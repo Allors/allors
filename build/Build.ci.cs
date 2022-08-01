@@ -33,7 +33,4 @@ partial class Build
     private Target CiTypescriptWorkspaceAdaptersJsonTest => _ => _
         .DependsOn(TypescriptInstall)
         .DependsOn(TypescriptWorkspaceAdaptersJsonTest);
-
-    private Target CiDemosTest => _ => _
-        .DependsOn(DemosDerivationTest);
 }

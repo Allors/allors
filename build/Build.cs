@@ -51,8 +51,7 @@ partial class Build : NukeBuild
     private Target Generate => _ => _
         .DependsOn(DotnetSystemAdaptersGenerate)
         .DependsOn(DotnetCoreGenerate)
-        .DependsOn(DotnetBaseGenerate)
-        .DependsOn(DemosDerivationGenerate);
+        .DependsOn(DotnetBaseGenerate);
 
     private Target Default => _ => _
         .DependsOn(Install)
