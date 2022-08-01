@@ -14,36 +14,26 @@ stages:
 
     strategy:
       matrix:
-        adapters_memory:
+        dotnet_system_adapters_memory:
           target: 'CiDotnetSystemAdaptersTestMemory'
-        adapters_sqlclient:
+        dotnet_system_adapters_sqlclient:
           target: 'CiDotnetSystemAdaptersTestSqlClient'
-        adapters_npgsql:
+        dotnet_system_adapters_npgsql:
           target: 'CiDotnetSystemAdaptersTestNpgsql'
-        core_database:
+        dotnet_core_database:
           target: 'CiDotnetCoreDatabaseTest'
-        core_workspace_local:
+        dotnet_core_workspace_local:
           target: 'CiDotnetCoreWorkspaceLocalTest'
-        core_workspace_remote_json_systemtext:
+        dotnet_core_workspace_remote_json_systemtext:
           target: 'CiDotnetCoreWorkspaceRemoteJsonSystemTextTest'
-        core_workspace_remote_json_restsharp:
+        dotnet_core_workspace_remote_json_restsharp:
           target: 'CiDotnetCoreWorkspaceRemoteJsonRestSharpTest'
-        base_database:
+        dotnet_base_database:
           target: 'CiDotnetBaseDatabaseTest'
-        apps_database:
-          target: 'CiDotnetAppsDatabaseTest'
         typescript_workspace:
           target: 'CiTypescriptWorkspaceTest'
         typescript_workspace_adapters_json:
           target: 'CiTypescriptWorkspaceAdaptersJsonTest'
-        typescript_workspace_e2e_angular_base:
-          target: 'CiTypescriptE2EAngularBaseTest'
-        typescript_workspace_e2e_angular_apps_intranet:
-          target: 'CiTypescriptWorkspacesE2EAngularAppsIntranetTest'
-        #typescript_workspace_e2e_angular_apps_extranet:
-        #  target: 'CiTypescriptWorkspacesE2EAngularAppsExtranetTest'
-        demos:
-          target: 'CiDemosTest'
 
     steps:
     - checkout: self
