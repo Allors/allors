@@ -1,0 +1,96 @@
+delimiters "$", "$"
+
+TemplateId() ::= <<2FD8EE5D-4976-484F-96F9-9474AE09BFDB>>
+TemplateName() ::= <<Allors Typescript Workspace Meta Json>>
+TemplateVersion() ::= <<3.0.3>>
+TemplateAllors() ::= <<1.0>>
+TemplateConfiguration(meta, workspaceName) ::= <<
+$!
+Copyright 2002-2017 Allors bvba.
+
+Dual Licensed under
+  a) the Lesser General Public Licence v3 (LGPL)
+  b) the Allors License
+
+The LGPL License is included in the file lgpl.txt.
+The Allors License is an addendum to your contract.
+
+Allors Platform is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+For more information visit http://www.allors.com/legal
+!$
+<generations>
+  <generation template="index" output="index.ts"/>
+  <generation template="data" output="data.g.ts"/>
+</generations>
+>>
+
+index(meta, workspaceName) ::= <<
+/* Allors generated file. Do not edit, changes will be overwritten. */
+
+export { data } from './data.g';
+
+>>
+
+data(meta, workspaceName) ::= <<
+import { MetaData } from '@allors/system/common/protocol-json';
+
+export const data: MetaData =
+{
+  i:
+  [
+$meta.WorkspaceInterfacesByWorkspaceName.(workspaceName):{objectType|$data_objectType(objectType)$}; separator=",\n"$
+  ],
+  c:
+  [
+$meta.WorkspaceClassesByWorkspaceName.(workspaceName):{objectType|$data_objectType(objectType)$}; separator=",\n"$
+  ],
+  o: [$meta.WorkspaceSessionOriginTagsByWorkspaceName.(workspaceName):{tag|'$tag$'}; separator=","$],
+  m:
+  [
+    [$meta.WorkspaceOneToOneTagsByWorkspaceName.(workspaceName):{tag|'$tag$'}; separator=","$],
+    [$meta.WorkspaceOneToManyTagsByWorkspaceName.(workspaceName):{tag|'$tag$'}; separator=","$],
+    [$meta.WorkspaceManyToManyTagsByWorkspaceName.(workspaceName):{tag|'$tag$'}; separator=","$]
+  ],
+  d: [$meta.WorkspaceDerivedTagsByWorkspaceName.(workspaceName):{tag|'$tag$'}; separator=","$],
+  r: [$meta.WorkspaceRequiredTagsByWorkspaceName.(workspaceName):{tag|'$tag$'}; separator=","$],
+  t:
+  {
+    $meta.WorkspaceMediaTagsByMediaTypeNameByWorkspaceName.(workspaceName):{mediaTypeName|'$mediaTypeName$': [$data_mediaType(mediaTypeName)$]}; separator=",\n"$
+  },
+  or: [$meta.WorkspaceClassesByWorkspaceName.(workspaceName):{objectType|$data_overridden_required(objectType)$}; separator=""$],
+  rel: [$meta.WorkspaceRelationshipsByWorkspaceName.(workspaceName):{objectType|'$objectType.tag$'}; separator=","$],
+}
+
+>>
+
+data_objectType(objectType) ::= <<
+    ['$objectType.Tag$', '$objectType.SingularName$', $data_supertypes()$, $data_relationTypes()$, $data_methodTypes()$$if(objectType.ExistAssignedPluralName)$, "$objectType.PluralName$"$endif$]
+>>
+
+data_supertypes() ::= <<[$objectType.WorkspaceDirectSupertypesByWorkspaceName.(workspaceName):{supertype|'$supertype.Tag$'}; separator=","$]>>
+
+data_relationTypes() ::= <<[$objectType.WorkspaceExclusiveRoleTypesByWorkspaceName.(workspaceName):{roleType|$data_relationType(relationType=roleType.RelationType, associationType=roleType.AssociationType, roleType=roleType)$}; separator=","$]>>
+
+data_relationType(relationType, associationType, roleType) ::= <<['$relationType.Tag$', '$roleType.ObjectType.Tag$'$data_relationType_singularAndPluralName()$$data_relationType_size_scale_precision()$]>>
+
+data_relationType_singularAndPluralName() ::= <<$if(roleType.ExistAssignedSingularName)$, "$roleType.singularName$"$data_relationType_pluralName()$$endif$>>
+
+data_relationType_pluralName() ::= <<$if(roleType.ExistAssignedPluralName)$, "$roleType.pluralName$"$endif$>>
+
+data_relationType_size_scale_precision() ::= <<$if(roleType.Size)$, $roleType.Size$$endif$$if(roleType.Scale)$, $roleType.Scale$, $roleType.Precision$$endif$>>
+
+data_methodTypes() ::= <<[$objectType.WorkspaceExclusiveMethodTypesByWorkspaceName.(workspaceName):{methodType|$data_methodType(methodType)$}; separator=","$]>>
+
+data_methodType(methodType) ::= <<['$methodType.Tag$', "$methodType.Name$"]>>
+
+data_origin(metaObject) ::= <<$if(!metaObject.IsDefaultOrigin)$'$metaObject.Tag$'$endif$>>
+
+data_mediaType(mediaTypeName) ::= <<$meta.WorkspaceMediaTagsByMediaTypeNameByWorkspaceName.(workspaceName).(mediaTypeName):{tag|'$tag$'}; separator=","$>>
+
+data_overridden_required(objectType) ::= <<$if(objectType.WorkspaceOverriddenRequiredByWorkspaceName.(workspaceName))$
+    ['$objectType.Tag$', [$objectType.WorkspaceOverriddenRequiredByWorkspaceName.(workspaceName):{roleType|'$roleType.RelationType.tag$'}; separator=","$]],
+$endif$>>
