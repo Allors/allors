@@ -11,7 +11,6 @@ import {
   IObject,
   IPullResult,
   IResult,
-  IRule,
   ISession,
   IWorkspace,
   Method,
@@ -38,10 +37,6 @@ export class CoreContext implements Context {
 
   set name(value: string) {
     this.session.context = value;
-  }
-
-  activate(rules: IRule<IObject>[]) {
-    this.session.activate(rules);
   }
 
   create<T extends IObject>(cls: Class): T {

@@ -7,13 +7,11 @@ namespace Allors.Database.Data
 {
     public class Not : ICompositePredicate
     {
-        public string[] Dependencies { get; set; }
-
         public Not(IPredicate operand = null) => this.Operand = operand;
 
         public IPredicate Operand { get; set; }
 
-        bool IPredicate.ShouldTreeShake(IArguments arguments) => this.HasMissingDependencies(arguments) || this.Operand == null || this.Operand.ShouldTreeShake(arguments);
+        bool IPredicate.ShouldTreeShake(IArguments arguments) => this.Operand == null || this.Operand.ShouldTreeShake(arguments);
 
         bool IPredicate.HasMissingArguments(IArguments arguments) => this.Operand?.HasMissingArguments(arguments) == true;
 

@@ -9,15 +9,13 @@ namespace Allors.Database.Data
 
     public class Exists : IPropertyPredicate
     {
-        public string[] Dependencies { get; set; }
-
         public Exists(IPropertyType propertyType = null) => this.PropertyType = propertyType;
 
         public string Parameter { get; set; }
 
         public IPropertyType PropertyType { get; set; }
 
-        bool IPredicate.ShouldTreeShake(IArguments arguments) => this.HasMissingDependencies(arguments) || ((IPredicate)this).HasMissingArguments(arguments);
+        bool IPredicate.ShouldTreeShake(IArguments arguments) => ((IPredicate)this).HasMissingArguments(arguments);
 
         bool IPredicate.HasMissingArguments(IArguments arguments) => this.Parameter != null && (arguments?.HasArgument(this.Parameter) != true);
 

@@ -7,8 +7,6 @@ namespace Allors.Database.Data
 {
     public interface IPredicate : IVisitable
     {
-        string[] Dependencies { get; }
-
         void Build(ITransaction transaction, IArguments arguments, Database.ICompositePredicate compositePredicate);
 
         bool ShouldTreeShake(IArguments arguments);

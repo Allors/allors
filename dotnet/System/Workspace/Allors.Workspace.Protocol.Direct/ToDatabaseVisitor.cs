@@ -79,14 +79,10 @@ namespace Allors.Workspace.Protocol.Direct
                 _ => throw new Exception($"Unknown implementation of IExtent: {ws.GetType()}")
             };
 
-        private IPredicate Visit(Data.And ws) => new And(ws.Operands?.Select(this.Visit).ToArray())
-        {
-            Dependencies = ws.Dependencies,
-        };
+        private IPredicate Visit(Data.And ws) => new And(ws.Operands?.Select(this.Visit).ToArray());
 
         private IPredicate Visit(Data.Between ws) => new Between(this.Visit(ws.RoleType))
         {
-            Dependencies = ws.Dependencies,
             Parameter = ws.Parameter,
             Values = ws.Values,
             Paths = this.Visit(ws.Paths)
@@ -94,7 +90,6 @@ namespace Allors.Workspace.Protocol.Direct
 
         private IPredicate Visit(Data.ContainedIn ws) => new ContainedIn(this.Visit(ws.PropertyType))
         {
-            Dependencies = ws.Dependencies,
             Parameter = ws.Parameter,
             Objects = this.Visit(ws.Objects),
             Extent = this.Visit(ws.Extent),
@@ -102,14 +97,12 @@ namespace Allors.Workspace.Protocol.Direct
 
         private IPredicate Visit(Data.Contains ws) => new Contains(this.Visit(ws.PropertyType))
         {
-            Dependencies = ws.Dependencies,
             Parameter = ws.Parameter,
             Object = this.Visit(ws.Object)
         };
 
         private IPredicate Visit(Data.Equals ws) => new Equals(this.Visit(ws.PropertyType))
         {
-            Dependencies = ws.Dependencies,
             Parameter = ws.Parameter,
             Object = this.Visit(ws.Object),
             Value = ws.Value,
@@ -118,13 +111,11 @@ namespace Allors.Workspace.Protocol.Direct
 
         private IPredicate Visit(Data.Exists ws) => new Exists(this.Visit(ws.PropertyType))
         {
-            Dependencies = ws.Dependencies,
             Parameter = ws.Parameter,
         };
 
         private IPredicate Visit(Data.GreaterThan ws) => new GreaterThan(this.Visit(ws.RoleType))
         {
-            Dependencies = ws.Dependencies,
             Parameter = ws.Parameter,
             Value = ws.Value,
             Path = this.Visit(ws.Path)
@@ -132,14 +123,12 @@ namespace Allors.Workspace.Protocol.Direct
 
         private IPredicate Visit(Data.Instanceof ws) => new Instanceof(this.Visit(ws.PropertyType))
         {
-            Dependencies = ws.Dependencies,
             Parameter = ws.Parameter,
             ObjectType = this.Visit(ws.ObjectType)
         };
 
         private IPredicate Visit(Data.LessThan ws) => new LessThan(this.Visit(ws.RoleType))
         {
-            Dependencies = ws.Dependencies,
             Parameter = ws.Parameter,
             Value = ws.Value,
             Path = this.Visit(ws.Path)
@@ -147,14 +136,13 @@ namespace Allors.Workspace.Protocol.Direct
 
         private IPredicate Visit(Data.Like ws) => new Like(this.Visit(ws.RoleType))
         {
-            Dependencies = ws.Dependencies,
             Parameter = ws.Parameter,
             Value = ws.Value,
         };
 
-        private IPredicate Visit(Data.Not ws) => new Not(this.Visit(ws.Operand)) { Dependencies = ws.Dependencies };
+        private IPredicate Visit(Data.Not ws) => new Not(this.Visit(ws.Operand));
 
-        private IPredicate Visit(Data.Or ws) => new Or(ws.Operands?.Select(this.Visit).ToArray()) { Dependencies = ws.Dependencies };
+        private IPredicate Visit(Data.Or ws) => new Or(ws.Operands?.Select(this.Visit).ToArray());
 
         private Except Visit(Data.Except ws) => new Except(ws.Operands?.Select(this.Visit).ToArray()) { Sorting = this.Visit(ws.Sorting) };
 

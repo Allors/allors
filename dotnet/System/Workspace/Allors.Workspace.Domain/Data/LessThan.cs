@@ -5,13 +5,10 @@
 
 namespace Allors.Workspace.Data
 {
-    
     using Meta;
 
     public class LessThan : IRolePredicate
     {
-        public string[] Dependencies { get; set; }
-
         public LessThan(IRoleType roleType = null) => this.RoleType = roleType;
 
         public IRoleType RoleType { get; set; }

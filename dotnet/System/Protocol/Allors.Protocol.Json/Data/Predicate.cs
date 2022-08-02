@@ -33,11 +33,6 @@ namespace Allors.Protocol.Json.Data
         public string p { get; set; }
 
         /// <summary>
-        /// Dependencies
-        /// </summary>
-        public string[] d { get; set; }
-
-        /// <summary>
         /// Operand
         /// </summary>
         public Predicate op { get; set; }

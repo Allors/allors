@@ -7,6 +7,5 @@ namespace Allors.Workspace.Data
 {
     public interface IPredicate : IVisitable
     {
-        string[] Dependencies { get; set; }
     }
 }

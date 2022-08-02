@@ -10,8 +10,6 @@ namespace Allors.Workspace.Data
 
     public class Instanceof : IPropertyPredicate
     {
-        public string[] Dependencies { get; set; }
-
         public Instanceof(IPropertyType propertyType = null) => this.PropertyType = propertyType;
 
         public string Parameter { get; set; }

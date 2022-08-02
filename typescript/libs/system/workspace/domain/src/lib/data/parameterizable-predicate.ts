@@ -8,7 +8,6 @@ import { GreaterThan } from './greater-than';
 import { Instanceof } from './instance-of';
 import { LessThan } from './less-than';
 import { Like } from './like';
-import { PredicateBase } from './predicate';
 
 export type ParameterizablePredicate =
   | Between
@@ -23,7 +22,7 @@ export type ParameterizablePredicate =
 
 export type ParameterizablePredicateKind = ParameterizablePredicate['kind'];
 
-export interface ParameterizablePredicateBase extends PredicateBase {
+export interface ParameterizablePredicateBase {
   parameter?: string;
 }
 

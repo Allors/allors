@@ -98,19 +98,6 @@ namespace Tests
 
             var pullRequest = new PullRequest
             {
-                d = new[]
-                {
-                    new PullDependency
-                    {
-                        o = this.M.TraceX.Tag,
-                        r = this.M.TraceX.One2One.RelationType.Tag,
-                    },
-                    new PullDependency
-                    {
-                        o = this.M.TraceY.Tag,
-                        r = this.M.TraceY.One2One.RelationType.Tag,
-                    },
-                },
                 l = Enumerable.Range(0, 100).Select(v => new Allors.Protocol.Json.Data.Pull
                 {
                     o = this.x[v].Id

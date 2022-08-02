@@ -10,8 +10,6 @@ namespace Allors.Workspace.Data
 
     public class Between : IRolePredicate
     {
-        public string[] Dependencies { get; set; }
-
         public Between(IRoleType roleType = null) => this.RoleType = roleType;
 
         public IRoleType RoleType { get; set; }

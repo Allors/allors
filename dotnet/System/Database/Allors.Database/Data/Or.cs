@@ -10,13 +10,11 @@ namespace Allors.Database.Data
 
     public class Or : ICompositePredicate
     {
-        public string[] Dependencies { get; set; }
-
         public Or(params IPredicate[] operands) => this.Operands = operands;
 
         public IPredicate[] Operands { get; set; }
 
-        bool IPredicate.ShouldTreeShake(IArguments arguments) => this.HasMissingDependencies(arguments) || this.Operands.All(v => v.ShouldTreeShake(arguments));
+        bool IPredicate.ShouldTreeShake(IArguments arguments) => this.Operands.All(v => v.ShouldTreeShake(arguments));
 
         bool IPredicate.HasMissingArguments(IArguments arguments) => this.Operands.All(v => v.HasMissingArguments(arguments));
 

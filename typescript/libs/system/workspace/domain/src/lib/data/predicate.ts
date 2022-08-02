@@ -14,7 +14,3 @@ import { Or } from './or';
 export type Predicate = And | Between | ContainedIn | Contains | Equals | Exists | GreaterThan | Instanceof | LessThan | Like | Not | Or;
 
 export type PredicateKind = Predicate['kind'];
-
-export interface PredicateBase {
-  dependencies?: string[];
-}

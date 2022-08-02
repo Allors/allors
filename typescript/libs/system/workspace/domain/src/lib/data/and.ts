@@ -1,6 +1,6 @@
-import { Predicate, PredicateBase } from './predicate';
+import { Predicate } from './predicate';
 
-export interface And extends PredicateBase {
+export interface And {
   readonly kind: 'And';
   operands: Predicate[];
 }

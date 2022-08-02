@@ -113,8 +113,7 @@ namespace Allors.Database.Protocol.Json
             var @event = this.Sink?.OnPull(this.Transaction, pullRequest);
             this.Sink?.OnBefore(@event);
 
-            var dependencies = this.ToDependencies(pullRequest.d);
-            var pullResponseBuilder = new PullResponseBuilder(this.Transaction, this.AccessControl, this.AllowedClasses, this.PreparedSelects, this.PreparedExtents, this.UnitConvert, this.Ranges, dependencies, this.PrefetchPolicyCache, this.CancellationToken);
+            var pullResponseBuilder = new PullResponseBuilder(this.Transaction, this.AccessControl, this.AllowedClasses, this.PreparedSelects, this.PreparedExtents, this.UnitConvert, this.Ranges, this.PrefetchPolicyCache, this.CancellationToken);
             var pullResponse = pullResponseBuilder.Build(pullRequest);
 
             if (@event != null)
@@ -174,47 +173,6 @@ namespace Allors.Database.Protocol.Json
         }
 
         // TODO: Delete
-        public PullResponseBuilder CreatePullResponseBuilder(string dependencyId = null)
-        {
-            // TODO: Dependencies
-            return new PullResponseBuilder(this.Transaction, this.AccessControl, this.AllowedClasses, this.PreparedSelects, this.PreparedExtents, this.UnitConvert, this.Ranges, null, this.PrefetchPolicyCache, this.CancellationToken);
-        }
-
-        private IDictionary<IClass, ISet<IPropertyType>> ToDependencies(PullDependency[] pullDependencies)
-        {
-            if (pullDependencies == null)
-            {
-                return null;
-            }
-
-            var classDependencies = new Dictionary<IClass, ISet<IPropertyType>>();
-
-            foreach (var pullDependency in pullDependencies)
-            {
-                var objectType = (IComposite)this.M.FindByTag(pullDependency.o);
-                IPropertyType propertyType;
-                if (pullDependency.a != null)
-                {
-                    propertyType = ((IRelationType)this.M.FindByTag(pullDependency.a)).AssociationType;
-                }
-                else
-                {
-                    propertyType = ((IRelationType)this.M.FindByTag(pullDependency.r)).RoleType;
-                }
-
-                foreach (var @class in objectType.Classes)
-                {
-                    if (!classDependencies.TryGetValue(@class, out var classDependency))
-                    {
-                        classDependency = new HashSet<IPropertyType>();
-                        classDependencies.Add(@class, classDependency);
-                    }
-
-                    classDependency.Add(propertyType);
-                }
-            }
-
-            return classDependencies;
-        }
+        public PullResponseBuilder CreatePullResponseBuilder() => new PullResponseBuilder(this.Transaction, this.AccessControl, this.AllowedClasses, this.PreparedSelects, this.PreparedExtents, this.UnitConvert, this.Ranges, this.PrefetchPolicyCache, this.CancellationToken);
     }
 }

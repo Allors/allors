@@ -11,8 +11,6 @@ namespace Allors.Workspace.Data
 
     public class ContainedIn : IPropertyPredicate
     {
-        public string[] Dependencies { get; set; }
-
         public ContainedIn(IPropertyType propertyType = null) => this.PropertyType = propertyType;
 
         public IPropertyType PropertyType { get; set; }

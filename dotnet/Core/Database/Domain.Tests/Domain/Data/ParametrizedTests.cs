@@ -32,31 +32,7 @@ namespace Allors.Database.Domain.Tests
 
             Assert.Equal(extent.ToArray(), queryExtent.ToArray());
         }
-
-        [Fact]
-        public void EqualsWithDependencies()
-        {
-            var filter = new Extent(this.M.Person)
-            {
-                Predicate = new Equals { Dependencies = new[] { "useFirstname" }, PropertyType = this.M.Person.FirstName, Value = "John" },
-            };
-
-            var arguments = new Arguments(new Dictionary<string, object>());
-            var queryExtent = filter.Build(this.Transaction, arguments);
-
-            var extent = this.Transaction.Extent(this.M.Person);
-
-            Assert.Equal(extent.ToArray(), queryExtent.ToArray());
-
-            arguments = new Arguments(new Dictionary<string, object> { { "useFirstname", "x" } });
-            queryExtent = filter.Build(this.Transaction, arguments);
-
-            extent = this.Transaction.Extent(this.M.Person);
-            extent.Filter.AddEquals(this.M.Person.FirstName, "John");
-
-            Assert.Equal(extent.ToArray(), queryExtent.ToArray());
-        }
-
+        
         [Fact]
         public void EqualsWithoutArguments()
         {

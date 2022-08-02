@@ -10,8 +10,6 @@ namespace Allors.Workspace.Data
 
     public class Like : IRolePredicate
     {
-        public string[] Dependencies { get; set; }
-
         public Like(IRoleType roleType = null) => this.RoleType = roleType;
 
         public IRoleType RoleType { get; set; }

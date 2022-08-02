@@ -1,6 +1,5 @@
 import {
   AssociationType,
-  Dependency,
   MethodType,
   pluralize,
   PropertyType,
@@ -18,7 +17,6 @@ import { InternalMetaPopulation } from './internal/internal-meta-population';
 
 import { LazyRelationType } from './lazy-relation-type';
 import { LazyMethodType } from './lazy-method-type';
-import { LazyDependency } from './lazy-dependency';
 
 export abstract class LazyComposite implements InternalComposite {
   readonly _ = {};
@@ -40,8 +38,6 @@ export abstract class LazyComposite implements InternalComposite {
   directMethodTypes: Set<MethodType> = new Set();
 
   databaseOriginRoleTypes: Set<RoleType>;
-
-  dependencyByPropertyType: Map<PropertyType, Dependency>;
 
   isRelationship: boolean;
 
@@ -134,24 +130,6 @@ export abstract class LazyComposite implements InternalComposite {
   }
 
   abstract derivePropertyTypeByPropertyName();
-
-  deriveDependencies(): void {
-    this.dependencyByPropertyType = new Map();
-
-    for (const associationType of this.associationTypes) {
-      this.dependencyByPropertyType.set(
-        associationType,
-        new LazyDependency(this, associationType)
-      );
-    }
-
-    for (const roleType of this.roleTypes) {
-      this.dependencyByPropertyType.set(
-        roleType,
-        new LazyDependency(this, roleType)
-      );
-    }
-  }
 
   *supertypeGenerator(): IterableIterator<InternalInterface> {
     if (this.supertypes) {

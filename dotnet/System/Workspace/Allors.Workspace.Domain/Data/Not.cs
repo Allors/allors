@@ -5,12 +5,8 @@
 
 namespace Allors.Workspace.Data
 {
-    
-
     public class Not : ICompositePredicate
     {
-        public string[] Dependencies { get; set; }
-
         public Not(IPredicate operand = null) => this.Operand = operand;
 
         public IPredicate Operand { get; set; }

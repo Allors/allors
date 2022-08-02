@@ -10,8 +10,6 @@ namespace Allors.Database.Data
 
     public class ContainedIn : IPropertyPredicate
     {
-        public string[] Dependencies { get; set; }
-
         public ContainedIn(IPropertyType propertyType = null) => this.PropertyType = propertyType;
 
         public IPropertyType PropertyType { get; set; }
@@ -22,7 +20,7 @@ namespace Allors.Database.Data
 
         public string Parameter { get; set; }
 
-        bool IPredicate.ShouldTreeShake(IArguments arguments) => this.HasMissingDependencies(arguments) || this.HasMissingArguments(arguments);
+        bool IPredicate.ShouldTreeShake(IArguments arguments) => this.HasMissingArguments(arguments);
 
         bool IPredicate.HasMissingArguments(IArguments arguments) => this.HasMissingArguments(arguments);
 

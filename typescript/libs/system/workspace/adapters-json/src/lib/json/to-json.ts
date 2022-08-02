@@ -1,6 +1,5 @@
 import {
   AssociationType,
-  Dependency,
   MetaObject,
   ObjectType,
   PropertyType,
@@ -30,7 +29,6 @@ import {
   Sort,
   Node,
   PredicateKind,
-  PullDependency,
 } from '@allors/system/common/protocol-json';
 
 export function unitToJson(from: unknown): IUnit {
@@ -50,32 +48,6 @@ export function unitToJson(from: unknown): IUnit {
   }
 
   throw new Error(`Unsupported value: ${from}`);
-}
-
-export function dependenciesToJson(from: Set<Dependency>): PullDependency[] {
-  if (from == null) {
-    return null;
-  }
-
-  return [...from].map((v) => dependencyToJson(v));
-}
-
-export function dependencyToJson(from: Dependency): PullDependency {
-  if (from == null) {
-    return null;
-  }
-
-  if (from.propertyType.isAssociationType) {
-    return {
-      o: objectTypeToJson(from.objectType),
-      a: asAssociationTypeToJson(from.propertyType),
-    };
-  } else {
-    return {
-      o: objectTypeToJson(from.objectType),
-      r: asRoleTypeToJson(from.propertyType),
-    };
-  }
 }
 
 export function procedureToJson(from: DataProcedure): Procedure {
@@ -142,14 +114,12 @@ export function predicateToJson(from: DataPredicate): Predicate {
     case 'And':
       return {
         k: PredicateKind[from.kind],
-        d: from.dependencies,
         ops: predicatesToJson(from.operands),
       };
 
     case 'Between':
       return {
         k: PredicateKind.Between,
-        d: from.dependencies,
         r: roleTypeToJson(from.roleType),
         vs: from.values?.map((v) => unitToJson(v)),
         pas: pathsToJson(from.paths),
@@ -159,7 +129,6 @@ export function predicateToJson(from: DataPredicate): Predicate {
     case 'ContainedIn':
       return {
         k: PredicateKind.ContainedIn,
-        d: from.dependencies,
         a: asAssociationTypeToJson(from.propertyType),
         r: asRoleTypeToJson(from.propertyType),
         obs: from.objects?.map((v) => v.id) ?? from.objectIds,
@@ -170,7 +139,6 @@ export function predicateToJson(from: DataPredicate): Predicate {
     case 'Contains':
       return {
         k: PredicateKind.Contains,
-        d: from.dependencies,
         a: asAssociationTypeToJson(from.propertyType),
         r: asRoleTypeToJson(from.propertyType),
         ob: from.objectId ?? objectToJson(from.object),
@@ -180,7 +148,6 @@ export function predicateToJson(from: DataPredicate): Predicate {
     case 'Equals':
       return {
         k: PredicateKind[from.kind],
-        d: from.dependencies,
         a: asAssociationTypeToJson(from.propertyType),
         r: asRoleTypeToJson(from.propertyType),
         ob: from.object?.id ?? from.objectId,
@@ -192,7 +159,6 @@ export function predicateToJson(from: DataPredicate): Predicate {
     case 'Exists':
       return {
         k: PredicateKind[from.kind],
-        d: from.dependencies,
         a: asAssociationTypeToJson(from.propertyType),
         r: asRoleTypeToJson(from.propertyType),
         p: from.parameter,
@@ -201,7 +167,6 @@ export function predicateToJson(from: DataPredicate): Predicate {
     case 'GreaterThan':
       return {
         k: PredicateKind[from.kind],
-        d: from.dependencies,
         r: roleTypeToJson(from.roleType),
         v: unitToJson(from.value),
         pa: roleTypeToJson(from.path),
@@ -211,7 +176,6 @@ export function predicateToJson(from: DataPredicate): Predicate {
     case 'Instanceof':
       return {
         k: PredicateKind[from.kind],
-        d: from.dependencies,
         o: objectTypeToJson(from.objectType),
         a: asAssociationTypeToJson(from.propertyType),
         r: asRoleTypeToJson(from.propertyType),
@@ -221,7 +185,6 @@ export function predicateToJson(from: DataPredicate): Predicate {
     case 'LessThan':
       return {
         k: PredicateKind[from.kind],
-        d: from.dependencies,
         r: roleTypeToJson(from.roleType),
         v: unitToJson(from.value),
         pa: roleTypeToJson(from.path),
@@ -231,7 +194,6 @@ export function predicateToJson(from: DataPredicate): Predicate {
     case 'Like':
       return {
         k: PredicateKind[from.kind],
-        d: from.dependencies,
         r: roleTypeToJson(from.roleType),
         v: unitToJson(from.value),
         p: from.parameter,
@@ -240,14 +202,12 @@ export function predicateToJson(from: DataPredicate): Predicate {
     case 'Not':
       return {
         k: PredicateKind[from.kind],
-        d: from.dependencies,
         op: predicateToJson(from.operand),
       };
 
     case 'Or':
       return {
         k: PredicateKind[from.kind],
-        d: from.dependencies,
         ops: predicatesToJson(from.operands),
       };
   }

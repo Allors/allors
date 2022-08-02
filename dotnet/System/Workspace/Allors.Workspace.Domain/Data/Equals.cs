@@ -10,8 +10,6 @@ namespace Allors.Workspace.Data
 
     public class Equals : IPropertyPredicate
     {
-        public string[] Dependencies { get; set; }
-
         public Equals(IPropertyType propertyType = null) => this.PropertyType = propertyType;
 
         /// <inheritdoc/>

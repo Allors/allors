@@ -5,8 +5,6 @@ import { MethodType } from './method-type';
 import { Unit } from './unit';
 import { RelationType } from './relation-type';
 import { Composite } from './composite';
-import { PropertyType } from './property-type';
-import { Dependency } from './dependency';
 
 export interface MetaPopulation {
   readonly kind: 'MetaPopulation';
@@ -18,9 +16,4 @@ export interface MetaPopulation {
   composites: Set<Composite>;
   relationTypes: Set<RelationType>;
   methodTypes: Set<MethodType>;
-
-  dependency: <T extends Composite>(
-    objectType: T,
-    propertyType: (objectType: T) => PropertyType
-  ) => Dependency;
 }

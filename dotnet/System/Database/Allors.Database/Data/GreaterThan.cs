@@ -10,8 +10,6 @@ namespace Allors.Database.Data
 
     public class GreaterThan : IRolePredicate
     {
-        public string[] Dependencies { get; set; }
-
         public GreaterThan(IRoleType roleType = null) => this.RoleType = roleType;
 
         public IRoleType RoleType { get; set; }
@@ -22,7 +20,7 @@ namespace Allors.Database.Data
 
         public string Parameter { get; set; }
 
-        bool IPredicate.ShouldTreeShake(IArguments arguments) => this.HasMissingDependencies(arguments) || ((IPredicate)this).HasMissingArguments(arguments);
+        bool IPredicate.ShouldTreeShake(IArguments arguments) => ((IPredicate)this).HasMissingArguments(arguments);
 
         bool IPredicate.HasMissingArguments(IArguments arguments) => this.Parameter != null && (arguments == null || !arguments.HasArgument(this.Parameter));
 

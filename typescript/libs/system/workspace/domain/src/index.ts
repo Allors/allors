@@ -47,9 +47,6 @@ export * from './lib/data/filter';
 export * from './lib/data/result';
 export * from './lib/data/operator';
 
-// derivation
-export * from './lib/derivation/irule';
-
 // diff
 export * from './lib/diff/icomposite-diff';
 export * from './lib/diff/icomposites-diff';

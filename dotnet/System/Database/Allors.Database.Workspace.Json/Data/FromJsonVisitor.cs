@@ -176,10 +176,7 @@ namespace Allors.Database.Protocol.Json
             switch (visited.k)
             {
                 case PredicateKind.And:
-                    var and = new Data.And
-                    {
-                        Dependencies = visited.d,
-                    };
+                    var and = new Data.And();
 
                     this.predicates.Push(and);
 
@@ -199,10 +196,7 @@ namespace Allors.Database.Protocol.Json
                     break;
 
                 case PredicateKind.Or:
-                    var or = new Data.Or
-                    {
-                        Dependencies = visited.d
-                    };
+                    var or = new Data.Or();
 
                     this.predicates.Push(or);
 
@@ -222,10 +216,7 @@ namespace Allors.Database.Protocol.Json
                     break;
 
                 case PredicateKind.Not:
-                    var not = new Data.Not
-                    {
-                        Dependencies = visited.d,
-                    };
+                    var not = new Data.Not();
 
                     this.predicates.Push(not);
 
@@ -248,7 +239,6 @@ namespace Allors.Database.Protocol.Json
 
                             var instanceOf = new Data.Instanceof(propertyType)
                             {
-                                Dependencies = visited.d,
                                 ObjectType = visited.o != null ? (IComposite)this.fromJson.MetaPopulation.FindByTag(visited.o) : null,
                                 Parameter = visited.p,
                             };
@@ -260,7 +250,6 @@ namespace Allors.Database.Protocol.Json
 
                             var exists = new Data.Exists(propertyType)
                             {
-                                Dependencies = visited.d,
                                 Parameter = visited.p,
                             };
 
@@ -271,7 +260,6 @@ namespace Allors.Database.Protocol.Json
 
                             var contains = new Data.Contains(propertyType)
                             {
-                                Dependencies = visited.d,
                                 Parameter = visited.p,
                             };
 
@@ -287,7 +275,6 @@ namespace Allors.Database.Protocol.Json
 
                             var containedIn = new Data.ContainedIn(propertyType)
                             {
-                                Dependencies = visited.d,
                                 Parameter = visited.p
                             };
 
@@ -309,7 +296,6 @@ namespace Allors.Database.Protocol.Json
 
                             var equals = new Data.Equals(propertyType)
                             {
-                                Dependencies = visited.d,
                                 Parameter = visited.p,
                                 Path = this.fromJson.MetaPopulation.FindRoleType(visited.pa)
                             };
@@ -339,7 +325,6 @@ namespace Allors.Database.Protocol.Json
 
                             var between = new Data.Between(roleType)
                             {
-                                Dependencies = visited.d,
                                 Parameter = visited.p,
                                 Values = visited.vs?.Select(v => this.fromJson.UnitConvert.UnitFromJson(roleType.ObjectType.Tag, v)).ToArray(),
                                 Paths = visited.pas?.Select(v => this.fromJson.MetaPopulation.FindRoleType(v)).ToArray()
@@ -353,7 +338,6 @@ namespace Allors.Database.Protocol.Json
 
                             var greaterThan = new Data.GreaterThan(roleType)
                             {
-                                Dependencies = visited.d,
                                 Parameter = visited.p,
                                 Value = this.fromJson.UnitConvert.UnitFromJson(roleType.ObjectType.Tag, visited.v),
                                 Path = this.fromJson.MetaPopulation.FindRoleType(visited.pa)
@@ -367,7 +351,6 @@ namespace Allors.Database.Protocol.Json
 
                             var lessThan = new Data.LessThan(roleType)
                             {
-                                Dependencies = visited.d,
                                 Parameter = visited.p,
                                 Value = this.fromJson.UnitConvert.UnitFromJson(roleType.ObjectType.Tag, visited.v),
                                 Path = this.fromJson.MetaPopulation.FindRoleType(visited.pa)
@@ -381,7 +364,6 @@ namespace Allors.Database.Protocol.Json
 
                             var like = new Data.Like(roleType)
                             {
-                                Dependencies = visited.d,
                                 Parameter = visited.p,
                                 Value = this.fromJson.UnitConvert.UnitFromJson(roleType.ObjectType.Tag, visited.v)?.ToString(),
                             };

@@ -5,7 +5,6 @@ import {
   IObject,
   IPullResult,
   IPushResult,
-  IRule,
   ISession,
   Method,
   Procedure,
@@ -15,8 +14,6 @@ import {
   AssociationType,
   Class,
   Composite,
-  Dependency,
-  RoleType,
 } from '@allors/system/workspace/meta';
 
 import { Workspace } from '../workspace/workspace';
@@ -40,15 +37,11 @@ export abstract class Session implements ISession {
 
   pushToDatabaseTracker: PushToDatabaseTracker;
 
-  activeRulesByRoleType: Map<RoleType, Set<IRule<IObject>>>;
-
   readonly ranges: Ranges<IObject>;
 
   protected objectByWorkspaceId: Map<number, IObject>;
 
   private objectsByClass: Map<Class, Set<IObject>>;
-
-  protected dependencies: Set<Dependency>;
 
   constructor(public workspace: Workspace) {
     this.ranges = new DefaultObjectRanges();
@@ -58,31 +51,6 @@ export abstract class Session implements ISession {
 
     this.changeSetTracker = new ChangeSetTracker();
     this.pushToDatabaseTracker = new PushToDatabaseTracker();
-
-    this.activeRulesByRoleType = new Map();
-    this.dependencies = new Set();
-  }
-
-  activate(rules: IRule<IObject>[]): void {
-    if (rules == null) {
-      return;
-    }
-
-    for (const rule of rules) {
-      let activeRules = this.activeRulesByRoleType.get(rule.roleType);
-      if (activeRules == null) {
-        activeRules = new Set();
-        this.activeRulesByRoleType.set(rule.roleType, activeRules);
-      }
-
-      activeRules.add(rule);
-
-      if (rule.dependencies != null) {
-        for (const dependency of rule.dependencies) {
-          this.dependencies.add(dependency);
-        }
-      }
-    }
   }
 
   get hasChanges(): boolean {

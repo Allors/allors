@@ -55,7 +55,6 @@ namespace Allors.Database.Protocol.Json
             var predicate = new Predicate
             {
                 k = PredicateKind.And,
-                d = visited.Dependencies,
             };
 
             this.predicates.Push(predicate);
@@ -78,7 +77,6 @@ namespace Allors.Database.Protocol.Json
             var predicate = new Predicate
             {
                 k = PredicateKind.Between,
-                d = visited.Dependencies,
                 r = visited.RoleType?.RelationType.Tag,
                 vs = visited.Values.Select(this.unitConvert.ToJson).ToArray(),
                 pas = visited.Paths?.Select(v => v.RelationType.Tag).ToArray(),
@@ -93,7 +91,6 @@ namespace Allors.Database.Protocol.Json
             var predicate = new Predicate
             {
                 k = PredicateKind.ContainedIn,
-                d = visited.Dependencies,
                 a = (visited.PropertyType as IAssociationType)?.RelationType.Tag,
                 r = (visited.PropertyType as IRoleType)?.RelationType.Tag,
                 vs = visited.Objects?.Select(v => v.Id.ToString()).ToArray(),
@@ -114,7 +111,6 @@ namespace Allors.Database.Protocol.Json
             var predicate = new Predicate
             {
                 k = PredicateKind.Contains,
-                d = visited.Dependencies,
                 a = (visited.PropertyType as IAssociationType)?.RelationType.Tag,
                 r = (visited.PropertyType as IRoleType)?.RelationType.Tag,
                 ob = visited.Object?.Id,
@@ -129,7 +125,6 @@ namespace Allors.Database.Protocol.Json
             var predicate = new Predicate
             {
                 k = PredicateKind.Equals,
-                d = visited.Dependencies,
                 a = (visited.PropertyType as IAssociationType)?.RelationType.Tag,
                 r = (visited.PropertyType as IRoleType)?.RelationType.Tag,
                 ob = visited.Object?.Id,
@@ -180,7 +175,6 @@ namespace Allors.Database.Protocol.Json
             var predicate = new Predicate
             {
                 k = PredicateKind.Exists,
-                d = visited.Dependencies,
                 a = (visited.PropertyType as IAssociationType)?.RelationType.Tag,
                 r = (visited.PropertyType as IRoleType)?.RelationType.Tag,
                 p = visited.Parameter,
@@ -242,7 +236,6 @@ namespace Allors.Database.Protocol.Json
             var predicate = new Predicate
             {
                 k = PredicateKind.GreaterThan,
-                d = visited.Dependencies,
                 r = visited.RoleType?.RelationType.Tag,
                 v = this.unitConvert.ToJson(visited.Value),
                 pa = visited.Path?.RelationType.Tag,
@@ -257,7 +250,6 @@ namespace Allors.Database.Protocol.Json
             var predicate = new Predicate
             {
                 k = PredicateKind.InstanceOf,
-                d = visited.Dependencies,
                 o = visited.ObjectType?.Tag,
                 a = (visited.PropertyType as IAssociationType)?.RelationType.Tag,
                 r = (visited.PropertyType as IRoleType)?.RelationType.Tag,
@@ -305,7 +297,6 @@ namespace Allors.Database.Protocol.Json
             var predicate = new Predicate
             {
                 k = PredicateKind.LessThan,
-                d = visited.Dependencies,
                 r = visited.RoleType?.RelationType.Tag,
                 v = this.unitConvert.ToJson(visited.Value),
                 pa = visited.Path?.RelationType.Tag,
@@ -320,7 +311,6 @@ namespace Allors.Database.Protocol.Json
             var predicate = new Predicate
             {
                 k = PredicateKind.Like,
-                d = visited.Dependencies,
                 r = visited.RoleType?.RelationType.Tag,
                 v = this.unitConvert.ToJson(visited.Value),
                 p = visited.Parameter,
@@ -356,7 +346,6 @@ namespace Allors.Database.Protocol.Json
             var predicate = new Predicate()
             {
                 k = PredicateKind.Not,
-                d = visited.Dependencies,
             };
 
             this.predicates.Push(predicate);
@@ -373,7 +362,6 @@ namespace Allors.Database.Protocol.Json
             var predicate = new Predicate()
             {
                 k = PredicateKind.Or,
-                d = visited.Dependencies,
             };
 
             this.predicates.Push(predicate);

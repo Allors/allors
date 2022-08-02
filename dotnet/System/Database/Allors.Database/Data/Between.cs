@@ -11,8 +11,6 @@ namespace Allors.Database.Data
 
     public class Between : IRolePredicate
     {
-        public string[] Dependencies { get; set; }
-
         public Between(IRoleType roleType = null) => this.RoleType = roleType;
 
         public IRoleType RoleType { get; set; }
@@ -23,7 +21,7 @@ namespace Allors.Database.Data
 
         public string Parameter { get; set; }
 
-        bool IPredicate.ShouldTreeShake(IArguments arguments) => this.HasMissingDependencies(arguments) || ((IPredicate)this).HasMissingArguments(arguments);
+        bool IPredicate.ShouldTreeShake(IArguments arguments) => ((IPredicate)this).HasMissingArguments(arguments);
 
         bool IPredicate.HasMissingArguments(IArguments arguments) => this.Parameter != null && (arguments?.HasArgument(this.Parameter) != true);
 

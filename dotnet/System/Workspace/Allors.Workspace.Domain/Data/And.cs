@@ -9,8 +9,6 @@ namespace Allors.Workspace.Data
 
     public class And : ICompositePredicate
     {
-        public string[] Dependencies { get; set; }
-
         public And(params IPredicate[] operands) => this.Operands = operands;
 
         public IPredicate[] Operands { get; set; }

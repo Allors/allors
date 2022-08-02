@@ -5,13 +5,10 @@
 
 namespace Allors.Workspace.Data
 {
-    
     using Meta;
 
     public class Exists : IPropertyPredicate
     {
-        public string[] Dependencies { get; set; }
-
         public Exists(IPropertyType propertyType = null) => this.PropertyType = propertyType;
 
         public string Parameter { get; set; }

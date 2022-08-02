@@ -1,6 +1,5 @@
 import { AssociationType } from './association-type';
 import { Class } from './class';
-import { Dependency } from './dependency';
 import { Interface } from './interface';
 import { MethodType } from './method-type';
 import { ObjectType } from './object-type';
@@ -21,8 +20,6 @@ export interface Composite extends ObjectType {
   methodTypes: Set<MethodType>;
 
   databaseOriginRoleTypes: Set<RoleType>;
-
-  dependencyByPropertyType: Map<PropertyType, Dependency>;
 
   isRelationship: boolean;
 

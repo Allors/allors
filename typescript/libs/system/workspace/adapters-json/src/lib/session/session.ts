@@ -22,11 +22,7 @@ import { DatabaseRecord } from '../database/database-record';
 import { InvokeResult } from '../database/invoke/invoke-result';
 import { PullResult } from '../database/pull/pull-result';
 import { PushResult } from '../database/push/push-result';
-import {
-  dependenciesToJson,
-  procedureToJson,
-  pullToJson,
-} from '../json/to-json';
+import { procedureToJson, pullToJson } from '../json/to-json';
 import { Workspace } from '../workspace/workspace';
 import { DatabaseState } from './originstate/database-origin-state';
 import { Strategy } from './strategy';
@@ -107,7 +103,6 @@ export class Session extends SystemSession {
   async call(procedure: Procedure, ...pulls: Pull[]): Promise<IPullResult> {
     const pullRequest: PullRequest = {
       x: this.context,
-      d: dependenciesToJson(this.dependencies),
       p: procedureToJson(procedure),
       l: pulls.map((v) => pullToJson(v)),
     };
@@ -127,7 +122,6 @@ export class Session extends SystemSession {
 
     const pullRequest: PullRequest = {
       x: this.context,
-      d: dependenciesToJson(this.dependencies),
       l: pulls.map((v) => pullToJson(v)),
     };
 
@@ -142,9 +136,7 @@ export class Session extends SystemSession {
 
     if (this.pushToDatabaseTracker.created) {
       pushRequest.n = [...this.pushToDatabaseTracker.created].map((v) =>
-        (
-          (v.strategy as Strategy).DatabaseState as DatabaseState
-        ).pushNew()
+        ((v.strategy as Strategy).DatabaseState as DatabaseState).pushNew()
       );
     }
 

@@ -5,13 +5,11 @@
 
 namespace Allors.Workspace.Data
 {
-    
+
     using Meta;
 
     public class Contains : IPropertyPredicate
     {
-        public string[] Dependencies { get; set; }
-
         public Contains(IPropertyType propertyType = null) => this.PropertyType = propertyType;
 
         public IPropertyType PropertyType { get; set; }

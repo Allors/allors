@@ -22,7 +22,6 @@ namespace Allors.Database.Protocol.Json
     {
         private readonly IUnitConvert unitConvert;
         private readonly IRanges<long> ranges;
-        private readonly IDictionary<IClass, ISet<IPropertyType>> dependencies;
 
         private readonly Dictionary<string, ISet<IObject>> collectionsByName = new Dictionary<string, ISet<IObject>>();
         private readonly Dictionary<string, IObject> objectByName = new Dictionary<string, IObject>();
@@ -43,13 +42,11 @@ namespace Allors.Database.Protocol.Json
             IPreparedExtents preparedExtents,
             IUnitConvert unitConvert,
             IRanges<long> ranges,
-            IDictionary<IClass, ISet<IPropertyType>> dependencies,
             IPrefetchPolicyCache prefetchPolicyCache,
             CancellationToken cancellationToken)
         {
             this.unitConvert = unitConvert;
             this.ranges = ranges;
-            this.dependencies = dependencies;
             this.Transaction = transaction;
 
             this.AccessControl = accessControl;
@@ -251,9 +248,6 @@ namespace Allors.Database.Protocol.Json
                 }
             }
 
-            // Add dependencies
-            this.AddDependencies();
-
             // Serialize
             var versionByGrant = new Dictionary<long, long>();
             var versionByRevocation = new Dictionary<long, long>();
@@ -313,82 +307,6 @@ namespace Allors.Database.Protocol.Json
             }
 
             return true;
-        }
-
-        private void AddDependencies()
-        {
-            if (this.dependencies == null)
-            {
-                return;
-            }
-
-            this.ThrowIfCancellationRequested();
-
-            var current = this.unmaskedObjects.ToArray();
-
-            while (current.Length > 0)
-            {
-                this.ThrowIfCancellationRequested();
-
-                var newObjects = new HashSet<IObject>();
-
-                foreach (var grouping in current.GroupBy(v => v.Strategy.Class, v => v))
-                {
-                    this.ThrowIfCancellationRequested();
-
-                    var @class = grouping.Key;
-                    var grouped = grouping.ToArray();
-
-                    if (this.dependencies.TryGetValue(@class, out var propertyTypes))
-                    {
-                        var prefetchPolicy = this.prefetchPolicyCache.ForDependency(@class, propertyTypes);
-                        this.Transaction.Prefetch(prefetchPolicy, grouped);
-
-                        foreach (var @object in grouped)
-                        {
-                            foreach (var propertyType in propertyTypes)
-                            {
-                                if (propertyType is IRoleType roleType)
-                                {
-                                    if (roleType.IsOne)
-                                    {
-                                        var role = @object.Strategy.GetCompositeRole(roleType);
-                                        if (this.Include(role))
-                                        {
-                                            newObjects.Add(role);
-                                        }
-                                    }
-                                    else
-                                    {
-                                        var role = @object.Strategy.GetCompositesRole<IObject>(roleType).Where(this.Include);
-                                        newObjects.UnionWith(role);
-                                    }
-                                }
-                                else
-                                {
-                                    var associationType = (IAssociationType)propertyType;
-                                    if (associationType.IsOne)
-                                    {
-                                        var association = @object.Strategy.GetCompositeAssociation(associationType);
-                                        if (this.Include(association))
-                                        {
-                                            newObjects.Add(association);
-                                        }
-                                    }
-                                    else
-                                    {
-                                        var association = @object.Strategy.GetCompositesAssociation<IObject>(associationType).Where(this.Include);
-                                        newObjects.UnionWith(association);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-
-                current = newObjects.Except(this.unmaskedObjects).ToArray();
-                this.unmaskedObjects.UnionWith(newObjects);
-            }
         }
 
         private void Add(IObject @object)

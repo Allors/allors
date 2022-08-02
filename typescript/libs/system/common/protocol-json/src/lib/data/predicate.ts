@@ -18,9 +18,6 @@ export interface Predicate {
   /** Parameter */
   p?: string;
 
-  /** Dependencies */
-  d?: string[];
-
   /** Operand */
   op?: Predicate;
 

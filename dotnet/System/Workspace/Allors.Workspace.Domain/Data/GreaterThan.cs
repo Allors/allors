@@ -9,8 +9,6 @@ namespace Allors.Workspace.Data
 
     public class GreaterThan : IRolePredicate
     {
-        public string[] Dependencies { get; set; }
-
         public GreaterThan(IRoleType roleType = null) => this.RoleType = roleType;
 
         public IRoleType RoleType { get; set; }

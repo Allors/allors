@@ -14,7 +14,6 @@ export interface InternalComposite extends ObjectType, Composite {
   deriveOperand(): void;
   deriveOriginRoleType(): void;
   derivePropertyTypeByPropertyName(): void;
-  deriveDependencies(): void;
   supertypeGenerator(): IterableIterator<InternalInterface>;
   onNewAssociationType(associationType: AssociationType): void;
   onNewRoleType(roleType: RoleType): void;

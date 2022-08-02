@@ -10,8 +10,6 @@ namespace Allors.Workspace.Data
 
     public class Or : ICompositePredicate
     {
-        public string[] Dependencies { get; set; }
-
         public Or(params IPredicate[] operands) => this.Operands = operands;
 
         public IPredicate[] Operands { get; set; }
