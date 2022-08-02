@@ -3,11 +3,7 @@ import {
   IObjectFactory,
   IStrategy,
 } from '@allors/system/workspace/domain';
-import {
-  MetaPopulation,
-  ObjectType,
-  Origin,
-} from '@allors/system/workspace/meta';
+import { MetaPopulation, ObjectType } from '@allors/system/workspace/meta';
 
 import { ObjectBase } from './object-base';
 
@@ -54,7 +50,7 @@ export class PrototypeObjectFactory implements IObjectFactory {
         });
 
         const relationType = roleType.relationType;
-        const isDatabase = relationType.origin === Origin.Database;
+        const isDatabase = true;
         const isDerived = relationType.isDerived;
 
         if (isDatabase && isDerived) {

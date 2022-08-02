@@ -114,7 +114,7 @@ namespace Allors.Database.Meta
             }
 
             this.structuralDerivedClasses = new HashSet<IClassBase>(subClasses);
-            this.structuralDerivedDatabaseClasses = new HashSet<IClassBase>(subClasses.Where(v => v.Origin == Origin.Database));
+            this.structuralDerivedDatabaseClasses = new HashSet<IClassBase>(subClasses);
         }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace Allors.Database.Meta
             this.StructuralDeriveSubtypesRecursively(this, subTypes);
 
             this.structuralDerivedSubtypes = new HashSet<ICompositeBase>(subTypes);
-            this.structuralDerivedDatabaseSubtypes = new HashSet<ICompositeBase>(subTypes.Where(v => v.Origin == Origin.Database));
+            this.structuralDerivedDatabaseSubtypes = new HashSet<ICompositeBase>(subTypes);
         }
 
         /// <summary>

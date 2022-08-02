@@ -1,6 +1,5 @@
 import { C1, Denied, TrimFrom } from '@allors/default/workspace/domain';
 import { Pull } from '@allors/system/workspace/domain';
-import { Origin } from '@allors/system/workspace/meta';
 import { Fixture } from '../fixture';
 import '../matchers';
 
@@ -40,13 +39,8 @@ test('withoutAccessControl', async () => {
   const c1s = result.collection<C1>(m.C1);
   for (const c1 of c1s) {
     for (const roleType of c1.strategy.cls.roleTypes) {
-      if (roleType.relationType.origin === Origin.Database) {
-        expect(c1.strategy.canRead(roleType)).toBeFalsy();
-        expect(c1.strategy.canWrite(roleType)).toBeFalsy();
-      } else {
-        expect(c1.strategy.canRead(roleType)).toBeTruthy();
-        expect(c1.strategy.canWrite(roleType)).toBeTruthy();
-      }
+      expect(c1.strategy.canRead(roleType)).toBeFalsy();
+      expect(c1.strategy.canWrite(roleType)).toBeFalsy();
     }
   }
 });
@@ -63,13 +57,8 @@ test('withoutPermissions', async () => {
   const c1s = result.collection<C1>(m.C1);
   for (const c1 of c1s) {
     for (const roleType of c1.strategy.cls.roleTypes) {
-      if (roleType.relationType.origin === Origin.Database) {
-        expect(c1.strategy.canRead(roleType)).toBeFalsy();
-        expect(c1.strategy.canWrite(roleType)).toBeFalsy();
-      } else {
-        expect(c1.strategy.canRead(roleType)).toBeTruthy();
-        expect(c1.strategy.canWrite(roleType)).toBeTruthy();
-      }
+      expect(c1.strategy.canRead(roleType)).toBeFalsy();
+      expect(c1.strategy.canWrite(roleType)).toBeFalsy();
     }
   }
 });
@@ -84,13 +73,8 @@ test('deniedPermissions', async () => {
   const denieds = result.collection<Denied>(m.Denied);
   for (const denied of denieds) {
     for (const roleType of denied.strategy.cls.roleTypes) {
-      if (roleType.relationType.origin === Origin.Database) {
-        expect(denied.strategy.canRead(roleType)).toBeTruthy();
-        expect(denied.strategy.canWrite(roleType)).toBeFalsy();
-      } else {
-        expect(denied.strategy.canRead(roleType)).toBeTruthy();
-        expect(denied.strategy.canRead(roleType)).toBeTruthy();
-      }
+      expect(denied.strategy.canRead(roleType)).toBeTruthy();
+      expect(denied.strategy.canWrite(roleType)).toBeFalsy();
     }
   }
 });

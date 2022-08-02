@@ -36,13 +36,11 @@ namespace Allors.Repository.Domain
             }
         }
 
-        public Origin Origin => (Origin)(int)(((dynamic)this.AttributeByName.Get(AttributeNames.Origin))?.Value ?? Origin.Database);
-
         public bool Required => (bool)(((dynamic)this.AttributeByName.Get(AttributeNames.Required))?.Value ?? false);
 
         public bool Unique => (bool)(((dynamic)this.AttributeByName.Get(AttributeNames.Unique))?.Value ?? false);
 
-        public bool HasDatabaseOrigin => this.Origin == Origin.Database;
+        public bool HasDatabaseOrigin => true;
 
         public XmlDoc XmlDoc { get; set; }
 

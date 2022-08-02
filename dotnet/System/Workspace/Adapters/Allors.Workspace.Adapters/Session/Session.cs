@@ -5,22 +5,16 @@
 
 namespace Allors.Workspace.Adapters
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
     using Collections;
     using Data;
-    using Derivations;
     using Meta;
 
     public abstract class Session : ISession
     {
         private readonly Dictionary<IClass, ISet<Strategy>> strategiesByClass;
-
-        protected ISet<IDependency> dependencies;
-
-        private IDictionary<IRoleType, ISet<IRule>> activeRulesByRoleType;
 
         protected Session(Workspace workspace, ISessionServices sessionServices)
         {
@@ -29,16 +23,12 @@ namespace Allors.Workspace.Adapters
 
             this.StrategyByWorkspaceId = new Dictionary<long, Strategy>();
             this.strategiesByClass = new Dictionary<IClass, ISet<Strategy>>();
-            this.SessionOriginState = new SessionOriginState(workspace.StrategyRanges);
 
             this.ChangeSetTracker = new ChangeSetTracker();
             this.PushToDatabaseTracker = new PushToDatabaseTracker();
 
             this.Services.OnInit(this);
         }
-
-        // TODO: push to concrete classes and implement
-        public ISet<IDependency> Dependencies => EmptySet<IDependency>.Instance;
 
         public bool HasChanges => this.StrategyByWorkspaceId.Any(kvp => kvp.Value.HasChanges);
 
@@ -51,63 +41,11 @@ namespace Allors.Workspace.Adapters
 
         public PushToDatabaseTracker PushToDatabaseTracker { get; }
 
-        public SessionOriginState SessionOriginState { get; }
-
         protected Dictionary<long, Strategy> StrategyByWorkspaceId { get; }
 
         public override string ToString() => $"session: {base.ToString()}";
 
         internal static bool IsNewId(long id) => id < 0;
-
-        public void Activate(IEnumerable<IRule> rules)
-        {
-            if (rules == null)
-            {
-                return;
-            }
-
-
-            if (this.activeRulesByRoleType == null)
-            {
-                this.activeRulesByRoleType = new Dictionary<IRoleType, ISet<IRule>>();
-                this.dependencies = new HashSet<IDependency>();
-            }
-
-            foreach (var rule in rules)
-            {
-                if (!this.activeRulesByRoleType.TryGetValue(rule.RoleType, out var activeRules))
-                {
-                    activeRules = new HashSet<IRule>();
-                    this.activeRulesByRoleType.Add(rule.RoleType, activeRules);
-                }
-
-                activeRules.Add(rule);
-                if (rule.Dependencies == null)
-                {
-                    continue;
-                }
-
-                foreach (var dependency in rule.Dependencies)
-                {
-                    this.dependencies.Add(dependency);
-                }
-            }
-        }
-
-        public IRule Resolve(Strategy strategy, IRoleType roleType)
-        {
-            if (this.activeRulesByRoleType != null && this.activeRulesByRoleType.TryGetValue(roleType, out var activeRules) && activeRules.Count > 0)
-            {
-                var rule = this.Workspace.GetRule(roleType, strategy);
-
-                if (rule != null && activeRules.Contains(rule))
-                {
-                    return rule;
-                }
-            }
-
-            return null;
-        }
 
         public void Reset()
         {
@@ -146,8 +84,6 @@ namespace Allors.Workspace.Adapters
                     databaseOriginState.Checkpoint(changeSet);
                 }
             }
-
-            this.SessionOriginState.Checkpoint(changeSet);
 
             this.ChangeSetTracker.Created = null;
             this.ChangeSetTracker.Instantiated = null;

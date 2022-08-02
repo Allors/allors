@@ -2,7 +2,6 @@ import {
   AssociationType,
   Dependency,
   MethodType,
-  Origin,
   pluralize,
   PropertyType,
   RoleType,
@@ -27,7 +26,6 @@ export abstract class LazyComposite implements InternalComposite {
   isComposite = true;
   tag: string;
   singularName: string;
-  origin: Origin;
 
   associationTypes!: Set<AssociationType>;
   roleTypes!: Set<RoleType>;
@@ -67,7 +65,6 @@ export abstract class LazyComposite implements InternalComposite {
     const [t, s] = this.d;
     this.tag = t;
     this.singularName = s;
-    this.origin = lookup.o.get(t) ?? Origin.Database;
     this.isRelationship = lookup.rel.has(t) ?? false;
     metaPopulation.onNewComposite(this);
   }
@@ -202,9 +199,7 @@ export abstract class LazyComposite implements InternalComposite {
 
   *databaseOriginRoleTypesGenerator(): IterableIterator<RoleType> {
     for (const roleType of this.roleTypes) {
-      if (roleType.origin === Origin.Database) {
-        yield roleType;
-      }
+      yield roleType;
     }
   }
 }

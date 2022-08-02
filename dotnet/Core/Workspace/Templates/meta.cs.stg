@@ -2,11 +2,11 @@ group AllorsCSharpRepository;
 
 TemplateId() ::= <<7B7D955D-7C87-4198-A40D-4B70CABC7525>>
 TemplateName() ::= <<Allors C# Workspace Meta>>
-TemplateVersion() ::= <<3.0.2>>
+TemplateVersion() ::= <<3.0.3>>
 TemplateAllors() ::= <<1.0>>
 TemplateConfiguration(meta, workspaceName) ::= <<
 $!
-Copyright 2002-2021 Allors bvba.
+Copyright 2002-2022 Allors bvba.
 
 Dual Licensed under
   a) the Lesser General Public Licence v3 (LGPL)

@@ -50,7 +50,6 @@ namespace Allors.Workspace.Adapters.Local
 
             result.Execute(procedure);
             result.Execute(pull);
-            result.AddDependencies();
 
             this.OnPulled(result);
 

@@ -18,17 +18,12 @@ import {
   Pull,
 } from '@allors/system/workspace/domain';
 import { Class, Composite } from '@allors/system/workspace/meta';
-import { derivationRules } from '@allors/system/workspace/derivations';
 
 export class CoreContext implements Context {
   constructor(public workspaceService: WorkspaceService) {
     this.workspace = this.workspaceService.workspace;
     this.configuration = this.workspace.configuration;
     this.session = this.workspace.createSession();
-
-    // Auto activate
-    const rules = derivationRules(this.workspace.configuration.metaPopulation);
-    this.session.activate(rules);
   }
 
   workspace: IWorkspace;

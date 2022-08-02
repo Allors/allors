@@ -268,7 +268,7 @@ build_interface(interface) ::= <<
 >>
 
 build_class(class) ::= <<
-	        m.$class.SingularName$.Init(tag: "$class.Tag$", singularName: "$class.SingularName$"$if(class.ExistAssignedPluralName)$, pluralName: "$class.PluralName$"$endif$$if(!class.HasDatabaseOrigin)$, origin: Allors.Origin.$class.Origin$$endif$);
+	        m.$class.SingularName$.Init(tag: "$class.Tag$", singularName: "$class.SingularName$"$if(class.ExistAssignedPluralName)$, pluralName: "$class.PluralName$"$endif$);
 >>
 
 inheritance(composite) ::= <<$composite.WorkspaceDirectSupertypesByWorkspaceName.(workspaceName):{superType|$build_inheritance(composite, superType)$}$>>
@@ -282,7 +282,7 @@ build_relationType(relationType) ::= <<
 
             var relationType = new RelationType("$relationType.Tag$", associationType, m.$relationType.AssociationType.ObjectType.Name$, roleType, m.$relationType.RoleType.ObjectType.Name$$if(relationType.Multiplicity)$, Allors.Multiplicity.$relationType.Multiplicity$$endif$);
 
-            relationType.Init($Separated([origin(relationType), isDerived(relationType)], ",")$);
+            relationType.Init($Separated([isDerived(relationType)], ",")$);
 
 $initRoleType(roleType=relationType.RoleType)$
 
@@ -290,7 +290,6 @@ $initRoleType(roleType=relationType.RoleType)$
         }
 >>
 
-origin(relationType) ::= <<$if(!relationType.HasDatabaseOrigin)$origin: Origin.$relationType.Origin$$endif$>>
 isDerived(relationType) ::= <<$if(relationType.IsDerived)$isDerived: $relationType.IsDerived$$endif$>>
 
 initRoleType(roleType) ::= <<

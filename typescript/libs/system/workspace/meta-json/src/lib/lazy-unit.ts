@@ -1,4 +1,4 @@
-import { Origin, Unit, UnitTags } from '@allors/system/workspace/meta';
+import { Unit, UnitTags } from '@allors/system/workspace/meta';
 import { InternalMetaPopulation } from './internal/internal-meta-population';
 
 export class LazyUnit implements Unit {
@@ -9,7 +9,6 @@ export class LazyUnit implements Unit {
   isInterface = false;
   isClass = false;
   pluralName: string;
-  origin = Origin.Database;
   isBinary = this.tag === UnitTags.Binary;
   isBoolean = this.tag === UnitTags.Boolean;
   isDecimal = this.tag === UnitTags.Decimal;

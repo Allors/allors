@@ -3,7 +3,7 @@ import {
   Strategy as SystemStrategy,
 } from '@allors/system/workspace/adapters';
 import { Class } from '@allors/system/workspace/meta';
-import { DatabaseOriginState } from './originstate/database-origin-state';
+import { DatabaseState } from './originstate/database-origin-state';
 import { DatabaseRecord } from '../database/database-record';
 
 export class Strategy extends SystemStrategy {
@@ -14,7 +14,7 @@ export class Strategy extends SystemStrategy {
   ) {
     super(session, cls, id);
 
-    this.DatabaseOriginState = new DatabaseOriginState(
+    this.DatabaseState = new DatabaseState(
       this.object,
       session.workspace.database.getRecord(this.id)
     );

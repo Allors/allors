@@ -40,15 +40,6 @@ namespace Allors.Repository
         public string FullName { get; set; }
 
         #region Allors
-        [Id("4F2E08E1-2892-41F9-A71F-4148AD9803F4")]
-        [Size(256)]
-        #endregion
-        [Workspace(Default)]
-        [Origin(Origin.Session)]
-        [Derived]
-        public string WorkingFullName { get; set; }
-
-        #region Allors
         [Id("105CF367-F076-45F8-8E2A-2431BB2D65C7")]
         [Size(256)]
         #endregion

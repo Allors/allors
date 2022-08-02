@@ -16,7 +16,7 @@ import {
   Pull,
   ResultError,
 } from '@allors/system/workspace/domain';
-import { Class, Origin } from '@allors/system/workspace/meta';
+import { Class } from '@allors/system/workspace/meta';
 import { DatabaseConnection } from '../database/database-connection';
 import { DatabaseRecord } from '../database/database-record';
 import { InvokeResult } from '../database/invoke/invoke-result';
@@ -28,7 +28,7 @@ import {
   pullToJson,
 } from '../json/to-json';
 import { Workspace } from '../workspace/workspace';
-import { DatabaseOriginState } from './originstate/database-origin-state';
+import { DatabaseState } from './originstate/database-origin-state';
 import { Strategy } from './strategy';
 
 export class Session extends SystemSession {
@@ -81,7 +81,7 @@ export class Session extends SystemSession {
       l: methods.map((v) => {
         return {
           i: v.object.id,
-          v: (v.object.strategy as Strategy).DatabaseOriginState.version,
+          v: (v.object.strategy as Strategy).DatabaseState.version,
           m: v.methodType.tag,
         };
       }),
@@ -143,14 +143,14 @@ export class Session extends SystemSession {
     if (this.pushToDatabaseTracker.created) {
       pushRequest.n = [...this.pushToDatabaseTracker.created].map((v) =>
         (
-          (v.strategy as Strategy).DatabaseOriginState as DatabaseOriginState
+          (v.strategy as Strategy).DatabaseState as DatabaseState
         ).pushNew()
       );
     }
 
     if (this.pushToDatabaseTracker.changed) {
       pushRequest.o = [...this.pushToDatabaseTracker.changed].map((v) =>
-        (v as DatabaseOriginState).pushExisting()
+        (v as DatabaseState).pushExisting()
       );
     }
 
@@ -210,7 +210,7 @@ export class Session extends SystemSession {
     for (const v of pullResponse.p) {
       if (this.objectByWorkspaceId.has(v.i)) {
         const object = this.objectByWorkspaceId.get(v.i);
-        (object.strategy as Strategy).DatabaseOriginState.onPulled(pullResult);
+        (object.strategy as Strategy).DatabaseState.onPulled(pullResult);
       } else {
         this.instantiateDatabaseStrategy(v.i);
       }

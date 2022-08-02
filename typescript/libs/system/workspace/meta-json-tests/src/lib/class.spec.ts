@@ -1,4 +1,4 @@
-import { Origin, Class } from '@allors/system/workspace/meta';
+import {Class } from '@allors/system/workspace/meta';
 import { LazyMetaPopulation } from '@allors/system/workspace/meta-json';
 
 describe('Class in MetaPopulation', () => {
@@ -43,7 +43,6 @@ describe('Class in MetaPopulation', () => {
         ['10', 'C1', [], [], [], 'PluralC1'],
         ['11', 'C2', [], [], [], 'PluralC2'],
       ],
-      o: ['10', '11'],
     }) as M;
 
     const { C1, C2 } = metaPopulation;

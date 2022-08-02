@@ -1,5 +1,5 @@
 import { IObject, ISession, IWorkspace } from '@allors/system/workspace/domain';
-import { Class, Origin } from '@allors/system/workspace/meta';
+import { Class } from '@allors/system/workspace/meta';
 import { Fixture } from '../../fixture';
 import { DatabaseMode } from './modes/database-mode';
 

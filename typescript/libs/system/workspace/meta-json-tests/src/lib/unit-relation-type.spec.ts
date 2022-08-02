@@ -5,7 +5,6 @@ import {
   Interface,
   UnitTags,
   Multiplicity,
-  Origin,
 } from '@allors/system/workspace/meta';
 import { LazyMetaPopulation } from '@allors/system/workspace/meta-json';
 
@@ -36,7 +35,6 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(roleType.singularName).toBe('Name');
       expect(roleType.pluralName).toBe('Names');
       expect(roleType.name).toBe('Name');
-      expect(roleType.origin).toBe(Origin.Database);
       expect(roleType.isRequired).toBeFalsy();
       expect(roleType.size).toBeUndefined();
       expect(roleType.scale).toBeUndefined();
@@ -47,7 +45,6 @@ describe('Unit Relation in MetaPopulation', () => {
 
       expect(relationType).toBeDefined;
       expect(relationType.multiplicity).toBe(Multiplicity.OneToOne);
-      expect(relationType.origin).toBe(Origin.Database);
       expect(relationType.isDerived).toBeFalsy();
       expect(relationType).not.toBeNull();
 
@@ -55,7 +52,6 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(associationType.objectType).toBe(Organisation);
       expect(associationType.isOne).toBeTruthy();
       expect(associationType.isMany).toBeFalsy();
-      expect(associationType.origin).toBe(Origin.Database);
     });
   });
 
@@ -79,7 +75,6 @@ describe('Unit Relation in MetaPopulation', () => {
           [['11', UnitTags.String, 'Name', 'Names', 1024]],
         ],
       ],
-      o: ['11'],
       m: [['11']],
       d: ['11'],
       r: ['11'],
@@ -97,7 +92,6 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(roleType.singularName).toBe('Name');
       expect(roleType.pluralName).toBe('Names');
       expect(roleType.name).toBe('Name');
-      expect(roleType.origin).toBe(Origin.Session);
       expect(roleType.isRequired).toBeTruthy();
       expect(roleType.size).toBeDefined();
       expect(roleType.size).toBe(1024);
@@ -110,7 +104,6 @@ describe('Unit Relation in MetaPopulation', () => {
 
       expect(relationType).toBeDefined;
       expect(relationType.multiplicity).toBe(Multiplicity.OneToOne);
-      expect(relationType.origin).toBe(Origin.Session);
       expect(relationType.isDerived).toBeTruthy();
       expect(relationType).not.toBeNull();
 
@@ -118,7 +111,6 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(associationType.objectType).toBe(Organisation);
       expect(associationType.isOne).toBeTruthy(); // Always for Unit
       expect(associationType.isMany).toBeFalsy();
-      expect(associationType.origin).toBe(Origin.Session);
     });
   });
 
@@ -148,7 +140,6 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(roleType.singularName).toBe('Decimal');
       expect(roleType.pluralName).toBe('Decimals');
       expect(roleType.name).toBe('Decimal');
-      expect(roleType.origin).toBe(Origin.Database);
       expect(roleType.isRequired).toBeFalsy();
       expect(roleType.size).toBeUndefined();
       expect(roleType.scale).toBe(21);
@@ -159,7 +150,6 @@ describe('Unit Relation in MetaPopulation', () => {
 
       expect(relationType).toBeDefined;
       expect(relationType.multiplicity).toBe(Multiplicity.OneToOne);
-      expect(relationType.origin).toBe(Origin.Database);
       expect(relationType.isDerived).toBeFalsy();
       expect(relationType).not.toBeNull();
 
@@ -167,7 +157,6 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(associationType.objectType).toBe(Organisation);
       expect(associationType.isOne).toBeTruthy();
       expect(associationType.isMany).toBeFalsy();
-      expect(associationType.origin).toBe(Origin.Database);
     });
   });
 
@@ -197,7 +186,6 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(roleType.singularName).toBe('Decimal');
       expect(roleType.pluralName).toBe('Decimals');
       expect(roleType.name).toBe('Decimal');
-      expect(roleType.origin).toBe(Origin.Database);
       expect(roleType.isRequired).toBeFalsy();
       expect(roleType.size).toBeUndefined();
       expect(roleType.scale).toBe(21);
@@ -208,7 +196,6 @@ describe('Unit Relation in MetaPopulation', () => {
 
       expect(relationType).toBeDefined;
       expect(relationType.multiplicity).toBe(Multiplicity.OneToOne);
-      expect(relationType.origin).toBe(Origin.Database);
       expect(relationType.isDerived).toBeFalsy();
       expect(relationType).not.toBeNull();
 
@@ -216,7 +203,6 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(associationType.objectType).toBe(Organisation);
       expect(associationType.isOne).toBeTruthy();
       expect(associationType.isMany).toBeFalsy();
-      expect(associationType.origin).toBe(Origin.Database);
     });
   });
 
@@ -248,7 +234,6 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(roleType.singularName).toBe('Balance');
       expect(roleType.pluralName).toBe('Balances');
       expect(roleType.name).toBe('Balance');
-      expect(roleType.origin).toBe(Origin.Database);
       expect(roleType.isRequired).toBeFalsy();
       expect(roleType.size).toBeUndefined();
       expect(roleType.scale).toBe(25);
@@ -259,7 +244,6 @@ describe('Unit Relation in MetaPopulation', () => {
 
       expect(relationType).toBeDefined;
       expect(relationType.multiplicity).toBe(Multiplicity.OneToOne);
-      expect(relationType.origin).toBe(Origin.Database);
       expect(relationType.isDerived).toBeFalsy();
       expect(relationType).not.toBeNull();
 
@@ -267,7 +251,6 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(associationType.objectType).toBe(Organisation);
       expect(associationType.isOne).toBeTruthy();
       expect(associationType.isMany).toBeFalsy();
-      expect(associationType.origin).toBe(Origin.Database);
     });
   });
 
@@ -304,7 +287,6 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(roleType.singularName).toBe('Balance');
       expect(roleType.pluralName).toBe('Balances');
       expect(roleType.name).toBe('Balance');
-      expect(roleType.origin).toBe(Origin.Database);
       expect(roleType.isRequired).toBeFalsy();
       expect(roleType.size).toBeUndefined();
       expect(roleType.scale).toBe(25);
@@ -315,7 +297,6 @@ describe('Unit Relation in MetaPopulation', () => {
 
       expect(relationType).toBeDefined;
       expect(relationType.multiplicity).toBe(Multiplicity.OneToOne);
-      expect(relationType.origin).toBe(Origin.Database);
       expect(relationType.isDerived).toBeFalsy();
       expect(relationType).not.toBeNull();
 
@@ -323,7 +304,6 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(associationType.objectType).toBe(Organisation);
       expect(associationType.isOne).toBeTruthy();
       expect(associationType.isMany).toBeFalsy();
-      expect(associationType.origin).toBe(Origin.Database);
     });
   });
 
@@ -360,7 +340,6 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(roleType.singularName).toBe('Balance');
       expect(roleType.pluralName).toBe('PluralBalance');
       expect(roleType.name).toBe('Balance');
-      expect(roleType.origin).toBe(Origin.Database);
       expect(roleType.isRequired).toBeFalsy();
       expect(roleType.size).toBeUndefined();
       expect(roleType.scale).toBe(26);
@@ -371,7 +350,6 @@ describe('Unit Relation in MetaPopulation', () => {
 
       expect(relationType).toBeDefined;
       expect(relationType.multiplicity).toBe(Multiplicity.OneToOne);
-      expect(relationType.origin).toBe(Origin.Database);
       expect(relationType.isDerived).toBeFalsy();
       expect(relationType).not.toBeNull();
 
@@ -379,7 +357,6 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(associationType.objectType).toBe(Organisation);
       expect(associationType.isOne).toBeTruthy();
       expect(associationType.isMany).toBeFalsy();
-      expect(associationType.origin).toBe(Origin.Database);
     });
   });
 
@@ -416,7 +393,6 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(roleType.singularName).toBe('Balance');
       expect(roleType.pluralName).toBe('PluralBalance');
       expect(roleType.name).toBe('Balance');
-      expect(roleType.origin).toBe(Origin.Database);
       expect(roleType.isRequired).toBeFalsy();
       expect(roleType.size).toBeUndefined();
       expect(roleType.scale).toBe(26);
@@ -427,7 +403,6 @@ describe('Unit Relation in MetaPopulation', () => {
 
       expect(relationType).toBeDefined;
       expect(relationType.multiplicity).toBe(Multiplicity.OneToOne);
-      expect(relationType.origin).toBe(Origin.Database);
       expect(relationType.isDerived).toBeFalsy();
       expect(relationType).not.toBeNull();
 
@@ -435,7 +410,6 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(associationType.objectType).toBe(Organisation);
       expect(associationType.isOne).toBeTruthy();
       expect(associationType.isMany).toBeFalsy();
-      expect(associationType.origin).toBe(Origin.Database);
     });
   });
 
@@ -465,7 +439,6 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(roleType.singularName).toBe('String');
       expect(roleType.pluralName).toBe('Strings');
       expect(roleType.name).toBe('String');
-      expect(roleType.origin).toBe(Origin.Database);
       expect(roleType.isRequired).toBeFalsy();
       expect(roleType.size).toBe(256);
       expect(roleType.scale).toBeUndefined();
@@ -476,7 +449,6 @@ describe('Unit Relation in MetaPopulation', () => {
 
       expect(relationType).toBeDefined;
       expect(relationType.multiplicity).toBe(Multiplicity.OneToOne);
-      expect(relationType.origin).toBe(Origin.Database);
       expect(relationType.isDerived).toBeFalsy();
       expect(relationType).not.toBeNull();
 
@@ -484,7 +456,6 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(associationType.objectType).toBe(Organisation);
       expect(associationType.isOne).toBeTruthy();
       expect(associationType.isMany).toBeFalsy();
-      expect(associationType.origin).toBe(Origin.Database);
     });
   });
 
@@ -514,7 +485,6 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(roleType.singularName).toBe('String');
       expect(roleType.pluralName).toBe('Strings');
       expect(roleType.name).toBe('String');
-      expect(roleType.origin).toBe(Origin.Database);
       expect(roleType.isRequired).toBeFalsy();
       expect(roleType.size).toBe(256);
       expect(roleType.scale).toBeUndefined();
@@ -525,7 +495,6 @@ describe('Unit Relation in MetaPopulation', () => {
 
       expect(relationType).toBeDefined;
       expect(relationType.multiplicity).toBe(Multiplicity.OneToOne);
-      expect(relationType.origin).toBe(Origin.Database);
       expect(relationType.isDerived).toBeFalsy();
       expect(relationType).not.toBeNull();
 
@@ -533,7 +502,6 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(associationType.objectType).toBe(Organisation);
       expect(associationType.isOne).toBeTruthy();
       expect(associationType.isMany).toBeFalsy();
-      expect(associationType.origin).toBe(Origin.Database);
     });
   });
 
@@ -563,7 +531,6 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(roleType.singularName).toBe('Text');
       expect(roleType.pluralName).toBe('Texts');
       expect(roleType.name).toBe('Text');
-      expect(roleType.origin).toBe(Origin.Database);
       expect(roleType.isRequired).toBeFalsy();
       expect(roleType.size).toBe(512);
       expect(roleType.scale).toBeUndefined();
@@ -574,7 +541,6 @@ describe('Unit Relation in MetaPopulation', () => {
 
       expect(relationType).toBeDefined;
       expect(relationType.multiplicity).toBe(Multiplicity.OneToOne);
-      expect(relationType.origin).toBe(Origin.Database);
       expect(relationType.isDerived).toBeFalsy();
       expect(relationType).not.toBeNull();
 
@@ -582,7 +548,6 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(associationType.objectType).toBe(Organisation);
       expect(associationType.isOne).toBeTruthy();
       expect(associationType.isMany).toBeFalsy();
-      expect(associationType.origin).toBe(Origin.Database);
     });
   });
 
@@ -614,7 +579,6 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(roleType.singularName).toBe('Text');
       expect(roleType.pluralName).toBe('Texts');
       expect(roleType.name).toBe('Text');
-      expect(roleType.origin).toBe(Origin.Database);
       expect(roleType.isRequired).toBeFalsy();
       expect(roleType.size).toBe(512);
       expect(roleType.scale).toBeUndefined();
@@ -625,7 +589,6 @@ describe('Unit Relation in MetaPopulation', () => {
 
       expect(relationType).toBeDefined;
       expect(relationType.multiplicity).toBe(Multiplicity.OneToOne);
-      expect(relationType.origin).toBe(Origin.Database);
       expect(relationType.isDerived).toBeFalsy();
       expect(relationType).not.toBeNull();
 
@@ -633,7 +596,6 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(associationType.objectType).toBe(Organisation);
       expect(associationType.isOne).toBeTruthy();
       expect(associationType.isMany).toBeFalsy();
-      expect(associationType.origin).toBe(Origin.Database);
     });
   });
 
@@ -670,7 +632,6 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(roleType.singularName).toBe('Text');
       expect(roleType.pluralName).toBe('PluralText');
       expect(roleType.name).toBe('Text');
-      expect(roleType.origin).toBe(Origin.Database);
       expect(roleType.isRequired).toBeFalsy();
       expect(roleType.size).toBe(512);
       expect(roleType.scale).toBeUndefined();
@@ -681,7 +642,6 @@ describe('Unit Relation in MetaPopulation', () => {
 
       expect(relationType).toBeDefined;
       expect(relationType.multiplicity).toBe(Multiplicity.OneToOne);
-      expect(relationType.origin).toBe(Origin.Database);
       expect(relationType.isDerived).toBeFalsy();
       expect(relationType).not.toBeNull();
 
@@ -689,7 +649,6 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(associationType.objectType).toBe(Organisation);
       expect(associationType.isOne).toBeTruthy();
       expect(associationType.isMany).toBeFalsy();
-      expect(associationType.origin).toBe(Origin.Database);
     });
   });
 
@@ -726,7 +685,6 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(roleType.singularName).toBe('Text');
       expect(roleType.pluralName).toBe('PluralText');
       expect(roleType.name).toBe('Text');
-      expect(roleType.origin).toBe(Origin.Database);
       expect(roleType.isRequired).toBeFalsy();
       expect(roleType.size).toBe(512);
       expect(roleType.scale).toBeUndefined();
@@ -737,7 +695,6 @@ describe('Unit Relation in MetaPopulation', () => {
 
       expect(relationType).toBeDefined;
       expect(relationType.multiplicity).toBe(Multiplicity.OneToOne);
-      expect(relationType.origin).toBe(Origin.Database);
       expect(relationType.isDerived).toBeFalsy();
       expect(relationType).not.toBeNull();
 
@@ -745,7 +702,6 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(associationType.objectType).toBe(Organisation);
       expect(associationType.isOne).toBeTruthy();
       expect(associationType.isMany).toBeFalsy();
-      expect(associationType.origin).toBe(Origin.Database);
     });
   });
 

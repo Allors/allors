@@ -74,16 +74,6 @@ namespace Allors.Meta.Generation.Model
 
         public IEnumerable<string> WorkspaceNames => this.MetaPopulation.WorkspaceNames;
 
-        public IReadOnlyDictionary<string, IOrderedEnumerable<string>> WorkspaceOriginTagsByWorkspaceName(Origin origin) =>
-            this.WorkspaceNames
-                .ToDictionary(v => v, v =>
-                    this.Composites.Where(w => w.Origin == origin && w.WorkspaceNames.Contains(v)).Select(w => w.Tag).Union(
-                    this.RelationTypes.Where(w => w.Origin == origin && w.WorkspaceNames.Contains(v)).Select(w => w.Tag)).Union(
-                    this.MethodTypes.Where(w => w.Origin == origin && w.WorkspaceNames.Contains(v)).Select(w => w.Tag))
-                        .OrderBy(w => w));
-
-        public IReadOnlyDictionary<string, IOrderedEnumerable<string>> WorkspaceSessionOriginTagsByWorkspaceName => this.WorkspaceOriginTagsByWorkspaceName(Origin.Session);
-
         public IReadOnlyDictionary<string, IOrderedEnumerable<string>> WorkspaceMultiplicityTagsByWorkspaceName(Multiplicity multiplicity) =>
             this.WorkspaceNames
                 .ToDictionary(v => v, v => this.RelationTypes.Where(w => w.RoleType.ObjectType.IsComposite && w.Multiplicity == multiplicity && w.WorkspaceNames.Contains(v)).Select(w => w.Tag).OrderBy(w => w));

@@ -5,7 +5,6 @@
 
 namespace Allors.Workspace
 {
-    using Derivations;
     using Meta;
 
     public interface IConfiguration
@@ -15,7 +14,5 @@ namespace Allors.Workspace
         IMetaPopulation MetaPopulation { get; }
 
         IObjectFactory ObjectFactory { get; }
-
-        IRule[] Rules { get; }
     }
 }

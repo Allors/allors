@@ -45,11 +45,6 @@ export interface MetaData {
   c?: ObjectTypeData[];
 
   /**
-   * Origin
-   */
-  o?: string[];
-
-  /**
    * Multiplicity
    */
   m?: string[][];

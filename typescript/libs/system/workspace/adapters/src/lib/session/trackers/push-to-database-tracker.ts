@@ -1,18 +1,18 @@
 import { IObject } from '@allors/system/workspace/domain';
-import { DatabaseOriginState } from '../originstate/database-origin-state';
+import { DatabaseState } from '../state/database-state';
 
 export class PushToDatabaseTracker {
   created: Set<IObject>;
 
-  changed: Set<DatabaseOriginState>;
+  changed: Set<DatabaseState>;
 
   onCreated(strategy: IObject) {
     (this.created ??= new Set<IObject>()).add(strategy);
   }
 
-  onChanged(state: DatabaseOriginState) {
+  onChanged(state: DatabaseState) {
     if (!state.object.strategy.isNew) {
-      (this.changed ??= new Set<DatabaseOriginState>()).add(state);
+      (this.changed ??= new Set<DatabaseState>()).add(state);
     }
   }
 

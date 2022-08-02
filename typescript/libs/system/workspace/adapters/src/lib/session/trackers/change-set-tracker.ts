@@ -1,15 +1,15 @@
 import { IObject } from '@allors/system/workspace/domain';
-import { DatabaseOriginState } from '../originstate/database-origin-state';
+import { DatabaseState } from '../state/database-state';
 
 export class ChangeSetTracker {
   created: Set<IObject>;
-  databaseOriginStates: Set<DatabaseOriginState>;
+  databaseOriginStates: Set<DatabaseState>;
 
   public onCreated(object: IObject) {
     (this.created ??= new Set()).add(object);
   }
 
-  public onDatabaseChanged(state: DatabaseOriginState) {
+  public onDatabaseChanged(state: DatabaseState) {
     (this.databaseOriginStates ??= new Set()).add(state);
   }
 

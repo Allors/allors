@@ -1,5 +1,4 @@
 import {
-  Origin,
   Composite,
   Interface,
   MethodType,

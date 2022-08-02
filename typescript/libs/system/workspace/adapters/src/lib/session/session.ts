@@ -24,7 +24,6 @@ import { ObjectBase } from '../object-base';
 import { DefaultObjectRanges } from '../collections/ranges/default-object-ranges';
 import { Ranges } from '../collections/ranges/ranges';
 
-import { SessionOriginState } from './originstate/session-origin-state';
 import { Strategy } from './strategy';
 import { ChangeSetTracker } from './trackers/change-set-tracker';
 import { PushToDatabaseTracker } from './trackers/push-to-database-tracker';
@@ -41,8 +40,6 @@ export abstract class Session implements ISession {
 
   pushToDatabaseTracker: PushToDatabaseTracker;
 
-  sessionOriginState: SessionOriginState;
-
   activeRulesByRoleType: Map<RoleType, Set<IRule<IObject>>>;
 
   readonly ranges: Ranges<IObject>;
@@ -58,7 +55,6 @@ export abstract class Session implements ISession {
 
     this.objectByWorkspaceId = new Map();
     this.objectsByClass = new Map();
-    this.sessionOriginState = new SessionOriginState(this.ranges);
 
     this.changeSetTracker = new ChangeSetTracker();
     this.pushToDatabaseTracker = new PushToDatabaseTracker();
@@ -87,20 +83,6 @@ export abstract class Session implements ISession {
         }
       }
     }
-  }
-
-  resolve(strategy: Strategy, roleType: RoleType): IRule<IObject> {
-    const activeRules = this.activeRulesByRoleType.get(roleType);
-
-    if (activeRules?.size > 0) {
-      const rule = this.workspace.rule(roleType, strategy);
-
-      if (rule != null && activeRules.has(rule)) {
-        return rule;
-      }
-    }
-
-    return null;
   }
 
   get hasChanges(): boolean {
@@ -149,8 +131,6 @@ export abstract class Session implements ISession {
         databaseOriginState.checkpoint(changeSet);
       }
     }
-
-    this.sessionOriginState.checkpoint(changeSet);
 
     this.changeSetTracker.created = null;
     this.changeSetTracker.databaseOriginStates = null;

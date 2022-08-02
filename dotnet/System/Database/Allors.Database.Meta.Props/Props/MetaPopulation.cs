@@ -334,10 +334,10 @@ namespace Allors.Database.Meta
                 this.structuralDerivedComposites = compositeTypes.ToArray();
 
                 // Database
-                this.structuralDerivedDatabaseComposites = this.Composites.Where(v => v.Origin == Origin.Database).ToArray();
-                this.structuralDerivedDatabaseInterfaces = this.interfaces.Where(v => v.Origin == Origin.Database).ToArray();
-                this.structuralDerivedDatabaseClasses = this.classes.Where(v => v.Origin == Origin.Database).ToArray();
-                this.structuralDerivedDatabaseRelationTypes = this.relationTypes.Where(v => v.Origin == Origin.Database).ToArray();
+                this.structuralDerivedDatabaseComposites = this.Composites.ToArray();
+                this.structuralDerivedDatabaseInterfaces = this.interfaces.ToArray();
+                this.structuralDerivedDatabaseClasses = this.classes.ToArray();
+                this.structuralDerivedDatabaseRelationTypes = this.relationTypes.ToArray();
 
                 // DirectSupertypes
                 foreach (var type in this.Composites)

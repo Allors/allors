@@ -210,12 +210,5 @@ namespace Allors.Database.Meta
         }
 
         IMetaPopulation IMetaObject.MetaPopulation => this.MetaPopulation;
-
-        public abstract Origin Origin { get; }
-        public int OriginAsInt => (int)this.Origin;
-
-        public bool HasDatabaseOrigin => this.Origin == Origin.Database;
-
-        public bool HasSessionOrigin => this.Origin == Origin.Session;
     }
 }

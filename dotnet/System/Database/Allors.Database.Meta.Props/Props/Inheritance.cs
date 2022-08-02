@@ -53,10 +53,6 @@ namespace Allors.Database.Meta
         IMetaPopulationBase IMetaObjectBase.MetaPopulation => this.metaPopulation;
         IMetaPopulation IMetaObject.MetaPopulation => this.metaPopulation;
 
-        private Origin Origin => this.Subtype.AssignedOrigin;
-        Origin IMetaObject.Origin => this.Origin;
-
-
         /// <summary>
         /// Gets the validation name.
         /// </summary>

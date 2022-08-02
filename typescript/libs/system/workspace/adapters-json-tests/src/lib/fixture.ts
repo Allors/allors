@@ -1,7 +1,6 @@
 import { MetaPopulation } from '@allors/system/workspace/meta';
 import { LazyMetaPopulation } from '@allors/system/workspace/meta-json';
 import { data } from '@allors/default/workspace/meta-json';
-import { ruleBuilder } from '@allors/core/workspace/derivations-custom';
 import { DatabaseConnection } from '@allors/system/workspace/adapters-json';
 import { PrototypeObjectFactory } from '@allors/system/workspace/adapters';
 import { M } from '@allors/default/workspace/meta';
@@ -45,7 +44,6 @@ export class Fixture {
       metaPopulation,
       objectFactory: new PrototypeObjectFactory(metaPopulation),
       idGenerator: () => nextId--,
-      rules: ruleBuilder(this.m),
     };
 
     return new DatabaseConnection(configuration, this.jsonClient);

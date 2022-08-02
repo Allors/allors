@@ -11,7 +11,5 @@ namespace Allors.Database.Meta
     public interface IMetaObject
     {
         IMetaPopulation MetaPopulation { get; }
-
-        Origin Origin { get; }
     }
 }

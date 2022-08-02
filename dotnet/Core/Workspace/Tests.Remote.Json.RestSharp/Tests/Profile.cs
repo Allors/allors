@@ -11,8 +11,6 @@ namespace Tests.Workspace.Remote
     using Allors.Workspace;
     using Allors.Workspace.Adapters;
     using Allors.Workspace.Adapters.Remote.ResthSharp;
-    using Allors.Workspace.Derivations;
-    using Allors.Workspace.Domain;
     using Allors.Workspace.Meta;
     using Allors.Workspace.Meta.Lazy;
     using RestSharp;
@@ -46,8 +44,7 @@ namespace Tests.Workspace.Remote
         {
             var metaPopulation = new MetaBuilder().Build();
             var objectFactory = new ReflectionObjectFactory(metaPopulation, typeof(Allors.Workspace.Domain.Person));
-            var rules = new IRule[] { new PersonSessionFullNameRule(metaPopulation) };
-            this.configuration = new Configuration("Default", metaPopulation, objectFactory, rules);
+            this.configuration = new Configuration("Default", metaPopulation, objectFactory);
             this.idGenerator = new IdGenerator();
             this.defaultRanges = new DefaultStructRanges<long>();
         }

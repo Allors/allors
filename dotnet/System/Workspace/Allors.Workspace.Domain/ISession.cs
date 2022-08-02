@@ -9,7 +9,6 @@ namespace Allors.Workspace
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Data;
-    using Derivations;
 
     public interface ISession
     {
@@ -18,8 +17,6 @@ namespace Allors.Workspace
         bool HasChanges { get; }
 
         ISessionServices Services { get; }
-
-        public void Activate(IEnumerable<IRule> rules);
 
         void Reset();
 

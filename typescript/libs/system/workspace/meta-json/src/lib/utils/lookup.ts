@@ -1,8 +1,7 @@
 import { MetaData } from '@allors/system/common/protocol-json';
-import { Multiplicity, Origin } from '@allors/system/workspace/meta';
+import { Multiplicity } from '@allors/system/workspace/meta';
 
 export class Lookup {
-  o: Map<string, Origin>;
   m: Map<string, Multiplicity>;
   d: Set<string>;
   r: Set<string>;
@@ -20,11 +19,6 @@ export class Lookup {
           ? Multiplicity.OneToMany
           : Multiplicity.ManyToMany;
       v.forEach((w) => this.m.set(w, multiplicity));
-    });
-
-    this.o = new Map();
-    data.o?.forEach((v) => {
-      this.o.set(v, Origin.Session);
     });
 
     this.d = new Set(data.d ?? []);

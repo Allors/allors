@@ -112,7 +112,5 @@ namespace Allors.Database.Meta
         }
 
         public override IEnumerable<string> WorkspaceNames => this.MetaPopulation.WorkspaceNames;
-
-        public override Origin Origin => Origin.Database;
     }
 }

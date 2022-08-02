@@ -18,14 +18,10 @@ namespace Allors.Workspace.Adapters
 
         public ISet<DatabaseOriginState> DatabaseOriginStates { get; set; }
 
-        public ISet<SessionOriginState> SessionOriginStates { get; set; }
-
         public void OnCreated(Strategy strategy) => (this.Created ??= new HashSet<IStrategy>()).Add(strategy);
 
         public void OnInstantiated(Strategy strategy) => (this.Instantiated ??= new HashSet<IStrategy>()).Add(strategy);
 
         public void OnDatabaseChanged(DatabaseOriginState state) => (this.DatabaseOriginStates ??= new HashSet<DatabaseOriginState>()).Add(state);
-
-        public void OnSessionChanged(SessionOriginState state) => (this.SessionOriginStates ??= new HashSet<SessionOriginState>()).Add(state);
     }
 }

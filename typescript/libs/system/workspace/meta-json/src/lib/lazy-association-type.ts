@@ -1,7 +1,6 @@
 import {
   AssociationType,
   Multiplicity,
-  Origin,
   RelationType,
   RoleType,
 } from '@allors/system/workspace/meta';
@@ -17,7 +16,6 @@ export class LazyAssociationType implements AssociationType {
 
   relationType: RelationType;
   operandTag: string;
-  origin: Origin;
   isOne: boolean;
   isMany: boolean;
   name: string;
@@ -32,7 +30,6 @@ export class LazyAssociationType implements AssociationType {
   ) {
     this.relationType = roleType.relationType;
     this.operandTag = this.relationType.tag;
-    this.origin = this.relationType.origin;
     this.isOne = (multiplicity & 2) == 0;
     this.isMany = !this.isOne;
     this.singularName =

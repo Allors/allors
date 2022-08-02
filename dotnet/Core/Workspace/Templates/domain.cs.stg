@@ -2,11 +2,11 @@ delimiters "$", "$"
 
 TemplateId() ::= <<07F63139-1791-4F55-AAED-F1A6D8D40055>>
 TemplateName() ::= <<Allors C# Workspace Domain>>
-TemplateVersion() ::= <<3.0.4>>
+TemplateVersion() ::= <<3.0.5>>
 TemplateAllors() ::= <<1.0>>
 TemplateConfiguration(meta, workspaceName) ::= <<
 $!
-Copyright 2002-2016 Allors bvba.
+Copyright 2002-2022 Allors bvba.
 
 Dual Licensed under
   a) the Lesser General Public Licence v3 (LGPL)
@@ -150,9 +150,7 @@ namespace Allors.Workspace.Domain
             this.M = strategy.Session.Workspace.Services.Get<Allors.Workspace.Meta.M>();
         }
 
-$if(class.HasDatabaseOrigin)$
         IStrategy IObject.Strategy => this.Strategy;
-$endif$
 
         public IStrategy Strategy { get; }
 
@@ -198,7 +196,6 @@ $class.WorkspaceMethodTypesByWorkspaceName.(workspaceName):{methodType|$classMet
 >>
 
 classMethodType() ::= <<
-$if(methodType.HasDatabaseOrigin)$
 			public bool CanExecute$methodType.Name$
 			{
 				get
@@ -206,7 +203,7 @@ $if(methodType.HasDatabaseOrigin)$
 					return this.Strategy.CanExecute(this.Meta.$methodType.Name$);
 				}
 			}
-$endif$
+
 			public Method $methodType.Name$
 			{
 				get
@@ -217,7 +214,6 @@ $endif$
 >>
 
 classConcreteRoleType_Class() ::= <<
-$if(concreteRoleType.HasDatabaseOrigin)$
 		public bool CanRead$concreteRoleType.Name$
 		{
 			get
@@ -233,7 +229,6 @@ $if(concreteRoleType.HasDatabaseOrigin)$
 				return this.Strategy.CanWrite(this.Meta.$concreteRoleType.Name$);
 			}
 		}
-$endif$
 $\n$
 $if(concreteRoleType.ObjectType.IsUnit)$
 		virtual public $concreteRoleType_ObjectType(concreteRoleType)$ $concreteRoleType.SingularName$

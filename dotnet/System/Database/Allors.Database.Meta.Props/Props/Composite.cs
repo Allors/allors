@@ -27,16 +27,8 @@ namespace Allors.Database.Meta
         private bool? assignedIsRelationship;
         private bool isRelationship;
 
-        protected Composite(IMetaPopulationBase metaPopulation, Guid id, string tag) : base(metaPopulation, id, tag)
-        {
-            this.metaPopulation = metaPopulation;
-            this.AssignedOrigin = Origin.Database;
-        }
-
-        public override Origin Origin => this.AssignedOrigin;
-
-        public Origin AssignedOrigin { get; set; }
-
+        protected Composite(IMetaPopulationBase metaPopulation, Guid id, string tag) : base(metaPopulation, id, tag) => this.metaPopulation = metaPopulation;
+        
         public bool? AssignedIsRelationship
         {
             get => this.assignedIsRelationship;
@@ -99,7 +91,7 @@ namespace Allors.Database.Meta
         public IEnumerable<IAssociationTypeBase> ExclusiveAssociationTypes => this.AssociationTypes.Where(associationType => this.Equals(associationType.RoleType.ObjectType)).ToArray();
 
         IEnumerable<IAssociationType> IComposite.ExclusiveDatabaseAssociationTypes => this.ExclusiveDatabaseAssociationTypes;
-        public IEnumerable<IAssociationTypeBase> ExclusiveDatabaseAssociationTypes => this.ExclusiveAssociationTypes.Where(v => v.Origin == Origin.Database).ToArray();
+        public IEnumerable<IAssociationTypeBase> ExclusiveDatabaseAssociationTypes => this.ExclusiveAssociationTypes.ToArray();
 
         IEnumerable<IRoleType> ICompositeBase.RoleTypes => this.RoleTypes;
         public IEnumerable<IRoleTypeBase> RoleTypes => this.structuralDerivedRoleTypes;
@@ -107,7 +99,7 @@ namespace Allors.Database.Meta
         public IEnumerable<IRoleTypeBase> ExclusiveRoleTypes => this.RoleTypes.Where(roleType => this.Equals(roleType.AssociationType.ObjectType)).ToArray();
 
         IEnumerable<IRoleType> IComposite.ExclusiveDatabaseRoleTypes => this.ExclusiveDatabaseRoleTypes;
-        public IEnumerable<IRoleTypeBase> ExclusiveDatabaseRoleTypes => this.ExclusiveRoleTypes.Where(v => v.Origin == Origin.Database).ToArray();
+        public IEnumerable<IRoleTypeBase> ExclusiveDatabaseRoleTypes => this.ExclusiveRoleTypes.ToArray();
 
         IEnumerable<IMethodType> IComposite.MethodTypes => this.MethodTypes;
 
@@ -129,9 +121,9 @@ namespace Allors.Database.Meta
         IEnumerable<IAssociationType> IComposite.InheritedAssociationTypes => this.InheritedAssociationTypes;
         public IEnumerable<IAssociationTypeBase> InheritedAssociationTypes => this.AssociationTypes.Except(this.ExclusiveAssociationTypes);
 
-        public IEnumerable<IRoleTypeBase> InheritedDatabaseRoleTypes => this.InheritedRoleTypes.Where(v => v.Origin == Origin.Database);
+        public IEnumerable<IRoleTypeBase> InheritedDatabaseRoleTypes => this.InheritedRoleTypes;
 
-        public IEnumerable<IAssociationTypeBase> InheritedDatabaseAssociationTypes => this.InheritedAssociationTypes.Where(v => v.Origin == Origin.Database);
+        public IEnumerable<IAssociationTypeBase> InheritedDatabaseAssociationTypes => this.InheritedAssociationTypes;
 
         #region Workspace
 
@@ -149,13 +141,13 @@ namespace Allors.Database.Meta
 
         public abstract IEnumerable<ICompositeBase> DatabaseSubtypes { get; }
 
-        public IEnumerable<IRoleTypeBase> ExclusiveRoleTypesWithDatabaseOrigin => this.ExclusiveRoleTypes.Where(roleType => roleType.RelationType.Origin == Origin.Database);
+        public IEnumerable<IRoleTypeBase> ExclusiveRoleTypesWithDatabaseOrigin => this.ExclusiveRoleTypes;
 
-        public IEnumerable<IRoleTypeBase> ExclusiveRoleTypesWithSessionOrigin => this.ExclusiveRoleTypes.Where(roleType => roleType.RelationType.Origin == Origin.Session);
+        public IEnumerable<IRoleTypeBase> ExclusiveRoleTypesWithSessionOrigin => this.ExclusiveRoleTypes;
 
-        public IEnumerable<IAssociationTypeBase> ExclusiveAssociationTypesWithDatabaseOrigin => this.ExclusiveAssociationTypes.Where(roleType => roleType.RelationType.Origin == Origin.Database);
+        public IEnumerable<IAssociationTypeBase> ExclusiveAssociationTypesWithDatabaseOrigin => this.ExclusiveAssociationTypes;
 
-        public IEnumerable<IAssociationTypeBase> ExclusiveAssociationTypesWithSessionOrigin => this.ExclusiveAssociationTypes.Where(roleType => roleType.RelationType.Origin == Origin.Session);
+        public IEnumerable<IAssociationTypeBase> ExclusiveAssociationTypesWithSessionOrigin => this.ExclusiveAssociationTypes;
 
         #endregion Workspace
 
@@ -235,7 +227,7 @@ namespace Allors.Database.Meta
             }
 
             this.structuralDerivedRoleTypes = new HashSet<IRoleTypeBase>(roleTypes);
-            this.structuralDerivedDatabaseRoleTypes = new HashSet<IRoleTypeBase>(roleTypes.Where(v => v.Origin == Origin.Database));
+            this.structuralDerivedDatabaseRoleTypes = new HashSet<IRoleTypeBase>(roleTypes);
         }
 
         /// <summary>
@@ -261,7 +253,7 @@ namespace Allors.Database.Meta
             }
 
             this.structuralDerivedAssociationTypes = new HashSet<IAssociationTypeBase>(associationTypes);
-            this.structuralDerivedDatabaseAssociationTypes = new HashSet<IAssociationTypeBase>(associationTypes.Where(v => v.Origin == Origin.Database));
+            this.structuralDerivedDatabaseAssociationTypes = new HashSet<IAssociationTypeBase>(associationTypes);
         }
 
         /// <summary>

@@ -82,7 +82,7 @@ namespace Allors.Database.Meta
 
         public override IEnumerable<IClassBase> Classes => this.classes;
 
-        public override IEnumerable<IClass> DatabaseClasses => this.Origin == Origin.Database ? this.classes : Array.Empty<Class>();
+        public override IEnumerable<IClass> DatabaseClasses => this.classes;
 
         public override bool ExistClass => true;
 
@@ -92,7 +92,7 @@ namespace Allors.Database.Meta
 
         public override IEnumerable<ICompositeBase> Subtypes => Array.Empty<ICompositeBase>();
 
-        public override IEnumerable<ICompositeBase> DatabaseSubtypes => this.Origin == Origin.Database ? this.Subtypes : Array.Empty<Composite>();
+        public override IEnumerable<ICompositeBase> DatabaseSubtypes => this.Subtypes;
 
         public void DeriveWorkspaceNames(HashSet<string> workspaceNames)
         {

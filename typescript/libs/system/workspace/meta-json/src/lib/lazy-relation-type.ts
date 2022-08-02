@@ -3,7 +3,6 @@ import {
   AssociationType,
   Multiplicity,
   ObjectType,
-  Origin,
   RelationType,
   RoleType,
 } from '@allors/system/workspace/meta';
@@ -21,7 +20,6 @@ export class LazyRelationType implements RelationType {
 
   tag: string;
   multiplicity: Multiplicity;
-  origin: Origin;
   isDerived: boolean;
 
   associationType: AssociationType;
@@ -44,7 +42,6 @@ export class LazyRelationType implements RelationType {
     this.multiplicity = roleObjectType.isUnit
       ? Multiplicity.OneToOne
       : lookup.m.get(t) ?? Multiplicity.ManyToOne;
-    this.origin = lookup.o.get(t) ?? Origin.Database;
     this.isDerived = lookup.d.has(t);
 
     this.metaPopulation.onNew(this);

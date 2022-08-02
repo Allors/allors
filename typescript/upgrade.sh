@@ -19,22 +19,6 @@ npm install easymde
 npm install jsnlog
 npm install luxon
 
-// Apps Extranet
-npx nx g @nrwl/angular:application apps-extranet/workspace/angular-material-app --routing=true --style=scss --e2eTestRunner=none
-npx nx g @nrwl/workspace:library apps-extranet/workspace/angular-material
-npx nx g @nrwl/workspace:library apps-extranet/workspace/derivations
-npx nx g @nrwl/workspace:library apps-extranet/workspace/domain
-npx nx g @nrwl/workspace:library apps-extranet/workspace/meta
-npx nx g @nrwl/workspace:library apps-extranet/workspace/meta-json
-
-// Apps Intranet
-npx nx g @nrwl/angular:application apps-intranet/workspace/angular-material-app --routing=true --style=scss --e2eTestRunner=none
-npx nx g @nrwl/workspace:library apps-intranet/workspace/angular-material
-npx nx g @nrwl/workspace:library apps-intranet/workspace/derivations
-npx nx g @nrwl/workspace:library apps-intranet/workspace/domain
-npx nx g @nrwl/workspace:library apps-intranet/workspace/meta
-npx nx g @nrwl/workspace:library apps-intranet/workspace/meta-json
-
 // Base
 npx nx g @nrwl/angular:application base/workspace/angular/foundation-app --routing=true --e2eTestRunner=none
 npx nx g @nrwl/angular:application base/workspace/angular-material/application-app --routing=true --style=scss --e2eTestRunner=none
@@ -42,15 +26,11 @@ npx nx g @nrwl/workspace:library base/workspace/angular/foundation
 npx nx g @nrwl/workspace:library base/workspace/angular/application
 npx nx g @nrwl/workspace:library base/workspace/angular-material/foundation
 npx nx g @nrwl/workspace:library base/workspace/angular-material/application
-npx nx g @nrwl/workspace:library base/workspace/derivations
-npx nx g @nrwl/workspace:library base/workspace/derivations-custom
 npx nx g @nrwl/workspace:library base/workspace/domain
 npx nx g @nrwl/workspace:library base/workspace/meta
 npx nx g @nrwl/workspace:library base/workspace/meta-json
 
 // Core
-npx nx g @nrwl/workspace:library core/workspace/derivations
-npx nx g @nrwl/workspace:library core/workspace/derivations-custom
 npx nx g @nrwl/workspace:library core/workspace/domain
 npx nx g @nrwl/workspace:library core/workspace/meta
 npx nx g @nrwl/workspace:library core/workspace/meta-json

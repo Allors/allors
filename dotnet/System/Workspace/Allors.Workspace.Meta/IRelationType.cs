@@ -12,8 +12,6 @@ namespace Allors.Workspace.Meta
     /// </summary>
     public interface IRelationType : IMetaObject
     {
-        Origin Origin { get; }
-
         IAssociationType AssociationType { get; }
 
         IRoleType RoleType { get; }

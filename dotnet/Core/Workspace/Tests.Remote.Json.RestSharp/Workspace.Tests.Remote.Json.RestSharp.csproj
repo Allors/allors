@@ -20,4 +20,8 @@
     <ProjectReference Include="..\Tests\Workspace.Tests.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Tests\Database\" />
+  </ItemGroup>
+
 </Project>

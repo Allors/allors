@@ -1,6 +1,5 @@
 import { RelationTypeData } from '@allors/system/common/protocol-json';
 import {
-  Origin,
   pluralize,
   Multiplicity,
   RoleType,
@@ -25,7 +24,6 @@ export class LazyRoleType implements RoleType {
   objectType: ObjectType;
   isOne: boolean;
   isMany: boolean;
-  origin: Origin;
   name: string;
   singularName: string;
   isDerived: boolean;
@@ -50,7 +48,6 @@ export class LazyRoleType implements RoleType {
   ) {
     this.isOne = (multiplicity & 1) == 0;
     this.isMany = !this.isOne;
-    this.origin = relationType.origin;
     this.operandTag = relationType.tag;
     this.objectType = roleObjectType;
 

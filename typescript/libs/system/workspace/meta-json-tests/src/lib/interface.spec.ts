@@ -1,4 +1,4 @@
-import { Origin, Interface } from '@allors/system/workspace/meta';
+import { Interface } from '@allors/system/workspace/meta';
 import { MetaData } from '@allors/system/common/protocol-json';
 import { LazyMetaPopulation } from '@allors/system/workspace/meta-json';
 
@@ -45,7 +45,6 @@ describe('Interface in MetaPopulation', () => {
         ['10', 'I1', [], [], [], 'PluralI1'],
         ['11', 'I2', [], [], [], 'PluralI2'],
       ],
-      o: ['10', '11'],
     }) as M;
 
     const { I1, I2 } = metaPopulation;

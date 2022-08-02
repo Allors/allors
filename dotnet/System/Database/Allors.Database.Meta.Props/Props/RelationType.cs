@@ -31,7 +31,6 @@ namespace Allors.Database.Meta
             this.metaPopulation = associationTypeComposite.MetaPopulation;
             this.Id = id;
             this.Tag = tag ?? id.Tag();
-            this.AssignedOrigin = Origin.Database;
 
             this.AssociationType = associationTypeFactory(this);
             this.AssociationType.ObjectType = associationTypeComposite;
@@ -68,9 +67,6 @@ namespace Allors.Database.Meta
 
         IMetaPopulationBase IMetaObjectBase.MetaPopulation => this.metaPopulation;
         IMetaPopulation IMetaObject.MetaPopulation => this.metaPopulation;
-        Origin IMetaObject.Origin => this.AssignedOrigin;
-
-        public Origin AssignedOrigin { get; set; }
 
         public bool IsDerived
         {

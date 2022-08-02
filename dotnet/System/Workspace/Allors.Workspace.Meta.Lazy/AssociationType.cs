@@ -36,8 +36,6 @@ namespace Allors.Workspace.Meta
         #endregion
 
         #region IPropertyType
-        Origin IPropertyType.Origin => this.RelationType.Origin;
-
         string IPropertyType.Name => this.Name;
 
         string IPropertyType.SingularName => this.SingularName;

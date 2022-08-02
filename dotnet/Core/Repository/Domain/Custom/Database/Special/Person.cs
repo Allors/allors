@@ -106,15 +106,6 @@ namespace Allors.Repository
         #endregion
         [Workspace(Default)]
         public DateTime BirthDate { get; set; }
-        
-        #region Allors
-        [Id("4F2E08E1-2892-41F9-A71F-4148AD9803F4")]
-        [Size(256)]
-        #endregion
-        [Workspace(Default)]
-        [Origin(Origin.Session)]
-        [Derived]
-        public string SessionFullName { get; set; }
 
         #region Allors
         [Id("105CF367-F076-45F8-8E2A-2431BB2D65C7")]
@@ -210,15 +201,6 @@ namespace Allors.Repository
         [Workspace(Default)]
         [Derived]
         public string DefaultWorkspaceField { get; set; }
-
-        #region Allors
-        [Id("38CA55F8-675C-4CBC-A994-F9E0B5661D61")]
-        [Size(256)]
-        #endregion
-        [Workspace(Default)]
-        [Origin(Origin.Session)]
-        [Derived]
-        public string DisplayName { get; set; }
 
         [Id("FAF120ED-09D1-4E42-86A6-F0D9FF75E03C")]
         public void Method() { }

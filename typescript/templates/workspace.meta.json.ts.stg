@@ -2,11 +2,11 @@ delimiters "$", "$"
 
 TemplateId() ::= <<2FD8EE5D-4976-484F-96F9-9474AE09BFDB>>
 TemplateName() ::= <<Allors Typescript Workspace Meta Json>>
-TemplateVersion() ::= <<3.0.3>>
+TemplateVersion() ::= <<3.0.4>>
 TemplateAllors() ::= <<1.0>>
 TemplateConfiguration(meta, workspaceName) ::= <<
 $!
-Copyright 2002-2017 Allors bvba.
+Copyright 2002-2022 Allors bvba.
 
 Dual Licensed under
   a) the Lesser General Public Licence v3 (LGPL)
@@ -48,7 +48,6 @@ $meta.WorkspaceInterfacesByWorkspaceName.(workspaceName):{objectType|$data_objec
   [
 $meta.WorkspaceClassesByWorkspaceName.(workspaceName):{objectType|$data_objectType(objectType)$}; separator=",\n"$
   ],
-  o: [$meta.WorkspaceSessionOriginTagsByWorkspaceName.(workspaceName):{tag|'$tag$'}; separator=","$],
   m:
   [
     [$meta.WorkspaceOneToOneTagsByWorkspaceName.(workspaceName):{tag|'$tag$'}; separator=","$],
@@ -86,8 +85,6 @@ data_relationType_size_scale_precision() ::= <<$if(roleType.Size)$, $roleType.Si
 data_methodTypes() ::= <<[$objectType.WorkspaceExclusiveMethodTypesByWorkspaceName.(workspaceName):{methodType|$data_methodType(methodType)$}; separator=","$]>>
 
 data_methodType(methodType) ::= <<['$methodType.Tag$', "$methodType.Name$"]>>
-
-data_origin(metaObject) ::= <<$if(!metaObject.IsDefaultOrigin)$'$metaObject.Tag$'$endif$>>
 
 data_mediaType(mediaTypeName) ::= <<$meta.WorkspaceMediaTagsByMediaTypeNameByWorkspaceName.(workspaceName).(mediaTypeName):{tag|'$tag$'}; separator=","$>>
 

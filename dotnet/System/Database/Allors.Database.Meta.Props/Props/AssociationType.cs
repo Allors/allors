@@ -38,8 +38,6 @@ namespace Allors.Database.Meta
         #region IMetaObject & IMetaObjectBase
         IMetaPopulation IMetaObject.MetaPopulation => this.metaPopulation;
 
-        Origin IMetaObject.Origin => this.relationType.Origin;
-
         IMetaPopulationBase IMetaObjectBase.MetaPopulation => this.metaPopulation;
 
         #endregion

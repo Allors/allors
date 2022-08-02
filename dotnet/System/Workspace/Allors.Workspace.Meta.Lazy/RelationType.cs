@@ -29,7 +29,6 @@ namespace Allors.Workspace.Meta
 
         private string Tag { get; }
         private Multiplicity Multiplicity { get; }
-        private Origin Origin { get; set; }
         private bool IsDerived { get; set; }
 
         #region IMetaObject
@@ -45,8 +44,6 @@ namespace Allors.Workspace.Meta
         #endregion
 
         #region IRelationType
-
-        Origin IRelationType.Origin => this.Origin;
 
         IAssociationType IRelationType.AssociationType => this.AssociationType;
 
@@ -66,9 +63,8 @@ namespace Allors.Workspace.Meta
 
         public override string ToString() => $"{this.AssociationType.ObjectType.SingularName}{this.RoleType.Name}";
 
-        public void Init(Origin origin = Origin.Database, bool isDerived = false)
+        public void Init(bool isDerived = false)
         {
-            this.Origin = origin;
             this.IsDerived = isDerived;
 
             ((AssociationType)this.AssociationType).Init();

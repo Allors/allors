@@ -22,10 +22,8 @@ namespace Allors.Workspace.Meta
 
         private HashSet<IAssociationTypeInternals> LazyAssociationTypes => this.lazyAssociationTypes ??= new HashSet<IAssociationTypeInternals>(this.ExclusiveAssociationTypes.Union(this.Supertypes.SelectMany(v => v.ExclusiveAssociationTypes)));
         private HashSet<IRoleTypeInternals> LazyRoleTypes => this.lazyRoleTypes ??= new HashSet<IRoleTypeInternals>(this.ExclusiveRoleTypes.Union(this.Supertypes.SelectMany(v => v.ExclusiveRoleTypes)));
-        private HashSet<IRoleTypeInternals> LazyDatabaseRoleTypes => this.lazyDatabaseRoleTypes ??= new HashSet<IRoleTypeInternals>(this.LazyRoleTypes.Where(v => v.RelationType.Origin == Origin.Database));
         private HashSet<IMethodTypeInternals> LazyMethodTypes => this.lazyMethodTypes ??= new HashSet<IMethodTypeInternals>(this.ExclusiveMethodTypes.Union(this.Supertypes.SelectMany(v => v.ExclusiveMethodTypes)));
 
-        private Origin Origin { get; set; }
         private string Tag { get; set; }
         private string SingularName { get; set; }
         private string PluralName { get; set; }
@@ -81,7 +79,7 @@ namespace Allors.Workspace.Meta
 
         IEnumerable<IRoleType> IComposite.RoleTypes => this.LazyRoleTypes ?? new HashSet<IRoleTypeInternals>(this.ExclusiveRoleTypes.Union(this.Supertypes.SelectMany(v => v.ExclusiveRoleTypes)));
 
-        IEnumerable<IRoleType> IComposite.DatabaseOriginRoleTypes => this.LazyDatabaseRoleTypes;
+        IEnumerable<IRoleType> IComposite.DatabaseOriginRoleTypes => this.LazyRoleTypes;
 
         IEnumerable<IMethodType> IComposite.MethodTypes => this.LazyMethodTypes;
 
@@ -110,12 +108,11 @@ namespace Allors.Workspace.Meta
 
         void ICompositeInternals.Bind(Dictionary<string, Type> typeByTypeName) => this.ClrType = typeByTypeName[this.SingularName];
 
-        public void Init(string tag, string singularName, string pluralName = null, Origin origin = Origin.Database)
+        public void Init(string tag, string singularName, string pluralName = null)
         {
             this.Tag = tag;
             this.SingularName = singularName;
             this.PluralName = pluralName ?? Pluralizer.Pluralize(singularName);
-            this.Origin = origin;
         }
     }
 }
