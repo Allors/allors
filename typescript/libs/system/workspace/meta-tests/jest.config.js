@@ -17,7 +17,7 @@ module.exports = {
     [
       'jest-trx-results-processor',
       {
-        outputFile: '../../artifacts/tests/typscript.system-workspace-meta.trx',
+        outputFile: '../artifacts/tests/typscript.system-workspace-meta.trx',
       },
     ],
   ],

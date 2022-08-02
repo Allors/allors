@@ -1,18 +1,6 @@
 {
   "version": 2,
   "projects": {
-    "apps-extranet-workspace-angular-material": "libs/apps-extranet/workspace/angular-material",
-    "apps-extranet-workspace-angular-material-app": "apps/apps-extranet/workspace/angular-material-app",
-    "apps-extranet-workspace-derivations": "libs/apps-extranet/workspace/derivations",
-    "apps-extranet-workspace-domain": "libs/apps-extranet/workspace/domain",
-    "apps-extranet-workspace-meta": "libs/apps-extranet/workspace/meta",
-    "apps-extranet-workspace-meta-json": "libs/apps-extranet/workspace/meta-json",
-    "apps-intranet-workspace-angular-material": "libs/apps-intranet/workspace/angular-material",
-    "apps-intranet-workspace-angular-material-app": "apps/apps-intranet/workspace/angular-material-app",
-    "apps-intranet-workspace-derivations": "libs/apps-intranet/workspace/derivations",
-    "apps-intranet-workspace-domain": "libs/apps-intranet/workspace/domain",
-    "apps-intranet-workspace-meta": "libs/apps-intranet/workspace/meta",
-    "apps-intranet-workspace-meta-json": "libs/apps-intranet/workspace/meta-json",
     "base-workspace-angular-application": "libs/base/workspace/angular/application",
     "base-workspace-angular-foundation": "libs/base/workspace/angular/foundation",
     "base-workspace-angular-foundation-app": "apps/base/workspace/angular/foundation-app",
