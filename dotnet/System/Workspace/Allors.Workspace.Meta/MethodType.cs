@@ -6,7 +6,7 @@
 
 namespace Allors.Workspace.Meta
 {
-    public abstract class MethodType : IMetaObject, IOperandType
+    public sealed class MethodType : IMetaObject, IOperandType
     {
         public MetaPopulation MetaPopulation { get; set; }
 

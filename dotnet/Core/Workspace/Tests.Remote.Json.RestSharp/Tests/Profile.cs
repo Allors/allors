@@ -12,7 +12,6 @@ namespace Tests.Workspace.Remote
     using Allors.Workspace.Adapters;
     using Allors.Workspace.Adapters.Remote.ResthSharp;
     using Allors.Workspace.Meta;
-    using Allors.Workspace.Meta.Lazy;
     using RestSharp;
     using RestSharp.Serializers.NewtonsoftJson;
     using Xunit;

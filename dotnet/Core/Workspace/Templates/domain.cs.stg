@@ -147,7 +147,7 @@ namespace Allors.Workspace.Domain
 		public $class.name$(IStrategy strategy)
 		{
             this.Strategy = strategy;
-            this.M = strategy.Session.Workspace.Services.Get<Allors.Workspace.Meta.M>();
+            this.M = (Allors.Workspace.Meta.M)strategy.Session.Workspace.Configuration.MetaPopulation;
         }
 
         IStrategy IObject.Strategy => this.Strategy;
@@ -162,7 +162,7 @@ namespace Allors.Workspace.Domain
 			}
 		}
 
-		public Allors.Workspace.Meta.$class.name$ Meta
+		public Allors.Workspace.Meta.Meta$class.name$ Meta
 		{
 			get
 			{

@@ -16,7 +16,6 @@ namespace Tests.Workspace.Local
     using Allors.Workspace;
     using Allors.Workspace.Adapters;
     using Allors.Workspace.Meta;
-    using Allors.Workspace.Meta.Lazy;
     using Configuration = Allors.Workspace.Adapters.Local.Configuration;
     using DatabaseConnection = Allors.Workspace.Adapters.Local.DatabaseConnection;
     using IWorkspaceServices = Allors.Workspace.IWorkspaceServices;

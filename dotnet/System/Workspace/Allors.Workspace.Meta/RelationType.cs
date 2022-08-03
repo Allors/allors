@@ -10,7 +10,7 @@ namespace Allors.Workspace.Meta
     /// A relation type defines the state and behavior for
     /// a set of association types and role types.
     /// </summary>
-    public abstract class RelationType : IMetaObject
+    public sealed class RelationType : IMetaObject
     {
         // Class
         public RelationType(string tag, AssociationType associationType, IComposite associationObjectType, RoleType roleType, IObjectType roleObjectType, Multiplicity multiplicity = Multiplicity.ManyToOne)

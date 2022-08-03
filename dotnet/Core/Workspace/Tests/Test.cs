@@ -18,7 +18,7 @@ namespace Tests.Workspace
 
         public IWorkspace Workspace => this.Profile.Workspace;
 
-        public M M => this.Workspace.Services.Get<M>();
+        public M M => (M)this.Workspace.Configuration.MetaPopulation;
 
         public abstract IProfile Profile { get; }
 

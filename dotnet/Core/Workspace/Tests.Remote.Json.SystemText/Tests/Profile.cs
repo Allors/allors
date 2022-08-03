@@ -12,7 +12,6 @@ namespace Tests.Workspace.Remote
     using Allors.Workspace;
     using Allors.Workspace.Adapters;
     using Allors.Workspace.Meta;
-    using Allors.Workspace.Meta.Lazy;
     using Xunit;
     using Configuration = Allors.Workspace.Adapters.Remote.Configuration;
     using DatabaseConnection = Allors.Workspace.Adapters.Remote.SystemText.DatabaseConnection;
