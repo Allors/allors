@@ -15,9 +15,9 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\System\Database\Adapters\Allors.Database.Adapters.Memory\Allors.Database.Adapters.Memory.csproj" />
     <ProjectReference Include="..\..\..\System\Database\Adapters\Allors.Database.Adapters.Sql.SqlClient\Allors.Database.Adapters.Sql.SqlClient.csproj" />
+    <ProjectReference Include="..\..\..\System\Workspace\Allors.Workspace.Meta\Allors.Workspace.Meta.csproj" />
     <ProjectReference Include="..\..\Database\Configuration\Configuration.csproj" />
     <ProjectReference Include="..\Configuration\Workspace.Configuration.csproj" />
-    <ProjectReference Include="..\Meta.Lazy\Workspace.Meta.Lazy.csproj" />
   </ItemGroup>
 
 </Project>

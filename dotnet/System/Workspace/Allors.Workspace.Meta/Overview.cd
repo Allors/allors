@@ -1,104 +1,120 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Interface Name="Allors.Workspace.Meta.IAssociationType" Collapsed="true">
-    <Position X="8" Y="4" Width="1.5" />
+  <Class Name="Allors.Workspace.Meta.AssociationType" Collapsed="true">
+    <Position X="7.25" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAIAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAIAAAAAAAAA=</HashCode>
-      <FileName>Meta\IAssociationType.cs</FileName>
+      <HashCode>AAIEmAAAAAAAAIZEgECAAAQACIEAAIACBZAIAAoAAAA=</HashCode>
+      <FileName>Core\AssociationType.cs</FileName>
     </TypeIdentifier>
-  </Interface>
-  <Interface Name="Allors.Workspace.Meta.IClass" Collapsed="true">
-    <Position X="4.25" Y="5.75" Width="1.5" />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Allors.Workspace.Meta.Class" Collapsed="true">
+    <Position X="5" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Meta\IClass.cs</FileName>
+      <HashCode>AAAAgIAAAAHAAAABAAAQAAAAAAAAAAAAAAAAAAIAAAA=</HashCode>
+      <FileName>Core\Class.cs</FileName>
     </TypeIdentifier>
-  </Interface>
-  <Interface Name="Allors.Workspace.Meta.IComposite" Collapsed="true">
-    <Position X="3" Y="4.25" Width="1.5" />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Allors.Workspace.Meta.Composite" Collapsed="true">
+    <Position X="3.75" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAJAAAAAAAVAAAAAACAIAAAAAQAAAAAAAABAAAAAAAA=</HashCode>
-      <FileName>Meta\IComposite.cs</FileName>
+      <HashCode>AAJQAQAgQQVAIAAAECAYAAAAwQBAAEJAQBBAAAgCAAA=</HashCode>
+      <FileName>Core\Composite.cs</FileName>
     </TypeIdentifier>
-  </Interface>
-  <Interface Name="Allors.Workspace.Meta.IInterface" Collapsed="true">
-    <Position X="2.25" Y="5.75" Width="1.5" />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Allors.Workspace.Meta.Inheritance" Collapsed="true">
+    <Position X="5.75" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAIAAAAAAAA=</HashCode>
-      <FileName>Meta\IInterface.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAQEgACAAAAAAAAAAIAAAAAAABgQAAA=</HashCode>
+      <FileName>Core\Inheritance.cs</FileName>
     </TypeIdentifier>
-  </Interface>
-  <Interface Name="Allors.Workspace.Meta.IMetaObject" Collapsed="true">
-    <Position X="5.75" Y="0.5" Width="1.5" />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Allors.Workspace.Meta.Interface" Collapsed="true">
+    <Position X="2.75" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAIAAAAAAAQAAAAAAAACAAAAQAAAAAAAAAAgAAAA=</HashCode>
-      <FileName>Meta\IMetaObject.cs</FileName>
+      <HashCode>AAAAgIAAAAHAAEABAAAQAAAAAAAAAkAAAAMAAAIAAAA=</HashCode>
+      <FileName>Core\Interface.cs</FileName>
     </TypeIdentifier>
-  </Interface>
-  <Interface Name="Allors.Workspace.Meta.IMetaPopulation">
-    <Position X="13.5" Y="0.5" Width="1.5" />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Allors.Workspace.Meta.MetaObjectBase" Collapsed="true">
+    <Position X="8.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AABAgAAAAAECAAAAAAAAACgAAAAIAAAAEAAAAAACAAA=</HashCode>
-      <FileName>Meta\IMetaPopulation.cs</FileName>
+      <HashCode>AAAAAIAQAAAAAQAAAACAAAIAAAAQAAAAAAAAAAhAAAA=</HashCode>
+      <FileName>Core\MetaObject.cs</FileName>
     </TypeIdentifier>
-  </Interface>
-  <Interface Name="Allors.Workspace.Meta.IMethodType" Collapsed="true">
-    <Position X="6.5" Y="2.5" Width="1.5" />
-    <InheritanceLine Type="Allors.Workspace.Meta.IOperandType" FixedToPoint="true">
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Allors.Workspace.Meta.MethodType" Collapsed="true">
+    <Position X="11.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACEAAAAAAAAIQEgBCAABSACAAAAIAAAAAAAAgAAAA=</HashCode>
+      <FileName>Core\MethodType.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Allors.Workspace.Meta.ObjectType" Collapsed="true">
+    <Position X="2.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAIAAAAAAAAYEgACAAASBACKAAIACAAAAAUAAAAA=</HashCode>
+      <FileName>Core\ObjectType.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Allors.Workspace.Meta.OperandType" Collapsed="true">
+    <Position X="9.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\OperandType.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Allors.Workspace.Meta.RelationType" Collapsed="true">
+    <Position X="16.25" Y="1.75" Width="1.5" />
+    <AssociationLine Name="RoleType" Type="Allors.Workspace.Meta.RoleType" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="8.75" Y="1.812" />
-        <Point X="8.75" Y="2.125" />
-        <Point X="7.688" Y="2.125" />
-        <Point X="7.688" Y="2.5" />
+        <Point X="17" Y="2.441" />
+        <Point X="17" Y="4.316" />
+        <Point X="10.562" Y="4.316" />
+        <Point X="10.562" Y="3.941" />
       </Path>
-    </InheritanceLine>
+    </AssociationLine>
+    <AssociationLine Name="AssociationType" Type="Allors.Workspace.Meta.AssociationType" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="17.312" Y="2.441" />
+        <Point X="17.312" Y="4.545" />
+        <Point X="8.188" Y="4.545" />
+        <Point X="8.188" Y="3.941" />
+      </Path>
+    </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAA=</HashCode>
-      <FileName>Meta\IMethodType.cs</FileName>
-      <NewMemberFileName>Meta\IRoleType.cs</NewMemberFileName>
+      <HashCode>ACICAAAgAAAAAQQWgACIAASAiAAAAIBAEAIAAAgAAAA=</HashCode>
+      <FileName>Core\RelationType.cs</FileName>
     </TypeIdentifier>
-  </Interface>
-  <Interface Name="Allors.Workspace.Meta.IObjectType" Collapsed="true">
-    <Position X="2.25" Y="2.5" Width="1.5" />
+    <ShowAsAssociation>
+      <Property Name="RoleType" />
+      <Property Name="AssociationType" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Allors.Workspace.Meta.RoleType" Collapsed="true">
+    <Position X="9.5" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAIAAAAAAAAIAAAAAAAAAACCAAAACAAAAAUAAAAA=</HashCode>
-      <FileName>Meta\IObjectType.cs</FileName>
+      <HashCode>AAAEmBAAAAAAhI5EgELABAQgiAAAAIACCZAAAAqAEAA=</HashCode>
+      <FileName>Core\RoleType.cs</FileName>
     </TypeIdentifier>
-  </Interface>
-  <Interface Name="Allors.Workspace.Meta.IOperandType" Collapsed="true">
-    <Position X="8" Y="1.25" Width="1.5" />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Allors.Workspace.Meta.Unit" Collapsed="true">
+    <Position X="0.5" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Meta\IOperandType.cs</FileName>
+      <HashCode>AAAIgIAAAACAAABIgAAAQAABAAAAAAIQAAAAAQgAAAA=</HashCode>
+      <FileName>Core\Unit.cs</FileName>
     </TypeIdentifier>
-  </Interface>
-  <Interface Name="Allors.Workspace.Meta.IPropertyType" Collapsed="true">
-    <Position X="9" Y="2.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAiAAAAAAAAAJAAAAAAAQAAAAAAAACAIAAAAAAAAA=</HashCode>
-      <FileName>Meta\IPropertyType.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="Allors.Workspace.Meta.IRelationType" Collapsed="true">
-    <Position X="4.25" Y="2.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAIAAAAAAAAAAAAQAAAAAAAAiAAAAAAAEAAAAAAAAAA=</HashCode>
-      <FileName>Meta\IRelationType.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="Allors.Workspace.Meta.IRoleType" Collapsed="true">
-    <Position X="10" Y="4" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAgAAAAEIAAAAAgAAAAAAAAAAAAAAAEAA=</HashCode>
-      <FileName>Meta\IRoleType.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="Allors.Workspace.Meta.IUnit" Collapsed="true">
-    <Position X="0.5" Y="4.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAIAAAAAAAAAABIgAAAQAABAAAAAAIQAAAAAQAAAAA=</HashCode>
-      <FileName>Meta\IUnit.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
+    <Lollipop Position="0.2" />
+  </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

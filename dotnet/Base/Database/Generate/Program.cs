@@ -25,7 +25,6 @@ namespace Allors.Meta.Generation.Storage
             string[,] workspace =
             {
                 { "../Core/Workspace/Templates/meta.cs.stg", "Workspace/Meta/Generated" },
-                { "../Core/Workspace/Templates/meta.lazy.cs.stg", "Workspace/Meta.Lazy/Generated" },
                 { "../Core/Workspace/Templates/domain.cs.stg", "Workspace/Domain/Generated" },
                 { "../Core/Workspace/Templates/uml.cs.stg", "Workspace/Domain.Diagrams/Generated" },
 

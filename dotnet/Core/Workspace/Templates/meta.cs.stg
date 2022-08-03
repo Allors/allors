@@ -29,6 +29,7 @@ For more information visit http://www.allors.com/legal
 	<generation template="classes" output="classes.g.cs"/>
 	<generation template="associationTypes" output="associationTypes.g.cs"/>
 	<generation template="roleTypes" output="roleTypes.g.cs"/>
+    <generation template="builder" output="builder.g.cs"/>
 </generations>
 >>
 
@@ -49,12 +50,37 @@ $meta.WorkspaceInterfacesByWorkspaceName.(workspaceName):{interface|        publ
 $meta.WorkspaceClassesByWorkspaceName.(workspaceName):{class|        public $class.SingularName$ $class.SingularName$ { get; \}}; separator="\n"$
     }
 }
+
+namespace Allors.Workspace.Meta.Lazy
+{
+    public sealed class LazyM : MetaPopulation, M
+    {
+        // Units
+$meta.Units:{unit|        internal readonly Lazy$unit.SingularName$ $unit.SingularName$ = new Lazy$unit.SingularName$();}; separator="\n"$
+
+        // Interfaces
+$meta.WorkspaceInterfacesByWorkspaceName.(workspaceName):{interface|        internal readonly Lazy$interface.SingularName$ $interface.SingularName$ = new Lazy$interface.SingularName$();}; separator="\n"$
+
+        // Classes
+$meta.WorkspaceClassesByWorkspaceName.(workspaceName):{class|        internal readonly Lazy$class.SingularName$ $class.SingularName$ = new Lazy$class.SingularName$();}; separator="\n"$
+
+        // M
+$meta.Units:{unit|        $unit.SingularName$ M.$unit.SingularName$ => this.$unit.SingularName$;}; separator="\n"$
+$meta.WorkspaceInterfacesByWorkspaceName.(workspaceName):{interface|        $interface.SingularName$ M.$interface.SingularName$ => this.$interface.SingularName$;}; separator="\n"$
+$meta.WorkspaceClassesByWorkspaceName.(workspaceName):{class|        $class.SingularName$ M.$class.SingularName$ => this.$class.SingularName$;}; separator="\n"$
+    }
+}
 >>
 
 units(meta, workspaceName) ::= <<
 namespace Allors.Workspace.Meta
 {
 $meta.Units:{unit|$define_unit(unit)$}; separator="\n"$
+}
+
+namespace Allors.Workspace.Meta.Lazy
+{
+$meta.Units:{unit|$lazy_define_unit(unit)$}; separator="\n"$
 }
 >>
 
@@ -63,10 +89,20 @@ define_unit(unit) ::= <<
     }
 >>
 
+lazy_define_unit(unit) ::= <<
+    public class Lazy$unit.SingularName$ : Unit, $unit.SingularName$ {}
+
+>>
+
 interfaces(meta, workspaceName) ::= <<
 namespace Allors.Workspace.Meta
 {
 $meta.Interfaces:{interface|$define_interface(interface)$}; separator="\n"$
+}
+
+namespace Allors.Workspace.Meta.Lazy
+{
+$meta.Interfaces:{interface|$lazy_define_interface(interface)$}; separator="\n"$
 }
 >>
 
@@ -84,10 +120,33 @@ $interface.WorkspaceAssociationTypesByWorkspaceName.(workspaceName):{association
 
 >>
 
+lazy_define_interface(interface) ::= <<
+    public class Lazy$interface.SingularName$ : Interface, $interface.SingularName$ {
+
+$interface.WorkspaceSubtypesByWorkspaceName.(workspaceName):{subtype|        public $subtype.SingularName$ As$subtype.SingularName$ => ((M)this.MetaPopulation).$subtype.SingularName$;}; separator="\n"$
+
+$interface.WorkspaceExclusiveMethodTypesByWorkspaceName.(workspaceName):{methodType|        public IMethodType $methodType.Name$ { get; \} = new MethodType();}; separator="\n"$
+$interface.WorkspaceInheritedMethodTypesByWorkspaceName.(workspaceName):{methodType|        public IMethodType $methodType.Name$ { get; internal set; \}}; separator="\n"$
+
+$interface.WorkspaceExclusiveRoleTypesByWorkspaceName.(workspaceName):{roleType|        public $roleType.FullName$ $roleType.Name$ { get; \} = new Lazy$roleType.FullName$();}; separator="\n"$
+$interface.WorkspaceInheritedRoleTypesByWorkspaceName.(workspaceName):{roleType|        public $roleType.FullName$ $roleType.Name$ { get; internal set; \}}; separator="\n"$
+
+$interface.WorkspaceExclusiveAssociationTypesByWorkspaceName.(workspaceName):{associationType|        public $associationType.Name$ $associationType.Name$ { get; \} = new Lazy$associationType.Name$();}; separator="\n"$
+$interface.WorkspaceInheritedAssociationTypesByWorkspaceName.(workspaceName):{associationType|        public $associationType.Name$ $associationType.Name$ { get; internal set; \}}; separator="\n"$
+
+    }
+
+>>
+
 classes(meta, workspaceName) ::= <<
 namespace Allors.Workspace.Meta
 {
 $meta.Classes:{class|$define_class(class)$}; separator="\n"$
+}
+
+namespace Allors.Workspace.Meta.Lazy
+{
+$meta.Classes:{class|$lazy_define_class(class)$}; separator="\n"$
 }
 >>
 
@@ -103,10 +162,29 @@ $class.WorkspaceAssociationTypesByWorkspaceName.(workspaceName):{associationType
 
 >>
 
+lazy_define_class(class) ::= <<
+    public class Lazy$class.SingularName$ : Class, $class.SingularName$ {
+
+$class.WorkspaceExclusiveMethodTypesByWorkspaceName.(workspaceName):{methodType|        public IMethodType $methodType.Name$ { get; \} = new MethodType();}; separator="\n"$
+$class.WorkspaceInheritedMethodTypesByWorkspaceName.(workspaceName):{methodType|        public IMethodType $methodType.Name$ { get; internal set; \}}; separator="\n"$
+
+$class.WorkspaceExclusiveRoleTypesByWorkspaceName.(workspaceName):{roleType|        public $roleType.FullName$ $roleType.Name$ { get; \} = new Lazy$roleType.FullName$();}; separator="\n"$
+$class.WorkspaceInheritedRoleTypesByWorkspaceName.(workspaceName):{roleType|        public $roleType.FullName$ $roleType.Name$ { get; internal set; \}}; separator="\n"$
+
+$class.WorkspaceExclusiveAssociationTypesByWorkspaceName.(workspaceName):{associationType|        public $associationType.Name$ $associationType.Name$ { get; \} = new Lazy$associationType.Name$();}; separator="\n"$
+$class.WorkspaceInheritedAssociationTypesByWorkspaceName.(workspaceName):{associationType|        public $associationType.Name$ $associationType.Name$ { get; internal set; \}}; separator="\n"$
+    }
+
+>>
+
 associationTypes(meta, workspaceName) ::= <<
 namespace Allors.Workspace.Meta
 {
 $meta.Composites:{composite|$define_associationTypes(composite)$}; separator="\n"$
+}
+namespace Allors.Workspace.Meta.Lazy
+{
+$meta.Composites:{composite|$lazy_define_associationTypes(composite)$}; separator="\n"$
 }
 >>
 
@@ -122,10 +200,26 @@ define_associationType(associationType) ::= <<
 
 >>
 
+lazy_define_associationTypes(composite) ::= <<
+$composite.WorkspaceExclusiveRoleTypesByWorkspaceName.(workspaceName):{roleType|$lazy_define_associationType(roleType.associationType)$}; separator="\n"$
+>>
+
+lazy_define_associationType(associationType) ::= <<
+    public class Lazy$associationType.Name$ : AssociationType, $associationType.Name$
+    {
+        $associationType.ObjectType.SingularName$ Meta.$associationType.Name$.ObjectType => ((M)this.MetaPopulation).$associationType.ObjectType.SingularName$;
+    }
+
+>>
+
 roleTypes(meta, workspaceName) ::= <<
 namespace Allors.Workspace.Meta
 {
 $meta.Composites:{composite|$define_roleTypes(composite)$}; separator="\n"$
+}
+namespace Allors.Workspace.Meta.Lazy
+{
+$meta.Composites:{composite|$lazy_define_roleTypes(composite)$}; separator="\n"$
 }
 >>
 
@@ -142,4 +236,200 @@ $endif$
     }
 
 >>
+
+lazy_define_roleTypes(composite) ::= <<
+$composite.WorkspaceExclusiveRoleTypesByWorkspaceName.(workspaceName):{roleType|$lazy_define_roleType(roleType)$}; separator="\n"$
+>>
+
+lazy_define_roleType(roleType) ::= <<
+    public class Lazy$roleType.FullName$ : RoleType, Meta.$roleType.FullName$
+    {
+
+$if(roleType.ObjectType.IsComposite)$
+        $roleType.ObjectType.SingularName$ Meta.$roleType.FullName$.ObjectType => ((M)this.MetaPopulation).$roleType.ObjectType.SingularName$;
+$endif$
+    }
+
+>>
+
+builder(meta, workspaceName) ::= <<
+// <auto-generated />
+namespace Allors.Workspace.Meta.Lazy
+{
+	public class MetaBuilder
+	{
+        public M Build() {
+            var m =  new LazyM();
+
+            var units = this.BuildUnits(m);
+            var interfaces = this.BuildInterfaces(m);
+            var classes = this.BuildClasses(m);
+            var inheritances = this.BuildInheritances(m);
+            var relationTypes = this.BuildRelationTypes(m);
+            var methodTypes = this.BuildMethodTypes(m);
+
+            this.AssignPropertyTypes(m);
+            this.AssignMethodTypes(m);
+
+            m.Init(units, interfaces, classes, inheritances, relationTypes, methodTypes);
+
+            return m;
+        }
+
+		private IUnitInternals[] BuildUnits(LazyM m)
+		{
+$meta.Units:{unit|$build_unit(unit)$}; separator="\n"$
+
+            return new IUnitInternals[]
+            {
+$meta.Units:{unit|                m.$unit.SingularName$}; separator=",\n"$
+            };
+		}
+
+        private IInterfaceInternals[] BuildInterfaces(LazyM m)
+        {
+$meta.WorkspaceInterfacesByWorkspaceName.(workspaceName):{interface|$build_interface(interface)$}; separator="\n"$
+
+            return new IInterfaceInternals[]
+            {
+$meta.WorkspaceInterfacesByWorkspaceName.(workspaceName):{interface|                m.$interface.SingularName$}; separator=",\n"$
+            };
+        }
+
+        private IClassInternals[] BuildClasses(LazyM m)
+        {
+$meta.WorkspaceClassesByWorkspaceName.(workspaceName):{class|$build_class(class)$}; separator="\n"$
+
+            return new IClassInternals[]
+            {
+$meta.WorkspaceClassesByWorkspaceName.(workspaceName):{class|                m.$class.SingularName$}; separator=",\n"$
+            };
+        }
+
+        private Inheritance[] BuildInheritances(LazyM m)
+        {
+            return new []
+            {$meta.Composites:{composite|$inheritance(composite)$}$
+            };
+        }
+
+        private IRelationTypeInternals[] BuildRelationTypes(LazyM m)
+        {
+
+            return new IRelationTypeInternals[]
+            {
+$meta.WorkspaceRelationTypesByWorkspaceName.(workspaceName):{relationType|            this.Build$relationType.Name$(m),}; separator="\n"$
+            };
+        }
+
+$meta.WorkspaceRelationTypesByWorkspaceName.(workspaceName):{relationType|$build_relationType(relationType)$}; separator="\n"$
+
+        private IMethodTypeInternals[] BuildMethodTypes(LazyM m)
+		{
+		    return new IMethodTypeInternals[]
+                {$meta.WorkspaceMethodTypesByWorkspaceName.(workspaceName):{methodType|            this.Build$methodType.FullName$(m),}; separator="\n"$
+                };
+		}
+
+        private void AssignPropertyTypes(LazyM m)
+        {
+$meta.WorkspaceCompositesByWorkspaceName.(workspaceName):{composite|$assign_properties(composite)$}; separator="\n"$
+        }
+
+        private void AssignMethodTypes(LazyM m)
+        {
+$meta.WorkspaceCompositesByWorkspaceName.(workspaceName):{composite|$assign_methods(composite)$}; separator="\n"$
+        }
+
+$meta.WorkspaceMethodTypesByWorkspaceName.(workspaceName):{methodType|$build_methodType(methodType)$}; separator="\n"$
+    }
+}
+>>
+
+define_roleClasses(class) ::= <<
+$class.WorkspaceRoleTypesByWorkspaceName.(workspaceName):{roleType|$\n$             public RoleType $class.Name$$roleType.Name$;}$
+>>
+
+assign_roleClasses(class) ::= <<
+$class.WorkspaceRoleTypesByWorkspaceName.(workspaceName):{roleType|$\n$                 this.$class.Name$$roleType.Name$ = relationTypes.$roleType.RelationType.Name$.RoleType;}$
+>>
+
+build_unit(unit) ::= <<
+	        m.$unit.SingularName$.Init(UnitTags.$unit.SingularName$, UnitNames.$unit.SingularName$);
+>>
+
+build_interface(interface) ::= <<
+	        m.$interface.SingularName$.Init(tag: "$interface.Tag$", singularName: "$interface.SingularName$"$if(interface.ExistAssignedPluralName)$, pluralName: "$interface.PluralName$"$endif$);
+>>
+
+build_class(class) ::= <<
+	        m.$class.SingularName$.Init(tag: "$class.Tag$", singularName: "$class.SingularName$"$if(class.ExistAssignedPluralName)$, pluralName: "$class.PluralName$"$endif$);
+>>
+
+inheritance(composite) ::= <<$composite.WorkspaceDirectSupertypesByWorkspaceName.(workspaceName):{superType|$build_inheritance(composite, superType)$}$>>
+build_inheritance(composite, superType) ::= <<$\n$                new Inheritance(m.$composite.SingularName$, m.$superType.SingularName$),>>
+
+build_relationType(relationType) ::= <<
+        private IRelationTypeInternals Build$relationType.Name$(LazyM m)
+        {
+            var associationType = (IAssociationTypeInternals)$if(relationType.RoleType.ObjectType.IsUnit)$new AssociationTypeWithUnitRole();$else$m.$relationType.RoleType.ObjectType.SingularName$.$relationType.AssociationType.Name$;$endif$
+            var roleType = (RoleType)m.$relationType.AssociationType.ObjectType.SingularName$.$relationType.RoleType.Name$;
+
+            var relationType = new RelationType("$relationType.Tag$", associationType, m.$relationType.AssociationType.ObjectType.Name$, roleType, m.$relationType.RoleType.ObjectType.Name$$if(relationType.Multiplicity)$, Allors.Multiplicity.$relationType.Multiplicity$$endif$);
+
+            relationType.Init($Separated([isDerived(relationType)], ",")$);
+
+$initRoleType(roleType=relationType.RoleType)$
+
+            return relationType;
+        }
+>>
+
+isDerived(relationType) ::= <<$if(relationType.IsDerived)$isDerived: $relationType.IsDerived$$endif$>>
+
+initRoleType(roleType) ::= <<
+            roleType.Init($Separated([singularName(roleType), pluralName(roleType), size(roleType), precision(roleType), scale(roleType), isRequired(roleType), isUnique(roleType), mediaType(roleType)], ",")$);
+>>
+
+singularName(roleType) ::= <<$if(roleType.ExistAssignedSingularName)$singularName: "$roleType.SingularName$"$endif$>>
+pluralName(roleType) ::= <<$if(roleType.ExistAssignedPluralName)$pluralName: "$roleType.PluralName$"$endif$>>
+size(roleType) ::= <<$if(relationType.RoleType.Size)$size: $relationType.RoleType.Size$ $endif$>>
+precision(roleType) ::= <<$if(relationType.RoleType.Precision)$precision: $relationType.RoleType.Precision$$endif$>>
+scale(roleType) ::= <<$if(relationType.RoleType.Scale)$scale: $relationType.RoleType.Scale$$endif$>>
+isRequired(roleType) ::= <<$if(relationType.RoleType.IsRequired)$isRequired: $relationType.RoleType.IsRequired$$endif$>>
+isUnique(roleType) ::= <<$if(relationType.RoleType.IsUnique)$isUnique: $relationType.RoleType.IsUnique$$endif$>>
+mediaType(roleType) ::= <<$if(relationType.RoleType.MediaType)$mediaType: "$relationType.RoleType.MediaType$"$endif$>>
+
+build_methodType(methodType) ::= <<
+        private IMethodTypeInternals Build$methodType.FullName$(LazyM m)
+        {
+            return ((MethodType)m.$methodType.ObjectType.Name$.$methodType.Name$).Init("$methodType.Tag$", m.$methodType.ObjectType.Name$, "$methodType.Name$");
+        }
+>>
+
+assign_properties(composite) ::= <<
+$composite.WorkspaceInheritedRoleTypesByWorkspaceName.(workspaceName):{roleType|$assign_roleType(roleType)$}; separator="\n"$
+$composite.WorkspaceInheritedAssociationTypesByWorkspaceName.(workspaceName):{associationType|$assign_associationType(associationType)$}; separator="\n"$
+>>
+
+assign_roleType(roleType) ::= <<
+                m.$composite.SingularName$.$roleType.Name$ = m.$roleType.AssociationType.ObjectType.SingularName$.$roleType.Name$;
+>>
+
+assign_associationType(associationType) ::= <<
+                m.$composite.SingularName$.$associationType.Name$ = ($associationType.Name$) m.$associationType.ObjectType.SingularName$.$associationType.RoleType.Name$.AssociationType;
+>>
+
+assign_methods(composite) ::= <<
+$composite.WorkspaceInheritedMethodTypesByWorkspaceName.(workspaceName):{methodType|$assign_methodType(methodType)$}; separator="\n"$
+>>
+
+assign_methodType(methodType) ::= <<
+                m.$composite.SingularName$.$methodType.Name$ = m.$methodType.ObjectType.SingularName$.$methodType.Name$;
+>>
+
+DropEmpty ::= ["": false, default: key]
+
+Separated(l, s, w=false) ::= "$if (DropEmpty.(first(l)))$$if (w)$$s$$endif$$first(l)$$Separated(rest(l), s, true)$$else$$if (rest(l))$$Separated(rest(l), s, w)$$endif$$endif$"
+
 
