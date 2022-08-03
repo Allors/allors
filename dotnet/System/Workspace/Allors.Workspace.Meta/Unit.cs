@@ -1,4 +1,4 @@
-// <copyright file="Unit.cs" company="Allors bvba">
+// <copyright file="IUnit.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -9,67 +9,43 @@ namespace Allors.Workspace.Meta
     using System;
     using Text;
 
-    public abstract class Unit : IUnitInternals
+    public abstract class Unit : IObjectType
     {
         public MetaPopulation MetaPopulation { get; set; }
 
-        private string Tag { get; set; }
+        public string Tag { get; set; }
 
-        private string SingularName { get; set; }
+        public string SingularName { get; set; }
 
-        private string PluralName { get; set; }
+        public string PluralName { get; set; }
 
-        private Type ClrType { get; set; }
+        public Type ClrType { get; set; }
 
-        #region IComparable
         int IComparable<IObjectType>.CompareTo(IObjectType other) => string.Compare(this.SingularName, other.SingularName, StringComparison.InvariantCulture);
-        #endregion
 
-        #region IMetaObject
+        public bool IsUnit => true;
 
-        IMetaPopulation IMetaObject.MetaPopulation => this.MetaPopulation;
+        public bool IsComposite => false;
 
-        #endregion
+        public bool IsInterface => false;
 
-        #region IMetaIdentifiableObject
-        string IMetaObject.Tag => this.Tag;
+        public bool IsClass => false;
 
-        #endregion
+        public bool IsBinary => this.Tag == UnitTags.Binary;
 
-        #region IObjectType
-        bool IObjectType.IsUnit => true;
+        public bool IsBoolean => this.Tag == UnitTags.Boolean;
 
-        bool IObjectType.IsComposite => false;
+        public bool IsDateTime => this.Tag == UnitTags.DateTime;
 
-        bool IObjectType.IsInterface => false;
+        public bool IsDecimal => this.Tag == UnitTags.Decimal;
 
-        bool IObjectType.IsClass => false;
+        public bool IsFloat => this.Tag == UnitTags.Float;
 
-        string IObjectType.SingularName => this.SingularName;
+        public bool IsInteger => this.Tag == UnitTags.Integer;
 
-        string IObjectType.PluralName => this.PluralName;
+        public bool IsString => this.Tag == UnitTags.String;
 
-        Type IObjectType.ClrType => this.ClrType;
-        #endregion
-
-        #region IUnit
-
-        bool IUnit.IsBinary => this.Tag == UnitTags.Binary;
-
-        bool IUnit.IsBoolean => this.Tag == UnitTags.Boolean;
-
-        bool IUnit.IsDateTime => this.Tag == UnitTags.DateTime;
-
-        bool IUnit.IsDecimal => this.Tag == UnitTags.Decimal;
-
-        bool IUnit.IsFloat => this.Tag == UnitTags.Float;
-
-        bool IUnit.IsInteger => this.Tag == UnitTags.Integer;
-
-        bool IUnit.IsString => this.Tag == UnitTags.String;
-
-        bool IUnit.IsUnique => this.Tag == UnitTags.Unique;
-        #endregion
+        public bool IsUnique => this.Tag == UnitTags.Unique;
 
         public Unit Init(string tag, string singularName)
         {
@@ -80,7 +56,7 @@ namespace Allors.Workspace.Meta
             return this;
         }
 
-        void IUnitInternals.Bind()
+        public void Bind()
         {
             switch (this.Tag)
             {

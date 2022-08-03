@@ -9,13 +9,13 @@ namespace Allors.Workspace.Data
 
     public class LessThan : IRolePredicate
     {
-        public LessThan(IRoleType roleType = null) => this.RoleType = roleType;
+        public LessThan(RoleType roleType = null) => this.RoleType = roleType;
 
-        public IRoleType RoleType { get; set; }
+        public RoleType RoleType { get; set; }
 
         public object Value { get; set; }
 
-        public IRoleType Path { get; set; }
+        public RoleType Path { get; set; }
 
         public string Parameter { get; set; }
 

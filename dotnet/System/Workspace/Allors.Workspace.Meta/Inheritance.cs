@@ -8,14 +8,14 @@ namespace Allors.Workspace.Meta
 {
     public sealed class Inheritance
     {
-        public Inheritance(ICompositeInternals subtype, IInterfaceInternals supertype)
+        public Inheritance(IComposite subtype, Interface supertype)
         {
             this.Subtype = subtype;
             this.Supertype = supertype;
         }
 
-        public IInterfaceInternals Supertype { get; }
+        public Interface Supertype { get; }
 
-        public ICompositeInternals Subtype { get; }
+        public IComposite Subtype { get; }
     }
 }

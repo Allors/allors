@@ -22,8 +22,8 @@ namespace Allors.Workspace.Adapters
             this.Session = session;
             this.Created = created ?? EmptySet<IStrategy>.Instance;
             this.Instantiated = instantiated ?? EmptySet<IStrategy>.Instance;
-            this.AssociationsByRoleType = new Dictionary<IRoleType, ISet<IStrategy>>();
-            this.RolesByAssociationType = new Dictionary<IAssociationType, ISet<IStrategy>>();
+            this.AssociationsByRoleType = new Dictionary<RoleType, ISet<IStrategy>>();
+            this.RolesByAssociationType = new Dictionary<AssociationType, ISet<IStrategy>>();
         }
 
         private Session Session { get; }
@@ -34,9 +34,9 @@ namespace Allors.Workspace.Adapters
 
         public ISet<IStrategy> Instantiated { get; }
 
-        public IDictionary<IRoleType, ISet<IStrategy>> AssociationsByRoleType { get; }
+        public IDictionary<RoleType, ISet<IStrategy>> AssociationsByRoleType { get; }
 
-        public IDictionary<IAssociationType, ISet<IStrategy>> RolesByAssociationType { get; }
+        public IDictionary<AssociationType, ISet<IStrategy>> RolesByAssociationType { get; }
 
         public void AddSessionStateChanges(IDictionary<IPropertyType, IDictionary<Strategy, object>> sessionStateChangeSet)
         {
@@ -46,10 +46,10 @@ namespace Allors.Workspace.Adapters
 
                 switch (kvp.Key)
                 {
-                    case IAssociationType associationType:
+                    case AssociationType associationType:
                         this.RolesByAssociationType.Add(associationType, strategies);
                         break;
-                    case IRoleType roleType:
+                    case RoleType roleType:
                         this.AssociationsByRoleType.Add(roleType, strategies);
                         break;
                     default:
@@ -58,7 +58,7 @@ namespace Allors.Workspace.Adapters
             }
         }
 
-        public void DiffUnit(Strategy association, IRelationType relationType, object current, object previous)
+        public void DiffUnit(Strategy association, RelationType relationType, object current, object previous)
         {
             if (!Equals(current, previous))
             {
@@ -66,7 +66,7 @@ namespace Allors.Workspace.Adapters
             }
         }
 
-        public void DiffComposite(Strategy association, IRelationType relationType, Strategy current, long? previous)
+        public void DiffComposite(Strategy association, RelationType relationType, Strategy current, long? previous)
         {
             if (Equals(current?.Id, previous))
             {
@@ -86,7 +86,7 @@ namespace Allors.Workspace.Adapters
             this.AddAssociation(relationType, association);
         }
 
-        public void DiffComposite(Strategy association, IRelationType relationType, long? current, long? previous)
+        public void DiffComposite(Strategy association, RelationType relationType, long? current, long? previous)
         {
             if (Equals(current, previous))
             {
@@ -106,7 +106,7 @@ namespace Allors.Workspace.Adapters
             this.AddAssociation(relationType, association);
         }
 
-        public void DiffComposite(Strategy association, IRelationType relationType, Strategy current, Strategy previous)
+        public void DiffComposite(Strategy association, RelationType relationType, Strategy current, Strategy previous)
         {
             if (Equals(current, previous))
             {
@@ -126,21 +126,21 @@ namespace Allors.Workspace.Adapters
             this.AddAssociation(relationType, association);
         }
 
-        public void DiffComposites(Strategy association, IRelationType relationType, IRange<Strategy> current, IRange<long> previousRange)
+        public void DiffComposites(Strategy association, RelationType relationType, IRange<Strategy> current, IRange<long> previousRange)
         {
             var ranges = this.Session.Workspace.RecordRanges;
             var previous = this.Session.Workspace.StrategyRanges.Load(ranges.Ensure(previousRange).Select(v => this.Session.GetStrategy(v)));
             this.DiffComposites(association, relationType, current, previous);
         }
 
-        public void DiffComposites(Strategy association, IRelationType relationType, IRange<long> currentRange, IRange<long> previous)
+        public void DiffComposites(Strategy association, RelationType relationType, IRange<long> currentRange, IRange<long> previous)
         {
             var ranges = this.Session.Workspace.RecordRanges;
             var current = this.Session.Workspace.StrategyRanges.Load(ranges.Ensure(currentRange).Select(v => this.Session.GetStrategy(v)));
             this.DiffComposites(association, relationType, current, previous);
         }
 
-        public void DiffComposites(Strategy association, IRelationType relationType, IRange<Strategy> current, IRange<Strategy> previous)
+        public void DiffComposites(Strategy association, RelationType relationType, IRange<Strategy> current, IRange<Strategy> previous)
         {
             var hasChange = false;
 
@@ -162,7 +162,7 @@ namespace Allors.Workspace.Adapters
             }
         }
 
-        private void AddAssociation(IRelationType relationType, Strategy association)
+        private void AddAssociation(RelationType relationType, Strategy association)
         {
             var roleType = relationType.RoleType;
 
@@ -175,7 +175,7 @@ namespace Allors.Workspace.Adapters
             associations.Add(association);
         }
 
-        private void AddRole(IRelationType relationType, Strategy role)
+        private void AddRole(RelationType relationType, Strategy role)
         {
             var associationType = relationType.AssociationType;
 

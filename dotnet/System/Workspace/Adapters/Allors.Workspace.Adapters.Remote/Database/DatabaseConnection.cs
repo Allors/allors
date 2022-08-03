@@ -24,9 +24,9 @@ namespace Allors.Workspace.Adapters.Remote
 
         private readonly Func<IWorkspaceServices> servicesBuilder;
 
-        private readonly Dictionary<IClass, Dictionary<IOperandType, long>> readPermissionByOperandTypeByClass;
-        private readonly Dictionary<IClass, Dictionary<IOperandType, long>> writePermissionByOperandTypeByClass;
-        private readonly Dictionary<IClass, Dictionary<IOperandType, long>> executePermissionByOperandTypeByClass;
+        private readonly Dictionary<Class, Dictionary<IOperandType, long>> readPermissionByOperandTypeByClass;
+        private readonly Dictionary<Class, Dictionary<IOperandType, long>> writePermissionByOperandTypeByClass;
+        private readonly Dictionary<Class, Dictionary<IOperandType, long>> executePermissionByOperandTypeByClass;
 
         protected DatabaseConnection(Adapters.Configuration configuration, IdGenerator idGenerator, Func<IWorkspaceServices> servicesBuilder, IRanges<long> ranges) : base(configuration, idGenerator)
         {
@@ -39,9 +39,9 @@ namespace Allors.Workspace.Adapters.Remote
             this.RevocationById = new Dictionary<long, Revocation>();
             this.Permissions = new HashSet<long>();
 
-            this.readPermissionByOperandTypeByClass = new Dictionary<IClass, Dictionary<IOperandType, long>>();
-            this.writePermissionByOperandTypeByClass = new Dictionary<IClass, Dictionary<IOperandType, long>>();
-            this.executePermissionByOperandTypeByClass = new Dictionary<IClass, Dictionary<IOperandType, long>>();
+            this.readPermissionByOperandTypeByClass = new Dictionary<Class, Dictionary<IOperandType, long>>();
+            this.writePermissionByOperandTypeByClass = new Dictionary<Class, Dictionary<IOperandType, long>>();
+            this.executePermissionByOperandTypeByClass = new Dictionary<Class, Dictionary<IOperandType, long>>();
         }
 
         internal Dictionary<long, AccessControl> AccessControlById { get; }
@@ -170,9 +170,9 @@ namespace Allors.Workspace.Adapters.Remote
                 foreach (var syncResponsePermission in permissionResponse.p)
                 {
                     var id = syncResponsePermission.i;
-                    var @class = (IClass)this.Configuration.MetaPopulation.FindByTag(syncResponsePermission.c);
+                    var @class = (Class)this.Configuration.MetaPopulation.FindByTag(syncResponsePermission.c);
                     var metaObject = this.Configuration.MetaPopulation.FindByTag(syncResponsePermission.t);
-                    var operandType = (IOperandType)(metaObject as IRelationType)?.RoleType ?? (IMethodType)metaObject;
+                    var operandType = (IOperandType)(metaObject as RelationType)?.RoleType ?? (MethodType)metaObject;
                     var operation = (Operations)syncResponsePermission.o;
 
                     this.Permissions.Add(id);
@@ -220,7 +220,7 @@ namespace Allors.Workspace.Adapters.Remote
             }
         }
 
-        public override long GetPermission(IClass @class, IOperandType operandType, Operations operation)
+        public override long GetPermission(Class @class, IOperandType operandType, Operations operation)
         {
             switch (operation)
             {

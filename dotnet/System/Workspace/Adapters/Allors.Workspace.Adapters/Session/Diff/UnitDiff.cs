@@ -9,7 +9,7 @@ namespace Allors.Workspace.Adapters
 
     public class UnitDiff : Diff, IUnitDiff
     {
-        public UnitDiff(IRelationType relationType, Strategy association) : base(relationType, association)
+        public UnitDiff(RelationType relationType, Strategy association) : base(relationType, association)
         {
         }
 

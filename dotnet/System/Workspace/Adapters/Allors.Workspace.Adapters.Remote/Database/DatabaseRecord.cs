@@ -15,13 +15,13 @@ namespace Allors.Workspace.Adapters.Remote
     {
         private readonly DatabaseConnection database;
 
-        private Dictionary<IRelationType, object> roleByRelationType;
+        private Dictionary<RelationType, object> roleByRelationType;
         private SyncResponseRole[] syncResponseRoles;
 
-        internal DatabaseRecord(DatabaseConnection database, IClass @class, long id, long version) : base(@class, id, version) => this.database = database;
+        internal DatabaseRecord(DatabaseConnection database, Class @class, long id, long version) : base(@class, id, version) => this.database = database;
 
         internal static DatabaseRecord FromResponse(DatabaseConnection database, ResponseContext ctx, SyncResponseObject syncResponseObject) =>
-            new DatabaseRecord(database, (IClass)database.Configuration.MetaPopulation.FindByTag(syncResponseObject.c), syncResponseObject.i, syncResponseObject.v)
+            new DatabaseRecord(database, (Class)database.Configuration.MetaPopulation.FindByTag(syncResponseObject.c), syncResponseObject.i, syncResponseObject.v)
             {
                 syncResponseRoles = syncResponseObject.ro,
                 GrantIds = database.Ranges.Load(ctx.CheckForMissingGrants(syncResponseObject.g)),
@@ -32,7 +32,7 @@ namespace Allors.Workspace.Adapters.Remote
 
         internal IRange<long> RevocationIds { get; private set; }
 
-        private Dictionary<IRelationType, object> RoleByRelationType
+        private Dictionary<RelationType, object> RoleByRelationType
         {
             get
             {
@@ -41,10 +41,10 @@ namespace Allors.Workspace.Adapters.Remote
                     var ranges = this.database.Ranges;
                     var metaPopulation = this.database.Configuration.MetaPopulation;
                     this.roleByRelationType = this.syncResponseRoles.ToDictionary(
-                        v => (IRelationType)metaPopulation.FindByTag(v.t),
+                        v => (RelationType)metaPopulation.FindByTag(v.t),
                         v =>
                         {
-                            var roleType = ((IRelationType)metaPopulation.FindByTag(v.t)).RoleType;
+                            var roleType = ((RelationType)metaPopulation.FindByTag(v.t)).RoleType;
                             var objectType = roleType.ObjectType;
 
                             if (objectType.IsUnit)
@@ -67,7 +67,7 @@ namespace Allors.Workspace.Adapters.Remote
             }
         }
 
-        public override object GetRole(IRoleType roleType)
+        public override object GetRole(RoleType roleType)
         {
             object @object = null;
             this.RoleByRelationType?.TryGetValue(roleType.RelationType, out @object);

@@ -10,13 +10,13 @@ namespace Allors.Workspace.Data
 
     public class Between : IRolePredicate
     {
-        public Between(IRoleType roleType = null) => this.RoleType = roleType;
+        public Between(RoleType roleType = null) => this.RoleType = roleType;
 
-        public IRoleType RoleType { get; set; }
+        public RoleType RoleType { get; set; }
 
         public IEnumerable<object> Values { get; set; }
 
-        public IEnumerable<IRoleType> Paths { get; set; }
+        public IEnumerable<RoleType> Paths { get; set; }
 
         public string Parameter { get; set; }
 

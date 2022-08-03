@@ -19,7 +19,7 @@ namespace Allors.Workspace.Data
 
         public object Value { get; set; }
 
-        public IRoleType Path { get; set; }
+        public RoleType Path { get; set; }
 
         public string Parameter { get; set; }
 

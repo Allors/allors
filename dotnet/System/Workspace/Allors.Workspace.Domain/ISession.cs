@@ -24,7 +24,7 @@ namespace Allors.Workspace
 
         T Create<T>() where T : class, IObject;
 
-        T Create<T>(IClass @class) where T : class, IObject;
+        T Create<T>(Class @class) where T : class, IObject;
 
         #region Instantiate
         T Instantiate<T>(IObject @object) where T : class, IObject;

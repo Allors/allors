@@ -45,7 +45,7 @@ namespace Tests.Workspace
 
         public async Task<T> Create<T>(ISession session, DatabaseMode mode) where T : class, IObject
         {
-            var @class = (IClass)session.Workspace.Configuration.ObjectFactory.GetObjectType<T>();
+            var @class = (Class)session.Workspace.Configuration.ObjectFactory.GetObjectType<T>();
 
             T result;
             switch (mode)

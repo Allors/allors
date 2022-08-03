@@ -9,7 +9,7 @@ namespace Allors.Workspace.Adapters
 
     public class CompositeDiff : Diff, ICompositeDiff
     {
-        public CompositeDiff(IRelationType relationType, Strategy association) : base(relationType, association)
+        public CompositeDiff(RelationType relationType, Strategy association) : base(relationType, association)
         {
         }
 

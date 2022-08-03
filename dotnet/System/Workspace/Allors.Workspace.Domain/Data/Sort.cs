@@ -9,9 +9,9 @@ namespace Allors.Workspace.Data
 
     public class Sort : IVisitable
     {
-        public Sort(IRoleType roleType = null) => this.RoleType = roleType;
+        public Sort(RoleType roleType = null) => this.RoleType = roleType;
 
-        public IRoleType RoleType { get; set; }
+        public RoleType RoleType { get; set; }
 
         public SortDirection? SortDirection { get; set; }
 

@@ -9,7 +9,7 @@ namespace Allors.Workspace
 
     public readonly struct Method
     {
-        public Method(IObject @object, IMethodType methodType)
+        public Method(IObject @object, MethodType methodType)
         {
             this.Object = @object;
             this.MethodType = methodType;
@@ -17,6 +17,6 @@ namespace Allors.Workspace
 
         public IObject Object { get; }
 
-        public IMethodType MethodType { get; }
+        public MethodType MethodType { get; }
     }
 }

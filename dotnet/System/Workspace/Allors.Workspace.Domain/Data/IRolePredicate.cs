@@ -9,6 +9,6 @@ namespace Allors.Workspace.Data
 
     public interface IRolePredicate : IPredicate
     {
-        IRoleType RoleType { get; set; }
+        RoleType RoleType { get; set; }
     }
 }

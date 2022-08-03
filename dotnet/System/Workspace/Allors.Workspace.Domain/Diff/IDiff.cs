@@ -4,7 +4,7 @@ namespace Allors.Workspace
 
     public interface IDiff
     {
-        IRelationType RelationType { get; }
+        RelationType RelationType { get; }
 
         IStrategy Association { get; }
     }

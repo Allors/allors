@@ -9,6 +9,6 @@ namespace Allors.Workspace.Adapters.Local
 
     public class Configuration : Adapters.Configuration
     {
-        public Configuration(string name, IMetaPopulation metaPopulation, ReflectionObjectFactory objectFactory) : base(name, metaPopulation, objectFactory) { }
+        public Configuration(string name, MetaPopulation metaPopulation, ReflectionObjectFactory objectFactory) : base(name, metaPopulation, objectFactory) { }
     }
 }

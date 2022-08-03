@@ -1,4 +1,4 @@
-// <copyright file="MetaPopulation.cs" company="Allors bvba">
+// <copyright file="IMetaPopulation.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -10,36 +10,32 @@ namespace Allors.Workspace.Meta
     using System.Collections.Generic;
     using System.Linq;
 
-    public abstract class MetaPopulation : IMetaPopulation
+    public abstract class MetaPopulation
     {
-        private IUnitInternals[] Units { get; set; }
-        private IInterfaceInternals[] Interfaces { get; set; }
-        private IClassInternals[] Classes { get; set; }
-        private IRelationTypeInternals[] RelationTypes { get; set; }
-        private IMethodTypeInternals[] MethodTypes { get; set; }
+        // class
+        public Unit[] Units { get; private set; }
+        public Interface[] Interfaces { get; private set; }
+        public Class[] Classes { get; private set; }
+        public RelationType[] RelationTypes { get; private set; }
+        public MethodType[] MethodTypes { get; private set; }
 
-        private Dictionary<string, IMetaObject> MetaObjectByTag { get; set; }
-        private ICompositeInternals[] Composites { get; set; }
-        private Dictionary<string, ICompositeInternals> CompositeByLowercaseName { get; set; }
+        public Dictionary<string, IMetaObject> MetaObjectByTag { get; private set; }
+        public IComposite[] Composites { get; private set; }
+        public Dictionary<string, IComposite> CompositeByLowercaseName { get; private set; }
 
-        #region IMetaPopulation
-        IEnumerable<IUnit> IMetaPopulation.Units => this.Units;
-        IEnumerable<IInterface> IMetaPopulation.Interfaces => this.Interfaces;
-        IEnumerable<IClass> IMetaPopulation.Classes => this.Classes;
-        IEnumerable<IRelationType> IMetaPopulation.RelationTypes => this.RelationTypes;
-        IEnumerable<IMethodType> IMetaPopulation.MethodTypes => this.MethodTypes;
-        IEnumerable<IComposite> IMetaPopulation.Composites => this.Composites;
-        IMetaObject IMetaPopulation.FindByTag(string tag)
+        public IMetaObject FindByTag(string tag)
         {
             this.MetaObjectByTag.TryGetValue(tag, out var metaObject);
             return metaObject;
         }
-        IComposite IMetaPopulation.FindByName(string name)
+
+        public IComposite FindByName(string name)
         {
             this.CompositeByLowercaseName.TryGetValue(name.ToLowerInvariant(), out var composite);
             return composite;
         }
-        void IMetaPopulation.Bind(Type[] types)
+
+        public void Bind(Type[] types)
         {
             var typeByName = types.ToDictionary(type => type.Name, type => type);
 
@@ -59,9 +55,7 @@ namespace Allors.Workspace.Meta
             }
         }
 
-        #endregion
-
-        public void Init(IUnitInternals[] units, IInterfaceInternals[] interfaces, IClassInternals[] classes, Inheritance[] inheritances, IRelationTypeInternals[] relationTypes, IMethodTypeInternals[] methodTypes)
+        public void Init(Unit[] units, Interface[] interfaces, Class[] classes, Inheritance[] inheritances, RelationType[] relationTypes, MethodType[] methodTypes)
         {
             this.Units = units;
             this.Interfaces = interfaces;
@@ -77,7 +71,7 @@ namespace Allors.Workspace.Meta
                 .Union(this.MethodTypes)
                 .ToDictionary(v => v.Tag, v => v);
 
-            this.Composites = this.Interfaces.Cast<ICompositeInternals>().Union(this.Classes).ToArray();
+            this.Composites = this.Interfaces.Cast<IComposite>().Union(this.Classes).ToArray();
             this.CompositeByLowercaseName = this.Composites.ToDictionary(v => v.SingularName.ToLowerInvariant());
 
             foreach (var composite in this.Composites)
@@ -99,20 +93,20 @@ namespace Allors.Workspace.Meta
             foreach (var grouping in inheritances.GroupBy(v => v.Subtype, v => v.Supertype))
             {
                 var composite = grouping.Key;
-                composite.DirectSupertypes = new HashSet<IInterfaceInternals>(grouping);
+                composite.DirectSupertypes = new HashSet<Interface>(grouping);
             }
 
             // DirectSubtypes
             foreach (var grouping in inheritances.GroupBy(v => v.Supertype, v => v.Subtype))
             {
                 var @interface = grouping.Key;
-                @interface.DirectSubtypes = new HashSet<ICompositeInternals>(grouping);
+                @interface.DirectSubtypes = new HashSet<IComposite>(grouping);
             }
 
             // Supertypes
             foreach (var composite in this.Composites)
             {
-                static IEnumerable<IInterfaceInternals> RecurseDirectSupertypes(ICompositeInternals composite)
+                static IEnumerable<Interface> RecurseDirectSupertypes(IComposite composite)
                 {
                     if (composite.DirectSupertypes != null)
                     {
@@ -128,13 +122,13 @@ namespace Allors.Workspace.Meta
                     }
                 }
 
-                composite.Supertypes = new HashSet<IInterfaceInternals>(RecurseDirectSupertypes(composite));
+                composite.Supertypes = new HashSet<Interface>(RecurseDirectSupertypes(composite));
             }
 
             // Subtypes
             foreach (var @interface in this.Interfaces)
             {
-                static IEnumerable<ICompositeInternals> RecurseDirectSubtypes(IInterfaceInternals @interface)
+                static IEnumerable<IComposite> RecurseDirectSubtypes(Interface @interface)
                 {
                     if (@interface.DirectSubtypes != null)
                     {
@@ -153,8 +147,8 @@ namespace Allors.Workspace.Meta
                     }
                 }
 
-                @interface.Subtypes = new HashSet<ICompositeInternals>(RecurseDirectSubtypes(@interface));
-                @interface.Classes = new HashSet<IClassInternals>(@interface.Subtypes.Where(v => v.IsClass).Cast<Class>());
+                @interface.Subtypes = new HashSet<IComposite>(RecurseDirectSubtypes(@interface));
+                @interface.Classes = new HashSet<Class>(@interface.Subtypes.Where(v => v.IsClass).Cast<Class>());
             }
 
             // RoleTypes
@@ -166,7 +160,7 @@ namespace Allors.Workspace.Meta
                 foreach (var objectType in this.Composites)
                 {
                     exclusiveRoleTypesObjectType.TryGetValue(objectType, out var exclusiveRoleTypes);
-                    objectType.ExclusiveRoleTypes = exclusiveRoleTypes ?? Array.Empty<IRoleTypeInternals>();
+                    objectType.ExclusiveRoleTypes = exclusiveRoleTypes ?? Array.Empty<RoleType>();
                 }
             }
 
@@ -179,7 +173,7 @@ namespace Allors.Workspace.Meta
                 foreach (var objectType in this.Composites)
                 {
                     exclusiveAssociationTypesByObjectType.TryGetValue(objectType, out var exclusiveAssociationTypes);
-                    objectType.ExclusiveAssociationTypes = exclusiveAssociationTypes ?? Array.Empty<IAssociationTypeInternals>();
+                    objectType.ExclusiveAssociationTypes = exclusiveAssociationTypes ?? Array.Empty<AssociationType>();
                 }
             }
 
@@ -192,7 +186,7 @@ namespace Allors.Workspace.Meta
                 foreach (var objectType in this.Composites)
                 {
                     exclusiveMethodTypeByObjectType.TryGetValue(objectType, out var exclusiveMethodTypes);
-                    objectType.ExclusiveMethodTypes = exclusiveMethodTypes ?? Array.Empty<IMethodTypeInternals>();
+                    objectType.ExclusiveMethodTypes = exclusiveMethodTypes ?? Array.Empty<MethodType>();
                 }
             }
         }

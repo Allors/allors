@@ -44,7 +44,7 @@ namespace Allors.Workspace.Adapters
         /// </param>
         /// <param name="instance"></param>
         /// <exception cref="ArgumentException"></exception>
-        public ReflectionObjectFactory(IMetaPopulation metaPopulation, Type instance)
+        public ReflectionObjectFactory(MetaPopulation metaPopulation, Type instance)
         {
             var assembly = instance.GetTypeInfo().Assembly;
 
@@ -72,7 +72,7 @@ namespace Allors.Workspace.Adapters
                 this.objectTypeByName[type.Name] = objectType;
                 this.objectTypeByObjectTypeTag[objectType.Tag] = objectType;
 
-                if (objectType is IClass)
+                if (objectType is Class)
                 {
                     var parameterTypes = new[] { typeof(IStrategy) };
                     var databaseParameterTypes = new[] { typeof(IStrategy) };

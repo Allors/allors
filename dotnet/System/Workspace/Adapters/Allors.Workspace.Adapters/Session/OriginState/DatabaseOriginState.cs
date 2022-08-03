@@ -21,7 +21,7 @@ namespace Allors.Workspace.Adapters
 
         private bool IsVersionInitial => this.Version == Allors.Version.WorkspaceInitial.Value;
 
-        protected override IEnumerable<IRoleType> RoleTypes => this.Class.DatabaseOriginRoleTypes;
+        protected override IEnumerable<RoleType> RoleTypes => this.Class.DatabaseOriginRoleTypes;
 
         protected bool ExistRecord => this.Record != null;
 
@@ -31,7 +31,7 @@ namespace Allors.Workspace.Adapters
 
         private bool IsPushed { get; set; }
 
-        public bool CanRead(IRoleType roleType)
+        public bool CanRead(RoleType roleType)
         {
             if (!this.ExistRecord)
             {
@@ -48,7 +48,7 @@ namespace Allors.Workspace.Adapters
             return this.DatabaseRecord.IsPermitted(permission);
         }
 
-        public bool CanWrite(IRoleType roleType)
+        public bool CanWrite(RoleType roleType)
         {
             if (this.IsVersionInitial)
             {
@@ -69,7 +69,7 @@ namespace Allors.Workspace.Adapters
             return this.DatabaseRecord.IsPermitted(permission);
         }
 
-        public bool CanExecute(IMethodType methodType)
+        public bool CanExecute(MethodType methodType)
         {
             if (!this.ExistRecord)
             {

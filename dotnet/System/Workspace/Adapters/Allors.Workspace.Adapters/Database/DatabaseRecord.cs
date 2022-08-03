@@ -9,20 +9,20 @@ namespace Allors.Workspace.Adapters
 
     public abstract class DatabaseRecord : IRecord
     {
-        protected DatabaseRecord(IClass @class, long id, long version)
+        protected DatabaseRecord(Class @class, long id, long version)
         {
             this.Class = @class;
             this.Id = id;
             this.Version = version;
         }
 
-        public IClass Class { get; }
+        public Class Class { get; }
 
         public long Id { get; }
 
         public long Version { get; }
 
-        public abstract object GetRole(IRoleType roleType);
+        public abstract object GetRole(RoleType roleType);
 
         public abstract bool IsPermitted(long permission);
     }

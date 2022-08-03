@@ -41,11 +41,11 @@ namespace Allors.Workspace
         /// <summary>
         /// Gets the association objects by changed role type.
         /// </summary>
-        IDictionary<IRoleType, ISet<IStrategy>> AssociationsByRoleType { get; }
+        IDictionary<RoleType, ISet<IStrategy>> AssociationsByRoleType { get; }
 
         /// <summary>
         /// Gets the role objects by changed association type.
         /// </summary>
-        IDictionary<IAssociationType, ISet<IStrategy>> RolesByAssociationType { get; }
+        IDictionary<AssociationType, ISet<IStrategy>> RolesByAssociationType { get; }
     }
 }

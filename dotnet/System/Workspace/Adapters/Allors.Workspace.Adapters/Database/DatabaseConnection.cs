@@ -23,7 +23,7 @@ namespace Allors.Workspace.Adapters
 
         public abstract DatabaseRecord GetRecord(long id);
 
-        public abstract long GetPermission(IClass @class, IOperandType operandType, Operations operation);
+        public abstract long GetPermission(Class @class, IOperandType operandType, Operations operation);
 
         public long NextId() => this.idGenerator.Next();
     }

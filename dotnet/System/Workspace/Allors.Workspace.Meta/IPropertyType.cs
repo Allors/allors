@@ -9,7 +9,7 @@ namespace Allors.Workspace.Meta
     using System;
 
     /// <summary>
-    /// A <see cref="IPropertyType"/> can be a <see cref="IAssociationType"/> or a <see cref="IRoleType"/>.
+    /// A <see cref="IPropertyType"/> can be a <see cref="AssociationType"/> or a <see cref="RoleType"/>.
     /// </summary>
     public interface IPropertyType : IOperandType, IComparable<IPropertyType>
     {

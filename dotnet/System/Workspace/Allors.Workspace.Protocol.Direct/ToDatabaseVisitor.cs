@@ -187,17 +187,17 @@ namespace Allors.Workspace.Protocol.Direct
         private IPropertyType Visit(Meta.IPropertyType ws) =>
             ws switch
             {
-                Meta.IAssociationType associationType => this.Visit(associationType),
-                Meta.IRoleType roleType => this.Visit(roleType),
+                Meta.AssociationType associationType => this.Visit(associationType),
+                Meta.RoleType roleType => this.Visit(roleType),
                 null => null,
                 _ => throw new ArgumentException("Invalid property type")
             };
 
-        private IAssociationType Visit(Meta.IAssociationType ws) => ws != null ? ((IRelationType)this.metaPopulation.FindByTag(ws.OperandTag)).AssociationType : null;
+        private IAssociationType Visit(Meta.AssociationType ws) => ws != null ? ((IRelationType)this.metaPopulation.FindByTag(ws.OperandTag)).AssociationType : null;
 
-        private IRoleType Visit(Meta.IRoleType ws) => ws != null ? ((IRelationType)this.metaPopulation.FindByTag(ws.OperandTag)).RoleType : null;
+        private IRoleType Visit(Meta.RoleType ws) => ws != null ? ((IRelationType)this.metaPopulation.FindByTag(ws.OperandTag)).RoleType : null;
 
-        private IRoleType[] Visit(IEnumerable<Meta.IRoleType> ws) => ws?.Select(v => ((IRelationType)this.metaPopulation.FindByTag(v.OperandTag)).RoleType).ToArray();
+        private IRoleType[] Visit(IEnumerable<Meta.RoleType> ws) => ws?.Select(v => ((IRelationType)this.metaPopulation.FindByTag(v.OperandTag)).RoleType).ToArray();
 
         private IObject[] Visit(IEnumerable<Workspace.IObject> ws) => ws != null ? this.transaction.Instantiate(ws.Select(v => v.Id)) : null;
 

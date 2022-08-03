@@ -51,8 +51,8 @@ namespace Allors.Workspace.Adapters.Local
                     var databaseClass = @object.Strategy.Class;
                     var roleTypes = databaseClass.DatabaseRoleTypes.Where(w => w.RelationType.WorkspaceNames.Length > 0);
 
-                    var workspaceClass = (IClass)this.Configuration.MetaPopulation.FindByTag(databaseClass.Tag);
-                    var roleByRoleType = roleTypes.ToDictionary(w => ((IRelationType)this.Configuration.MetaPopulation.FindByTag(w.RelationType.Tag)).RoleType, w => this.GetRole(@object, w));
+                    var workspaceClass = (Class)this.Configuration.MetaPopulation.FindByTag(databaseClass.Tag);
+                    var roleByRoleType = roleTypes.ToDictionary(w => ((RelationType)this.Configuration.MetaPopulation.FindByTag(w.RelationType.Tag)).RoleType, w => this.GetRole(@object, w));
 
                     var acl = accessControl[@object];
 
@@ -71,7 +71,7 @@ namespace Allors.Workspace.Adapters.Local
             return databaseObjects;
         }
 
-        public override long GetPermission(IClass workspaceClass, IOperandType operandType, Operations operation)
+        public override long GetPermission(Class workspaceClass, IOperandType operandType, Operations operation)
         {
             var @class = (Database.Meta.IClass)this.Database.MetaPopulation.FindByTag(workspaceClass.Tag);
             var operandId = this.Database.MetaPopulation.FindByTag(operandType.OperandTag).Id;

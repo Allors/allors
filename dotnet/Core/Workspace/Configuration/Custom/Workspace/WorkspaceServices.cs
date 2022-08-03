@@ -32,7 +32,6 @@ namespace Allors.Workspace
            typeof(T) switch
            {
                // Core
-               { } type when type == typeof(M) => (T)this.M,
                { } type when type == typeof(ITime) => (T)this.Time,
                _ => throw new NotSupportedException($"Service {typeof(T)} not supported")
            };

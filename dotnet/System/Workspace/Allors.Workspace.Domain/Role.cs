@@ -9,7 +9,7 @@ namespace Allors.Workspace
 
     public struct Role
     {
-        public Role(IObject @object, IRelationType relationType)
+        public Role(IObject @object, RelationType relationType)
         {
             this.Object = @object;
             this.RelationType = relationType;
@@ -17,6 +17,6 @@ namespace Allors.Workspace
 
         public IObject Object { get; }
 
-        public IRelationType RelationType { get; }
+        public RelationType RelationType { get; }
     }
 }

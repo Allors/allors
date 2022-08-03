@@ -1,4 +1,4 @@
-// <copyright file="RelationType.cs" company="Allors bvba">
+// <copyright file="IRelationType.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -7,12 +7,13 @@
 namespace Allors.Workspace.Meta
 {
     /// <summary>
-    /// A <see cref="RelationType"/> defines the state and behavior for
-    /// a set of <see cref="AssociationType"/>s and <see cref="RoleType"/>s.
+    /// A relation type defines the state and behavior for
+    /// a set of association types and role types.
     /// </summary>
-    public sealed class RelationType : IRelationTypeInternals
+    public abstract class RelationType : IMetaObject
     {
-        public RelationType(string tag, IAssociationTypeInternals associationType, ICompositeInternals associationObjectType, IRoleTypeInternals roleType, IObjectType roleObjectType, Multiplicity multiplicity = Multiplicity.ManyToOne)
+        // Class
+        public RelationType(string tag, AssociationType associationType, IComposite associationObjectType, RoleType roleType, IObjectType roleObjectType, Multiplicity multiplicity = Multiplicity.ManyToOne)
         {
             this.Tag = tag;
             this.AssociationType = associationType;
@@ -24,42 +25,14 @@ namespace Allors.Workspace.Meta
             this.Multiplicity = this.RoleType.ObjectType.IsUnit ? Multiplicity.OneToOne : multiplicity;
         }
 
-        private IAssociationTypeInternals AssociationType { get; }
-        private IRoleTypeInternals RoleType { get; }
+        public AssociationType AssociationType { get; }
+        public RoleType RoleType { get; }
 
-        private string Tag { get; }
-        private Multiplicity Multiplicity { get; }
-        private bool IsDerived { get; set; }
+        public string Tag { get; }
+        public Multiplicity Multiplicity { get; }
+        public bool IsDerived { get; set; }
 
-        #region IMetaObject
-
-        public IMetaPopulation MetaPopulation { get; }
-
-        #endregion
-
-        #region IMetaIdentifiableObject
-
-        string IMetaObject.Tag => this.Tag;
-
-        #endregion
-
-        #region IRelationType
-
-        IAssociationType IRelationType.AssociationType => this.AssociationType;
-
-        IRoleType IRelationType.RoleType => this.RoleType;
-
-        Multiplicity IRelationType.Multiplicity => this.Multiplicity;
-
-        bool IRelationType.IsDerived => this.IsDerived;
-
-        #endregion
-
-        #region IRelationTypeInternals
-
-        IAssociationTypeInternals IRelationTypeInternals.AssociationType => this.AssociationType;
-        IRoleTypeInternals IRelationTypeInternals.RoleType => this.RoleType;
-        #endregion
+        public MetaPopulation MetaPopulation { get; }
 
         public override string ToString() => $"{this.AssociationType.ObjectType.SingularName}{this.RoleType.Name}";
 

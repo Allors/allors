@@ -28,7 +28,7 @@ namespace Allors.Workspace.Adapters.Remote
 
         public new Workspace Workspace => (Workspace)base.Workspace;
 
-        public override T Create<T>(IClass @class)
+        public override T Create<T>(Class @class)
         {
             var workspaceId = base.Workspace.DatabaseConnection.NextId();
             var strategy = new Strategy(this, @class, workspaceId);

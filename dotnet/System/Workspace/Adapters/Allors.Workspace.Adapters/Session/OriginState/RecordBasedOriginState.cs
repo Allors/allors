@@ -17,17 +17,17 @@ namespace Allors.Workspace.Adapters
 
         protected bool HasChanges => this.Record == null || this.ChangedRoleByRelationType?.Count > 0;
 
-        protected abstract IEnumerable<IRoleType> RoleTypes { get; }
+        protected abstract IEnumerable<RoleType> RoleTypes { get; }
 
         protected abstract IRecord Record { get; }
 
         protected IRecord PreviousRecord { get; set; }
 
-        public Dictionary<IRelationType, object> ChangedRoleByRelationType { get; private set; }
+        public Dictionary<RelationType, object> ChangedRoleByRelationType { get; private set; }
 
-        private Dictionary<IRelationType, object> PreviousChangedRoleByRelationType { get; set; }
+        private Dictionary<RelationType, object> PreviousChangedRoleByRelationType { get; set; }
 
-        public object GetUnitRole(IRoleType roleType)
+        public object GetUnitRole(RoleType roleType)
         {
             if (this.ChangedRoleByRelationType != null && this.ChangedRoleByRelationType.TryGetValue(roleType.RelationType, out var role))
             {
@@ -37,9 +37,9 @@ namespace Allors.Workspace.Adapters
             return this.Record?.GetRole(roleType);
         }
 
-        public void SetUnitRole(IRoleType roleType, object role) => this.SetChangedRole(roleType, role);
+        public void SetUnitRole(RoleType roleType, object role) => this.SetChangedRole(roleType, role);
 
-        public Strategy GetCompositeRole(IRoleType roleType)
+        public Strategy GetCompositeRole(RoleType roleType)
         {
             if (this.ChangedRoleByRelationType != null && this.ChangedRoleByRelationType.TryGetValue(roleType.RelationType, out var changedRole))
             {
@@ -58,7 +58,7 @@ namespace Allors.Workspace.Adapters
             return strategy;
         }
 
-        public void SetCompositeRole(IRoleType roleType, Strategy role)
+        public void SetCompositeRole(RoleType roleType, Strategy role)
         {
             if (this.SameCompositeRole(roleType, role))
             {
@@ -82,7 +82,7 @@ namespace Allors.Workspace.Adapters
             }
         }
 
-        public IRange<Strategy> GetCompositesRole(IRoleType roleType)
+        public IRange<Strategy> GetCompositesRole(RoleType roleType)
         {
             if (this.ChangedRoleByRelationType != null && this.ChangedRoleByRelationType.TryGetValue(roleType.RelationType, out var changedRole))
             {
@@ -104,7 +104,7 @@ namespace Allors.Workspace.Adapters
             }));
         }
 
-        public void AddCompositesRole(IRoleType roleType, Strategy roleToAdd)
+        public void AddCompositesRole(RoleType roleType, Strategy roleToAdd)
         {
             var associationType = roleType.AssociationType;
             var previousAssociation = this.Session.GetCompositeAssociation(roleToAdd, associationType);
@@ -128,7 +128,7 @@ namespace Allors.Workspace.Adapters
             previousAssociation?.SetRole(roleType, null);
         }
 
-        public void RemoveCompositesRole(IRoleType roleType, Strategy roleToRemove)
+        public void RemoveCompositesRole(RoleType roleType, Strategy roleToRemove)
         {
             var role = this.GetCompositesRole(roleType);
 
@@ -141,7 +141,7 @@ namespace Allors.Workspace.Adapters
             this.SetChangedRole(roleType, role);
         }
 
-        public void SetCompositesRole(IRoleType roleType, IRange<Strategy> role)
+        public void SetCompositesRole(RoleType roleType, IRange<Strategy> role)
         {
             if (this.SameCompositesRole(roleType, role))
             {
@@ -266,7 +266,7 @@ namespace Allors.Workspace.Adapters
             }
 
             this.PreviousRecord = this.Record;
-            this.PreviousChangedRoleByRelationType = this.ChangedRoleByRelationType != null ? new Dictionary<IRelationType, object>(this.ChangedRoleByRelationType) : null;
+            this.PreviousChangedRoleByRelationType = this.ChangedRoleByRelationType != null ? new Dictionary<RelationType, object>(this.ChangedRoleByRelationType) : null;
         }
 
         public void Diff(IList<IDiff> diffs)
@@ -357,7 +357,7 @@ namespace Allors.Workspace.Adapters
 
         public void Reset() => this.ChangedRoleByRelationType = null;
 
-        public bool IsAssociationForRole(IRoleType roleType, Strategy forRole)
+        public bool IsAssociationForRole(RoleType roleType, Strategy forRole)
         {
             if (roleType.IsOne)
             {
@@ -369,20 +369,20 @@ namespace Allors.Workspace.Adapters
             return compositesRole.Contains(forRole);
         }
 
-        public bool HasChanged(IRoleType roleType) => this.ChangedRoleByRelationType?.ContainsKey(roleType.RelationType) ?? false;
+        public bool HasChanged(RoleType roleType) => this.ChangedRoleByRelationType?.ContainsKey(roleType.RelationType) ?? false;
 
-        public void RestoreRole(IRoleType roleType) => this.ChangedRoleByRelationType?.Remove(roleType.RelationType);
+        public void RestoreRole(RoleType roleType) => this.ChangedRoleByRelationType?.Remove(roleType.RelationType);
 
         protected abstract void OnChange();
 
-        private void SetChangedRole(IRoleType roleType, object role)
+        private void SetChangedRole(RoleType roleType, object role)
         {
-            this.ChangedRoleByRelationType ??= new Dictionary<IRelationType, object>();
+            this.ChangedRoleByRelationType ??= new Dictionary<RelationType, object>();
             this.ChangedRoleByRelationType[roleType.RelationType] = role;
             this.OnChange();
         }
 
-        private Strategy GetCompositeRoleIfInstantiated(IRoleType roleType)
+        private Strategy GetCompositeRoleIfInstantiated(RoleType roleType)
         {
             if (this.ChangedRoleByRelationType != null && this.ChangedRoleByRelationType.TryGetValue(roleType.RelationType, out var changedRole))
             {
@@ -393,7 +393,7 @@ namespace Allors.Workspace.Adapters
             return role == null ? null : this.Session.GetStrategy((long)role);
         }
 
-        private IRange<Strategy> GetCompositesRoleIfInstantiated(IRoleType roleType)
+        private IRange<Strategy> GetCompositesRoleIfInstantiated(RoleType roleType)
         {
             if (this.ChangedRoleByRelationType != null && this.ChangedRoleByRelationType.TryGetValue(roleType.RelationType, out var changedRole))
             {
@@ -403,7 +403,7 @@ namespace Allors.Workspace.Adapters
             var role = (IRange<long>)this.Record?.GetRole(roleType);
             return role == null ? EmptyRange<Strategy>.Instance : this.Ranges.Load(role.Select(v => this.Session.GetStrategy(v)).Where(v => v != null));
         }
-        private bool SameCompositeRole(IRoleType roleType, Strategy role)
+        private bool SameCompositeRole(RoleType roleType, Strategy role)
         {
             if (this.ChangedRoleByRelationType != null && this.ChangedRoleByRelationType.TryGetValue(roleType.RelationType, out var changedRole))
             {
@@ -425,7 +425,7 @@ namespace Allors.Workspace.Adapters
             return role.Id == (long)changedRoleId;
         }
 
-        private bool SameCompositesRole(IRoleType roleType, IRange<Strategy> role)
+        private bool SameCompositesRole(RoleType roleType, IRange<Strategy> role)
         {
             if (this.ChangedRoleByRelationType != null && this.ChangedRoleByRelationType.TryGetValue(roleType.RelationType, out var changedRole))
             {
@@ -448,7 +448,7 @@ namespace Allors.Workspace.Adapters
 
         protected long Id => this.Strategy.Id;
 
-        protected IClass Class => this.Strategy.Class;
+        protected Class Class => this.Strategy.Class;
 
         protected Session Session => this.Strategy.Session;
 

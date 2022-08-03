@@ -10,7 +10,7 @@ namespace Allors.Workspace.Meta
     /// </summary>
     public interface IMetaObject
     {
-        IMetaPopulation MetaPopulation { get; }
+        MetaPopulation MetaPopulation { get; }
 
         string Tag { get; }
     }

@@ -14,7 +14,7 @@ namespace Allors.Workspace.Adapters
 
     public abstract class Session : ISession
     {
-        private readonly Dictionary<IClass, ISet<Strategy>> strategiesByClass;
+        private readonly Dictionary<Class, ISet<Strategy>> strategiesByClass;
 
         protected Session(Workspace workspace, ISessionServices sessionServices)
         {
@@ -22,7 +22,7 @@ namespace Allors.Workspace.Adapters
             this.Services = sessionServices;
 
             this.StrategyByWorkspaceId = new Dictionary<long, Strategy>();
-            this.strategiesByClass = new Dictionary<IClass, ISet<Strategy>>();
+            this.strategiesByClass = new Dictionary<Class, ISet<Strategy>>();
 
             this.ChangeSetTracker = new ChangeSetTracker();
             this.PushToDatabaseTracker = new PushToDatabaseTracker();
@@ -70,9 +70,9 @@ namespace Allors.Workspace.Adapters
             }
         }
 
-        public abstract T Create<T>(IClass @class) where T : class, IObject;
+        public abstract T Create<T>(Class @class) where T : class, IObject;
 
-        public T Create<T>() where T : class, IObject => this.Create<T>((IClass)this.Workspace.DatabaseConnection.Configuration.ObjectFactory.GetObjectType<T>());
+        public T Create<T>() where T : class, IObject => this.Create<T>((Class)this.Workspace.DatabaseConnection.Configuration.ObjectFactory.GetObjectType<T>());
         public IChangeSet Checkpoint()
         {
             var changeSet = new ChangeSet(this, this.ChangeSetTracker.Created, this.ChangeSetTracker.Instantiated);
@@ -148,7 +148,7 @@ namespace Allors.Workspace.Adapters
             return this.StrategyByWorkspaceId.TryGetValue(id, out var sessionStrategy) ? sessionStrategy : null;
         }
 
-        public Strategy GetCompositeAssociation(Strategy role, IAssociationType associationType)
+        public Strategy GetCompositeAssociation(Strategy role, AssociationType associationType)
         {
             var roleType = associationType.RoleType;
 
@@ -168,7 +168,7 @@ namespace Allors.Workspace.Adapters
             return null;
         }
 
-        public IEnumerable<Strategy> GetCompositesAssociation(Strategy role, IAssociationType associationType)
+        public IEnumerable<Strategy> GetCompositesAssociation(Strategy role, AssociationType associationType)
         {
             var roleType = associationType.RoleType;
 
@@ -213,7 +213,7 @@ namespace Allors.Workspace.Adapters
         private IEnumerable<Strategy> StrategiesForClass(IComposite objectType)
         {
             // TODO: Optimize
-            var classes = new HashSet<IClass>(objectType.Classes);
+            var classes = new HashSet<Class>(objectType.Classes);
             return this.StrategyByWorkspaceId.Where(v => classes.Contains(v.Value.Class)).Select(v => v.Value).Distinct();
         }
 

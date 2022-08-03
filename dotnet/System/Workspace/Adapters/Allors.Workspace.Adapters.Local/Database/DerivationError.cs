@@ -24,7 +24,7 @@ namespace Allors.Workspace.Adapters.Local
             .Select(v =>
                 new Role(
                     this.session.Instantiate<IObject>(v.Association.Id),
-                    (IRelationType)this.session.Workspace.DatabaseConnection.Configuration.MetaPopulation.FindByTag(v.RelationType.Tag)));
+                    (RelationType)this.session.Workspace.DatabaseConnection.Configuration.MetaPopulation.FindByTag(v.RelationType.Tag)));
 
         public string Message => this.derivationError.Message;
     }

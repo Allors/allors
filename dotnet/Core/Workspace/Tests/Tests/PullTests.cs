@@ -835,7 +835,7 @@ namespace Tests.Workspace
                 {
                     Predicate = new Between(m.C1.C1AllorsDateTime)
                     {
-                        Paths = new IRoleType[] { m.C1.C1DateTimeBetweenA, m.C1.C1DateTimeBetweenB }
+                        Paths = new RoleType[] { m.C1.C1DateTimeBetweenA, m.C1.C1DateTimeBetweenB }
                     }
                 }
             };
@@ -1035,7 +1035,7 @@ namespace Tests.Workspace
                 {
                     Predicate = new Between(m.C1.C1AllorsDecimal)
                     {
-                        Paths = new IRoleType[] { m.C1.C1DecimalBetweenA, m.C1.C1DecimalBetweenB }
+                        Paths = new RoleType[] { m.C1.C1DecimalBetweenA, m.C1.C1DecimalBetweenB }
                     }
                 }
             };
@@ -1231,7 +1231,7 @@ namespace Tests.Workspace
                 {
                     Predicate = new Between(m.C1.C1AllorsDouble)
                     {
-                        Paths = new IRoleType[] { m.C1.C1DoubleBetweenA, m.C1.C1DoubleBetweenB }
+                        Paths = new RoleType[] { m.C1.C1DoubleBetweenA, m.C1.C1DoubleBetweenB }
                     }
                 }
             };
@@ -1427,7 +1427,7 @@ namespace Tests.Workspace
                 {
                     Predicate = new Between(m.C1.C1AllorsInteger)
                     {
-                        Paths = new IRoleType[] { m.C1.C1IntegerBetweenA, m.C1.C1IntegerBetweenB }
+                        Paths = new RoleType[] { m.C1.C1IntegerBetweenA, m.C1.C1IntegerBetweenB }
                     }
                 }
             };

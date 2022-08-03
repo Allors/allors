@@ -28,7 +28,7 @@ namespace Allors.Workspace.Data
 
     public static partial class ExpressionExtensions
     {
-        public static Node Node<T>(this Expression<Func<T, IPropertyType>> @this, IMetaPopulation metaPopulation) where T : IComposite
+        public static Node Node<T>(this Expression<Func<T, IPropertyType>> @this, MetaPopulation metaPopulation) where T : IComposite
         {
             var visitor = new MemberExpressionsVisitor();
             visitor.Visit(@this);
@@ -36,7 +36,7 @@ namespace Allors.Workspace.Data
             return Node<T>(metaPopulation, visitor);
         }
 
-        public static Node Node<T>(this Expression<Func<T, IComposite>> @this, IMetaPopulation metaPopulation) where T : IComposite
+        public static Node Node<T>(this Expression<Func<T, IComposite>> @this, MetaPopulation metaPopulation) where T : IComposite
         {
             var visitor = new MemberExpressionsVisitor();
             visitor.Visit(@this);
@@ -44,7 +44,7 @@ namespace Allors.Workspace.Data
             return Node<T>(metaPopulation, visitor);
         }
 
-        private static Node Node<T>(IMetaPopulation metaPopulation, MemberExpressionsVisitor visitor) where T : IComposite
+        private static Node Node<T>(MetaPopulation metaPopulation, MemberExpressionsVisitor visitor) where T : IComposite
         {
             Node path = null;
             Node currentPath = null;
@@ -82,14 +82,14 @@ namespace Allors.Workspace.Data
                     }
                 }
 
-                if (memberExpression.Type.GetInterfaces().Contains(typeof(IRoleType)))
+                if (memberExpression.Type.GetInterfaces().Contains(typeof(RoleType)))
                 {
                     var name = memberExpression.Member.Name;
                     var propertyType = composite.RoleTypes.First(v => v.Name.Equals(name));
                     AddPath(propertyType);
                 }
 
-                if (memberExpression.Type.GetInterfaces().Contains(typeof(IAssociationType)))
+                if (memberExpression.Type.GetInterfaces().Contains(typeof(AssociationType)))
                 {
                     var name = memberExpression.Member.Name;
                     var propertyType = composite.AssociationTypes.First(v => v.Name.Equals(name));

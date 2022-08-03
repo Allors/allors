@@ -1,4 +1,4 @@
-// <copyright file="Interface.cs" company="Allors bvba">
+// <copyright file="IInterface.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -11,102 +11,53 @@ namespace Allors.Workspace.Meta
     using System.Linq;
     using Text;
 
-    public abstract class Interface : IInterfaceInternals
+    public abstract class Interface : IComposite
     {
+        // Class
         public MetaPopulation MetaPopulation { get; set; }
 
-        private HashSet<IAssociationTypeInternals> lazyAssociationTypes;
-        private HashSet<IRoleTypeInternals> lazyRoleTypes;
-        private HashSet<IRoleTypeInternals> lazyDatabaseRoleTypes;
-        private HashSet<IMethodTypeInternals> lazyMethodTypes;
+        private HashSet<AssociationType> lazyAssociationTypes;
+        private HashSet<RoleType> lazyRoleTypes;
+        private HashSet<MethodType> lazyMethodTypes;
 
-        private HashSet<IAssociationTypeInternals> LazyAssociationTypes => this.lazyAssociationTypes ??= new HashSet<IAssociationTypeInternals>(this.ExclusiveAssociationTypes.Union(this.Supertypes.SelectMany(v => v.ExclusiveAssociationTypes)));
-        private HashSet<IRoleTypeInternals> LazyRoleTypes => this.lazyRoleTypes ??= new HashSet<IRoleTypeInternals>(this.ExclusiveRoleTypes.Union(this.Supertypes.SelectMany(v => v.ExclusiveRoleTypes)));
-        private HashSet<IMethodTypeInternals> LazyMethodTypes => this.lazyMethodTypes ??= new HashSet<IMethodTypeInternals>(this.ExclusiveMethodTypes.Union(this.Supertypes.SelectMany(v => v.ExclusiveMethodTypes)));
+        private HashSet<AssociationType> LazyAssociationTypes => this.lazyAssociationTypes ??= new HashSet<AssociationType>(this.ExclusiveAssociationTypes.Union(this.Supertypes.SelectMany(v => v.ExclusiveAssociationTypes)));
+        private HashSet<RoleType> LazyRoleTypes => this.lazyRoleTypes ??= new HashSet<RoleType>(this.ExclusiveRoleTypes.Union(this.Supertypes.SelectMany(v => v.ExclusiveRoleTypes)));
+        private HashSet<MethodType> LazyMethodTypes => this.lazyMethodTypes ??= new HashSet<MethodType>(this.ExclusiveMethodTypes.Union(this.Supertypes.SelectMany(v => v.ExclusiveMethodTypes)));
 
-        private string Tag { get; set; }
-        private string SingularName { get; set; }
-        private string PluralName { get; set; }
-        private Type ClrType { get; set; }
+        public string Tag { get; set; }
+        public string SingularName { get; set; }
+        public string PluralName { get; set; }
+        public Type ClrType { get; set; }
 
-        private ISet<IInterfaceInternals> DirectSupertypes { get; set; }
-        private ISet<IInterfaceInternals> Supertypes { get; set; }
-        private ISet<ICompositeInternals> DirectSubtypes { get; set; }
-        private ISet<ICompositeInternals> Subtypes { get; set; }
-        private ISet<IClassInternals> Classes { get; set; }
-        private IRoleTypeInternals[] ExclusiveRoleTypes { get; set; }
-        private IAssociationTypeInternals[] ExclusiveAssociationTypes { get; set; }
-        private IMethodTypeInternals[] ExclusiveMethodTypes { get; set; }
+        public ISet<Interface> DirectSupertypes { get; set; }
+        public ISet<Interface> Supertypes { get; set; }
+        public ISet<IComposite> DirectSubtypes { get; set; }
+        public ISet<IComposite> Subtypes { get; set; }
+        public ISet<Class> Classes { get; set; }
+        public RoleType[] ExclusiveRoleTypes { get; set; }
+        public AssociationType[] ExclusiveAssociationTypes { get; set; }
+        public MethodType[] ExclusiveMethodTypes { get; set; }
 
-        #region IComparable
         int IComparable<IObjectType>.CompareTo(IObjectType other) => string.Compare(this.SingularName, other.SingularName, StringComparison.InvariantCulture);
-        #endregion
 
-        #region IMetaObject
+        public bool IsUnit => false;
 
-        IMetaPopulation IMetaObject.MetaPopulation => this.MetaPopulation;
-        #endregion
+        public bool IsComposite => true;
 
-        #region IMetaIdentifiableObject
-        string IMetaObject.Tag => this.Tag;
-        #endregion
+        public bool IsInterface => true;
 
-        #region IObjectType
-        bool IObjectType.IsUnit => false;
+        public bool IsClass => false;
 
-        bool IObjectType.IsComposite => true;
+        public ISet<AssociationType> AssociationTypes => this.LazyAssociationTypes;
 
-        bool IObjectType.IsInterface => true;
+        public ISet<RoleType> RoleTypes => this.LazyRoleTypes ?? new HashSet<RoleType>(this.ExclusiveRoleTypes.Union(this.Supertypes.SelectMany(v => v.ExclusiveRoleTypes)));
 
-        bool IObjectType.IsClass => false;
+        public ISet<RoleType> DatabaseOriginRoleTypes => this.LazyRoleTypes;
 
-        string IObjectType.SingularName => this.SingularName;
+        public ISet<MethodType> MethodTypes => this.LazyMethodTypes;
+        public bool IsAssignableFrom(IComposite objectType) => this.Equals(objectType) || this.Subtypes.Contains(objectType);
 
-        string IObjectType.PluralName => this.PluralName;
-
-        Type IObjectType.ClrType => this.ClrType;
-        #endregion
-
-        #region IComposite
-
-        IEnumerable<IInterface> IComposite.DirectSupertypes => this.DirectSupertypes;
-
-        IEnumerable<IInterface> IComposite.Supertypes => this.Supertypes;
-
-        IEnumerable<IClass> IComposite.Classes => this.Classes;
-
-        IEnumerable<IAssociationType> IComposite.AssociationTypes => this.LazyAssociationTypes;
-
-        IEnumerable<IRoleType> IComposite.RoleTypes => this.LazyRoleTypes ?? new HashSet<IRoleTypeInternals>(this.ExclusiveRoleTypes.Union(this.Supertypes.SelectMany(v => v.ExclusiveRoleTypes)));
-
-        IEnumerable<IRoleType> IComposite.DatabaseOriginRoleTypes => this.LazyRoleTypes;
-
-        IEnumerable<IMethodType> IComposite.MethodTypes => this.LazyMethodTypes;
-
-        bool IComposite.IsAssignableFrom(IComposite objectType) => this.Equals(objectType) || this.Subtypes.Contains(objectType);
-        #endregion
-
-        #region IInterface
-        IEnumerable<IComposite> IInterface.DirectSubtypes => this.DirectSubtypes;
-
-        IEnumerable<IComposite> IInterface.Subtypes => this.Subtypes;
-        #endregion
-
-        #region ICompositeInternals
-        ISet<IInterfaceInternals> ICompositeInternals.DirectSupertypes { get => this.DirectSupertypes; set => this.DirectSupertypes = value; }
-        ISet<IInterfaceInternals> ICompositeInternals.Supertypes { get => this.Supertypes; set => this.Supertypes = value; }
-        IRoleTypeInternals[] ICompositeInternals.ExclusiveRoleTypes { get => this.ExclusiveRoleTypes; set => this.ExclusiveRoleTypes = value; }
-        IAssociationTypeInternals[] ICompositeInternals.ExclusiveAssociationTypes { get => this.ExclusiveAssociationTypes; set => this.ExclusiveAssociationTypes = value; }
-        IMethodTypeInternals[] ICompositeInternals.ExclusiveMethodTypes { get => this.ExclusiveMethodTypes; set => this.ExclusiveMethodTypes = value; }
-        #endregion
-
-        #region IInterfaceInternals
-        ISet<ICompositeInternals> IInterfaceInternals.DirectSubtypes { get => this.DirectSubtypes; set => this.DirectSubtypes = value; }
-        ISet<ICompositeInternals> IInterfaceInternals.Subtypes { get => this.Subtypes; set => this.Subtypes = value; }
-        ISet<IClassInternals> IInterfaceInternals.Classes { get => this.Classes; set => this.Classes = value; }
-        #endregion
-
-        void ICompositeInternals.Bind(Dictionary<string, Type> typeByTypeName) => this.ClrType = typeByTypeName[this.SingularName];
+        public void Bind(Dictionary<string, Type> typeByTypeName) => this.ClrType = typeByTypeName[this.SingularName];
 
         public void Init(string tag, string singularName, string pluralName = null)
         {

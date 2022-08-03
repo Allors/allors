@@ -91,8 +91,8 @@ namespace Allors.Workspace.Protocol.Json
             var predicate = new Predicate
             {
                 k = PredicateKind.ContainedIn,
-                a = (visited.PropertyType as IAssociationType)?.RelationType.Tag,
-                r = (visited.PropertyType as IRoleType)?.RelationType.Tag,
+                a = (visited.PropertyType as AssociationType)?.RelationType.Tag,
+                r = (visited.PropertyType as RoleType)?.RelationType.Tag,
                 vs = visited.Objects?.Select(v => v.Id as object).ToArray(),
                 p = visited.Parameter,
             };
@@ -111,8 +111,8 @@ namespace Allors.Workspace.Protocol.Json
             var predicate = new Predicate
             {
                 k = PredicateKind.Contains,
-                a = (visited.PropertyType as IAssociationType)?.RelationType.Tag,
-                r = (visited.PropertyType as IRoleType)?.RelationType.Tag,
+                a = (visited.PropertyType as AssociationType)?.RelationType.Tag,
+                r = (visited.PropertyType as RoleType)?.RelationType.Tag,
                 ob = visited.Object?.Id,
                 p = visited.Parameter,
             };
@@ -125,8 +125,8 @@ namespace Allors.Workspace.Protocol.Json
             var predicate = new Predicate
             {
                 k = PredicateKind.Equals,
-                a = (visited.PropertyType as IAssociationType)?.RelationType.Tag,
-                r = (visited.PropertyType as IRoleType)?.RelationType.Tag,
+                a = (visited.PropertyType as AssociationType)?.RelationType.Tag,
+                r = (visited.PropertyType as RoleType)?.RelationType.Tag,
                 ob = visited.Object?.Id,
                 v = this.unitConvert.ToJson(visited.Value),
                 pa = visited.Path?.RelationType.Tag,
@@ -175,8 +175,8 @@ namespace Allors.Workspace.Protocol.Json
             var predicate = new Predicate
             {
                 k = PredicateKind.Exists,
-                a = (visited.PropertyType as IAssociationType)?.RelationType.Tag,
-                r = (visited.PropertyType as IRoleType)?.RelationType.Tag,
+                a = (visited.PropertyType as AssociationType)?.RelationType.Tag,
+                r = (visited.PropertyType as RoleType)?.RelationType.Tag,
                 p = visited.Parameter,
             };
 
@@ -209,8 +209,8 @@ namespace Allors.Workspace.Protocol.Json
         {
             var @select = new Select
             {
-                a = (visited.PropertyType as IAssociationType)?.RelationType.Tag,
-                r = (visited.PropertyType as IRoleType)?.RelationType.Tag,
+                a = (visited.PropertyType as AssociationType)?.RelationType.Tag,
+                r = (visited.PropertyType as RoleType)?.RelationType.Tag,
                 o = visited.OfType?.Tag
             };
 
@@ -256,8 +256,8 @@ namespace Allors.Workspace.Protocol.Json
             {
                 k = PredicateKind.InstanceOf,
                 o = visited.ObjectType?.Tag,
-                a = (visited.PropertyType as IAssociationType)?.RelationType.Tag,
-                r = (visited.PropertyType as IRoleType)?.RelationType.Tag,
+                a = (visited.PropertyType as AssociationType)?.RelationType.Tag,
+                r = (visited.PropertyType as RoleType)?.RelationType.Tag,
             };
 
             this.predicates.Push(predicate);
@@ -328,8 +328,8 @@ namespace Allors.Workspace.Protocol.Json
         {
             var node = new Node
             {
-                a = (visited.PropertyType as IAssociationType)?.RelationType.Tag,
-                r = (visited.PropertyType as IRoleType)?.RelationType.Tag,
+                a = (visited.PropertyType as AssociationType)?.RelationType.Tag,
+                r = (visited.PropertyType as RoleType)?.RelationType.Tag,
             };
 
             this.nodes.Push(node);

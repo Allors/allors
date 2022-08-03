@@ -23,7 +23,7 @@ namespace Allors.Workspace.Blazor
         public bool ExistObject => this.Object != null;
 
         [Parameter]
-        public IRoleType RoleType { get; set; }
+        public RoleType RoleType { get; set; }
 
         public bool CanRead => this.ExistObject && this.Object.Strategy.CanRead(this.RoleType);
 

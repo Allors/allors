@@ -9,13 +9,13 @@ namespace Allors.Workspace.Adapters
 
     public class Diff : IDiff
     {
-        protected Diff(IRelationType relationType, Strategy association)
+        protected Diff(RelationType relationType, Strategy association)
         {
             this.RelationType = relationType;
             this.Association = association;
         }
 
-        public IRelationType RelationType { get; set; }
+        public RelationType RelationType { get; set; }
 
         public IStrategy Association { get; set; }
     }

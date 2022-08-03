@@ -14,7 +14,7 @@ namespace Allors.Workspace
 
         IObject Object { get; }
 
-        IClass Class { get; }
+        Class Class { get; }
 
         long Id { get; }
 
@@ -28,42 +28,42 @@ namespace Allors.Workspace
 
         IReadOnlyList<IDiff> Diff();
 
-        bool CanRead(IRoleType roleType);
+        bool CanRead(RoleType roleType);
 
-        bool CanWrite(IRoleType roleType);
+        bool CanWrite(RoleType roleType);
 
-        bool CanExecute(IMethodType methodType);
+        bool CanExecute(MethodType methodType);
 
-        bool ExistRole(IRoleType roleType);
+        bool ExistRole(RoleType roleType);
 
-        bool HasChanged(IRoleType roleType);
+        bool HasChanged(RoleType roleType);
 
-        void RestoreRole(IRoleType roleType);
+        void RestoreRole(RoleType roleType);
 
-        object GetRole(IRoleType roleType);
+        object GetRole(RoleType roleType);
 
-        void SetRole(IRoleType roleType, object value);
+        void SetRole(RoleType roleType, object value);
 
-        void RemoveRole(IRoleType roleType);
+        void RemoveRole(RoleType roleType);
 
-        object GetUnitRole(IRoleType roleType);
+        object GetUnitRole(RoleType roleType);
 
-        void SetUnitRole(IRoleType roleType, object value);
+        void SetUnitRole(RoleType roleType, object value);
 
-        T GetCompositeRole<T>(IRoleType roleType) where T : class, IObject;
+        T GetCompositeRole<T>(RoleType roleType) where T : class, IObject;
 
-        void SetCompositeRole<T>(IRoleType roleType, T value) where T : class, IObject;
+        void SetCompositeRole<T>(RoleType roleType, T value) where T : class, IObject;
 
-        IEnumerable<T> GetCompositesRole<T>(IRoleType roleType) where T : class, IObject;
+        IEnumerable<T> GetCompositesRole<T>(RoleType roleType) where T : class, IObject;
 
-        void AddCompositesRole<T>(IRoleType roleType, T value) where T : class, IObject;
+        void AddCompositesRole<T>(RoleType roleType, T value) where T : class, IObject;
 
-        void RemoveCompositesRole<T>(IRoleType roleType, T value) where T : class, IObject;
+        void RemoveCompositesRole<T>(RoleType roleType, T value) where T : class, IObject;
 
-        void SetCompositesRole<T>(IRoleType roleType, in IEnumerable<T> role) where T : class, IObject;
+        void SetCompositesRole<T>(RoleType roleType, in IEnumerable<T> role) where T : class, IObject;
 
-        T GetCompositeAssociation<T>(IAssociationType associationType) where T : class, IObject;
+        T GetCompositeAssociation<T>(AssociationType associationType) where T : class, IObject;
 
-        IEnumerable<T> GetCompositesAssociation<T>(IAssociationType associationType) where T : class, IObject;
+        IEnumerable<T> GetCompositesAssociation<T>(AssociationType associationType) where T : class, IObject;
     }
 }

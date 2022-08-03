@@ -15,7 +15,7 @@ namespace Allors.Workspace.Adapters.Local
 
         public new Workspace Workspace => (Workspace)base.Workspace;
 
-        public override T Create<T>(IClass @class)
+        public override T Create<T>(Class @class)
         {
             var workspaceId = this.Workspace.DatabaseConnection.NextId();
             var strategy = new Strategy(this, @class, workspaceId);

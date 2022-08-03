@@ -1,4 +1,4 @@
-// <copyright file="RoleType.cs" company="Allors bvba">
+// <copyright file="IRoleType.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -9,7 +9,12 @@ namespace Allors.Workspace.Meta
     using System;
     using Text;
 
-    public abstract class RoleType : IRoleTypeInternals
+    /// <summary>
+    /// A <see cref="RoleType"/> defines the role side of a relation.
+    /// This is also called the 'passive' side.
+    /// RoleTypes can have composite and unit <see cref="ObjectType"/>s.
+    /// </summary>
+    public abstract class RoleType : IPropertyType
     {
         /// <summary>
         /// The maximum size value.
@@ -18,69 +23,25 @@ namespace Allors.Workspace.Meta
 
         public MetaPopulation MetaPopulation { get; set; }
 
-        private IRelationTypeInternals RelationType { get; set; }
-        private IAssociationTypeInternals AssociationType => this.RelationType.AssociationType;
+        public IObjectType ObjectType { get; set; }
+        public RelationType RelationType { get; set; }
+        public AssociationType AssociationType => this.RelationType.AssociationType;
 
-        private IObjectType ObjectType { get; set; }
-        private string SingularName { get; set; }
-        private string PluralName { get; set; }
-        private string Name { get; set; }
-        private bool IsMany { get; set; }
-        private bool IsOne { get; set; }
-        private int? Size { get; set; }
-        private int? Precision { get; set; }
-        private int? Scale { get; set; }
-        private bool IsRequired { get; set; }
-        private bool IsUnique { get; set; }
-        private string MediaType { get; set; }
+        public string SingularName { get; set; }
+        public string PluralName { get; set; }
+        public string Name { get; set; }
+        public bool IsMany { get; set; }
+        public bool IsOne { get; set; }
+        public int? Size { get; set; }
+        public int? Precision { get; set; }
+        public int? Scale { get; set; }
+        public bool IsRequired { get; set; }
+        public bool IsUnique { get; set; }
+        public string MediaType { get; set; }
 
-        #region IComparable
         int IComparable<IPropertyType>.CompareTo(IPropertyType other) => string.Compare(this.Name, other.Name, StringComparison.InvariantCulture);
-        #endregion
 
-        #region IOperandType
-        string IOperandType.OperandTag => this.RelationType.Tag;
-        #endregion
-
-        #region IPropertyType
-
-        string IPropertyType.Name => this.Name;
-
-        string IPropertyType.SingularName => this.SingularName;
-
-        string IPropertyType.PluralName => this.PluralName;
-
-        IObjectType IPropertyType.ObjectType => this.ObjectType;
-
-        bool IPropertyType.IsOne => this.IsOne;
-
-        bool IPropertyType.IsMany => this.IsMany;
-
-        #endregion
-
-        #region IRoleType
-        IAssociationType IRoleType.AssociationType => this.AssociationType;
-
-        IRelationType IRoleType.RelationType => this.RelationType;
-
-        int? IRoleType.Size => this.Size;
-
-        int? IRoleType.Precision => this.Precision;
-
-        int? IRoleType.Scale => this.Scale;
-
-        bool IRoleType.IsRequired => this.IsRequired;
-
-        bool IRoleType.IsUnique => this.IsUnique;
-
-        string IRoleType.MediaType => this.MediaType;
-        #endregion
-
-        #region IRoleTypeInternals
-        IObjectType IRoleTypeInternals.ObjectType { get => this.ObjectType; set => this.ObjectType = value; }
-
-        IRelationTypeInternals IRoleTypeInternals.RelationType { get => this.RelationType; set => this.RelationType = value; }
-        #endregion
+        public string OperandTag => this.RelationType.Tag;
 
         public override string ToString() => $"{this.Name}";
 
@@ -94,7 +55,7 @@ namespace Allors.Workspace.Meta
             this.IsOne = !this.IsMany;
             this.Name = this.IsMany ? this.PluralName : this.SingularName;
 
-            if (this.ObjectType is IUnit unitType)
+            if (this.ObjectType is Unit unitType)
             {
                 switch (unitType.Tag)
                 {

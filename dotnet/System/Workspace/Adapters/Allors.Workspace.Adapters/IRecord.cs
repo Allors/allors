@@ -11,6 +11,6 @@ namespace Allors.Workspace.Adapters
     {
         long Version { get; }
 
-        object GetRole(IRoleType roleType);
+        object GetRole(RoleType roleType);
     }
 }

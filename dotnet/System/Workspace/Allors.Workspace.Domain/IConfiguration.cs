@@ -11,7 +11,7 @@ namespace Allors.Workspace
     {
         string Name { get; }
 
-        IMetaPopulation MetaPopulation { get; }
+        MetaPopulation MetaPopulation { get; }
 
         IObjectFactory ObjectFactory { get; }
     }

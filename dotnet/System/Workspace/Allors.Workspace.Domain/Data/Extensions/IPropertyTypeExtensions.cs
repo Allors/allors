@@ -23,7 +23,7 @@ namespace Allors.Workspace.Data
 
         public static object Get<T>(this T @this, IStrategy strategy, IComposite ofType = null) where T : IPropertyType
         {
-            if (@this is IRoleType roleType)
+            if (@this is RoleType roleType)
             {
                 if (roleType.IsOne)
                 {
@@ -49,7 +49,7 @@ namespace Allors.Workspace.Data
                 }
             }
 
-            if (@this is IAssociationType associationType)
+            if (@this is AssociationType associationType)
             {
                 if (associationType.IsOne)
                 {

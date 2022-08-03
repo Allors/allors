@@ -17,7 +17,7 @@ namespace Allors.Workspace.Adapters
 
         private IObject @object;
 
-        protected Strategy(Session session, IClass @class, long id)
+        protected Strategy(Session session, Class @class, long id)
         {
             this.Session = session;
             this.Id = id;
@@ -45,7 +45,7 @@ namespace Allors.Workspace.Adapters
 
         ISession IStrategy.Session => this.Session;
 
-        public IClass Class { get; }
+        public Class Class { get; }
 
         public long Id { get; private set; }
 
@@ -63,7 +63,7 @@ namespace Allors.Workspace.Adapters
 
         public void Reset() => this.DatabaseOriginState.Reset();
 
-        public bool ExistRole(IRoleType roleType)
+        public bool ExistRole(RoleType roleType)
         {
             if (roleType.ObjectType.IsUnit)
             {
@@ -78,9 +78,9 @@ namespace Allors.Workspace.Adapters
             return this.GetCompositesRole<IObject>(roleType).Any();
         }
 
-        public bool HasChanged(IRoleType roleType) => this.CanRead(roleType) && this.DatabaseOriginState.HasChanged(roleType);
+        public bool HasChanged(RoleType roleType) => this.CanRead(roleType) && this.DatabaseOriginState.HasChanged(roleType);
 
-        public void RestoreRole(IRoleType roleType)
+        public void RestoreRole(RoleType roleType)
         {
             if (this.CanRead(roleType))
             {
@@ -88,7 +88,7 @@ namespace Allors.Workspace.Adapters
             }
         }
 
-        public object GetRole(IRoleType roleType)
+        public object GetRole(RoleType roleType)
         {
             if (roleType == null)
             {
@@ -108,19 +108,19 @@ namespace Allors.Workspace.Adapters
             return this.GetCompositesRole<IObject>(roleType);
         }
 
-        public object GetUnitRole(IRoleType roleType) => this.CanRead(roleType) ? this.DatabaseOriginState.GetUnitRole(roleType) : null;
+        public object GetUnitRole(RoleType roleType) => this.CanRead(roleType) ? this.DatabaseOriginState.GetUnitRole(roleType) : null;
 
-        public T GetCompositeRole<T>(IRoleType roleType) where T : class, IObject =>
+        public T GetCompositeRole<T>(RoleType roleType) where T : class, IObject =>
             this.CanRead(roleType)
                 ? (T)this.DatabaseOriginState.GetCompositeRole(roleType)?.Object
                 : null;
 
-        public IEnumerable<T> GetCompositesRole<T>(IRoleType roleType) where T : class, IObject =>
+        public IEnumerable<T> GetCompositesRole<T>(RoleType roleType) where T : class, IObject =>
             this.CanRead(roleType)
                 ? this.DatabaseOriginState.GetCompositesRole(roleType).Select(v => (T)v.Object)
                 : Array.Empty<T>();
 
-        public void SetRole(IRoleType roleType, object value)
+        public void SetRole(RoleType roleType, object value)
         {
             if (roleType.ObjectType.IsUnit)
             {
@@ -136,7 +136,7 @@ namespace Allors.Workspace.Adapters
             }
         }
 
-        public void SetUnitRole(IRoleType roleType, object value)
+        public void SetUnitRole(RoleType roleType, object value)
         {
             AssertUnit(roleType, value);
 
@@ -146,7 +146,7 @@ namespace Allors.Workspace.Adapters
             }
         }
 
-        public void SetCompositeRole<T>(IRoleType roleType, T value) where T : class, IObject
+        public void SetCompositeRole<T>(RoleType roleType, T value) where T : class, IObject
         {
             this.AssertComposite(value);
 
@@ -167,7 +167,7 @@ namespace Allors.Workspace.Adapters
             }
         }
 
-        public void SetCompositesRole<T>(IRoleType roleType, in IEnumerable<T> role) where T : class, IObject
+        public void SetCompositesRole<T>(RoleType roleType, in IEnumerable<T> role) where T : class, IObject
         {
             this.AssertComposites(role);
 
@@ -179,7 +179,7 @@ namespace Allors.Workspace.Adapters
             }
         }
 
-        public void AddCompositesRole<T>(IRoleType roleType, T value) where T : class, IObject
+        public void AddCompositesRole<T>(RoleType roleType, T value) where T : class, IObject
         {
             if (value == null)
             {
@@ -201,7 +201,7 @@ namespace Allors.Workspace.Adapters
             }
         }
 
-        public void RemoveCompositesRole<T>(IRoleType roleType, T value) where T : class, IObject
+        public void RemoveCompositesRole<T>(RoleType roleType, T value) where T : class, IObject
         {
             if (value == null)
             {
@@ -216,7 +216,7 @@ namespace Allors.Workspace.Adapters
             }
         }
 
-        public void RemoveRole(IRoleType roleType)
+        public void RemoveRole(RoleType roleType)
         {
             if (roleType.ObjectType.IsUnit)
             {
@@ -232,25 +232,25 @@ namespace Allors.Workspace.Adapters
             }
         }
 
-        public T GetCompositeAssociation<T>(IAssociationType associationType) where T : class, IObject => (T)this.Session.GetCompositeAssociation(this, associationType)?.Object;
+        public T GetCompositeAssociation<T>(AssociationType associationType) where T : class, IObject => (T)this.Session.GetCompositeAssociation(this, associationType)?.Object;
 
-        public IEnumerable<T> GetCompositesAssociation<T>(IAssociationType associationType) where T : class, IObject => this.Session.GetCompositesAssociation(this, associationType).Select(v => v.Object).Cast<T>();
+        public IEnumerable<T> GetCompositesAssociation<T>(AssociationType associationType) where T : class, IObject => this.Session.GetCompositesAssociation(this, associationType).Select(v => v.Object).Cast<T>();
 
-        public bool CanRead(IRoleType roleType) => this.DatabaseOriginState.CanRead(roleType);
+        public bool CanRead(RoleType roleType) => this.DatabaseOriginState.CanRead(roleType);
 
-        public bool CanWrite(IRoleType roleType) => this.DatabaseOriginState.CanWrite(roleType);
+        public bool CanWrite(RoleType roleType) => this.DatabaseOriginState.CanWrite(roleType);
 
-        public bool CanExecute(IMethodType methodType) => this.DatabaseOriginState.CanExecute(methodType);
+        public bool CanExecute(MethodType methodType) => this.DatabaseOriginState.CanExecute(methodType);
 
-        public bool IsCompositeAssociationForRole(IRoleType roleType, Strategy forRole) => this.DatabaseOriginState.IsAssociationForRole(roleType, forRole);
+        public bool IsCompositeAssociationForRole(RoleType roleType, Strategy forRole) => this.DatabaseOriginState.IsAssociationForRole(roleType, forRole);
 
-        public bool IsCompositesAssociationForRole(IRoleType roleType, Strategy forRoleId) => this.DatabaseOriginState.IsAssociationForRole(roleType, forRoleId);
+        public bool IsCompositesAssociationForRole(RoleType roleType, Strategy forRoleId) => this.DatabaseOriginState.IsAssociationForRole(roleType, forRoleId);
 
         public void OnDatabasePushNewId(long newId) => this.Id = newId;
 
         public void OnDatabasePushed() => this.DatabaseOriginState.OnPushed();
 
-        private void AssertSameType<T>(IRoleType roleType, T value) where T : class, IObject
+        private void AssertSameType<T>(RoleType roleType, T value) where T : class, IObject
         {
             if (!((IComposite)roleType.ObjectType).IsAssignableFrom(value.Strategy.Class))
             {
@@ -266,7 +266,7 @@ namespace Allors.Workspace.Adapters
             }
         }
 
-        private static void AssertUnit(IRoleType roleType, object value)
+        private static void AssertUnit(RoleType roleType, object value)
         {
             if (value == null)
             {

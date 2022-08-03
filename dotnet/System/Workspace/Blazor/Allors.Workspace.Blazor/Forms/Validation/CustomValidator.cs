@@ -52,7 +52,7 @@ namespace Allors.Workspace.Blazor.Validation
             if (field.PropertyType == propertyType)
             {
                 var model = field.Object;
-                var roleType = field.PropertyType as IRoleType;
+                var roleType = field.PropertyType as RoleType;
 
                 if (roleType?.IsOne == true)
                 {
@@ -76,7 +76,7 @@ namespace Allors.Workspace.Blazor.Validation
             if (field.PropertyType == propertyType)
             {
                 var model = field.Object;
-                var roleType = field.PropertyType as IRoleType;
+                var roleType = field.PropertyType as RoleType;
 
                 if (roleType?.IsOne == true)
                 {

@@ -9,7 +9,7 @@ namespace Allors.Workspace.Adapters
 
     public abstract class Configuration : IConfiguration
     {
-        protected Configuration(string name, IMetaPopulation metaPopulation, IObjectFactory objectFactory)
+        protected Configuration(string name, MetaPopulation metaPopulation, IObjectFactory objectFactory)
         {
             this.Name = name;
             this.MetaPopulation = metaPopulation;
@@ -18,7 +18,7 @@ namespace Allors.Workspace.Adapters
 
         public string Name { get; }
 
-        public IMetaPopulation MetaPopulation { get; }
+        public MetaPopulation MetaPopulation { get; }
 
         public IObjectFactory ObjectFactory { get; }
     }
