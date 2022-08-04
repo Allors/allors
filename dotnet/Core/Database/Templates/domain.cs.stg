@@ -45,7 +45,7 @@ $interface.ExclusiveDatabaseAssociationTypes:{associationType|$interfaceExclusiv
 $interface.ExclusiveMethodTypes:{methodType|$interfaceExclusiveMethodType_Interface()$}$
 	}
 
-	public partial interface $interface.name$Builder : $interface.DirectSupertypes:{directSupertype|$directSupertype.Name$Builder ,}$ global::System.IDisposable
+	public partial interface $interface.name$Builder : $interface.DirectSupertypes:{directSupertype|$directSupertype.Name$Builder ,}$ IObjectBuilder, global::System.IDisposable
 	{
 $interface.ExclusiveDatabaseRoleTypes:{roleType|$interfaceExclusiveRoleTypes_Builder()$}$
 	}
@@ -208,7 +208,7 @@ $class.DatabaseAssociationTypes:{associationType|$classAssociationType_Class()$}
 $class.MethodTypes:{methodType|$classMethodType_Method()$}$
 	}
 
-	public partial class $class.name$Builder : Allors.Database.Domain.ObjectBuilder<$class.name$> $class.DirectSupertypes:{directSupertype|, $directSupertype.Name$Builder}$, global::System.IDisposable
+	public partial class $class.name$Builder : Allors.Database.Domain.ObjectBuilder<$class.name$> $class.DirectSupertypes:{directSupertype|, $directSupertype.Name$Builder}$, IObjectBuilder, global::System.IDisposable
 	{
 		public $class.name$Builder(Allors.Database.ITransaction transaction) : base(transaction)
 	    {

@@ -9,6 +9,8 @@ namespace Allors.Database.Domain
 
     public interface IObjectBuilder : IDisposable
     {
+        ITransaction Transaction { get; }
+
         IObject DefaultBuild();
     }
 }
