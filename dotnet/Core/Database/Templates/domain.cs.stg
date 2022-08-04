@@ -2,11 +2,11 @@ delimiters "$", "$"
 
 TemplateId() ::= <<17ED40F8-BDF8-4A7C-9AE9-1C4D2AD6BA2B>>
 TemplateName() ::= <<Allors C# Domain>>
-TemplateVersion() ::= <<3.0.5>>
+TemplateVersion() ::= <<3.0.6>>
 TemplateAllors() ::= <<1.0>>
 TemplateConfiguration(meta) ::= <<
 $!
-Copyright 2002-2021 Allors bvba.
+Copyright 2002-2022 Allors bvba.
 
 Dual Licensed under
   a) the Lesser General Public Licence v3 (LGPL)
@@ -147,6 +147,7 @@ $else$
 
 $endif$
 $endif$
+		$interface.name$Builder With$roleType.SingularName$($objectType_NullableName(roleType.ObjectType)$ value);
 >>
 
 castClass(meta, objectType) ::= <<
@@ -220,6 +221,8 @@ $class.CompositeDatabaseRoleTypes:{roleType|$classCompsiteRoleTypes_Class_OnBuil
 		}
 
 
+$class.InheritedRoleTypes:{roleType|$classInheritedRoleTypes_Builder(interface=roleType.associationType.ObjectType)$}$
+
 $class.DatabaseRoleTypes:{roleType|
 	$if(roleType.objectType.IsUnit)$
 		$classUnitRoleType_Builder()$
@@ -232,6 +235,10 @@ $class.DatabaseRoleTypes:{roleType|
 $objectType_Plural()$
 
 }
+>>
+
+classInheritedRoleTypes_Builder(interface) ::= <<
+	$interface.name$Builder $interface.name$Builder.With$roleType.SingularName$($objectType_NullableName(roleType.ObjectType)$ value) => this.With$roleType.SingularName$(value);
 >>
 
 classUnitRoleTypes_Class_OnBuild() ::= <<
@@ -427,7 +434,7 @@ $else$
 $endif$
 $endif$
 		/// <exclude/>
-		public $class.name$Builder With$roleType.SingularName$($objectType_NullableName(roleType.ObjectType)$ value)
+		new public $class.name$Builder With$roleType.SingularName$($objectType_NullableName(roleType.ObjectType)$ value)
         {
 		    if(this.$roleType.Name$!=null){throw new global::System.ArgumentException("One multicplicity");}
             this.$roleType.Name$ = value;
