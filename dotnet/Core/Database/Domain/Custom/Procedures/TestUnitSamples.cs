@@ -16,7 +16,7 @@ namespace Allors.Database.Domain
             var unitSample = new UnitSamples(context.Transaction).Extent().First;
             if (unitSample == null)
             {
-                unitSample = new UnitSampleBuilder(context.Transaction).Build();
+                unitSample = context.Transaction.Create<UnitSample>();
                 context.Transaction.Commit();
             }
 

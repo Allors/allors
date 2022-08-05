@@ -19,12 +19,12 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void GivenNoAccessControlWhenCreatingAnAccessControlWithoutARoleThenAccessControlIsInvalid()
         {
-            var userGroup = new UserGroupBuilder(this.Transaction).WithName("UserGroup").Build();
-            var securityToken = new SecurityTokenBuilder(this.Transaction).Build();
+            var userGroup = this.BuildUserGroup("UserGroup");
+            var securityToken = this.BuildSecurityToken();
 
-            securityToken.AddGrant(new GrantBuilder(this.Transaction)
-                .WithSubjectGroup(userGroup)
-                .Build());
+            var grant = this.BuildGrant(userGroup);
+
+            securityToken.AddGrant(grant);
 
             var validation = this.Transaction.Derive(false);
 
@@ -41,8 +41,8 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void GivenNoAccessControlWhenCreatingAAccessControlWithoutAUserOrUserGroupThenAccessControlIsInvalid()
         {
-            var securityToken = new SecurityTokenBuilder(this.Transaction).Build();
-            var role = new RoleBuilder(this.Transaction).WithName("Role").Build();
+            var securityToken = this.BuildSecurityToken();
+            var role = this.BuildRole("Role");
 
             securityToken.AddGrant(
             new GrantBuilder(this.Transaction)

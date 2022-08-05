@@ -15,8 +15,16 @@ namespace Allors.Database.Domain.Tests
     using Database.Security;
     using Meta;
     using Moq;
-    using Services;
+    using UserGroup = Domain.UserGroup;
+    using Permission = Domain.Permission;
+    using Permissions = Domain.Permissions;
+    using Person = Domain.Person;
+    using Role = Domain.Role;
     using User = Domain.User;
+    using Grant = Domain.Grant;
+    using Revocation = Domain.Revocation;
+    using Organisation = Domain.Organisation;
+    using SecurityToken = Domain.SecurityToken;
 
     public class DomainTest : IDisposable
     {
@@ -100,5 +108,61 @@ namespace Allors.Database.Domain.Tests
             resource?.CopyTo(ms);
             return ms.ToArray();
         }
+
+        protected Permission FindPermission(IRoleType roleType, Operations operation)
+        {
+            var objectType = (Class)roleType.AssociationType.ObjectType;
+            return new Permissions(this.Transaction).Get(objectType, roleType, operation);
+        }
+
+        #region Builders
+        protected UserGroup BuildUserGroup(string name, params User[] members) => this.Transaction.Create<UserGroup>(v =>
+        {
+            v.Name = name;
+            v.Members = members;
+        });
+
+        protected Role BuildRole(string name, params Permission[] permissions) => this.Transaction.Create<Role>(v =>
+        {
+            v.Name = name;
+            v.Permissions = permissions;
+        });
+
+        protected Grant BuildGrant(User subject, Role role = null) => this.Transaction.Create<Grant>(v =>
+        {
+            v.AddSubject(subject);
+            v.Role = role;
+        });
+
+        protected Grant BuildGrant(UserGroup subjectGroup, Role role = null) => this.Transaction.Create<Grant>(v =>
+        {
+            v.AddSubjectGroup(subjectGroup);
+            v.Role = role;
+        });
+
+        protected Revocation BuildRevocation(params Permission[] deniedPermissions) => this.Transaction.Create<Revocation>(v =>
+        {
+            v.DeniedPermissions = deniedPermissions;
+        });
+
+        protected SecurityToken BuildSecurityToken() => this.Transaction.Create<SecurityToken>();
+
+        protected Person BuildPerson(string firstName, string lastName) => this.Transaction.Create<Person>(v =>
+        {
+            v.FirstName = firstName;
+            v.LastName = lastName;
+        });
+
+        protected Person BuildPerson(string userName) => this.Transaction.Create<Person>(v =>
+        {
+            v.UserName= userName;
+        });
+
+        protected Organisation BuildOrganisation(string name) => this.Transaction.Create<Organisation>(v =>
+        {
+            v.Name = name;
+        });
+
+        #endregion
     }
 }

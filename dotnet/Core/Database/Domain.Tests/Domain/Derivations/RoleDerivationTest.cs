@@ -17,14 +17,13 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void RemoveRole()
         {
-            var organisation = new OrganisationBuilder(this.Transaction)
-                .WithName("Acme")
-                .Build();
+            var organisation = this.BuildOrganisation("Acme");
 
-            var jane = new PersonBuilder(this.Transaction)
-                .WithFirstName("Jane")
-                .WithLastName("Doe")
-                .Build();
+            var jane = this.Transaction.Create<Person>(v =>
+            {
+                v.FirstName = "Jane";
+                v.LastName = "Doe";
+            });
 
             this.Transaction.Derive();
 

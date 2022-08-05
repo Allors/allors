@@ -14,7 +14,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void Default()
         {
-            var existingOrganisation = new OrganisationBuilder(this.Transaction).WithName("existing organisation").Build();
+            var existingOrganisation = BuildOrganisation("existing organisation");
 
             this.Transaction.Derive();
             this.Transaction.Commit();
@@ -27,7 +27,7 @@ namespace Allors.Database.Domain.Tests
                 Assert.Equal(existingOrganisation.UniqueId, cachedOrganisation.UniqueId);
                 Assert.Same(session, cachedOrganisation.Strategy.Transaction);
 
-                var newOrganisation = new OrganisationBuilder(session).WithName("new organisation").Build();
+                var newOrganisation = new OrganisationBuilder(session).WithName("new organisation");
                 cachedOrganisation = new Organisations(session).Cache[newOrganisation.UniqueId];
                 Assert.Equal(newOrganisation.UniqueId, cachedOrganisation.UniqueId);
                 Assert.Same(session, cachedOrganisation.Strategy.Transaction);

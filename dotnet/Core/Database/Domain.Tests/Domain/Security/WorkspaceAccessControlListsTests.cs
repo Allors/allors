@@ -23,12 +23,12 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void InitialWithoutAccessControl()
         {
-            var person = new PersonBuilder(this.Transaction).WithFirstName("John").WithLastName("Doe").Build();
+            var person = this.BuildPerson("John", "Doe");
 
             this.Transaction.Derive();
             this.Transaction.Commit();
 
-            var organisation = new OrganisationBuilder(this.Transaction).WithName("Organisation").Build();
+            var organisation = new OrganisationBuilder(this.Transaction).WithName("Organisation");
 
             var aclService = new WorkspaceAclsService(this.Security, new WorkspaceMask(this.M), person);
             var acl = aclService.Create(this.workspaceName)[organisation];
@@ -40,9 +40,9 @@ namespace Allors.Database.Domain.Tests
         public void Initial()
         {
             var permission = this.FindPermission(this.M.Organisation.Name, Operations.Read);
-            var role = new RoleBuilder(this.Transaction).WithName("Role").WithPermission(permission).Build();
-            var person = new PersonBuilder(this.Transaction).WithFirstName("John").WithLastName("Doe").Build();
-            var grant = new GrantBuilder(this.Transaction).WithSubject(person).WithRole(role).Build();
+            var role = this.BuildRole("Role", permission);
+            var person = this.BuildPerson("John", "Doe");
+            var grant = new GrantBuilder(this.Transaction).WithSubject(person).WithRole(role);
 
             var initialSecurityToken = new SecurityTokens(this.Transaction).InitialSecurityToken;
             initialSecurityToken.AddGrant(grant);
@@ -50,7 +50,7 @@ namespace Allors.Database.Domain.Tests
             this.Transaction.Derive();
             this.Transaction.Commit();
 
-            var organisation = new OrganisationBuilder(this.Transaction).WithName("Organisation").Build();
+            var organisation = new OrganisationBuilder(this.Transaction).WithName("Organisation");
 
             var aclService = new WorkspaceAclsService(this.Security, new WorkspaceMask(this.M), person);
             var acl = aclService.Create(this.workspaceName)[organisation];
@@ -61,14 +61,14 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void GivenAWorkspaceAccessControlListsThenADatabaseDeniedPermissionsIsNotPresent()
         {
-            var administrator = new PersonBuilder(this.Transaction).WithUserName("administrator").Build();
+            var administrator = this.BuildPerson("administrator");
             var administrators = new UserGroups(this.Transaction).Administrators;
             administrators.AddMember(administrator);
 
             var databaseOnlyPermissions = new Permissions(this.Transaction).Extent().Where(v => v.ExistOperandType && v.OperandType.Equals(M.Person.DatabaseOnlyField));
             var databaseOnlyReadPermission = databaseOnlyPermissions.First(v => v.Operation == Operations.Read);
 
-            var revocation = new RevocationBuilder(this.Transaction).WithDeniedPermission(databaseOnlyReadPermission).Build();
+            var revocation = new RevocationBuilder(this.Transaction).WithDeniedPermission(databaseOnlyReadPermission);
 
             administrator.AddRevocation(revocation);
 
@@ -84,13 +84,13 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void GivenAWorkspaceAccessControlListsThenAWorkspaceDeniedPermissionsIsNotPresent()
         {
-            var administrator = new PersonBuilder(this.Transaction).WithUserName("administrator").Build();
+            var administrator = this.BuildPerson("administrator");
             var administrators = new UserGroups(this.Transaction).Administrators;
             administrators.AddMember(administrator);
 
             var workspacePermissions = new Permissions(this.Transaction).Extent().Where(v => v.ExistOperandType && v.OperandType.Equals(M.Person.DefaultWorkspaceField));
             var workspaceReadPermission = workspacePermissions.First(v => v.Operation == Operations.Read);
-            var revocation = new RevocationBuilder(this.Transaction).WithDeniedPermission(workspaceReadPermission).Build();
+            var revocation = this.BuildRevocation(workspaceReadPermission);
 
             administrator.AddRevocation(revocation);
 
@@ -106,13 +106,13 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void GivenAWorkspaceAccessControlListsThenAnotherWorkspaceDeniedPermissionsIsNotPresent()
         {
-            var administrator = new PersonBuilder(this.Transaction).WithUserName("administrator").Build();
+            var administrator = this.BuildPerson("administrator");
             var administrators = new UserGroups(this.Transaction).Administrators;
             administrators.AddMember(administrator);
 
             var workspacePermissions = new Permissions(this.Transaction).Extent().Where(v => v.ExistOperandType && v.OperandType.Equals(M.Person.DefaultWorkspaceField));
             var workspaceReadPermission = workspacePermissions.First(v => v.Operation == Operations.Read);
-            var revocation = new RevocationBuilder(this.Transaction).WithDeniedPermission(workspaceReadPermission).Build();
+            var revocation = this.BuildRevocation(workspaceReadPermission);
 
             administrator.AddRevocation(revocation);
 

@@ -17,11 +17,11 @@ namespace Allors.Database.Domain.Tests
         {
             var c1A = new C1Builder(this.Transaction)
                 .WithC1AllorsString("c1A")
-                .Build();
+                ;
 
             var c1B = new C1Builder(this.Transaction)
                 .WithC1AllorsString("c1B")
-                .Build();
+                ;
 
             c1B.Merge(c1A);
 
@@ -32,11 +32,11 @@ namespace Allors.Database.Domain.Tests
         public void MergeUnitRole()
         {
             var c1A = new C1Builder(this.Transaction)
-                .Build();
+                ;
 
             var c1B = new C1Builder(this.Transaction)
                 .WithC1AllorsString("c1B")
-                .Build();
+                ;
 
             c1B.Merge(c1A);
 
@@ -47,18 +47,18 @@ namespace Allors.Database.Domain.Tests
         public void NotMergeOneToOneRoleWhenExist()
         {
             var c2A = new C2Builder(this.Transaction)
-                .Build();
+                ;
 
             var c1A = new C1Builder(this.Transaction)
                 .WithC1C2One2One(c2A)
-                .Build();
+                ;
 
             var c2B = new C2Builder(this.Transaction)
-                .Build();
+                ;
 
             var c1B = new C1Builder(this.Transaction)
                 .WithC1C2One2One(c2B)
-                .Build();
+                ;
 
             c1B.Merge(c1A);
 
@@ -69,14 +69,14 @@ namespace Allors.Database.Domain.Tests
         public void MergeOneToOne()
         {
             var c1A = new C1Builder(this.Transaction)
-                .Build();
+                ;
 
             var c2B = new C2Builder(this.Transaction)
-                .Build();
+                ;
 
             var c1B = new C1Builder(this.Transaction)
                 .WithC1C2One2One(c2B)
-                .Build();
+                ;
 
             c1B.Merge(c1A);
 
@@ -87,18 +87,18 @@ namespace Allors.Database.Domain.Tests
         public void NotMergeManyToOneRoleWhenExist()
         {
             var c2A = new C2Builder(this.Transaction)
-                .Build();
+                ;
 
             var c1A = new C1Builder(this.Transaction)
                 .WithC1C2Many2One(c2A)
-                .Build();
+                ;
 
             var c2B = new C2Builder(this.Transaction)
-                .Build();
+                ;
 
             var c1B = new C1Builder(this.Transaction)
                 .WithC1C2Many2One(c2B)
-                .Build();
+                ;
 
             c1B.Merge(c1A);
 
@@ -109,14 +109,14 @@ namespace Allors.Database.Domain.Tests
         public void MergeManyToOne()
         {
             var c1A = new C1Builder(this.Transaction)
-                .Build();
+                ;
 
             var c2B = new C2Builder(this.Transaction)
-                .Build();
+                ;
 
             var c1B = new C1Builder(this.Transaction)
                 .WithC1C2Many2One(c2B)
-                .Build();
+                ;
 
             c1B.Merge(c1A);
 
@@ -129,13 +129,13 @@ namespace Allors.Database.Domain.Tests
             var c1A = new C1Builder(this.Transaction)
                 .WithC1C2One2Many(new C2Builder(this.Transaction).Build())
                 .WithC1C2One2Many(new C2Builder(this.Transaction).Build())
-                .Build();
+                ;
 
             var c1B = new C1Builder(this.Transaction)
                 .WithC1C2One2Many(new C2Builder(this.Transaction).Build())
                 .WithC1C2One2Many(new C2Builder(this.Transaction).Build())
                 .WithC1C2One2Many(new C2Builder(this.Transaction).Build())
-                .Build();
+                ;
 
             c1B.Merge(c1A);
 
@@ -145,15 +145,15 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void MergeManyToManyWhenExist()
         {
-            var c2 = new C2Builder(this.Transaction).Build();
+            var c2 = this.Transaction.Create<C2>();
 
             var c1A = new C1Builder(this.Transaction)
                 .WithC1C2Many2Many(c2)
-                .Build();
+                ;
 
             var c1B = new C1Builder(this.Transaction)
                 .WithC1C2Many2Many(c2)
-                .Build();
+                ;
 
             c1B.Merge(c1A);
 
@@ -164,12 +164,12 @@ namespace Allors.Database.Domain.Tests
         public void MergeManyToMany()
         {
             var c1A = new C1Builder(this.Transaction)
-                .Build();
+                ;
 
             var c1B = new C1Builder(this.Transaction)
                 .WithC1C2Many2Many(new C2Builder(this.Transaction).Build())
                 .WithC1C2Many2Many(new C2Builder(this.Transaction).Build())
-                .Build();
+                ;
 
             c1B.Merge(c1A);
 
@@ -179,12 +179,12 @@ namespace Allors.Database.Domain.Tests
         [Fact(Skip = "TODO: Koen")]
         public void Merge()
         {
-            var c1A = new C1Builder(this.Transaction).WithC1AllorsString("c1A").Build();
-            var c1B = new C1Builder(this.Transaction).WithC1AllorsString("c1B").Build();
+            var c1A = new C1Builder(this.Transaction).WithC1AllorsString("c1A");
+            var c1B = new C1Builder(this.Transaction).WithC1AllorsString("c1B");
 
             var c2 = new C2Builder(this.Transaction)
                 .WithC2C1Many2One(c1B)
-                .Build();
+                ;
 
             c1B.Merge(c1A);
 

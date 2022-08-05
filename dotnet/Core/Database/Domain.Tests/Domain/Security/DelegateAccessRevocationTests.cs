@@ -18,14 +18,14 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void WithRevocationAndDelegateWithoutRevocation()
         {
-            var user = new PersonBuilder(this.Transaction).WithUserName("user").Build();
+            var user = this.BuildPerson("user");
 
-            var delegatedAccessClass = new AccessClassBuilder(this.Transaction).Build();
-            var accessClass = new AccessClassBuilder(this.Transaction).WithDelegatedAccess(delegatedAccessClass).Build();
+            var delegatedAccessClass = new AccessClassBuilder(this.Transaction);
+            var accessClass = new AccessClassBuilder(this.Transaction).WithDelegatedAccess(delegatedAccessClass);
 
-            var securityToken = new SecurityTokenBuilder(this.Transaction).Build();
+            var securityToken = this.BuildSecurityToken();
             var permission = this.FindPermission(this.M.AccessClass.Property, Operations.Read);
-            var role = new RoleBuilder(this.Transaction).WithName("Role").WithPermission(permission).Build();
+            var role = this.BuildRole("Role", permission);
 
             securityToken.AddGrant(
                 new GrantBuilder(this.Transaction)
@@ -35,7 +35,7 @@ namespace Allors.Database.Domain.Tests
 
             accessClass.AddSecurityToken(securityToken);
 
-            var revocation = new RevocationBuilder(this.Transaction).WithDeniedPermission(permission).Build();
+            var revocation = this.BuildRevocation(permission);
             accessClass.AddRevocation(revocation);
 
             this.Transaction.Derive();
@@ -50,14 +50,14 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void WithoutRevocationAndDelegateWithoutRevocation()
         {
-            var user = new PersonBuilder(this.Transaction).WithUserName("user").Build();
+            var user = this.BuildPerson("user");
 
-            var delegatedAccessClass = new AccessClassBuilder(this.Transaction).Build();
-            var accessClass = new AccessClassBuilder(this.Transaction).WithDelegatedAccess(delegatedAccessClass).Build();
+            var delegatedAccessClass = new AccessClassBuilder(this.Transaction);
+            var accessClass = new AccessClassBuilder(this.Transaction).WithDelegatedAccess(delegatedAccessClass);
 
-            var securityToken = new SecurityTokenBuilder(this.Transaction).Build();
+            var securityToken = this.BuildSecurityToken();
             var permission = this.FindPermission(this.M.AccessClass.Property, Operations.Read);
-            var role = new RoleBuilder(this.Transaction).WithName("Role").WithPermission(permission).Build();
+            var role = this.BuildRole("Role", permission);
 
             securityToken.AddGrant(
                 new GrantBuilder(this.Transaction)
@@ -67,7 +67,7 @@ namespace Allors.Database.Domain.Tests
 
             accessClass.AddSecurityToken(securityToken);
 
-            var revocation = new RevocationBuilder(this.Transaction).WithDeniedPermission(permission).Build();
+            var revocation = this.BuildRevocation(permission);
 
             this.Transaction.Derive();
             this.Transaction.Commit();
@@ -81,14 +81,14 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void WithRevocationAndDelegateWithRevocation()
         {
-            var user = new PersonBuilder(this.Transaction).WithUserName("user").Build();
+            var user = this.BuildPerson("user");
 
-            var delegatedAccessClass = new AccessClassBuilder(this.Transaction).Build();
-            var accessClass = new AccessClassBuilder(this.Transaction).WithDelegatedAccess(delegatedAccessClass).Build();
+            var delegatedAccessClass = new AccessClassBuilder(this.Transaction);
+            var accessClass = new AccessClassBuilder(this.Transaction).WithDelegatedAccess(delegatedAccessClass);
 
-            var securityToken = new SecurityTokenBuilder(this.Transaction).Build();
+            var securityToken = this.BuildSecurityToken();
             var permission = this.FindPermission(this.M.AccessClass.Property, Operations.Read);
-            var role = new RoleBuilder(this.Transaction).WithName("Role").WithPermission(permission).Build();
+            var role = this.BuildRole("Role", permission);
 
             securityToken.AddGrant(
                 new GrantBuilder(this.Transaction)
@@ -98,7 +98,7 @@ namespace Allors.Database.Domain.Tests
 
             accessClass.AddSecurityToken(securityToken);
 
-            var revocation = new RevocationBuilder(this.Transaction).WithDeniedPermission(permission).Build();
+            var revocation = this.BuildRevocation(permission);
             accessClass.AddRevocation(revocation);
             delegatedAccessClass.AddRevocation(revocation);
 
@@ -114,14 +114,14 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void WithoutRevocationAndDelegateWithRevocation()
         {
-            var user = new PersonBuilder(this.Transaction).WithUserName("user").Build();
+            var user = this.BuildPerson("user");
 
-            var delegatedAccessClass = new AccessClassBuilder(this.Transaction).Build();
-            var accessClass = new AccessClassBuilder(this.Transaction).WithDelegatedAccess(delegatedAccessClass).Build();
+            var delegatedAccessClass = new AccessClassBuilder(this.Transaction);
+            var accessClass = new AccessClassBuilder(this.Transaction).WithDelegatedAccess(delegatedAccessClass);
 
-            var securityToken = new SecurityTokenBuilder(this.Transaction).Build();
+            var securityToken = this.BuildSecurityToken();
             var permission = this.FindPermission(this.M.AccessClass.Property, Operations.Read);
-            var role = new RoleBuilder(this.Transaction).WithName("Role").WithPermission(permission).Build();
+            var role = this.BuildRole("Role", permission);
 
             securityToken.AddGrant(
                 new GrantBuilder(this.Transaction)
@@ -132,7 +132,7 @@ namespace Allors.Database.Domain.Tests
 
             accessClass.AddSecurityToken(securityToken);
 
-            var revocation = new RevocationBuilder(this.Transaction).WithDeniedPermission(permission).Build();
+            var revocation = this.BuildRevocation(permission);
             delegatedAccessClass.AddRevocation(revocation);
 
             this.Transaction.Derive();

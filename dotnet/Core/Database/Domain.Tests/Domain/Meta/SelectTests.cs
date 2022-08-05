@@ -16,20 +16,20 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void One2ManyWithPropertyTypes()
         {
-            var c2A = new C2Builder(this.Transaction).WithC2AllorsString("c2A").Build();
-            var c2B = new C2Builder(this.Transaction).WithC2AllorsString("c2B").Build();
-            var c2C = new C2Builder(this.Transaction).WithC2AllorsString("c2C").Build();
+            var c2A = new C2Builder(this.Transaction).WithC2AllorsString("c2A");
+            var c2B = new C2Builder(this.Transaction).WithC2AllorsString("c2B");
+            var c2C = new C2Builder(this.Transaction).WithC2AllorsString("c2C");
 
             var c1a = new C1Builder(this.Transaction)
                 .WithC1AllorsString("c1A")
                 .WithC1C2One2Many(c2A)
-                .Build();
+                ;
 
             var c1b = new C1Builder(this.Transaction)
                 .WithC1AllorsString("c1B")
                 .WithC1C2One2Many(c2B)
                 .WithC1C2One2Many(c2C)
-                .Build();
+                ;
 
             this.Transaction.Derive();
 
@@ -48,20 +48,20 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void One2ManyWithPropertyTypeIds()
         {
-            var c2A = new C2Builder(this.Transaction).WithC2AllorsString("c2A").Build();
-            var c2B = new C2Builder(this.Transaction).WithC2AllorsString("c2B").Build();
-            var c2C = new C2Builder(this.Transaction).WithC2AllorsString("c2C").Build();
+            var c2A = new C2Builder(this.Transaction).WithC2AllorsString("c2A");
+            var c2B = new C2Builder(this.Transaction).WithC2AllorsString("c2B");
+            var c2C = new C2Builder(this.Transaction).WithC2AllorsString("c2C");
 
             var c1a = new C1Builder(this.Transaction)
                 .WithC1AllorsString("c1A")
                 .WithC1C2One2Many(c2A)
-                .Build();
+                ;
 
             var c1b = new C1Builder(this.Transaction)
                 .WithC1AllorsString("c1B")
                 .WithC1C2One2Many(c2B)
                 .WithC1C2One2Many(c2C)
-                .Build();
+                ;
 
             this.Transaction.Derive();
 
@@ -80,20 +80,20 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void One2ManyWithPropertyNames()
         {
-            var c2A = new C2Builder(this.Transaction).WithC2AllorsString("c2A").Build();
-            var c2B = new C2Builder(this.Transaction).WithC2AllorsString("c2B").Build();
-            var c2C = new C2Builder(this.Transaction).WithC2AllorsString("c2C").Build();
+            var c2A = new C2Builder(this.Transaction).WithC2AllorsString("c2A");
+            var c2B = new C2Builder(this.Transaction).WithC2AllorsString("c2B");
+            var c2C = new C2Builder(this.Transaction).WithC2AllorsString("c2C");
 
             var c1A = new C1Builder(this.Transaction)
                 .WithC1AllorsString("c1A")
                 .WithC1C2One2Many(c2A)
-                .Build();
+                ;
 
             var c1B = new C1Builder(this.Transaction)
                 .WithC1AllorsString("c1B")
                 .WithC1C2One2Many(c2B)
                 .WithC1C2One2Many(c2C)
-                .Build();
+                ;
 
             this.Transaction.Derive();
 

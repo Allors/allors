@@ -23,7 +23,7 @@ namespace Allors.Database.Domain.Tests
         // {
         //    var domain = (Domain)this.DatabaseTransaction.Population.MetaPopulation.Find(new Guid("AB41FD0C-C887-4A1D-BEDA-CED69527E69A"));
 
-        // var methodType = new MethodTypeBuilder(domain, Guid.NewGuid()).Build();
+        // var methodType = new MethodTypeBuilder(domain, Guid.NewGuid());
         //    methodType.ObjectType = M.Organisation.ObjectType;
         //    methodType.Name = "Method";
 
@@ -45,7 +45,7 @@ namespace Allors.Database.Domain.Tests
 
         // var count = new Permissions(this.DatabaseTransaction).Extent().Count;
 
-        // var relationType = new RelationTypeBuilder(domain, Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid()).Build();
+        // var relationType = new RelationTypeBuilder(domain, Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid());
 
         // relationType.AssociationType.ObjectType = M.Organisation.ObjectType;
         //    relationType.RoleType.ObjectType = Persons.Meta.ObjectType;
@@ -84,7 +84,7 @@ namespace Allors.Database.Domain.Tests
 
             var count = new Permissions(this.Transaction).Extent().Count;
 
-            var permission = new ExecutePermissionBuilder(this.Transaction).WithClassPointer(new Guid()).WithMethodTypePointer(new Guid()).Build();
+            var permission = new ExecutePermissionBuilder(this.Transaction).WithClassPointer(new Guid()).WithMethodTypePointer(new Guid());
 
             this.Transaction.Database.Services.Get<IPermissions>().Sync(this.Transaction);
 
@@ -94,7 +94,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void WhenSyncingPermissionsThenDanglingPermissionsAreDeleted()
         {
-            var permission = new ReadPermissionBuilder(this.Transaction).Build();
+            var permission = new ReadPermissionBuilder(this.Transaction);
 
             this.Transaction.Database.Services.Get<IPermissions>().Sync(this.Transaction);
 

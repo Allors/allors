@@ -2,7 +2,7 @@ delimiters "$", "$"
 
 TemplateId() ::= <<17ED40F8-BDF8-4A7C-9AE9-1C4D2AD6BA2B>>
 TemplateName() ::= <<Allors C# Domain>>
-TemplateVersion() ::= <<3.0.6>>
+TemplateVersion() ::= <<3.0.7>>
 TemplateAllors() ::= <<1.0>>
 TemplateConfiguration(meta) ::= <<
 $!
@@ -43,11 +43,6 @@ namespace Allors.Database.Domain
 $interface.ExclusiveDatabaseRoleTypes:{roleType|$interfaceExclusiveRoleType_Interface()$}$
 $interface.ExclusiveDatabaseAssociationTypes:{associationType|$interfaceExclusiveAssociationType_Interface()$}$
 $interface.ExclusiveMethodTypes:{methodType|$interfaceExclusiveMethodType_Interface()$}$
-	}
-
-	public partial interface $interface.name$Builder : $interface.DirectSupertypes:{directSupertype|$directSupertype.Name$Builder ,}$ IObjectBuilder, global::System.IDisposable
-	{
-$interface.ExclusiveDatabaseRoleTypes:{roleType|$interfaceExclusiveRoleTypes_Builder()$}$
 	}
 
 $objectType_Plural()$
@@ -134,22 +129,6 @@ $\n$
 		$methodType.FullName$ $methodType.Name$(System.Action<$methodType.FullName$> action);
 >>
 
-interfaceExclusiveRoleTypes_Builder() ::= <<
-$if(roleType.ObjectType.IsUnit)$
-		$objectType_NullableName(roleType.ObjectType)$ $roleType.Name$ {get;}
-$else$
-$if(roleType.IsOne)$
-		$objectType_NullableName(roleType.ObjectType)$ $roleType.Name$ {get;}
-
-$else$
-
-		global::System.Collections.Generic.List<$objectType_Name(roleType.ObjectType)$> $roleType.Name$ {get;}
-
-$endif$
-$endif$
-		$interface.name$Builder With$roleType.SingularName$($objectType_NullableName(roleType.ObjectType)$ value);
->>
-
 castClass(meta, objectType) ::= <<
 $class(meta,objectType)$
 >>
@@ -208,63 +187,9 @@ $class.DatabaseAssociationTypes:{associationType|$classAssociationType_Class()$}
 $class.MethodTypes:{methodType|$classMethodType_Method()$}$
 	}
 
-	public partial class $class.name$Builder : Allors.Database.Domain.ObjectBuilder<$class.name$> $class.DirectSupertypes:{directSupertype|, $directSupertype.Name$Builder}$, IObjectBuilder, global::System.IDisposable
-	{
-		public $class.name$Builder(Allors.Database.ITransaction transaction) : base(transaction)
-	    {
-	    }
-
-		protected override void OnBuild($class.name$ instance)
-		{
-$class.UnitDatabaseRoleTypes:{roleType|$classUnitRoleTypes_Class_OnBuild()$}$
-$class.CompositeDatabaseRoleTypes:{roleType|$classCompsiteRoleTypes_Class_OnBuild()$}$
-		}
-
-
-$class.InheritedRoleTypes:{roleType|$classInheritedRoleTypes_Builder(interface=roleType.associationType.ObjectType)$}$
-
-$class.DatabaseRoleTypes:{roleType|
-	$if(roleType.objectType.IsUnit)$
-		$classUnitRoleType_Builder()$
-	$else$
-		$classCompositeRoleType_Builder()$
-	$endif$
-}$
-	}
-
 $objectType_Plural()$
 
 }
->>
-
-classInheritedRoleTypes_Builder(interface) ::= <<
-	$interface.name$Builder $interface.name$Builder.With$roleType.SingularName$($objectType_NullableName(roleType.ObjectType)$ value) => this.With$roleType.SingularName$(value);
->>
-
-classUnitRoleTypes_Class_OnBuild() ::= <<
-$if((roleType.ObjectType.IsString || roleType.ObjectType.IsBinary))$
-
-			instance.$roleType.Name$ = this.$roleType.Name$;
-$else$
-
-			if(this.$roleType.Name$.HasValue)
-			{
-				instance.$roleType.Name$ = this.$roleType.Name$.Value;
-			}
-$endif$
->>
-
-classCompsiteRoleTypes_Class_OnBuild() ::= <<
-$if(roleType.IsOne)$
-
-			instance.$roleType.Name$ = this.$roleType.Name$;
-
-$else$
-			if(this.$roleType.Name$!=null)
-			{
-				instance.$roleType.Name$ = this.$roleType.Name$.ToArray();
-			}
-$endif$
 >>
 
 classAssociationType_Class() ::= <<
@@ -418,62 +343,6 @@ $\n$
             method.Execute();
             return method;
 		}
->>
-
-classUnitRoleType_Builder() ::= <<
-$if(roleType.ObjectType.IsString)$
-		public $objectType_NullableName(roleType.ObjectType)$ $roleType.Name$ {get; set;}
-
-$else$
-$if(roleType.ObjectType.IsBinary)$
-		public $objectType_NullableName(roleType.ObjectType)$ $roleType.Name$ {get; set;}
-
-$else$
-		public $objectType_NullableName(roleType.ObjectType)$ $roleType.Name$ {get; set;}
-
-$endif$
-$endif$
-		/// <exclude/>
-		new public $class.name$Builder With$roleType.SingularName$($objectType_NullableName(roleType.ObjectType)$ value)
-        {
-            this.$roleType.Name$ = value;
-            return this;
-        }
-
->>
-
-classCompositeRoleType_Builder() ::= <<
-$if(roleType.IsOne)$
-		public $objectType_NullableName(roleType.ObjectType)$ $roleType.Name$ {get; set;}
-
-		/// <exclude/>
-		public $class.name$Builder With$roleType.SingularName$($objectType_NullableName(roleType.ObjectType)$ value)
-        {
-			this.$roleType.Name$ = value;
-            return this;
-        }
-
-$else$
-		public global::System.Collections.Generic.List<$objectType_NullableName(roleType.ObjectType)$> $roleType.Name$ {get; set;}
-
-		/// <exclude/>
-		public $class.name$Builder With$roleType.SingularName$($objectType_NullableName(roleType.ObjectType)$ value)
-        {
-			if(this.$roleType.Name$ == null)
-			{
-				this.$roleType.Name$ = new global::System.Collections.Generic.List<$objectType_NullableName(roleType.ObjectType)$>();
-			}
-            this.$roleType.Name$.Add(value);
-            return this;
-        }
-
-		/// <exclude/>
-		public $class.name$Builder With$roleType.PluralName$(System.Collections.Generic.IEnumerable<$objectType_NullableName(roleType.ObjectType)$> value)
-        {
-            this.$roleType.Name$ = value != null ? new System.Collections.Generic.List<$roleType.ObjectType$>(value) : null;
-            return this;
-        }
-$endif$
 >>
 
 objectType_Plural() ::= <<

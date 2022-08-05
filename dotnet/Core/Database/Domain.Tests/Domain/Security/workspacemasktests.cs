@@ -24,9 +24,9 @@ namespace Allors.Database.Domain.Tests
         public void WithoutMask()
         {
             var permission = this.FindPermission(this.M.Organisation.Name, Operations.Read);
-            var role = new RoleBuilder(this.Transaction).WithName("Role").WithPermission(permission).Build();
-            var person = new PersonBuilder(this.Transaction).WithFirstName("John").WithLastName("Doe").Build();
-            var accessControl = new GrantBuilder(this.Transaction).WithSubject(person).WithRole(role).Build();
+            var role = this.BuildRole("Role", permission);
+            var person = this.BuildPerson("John", "Doe");
+            var accessControl = new GrantBuilder(this.Transaction).WithSubject(person).WithRole(role);
 
             var intialSecurityToken = new SecurityTokens(this.Transaction).InitialSecurityToken;
             intialSecurityToken.AddGrant(accessControl);
@@ -34,7 +34,7 @@ namespace Allors.Database.Domain.Tests
             this.Transaction.Derive();
             this.Transaction.Commit();
 
-            var organisation = new OrganisationBuilder(this.Transaction).WithName("Organisation").Build();
+            var organisation = new OrganisationBuilder(this.Transaction).WithName("Organisation");
 
             var aclService = new WorkspaceAclsService(this.Security, new WorkspaceMask(this.M), person);
             var acl = aclService.Create(this.workspaceName)[organisation];
@@ -45,12 +45,12 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void WithMask()
         {
-            var person = new PersonBuilder(this.Transaction).WithFirstName("John").WithLastName("Doe").Build();
+            var person = this.BuildPerson("John", "Doe");
 
             this.Transaction.Derive();
             this.Transaction.Commit();
 
-            var organisation = new OrganisationBuilder(this.Transaction).WithName("Organisation").Build();
+            var organisation = new OrganisationBuilder(this.Transaction).WithName("Organisation");
 
             var aclService = new WorkspaceAclsService(this.Security, new WorkspaceMask(this.M), person);
             var acl = aclService.Create(this.workspaceName)[organisation];

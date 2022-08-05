@@ -86,6 +86,18 @@ namespace Allors.Database.Adapters.Sql
             }
         }
 
+        public T Create<T>(params Action<T>[] builders) where T : IObject
+        {
+            var newObject = this.Create<T>();
+
+            foreach (var builder in builders)
+            {
+                builder(newObject);
+            }
+
+            return newObject;
+        }
+
         public IObject Create(IClass objectType)
         {
             if (!objectType.IsClass)

@@ -5,6 +5,7 @@
 
 namespace Allors.Database.Domain
 {
+    using System;
     using System.Linq;
     using Meta;
     using Services;
@@ -25,45 +26,85 @@ namespace Allors.Database.Domain
 
         private void CustomOnPostSetup(Config config)
         {
+            #region Plurals
+            var revocations = new Revocations(this.transaction);
+            var people = new People(this.transaction);
+            var userGroups = new UserGroups(this.transaction);
+            var organisations = new Organisations(this.transaction);
+            var trimFroms = new TrimFroms(this.transaction);
+            var trimTos = new TrimTos(this.transaction);
+            #endregion
 
-            var jane = new PersonBuilder(this.transaction).WithFirstName("Jane").WithLastName("Doe").WithUserName("jane@example.com").Build();
-            var john = new PersonBuilder(this.transaction).WithFirstName("John").WithLastName("Doe").WithUserName("john@example.com").Build();
-            var jenny = new PersonBuilder(this.transaction).WithFirstName("Jenny").WithLastName("Doe").WithUserName("jenny@example.com").Build();
+            #region Builders
+            Person BuildPerson(string firstName, string lastName, string userName, string password = null)
+            {
+                void Builder(Person v)
+                {
+                    v.FirstName = firstName;
+                    v.LastName = lastName;
+                    v.UserName = userName;
+                    v.SetPassword(password);
+                }
 
-            var guest = new PersonBuilder(this.transaction).WithFirstName("Gu").WithLastName("Est").WithUserName("guest@example.com").Build();
+                return people.Create(Builder);
+            }
 
-            jane.SetPassword("jane");
-            john.SetPassword("john");
-            jenny.SetPassword("jenny");
+            Organisation BuildOrganisation(string name, Action<Organisation> extraBuilder = null)
+            {
+                void Builder(Organisation v) => v.Name = name;
+                return organisations.Create(Builder, extraBuilder);
+            }
 
-            new UserGroups(this.transaction).Administrators.AddMember(jane);
-            new UserGroups(this.transaction).Creators.AddMember(jane);
-            new UserGroups(this.transaction).Creators.AddMember(john);
-            new UserGroups(this.transaction).Creators.AddMember(jenny);
+            Revocation BuildRevocation(params Permission[] deniedPermissions) => revocations.Create(v => v.DeniedPermissions = deniedPermissions);
 
-            var acme = new OrganisationBuilder(this.transaction)
-                .WithName("Acme")
-                .WithOwner(jane)
-                .WithEmployee(john)
-                .WithEmployee(jenny)
-                .Build();
+            TrimFrom BuildTrimFrom(string name, Action<TrimFrom> extraBuilder = null)
+            {
+                void Builder(TrimFrom v) => v.Name = name;
+                return trimFroms.Create(Builder, extraBuilder);
+            }
+
+            TrimTo BuildTrimTo(string name, Action<TrimTo> extraBuilder = null)
+            {
+                void Builder(TrimTo v) => v.Name = name;
+                return trimTos.Create(Builder, extraBuilder);
+            }
+
+            #endregion
+
+            var jane = BuildPerson("Jane", "Doe", "jane@example.com", "jane");
+            var john = BuildPerson("John", "Doe", "john@example.com", "john");
+            var jenny = BuildPerson("Jenny", "Doe", "jenny@example.com", "jenny");
+
+            var guest = BuildPerson("Gu", "est", "guest@example.com");
+
+            userGroups.Administrators.AddMember(jane);
+            userGroups.Creators.AddMember(jane);
+            userGroups.Creators.AddMember(john);
+            userGroups.Creators.AddMember(jenny);
+
+            var acme = BuildOrganisation("Acme", organisation =>
+                {
+                    organisation.Owner = jane;
+                    organisation.AddEmployee(john);
+                    organisation.AddEmployee(jenny);
+                });
 
             for (var i = 0; i < 100; i++)
             {
-                new OrganisationBuilder(this.transaction)
-                    .WithName($"Organisation-{i}")
-                    .WithOwner(john)
-                    .WithEmployee(jenny)
-                    .WithEmployee(jane)
-                    .Build();
+                BuildOrganisation($"Organisation-{i}", organisation =>
+                {
+                    organisation.Owner = john;
+                    organisation.AddEmployee(jenny);
+                    organisation.AddEmployee(jane);
+                });
             }
 
             // Create cycles between Organisation and Person
-            var cycleOrganisation1 = new OrganisationBuilder(this.transaction).WithName("Organisatin Cycle One").Build();
-            var cycleOrganisation2 = new OrganisationBuilder(this.transaction).WithName("Organisatin Cycle Two").Build();
+            var cycleOrganisation1 = BuildOrganisation("Organisatin Cycle One");
+            var cycleOrganisation2 = BuildOrganisation("Organisatin Cycle Two");
 
-            var cyclePerson1 = new PersonBuilder(this.transaction).WithFirstName("Person Cycle").WithLastName("One").WithUserName("cycle1@one.org").Build();
-            var cyclePerson2 = new PersonBuilder(this.transaction).WithFirstName("Person Cycle").WithLastName("Two").WithUserName("cycle2@one.org").Build();
+            var cyclePerson1 = BuildPerson("Person Cycle", "One", "cycle1@one.org");
+            var cyclePerson2 = BuildPerson("Person Cycle", "Two", "cycle2@one.org");
 
             // One
             cycleOrganisation1.CycleOne = cyclePerson1;
@@ -90,11 +131,12 @@ namespace Allors.Database.Domain
             {
                 this.transaction.Database.Services.Get<IPermissions>().Sync(this.transaction);
 
-                var denied = new DeniedBuilder(this.transaction)
-                    .WithDatabaseProperty("DatabaseProp")
-                    .WithDefaultWorkspaceProperty("DefaultWorkspaceProp")
-                    .WithWorkspaceXProperty("WorkspaceXProp")
-                    .Build();
+                var denied = this.transaction.Create<Denied>(denied =>
+                {
+                    denied.DatabaseProperty = "DatabaseProp";
+                    denied.DefaultWorkspaceProperty = "DefaultWorkspaceProp";
+                    denied.WorkspaceXProperty = "WorkspaceXProp";
+                });
 
                 var m = denied.M;
 
@@ -102,11 +144,7 @@ namespace Allors.Database.Domain
                 var defaultWorkspaceWrite = new Permissions(this.transaction).Extent().First(v => v.Operation == Operations.Write && v.OperandType.Equals(m.Denied.DefaultWorkspaceProperty));
                 var workspaceXWrite = new Permissions(this.transaction).Extent().First(v => v.Operation == Operations.Write && v.OperandType.Equals(m.Denied.WorkspaceXProperty));
 
-                var revocation = new RevocationBuilder(this.transaction)
-                    .WithDeniedPermission(databaseWrite)
-                    .WithDeniedPermission(defaultWorkspaceWrite)
-                    .WithDeniedPermission(workspaceXWrite)
-                    .Build();
+                var revocation = BuildRevocation(databaseWrite, defaultWorkspaceWrite, workspaceXWrite);
 
                 denied.AddRevocation(revocation);
             }
@@ -115,28 +153,24 @@ namespace Allors.Database.Domain
             if (this.Config.SetupSecurity)
             {
                 // Objects
-                var fromTrimmed1 = new TrimFromBuilder(this.transaction).WithName("Trimmed1").Build();
-                var fromTrimmed2 = new TrimFromBuilder(this.transaction).WithName("Trimmed2").Build();
-                var fromUntrimmed1 = new TrimFromBuilder(this.transaction).WithName("Untrimmed1").Build();
-                var fromUntrimmed2 = new TrimFromBuilder(this.transaction).WithName("Untrimmed2").Build();
+                var fromTrimmed1 = BuildTrimFrom("Trimmed1");
+                var fromTrimmed2 = BuildTrimFrom("Trimmed2");
+                var fromUntrimmed1 = BuildTrimFrom("Untrimmed1");
+                var fromUntrimmed2 = BuildTrimFrom("Untrimmed2");
 
-                var toTrimmed = new TrimToBuilder(this.transaction).WithName("Trimmed1").Build();
-                var toUntrimmed = new TrimToBuilder(this.transaction).WithName("Untrimmed1").Build();
+                var toTrimmed = BuildTrimTo("Trimmed1");
+                var toUntrimmed = BuildTrimTo("Untrimmed1");
 
                 var m = this.transaction.Database.Services.Get<MetaPopulation>();
 
                 // Denied Permissions
                 var fromTrimPermission = new Permissions(this.transaction).Extent().First(v => v.Operation == Operations.Read && v.OperandType.Equals(m.TrimFrom.Name));
-                var fromRevocation = new RevocationBuilder(this.transaction)
-                    .WithDeniedPermission(fromTrimPermission)
-                    .Build();
+                var fromRevocation = BuildRevocation(fromTrimPermission);
                 fromTrimmed1.AddRevocation(fromRevocation);
                 fromTrimmed2.AddRevocation(fromRevocation);
 
                 var toTrimPermission = new Permissions(this.transaction).Extent().First(v => v.Operation == Operations.Read && v.OperandType.Equals(m.TrimTo.Name));
-                var toRevocation = new RevocationBuilder(this.transaction)
-                    .WithDeniedPermission(toTrimPermission)
-                    .Build();
+                var toRevocation = BuildRevocation(toTrimPermission);
                 toTrimmed.AddRevocation(toRevocation);
 
                 // Relations

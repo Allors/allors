@@ -19,11 +19,16 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void WhenDeletingUserThenLoginShouldAlsoBeDeleted()
         {
-            var person = new PersonBuilder(this.Transaction).WithUserName("user").Build();
+            var person = this.BuildPerson("user");
 
             this.Transaction.Derive();
 
-            var login = new LoginBuilder(this.Transaction).WithProvider("MyProvider").WithKey("XXXYYYZZZ").Build();
+            var login = this.Transaction.Create<Login>(v =>
+            {
+                v.Provider = "MyProvider";
+                v.Key = "XXXYYYZZZ";
+            });
+
             person.AddLogin(login);
 
             this.Transaction.Derive();

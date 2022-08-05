@@ -22,16 +22,16 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void ResolveObject()
         {
-            var c2A = new C2Builder(this.Transaction).WithC2AllorsString("c2A").Build();
-            var c2B = new C2Builder(this.Transaction).WithC2AllorsString("c2B").Build();
-            var c2C = new C2Builder(this.Transaction).WithC2AllorsString("c2C").Build();
+            var c2A = new C2Builder(this.Transaction).WithC2AllorsString("c2A");
+            var c2B = new C2Builder(this.Transaction).WithC2AllorsString("c2B");
+            var c2C = new C2Builder(this.Transaction).WithC2AllorsString("c2C");
 
-            var c1A = new C1Builder(this.Transaction).WithC1AllorsString("c1A").WithC1C2One2Many(c2A).Build();
+            var c1A = new C1Builder(this.Transaction).WithC1AllorsString("c1A").WithC1C2One2Many(c2A);
 
             var c1B = new C1Builder(this.Transaction).WithC1AllorsString("c1B")
                     .WithC1C2One2Many(c2B)
                     .WithC1C2One2Many(c2C)
-                    .Build();
+                    ;
 
             this.Transaction.Derive();
 
@@ -57,16 +57,16 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void ResolveObjectMultipleSubtree()
         {
-            var c1A = new C1Builder(this.Transaction).WithC1AllorsString("c1A").Build();
-            var c1B = new C1Builder(this.Transaction).WithC1AllorsString("c1B").Build();
-            var c1C = new C1Builder(this.Transaction).WithC1AllorsString("c1C").Build();
-            var c1D = new C1Builder(this.Transaction).WithC1AllorsString("c1D").Build();
-            var c1E = new C1Builder(this.Transaction).WithC1AllorsString("c1E").Build();
+            var c1A = new C1Builder(this.Transaction).WithC1AllorsString("c1A");
+            var c1B = new C1Builder(this.Transaction).WithC1AllorsString("c1B");
+            var c1C = new C1Builder(this.Transaction).WithC1AllorsString("c1C");
+            var c1D = new C1Builder(this.Transaction).WithC1AllorsString("c1D");
+            var c1E = new C1Builder(this.Transaction).WithC1AllorsString("c1E");
 
-            var c2A = new C2Builder(this.Transaction).WithC2AllorsString("c2A").Build();
-            var c2B = new C2Builder(this.Transaction).WithC2AllorsString("c2B").Build();
-            var c2C = new C2Builder(this.Transaction).WithC2AllorsString("c2C").Build();
-            var c2D = new C2Builder(this.Transaction).WithC2AllorsString("c2D").Build();
+            var c2A = new C2Builder(this.Transaction).WithC2AllorsString("c2A");
+            var c2B = new C2Builder(this.Transaction).WithC2AllorsString("c2B");
+            var c2C = new C2Builder(this.Transaction).WithC2AllorsString("c2C");
+            var c2D = new C2Builder(this.Transaction).WithC2AllorsString("c2D");
 
             c1A.AddC1I12One2Many(c1C);
             c1B.AddC1I12One2Many(c1E);
@@ -89,7 +89,7 @@ namespace Allors.Database.Domain.Tests
                     .Add(this.M.C2.C2C2One2Manies),
             };
 
-            var prefetchPolicy = new PrefetchPolicyBuilder().WithNodes(tree, this.M).Build();
+            var prefetchPolicy = new PrefetchPolicyBuilder().WithNodes(tree, this.M);
 
             {
                 var resolved = new HashSet<IObject>();
@@ -121,16 +121,16 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void ResolveCollection()
         {
-            var c2A = new C2Builder(this.Transaction).WithC2AllorsString("c2A").Build();
-            var c2B = new C2Builder(this.Transaction).WithC2AllorsString("c2B").Build();
-            var c2C = new C2Builder(this.Transaction).WithC2AllorsString("c2C").Build();
+            var c2A = new C2Builder(this.Transaction).WithC2AllorsString("c2A");
+            var c2B = new C2Builder(this.Transaction).WithC2AllorsString("c2B");
+            var c2C = new C2Builder(this.Transaction).WithC2AllorsString("c2C");
 
-            var c1A = new C1Builder(this.Transaction).WithC1AllorsString("c1A").WithC1C2One2Many(c2A).Build();
+            var c1A = new C1Builder(this.Transaction).WithC1AllorsString("c1A").WithC1C2One2Many(c2A);
 
             var c1B = new C1Builder(this.Transaction).WithC1AllorsString("c1B")
                     .WithC1C2One2Many(c2B)
                     .WithC1C2One2Many(c2C)
-                    .Build();
+                    ;
 
             this.Transaction.Derive();
 
@@ -156,16 +156,16 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void ResolveCollectionMultipleSubtree()
         {
-            var c1A = new C1Builder(this.Transaction).WithC1AllorsString("c1A").Build();
-            var c1B = new C1Builder(this.Transaction).WithC1AllorsString("c1B").Build();
-            var c1C = new C1Builder(this.Transaction).WithC1AllorsString("c1C").Build();
-            var c1D = new C1Builder(this.Transaction).WithC1AllorsString("c1D").Build();
-            var c1E = new C1Builder(this.Transaction).WithC1AllorsString("c1E").Build();
+            var c1A = new C1Builder(this.Transaction).WithC1AllorsString("c1A");
+            var c1B = new C1Builder(this.Transaction).WithC1AllorsString("c1B");
+            var c1C = new C1Builder(this.Transaction).WithC1AllorsString("c1C");
+            var c1D = new C1Builder(this.Transaction).WithC1AllorsString("c1D");
+            var c1E = new C1Builder(this.Transaction).WithC1AllorsString("c1E");
 
-            var c2A = new C2Builder(this.Transaction).WithC2AllorsString("c2A").Build();
-            var c2B = new C2Builder(this.Transaction).WithC2AllorsString("c2B").Build();
-            var c2C = new C2Builder(this.Transaction).WithC2AllorsString("c2C").Build();
-            var c2D = new C2Builder(this.Transaction).WithC2AllorsString("c2D").Build();
+            var c2A = new C2Builder(this.Transaction).WithC2AllorsString("c2A");
+            var c2B = new C2Builder(this.Transaction).WithC2AllorsString("c2B");
+            var c2C = new C2Builder(this.Transaction).WithC2AllorsString("c2C");
+            var c2D = new C2Builder(this.Transaction).WithC2AllorsString("c2D");
 
             c1A.AddC1I12One2Many(c1C);
             c1B.AddC1I12One2Many(c1E);
@@ -188,7 +188,7 @@ namespace Allors.Database.Domain.Tests
                     .Add(this.M.C2.C2C2One2Manies),
             };
 
-            var prefetchPolicy = new PrefetchPolicyBuilder().WithNodes(tree, this.M).Build();
+            var prefetchPolicy = new PrefetchPolicyBuilder().WithNodes(tree, this.M);
 
             {
                 var resolved = new HashSet<IObject>();
@@ -258,13 +258,13 @@ namespace Allors.Database.Domain.Tests
         public void Prefetch()
         {
             var tree = Array.Empty<Node>();
-            new PrefetchPolicyBuilder().WithNodes(tree, this.M).Build();
+            new PrefetchPolicyBuilder().WithNodes(tree, this.M);
 
             tree = new[] { new Node(this.M.C1.C1AllorsBinary) };
-            new PrefetchPolicyBuilder().WithNodes(tree, this.M).Build();
+            new PrefetchPolicyBuilder().WithNodes(tree, this.M);
 
             tree = new[] { new Node(this.M.C1.C1C1Many2Manies) };
-            new PrefetchPolicyBuilder().WithNodes(tree, this.M).Build();
+            new PrefetchPolicyBuilder().WithNodes(tree, this.M);
         }
     }
 }

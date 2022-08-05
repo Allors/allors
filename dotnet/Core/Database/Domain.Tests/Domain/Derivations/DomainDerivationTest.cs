@@ -17,10 +17,11 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void UnitRoles()
         {
-            var person = new PersonBuilder(this.Transaction)
-                .WithFirstName("Jane")
-                .WithLastName("Doe")
-                .Build();
+            var person = this.Transaction.Create<Person>(v =>
+            {
+                v.FirstName = "Jane";
+                v.LastName = "Doe";
+            });
 
             this.Transaction.Derive();
 

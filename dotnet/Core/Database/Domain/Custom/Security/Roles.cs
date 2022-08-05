@@ -24,9 +24,11 @@ namespace Allors.Database.Domain
         {
             base.CustomSetup(setup);
 
-            new RoleBuilder(this.Transaction).WithName("Operations").WithUniqueId(OperationsId).Build();
-            new RoleBuilder(this.Transaction).WithName("Procurement").WithUniqueId(ProcurementId).Build();
-            new RoleBuilder(this.Transaction).WithName("Sales").WithUniqueId(SalesId).Build();
+            var merge = this.Cache.Merger().Action();
+
+            merge(OperationsId, v => v.Name = "Operations");
+            merge(ProcurementId, v => v.Name = "Procurement");
+            merge(SalesId, v => v.Name = "Sales");
         }
     }
 }

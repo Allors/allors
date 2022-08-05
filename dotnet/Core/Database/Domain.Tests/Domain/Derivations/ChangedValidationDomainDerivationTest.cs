@@ -17,16 +17,9 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void One2One()
         {
-            var cc = new CCBuilder(this.Transaction)
-                .Build();
-
-            var bb = new BBBuilder(this.Transaction)
-                .WithOne2One(cc)
-                .Build();
-
-            var aa = new AABuilder(this.Transaction)
-                .WithOne2One(bb)
-                .Build();
+            var cc = this.Transaction.Create<CC>();
+            var bb = this.Transaction.Create<BB>(v => v.One2One = cc);
+            var aa = this.Transaction.Create<AA>(v => v.One2One = bb);
 
             this.Transaction.Derive();
 
@@ -40,16 +33,9 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void Many2One()
         {
-            var cc = new CCBuilder(this.Transaction)
-                .Build();
-
-            var bb = new BBBuilder(this.Transaction)
-                .WithMany2One(cc)
-                .Build();
-
-            var aa = new AABuilder(this.Transaction)
-                .WithMany2One(bb)
-                .Build();
+            var cc = this.Transaction.Create<CC>();
+            var bb = this.Transaction.Create<BB>(v => v.One2One = cc);
+            var aa = this.Transaction.Create<AA>(v => v.One2One = bb);
 
             this.Transaction.Derive();
 
@@ -63,16 +49,9 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void One2Many()
         {
-            var cc = new CCBuilder(this.Transaction)
-                .Build();
-
-            var bb = new BBBuilder(this.Transaction)
-                .WithOne2Many(cc)
-                .Build();
-
-            var aa = new AABuilder(this.Transaction)
-                .WithOne2Many(bb)
-                .Build();
+            var cc = this.Transaction.Create<CC>();
+            var bb = this.Transaction.Create<BB>(v => v.One2One = cc);
+            var aa = this.Transaction.Create<AA>(v => v.One2One = bb);
 
             this.Transaction.Derive();
 
@@ -86,16 +65,9 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void Many2Many()
         {
-            var cc = new CCBuilder(this.Transaction)
-                .Build();
-
-            var bb = new BBBuilder(this.Transaction)
-                .WithMany2Many(cc)
-                .Build();
-
-            var aa = new AABuilder(this.Transaction)
-                .WithMany2Many(bb)
-                .Build();
+            var cc = this.Transaction.Create<CC>();
+            var bb = this.Transaction.Create<BB>(v => v.One2One = cc);
+            var aa = this.Transaction.Create<AA>(v => v.One2One = bb);
 
             this.Transaction.Derive();
 
@@ -109,8 +81,8 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void C1ChangedRole()
         {
-            var c1 = new C1Builder(this.Transaction).Build();
-            var c2 = new C2Builder(this.Transaction).Build();
+            var c1 = this.Transaction.Create<C1>();
+            var c2 = this.Transaction.Create<C2>();
 
             c1.ChangedRolePingC1 = true;
             c2.ChangedRolePingC1 = true;
@@ -124,8 +96,8 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void I1ChangedRole()
         {
-            var c1 = new C1Builder(this.Transaction).Build();
-            var c2 = new C2Builder(this.Transaction).Build();
+            var c1 = this.Transaction.Create<C1>();
+            var c2 = this.Transaction.Create<C2>();
 
             c1.ChangedRolePingI1 = true;
             c2.ChangedRolePingI1 = true;
@@ -139,8 +111,8 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void I12ChangedRole()
         {
-            var c1 = new C1Builder(this.Transaction).Build();
-            var c2 = new C2Builder(this.Transaction).Build();
+            var c1 = this.Transaction.Create<C1>();
+            var c2 = this.Transaction.Create<C2>();
 
             c1.ChangedRolePingI12 = true;
             c2.ChangedRolePingI12 = true;
@@ -154,8 +126,8 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void S12ChangedRole()
         {
-            var c1 = new C1Builder(this.Transaction).Build();
-            var c2 = new C2Builder(this.Transaction).Build();
+            var c1 = this.Transaction.Create<C1>();
+            var c2 = this.Transaction.Create<C2>();
 
             c1.ChangedRolePingS12 = true;
             c2.ChangedRolePingS12 = true;

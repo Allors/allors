@@ -140,6 +140,18 @@ namespace Allors.Database.Adapters.Memory
             return (T)this.Create(@class);
         }
 
+        public T Create<T>(params Action<T>[] builders) where T : IObject
+        {
+            var newObject = this.Create<T>();
+
+            foreach (var builder in builders)
+            {
+                builder?.Invoke(newObject);
+            }
+
+            return newObject;
+        }
+
         public IObject[] Create(IClass objectType, int count)
         {
             var arrayType = this.Database.ObjectFactory.GetType(objectType);

@@ -40,17 +40,19 @@ namespace Allors.Database.Domain
             if (!@this.ExistOwnerGrant)
             {
                 var ownerRole = new Roles(@this.Strategy.Transaction).Owner;
-                @this.OwnerGrant = new GrantBuilder(@this.Strategy.Transaction)
-                    .WithRole(ownerRole)
-                    .WithSubject(@this)
-                    .Build();
+                @this.OwnerGrant = @this.Transaction().Create<Grant>(grant =>
+                {
+                    grant.Role = ownerRole;
+                    grant.AddSubject(@this);
+                });
             }
 
             if (!@this.ExistOwnerSecurityToken)
             {
-                @this.OwnerSecurityToken = new SecurityTokenBuilder(@this.Strategy.Transaction)
-                    .WithGrant(@this.OwnerGrant)
-                    .Build();
+                @this.OwnerSecurityToken = @this.Transaction().Create<SecurityToken>(securityToken =>
+                {
+                    securityToken.AddGrant(@this.OwnerGrant);
+                });
             }
 
             if (!@this.ExistUserSecurityStamp)

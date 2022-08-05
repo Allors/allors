@@ -17,19 +17,19 @@ namespace Allors.Database.Domain.Tests
         {
             var c2A = new C2Builder(this.Transaction)
                 .WithC2AllorsString("c2A")
-                .Build();
+                ;
 
             var c2B = new C2Builder(this.Transaction)
                 .WithC2AllorsString("c2B")
-                .Build();
+                ;
 
             var c2C = new C2Builder(this.Transaction)
                 .WithC2AllorsString("c2B")
-                .Build();
+                ;
 
             var c2D = new C2Builder(this.Transaction)
                 .WithC2AllorsString("c2D")
-                .Build();
+                ;
 
             var c1A = new C1Builder(this.Transaction)
                 .WithC1AllorsString("c1A")
@@ -37,7 +37,7 @@ namespace Allors.Database.Domain.Tests
                 .WithC1C2One2Many(c2B)
                 .WithC1C2Many2One(c2C)
                 .WithC1C2Many2Many(c2D)
-                .Build();
+                ;
 
             var cloned = c1A.Clone();
 
@@ -54,19 +54,19 @@ namespace Allors.Database.Domain.Tests
         {
             var c2A = new C2Builder(this.Transaction)
                 .WithC2AllorsString("c2A")
-                .Build();
+                ;
 
             var c2B = new C2Builder(this.Transaction)
                 .WithC2AllorsString("c2B")
-                .Build();
+                ;
 
             var c2C = new C2Builder(this.Transaction)
                 .WithC2AllorsString("c2B")
-                .Build();
+                ;
 
             var c2D = new C2Builder(this.Transaction)
                 .WithC2AllorsString("c2D")
-                .Build();
+                ;
 
             var c1A = new C1Builder(this.Transaction)
                 .WithC1AllorsString("c1A")
@@ -74,7 +74,7 @@ namespace Allors.Database.Domain.Tests
                 .WithC1C2One2Many(c2B)
                 .WithC1C2Many2One(c2C)
                 .WithC1C2Many2Many(c2D)
-                .Build();
+                ;
 
             var cloned = c1A.Clone(this.M.C1.Nodes(
                 v => v.C1C2One2One.Node(),
@@ -100,22 +100,22 @@ namespace Allors.Database.Domain.Tests
         {
             var c2C = new C2Builder(this.Transaction)
                 .WithC2AllorsString("c2C")
-                .Build();
+                ;
 
             var c2B = new C2Builder(this.Transaction)
                 .WithC2AllorsString("c2B")
-                .Build();
+                ;
 
             var c2A = new C2Builder(this.Transaction)
                 .WithC2AllorsString("c2A")
                 .WithC2C2One2One(c2B)
                 .WithC2C2Many2One(c2C)
-                .Build();
+                ;
 
             var c1A = new C1Builder(this.Transaction)
                 .WithC1AllorsString("c1A")
                 .WithC1C2One2One(c2A)
-                .Build();
+                ;
 
             var deepClone = this.M.C1.Node(v => v.C1C2One2One.Node(w => w.C2.C2C2One2One.Node()));
 

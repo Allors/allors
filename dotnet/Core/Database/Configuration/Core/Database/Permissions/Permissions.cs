@@ -78,7 +78,7 @@ namespace Allors.Database.Configuration
                 // Create
                 if (!createPermissionsByClassId.ContainsKey(@class.Id))
                 {
-                    new CreatePermissionBuilder(transaction).WithClassPointer(@class.Id).Build();
+                    transaction.Create<CreatePermission>(v => v.ClassPointer = @class.Id);
                 }
 
                 var relationTypeIds = new HashSet<Guid>(@class.DatabaseRoleTypes.Select(v => v.RelationType.Id));
@@ -101,18 +101,22 @@ namespace Allors.Database.Configuration
 
                     foreach (var relationTypeId in relationTypeIds.Where(v => !existingRelationTypeIds.Contains(v)))
                     {
-                        new ReadPermissionBuilder(transaction)
-                            .WithClassPointer(@class.Id)
-                            .WithRelationTypePointer(relationTypeId).Build();
+                        transaction.Create<ReadPermission>(v =>
+                        {
+                            v.ClassPointer = @class.Id;
+                            v.RelationTypePointer = relationTypeId;
+                        });
                     }
                 }
                 else
                 {
                     foreach (var relationTypeId in relationTypeIds)
                     {
-                        new ReadPermissionBuilder(transaction)
-                            .WithClassPointer(@class.Id)
-                            .WithRelationTypePointer(relationTypeId).Build();
+                        transaction.Create<ReadPermission>(v =>
+                        {
+                            v.ClassPointer = @class.Id;
+                            v.RelationTypePointer = relationTypeId;
+                        });
                     }
                 }
 
@@ -134,18 +138,22 @@ namespace Allors.Database.Configuration
 
                     foreach (var relationTypeId in relationTypeIds.Where(v => !existingRelationTypeIds.Contains(v)))
                     {
-                        new WritePermissionBuilder(transaction)
-                            .WithClassPointer(@class.Id)
-                            .WithRelationTypePointer(relationTypeId).Build();
+                        transaction.Create<WritePermission>(v =>
+                        {
+                            v.ClassPointer = @class.Id;
+                            v.RelationTypePointer = relationTypeId;
+                        });
                     }
                 }
                 else
                 {
                     foreach (var relationTypeId in relationTypeIds)
                     {
-                        new WritePermissionBuilder(transaction)
-                            .WithClassPointer(@class.Id)
-                            .WithRelationTypePointer(relationTypeId).Build();
+                        transaction.Create<WritePermission>(v =>
+                        {
+                            v.ClassPointer = @class.Id;
+                            v.RelationTypePointer = relationTypeId;
+                        });
                     }
                 }
 
@@ -169,18 +177,22 @@ namespace Allors.Database.Configuration
 
                     foreach (var methodTypeId in methodTypeIds.Where(v => !existingRelationTypeIds.Contains(v)))
                     {
-                        new ExecutePermissionBuilder(transaction)
-                            .WithClassPointer(@class.Id)
-                            .WithMethodTypePointer(methodTypeId).Build();
+                        transaction.Create<ExecutePermission>(v =>
+                        {
+                            v.ClassPointer = @class.Id;
+                            v.MethodTypePointer = methodTypeId;
+                        });
                     }
                 }
                 else
                 {
                     foreach (var methodTypeId in methodTypeIds)
                     {
-                        new ExecutePermissionBuilder(transaction)
-                            .WithClassPointer(@class.Id)
-                            .WithMethodTypePointer(methodTypeId).Build();
+                        transaction.Create<ExecutePermission>(v =>
+                        {
+                            v.ClassPointer = @class.Id;
+                            v.MethodTypePointer = methodTypeId;
+                        });
                     }
                 }
             }

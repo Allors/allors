@@ -17,7 +17,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void CycleAgain()
         {
-            var organisation = new OrganisationBuilder(this.Transaction).WithName("Acme").Build();
+            var organisation = this.BuildOrganisation("Acme");
 
             Assert.False(organisation.PostDeriveTrigger);
             Assert.False(organisation.PostDeriveTriggered);
