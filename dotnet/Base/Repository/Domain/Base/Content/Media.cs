@@ -100,7 +100,7 @@ namespace Allors.Repository
         public string FileName { get; set; }
 
         #region inherited methods
-        public void OnBuild() { }
+        
 
         public void OnPostBuild() { }
 

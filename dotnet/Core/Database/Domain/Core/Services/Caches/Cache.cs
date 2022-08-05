@@ -79,7 +79,7 @@ namespace Allors.Database.Domain
             public Func<TKey, Action<TObject>, TObject> Action() =>
                 (id, action) =>
                 {
-                    var @object = this.cache[id] ?? (TObject)DefaultObjectBuilder.Build(this.transaction, this.@class);
+                    var @object = this.cache[id] ?? (TObject)this.transaction.Create(this.@class);
 
                     @object.Strategy.SetUnitRole(this.roleType, id);
                     action(@object);

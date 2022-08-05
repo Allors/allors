@@ -8,6 +8,7 @@ namespace Allors.Database.Domain.Tests
 {
     using System;
     using System.IO;
+    using System.Linq;
     using System.Reflection;
     using Adapters.Memory;
     using Configuration;
@@ -25,6 +26,8 @@ namespace Allors.Database.Domain.Tests
     using Revocation = Domain.Revocation;
     using Organisation = Domain.Organisation;
     using SecurityToken = Domain.SecurityToken;
+    using C1 = Domain.C1;
+    using C2 = Domain.C2;
 
     public class DomainTest : IDisposable
     {
@@ -155,13 +158,27 @@ namespace Allors.Database.Domain.Tests
 
         protected Person BuildPerson(string userName) => this.Transaction.Create<Person>(v =>
         {
-            v.UserName= userName;
+            v.UserName = userName;
         });
 
         protected Organisation BuildOrganisation(string name) => this.Transaction.Create<Organisation>(v =>
         {
             v.Name = name;
         });
+
+        protected C1 BuildC1(params Action<C1>[] builders) => this.Transaction.Create(builders);
+
+        protected C1 BuildC1(string c1AllorsString = null, Action<C1> builder = null) => this.Transaction.Create<C1>((v =>
+        {
+            v.C1AllorsString = c1AllorsString;
+        }), builder);
+
+        protected C2 BuildC2(params Action<C2>[] builders) => this.Transaction.Create(builders);
+
+        protected C2 BuildC2(string c2AllorsString = null, Action<C2> builder = null) => this.Transaction.Create<C2>(v =>
+        {
+            v.C2AllorsString = c2AllorsString;
+        }, builder);
 
         #endregion
     }

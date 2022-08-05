@@ -10,7 +10,7 @@ namespace Allors.Database.Domain
 
     public static class UniquelyIdentifiableExtensions
     {
-        public static void CoreOnBuild(this UniquelyIdentifiable @this, ObjectOnBuild method)
+        public static void CoreOnPostBuild(this UniquelyIdentifiable @this, ObjectOnPostBuild method)
         {
             if (!@this.ExistUniqueId)
             {

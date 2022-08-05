@@ -28,7 +28,7 @@ namespace Allors.Database.Domain.Tests
             this.Transaction.Derive();
             this.Transaction.Commit();
 
-            var organisation = new OrganisationBuilder(this.Transaction).WithName("Organisation");
+            var organisation = this.BuildOrganisation("Organisation");
 
             var aclService = new WorkspaceAclsService(this.Security, new WorkspaceMask(this.M), person);
             var acl = aclService.Create(this.workspaceName)[organisation];
@@ -42,7 +42,7 @@ namespace Allors.Database.Domain.Tests
             var permission = this.FindPermission(this.M.Organisation.Name, Operations.Read);
             var role = this.BuildRole("Role", permission);
             var person = this.BuildPerson("John", "Doe");
-            var grant = new GrantBuilder(this.Transaction).WithSubject(person).WithRole(role);
+            var grant = this.BuildGrant(person, role);
 
             var initialSecurityToken = new SecurityTokens(this.Transaction).InitialSecurityToken;
             initialSecurityToken.AddGrant(grant);
@@ -50,7 +50,7 @@ namespace Allors.Database.Domain.Tests
             this.Transaction.Derive();
             this.Transaction.Commit();
 
-            var organisation = new OrganisationBuilder(this.Transaction).WithName("Organisation");
+            var organisation = this.BuildOrganisation("Organisation");
 
             var aclService = new WorkspaceAclsService(this.Security, new WorkspaceMask(this.M), person);
             var acl = aclService.Create(this.workspaceName)[organisation];
@@ -68,7 +68,7 @@ namespace Allors.Database.Domain.Tests
             var databaseOnlyPermissions = new Permissions(this.Transaction).Extent().Where(v => v.ExistOperandType && v.OperandType.Equals(M.Person.DatabaseOnlyField));
             var databaseOnlyReadPermission = databaseOnlyPermissions.First(v => v.Operation == Operations.Read);
 
-            var revocation = new RevocationBuilder(this.Transaction).WithDeniedPermission(databaseOnlyReadPermission);
+            var revocation = this.BuildRevocation(databaseOnlyReadPermission);
 
             administrator.AddRevocation(revocation);
 
@@ -123,13 +123,6 @@ namespace Allors.Database.Domain.Tests
             var acl = aclService.Create("X")[administrator];
 
             Assert.DoesNotContain(revocation.Id, acl.Revocations.Select(v => v.Id));
-        }
-
-
-        private Permission FindPermission(IRoleType roleType, Operations operation)
-        {
-            var objectType = (Class)roleType.AssociationType.ObjectType;
-            return new Permissions(this.Transaction).Get(objectType, roleType, operation);
         }
     }
 }

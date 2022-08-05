@@ -8,6 +8,7 @@ namespace Allors.Database.Domain.Tests
     using Meta;
     using Xunit;
     using Permission = Domain.Permission;
+    using AccessClass = Domain.AccessClass;
 
     public class DelegateAccessGrantTests : DomainTest, IClassFixture<Fixture>
     {
@@ -20,18 +21,15 @@ namespace Allors.Database.Domain.Tests
         {
             var user = this.BuildPerson("user");
 
-            var delegatedAccessClass = new AccessClassBuilder(this.Transaction);
-            var accessClass = new AccessClassBuilder(this.Transaction).WithDelegatedAccess(delegatedAccessClass);
+            var delegatedAccessClass = this.Transaction.Create<AccessClass>();
+            var accessClass = this.Transaction.Create<AccessClass>(v => v.DelegatedAccess = delegatedAccessClass);
 
             var securityToken = this.BuildSecurityToken();
             var permission = this.FindPermission(this.M.AccessClass.Property, Operations.Read);
             var role = this.BuildRole("Role", permission);
 
-            securityToken.AddGrant(
-                new GrantBuilder(this.Transaction)
-                    .WithRole(role)
-                    .WithSubject(user)
-                    .Build());
+            var grant = this.BuildGrant(user, role);
+            securityToken.AddGrant(grant);
 
             accessClass.AddSecurityToken(securityToken);
 
@@ -52,18 +50,15 @@ namespace Allors.Database.Domain.Tests
         {
             var user = this.BuildPerson("user");
 
-            var delegatedAccessClass = new AccessClassBuilder(this.Transaction);
-            var accessClass = new AccessClassBuilder(this.Transaction).WithDelegatedAccess(delegatedAccessClass);
+            var delegatedAccessClass = this.Transaction.Create<AccessClass>();
+            var accessClass = this.Transaction.Create<AccessClass>(v => v.DelegatedAccess = delegatedAccessClass);
 
             var securityToken = this.BuildSecurityToken();
             var permission = this.FindPermission(this.M.AccessClass.Property, Operations.Read);
             var role = this.BuildRole("Role", permission);
 
-            securityToken.AddGrant(
-                new GrantBuilder(this.Transaction)
-                    .WithRole(role)
-                    .WithSubject(user)
-                    .Build());
+            var grant = this.BuildGrant(user, role);
+            securityToken.AddGrant(grant);
 
             this.Transaction.Derive();
             this.Transaction.Commit();
@@ -82,28 +77,20 @@ namespace Allors.Database.Domain.Tests
         {
             var user = this.BuildPerson("user");
 
-            var delegatedAccessClass = new AccessClassBuilder(this.Transaction);
-            var accessClass = new AccessClassBuilder(this.Transaction).WithDelegatedAccess(delegatedAccessClass);
+            var delegatedAccessClass = this.Transaction.Create<AccessClass>();
+            var accessClass = this.Transaction.Create<AccessClass>(v => v.DelegatedAccess = delegatedAccessClass);
 
             var securityToken1 = this.BuildSecurityToken();
             var permission1 = this.FindPermission(this.M.AccessClass.Property, Operations.Read);
-            var role1 = new RoleBuilder(this.Transaction).WithName("Role").WithPermission(permission1);
+            var role1 = this.BuildRole("Role", permission1);
 
-            securityToken1.AddGrant(
-                new GrantBuilder(this.Transaction)
-                    .WithRole(role1)
-                    .WithSubject(user)
-                    .Build());
+            securityToken1.AddGrant(this.BuildGrant(user, role1));
 
             var securityToken2 = this.BuildSecurityToken();
             var permission2 = this.FindPermission(this.M.AccessClass.AnotherProperty, Operations.Read);
-            var role2 = new RoleBuilder(this.Transaction).WithName("Role").WithPermission(permission2);
+            var role2 = this.BuildRole("Role", permission2);
 
-            securityToken2.AddGrant(
-                new GrantBuilder(this.Transaction)
-                    .WithRole(role2)
-                    .WithSubject(user)
-                    .Build());
+            securityToken2.AddGrant(this.BuildGrant(user, role2));
 
             accessClass.AddSecurityToken(securityToken1);
             delegatedAccessClass.AddSecurityToken(securityToken2);
@@ -125,18 +112,15 @@ namespace Allors.Database.Domain.Tests
         {
             var user = this.BuildPerson("user");
 
-            var delegatedAccessClass = new AccessClassBuilder(this.Transaction);
-            var accessClass = new AccessClassBuilder(this.Transaction).WithDelegatedAccess(delegatedAccessClass);
+            var delegatedAccessClass = this.Transaction.Create<AccessClass>();
+            var accessClass = this.Transaction.Create<AccessClass>(v => v.DelegatedAccess = delegatedAccessClass);
 
             var securityToken = this.BuildSecurityToken();
             var permission = this.FindPermission(this.M.AccessClass.Property, Operations.Read);
             var role = this.BuildRole("Role", permission);
 
-            securityToken.AddGrant(
-                new GrantBuilder(this.Transaction)
-                    .WithRole(role)
-                    .WithSubject(user)
-                    .Build());
+            var grant = this.BuildGrant(user, role);
+            securityToken.AddGrant(grant);
 
             delegatedAccessClass.AddSecurityToken(securityToken);
 
@@ -150,12 +134,6 @@ namespace Allors.Database.Domain.Tests
 
             Assert.False(acl.CanRead(this.M.AccessClass.AnotherProperty));
             Assert.False(acl.CanRead(this.M.AccessClass.AnotherProperty));
-        }
-
-        private Permission FindPermission(IRoleType roleType, Operations operation)
-        {
-            var objectType = (Class)roleType.AssociationType.ObjectType;
-            return new Permissions(this.Transaction).Get(objectType, roleType, operation);
         }
     }
 }

@@ -7,6 +7,6 @@ namespace Allors.Database.Domain
 {
     public static partial class ObjectStateExtensions
     {
-        public static void CoreOnPostBuild(this ObjectState @this, ObjectOnPostBuild method) => @this.ObjectRevocation ??= new RevocationBuilder(@this.Transaction()).Build();
+        public static void BaseOnPostBuild(this ObjectState @this, ObjectOnPostBuild method) => @this.ObjectRevocation ??= new RevocationBuilder(@this.Transaction()).Build();
     }
 }

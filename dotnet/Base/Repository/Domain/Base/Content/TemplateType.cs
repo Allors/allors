@@ -28,7 +28,7 @@ namespace Allors.Repository
 
         public bool IsActive { get; set; }
 
-        public void OnBuild() { }
+        
 
         public void OnPostBuild() { }
 

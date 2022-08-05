@@ -20,7 +20,7 @@ namespace Allors.Database.Domain.Tests
         {
             var before = this.Transaction.Now();
 
-            var units = new UnitSampleBuilder(this.Transaction);
+            var units = this.Transaction.Create<UnitSample>();
 
             this.Transaction.Derive(false);
 

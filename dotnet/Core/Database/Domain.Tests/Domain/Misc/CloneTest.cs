@@ -15,29 +15,18 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void Shallow()
         {
-            var c2A = new C2Builder(this.Transaction)
-                .WithC2AllorsString("c2A")
-                ;
+            var c2A = this.BuildC2("c2A");
+            var c2B = this.BuildC2("c2C");
+            var c2C = this.BuildC2("c2B");
+            var c2D = this.BuildC2("c2D");
 
-            var c2B = new C2Builder(this.Transaction)
-                .WithC2AllorsString("c2B")
-                ;
-
-            var c2C = new C2Builder(this.Transaction)
-                .WithC2AllorsString("c2B")
-                ;
-
-            var c2D = new C2Builder(this.Transaction)
-                .WithC2AllorsString("c2D")
-                ;
-
-            var c1A = new C1Builder(this.Transaction)
-                .WithC1AllorsString("c1A")
-                .WithC1C2One2One(c2A)
-                .WithC1C2One2Many(c2B)
-                .WithC1C2Many2One(c2C)
-                .WithC1C2Many2Many(c2D)
-                ;
+            var c1A = this.BuildC1("c1A", v =>
+            {
+                v.C1C2One2One = c2A;
+                v.AddC1C2One2Many(c2B);
+                v.C1C2Many2One = c2C;
+                v.AddC1C2Many2Many(c2D);
+            });
 
             var cloned = c1A.Clone();
 
@@ -52,29 +41,18 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void DeepLevelOne()
         {
-            var c2A = new C2Builder(this.Transaction)
-                .WithC2AllorsString("c2A")
-                ;
+            var c2A = this.BuildC2("c2A");
+            var c2B = this.BuildC2("c2B");
+            var c2C = this.BuildC2("c2C");
+            var c2D = this.BuildC2("c2D");
 
-            var c2B = new C2Builder(this.Transaction)
-                .WithC2AllorsString("c2B")
-                ;
-
-            var c2C = new C2Builder(this.Transaction)
-                .WithC2AllorsString("c2B")
-                ;
-
-            var c2D = new C2Builder(this.Transaction)
-                .WithC2AllorsString("c2D")
-                ;
-
-            var c1A = new C1Builder(this.Transaction)
-                .WithC1AllorsString("c1A")
-                .WithC1C2One2One(c2A)
-                .WithC1C2One2Many(c2B)
-                .WithC1C2Many2One(c2C)
-                .WithC1C2Many2Many(c2D)
-                ;
+            var c1A = this.BuildC1("c1A", v =>
+            {
+                v.C1C2One2One = c2A;
+                v.AddC1C2One2Many(c2B);
+                v.C1C2Many2One = c2C;
+                v.AddC1C2Many2Many(c2D);
+            });
 
             var cloned = c1A.Clone(this.M.C1.Nodes(
                 v => v.C1C2One2One.Node(),
@@ -98,24 +76,16 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void DeepLevelTwo()
         {
-            var c2C = new C2Builder(this.Transaction)
-                .WithC2AllorsString("c2C")
-                ;
+            var c2C = this.BuildC2("c2C");
+            var c2B = this.BuildC2("c2B");
 
-            var c2B = new C2Builder(this.Transaction)
-                .WithC2AllorsString("c2B")
-                ;
+            var c2A = this.BuildC2("c2A", v =>
+            {
+                v.C2C2One2One = c2B;
+                v.C2C2Many2One = c2C;
+            });
 
-            var c2A = new C2Builder(this.Transaction)
-                .WithC2AllorsString("c2A")
-                .WithC2C2One2One(c2B)
-                .WithC2C2Many2One(c2C)
-                ;
-
-            var c1A = new C1Builder(this.Transaction)
-                .WithC1AllorsString("c1A")
-                .WithC1C2One2One(c2A)
-                ;
+            var c1A = this.BuildC1("c1A", v => v.C1C2One2One = c2A);
 
             var deepClone = this.M.C1.Node(v => v.C1C2One2One.Node(w => w.C2.C2C2One2One.Node()));
 

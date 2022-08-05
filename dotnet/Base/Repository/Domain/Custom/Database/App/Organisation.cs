@@ -196,7 +196,7 @@ namespace Allors.Repository
         public Country Country { get; set; }
 
         #region inherited methods
-        public void OnBuild() { }
+        
 
         public void OnPostBuild() { }
 

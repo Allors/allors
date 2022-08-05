@@ -17,7 +17,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void GivenNoRolesWhenCreatingARoleWithoutANameThenRoleIsInvalid()
         {
-            new RoleBuilder(this.Transaction);
+            this.Transaction.Create<Role>();
 
             var validation = this.Transaction.Derive(false);
 
@@ -34,9 +34,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void GivenNoRolesWhenCreatingARoleWithoutAUniqueIdThenRoleIsValid()
         {
-            var role = new RoleBuilder(this.Transaction)
-                .WithName("Role")
-                ;
+            var role = this.BuildRole("Role");
 
             Assert.True(role.ExistUniqueId);
 

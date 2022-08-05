@@ -29,11 +29,6 @@ namespace Allors.Repository
         Revocation[] Revocations { get; set; }
 
         #region Allors
-        [Id("FDD32313-CF62-4166-9167-EF90BE3A3C75")]
-        #endregion
-        void OnBuild();
-
-        #region Allors
         [Id("2B827E22-155D-4AA8-BA9F-46A64D7C79C8")]
         #endregion
         void OnPostBuild();

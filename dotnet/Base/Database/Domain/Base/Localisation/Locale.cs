@@ -13,7 +13,7 @@ namespace Allors.Database.Domain
 
         public CultureInfo CultureInfo => this.ExistName ? new CultureInfo(this.Name) : null;
 
-        public void CoreOnPostBuild(ObjectOnPostBuild method)
+        public void BaseOnPostBuild(ObjectOnPostBuild method)
         {
             if (!this.ExistName && this.ExistLanguage && this.ExistCountry)
             {

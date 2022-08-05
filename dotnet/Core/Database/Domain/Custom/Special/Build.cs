@@ -12,16 +12,13 @@ namespace Allors.Database.Domain
     /// </summary>
     public partial class Build
     {
-        public void CustomOnBuild(ObjectOnBuild method)
+        public void CustomOnPostBuild(ObjectOnPostBuild method)
         {
             if (!this.ExistGuid)
             {
                 this.Guid = new Guid("DCE649A4-7CF6-48FA-93E4-CDE222DA2A94");
             }
-        }
 
-        public void CustomOnPostBuild(ObjectOnPostBuild method)
-        {
             if (!this.ExistString)
             {
                 this.String = "Exist";

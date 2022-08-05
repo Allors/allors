@@ -44,10 +44,8 @@ namespace Allors.Database.Domain.Tests
             var securityToken = this.BuildSecurityToken();
             var role = this.BuildRole("Role");
 
-            securityToken.AddGrant(
-            new GrantBuilder(this.Transaction)
-                .WithRole(role)
-                .Build());
+            var grant = this.Transaction.Create<Grant>(v => v.Role = role);
+            securityToken.AddGrant(grant);
 
             var validation = this.Transaction.Derive(false);
 

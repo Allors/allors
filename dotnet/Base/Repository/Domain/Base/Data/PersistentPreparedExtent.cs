@@ -45,10 +45,6 @@ namespace Allors.Repository
 
         public SecurityToken[] SecurityTokens { get; set; }
 
-        public void OnBuild()
-        {
-        }
-
         public void OnPostBuild()
         {
         }

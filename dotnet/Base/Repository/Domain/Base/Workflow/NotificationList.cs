@@ -45,11 +45,7 @@ namespace Allors.Repository
         public Notification[] ConfirmedNotifications { get; set; }
 
         #region inherited methods
-
-        public void OnBuild()
-        {
-        }
-
+        
         public void OnPostBuild()
         {
         }

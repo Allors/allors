@@ -10,14 +10,14 @@ namespace Allors.Database.Domain
 
     public static partial class TaskExtensions
     {
-        public static void BaseOnBuild(this Task @this, ObjectOnBuild method)
+        public static void BaseOnPostBuild(this Task @this, ObjectOnPostBuild _)
         {
             if (!@this.ExistDateCreated)
             {
                 @this.DateCreated = @this.Strategy.Transaction.Now();
             }
         }
-        
+
         public static void BaseDelete(this Task @this, DeletableDelete _)
         {
             foreach (var taskAssignment in @this.TaskAssignmentsWhereTask)

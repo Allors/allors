@@ -164,7 +164,7 @@ namespace Allors.Repository
         public void ToggleCanWrite() { }
 
         #region inherited methods
-        public void OnBuild() { }
+        
 
         public void OnPostBuild() { }
 

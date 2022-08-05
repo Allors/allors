@@ -7,7 +7,7 @@ namespace Allors.Database.Domain
 {
     public partial class Counter
     {
-        public void CoreOnBuild(ObjectOnBuild method)
+        public void BaseOnPostBuild(ObjectOnPostBuild method)
         {
             if (!this.ExistValue)
             {

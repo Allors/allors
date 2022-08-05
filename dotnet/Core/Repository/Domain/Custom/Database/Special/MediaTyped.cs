@@ -31,11 +31,6 @@ namespace Allors.Repository
         public string Markdown { get; set; }
 
         #region inherited methods
-
-        public void OnBuild()
-        {
-        }
-
         public void OnPostBuild()
         {
         }

@@ -47,7 +47,7 @@ namespace Allors.Database.Protocol.Json
             this.MetaPopulation = this.M;
             this.PreparedSelects = databaseServices.Get<IPreparedSelects>();
             this.PreparedExtents = databaseServices.Get<IPreparedExtents>();
-            this.Build = @class => DefaultObjectBuilder.Build(transaction, @class);
+            this.Build = @class => transaction.Create(@class);
             this.Derive = () => this.Transaction.Derive(false);
             this.Security = databaseServices.Get<ISecurity>();
 

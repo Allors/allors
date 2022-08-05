@@ -16,30 +16,22 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void One2ManyWithPropertyTypes()
         {
-            var c2A = new C2Builder(this.Transaction).WithC2AllorsString("c2A");
-            var c2B = new C2Builder(this.Transaction).WithC2AllorsString("c2B");
-            var c2C = new C2Builder(this.Transaction).WithC2AllorsString("c2C");
+            var c2A = this.BuildC2("c2A");
+            var c2B = this.BuildC2("c2B");
+            var c2C = this.BuildC2("c2C");
 
-            var c1a = new C1Builder(this.Transaction)
-                .WithC1AllorsString("c1A")
-                .WithC1C2One2Many(c2A)
-                ;
-
-            var c1b = new C1Builder(this.Transaction)
-                .WithC1AllorsString("c1B")
-                .WithC1C2One2Many(c2B)
-                .WithC1C2One2Many(c2C)
-                ;
+            var c1A = this.BuildC1("c1A", v => v.AddC1C2One2Many(c2A));
+            var c1B = this.BuildC1("c1B", v => v.C1C2One2Manies = new[] { c2B, c2C });
 
             this.Transaction.Derive();
 
             var path = new Select(this.M.C1.C1C2One2Manies, this.M.C2.C2AllorsString);
 
-            var result = (ISet<object>)path.Get(c1a, this.AclsMock.Object);
+            var result = (ISet<object>)path.Get(c1A, this.AclsMock.Object);
             Assert.Equal(1, result.Count);
             Assert.True(result.Contains("c2A"));
 
-            result = (ISet<object>)path.Get(c1b, this.AclsMock.Object);
+            result = (ISet<object>)path.Get(c1B, this.AclsMock.Object);
             Assert.Equal(2, result.Count);
             Assert.True(result.Contains("c2B"));
             Assert.True(result.Contains("c2C"));
@@ -48,30 +40,22 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void One2ManyWithPropertyTypeIds()
         {
-            var c2A = new C2Builder(this.Transaction).WithC2AllorsString("c2A");
-            var c2B = new C2Builder(this.Transaction).WithC2AllorsString("c2B");
-            var c2C = new C2Builder(this.Transaction).WithC2AllorsString("c2C");
+            var c2A = this.BuildC2("c2A");
+            var c2B = this.BuildC2("c2B");
+            var c2C = this.BuildC2("c2C");
 
-            var c1a = new C1Builder(this.Transaction)
-                .WithC1AllorsString("c1A")
-                .WithC1C2One2Many(c2A)
-                ;
-
-            var c1b = new C1Builder(this.Transaction)
-                .WithC1AllorsString("c1B")
-                .WithC1C2One2Many(c2B)
-                .WithC1C2One2Many(c2C)
-                ;
+            var c1A = this.BuildC1("c1A", v => v.AddC1C2One2Many(c2A));
+            var c1B = this.BuildC1("c1B", v => v.C1C2One2Manies = new[] { c2B, c2C });
 
             this.Transaction.Derive();
 
             var path = new Select(this.M.C1.C1C2One2Manies, this.M.C2.C2AllorsString);
 
-            var result = (ISet<object>)path.Get(c1a, this.AclsMock.Object);
+            var result = (ISet<object>)path.Get(c1A, this.AclsMock.Object);
             Assert.Equal(1, result.Count);
             Assert.True(result.Contains("c2A"));
 
-            result = (ISet<object>)path.Get(c1b, this.AclsMock.Object);
+            result = (ISet<object>)path.Get(c1B, this.AclsMock.Object);
             Assert.Equal(2, result.Count);
             Assert.True(result.Contains("c2B"));
             Assert.True(result.Contains("c2C"));
@@ -80,20 +64,12 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void One2ManyWithPropertyNames()
         {
-            var c2A = new C2Builder(this.Transaction).WithC2AllorsString("c2A");
-            var c2B = new C2Builder(this.Transaction).WithC2AllorsString("c2B");
-            var c2C = new C2Builder(this.Transaction).WithC2AllorsString("c2C");
+            var c2A = this.BuildC2("c2A");
+            var c2B = this.BuildC2("c2B");
+            var c2C = this.BuildC2("c2C");
 
-            var c1A = new C1Builder(this.Transaction)
-                .WithC1AllorsString("c1A")
-                .WithC1C2One2Many(c2A)
-                ;
-
-            var c1B = new C1Builder(this.Transaction)
-                .WithC1AllorsString("c1B")
-                .WithC1C2One2Many(c2B)
-                .WithC1C2One2Many(c2C)
-                ;
+            var c1A = this.BuildC1("c1A", v => v.AddC1C2One2Many(c2A));
+            var c1B = this.BuildC1("c1B", v => v.C1C2One2Manies = new[] { c2B, c2C });
 
             this.Transaction.Derive();
 

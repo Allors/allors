@@ -30,7 +30,7 @@ namespace Allors.Repository
         public Media Media { get; set; }
 
         #region inherited methods
-        public void OnBuild() { }
+        
 
         public void OnPostBuild() { }
 

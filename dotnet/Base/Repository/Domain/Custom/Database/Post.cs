@@ -26,7 +26,7 @@ namespace Allors.Repository
         public int Counter { get; set; }
 
         #region inherited methods
-        public void OnBuild() { }
+        
 
         public void OnPostBuild() { }
 

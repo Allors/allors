@@ -7,7 +7,7 @@ namespace Allors.Database.Domain
 {
     public partial class Notification
     {
-        public void BaseOnBuild(ObjectOnBuild _)
+        public void BaseOnPostBuild(ObjectOnPostBuild _)
         {
             if (!this.ExistDateCreated)
             {

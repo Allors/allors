@@ -24,7 +24,7 @@ namespace Allors.Repository
         public string OverrideRequired { get; set; }
 
         #region inherited methods
-        public void OnBuild() { }
+        
 
         public void OnPostBuild() { }
 

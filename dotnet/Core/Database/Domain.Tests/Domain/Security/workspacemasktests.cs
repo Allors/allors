@@ -26,7 +26,7 @@ namespace Allors.Database.Domain.Tests
             var permission = this.FindPermission(this.M.Organisation.Name, Operations.Read);
             var role = this.BuildRole("Role", permission);
             var person = this.BuildPerson("John", "Doe");
-            var accessControl = new GrantBuilder(this.Transaction).WithSubject(person).WithRole(role);
+            var accessControl = this.BuildGrant(person, role);
 
             var intialSecurityToken = new SecurityTokens(this.Transaction).InitialSecurityToken;
             intialSecurityToken.AddGrant(accessControl);
@@ -34,7 +34,7 @@ namespace Allors.Database.Domain.Tests
             this.Transaction.Derive();
             this.Transaction.Commit();
 
-            var organisation = new OrganisationBuilder(this.Transaction).WithName("Organisation");
+            var organisation = this.BuildOrganisation("Organisation");
 
             var aclService = new WorkspaceAclsService(this.Security, new WorkspaceMask(this.M), person);
             var acl = aclService.Create(this.workspaceName)[organisation];
@@ -50,7 +50,7 @@ namespace Allors.Database.Domain.Tests
             this.Transaction.Derive();
             this.Transaction.Commit();
 
-            var organisation = new OrganisationBuilder(this.Transaction).WithName("Organisation");
+            var organisation = this.BuildOrganisation("Organisation");
 
             var aclService = new WorkspaceAclsService(this.Security, new WorkspaceMask(this.M), person);
             var acl = aclService.Create(this.workspaceName)[organisation];
@@ -59,14 +59,7 @@ namespace Allors.Database.Domain.Tests
 
             Assert.True(acl.IsMasked());
         }
-
-
-        private Permission FindPermission(IRoleType roleType, Operations operation)
-        {
-            var objectType = (Class)roleType.AssociationType.ObjectType;
-            return new Permissions(this.Transaction).Get(objectType, roleType, operation);
-        }
-
+        
         private class WorkspaceMask : IWorkspaceMask
         {
             private readonly Dictionary<IClass, IRoleType> masks;

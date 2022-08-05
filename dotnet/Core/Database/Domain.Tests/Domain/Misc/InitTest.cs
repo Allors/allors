@@ -14,8 +14,8 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void Init()
         {
-            var allors = new OrganisationBuilder(this.Transaction).WithName("Allors");
-            var acme = new OrganisationBuilder(this.Transaction).WithName("Acme");
+            var allors = this.BuildOrganisation("Allors");
+            var acme = this.BuildOrganisation("Acme");
             var person = this.Transaction.Create<Person>(v => v.LastName = "Hesius");
 
             allors.Manager = person;

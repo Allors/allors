@@ -8,6 +8,7 @@ namespace Allors.Database.Adapters.Memory
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Reflection;
     using System.Xml;
 
     using Meta;
@@ -137,17 +138,32 @@ namespace Allors.Database.Adapters.Memory
                 throw new Exception("IObjectType should be a class");
             }
 
-            return (T)this.Create(@class);
+            var newObject = (T)this.Create(@class);
+
+            var methodInfo = typeof(T).GetMethod("OnPostBuild", Type.EmptyTypes);
+            methodInfo.Invoke(newObject, null);
+
+            return newObject;
         }
 
         public T Create<T>(params Action<T>[] builders) where T : IObject
         {
-            var newObject = this.Create<T>();
+            var objectType = this.Database.ObjectFactory.GetObjectType(typeof(T));
+
+            if (!(objectType is IClass @class))
+            {
+                throw new Exception("IObjectType should be a class");
+            }
+
+            var newObject = (T)this.Create(@class);
 
             foreach (var builder in builders)
             {
                 builder?.Invoke(newObject);
             }
+
+            var methodInfo = typeof(T).GetMethod("OnPostBuild", Type.EmptyTypes);
+            methodInfo.Invoke(newObject, null);
 
             return newObject;
         }
