@@ -436,7 +436,6 @@ $endif$
 		/// <exclude/>
 		new public $class.name$Builder With$roleType.SingularName$($objectType_NullableName(roleType.ObjectType)$ value)
         {
-		    if(this.$roleType.Name$!=null){throw new global::System.ArgumentException("One multicplicity");}
             this.$roleType.Name$ = value;
             return this;
         }
@@ -450,7 +449,6 @@ $if(roleType.IsOne)$
 		/// <exclude/>
 		public $class.name$Builder With$roleType.SingularName$($objectType_NullableName(roleType.ObjectType)$ value)
         {
-            if(this.$roleType.Name$!=null){throw new global::System.ArgumentException("One multicplicity");}
 			this.$roleType.Name$ = value;
             return this;
         }
@@ -469,6 +467,12 @@ $else$
             return this;
         }
 
+		/// <exclude/>
+		public $class.name$Builder With$roleType.PluralName$(System.Collections.Generic.IEnumerable<$objectType_NullableName(roleType.ObjectType)$> value)
+        {
+            this.$roleType.Name$ = value != null ? new System.Collections.Generic.List<$roleType.ObjectType$>(value) : null;
+            return this;
+        }
 $endif$
 >>
 

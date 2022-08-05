@@ -15,7 +15,7 @@ namespace Allors.Repository
     #endregion
     public partial class TemplateType : Enumeration, Deletable
     {
-        #region inherited properties
+        #region inherited
         public Guid UniqueId { get; set; }
 
         public Revocation[] Revocations { get; set; }
@@ -28,9 +28,6 @@ namespace Allors.Repository
 
         public bool IsActive { get; set; }
 
-        #endregion
-
-        #region inherited methods
         public void OnBuild() { }
 
         public void OnPostBuild() { }
