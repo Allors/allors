@@ -19,8 +19,16 @@ namespace Allors.Database.Domain
         public static T SetPassword<T>(this T @this, string clearTextPassword)
             where T : User
         {
-            var passwordService = @this.Transaction().Database.Services.Get<IPasswordHasher>();
-            @this.UserPasswordHash = passwordService.HashPassword(@this.UserName, clearTextPassword);
+            if (clearTextPassword == null)
+            {
+                @this.RemoveUserPasswordHash();
+            }
+            else
+            {
+                var passwordService = @this.Transaction().Database.Services.Get<IPasswordHasher>();
+                @this.UserPasswordHash = passwordService.HashPassword(@this.UserName, clearTextPassword);
+            }
+
             return @this;
         }
 

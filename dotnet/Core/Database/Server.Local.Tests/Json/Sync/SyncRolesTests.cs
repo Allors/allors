@@ -22,12 +22,13 @@ namespace Tests
             var m = this.M;
             var user = this.SetUser("jane@example.com");
 
-            var x1 = new WorkspaceXObject1Builder(this.Transaction)
-                .WithWorkspaceXString("x1:x")
-                .WithWorkspaceYString("x1:y")
-                .WithWorkspaceXYString("x1:xy")
-                .WithWorkspaceNonString("x1:none")
-                .Build();
+            var x1 = this.Transaction.Create<WorkspaceXObject1>(v =>
+            {
+                v.WorkspaceXString = "x1:x";
+                v.WorkspaceYString = "x1:y";
+                v.WorkspaceXYString = "x1:xy";
+                v.WorkspaceNonString = "x1:none";
+            });
 
             this.Transaction.Commit();
 
@@ -58,18 +59,19 @@ namespace Tests
             var m = this.M;
             var user = this.SetUser("jane@example.com");
 
-            var x1 = new WorkspaceXObject1Builder(this.Transaction)
-                .WithWorkspaceXString("x1:x")
-                .WithWorkspaceYString("x1:y")
-                .WithWorkspaceXYString("x1:xy")
-                .WithWorkspaceNonString("x1:none")
-                .Build();
+            var x1 = this.Transaction.Create<WorkspaceXObject1>(v =>
+            {
+                v.WorkspaceXString = "x1:x";
+                v.WorkspaceYString = "x1:y";
+                v.WorkspaceXYString = "x1:xy";
+                v.WorkspaceNonString = "x1:none";
+            });
 
             this.Transaction.Commit();
 
             var syncRequest = new SyncRequest
             {
-                o = new[] { x1.Id},
+                o = new[] { x1.Id },
             };
             var api = new Api(this.Transaction, "Y", CancellationToken.None);
             var syncResponse = api.Sync(syncRequest);

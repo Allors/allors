@@ -63,7 +63,7 @@ namespace Tests.Workspace.Local
 
             using var transaction = this.Database.CreateTransaction();
 
-            var administrator = new PersonBuilder(transaction).WithUserName("administrator").Build();
+            var administrator = transaction.Create<Allors.Database.Domain.Person>(v => v.UserName = "administrator");
             new UserGroups(transaction).Administrators.AddMember(administrator);
             transaction.Services.Get<IUserService>().User = administrator;
 

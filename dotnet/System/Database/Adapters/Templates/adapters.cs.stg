@@ -182,6 +182,9 @@ namespace Allors.Database.Domain
             get { return this.strategy; }
         }
 
+        public bool onPostBuild = false;
+        void IObject.OnPostBuild() => this.onPostBuild = true;
+
 		public static $class.name$ Instantiate (Allors.Database.ITransaction allorsTransaction, string allorsObjectId)
 		{
 			return ($class.name$) allorsTransaction.Instantiate(allorsObjectId);

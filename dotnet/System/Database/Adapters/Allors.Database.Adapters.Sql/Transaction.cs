@@ -86,33 +86,123 @@ namespace Allors.Database.Adapters.Sql
             }
         }
 
+        public T Create<T>() where T : IObject
+        {
+            var objectType = this.Database.ObjectFactory.GetObjectType(typeof(T));
+
+            if (!(objectType is IClass @class))
+            {
+                throw new Exception("IObjectType should be a class");
+            }
+
+            var newObject = (T)this.CreateWithoutOnBuild(@class);
+            newObject.OnPostBuild();
+
+            return newObject;
+        }
+
+        public T Create<T>(Action<T> builder) where T : IObject
+        {
+            var objectType = this.Database.ObjectFactory.GetObjectType(typeof(T));
+
+            if (!(objectType is IClass @class))
+            {
+                throw new Exception("IObjectType should be a class");
+            }
+
+            var newObject = (T)this.CreateWithoutOnBuild(@class);
+
+            builder?.Invoke(newObject);
+
+            newObject.OnPostBuild();
+
+            return newObject;
+        }
+
         public T Create<T>(params Action<T>[] builders) where T : IObject
         {
-            var newObject = this.Create<T>();
+            var objectType = this.Database.ObjectFactory.GetObjectType(typeof(T));
 
-            foreach (var builder in builders)
+            if (!(objectType is IClass @class))
             {
-                builder(newObject);
+                throw new Exception("IObjectType should be a class");
             }
+
+            var newObject = (T)this.CreateWithoutOnBuild(@class);
+
+            if (builders != null)
+            {
+                foreach (var builder in builders)
+                {
+                    builder?.Invoke(newObject);
+                }
+            }
+
+            newObject.OnPostBuild();
+
+            return newObject;
+        }
+
+        public T Create<T>(IEnumerable<Action<T>> builders, Action<T> extraBuilder) where T : IObject
+        {
+            var objectType = this.Database.ObjectFactory.GetObjectType(typeof(T));
+
+            if (!(objectType is IClass @class))
+            {
+                throw new Exception("IObjectType should be a class");
+            }
+
+            var newObject = (T)this.CreateWithoutOnBuild(@class);
+
+            if (builders != null)
+            {
+                foreach (var builder in builders)
+                {
+                    builder?.Invoke(newObject);
+                }
+            }
+
+            extraBuilder?.Invoke(newObject);
+
+            newObject.OnPostBuild();
+
+            return newObject;
+        }
+
+        public T Create<T>(IEnumerable<Action<T>> builders, params Action<T>[] extraBuilders) where T : IObject
+        {
+            var objectType = this.Database.ObjectFactory.GetObjectType(typeof(T));
+
+            if (!(objectType is IClass @class))
+            {
+                throw new Exception("IObjectType should be a class");
+            }
+
+            var newObject = (T)this.CreateWithoutOnBuild(@class);
+
+            if (builders != null)
+            {
+                foreach (var builder in builders)
+                {
+                    builder?.Invoke(newObject);
+                }
+            }
+
+            foreach (var extraBuilder in extraBuilders)
+            {
+                extraBuilder?.Invoke(newObject);
+            }
+
+            newObject.OnPostBuild();
 
             return newObject;
         }
 
         public IObject Create(IClass objectType)
         {
-            if (!objectType.IsClass)
-            {
-                throw new ArgumentException("Can not create non concrete composite type " + objectType);
-            }
-
-            var reference = this.Commands.CreateObject(objectType);
-            this.State.ReferenceByObjectId[reference.ObjectId] = reference;
-
-            this.Database.Cache.SetObjectType(reference.ObjectId, objectType);
-
-            this.State.ChangeLog.OnCreated(reference.Strategy);
-
-            return reference.Strategy.GetObject();
+            var newObject = this.CreateWithoutOnBuild(objectType);
+            newObject.OnPostBuild();
+            return newObject;
         }
 
         public IObject[] Create(IClass objectType, int count)
@@ -131,13 +221,26 @@ namespace Allors.Database.Adapters.Sql
             {
                 var reference = references[i];
                 this.State.ReferenceByObjectId[reference.ObjectId] = reference;
-
-                domainObjects[i] = reference.Strategy.GetObject();
-
                 this.State.ChangeLog.OnCreated(reference.Strategy);
+
+                var newObject = reference.Strategy.GetObject();
+                newObject.OnPostBuild();
+                domainObjects[i] = newObject;
             }
 
             return domainObjects;
+        }
+
+        private IObject CreateWithoutOnBuild(IClass objectType)
+        {
+            var reference = this.Commands.CreateObject(objectType);
+            this.State.ReferenceByObjectId[reference.ObjectId] = reference;
+
+            this.Database.Cache.SetObjectType(reference.ObjectId, objectType);
+
+            this.State.ChangeLog.OnCreated(reference.Strategy);
+
+            return reference.Strategy.GetObject();
         }
 
         public IObject Instantiate(IObject obj) => this.Instantiate(obj.Strategy.ObjectId);
@@ -379,12 +482,6 @@ namespace Allors.Database.Adapters.Sql
         }
 
         public void Dispose() => this.Rollback();
-
-        public T Create<T>() where T : IObject
-        {
-            var objectType = (IClass)this.Database.ObjectFactory.GetObjectType(typeof(T));
-            return (T)this.Create(objectType);
-        }
 
         public override string ToString() => "Transaction[id=" + this.GetHashCode() + "] " + this.Database;
 

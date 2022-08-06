@@ -18,6 +18,8 @@ namespace Allors.Security
     using Deletable = Database.Domain.Deletable;
     using Task = System.Threading.Tasks.Task;
     using User = Database.Domain.User;
+    using Person = Database.Domain.Person;
+    using Login = Database.Domain.Login;
 
     public class AllorsUserStore : IUserPasswordStore<IdentityUser>,
                                    IUserLoginStore<IdentityUser>,
@@ -69,107 +71,100 @@ namespace Allors.Security
         public async Task<IdentityResult> CreateAsync(IdentityUser identityUser, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            using (var transaction = this.database.CreateTransaction())
+            using var transaction = this.database.CreateTransaction();
+
+            try
             {
-                try
+                var user = transaction.Create<Person>(v =>
                 {
-                    var user = new PersonBuilder(transaction)
-                        .WithUserName(identityUser.UserName)
-                        .WithUserPasswordHash(identityUser.PasswordHash)
-                        .WithUserEmail(identityUser.Email)
-                        .WithUserEmailConfirmed(identityUser.EmailConfirmed)
-                        .WithUserPasswordHash(identityUser.PasswordHash)
-                        .WithUserSecurityStamp(identityUser.SecurityStamp)
-                        .WithUserPhoneNumber(identityUser.PhoneNumber)
-                        .WithUserPhoneNumberConfirmed(identityUser.PhoneNumberConfirmed)
-                        .WithUserTwoFactorEnabled(identityUser.TwoFactorEnabled)
-                        .WithUserLockoutEnd(identityUser.LockoutEnd?.UtcDateTime)
-                        .WithUserLockoutEnabled(identityUser.LockoutEnabled)
-                        .WithUserAccessFailedCount(identityUser.AccessFailedCount)
-                        .Build();
+                    v.UserName = identityUser.UserName;
+                    v.UserEmail = identityUser.Email;
+                    v.UserEmailConfirmed = identityUser.EmailConfirmed;
+                    v.UserPasswordHash = identityUser.PasswordHash;
+                    v.UserSecurityStamp = identityUser.SecurityStamp;
+                    v.UserPhoneNumber = identityUser.PhoneNumber;
+                    v.UserPhoneNumberConfirmed = identityUser.PhoneNumberConfirmed;
+                    v.UserTwoFactorEnabled = identityUser.TwoFactorEnabled;
+                    v.UserLockoutEnd = identityUser.LockoutEnd?.UtcDateTime;
+                    v.UserLockoutEnabled = identityUser.LockoutEnabled;
+                    v.UserAccessFailedCount = identityUser.AccessFailedCount;
+                });
 
-                    transaction.Derive();
-                    transaction.Commit();
+                transaction.Derive();
+                transaction.Commit();
 
-                    identityUser.Id = user.Id.ToString();
+                identityUser.Id = user.Id.ToString();
 
-                    return IdentityResult.Success;
-                }
-                catch (Exception e)
-                {
-                    return IdentityResult.Failed(new IdentityError { Description = $"Could not create user {identityUser.UserName}." });
-                }
+                return IdentityResult.Success;
+            }
+            catch (Exception e)
+            {
+                return IdentityResult.Failed(new IdentityError { Description = $"Could not create user {identityUser.UserName}." });
             }
         }
 
         public async Task<IdentityResult> UpdateAsync(IdentityUser identityUser, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            using (var transaction = this.database.CreateTransaction())
+            using var transaction = this.database.CreateTransaction();
+            try
             {
-                try
-                {
-                    var user = identityUser.User(transaction);
+                var user = identityUser.User(transaction);
 
-                    user.UserName = identityUser.UserName;
-                    user.UserPasswordHash = identityUser.PasswordHash;
-                    user.UserEmail = identityUser.Email;
-                    user.UserEmailConfirmed = identityUser.EmailConfirmed;
-                    user.UserPasswordHash = identityUser.PasswordHash;
-                    user.UserSecurityStamp = identityUser.SecurityStamp;
-                    user.UserPhoneNumber = identityUser.PhoneNumber;
-                    user.UserPhoneNumberConfirmed = identityUser.PhoneNumberConfirmed;
-                    user.UserTwoFactorEnabled = identityUser.TwoFactorEnabled;
-                    user.UserLockoutEnd = identityUser.LockoutEnd?.UtcDateTime;
-                    user.UserLockoutEnabled = identityUser.LockoutEnabled;
-                    user.UserAccessFailedCount = identityUser.AccessFailedCount;
+                user.UserName = identityUser.UserName;
+                user.UserPasswordHash = identityUser.PasswordHash;
+                user.UserEmail = identityUser.Email;
+                user.UserEmailConfirmed = identityUser.EmailConfirmed;
+                user.UserPasswordHash = identityUser.PasswordHash;
+                user.UserSecurityStamp = identityUser.SecurityStamp;
+                user.UserPhoneNumber = identityUser.PhoneNumber;
+                user.UserPhoneNumberConfirmed = identityUser.PhoneNumberConfirmed;
+                user.UserTwoFactorEnabled = identityUser.TwoFactorEnabled;
+                user.UserLockoutEnd = identityUser.LockoutEnd?.UtcDateTime;
+                user.UserLockoutEnabled = identityUser.LockoutEnabled;
+                user.UserAccessFailedCount = identityUser.AccessFailedCount;
 
-                    transaction.Derive();
-                    transaction.Commit();
+                transaction.Derive();
+                transaction.Commit();
 
-                    return IdentityResult.Success;
-                }
-                catch
-                {
-                    return IdentityResult.Failed(new IdentityError { Description = $"Could not update user {identityUser.UserName}." });
-                }
+                return IdentityResult.Success;
+            }
+            catch
+            {
+                return IdentityResult.Failed(new IdentityError { Description = $"Could not update user {identityUser.UserName}." });
             }
         }
 
         public async Task<IdentityResult> DeleteAsync(IdentityUser identityUser, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            using (var transaction = this.database.CreateTransaction())
+            using var transaction = this.database.CreateTransaction();
+            try
             {
-                try
+                var user = (User)transaction.Instantiate(identityUser.Id);
+
+                if (user is Deletable deletable)
                 {
-                    var user = (User)transaction.Instantiate(identityUser.Id);
-
-                    if (user is Deletable deletable)
-                    {
-                        deletable.Delete();
-                    }
-
-                    transaction.Derive();
-                    transaction.Commit();
-
-                    return IdentityResult.Success;
+                    deletable.Delete();
                 }
-                catch
-                {
-                    return IdentityResult.Failed(new IdentityError { Description = $"Could not delete user {identityUser.UserName}." });
-                }
+
+                transaction.Derive();
+                transaction.Commit();
+
+                return IdentityResult.Success;
+            }
+            catch
+            {
+                return IdentityResult.Failed(new IdentityError { Description = $"Could not delete user {identityUser.UserName}." });
             }
         }
 
         public async Task<IdentityUser> FindByIdAsync(string userId, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            using (var transaction = this.database.CreateTransaction())
-            {
-                var user = (User)transaction.Instantiate(userId);
-                return user?.AsIdentityUser();
-            }
+            using var transaction = this.database.CreateTransaction();
+            var user = (User)transaction.Instantiate(userId);
+            return user?.AsIdentityUser();
         }
 
         public async Task<IdentityUser> FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken)
@@ -177,11 +172,9 @@ namespace Allors.Security
             var m = this.database.Services.Get<MetaPopulation>();
 
             cancellationToken.ThrowIfCancellationRequested();
-            using (var transaction = this.database.CreateTransaction())
-            {
-                var user = new Users(transaction).FindBy(m.User.NormalizedUserName, normalizedUserName);
-                return user?.AsIdentityUser();
-            }
+            using var transaction = this.database.CreateTransaction();
+            var user = new Users(transaction).FindBy(m.User.NormalizedUserName, normalizedUserName);
+            return user?.AsIdentityUser();
         }
 
         #endregion
@@ -211,21 +204,20 @@ namespace Allors.Security
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            using (var transaction = this.database.CreateTransaction())
+            using var transaction = this.database.CreateTransaction();
+            var user = (User)transaction.Instantiate(identityUser.Id);
+
+            var login = transaction.Create<Login>(v =>
             {
-                var user = (User)transaction.Instantiate(identityUser.Id);
+                v.Provider = userLoginInfo.LoginProvider;
+                v.Key = userLoginInfo.ProviderKey;
+                v.DisplayName = userLoginInfo.ProviderDisplayName;
+            });
 
-                var login = new LoginBuilder(transaction)
-                    .WithProvider(userLoginInfo.LoginProvider)
-                    .WithKey(userLoginInfo.ProviderKey)
-                    .WithDisplayName(userLoginInfo.ProviderDisplayName)
-                    .Build();
+            user.AddLogin(login);
 
-                user.AddLogin(login);
-
-                transaction.Derive();
-                transaction.Commit();
-            }
+            transaction.Derive();
+            transaction.Commit();
         }
 
         public async Task<IdentityUser> FindByLoginAsync(string loginProvider, string providerKey, CancellationToken cancellationToken)
@@ -234,26 +226,22 @@ namespace Allors.Security
 
             var m = this.database.Services.Get<MetaPopulation>();
 
-            using (var transaction = this.database.CreateTransaction())
-            {
-                var extent = new Logins(transaction).Extent();
-                extent.Filter.AddEquals(m.Login.Provider, loginProvider);
-                extent.Filter.AddEquals(m.Login.Key, providerKey);
+            using var transaction = this.database.CreateTransaction();
+            var extent = new Logins(transaction).Extent();
+            extent.Filter.AddEquals(m.Login.Provider, loginProvider);
+            extent.Filter.AddEquals(m.Login.Key, providerKey);
 
-                var user = extent.FirstOrDefault()?.UserWhereLogin;
-                return user?.AsIdentityUser();
-            }
+            var user = extent.FirstOrDefault()?.UserWhereLogin;
+            return user?.AsIdentityUser();
         }
 
         public async Task<IList<UserLoginInfo>> GetLoginsAsync(IdentityUser identityUser, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            using (var transaction = this.database.CreateTransaction())
-            {
-                var user = (User)transaction.Instantiate(identityUser.Id);
-                return user.Logins.Select(v => v.AsUserLoginInfo()).ToArray();
-            }
+            using var transaction = this.database.CreateTransaction();
+            var user = (User)transaction.Instantiate(identityUser.Id);
+            return user.Logins.Select(v => v.AsUserLoginInfo()).ToArray();
         }
 
         public async Task RemoveLoginAsync(IdentityUser user, string loginProvider, string providerKey, CancellationToken cancellationToken)
@@ -262,18 +250,16 @@ namespace Allors.Security
 
             var m = this.database.Services.Get<MetaPopulation>();
 
-            using (var transaction = this.database.CreateTransaction())
-            {
-                var extent = new Logins(transaction).Extent();
-                extent.Filter.AddEquals(m.Login.Provider, loginProvider);
-                extent.Filter.AddEquals(m.Login.Key, providerKey);
+            using var transaction = this.database.CreateTransaction();
+            var extent = new Logins(transaction).Extent();
+            extent.Filter.AddEquals(m.Login.Provider, loginProvider);
+            extent.Filter.AddEquals(m.Login.Key, providerKey);
 
-                var login = extent.FirstOrDefault();
-                login?.Delete();
+            var login = extent.FirstOrDefault();
+            login?.Delete();
 
-                transaction.Derive();
-                transaction.Commit();
-            }
+            transaction.Derive();
+            transaction.Commit();
         }
 
         #endregion
@@ -315,11 +301,9 @@ namespace Allors.Security
 
             var m = this.database.Services.Get<MetaPopulation>();
 
-            using (var transaction = this.database.CreateTransaction())
-            {
-                var user = new Users(transaction).FindBy(m.User.NormalizedUserEmail, normalizedEmail);
-                return user?.AsIdentityUser();
-            }
+            using var transaction = this.database.CreateTransaction();
+            var user = new Users(transaction).FindBy(m.User.NormalizedUserEmail, normalizedEmail);
+            return user?.AsIdentityUser();
         }
 
         public async Task<string> GetEmailAsync(IdentityUser user, CancellationToken cancellationToken)

@@ -83,7 +83,7 @@ namespace Tests
         {
             var user = this.SetUser("jane@example.com");
 
-            var data = new DataBuilder(this.Transaction).WithString("First").Build();
+            var data = this.Transaction.Create<Data>(v => v.String = "First");
 
             this.Transaction.Derive();
             this.Transaction.Commit();

@@ -29,5 +29,11 @@ namespace Allors.Database
         /// </summary>
         /// <value>The object id.</value>
         long Id { get; }
+
+        /// <summary>
+        /// OnPostBuild
+        /// </summary>
+        /// <value>The object id.</value>
+        void OnPostBuild();
     }
 }

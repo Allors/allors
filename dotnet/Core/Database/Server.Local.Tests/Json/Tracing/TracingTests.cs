@@ -177,17 +177,14 @@ namespace Tests
 
             for (var i = 0; i < 100; i++)
             {
-                this.x[i] = new TraceXBuilder(this.Transaction)
-                    .WithAllorsString($"X{i}")
-                    .Build();
+                this.x[i] = this.Transaction.Create<TraceX>(v => v.AllorsString = $"X{i}");
 
-                this.y[i] = new TraceYBuilder(this.Transaction)
-                    .WithAllorsString($"Y{i}")
-                    .Build();
+                this.y[i] = this.Transaction.Create<TraceY>(v =>
+                {
+                    v.AllorsString = $"Y{i}";
+                });
 
-                this.z[i] = new TraceZBuilder(this.Transaction)
-                    .WithAllorsString($"Z{i}")
-                    .Build();
+                this.z[i] = this.Transaction.Create<TraceZ>(v => v.AllorsString = $"Z{i}");
             }
 
             for (var i = 0; i < 100; i++)

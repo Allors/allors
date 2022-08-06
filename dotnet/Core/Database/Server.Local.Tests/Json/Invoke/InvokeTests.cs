@@ -24,9 +24,9 @@ namespace Tests
 
         public InvokeTests(Fixture fixture) : base(fixture)
         {
-            this.x1 = new WorkspaceXObject1Builder(this.Transaction).Build();
-            this.y1 = new WorkspaceYObject1Builder(this.Transaction).Build();
-            this.none1 = new WorkspaceNoneObject1Builder(this.Transaction).Build();
+            this.x1 = this.Transaction.Create<WorkspaceXObject1>();
+            this.y1 = this.Transaction.Create<WorkspaceYObject1>();
+            this.none1 = this.Transaction.Create<WorkspaceNoneObject1>();
 
             this.x1Version = this.x1.Strategy.ObjectVersion;
             this.y1Version = this.y1.Strategy.ObjectVersion;

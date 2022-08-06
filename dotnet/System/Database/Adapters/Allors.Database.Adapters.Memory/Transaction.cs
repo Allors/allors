@@ -138,10 +138,26 @@ namespace Allors.Database.Adapters.Memory
                 throw new Exception("IObjectType should be a class");
             }
 
-            var newObject = (T)this.Create(@class);
+            var newObject = (T)this.CreateWithoutOnBuild(@class);
+            newObject.OnPostBuild();
 
-            var methodInfo = typeof(T).GetMethod("OnPostBuild", Type.EmptyTypes);
-            methodInfo.Invoke(newObject, null);
+            return newObject;
+        }
+
+        public T Create<T>(Action<T> builder) where T : IObject
+        {
+            var objectType = this.Database.ObjectFactory.GetObjectType(typeof(T));
+
+            if (!(objectType is IClass @class))
+            {
+                throw new Exception("IObjectType should be a class");
+            }
+
+            var newObject = (T)this.CreateWithoutOnBuild(@class);
+
+            builder?.Invoke(newObject);
+
+            newObject.OnPostBuild();
 
             return newObject;
         }
@@ -155,16 +171,80 @@ namespace Allors.Database.Adapters.Memory
                 throw new Exception("IObjectType should be a class");
             }
 
-            var newObject = (T)this.Create(@class);
+            var newObject = (T)this.CreateWithoutOnBuild(@class);
 
-            foreach (var builder in builders)
+            if (builders != null)
             {
-                builder?.Invoke(newObject);
+                foreach (var builder in builders)
+                {
+                    builder?.Invoke(newObject);
+                }
             }
 
-            var methodInfo = typeof(T).GetMethod("OnPostBuild", Type.EmptyTypes);
-            methodInfo.Invoke(newObject, null);
+            newObject.OnPostBuild();
 
+            return newObject;
+        }
+
+        public T Create<T>(IEnumerable<Action<T>> builders, Action<T> extraBuilder) where T : IObject
+        {
+            var objectType = this.Database.ObjectFactory.GetObjectType(typeof(T));
+
+            if (!(objectType is IClass @class))
+            {
+                throw new Exception("IObjectType should be a class");
+            }
+
+            var newObject = (T)this.CreateWithoutOnBuild(@class);
+
+            if (builders != null)
+            {
+                foreach (var builder in builders)
+                {
+                    builder?.Invoke(newObject);
+                }
+            }
+
+            extraBuilder?.Invoke(newObject);
+
+            newObject.OnPostBuild();
+
+            return newObject;
+        }
+
+        public T Create<T>(IEnumerable<Action<T>> builders, params Action<T>[] extraBuilders) where T : IObject
+        {
+            var objectType = this.Database.ObjectFactory.GetObjectType(typeof(T));
+
+            if (!(objectType is IClass @class))
+            {
+                throw new Exception("IObjectType should be a class");
+            }
+
+            var newObject = (T)this.CreateWithoutOnBuild(@class);
+
+            if (builders != null)
+            {
+                foreach (var builder in builders)
+                {
+                    builder?.Invoke(newObject);
+                }
+            }
+
+            foreach (var extraBuilder in extraBuilders)
+            {
+                extraBuilder?.Invoke(newObject);
+            }
+
+            newObject.OnPostBuild();
+
+            return newObject;
+        }
+
+        public virtual IObject Create(IClass objectType)
+        {
+            var newObject = this.CreateWithoutOnBuild(objectType);
+            newObject.OnPostBuild();
             return newObject;
         }
 
@@ -174,10 +254,22 @@ namespace Allors.Database.Adapters.Memory
             var allorsObjects = (IObject[])Array.CreateInstance(arrayType, count);
             for (var i = 0; i < count; i++)
             {
-                allorsObjects[i] = this.Create(objectType);
+                var newObject = this.CreateWithoutOnBuild(objectType);
+                newObject.OnPostBuild();
+                allorsObjects[i] = newObject;
             }
 
             return allorsObjects;
+        }
+
+        private IObject CreateWithoutOnBuild(IClass objectType)
+        {
+            var strategy = new Strategy(this, objectType, ++this.currentId, Version.DatabaseInitial);
+            this.AddStrategy(strategy);
+
+            this.ChangeLog.OnCreated(strategy);
+
+            return strategy.GetObject();
         }
 
         public IObject Instantiate(string objectIdString) => long.TryParse(objectIdString, out var id) ? this.Instantiate(id) : null;
@@ -265,16 +357,6 @@ namespace Allors.Database.Adapters.Memory
             var secondExtent = (Extent)secondOperand;
 
             return new ExtentOperation(this, firstExtent, secondExtent, ExtentOperationType.Except);
-        }
-
-        public virtual IObject Create(IClass objectType)
-        {
-            var strategy = new Strategy(this, objectType, ++this.currentId, Version.DatabaseInitial);
-            this.AddStrategy(strategy);
-
-            this.ChangeLog.OnCreated(strategy);
-
-            return strategy.GetObject();
         }
 
         internal void Init() => this.Reset();

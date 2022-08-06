@@ -22,8 +22,6 @@ namespace Allors.Database.Domain.Tests
 
             var units = this.Transaction.Create<UnitSample>();
 
-            this.Transaction.Derive(false);
-
             var after = this.Transaction.Now();
 
             Assert.False(units.ExistRequiredBinary);
