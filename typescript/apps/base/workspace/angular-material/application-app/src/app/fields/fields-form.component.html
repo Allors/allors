@@ -94,38 +94,38 @@
         </div>
 
         <div class="row">
-          <a-mat-localised-text class="col-md" [object]="data" [roleType]="m.Data.LocalisedTexts" [locale]="locale"></a-mat-localised-text>
-          <a-mat-localised-markdown class="col-md" [object]="data" [roleType]="m.Data.LocalisedMarkdowns" [locale]="locale"></a-mat-localised-markdown>
+          <a-mat-localized-text class="col-md" [object]="data" [roleType]="m.Data.LocalizedTexts" [locale]="locale"></a-mat-localized-text>
+          <a-mat-localized-markdown class="col-md" [object]="data" [roleType]="m.Data.LocalizedMarkdowns" [locale]="locale"></a-mat-localized-markdown>
         </div>
 
         <div class="row">
           <div class="col-md">
-            <h4>Organisation Where Jane is Manager</h4>
-            <a-mat-association-autocomplete [object]="jane" [associationType]="m.Person.OrganisationWhereManager" [filter]="organisationFilter.create(allors.context)" display="Name"></a-mat-association-autocomplete>
-            <a-mat-association-autocomplete [object]="jane" [associationType]="m.Person.OrganisationWhereManager" [filter]="organisationFilter.create(allors.context)" display="Name"></a-mat-association-autocomplete>
+            <h4>Organization Where Jane is Manager</h4>
+            <a-mat-association-autocomplete [object]="jane" [associationType]="m.Person.OrganizationWhereManager" [filter]="organizationFilter.create(allors.context)" display="Name"></a-mat-association-autocomplete>
+            <a-mat-association-autocomplete [object]="jane" [associationType]="m.Person.OrganizationWhereManager" [filter]="organizationFilter.create(allors.context)" display="Name"></a-mat-association-autocomplete>
           </div>
           <div class="col-md">
-            <h4>Organisations with Managers ({{ organisationsWithManagers?.length }})</h4>
-            <div *ngFor="let organisation of organisationsWithManagers">
-              {{ organisation.Name }}
+            <h4>Organizations with Managers ({{ organizationsWithManagers?.length }})</h4>
+            <div *ngFor="let organization of organizationsWithManagers">
+              {{ organization.Name }}
               ->
-              {{ organisation.Manager.FirstName }}
+              {{ organization.Manager.FirstName }}
             </div>
           </div>
         </div>
 
         <div class="row">
           <div class="col-md">
-            <h4>Organisation Where Jane is Employee</h4>
-            <a-mat-association-autocomplete [object]="jane" [associationType]="m.Person.OrganisationWhereEmployee" [filter]="organisationFilter.create(allors.context)" display="Name"></a-mat-association-autocomplete>
-            <a-mat-association-autocomplete [object]="jane" [associationType]="m.Person.OrganisationWhereEmployee" [filter]="organisationFilter.create(allors.context)" display="Name"></a-mat-association-autocomplete>
+            <h4>Organization Where Jane is Employee</h4>
+            <a-mat-association-autocomplete [object]="jane" [associationType]="m.Person.OrganizationWhereEmployee" [filter]="organizationFilter.create(allors.context)" display="Name"></a-mat-association-autocomplete>
+            <a-mat-association-autocomplete [object]="jane" [associationType]="m.Person.OrganizationWhereEmployee" [filter]="organizationFilter.create(allors.context)" display="Name"></a-mat-association-autocomplete>
           </div>
           <div class="col-md">
-            <h4>Organisations with Empoyees ({{ organisationsWithEmployees?.length }})</h4>
-            <div *ngFor="let organisation of organisationsWithEmployees">
-              {{ organisation.Name }}
+            <h4>Organizations with Empoyees ({{ organizationsWithEmployees?.length }})</h4>
+            <div *ngFor="let organization of organizationsWithEmployees">
+              {{ organization.Name }}
               ->
-              <span *ngFor="let employee of organisation.Employees">{{ employee.FirstName }}, </span>
+              <span *ngFor="let employee of organization.Employees">{{ employee.FirstName }}, </span>
             </div>
           </div>
         </div>

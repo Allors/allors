@@ -10,7 +10,7 @@ export const dialogs = {
   create: {
     [tags.Country]: Create,
     [tags.Employment]: Create,
-    [tags.Organisation]: Create,
+    [tags.Organization]: Create,
     [tags.Person]: PersonCreateDialogComponent,
   },
   edit: {

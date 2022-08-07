@@ -3,29 +3,29 @@ import { LazyMetaPopulation } from '@allors/system/workspace/meta-json';
 
 describe('Class in MetaPopulation', () => {
   describe('with minimal class metadata', () => {
-    type Organisation = Class;
+    type Organization = Class;
 
     interface M extends LazyMetaPopulation {
-      Organisation: Organisation;
+      Organization: Organization;
     }
 
     const metaPopulation = new LazyMetaPopulation({
-      c: [['10', 'Organisation']],
+      c: [['10', 'Organization']],
     }) as M;
 
-    const { Organisation } = metaPopulation;
+    const { Organization } = metaPopulation;
 
     it('should have the class with its defaults', () => {
-      expect(Organisation).toBeDefined();
-      expect(Organisation.metaPopulation).toBe(metaPopulation);
-      expect(Organisation.tag).toBe('10');
-      expect(Organisation.singularName).toBe('Organisation');
-      expect(Organisation.pluralName).toBe('Organisations');
-      expect(Organisation.isUnit).toBeFalsy();
-      expect(Organisation.isComposite).toBeTruthy();
-      expect(Organisation.isInterface).toBeFalsy();
-      expect(Organisation.isClass).toBeTruthy();
-      expect(Organisation.isRelationship).toBeFalsy();
+      expect(Organization).toBeDefined();
+      expect(Organization.metaPopulation).toBe(metaPopulation);
+      expect(Organization.tag).toBe('10');
+      expect(Organization.singularName).toBe('Organization');
+      expect(Organization.pluralName).toBe('Organizations');
+      expect(Organization.isUnit).toBeFalsy();
+      expect(Organization.isComposite).toBeTruthy();
+      expect(Organization.isInterface).toBeFalsy();
+      expect(Organization.isClass).toBeTruthy();
+      expect(Organization.isRelationship).toBeFalsy();
     });
   });
 

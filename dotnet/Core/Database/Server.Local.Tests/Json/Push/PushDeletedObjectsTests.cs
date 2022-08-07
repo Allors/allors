@@ -21,13 +21,13 @@ namespace Tests
         {
             this.SetUser("jane@example.com");
 
-            var organisation = this.Transaction.Build<Organisation>();
+            var organization = this.Transaction.Build<Organization>();
             this.Transaction.Commit();
 
-            var organisationId = organisation.Id;
-            var organisationVersion = organisation.Strategy.ObjectVersion;
+            var organizationId = organization.Id;
+            var organizationVersion = organization.Strategy.ObjectVersion;
 
-            organisation.Delete();
+            organization.Delete();
             this.Transaction.Commit();
 
             var uri = new Uri(@"allors/push", UriKind.Relative);
@@ -38,13 +38,13 @@ namespace Tests
                 {
                     new PushRequestObject
                     {
-                        d = organisationId,
-                        v = organisationVersion,
+                        d = organizationId,
+                        v = organizationVersion,
                         r = new[]
                         {
                             new PushRequestRole
                             {
-                              t = this.M.Organisation.Name.RelationType.Tag,
+                              t = this.M.Organization.Name.RelationType.Tag,
                               u = "Acme"
                             },
                         },
@@ -57,7 +57,7 @@ namespace Tests
 
             Assert.True(pushResponse.HasErrors);
             Assert.Single(pushResponse._m);
-            Assert.Contains(organisationId, pushResponse._m);
+            Assert.Contains(organizationId, pushResponse._m);
         }
     }
 }

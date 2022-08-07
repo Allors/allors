@@ -11,11 +11,11 @@ describe('Pulls', () => {
 
   describe('with metadata', () => {
     it('should return pulls', () => {
-      const pull = p.Organisation({
+      const pull = p.Organization({
         select: {
           Owner: {
             include: {
-              OrganisationsWhereOwner: {},
+              OrganizationsWhereOwner: {},
             },
           },
         },
@@ -29,7 +29,7 @@ describe('Pulls', () => {
 
       const extent = pull.extent as Filter;
 
-      expect(extent.objectType).toBe(m.Organisation);
+      expect(extent.objectType).toBe(m.Organization);
 
       expect(pull.results).toBeDefined();
       expect(pull.results.length).toBe(1);
@@ -46,7 +46,7 @@ describe('Pulls', () => {
 
       expect(select.include).toBeDefined();
       expect(select.next).toBeUndefined();
-      expect(select.propertyType).toBe(m.Organisation.Owner);
+      expect(select.propertyType).toBe(m.Organization.Owner);
 
       const include = select.include;
 
@@ -56,7 +56,7 @@ describe('Pulls', () => {
 
       expect(node.nodes).toBeUndefined();
       expect(node.ofType).toBeUndefined();
-      expect(node.propertyType).toBe(m.Person.OrganisationsWhereOwner);
+      expect(node.propertyType).toBe(m.Person.OrganizationsWhereOwner);
     });
   });
 });

@@ -37,11 +37,11 @@ namespace Allors.Database.Server.Controllers
             var response = api.CreatePullResponseBuilder();
 
             var m = this.Transaction.Database.Services.Get<MetaPopulation>();
-            var organisation = new Organisations(this.Transaction).FindBy(m.Organisation.Owner, this.Transaction.Services.Get<IUserService>().User);
+            var organization = new Organizations(this.Transaction).FindBy(m.Organization.Owner, this.Transaction.Services.Get<IUserService>().User);
 
-            response.AddObject("root", organisation, new[]
+            response.AddObject("root", organization, new[]
             {
-                new Node(m.Organisation.Employees),
+                new Node(m.Organization.Employees),
             });
 
             return this.Ok(response.Build());

@@ -3,7 +3,7 @@ import { filter } from 'rxjs/operators';
 import { Component, ViewChild, OnDestroy, OnInit, Self } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router, NavigationEnd } from '@angular/router';
-import { Organisation } from '@allors/default/workspace/domain';
+import { Organization } from '@allors/default/workspace/domain';
 import {
   ContextService,
   MetaService,
@@ -24,8 +24,8 @@ import {
   providers: [ContextService],
 })
 export class MainComponent implements OnInit, OnDestroy {
-  selectedInternalOrganisation: Organisation;
-  internalOriganisations: Organisation[];
+  selectedInternalOrganization: Organization;
+  internalOriganisations: Organization[];
 
   sideMenuItems: SideMenuItem[] = [];
 

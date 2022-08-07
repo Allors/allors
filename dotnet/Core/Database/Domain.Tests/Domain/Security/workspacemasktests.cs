@@ -23,7 +23,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void WithoutMask()
         {
-            var permission = this.FindPermission(this.M.Organisation.Name, Operations.Read);
+            var permission = this.FindPermission(this.M.Organization.Name, Operations.Read);
             var role = this.BuildRole("Role", permission);
             var person = this.BuildPerson("John", "Doe");
             var accessControl = this.BuildGrant(person, role);
@@ -34,10 +34,10 @@ namespace Allors.Database.Domain.Tests
             this.Transaction.Derive();
             this.Transaction.Commit();
 
-            var organisation = this.BuildOrganisation("Organisation");
+            var organization = this.BuildOrganization("Organization");
 
             var aclService = new WorkspaceAclsService(this.Security, new WorkspaceMask(this.M), person);
-            var acl = aclService.Create(this.workspaceName)[organisation];
+            var acl = aclService.Create(this.workspaceName)[organization];
 
             Assert.False(acl.IsMasked());
         }
@@ -50,12 +50,12 @@ namespace Allors.Database.Domain.Tests
             this.Transaction.Derive();
             this.Transaction.Commit();
 
-            var organisation = this.BuildOrganisation("Organisation");
+            var organization = this.BuildOrganization("Organization");
 
             var aclService = new WorkspaceAclsService(this.Security, new WorkspaceMask(this.M), person);
-            var acl = aclService.Create(this.workspaceName)[organisation];
+            var acl = aclService.Create(this.workspaceName)[organization];
 
-            var canRead = acl.CanRead(this.M.Organisation.Name);
+            var canRead = acl.CanRead(this.M.Organization.Name);
 
             Assert.True(acl.IsMasked());
         }
@@ -67,7 +67,7 @@ namespace Allors.Database.Domain.Tests
             public WorkspaceMask(MetaPopulation m) =>
                 this.masks = new Dictionary<IClass, IRoleType>
                 {
-                    {m.Organisation, m.Organisation.Name},
+                    {m.Organization, m.Organization.Name},
                 };
 
             public IDictionary<IClass, IRoleType> GetMasks(string workspaceName) => this.masks;

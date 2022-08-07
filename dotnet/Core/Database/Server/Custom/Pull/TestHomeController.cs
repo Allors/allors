@@ -36,9 +36,9 @@ namespace Allors.Server.Controllers
             var response = api.CreatePullResponseBuilder();
 
             var m = this.Transaction.Database.Services.Get<MetaPopulation>();
-            var organisation = new Organisations(this.Transaction).FindBy(m.Organisation.Owner, this.Transaction.Services.Get<IUserService>().User);
-            response.AddObject("root", organisation, new[] {
-                new Node(m.Organisation.Shareholders)
+            var organization = new Organizations(this.Transaction).FindBy(m.Organization.Owner, this.Transaction.Services.Get<IUserService>().User);
+            response.AddObject("root", organization, new[] {
+                new Node(m.Organization.Shareholders)
             });
             return this.Ok(response.Build());
         }

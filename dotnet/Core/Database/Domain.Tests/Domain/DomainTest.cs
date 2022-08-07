@@ -24,7 +24,7 @@ namespace Allors.Database.Domain.Tests
     using User = Domain.User;
     using Grant = Domain.Grant;
     using Revocation = Domain.Revocation;
-    using Organisation = Domain.Organisation;
+    using Organization = Domain.Organization;
     using SecurityToken = Domain.SecurityToken;
     using C1 = Domain.C1;
     using C2 = Domain.C2;
@@ -161,7 +161,7 @@ namespace Allors.Database.Domain.Tests
             v.UserName = userName;
         });
 
-        protected Organisation BuildOrganisation(string name) => this.Transaction.Build<Organisation>(v =>
+        protected Organization BuildOrganization(string name) => this.Transaction.Build<Organization>(v =>
         {
             v.Name = name;
         });

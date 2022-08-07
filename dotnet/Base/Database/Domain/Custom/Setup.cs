@@ -28,7 +28,7 @@ namespace Allors.Database.Domain
             var revocations = new Revocations(this.transaction);
             var people = new People(this.transaction);
             var userGroups = new UserGroups(this.transaction);
-            var organisations = new Organisations(this.transaction);
+            var organizations = new Organizations(this.transaction);
             var countries = new Countries(this.transaction);
             #endregion
 
@@ -46,10 +46,10 @@ namespace Allors.Database.Domain
                 return people.Create(Builder);
             }
 
-            Organisation BuildOrganisation(string name, Action<Organisation> extraBuilder = null)
+            Organization BuildOrganization(string name, Action<Organization> extraBuilder = null)
             {
-                void Builder(Organisation v) => v.Name = name;
-                return organisations.Create(Builder, extraBuilder);
+                void Builder(Organization v) => v.Name = name;
+                return organizations.Create(Builder, extraBuilder);
             }
 
             Revocation BuildRevocation(params Permission[] deniedPermissions) => revocations.Create(v => v.DeniedPermissions = deniedPermissions);
@@ -87,7 +87,7 @@ namespace Allors.Database.Domain
             new UserGroups(this.transaction).Creators.AddMember(john);
             new UserGroups(this.transaction).Creators.AddMember(jenny);
 
-            var acme = BuildOrganisation("Acme", v =>
+            var acme = BuildOrganization("Acme", v =>
             {
                 v.Owner = jane;
                 v.AddEmployee(john);
@@ -114,35 +114,35 @@ namespace Allors.Database.Domain
                 v.ThroughDate = now.AddDays(-1);
             });
 
-            // Create cycles between Organisation and Person
-            var cycleOrganisation1 = BuildOrganisation("Organisatin Cycle One", v => v.IncorporationDate = DateTimeFactory.CreateDate(2000, 1, 1));
-            var cycleOrganisation2 = BuildOrganisation("Organisatin Cycle Two", v => v.IncorporationDate = DateTimeFactory.CreateDate(2001, 1, 1));
+            // Create cycles between Organization and Person
+            var cycleOrganization1 = BuildOrganization("Organisatin Cycle One", v => v.IncorporationDate = DateTimeFactory.CreateDate(2000, 1, 1));
+            var cycleOrganization2 = BuildOrganization("Organisatin Cycle Two", v => v.IncorporationDate = DateTimeFactory.CreateDate(2001, 1, 1));
 
-            cycleOrganisation1.AddShareholder(jane);
-            cycleOrganisation2.AddShareholder(jenny);
+            cycleOrganization1.AddShareholder(jane);
+            cycleOrganization2.AddShareholder(jenny);
 
             var cyclePerson1 = BuildPerson("Person Cycle", "One", "cycle1@one.org");
             var cyclePerson2 = BuildPerson("Person Cycle", "Two", "cycle2@one.org");
 
             // One
-            cycleOrganisation1.CycleOne = cyclePerson1;
-            cyclePerson1.CycleOne = cycleOrganisation1;
+            cycleOrganization1.CycleOne = cyclePerson1;
+            cyclePerson1.CycleOne = cycleOrganization1;
 
-            cycleOrganisation2.CycleOne = cyclePerson2;
-            cyclePerson2.CycleOne = cycleOrganisation2;
+            cycleOrganization2.CycleOne = cyclePerson2;
+            cyclePerson2.CycleOne = cycleOrganization2;
 
             // Many
-            cycleOrganisation1.AddCycleMany(cyclePerson1);
-            cycleOrganisation1.AddCycleMany(cyclePerson2);
+            cycleOrganization1.AddCycleMany(cyclePerson1);
+            cycleOrganization1.AddCycleMany(cyclePerson2);
 
-            cycleOrganisation1.AddCycleMany(cyclePerson1);
-            cycleOrganisation1.AddCycleMany(cyclePerson2);
+            cycleOrganization1.AddCycleMany(cyclePerson1);
+            cycleOrganization1.AddCycleMany(cyclePerson2);
 
-            cyclePerson1.AddCycleMany(cycleOrganisation1);
-            cyclePerson1.AddCycleMany(cycleOrganisation2);
+            cyclePerson1.AddCycleMany(cycleOrganization1);
+            cyclePerson1.AddCycleMany(cycleOrganization2);
 
-            cyclePerson2.AddCycleMany(cycleOrganisation1);
-            cyclePerson2.AddCycleMany(cycleOrganisation2);
+            cyclePerson2.AddCycleMany(cycleOrganization1);
+            cyclePerson2.AddCycleMany(cycleOrganization2);
 
             // MediaTyped
             var mediaTyped = this.transaction.Build<MediaTyped>(v => v.Markdown = @"

@@ -13,7 +13,7 @@ export class AppFilterService implements FilterService {
   m: M;
 
   countryFilter: Filter;
-  organisationFilter: Filter;
+  organizationFilter: Filter;
   personFilter: Filter;
 
   constructor(workspaceService: WorkspaceService) {
@@ -38,14 +38,14 @@ export class AppFilterService implements FilterService {
           })
         ));
 
-      case tags.Organisation:
-        return (this.organisationFilter ??= new Filter(
+      case tags.Organization:
+        return (this.organizationFilter ??= new Filter(
           new FilterDefinition({
             kind: 'And',
             operands: [
               {
                 kind: 'Like',
-                roleType: m.Organisation.Name,
+                roleType: m.Organization.Name,
                 parameter: 'name',
               },
               {

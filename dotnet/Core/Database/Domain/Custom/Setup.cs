@@ -30,7 +30,7 @@ namespace Allors.Database.Domain
             var revocations = new Revocations(this.transaction);
             var people = new People(this.transaction);
             var userGroups = new UserGroups(this.transaction);
-            var organisations = new Organisations(this.transaction);
+            var organizations = new Organizations(this.transaction);
             var trimFroms = new TrimFroms(this.transaction);
             var trimTos = new TrimTos(this.transaction);
             #endregion
@@ -49,10 +49,10 @@ namespace Allors.Database.Domain
                 return people.Create(Builder);
             }
 
-            Organisation BuildOrganisation(string name, Action<Organisation> extraBuilder = null)
+            Organization BuildOrganization(string name, Action<Organization> extraBuilder = null)
             {
-                void Builder(Organisation v) => v.Name = name;
-                return organisations.Create(Builder, extraBuilder);
+                void Builder(Organization v) => v.Name = name;
+                return organizations.Create(Builder, extraBuilder);
             }
 
             Revocation BuildRevocation(params Permission[] deniedPermissions) => revocations.Create(v => v.DeniedPermissions = deniedPermissions);
@@ -82,49 +82,49 @@ namespace Allors.Database.Domain
             userGroups.Creators.AddMember(john);
             userGroups.Creators.AddMember(jenny);
 
-            var acme = BuildOrganisation("Acme", organisation =>
+            var acme = BuildOrganization("Acme", organization =>
                 {
-                    organisation.Owner = jane;
-                    organisation.AddEmployee(john);
-                    organisation.AddEmployee(jenny);
+                    organization.Owner = jane;
+                    organization.AddEmployee(john);
+                    organization.AddEmployee(jenny);
                 });
 
             for (var i = 0; i < 100; i++)
             {
-                BuildOrganisation($"Organisation-{i}", organisation =>
+                BuildOrganization($"Organization-{i}", organization =>
                 {
-                    organisation.Owner = john;
-                    organisation.AddEmployee(jenny);
-                    organisation.AddEmployee(jane);
+                    organization.Owner = john;
+                    organization.AddEmployee(jenny);
+                    organization.AddEmployee(jane);
                 });
             }
 
-            // Create cycles between Organisation and Person
-            var cycleOrganisation1 = BuildOrganisation("Organisatin Cycle One");
-            var cycleOrganisation2 = BuildOrganisation("Organisatin Cycle Two");
+            // Create cycles between Organization and Person
+            var cycleOrganization1 = BuildOrganization("Organisatin Cycle One");
+            var cycleOrganization2 = BuildOrganization("Organisatin Cycle Two");
 
             var cyclePerson1 = BuildPerson("Person Cycle", "One", "cycle1@one.org");
             var cyclePerson2 = BuildPerson("Person Cycle", "Two", "cycle2@one.org");
 
             // One
-            cycleOrganisation1.CycleOne = cyclePerson1;
-            cyclePerson1.CycleOne = cycleOrganisation1;
+            cycleOrganization1.CycleOne = cyclePerson1;
+            cyclePerson1.CycleOne = cycleOrganization1;
 
-            cycleOrganisation2.CycleOne = cyclePerson2;
-            cyclePerson2.CycleOne = cycleOrganisation2;
+            cycleOrganization2.CycleOne = cyclePerson2;
+            cyclePerson2.CycleOne = cycleOrganization2;
 
             // Many
-            cycleOrganisation1.AddCycleMany(cyclePerson1);
-            cycleOrganisation1.AddCycleMany(cyclePerson2);
+            cycleOrganization1.AddCycleMany(cyclePerson1);
+            cycleOrganization1.AddCycleMany(cyclePerson2);
 
-            cycleOrganisation1.AddCycleMany(cyclePerson1);
-            cycleOrganisation1.AddCycleMany(cyclePerson2);
+            cycleOrganization1.AddCycleMany(cyclePerson1);
+            cycleOrganization1.AddCycleMany(cyclePerson2);
 
-            cyclePerson1.AddCycleMany(cycleOrganisation1);
-            cyclePerson1.AddCycleMany(cycleOrganisation2);
+            cyclePerson1.AddCycleMany(cycleOrganization1);
+            cyclePerson1.AddCycleMany(cycleOrganization2);
 
-            cyclePerson2.AddCycleMany(cycleOrganisation1);
-            cyclePerson2.AddCycleMany(cycleOrganisation2);
+            cyclePerson2.AddCycleMany(cycleOrganization1);
+            cyclePerson2.AddCycleMany(cycleOrganization2);
 
             // Security
             if (this.Config.SetupSecurity)

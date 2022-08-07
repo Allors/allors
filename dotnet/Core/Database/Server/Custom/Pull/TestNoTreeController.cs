@@ -33,8 +33,8 @@ namespace Allors.Server.Controllers
             var api = new Api(this.Transaction, this.WorkspaceService.Name, cancellationToken);
             var response = api.CreatePullResponseBuilder();
             response.AddObject("object", api.User);
-            var organisations = new Organisations(this.Transaction);
-            response.AddCollection("collection", organisations.ObjectType, organisations.Extent().ToArray());
+            var organizations = new Organizations(this.Transaction);
+            response.AddCollection("collection", organizations.ObjectType, organizations.Extent().ToArray());
             return this.Ok(response.Build());
         }
     }

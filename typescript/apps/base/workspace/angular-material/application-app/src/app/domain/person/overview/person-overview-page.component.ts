@@ -59,7 +59,7 @@ export class PersonOverviewPageComponent extends AllorsOverviewPageComponent {
     } = this;
 
     pulls.push(
-      p.Organisation({
+      p.Organization({
         name: prefix,
         objectId: this.scoped.id,
       })

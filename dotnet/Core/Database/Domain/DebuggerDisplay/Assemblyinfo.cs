@@ -13,6 +13,6 @@ using static DebuggerDisplayConstants;
 
 // Allors
 [assembly: DebuggerDisplay("{DebuggerDisplay}" + id, Target = typeof(Grant))]
-[assembly: DebuggerDisplay(name, Target = typeof(Organisation))]
+[assembly: DebuggerDisplay(name, Target = typeof(Organization))]
 [assembly: DebuggerDisplay("{UserName}" + id, Target = typeof(Person))]
 [assembly: DebuggerDisplay("{DebuggerDisplay}" + id, Target = typeof(SecurityToken))]

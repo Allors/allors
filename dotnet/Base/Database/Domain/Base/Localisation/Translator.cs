@@ -7,7 +7,7 @@ namespace Allors.Database.Domain
 {
     using System;
     using System.Linq;
-   
+
 
     public partial class Translator<T>
         where T : IObject
@@ -16,15 +16,15 @@ namespace Allors.Database.Domain
         private readonly Locale defaultLocale;
 
         private readonly Func<T, string> value;
-        private readonly Func<T, LocalisedText[]> localisedValues;
+        private readonly Func<T, LocalizedText[]> localizedValues;
 
-        public Translator(Locale locale, Func<T, string> value, Func<T, LocalisedText[]> localisedValues)
+        public Translator(Locale locale, Func<T, string> value, Func<T, LocalizedText[]> localizedValues)
         {
             this.locale = locale;
             this.defaultLocale = locale?.Strategy.Transaction.GetSingleton().DefaultLocale;
 
             this.value = value;
-            this.localisedValues = localisedValues;
+            this.localizedValues = localizedValues;
         }
 
         public string Translate(T source)
@@ -39,8 +39,8 @@ namespace Allors.Database.Domain
                 return this.value(source);
             }
 
-            var localisedValue = this.localisedValues(source).FirstOrDefault(v => v.Locale.Equals(this.locale));
-            return localisedValue != null ? localisedValue.Text : this.value(source);
+            var localizedValue = this.localizedValues(source).FirstOrDefault(v => v.Locale.Equals(this.locale));
+            return localizedValue != null ? localizedValue.Text : this.value(source);
         }
     }
 }

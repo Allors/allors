@@ -17,15 +17,15 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void CycleAgain()
         {
-            var organisation = this.BuildOrganisation("Acme");
+            var organization = this.BuildOrganization("Acme");
 
-            Assert.False(organisation.PostDeriveTrigger);
-            Assert.False(organisation.PostDeriveTriggered);
+            Assert.False(organization.PostDeriveTrigger);
+            Assert.False(organization.PostDeriveTriggered);
 
             this.Transaction.Derive(false);
 
-            Assert.True(organisation.PostDeriveTrigger);
-            Assert.True(organisation.PostDeriveTriggered);
+            Assert.True(organization.PostDeriveTrigger);
+            Assert.True(organization.PostDeriveTriggered);
         }
     }
 }

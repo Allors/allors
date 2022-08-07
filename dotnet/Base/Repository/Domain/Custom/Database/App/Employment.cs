@@ -43,7 +43,7 @@ namespace Allors.Repository
         [Multiplicity(Multiplicity.ManyToOne)]
         [Required]
         [Workspace(Default)]
-        public Organisation Employer { get; set; }
+        public Organization Employer { get; set; }
 
         #region inherited methods
 

@@ -14,7 +14,7 @@ namespace Allors.Repository
     public partial class Gender : Enumeration
     {
         #region inherited properties
-        public LocalisedText[] LocalisedNames { get; set; }
+        public LocalizedText[] LocalizedNames { get; set; }
 
         public string Name { get; set; }
 

@@ -24,7 +24,7 @@ namespace Allors.Repository
 
         public string Name { get; set; }
 
-        public LocalisedText[] LocalisedNames { get; set; }
+        public LocalizedText[] LocalizedNames { get; set; }
 
         public bool IsActive { get; set; }
 

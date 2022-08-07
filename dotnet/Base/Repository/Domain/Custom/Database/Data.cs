@@ -216,7 +216,7 @@ namespace Allors.Repository
         #endregion
         [Multiplicity(Multiplicity.OneToMany)]
         [Workspace(Default)]
-        public LocalisedText[] LocalisedTexts { get; set; }
+        public LocalizedText[] LocalizedTexts { get; set; }
 
         #region Allors
         [Id("7AB21625-164A-4686-A59E-5D64013EE9CC")]
@@ -224,7 +224,7 @@ namespace Allors.Repository
         #endregion
         [Multiplicity(Multiplicity.OneToMany)]
         [Workspace(Default)]
-        public LocalisedText[] LocalisedMarkdowns { get; set; }
+        public LocalizedText[] LocalizedMarkdowns { get; set; }
 
         #region inherited methods
 

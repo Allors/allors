@@ -38,7 +38,7 @@ namespace Tests
                 {
                     new Pull
                     {
-                        er = PreparedExtents.OrganisationByName,
+                        er = PreparedExtents.OrganizationByName,
                         a = new Dictionary<string, object> { ["name"] = "Acme" },
                     },
                 },
@@ -47,9 +47,9 @@ namespace Tests
             var api = new Api(this.Transaction, "Default", CancellationToken.None);
             var pullResponse = api.Pull(pullRequest);
 
-            var organisations = pullResponse.c["Organisations"];
+            var organizations = pullResponse.c["Organizations"];
 
-            Assert.Single(organisations);
+            Assert.Single(organizations);
         }
 
         [Fact]
@@ -64,7 +64,7 @@ namespace Tests
                 {
                     new Pull
                     {
-                        er = PreparedExtents.OrganisationByName,
+                        er = PreparedExtents.OrganizationByName,
                         a = new Dictionary<string, object> { ["name"] = "Acme" },
                     },
                 },
@@ -73,9 +73,9 @@ namespace Tests
             var api = new Api(this.Transaction, "Default", CancellationToken.None);
             var pullResponse = api.Pull(pullRequest);
 
-            var organisations = pullResponse.c["Organisations"];
+            var organizations = pullResponse.c["Organizations"];
 
-            Assert.Single(organisations);
+            Assert.Single(organizations);
         }
 
         [Fact]

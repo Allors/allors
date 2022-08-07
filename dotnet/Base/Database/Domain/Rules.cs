@@ -28,7 +28,7 @@ namespace Allors.Database.Domain
 
                 // Custom
                 new DataRule(m),
-                new OrganisationEmployementRule(m),
+                new OrganizationEmployementRule(m),
                 new PersonAddressRule(m),
                 new PersonFullNameRule(m),
                 new PersonGreetingRule(m),

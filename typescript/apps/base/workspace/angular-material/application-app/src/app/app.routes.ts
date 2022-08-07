@@ -8,8 +8,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { FieldsComponent } from './fields/fields-form.component';
 
 import { CountryListPageComponent } from './domain/country/list/country-list-page.component';
-import { OrganisationListPageComponent } from './domain/organisation/list/organisation-list-page.component';
-import { OrganisationOverviewPageComponent } from './domain/organisation/overview/organisation-overview-page.component';
+import { OrganizationListPageComponent } from './domain/organization/list/organization-list-page.component';
+import { OrganizationOverviewPageComponent } from './domain/organization/overview/organization-overview-page.component';
 import { PersonListPageComponent } from './domain/person/list/person-list-page.component';
 import { PersonOverviewPageComponent } from './domain/person/overview/person-overview-page.component';
 
@@ -31,12 +31,12 @@ export const routes: Routes = [
           { path: 'people', component: PersonListPageComponent },
           { path: 'person/:id', component: PersonOverviewPageComponent },
           {
-            path: 'organisations',
-            component: OrganisationListPageComponent,
+            path: 'organizations',
+            component: OrganizationListPageComponent,
           },
           {
-            path: 'organisation/:id',
-            component: OrganisationOverviewPageComponent,
+            path: 'organization/:id',
+            component: OrganizationOverviewPageComponent,
           },
           { path: 'countries', component: CountryListPageComponent },
         ],
@@ -55,8 +55,8 @@ export const components: any[] = [
   DashboardComponent,
   FieldsComponent,
   CountryListPageComponent,
-  OrganisationListPageComponent,
-  OrganisationOverviewPageComponent,
+  OrganizationListPageComponent,
+  OrganizationOverviewPageComponent,
   PersonListPageComponent,
   PersonOverviewPageComponent,
 ];

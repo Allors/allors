@@ -32,13 +32,13 @@ namespace Allors.Database.Domain.Tests
 
                 var guest = new AutomatedAgents(this.Transaction).Guest;
                 var acls = new DatabaseAccessControl(this.Security, guest);
-                foreach (Object aco in (IObject[])session.Extent(this.M.Organisation))
+                foreach (Object aco in (IObject[])session.Extent(this.M.Organization))
                 {
                     // When
                     var accessList = acls[aco];
 
                     // Then
-                    Assert.False(accessList.CanExecute(this.M.Organisation.JustDoIt));
+                    Assert.False(accessList.CanExecute(this.M.Organization.JustDoIt));
                 }
 
                 session.Rollback();

@@ -27,7 +27,7 @@ namespace Allors.Repository
         [Multiplicity(Multiplicity.ManyToOne)]
         [Indexed]
         #endregion
-        public Organisation CompanyOne { get; set; }
+        public Organization CompanyOne { get; set; }
 
         #region Allors
         [Id("a4db0d75-3dff-45ac-9c1d-623bca046b4a")]
@@ -41,7 +41,7 @@ namespace Allors.Repository
         [Multiplicity(Multiplicity.ManyToOne)]
         [Indexed]
         #endregion
-        public Organisation CompanyMany { get; set; }
+        public Organization CompanyMany { get; set; }
 
         #region Allors
         [Id("c93a102e-ecdb-4189-a0fc-eeea8b4b85d4")]

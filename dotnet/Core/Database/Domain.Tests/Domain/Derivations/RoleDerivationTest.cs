@@ -17,7 +17,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void RemoveRole()
         {
-            var organisation = this.BuildOrganisation("Acme");
+            var organization = this.BuildOrganization("Acme");
 
             var jane = this.Transaction.Build<Person>(v =>
             {
@@ -27,13 +27,13 @@ namespace Allors.Database.Domain.Tests
 
             this.Transaction.Derive();
 
-            organisation.Owner = jane;
+            organization.Owner = jane;
 
             this.Transaction.Derive();
 
             Assert.True(jane.Owning);
 
-            organisation.RemoveOwner();
+            organization.RemoveOwner();
 
             this.Transaction.Derive();
 

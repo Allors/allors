@@ -19,7 +19,7 @@ import { M } from '@allors/default/workspace/meta';
 export class EmploymentFormComponent extends AllorsFormComponent<Employment> {
   m: M;
 
-  organisationsFilter: SearchFactory;
+  organizationsFilter: SearchFactory;
   peopleFilter: SearchFactory;
 
   constructor(
@@ -30,9 +30,9 @@ export class EmploymentFormComponent extends AllorsFormComponent<Employment> {
     super(allors, errorService, form);
     this.m = allors.metaPopulation as M;
 
-    this.organisationsFilter = new SearchFactory({
-      objectType: this.m.Organisation,
-      roleTypes: [this.m.Organisation.Name],
+    this.organizationsFilter = new SearchFactory({
+      objectType: this.m.Organization,
+      roleTypes: [this.m.Organization.Name],
     });
 
     this.peopleFilter = new SearchFactory({

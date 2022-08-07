@@ -1,4 +1,4 @@
-import { Organisation } from '@allors/default/workspace/domain';
+import { Organization } from '@allors/default/workspace/domain';
 import { Pull } from '@allors/system/workspace/domain';
 import { Fixture } from '../fixture';
 import '../matchers';
@@ -17,23 +17,23 @@ test('callSingle', async () => {
   const pull: Pull = {
     extent: {
       kind: 'Filter',
-      objectType: m.Organisation,
+      objectType: m.Organization,
     },
   };
 
   let result = await session.pull([pull]);
-  const organisation = result.collection<Organisation>(m.Organisation)[0];
+  const organization = result.collection<Organization>(m.Organization)[0];
 
-  expect(organisation.JustDidIt).toBeFalsy();
+  expect(organization.JustDidIt).toBeFalsy();
 
-  const invokeResult = await session.invoke(organisation.JustDoIt);
+  const invokeResult = await session.invoke(organization.JustDoIt);
 
   expect(invokeResult.hasErrors).toBeFalsy();
 
-  result = await session.pull([{ object: organisation }]);
+  result = await session.pull([{ object: organization }]);
 
-  expect(organisation.JustDidIt).toBeTruthy();
-  expect(organisation.JustDidItDerived).toBeTruthy();
+  expect(organization.JustDidIt).toBeTruthy();
+  expect(organization.JustDidItDerived).toBeTruthy();
 });
 
 test('callMultiple', async () => {
@@ -43,30 +43,30 @@ test('callMultiple', async () => {
   const pull: Pull = {
     extent: {
       kind: 'Filter',
-      objectType: m.Organisation,
+      objectType: m.Organization,
     },
   };
 
   let result = await session.pull([pull]);
-  const organisation1 = result.collection<Organisation>(m.Organisation)[0];
-  const organisation2 = result.collection<Organisation>(m.Organisation)[1];
+  const organization1 = result.collection<Organization>(m.Organization)[0];
+  const organization2 = result.collection<Organization>(m.Organization)[1];
 
-  expect(organisation1.JustDidIt).toBeFalsy();
+  expect(organization1.JustDidIt).toBeFalsy();
 
   const invokeResult = await session.invoke([
-    organisation1.JustDoIt,
-    organisation2.JustDoIt,
+    organization1.JustDoIt,
+    organization2.JustDoIt,
   ]);
 
   expect(invokeResult.hasErrors).toBeFalsy();
 
   result = await session.pull([pull]);
 
-  expect(organisation1.JustDidIt).toBeTruthy();
-  expect(organisation1.JustDidItDerived).toBeTruthy();
+  expect(organization1.JustDidIt).toBeTruthy();
+  expect(organization1.JustDidItDerived).toBeTruthy();
 
-  expect(organisation2.JustDidIt).toBeTruthy();
-  expect(organisation2.JustDidItDerived).toBeTruthy();
+  expect(organization2.JustDidIt).toBeTruthy();
+  expect(organization2.JustDidItDerived).toBeTruthy();
 });
 
 test('callMultipleIsolated', async () => {
@@ -76,18 +76,18 @@ test('callMultipleIsolated', async () => {
   const pull: Pull = {
     extent: {
       kind: 'Filter',
-      objectType: m.Organisation,
+      objectType: m.Organization,
     },
   };
 
   let result = await session.pull([pull]);
-  const organisation1 = result.collection<Organisation>(m.Organisation)[0];
-  const organisation2 = result.collection<Organisation>(m.Organisation)[1];
+  const organization1 = result.collection<Organization>(m.Organization)[0];
+  const organization2 = result.collection<Organization>(m.Organization)[1];
 
-  expect(organisation1.JustDidIt).toBeFalsy();
+  expect(organization1.JustDidIt).toBeFalsy();
 
   const invokeResult = await session.invoke(
-    [organisation1.JustDoIt, organisation2.JustDoIt],
+    [organization1.JustDoIt, organization2.JustDoIt],
     { isolated: true }
   );
 
@@ -95,9 +95,9 @@ test('callMultipleIsolated', async () => {
 
   result = await session.pull([pull]);
 
-  expect(organisation1.JustDidIt).toBeTruthy();
-  expect(organisation1.JustDidItDerived).toBeTruthy();
+  expect(organization1.JustDidIt).toBeTruthy();
+  expect(organization1.JustDidItDerived).toBeTruthy();
 
-  expect(organisation2.JustDidIt).toBeTruthy();
-  expect(organisation2.JustDidItDerived).toBeTruthy();
+  expect(organization2.JustDidIt).toBeTruthy();
+  expect(organization2.JustDidItDerived).toBeTruthy();
 });

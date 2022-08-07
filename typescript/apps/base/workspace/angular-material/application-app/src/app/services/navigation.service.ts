@@ -22,11 +22,11 @@ export class AppNavigationService extends NavigationService {
     const m = workspaceService.workspace.configuration.metaPopulation as M;
 
     this.listByComposite.set(m.Person, '/contacts/people');
-    this.listByComposite.set(m.Organisation, '/contacts/organisations');
+    this.listByComposite.set(m.Organization, '/contacts/organizations');
     this.listByComposite.set(m.Country, '/contacts/countries');
 
     this.overviewByComposite.set(m.Person, '/contacts/person/:id');
-    this.overviewByComposite.set(m.Organisation, '/contacts/organisation/:id');
+    this.overviewByComposite.set(m.Organization, '/contacts/organization/:id');
   }
 
   hasList(objectType: Composite): boolean {

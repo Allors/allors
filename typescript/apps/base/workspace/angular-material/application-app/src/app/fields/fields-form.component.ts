@@ -6,7 +6,7 @@ import { ActivatedRoute, UrlSegment } from '@angular/router';
 import { M } from '@allors/default/workspace/meta';
 import {
   Data,
-  Organisation,
+  Organization,
   Person,
   Locale,
 } from '@allors/default/workspace/domain';
@@ -26,13 +26,13 @@ export class FieldsComponent implements OnInit, OnDestroy {
   title: string;
   m: M;
 
-  organisations: Organisation[];
+  organizations: Organization[];
   people: Person[];
   locale: Locale;
 
   jane: Person | undefined;
 
-  organisationFilter: SearchFactory;
+  organizationFilter: SearchFactory;
   peopleFilter: SearchFactory;
 
   data: Data | null;
@@ -43,12 +43,12 @@ export class FieldsComponent implements OnInit, OnDestroy {
     { label: 'Three', value: 'three' },
   ];
 
-  get organisationsWithManagers(): Organisation[] {
-    return this.organisations?.filter((v) => v.Manager);
+  get organizationsWithManagers(): Organization[] {
+    return this.organizations?.filter((v) => v.Manager);
   }
 
-  get organisationsWithEmployees(): Organisation[] {
-    return this.organisations?.filter((v) => v.Employees.length > 0);
+  get organizationsWithEmployees(): Organization[] {
+    return this.organizations?.filter((v) => v.Employees.length > 0);
   }
 
   private refresh$: BehaviorSubject<Date>;
@@ -66,9 +66,9 @@ export class FieldsComponent implements OnInit, OnDestroy {
 
     this.m = this.allors.context.configuration.metaPopulation as M;
 
-    this.organisationFilter = new SearchFactory({
-      objectType: this.m.Organisation,
-      roleTypes: [this.m.Organisation.Name],
+    this.organizationFilter = new SearchFactory({
+      objectType: this.m.Organization,
+      roleTypes: [this.m.Organization.Name],
     });
     this.peopleFilter = new SearchFactory({
       objectType: this.m.Person,
@@ -102,11 +102,11 @@ export class FieldsComponent implements OnInit, OnDestroy {
                 Chips: {},
                 File: {},
                 MultipleFiles: {},
-                LocalisedTexts: {},
-                LocalisedMarkdowns: {},
+                LocalizedTexts: {},
+                LocalizedMarkdowns: {},
               },
             }),
-            p.Organisation({
+            p.Organization({
               include: {
                 OneData: {},
                 ManyDatas: {},
@@ -129,8 +129,8 @@ export class FieldsComponent implements OnInit, OnDestroy {
       .subscribe((loaded: IPullResult) => {
         this.allors.context.reset();
 
-        this.organisations = loaded.collection<Organisation>(
-          this.m.Organisation
+        this.organizations = loaded.collection<Organization>(
+          this.m.Organization
         );
         this.people = loaded.collection<Person>(this.m.Person);
         const datas = loaded.collection<Data>(this.m.Data);

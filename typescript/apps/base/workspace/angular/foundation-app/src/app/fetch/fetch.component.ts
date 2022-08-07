@@ -8,7 +8,7 @@ import {
   WorkspaceService,
 } from '@allors/base/workspace/angular/foundation';
 import { IPullResult, Pull } from '@allors/system/workspace/domain';
-import { Organisation } from '@allors/default/workspace/domain';
+import { Organization } from '@allors/default/workspace/domain';
 import { M } from '@allors/default/workspace/meta';
 
 @Component({
@@ -16,8 +16,8 @@ import { M } from '@allors/default/workspace/meta';
   providers: [ContextService],
 })
 export class FetchComponent implements OnInit, OnDestroy {
-  public organisation: Organisation;
-  public organisations: Organisation[];
+  public organization: Organization;
+  public organizations: Organization[];
 
   private subscription: Subscription;
 
@@ -47,14 +47,14 @@ export class FetchComponent implements OnInit, OnDestroy {
     const id = this.route.snapshot.paramMap.get('id');
 
     const pulls: Pull[] = [
-      p.Organisation({
+      p.Organization({
         objectId: id,
         results: [
           {},
           {
             select: {
               Owner: {
-                OrganisationsWhereOwner: {
+                OrganizationsWhereOwner: {
                   include: {
                     Owner: {},
                   },
@@ -68,9 +68,9 @@ export class FetchComponent implements OnInit, OnDestroy {
 
     this.subscription = context.pull(pulls).subscribe(
       (result: IPullResult) => {
-        this.organisation = result.object<Organisation>(m.Organisation);
-        this.organisations = result.collection<Organisation>(
-          m.Person.OrganisationsWhereOwner
+        this.organization = result.object<Organization>(m.Organization);
+        this.organizations = result.collection<Organization>(
+          m.Person.OrganizationsWhereOwner
         );
       },
       (error) => {

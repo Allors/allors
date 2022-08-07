@@ -1,4 +1,4 @@
-// <copyright file="Organisations.cs" company="Allors bvba">
+// <copyright file="Organizations.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -19,8 +19,8 @@ namespace Allors.Database.Domain
 
             merge(ByName, v =>
             {
-                v.Description = "Organisation by name";
-                v.Extent = new Extent(this.M.Organisation) { Predicate = new Equals(this.M.Organisation.Name) { Parameter = "name" } };
+                v.Description = "Organization by name";
+                v.Extent = new Extent(this.M.Organization) { Predicate = new Equals(this.M.Organization.Name) { Parameter = "name" } };
             });
         }
     }

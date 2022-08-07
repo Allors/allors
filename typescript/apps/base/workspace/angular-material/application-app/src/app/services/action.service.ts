@@ -20,10 +20,10 @@ export class AppActionService implements ActionService {
 
     this.actionByObjectType = new Map<Composite, Action[]>([
       [
-        m.Organisation,
+        m.Organization,
         [
-          methodActionService.create(m.Organisation.ToggleCanWrite),
-          methodActionService.create(m.Organisation.JustDoIt),
+          methodActionService.create(m.Organization.ToggleCanWrite),
+          methodActionService.create(m.Organization.JustDoIt),
         ],
       ],
       [m.Person, []],

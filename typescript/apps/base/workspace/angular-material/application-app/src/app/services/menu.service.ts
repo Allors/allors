@@ -19,7 +19,7 @@ export class AppMenuService implements MenuService {
         icon: 'business',
         children: [
           { objectType: m.Person },
-          { objectType: m.Organisation },
+          { objectType: m.Organization },
           { objectType: m.Country },
         ],
       },

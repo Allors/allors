@@ -1,0 +1,13 @@
+<mat-card *ngIf="organization">
+  <mat-card-header (click)="toggle()" style="cursor: pointer">
+    <div mat-card-avatar>
+      <mat-icon style="font-size: 36px">business</mat-icon>
+    </div>
+    <mat-card-title>{{ organization.Name }}</mat-card-title>
+    <mat-card-subtitle>
+      <div *ngIf="organization.Country">
+        {{ organization.Country.Name }}
+      </div>
+    </mat-card-subtitle>
+  </mat-card-header>
+</mat-card>

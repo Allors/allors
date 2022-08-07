@@ -29,7 +29,7 @@ namespace Allors.Repository
         [Multiplicity(Multiplicity.OneToMany)]
         [Indexed]
         [Workspace(Default)]
-        LocalisedText[] LocalisedNames { get; set; }
+        LocalizedText[] LocalizedNames { get; set; }
 
         #region Allors
         [Id("f57bb62e-77a8-4519-81e6-539d54b71cb7")]

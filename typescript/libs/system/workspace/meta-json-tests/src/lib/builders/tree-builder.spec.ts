@@ -10,9 +10,9 @@ describe('TreeBuilder', () => {
 
   describe('with metadata', () => {
     it('should return nodes', () => {
-      const tree = t.Organisation({
+      const tree = t.Organization({
         Owner: {
-          OrganisationsWhereOwner: {},
+          OrganizationsWhereOwner: {},
         },
       });
 
@@ -21,11 +21,11 @@ describe('TreeBuilder', () => {
 
       const node = tree[0];
 
-      expect(node.propertyType).toBe(m.Organisation.Owner);
+      expect(node.propertyType).toBe(m.Organization.Owner);
       expect(node.nodes.length).toBe(1);
 
       const subnode = node.nodes[0];
-      expect(subnode.propertyType).toBe(m.Person.OrganisationsWhereOwner);
+      expect(subnode.propertyType).toBe(m.Person.OrganizationsWhereOwner);
       expect(subnode.nodes).toBeUndefined();
     });
   });

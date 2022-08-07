@@ -38,37 +38,37 @@ namespace Allors.Database.Data.Tests
         [Fact]
         public void ClassAssociation()
         {
-            Expression<Func<Person, IPropertyType>> expression = v => v.OrganisationWhereEmployee;
+            Expression<Func<Person, IPropertyType>> expression = v => v.OrganizationWhereEmployee;
 
             var path = expression.Node(this.M);
 
-            Assert.Equal(this.M.Person.OrganisationWhereEmployee, path.PropertyType);
+            Assert.Equal(this.M.Person.OrganizationWhereEmployee, path.PropertyType);
             Assert.Empty(path.Nodes);
         }
 
         [Fact]
         public void ClassAssociationClassRole()
         {
-            Expression<Func<Person, IPropertyType>> expression = v => v.OrganisationWhereEmployee.Organisation.Information;
+            Expression<Func<Person, IPropertyType>> expression = v => v.OrganizationWhereEmployee.Organization.Information;
 
             var path = expression.Node(this.M);
 
-            Assert.Equal(this.M.Person.OrganisationWhereEmployee, path.PropertyType);
+            Assert.Equal(this.M.Person.OrganizationWhereEmployee, path.PropertyType);
 
             var next = path.Nodes.First();
 
-            Assert.Equal(this.M.Organisation.Information, next.PropertyType);
+            Assert.Equal(this.M.Organization.Information, next.PropertyType);
             Assert.Empty(next.Nodes);
         }
 
         [Fact]
         public void ClassRole()
         {
-            Expression<Func<Organisation, IPropertyType>> expression = v => v.Name;
+            Expression<Func<Organization, IPropertyType>> expression = v => v.Name;
 
             var path = expression.Node(this.M);
 
-            Assert.Equal(this.M.Organisation.Name, path.PropertyType);
+            Assert.Equal(this.M.Organization.Name, path.PropertyType);
             Assert.Empty(path.Nodes);
         }
 
@@ -87,11 +87,11 @@ namespace Allors.Database.Data.Tests
         [Fact]
         public void ClassRoleClassRole()
         {
-            Expression<Func<Organisation, IPropertyType>> expression = v => v.Employees.Person.FirstName;
+            Expression<Func<Organization, IPropertyType>> expression = v => v.Employees.Person.FirstName;
 
             var path = expression.Node(this.M);
 
-            Assert.Equal(this.M.Organisation.Employees, path.PropertyType);
+            Assert.Equal(this.M.Organization.Employees, path.PropertyType);
 
             var next = path.Nodes.First();
 

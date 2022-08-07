@@ -11,7 +11,7 @@ namespace Allors.Repository
     using static Workspaces;
 
     [Workspace(Default)]
-    public partial class Person : Addressable, Localised
+    public partial class Person : Addressable, Localized
     {
         #region inherited properties
         public Address Address { get; set; }
@@ -135,7 +135,7 @@ namespace Allors.Repository
         [Workspace(Default)]
         [Multiplicity(Multiplicity.ManyToOne)]
         [Indexed]
-        public Organisation CycleOne { get; set; }
+        public Organization CycleOne { get; set; }
 
         #region Allors
         [Id("2EB2AF4F-2BF4-475F-BB41-D740197F168E")]
@@ -143,7 +143,7 @@ namespace Allors.Repository
         [Workspace(Default)]
         [Multiplicity(Multiplicity.ManyToMany)]
         [Indexed]
-        public Organisation[] CycleMany { get; set; }
+        public Organization[] CycleMany { get; set; }
 
         [Id("FAF120ED-09D1-4E42-86A6-F0D9FF75E03C")]
         public void Method() { }

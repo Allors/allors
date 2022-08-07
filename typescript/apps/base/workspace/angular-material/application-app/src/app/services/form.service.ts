@@ -7,7 +7,7 @@ import {
 
 import { CountryFormComponent } from '../domain/country/form/country-form.component';
 import { EmploymentFormComponent } from '../domain/employment/form/employment-form.component';
-import { OrganisationFormComponent } from '../domain/organisation/form/organisation-form.component';
+import { OrganizationFormComponent } from '../domain/organization/form/organization-form.component';
 
 import { Injectable } from '@angular/core';
 import { PersonFormComponent } from '../domain/person/form/person-form.component';
@@ -30,8 +30,8 @@ export class AppFormService implements FormService {
       case tags.Country:
         return CountryFormComponent;
 
-      case tags.Organisation:
-        return OrganisationFormComponent;
+      case tags.Organization:
+        return OrganizationFormComponent;
 
       case tags.Person:
         return PersonFormComponent;
@@ -48,6 +48,6 @@ export class AppFormService implements FormService {
 export const components: any[] = [
   CountryFormComponent,
   PersonFormComponent,
-  OrganisationFormComponent,
+  OrganizationFormComponent,
   EmploymentFormComponent,
 ];

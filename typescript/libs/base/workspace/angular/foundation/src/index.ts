@@ -37,7 +37,7 @@ export * from './lib/error/error.service';
 
 export * from './lib/field/association-field';
 export * from './lib/field/field';
-export * from './lib/field/localised-role-field';
+export * from './lib/field/localized-role-field';
 export * from './lib/field/role-field';
 
 export * from './lib/filter/filter-definition';

@@ -25,7 +25,7 @@ export class AppHyperlinkService implements HyperlinkService {
     const { treeBuilder: t } = m;
 
     this.linkTypesByObjectType = new Map<Composite, HyperlinkType[]>([
-      [m.Organisation, [create(t.Organisation({ Address: {} }))]],
+      [m.Organization, [create(t.Organization({ Address: {} }))]],
       [m.Person, [create(t.Person({ Address: {} }))]],
     ]);
   }

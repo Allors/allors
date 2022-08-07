@@ -141,7 +141,7 @@ export class CountryListPageComponent
                   ? this.sorterService.sorter(m.Country)?.create(sort)
                   : null,
                 include: {
-                  LocalisedNames: x,
+                  LocalizedNames: x,
                 },
                 arguments: this.filter.parameters(filterFields),
                 skip: pageEvent.pageIndex * pageEvent.pageSize,

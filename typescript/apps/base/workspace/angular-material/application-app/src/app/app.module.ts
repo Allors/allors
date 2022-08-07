@@ -97,8 +97,8 @@ import {
   AllorsMaterialFileComponent,
   AllorsMaterialFilesComponent,
   AllorsMaterialInputComponent,
-  AllorsMaterialLocalisedMarkdownComponent,
-  AllorsMaterialLocalisedTextComponent,
+  AllorsMaterialLocalizedMarkdownComponent,
+  AllorsMaterialLocalizedTextComponent,
   AllorsMaterialMarkdownComponent,
   AllorsMaterialPaginatorComponent,
   AllorsMaterialRadioGroupComponent,
@@ -151,7 +151,7 @@ import {
   components as formComponents,
 } from './services/form.service';
 
-import { OrganisationSummaryPanelComponent } from './domain/organisation/summary/organisation-summary-panel.component';
+import { OrganizationSummaryPanelComponent } from './domain/organization/summary/organization-summary-panel.component';
 import { PersonInlineComponent } from './domain/person/inline/person-inline.component';
 import { PersonFormComponent } from './domain/person/form/person-form.component';
 import { AppFilterService } from './services/filter.service';
@@ -193,8 +193,8 @@ import { AppActionService } from './services/action.service';
     AllorsMaterialFileComponent,
     AllorsMaterialFilesComponent,
     AllorsMaterialInputComponent,
-    AllorsMaterialLocalisedMarkdownComponent,
-    AllorsMaterialLocalisedTextComponent,
+    AllorsMaterialLocalizedMarkdownComponent,
+    AllorsMaterialLocalizedTextComponent,
     AllorsMaterialMarkdownComponent,
     AllorsMaterialPaginatorComponent,
     AllorsMaterialRadioGroupComponent,
@@ -221,7 +221,7 @@ import { AppActionService } from './services/action.service';
     ...dialogComponents,
     ...formComponents,
     // Non routed and non dialog components
-    OrganisationSummaryPanelComponent,
+    OrganizationSummaryPanelComponent,
     PersonInlineComponent,
     PersonFormComponent,
     // App

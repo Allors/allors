@@ -25,7 +25,7 @@ namespace Allors.Database.Domain.Tests
         //    var domain = (Domain)this.DatabaseTransaction.Population.MetaPopulation.Find(new Guid("AB41FD0C-C887-4A1D-BEDA-CED69527E69A"));
 
         // var methodType = new MethodTypeBuilder(domain, Guid.NewGuid());
-        //    methodType.ObjectType = M.Organisation.ObjectType;
+        //    methodType.ObjectType = M.Organization.ObjectType;
         //    methodType.Name = "Method";
 
         // var count = new Permissions(this.DatabaseTransaction).Extent().Count;
@@ -48,7 +48,7 @@ namespace Allors.Database.Domain.Tests
 
         // var relationType = new RelationTypeBuilder(domain, Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid());
 
-        // relationType.AssociationType.ObjectType = M.Organisation.ObjectType;
+        // relationType.AssociationType.ObjectType = M.Organization.ObjectType;
         //    relationType.RoleType.ObjectType = Persons.Meta.ObjectType;
         //    relationType.RoleType.AssignedSingularName = "Relation";
         //    relationType.RoleType.AssignedPluralName = "Relations";

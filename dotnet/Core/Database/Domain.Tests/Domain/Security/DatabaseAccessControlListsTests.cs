@@ -29,13 +29,13 @@ namespace Allors.Database.Domain.Tests
 
                 var guest = new Users(this.Transaction).FindBy(this.M.User.UserName, "guest@example.com");
                 var acls = new DatabaseAccessControl(this.Security, guest);
-                foreach (Object aco in (IObject[])session.Extent(this.M.Organisation))
+                foreach (Object aco in (IObject[])session.Extent(this.M.Organization))
                 {
                     // When
                     var accessList = acls[aco];
 
                     // Then
-                    Assert.False(accessList.CanExecute(this.M.Organisation.JustDoIt));
+                    Assert.False(accessList.CanExecute(this.M.Organization.JustDoIt));
                 }
 
                 session.Rollback();
@@ -45,7 +45,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void GivenAUserAndAnAccessControlledObjectWhenGettingTheAccessListThenUserHasAccessToThePermissionsInTheRole()
         {
-            var permission = this.FindPermission(this.M.Organisation.Name, Operations.Read);
+            var permission = this.FindPermission(this.M.Organization.Name, Operations.Read);
             var role = this.BuildRole("Role", permission);
             var person = this.BuildPerson("John", "Doe");
             this.BuildGrant(person, role);
@@ -57,10 +57,10 @@ namespace Allors.Database.Domain.Tests
             {
                 session.Commit();
 
-                var organisation = this.BuildOrganisation("Organisation");
+                var organization = this.BuildOrganization("Organization");
 
                 var token = this.BuildSecurityToken();
-                organisation.AddSecurityToken(token);
+                organization.AddSecurityToken(token);
 
                 var accessControl = (Grant)session.Instantiate(role.GrantsWhereRole.First());
                 token.AddGrant(accessControl);
@@ -69,9 +69,9 @@ namespace Allors.Database.Domain.Tests
 
                 Assert.False(this.Transaction.Derive(false).HasErrors);
 
-                var acl = new DatabaseAccessControl(this.Security, person)[organisation];
+                var acl = new DatabaseAccessControl(this.Security, person)[organization];
 
-                Assert.True(acl.CanRead(this.M.Organisation.Name));
+                Assert.True(acl.CanRead(this.M.Organization.Name));
 
                 session.Rollback();
             }
@@ -80,7 +80,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void GivenAUserGroupAndAnAccessControlledObjectWhenGettingTheAccessListThenUserHasAccessToThePermissionsInTheRole()
         {
-            var permission = this.FindPermission(this.M.Organisation.Name, Operations.Read);
+            var permission = this.FindPermission(this.M.Organization.Name, Operations.Read);
             var role = this.BuildRole("Role", permission);
             var person = this.BuildPerson("John", "Doe");
             this.BuildUserGroup("Group", person);
@@ -94,19 +94,19 @@ namespace Allors.Database.Domain.Tests
             {
                 session.Commit();
 
-                var organisation = this.BuildOrganisation("Organisation");
+                var organization = this.BuildOrganization("Organization");
 
                 var token = this.BuildSecurityToken();
-                organisation.AddSecurityToken(token);
+                organization.AddSecurityToken(token);
 
                 var accessControl = (Grant)session.Instantiate(role.GrantsWhereRole.First());
                 token.AddGrant(accessControl);
 
                 Assert.False(this.Transaction.Derive(false).HasErrors);
 
-                var acl = new DatabaseAccessControl(this.Security, person)[organisation];
+                var acl = new DatabaseAccessControl(this.Security, person)[organization];
 
-                Assert.True(acl.CanRead(this.M.Organisation.Name));
+                Assert.True(acl.CanRead(this.M.Organization.Name));
 
                 session.Rollback();
             }
@@ -115,8 +115,8 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void GivenAnotherUserAndAnAccessControlledObjectWhenGettingTheAccessListThenUserHasAccessToThePermissionsInTheRole()
         {
-            var readOrganisationName = this.FindPermission(this.M.Organisation.Name, Operations.Read);
-            var databaseRole = this.BuildRole("Role", readOrganisationName);
+            var readOrganizationName = this.FindPermission(this.M.Organization.Name, Operations.Read);
+            var databaseRole = this.BuildRole("Role", readOrganizationName);
 
             Assert.False(this.Transaction.Derive(false).HasErrors);
 
@@ -133,10 +133,10 @@ namespace Allors.Database.Domain.Tests
             {
                 session.Commit();
 
-                var organisation = this.BuildOrganisation("Organisation");
+                var organization = this.BuildOrganization("Organization");
 
                 var token = this.BuildSecurityToken();
-                organisation.AddSecurityToken(token);
+                organization.AddSecurityToken(token);
 
                 var role = (Role)session.Instantiate(new Roles(this.Transaction).FindBy(this.M.Role.Name, "Role"));
                 var accessControl = (Grant)session.Instantiate(role.GrantsWhereRole.First());
@@ -144,9 +144,9 @@ namespace Allors.Database.Domain.Tests
 
                 Assert.False(this.Transaction.Derive(false).HasErrors);
 
-                var acl = new DatabaseAccessControl(this.Security, person)[organisation];
+                var acl = new DatabaseAccessControl(this.Security, person)[organization];
 
-                Assert.False(acl.CanRead(this.M.Organisation.Name));
+                Assert.False(acl.CanRead(this.M.Organization.Name));
 
                 session.Rollback();
             }
@@ -155,8 +155,8 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void GivenAnotherUserGroupAndAnAccessControlledObjectWhenGettingTheAccessListThenUserHasAccessToThePermissionsInTheRole()
         {
-            var readOrganisationName = this.FindPermission(this.M.Organisation.Name, Operations.Read);
-            var databaseRole = this.BuildRole("Role", readOrganisationName);
+            var readOrganizationName = this.FindPermission(this.M.Organization.Name, Operations.Read);
+            var databaseRole = this.BuildRole("Role", readOrganizationName);
 
             var person = this.BuildPerson("John", "Doe");
             this.BuildUserGroup("Group", person);
@@ -173,10 +173,10 @@ namespace Allors.Database.Domain.Tests
             {
                 session.Commit();
 
-                var organisation = this.BuildOrganisation("Organisation");
+                var organization = this.BuildOrganization("Organization");
 
                 var token = this.BuildSecurityToken();
-                organisation.AddSecurityToken(token);
+                organization.AddSecurityToken(token);
 
                 var role = (Role)session.Instantiate(new Roles(this.Transaction).FindBy(this.M.Role.Name, "Role"));
                 var accessControl = (Grant)session.Instantiate(role.GrantsWhereRole.First());
@@ -184,9 +184,9 @@ namespace Allors.Database.Domain.Tests
 
                 Assert.False(this.Transaction.Derive(false).HasErrors);
 
-                var acl = new DatabaseAccessControl(this.Security, person)[organisation];
+                var acl = new DatabaseAccessControl(this.Security, person)[organization];
 
-                Assert.False(acl.CanRead(this.M.Organisation.Name));
+                Assert.False(acl.CanRead(this.M.Organization.Name));
 
                 session.Rollback();
             }
@@ -195,7 +195,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void GivenAnAccessListWhenRemovingUserFromACLThenUserHasNoAccessToThePermissionsInTheRole()
         {
-            var permission = this.FindPermission(this.M.Organisation.Name, Operations.Read);
+            var permission = this.FindPermission(this.M.Organization.Name, Operations.Read);
             var role = this.BuildRole("Role", permission);
             var person = this.BuildPerson("John", "Doe");
             var person2 = this.BuildPerson("Jane", "Doe");
@@ -208,17 +208,17 @@ namespace Allors.Database.Domain.Tests
             {
                 session.Commit();
 
-                var organisation = this.BuildOrganisation("Organisation");
+                var organization = this.BuildOrganization("Organization");
 
                 var token = this.BuildSecurityToken();
-                organisation.AddSecurityToken(token);
+                organization.AddSecurityToken(token);
 
                 var accessControl = (Grant)session.Instantiate(role.GrantsWhereRole.First());
                 token.AddGrant(accessControl);
 
                 this.Transaction.Derive();
 
-                var acl = new DatabaseAccessControl(this.Security, person)[organisation];
+                var acl = new DatabaseAccessControl(this.Security, person)[organization];
 
                 accessControl.RemoveSubject(person);
                 accessControl.AddSubject(person2);
@@ -226,9 +226,9 @@ namespace Allors.Database.Domain.Tests
                 this.Transaction.Derive();
                 this.Transaction.Commit();
 
-                acl = new DatabaseAccessControl(this.Security, person)[organisation];
+                acl = new DatabaseAccessControl(this.Security, person)[organization];
 
-                Assert.False(acl.CanRead(this.M.Organisation.Name));
+                Assert.False(acl.CanRead(this.M.Organization.Name));
 
                 session.Rollback();
             }
@@ -237,8 +237,8 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void Revocations()
         {
-            var readOrganisationName = this.FindPermission(this.M.Organisation.Name, Operations.Read);
-            var databaseRole = this.BuildRole("Role", readOrganisationName);
+            var readOrganizationName = this.FindPermission(this.M.Organization.Name, Operations.Read);
+            var databaseRole = this.BuildRole("Role", readOrganizationName);
             var person = this.BuildPerson("John", "Doe");
             this.BuildGrant(person, databaseRole);
 
@@ -249,10 +249,10 @@ namespace Allors.Database.Domain.Tests
             {
                 session.Commit();
 
-                var organisation = this.BuildOrganisation("Organisation");
+                var organization = this.BuildOrganization("Organization");
 
                 var token = this.BuildSecurityToken();
-                organisation.AddSecurityToken(token);
+                organization.AddSecurityToken(token);
 
                 var role = (Role)session.Instantiate(new Roles(this.Transaction).FindBy(this.M.Role.Name, "Role"));
                 var accessControl = (Grant)session.Instantiate(role.GrantsWhereRole.First());
@@ -260,17 +260,17 @@ namespace Allors.Database.Domain.Tests
 
                 Assert.False(this.Transaction.Derive(false).HasErrors);
 
-                var acl = new DatabaseAccessControl(this.Security, person)[organisation];
+                var acl = new DatabaseAccessControl(this.Security, person)[organization];
 
-                Assert.True(acl.CanRead(this.M.Organisation.Name));
+                Assert.True(acl.CanRead(this.M.Organization.Name));
 
-                var revocation = this.BuildRevocation(readOrganisationName);
+                var revocation = this.BuildRevocation(readOrganizationName);
 
-                organisation.AddRevocation(revocation);
+                organization.AddRevocation(revocation);
 
-                acl = new DatabaseAccessControl(this.Security, person)[organisation];
+                acl = new DatabaseAccessControl(this.Security, person)[organization];
 
-                Assert.False(acl.CanRead(this.M.Organisation.Name));
+                Assert.False(acl.CanRead(this.M.Organization.Name));
 
                 session.Rollback();
             }

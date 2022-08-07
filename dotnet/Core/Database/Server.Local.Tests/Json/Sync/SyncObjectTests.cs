@@ -21,17 +21,17 @@ namespace Tests
         {
             this.SetUser("jane@example.com");
 
-            var organisation = this.Transaction.Build<Organisation>(v => v.Name = "Acme");
+            var organization = this.Transaction.Build<Organization>(v => v.Name = "Acme");
             this.Transaction.Derive();
             this.Transaction.Commit();
 
-            organisation.Strategy.Delete();
+            organization.Strategy.Delete();
             this.Transaction.Derive();
             this.Transaction.Commit();
 
             var syncRequest = new SyncRequest
             {
-                o = new[] { organisation.Id },
+                o = new[] { organization.Id },
             };
 
             var api = new Api(this.Transaction, "Default", CancellationToken.None);

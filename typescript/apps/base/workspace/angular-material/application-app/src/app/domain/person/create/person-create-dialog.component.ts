@@ -4,7 +4,7 @@ import { Component, OnDestroy, OnInit, Self, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { M } from '@allors/default/workspace/meta';
-import { Locale, Person, Organisation } from '@allors/default/workspace/domain';
+import { Locale, Person, Organization } from '@allors/default/workspace/domain';
 import {
   ContextService,
   CreateRequest,
@@ -25,7 +25,7 @@ export class PersonCreateDialogComponent implements OnInit, OnDestroy {
   public title = 'Add Person';
 
   person: Person;
-  organisation: Organisation;
+  organization: Organization;
 
   locales: Locale[];
 
@@ -63,7 +63,7 @@ export class PersonCreateDialogComponent implements OnInit, OnDestroy {
                 },
               },
             }),
-            pull.Organisation({
+            pull.Organization({
               objectId: this.data.initializer?.id,
             }),
           ];
@@ -74,7 +74,7 @@ export class PersonCreateDialogComponent implements OnInit, OnDestroy {
       .subscribe((loaded) => {
         this.allors.context.reset();
 
-        this.organisation = loaded.object<Organisation>(m.Organisation);
+        this.organization = loaded.object<Organization>(m.Organization);
         this.locales = loaded.collection<Locale>(m.Locale) || [];
 
         this.person = this.allors.context.create<Person>(m.Person);
@@ -88,8 +88,8 @@ export class PersonCreateDialogComponent implements OnInit, OnDestroy {
   }
 
   public save(): void {
-    if (this.organisation != null) {
-      this.organisation.Owner = this.person;
+    if (this.organization != null) {
+      this.organization.Owner = this.person;
     }
 
     this.allors.context.push().subscribe(() => {

@@ -24,20 +24,20 @@ namespace Tests.Workspace
 
             var session = this.Workspace.CreateSession();
 
-            var pull = new[] { new Pull { Extent = new Filter(this.M.Organisation) } };
+            var pull = new[] { new Pull { Extent = new Filter(this.M.Organization) } };
 
-            var organisation = (await session.PullAsync(pull)).GetCollection<Organisation>()[0];
+            var organization = (await session.PullAsync(pull)).GetCollection<Organization>()[0];
 
-            Assert.False(organisation.JustDidIt);
+            Assert.False(organization.JustDidIt);
 
-            var invokeResult = await session.InvokeAsync(organisation.JustDoIt);
+            var invokeResult = await session.InvokeAsync(organization.JustDoIt);
 
             Assert.False(invokeResult.HasErrors);
 
-            await session.PullAsync(new Pull { Object = organisation });
+            await session.PullAsync(new Pull { Object = organization });
 
-            Assert.True(organisation.JustDidIt);
-            Assert.True(organisation.JustDidItDerived);
+            Assert.True(organization.JustDidIt);
+            Assert.True(organization.JustDidItDerived);
         }
 
         [Fact]
@@ -47,24 +47,24 @@ namespace Tests.Workspace
 
             var session = this.Workspace.CreateSession();
 
-            var pull = new[] { new Pull { Extent = new Filter(this.M.Organisation) } };
+            var pull = new[] { new Pull { Extent = new Filter(this.M.Organization) } };
 
-            var organisation1 = (await session.PullAsync(pull)).GetCollection<Organisation>()[0];
-            var organisation2 = (await session.PullAsync(pull)).GetCollection<Organisation>().Skip(1).First();
+            var organization1 = (await session.PullAsync(pull)).GetCollection<Organization>()[0];
+            var organization2 = (await session.PullAsync(pull)).GetCollection<Organization>().Skip(1).First();
 
-            Assert.False(organisation1.JustDidIt);
+            Assert.False(organization1.JustDidIt);
 
-            var invokeResult = await session.InvokeAsync(new[] { organisation1.JustDoIt, organisation2.JustDoIt });
+            var invokeResult = await session.InvokeAsync(new[] { organization1.JustDoIt, organization2.JustDoIt });
 
             Assert.False(invokeResult.HasErrors);
 
             await session.PullAsync(pull);
 
-            Assert.True(organisation1.JustDidIt);
-            Assert.True(organisation1.JustDidItDerived);
+            Assert.True(organization1.JustDidIt);
+            Assert.True(organization1.JustDidItDerived);
 
-            Assert.True(organisation2.JustDidIt);
-            Assert.True(organisation2.JustDidItDerived);
+            Assert.True(organization2.JustDidIt);
+            Assert.True(organization2.JustDidItDerived);
         }
 
         [Fact]
@@ -74,24 +74,24 @@ namespace Tests.Workspace
 
             var session = this.Workspace.CreateSession();
 
-            var pull = new[] { new Pull { Extent = new Filter(this.M.Organisation) } };
+            var pull = new[] { new Pull { Extent = new Filter(this.M.Organization) } };
 
-            var organisation1 = (await session.PullAsync(pull)).GetCollection<Organisation>()[0];
-            var organisation2 = (await session.PullAsync(pull)).GetCollection<Organisation>().Skip(1).First();
+            var organization1 = (await session.PullAsync(pull)).GetCollection<Organization>()[0];
+            var organization2 = (await session.PullAsync(pull)).GetCollection<Organization>().Skip(1).First();
 
-            Assert.False(organisation1.JustDidIt);
+            Assert.False(organization1.JustDidIt);
 
-            var invokeResult = await session.InvokeAsync(new[] { organisation1.JustDoIt, organisation2.JustDoIt }, new InvokeOptions { Isolated = true });
+            var invokeResult = await session.InvokeAsync(new[] { organization1.JustDoIt, organization2.JustDoIt }, new InvokeOptions { Isolated = true });
 
             Assert.False(invokeResult.HasErrors);
 
             await session.PullAsync(pull);
 
-            Assert.True(organisation1.JustDidIt);
-            Assert.True(organisation1.JustDidItDerived);
+            Assert.True(organization1.JustDidIt);
+            Assert.True(organization1.JustDidItDerived);
 
-            Assert.True(organisation2.JustDidIt);
-            Assert.True(organisation2.JustDidItDerived);
+            Assert.True(organization2.JustDidIt);
+            Assert.True(organization2.JustDidItDerived);
         }
 
     }

@@ -22,8 +22,8 @@ export class AppSorterService implements SorterService {
       case tags.Country:
         return new Sorter({ isoCode: m.Country.IsoCode, name: m.Country.Name });
 
-      case tags.Organisation:
-        return new Sorter({ name: m.Organisation.Name });
+      case tags.Organization:
+        return new Sorter({ name: m.Organization.Name });
 
       case tags.Person:
         return new Sorter({

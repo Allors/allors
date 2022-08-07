@@ -10,22 +10,22 @@ import { LazyMetaPopulation } from '@allors/system/workspace/meta-json';
 
 describe('Unit Relation in MetaPopulation', () => {
   describe('with minimal unit relation metadata', () => {
-    interface Organisation extends Composite {
+    interface Organization extends Composite {
       Name: RoleType;
     }
 
     interface M extends LazyMetaPopulation {
       String: Unit;
 
-      Organisation: Organisation;
+      Organization: Organization;
     }
 
     const metaPopulation = new LazyMetaPopulation({
-      c: [['10', 'Organisation', [], [['11', UnitTags.String, 'Name']]]],
+      c: [['10', 'Organization', [], [['11', UnitTags.String, 'Name']]]],
     }) as M;
 
-    const { Organisation, String } = metaPopulation;
-    const { Name: roleType } = Organisation;
+    const { Organization, String } = metaPopulation;
+    const { Name: roleType } = Organization;
 
     it('should have the relation with its defaults', () => {
       expect(roleType).toBeDefined();
@@ -49,28 +49,28 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(relationType).not.toBeNull();
 
       expect(associationType).toBeDefined;
-      expect(associationType.objectType).toBe(Organisation);
+      expect(associationType.objectType).toBe(Organization);
       expect(associationType.isOne).toBeTruthy();
       expect(associationType.isMany).toBeFalsy();
     });
   });
 
   describe('with maximal unit relation metadata', () => {
-    interface Organisation extends Composite {
+    interface Organization extends Composite {
       Name: RoleType;
     }
 
     interface M extends LazyMetaPopulation {
       String: Unit;
 
-      Organisation: Organisation;
+      Organization: Organization;
     }
 
     const metaPopulation = new LazyMetaPopulation({
       c: [
         [
           '10',
-          'Organisation',
+          'Organization',
           [],
           [['11', UnitTags.String, 'Name', 'Names', 1024]],
         ],
@@ -81,8 +81,8 @@ describe('Unit Relation in MetaPopulation', () => {
       t: { 'application/pdf': ['11'] },
     }) as M;
 
-    const { Organisation, String } = metaPopulation;
-    const { Name: roleType } = Organisation;
+    const { Organization, String } = metaPopulation;
+    const { Name: roleType } = Organization;
 
     it('should have the relation with its defaults', () => {
       expect(roleType).toBeDefined();
@@ -108,29 +108,29 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(relationType).not.toBeNull();
 
       expect(associationType).toBeDefined;
-      expect(associationType.objectType).toBe(Organisation);
+      expect(associationType.objectType).toBe(Organization);
       expect(associationType.isOne).toBeTruthy(); // Always for Unit
       expect(associationType.isMany).toBeFalsy();
     });
   });
 
   describe('with decimal relation no names scale metadata', () => {
-    interface Organisation extends Composite {
+    interface Organization extends Composite {
       Decimal: RoleType;
     }
 
     interface M extends LazyMetaPopulation {
       Decimal: Unit;
 
-      Organisation: Organisation;
+      Organization: Organization;
     }
 
     const metaPopulation = new LazyMetaPopulation({
-      c: [['10', 'Organisation', [], [['11', UnitTags.Decimal, 21]]]],
+      c: [['10', 'Organization', [], [['11', UnitTags.Decimal, 21]]]],
     }) as M;
 
-    const { Organisation, Decimal } = metaPopulation;
-    const { Decimal: roleType } = Organisation;
+    const { Organization, Decimal } = metaPopulation;
+    const { Decimal: roleType } = Organization;
 
     it('should have the relation with its values', () => {
       expect(roleType).toBeDefined();
@@ -154,29 +154,29 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(relationType).not.toBeNull();
 
       expect(associationType).toBeDefined;
-      expect(associationType.objectType).toBe(Organisation);
+      expect(associationType.objectType).toBe(Organization);
       expect(associationType.isOne).toBeTruthy();
       expect(associationType.isMany).toBeFalsy();
     });
   });
 
   describe('with decimal relation no names scale and precision metadata', () => {
-    interface Organisation extends Composite {
+    interface Organization extends Composite {
       Decimal: RoleType;
     }
 
     interface M extends LazyMetaPopulation {
       Decimal: Unit;
 
-      Organisation: Organisation;
+      Organization: Organization;
     }
 
     const metaPopulation = new LazyMetaPopulation({
-      c: [['10', 'Organisation', [], [['11', UnitTags.Decimal, 21, 3]]]],
+      c: [['10', 'Organization', [], [['11', UnitTags.Decimal, 21, 3]]]],
     }) as M;
 
-    const { Organisation, Decimal } = metaPopulation;
-    const { Decimal: roleType } = Organisation;
+    const { Organization, Decimal } = metaPopulation;
+    const { Decimal: roleType } = Organization;
 
     it('should have the relation with its values', () => {
       expect(roleType).toBeDefined();
@@ -200,31 +200,31 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(relationType).not.toBeNull();
 
       expect(associationType).toBeDefined;
-      expect(associationType.objectType).toBe(Organisation);
+      expect(associationType.objectType).toBe(Organization);
       expect(associationType.isOne).toBeTruthy();
       expect(associationType.isMany).toBeFalsy();
     });
   });
 
   describe('with decimal relation singularName scale metadata', () => {
-    interface Organisation extends Composite {
+    interface Organization extends Composite {
       Balance: RoleType;
     }
 
     interface M extends LazyMetaPopulation {
       Decimal: Unit;
 
-      Organisation: Organisation;
+      Organization: Organization;
     }
 
     const metaPopulation = new LazyMetaPopulation({
       c: [
-        ['10', 'Organisation', [], [['11', UnitTags.Decimal, 'Balance', 25]]],
+        ['10', 'Organization', [], [['11', UnitTags.Decimal, 'Balance', 25]]],
       ],
     }) as M;
 
-    const { Organisation, Decimal } = metaPopulation;
-    const { Balance: roleType } = Organisation;
+    const { Organization, Decimal } = metaPopulation;
+    const { Balance: roleType } = Organization;
 
     it('should have the relation with its values', () => {
       expect(roleType).toBeDefined();
@@ -248,36 +248,36 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(relationType).not.toBeNull();
 
       expect(associationType).toBeDefined;
-      expect(associationType.objectType).toBe(Organisation);
+      expect(associationType.objectType).toBe(Organization);
       expect(associationType.isOne).toBeTruthy();
       expect(associationType.isMany).toBeFalsy();
     });
   });
 
   describe('with decimal relation singularName scale and precision metadata', () => {
-    interface Organisation extends Composite {
+    interface Organization extends Composite {
       Balance: RoleType;
     }
 
     interface M extends LazyMetaPopulation {
       Decimal: Unit;
 
-      Organisation: Organisation;
+      Organization: Organization;
     }
 
     const metaPopulation = new LazyMetaPopulation({
       c: [
         [
           '10',
-          'Organisation',
+          'Organization',
           [],
           [['11', UnitTags.Decimal, 'Balance', 25, 2]],
         ],
       ],
     }) as M;
 
-    const { Organisation, Decimal } = metaPopulation;
-    const { Balance: roleType } = Organisation;
+    const { Organization, Decimal } = metaPopulation;
+    const { Balance: roleType } = Organization;
 
     it('should have the relation with its values', () => {
       expect(roleType).toBeDefined();
@@ -301,36 +301,36 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(relationType).not.toBeNull();
 
       expect(associationType).toBeDefined;
-      expect(associationType.objectType).toBe(Organisation);
+      expect(associationType.objectType).toBe(Organization);
       expect(associationType.isOne).toBeTruthy();
       expect(associationType.isMany).toBeFalsy();
     });
   });
 
   describe('with decimal relation singularName and pluralName scale metadata', () => {
-    interface Organisation extends Composite {
+    interface Organization extends Composite {
       Balance: RoleType;
     }
 
     interface M extends LazyMetaPopulation {
       Decimal: Unit;
 
-      Organisation: Organisation;
+      Organization: Organization;
     }
 
     const metaPopulation = new LazyMetaPopulation({
       c: [
         [
           '10',
-          'Organisation',
+          'Organization',
           [],
           [['11', UnitTags.Decimal, 'Balance', 'PluralBalance', 26]],
         ],
       ],
     }) as M;
 
-    const { Organisation, Decimal } = metaPopulation;
-    const { Balance: roleType } = Organisation;
+    const { Organization, Decimal } = metaPopulation;
+    const { Balance: roleType } = Organization;
 
     it('should have the relation with its values', () => {
       expect(roleType).toBeDefined();
@@ -354,36 +354,36 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(relationType).not.toBeNull();
 
       expect(associationType).toBeDefined;
-      expect(associationType.objectType).toBe(Organisation);
+      expect(associationType.objectType).toBe(Organization);
       expect(associationType.isOne).toBeTruthy();
       expect(associationType.isMany).toBeFalsy();
     });
   });
 
   describe('with decimal relation singularName and pluralName scale and precision metadata', () => {
-    interface Organisation extends Composite {
+    interface Organization extends Composite {
       Balance: RoleType;
     }
 
     interface M extends LazyMetaPopulation {
       Decimal: Unit;
 
-      Organisation: Organisation;
+      Organization: Organization;
     }
 
     const metaPopulation = new LazyMetaPopulation({
       c: [
         [
           '10',
-          'Organisation',
+          'Organization',
           [],
           [['11', UnitTags.Decimal, 'Balance', 'PluralBalance', 26, 5]],
         ],
       ],
     }) as M;
 
-    const { Organisation, Decimal } = metaPopulation;
-    const { Balance: roleType } = Organisation;
+    const { Organization, Decimal } = metaPopulation;
+    const { Balance: roleType } = Organization;
 
     it('should have the relation with its values', () => {
       expect(roleType).toBeDefined();
@@ -407,29 +407,29 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(relationType).not.toBeNull();
 
       expect(associationType).toBeDefined;
-      expect(associationType.objectType).toBe(Organisation);
+      expect(associationType.objectType).toBe(Organization);
       expect(associationType.isOne).toBeTruthy();
       expect(associationType.isMany).toBeFalsy();
     });
   });
 
   describe('with string relation no names metadata', () => {
-    interface Organisation extends Composite {
+    interface Organization extends Composite {
       String: RoleType;
     }
 
     interface M extends LazyMetaPopulation {
       String: Unit;
 
-      Organisation: Organisation;
+      Organization: Organization;
     }
 
     const metaPopulation = new LazyMetaPopulation({
-      c: [['10', 'Organisation', [], [['11', UnitTags.String, 256]]]],
+      c: [['10', 'Organization', [], [['11', UnitTags.String, 256]]]],
     }) as M;
 
-    const { Organisation, String } = metaPopulation;
-    const { String: roleType } = Organisation;
+    const { Organization, String } = metaPopulation;
+    const { String: roleType } = Organization;
 
     it('should have the relation with its values', () => {
       expect(roleType).toBeDefined();
@@ -453,29 +453,29 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(relationType).not.toBeNull();
 
       expect(associationType).toBeDefined;
-      expect(associationType.objectType).toBe(Organisation);
+      expect(associationType.objectType).toBe(Organization);
       expect(associationType.isOne).toBeTruthy();
       expect(associationType.isMany).toBeFalsy();
     });
   });
 
   describe('with string relation no names precision overflow metadata', () => {
-    interface Organisation extends Composite {
+    interface Organization extends Composite {
       String: RoleType;
     }
 
     interface M extends LazyMetaPopulation {
       String: Unit;
 
-      Organisation: Organisation;
+      Organization: Organization;
     }
 
     const metaPopulation = new LazyMetaPopulation({
-      c: [['10', 'Organisation', [], [['11', UnitTags.String, 256, 5]]]],
+      c: [['10', 'Organization', [], [['11', UnitTags.String, 256, 5]]]],
     }) as M;
 
-    const { Organisation, String } = metaPopulation;
-    const { String: roleType } = Organisation;
+    const { Organization, String } = metaPopulation;
+    const { String: roleType } = Organization;
 
     it('should have the relation with its values', () => {
       expect(roleType).toBeDefined();
@@ -499,29 +499,29 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(relationType).not.toBeNull();
 
       expect(associationType).toBeDefined;
-      expect(associationType.objectType).toBe(Organisation);
+      expect(associationType.objectType).toBe(Organization);
       expect(associationType.isOne).toBeTruthy();
       expect(associationType.isMany).toBeFalsy();
     });
   });
 
   describe('with string relation singularName metadata', () => {
-    interface Organisation extends Composite {
+    interface Organization extends Composite {
       Text: RoleType;
     }
 
     interface M extends LazyMetaPopulation {
       String: Unit;
 
-      Organisation: Organisation;
+      Organization: Organization;
     }
 
     const metaPopulation = new LazyMetaPopulation({
-      c: [['10', 'Organisation', [], [['11', UnitTags.String, 'Text', 512]]]],
+      c: [['10', 'Organization', [], [['11', UnitTags.String, 'Text', 512]]]],
     }) as M;
 
-    const { Organisation, String } = metaPopulation;
-    const { Text: roleType } = Organisation;
+    const { Organization, String } = metaPopulation;
+    const { Text: roleType } = Organization;
 
     it('should have the relation with its values', () => {
       expect(roleType).toBeDefined();
@@ -545,31 +545,31 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(relationType).not.toBeNull();
 
       expect(associationType).toBeDefined;
-      expect(associationType.objectType).toBe(Organisation);
+      expect(associationType.objectType).toBe(Organization);
       expect(associationType.isOne).toBeTruthy();
       expect(associationType.isMany).toBeFalsy();
     });
   });
 
   describe('with string relation singularName precision overflow metadata', () => {
-    interface Organisation extends Composite {
+    interface Organization extends Composite {
       Text: RoleType;
     }
 
     interface M extends LazyMetaPopulation {
       String: Unit;
 
-      Organisation: Organisation;
+      Organization: Organization;
     }
 
     const metaPopulation = new LazyMetaPopulation({
       c: [
-        ['10', 'Organisation', [], [['11', UnitTags.String, 'Text', 512, 10]]],
+        ['10', 'Organization', [], [['11', UnitTags.String, 'Text', 512, 10]]],
       ],
     }) as M;
 
-    const { Organisation, String } = metaPopulation;
-    const { Text: roleType } = Organisation;
+    const { Organization, String } = metaPopulation;
+    const { Text: roleType } = Organization;
 
     it('should have the relation with its values', () => {
       expect(roleType).toBeDefined();
@@ -593,36 +593,36 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(relationType).not.toBeNull();
 
       expect(associationType).toBeDefined;
-      expect(associationType.objectType).toBe(Organisation);
+      expect(associationType.objectType).toBe(Organization);
       expect(associationType.isOne).toBeTruthy();
       expect(associationType.isMany).toBeFalsy();
     });
   });
 
   describe('with string relation singularName and pluralName metadata', () => {
-    interface Organisation extends Composite {
+    interface Organization extends Composite {
       Text: RoleType;
     }
 
     interface M extends LazyMetaPopulation {
       String: Unit;
 
-      Organisation: Organisation;
+      Organization: Organization;
     }
 
     const metaPopulation = new LazyMetaPopulation({
       c: [
         [
           '10',
-          'Organisation',
+          'Organization',
           [],
           [['11', UnitTags.String, 'Text', 'PluralText', 512]],
         ],
       ],
     }) as M;
 
-    const { Organisation, String } = metaPopulation;
-    const { Text: roleType } = Organisation;
+    const { Organization, String } = metaPopulation;
+    const { Text: roleType } = Organization;
 
     it('should have the relation with its values', () => {
       expect(roleType).toBeDefined();
@@ -646,36 +646,36 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(relationType).not.toBeNull();
 
       expect(associationType).toBeDefined;
-      expect(associationType.objectType).toBe(Organisation);
+      expect(associationType.objectType).toBe(Organization);
       expect(associationType.isOne).toBeTruthy();
       expect(associationType.isMany).toBeFalsy();
     });
   });
 
   describe('with string relation singularName and pluralName precision overflow metadata', () => {
-    interface Organisation extends Composite {
+    interface Organization extends Composite {
       Text: RoleType;
     }
 
     interface M extends LazyMetaPopulation {
       String: Unit;
 
-      Organisation: Organisation;
+      Organization: Organization;
     }
 
     const metaPopulation = new LazyMetaPopulation({
       c: [
         [
           '10',
-          'Organisation',
+          'Organization',
           [],
           [['11', UnitTags.String, 'Text', 'PluralText', 512, 1]],
         ],
       ],
     }) as M;
 
-    const { Organisation, String } = metaPopulation;
-    const { Text: roleType } = Organisation;
+    const { Organization, String } = metaPopulation;
+    const { Text: roleType } = Organization;
 
     it('should have the relation with its values', () => {
       expect(roleType).toBeDefined();
@@ -699,7 +699,7 @@ describe('Unit Relation in MetaPopulation', () => {
       expect(relationType).not.toBeNull();
 
       expect(associationType).toBeDefined;
-      expect(associationType.objectType).toBe(Organisation);
+      expect(associationType.objectType).toBe(Organization);
       expect(associationType.isOne).toBeTruthy();
       expect(associationType.isMany).toBeFalsy();
     });
@@ -710,7 +710,7 @@ describe('Unit Relation in MetaPopulation', () => {
       Name: RoleType;
     }
 
-    interface Organisation extends Composite {
+    interface Organization extends Composite {
       Name: RoleType;
     }
 
@@ -719,22 +719,22 @@ describe('Unit Relation in MetaPopulation', () => {
 
       Named: Named;
 
-      Organisation: Organisation;
+      Organization: Organization;
     }
 
     const metaPopulation = new LazyMetaPopulation({
       i: [['9', 'Named', [], [['11', UnitTags.String, 'Name']]]],
-      c: [['10', 'Organisation', ['9']]],
+      c: [['10', 'Organization', ['9']]],
     }) as M;
 
-    const { Named, Organisation } = metaPopulation;
+    const { Named, Organization } = metaPopulation;
     const { Name: namedRoleType } = Named;
-    const { Name: organisationRoleType } = Organisation;
+    const { Name: organizationRoleType } = Organization;
 
     it('should have the same RoleType', () => {
       expect(namedRoleType).toBeDefined();
-      expect(organisationRoleType).toBeDefined();
-      expect(organisationRoleType).toBe(namedRoleType);
+      expect(organizationRoleType).toBeDefined();
+      expect(organizationRoleType).toBe(namedRoleType);
     });
   });
 });

@@ -20,7 +20,7 @@ export class AppDisplayService implements DisplayService {
 
     this.nameByObjectType = new Map<Composite, RoleType>([
       [m.HomeAddress, m.HomeAddress.Street],
-      [m.Organisation, m.Organisation.Name],
+      [m.Organization, m.Organization.Name],
       [m.Person, m.Person.DomainFullName],
     ]);
 
@@ -29,11 +29,11 @@ export class AppDisplayService implements DisplayService {
     this.primaryByObjectType = new Map<Composite, RoleType[]>([
       [m.Person, [m.Person.FirstName, m.Person.LastName, m.Person.Address]],
       [
-        m.Organisation,
+        m.Organization,
         [
-          m.Organisation.Name,
-          m.Organisation.Owner,
-          m.Organisation.IncorporationDate,
+          m.Organization.Name,
+          m.Organization.Owner,
+          m.Organization.IncorporationDate,
         ],
       ],
     ]);

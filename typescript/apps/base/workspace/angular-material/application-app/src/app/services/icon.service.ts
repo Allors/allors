@@ -14,7 +14,7 @@ export class AppIconService implements IconService {
 
     this.iconByComposite = new Map();
     this.iconByComposite.set(m.Country, 'public');
-    this.iconByComposite.set(m.Organisation, 'domain');
+    this.iconByComposite.set(m.Organization, 'domain');
     this.iconByComposite.set(m.Person, 'person');
   }
 
