@@ -20,7 +20,7 @@ namespace Allors.Server.Tests
             this.Transaction.Create<Person>(v => v.UserName = "John");
             this.Transaction.Create<Person>(v =>
             {
-                v.UserName = "John";
+                v.UserName = "Jane";
                 v.SetPassword("p@ssw0rd");
             });
 
