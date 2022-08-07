@@ -86,7 +86,7 @@ namespace Allors.Database.Adapters.Sql
             }
         }
 
-        public T Create<T>() where T : IObject
+        public T Build<T>() where T : IObject
         {
             var objectType = this.Database.ObjectFactory.GetObjectType(typeof(T));
 
@@ -101,7 +101,7 @@ namespace Allors.Database.Adapters.Sql
             return newObject;
         }
 
-        public T Create<T>(Action<T> builder) where T : IObject
+        public T Build<T>(Action<T> builder) where T : IObject
         {
             var objectType = this.Database.ObjectFactory.GetObjectType(typeof(T));
 
@@ -119,7 +119,7 @@ namespace Allors.Database.Adapters.Sql
             return newObject;
         }
 
-        public T Create<T>(params Action<T>[] builders) where T : IObject
+        public T Build<T>(params Action<T>[] builders) where T : IObject
         {
             var objectType = this.Database.ObjectFactory.GetObjectType(typeof(T));
 
@@ -143,7 +143,7 @@ namespace Allors.Database.Adapters.Sql
             return newObject;
         }
 
-        public T Create<T>(IEnumerable<Action<T>> builders, Action<T> extraBuilder) where T : IObject
+        public T Build<T>(IEnumerable<Action<T>> builders, Action<T> extraBuilder) where T : IObject
         {
             var objectType = this.Database.ObjectFactory.GetObjectType(typeof(T));
 
@@ -169,7 +169,7 @@ namespace Allors.Database.Adapters.Sql
             return newObject;
         }
 
-        public T Create<T>(IEnumerable<Action<T>> builders, params Action<T>[] extraBuilders) where T : IObject
+        public T Build<T>(IEnumerable<Action<T>> builders, params Action<T>[] extraBuilders) where T : IObject
         {
             var objectType = this.Database.ObjectFactory.GetObjectType(typeof(T));
 
@@ -198,14 +198,14 @@ namespace Allors.Database.Adapters.Sql
             return newObject;
         }
 
-        public IObject Create(IClass objectType)
+        public IObject Build(IClass objectType)
         {
             var newObject = this.CreateWithoutOnBuild(objectType);
             newObject.OnPostBuild();
             return newObject;
         }
 
-        public IObject[] Create(IClass objectType, int count)
+        public IObject[] Build(IClass objectType, int count)
         {
             if (!objectType.IsClass)
             {

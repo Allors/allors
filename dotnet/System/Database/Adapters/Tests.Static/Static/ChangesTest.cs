@@ -32,8 +32,8 @@ namespace Allors.Database.Adapters
                 init();
                 var m = this.Transaction.Database.Context().M;
 
-                var a = (C1)this.Transaction.Create(m.C1);
-                var c = this.Transaction.Create(m.C3);
+                var a = (C1)this.Transaction.Build(m.C1);
+                var c = this.Transaction.Build(m.C3);
                 this.Transaction.Commit();
 
                 a = (C1)this.Transaction.Instantiate(a);
@@ -71,7 +71,7 @@ namespace Allors.Database.Adapters
 
                 foreach (var @class in m.Classes)
                 {
-                    dynamic newObject = this.Transaction.Create(@class);
+                    dynamic newObject = this.Transaction.Build(@class);
                     Assert.True(newObject.onPostBuild);
                 }
             }
@@ -88,7 +88,7 @@ namespace Allors.Database.Adapters
                 foreach (var @class in m.Classes)
                 {
                     {
-                        var newObjects = this.Transaction.Create(@class, 2);
+                        var newObjects = this.Transaction.Build(@class, 2);
                         foreach (dynamic newObject in newObjects)
                         {
                             Assert.True(newObject.onPostBuild);
@@ -106,7 +106,7 @@ namespace Allors.Database.Adapters
                 init();
                 var m = this.Transaction.Database.Context().M;
 
-                var newObject = this.Transaction.Create<C1>();
+                var newObject = this.Transaction.Build<C1>();
                 Assert.True(newObject.onPostBuild);
                 Assert.Null(newObject.Name);
             }
@@ -124,13 +124,13 @@ namespace Allors.Database.Adapters
                 Action<C1> builderA = v => v.Name += "A";
 
                 {
-                    var newObject = this.Transaction.Create(builderA);
+                    var newObject = this.Transaction.Build(builderA);
                     Assert.True(newObject.onPostBuild);
                     Assert.Equal("A", newObject.Name);
                 }
 
                 {
-                    var newObject = this.Transaction.Create(nullBuilder);
+                    var newObject = this.Transaction.Build(nullBuilder);
                     Assert.True(newObject.onPostBuild);
                     Assert.Null(newObject.Name);
                 }
@@ -150,19 +150,19 @@ namespace Allors.Database.Adapters
                 Action<C1> builderB = v => v.Name += "B";
 
                 {
-                    var newObject = this.Transaction.Create(builderA, builderB);
+                    var newObject = this.Transaction.Build(builderA, builderB);
                     Assert.True(newObject.onPostBuild);
                     Assert.Equal("AB", newObject.Name);
                 }
 
                 {
-                    var newObject = this.Transaction.Create(builderA, nullBuilder);
+                    var newObject = this.Transaction.Build(builderA, nullBuilder);
                     Assert.True(newObject.onPostBuild);
                     Assert.Equal("A", newObject.Name);
                 }
 
                 {
-                    var newObject = this.Transaction.Create(nullBuilder, builderB);
+                    var newObject = this.Transaction.Build(nullBuilder, builderB);
                     Assert.True(newObject.onPostBuild);
                     Assert.Equal("B", newObject.Name);
                 }
@@ -185,56 +185,56 @@ namespace Allors.Database.Adapters
 
                 {
                     var builderEnumeration = new[] { builderA, builderB };
-                    var newObject = this.Transaction.Create(builderEnumeration);
+                    var newObject = this.Transaction.Build(builderEnumeration);
                     Assert.True(newObject.onPostBuild);
                     Assert.Equal("AB", newObject.Name);
                 }
 
                 {
                     var builderEnumeration = new[] { builderA, builderB };
-                    var newObject = this.Transaction.Create(builderEnumeration, builderC);
+                    var newObject = this.Transaction.Build(builderEnumeration, builderC);
                     Assert.True(newObject.onPostBuild);
                     Assert.Equal("ABC", newObject.Name);
                 }
 
                 {
                     var builderWithNullEnumeration = new[] { nullBuilder, builderB };
-                    var newObject = this.Transaction.Create(builderWithNullEnumeration);
+                    var newObject = this.Transaction.Build(builderWithNullEnumeration);
                     Assert.True(newObject.onPostBuild);
                     Assert.Equal("B", newObject.Name);
                 }
 
                 {
                     var builderWithNullEnumeration = new[] { builderA, nullBuilder };
-                    var newObject = this.Transaction.Create(builderWithNullEnumeration);
+                    var newObject = this.Transaction.Build(builderWithNullEnumeration);
                     Assert.True(newObject.onPostBuild);
                     Assert.Equal("A", newObject.Name);
                 }
 
                 {
                     var builderWithNullEnumeration = new[] { nullBuilder, builderB };
-                    var newObject = this.Transaction.Create(builderWithNullEnumeration, builderC);
+                    var newObject = this.Transaction.Build(builderWithNullEnumeration, builderC);
                     Assert.True(newObject.onPostBuild);
                     Assert.Equal("BC", newObject.Name);
                 }
 
                 {
                     var builderWithNullEnumeration = new[] { builderA, nullBuilder };
-                    var newObject = this.Transaction.Create(builderWithNullEnumeration, builderC);
+                    var newObject = this.Transaction.Build(builderWithNullEnumeration, builderC);
                     Assert.True(newObject.onPostBuild);
                     Assert.Equal("AC", newObject.Name);
                 }
 
                 {
                     var builderWithNullEnumeration = new[] { nullBuilder, builderB };
-                    var newObject = this.Transaction.Create(builderWithNullEnumeration, nullBuilder);
+                    var newObject = this.Transaction.Build(builderWithNullEnumeration, nullBuilder);
                     Assert.True(newObject.onPostBuild);
                     Assert.Equal("B", newObject.Name);
                 }
 
                 {
                     var builderEnumeration = new[] { builderA, builderB };
-                    var newObject = this.Transaction.Create(builderEnumeration, nullBuilder);
+                    var newObject = this.Transaction.Build(builderEnumeration, nullBuilder);
                     Assert.True(newObject.onPostBuild);
                     Assert.Equal("AB", newObject.Name);
                 }
@@ -242,19 +242,19 @@ namespace Allors.Database.Adapters
                 Action<C1>[] nullBuilderEnumeration = null;
 
                 {
-                    var newObject = this.Transaction.Create(nullBuilderEnumeration);
+                    var newObject = this.Transaction.Build(nullBuilderEnumeration);
                     Assert.True(newObject.onPostBuild);
                     Assert.Null(newObject.Name);
                 }
 
                 {
-                    var newObject = this.Transaction.Create(nullBuilderEnumeration, builderC);
+                    var newObject = this.Transaction.Build(nullBuilderEnumeration, builderC);
                     Assert.True(newObject.onPostBuild);
                     Assert.Equal("C", newObject.Name);
                 }
 
                 {
-                    var newObject = this.Transaction.Create(nullBuilderEnumeration, nullBuilder);
+                    var newObject = this.Transaction.Build(nullBuilderEnumeration, nullBuilder);
                     Assert.True(newObject.onPostBuild);
                     Assert.Null(newObject.Name);
                 }
@@ -278,42 +278,42 @@ namespace Allors.Database.Adapters
 
                 {
                     var builderEnumeration = new[] { builderA, builderB };
-                    var newObject = this.Transaction.Create(builderEnumeration, builderC, builderD);
+                    var newObject = this.Transaction.Build(builderEnumeration, builderC, builderD);
                     Assert.True(newObject.onPostBuild);
                     Assert.Equal("ABCD", newObject.Name);
                 }
 
                 {
                     var builderWithNullEnumeration = new[] { nullBuilder, builderB };
-                    var newObject = this.Transaction.Create(builderWithNullEnumeration, builderC, builderD);
+                    var newObject = this.Transaction.Build(builderWithNullEnumeration, builderC, builderD);
                     Assert.True(newObject.onPostBuild);
                     Assert.Equal("BCD", newObject.Name);
                 }
 
                 {
                     var builderWithNullEnumeration = new[] { builderA, nullBuilder };
-                    var newObject = this.Transaction.Create(builderWithNullEnumeration, builderC, builderD);
+                    var newObject = this.Transaction.Build(builderWithNullEnumeration, builderC, builderD);
                     Assert.True(newObject.onPostBuild);
                     Assert.Equal("ACD", newObject.Name);
                 }
 
                 {
                     var builderWithNullEnumeration = new[] { nullBuilder, builderB };
-                    var newObject = this.Transaction.Create(builderWithNullEnumeration, builderC, nullBuilder);
+                    var newObject = this.Transaction.Build(builderWithNullEnumeration, builderC, nullBuilder);
                     Assert.True(newObject.onPostBuild);
                     Assert.Equal("BC", newObject.Name);
                 }
 
                 {
                     var builderWithNullEnumeration = new[] { builderA, nullBuilder };
-                    var newObject = this.Transaction.Create(builderWithNullEnumeration, nullBuilder, builderD);
+                    var newObject = this.Transaction.Build(builderWithNullEnumeration, nullBuilder, builderD);
                     Assert.True(newObject.onPostBuild);
                     Assert.Equal("AD", newObject.Name);
                 }
 
                 {
                     var builderWithNullEnumeration = new[] { builderA, nullBuilder };
-                    var newObject = this.Transaction.Create(builderWithNullEnumeration, nullBuilder, nullBuilder);
+                    var newObject = this.Transaction.Build(builderWithNullEnumeration, nullBuilder, nullBuilder);
                     Assert.True(newObject.onPostBuild);
                     Assert.Equal("A", newObject.Name);
                 }
@@ -321,25 +321,25 @@ namespace Allors.Database.Adapters
                 Action<C1>[] nullBuilderEnumeration = null;
 
                 {
-                    var newObject = this.Transaction.Create(nullBuilderEnumeration, builderC, builderD);
+                    var newObject = this.Transaction.Build(nullBuilderEnumeration, builderC, builderD);
                     Assert.True(newObject.onPostBuild);
                     Assert.Equal("CD", newObject.Name);
                 }
 
                 {
-                    var newObject = this.Transaction.Create(nullBuilderEnumeration, builderC, nullBuilder);
+                    var newObject = this.Transaction.Build(nullBuilderEnumeration, builderC, nullBuilder);
                     Assert.True(newObject.onPostBuild);
                     Assert.Equal("C", newObject.Name);
                 }
 
                 {
-                    var newObject = this.Transaction.Create(nullBuilderEnumeration, nullBuilder, builderD);
+                    var newObject = this.Transaction.Build(nullBuilderEnumeration, nullBuilder, builderD);
                     Assert.True(newObject.onPostBuild);
                     Assert.Equal("D", newObject.Name);
                 }
 
                 {
-                    var newObject = this.Transaction.Create(nullBuilderEnumeration, nullBuilder, nullBuilder);
+                    var newObject = this.Transaction.Build(nullBuilderEnumeration, nullBuilder, nullBuilder);
                     Assert.True(newObject.onPostBuild);
                     Assert.Null(newObject.Name);
                 }
@@ -472,8 +472,8 @@ namespace Allors.Database.Adapters
                 init();
                 var m = this.Transaction.Database.Context().M;
 
-                var a = (C1)this.Transaction.Create(m.C1);
-                var c = this.Transaction.Create(m.C3);
+                var a = (C1)this.Transaction.Build(m.C1);
+                var c = this.Transaction.Build(m.C3);
                 this.Transaction.Commit();
 
                 a = (C1)this.Transaction.Instantiate(a);
@@ -686,8 +686,8 @@ namespace Allors.Database.Adapters
                 init();
                 var m = this.Transaction.Database.Context().M;
 
-                var a = (C1)this.Transaction.Create(m.C1);
-                var c = this.Transaction.Create(m.C3);
+                var a = (C1)this.Transaction.Build(m.C1);
+                var c = this.Transaction.Build(m.C3);
                 this.Transaction.Commit();
 
                 a = (C1)this.Transaction.Instantiate(a);
@@ -878,10 +878,10 @@ namespace Allors.Database.Adapters
                 init();
                 var m = this.Transaction.Database.Context().M;
 
-                var c1a = (C1)this.Transaction.Create(m.C1);
-                var c1b = (C1)this.Transaction.Create(m.C1);
-                var c2a = (C2)this.Transaction.Create(m.C2);
-                var c2b = (C2)this.Transaction.Create(m.C2);
+                var c1a = (C1)this.Transaction.Build(m.C1);
+                var c1b = (C1)this.Transaction.Build(m.C1);
+                var c2a = (C2)this.Transaction.Build(m.C2);
+                var c2b = (C2)this.Transaction.Build(m.C2);
 
                 c1a.Name = "c1a";
                 c1b.Name = "c1b";
@@ -988,9 +988,9 @@ namespace Allors.Database.Adapters
                 init();
                 var m = this.Transaction.Database.Context().M;
 
-                var c1a = (C1)this.Transaction.Create(m.C1);
-                var c1b = (C1)this.Transaction.Create(m.C1);
-                var c2a = (C2)this.Transaction.Create(m.C2);
+                var c1a = (C1)this.Transaction.Build(m.C1);
+                var c1b = (C1)this.Transaction.Build(m.C1);
+                var c2a = (C2)this.Transaction.Build(m.C2);
                 var c2b = C2.Create(this.Transaction);
 
                 c1a.Name = "c1a";
@@ -1098,9 +1098,9 @@ namespace Allors.Database.Adapters
                 init();
                 var m = this.Transaction.Database.Context().M;
 
-                var c1a = (C1)this.Transaction.Create(m.C1);
-                var c1b = (C1)this.Transaction.Create(m.C1);
-                var c2a = (C2)this.Transaction.Create(m.C2);
+                var c1a = (C1)this.Transaction.Build(m.C1);
+                var c1b = (C1)this.Transaction.Build(m.C1);
+                var c2a = (C2)this.Transaction.Build(m.C2);
                 var c2b = C2.Create(this.Transaction);
 
                 c1a.Name = "c1a";
@@ -1270,9 +1270,9 @@ namespace Allors.Database.Adapters
                 init();
                 var m = this.Transaction.Database.Context().M;
 
-                var c1a = (C1)this.Transaction.Create(m.C1);
-                var c1b = (C1)this.Transaction.Create(m.C1);
-                var c2a = (C2)this.Transaction.Create(m.C2);
+                var c1a = (C1)this.Transaction.Build(m.C1);
+                var c1b = (C1)this.Transaction.Build(m.C1);
+                var c2a = (C2)this.Transaction.Build(m.C2);
                 var c2b = C2.Create(this.Transaction);
 
                 c1a.Name = "c1a";
@@ -1438,8 +1438,8 @@ namespace Allors.Database.Adapters
                 init();
                 var m = this.Transaction.Database.Context().M;
 
-                var a = (C1)this.Transaction.Create(m.C1);
-                var c = this.Transaction.Create(m.C3);
+                var a = (C1)this.Transaction.Build(m.C1);
+                var c = this.Transaction.Build(m.C3);
                 this.Transaction.Commit();
 
                 a = (C1)this.Transaction.Instantiate(a);

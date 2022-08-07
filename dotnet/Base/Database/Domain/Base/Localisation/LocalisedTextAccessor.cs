@@ -37,7 +37,7 @@ namespace Allors.Database.Domain
                 }
             }
 
-            var newLocalisedText = @object.Transaction().Create<LocalisedText>(v =>
+            var newLocalisedText = @object.Transaction().Build<LocalisedText>(v =>
             {
                 v.Locale = locale;
                 v.Text = text;

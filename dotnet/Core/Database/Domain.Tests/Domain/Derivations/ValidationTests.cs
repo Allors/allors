@@ -17,7 +17,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void AssertIsUniqueTest()
         {
-            var valiData = this.Transaction.Create<ValiData>();
+            var valiData = this.Transaction.Build<ValiData>();
 
             Assert.True(this.Transaction.Derive(false).HasErrors);
 

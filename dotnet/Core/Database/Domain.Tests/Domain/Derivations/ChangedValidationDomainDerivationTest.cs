@@ -17,9 +17,9 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void One2One()
         {
-            var cc = this.Transaction.Create<CC>();
-            var bb = this.Transaction.Create<BB>(v => v.One2One = cc);
-            var aa = this.Transaction.Create<AA>(v => v.One2One = bb);
+            var cc = this.Transaction.Build<CC>();
+            var bb = this.Transaction.Build<BB>(v => v.One2One = cc);
+            var aa = this.Transaction.Build<AA>(v => v.One2One = bb);
 
             this.Transaction.Derive();
 
@@ -33,9 +33,9 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void Many2One()
         {
-            var cc = this.Transaction.Create<CC>();
-            var bb = this.Transaction.Create<BB>(v => v.One2One = cc);
-            var aa = this.Transaction.Create<AA>(v => v.One2One = bb);
+            var cc = this.Transaction.Build<CC>();
+            var bb = this.Transaction.Build<BB>(v => v.One2One = cc);
+            var aa = this.Transaction.Build<AA>(v => v.One2One = bb);
 
             this.Transaction.Derive();
 
@@ -49,9 +49,9 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void One2Many()
         {
-            var cc = this.Transaction.Create<CC>();
-            var bb = this.Transaction.Create<BB>(v => v.One2One = cc);
-            var aa = this.Transaction.Create<AA>(v => v.One2One = bb);
+            var cc = this.Transaction.Build<CC>();
+            var bb = this.Transaction.Build<BB>(v => v.One2One = cc);
+            var aa = this.Transaction.Build<AA>(v => v.One2One = bb);
 
             this.Transaction.Derive();
 
@@ -65,9 +65,9 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void Many2Many()
         {
-            var cc = this.Transaction.Create<CC>();
-            var bb = this.Transaction.Create<BB>(v => v.One2One = cc);
-            var aa = this.Transaction.Create<AA>(v => v.One2One = bb);
+            var cc = this.Transaction.Build<CC>();
+            var bb = this.Transaction.Build<BB>(v => v.One2One = cc);
+            var aa = this.Transaction.Build<AA>(v => v.One2One = bb);
 
             this.Transaction.Derive();
 
@@ -81,8 +81,8 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void C1ChangedRole()
         {
-            var c1 = this.Transaction.Create<C1>();
-            var c2 = this.Transaction.Create<C2>();
+            var c1 = this.Transaction.Build<C1>();
+            var c2 = this.Transaction.Build<C2>();
 
             c1.ChangedRolePingC1 = true;
             c2.ChangedRolePingC1 = true;
@@ -96,8 +96,8 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void I1ChangedRole()
         {
-            var c1 = this.Transaction.Create<C1>();
-            var c2 = this.Transaction.Create<C2>();
+            var c1 = this.Transaction.Build<C1>();
+            var c2 = this.Transaction.Build<C2>();
 
             c1.ChangedRolePingI1 = true;
             c2.ChangedRolePingI1 = true;
@@ -111,8 +111,8 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void I12ChangedRole()
         {
-            var c1 = this.Transaction.Create<C1>();
-            var c2 = this.Transaction.Create<C2>();
+            var c1 = this.Transaction.Build<C1>();
+            var c2 = this.Transaction.Build<C2>();
 
             c1.ChangedRolePingI12 = true;
             c2.ChangedRolePingI12 = true;
@@ -126,8 +126,8 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void S12ChangedRole()
         {
-            var c1 = this.Transaction.Create<C1>();
-            var c2 = this.Transaction.Create<C2>();
+            var c1 = this.Transaction.Build<C1>();
+            var c2 = this.Transaction.Build<C2>();
 
             c1.ChangedRolePingS12 = true;
             c2.ChangedRolePingS12 = true;

@@ -131,7 +131,7 @@ namespace Allors.Database.Domain
             {
                 this.transaction.Database.Services.Get<IPermissions>().Sync(this.transaction);
 
-                var denied = this.transaction.Create<Denied>(denied =>
+                var denied = this.transaction.Build<Denied>(denied =>
                 {
                     denied.DatabaseProperty = "DatabaseProp";
                     denied.DefaultWorkspaceProperty = "DefaultWorkspaceProp";

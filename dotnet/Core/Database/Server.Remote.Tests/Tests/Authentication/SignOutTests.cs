@@ -15,7 +15,7 @@ namespace Allors.Server.Tests
     {
         public SignOutTests()
         {
-            this.Transaction.Create<Person>(v =>
+            this.Transaction.Build<Person>(v =>
             {
                 v.UserName = "user";
                 v.SetPassword("p@ssw0rd");

@@ -21,8 +21,8 @@ namespace Allors.Database.Domain.Tests
         {
             var user = this.BuildPerson("user");
 
-            var delegatedAccessClass = this.Transaction.Create<AccessClass>();
-            var accessClass = this.Transaction.Create<AccessClass>(v => v.DelegatedAccess = delegatedAccessClass);
+            var delegatedAccessClass = this.Transaction.Build<AccessClass>();
+            var accessClass = this.Transaction.Build<AccessClass>(v => v.DelegatedAccess = delegatedAccessClass);
 
             var securityToken = this.BuildSecurityToken();
             var permission = this.FindPermission(this.M.AccessClass.Property, Operations.Read);
@@ -50,8 +50,8 @@ namespace Allors.Database.Domain.Tests
         {
             var user = this.BuildPerson("user");
 
-            var delegatedAccessClass = this.Transaction.Create<AccessClass>();
-            var accessClass = this.Transaction.Create<AccessClass>(v => v.DelegatedAccess = delegatedAccessClass);
+            var delegatedAccessClass = this.Transaction.Build<AccessClass>();
+            var accessClass = this.Transaction.Build<AccessClass>(v => v.DelegatedAccess = delegatedAccessClass);
 
             var securityToken = this.BuildSecurityToken();
             var permission = this.FindPermission(this.M.AccessClass.Property, Operations.Read);
@@ -78,8 +78,8 @@ namespace Allors.Database.Domain.Tests
         {
             var user = this.BuildPerson("user");
 
-            var delegatedAccessClass = this.Transaction.Create<AccessClass>();
-            var accessClass = this.Transaction.Create<AccessClass>(v => v.DelegatedAccess = delegatedAccessClass);
+            var delegatedAccessClass = this.Transaction.Build<AccessClass>();
+            var accessClass = this.Transaction.Build<AccessClass>(v => v.DelegatedAccess = delegatedAccessClass);
 
             var securityToken = this.BuildSecurityToken();
             var permission = this.FindPermission(this.M.AccessClass.Property, Operations.Read);
@@ -108,8 +108,8 @@ namespace Allors.Database.Domain.Tests
         {
             var user = this.BuildPerson("user");
 
-            var delegatedAccessClass = this.Transaction.Create<AccessClass>();
-            var accessClass = this.Transaction.Create<AccessClass>(v => v.DelegatedAccess = delegatedAccessClass);
+            var delegatedAccessClass = this.Transaction.Build<AccessClass>();
+            var accessClass = this.Transaction.Build<AccessClass>(v => v.DelegatedAccess = delegatedAccessClass);
 
             var securityToken = this.BuildSecurityToken();
             var permission = this.FindPermission(this.M.AccessClass.Property, Operations.Read);

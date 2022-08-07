@@ -108,7 +108,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void MergeManyToManyWhenExist()
         {
-            var c2 = this.Transaction.Create<C2>();
+            var c2 = this.Transaction.Build<C2>();
             var c1A = this.BuildC1(v => v.AddC1C2Many2Many(c2));
             var c1B = this.BuildC1(v => v.AddC1C2Many2Many(c2));
 

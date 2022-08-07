@@ -13,7 +13,7 @@ namespace Allors.Database.Domain
 
         protected override void CoreSetup(Setup setup)
         {
-            var singleton = this.Transaction.GetSingleton() ?? this.Transaction.Create<Singleton>();
+            var singleton = this.Transaction.GetSingleton() ?? this.Transaction.Build<Singleton>();
 
             singleton.DefaultLocale = new Locales(this.Transaction).EnglishGreatBritain;
         }

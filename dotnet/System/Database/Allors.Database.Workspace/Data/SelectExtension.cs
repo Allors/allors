@@ -120,7 +120,7 @@ namespace Allors.Database.Data
                     var role = roleType.Get(@object.Strategy);
                     if (role == null && acl.CanWrite(roleType))
                     {
-                        role = @object.Strategy.Transaction.Create((IClass)roleType.ObjectType);
+                        role = @object.Strategy.Transaction.Build((IClass)roleType.ObjectType);
                         roleType.Set(@object.Strategy, role);
                     }
 

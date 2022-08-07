@@ -30,7 +30,7 @@ namespace Tests
             var m = this.M;
             this.SetUser("jane@example.com");
 
-            var x1 = this.Transaction.Create<WorkspaceXObject1>();
+            var x1 = this.Transaction.Build<WorkspaceXObject1>();
 
             this.Transaction.Commit();
 
@@ -77,7 +77,7 @@ namespace Tests
             var m = this.M;
             this.SetUser("jane@example.com");
 
-            var x1 = this.Transaction.Create<WorkspaceXObject1>();
+            var x1 = this.Transaction.Build<WorkspaceXObject1>();
 
             this.Transaction.Commit();
 
@@ -118,7 +118,7 @@ namespace Tests
             var m = this.M;
             this.SetUser("jane@example.com");
 
-            var x1 = this.Transaction.Create<WorkspaceXObject1>();
+            var x1 = this.Transaction.Build<WorkspaceXObject1>();
 
             this.Transaction.Commit();
 
@@ -159,10 +159,10 @@ namespace Tests
             var m = this.M;
             var user = this.SetUser("jane@example.com");
 
-            var data = this.Transaction.Create<Data>(v => v.String = "First");
+            var data = this.Transaction.Build<Data>(v => v.String = "First");
             var permissions = new Permissions(this.Transaction).Extent();
             var permission = permissions.First(v => Equals(v.Class, this.M.Data) && v.InWorkspace("Default"));
-            var revocation = this.Transaction.Create<Revocation>(v => v.AddDeniedPermission(permission));
+            var revocation = this.Transaction.Build<Revocation>(v => v.AddDeniedPermission(permission));
             data.AddRevocation(revocation);
 
             this.Transaction.Commit();
@@ -242,7 +242,7 @@ namespace Tests
         {
             var user = this.SetUser("jane@example.com");
 
-            var data = this.Transaction.Create<Data>(v => v.String = "First");
+            var data = this.Transaction.Build<Data>(v => v.String = "First");
 
             this.Transaction.Derive();
             this.Transaction.Commit();

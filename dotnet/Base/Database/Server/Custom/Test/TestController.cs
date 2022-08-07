@@ -58,7 +58,7 @@ namespace Allors.Database.Server.Controllers
                     transaction.Derive();
                     transaction.Commit();
 
-                    var administrator = transaction.Create<Person>(v => v.UserName = "administrator");
+                    var administrator = transaction.Build<Person>(v => v.UserName = "administrator");
                     new UserGroups(transaction).Administrators.AddMember(administrator);
                     transaction.Services.Get<IUserService>().User = administrator;
 

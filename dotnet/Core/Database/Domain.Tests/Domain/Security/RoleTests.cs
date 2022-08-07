@@ -17,7 +17,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void GivenNoRolesWhenCreatingARoleWithoutANameThenRoleIsInvalid()
         {
-            this.Transaction.Create<Role>();
+            this.Transaction.Build<Role>();
 
             var validation = this.Transaction.Derive(false);
 

@@ -56,7 +56,7 @@ namespace Allors.Database.Adapters
                                         var roleClass = roleTypes[iRoleType];
 
                                         // One Role
-                                        var role = this.GetTransaction().Create(roleClass);
+                                        var role = this.GetTransaction().Build(roleClass);
                                         IObject[] roles = this.CreateRoles(relationType, role);
                                         new DifferentAssociationSameRole(this).Test(
                                             relationType,
@@ -121,7 +121,7 @@ namespace Allors.Database.Adapters
                                         var roleClass = roleTypes[iRoleType];
 
                                         // One Role
-                                        var role = this.GetTransaction().Create(roleClass);
+                                        var role = this.GetTransaction().Build(roleClass);
                                         IObject[] roles = this.CreateRoles(relationType, role);
                                         new DifferentAssociationSameRole(this).Test(relationType, associations, role, roles, emptyRoles, transactionFlag, repeat, assertRepeat, testRepeat);
                                     }
@@ -187,8 +187,8 @@ namespace Allors.Database.Adapters
                                         var roleType = roleTypes[iRoleType];
 
                                         // One Role
-                                        var association = this.GetTransaction().Create(associationType);
-                                        var role = this.GetTransaction().Create(roleType);
+                                        var association = this.GetTransaction().Build(associationType);
+                                        var role = this.GetTransaction().Build(roleType);
                                         IObject[] allRoles = this.CreateRoles(relationType, role);
                                         new SameAssociationSameRole(this).Test(
                                             relationType,
@@ -207,7 +207,7 @@ namespace Allors.Database.Adapters
                                         var roleClass = roleTypes[iRoleType];
 
                                         // Many RoleTypes With Same ObjectType
-                                        var association = this.GetTransaction().Create(associationType);
+                                        var association = this.GetTransaction().Build(associationType);
                                         IObject[] allRoles = this.CreateRolesWithSameClass(relationType, roleClass);
                                         IObject[] rolesOtherDatabase =
                                             this.CreateRolesWithSameClass(this.GetTransaction2(), relationType, roleClass);
@@ -234,7 +234,7 @@ namespace Allors.Database.Adapters
 
                                     {
                                         // Many RoleTypes Different ObjectTypes
-                                        var association = this.GetTransaction().Create(associationType);
+                                        var association = this.GetTransaction().Build(associationType);
                                         IObject[] allRoles = this.CreateRolesWithDifferentClass(relationType);
                                         IObject[] rolesOtherDatabase = this.CreateRolesWithDifferentClass(this.GetTransaction2(), relationType);
                                         new SameAssociationSameRolesByOne(this).Test(relationType, association, allRoles, emptyRoles, rolesOtherDatabase, transactionFlag, repeat, testRepeat, assertRepeat);
@@ -260,7 +260,7 @@ namespace Allors.Database.Adapters
             {
                 int classIndex = i % concreteClasses.Count();
                 var associationType = concreteClasses[classIndex];
-                associations[i] = this.GetTransaction().Create(associationType);
+                associations[i] = this.GetTransaction().Build(associationType);
             }
 
             return associations;
@@ -271,7 +271,7 @@ namespace Allors.Database.Adapters
             IObject[] associations = this.CreateArray(relationType.AssociationType.ObjectType, this.GetAssociationCount());
             for (int i = 0; i < this.GetAssociationCount(); i++)
             {
-                associations[i] = this.GetTransaction().Create(associationClass);
+                associations[i] = this.GetTransaction().Build(associationClass);
             }
 
             return associations;
@@ -294,7 +294,7 @@ namespace Allors.Database.Adapters
             {
                 int classIndex = i % concreteClasses.Count();
                 var roleType = concreteClasses[classIndex];
-                allRoles[i] = transaction.Create(roleType);
+                allRoles[i] = transaction.Build(roleType);
             }
 
             return allRoles;
@@ -307,7 +307,7 @@ namespace Allors.Database.Adapters
             IObject[] allRoles = this.CreateArray(relationType.RoleType.ObjectType, this.GetRoleCount());
             for (int i = 0; i < allRoles.Count(); i++)
             {
-                allRoles[i] = transaction.Create(roleClass);
+                allRoles[i] = transaction.Build(roleClass);
             }
 
             return allRoles;

@@ -58,14 +58,14 @@ namespace Allors.Database.Domain
 
             var avatar = new Medias(this.transaction).Avatar;
 
-            var place = this.transaction.Create<Place>(v =>
+            var place = this.transaction.Build<Place>(v =>
             {
                 v.PostalCode = "X";
                 v.City = "London";
                 v.Country = countries.CountryByIsoCode["GB"];
             });
 
-            var address = this.transaction.Create<HomeAddress>(v =>
+            var address = this.transaction.Build<HomeAddress>(v =>
             {
                 v.Street = "Main Street";
                 v.HouseNumber = "1";
@@ -99,14 +99,14 @@ namespace Allors.Database.Domain
             acme.Manager = jane;
             acme.AddShareholder(jane);
             acme.AddShareholder(jenny);
-            this.transaction.Create<Employment>(v =>
+            this.transaction.Build<Employment>(v =>
             {
                 v.Employer = acme;
                 v.Employee = jane;
             });
 
             var now = this.transaction.Now();
-            this.transaction.Create<Employment>(v =>
+            this.transaction.Build<Employment>(v =>
             {
                 v.Employer = acme;
                 v.Employee = john;
@@ -145,7 +145,7 @@ namespace Allors.Database.Domain
             cyclePerson2.AddCycleMany(cycleOrganisation2);
 
             // MediaTyped
-            var mediaTyped = this.transaction.Create<MediaTyped>(v => v.Markdown = @"
+            var mediaTyped = this.transaction.Build<MediaTyped>(v => v.Markdown = @"
 # Markdown
 1.  List item one.
 

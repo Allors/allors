@@ -59,7 +59,7 @@ namespace Allors.Database.Domain
 
             foreach (var user in participantSet)
             {
-                transaction.Create<TaskAssignment>(v =>
+                transaction.Build<TaskAssignment>(v =>
                 {
                     v.Task = @this;
                     v.User = user;

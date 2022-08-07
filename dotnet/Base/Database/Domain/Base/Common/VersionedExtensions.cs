@@ -66,7 +66,7 @@ namespace Allors.Database.Domain
             if (isNewVersion)
             {
                 var transaction = @this.Strategy.Transaction;
-                var newVersion = (Version)transaction.Create(versionClass);
+                var newVersion = (Version)transaction.Build(versionClass);
                 newVersion.DerivationId = derivation.Id;
                 newVersion.DerivationTimeStamp = derivation.TimeStamp;
 

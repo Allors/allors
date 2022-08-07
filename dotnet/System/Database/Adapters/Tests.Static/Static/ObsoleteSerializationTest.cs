@@ -226,7 +226,7 @@ namespace Allors.Database.Adapters
                 using (var otherTransaction = otherPopulation.CreateTransaction())
                 {
                     // Initial
-                    var otherC1 = otherTransaction.Create<C1>();
+                    var otherC1 = otherTransaction.Build<C1>();
 
                     otherTransaction.Commit();
 
@@ -562,7 +562,7 @@ namespace Allors.Database.Adapters
                 using (var transaction = this.Population.CreateTransaction())
                 {
                     // Initial
-                    var c1 = transaction.Create<C1>();
+                    var c1 = transaction.Build<C1>();
 
                     transaction.Commit();
 

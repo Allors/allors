@@ -24,9 +24,9 @@ namespace Tests
 
         public PushExistingObjectTests(Fixture fixture) : base(fixture)
         {
-            this.x1 = this.Transaction.Create<WorkspaceXObject1>();
-            this.y1 = this.Transaction.Create<WorkspaceYObject1>();
-            this.none1 = this.Transaction.Create<WorkspaceNoneObject1>();
+            this.x1 = this.Transaction.Build<WorkspaceXObject1>();
+            this.y1 = this.Transaction.Build<WorkspaceYObject1>();
+            this.none1 = this.Transaction.Build<WorkspaceNoneObject1>();
 
             this.x1Version = this.x1.Strategy.ObjectVersion;
             this.y1Version = this.y1.Strategy.ObjectVersion;

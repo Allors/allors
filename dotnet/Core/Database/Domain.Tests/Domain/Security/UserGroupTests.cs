@@ -20,7 +20,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void GivenNoUserGroupWhenCreatingAUserGroupWithoutANameThenUserGroupIsInvalid()
         {
-            this.Transaction.Create<UserGroup>();
+            this.Transaction.Build<UserGroup>();
 
             var validation = this.Transaction.Derive(false);
 

@@ -68,10 +68,10 @@ namespace Allors.Database.Server.Controllers
             BuildPerson("noacl", "no", "acl");
 
             var noperm = BuildPerson("noperm", "no", "perm");
-            var emptyRole = this.transaction.Create<Role>(v => v.Name = "Empty");
+            var emptyRole = this.transaction.Build<Role>(v => v.Name = "Empty");
             var defaultSecurityToken = new SecurityTokens(this.transaction).DefaultSecurityToken;
 
-            var acl = this.transaction.Create<Grant>(v =>
+            var acl = this.transaction.Build<Grant>(v =>
             {
                 v.Role = emptyRole;
                 v.AddSubject(noperm);

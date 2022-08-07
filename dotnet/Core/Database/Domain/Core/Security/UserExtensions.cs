@@ -48,7 +48,7 @@ namespace Allors.Database.Domain
             if (!@this.ExistOwnerGrant)
             {
                 var ownerRole = new Roles(@this.Strategy.Transaction).Owner;
-                @this.OwnerGrant = @this.Transaction().Create<Grant>(grant =>
+                @this.OwnerGrant = @this.Transaction().Build<Grant>(grant =>
                 {
                     grant.Role = ownerRole;
                     grant.AddSubject(@this);
@@ -57,7 +57,7 @@ namespace Allors.Database.Domain
 
             if (!@this.ExistOwnerSecurityToken)
             {
-                @this.OwnerSecurityToken = @this.Transaction().Create<SecurityToken>(securityToken =>
+                @this.OwnerSecurityToken = @this.Transaction().Build<SecurityToken>(securityToken =>
                 {
                     securityToken.AddGrant(@this.OwnerGrant);
                 });

@@ -75,7 +75,7 @@ namespace Allors.Security
 
             try
             {
-                var user = transaction.Create<Person>(v =>
+                var user = transaction.Build<Person>(v =>
                 {
                     v.UserName = identityUser.UserName;
                     v.UserEmail = identityUser.Email;
@@ -207,7 +207,7 @@ namespace Allors.Security
             using var transaction = this.database.CreateTransaction();
             var user = (User)transaction.Instantiate(identityUser.Id);
 
-            var login = transaction.Create<Login>(v =>
+            var login = transaction.Build<Login>(v =>
             {
                 v.Provider = userLoginInfo.LoginProvider;
                 v.Key = userLoginInfo.ProviderKey;

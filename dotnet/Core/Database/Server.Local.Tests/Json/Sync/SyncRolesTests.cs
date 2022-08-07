@@ -22,7 +22,7 @@ namespace Tests
             var m = this.M;
             var user = this.SetUser("jane@example.com");
 
-            var x1 = this.Transaction.Create<WorkspaceXObject1>(v =>
+            var x1 = this.Transaction.Build<WorkspaceXObject1>(v =>
             {
                 v.WorkspaceXString = "x1:x";
                 v.WorkspaceYString = "x1:y";
@@ -59,7 +59,7 @@ namespace Tests
             var m = this.M;
             var user = this.SetUser("jane@example.com");
 
-            var x1 = this.Transaction.Create<WorkspaceXObject1>(v =>
+            var x1 = this.Transaction.Build<WorkspaceXObject1>(v =>
             {
                 v.WorkspaceXString = "x1:x";
                 v.WorkspaceYString = "x1:y";

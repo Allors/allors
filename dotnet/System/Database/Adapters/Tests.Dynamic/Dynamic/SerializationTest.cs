@@ -75,7 +75,7 @@ namespace Allors.Database.Adapters
                     {
                         foreach (var concreteClass in concreteClasses)
                         {
-                            ((ArrayList)objectsByMetaType[concreteClass]).Add(saveTransaction.Create(concreteClass));
+                            ((ArrayList)objectsByMetaType[concreteClass]).Add(saveTransaction.Build(concreteClass));
                         }
                     }
 
@@ -84,7 +84,7 @@ namespace Allors.Database.Adapters
                         for (var j = 0; j < this.ObjectsPerClass; j++)
                         {
                             var concreteClass = t;
-                            ((ArrayList)objectsByMetaType[concreteClass]).Add(saveTransaction.Create(concreteClass));
+                            ((ArrayList)objectsByMetaType[concreteClass]).Add(saveTransaction.Build(concreteClass));
                         }
                     }
 

@@ -39,7 +39,7 @@ namespace Allors.Database.Adapters
                 var objects = new List<IObject>();
                 for (var i = 0; i < Max; i++)
                 {
-                    objects.Add(this.GetTransaction().Create(concreteCompositeType));
+                    objects.Add(this.GetTransaction().Build(concreteCompositeType));
                 }
 
                 objectsByObjectType[concreteCompositeType] = objects;
@@ -94,7 +94,7 @@ namespace Allors.Database.Adapters
                     {
                         foreach (var concreteType in ((Composite)role.ObjectType).Classes)
                         {
-                            var roleObject = this.GetTransaction().Create(concreteType);
+                            var roleObject = this.GetTransaction().Build(concreteType);
                             extent.Filter.AddEquals(role, roleObject);
                         }
                     }
@@ -106,7 +106,7 @@ namespace Allors.Database.Adapters
                     {
                         foreach (var concreteType in association.ObjectType.DatabaseClasses)
                         {
-                            var associationObject = this.GetTransaction().Create(concreteType);
+                            var associationObject = this.GetTransaction().Build(concreteType);
                             extent.Filter.AddEquals(association, associationObject);
                         }
                     }

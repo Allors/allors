@@ -17,7 +17,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void UnitRoles()
         {
-            var person = this.Transaction.Create<Person>(v =>
+            var person = this.Transaction.Build<Person>(v =>
             {
                 v.FirstName = "Jane";
                 v.LastName = "Doe";

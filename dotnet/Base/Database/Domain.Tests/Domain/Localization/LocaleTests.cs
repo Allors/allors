@@ -28,7 +28,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void GivenLocale_WhenDeriving_ThenNameIsSet()
         {
-            var locale = this.Transaction.Create<Locale>(v =>
+            var locale = this.Transaction.Build<Locale>(v =>
             {
                 v.Language = new Languages(this.Transaction).FindBy(this.M.Language.IsoCode, "en");
                 v.Country = new Countries(this.Transaction).FindBy(this.M.Country.IsoCode, "BE");

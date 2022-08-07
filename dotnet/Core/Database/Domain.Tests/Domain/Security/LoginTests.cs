@@ -23,7 +23,7 @@ namespace Allors.Database.Domain.Tests
 
             this.Transaction.Derive();
 
-            var login = this.Transaction.Create<Login>(v =>
+            var login = this.Transaction.Build<Login>(v =>
             {
                 v.Provider = "MyProvider";
                 v.Key = "XXXYYYZZZ";

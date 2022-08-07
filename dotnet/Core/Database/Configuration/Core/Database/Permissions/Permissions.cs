@@ -78,7 +78,7 @@ namespace Allors.Database.Configuration
                 // Create
                 if (!createPermissionsByClassId.ContainsKey(@class.Id))
                 {
-                    transaction.Create<CreatePermission>(v => v.ClassPointer = @class.Id);
+                    transaction.Build<CreatePermission>(v => v.ClassPointer = @class.Id);
                 }
 
                 var relationTypeIds = new HashSet<Guid>(@class.DatabaseRoleTypes.Select(v => v.RelationType.Id));
@@ -101,7 +101,7 @@ namespace Allors.Database.Configuration
 
                     foreach (var relationTypeId in relationTypeIds.Where(v => !existingRelationTypeIds.Contains(v)))
                     {
-                        transaction.Create<ReadPermission>(v =>
+                        transaction.Build<ReadPermission>(v =>
                         {
                             v.ClassPointer = @class.Id;
                             v.RelationTypePointer = relationTypeId;
@@ -112,7 +112,7 @@ namespace Allors.Database.Configuration
                 {
                     foreach (var relationTypeId in relationTypeIds)
                     {
-                        transaction.Create<ReadPermission>(v =>
+                        transaction.Build<ReadPermission>(v =>
                         {
                             v.ClassPointer = @class.Id;
                             v.RelationTypePointer = relationTypeId;
@@ -138,7 +138,7 @@ namespace Allors.Database.Configuration
 
                     foreach (var relationTypeId in relationTypeIds.Where(v => !existingRelationTypeIds.Contains(v)))
                     {
-                        transaction.Create<WritePermission>(v =>
+                        transaction.Build<WritePermission>(v =>
                         {
                             v.ClassPointer = @class.Id;
                             v.RelationTypePointer = relationTypeId;
@@ -149,7 +149,7 @@ namespace Allors.Database.Configuration
                 {
                     foreach (var relationTypeId in relationTypeIds)
                     {
-                        transaction.Create<WritePermission>(v =>
+                        transaction.Build<WritePermission>(v =>
                         {
                             v.ClassPointer = @class.Id;
                             v.RelationTypePointer = relationTypeId;
@@ -177,7 +177,7 @@ namespace Allors.Database.Configuration
 
                     foreach (var methodTypeId in methodTypeIds.Where(v => !existingRelationTypeIds.Contains(v)))
                     {
-                        transaction.Create<ExecutePermission>(v =>
+                        transaction.Build<ExecutePermission>(v =>
                         {
                             v.ClassPointer = @class.Id;
                             v.MethodTypePointer = methodTypeId;
@@ -188,7 +188,7 @@ namespace Allors.Database.Configuration
                 {
                     foreach (var methodTypeId in methodTypeIds)
                     {
-                        transaction.Create<ExecutePermission>(v =>
+                        transaction.Build<ExecutePermission>(v =>
                         {
                             v.ClassPointer = @class.Id;
                             v.MethodTypePointer = methodTypeId;

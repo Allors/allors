@@ -17,7 +17,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void ClassMethod()
         {
-            var c1 = this.Transaction.Create<C1>();
+            var c1 = this.Transaction.Build<C1>();
 
             var classMethod = c1.ClassMethod();
 
@@ -27,7 +27,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void InterfaceMethod()
         {
-            var c1 = this.Transaction.Create<C1>();
+            var c1 = this.Transaction.Build<C1>();
 
             var interfaceMethod = c1.InterfaceMethod();
 
@@ -37,7 +37,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void SuperinterfaceMethod()
         {
-            var c1 = this.Transaction.Create<C1>();
+            var c1 = this.Transaction.Build<C1>();
 
             var interfaceMethod = c1.SuperinterfaceMethod();
 
@@ -47,7 +47,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void MethodWithResults()
         {
-            var c1 = this.Transaction.Create<C1>();
+            var c1 = this.Transaction.Build<C1>();
 
             var method = c1.Sum(
                 m =>
@@ -62,7 +62,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void CallMethodTwice()
         {
-            var c1 = this.Transaction.Create<C1>();
+            var c1 = this.Transaction.Build<C1>();
 
             var classMethod = c1.ClassMethod();
 

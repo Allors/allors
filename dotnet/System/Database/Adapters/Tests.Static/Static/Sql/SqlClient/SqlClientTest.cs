@@ -59,8 +59,8 @@ namespace Allors.Database.Adapters.Sql.SqlClient
 
                 using (var transaction = this.CreateTransaction())
                 {
-                    var c1s = (Extent<C1>)transaction.Create(m.C1, count);
-                    var c2s = (Extent<C2>)transaction.Create(m.C2, count);
+                    var c1s = (Extent<C1>)transaction.Build(m.C1, count);
+                    var c2s = (Extent<C2>)transaction.Build(m.C2, count);
 
                     for (var i = 0; i < count; i++)
                     {

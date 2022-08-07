@@ -41,7 +41,7 @@ namespace Allors.Database.Domain
                 {
                     if (!media.ExistMediaContent)
                     {
-                        media.MediaContent = media.Transaction().Create<MediaContent>();
+                        media.MediaContent = media.Transaction().Build<MediaContent>();
                     }
                 }
 

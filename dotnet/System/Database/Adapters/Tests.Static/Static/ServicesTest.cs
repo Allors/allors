@@ -38,11 +38,11 @@ namespace Allors.Database.Adapters
                 init();
                 var m = this.Transaction.Database.Context().M;
 
-                var c1 = this.Transaction.Create<C1>();
+                var c1 = this.Transaction.Build<C1>();
                 var strategy = c1.Strategy;
                 var id = long.Parse(strategy.ObjectId.ToString());
 
-                var nextId = long.Parse(this.Transaction.Create<C1>().Strategy.ObjectId.ToString());
+                var nextId = long.Parse(this.Transaction.Build<C1>().Strategy.ObjectId.ToString());
 
                 Assert.Equal(id + 1, nextId);
             }
@@ -61,7 +61,7 @@ namespace Allors.Database.Adapters
                 var total = 0;
                 foreach (var run in runs)
                 {
-                    var allorsObjects = this.Transaction.Create(m.C1, run);
+                    var allorsObjects = this.Transaction.Build(m.C1, run);
 
                     Assert.Equal(run, allorsObjects.Length);
 
@@ -88,7 +88,7 @@ namespace Allors.Database.Adapters
                         allorsObject.C1AllorsString = "CreateMany";
                     }
 
-                    var c2s = (C2[])this.Transaction.Create(m.C2, run);
+                    var c2s = (C2[])this.Transaction.Build(m.C2, run);
                     Assert.Equal(run, c2s.Length);
                 }
             }
@@ -3979,7 +3979,7 @@ namespace Allors.Database.Adapters
                 var m = this.Transaction.Database.Context().M;
 
                 const int ObjectCount = 10;
-                var allorsObjects = this.Transaction.Create(m.Company, ObjectCount);
+                var allorsObjects = this.Transaction.Build(m.Company, ObjectCount);
                 var ids = new string[ObjectCount];
                 for (var i = 0; i < ObjectCount; i++)
                 {
@@ -4005,7 +4005,7 @@ namespace Allors.Database.Adapters
                 init();
                 var m = this.Transaction.Database.Context().M;
 
-                var obj = this.Transaction.Create<C1>();
+                var obj = this.Transaction.Build<C1>();
 
                 Assert.Equal(2, obj.Strategy.ObjectVersion);
 
@@ -4235,13 +4235,13 @@ namespace Allors.Database.Adapters
                     populations.Add(population1);
                     var transaction1 = population1.CreateTransaction();
 
-                    var c1 = transaction1.Create<C1>();
+                    var c1 = transaction1.Build<C1>();
 
                     var population2 = this.CreatePopulation();
                     populations.Add(population2);
                     var transaction2 = population2.CreateTransaction();
 
-                    var c2 = transaction2.Create<C2>();
+                    var c2 = transaction2.Build<C2>();
 
                     transaction1.Commit();
                     transaction2.Commit();
@@ -4257,14 +4257,14 @@ namespace Allors.Database.Adapters
                 init();
                 var m = this.Transaction.Database.Context().M;
 
-                var c1a = this.Transaction.Create(m.C1);
+                var c1a = this.Transaction.Build(m.C1);
                 Assert.Equal(m.C1, c1a.Strategy.Class);
 
                 this.Transaction.Commit();
 
                 Assert.Equal(m.C1, c1a.Strategy.Class);
 
-                var c1b = this.Transaction.Create(m.C1);
+                var c1b = this.Transaction.Build(m.C1);
 
                 this.Transaction.Rollback();
 
@@ -4281,7 +4281,7 @@ namespace Allors.Database.Adapters
 
                 Assert.True(exceptionThrown);
 
-                var c2a = this.Transaction.Create(m.C2);
+                var c2a = this.Transaction.Build(m.C2);
                 Assert.Equal(m.C2, c2a.Strategy.Class);
 
                 this.Transaction.Commit();

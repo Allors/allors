@@ -119,63 +119,63 @@ namespace Allors.Database.Domain.Tests
         }
 
         #region Builders
-        protected UserGroup BuildUserGroup(string name, params User[] members) => this.Transaction.Create<UserGroup>(v =>
+        protected UserGroup BuildUserGroup(string name, params User[] members) => this.Transaction.Build<UserGroup>(v =>
         {
             v.Name = name;
             v.Members = members;
         });
 
-        protected Role BuildRole(string name, params Permission[] permissions) => this.Transaction.Create<Role>(v =>
+        protected Role BuildRole(string name, params Permission[] permissions) => this.Transaction.Build<Role>(v =>
         {
             v.Name = name;
             v.Permissions = permissions;
         });
 
-        protected Grant BuildGrant(User subject, Role role = null) => this.Transaction.Create<Grant>(v =>
+        protected Grant BuildGrant(User subject, Role role = null) => this.Transaction.Build<Grant>(v =>
         {
             v.AddSubject(subject);
             v.Role = role;
         });
 
-        protected Grant BuildGrant(UserGroup subjectGroup, Role role = null) => this.Transaction.Create<Grant>(v =>
+        protected Grant BuildGrant(UserGroup subjectGroup, Role role = null) => this.Transaction.Build<Grant>(v =>
         {
             v.AddSubjectGroup(subjectGroup);
             v.Role = role;
         });
 
-        protected Revocation BuildRevocation(params Permission[] deniedPermissions) => this.Transaction.Create<Revocation>(v =>
+        protected Revocation BuildRevocation(params Permission[] deniedPermissions) => this.Transaction.Build<Revocation>(v =>
         {
             v.DeniedPermissions = deniedPermissions;
         });
 
-        protected SecurityToken BuildSecurityToken() => this.Transaction.Create<SecurityToken>();
+        protected SecurityToken BuildSecurityToken() => this.Transaction.Build<SecurityToken>();
 
-        protected Person BuildPerson(string firstName, string lastName) => this.Transaction.Create<Person>(v =>
+        protected Person BuildPerson(string firstName, string lastName) => this.Transaction.Build<Person>(v =>
         {
             v.FirstName = firstName;
             v.LastName = lastName;
         });
 
-        protected Person BuildPerson(string userName) => this.Transaction.Create<Person>(v =>
+        protected Person BuildPerson(string userName) => this.Transaction.Build<Person>(v =>
         {
             v.UserName = userName;
         });
 
-        protected Organisation BuildOrganisation(string name) => this.Transaction.Create<Organisation>(v =>
+        protected Organisation BuildOrganisation(string name) => this.Transaction.Build<Organisation>(v =>
         {
             v.Name = name;
         });
 
-        protected C1 BuildC1(params Action<C1>[] builders) => this.Transaction.Create(builders);
+        protected C1 BuildC1(params Action<C1>[] builders) => this.Transaction.Build(builders);
 
-        protected C1 BuildC1(string c1AllorsString = null, Action<C1> builder = null) => this.Transaction.Create<C1>((v =>
+        protected C1 BuildC1(string c1AllorsString = null, Action<C1> builder = null) => this.Transaction.Build<C1>((v =>
         {
             v.C1AllorsString = c1AllorsString;
         }), builder);
 
-        protected C2 BuildC2(params Action<C2>[] builders) => this.Transaction.Create(builders);
+        protected C2 BuildC2(params Action<C2>[] builders) => this.Transaction.Build(builders);
 
-        protected C2 BuildC2(string c2AllorsString = null, Action<C2> builder = null) => this.Transaction.Create<C2>(v =>
+        protected C2 BuildC2(string c2AllorsString = null, Action<C2> builder = null) => this.Transaction.Build<C2>(v =>
         {
             v.C2AllorsString = c2AllorsString;
         }, builder);

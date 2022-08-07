@@ -81,7 +81,7 @@ namespace Allors.Database.Adapters
                     for (int testTypeIndex = 0; testTypeIndex < this.GetTestTypes().Length; testTypeIndex++)
                     {
                         var testType = this.GetTestTypes()[testTypeIndex];
-                        var allorsObject = this.GetTransaction().Create(testType);
+                        var allorsObject = this.GetTransaction().Build(testType);
                         if (transactionFlag)
                         {
                             this.GetTransaction().Commit();
@@ -128,7 +128,7 @@ namespace Allors.Database.Adapters
                     for (int testTypeIndex = 0; testTypeIndex < this.GetTestTypes().Length; testTypeIndex++)
                     {
                         var testType = this.GetTestTypes()[testTypeIndex];
-                        var allorsObject = this.GetTransaction().Create(testType);
+                        var allorsObject = this.GetTransaction().Build(testType);
                         if (transactionFlag)
                         {
                             this.GetTransaction().Commit();
@@ -154,7 +154,7 @@ namespace Allors.Database.Adapters
                 for (int testTypeIndex = 0; testTypeIndex < this.GetTestTypes().Length; testTypeIndex++)
                 {
                     var testType = this.GetTestTypes()[testTypeIndex];
-                    var allorsObject = this.GetTransaction().Create(testType);
+                    var allorsObject = this.GetTransaction().Build(testType);
                     if (transactionFlag)
                     {
                         this.GetTransaction().Commit();
@@ -185,7 +185,7 @@ namespace Allors.Database.Adapters
                     for (int testTypeIndex = 0; testTypeIndex < this.GetTestTypes().Length; testTypeIndex++)
                     {
                         var testType = this.GetTestTypes()[testTypeIndex];
-                        var allorsObject = this.GetTransaction().Create(testType);
+                        var allorsObject = this.GetTransaction().Build(testType);
 
                         var testRoleTypes = this.GetBooleanRoles(testType);
                         for (int testRoleTypeIndex = 0; testRoleTypeIndex < testRoleTypes.Count(); testRoleTypeIndex++)
@@ -230,7 +230,7 @@ namespace Allors.Database.Adapters
                     for (int testTypeIndex = 0; testTypeIndex < this.GetTestTypes().Length; testTypeIndex++)
                     {
                         var testType = this.GetTestTypes()[testTypeIndex];
-                        var allorsObject = this.GetTransaction().Create(testType);
+                        var allorsObject = this.GetTransaction().Build(testType);
                         this.GetTransaction().Commit();
 
                         var testRoleTypes = this.GetBooleanRoles(testType);
@@ -254,7 +254,7 @@ namespace Allors.Database.Adapters
                     for (int testTypeIndex = 0; testTypeIndex < this.GetTestTypes().Length; testTypeIndex++)
                     {
                         var testType = this.GetTestTypes()[testTypeIndex];
-                        var allorsObject = this.GetTransaction().Create(testType);
+                        var allorsObject = this.GetTransaction().Build(testType);
 
                         var testRoleTypes = this.GetBooleanRoles(testType);
                         for (int testRoleTypeIndex = 0; testRoleTypeIndex < testRoleTypes.Count(); testRoleTypeIndex++)
@@ -285,7 +285,7 @@ namespace Allors.Database.Adapters
                     for (int testTypeIndex = 0; testTypeIndex < this.GetTestTypes().Length; testTypeIndex++)
                     {
                         var testType = this.GetTestTypes()[testTypeIndex];
-                        var allorsObject = this.GetTransaction().Create(testType);
+                        var allorsObject = this.GetTransaction().Build(testType);
 
                         var testRoleTypes = this.GetBooleanRoles(testType);
                         for (int testRoleTypeIndex = 0; testRoleTypeIndex < testRoleTypes.Count(); testRoleTypeIndex++)
@@ -331,7 +331,7 @@ namespace Allors.Database.Adapters
                     for (int testTypeIndex = 0; testTypeIndex < this.GetTestTypes().Length; testTypeIndex++)
                     {
                         var testType = this.GetTestTypes()[testTypeIndex];
-                        var allorsObject = this.GetTransaction().Create(testType);
+                        var allorsObject = this.GetTransaction().Build(testType);
                         if (transactionFlag)
                         {
                             this.GetTransaction().Commit();
@@ -363,7 +363,7 @@ namespace Allors.Database.Adapters
                 for (int testTypeIndex = 0; testTypeIndex < this.GetTestTypes().Length; testTypeIndex++)
                 {
                     var testType = this.GetTestTypes()[testTypeIndex];
-                    var allorsObject = this.GetTransaction().Create(testType);
+                    var allorsObject = this.GetTransaction().Build(testType);
                     if (transactionFlag)
                     {
                         this.GetTransaction().Commit();
@@ -394,7 +394,7 @@ namespace Allors.Database.Adapters
                     for (int testTypeIndex = 0; testTypeIndex < this.GetTestTypes().Length; testTypeIndex++)
                     {
                         var testType = this.GetTestTypes()[testTypeIndex];
-                        var allorsObject = this.GetTransaction().Create(testType);
+                        var allorsObject = this.GetTransaction().Build(testType);
 
                         var testRoleTypes = this.GetDateTimeRoles(testType);
                         for (int testRoleTypeIndex = 0; testRoleTypeIndex < testRoleTypes.Count(); testRoleTypeIndex++)
@@ -439,7 +439,7 @@ namespace Allors.Database.Adapters
                     for (int testTypeIndex = 0; testTypeIndex < this.GetTestTypes().Length; testTypeIndex++)
                     {
                         var testType = this.GetTestTypes()[testTypeIndex];
-                        var allorsObject = this.GetTransaction().Create(testType);
+                        var allorsObject = this.GetTransaction().Build(testType);
                         this.GetTransaction().Commit();
 
                         var testRoleTypes = this.GetDateTimeRoles(testType);
@@ -463,7 +463,7 @@ namespace Allors.Database.Adapters
                     for (int testTypeIndex = 0; testTypeIndex < this.GetTestTypes().Length; testTypeIndex++)
                     {
                         var testType = this.GetTestTypes()[testTypeIndex];
-                        var allorsObject = this.GetTransaction().Create(testType);
+                        var allorsObject = this.GetTransaction().Build(testType);
 
                         var testRoleTypes = this.GetDateTimeRoles(testType);
                         for (int testRoleTypeIndex = 0; testRoleTypeIndex < testRoleTypes.Count(); testRoleTypeIndex++)
@@ -494,7 +494,7 @@ namespace Allors.Database.Adapters
                     for (int testTypeIndex = 0; testTypeIndex < this.GetTestTypes().Length; testTypeIndex++)
                     {
                         var testType = this.GetTestTypes()[testTypeIndex];
-                        var allorsObject = this.GetTransaction().Create(testType);
+                        var allorsObject = this.GetTransaction().Build(testType);
 
                         var testRoleTypes = this.GetDateTimeRoles(testType);
                         for (int testRoleTypeIndex = 0; testRoleTypeIndex < testRoleTypes.Count(); testRoleTypeIndex++)
@@ -540,7 +540,7 @@ namespace Allors.Database.Adapters
                     for (int testTypeIndex = 0; testTypeIndex < this.GetTestTypes().Length; testTypeIndex++)
                     {
                         var testType = this.GetTestTypes()[testTypeIndex];
-                        var allorsObject = this.GetTransaction().Create(testType);
+                        var allorsObject = this.GetTransaction().Build(testType);
                         if (transactionFlag)
                         {
                             this.GetTransaction().Commit();
@@ -566,7 +566,7 @@ namespace Allors.Database.Adapters
                 for (int testTypeIndex = 0; testTypeIndex < this.GetTestTypes().Length; testTypeIndex++)
                 {
                     var testType = this.GetTestTypes()[testTypeIndex];
-                    var allorsObject = this.GetTransaction().Create(testType);
+                    var allorsObject = this.GetTransaction().Build(testType);
                     if (transactionFlag)
                     {
                         this.GetTransaction().Commit();
@@ -597,7 +597,7 @@ namespace Allors.Database.Adapters
                     for (int testTypeIndex = 0; testTypeIndex < this.GetTestTypes().Length; testTypeIndex++)
                     {
                         var testType = this.GetTestTypes()[testTypeIndex];
-                        var allorsObject = this.GetTransaction().Create(testType);
+                        var allorsObject = this.GetTransaction().Build(testType);
 
                         var testRoleTypes = this.GetDecimalRoles(testType);
                         for (int testRoleTypeIndex = 0; testRoleTypeIndex < testRoleTypes.Count(); testRoleTypeIndex++)
@@ -642,7 +642,7 @@ namespace Allors.Database.Adapters
                     for (int testTypeIndex = 0; testTypeIndex < this.GetTestTypes().Length; testTypeIndex++)
                     {
                         var testType = this.GetTestTypes()[testTypeIndex];
-                        var allorsObject = this.GetTransaction().Create(testType);
+                        var allorsObject = this.GetTransaction().Build(testType);
                         this.GetTransaction().Commit();
 
                         var testRoleTypes = this.GetDecimalRoles(testType);
@@ -666,7 +666,7 @@ namespace Allors.Database.Adapters
                     for (int testTypeIndex = 0; testTypeIndex < this.GetTestTypes().Length; testTypeIndex++)
                     {
                         var testType = this.GetTestTypes()[testTypeIndex];
-                        var allorsObject = this.GetTransaction().Create(testType);
+                        var allorsObject = this.GetTransaction().Build(testType);
 
                         var testRoleTypes = this.GetDecimalRoles(testType);
                         for (int testRoleTypeIndex = 0; testRoleTypeIndex < testRoleTypes.Count(); testRoleTypeIndex++)
@@ -697,7 +697,7 @@ namespace Allors.Database.Adapters
                     for (int testTypeIndex = 0; testTypeIndex < this.GetTestTypes().Length; testTypeIndex++)
                     {
                         var testType = this.GetTestTypes()[testTypeIndex];
-                        var allorsObject = this.GetTransaction().Create(testType);
+                        var allorsObject = this.GetTransaction().Build(testType);
 
                         var testRoleTypes = this.GetDecimalRoles(testType);
                         for (int testRoleTypeIndex = 0; testRoleTypeIndex < testRoleTypes.Count(); testRoleTypeIndex++)
@@ -739,7 +739,7 @@ namespace Allors.Database.Adapters
                     for (int testTypeIndex = 0; testTypeIndex < this.GetTestTypes().Length; testTypeIndex++)
                     {
                         var testType = this.GetTestTypes()[testTypeIndex];
-                        var allorsObject = this.GetTransaction().Create(testType);
+                        var allorsObject = this.GetTransaction().Build(testType);
                         if (transactionFlag)
                         {
                             this.GetTransaction().Commit();
@@ -765,7 +765,7 @@ namespace Allors.Database.Adapters
                 for (int testTypeIndex = 0; testTypeIndex < this.GetTestTypes().Length; testTypeIndex++)
                 {
                     var testType = this.GetTestTypes()[testTypeIndex];
-                    var allorsObject = this.GetTransaction().Create(testType);
+                    var allorsObject = this.GetTransaction().Build(testType);
                     if (transactionFlag)
                     {
                         this.GetTransaction().Commit();
@@ -796,7 +796,7 @@ namespace Allors.Database.Adapters
                     for (int testTypeIndex = 0; testTypeIndex < this.GetTestTypes().Length; testTypeIndex++)
                     {
                         var testType = this.GetTestTypes()[testTypeIndex];
-                        var allorsObject = this.GetTransaction().Create(testType);
+                        var allorsObject = this.GetTransaction().Build(testType);
 
                         var testRoleTypes = this.GetFloatRoles(testType);
                         for (int testRoleTypeIndex = 0; testRoleTypeIndex < testRoleTypes.Count(); testRoleTypeIndex++)
@@ -841,7 +841,7 @@ namespace Allors.Database.Adapters
                     for (int testTypeIndex = 0; testTypeIndex < this.GetTestTypes().Length; testTypeIndex++)
                     {
                         var testType = this.GetTestTypes()[testTypeIndex];
-                        var allorsObject = this.GetTransaction().Create(testType);
+                        var allorsObject = this.GetTransaction().Build(testType);
                         this.GetTransaction().Commit();
 
                         var testRoleTypes = this.GetFloatRoles(testType);
@@ -865,7 +865,7 @@ namespace Allors.Database.Adapters
                     for (int testTypeIndex = 0; testTypeIndex < this.GetTestTypes().Length; testTypeIndex++)
                     {
                         var testType = this.GetTestTypes()[testTypeIndex];
-                        var allorsObject = this.GetTransaction().Create(testType);
+                        var allorsObject = this.GetTransaction().Build(testType);
 
                         var testRoleTypes = this.GetFloatRoles(testType);
                         for (int testRoleTypeIndex = 0; testRoleTypeIndex < testRoleTypes.Count(); testRoleTypeIndex++)
@@ -896,7 +896,7 @@ namespace Allors.Database.Adapters
                     for (int testTypeIndex = 0; testTypeIndex < this.GetTestTypes().Length; testTypeIndex++)
                     {
                         var testType = this.GetTestTypes()[testTypeIndex];
-                        var allorsObject = this.GetTransaction().Create(testType);
+                        var allorsObject = this.GetTransaction().Build(testType);
 
                         var testRoleTypes = this.GetFloatRoles(testType);
                         for (int testRoleTypeIndex = 0; testRoleTypeIndex < testRoleTypes.Count(); testRoleTypeIndex++)
@@ -940,7 +940,7 @@ namespace Allors.Database.Adapters
                     for (int testTypeIndex = 0; testTypeIndex < testTypes.Count(); testTypeIndex++)
                     {
                         var testType = testTypes[testTypeIndex];
-                        var allorsObject = this.GetTransaction().Create(testType);
+                        var allorsObject = this.GetTransaction().Build(testType);
                         if (transactionFlag)
                         {
                             this.GetTransaction().Commit();
@@ -966,7 +966,7 @@ namespace Allors.Database.Adapters
                 for (int testTypeIndex = 0; testTypeIndex < this.GetTestTypes().Length; testTypeIndex++)
                 {
                     var testType = this.GetTestTypes()[testTypeIndex];
-                    var allorsObject = this.GetTransaction().Create(testType);
+                    var allorsObject = this.GetTransaction().Build(testType);
                     if (transactionFlag)
                     {
                         this.GetTransaction().Commit();
@@ -997,7 +997,7 @@ namespace Allors.Database.Adapters
                     for (int testTypeIndex = 0; testTypeIndex < this.GetTestTypes().Length; testTypeIndex++)
                     {
                         var testType = this.GetTestTypes()[testTypeIndex];
-                        var allorsObject = this.GetTransaction().Create(testType);
+                        var allorsObject = this.GetTransaction().Build(testType);
 
                         var testRoleTypes = this.GetIntegerRoles(testType);
                         for (int testRoleTypeIndex = 0; testRoleTypeIndex < testRoleTypes.Count(); testRoleTypeIndex++)
@@ -1042,7 +1042,7 @@ namespace Allors.Database.Adapters
                     for (int testTypeIndex = 0; testTypeIndex < this.GetTestTypes().Length; testTypeIndex++)
                     {
                         var testType = this.GetTestTypes()[testTypeIndex];
-                        var allorsObject = this.GetTransaction().Create(testType);
+                        var allorsObject = this.GetTransaction().Build(testType);
                         this.GetTransaction().Commit();
 
                         var testRoleTypes = this.GetIntegerRoles(testType);
@@ -1066,7 +1066,7 @@ namespace Allors.Database.Adapters
                     for (int testTypeIndex = 0; testTypeIndex < this.GetTestTypes().Length; testTypeIndex++)
                     {
                         var testType = this.GetTestTypes()[testTypeIndex];
-                        var allorsObject = this.GetTransaction().Create(testType);
+                        var allorsObject = this.GetTransaction().Build(testType);
 
                         var testRoleTypes = this.GetIntegerRoles(testType);
                         for (int testRoleTypeIndex = 0; testRoleTypeIndex < testRoleTypes.Count(); testRoleTypeIndex++)
@@ -1097,7 +1097,7 @@ namespace Allors.Database.Adapters
                     for (int testTypeIndex = 0; testTypeIndex < this.GetTestTypes().Length; testTypeIndex++)
                     {
                         var testType = this.GetTestTypes()[testTypeIndex];
-                        var allorsObject = this.GetTransaction().Create(testType);
+                        var allorsObject = this.GetTransaction().Build(testType);
 
                         var testRoleTypes = this.GetIntegerRoles(testType);
                         for (int testRoleTypeIndex = 0; testRoleTypeIndex < testRoleTypes.Count(); testRoleTypeIndex++)
@@ -1139,7 +1139,7 @@ namespace Allors.Database.Adapters
                     for (int testTypeIndex = 0; testTypeIndex < this.GetTestTypes().Length; testTypeIndex++)
                     {
                         var testType = this.GetTestTypes()[testTypeIndex];
-                        var allorsObject = this.GetTransaction().Create(testType);
+                        var allorsObject = this.GetTransaction().Build(testType);
                         if (transactionFlag)
                         {
                             this.GetTransaction().Commit();
@@ -1188,7 +1188,7 @@ namespace Allors.Database.Adapters
                     for (int testTypeIndex = 0; testTypeIndex < testTypes.Count(); testTypeIndex++)
                     {
                         var testType = testTypes[testTypeIndex];
-                        var allorsObject = this.GetTransaction().Create(testType);
+                        var allorsObject = this.GetTransaction().Build(testType);
                         if (transactionFlag)
                         {
                             this.GetTransaction().Commit();
@@ -1214,7 +1214,7 @@ namespace Allors.Database.Adapters
                 for (int testTypeIndex = 0; testTypeIndex < this.GetTestTypes().Length; testTypeIndex++)
                 {
                     var testType = this.GetTestTypes()[testTypeIndex];
-                    var allorsObject = this.GetTransaction().Create(testType);
+                    var allorsObject = this.GetTransaction().Build(testType);
                     if (transactionFlag)
                     {
                         this.GetTransaction().Commit();
@@ -1245,7 +1245,7 @@ namespace Allors.Database.Adapters
                     for (int testTypeIndex = 0; testTypeIndex < this.GetTestTypes().Length; testTypeIndex++)
                     {
                         var testType = this.GetTestTypes()[testTypeIndex];
-                        var allorsObject = this.GetTransaction().Create(testType);
+                        var allorsObject = this.GetTransaction().Build(testType);
 
                         var testRoleTypes = this.GetUniqueRoles(testType);
                         for (int testRoleTypeIndex = 0; testRoleTypeIndex < testRoleTypes.Count(); testRoleTypeIndex++)
@@ -1290,7 +1290,7 @@ namespace Allors.Database.Adapters
                     for (int testTypeIndex = 0; testTypeIndex < this.GetTestTypes().Length; testTypeIndex++)
                     {
                         var testType = this.GetTestTypes()[testTypeIndex];
-                        var allorsObject = this.GetTransaction().Create(testType);
+                        var allorsObject = this.GetTransaction().Build(testType);
                         this.GetTransaction().Commit();
 
                         var testRoleTypes = this.GetUniqueRoles(testType);
@@ -1314,7 +1314,7 @@ namespace Allors.Database.Adapters
                     for (int testTypeIndex = 0; testTypeIndex < this.GetTestTypes().Length; testTypeIndex++)
                     {
                         var testType = this.GetTestTypes()[testTypeIndex];
-                        var allorsObject = this.GetTransaction().Create(testType);
+                        var allorsObject = this.GetTransaction().Build(testType);
 
                         var testRoleTypes = this.GetUniqueRoles(testType);
                         for (int testRoleTypeIndex = 0; testRoleTypeIndex < testRoleTypes.Count(); testRoleTypeIndex++)
@@ -1345,7 +1345,7 @@ namespace Allors.Database.Adapters
                     for (int testTypeIndex = 0; testTypeIndex < this.GetTestTypes().Length; testTypeIndex++)
                     {
                         var testType = this.GetTestTypes()[testTypeIndex];
-                        var allorsObject = this.GetTransaction().Create(testType);
+                        var allorsObject = this.GetTransaction().Build(testType);
 
                         var testRoleTypes = this.GetUniqueRoles(testType);
                         for (int testRoleTypeIndex = 0; testRoleTypeIndex < testRoleTypes.Count(); testRoleTypeIndex++)

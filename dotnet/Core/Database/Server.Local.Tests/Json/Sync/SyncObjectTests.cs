@@ -21,7 +21,7 @@ namespace Tests
         {
             this.SetUser("jane@example.com");
 
-            var organisation = this.Transaction.Create<Organisation>(v => v.Name = "Acme");
+            var organisation = this.Transaction.Build<Organisation>(v => v.Name = "Acme");
             this.Transaction.Derive();
             this.Transaction.Commit();
 

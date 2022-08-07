@@ -19,7 +19,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void InitialNothing()
         {
-            var order = this.Transaction.Create<Order>();
+            var order = this.Transaction.Build<Order>();
 
             this.Transaction.Derive();
 
@@ -35,7 +35,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void VersionedUnitRole()
         {
-            var order = this.Transaction.Create<Order>(v => v.Amount = 10m);
+            var order = this.Transaction.Build<Order>(v => v.Amount = 10m);
 
             this.Transaction.Derive();
 
@@ -53,7 +53,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void NonVersionedUnitRole()
         {
-            var order = this.Transaction.Create<Order>(v => v.Amount = 10m);
+            var order = this.Transaction.Build<Order>(v => v.Amount = 10m);
 
             this.Transaction.Derive();
 
@@ -73,7 +73,7 @@ namespace Allors.Database.Domain.Tests
         {
             var initialObjectState = new OrderStates(this.Transaction).Initial;
 
-            var order = this.Transaction.Create<Order>(v => v.OrderState = initialObjectState);
+            var order = this.Transaction.Build<Order>(v => v.OrderState = initialObjectState);
 
             this.Transaction.Derive();
 
@@ -91,8 +91,8 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void InitialCompositeRoles()
         {
-            var orderLine = this.Transaction.Create<OrderLine>();
-            var order = this.Transaction.Create<Order>(v => v.AddOrderLine(orderLine));
+            var orderLine = this.Transaction.Build<OrderLine>();
+            var order = this.Transaction.Build<Order>(v => v.AddOrderLine(orderLine));
 
             this.Transaction.Derive();
 

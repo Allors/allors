@@ -85,7 +85,7 @@ namespace Allors.Database.Domain.Tests
 
             var count = new Permissions(this.Transaction).Extent().Count;
 
-            var permission = this.Transaction.Create<ExecutePermission>(v =>
+            var permission = this.Transaction.Build<ExecutePermission>(v =>
             {
                 v.ClassPointer = new Guid();
                 v.MethodTypePointer = new Guid();
@@ -99,7 +99,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void WhenSyncingPermissionsThenDanglingPermissionsAreDeleted()
         {
-            var permission = this.Transaction.Create<Database.Domain.ReadPermission>();
+            var permission = this.Transaction.Build<Database.Domain.ReadPermission>();
 
             this.Transaction.Database.Services.Get<IPermissions>().Sync(this.Transaction);
 

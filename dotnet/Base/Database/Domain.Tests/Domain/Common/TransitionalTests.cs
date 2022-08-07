@@ -23,7 +23,7 @@ namespace Allors.Database.Domain.Tests
             var confirmed = new OrderStates(this.Transaction).Confirmed;
             var cancelled = new OrderStates(this.Transaction).Cancelled;
 
-            var order = this.Transaction.Create<Order>();
+            var order = this.Transaction.Build<Order>();
 
             this.Transaction.Derive();
 
@@ -76,7 +76,7 @@ namespace Allors.Database.Domain.Tests
             var partiallyShipped = new ShipmentStates(this.Transaction).PartiallyShipped;
             var shipped = new ShipmentStates(this.Transaction).Shipped;
 
-            var order = this.Transaction.Create<Order>();
+            var order = this.Transaction.Build<Order>();
 
             order.OrderState = initial;
 

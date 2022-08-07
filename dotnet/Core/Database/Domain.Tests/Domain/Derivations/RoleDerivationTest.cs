@@ -19,7 +19,7 @@ namespace Allors.Database.Domain.Tests
         {
             var organisation = this.BuildOrganisation("Acme");
 
-            var jane = this.Transaction.Create<Person>(v =>
+            var jane = this.Transaction.Build<Person>(v =>
             {
                 v.FirstName = "Jane";
                 v.LastName = "Doe";

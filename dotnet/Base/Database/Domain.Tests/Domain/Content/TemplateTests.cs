@@ -20,9 +20,9 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void Render()
         {
-            var media = this.Transaction.Create<Media>(v => v.InData = this.GetResourceBytes("Domain.Tests.Resources.EmbeddedTemplate.odt"));
+            var media = this.Transaction.Build<Media>(v => v.InData = this.GetResourceBytes("Domain.Tests.Resources.EmbeddedTemplate.odt"));
             var templateType = new TemplateTypes(this.Transaction).OpenDocumentType;
-            var template = this.Transaction.Create<Template>(v =>
+            var template = this.Transaction.Build<Template>(v =>
             {
                 v.Media = media;
                 v.TemplateType = templateType;

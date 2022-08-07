@@ -23,7 +23,7 @@ namespace Tests
             var workspaceName = "X";
             var metaCache = this.Transaction.Database.Services.Get<IMetaCache>();
             var grant = new Grants(this.Transaction).Administrator;
-            var securityToken = this.Transaction.Create<SecurityToken>(v => v.AddGrant(grant));
+            var securityToken = this.Transaction.Build<SecurityToken>(v => v.AddGrant(grant));
 
             this.Transaction.Derive();
 

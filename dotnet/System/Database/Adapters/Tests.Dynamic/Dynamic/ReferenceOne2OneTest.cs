@@ -50,10 +50,10 @@ namespace Allors.Database.Adapters
                                     for (int iRoleType = 0; iRoleType < roleTypes.Count(); iRoleType++)
                                     {
                                         var roleType = roleTypes[iRoleType];
-                                        IObject association1 = this.GetTransaction().Create(associationType);
-                                        IObject association2 = this.GetTransaction().Create(associationType);
-                                        IObject role1 = this.GetTransaction().Create(roleType);
-                                        IObject role2 = this.GetTransaction().Create(roleType);
+                                        IObject association1 = this.GetTransaction().Build(associationType);
+                                        IObject association2 = this.GetTransaction().Build(associationType);
+                                        IObject role1 = this.GetTransaction().Build(roleType);
+                                        IObject role2 = this.GetTransaction().Build(roleType);
 
                                         for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
                                         {
@@ -355,10 +355,10 @@ namespace Allors.Database.Adapters
                                     for (int iRoleType = 0; iRoleType < roleTypes.Count(); iRoleType++)
                                     {
                                         var roleType = roleTypes[iRoleType];
-                                        IObject association1 = this.GetTransaction().Create(associationType);
-                                        IObject association2 = this.GetTransaction().Create(associationType);
-                                        IObject role1 = this.GetTransaction().Create(roleType);
-                                        IObject role2 = this.GetTransaction().Create(roleType);
+                                        IObject association1 = this.GetTransaction().Build(associationType);
+                                        IObject association2 = this.GetTransaction().Build(associationType);
+                                        IObject role1 = this.GetTransaction().Build(roleType);
+                                        IObject role2 = this.GetTransaction().Build(roleType);
 
                                         for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
                                         {
@@ -662,10 +662,10 @@ namespace Allors.Database.Adapters
                                     for (int iRoleType = 0; iRoleType < roleTypes.Count(); iRoleType++)
                                     {
                                         var roleType = roleTypes[iRoleType];
-                                        IObject association1 = this.GetTransaction().Create(associationType);
-                                        IObject association2 = this.GetTransaction().Create(associationType);
-                                        IObject role1 = this.GetTransaction().Create(roleType);
-                                        IObject role2 = this.GetTransaction().Create(roleType);
+                                        IObject association1 = this.GetTransaction().Build(associationType);
+                                        IObject association2 = this.GetTransaction().Build(associationType);
+                                        IObject role1 = this.GetTransaction().Build(roleType);
+                                        IObject role2 = this.GetTransaction().Build(roleType);
 
                                         for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
                                         {
@@ -904,10 +904,10 @@ namespace Allors.Database.Adapters
                                     for (int iRoleType = 0; iRoleType < roleTypes.Count(); iRoleType++)
                                     {
                                         var roleType = roleTypes[iRoleType];
-                                        IObject association1 = this.GetTransaction().Create(associationType);
-                                        IObject association2 = this.GetTransaction().Create(associationType);
-                                        IObject role1 = this.GetTransaction().Create(roleType);
-                                        IObject role2 = this.GetTransaction().Create(roleType);
+                                        IObject association1 = this.GetTransaction().Build(associationType);
+                                        IObject association2 = this.GetTransaction().Build(associationType);
+                                        IObject role1 = this.GetTransaction().Build(roleType);
+                                        IObject role2 = this.GetTransaction().Build(roleType);
 
                                         for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
                                         {
@@ -1166,9 +1166,9 @@ namespace Allors.Database.Adapters
                                     for (int iRoleType = 0; iRoleType < roleTypes.Count(); iRoleType++)
                                     {
                                         var roleType = roleTypes[iRoleType];
-                                        IObject association1 = this.GetTransaction().Create(associationType);
-                                        IObject association2 = this.GetTransaction().Create(associationType);
-                                        var role = this.GetTransaction().Create(roleType);
+                                        IObject association1 = this.GetTransaction().Build(associationType);
+                                        IObject association2 = this.GetTransaction().Build(associationType);
+                                        var role = this.GetTransaction().Build(roleType);
 
                                         for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
                                         {
@@ -1416,9 +1416,9 @@ namespace Allors.Database.Adapters
                                     for (int iRoleType = 0; iRoleType < roleTypes.Count(); iRoleType++)
                                     {
                                         var roleType = roleTypes[iRoleType];
-                                        IObject association1 = this.GetTransaction().Create(associationType);
-                                        IObject association2 = this.GetTransaction().Create(associationType);
-                                        var role = this.GetTransaction().Create(roleType);
+                                        IObject association1 = this.GetTransaction().Build(associationType);
+                                        IObject association2 = this.GetTransaction().Build(associationType);
+                                        var role = this.GetTransaction().Build(roleType);
 
                                         for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
                                         {
@@ -1668,9 +1668,9 @@ namespace Allors.Database.Adapters
                                     for (int iRoleType = 0; iRoleType < roleTypes.Count(); iRoleType++)
                                     {
                                         var roleType = roleTypes[iRoleType];
-                                        IObject association1 = this.GetTransaction().Create(associationType);
-                                        IObject association2 = this.GetTransaction().Create(associationType);
-                                        var role = this.GetTransaction().Create(roleType);
+                                        IObject association1 = this.GetTransaction().Build(associationType);
+                                        IObject association2 = this.GetTransaction().Build(associationType);
+                                        var role = this.GetTransaction().Build(roleType);
 
                                         for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
                                         {
@@ -1829,9 +1829,9 @@ namespace Allors.Database.Adapters
                                     for (int iRoleType = 0; iRoleType < roleTypes.Count(); iRoleType++)
                                     {
                                         var roleType = roleTypes[iRoleType];
-                                        IObject association1 = this.GetTransaction().Create(associationType);
-                                        IObject association2 = this.GetTransaction().Create(associationType);
-                                        var role = this.GetTransaction().Create(roleType);
+                                        IObject association1 = this.GetTransaction().Build(associationType);
+                                        IObject association2 = this.GetTransaction().Build(associationType);
+                                        var role = this.GetTransaction().Build(roleType);
 
                                         for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
                                         {
@@ -2009,9 +2009,9 @@ namespace Allors.Database.Adapters
                                     for (int iRoleType = 0; iRoleType < roleTypes.Count(); iRoleType++)
                                     {
                                         var roleType = roleTypes[iRoleType];
-                                        var association = this.GetTransaction().Create(associationType);
-                                        IObject role1 = this.GetTransaction().Create(roleType);
-                                        IObject role2 = this.GetTransaction().Create(roleType);
+                                        var association = this.GetTransaction().Build(associationType);
+                                        IObject role1 = this.GetTransaction().Build(roleType);
+                                        IObject role2 = this.GetTransaction().Build(roleType);
 
                                         for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
                                         {
@@ -2259,9 +2259,9 @@ namespace Allors.Database.Adapters
                                     for (int iRoleType = 0; iRoleType < roleTypes.Count(); iRoleType++)
                                     {
                                         var roleType = roleTypes[iRoleType];
-                                        var association = this.GetTransaction().Create(associationType);
-                                        IObject role1 = this.GetTransaction().Create(roleType);
-                                        IObject role2 = this.GetTransaction().Create(roleType);
+                                        var association = this.GetTransaction().Build(associationType);
+                                        IObject role1 = this.GetTransaction().Build(roleType);
+                                        IObject role2 = this.GetTransaction().Build(roleType);
 
                                         for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
                                         {
@@ -2511,9 +2511,9 @@ namespace Allors.Database.Adapters
                                     for (int iRoleType = 0; iRoleType < roleTypes.Count(); iRoleType++)
                                     {
                                         var roleType = roleTypes[iRoleType];
-                                        var association = this.GetTransaction().Create(associationType);
-                                        IObject role1 = this.GetTransaction().Create(roleType);
-                                        IObject role2 = this.GetTransaction().Create(roleType);
+                                        var association = this.GetTransaction().Build(associationType);
+                                        IObject role1 = this.GetTransaction().Build(roleType);
+                                        IObject role2 = this.GetTransaction().Build(roleType);
 
                                         for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
                                         {
@@ -2672,9 +2672,9 @@ namespace Allors.Database.Adapters
                                     for (int iRoleType = 0; iRoleType < roleTypes.Count(); iRoleType++)
                                     {
                                         var roleType = roleTypes[iRoleType];
-                                        var association = this.GetTransaction().Create(associationType);
-                                        IObject role1 = this.GetTransaction().Create(roleType);
-                                        IObject role2 = this.GetTransaction().Create(roleType);
+                                        var association = this.GetTransaction().Build(associationType);
+                                        IObject role1 = this.GetTransaction().Build(roleType);
+                                        IObject role2 = this.GetTransaction().Build(roleType);
 
                                         for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
                                         {
@@ -2853,9 +2853,9 @@ namespace Allors.Database.Adapters
                                     for (int iRoleType = 0; iRoleType < roleTypes.Count(); iRoleType++)
                                     {
                                         var roleType = roleTypes[iRoleType];
-                                        var association = this.GetTransaction().Create(associationType);
-                                        var role = this.GetTransaction().Create(roleType);
-                                        IObject roleOtherDatabase = this.GetTransaction2().Create(roleType);
+                                        var association = this.GetTransaction().Build(associationType);
+                                        var role = this.GetTransaction().Build(roleType);
+                                        IObject roleOtherDatabase = this.GetTransaction2().Build(roleType);
 
                                         for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
                                         {
@@ -2987,8 +2987,8 @@ namespace Allors.Database.Adapters
                                     for (int iRoleType = 0; iRoleType < roleTypes.Count(); iRoleType++)
                                     {
                                         var roleType = roleTypes[iRoleType];
-                                        var association = this.GetTransaction().Create(associationType);
-                                        var role = this.GetTransaction().Create(roleType);
+                                        var association = this.GetTransaction().Build(associationType);
+                                        var role = this.GetTransaction().Build(roleType);
                                         if (transactionFlag)
                                         {
                                             this.GetTransaction().Commit();
@@ -3097,8 +3097,8 @@ namespace Allors.Database.Adapters
                                     for (int iRoleType = 0; iRoleType < roleTypes.Count(); iRoleType++)
                                     {
                                         var roleType = roleTypes[iRoleType];
-                                        var association = this.GetTransaction().Create(associationType);
-                                        var role = this.GetTransaction().Create(roleType);
+                                        var association = this.GetTransaction().Build(associationType);
+                                        var role = this.GetTransaction().Build(roleType);
 
                                         for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
                                         {
@@ -3181,8 +3181,8 @@ namespace Allors.Database.Adapters
                                     for (int iRoleType = 0; iRoleType < roleTypes.Count(); iRoleType++)
                                     {
                                         var roleType = roleTypes[iRoleType];
-                                        var association = this.GetTransaction().Create(associationType);
-                                        var role = this.GetTransaction().Create(roleType);
+                                        var association = this.GetTransaction().Build(associationType);
+                                        var role = this.GetTransaction().Build(roleType);
 
                                         for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
                                         {
