@@ -2,7 +2,7 @@ delimiters "$", "$"
 
 TemplateId() ::= <<17ED40F8-BDF8-4A7C-9AE9-1C4D2AD6BA2B>>
 TemplateName() ::= <<Allors C# Domain>>
-TemplateVersion() ::= <<3.0.7>>
+TemplateVersion() ::= <<3.0.8>>
 TemplateAllors() ::= <<1.0>>
 TemplateConfiguration(meta) ::= <<
 $!
@@ -151,7 +151,7 @@ namespace Allors.Database.Domain
 
 		public Allors.Database.Meta.MetaPopulation M => m;
 
-		public Allors.Database.Meta.$class.name$ Meta => m.$class.name$;
+		public Allors.Database.Meta.Meta$class.name$ Meta => m.$class.name$;
 
 		public long Id
 		{
@@ -354,7 +354,7 @@ objectType_Plural() ::= <<
 		{
 		}
 
-		public Allors.Database.Meta.$objectType.SingularName$ Meta
+		public Allors.Database.Meta.Meta$objectType.SingularName$ Meta
 		{
 			get
 			{

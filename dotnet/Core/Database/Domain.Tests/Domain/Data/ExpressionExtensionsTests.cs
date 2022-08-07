@@ -27,7 +27,7 @@ namespace Allors.Database.Data.Tests
         [Fact]
         public void InterfaceAssociation()
         {
-            Expression<Func<User, IPropertyType>> expression = v => v.Logins;
+            Expression<Func<MetaUser, IPropertyType>> expression = v => v.Logins;
 
             var path = expression.Node(this.M);
 
@@ -38,7 +38,7 @@ namespace Allors.Database.Data.Tests
         [Fact]
         public void ClassAssociation()
         {
-            Expression<Func<Person, IPropertyType>> expression = v => v.OrganizationWhereEmployee;
+            Expression<Func<MetaPerson, IPropertyType>> expression = v => v.OrganizationWhereEmployee;
 
             var path = expression.Node(this.M);
 
@@ -49,7 +49,7 @@ namespace Allors.Database.Data.Tests
         [Fact]
         public void ClassAssociationClassRole()
         {
-            Expression<Func<Person, IPropertyType>> expression = v => v.OrganizationWhereEmployee.Organization.Information;
+            Expression<Func<MetaPerson, IPropertyType>> expression = v => v.OrganizationWhereEmployee.Organization.Information;
 
             var path = expression.Node(this.M);
 
@@ -64,7 +64,7 @@ namespace Allors.Database.Data.Tests
         [Fact]
         public void ClassRole()
         {
-            Expression<Func<Organization, IPropertyType>> expression = v => v.Name;
+            Expression<Func<MetaOrganization, IPropertyType>> expression = v => v.Name;
 
             var path = expression.Node(this.M);
 
@@ -75,7 +75,7 @@ namespace Allors.Database.Data.Tests
         [Fact]
         public void ClassRoleOfType()
         {
-            Expression<Func<UserGroup, IComposite>> expression = v => v.Members.User.AsPerson;
+            Expression<Func<MetaUserGroup, IComposite>> expression = v => v.Members.User.AsPerson;
 
             var path = expression.Node(this.M);
 
@@ -87,7 +87,7 @@ namespace Allors.Database.Data.Tests
         [Fact]
         public void ClassRoleClassRole()
         {
-            Expression<Func<Organization, IPropertyType>> expression = v => v.Employees.Person.FirstName;
+            Expression<Func<MetaOrganization, IPropertyType>> expression = v => v.Employees.Person.FirstName;
 
             var path = expression.Node(this.M);
 
@@ -103,7 +103,7 @@ namespace Allors.Database.Data.Tests
         [Fact]
         public void ClassRoleInterfaceAsClassRole()
         {
-            Expression<Func<UserGroup, IPropertyType>> expression = v => v.Members.User.AsPerson.FirstName;
+            Expression<Func<MetaUserGroup, IPropertyType>> expression = v => v.Members.User.AsPerson.FirstName;
 
             var path = expression.Node(this.M);
 

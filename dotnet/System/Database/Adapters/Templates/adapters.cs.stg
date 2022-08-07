@@ -2,11 +2,11 @@ delimiters "$", "$"
 
 TemplateId() ::= <<17ED40F8-BDF8-4A7C-9AE9-1C4D2AD6BA2B>>
 TemplateName() ::= <<C# Adapters>>
-TemplateVersion() ::= <<1.0.81>>
+TemplateVersion() ::= <<3.0.82>>
 TemplateAllors() ::= <<1.0>>
 TemplateConfiguration(meta, grp) ::= <<
 $!
-Copyright 2002-2021 Allors bvba.
+Copyright 2002-2022 Allors bvba.
 
 Dual Licensed under
   a) the Lesser General Public Licence v3 (LGPL)
@@ -169,7 +169,7 @@ namespace Allors.Database.Domain
 
 		public Allors.Database.Meta.MetaPopulation M => m;
 
-		public Allors.Database.Meta.$class.name$ Meta => this.m.$class.name$;
+		public Allors.Database.Meta.Meta$class.name$ Meta => this.m.$class.name$;
 
 		public long Id
 		{

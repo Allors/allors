@@ -2,11 +2,11 @@ group AllorsCSharpRepository;
 
 TemplateId() ::= <<14F49218-A676-43ba-9CBD-B8FFA059D1BF>>
 TemplateName() ::= <<Allors C# Meta>>
-TemplateVersion() ::= <<1.0.8>>
+TemplateVersion() ::= <<1.0.9>>
 TemplateAllors() ::= <<1.0>>
 TemplateConfiguration(repository) ::= <<
 $!
-Copyright 2002-2021 Allors bvba.
+Copyright 2002-2022 Allors bvba.
 
 Dual Licensed under
   a) the Lesser General Public Licence v3 (LGPL)
@@ -76,9 +76,9 @@ m(repository) ::= <<
 namespace Allors.Database.Meta
 {
     public partial class MetaPopulation {
-$repository.Units:{unit|        public $unit.SingularName$ $unit.SingularName$;}; separator="\n"$
-$repository.Interfaces:{interface|        public $interface.SingularName$ $interface.SingularName$;}; separator="\n"$
-$repository.Classes:{class|        public $class.SingularName$ $class.SingularName$;}; separator="\n"$
+$repository.Units:{unit|        public Meta$unit.SingularName$ $unit.SingularName$;}; separator="\n"$
+$repository.Interfaces:{interface|        public Meta$interface.SingularName$ $interface.SingularName$;}; separator="\n"$
+$repository.Classes:{class|        public Meta$class.SingularName$ $class.SingularName$;}; separator="\n"$
     }
 }
 >>
@@ -91,8 +91,8 @@ $repository.Units:{unit|$define_unit(unit)$}; separator="\n"$
 >>
 
 define_unit(unit) ::= <<
-    public class $unit.SingularName$ : Unit {
-        public $unit.SingularName$(MetaPopulation metaPopulation, System.Guid id) : base(metaPopulation, id, UnitTags.$unit.SingularName$)
+    public class Meta$unit.SingularName$ : Unit {
+        public Meta$unit.SingularName$(MetaPopulation metaPopulation, System.Guid id) : base(metaPopulation, id, UnitTags.$unit.SingularName$)
         {
         }
     }
@@ -106,14 +106,14 @@ $repository.Interfaces:{interface|$define_interface(interface)$}; separator="\n"
 >>
 
 define_interface(interface) ::= <<
-    public partial class $interface.SingularName$ : Interface {
-        public $interface.SingularName$(MetaPopulation metaPopulation, System.Guid id, string tag = null) : base(metaPopulation, id, tag)
+    public partial class Meta$interface.SingularName$ : Interface {
+        public Meta$interface.SingularName$(MetaPopulation metaPopulation, System.Guid id, string tag = null) : base(metaPopulation, id, tag)
         {
         }
 
         MetaPopulation M;
 
-$interface.Subtypes:{subtype|        public $subtype.SingularName$ As$subtype.SingularName$ => this.M.$subtype.SingularName$;}; separator="\n"$
+$interface.Subtypes:{subtype|        public Meta$subtype.SingularName$ As$subtype.SingularName$ => this.M.$subtype.SingularName$;}; separator="\n"$
 
         $interface.DefinedProperties:{property|$define_propertyType(property)$}; separator="\n"$
 
@@ -137,8 +137,8 @@ $repository.Classes:{class|$define_class(class)$}; separator="\n"$
 >>
 
 define_class(class) ::= <<
-    public partial class $class.SingularName$ : Class {
-        public $class.SingularName$(MetaPopulation metaPopulation, System.Guid id, string tag = null) : base(metaPopulation, id, tag)
+    public partial class Meta$class.SingularName$ : Class {
+        public Meta$class.SingularName$(MetaPopulation metaPopulation, System.Guid id, string tag = null) : base(metaPopulation, id, tag)
         {
         }
         
@@ -170,13 +170,13 @@ $composite.DefinedProperties:{property|$define_associationType(property)$}; sepa
 >>
 
 define_associationType(property) ::= <<
-    public class $property.AssociationName$ : AssociationType
+    public class Meta$property.AssociationName$ : AssociationType
     {
-        public $property.AssociationName$(IRelationTypeBase relationType) : base(relationType)
+        public Meta$property.AssociationName$(IRelationTypeBase relationType) : base(relationType)
         {
         }
 
-        public $property.DefiningType.SingularName$ $property.DefiningType.SingularName$ => this.M.$property.DefiningType.SingularName$;
+        public Meta$property.DefiningType.SingularName$ $property.DefiningType.SingularName$ => this.M.$property.DefiningType.SingularName$;
     }
 >>
 
@@ -192,35 +192,35 @@ $composite.DefinedProperties:{property|$define_roleType(property)$}; separator="
 >>
 
 define_roleType(property) ::= <<
-    public class $property.DefiningType.SingularName$$property.RoleName$ : RoleType
+    public class Meta$property.DefiningType.SingularName$$property.RoleName$ : RoleType
     {
-        public $property.DefiningType.SingularName$$property.RoleName$(IRelationTypeBase relationType) : base(relationType)
+        public Meta$property.DefiningType.SingularName$$property.RoleName$(IRelationTypeBase relationType) : base(relationType)
         {
         }
 $if(property.Type.IsComposite)$
-        public $property.Type.SingularName$ $property.Type.SingularName$ => this.M.$property.Type.SingularName$;
+        public Meta$property.Type.SingularName$ $property.Type.SingularName$ => this.M.$property.Type.SingularName$;
 $endif$
     }
 >>
 
 define_propertyType(property) ::= <<
-        public $property.DefiningType.SingularName$$property.RoleName$ $property.RoleName$;
+        public Meta$property.DefiningType.SingularName$$property.RoleName$ $property.RoleName$;
 >>
 
 define_inheritedpropertyType(property) ::= <<
  $if(property.DefiningProperty)$
-        public $property.DefiningProperty.DefiningType.SingularName$$property.DefiningProperty.RoleName$ $property.DefiningProperty.RoleName$;
+        public Meta$property.DefiningProperty.DefiningType.SingularName$$property.DefiningProperty.RoleName$ $property.DefiningProperty.RoleName$;
  $else$
-        public $property.DefiningType.SingularName$$property.RoleName$ $property.RoleName$;
+        public Meta$property.DefiningType.SingularName$$property.RoleName$ $property.RoleName$;
  $endif$
 >>
 
 define_reversepropertyType(property) ::= <<
-        public $property.AssociationName$ $property.AssociationName$;
+        public Meta$property.AssociationName$ $property.AssociationName$;
 >>
 
 define_inheritedreversepropertyType(property) ::= <<
-        public $property.AssociationName$ $property.AssociationName$;
+        public Meta$property.AssociationName$ $property.AssociationName$;
 >>
 
 define_methodType(method) ::= <<
@@ -358,7 +358,7 @@ $class.ImplementedProperties:{property|             public RoleClass $class.Sing
 >>
 
 assign_roleClasses(class) ::= <<
-$class.ImplementedProperties:{property|                 this.$class.SingularName$$property.RoleName$ = relationTypes.$property.DefiningProperty.DefiningType.SingularName$$property.DefiningProperty.RoleName$.RoleClassBy(meta.$class.SingularName$);}; separator="\n"$
+$class.ImplementedProperties:{property|                 Metathis.$class.SingularName$$property.RoleName$ = relationTypes.$property.DefiningProperty.DefiningType.SingularName$$property.DefiningProperty.RoleName$.RoleClassBy(meta.$class.SingularName$);}; separator="\n"$
 >>
 
 define_methods(composite) ::= <<
@@ -379,14 +379,14 @@ $endif$
 >>
 
 build_unit(unit) ::= <<
-	        meta.$unit.SingularName$ = new $unit.SingularName$(meta, Ids.$unit.SingularName$)
+	        meta.$unit.SingularName$ = new Meta$unit.SingularName$(meta, Ids.$unit.SingularName$)
             {
                 SingularName = UnitNames.$unit.SingularName$
             };
 >>
 
 build_interface(interface) ::= <<
-	        meta.$interface.SingularName$ = new $interface.SingularName$(meta, Ids.$interface.SingularName$)
+	        meta.$interface.SingularName$ = new Meta$interface.SingularName$(meta, Ids.$interface.SingularName$)
             {
                 SingularName = "$interface.SingularName$",
                 $if(interface.AssignedPluralName)$PluralName = "$interface.AssignedPluralName$",$endif$
@@ -395,7 +395,7 @@ build_interface(interface) ::= <<
 >>
 
 build_class(class) ::= <<
-	        meta.$class.SingularName$ = new $class.SingularName$(meta, Ids.$class.SingularName$)
+	        meta.$class.SingularName$ = new Meta$class.SingularName$(meta, Ids.$class.SingularName$)
             {
 $if(!class.HasDatabaseOrigin)$                AssignedOrigin = Allors.Origin.$class.Origin$,$endif$
                 SingularName = "$class.SingularName$",
@@ -419,7 +419,7 @@ $composite.DefinedProperties:{property|$relation(property)$}; separator="\n"$
 relation(property) ::= <<
         private void Build$property.DefiningType.SingularName$$property.RoleName$(MetaPopulation meta, Domains domains, RelationTypes relationTypes)
         {
-            relationTypes.$property.DefiningType.SingularName$$property.RoleName$ = new RelationType(meta.$property.DefiningType.SingularName$, Ids.$property.DefiningType.SingularName$$property.RoleName$, v => new $property.AssociationName$(v), v => new $property.DefiningType.SingularName$$property.RoleName$(v))
+            relationTypes.$property.DefiningType.SingularName$$property.RoleName$ = new RelationType(meta.$property.DefiningType.SingularName$, Ids.$property.DefiningType.SingularName$$property.RoleName$, v => new Meta$property.AssociationName$(v), v => new Meta$property.DefiningType.SingularName$$property.RoleName$(v))
             {
 $if(!property.HasDatabaseOrigin)$                AssignedOrigin = Origin.$property.Origin$,$endif$
 $if(property.WorkspaceNames)$		        AssignedWorkspaceNames = new[] {$property.WorkspaceNames:{name|"$name$"}; separator=", "$},$endif$
@@ -458,22 +458,22 @@ $composite.InheritedReverseProperties:{property|$assign_inheritedreverseproperty
 >>
 
 assign_propertyType(property) ::= <<
-                meta.$composite.SingularName$.$property.RoleName$ = ($property.DefiningType.SingularName$$property.RoleName$) relationTypes.$property.DefiningType.SingularName$$property.RoleName$.RoleType;
+                meta.$composite.SingularName$.$property.RoleName$ = (Meta$property.DefiningType.SingularName$$property.RoleName$) relationTypes.$property.DefiningType.SingularName$$property.RoleName$.RoleType;
 >>
 
 assign_inheritedpropertyType(property) ::= <<
-$if(property.DefiningProperty)$                meta.$composite.SingularName$.$property.DefiningProperty.RoleName$ = ($property.DefiningProperty.DefiningType.SingularName$$property.DefiningProperty.RoleName$) relationTypes.$property.DefiningProperty.DefiningType.SingularName$$property.DefiningProperty.RoleName$.RoleType;
-$else$                meta.$composite.SingularName$.$property.RoleName$ = ($property.DefiningType.SingularName$$property.RoleName$) relationTypes.$property.DefiningType.SingularName$$property.RoleName$.RoleType;
+$if(property.DefiningProperty)$                meta.$composite.SingularName$.$property.DefiningProperty.RoleName$ = (Meta$property.DefiningProperty.DefiningType.SingularName$$property.DefiningProperty.RoleName$) relationTypes.$property.DefiningProperty.DefiningType.SingularName$$property.DefiningProperty.RoleName$.RoleType;
+$else$                meta.$composite.SingularName$.$property.RoleName$ = (Meta$property.DefiningType.SingularName$$property.RoleName$) relationTypes.$property.DefiningType.SingularName$$property.RoleName$.RoleType;
 $endif$
 >>
 
 assign_reversepropertyType(property) ::= <<
-                meta.$composite.SingularName$.$property.AssociationName$ = ($property.AssociationName$) relationTypes.$property.DefiningType.SingularName$$property.RoleName$.AssociationType;
+                meta.$composite.SingularName$.$property.AssociationName$ = (Meta$property.AssociationName$) relationTypes.$property.DefiningType.SingularName$$property.RoleName$.AssociationType;
 >>
 
 assign_inheritedreversepropertyType(property) ::= <<
-$if(property.DefiningProperty)$                meta.$composite.SingularName$.$property.AssociationName$ = ($property.AssociationName$) relationTypes.$property.DefiningProperty.DefiningType.SingularName$$property.DefiningProperty.RoleName$.AssociationType;
-$else$                meta.$composite.SingularName$.$property.AssociationName$ = ($property.AssociationName$) relationTypes.$property.DefiningType.SingularName$$property.RoleName$.AssociationType;
+$if(property.DefiningProperty)$                meta.$composite.SingularName$.$property.AssociationName$ = (Meta$property.AssociationName$) relationTypes.$property.DefiningProperty.DefiningType.SingularName$$property.DefiningProperty.RoleName$.AssociationType;
+$else$                meta.$composite.SingularName$.$property.AssociationName$ = (Meta$property.AssociationName$) relationTypes.$property.DefiningType.SingularName$$property.RoleName$.AssociationType;
 $endif$
 >>
 

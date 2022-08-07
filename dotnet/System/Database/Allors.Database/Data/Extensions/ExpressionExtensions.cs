@@ -66,15 +66,15 @@ namespace Allors.Database.Data
             }
 
             var root = visitor.MemberExpressions[0].Member.DeclaringType;
-            var composite = (IComposite) metaPopulation.FindDatabaseCompositeByName(root.Name);
+            var composite = metaPopulation.FindDatabaseCompositeByName(root.Name.Substring(4));
 
             foreach (var memberExpression in visitor.MemberExpressions)
             {
                 if (memberExpression.Type.GetInterfaces().Contains(typeof(IComposite)))
                 {
-                    var propertyInfo = (PropertyInfo) memberExpression.Member;
+                    var propertyInfo = (PropertyInfo)memberExpression.Member;
                     var propertyType = propertyInfo.PropertyType;
-                    composite = (IComposite) metaPopulation.FindDatabaseCompositeByName(propertyType.Name);
+                    composite = (IComposite)metaPopulation.FindDatabaseCompositeByName(propertyType.Name.Substring(4));
 
                     if (currentPath != null && !currentPath.PropertyType.ObjectType.Equals(composite))
                     {
