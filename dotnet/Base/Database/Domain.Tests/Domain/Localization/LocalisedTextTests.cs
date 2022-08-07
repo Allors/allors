@@ -5,7 +5,6 @@
 
 namespace Allors.Database.Domain.Tests
 {
-    using Domain;
     using Xunit;
 
     public class LocalisedTextTests : DomainTest, IClassFixture<Fixture>
@@ -13,19 +12,16 @@ namespace Allors.Database.Domain.Tests
         public LocalisedTextTests(Fixture fixture) : base(fixture) { }
 
         [Fact(Skip = "TODO: Koen  Locale is required")]
-        public void GivenLocalisedTextWhenValidatingThenRequiredRelationsMustExist()
+        public void RequiredRoleTypes()
         {
-            var builder = new LocalisedTextBuilder(this.Session);
-            builder.Build();
+            var @class = this.M.LocalisedText;
 
-            Assert.True(this.Session.Derive(false).HasErrors);
+            var requiredRoleTypes = @class.RequiredRoleTypes;
 
-            this.Session.Rollback();
+            Assert.Equal(2, requiredRoleTypes.Length);
 
-            builder.WithLocale(new Locales(this.Session).EnglishGreatBritain);
-            builder.Build();
-
-            Assert.False(this.Session.Derive(false).HasErrors);
+            Assert.Contains(@class.Locale, requiredRoleTypes);
+            Assert.Contains(@class.Text, requiredRoleTypes);
         }
     }
 }

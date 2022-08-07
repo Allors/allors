@@ -11,7 +11,7 @@ namespace Allors.Database.Domain
         {
             if (!@this.ExistNotificationList)
             {
-                @this.NotificationList = new NotificationListBuilder(@this.Strategy.Transaction).Build();
+                @this.NotificationList = @this.Transaction().Create<NotificationList>();
             }
         }
 

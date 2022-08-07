@@ -11,22 +11,38 @@ namespace Allors.Database.Domain
     public partial class UserGroups
     {
         public static readonly Guid OperationsId = new Guid("4EA028A4-57C6-46A1-AC4B-E18204F9B498");
-        public static readonly Guid SalesId = new Guid("1511E4E2-829F-4133-8824-B94ED46E6BED");
         public static readonly Guid ProcurementId = new Guid("FF887B58-CDA3-4C76-8308-0F005E362E0E");
+        public static readonly Guid SalesId = new Guid("1511E4E2-829F-4133-8824-B94ED46E6BED");
 
         public UserGroup Operations => this.Cache[OperationsId];
 
+        public UserGroup Procurement => this.Cache[ProcurementId];
+
         public UserGroup Sales => this.Cache[SalesId];
 
-        public UserGroup Procurement => this.Cache[ProcurementId];
 
         protected override void CustomSetup(Setup setup)
         {
             base.CustomSetup(setup);
 
-            new UserGroupBuilder(this.Transaction).WithName("operations").WithUniqueId(OperationsId).Build();
-            new UserGroupBuilder(this.Transaction).WithName("sales").WithUniqueId(SalesId).Build();
-            new UserGroupBuilder(this.Transaction).WithName("procurement").WithUniqueId(ProcurementId).Build();
+
+            var merge = this.Cache.Merger().Action();
+
+            merge(OperationsId, v =>
+            {
+                v.Name = "Operations";
+            });
+
+
+            merge(ProcurementId, v =>
+            {
+                v.Name = "Procurement";
+            });
+
+            merge(SalesId, v =>
+            {
+                v.Name = "Sales";
+            });
         }
     }
 }

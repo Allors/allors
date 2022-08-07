@@ -5,6 +5,7 @@
 
 namespace Allors.Database.Domain
 {
+    using System;
     using Services;
 
     public partial class Setup
@@ -23,16 +24,59 @@ namespace Allors.Database.Domain
 
         private void CustomOnPostSetup(Config config)
         {
+            #region Plurals
+            var revocations = new Revocations(this.transaction);
+            var people = new People(this.transaction);
+            var userGroups = new UserGroups(this.transaction);
+            var organisations = new Organisations(this.transaction);
+            var countries = new Countries(this.transaction);
+            #endregion
+
+            #region Builders
+            Person BuildPerson(string firstName, string lastName, string userName, Media photo = null, Gender gender = null, Address address = null)
+            {
+                void Builder(Person v)
+                {
+                    v.FirstName = firstName;
+                    v.LastName = lastName;
+                    v.Photo = photo;
+                    v.Address = address;
+                }
+
+                return people.Create(Builder);
+            }
+
+            Organisation BuildOrganisation(string name, Action<Organisation> extraBuilder = null)
+            {
+                void Builder(Organisation v) => v.Name = name;
+                return organisations.Create(Builder, extraBuilder);
+            }
+
+            Revocation BuildRevocation(params Permission[] deniedPermissions) => revocations.Create(v => v.DeniedPermissions = deniedPermissions);
+
+            #endregion
+
             var avatar = new Medias(this.transaction).Avatar;
 
-            var place = new PlaceBuilder(this.transaction).WithPostalCode("X").WithCity("London").WithCountry(new Countries(this.transaction).CountryByIsoCode["GB"]).Build();
-            var address = new HomeAddressBuilder(this.transaction).WithStreet("Main Street").WithHouseNumber("1").WithPlace(place).Build();
+            var place = this.transaction.Create<Place>(v =>
+            {
+                v.PostalCode = "X";
+                v.City = "London";
+                v.Country = countries.CountryByIsoCode["GB"];
+            });
+
+            var address = this.transaction.Create<HomeAddress>(v =>
+            {
+                v.Street = "Main Street";
+                v.HouseNumber = "1";
+                v.Place = place;
+            });
 
             var genders = new Genders(this.transaction);
 
-            var jane = new PersonBuilder(this.transaction).WithMainAddress(address).WithFirstName("Jane").WithLastName("Doe").WithUserName("jane@example.com").WithPhoto(avatar).WithGender(genders.Female).Build();
-            var john = new PersonBuilder(this.transaction).WithFirstName("John").WithLastName("Doe").WithUserName("john@example.com").WithPhoto(avatar).WithGender(genders.Male).Build();
-            var jenny = new PersonBuilder(this.transaction).WithFirstName("Jenny").WithLastName("Doe").WithUserName("jenny@example.com").WithPhoto(avatar).WithGender(genders.Other).Build();
+            var jane = BuildPerson("Jane", "Doe", "jane@example.com", avatar, genders.Female, address);
+            var john = BuildPerson("John", "Doe", "john@example.com", avatar, genders.Male);
+            var jenny = BuildPerson("Jenny", "Doe", "jenny@example.com", avatar, genders.Other);
 
             jane.SetPassword("jane");
             john.SetPassword("john");
@@ -43,32 +87,42 @@ namespace Allors.Database.Domain
             new UserGroups(this.transaction).Creators.AddMember(john);
             new UserGroups(this.transaction).Creators.AddMember(jenny);
 
-            var acme = new OrganisationBuilder(this.transaction)
-                .WithName("Acme")
-                .WithOwner(jane)
-                 .WithEmployee(john)
-                .WithEmployee(jenny)
-                .WithIncorporationDate(this.transaction.Now())
-                .Build();
+            var acme = BuildOrganisation("Acme", v =>
+            {
+                v.Owner = jane;
+                v.AddEmployee(john);
+                v.AddEmployee(jenny);
+                v.IncorporationDate = this.transaction.Now();
+            });
 
             acme.Owner = jenny;
             acme.Manager = jane;
             acme.AddShareholder(jane);
             acme.AddShareholder(jenny);
-            new EmploymentBuilder(this.transaction).WithEmployer(acme).WithEmployee(jane).Build();
+            this.transaction.Create<Employment>(v =>
+            {
+                v.Employer = acme;
+                v.Employee = jane;
+            });
 
             var now = this.transaction.Now();
-            new EmploymentBuilder(this.transaction).WithEmployer(acme).WithEmployee(john).WithFromDate(now.AddDays(-2)).WithThroughDate(now.AddDays(-1)).Build();
+            this.transaction.Create<Employment>(v =>
+            {
+                v.Employer = acme;
+                v.Employee = john;
+                v.FromDate = now.AddDays(-2);
+                v.ThroughDate = now.AddDays(-1);
+            });
 
             // Create cycles between Organisation and Person
-            var cycleOrganisation1 = new OrganisationBuilder(this.transaction).WithName("Organisatin Cycle One").WithIncorporationDate(DateTimeFactory.CreateDate(2000, 1, 1)).Build();
-            var cycleOrganisation2 = new OrganisationBuilder(this.transaction).WithName("Organisatin Cycle Two").WithIncorporationDate(DateTimeFactory.CreateDate(2001, 1, 1)).Build();
+            var cycleOrganisation1 = BuildOrganisation("Organisatin Cycle One", v => v.IncorporationDate = DateTimeFactory.CreateDate(2000, 1, 1));
+            var cycleOrganisation2 = BuildOrganisation("Organisatin Cycle Two", v => v.IncorporationDate = DateTimeFactory.CreateDate(2001, 1, 1));
 
             cycleOrganisation1.AddShareholder(jane);
             cycleOrganisation2.AddShareholder(jenny);
 
-            var cyclePerson1 = new PersonBuilder(this.transaction).WithFirstName("Person Cycle").WithLastName("One").WithUserName("cycle1@one.org").Build();
-            var cyclePerson2 = new PersonBuilder(this.transaction).WithFirstName("Person Cycle").WithLastName("Two").WithUserName("cycle2@one.org").Build();
+            var cyclePerson1 = BuildPerson("Person Cycle", "One", "cycle1@one.org");
+            var cyclePerson2 = BuildPerson("Person Cycle", "Two", "cycle2@one.org");
 
             // One
             cycleOrganisation1.CycleOne = cyclePerson1;
@@ -91,7 +145,7 @@ namespace Allors.Database.Domain
             cyclePerson2.AddCycleMany(cycleOrganisation2);
 
             // MediaTyped
-            var mediaTyped = new MediaTypedBuilder(this.transaction).WithMarkdown(@"
+            var mediaTyped = this.transaction.Create<MediaTyped>(v => v.Markdown = @"
 # Markdown
 1.  List item one.
 
@@ -114,7 +168,7 @@ namespace Allors.Database.Domain
     2. List item b.
 
     This paragraph belongs to item two of the outer list.
-").Build();
+");
 
             if (this.Config.SetupSecurity)
             {

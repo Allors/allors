@@ -19,9 +19,9 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void InitialNothing()
         {
-            var order = new OrderBuilder(this.Session).Build();
+            var order = this.Transaction.Create<Order>();
 
-            this.Session.Derive();
+            this.Transaction.Derive();
 
             Assert.True(order.ExistCurrentVersion);
             Assert.True(order.ExistAllVersions);
@@ -35,11 +35,9 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void VersionedUnitRole()
         {
-            var order = new OrderBuilder(this.Session)
-                .WithAmount(10m)
-                .Build();
+            var order = this.Transaction.Create<Order>(v => v.Amount = 10m);
 
-            this.Session.Derive();
+            this.Transaction.Derive();
 
             Assert.True(order.ExistCurrentVersion);
             Assert.True(order.ExistAllVersions);
@@ -55,17 +53,15 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void NonVersionedUnitRole()
         {
-            var order = new OrderBuilder(this.Session)
-                .WithAmount(10m)
-                .Build();
+            var order = this.Transaction.Create<Order>(v => v.Amount = 10m);
 
-            this.Session.Derive();
+            this.Transaction.Derive();
 
             var currentVersion = order.CurrentVersion;
 
             order.NonVersionedAmount = 20m;
 
-            this.Session.Derive();
+            this.Transaction.Derive();
 
             Assert.True(order.ExistAllVersions);
             Assert.Single(order.AllVersions);
@@ -75,13 +71,11 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void InitialCompositeRole()
         {
-            var initialObjectState = new OrderStates(this.Session).Initial;
+            var initialObjectState = new OrderStates(this.Transaction).Initial;
 
-            var order = new OrderBuilder(this.Session)
-                .WithOrderState(initialObjectState)
-                .Build();
+            var order = this.Transaction.Create<Order>(v => v.OrderState = initialObjectState);
 
-            this.Session.Derive();
+            this.Transaction.Derive();
 
             Assert.True(order.ExistCurrentVersion);
             Assert.True(order.ExistAllVersions);
@@ -97,13 +91,10 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void InitialCompositeRoles()
         {
-            var orderLine = new OrderLineBuilder(this.Session).Build();
+            var orderLine = this.Transaction.Create<OrderLine>();
+            var order = this.Transaction.Create<Order>(v => v.AddOrderLine(orderLine));
 
-            var order = new OrderBuilder(this.Session)
-                .WithOrderLine(orderLine)
-                .Build();
-
-            this.Session.Derive();
+            this.Transaction.Derive();
 
             Assert.True(order.ExistCurrentVersion);
             Assert.True(order.ExistAllVersions);

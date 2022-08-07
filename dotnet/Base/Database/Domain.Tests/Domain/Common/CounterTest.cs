@@ -19,14 +19,14 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void Meta()
         {
-            var counterBuilder = new CounterBuilder(this.Session).Build();
+            var counterBuilder = this.Transaction.Create<Counter>();
 
             Assert.True(counterBuilder.ExistUniqueId);
             Assert.NotEqual(Guid.Empty, counterBuilder.UniqueId);
 
             Assert.Equal(0, counterBuilder.Value);
 
-            var secondCounterBuilder = new CounterBuilder(this.Session).Build();
+            var secondCounterBuilder = this.Transaction.Create<Counter>();
 
             Assert.NotEqual(counterBuilder.UniqueId, secondCounterBuilder.UniqueId);
         }
@@ -36,9 +36,9 @@ namespace Allors.Database.Domain.Tests
         {
             var id = Guid.NewGuid();
 
-            var counter = new CounterBuilder(this.Session).WithUniqueId(id).Build();
-            this.Session.Derive();
-            this.Session.Commit();
+            var counter = this.Transaction.Create<Counter>(v => v.UniqueId = id);
+            this.Transaction.Derive();
+            this.Transaction.Commit();
 
             Assert.Equal(1, counter.NextValue());
             Assert.Equal(2, counter.NextValue());

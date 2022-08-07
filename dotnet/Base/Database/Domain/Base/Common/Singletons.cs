@@ -5,8 +5,6 @@
 
 namespace Allors.Database.Domain
 {
-   
-
     public partial class Singletons
     {
         public Singleton Instance => this.Transaction.GetSingleton();
@@ -15,7 +13,7 @@ namespace Allors.Database.Domain
 
         protected override void CoreSetup(Setup setup)
         {
-            var singleton = this.Transaction.GetSingleton() ?? new SingletonBuilder(this.Transaction).Build();
+            var singleton = this.Transaction.GetSingleton() ?? this.Transaction.Create<Singleton>();
 
             singleton.DefaultLocale = new Locales(this.Transaction).EnglishGreatBritain;
         }

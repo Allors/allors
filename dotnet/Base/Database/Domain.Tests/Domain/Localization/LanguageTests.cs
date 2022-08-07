@@ -5,7 +5,6 @@
 
 namespace Allors.Database.Domain.Tests
 {
-    using Domain;
     using Xunit;
 
     public class LanguageTests : DomainTest, IClassFixture<Fixture>
@@ -13,20 +12,17 @@ namespace Allors.Database.Domain.Tests
         public LanguageTests(Fixture fixture) : base(fixture) { }
 
         [Fact]
-        public void GivenLanguageWhenValidatingThenRequiredRelationsMustExist()
+        public void RequiredRoleTypes()
         {
-            var builder = new LanguageBuilder(this.Session);
-            builder.Build();
+            var @class = this.M.Language;
 
-            Assert.True(this.Session.Derive(false).HasErrors);
+            var requiredRoleTypes = @class.RequiredRoleTypes;
 
-            builder.WithIsoCode("XX").Build();
+            Assert.Equal(3, requiredRoleTypes.Length);
 
-            Assert.True(this.Session.Derive(false).HasErrors);
-
-            builder.WithLocalisedName(new LocalisedTextBuilder(this.Session).WithLocale(new Locales(this.Session).FindBy(this.M.Locale.Name, Locales.EnglishGreatBritainName)).WithText("XXX)").Build());
-
-            Assert.False(this.Session.Derive(false).HasErrors);
+            Assert.Contains(@class.IsoCode, requiredRoleTypes);
+            Assert.Contains(@class.Name, requiredRoleTypes);
+            Assert.Contains(@class.NativeName, requiredRoleTypes);
         }
     }
 }

@@ -5,7 +5,6 @@
 
 namespace Allors.Database.Domain.Tests
 {
-    using Domain;
     using Xunit;
 
     public class CountryTests : DomainTest, IClassFixture<Fixture>
@@ -13,34 +12,16 @@ namespace Allors.Database.Domain.Tests
         public CountryTests(Fixture fixture) : base(fixture) { }
 
         [Fact]
-        public void GivenCountryWhenValidatingThenRequiredRelationsMustExist()
+        public void RequiredRoleTypes()
         {
-            var builder = new CountryBuilder(this.Session);
-            builder.Build();
+            var @class = this.M.Country;
 
-            Assert.True(this.Session.Derive(false).HasErrors);
+            var requiredRoleTypes = @class.RequiredRoleTypes;
 
-            builder.WithIsoCode("XX").Build();
-            builder.Build();
+            Assert.Equal(2, requiredRoleTypes.Length);
 
-            Assert.True(this.Session.Derive(false).HasErrors);
-
-            this.Session.Rollback();
-
-            builder.WithName("X Country");
-
-            builder.Build();
-
-            Assert.False(this.Session.Derive(false).HasErrors);
-
-            this.Session.Rollback();
-
-            builder = new CountryBuilder(this.Session);
-            builder.WithName("X Country");
-
-            builder.Build();
-
-            Assert.True(this.Session.Derive(false).HasErrors);
+            Assert.Contains(@class.IsoCode, requiredRoleTypes);
+            Assert.Contains(@class.Name, requiredRoleTypes);
         }
     }
 }

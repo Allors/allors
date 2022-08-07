@@ -14,28 +14,17 @@ namespace Allors.Database.Domain.Tests
         public CurrencyTests(Fixture fixture) : base(fixture) { }
 
         [Fact]
-        public void GivenCurrencyWhenValidatingThenRequiredRelationsMustExist()
+        public void RequiredRoleTypes()
         {
-            var builder = new CurrencyBuilder(this.Session);
-            builder.Build();
+            var @class = this.M.Currency;
 
-            Assert.True(this.Session.Derive(false).HasErrors);
+            var requiredRoleTypes = @class.RequiredRoleTypes;
 
-            builder.WithIsoCode("BND").Build();
+            Assert.Equal(3, requiredRoleTypes.Length);
 
-            Assert.True(this.Session.Derive(false).HasErrors);
-
-            var locales = new Locales(this.Session).Extent().ToArray();
-            var locale = new Locales(this.Session).FindBy(this.M.Locale.Name, Locales.EnglishGreatBritainName);
-
-            builder
-                .WithLocalisedName(
-                    new LocalisedTextBuilder(this.Session)
-                    .WithText("Brunei Dollar")
-                    .WithLocale(locale)
-                .Build());
-
-            Assert.False(this.Session.Derive(false).HasErrors);
+            Assert.Contains(@class.UniqueId, requiredRoleTypes);
+            Assert.Contains(@class.IsoCode, requiredRoleTypes);
+            Assert.Contains(@class.Name, requiredRoleTypes);
         }
     }
 }

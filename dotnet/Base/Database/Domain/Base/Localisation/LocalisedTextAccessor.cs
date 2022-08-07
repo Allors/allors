@@ -37,10 +37,11 @@ namespace Allors.Database.Domain
                 }
             }
 
-            var newLocalisedText = new LocalisedTextBuilder(@object.Strategy.Transaction)
-                .WithLocale(locale)
-                .WithText(text)
-                .Build();
+            var newLocalisedText = @object.Transaction().Create<LocalisedText>(v =>
+            {
+                v.Locale = locale;
+                v.Text = text;
+            });
             @object.Strategy.AddCompositesRole(this.roleType, newLocalisedText);
         }
     }

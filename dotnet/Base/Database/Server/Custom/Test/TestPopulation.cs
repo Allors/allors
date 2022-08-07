@@ -32,22 +32,60 @@ namespace Allors.Database.Server.Controllers
 
         private void Full()
         {
-            new PersonBuilder(this.transaction).WithUserName("noacl").WithFirstName("no").WithLastName("acl").Build();
+            #region Plurals
+            var people = new People(this.transaction);
+            var c1s = new C1s(this.transaction);
+            var c2s = new C2s(this.transaction);
+            #endregion
 
-            var noperm = new PersonBuilder(this.transaction).WithUserName("noperm").WithFirstName("no").WithLastName("perm").Build();
-            var emptyRole = new RoleBuilder(this.transaction).WithName("Empty").Build();
+            #region Builders
+            Person BuildPerson(string userName, string firstName, string lastName)
+            {
+                void Builder(Person v)
+                {
+                    v.UserName = userName;
+                    v.FirstName = firstName;
+                    v.LastName = lastName;
+                }
+
+                return people.Create(Builder);
+            }
+
+            C1 BuildC1(string name, int order) => c1s.Create(v =>
+            {
+                v.Name = name;
+                v.Order = order;
+            });
+
+            C2 BuildC2(string name, int order) => c2s.Create(v =>
+            {
+                v.Name = name;
+                v.Order = order;
+            });
+
+            #endregion
+
+            BuildPerson("noacl", "no", "acl");
+
+            var noperm = BuildPerson("noperm", "no", "perm");
+            var emptyRole = this.transaction.Create<Role>(v => v.Name = "Empty");
             var defaultSecurityToken = new SecurityTokens(this.transaction).DefaultSecurityToken;
 
-            var acl = new GrantBuilder(this.transaction).WithRole(emptyRole).WithSubject(noperm).WithSecurityToken(defaultSecurityToken).Build();
+            var acl = this.transaction.Create<Grant>(v =>
+            {
+                v.Role = emptyRole;
+                v.AddSubject(noperm);
+                v.AddSecurityToken(defaultSecurityToken);
+            });
 
-            var c1A = new C1Builder(this.transaction).WithName("c1A").WithOrder(4).Build();
-            var c1B = new C1Builder(this.transaction).WithName("c1B").WithOrder(3).Build();
-            var c1C = new C1Builder(this.transaction).WithName("c1C").WithOrder(8).Build();
-            var c1D = new C1Builder(this.transaction).WithName("c1D").WithOrder(7).Build();
-            var c2A = new C2Builder(this.transaction).WithName("c2A").WithOrder(5).Build();
-            var c2B = new C2Builder(this.transaction).WithName("c2B").WithOrder(6).Build();
-            var c2C = new C2Builder(this.transaction).WithName("c2C").WithOrder(2).Build();
-            var c2D = new C2Builder(this.transaction).WithName("c2D").WithOrder(1).Build();
+            var c1A = BuildC1("c1A",4);
+            var c1B = BuildC1("c1B",3);
+            var c1C = BuildC1("c1C", 8);
+            var c1D = BuildC1("c1D", 7);
+            var c2A = BuildC2("c2A", 5);
+            var c2B = BuildC2("c2B", 6);
+            var c2C = BuildC2("c2C", 2);
+            var c2D = BuildC2("c2D", 1);
 
             // class
             c1B.C1AllorsString = "ᴀbra";

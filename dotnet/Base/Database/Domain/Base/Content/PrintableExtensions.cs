@@ -25,7 +25,7 @@ namespace Allors.Database.Domain
         {
             if (!@this.ExistPrintDocument)
             {
-                @this.PrintDocument = new PrintDocumentBuilder(@this.Strategy.Transaction).Build();
+                @this.PrintDocument = @this.Transaction().Create<PrintDocument>();
             }
 
             @this.PrintDocument.Media?.Delete();
@@ -37,12 +37,12 @@ namespace Allors.Database.Domain
             {
                 if (!@this.ExistPrintDocument)
                 {
-                    @this.PrintDocument = new PrintDocumentBuilder(@this.Strategy.Transaction).Build();
+                    @this.PrintDocument = @this.Transaction().Create<PrintDocument>();
                 }
 
                 if (!@this.PrintDocument.ExistMedia)
                 {
-                    @this.PrintDocument.Media = new MediaBuilder(@this.Strategy.Transaction).Build();
+                    @this.PrintDocument.Media = @this.Transaction().Create<Media>();
                 }
 
                 @this.PrintDocument.Media.InData = document;
