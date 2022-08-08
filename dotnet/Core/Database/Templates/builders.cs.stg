@@ -80,11 +80,11 @@ $\n$if(!@this.Exist$roleType.SingularName$) @this.$roleType.SingularName$ = $fak
 >>
 
 compositeOneRoleTypes() ::= <<
-$\n$@this.$roleType.SingularName$ ??= null;
+$\n$@this.$roleType.SingularName$ ??= $faker(roleType)$;
 >>
 
 compositeManyRoleTypes() ::= <<
-$\n$if(!@this.Exist$roleType.PluralName$) @this.Add$roleType.SingularName$(null);
+$\n$if(!@this.Exist$roleType.PluralName$) @this.Add$roleType.SingularName$($faker(roleType)$);
 >>
 
 faker(roleType) ::= <%
@@ -109,6 +109,6 @@ $else$
 faker.Random.XXX()
 $endif$
 $else$
-@this.Extent<$objectType.SingularName$>().FirstOrDefault()
+faker.PickRandom(transaction.Extent<$roleType.objectType.SingularName$>().ToArray())
 $endif$
 %>
