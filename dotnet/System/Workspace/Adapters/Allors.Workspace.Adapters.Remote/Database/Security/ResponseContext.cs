@@ -31,7 +31,7 @@ namespace Allors.Workspace.Adapters.Remote
                 return null;
             }
 
-            foreach (var accessControlId in value.Where(v => !this.database.AccessControlById.ContainsKey(v)))
+            foreach (var accessControlId in value.Where(v => !this.database.GrantById.ContainsKey(v)))
             {
                 this.MissingGrantIds.Add(accessControlId);
             }

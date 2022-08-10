@@ -27,12 +27,9 @@ namespace Allors.Workspace.Adapters.Remote.SystemText
     {
         private string userId;
 
-        public DatabaseConnection(Configuration configuration, Func<IWorkspaceServices> servicesBuilder, HttpClient httpClient, IdGenerator idGenerator, IRanges<long> ranges) : base(configuration, idGenerator, servicesBuilder, ranges)
+        public DatabaseConnection(Configuration configuration, Func<IWorkspaceServices> servicesBuilder, Client client, IdGenerator idGenerator, IRanges<long> ranges) : base(configuration, idGenerator, servicesBuilder, ranges)
         {
-            this.HttpClient = httpClient;
-            this.HttpClient.DefaultRequestHeaders.Accept.Clear();
-            this.HttpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
+            this.Client = client;
             this.UnitConvert = new UnitConvert();
         }
 
@@ -44,101 +41,67 @@ namespace Allors.Workspace.Adapters.Remote.SystemText
             .Handle<HttpRequestException>()
             .WaitAndRetryAsync(5, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
 
-        public HttpClient HttpClient { get; }
-
-        public async Task<bool> Login(Uri url, string username, string password)
-        {
-            var request = new AuthenticationTokenRequest { l = username, p = password };
-            using var response = await this.PostAsJsonAsync(url, request);
-            response.EnsureSuccessStatusCode();
-            var authResult = await this.ReadAsAsync<AuthenticationTokenResponse>(response);
-            if (!authResult.a)
-            {
-                return false;
-            }
-
-            this.HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", authResult.t);
-            this.userId = authResult.u;
-
-            return true;
-        }
+        public Client Client { get; }
 
         public override async Task<PullResponse> Pull(object args, string name)
         {
             var uri = new Uri($"{name}/pull", UriKind.Relative);
-            var response = await this.PostAsJsonAsync(uri, args);
+            var response = await this.Client.PostAsJsonAsync(uri, args);
             response.EnsureSuccessStatusCode();
-            return await this.ReadAsAsync<PullResponse>(response);
+            return await this.Client.ReadAsAsync<PullResponse>(response);
         }
 
         public override async Task<PullResponse> Pull(PullRequest pullRequest)
         {
             var uri = new Uri("pull", UriKind.Relative);
-            var response = await this.PostAsJsonAsync(uri, pullRequest);
+            var response = await this.Client.PostAsJsonAsync(uri, pullRequest);
             response.EnsureSuccessStatusCode();
-            return await this.ReadAsAsync<PullResponse>(response);
+            return await this.Client.ReadAsAsync<PullResponse>(response);
         }
 
         public override async Task<SyncResponse> Sync(SyncRequest syncRequest)
         {
             var uri = new Uri("sync", UriKind.Relative);
-            var response = await this.PostAsJsonAsync(uri, syncRequest);
+            var response = await this.Client.PostAsJsonAsync(uri, syncRequest);
             response.EnsureSuccessStatusCode();
 
-            return await this.ReadAsAsync<SyncResponse>(response);
+            return await this.Client.ReadAsAsync<SyncResponse>(response);
         }
 
         public override async Task<PushResponse> Push(PushRequest pushRequest)
         {
             var uri = new Uri("push", UriKind.Relative);
-            var response = await this.PostAsJsonAsync(uri, pushRequest);
+            var response = await this.Client.PostAsJsonAsync(uri, pushRequest);
             response.EnsureSuccessStatusCode();
 
-            return await this.ReadAsAsync<PushResponse>(response);
+            return await this.Client.ReadAsAsync<PushResponse>(response);
         }
 
         public override async Task<InvokeResponse> Invoke(InvokeRequest invokeRequest)
         {
             var uri = new Uri("invoke", UriKind.Relative);
-            var response = await this.PostAsJsonAsync(uri, invokeRequest);
+            var response = await this.Client.PostAsJsonAsync(uri, invokeRequest);
             response.EnsureSuccessStatusCode();
 
-            return await this.ReadAsAsync<InvokeResponse>(response);
+            return await this.Client.ReadAsAsync<InvokeResponse>(response);
         }
 
         public override async Task<AccessResponse> Access(AccessRequest accessRequest)
         {
             var uri = new Uri("access", UriKind.Relative);
-            var response = await this.PostAsJsonAsync(uri, accessRequest);
+            var response = await this.Client.PostAsJsonAsync(uri, accessRequest);
             response.EnsureSuccessStatusCode();
 
-            return await this.ReadAsAsync<AccessResponse>(response);
+            return await this.Client.ReadAsAsync<AccessResponse>(response);
         }
 
         public override async Task<PermissionResponse> Permission(PermissionRequest permissionRequest)
         {
             var uri = new Uri("permission", UriKind.Relative);
-            var response = await this.PostAsJsonAsync(uri, permissionRequest);
+            var response = await this.Client.PostAsJsonAsync(uri, permissionRequest);
             response.EnsureSuccessStatusCode();
 
-            return await this.ReadAsAsync<PermissionResponse>(response);
-        }
-
-        private async Task<HttpResponseMessage> PostAsJsonAsync(Uri uri, object args) =>
-            await this.Policy.ExecuteAsync(
-                async () =>
-                {
-                    // TODO: use SerializeToUtf8Bytes()
-                    var json = JsonSerializer.Serialize(args);
-                    return await this.HttpClient.PostAsync(
-                        uri,
-                        new StringContent(json, Encoding.UTF8, "application/json"));
-                });
-
-        private async Task<T> ReadAsAsync<T>(HttpResponseMessage response)
-        {
-            var json = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<T>(json);
+            return await this.Client.ReadAsAsync<PermissionResponse>(response);
         }
     }
 }

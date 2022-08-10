@@ -81,7 +81,13 @@ namespace Allors.Workspace.Adapters.Remote
                 return false;
             }
 
-            return !this.RevocationIds.Any(v => this.database.RevocationById[v].PermissionIds.Contains(permission)) && this.GrantIds.Any(v => this.database.AccessControlById[v].PermissionIds.Contains(permission));
+            if (this.RevocationIds.Any(v => this.database.RevocationById[v].PermissionIds.Contains(permission)))
+            {
+                return false;
+            }
+
+
+            return this.GrantIds.Any(v => this.database.GrantById[v].PermissionIds.Contains(permission));
         }
     }
 }

@@ -35,7 +35,7 @@ namespace Allors.Workspace.Adapters.Remote
 
             this.recordsById = new Dictionary<long, DatabaseRecord>();
 
-            this.AccessControlById = new Dictionary<long, AccessControl>();
+            this.GrantById = new Dictionary<long, Grant>();
             this.RevocationById = new Dictionary<long, Revocation>();
             this.Permissions = new HashSet<long>();
 
@@ -44,7 +44,7 @@ namespace Allors.Workspace.Adapters.Remote
             this.executePermissionByOperandTypeByClass = new Dictionary<Class, Dictionary<IOperandType, long>>();
         }
 
-        internal Dictionary<long, AccessControl> AccessControlById { get; }
+        internal Dictionary<long, Grant> GrantById { get; }
 
         internal Dictionary<long, Revocation> RevocationById { get; }
 
@@ -123,7 +123,7 @@ namespace Allors.Workspace.Adapters.Remote
                     var id = syncResponseAccessControl.i;
                     var version = syncResponseAccessControl.v;
                     var permissionIds = this.Ranges.Load(syncResponseAccessControl.p);
-                    this.AccessControlById[id] = new AccessControl { Version = version, PermissionIds = this.Ranges.Load(permissionIds) };
+                    this.GrantById[id] = new Grant { Version = version, PermissionIds = this.Ranges.Load(permissionIds) };
 
                     foreach (var permissionId in permissionIds)
                     {
