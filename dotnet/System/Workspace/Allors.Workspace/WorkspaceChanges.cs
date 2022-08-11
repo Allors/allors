@@ -1,11 +1,11 @@
 namespace Allors.Workspace
 {
-    using System.Collections.Generic;
+    using Ranges;
 
     public class WorkspaceChanges
     {
-        public WorkspaceChanges(ISet<long> objectIds) => this.ObjectIds = objectIds;
+        public WorkspaceChanges(IRange<long> objectIds) => this.ObjectIds = objectIds;
 
-        private ISet<long> ObjectIds { get; }
+        private IRange<long> ObjectIds { get; }
     }
 }
