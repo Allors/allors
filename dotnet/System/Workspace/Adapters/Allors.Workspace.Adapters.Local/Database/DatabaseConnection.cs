@@ -14,12 +14,12 @@ namespace Allors.Workspace.Adapters.Local
     using Database.Services;
     using Meta;
     using Ranges;
-    using AccessControl = AccessControl;
+    using Grant = Grant;
     using IRoleType = Database.Meta.IRoleType;
 
     public class DatabaseConnection : Adapters.DatabaseConnection
     {
-        private readonly Dictionary<long, AccessControl> accessControlById;
+        private readonly Dictionary<long, Grant> accessControlById;
         private readonly IPermissions permission;
         private readonly ConcurrentDictionary<long, DatabaseRecord> recordsById;
 
@@ -34,7 +34,7 @@ namespace Allors.Workspace.Adapters.Local
 
             this.recordsById = new ConcurrentDictionary<long, DatabaseRecord>();
             this.permission = this.Database.Services.Get<IPermissions>();
-            this.accessControlById = new Dictionary<long, AccessControl>();
+            this.accessControlById = new Dictionary<long, Grant>();
         }
 
         public long UserId { get; set; }
@@ -56,7 +56,7 @@ namespace Allors.Workspace.Adapters.Local
 
                     var acl = accessControl[@object];
 
-                    var accessControls = acl.Grants?.Select(v => (IGrant)transaction.Instantiate(v.Id)).Select(this.GetAccessControl).ToArray() ?? Array.Empty<AccessControl>();
+                    var accessControls = acl.Grants?.Select(v => (IGrant)transaction.Instantiate(v.Id)).Select(this.GetAccessControl).ToArray() ?? Array.Empty<Grant>();
 
                     this.recordsById[id] = new DatabaseRecord(workspaceClass, id, @object.Strategy.ObjectVersion, roleByRoleType, this.recordRanges.Load(acl.Revocations.Select(v => v.Id)), accessControls);
                 }
@@ -108,11 +108,11 @@ namespace Allors.Workspace.Adapters.Local
                 return true;
             });
 
-        private AccessControl GetAccessControl(IGrant grant)
+        private Grant GetAccessControl(IGrant grant)
         {
             if (!this.accessControlById.TryGetValue(grant.Strategy.ObjectId, out var acessControl))
             {
-                acessControl = new AccessControl();
+                acessControl = new Grant();
                 this.accessControlById.Add(grant.Strategy.ObjectId, acessControl);
             }
 

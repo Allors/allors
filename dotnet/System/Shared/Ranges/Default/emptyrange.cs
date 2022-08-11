@@ -10,7 +10,7 @@ namespace Allors.Ranges
     using System.Collections;
     using System.Collections.Generic;
 
-    public class EmptyRange<T> : IRange<T> where T : IComparable<T>
+    public sealed class EmptyRange<T> : IRange<T> where T : IComparable<T>
     {
         private static readonly EmptyEnumerator<T> Enumerator = new EmptyEnumerator<T>();
 
@@ -27,6 +27,8 @@ namespace Allors.Ranges
         public bool IsEmpty => true;
 
         public bool Contains(T item) => false;
+
+        public T[] ToArray() => Array.Empty<T>();
 
         public T[]? Save() => null;
 

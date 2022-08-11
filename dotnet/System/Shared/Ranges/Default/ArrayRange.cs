@@ -9,7 +9,7 @@ namespace Allors.Ranges
     using System.Collections;
     using System.Collections.Generic;
 
-    public class ArrayRange<T> : IRange<T> where T : IComparable<T>
+    public sealed class ArrayRange<T> : IRange<T> where T : IComparable<T>
     {
         public ArrayRange(T[] items) => this.Items = items;
 
@@ -69,6 +69,8 @@ namespace Allors.Ranges
                 var singleItems when singleItems.Length == 1 => singleItems[0].CompareTo(item) == 0,
                 _ => Array.BinarySearch(this.Items, item) >= 0,
             };
+
+        public T[] ToArray() => this.Items;
 
         public T[]? Save() => this.Items;
 

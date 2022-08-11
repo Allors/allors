@@ -11,6 +11,7 @@ namespace Tests.Workspace.Remote
     using Allors.Ranges;
     using Allors.Workspace;
     using Allors.Workspace.Adapters;
+    using Allors.Workspace.Adapters.Remote.SystemText;
     using Allors.Workspace.Meta;
     using Xunit;
     using Configuration = Allors.Workspace.Adapters.Remote.Configuration;
@@ -48,7 +49,7 @@ namespace Tests.Workspace.Remote
 
         public IWorkspace Workspace { get; private set; }
 
-        public M M => ((IWorkspaceServices)this.Workspace.Services).Get<M>();
+        public M M => this.Workspace.Services.Get<M>();
 
         public async Task InitializeAsync()
         {
@@ -56,7 +57,7 @@ namespace Tests.Workspace.Remote
             var response = await this.httpClient.GetAsync(SetupUrl);
             Assert.True(response.IsSuccessStatusCode);
 
-            this.DatabaseConnection = new DatabaseConnection(this.configuration, this.servicesBuilder, this.httpClient, this.idGenerator, this.defaultRanges);
+            this.DatabaseConnection = new DatabaseConnection(this.configuration, this.servicesBuilder, new Client(() => this.httpClient), this.idGenerator, this.defaultRanges);
             this.Workspace = this.DatabaseConnection.CreateWorkspace();
 
             await this.Login("administrator");
@@ -66,7 +67,7 @@ namespace Tests.Workspace.Remote
 
         public IWorkspace CreateExclusiveWorkspace()
         {
-            var database = new DatabaseConnection(this.configuration, this.servicesBuilder, this.httpClient, this.idGenerator, this.defaultRanges);
+            var database = new DatabaseConnection(this.configuration, this.servicesBuilder, new Client(() => this.httpClient), this.idGenerator, this.defaultRanges);
             return database.CreateWorkspace();
         }
 
@@ -75,7 +76,7 @@ namespace Tests.Workspace.Remote
         public async Task Login(string user)
         {
             var uri = new Uri(LoginUrl, UriKind.Relative);
-            var response = await this.DatabaseConnection.Login(uri, user, null);
+            var response = await this.DatabaseConnection.Client.Login(uri, user, null);
             Assert.True(response);
         }
     }
