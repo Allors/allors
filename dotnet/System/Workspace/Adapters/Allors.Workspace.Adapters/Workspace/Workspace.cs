@@ -5,8 +5,6 @@
 
 namespace Allors.Workspace.Adapters
 {
-    using System.Collections.Generic;
-    using Meta;
     using Ranges;
 
     public abstract class Workspace : IWorkspace
