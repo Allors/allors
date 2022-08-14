@@ -1,8 +1,8 @@
-namespace Allors.Workspace.State
+namespace Allors.Workspace.Pull
 {
     using System.Collections.Generic;
 
-    public interface IGrantState
+    public interface IPullGrant
     {
         long Version { get; }
 

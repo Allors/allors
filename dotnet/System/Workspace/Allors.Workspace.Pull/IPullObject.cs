@@ -1,8 +1,8 @@
-namespace Allors.Workspace.State
+namespace Allors.Workspace.Pull
 {
     using System.Collections.Generic;
 
-    public interface IObjectState
+    public interface IPullObject
     {
         string Tag { get; }
 
@@ -19,10 +19,10 @@ namespace Allors.Workspace.State
         /// </summary>
         string SecurityFingerprint { get; }
 
-        IDictionary<long, IGrantState> GrantStateById { get; }
+        IDictionary<long, IPullGrant> GrantById { get; }
 
-        IDictionary<long, IRevocationState> RevocationStateById { get; }
+        IDictionary<long, IPullRevocation> RevocationById { get; }
 
-        IDictionary<string, IRoleState> RoleStateByTag { get; }
+        IDictionary<string, IPullRole> RoleByTag { get; }
     }
 }
