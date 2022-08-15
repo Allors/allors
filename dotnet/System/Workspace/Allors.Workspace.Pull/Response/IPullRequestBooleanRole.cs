@@ -1,6 +1,6 @@
 namespace Allors.Workspace.Sync.Response
 {
-    public interface ISyncedBooleanRole : ISyncedUnitRole
+    public interface IPullRequestBooleanRole : IPullRequestUnitRole
     {
         new bool Value { get; }
     }

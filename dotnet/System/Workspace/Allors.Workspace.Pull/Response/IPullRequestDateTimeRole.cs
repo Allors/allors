@@ -2,7 +2,7 @@ namespace Allors.Workspace.Sync.Response
 {
     using System;
 
-    public interface ISyncedDateTimeRole : ISyncedUnitRole
+    public interface IPullRequestDateTimeRole : IPullRequestUnitRole
     {
         new DateTime Value { get; }
     }

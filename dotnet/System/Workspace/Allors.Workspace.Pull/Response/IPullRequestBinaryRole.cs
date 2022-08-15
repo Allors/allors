@@ -1,6 +1,6 @@
 namespace Allors.Workspace.Sync.Response
 {
-    public interface ISyncedBinaryRole : ISyncedUnitRole
+    public interface IPullRequestBinaryRole : IPullRequestUnitRole
     {
         new byte[] Value { get; }
     }

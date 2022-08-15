@@ -19,10 +19,10 @@ namespace Allors.Workspace.Sync.Response
         /// </summary>
         string SecurityFingerprint { get; }
 
-        IDictionary<long, ISyncedGrant> GrantById { get; }
+        IDictionary<long, IPullRequestGrant> GrantById { get; }
 
-        IDictionary<long, ISyncedRevocation> RevocationById { get; }
+        IDictionary<long, IPullRequestRevocation> RevocationById { get; }
 
-        IDictionary<string, ISyncedRole> RoleByTag { get; }
+        IDictionary<string, IPullRequestRole> RoleByTag { get; }
     }
 }

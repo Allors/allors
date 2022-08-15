@@ -2,7 +2,7 @@ namespace Allors.Workspace.Sync.Response
 {
     using System.Collections.Generic;
 
-    public interface ISyncedGrant
+    public interface IPullRequestGrant
     {
         long Version { get; }
 

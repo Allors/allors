@@ -4,6 +4,6 @@ namespace Allors.Workspace.State
 
     public interface IPullResponse
     {
-        IEnumerable<IPullObject> Objects { get; }
+        IEnumerable<IPullRequestObject> Objects { get; }
     }
 }

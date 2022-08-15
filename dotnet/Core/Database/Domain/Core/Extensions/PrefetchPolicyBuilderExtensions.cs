@@ -18,13 +18,13 @@ namespace Allors.Database.Domain
             @this.WithRule(m.Object.SecurityTokens);
             @this.WithRule(m.Object.Revocations);
 
-            // DelegatedAccessObject
-            var delegatedAccessPolicy = new PrefetchPolicyBuilder()
+            // TODO: Use caching
+            // Shared Security
+            var securityTokenGroupPolicy = new PrefetchPolicyBuilder()
                 .WithRule(m.Object.SecurityTokens)
-                .WithRule(m.Object.Revocations)
                 .Build();
 
-            @this.WithRule(m.DelegatedAccessObject.DelegatedAccess, delegatedAccessPolicy);
+            @this.WithRule(m.Object.SharedSecurity, securityTokenGroupPolicy);
 
             return @this;
         }

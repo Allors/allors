@@ -2,7 +2,7 @@ namespace Allors.Workspace.Sync.Response
 {
     using System;
 
-    public interface ISyncedUniqueRole : ISyncedUnitRole
+    public interface IPullRequestUniqueRole : IPullRequestUnitRole
     {
         new Guid Value { get; }
     }

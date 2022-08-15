@@ -167,6 +167,7 @@ namespace Allors.Repository
 
         #region inherited
 
+        public SecurityTokenGroup SharedSecurity { get; set; }
         public Revocation[] Revocations { get; set; }
         public Guid SecurityFingerPrint { get; set; }
 

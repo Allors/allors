@@ -25,12 +25,12 @@ namespace Allors.Repository
 
         #region inherited
 
-        public Revocation[] Revocations { get; set; }
-        public Guid SecurityFingerPrint { get; set; }
-
         public SecurityToken[] SecurityTokens { get; set; }
 
-        public Object DelegatedAccess { get; set; }
+        public SecurityTokenGroup SharedSecurity { get; set; }
+
+        public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
 
         public void OnPostBuild()
         {

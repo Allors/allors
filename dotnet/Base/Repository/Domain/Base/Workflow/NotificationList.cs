@@ -45,6 +45,8 @@ namespace Allors.Repository
 
         public Guid SecurityFingerPrint { get; set; }
 
+        
+        public SecurityTokenGroup SharedSecurity { get; set; }
         public Revocation[] Revocations { get; set; }
 
         public SecurityToken[] SecurityTokens { get; set; }

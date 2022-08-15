@@ -1,4 +1,4 @@
-// <copyright file="DelegatedAccessControlledObject.cs" company="Allors bvba">
+// <copyright file="SecurityToken.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -6,18 +6,18 @@
 
 namespace Allors.Repository
 {
+    using System;
     using Attributes;
 
     #region Allors
-    [Id("842FA7B5-2668-43E9-BFEF-21B6F5B20E8B")]
+    [Id("D62A834D-A415-4EC9-AB84-261F6EDD57A4")]
     #endregion
-    public partial interface DelegatedAccessObject : Object
+    public partial interface SecurityStamped : Object
     {
         #region Allors
-        [Id("4277EB04-A800-4EA9-B19F-A2268D903D5F")]
+        [Id("E094E1DD-A3B0-4B6A-B2FA-B00E98BDC0D6")]
         #endregion
-        [Multiplicity(Multiplicity.ManyToOne)]
-        [Indexed]
-        public Object DelegatedAccess { get; set; }
+        [Derived]
+        public Guid SecurityStamp { get; set; }
     }
 }

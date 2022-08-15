@@ -1,6 +1,6 @@
 namespace Allors.Workspace.Sync.Response
 {
-    public interface ISyncedFloatRole : ISyncedUnitRole
+    public interface IPullRequestFloatRole : IPullRequestUnitRole
     {
         new double Value { get; }
     }

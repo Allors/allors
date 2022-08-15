@@ -2,7 +2,7 @@ namespace Allors.Workspace.Sync.Response
 {
     using System.Collections.Generic;
 
-    public interface ISyncedRevocation
+    public interface IPullRequestRevocation
     {
         long Version { get; }
 

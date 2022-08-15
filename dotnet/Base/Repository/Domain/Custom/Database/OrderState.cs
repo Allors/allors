@@ -15,6 +15,9 @@ namespace Allors.Repository
     public partial class OrderState : ObjectState
     {
         #region inherited properties
+
+        
+        public SecurityTokenGroup SharedSecurity { get; set; }
         public Revocation[] Revocations { get; set; }
         public Guid SecurityFingerPrint { get; set; }
 

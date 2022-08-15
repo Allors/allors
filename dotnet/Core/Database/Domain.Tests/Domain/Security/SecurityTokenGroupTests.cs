@@ -5,14 +5,12 @@
 
 namespace Allors.Database.Domain.Tests
 {
-    using Meta;
     using Xunit;
-    using Permission = Domain.Permission;
     using AccessClass = Domain.AccessClass;
 
-    public class DelegateAccessGrantTests : DomainTest, IClassFixture<Fixture>
+    public class SecurityTokenGroupTests : DomainTest, IClassFixture<Fixture>
     {
-        public DelegateAccessGrantTests(Fixture fixture) : base(fixture) { }
+        public SecurityTokenGroupTests(Fixture fixture) : base(fixture) { }
 
         public override Config Config => new Config { SetupSecurity = true };
 
@@ -21,8 +19,8 @@ namespace Allors.Database.Domain.Tests
         {
             var user = this.BuildPerson("user");
 
-            var delegatedAccessClass = this.Transaction.Build<AccessClass>();
-            var accessClass = this.Transaction.Build<AccessClass>(v => v.DelegatedAccess = delegatedAccessClass);
+            var securityTokenGroup = this.Transaction.Build<SecurityTokenGroup>();
+            var accessClass = this.Transaction.Build<AccessClass>(v => v.SharedSecurity = securityTokenGroup);
 
             var securityToken = this.BuildSecurityToken();
             var permission = this.FindPermission(this.M.AccessClass.Property, Operations.Read);
@@ -46,12 +44,12 @@ namespace Allors.Database.Domain.Tests
         }
 
         [Fact]
-        public void WithoutSecurityTokenAndDelegateWithoutSecurityToken()
+        public void WithoutSecurityTokenAndSharedSecurityWithoutSecurityToken()
         {
             var user = this.BuildPerson("user");
 
-            var delegatedAccessClass = this.Transaction.Build<AccessClass>();
-            var accessClass = this.Transaction.Build<AccessClass>(v => v.DelegatedAccess = delegatedAccessClass);
+            var securityTokenGroup = this.Transaction.Build<SecurityTokenGroup>();
+            var accessClass = this.Transaction.Build<AccessClass>(v => v.SharedSecurity = securityTokenGroup);
 
             var securityToken = this.BuildSecurityToken();
             var permission = this.FindPermission(this.M.AccessClass.Property, Operations.Read);
@@ -73,12 +71,12 @@ namespace Allors.Database.Domain.Tests
         }
 
         [Fact]
-        public void WithSecurityTokenAndDelegateWithSecurityToken()
+        public void WithSecurityTokenAndSharedSecurityWithSecurityToken()
         {
             var user = this.BuildPerson("user");
 
-            var delegatedAccessClass = this.Transaction.Build<AccessClass>();
-            var accessClass = this.Transaction.Build<AccessClass>(v => v.DelegatedAccess = delegatedAccessClass);
+            var securityTokenGroup = this.Transaction.Build<SecurityTokenGroup>();
+            var accessClass = this.Transaction.Build<AccessClass>(v => v.SharedSecurity = securityTokenGroup);
 
             var securityToken1 = this.BuildSecurityToken();
             var permission1 = this.FindPermission(this.M.AccessClass.Property, Operations.Read);
@@ -93,7 +91,7 @@ namespace Allors.Database.Domain.Tests
             securityToken2.AddGrant(this.BuildGrant(user, role2));
 
             accessClass.AddSecurityToken(securityToken1);
-            delegatedAccessClass.AddSecurityToken(securityToken2);
+            securityTokenGroup.AddSecurityToken(securityToken2);
 
             this.Transaction.Derive();
             this.Transaction.Commit();
@@ -108,12 +106,12 @@ namespace Allors.Database.Domain.Tests
         }
 
         [Fact]
-        public void WithoutSecurityTokenAndDelegateWithSecurityToken()
+        public void WithoutSecurityTokenAndSharedSecurityWithSecurityToken()
         {
             var user = this.BuildPerson("user");
 
-            var delegatedAccessClass = this.Transaction.Build<AccessClass>();
-            var accessClass = this.Transaction.Build<AccessClass>(v => v.DelegatedAccess = delegatedAccessClass);
+            var securityTokenGroup = this.Transaction.Build<SecurityTokenGroup>();
+            var accessClass = this.Transaction.Build<AccessClass>(v => v.SharedSecurity = securityTokenGroup);
 
             var securityToken = this.BuildSecurityToken();
             var permission = this.FindPermission(this.M.AccessClass.Property, Operations.Read);
@@ -122,7 +120,7 @@ namespace Allors.Database.Domain.Tests
             var grant = this.BuildGrant(user, role);
             securityToken.AddGrant(grant);
 
-            delegatedAccessClass.AddSecurityToken(securityToken);
+            securityTokenGroup.AddSecurityToken(securityToken);
 
             this.Transaction.Derive();
             this.Transaction.Commit();

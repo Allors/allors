@@ -1,6 +1,6 @@
 namespace Allors.Workspace.Sync.Response
 {
-    public interface ISyncedDecimalRole : ISyncedUnitRole
+    public interface IPullRequestDecimalRole : IPullRequestUnitRole
     {
         new decimal Value { get; }
     }

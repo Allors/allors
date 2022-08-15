@@ -14,12 +14,13 @@ namespace Allors.Database.Domain
 
     public class ObjectSecurityFingerprintRule : Rule
     {
-        public ObjectSecurityFingerprintRule(MetaPopulation m) : base(m, new Guid("0C788305-AD7E-4722-B03C-83B5DE3E881A")) =>
+        public ObjectSecurityFingerprintRule(MetaPopulation m) : base(m, new Guid("24C833AD-8588-49EA-9D93-5A2C56EA4E9B")) =>
             this.Patterns = new Pattern[]
             {
+                m.Object.RolePattern(v=>v.SecurityTokens),
+                m.Object.RolePattern(v=>v.SharedSecurity),
                 m.SecurityToken.RolePattern(v=>v.SecurityStamp, v=>v.ObjectsWhereSecurityToken),
-                m.Revocation.RolePattern(v=>v.DeniedPermissions, v => v.ObjectsWhereRevocation),
-                m.DelegatedAccessObject.RolePattern(v=>v.SecurityFingerprint, v => v.DelegatedAccessObjectsWhereDelegatedAccess),
+                m.SecurityTokenGroup.RolePattern(v=>v.SecurityStamp, v => v.ObjectsWhereSharedSecurity),
             };
 
         public override void Derive(ICycle cycle, IEnumerable<IObject> matches)
@@ -28,13 +29,13 @@ namespace Allors.Database.Domain
 
             foreach (var securityToken in matches.Cast<SecurityToken>())
             {
-                securityToken.DeriveSecurityTokenSecurityStampRule(validation);
+                securityToken.DeriveObjectSecurityFingerprintRule(validation);
             }
         }
     }
 
-    public static class SecurityTokenSecurityStampRuleExtensions
+    public static class ObjectSecurityFingerprintRuleExtensions
     {
-        public static void DeriveSecurityTokenSecurityStampRule(this SecurityToken @this, IValidation validation) => @this.SecurityStamp = Guid.NewGuid();
+        public static void DeriveObjectSecurityFingerprintRule(this Object @this, IValidation validation) => @this.SecurityFingerPrint = Guid.NewGuid();
     }
 }

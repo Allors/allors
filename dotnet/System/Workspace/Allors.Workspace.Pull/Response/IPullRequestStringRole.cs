@@ -1,6 +1,6 @@
 namespace Allors.Workspace.Sync.Response
 {
-    public interface ISyncedStringRole : ISyncedUnitRole
+    public interface IPullRequestStringRole : IPullRequestUnitRole
     {
         new string Value { get; }
     }
