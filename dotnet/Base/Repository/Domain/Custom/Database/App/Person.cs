@@ -13,13 +13,6 @@ namespace Allors.Repository
     [Workspace(Default)]
     public partial class Person : Addressable, Localized
     {
-        #region inherited properties
-        public Address Address { get; set; }
-
-        public Locale Locale { get; set; }
-
-        #endregion
-
         #region Allors
         [Id("2a25125f-3545-4209-afc6-523eb0d8851e")]
         #endregion
@@ -148,7 +141,10 @@ namespace Allors.Repository
         [Id("FAF120ED-09D1-4E42-86A6-F0D9FF75E03C")]
         public void Method() { }
 
-        #region inherited methods
+        #region inherited
+        public Address Address { get; set; }
+
+        public Locale Locale { get; set; }
         #endregion
     }
 }

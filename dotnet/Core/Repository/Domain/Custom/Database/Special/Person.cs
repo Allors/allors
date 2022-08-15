@@ -16,52 +16,6 @@ namespace Allors.Repository
     [Workspace(Default)]
     public partial class Person : User
     {
-        #region inherited properties
-
-        public Guid UniqueId { get; set; }
-
-        public SecurityToken OwnerSecurityToken { get; set; }
-
-        public Grant OwnerGrant { get; set; }
-
-        public Revocation[] Revocations { get; set; }
-
-        public SecurityToken[] SecurityTokens { get; set; }
-
-        public string UserName { get; set; }
-
-        public string NormalizedUserName { get; set; }
-
-        public string InExistingUserPassword { get; set; }
-
-        public string InUserPassword { get; set; }
-
-        public string UserPasswordHash { get; set; }
-
-        public string UserEmail { get; set; }
-
-        public string NormalizedUserEmail { get; set; }
-
-        public bool UserEmailConfirmed { get; set; }
-
-        public string UserSecurityStamp { get; set; }
-
-        public string UserPhoneNumber { get; set; }
-
-        public bool UserPhoneNumberConfirmed { get; set; }
-
-        public bool UserTwoFactorEnabled { get; set; }
-
-        public DateTime UserLockoutEnd { get; set; }
-
-        public bool UserLockoutEnabled { get; set; }
-
-        public int UserAccessFailedCount { get; set; }
-
-        public Login[] Logins { get; set; }
-
-        #endregion
-
         #region Allors
         [Id("ed4b710a-fe24-4143-bb96-ed1bd9beae1a")]
         #endregion
@@ -83,19 +37,6 @@ namespace Allors.Repository
         [Workspace(Default)]
         public string LastName { get; set; }
 
-        #region inherited methods
-
-        
-
-        public void OnPostBuild() { }
-
-        public void OnInit()
-        {
-        }
-
-        public void OnPostDerive() { }
-
-        #endregion
         #region Allors
         [Id("2a25125f-3545-4209-afc6-523eb0d8851e")]
         #endregion
@@ -205,8 +146,59 @@ namespace Allors.Repository
         [Id("FAF120ED-09D1-4E42-86A6-F0D9FF75E03C")]
         public void Method() { }
 
-        #region inherited methods
+        #region inherited
 
+        public Guid UniqueId { get; set; }
+
+        public SecurityToken OwnerSecurityToken { get; set; }
+
+        public Grant OwnerGrant { get; set; }
+
+        public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
+
+        public SecurityToken[] SecurityTokens { get; set; }
+
+        public string UserName { get; set; }
+
+        public string NormalizedUserName { get; set; }
+
+        public string InExistingUserPassword { get; set; }
+
+        public string InUserPassword { get; set; }
+
+        public string UserPasswordHash { get; set; }
+
+        public string UserEmail { get; set; }
+
+        public string NormalizedUserEmail { get; set; }
+
+        public bool UserEmailConfirmed { get; set; }
+
+        public string UserSecurityStamp { get; set; }
+
+        public string UserPhoneNumber { get; set; }
+
+        public bool UserPhoneNumberConfirmed { get; set; }
+
+        public bool UserTwoFactorEnabled { get; set; }
+
+        public DateTime UserLockoutEnd { get; set; }
+
+        public bool UserLockoutEnabled { get; set; }
+
+        public int UserAccessFailedCount { get; set; }
+
+        public Login[] Logins { get; set; }
+
+        public void OnPostBuild() { }
+
+        public void OnInit()
+        {
+        }
+
+        public void OnPostDerive() { }
+        
         public void Delete()
         {
         }

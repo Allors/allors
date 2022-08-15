@@ -5,6 +5,7 @@
 
 namespace Allors.Repository
 {
+    using System;
     using Attributes;
 
     #region Allors
@@ -12,17 +13,15 @@ namespace Allors.Repository
     #endregion
     public partial class Subdependee : Object
     {
-        #region inherited properties
-        #endregion
-
         #region Allors
         [Id("194930f9-9c3f-458d-93ec-3d7bea4cd538")]
         #endregion
         public int Subcounter { get; set; }
 
-        #region inherited methods
+        #region inherited
 
         public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
 
         public SecurityToken[] SecurityTokens { get; set; }
 

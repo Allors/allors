@@ -5,6 +5,7 @@
 
 namespace Allors.Repository
 {
+    using System;
     using Attributes;
 
     #region Allors
@@ -12,9 +13,6 @@ namespace Allors.Repository
     #endregion
     public partial class BadUI : Object
     {
-        #region inherited properties
-        #endregion
-
         #region Allors
         [Id("8a999086-ca90-40a1-90ae-475d231bb1eb")]
         [Multiplicity(Multiplicity.OneToMany)]
@@ -49,9 +47,10 @@ namespace Allors.Repository
         #endregion
         public string AllorsString { get; set; }
 
-        #region inherited methods
+        #region inherited
 
         public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
 
         public SecurityToken[] SecurityTokens { get; set; }
 

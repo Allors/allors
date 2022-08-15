@@ -16,12 +16,6 @@ namespace Allors.Repository
     [Workspace(Default)]
     public partial class Data : Object
     {
-        #region inherited properties
-        public Revocation[] Revocations { get; set; }
-
-        public SecurityToken[] SecurityTokens { get; set; }
-        #endregion
-
         #region Allors
         [Id("46964F62-AF12-4450-83DA-C695C4A0ECE8")]
         #endregion
@@ -226,9 +220,12 @@ namespace Allors.Repository
         [Workspace(Default)]
         public LocalizedText[] LocalizedMarkdowns { get; set; }
 
-        #region inherited methods
+        #region inherited
 
-        
+        public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
+
+        public SecurityToken[] SecurityTokens { get; set; }
 
         public void OnPostBuild() { }
 

@@ -5,6 +5,7 @@
 
 namespace Allors.Repository
 {
+    using System;
     using Attributes;
 
     #region Allors
@@ -12,17 +13,15 @@ namespace Allors.Repository
     #endregion
     public partial class SimpleJob : Object
     {
-        #region inherited properties
-        #endregion
-
         #region Allors
         [Id("7cd27660-13c6-4a15-8fd8-5775920cfd28")]
         #endregion
         public int Index { get; set; }
 
-        #region inherited methods
+        #region inherited
 
         public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
 
         public SecurityToken[] SecurityTokens { get; set; }
 

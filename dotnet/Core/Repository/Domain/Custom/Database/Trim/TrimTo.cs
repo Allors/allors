@@ -5,6 +5,7 @@
 
 namespace Allors.Repository
 {
+    using System;
     using Attributes;
     using static Workspaces;
 
@@ -14,12 +15,6 @@ namespace Allors.Repository
     [Workspace(Default)]
     public partial class TrimTo : Object
     {
-        #region inherited properties
-        public Revocation[] Revocations { get; set; }
-
-        public SecurityToken[] SecurityTokens { get; set; }
-        #endregion
-
         #region Allors
         [Id("09E9D2E5-E406-4D3B-9E3D-5AA3D69408CF")]
         #endregion
@@ -27,9 +22,12 @@ namespace Allors.Repository
         [Workspace(Default)]
         public string Name { get; set; }
 
-        #region inherited methods
+        #region inherited
 
-        
+        public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
+
+        public SecurityToken[] SecurityTokens { get; set; }
 
         public void OnPostBuild() { }
 

@@ -5,6 +5,7 @@
 
 namespace Allors.Repository
 {
+    using System;
     using Attributes;
 
     #region Allors
@@ -12,14 +13,6 @@ namespace Allors.Repository
     #endregion
     public partial class BB : Object
     {
-        #region inherited properties
-
-        public Revocation[] Revocations { get; set; }
-
-        public SecurityToken[] SecurityTokens { get; set; }
-
-        #endregion
-
         #region Allors
         [Id("023301F0-E80E-4AAD-A3B0-7C0DFDEC688C")]
         [Indexed]
@@ -88,9 +81,12 @@ namespace Allors.Repository
         [Size(256)]
         public string Derived { get; set; }
 
-        #region inherited methods
+        #region inherited
 
-        
+        public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
+
+        public SecurityToken[] SecurityTokens { get; set; }
 
         public void OnPostBuild() { }
 

@@ -16,6 +16,7 @@ namespace Allors.Repository
     #endregion
     public partial interface Version : Object
     {
+        // TODO: Is this still necessary?
         #region Allors
         [Id("9FAEB940-A3A0-4E7A-B889-BCFD92F6A882")]
         #endregion

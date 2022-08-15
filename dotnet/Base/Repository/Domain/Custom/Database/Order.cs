@@ -5,6 +5,7 @@
 
 namespace Allors.Repository
 {
+    using System;
     using Attributes;
     using static Workspaces;
 
@@ -14,20 +15,6 @@ namespace Allors.Repository
     #endregion
     public partial class Order : Transitional, Versioned
     {
-        #region inherited properties
-        public Revocation[] Revocations { get; set; }
-
-        public Revocation[] TransitionalRevocations { get; set; }
-
-        public SecurityToken[] SecurityTokens { get; set; }
-
-        public ObjectState[] PreviousObjectStates { get; set; }
-
-        public ObjectState[] LastObjectStates { get; set; }
-
-        public ObjectState[] ObjectStates { get; set; }
-        #endregion
-
         #region ObjectStates
         #region OrderState
         #region Allors
@@ -154,9 +141,20 @@ namespace Allors.Repository
         public OrderVersion[] AllVersions { get; set; }
         #endregion
 
-        #region inherited methods
+        #region inherited
 
-        
+        public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
+
+        public Revocation[] TransitionalRevocations { get; set; }
+
+        public SecurityToken[] SecurityTokens { get; set; }
+
+        public ObjectState[] PreviousObjectStates { get; set; }
+
+        public ObjectState[] LastObjectStates { get; set; }
+
+        public ObjectState[] ObjectStates { get; set; }
 
         public void OnPostBuild() { }
 

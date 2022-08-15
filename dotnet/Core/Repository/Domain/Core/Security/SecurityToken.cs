@@ -14,11 +14,6 @@ namespace Allors.Repository
     #endregion
     public partial class SecurityToken : UniquelyIdentifiable, Deletable
     {
-        #region inherited properties
-        public Guid UniqueId { get; set; }
-
-        #endregion
-
         #region Allors
         [Id("6503574b-8bab-4da8-a19d-23a9bcffe01e")]
         #endregion
@@ -32,13 +27,14 @@ namespace Allors.Repository
         [Size(256)]
         public Guid SecurityStamp { get; set; }
 
-        #region inherited methods
+        #region inherited
 
         public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
 
         public SecurityToken[] SecurityTokens { get; set; }
 
-        
+        public Guid UniqueId { get; set; }
 
         public void OnPostBuild() { }
 

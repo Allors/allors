@@ -16,14 +16,6 @@ namespace Allors.Repository
     [Workspace(Default)]
     public partial class TraceZ : Object
     {
-        #region inherited properties
-
-        public Revocation[] Revocations { get; set; }
-
-        public SecurityToken[] SecurityTokens { get; set; }
-
-        #endregion
-
         #region Unit
         #region Allors
         [Id("D6F48267-A9F2-4237-94D3-7E3EF73EE0A9")]
@@ -79,9 +71,12 @@ namespace Allors.Repository
         public Guid AllorsUnique { get; set; }
         #endregion
 
-        #region inherited methods
+        #region inherited
 
-        
+        public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
+
+        public SecurityToken[] SecurityTokens { get; set; }
 
         public void OnPostBuild() { }
 

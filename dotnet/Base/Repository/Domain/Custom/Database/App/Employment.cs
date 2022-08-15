@@ -16,17 +16,6 @@ namespace Allors.Repository
     [Workspace(Default)]
     public partial class Employment : Period, Deletable
     {
-        #region inherited properties
-
-        public Revocation[] Revocations { get; set; }
-
-        public SecurityToken[] SecurityTokens { get; set; }
-
-        public DateTime FromDate { get; set; }
-        public DateTime ThroughDate { get; set; }
-
-        #endregion
-
         #region Allors
         [Id("93B8F2E1-9902-4C0B-BFAC-74629C494346")]
         [Indexed]
@@ -45,9 +34,15 @@ namespace Allors.Repository
         [Workspace(Default)]
         public Organization Employer { get; set; }
 
-        #region inherited methods
+        #region inherited
 
-        
+        public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
+
+        public SecurityToken[] SecurityTokens { get; set; }
+
+        public DateTime FromDate { get; set; }
+        public DateTime ThroughDate { get; set; }
 
         public void OnPostBuild() { }
 

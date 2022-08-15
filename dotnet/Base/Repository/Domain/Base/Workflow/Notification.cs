@@ -17,13 +17,6 @@ namespace Allors.Repository
     #endregion
     public partial class Notification : Deletable, Object
     {
-        #region inherited properties
-        public Revocation[] Revocations { get; set; }
-
-        public SecurityToken[] SecurityTokens { get; set; }
-
-        #endregion
-
         #region Allors
         [Id("9a226bec-31b9-413e-bec1-8dcdf36fa6fb")]
         [Multiplicity(Multiplicity.ManyToOne)]
@@ -62,9 +55,18 @@ namespace Allors.Repository
         [Required]
         public DateTime DateCreated { get; set; }
 
-        #region inherited methods
+        #region Allors
+        [Id("B445FC66-27AF-4D45-ADA8-4F1409EBBE72")]
+        #endregion
+        [Workspace(Default)]
+        public void Confirm() { }
 
-        
+        #region inherited
+
+        public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
+
+        public SecurityToken[] SecurityTokens { get; set; }
 
         public void OnPostBuild() { }
 
@@ -75,11 +77,5 @@ namespace Allors.Repository
         public void Delete() { }
 
         #endregion
-
-        #region Allors
-        [Id("B445FC66-27AF-4D45-ADA8-4F1409EBBE72")]
-        #endregion
-        [Workspace(Default)]
-        public void Confirm() { }
     }
 }

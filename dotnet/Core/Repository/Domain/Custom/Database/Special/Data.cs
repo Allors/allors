@@ -9,20 +9,13 @@ namespace Allors.Repository
 
     using Attributes;
     using static Workspaces;
-
-
+    
     #region Allors
     [Id("0E82B155-208C-41FD-B7D0-731EADBB5338")]
     #endregion
     [Workspace(Default)]
     public partial class Data : Object
     {
-        #region inherited properties
-        public Revocation[] Revocations { get; set; }
-
-        public SecurityToken[] SecurityTokens { get; set; }
-        #endregion
-
         #region Allors
         [Id("36FA4EB8-5EA9-4F56-B5AA-9908EF2B417F")]
         [Indexed]
@@ -127,9 +120,12 @@ namespace Allors.Repository
         [MediaType("text/html")]
         public string Html { get; set; }
 
-        #region inherited methods
+        #region inherited
 
-        
+        public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
+
+        public SecurityToken[] SecurityTokens { get; set; }
 
         public void OnPostBuild() { }
 

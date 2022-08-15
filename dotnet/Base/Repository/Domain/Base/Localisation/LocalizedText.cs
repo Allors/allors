@@ -6,6 +6,7 @@
 
 namespace Allors.Repository
 {
+    using System;
     using Attributes;
     using static Workspaces;
 
@@ -16,15 +17,6 @@ namespace Allors.Repository
     [Workspace(Default)]
     public partial class LocalizedText : Localized, Deletable, Object
     {
-        #region inherited properties
-        public Revocation[] Revocations { get; set; }
-
-        public SecurityToken[] SecurityTokens { get; set; }
-
-        public Locale Locale { get; set; }
-
-        #endregion
-
         #region Allors
         [Id("50dc85f0-3d22-4bc1-95d9-153674b89f7a")]
         #endregion
@@ -32,9 +24,14 @@ namespace Allors.Repository
         [Workspace(Default)]
         public string Text { get; set; }
 
-        #region inherited methods
+        #region inherited
 
-        
+        public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
+
+        public SecurityToken[] SecurityTokens { get; set; }
+
+        public Locale Locale { get; set; }
 
         public void OnPostBuild() { }
 

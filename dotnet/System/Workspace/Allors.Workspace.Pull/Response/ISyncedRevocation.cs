@@ -1,8 +1,8 @@
-namespace Allors.Workspace.Pull
+namespace Allors.Workspace.Sync.Response
 {
     using System.Collections.Generic;
 
-    public interface IPullRevocation
+    public interface ISyncedRevocation
     {
         long Version { get; }
 

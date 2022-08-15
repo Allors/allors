@@ -5,6 +5,7 @@
 
 namespace Allors.Repository
 {
+    using System;
     using Attributes;
 
     #region Allors
@@ -12,17 +13,6 @@ namespace Allors.Repository
     #endregion
     public partial class AccessClass : AccessInterface
     {
-        #region inherited properties
-
-        public Revocation[] Revocations { get; set; }
-
-        public SecurityToken[] SecurityTokens { get; set; }
-
-        public Object DelegatedAccess { get; set; }
-
-        #endregion
-
-
         #region Allors
         [Id("A67189D3-CD06-425B-98BB-59E0E73AC211")]
         #endregion
@@ -33,7 +23,14 @@ namespace Allors.Repository
         #endregion
         public string AnotherProperty { get; set; }
 
-        #region inherited methods
+        #region inherited
+
+        public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
+
+        public SecurityToken[] SecurityTokens { get; set; }
+
+        public Object DelegatedAccess { get; set; }
 
         public void OnPostBuild()
         {

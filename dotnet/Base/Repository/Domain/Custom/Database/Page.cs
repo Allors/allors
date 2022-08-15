@@ -14,15 +14,6 @@ namespace Allors.Repository
     #endregion
     public partial class Page : UniquelyIdentifiable
     {
-        #region inherited properties
-        public Revocation[] Revocations { get; set; }
-
-        public SecurityToken[] SecurityTokens { get; set; }
-
-        public Guid UniqueId { get; set; }
-
-        #endregion
-
         #region Allors
         [Id("9B2F32B4-DF88-41DA-AE4C-A7A8D4232C1C")]
         [Indexed]
@@ -38,9 +29,14 @@ namespace Allors.Repository
         [Workspace(Default)]
         public Media Content { get; set; }
 
-        #region inherited methods
+        #region inherited
 
-        
+        public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
+
+        public SecurityToken[] SecurityTokens { get; set; }
+
+        public Guid UniqueId { get; set; }
 
         public void OnPostBuild() { }
 

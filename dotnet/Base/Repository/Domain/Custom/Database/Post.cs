@@ -5,7 +5,7 @@
 
 namespace Allors.Repository
 {
-
+    using System;
     using Attributes;
 
     #region Allors
@@ -13,21 +13,18 @@ namespace Allors.Repository
     #endregion
     public partial class Post : Object
     {
-        #region inherited properties
-        public Revocation[] Revocations { get; set; }
-
-        public SecurityToken[] SecurityTokens { get; set; }
-        #endregion
-
         #region Allors
         [Id("D8714378-149D-4E4B-8A18-0D8622BCD32D")]
         #endregion
         [Required]
         public int Counter { get; set; }
 
-        #region inherited methods
-        
+        #region inherited
 
+        public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
+
+        public SecurityToken[] SecurityTokens { get; set; }
         public void OnPostBuild() { }
 
         public void OnInit() { }

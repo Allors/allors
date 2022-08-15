@@ -5,6 +5,7 @@
 
 namespace Allors.Repository
 {
+    using System;
     using Attributes;
 
     #region Allors
@@ -12,8 +13,6 @@ namespace Allors.Repository
     #endregion
     public partial class One : Object, Shared
     {
-        #region inherited properties
-        #endregion
 
         #region Allors
         [Id("448878af-c992-4256-baa7-239335a26bc6")]
@@ -22,9 +21,10 @@ namespace Allors.Repository
         #endregion
         public Two Two { get; set; }
 
-        #region inherited methods
+        #region inherited
 
         public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
 
         public SecurityToken[] SecurityTokens { get; set; }
 

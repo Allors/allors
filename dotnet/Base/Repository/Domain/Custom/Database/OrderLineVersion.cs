@@ -14,24 +14,21 @@ namespace Allors.Repository
     #endregion
     public partial class OrderLineVersion : Version
     {
-        #region inherited properties
+        #region Allors
+        [Id("0B9340C2-CE9B-48C7-A476-6D73B8829944")]
+        #endregion
+        public decimal Amount { get; set; }
+
+        #region inherited
 
         public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
 
         public SecurityToken[] SecurityTokens { get; set; }
 
         public Guid DerivationId { get; set; }
 
         public DateTime DerivationTimeStamp { get; set; }
-
-        #endregion
-
-        #region Allors
-        [Id("0B9340C2-CE9B-48C7-A476-6D73B8829944")]
-        #endregion
-        public decimal Amount { get; set; }
-
-        #region inherited methods
 
         public void OnPostBuild()
         {

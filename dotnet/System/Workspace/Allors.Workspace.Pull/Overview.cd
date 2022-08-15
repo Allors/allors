@@ -1,123 +1,34 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Interface Name="Allors.Workspace.Pull.IPull">
+  <Interface Name="Allors.Workspace.State.IPullConnection">
     <Position X="0.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>IPull.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>IPullConnection.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Allors.Workspace.State.IPullRequest">
+    <Position X="3.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAA=</HashCode>
+      <FileName>IPullRequest.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Allors.Workspace.State.IPullResponse">
+    <Position X="3.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAA=</HashCode>
+      <FileName>IPullResponse.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
-      <Property Name="ObjectById" />
+      <Property Name="Objects" />
     </ShowAsCollectionAssociation>
   </Interface>
-  <Interface Name="Allors.Workspace.Pull.IPullRole">
-    <Position X="7.5" Y="0.5" Width="1.5" />
+  <Interface Name="Allors.Workspace.State.IPullObject">
+    <Position X="6.75" Y="2.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
-      <FileName>IPullRole.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="Allors.Workspace.Pull.IPullCompositesRole">
-    <Position X="10.25" Y="2.25" Width="1.75" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
-      <FileName>IPullCompositesRole.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="Allors.Workspace.Pull.IPullDateTimeRole">
-    <Position X="6.75" Y="4" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
-      <FileName>IPullDateTimeRole.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="Allors.Workspace.Pull.IPullBooleanRole">
-    <Position X="5" Y="4" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
-      <FileName>IPullBooleanRole.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="Allors.Workspace.Pull.IPullCompositeRole">
-    <Position X="8.25" Y="2.25" Width="1.75" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
-      <FileName>IPullCompositeRole.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="Allors.Workspace.Pull.IPullIntegerRole">
-    <Position X="8.5" Y="4" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
-      <FileName>IPullIntegerRole.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="Allors.Workspace.Pull.IPullStringRole">
-    <Position X="10.25" Y="4" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
-      <FileName>IPullStringRole.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="Allors.Workspace.Pull.IPullUniqueRole">
-    <Position X="12" Y="4" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
-      <FileName>IPullUniqueRole.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="Allors.Workspace.Pull.IPullBinaryRole">
-    <Position X="13.75" Y="4" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
-      <FileName>IPullBinaryRole.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="Allors.Workspace.Pull.IPullDecimalRole">
-    <Position X="15.5" Y="4" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
-      <FileName>IPullDecimalRole.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="Allors.Workspace.Pull.IPullFloatRole">
-    <Position X="17.25" Y="4" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
-      <FileName>IPullFloatRole.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="Allors.Workspace.Pull.IPullRevocation">
-    <Position X="3.25" Y="3.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>IAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
-      <FileName>IPullRevocation.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="Allors.Workspace.Pull.IPullObject">
-    <Position X="3.5" Y="0.5" Width="1.75" />
-    <TypeIdentifier>
-      <HashCode>IAAAAAAAAAAgAAAAgAAAAgAAAAAAAAAAAAAIAAAAAAA=</HashCode>
+      <HashCode>IAACAAAAAAAgAAAAgAAAAgAAAAAAAAAAAAAIAAAAAAA=</HashCode>
       <FileName>IPullObject.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsCollectionAssociation>
-      <Property Name="GrantById" />
-      <Property Name="RevocationById" />
-      <Property Name="RoleByTag" />
-    </ShowAsCollectionAssociation>
-  </Interface>
-  <Interface Name="Allors.Workspace.Pull.IPullGrant">
-    <Position X="0.75" Y="2.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>IAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAQAAACAAA=</HashCode>
-      <FileName>IPullGrant.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="Allors.Workspace.Pull.IPullUnitRole">
-    <Position X="6.5" Y="2.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>IPullUnitRole.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Font Name="Segoe UI" Size="9" />

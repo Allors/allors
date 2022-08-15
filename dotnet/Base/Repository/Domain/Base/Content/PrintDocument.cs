@@ -5,6 +5,7 @@
 
 namespace Allors.Repository
 {
+    using System;
     using Attributes;
     using static Workspaces;
 
@@ -14,13 +15,6 @@ namespace Allors.Repository
     #endregion
     public partial class PrintDocument : Deletable, Object
     {
-        #region inherited properties
-        public Revocation[] Revocations { get; set; }
-
-        public SecurityToken[] SecurityTokens { get; set; }
-
-        #endregion
-
         #region Allors
         [Id("4C5C2727-908C-4FB2-9EB5-DA31837422FC")]
         [Indexed]
@@ -29,8 +23,12 @@ namespace Allors.Repository
         [Workspace(Default)]
         public Media Media { get; set; }
 
-        #region inherited methods
-        
+        #region inherited
+
+        public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
+
+        public SecurityToken[] SecurityTokens { get; set; }
 
         public void OnPostBuild() { }
 

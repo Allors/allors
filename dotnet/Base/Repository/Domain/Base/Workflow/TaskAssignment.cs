@@ -6,9 +6,9 @@
 
 namespace Allors.Repository
 {
+    using System;
     using Attributes;
     using static Workspaces;
-
 
     #region Allors
     [Id("4092d0b4-c6f4-4b81-b023-66be3f4c90bd")]
@@ -16,13 +16,6 @@ namespace Allors.Repository
     [Workspace(Default)]
     public partial class TaskAssignment : Deletable, Object
     {
-        #region inherited properties
-        public Revocation[] Revocations { get; set; }
-
-        public SecurityToken[] SecurityTokens { get; set; }
-
-        #endregion
-
         #region Allors
         [Id("c32c19f1-3f41-4d11-b19d-b8b2aa360166")]
         [Multiplicity(Multiplicity.ManyToOne)]
@@ -48,9 +41,12 @@ namespace Allors.Repository
         [Required]
         public Task Task { get; set; }
 
-        #region inherited methods
+        #region inherited
 
-        
+        public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
+
+        public SecurityToken[] SecurityTokens { get; set; }
 
         public void OnPostBuild() { }
 

@@ -15,15 +15,6 @@ namespace Allors.Repository
     #endregion
     public partial class Grant : UniquelyIdentifiable, Deletable
     {
-        #region inherited properties
-
-        public Guid UniqueId { get; set; }
-
-        public Revocation[] Revocations { get; set; }
-
-        public SecurityToken[] SecurityTokens { get; set; }
-        #endregion
-
         #region Allors
         [Id("0dbbff5c-3dca-4257-b2da-442d263dcd86")]
         #endregion
@@ -62,9 +53,15 @@ namespace Allors.Repository
         [Derived]
         public User[] EffectiveUsers { get; set; }
 
-        #region inherited methods
+        #region inherited
 
-        
+        public Guid UniqueId { get; set; }
+
+        public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
+
+        public SecurityToken[] SecurityTokens { get; set; }
+
 
         public void OnPostBuild() { }
 

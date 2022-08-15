@@ -6,6 +6,7 @@
 
 namespace Allors.Repository
 {
+    using System;
     using Attributes;
     using static Workspaces;
 
@@ -16,13 +17,6 @@ namespace Allors.Repository
     [Workspace(Default)]
     public partial class Locale : Object
     {
-        #region inherited properties
-        public Revocation[] Revocations { get; set; }
-
-        public SecurityToken[] SecurityTokens { get; set; }
-
-        #endregion
-
         #region Allors
         [Id("2a2c6f77-e6a2-4eab-bfe3-5d35a8abd7f7")]
         [Size(256)]
@@ -48,9 +42,12 @@ namespace Allors.Repository
         [Workspace(Default)]
         public Country Country { get; set; }
 
-        #region inherited methods
+        #region inherited
 
-        
+        public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
+
+        public SecurityToken[] SecurityTokens { get; set; }
 
         public void OnPostBuild() { }
 

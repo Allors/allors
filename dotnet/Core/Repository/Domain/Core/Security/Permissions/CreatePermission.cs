@@ -15,17 +15,15 @@ namespace Allors.Repository
     #endregion
     public partial class CreatePermission : Permission
     {
-        #region inherited properties
+
+        #region inherited
+
         public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
 
         public SecurityToken[] SecurityTokens { get; set; }
 
         public Guid ClassPointer { get; set; }
-        #endregion
-
-        #region inherited methods
-
-        
 
         public void OnPostBuild() { }
 

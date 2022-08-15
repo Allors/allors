@@ -14,14 +14,6 @@ namespace Allors.Repository
     #endregion
     public partial class Revocation : UniquelyIdentifiable, Deletable
     {
-        #region inherited properties
-        public Guid UniqueId { get; set; }
-
-        public Revocation[] Revocations { get; set; }
-
-        public SecurityToken[] SecurityTokens { get; set; }
-        #endregion
-
         #region Allors
         [Id("F7F98147-FD94-4BB1-A974-6405A3AB369E")]
         #endregion
@@ -29,8 +21,13 @@ namespace Allors.Repository
         [Indexed]
         public Permission[] DeniedPermissions { get; set; }
 
-        #region inherited methods
-        
+        #region inherited
+        public Guid UniqueId { get; set; }
+
+        public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
+
+        public SecurityToken[] SecurityTokens { get; set; }
 
         public void OnPostBuild() { }
 

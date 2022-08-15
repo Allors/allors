@@ -15,15 +15,6 @@ namespace Allors.Repository
     #endregion
     public partial class Role : UniquelyIdentifiable
     {
-        #region inherited properties
-        public Revocation[] Revocations { get; set; }
-
-        public SecurityToken[] SecurityTokens { get; set; }
-
-        public Guid UniqueId { get; set; }
-
-        #endregion
-
         #region Allors
         [Id("51e56ae1-72dc-443f-a2a3-f5aa3650f8d2")]
         [Indexed]
@@ -38,9 +29,14 @@ namespace Allors.Repository
         [Size(256)]
         public string Name { get; set; }
 
-        #region inherited methods
+        #region inherited
 
-        
+        public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
+
+        public SecurityToken[] SecurityTokens { get; set; }
+
+        public Guid UniqueId { get; set; }
 
         public void OnPostBuild() { }
 

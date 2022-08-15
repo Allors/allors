@@ -13,7 +13,7 @@ namespace Allors.Repository
     #endregion
     public partial class Gender : Enumeration
     {
-        #region inherited properties
+        #region inherited
         public LocalizedText[] LocalizedNames { get; set; }
 
         public string Name { get; set; }
@@ -21,16 +21,11 @@ namespace Allors.Repository
         public bool IsActive { get; set; }
 
         public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
 
         public SecurityToken[] SecurityTokens { get; set; }
 
         public Guid UniqueId { get; set; }
-
-        #endregion
-
-        #region inherited methods
-
-        
 
         public void OnPostBuild() { }
 

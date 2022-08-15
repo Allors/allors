@@ -15,22 +15,20 @@ namespace Allors.Repository
     #endregion
     public partial class Counter : UniquelyIdentifiable
     {
-        #region inherited properties
-        public Guid UniqueId { get; set; }
-
-        #endregion
-
         #region Allors
         [Id("309d07d9-8dea-4e99-a3b8-53c0d360bc54")]
         #endregion
         [Required]
         public int Value { get; set; }
 
-        #region inherited methods
+        #region inherited
 
         public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
 
         public SecurityToken[] SecurityTokens { get; set; }
+
+        public Guid UniqueId { get; set; }
 
         public void OnPostBuild()
         {

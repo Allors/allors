@@ -5,6 +5,7 @@
 
 namespace Allors.Repository
 {
+    using System;
     using Attributes;
 
     #region Allors
@@ -12,9 +13,6 @@ namespace Allors.Repository
     #endregion
     public partial class Place : Object
     {
-        #region inherited properties
-        #endregion
-
         #region Allors
         [Id("1bf1cc1e-75bf-4a3f-87bd-a2fae2697855")]
         [Multiplicity(Multiplicity.ManyToOne)]
@@ -34,9 +32,10 @@ namespace Allors.Repository
         #endregion
         public string PostalCode { get; set; }
 
-        #region inherited methods
+        #region inherited
 
         public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
 
         public SecurityToken[] SecurityTokens { get; set; }
 

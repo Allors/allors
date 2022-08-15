@@ -5,6 +5,7 @@
 
 namespace Allors.Repository
 {
+    using System;
     using Attributes;
     using static Workspaces;
 
@@ -14,14 +15,6 @@ namespace Allors.Repository
     [Workspace(Default)]
     public partial class Denied : Object
     {
-        #region inherited properties
-
-        public Revocation[] Revocations { get; set; }
-
-        public SecurityToken[] SecurityTokens { get; set; }
-
-        #endregion
-
         #region Allors
         [Id("449C1F0C-A63C-47B0-ABAC-3EE3511C6B23")]
         #endregion
@@ -39,7 +32,12 @@ namespace Allors.Repository
         [Workspace(X)]
         public string WorkspaceXProperty { get; set; }
 
-        #region inherited methods
+        #region inherited
+
+        public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
+        public SecurityToken[] SecurityTokens { get; set; }
+
         public void OnPostBuild()
         {
         }

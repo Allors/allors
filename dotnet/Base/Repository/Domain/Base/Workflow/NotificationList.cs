@@ -6,18 +6,15 @@
 
 namespace Allors.Repository
 {
+    using System;
     using Attributes;
     using static Workspaces;
-
 
     #region Allors
     [Id("b6579993-4ff1-4853-b048-1f8e67419c00")]
     #endregion
     public partial class NotificationList : Deletable, Object
     {
-        #region inherited properties
-        #endregion
-
         #region Allors
         [Id("4516c5c1-73a0-4fdc-ac3c-aefaf417c8ba")]
         [Multiplicity(Multiplicity.OneToMany)]
@@ -44,8 +41,14 @@ namespace Allors.Repository
         [Workspace(Default)]
         public Notification[] ConfirmedNotifications { get; set; }
 
-        #region inherited methods
-        
+        #region inherited
+
+        public Guid SecurityFingerPrint { get; set; }
+
+        public Revocation[] Revocations { get; set; }
+
+        public SecurityToken[] SecurityTokens { get; set; }
+
         public void OnPostBuild()
         {
         }
@@ -63,9 +66,5 @@ namespace Allors.Repository
         }
 
         #endregion
-
-        public Revocation[] Revocations { get; set; }
-
-        public SecurityToken[] SecurityTokens { get; set; }
     }
 }

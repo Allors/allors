@@ -15,15 +15,6 @@ namespace Allors.Repository
     #endregion
     public partial class WritePermission : Permission
     {
-        #region inherited properties
-        public Revocation[] Revocations { get; set; }
-
-        public SecurityToken[] SecurityTokens { get; set; }
-
-        public Guid ClassPointer { get; set; }
-
-        #endregion
-
         #region Allors
         [Id("86675DEA-D9F0-4930-99EC-13F2137CFB45")]
         [Indexed]
@@ -31,9 +22,14 @@ namespace Allors.Repository
         [Required]
         public Guid RelationTypePointer { get; set; }
 
-        #region inherited methods
+        #region inherited
 
-        
+        public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
+
+        public SecurityToken[] SecurityTokens { get; set; }
+
+        public Guid ClassPointer { get; set; }
 
         public void OnPostBuild() { }
 

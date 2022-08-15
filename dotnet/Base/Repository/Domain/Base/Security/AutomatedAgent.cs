@@ -14,7 +14,21 @@ namespace Allors.Repository
     #endregion
     public partial class AutomatedAgent : User
     {
-        #region inherited properties
+        #region Allors
+        [Id("4e158d75-d0b5-4cb7-ad41-e8ed3002d175")]
+        #endregion
+        [Indexed]
+        [Size(256)]
+        public string Name { get; set; }
+
+        #region Allors
+        [Id("58870c93-b066-47b7-95f7-5411a46dbc7e")]
+        #endregion
+        [Size(-1)]
+        public string Description { get; set; }
+
+        #region inherited
+
         public Guid UniqueId { get; set; }
 
         public SecurityToken OwnerSecurityToken { get; set; }
@@ -56,27 +70,9 @@ namespace Allors.Repository
         public Login[] Logins { get; set; }
 
         public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
 
         public SecurityToken[] SecurityTokens { get; set; }
-
-        #endregion
-
-        #region Allors
-        [Id("4e158d75-d0b5-4cb7-ad41-e8ed3002d175")]
-        #endregion
-        [Indexed]
-        [Size(256)]
-        public string Name { get; set; }
-
-        #region Allors
-        [Id("58870c93-b066-47b7-95f7-5411a46dbc7e")]
-        #endregion
-        [Size(-1)]
-        public string Description { get; set; }
-
-        #region inherited methods
-
-        
 
         public void OnPostBuild() { }
 

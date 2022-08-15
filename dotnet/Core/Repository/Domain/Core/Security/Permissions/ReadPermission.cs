@@ -15,15 +15,6 @@ namespace Allors.Repository
     #endregion
     public partial class ReadPermission : Permission
     {
-        #region inherited properties
-        public Revocation[] Revocations { get; set; }
-
-        public SecurityToken[] SecurityTokens { get; set; }
-
-        public Guid ClassPointer { get; set; }
-
-        #endregion
-
         #region Allors
         [Id("88A27D41-E97E-4446-86D7-2E2FC10C5004")]
         [Indexed]
@@ -31,9 +22,14 @@ namespace Allors.Repository
         [Required]
         public Guid RelationTypePointer { get; set; }
 
-        #region inherited methods
+        #region inherited
 
-        
+        public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
+
+        public SecurityToken[] SecurityTokens { get; set; }
+
+        public Guid ClassPointer { get; set; }
 
         public void OnPostBuild() { }
 

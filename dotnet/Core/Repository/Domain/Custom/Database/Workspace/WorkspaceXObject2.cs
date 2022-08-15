@@ -5,6 +5,7 @@
 
 namespace Allors.Repository
 {
+    using System;
     using Attributes;
 
     #region Allors
@@ -13,15 +14,11 @@ namespace Allors.Repository
     [Workspace(Workspaces.X)]
     public partial class WorkspaceXObject2 : Object
     {
-        #region inherited properties
+        #region inherited
         public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
 
         public SecurityToken[] SecurityTokens { get; set; }
-        #endregion
-
-        #region inherited methods
-
-        
 
         public void OnPostBuild() { }
 

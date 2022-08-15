@@ -15,12 +15,6 @@ namespace Allors.Repository
     #endregion
     public partial class PersistentPreparedExtent : UniquelyIdentifiable, Deletable
     {
-        #region inherited properties
-
-        public Guid UniqueId { get; set; }
-
-        #endregion
-
         #region Allors
         [Id("CEADE44E-AA67-4E77-83FC-2C6E141A89F6")]
         #endregion
@@ -39,9 +33,11 @@ namespace Allors.Repository
         [Size(-1)]
         public string Content { get; set; }
 
-        #region inherited methods
+        #region inherited
+        public Guid UniqueId { get; set; }
 
         public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
 
         public SecurityToken[] SecurityTokens { get; set; }
 

@@ -18,15 +18,6 @@ namespace Allors.Repository
     [Workspace(Default)]
     public partial class Media : UniquelyIdentifiable, Deletable, Object
     {
-        #region inherited properties
-        public Guid UniqueId { get; set; }
-
-        public Revocation[] Revocations { get; set; }
-
-        public SecurityToken[] SecurityTokens { get; set; }
-
-        #endregion
-
         #region Allors
         [Id("B74C2159-739A-4F1C-ADA7-C2DCC3CDCF83")]
         #endregion
@@ -99,9 +90,14 @@ namespace Allors.Repository
         [Workspace(Default)]
         public string FileName { get; set; }
 
-        #region inherited methods
-        
+        #region inherited
 
+        public Guid UniqueId { get; set; }
+
+        public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
+
+        public SecurityToken[] SecurityTokens { get; set; }
         public void OnPostBuild() { }
 
         public void OnInit()

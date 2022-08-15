@@ -5,6 +5,7 @@
 
 namespace Allors.Repository
 {
+    using System;
     using Attributes;
     using static Workspaces;
 
@@ -14,14 +15,6 @@ namespace Allors.Repository
     #endregion
     public partial class MediaTyped : Object
     {
-        #region inherited properties
-
-        public Revocation[] Revocations { get; set; }
-
-        public SecurityToken[] SecurityTokens { get; set; }
-
-        #endregion
-
         #region Allors
         [Id("D23961DF-6688-44D1-87D4-0E5D0C2ED533")]
         #endregion
@@ -30,7 +23,12 @@ namespace Allors.Repository
         [Workspace(Default)]
         public string Markdown { get; set; }
 
-        #region inherited methods
+        #region inherited
+        public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
+
+        public SecurityToken[] SecurityTokens { get; set; }
+
         public void OnPostBuild()
         {
         }

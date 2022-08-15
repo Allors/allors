@@ -16,13 +16,6 @@ namespace Allors.Repository
     [Workspace(Default)]
     public partial class UnitSample : Object
     {
-        #region inherited properties
-        public Revocation[] Revocations { get; set; }
-
-        public SecurityToken[] SecurityTokens { get; set; }
-
-        #endregion
-
         #region Allors
         [Id("24771d5b-f920-4820-aff7-ea6391b4a45c")]
         #endregion
@@ -122,9 +115,12 @@ namespace Allors.Repository
         [Required]
         public decimal RequiredDecimal { get; set; }
 
-        #region inherited methods
-        
+        #region inherited
 
+        public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
+
+        public SecurityToken[] SecurityTokens { get; set; }
         public void OnPostBuild() { }
 
         public void OnInit()

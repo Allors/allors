@@ -16,14 +16,6 @@ namespace Allors.Repository
     [Workspace(Default)]
     public partial class TraceX : Object
     {
-        #region inherited properties
-
-        public Revocation[] Revocations { get; set; }
-
-        public SecurityToken[] SecurityTokens { get; set; }
-
-        #endregion
-
         #region Unit
         #region Allors
         [Id("44242071-BE48-48D7-AEBC-6B1B088B79A2")]
@@ -113,9 +105,12 @@ namespace Allors.Repository
         public TraceY One2One { get; set; }
         #endregion
 
-        #region inherited methods
+        #region inherited
 
-        
+        public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
+
+        public SecurityToken[] SecurityTokens { get; set; }
 
         public void OnPostBuild() { }
 

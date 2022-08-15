@@ -5,6 +5,7 @@
 
 namespace Allors.Repository
 {
+    using System;
     using Attributes;
 
     #region Allors
@@ -12,18 +13,16 @@ namespace Allors.Repository
     #endregion
     public partial class Extender : Object
     {
-        #region inherited properties
-        #endregion
-
         #region Allors
         [Id("525bbc9e-d488-419f-ac02-0ab6ac409bac")]
         [Size(256)]
         #endregion
         public string AllorsString { get; set; }
 
-        #region inherited methods
+        #region inherited
 
         public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
 
         public SecurityToken[] SecurityTokens { get; set; }
 

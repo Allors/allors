@@ -5,6 +5,7 @@
 
 namespace Allors.Repository
 {
+    using System;
     using Attributes;
 
     #region Allors
@@ -12,11 +13,6 @@ namespace Allors.Repository
     #endregion
     public partial class Second : Object, DerivationCounted
     {
-        #region inherited properties
-        public int DerivationCount { get; set; }
-
-        #endregion
-
         #region Allors
         [Id("4f0eba0d-09b4-4bbc-8e42-15de94921ab5")]
         [Multiplicity(Multiplicity.OneToOne)]
@@ -29,13 +25,14 @@ namespace Allors.Repository
         #endregion
         public bool IsDerived { get; set; }
 
-        #region inherited methods
+        #region inherited
 
         public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
 
         public SecurityToken[] SecurityTokens { get; set; }
 
-        
+        public int DerivationCount { get; set; }
 
         public void OnPostBuild() { }
 

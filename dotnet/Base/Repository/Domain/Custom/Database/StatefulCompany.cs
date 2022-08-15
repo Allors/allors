@@ -5,6 +5,7 @@
 
 namespace Allors.Repository
 {
+    using System;
     using Attributes;
 
     #region Allors
@@ -13,9 +14,6 @@ namespace Allors.Repository
     [Plural("StatefulCompanies")]
     public partial class StatefulCompany : Object
     {
-        #region inherited properties
-        #endregion
-
         #region Allors
         [Id("6c848eeb-7b42-45ea-81ac-fa983e1e0fa9")]
         [Multiplicity(Multiplicity.ManyToOne)]
@@ -37,14 +35,13 @@ namespace Allors.Repository
         #endregion
         public Person Manager { get; set; }
 
-        #region inherited methods
+        #region inherited
 
         public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
 
         public SecurityToken[] SecurityTokens { get; set; }
-
         
-
         public void OnPostBuild() { }
 
         public void OnInit()

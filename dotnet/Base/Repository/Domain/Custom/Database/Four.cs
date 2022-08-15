@@ -5,6 +5,7 @@
 
 namespace Allors.Repository
 {
+    using System;
     using Attributes;
 
     #region Allors
@@ -12,12 +13,10 @@ namespace Allors.Repository
     #endregion
     public partial class Four : Object, Shared
     {
-        #region inherited properties
-        #endregion
-
-        #region inherited methods
+        #region inherited
 
         public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
 
         public SecurityToken[] SecurityTokens { get; set; }
 
@@ -32,6 +31,5 @@ namespace Allors.Repository
         public void OnPostDerive() { }
 
         #endregion
-
     }
 }

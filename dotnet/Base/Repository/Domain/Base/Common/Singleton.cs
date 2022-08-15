@@ -5,6 +5,7 @@
 
 namespace Allors.Repository
 {
+    using System;
     using Attributes;
     using static Workspaces;
 
@@ -13,13 +14,6 @@ namespace Allors.Repository
     #endregion
     public partial class Singleton : Object
     {
-        #region inherited properties
-        public Revocation[] Revocations { get; set; }
-
-        public SecurityToken[] SecurityTokens { get; set; }
-
-        #endregion
-
         #region Allors
         [Id("9c1634ab-be99-4504-8690-ed4b39fec5bc")]
         #endregion
@@ -53,9 +47,12 @@ namespace Allors.Repository
         [Workspace(Default)]
         public Media LogoImage { get; set; }
 
-        #region inherited methods
+        #region inherited
 
-        
+        public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
+
+        public SecurityToken[] SecurityTokens { get; set; }
 
         public void OnPostBuild() { }
 

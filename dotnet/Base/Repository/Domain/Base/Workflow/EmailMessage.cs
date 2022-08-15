@@ -15,9 +15,6 @@ namespace Allors.Repository
     #endregion
     public partial class EmailMessage : Object
     {
-        #region inherited properties
-        #endregion
-
         #region Allors
         [Id("5de25d18-3c36-418f-9c85-55a480d58bc5")]
         [Indexed]
@@ -80,9 +77,10 @@ namespace Allors.Repository
         [Workspace]
         public string Body { get; set; }
 
-        #region inherited methods
+        #region inherited
 
         public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
 
         public SecurityToken[] SecurityTokens { get; set; }
 

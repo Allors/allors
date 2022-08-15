@@ -14,18 +14,6 @@ namespace Allors.Repository
     #endregion
     public partial class OrderVersion : Version
     {
-        #region inherited properties
-
-        public Guid DerivationId { get; set; }
-
-        public DateTime DerivationTimeStamp { get; set; }
-
-        public Revocation[] Revocations { get; set; }
-
-        public SecurityToken[] SecurityTokens { get; set; }
-
-        #endregion
-
         #region Allors
         [Id("88BE9AFA-122A-469B-BD47-388ECC835EAB")]
         [Indexed]
@@ -46,7 +34,15 @@ namespace Allors.Repository
         [Derived]
         public decimal Amount { get; set; }
 
-        #region inherited methods
+        #region inherited
+        public Guid DerivationId { get; set; }
+
+        public DateTime DerivationTimeStamp { get; set; }
+
+        public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
+
+        public SecurityToken[] SecurityTokens { get; set; }
 
         public void OnPostBuild()
         {

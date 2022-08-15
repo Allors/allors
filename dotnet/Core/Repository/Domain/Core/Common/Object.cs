@@ -14,21 +14,6 @@ namespace Allors.Repository
     public partial interface Object
     {
         #region Allors
-        [Id("b816fccd-08e0-46e0-a49c-7213c3604416")]
-        #endregion
-        [Multiplicity(Multiplicity.ManyToMany)]
-        [Indexed]
-        SecurityToken[] SecurityTokens { get; set; }
-
-        #region Allors
-        [Id("E989F7D2-A4AC-43D8-AC7C-CBCDA2CFB6D3")]
-        #endregion
-        [Multiplicity(Multiplicity.ManyToMany)]
-        [Indexed]
-        [Derived]
-        Revocation[] Revocations { get; set; }
-
-        #region Allors
         [Id("2B827E22-155D-4AA8-BA9F-46A64D7C79C8")]
         #endregion
         void OnPostBuild();

@@ -15,15 +15,6 @@ namespace Allors.Repository
     #endregion
     public partial class Template : UniquelyIdentifiable, Deletable, Object
     {
-        #region inherited properties
-        public Guid UniqueId { get; set; }
-
-        public Revocation[] Revocations { get; set; }
-
-        public SecurityToken[] SecurityTokens { get; set; }
-
-        #endregion
-
         #region Allors
         [Id("64DD490F-2B13-4D63-94A4-6BCE96FA14C2")]
         [Indexed]
@@ -47,8 +38,14 @@ namespace Allors.Repository
         [Required]
         public string Arguments { get; set; }
 
-        #region inherited methods
-        
+        #region inherited
+
+        public Guid UniqueId { get; set; }
+
+        public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
+
+        public SecurityToken[] SecurityTokens { get; set; }
 
         public void OnPostBuild() { }
 

@@ -6,6 +6,7 @@
 
 namespace Allors.Repository
 {
+    using System;
     using Attributes;
 
     #region Allors
@@ -13,9 +14,6 @@ namespace Allors.Repository
     #endregion
     public partial class Login : Deletable
     {
-        #region inherited properties
-        #endregion
-
         #region Allors
         [Id("18262218-a14f-48c3-87a5-87196d3b5974")]
         #endregion
@@ -37,14 +35,13 @@ namespace Allors.Repository
         [Size(256)]
         public string DisplayName { get; set; }
 
-        #region inherited methods
+        #region inherited
 
         public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
 
         public SecurityToken[] SecurityTokens { get; set; }
-
         
-
         public void OnPostBuild() { }
 
         public void OnInit() { }

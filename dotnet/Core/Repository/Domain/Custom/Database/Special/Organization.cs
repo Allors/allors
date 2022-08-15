@@ -15,15 +15,6 @@ namespace Allors.Repository
     [Workspace(Default)]
     public partial class Organization : Deletable, UniquelyIdentifiable
     {
-        #region inherited properties
-        public Guid UniqueId { get; set; }
-
-        public Revocation[] Revocations { get; set; }
-
-        public SecurityToken[] SecurityTokens { get; set; }
-
-        #endregion
-
         #region Allors
         [Id("2cfea5d4-e893-4264-a966-a68716839acd")]
         [Size(-1)]
@@ -163,8 +154,14 @@ namespace Allors.Repository
         [Workspace(Default)]
         public void ToggleCanWrite() { }
 
-        #region inherited methods
-        
+        #region inherited
+
+        public Guid UniqueId { get; set; }
+
+        public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
+
+        public SecurityToken[] SecurityTokens { get; set; }
 
         public void OnPostBuild() { }
 

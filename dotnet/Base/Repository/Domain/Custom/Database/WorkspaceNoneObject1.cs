@@ -5,6 +5,7 @@
 
 namespace Allors.Repository
 {
+    using System;
     using Attributes;
     using static Workspaces;
 
@@ -13,12 +14,6 @@ namespace Allors.Repository
     #endregion
     public partial class WorkspaceNoneObject1 : Object
     {
-        #region inherited properties
-        public Revocation[] Revocations { get; set; }
-
-        public SecurityToken[] SecurityTokens { get; set; }
-        #endregion
-
         #region Allors
         [Id("C4AD393A-AA2A-4A72-AA51-24C68214828D")]
         [Indexed]
@@ -170,9 +165,12 @@ namespace Allors.Repository
         [Workspace(Y)]
         public void DoNone() { }
 
-        #region inherited methods
+        #region inherited
 
-        
+        public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
+
+        public SecurityToken[] SecurityTokens { get; set; }
 
         public void OnPostBuild() { }
 

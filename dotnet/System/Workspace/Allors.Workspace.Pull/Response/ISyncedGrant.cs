@@ -1,8 +1,8 @@
-namespace Allors.Workspace.Pull
+namespace Allors.Workspace.Sync.Response
 {
     using System.Collections.Generic;
 
-    public interface IPullGrant
+    public interface ISyncedGrant
     {
         long Version { get; }
 

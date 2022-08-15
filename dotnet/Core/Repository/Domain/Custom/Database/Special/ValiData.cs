@@ -5,6 +5,7 @@
 
 namespace Allors.Repository
 {
+    using System;
     using Attributes;
     using static Workspaces;
 
@@ -14,12 +15,6 @@ namespace Allors.Repository
     [Workspace(Default)]
     public partial class ValiData : Object
     {
-        #region inherited properties
-        public Revocation[] Revocations { get; set; }
-
-        public SecurityToken[] SecurityTokens { get; set; }
-        #endregion
-
         #region Allors
         [Id("C90E7744-9AFD-46A2-9F6F-3D76D681106A")]
         [Indexed]
@@ -29,9 +24,12 @@ namespace Allors.Repository
         [Required]
         public Person RequiredPerson { get; set; }
 
-        #region inherited methods
+        #region inherited
 
-        
+        public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
+
+        public SecurityToken[] SecurityTokens { get; set; }
 
         public void OnPostBuild() { }
 

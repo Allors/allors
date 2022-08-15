@@ -5,6 +5,7 @@
 
 namespace Allors.Repository
 {
+    using System;
     using Attributes;
 
     #region Allors
@@ -13,16 +14,12 @@ namespace Allors.Repository
     [Plural("ClassWithourRoleses")]
     public partial class ClassWithoutRoles : Object
     {
-        #region inherited properties
-        #endregion
-
-        #region inherited methods
+        #region inherited
 
         public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
 
         public SecurityToken[] SecurityTokens { get; set; }
-
-        
 
         public void OnPostBuild() { }
 

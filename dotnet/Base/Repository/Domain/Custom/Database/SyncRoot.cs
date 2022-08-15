@@ -5,6 +5,7 @@
 
 namespace Allors.Repository
 {
+    using System;
     using Attributes;
 
     #region Allors
@@ -12,28 +13,6 @@ namespace Allors.Repository
     #endregion
     public partial class SyncRoot : Object, DerivationCounted
     {
-        #region inherited properties
-        public int DerivationCount { get; set; }
-
-        #endregion
-
-        #region inherited methods
-
-        public Revocation[] Revocations { get; set; }
-
-        public SecurityToken[] SecurityTokens { get; set; }
-
-        
-
-        public void OnPostBuild() { }
-
-        public void OnInit()
-        {
-        }
-
-        public void OnPostDerive() { }
-
-        #endregion
 
         #region Allors
         [Id("615C6C58-513A-456F-A0CE-E472D173DCB0")]
@@ -48,5 +27,25 @@ namespace Allors.Repository
         #endregion
         [Required]
         public int Value { get; set; }
+
+        #region inherited
+
+        public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
+
+        public SecurityToken[] SecurityTokens { get; set; }
+
+        public int DerivationCount { get; set; }
+
+
+        public void OnPostBuild() { }
+
+        public void OnInit()
+        {
+        }
+
+        public void OnPostDerive() { }
+
+        #endregion
     }
 }

@@ -5,6 +5,7 @@
 
 namespace Allors.Repository
 {
+    using System;
     using Attributes;
     using static Workspaces;
 
@@ -15,11 +16,6 @@ namespace Allors.Repository
     [Workspace(Default)]
     public partial class HomeAddress : Object, Address
     {
-        #region inherited properties
-        public Place Place { get; set; }
-
-        #endregion
-
         #region Allors
         [Id("6f0f42c4-9b47-47c2-a632-da8e08116be4")]
         [Size(256)]
@@ -34,13 +30,14 @@ namespace Allors.Repository
         [Workspace(Default)]
         public string HouseNumber { get; set; }
 
-        #region inherited methods
+        #region inherited
 
         public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
 
         public SecurityToken[] SecurityTokens { get; set; }
 
-        
+        public Place Place { get; set; }
 
         public void OnPostBuild() { }
 

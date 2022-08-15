@@ -5,6 +5,7 @@
 
 namespace Allors.Repository
 {
+    using System;
     using Attributes;
     using static Workspaces;
 
@@ -14,14 +15,6 @@ namespace Allors.Repository
     #endregion
     public partial class OrderLine : Versioned, Object
     {
-        #region inherited properties
-
-        public Revocation[] Revocations { get; set; }
-
-        public SecurityToken[] SecurityTokens { get; set; }
-
-        #endregion
-
         #region Allors
         [Id("7022167A-046E-45B3-A14E-AE0290C0F1D6")]
         #endregion
@@ -45,7 +38,13 @@ namespace Allors.Repository
         public OrderLineVersion[] AllVersions { get; set; }
         #endregion
 
-        #region inherited methods
+        #region inherited
+
+
+        public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
+
+        public SecurityToken[] SecurityTokens { get; set; }
 
         public void OnPostBuild()
         {

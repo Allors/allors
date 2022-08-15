@@ -5,6 +5,7 @@
 
 namespace Allors.Repository
 {
+    using System;
     using Attributes;
 
     #region
@@ -14,11 +15,6 @@ namespace Allors.Repository
     #endregion
     public partial class Middle : DerivationCounted
     {
-        #region inherited properties
-        public int DerivationCount { get; set; }
-
-        #endregion
-
         #region Allors
         [Id("27D0ABFD-EBA0-46FE-812C-C67D8E3D12D0")]
         [Indexed]
@@ -32,11 +28,14 @@ namespace Allors.Repository
         [Required]
         public int Counter { get; set; }
 
-        #region inherited methods
+        #region inherited
 
         public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
 
         public SecurityToken[] SecurityTokens { get; set; }
+
+        public int DerivationCount { get; set; }
 
         public void OnPostBuild()
         {

@@ -5,6 +5,7 @@
 
 namespace Allors.Repository
 {
+    using System;
     using Attributes;
 
     #region Allors
@@ -12,11 +13,6 @@ namespace Allors.Repository
     #endregion
     public partial class Dependee : Object, DerivationCounted
     {
-        #region inherited properties
-        public int DerivationCount { get; set; }
-
-        #endregion
-
         #region Allors
         [Id("1b8e0350-c446-48dc-85c0-71130cc1490e")]
         [Multiplicity(Multiplicity.OneToOne)]
@@ -39,13 +35,15 @@ namespace Allors.Repository
         #endregion
         public bool DeleteDependent { get; set; }
 
-        #region inherited methods
+        #region inherited
 
         public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
 
         public SecurityToken[] SecurityTokens { get; set; }
 
-        
+        public int DerivationCount { get; set; }
+
 
         public void OnPostBuild() { }
 

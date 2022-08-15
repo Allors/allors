@@ -6,6 +6,7 @@
 
 namespace Allors.Repository
 {
+    using System;
     using Attributes;
     using static Workspaces;
 
@@ -15,15 +16,6 @@ namespace Allors.Repository
     #endregion
     public partial class LocalizedMedia : Localized, Deletable
     {
-        #region inherited properties
-        public Revocation[] Revocations { get; set; }
-
-        public SecurityToken[] SecurityTokens { get; set; }
-
-        public Locale Locale { get; set; }
-
-        #endregion
-
         #region Allors
         [Id("B6AE19AE-76BF-4B84-9CBE-176217D94B9E")]
         [Indexed]
@@ -32,9 +24,14 @@ namespace Allors.Repository
         [Workspace(Default)]
         public Media Media { get; set; }
 
-        #region inherited methods
+        #region inherited
 
-        
+        public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
+
+        public SecurityToken[] SecurityTokens { get; set; }
+
+        public Locale Locale { get; set; }
 
         public void OnPostBuild() { }
 

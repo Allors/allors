@@ -15,17 +15,6 @@ namespace Allors.Repository
     [Workspace(Default)]
     public partial class Organization : Addressable, Deletable, UniquelyIdentifiable
     {
-        #region inherited properties
-        public Guid UniqueId { get; set; }
-
-        public Revocation[] Revocations { get; set; }
-
-        public SecurityToken[] SecurityTokens { get; set; }
-
-        public Address Address { get; set; }
-
-        #endregion
-
         #region Allors
         [Id("2cfea5d4-e893-4264-a966-a68716839acd")]
         [Size(-1)]
@@ -195,9 +184,24 @@ namespace Allors.Repository
         [Workspace(Default)]
         public Country Country { get; set; }
 
-        #region inherited methods
-        
+        [Id("1869873F-F2F0-4D03-A0F9-7DC73491C117")]
+        [Workspace(Default)]
+        public void JustDoIt() { }
 
+        [Id("2CD2FF48-93FC-4C7D-BF2F-3F411D0DF7C3")]
+        [Workspace(Default)]
+        public void ToggleCanWrite() { }
+
+        #region inherited
+
+        public Guid UniqueId { get; set; }
+
+        public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
+
+        public SecurityToken[] SecurityTokens { get; set; }
+
+        public Address Address { get; set; }
         public void OnPostBuild() { }
 
         public void OnInit()
@@ -208,13 +212,5 @@ namespace Allors.Repository
 
         public void Delete() { }
         #endregion
-
-        [Id("1869873F-F2F0-4D03-A0F9-7DC73491C117")]
-        [Workspace(Default)]
-        public void JustDoIt() { }
-
-        [Id("2CD2FF48-93FC-4C7D-BF2F-3F411D0DF7C3")]
-        [Workspace(Default)]
-        public void ToggleCanWrite() { }
     }
 }

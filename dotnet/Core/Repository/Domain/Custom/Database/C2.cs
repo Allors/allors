@@ -17,137 +17,6 @@ namespace Allors.Repository
     [Workspace(Default)]
     public partial class C2 : Object, DerivationCounted, I2
     {
-        #region inherited properties
-
-        public int DerivationCount { get; set; }
-
-        public I2 I2I2Many2One { get; set; }
-
-        public C1 I2C1Many2One { get; set; }
-
-        public I12 I2I12Many2One { get; set; }
-
-        public bool I2AllorsBoolean { get; set; }
-
-        public C1[] I2C1One2Manies { get; set; }
-
-        public C1 I2C1One2One { get; set; }
-
-        public decimal I2AllorsDecimal { get; set; }
-
-        public I2[] I2I2Many2Manies { get; set; }
-
-        public byte[] I2AllorsBinary { get; set; }
-
-        public Guid I2AllorsUnique { get; set; }
-
-        public I1 I2I1Many2One { get; set; }
-
-        public DateTime I2AllorsDateTime { get; set; }
-
-        public I12[] I2I12One2Manies { get; set; }
-
-        public I12 I2I12One2One { get; set; }
-
-        public C2[] I2C2Many2Manies { get; set; }
-
-        public I1[] I2I1Many2Manies { get; set; }
-
-        public C2 I2C2Many2One { get; set; }
-
-        public string I2AllorsString { get; set; }
-
-        public C2[] I2C2One2Manies { get; set; }
-
-        public I1 I2I1One2One { get; set; }
-
-        public I1[] I2I1One2Manies { get; set; }
-
-        public I12[] I2I12Many2Manies { get; set; }
-
-        public I2 I2I2One2One { get; set; }
-
-        public int I2AllorsInteger { get; set; }
-
-        public I2[] I2I2One2Manies { get; set; }
-
-        public C1[] I2C1Many2Manies { get; set; }
-
-        public C2 I2C2One2One { get; set; }
-
-        public double I2AllorsDouble { get; set; }
-
-        public byte[] I12AllorsBinary { get; set; }
-
-        public C2 I12C2One2One { get; set; }
-
-        public double I12AllorsDouble { get; set; }
-
-        public I1 I12I1Many2One { get; set; }
-
-        public string I12AllorsString { get; set; }
-
-        public I12[] I12I12Many2Manies { get; set; }
-
-        public decimal I12AllorsDecimal { get; set; }
-
-        public I2[] I12I2Many2Manies { get; set; }
-
-        public C2[] I12C2Many2Manies { get; set; }
-
-        public I1[] I12I1Many2Manies { get; set; }
-
-        public I12[] I12I12One2Manies { get; set; }
-
-        public string Name { get; set; }
-
-        public int Order { get; set; }
-
-        public C1[] I12C1Many2Manies { get; set; }
-
-        public I2 I12I2Many2One { get; set; }
-
-        public Guid I12AllorsUnique { get; set; }
-
-        public int I12AllorsInteger { get; set; }
-
-        public I1[] I12I1One2Manies { get; set; }
-
-        public C1 I12C1One2One { get; set; }
-
-        public I12 I12I12One2One { get; set; }
-
-        public I2 I12I2One2One { get; set; }
-
-        public I12[] Dependencies { get; set; }
-
-        public I2[] I12I2One2Manies { get; set; }
-
-        public C2 I12C2Many2One { get; set; }
-
-        public I12 I12I12Many2One { get; set; }
-
-        public bool I12AllorsBoolean { get; set; }
-
-        public I1 I12I1One2One { get; set; }
-
-        public C1[] I12C1One2Manies { get; set; }
-
-        public C1 I12C1Many2One { get; set; }
-
-        public DateTime I12AllorsDateTime { get; set; }
-        
-        public bool ChangedRolePingS12 { get; set; }
-        public bool ChangedRolePongS12 { get; set; }
-        public bool ChangedRolePingI12 { get; set; }
-        public bool ChangedRolePongI12 { get; set; }
-        public bool ChangedRolePingI1 { get; set; }
-        public bool ChangedRolePongI1 { get; set; }
-        public bool ChangedRolePingC1 { get; set; }
-        public bool ChangedRolePongC1 { get; set; }
-
-        #endregion
-
         #region Allors
         [Id("07eaa992-322a-40e9-bf2c-aa33b69f54cd")]
         [Precision(19)]
@@ -163,7 +32,7 @@ namespace Allors.Repository
         [Workspace(Default)]
         #endregion
         public C1 C2C1One2One { get; set; }
-        
+
         #region Allors
         [Id("1444d919-6ca1-4642-8d18-9d955c817581")]
         [Workspace(Default)]
@@ -368,14 +237,140 @@ namespace Allors.Repository
         #endregion
         public S1 S1One2One { get; set; }
 
-        #region inherited methods
+        #region inherited
+
+        public int DerivationCount { get; set; }
+
+        public I2 I2I2Many2One { get; set; }
+
+        public C1 I2C1Many2One { get; set; }
+
+        public I12 I2I12Many2One { get; set; }
+
+        public bool I2AllorsBoolean { get; set; }
+
+        public C1[] I2C1One2Manies { get; set; }
+
+        public C1 I2C1One2One { get; set; }
+
+        public decimal I2AllorsDecimal { get; set; }
+
+        public I2[] I2I2Many2Manies { get; set; }
+
+        public byte[] I2AllorsBinary { get; set; }
+
+        public Guid I2AllorsUnique { get; set; }
+
+        public I1 I2I1Many2One { get; set; }
+
+        public DateTime I2AllorsDateTime { get; set; }
+
+        public I12[] I2I12One2Manies { get; set; }
+
+        public I12 I2I12One2One { get; set; }
+
+        public C2[] I2C2Many2Manies { get; set; }
+
+        public I1[] I2I1Many2Manies { get; set; }
+
+        public C2 I2C2Many2One { get; set; }
+
+        public string I2AllorsString { get; set; }
+
+        public C2[] I2C2One2Manies { get; set; }
+
+        public I1 I2I1One2One { get; set; }
+
+        public I1[] I2I1One2Manies { get; set; }
+
+        public I12[] I2I12Many2Manies { get; set; }
+
+        public I2 I2I2One2One { get; set; }
+
+        public int I2AllorsInteger { get; set; }
+
+        public I2[] I2I2One2Manies { get; set; }
+
+        public C1[] I2C1Many2Manies { get; set; }
+
+        public C2 I2C2One2One { get; set; }
+
+        public double I2AllorsDouble { get; set; }
+
+        public byte[] I12AllorsBinary { get; set; }
+
+        public C2 I12C2One2One { get; set; }
+
+        public double I12AllorsDouble { get; set; }
+
+        public I1 I12I1Many2One { get; set; }
+
+        public string I12AllorsString { get; set; }
+
+        public I12[] I12I12Many2Manies { get; set; }
+
+        public decimal I12AllorsDecimal { get; set; }
+
+        public I2[] I12I2Many2Manies { get; set; }
+
+        public C2[] I12C2Many2Manies { get; set; }
+
+        public I1[] I12I1Many2Manies { get; set; }
+
+        public I12[] I12I12One2Manies { get; set; }
+
+        public string Name { get; set; }
+
+        public int Order { get; set; }
+
+        public C1[] I12C1Many2Manies { get; set; }
+
+        public I2 I12I2Many2One { get; set; }
+
+        public Guid I12AllorsUnique { get; set; }
+
+        public int I12AllorsInteger { get; set; }
+
+        public I1[] I12I1One2Manies { get; set; }
+
+        public C1 I12C1One2One { get; set; }
+
+        public I12 I12I12One2One { get; set; }
+
+        public I2 I12I2One2One { get; set; }
+
+        public I12[] Dependencies { get; set; }
+
+        public I2[] I12I2One2Manies { get; set; }
+
+        public C2 I12C2Many2One { get; set; }
+
+        public I12 I12I12Many2One { get; set; }
+
+        public bool I12AllorsBoolean { get; set; }
+
+        public I1 I12I1One2One { get; set; }
+
+        public C1[] I12C1One2Manies { get; set; }
+
+        public C1 I12C1Many2One { get; set; }
+
+        public DateTime I12AllorsDateTime { get; set; }
+
+        public bool ChangedRolePingS12 { get; set; }
+        public bool ChangedRolePongS12 { get; set; }
+        public bool ChangedRolePingI12 { get; set; }
+        public bool ChangedRolePongI12 { get; set; }
+        public bool ChangedRolePingI1 { get; set; }
+        public bool ChangedRolePongI1 { get; set; }
+        public bool ChangedRolePingC1 { get; set; }
+        public bool ChangedRolePongC1 { get; set; }
 
         public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
 
         public SecurityToken[] SecurityTokens { get; set; }
-
         
-
         public void OnPostBuild() { }
 
         public void OnInit()

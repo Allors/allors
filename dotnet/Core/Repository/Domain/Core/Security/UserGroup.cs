@@ -17,15 +17,6 @@ namespace Allors.Repository
     #endregion
     public partial class UserGroup : UniquelyIdentifiable
     {
-        #region inherited properties
-        public Guid UniqueId { get; set; }
-
-        public Revocation[] Revocations { get; set; }
-
-        public SecurityToken[] SecurityTokens { get; set; }
-
-        #endregion
-
         #region Allors
         [Id("585bb5cf-9ba4-4865-9027-3667185abc4f")]
         #endregion
@@ -43,9 +34,14 @@ namespace Allors.Repository
         [Workspace(Default)]
         public string Name { get; set; }
 
-        #region inherited methods
+        #region inherited
 
-        
+        public Guid UniqueId { get; set; }
+
+        public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
+
+        public SecurityToken[] SecurityTokens { get; set; }
 
         public void OnPostBuild() { }
 

@@ -5,6 +5,7 @@
 
 namespace Allors.Repository
 {
+    using System;
     using Attributes;
 
     #region Allors
@@ -12,22 +13,19 @@ namespace Allors.Repository
     #endregion
     public partial class SyncDepthC1 : SyncDepthI1
     {
-        #region inherited properties
+        #region inherited
+
+        public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
+
+        public SecurityToken[] SecurityTokens { get; set; }
+
         public int DerivationCount { get; set; }
 
         public SyncDepth2 SyncDepth2 { get; set; }
 
         public int Value { get; set; }
 
-        #endregion
-
-        #region inherited methods
-
-        public Revocation[] Revocations { get; set; }
-
-        public SecurityToken[] SecurityTokens { get; set; }
-
-        
 
         public void OnPostBuild() { }
 

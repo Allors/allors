@@ -18,8 +18,18 @@ namespace Allors.Repository
     [Plural("Currencies")]
     public partial class Currency : Enumeration, Object
     {
-        #region inherited properties
+        #region Allors
+        [Id("294a4bdc-f03a-47a2-a649-419e6b9021a3")]
+        #endregion
+        [Required]
+        [Size(256)]
+        [Workspace(Default)]
+        public string IsoCode { get; set; }
+
+        #region inherited
+
         public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
 
         public SecurityToken[] SecurityTokens { get; set; }
 
@@ -30,20 +40,6 @@ namespace Allors.Repository
         public LocalizedText[] LocalizedNames { get; set; }
 
         public bool IsActive { get; set; }
-
-        #endregion
-
-        #region Allors
-        [Id("294a4bdc-f03a-47a2-a649-419e6b9021a3")]
-        #endregion
-        [Required]
-        [Size(256)]
-        [Workspace(Default)]
-        public string IsoCode { get; set; }
-
-        #region inherited methods
-
-        
 
         public void OnPostBuild() { }
 

@@ -14,18 +14,14 @@ namespace Allors.Repository
     #endregion
     public partial class ValidationC2 : Object, ValidationI12
     {
-        #region inherited properties
-        public Guid UniqueId { get; set; }
-
-        #endregion
-
-        #region inherited methods
+        #region inherited
 
         public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
 
         public SecurityToken[] SecurityTokens { get; set; }
 
-        
+        public Guid UniqueId { get; set; }
 
         public void OnPostBuild() { }
 

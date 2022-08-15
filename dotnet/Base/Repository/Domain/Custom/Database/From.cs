@@ -5,6 +5,7 @@
 
 namespace Allors.Repository
 {
+    using System;
     using Attributes;
 
     #region Allors
@@ -12,9 +13,6 @@ namespace Allors.Repository
     #endregion
     public partial class From : Object
     {
-        #region inherited properties
-        #endregion
-
         #region Allors
         [Id("d9a9896d-e175-410a-9916-9261d83aa229")]
         [Multiplicity(Multiplicity.OneToMany)]
@@ -22,9 +20,10 @@ namespace Allors.Repository
         #endregion
         public To[] Tos { get; set; }
 
-        #region inherited methods
+        #region inherited
 
         public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
 
         public SecurityToken[] SecurityTokens { get; set; }
 
@@ -39,6 +38,5 @@ namespace Allors.Repository
         public void OnPostDerive() { }
 
         #endregion
-
     }
 }

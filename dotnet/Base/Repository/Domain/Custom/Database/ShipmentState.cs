@@ -14,8 +14,9 @@ namespace Allors.Repository
     #endregion
     public partial class ShipmentState : Object, ObjectState
     {
-        #region inherited properties
+        #region inherited
         public Revocation[] Revocations { get; set; }
+        public Guid SecurityFingerPrint { get; set; }
 
         public SecurityToken[] SecurityTokens { get; set; }
 
@@ -24,12 +25,6 @@ namespace Allors.Repository
         public string Name { get; set; }
 
         public Guid UniqueId { get; set; }
-
-        #endregion
-
-        #region inherited methods
-
-        
 
         public void OnPostBuild() { }
 
