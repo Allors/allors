@@ -18,11 +18,11 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void OnPostBuild()
         {
-            var before = this.Transaction.Now();
+            var before = this.Transaction.Now().AddMilliseconds(-1);
 
             var units = this.Transaction.Build<UnitSample>();
 
-            var after = this.Transaction.Now();
+            var after = this.Transaction.Now().AddMilliseconds(+1);
 
             Assert.False(units.ExistRequiredBinary);
             Assert.False(units.ExistRequiredString);
