@@ -17,10 +17,12 @@ namespace Allors.Database.Domain
         public ObjectSecurityFingerprintRule(MetaPopulation m) : base(m, new Guid("24C833AD-8588-49EA-9D93-5A2C56EA4E9B")) =>
             this.Patterns = new Pattern[]
             {
+                m.Object.RolePattern(v=>v.AccessDelegation),
                 m.Object.RolePattern(v=>v.SecurityTokens),
-                m.Object.RolePattern(v=>v.SharedSecurity),
+                m.Object.RolePattern(v=>v.Revocations),
+                m.DelegatedAccess.RolePattern(v=>v.SecurityStamp, v => v.ObjectsWhereAccessDelegation),
                 m.SecurityToken.RolePattern(v=>v.SecurityStamp, v=>v.ObjectsWhereSecurityToken),
-                m.SecurityTokenGroup.RolePattern(v=>v.SecurityStamp, v => v.ObjectsWhereSharedSecurity),
+                m.Revocation.RolePattern(v=>v.SecurityStamp, v => v.ObjectsWhereRevocation),
             };
 
         public override void Derive(ICycle cycle, IEnumerable<IObject> matches)

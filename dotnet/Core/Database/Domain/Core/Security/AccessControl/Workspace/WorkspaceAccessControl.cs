@@ -59,13 +59,13 @@ namespace Allors.Database.Domain
         {
             var strategy = @object.Strategy;
             var transaction = strategy.Transaction;
+            var accessDelegation = @object.AccessDelegation;
 
             // Grants
             IEnumerable<ISecurityToken> tokens = null;
-            var sharedSecurity = @object.SharedSecurity;
-            if (sharedSecurity != null)
+            if (accessDelegation != null)
             {
-                tokens = @object.ExistSecurityTokens ? sharedSecurity.SecurityTokens.Concat(@object.SecurityTokens) : sharedSecurity.SecurityTokens;
+                tokens = @object.ExistSecurityTokens ? accessDelegation.DelegatedSecurityTokens.Concat(@object.SecurityTokens) : accessDelegation.DelegatedSecurityTokens;
             }
             else if (@object.ExistSecurityTokens)
             {
@@ -83,17 +83,24 @@ namespace Allors.Database.Domain
             var versionedGrants = this.security.GetVersionedGrants(transaction, this.user, tokens.ToArray(), this.workspaceName);
 
             // Revocations
-            var versionedRevocations = @object.ExistRevocations
-                ? this.security
-                    .GetVersionedRevocations(transaction, this.user, @object.Revocations.Cast<IRevocation>().ToArray(), this.workspaceName)
-                    .Where(v => v.PermissionSet.Any())
-                    .ToArray()
-                : Array.Empty<IVersionedRevocation>();
+            IEnumerable<IRevocation> revocations;
+            if (accessDelegation != null)
+            {
+                // TODO: Remove Union
+                revocations = @object.ExistRevocations ? accessDelegation.DelegatedRevocations.Union(@object.Revocations) : accessDelegation.DelegatedRevocations;
+            }
+            else
+            {
+                revocations = @object.Revocations;
+            }
+
+            var versionedRevocations = this.security
+                .GetVersionedRevocations(transaction, this.user, revocations.ToArray(), this.workspaceName)
+                .Where(v => v.PermissionSet.Any())
+                .ToArray();
 
             // Access Control List
             return new WorkspaceAccessControlList(this, @object, versionedGrants, versionedRevocations);
         }
-
-        private WorkspaceAccessControlList Create(IObject @object, IVersionedGrant[] grants, IVersionedRevocation[] revocations) => new WorkspaceAccessControlList(this, @object, grants, revocations);
     }
 }

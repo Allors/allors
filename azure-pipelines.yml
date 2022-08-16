@@ -10,7 +10,7 @@ stages:
     timeoutInMinutes: 480
 
     pool:
-      vmImage: 'windows-2019'
+      vmImage: 'windows-latest'
 
     strategy:
       matrix:

@@ -36,7 +36,7 @@ namespace Allors.Repository
         #region inherited
         public Guid UniqueId { get; set; }
         
-        public SecurityTokenGroup SharedSecurity { get; set; }
+        public DelegatedAccess AccessDelegation { get; set; }
         public Revocation[] Revocations { get; set; }
         public Guid SecurityFingerPrint { get; set; }
 

@@ -5,7 +5,6 @@
 
 namespace Allors.Database.Domain
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Database.Security;
@@ -45,13 +44,13 @@ namespace Allors.Database.Domain
         {
             var strategy = @object.Strategy;
             var transaction = strategy.Transaction;
+            var accessDelegation = @object.AccessDelegation;
 
             // Grants
             IEnumerable<ISecurityToken> tokens = null;
-            var sharedSecurity = @object.SharedSecurity;
-            if (sharedSecurity != null)
+            if (accessDelegation != null)
             {
-                tokens = @object.ExistSecurityTokens ? sharedSecurity.SecurityTokens.Concat(@object.SecurityTokens) : sharedSecurity.SecurityTokens;
+                tokens = @object.ExistSecurityTokens ? accessDelegation.DelegatedSecurityTokens.Concat(@object.SecurityTokens) : accessDelegation.DelegatedSecurityTokens;
             }
             else if (@object.ExistSecurityTokens)
             {
@@ -69,12 +68,21 @@ namespace Allors.Database.Domain
             var versionedGrants = this.security.GetVersionedGrants(transaction, this.user, tokens.ToArray());
 
             // Revocations
-            var versionedRevocations = @object.ExistRevocations ? this.security.GetVersionedRevocations(transaction, this.user, @object.Revocations.Cast<IRevocation>().ToArray()) : Array.Empty<IVersionedRevocation>();
+            IEnumerable<IRevocation> revocations;
+            if (accessDelegation != null)
+            {
+                // TODO: Remove Union
+                revocations = @object.ExistRevocations ? accessDelegation.DelegatedRevocations.Union(@object.Revocations) : accessDelegation.DelegatedRevocations;
+            }
+            else
+            {
+                revocations = @object.Revocations;
+            }
+
+            var versionedRevocations = this.security.GetVersionedRevocations(transaction, this.user, revocations.ToArray());
 
             // Access Control List
             return new DatabaseAccessControlList(this, @object, versionedGrants, versionedRevocations);
         }
-
-        private DatabaseAccessControlList Create(IObject @object, IVersionedGrant[] grants, IVersionedRevocation[] revocations) => new DatabaseAccessControlList(this, @object, grants, revocations);
     }
 }

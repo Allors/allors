@@ -366,7 +366,7 @@ namespace Allors.Repository
         public bool ChangedRolePingC1 { get; set; }
         public bool ChangedRolePongC1 { get; set; }
 
-        public SecurityTokenGroup SharedSecurity { get; set; }
+        public DelegatedAccess AccessDelegation { get; set; }
         public Revocation[] Revocations { get; set; }
         public Guid SecurityFingerPrint { get; set; }
 

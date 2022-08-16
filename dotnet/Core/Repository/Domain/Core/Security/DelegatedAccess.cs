@@ -12,21 +12,28 @@ namespace Allors.Repository
     #region Allors
     [Id("86AE10F1-9E60-4347-9046-D6A68E1B9381")]
     #endregion
-    public partial class SecurityTokenGroup : SecurityStamped, UniquelyIdentifiable, Deletable
+    public partial class DelegatedAccess : SecurityStamped, UniquelyIdentifiable, Deletable
     {
         #region Allors
-        [Id("8FC9E101-26B2-4834-8EF4-B433C1EECD21")]
+        [Id("E40496A8-21E5-48C9-9F9E-AF1985387698")]
         #endregion
         [Multiplicity(Multiplicity.ManyToMany)]
         [Indexed]
-        public SecurityToken[] Members { get; set; }
+        public SecurityToken[] DelegatedSecurityTokens { get; set; }
+
+        #region Allors
+        [Id("50A5189E-2E1E-44A5-A629-B5DB2E8FDBB5")]
+        #endregion
+        [Multiplicity(Multiplicity.ManyToMany)]
+        [Indexed]
+        public Revocation[] DelegatedRevocations { get; set; }
 
         #region inherited
         public Guid SecurityStamp { get; set; }
 
         public SecurityToken[] SecurityTokens { get; set; }
 
-        public SecurityTokenGroup SharedSecurity { get; set; }
+        public DelegatedAccess AccessDelegation { get; set; }
 
         public Revocation[] Revocations { get; set; }
 
