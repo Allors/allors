@@ -12,9 +12,9 @@ namespace Allors.Database.Domain
     using Derivations.Rules;
     using Meta;
 
-    public class SecurityTokenSecurityStampRule : Rule
+    public class SecurityTokenFingerprintRule : Rule
     {
-        public SecurityTokenSecurityStampRule(MetaPopulation m) : base(m, new Guid("0C788305-AD7E-4722-B03C-83B5DE3E881A")) =>
+        public SecurityTokenFingerprintRule(MetaPopulation m) : base(m, new Guid("0C788305-AD7E-4722-B03C-83B5DE3E881A")) =>
             this.Patterns = new Pattern[]
             {
                 m.SecurityToken.RolePattern(v=>v.Grants),
@@ -28,13 +28,13 @@ namespace Allors.Database.Domain
 
             foreach (var securityToken in matches.Cast<SecurityToken>())
             {
-                securityToken.DeriveSecurityTokenSecurityStampRule(validation);
+                securityToken.DeriveSecurityTokenFingerprintRule(validation);
             }
         }
     }
 
-    public static class SecurityTokenSecurityStampRuleExtensions
+    public static class SecurityTokenFingerprintRuleExtensions
     {
-        public static void DeriveSecurityTokenSecurityStampRule(this SecurityToken @this, IValidation validation) => @this.SecurityStamp = Guid.NewGuid();
+        public static void DeriveSecurityTokenFingerprintRule(this SecurityToken @this, IValidation validation) => @this.Fingerprint = Guid.NewGuid();
     }
 }

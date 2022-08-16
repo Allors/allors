@@ -34,7 +34,7 @@ namespace Allors.Repository
         public DelegatedAccess AccessDelegation { get; set; }
 
         public Revocation[] Revocations { get; set; }
-        public Guid SecurityFingerPrint { get; set; }
+        
 
         public void OnPostBuild()
         {

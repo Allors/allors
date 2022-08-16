@@ -12,7 +12,7 @@ namespace Allors.Repository
     #region Allors
     [Id("a53f1aed-0e3f-4c3c-9600-dc579cccf893")]
     #endregion
-    public partial class SecurityToken : SecurityStamped, UniquelyIdentifiable, Deletable
+    public partial class SecurityToken : UniquelyIdentifiable, Deletable
     {
         #region Allors
         [Id("6503574b-8bab-4da8-a19d-23a9bcffe01e")]
@@ -25,13 +25,13 @@ namespace Allors.Repository
         [Id("E094E1DD-A3B0-4B6A-B2FA-B00E98BDC0D6")]
         #endregion
         [Derived]
-        public Guid SecurityStamp { get; set; }
+        public Guid Fingerprint { get; set; }
 
         #region inherited
 
         public DelegatedAccess AccessDelegation { get; set; }
         public Revocation[] Revocations { get; set; }
-        public Guid SecurityFingerPrint { get; set; }
+        
 
         public SecurityToken[] SecurityTokens { get; set; }
 

@@ -43,7 +43,7 @@ namespace Allors.Repository
 
         #region inherited
 
-        public Guid SecurityFingerPrint { get; set; }
+        
 
         
         public DelegatedAccess AccessDelegation { get; set; }

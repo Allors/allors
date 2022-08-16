@@ -7,11 +7,11 @@
       <FileName>Generated\domain.g.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="Allors.Domain.Grant">
+  <Interface Name="Allors.Domain.Grant" Collapsed="true">
     <Position X="5" Y="1" Width="1.5" />
     <AssociationLine Name="_EffectivePermissions" Type="Allors.Domain.Permission" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="5.25" Y="2.127" />
+        <Point X="5.25" Y="1.821" />
         <Point X="5.25" Y="5.625" />
         <Point X="5.5" Y="5.625" />
       </Path>
@@ -58,22 +58,23 @@
   <Interface Name="Allors.Domain.SecurityToken">
     <Position X="2.75" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgA=</HashCode>
       <FileName>Generated\domain.g.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="Grants" />
     </ShowAsAssociation>
   </Interface>
-  <Interface Name="Allors.Domain.Object">
-    <Position X="1" Y="3.25" Width="1.75" />
+  <Interface Name="Allors.Domain.Object" Collapsed="true">
+    <Position X="1" Y="3.75" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAEAAQAAAAAAAAAAAAAQAAAAAAAAAAAAAAAIAAA=</HashCode>
+      <HashCode>AAAAAAAAAQAAAAAAAAAAAAAQAAAAAAAAAAAAAAAIAAA=</HashCode>
       <FileName>Generated\domain.g.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="SecurityTokens" />
       <Property Name="_Revocations" />
+      <Property Name="AccessDelegation" />
     </ShowAsAssociation>
   </Interface>
   <Interface Name="Allors.Domain.Person" Collapsed="true">
@@ -104,14 +105,14 @@
       <FileName>Generated\domain.g.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="Allors.Domain.CreatePermission">
+  <Interface Name="Allors.Domain.CreatePermission" Collapsed="true">
     <Position X="2.75" Y="7.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Generated\domain.g.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="Allors.Domain.Revocation">
+  <Interface Name="Allors.Domain.Revocation" Collapsed="true">
     <Position X="2" Y="5.25" Width="1.5" />
     <AssociationLine Name="DeniedPermissions" Type="Allors.Domain.Permission" FixedToPoint="true">
       <Path>
@@ -127,15 +128,22 @@
       <Property Name="DeniedPermissions" />
     </ShowAsAssociation>
   </Interface>
-  <Interface Name="Allors.Domain.DelegatedAccess">
+  <Interface Name="Allors.Domain.DelegatedAccess" Collapsed="true">
     <Position X="0.5" Y="0.5" Width="1.5" />
+    <AssociationLine Name="DelegatedSecurityTokens" Type="Allors.Domain.SecurityToken" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="2" Y="0.938" />
+        <Point X="2.938" Y="0.938" />
+        <Point X="2.938" Y="1.75" />
+      </Path>
+    </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAIAACAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAIQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Generated\domain.g.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="DelegatedRevocations" />
       <Property Name="DelegatedSecurityTokens" />
+      <Property Name="_DelegatedRevocations" />
     </ShowAsAssociation>
   </Interface>
   <Font Name="Segoe UI" Size="9" />

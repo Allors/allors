@@ -12,8 +12,6 @@ namespace Allors.Workspace.State
 
         long Version { get; }
 
-        Guid SecurityFingerprint { get; }
-
         IEnumerable<IPullRequestGrant> Grants { get; }
 
         IEnumerable<IPullRequestRevocation> Revocations { get; }

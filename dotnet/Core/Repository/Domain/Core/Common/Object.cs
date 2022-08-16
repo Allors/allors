@@ -37,12 +37,6 @@ namespace Allors.Repository
         Revocation[] Revocations { get; set; }
 
         #region Allors
-        [Id("D85377D7-49D9-4E3A-8FB2-F80CC1542141")]
-        #endregion
-        [Derived]
-        Guid SecurityFingerPrint { get; set; }
-
-        #region Allors
         [Id("2B827E22-155D-4AA8-BA9F-46A64D7C79C8")]
         #endregion
         void OnPostBuild();

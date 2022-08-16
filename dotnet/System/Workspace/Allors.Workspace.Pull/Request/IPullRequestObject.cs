@@ -7,7 +7,5 @@ namespace Allors.Workspace.Pull.Request
         long Id { get; }
 
         long Version { get; }
-
-        Guid SecurityFingerprint { get; }
     }
 }
