@@ -7,7 +7,7 @@ namespace Allors.Ranges.Long
 {
     using System;
     using Xunit;
-    using Range = Shared.Ranges.StructRange<long>;
+    using Range = Shared.Ranges.ValueRange<long>;
 
     public abstract class RangeUnionTests
     {

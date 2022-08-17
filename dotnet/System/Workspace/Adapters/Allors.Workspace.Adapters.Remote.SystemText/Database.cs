@@ -7,9 +7,6 @@ namespace Allors.Workspace.Adapters.Remote.SystemText
 {
     using System;
     using System.Net.Http;
-    using System.Net.Http.Headers;
-    using System.Text;
-    using System.Text.Json;
     using System.Threading.Tasks;
     using Allors.Protocol.Json;
     using Allors.Protocol.Json.Api.Invoke;
@@ -17,15 +14,13 @@ namespace Allors.Workspace.Adapters.Remote.SystemText
     using Allors.Protocol.Json.Api.Push;
     using Allors.Protocol.Json.Api.Security;
     using Allors.Protocol.Json.Api.Sync;
-    using Allors.Protocol.Json.Auth;
     using Allors.Protocol.Json.SystemTextJson;
-    using Ranges;
     using Polly;
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "RCS1090:Add call to 'ConfigureAwait' (or vice versa).", Justification = "<Pending>")]
     public class DatabaseConnection : Remote.DatabaseConnection
     {
-        public DatabaseConnection(Configuration configuration, Func<IWorkspaceServices> servicesBuilder, Client client, IdGenerator idGenerator, IRanges<long> ranges) : base(configuration, idGenerator, servicesBuilder, ranges)
+        public DatabaseConnection(Configuration configuration, Func<IWorkspaceServices> servicesBuilder, Client client, IdGenerator idGenerator) : base(configuration, idGenerator, servicesBuilder)
         {
             this.Client = client;
             this.UnitConvert = new UnitConvert();

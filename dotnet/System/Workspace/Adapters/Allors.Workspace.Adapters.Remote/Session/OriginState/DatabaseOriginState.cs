@@ -8,7 +8,7 @@ namespace Allors.Workspace.Adapters.Remote
     using System.Collections.Generic;
     using System.Linq;
     using Allors.Protocol.Json.Api.Push;
-    using Ranges;
+    using Shared.Ranges;
 
     internal sealed class DatabaseOriginState : Adapters.DatabaseOriginState
     {
@@ -36,7 +36,6 @@ namespace Allors.Workspace.Adapters.Remote
             if (this.ChangedRoleByRelationType?.Count > 0)
             {
                 var database = this.RemoteStrategy.Session.Workspace.DatabaseConnection;
-                var ranges = database.Ranges;
                 var roles = new List<PushRequestRole>();
 
                 foreach (var keyValuePair in this.ChangedRoleByRelationType)
@@ -56,7 +55,7 @@ namespace Allors.Workspace.Adapters.Remote
                     }
                     else
                     {
-                        var roleIds = ranges.Load(((IRange<Adapters.Strategy>)roleValue)?.Select(v => v.Id));
+                        var roleIds = ValueRange<long>.Load(((RefRange<Adapters.Strategy>)roleValue).Save()?.Select(v => v.Id));
 
                         if (!this.ExistRecord)
                         {
@@ -64,15 +63,15 @@ namespace Allors.Workspace.Adapters.Remote
                         }
                         else
                         {
-                            var databaseRole = ranges.Ensure(this.DatabaseRecord.GetRole(relationType.RoleType));
+                            var databaseRole = ValueRange<long>.Load((IEnumerable<long>)this.DatabaseRecord.GetRole(relationType.RoleType));
                             if (databaseRole.IsEmpty)
                             {
                                 pushRequestRole.a = roleIds.Save();
                             }
                             else
                             {
-                                pushRequestRole.a = ranges.Except(roleIds, databaseRole).Save();
-                                pushRequestRole.r = ranges.Except(databaseRole, roleIds).Save();
+                                pushRequestRole.a = roleIds.Except(databaseRole).Save();
+                                pushRequestRole.r = databaseRole.Except(roleIds).Save();
                             }
                         }
                     }

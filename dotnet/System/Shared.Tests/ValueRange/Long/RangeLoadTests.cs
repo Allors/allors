@@ -8,48 +8,40 @@ namespace Allors.Ranges.Long
     using System;
     using System.Linq;
     using Xunit;
-    using Range = Shared.Ranges.StructRange<long>;
+    using Range = Shared.Ranges.ValueRange<long>;
 
-    public class RangeImportTests
+    public class RangeLoadTests
     {
         [Fact]
-        public void ImportEmpty()
+        public void LoadDefault()
         {
-            var x = Range.Import(Array.Empty<long>());
+            var x = Range.Load();
 
             Assert.Equal(Array.Empty<long>(), x);
         }
 
         [Fact]
-        public void ImportSingle()
+        public void LoadValue()
         {
-            var x = Range.Import(new[] { 1L });
+            var x = Range.Load(1L);
 
             Assert.Equal(new[] { 1L }, x);
         }
 
         [Fact]
-        public void ImportOrderedPair()
+        public void LoadPair()
         {
-            var x = Range.Import(new[] { 1L, 2L });
+            var x = Range.Load(1L, 2L);
 
             Assert.Equal(new[] { 1L, 2L }, x);
         }
 
         [Fact]
-        public void ImportUnorderedPair()
-        {
-            var x = Range.Import(new[] { 2L, 1L });
-
-            Assert.Equal(new[] { 1L, 2L }, x);
-        }
-
-        [Fact]
-        public void ImportDistinctIterator()
+        public void LoadDistinctIterator()
         {
             var distinctIterator = Array.Empty<long>().Distinct();
 
-            var x = Range.Import(distinctIterator);
+            var x = Range.Load(distinctIterator);
 
             Assert.True(x.IsEmpty);
             Assert.Null(x.Save());

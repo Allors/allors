@@ -8,7 +8,6 @@ namespace Tests.Workspace.Remote
     using System;
     using System.Net.Http;
     using System.Threading.Tasks;
-    using Allors.Ranges;
     using Allors.Workspace;
     using Allors.Workspace.Adapters;
     using Allors.Workspace.Adapters.Remote.SystemText;
@@ -27,7 +26,6 @@ namespace Tests.Workspace.Remote
 
         private readonly Func<IWorkspaceServices> servicesBuilder;
         private readonly IdGenerator idGenerator;
-        private readonly DefaultRanges<long> defaultRanges;
         private readonly Configuration configuration;
 
         private HttpClient httpClient;
@@ -36,7 +34,6 @@ namespace Tests.Workspace.Remote
         {
             this.servicesBuilder = () => new WorkspaceServices();
             this.idGenerator = new IdGenerator();
-            this.defaultRanges = new DefaultStructRanges<long>();
 
             var metaPopulation = new MetaBuilder().Build();
             var objectFactory = new ReflectionObjectFactory(metaPopulation, typeof(Allors.Workspace.Domain.Person));
@@ -57,7 +54,7 @@ namespace Tests.Workspace.Remote
             var response = await this.httpClient.GetAsync(SetupUrl);
             Assert.True(response.IsSuccessStatusCode);
 
-            this.DatabaseConnection = new DatabaseConnection(this.configuration, this.servicesBuilder, new Client(() => this.httpClient), this.idGenerator, this.defaultRanges);
+            this.DatabaseConnection = new DatabaseConnection(this.configuration, this.servicesBuilder, new Client(() => this.httpClient), this.idGenerator);
             this.Workspace = this.DatabaseConnection.CreateWorkspace();
 
             await this.Login("administrator");
@@ -67,7 +64,7 @@ namespace Tests.Workspace.Remote
 
         public IWorkspace CreateExclusiveWorkspace()
         {
-            var database = new DatabaseConnection(this.configuration, this.servicesBuilder, new Client(() => this.httpClient), this.idGenerator, this.defaultRanges);
+            var database = new DatabaseConnection(this.configuration, this.servicesBuilder, new Client(() => this.httpClient), this.idGenerator);
             return database.CreateWorkspace();
         }
 

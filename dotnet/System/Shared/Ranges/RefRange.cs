@@ -11,15 +11,15 @@ namespace Allors.Shared.Ranges
     using System.Linq;
     using Allors.Collections;
 
-    public struct StructRange<T> : IEquatable<StructRange<T>>, IEnumerable<T> where T : struct, IComparable<T>
+    public struct RefRange<T> : IEquatable<RefRange<T>>, IEnumerable<T> where T : class, IComparable<T>
     {
-        private static readonly StructRange<T> Empty = new StructRange<T>();
+        public static readonly RefRange<T> Empty = new RefRange<T>();
 
         private readonly T[]? items;
 
-        private StructRange(T item) : this(new[] { item }) { }
+        private RefRange(T item) : this(new[] { item }) { }
 
-        private StructRange(T[]? items) => this.items = items;
+        private RefRange(T[]? items) => this.items = items;
 
         public bool IsEmpty => this.items == null;
 
@@ -39,7 +39,7 @@ namespace Allors.Shared.Ranges
 
         public bool Contains(T item) => this.items != null && Array.BinarySearch(this.items, item) >= 0;
 
-        public static StructRange<T> Load(IEnumerable<T>? sortedItems)
+        public static RefRange<T> Load(IEnumerable<T>? sortedItems)
         {
             switch (sortedItems)
             {
@@ -47,11 +47,11 @@ namespace Allors.Shared.Ranges
                 case T[] { Length: 0 }:
                     return Empty;
                 case T[] array:
-                    return new StructRange<T>(array);
+                    return new RefRange<T>(array);
                 case ICollection<T> collection:
                     var newArray = new T[collection.Count];
                     collection.CopyTo(newArray, 0);
-                    return new StructRange<T>(newArray);
+                    return new RefRange<T>(newArray);
                 default:
                     var materialized = sortedItems.ToArray();
                     if (materialized.Length == 0)
@@ -59,21 +59,21 @@ namespace Allors.Shared.Ranges
                         return Empty;
                     }
 
-                    return new StructRange<T>(materialized);
+                    return new RefRange<T>(materialized);
             }
         }
 
-        public static StructRange<T> Load(T item) => new StructRange<T>(new[] { item });
+        public static RefRange<T> Load(T item) => new RefRange<T>(new[] { item });
 
-        public static StructRange<T> Load(params T[] sortedItems) =>
+        public static RefRange<T> Load(params T[] sortedItems) =>
             sortedItems switch
             {
                 null => Empty,
                 { Length: 0 } => Empty,
-                _ => new StructRange<T>(sortedItems)
+                _ => new RefRange<T>(sortedItems)
             };
 
-        public static StructRange<T> Import(IEnumerable<T>? unsortedItems)
+        public static RefRange<T> Import(IEnumerable<T>? unsortedItems)
         {
             switch (unsortedItems)
             {
@@ -83,12 +83,12 @@ namespace Allors.Shared.Ranges
                 case T[] array:
                     var sortedArray = (T[])array.Clone();
                     Array.Sort(sortedArray);
-                    return new StructRange<T>(sortedArray);
+                    return new RefRange<T>(sortedArray);
                 case ICollection<T> collection:
                     var newSortedArray = new T[collection.Count];
                     collection.CopyTo(newSortedArray, 0);
                     Array.Sort(newSortedArray);
-                    return new StructRange<T>(newSortedArray);
+                    return new RefRange<T>(newSortedArray);
                 default:
                     var materialized = unsortedItems.ToArray();
                     if (materialized.Length == 0)
@@ -97,22 +97,22 @@ namespace Allors.Shared.Ranges
                     }
 
                     Array.Sort(materialized);
-                    return new StructRange<T>(materialized);
+                    return new RefRange<T>(materialized);
             }
         }
 
         public T[]? Save() => this.items;
 
-        public StructRange<T> Add(T item)
+        public RefRange<T> Add(T item)
         {
             switch (this.items)
             {
                 case null:
-                    return new StructRange<T>(item);
+                    return new RefRange<T>(item);
                 case var v when v.Length == 1 && v[0].CompareTo(item) == 0:
                     return this;
                 case var v when v.Length == 1:
-                    return v[0].CompareTo(item) < 0 ? new StructRange<T>(new[] { v[0], item }) : new StructRange<T>(new[] { item, v[0] });
+                    return v[0].CompareTo(item) < 0 ? new RefRange<T>(new[] { v[0], item }) : new RefRange<T>(new[] { item, v[0] });
                 default:
                     var index = Array.BinarySearch(this.items, item);
 
@@ -140,11 +140,11 @@ namespace Allors.Shared.Ranges
                         Array.Copy(this.items, index, result, index + 1, this.items.Length - index);
                     }
 
-                    return new StructRange<T>(result);
+                    return new RefRange<T>(result);
             }
         }
 
-        public StructRange<T> Remove(T item)
+        public RefRange<T> Remove(T item)
         {
             switch (this.items)
             {
@@ -178,11 +178,11 @@ namespace Allors.Shared.Ranges
                         Array.Copy(array, index + 1, result, index, array.Length - index - 1);
                     }
 
-                    return new StructRange<T>(result);
+                    return new RefRange<T>(result);
             }
         }
 
-        public StructRange<T> Union(StructRange<T> other)
+        public RefRange<T> Union(RefRange<T> other)
         {
             if (other.items == null)
             {
@@ -199,7 +199,7 @@ namespace Allors.Shared.Ranges
                 return other.items switch
                 {
                     var otherItems when otherItems.Length == 1 && this.items[0].CompareTo(otherItems[0]) == 0 => this,
-                    var otherItems when otherItems.Length == 1 => this.items[0].CompareTo(otherItems[0]) < 0 ? new StructRange<T>(new[] { this.items[0], otherItems[0] }) : new StructRange<T>(new[] { otherItems[0], this.items[0] }),
+                    var otherItems when otherItems.Length == 1 => this.items[0].CompareTo(otherItems[0]) < 0 ? new RefRange<T>(new[] { this.items[0], otherItems[0] }) : new RefRange<T>(new[] { otherItems[0], this.items[0] }),
                     _ => other.Add(this.items[0])
                 };
             }
@@ -219,7 +219,7 @@ namespace Allors.Shared.Ranges
                     var j = 0;
                     var k = 0;
 
-                    T previous = default;
+                    T? previous = null;
                     while (i < arrayLength && j < otherArrayLength)
                     {
                         var value = this.items[i];
@@ -227,7 +227,7 @@ namespace Allors.Shared.Ranges
 
                         if (value.CompareTo(otherValue) < 0)
                         {
-                            if (value.CompareTo(previous) != 0)
+                            if (previous == null || value.CompareTo(previous) != 0)
                             {
                                 result[k++] = value;
                             }
@@ -237,7 +237,7 @@ namespace Allors.Shared.Ranges
                         }
                         else
                         {
-                            if (Equals(previous, default) || otherValue.CompareTo(previous) != 0)
+                            if (previous == null || otherValue.CompareTo(previous) != 0)
                             {
                                 result[k++] = otherValue;
                             }
@@ -255,7 +255,7 @@ namespace Allors.Shared.Ranges
                     if (i < arrayLength)
                     {
                         var rest = arrayLength - i;
-                        Array.Copy(items, i, result, k, rest);
+                        Array.Copy(this.items, i, result, k, rest);
                         k += rest;
                     }
                     else if (j < otherArrayLength)
@@ -270,11 +270,11 @@ namespace Allors.Shared.Ranges
                         Array.Resize(ref result, k);
                     }
 
-                    return new StructRange<T>(result);
+                    return new RefRange<T>(result);
             }
         }
 
-        public StructRange<T> Except(StructRange<T> other)
+        public RefRange<T> Except(RefRange<T> other)
         {
             if (other.items == null)
             {
@@ -344,14 +344,14 @@ namespace Allors.Shared.Ranges
                                 Array.Resize(ref result, k);
                             }
 
-                            return result.Length != 0 ? new StructRange<T>(result) : Empty;
+                            return result.Length != 0 ? new RefRange<T>(result) : Empty;
                         }
                     }
                 }
             }
         }
 
-        public bool Equals(StructRange<T> other)
+        public bool Equals(RefRange<T> other)
         {
             if (this.items == null)
             {

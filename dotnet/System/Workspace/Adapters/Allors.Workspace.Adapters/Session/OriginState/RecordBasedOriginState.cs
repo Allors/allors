@@ -9,7 +9,7 @@ namespace Allors.Workspace.Adapters
     using System.Collections.Generic;
     using System.Linq;
     using Meta;
-    using Ranges;
+    using Shared.Ranges;
 
     public abstract class RecordBasedOriginState
     {
@@ -82,21 +82,21 @@ namespace Allors.Workspace.Adapters
             }
         }
 
-        public IRange<Strategy> GetCompositesRole(RoleType roleType)
+        public RefRange<Strategy> GetCompositesRole(RoleType roleType)
         {
             if (this.ChangedRoleByRelationType != null && this.ChangedRoleByRelationType.TryGetValue(roleType.RelationType, out var changedRole))
             {
-                return (IRange<Strategy>)changedRole;
+                return (RefRange<Strategy>)changedRole;
             }
 
-            var role = (IRange<long>)this.Record?.GetRole(roleType);
+            var role = (ValueRange<long>)this.Record?.GetRole(roleType);
 
-            if (role == null)
+            if (role.IsEmpty)
             {
-                return EmptyRange<Strategy>.Instance;
+                return RefRange<Strategy>.Empty;
             }
 
-            return this.Ranges.Load(role.Select(v =>
+            return RefRange<Strategy>.Load(role.Select(v =>
             {
                 var strategy = this.Session.GetStrategy(v);
                 this.AssertStrategy(strategy);
@@ -116,7 +116,7 @@ namespace Allors.Workspace.Adapters
                 return;
             }
 
-            role = this.Ranges.Add(role, roleToAdd);
+            role = role.Add(roleToAdd);
             this.SetChangedRole(roleType, role);
 
             if (associationType.IsMany)
@@ -137,11 +137,11 @@ namespace Allors.Workspace.Adapters
                 return;
             }
 
-            role = this.Ranges.Remove(role, roleToRemove);
+            role = role.Remove(roleToRemove);
             this.SetChangedRole(roleType, role);
         }
 
-        public void SetCompositesRole(RoleType roleType, IRange<Strategy> role)
+        public void SetCompositesRole(RoleType roleType, RefRange<Strategy> role)
         {
             if (this.SameCompositesRole(roleType, role))
             {
@@ -188,7 +188,7 @@ namespace Allors.Workspace.Adapters
                         }
                         else
                         {
-                            changeSet.DiffComposites(this.Strategy, relationType, (IRange<Strategy>)current, (IRange<Strategy>)previousChangedRole);
+                            changeSet.DiffComposites(this.Strategy, relationType, (RefRange<Strategy>)current, (RefRange<Strategy>)previousChangedRole);
                         }
                     }
                     else
@@ -205,7 +205,7 @@ namespace Allors.Workspace.Adapters
                         }
                         else
                         {
-                            changeSet.DiffComposites(this.Strategy, relationType, (IRange<Strategy>)current, (IRange<long>)previous);
+                            changeSet.DiffComposites(this.Strategy, relationType, (RefRange<Strategy>)current, (ValueRange<long>)previous);
                         }
 
                     }
@@ -238,7 +238,7 @@ namespace Allors.Workspace.Adapters
                         }
                         else
                         {
-                            changeSet.DiffComposites(this.Strategy, relationType, (IRange<Strategy>)current, (IRange<Strategy>)previous);
+                            changeSet.DiffComposites(this.Strategy, relationType, (RefRange<Strategy>)current, (RefRange<Strategy>)previous);
                         }
                     }
                     else
@@ -259,7 +259,7 @@ namespace Allors.Workspace.Adapters
                         }
                         else
                         {
-                            changeSet.DiffComposites(this.Strategy, relationType, (IRange<long>)current, (IRange<long>)previous);
+                            changeSet.DiffComposites(this.Strategy, relationType, (ValueRange<long>)current, (ValueRange<long>)previous);
                         }
                     }
                 }
@@ -275,8 +275,6 @@ namespace Allors.Workspace.Adapters
             {
                 return;
             }
-
-            var ranges = this.Session.Workspace.RecordRanges;
 
             foreach (var kvp in this.ChangedRoleByRelationType)
             {
@@ -306,8 +304,8 @@ namespace Allors.Workspace.Adapters
                 {
                     diffs.Add(new CompositesDiff(relationType, this.Strategy)
                     {
-                        OriginalRoles = original != null ? ranges.Ensure(original).Select(v => this.Session.GetStrategy(v)).ToArray() : Array.Empty<Strategy>(),
-                        ChangedRoles = ((IRange<Strategy>)changed).Save() ?? Array.Empty<Strategy>(),
+                        OriginalRoles = original != null ? ValueRange<long>.Load((IEnumerable<long>)original).Select(v => this.Session.GetStrategy(v)).ToArray() : Array.Empty<Strategy>(),
+                        ChangedRoles = ((RefRange<Strategy>)changed).Save() ?? Array.Empty<Strategy>(),
                     });
                 }
             }
@@ -319,8 +317,6 @@ namespace Allors.Workspace.Adapters
             {
                 return true;
             }
-
-            var ranges = this.Session.Workspace.RecordRanges;
 
             foreach (var kvp in this.ChangedRoleByRelationType)
             {
@@ -344,7 +340,7 @@ namespace Allors.Workspace.Adapters
                         return false;
                     }
                 }
-                else if (!ranges.Ensure(original).Equals(ranges.Ensure(newOriginal)))
+                else if (!ValueRange<long>.Load((IEnumerable<long>)original).Equals(ValueRange<long>.Load((IEnumerable<long>)newOriginal)))
                 {
                     return false;
                 }
@@ -393,15 +389,15 @@ namespace Allors.Workspace.Adapters
             return role == null ? null : this.Session.GetStrategy((long)role);
         }
 
-        private IRange<Strategy> GetCompositesRoleIfInstantiated(RoleType roleType)
+        private RefRange<Strategy> GetCompositesRoleIfInstantiated(RoleType roleType)
         {
             if (this.ChangedRoleByRelationType != null && this.ChangedRoleByRelationType.TryGetValue(roleType.RelationType, out var changedRole))
             {
-                return (IRange<Strategy>)changedRole;
+                return (RefRange<Strategy>)changedRole;
             }
 
-            var role = (IRange<long>)this.Record?.GetRole(roleType);
-            return role == null ? EmptyRange<Strategy>.Instance : this.Ranges.Load(role.Select(v => this.Session.GetStrategy(v)).Where(v => v != null));
+            var role = (ValueRange<long>)this.Record?.GetRole(roleType);
+            return role.IsEmpty ? RefRange<Strategy>.Empty : RefRange<Strategy>.Load(role.Select(v => this.Session.GetStrategy(v)).Where(v => v != null));
         }
         private bool SameCompositeRole(RoleType roleType, Strategy role)
         {
@@ -425,14 +421,14 @@ namespace Allors.Workspace.Adapters
             return role.Id == (long)changedRoleId;
         }
 
-        private bool SameCompositesRole(RoleType roleType, IRange<Strategy> role)
+        private bool SameCompositesRole(RoleType roleType, RefRange<Strategy> role)
         {
             if (this.ChangedRoleByRelationType != null && this.ChangedRoleByRelationType.TryGetValue(roleType.RelationType, out var changedRole))
             {
                 return role.Equals(changedRole);
             }
 
-            var roleIds = this.Session.Workspace.RecordRanges.Ensure(this.Record?.GetRole(roleType));
+            var roleIds = ValueRange<long>.Load((IEnumerable<long>)this.Record?.GetRole(roleType));
             return role.IsEmpty ? roleIds.IsEmpty : role.Select(v => v.Id).SequenceEqual(roleIds);
         }
 
@@ -453,8 +449,6 @@ namespace Allors.Workspace.Adapters
         protected Session Session => this.Strategy.Session;
 
         protected Workspace Workspace => this.Session.Workspace;
-
-        private IRanges<Strategy> Ranges => this.Strategy.Session.Workspace.StrategyRanges;
 
         #endregion
     }

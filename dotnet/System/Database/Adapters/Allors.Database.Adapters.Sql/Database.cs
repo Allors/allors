@@ -13,7 +13,7 @@ namespace Allors.Database.Adapters.Sql
     using Allors.Database.Tracing;
     using Caching;
     using Meta;
-    using Ranges;
+    using Shared.Ranges;
 
     public abstract class Database : IDatabase
     {
@@ -108,8 +108,6 @@ namespace Allors.Database.Adapters.Sql
         {
             get;
         }
-
-        internal IRanges<long> Ranges = new DefaultStructRanges<long>();
 
         public ITransaction CreateTransaction()
         {

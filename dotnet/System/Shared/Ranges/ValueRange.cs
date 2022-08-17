@@ -11,15 +11,15 @@ namespace Allors.Shared.Ranges
     using System.Linq;
     using Allors.Collections;
 
-    public struct ClassRange<T> : IEquatable<ClassRange<T>>, IEnumerable<T> where T : class, IComparable<T>
+    public struct ValueRange<T> : IEquatable<ValueRange<T>>, IEnumerable<T> where T : struct, IComparable<T>
     {
-        private static readonly ClassRange<T> Empty = new ClassRange<T>();
+        public static readonly ValueRange<T> Empty = new ValueRange<T>();
 
         private readonly T[]? items;
 
-        private ClassRange(T item) : this(new[] { item }) { }
+        private ValueRange(T item) : this(new[] { item }) { }
 
-        private ClassRange(T[]? items) => this.items = items;
+        private ValueRange(T[]? items) => this.items = items;
 
         public bool IsEmpty => this.items == null;
 
@@ -39,7 +39,7 @@ namespace Allors.Shared.Ranges
 
         public bool Contains(T item) => this.items != null && Array.BinarySearch(this.items, item) >= 0;
 
-        public static ClassRange<T> Load(IEnumerable<T>? sortedItems)
+        public static ValueRange<T> Load(IEnumerable<T>? sortedItems)
         {
             switch (sortedItems)
             {
@@ -47,11 +47,11 @@ namespace Allors.Shared.Ranges
                 case T[] { Length: 0 }:
                     return Empty;
                 case T[] array:
-                    return new ClassRange<T>(array);
+                    return new ValueRange<T>(array);
                 case ICollection<T> collection:
                     var newArray = new T[collection.Count];
                     collection.CopyTo(newArray, 0);
-                    return new ClassRange<T>(newArray);
+                    return new ValueRange<T>(newArray);
                 default:
                     var materialized = sortedItems.ToArray();
                     if (materialized.Length == 0)
@@ -59,21 +59,21 @@ namespace Allors.Shared.Ranges
                         return Empty;
                     }
 
-                    return new ClassRange<T>(materialized);
+                    return new ValueRange<T>(materialized);
             }
         }
 
-        public static ClassRange<T> Load(T item) => new ClassRange<T>(new[] { item });
+        public static ValueRange<T> Load(T item) => new ValueRange<T>(new[] { item });
 
-        public static ClassRange<T> Load(params T[] sortedItems) =>
+        public static ValueRange<T> Load(params T[] sortedItems) =>
             sortedItems switch
             {
                 null => Empty,
                 { Length: 0 } => Empty,
-                _ => new ClassRange<T>(sortedItems)
+                _ => new ValueRange<T>(sortedItems)
             };
 
-        public static ClassRange<T> Import(IEnumerable<T>? unsortedItems)
+        public static ValueRange<T> Import(IEnumerable<T>? unsortedItems)
         {
             switch (unsortedItems)
             {
@@ -83,12 +83,12 @@ namespace Allors.Shared.Ranges
                 case T[] array:
                     var sortedArray = (T[])array.Clone();
                     Array.Sort(sortedArray);
-                    return new ClassRange<T>(sortedArray);
+                    return new ValueRange<T>(sortedArray);
                 case ICollection<T> collection:
                     var newSortedArray = new T[collection.Count];
                     collection.CopyTo(newSortedArray, 0);
                     Array.Sort(newSortedArray);
-                    return new ClassRange<T>(newSortedArray);
+                    return new ValueRange<T>(newSortedArray);
                 default:
                     var materialized = unsortedItems.ToArray();
                     if (materialized.Length == 0)
@@ -97,22 +97,22 @@ namespace Allors.Shared.Ranges
                     }
 
                     Array.Sort(materialized);
-                    return new ClassRange<T>(materialized);
+                    return new ValueRange<T>(materialized);
             }
         }
 
         public T[]? Save() => this.items;
 
-        public ClassRange<T> Add(T item)
+        public ValueRange<T> Add(T item)
         {
             switch (this.items)
             {
                 case null:
-                    return new ClassRange<T>(item);
+                    return new ValueRange<T>(item);
                 case var v when v.Length == 1 && v[0].CompareTo(item) == 0:
                     return this;
                 case var v when v.Length == 1:
-                    return v[0].CompareTo(item) < 0 ? new ClassRange<T>(new[] { v[0], item }) : new ClassRange<T>(new[] { item, v[0] });
+                    return v[0].CompareTo(item) < 0 ? new ValueRange<T>(new[] { v[0], item }) : new ValueRange<T>(new[] { item, v[0] });
                 default:
                     var index = Array.BinarySearch(this.items, item);
 
@@ -140,11 +140,11 @@ namespace Allors.Shared.Ranges
                         Array.Copy(this.items, index, result, index + 1, this.items.Length - index);
                     }
 
-                    return new ClassRange<T>(result);
+                    return new ValueRange<T>(result);
             }
         }
 
-        public ClassRange<T> Remove(T item)
+        public ValueRange<T> Remove(T item)
         {
             switch (this.items)
             {
@@ -178,11 +178,11 @@ namespace Allors.Shared.Ranges
                         Array.Copy(array, index + 1, result, index, array.Length - index - 1);
                     }
 
-                    return new ClassRange<T>(result);
+                    return new ValueRange<T>(result);
             }
         }
 
-        public ClassRange<T> Union(ClassRange<T> other)
+        public ValueRange<T> Union(ValueRange<T> other)
         {
             if (other.items == null)
             {
@@ -199,7 +199,7 @@ namespace Allors.Shared.Ranges
                 return other.items switch
                 {
                     var otherItems when otherItems.Length == 1 && this.items[0].CompareTo(otherItems[0]) == 0 => this,
-                    var otherItems when otherItems.Length == 1 => this.items[0].CompareTo(otherItems[0]) < 0 ? new ClassRange<T>(new[] { this.items[0], otherItems[0] }) : new ClassRange<T>(new[] { otherItems[0], this.items[0] }),
+                    var otherItems when otherItems.Length == 1 => this.items[0].CompareTo(otherItems[0]) < 0 ? new ValueRange<T>(new[] { this.items[0], otherItems[0] }) : new ValueRange<T>(new[] { otherItems[0], this.items[0] }),
                     _ => other.Add(this.items[0])
                 };
             }
@@ -219,7 +219,7 @@ namespace Allors.Shared.Ranges
                     var j = 0;
                     var k = 0;
 
-                    T? previous = null;
+                    T previous = default;
                     while (i < arrayLength && j < otherArrayLength)
                     {
                         var value = this.items[i];
@@ -227,7 +227,7 @@ namespace Allors.Shared.Ranges
 
                         if (value.CompareTo(otherValue) < 0)
                         {
-                            if (previous == null || value.CompareTo(previous) != 0)
+                            if (value.CompareTo(previous) != 0)
                             {
                                 result[k++] = value;
                             }
@@ -237,7 +237,7 @@ namespace Allors.Shared.Ranges
                         }
                         else
                         {
-                            if (previous == null || otherValue.CompareTo(previous) != 0)
+                            if (Equals(previous, default) || otherValue.CompareTo(previous) != 0)
                             {
                                 result[k++] = otherValue;
                             }
@@ -255,7 +255,7 @@ namespace Allors.Shared.Ranges
                     if (i < arrayLength)
                     {
                         var rest = arrayLength - i;
-                        Array.Copy(this.items, i, result, k, rest);
+                        Array.Copy(items, i, result, k, rest);
                         k += rest;
                     }
                     else if (j < otherArrayLength)
@@ -270,11 +270,11 @@ namespace Allors.Shared.Ranges
                         Array.Resize(ref result, k);
                     }
 
-                    return new ClassRange<T>(result);
+                    return new ValueRange<T>(result);
             }
         }
 
-        public ClassRange<T> Except(ClassRange<T> other)
+        public ValueRange<T> Except(ValueRange<T> other)
         {
             if (other.items == null)
             {
@@ -344,14 +344,14 @@ namespace Allors.Shared.Ranges
                                 Array.Resize(ref result, k);
                             }
 
-                            return result.Length != 0 ? new ClassRange<T>(result) : Empty;
+                            return result.Length != 0 ? new ValueRange<T>(result) : Empty;
                         }
                     }
                 }
             }
         }
 
-        public bool Equals(ClassRange<T> other)
+        public bool Equals(ValueRange<T> other)
         {
             if (this.items == null)
             {

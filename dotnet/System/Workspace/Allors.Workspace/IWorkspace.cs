@@ -6,7 +6,7 @@
 namespace Allors.Workspace
 {
     using Meta;
-    using Ranges;
+    using Shared.Ranges;
 
     public interface IWorkspace : INotifyWorkspaceChanged
     {
@@ -20,10 +20,10 @@ namespace Allors.Workspace
 
         long GetCompositeRole(long id, RoleType roleType);
 
-        IRange<long> GetCompositesRole(long id, RoleType roleTYpe);
+        ValueRange<long> GetCompositesRole(long id, RoleType roleTYpe);
 
         long GetCompositeAssociation(long id, AssociationType roleType);
 
-        IRange<long> GetCompositesAssociation(long id, AssociationType roleTYpe);
+        ValueRange<long> GetCompositesAssociation(long id, AssociationType roleTYpe);
     }
 }

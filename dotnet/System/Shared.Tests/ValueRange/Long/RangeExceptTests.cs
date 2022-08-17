@@ -6,7 +6,7 @@
 namespace Allors.Ranges.Long
 {
     using Xunit;
-    using Range = Shared.Ranges.StructRange<long>;
+    using Range = Shared.Ranges.ValueRange<long>;
 
     public class RangeExceptTests
     {
