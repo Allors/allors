@@ -89,7 +89,7 @@ namespace Allors.Workspace.Adapters
                 return (RefRange<Strategy>)changedRole;
             }
 
-            var role = (ValueRange<long>)this.Record?.GetRole(roleType);
+            var role = (ValueRange<long>)(this.Record?.GetRole(roleType) ?? ValueRange<long>.Empty);
 
             if (role.IsEmpty)
             {
@@ -205,7 +205,7 @@ namespace Allors.Workspace.Adapters
                         }
                         else
                         {
-                            changeSet.DiffComposites(this.Strategy, relationType, (RefRange<Strategy>)current, (ValueRange<long>)previous);
+                            changeSet.DiffComposites(this.Strategy, relationType, (RefRange<Strategy>)current, (ValueRange<long>)(previous ?? ValueRange<long>.Empty));
                         }
 
                     }
@@ -259,7 +259,7 @@ namespace Allors.Workspace.Adapters
                         }
                         else
                         {
-                            changeSet.DiffComposites(this.Strategy, relationType, (ValueRange<long>)current, (ValueRange<long>)previous);
+                            changeSet.DiffComposites(this.Strategy, relationType, (ValueRange<long>)(current ?? ValueRange<long>.Empty), (ValueRange<long>)previous);
                         }
                     }
                 }
@@ -396,7 +396,7 @@ namespace Allors.Workspace.Adapters
                 return (RefRange<Strategy>)changedRole;
             }
 
-            var role = (ValueRange<long>)this.Record?.GetRole(roleType);
+            var role = (ValueRange<long>)(this.Record?.GetRole(roleType) ?? ValueRange<long>.Empty);
             return role.IsEmpty ? RefRange<Strategy>.Empty : RefRange<Strategy>.Load(role.Select(v => this.Session.GetStrategy(v)).Where(v => v != null));
         }
         private bool SameCompositeRole(RoleType roleType, Strategy role)
