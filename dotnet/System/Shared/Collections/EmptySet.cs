@@ -54,19 +54,6 @@ namespace Allors.Collections
         public IEnumerator<T> GetEnumerator() => EmptyEnumerator<T>.Instance;
 
         IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
-
-        private class EmptyEnumerator<TEmpty> : IEnumerator<TEmpty>
-        {
-            public static readonly EmptyEnumerator<TEmpty> Instance = new EmptyEnumerator<TEmpty>();
-
-            public bool MoveNext() => false;
-
-            public void Reset() { }
-
-            TEmpty IEnumerator<TEmpty>.Current => throw new NotSupportedException("EmptySet has no elements.");
-            public object Current => throw new NotSupportedException("EmptySet has no elements.");
-
-            public void Dispose() { }
-        }
+      
     }
 }

@@ -6,7 +6,6 @@
 namespace Allors.Database.Domain
 {
     using System.Collections.Generic;
-    using Ranges;
 
     public interface IVersionedGrant
     {

@@ -6,19 +6,16 @@
 namespace Allors.Ranges.Long
 {
     using Xunit;
+    using Range = Shared.Ranges.StructRange<long>;
 
-    public abstract class RangesAddTests
+    public class RangeAddTests
     {
-        public abstract IRanges<long> Ranges { get; }
-
         [Fact]
         public void Null()
         {
-            var num = this.Ranges;
-
-            var x = num.Load();
+            var x = Range.Load();
             const int y = 2;
-            var z = num.Add(x, y);
+            var z = x.Add(y);
 
             Assert.Equal(new long[] { 2 }, z);
         }
@@ -26,11 +23,9 @@ namespace Allors.Ranges.Long
         [Fact]
         public void ValueBefore()
         {
-            var num = this.Ranges;
-
-            var x = num.Load(1);
+            var x = Range.Load(1);
             const int y = 2;
-            var z = num.Add(x, y);
+            var z = x.Add(y);
 
             Assert.Equal(new long[] { 1, 2 }, z);
         }
@@ -38,11 +33,9 @@ namespace Allors.Ranges.Long
         [Fact]
         public void ValueAfter()
         {
-            var num = this.Ranges;
-
-            var x = num.Load(3);
+            var x = Range.Load(3);
             const int y = 2;
-            var z = num.Add(x, y);
+            var z = x.Add(y);
 
             Assert.Equal(new long[] { 2, 3 }, z);
         }
@@ -50,11 +43,9 @@ namespace Allors.Ranges.Long
         [Fact]
         public void ValueSame()
         {
-            var num = this.Ranges;
-
-            var x = num.Load(2);
+            var x = Range.Load(2);
             const int y = 2;
-            var z = num.Add(x, y);
+            var z = x.Add(y);
 
             Assert.Equal(new long[] { 2 }, z);
         }
@@ -62,11 +53,9 @@ namespace Allors.Ranges.Long
         [Fact]
         public void PairBefore()
         {
-            var num = this.Ranges;
-
-            var x = num.Load(-2, 1);
+            var x = Range.Load(-2, 1);
             const int y = 2;
-            var z = num.Add(x, y);
+            var z = x.Add(y);
 
             Assert.Equal(new long[] { -2, 1, 2 }, z);
         }
@@ -74,11 +63,9 @@ namespace Allors.Ranges.Long
         [Fact]
         public void PairAfter()
         {
-            var num = this.Ranges;
-
-            var x = num.Load(3, 4);
+            var x = Range.Load(3, 4);
             const int y = 2;
-            var z = num.Add(x, y);
+            var z = x.Add(y);
 
             Assert.Equal(new long[] { 2, 3, 4 }, z);
         }
@@ -86,11 +73,9 @@ namespace Allors.Ranges.Long
         [Fact]
         public void PairOverlapping()
         {
-            var num = this.Ranges;
-
-            var x = num.Load(1, 3);
+            var x = Range.Load(1, 3);
             const int y = 2;
-            var z = num.Add(x, y);
+            var z = x.Add(y);
 
             Assert.Equal(new long[] { 1, 2, 3 }, z);
         }
