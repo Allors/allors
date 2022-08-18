@@ -15,13 +15,13 @@ partial class Build
         .DependsOn(DotnetCoreDatabaseTest);
 
     private Target CiDotnetCoreWorkspaceLocalTest => _ => _
-        .DependsOn(DotnetCoreWorkspaceLocalTest);
+        .DependsOn(DotnetCoreWorkspaceDirectTest);
 
     private Target CiDotnetCoreWorkspaceRemoteJsonSystemTextTest => _ => _
-        .DependsOn(DotnetCoreWorkspaceRemoteJsonSystemTextTest);
+        .DependsOn(DotnetCoreWorkspaceJsonSystemTextHttpClientTest);
 
     private Target CiDotnetCoreWorkspaceRemoteJsonRestSharpTest => _ => _
-        .DependsOn(DotnetCoreWorkspaceRemoteJsonRestSharpTest);
+        .DependsOn(DotnetCoreWorkspaceJsonNewtonsoftWebClientTest);
 
     private Target CiDotnetBaseDatabaseTest => _ => _
         .DependsOn(DotnetBaseDatabaseTest);

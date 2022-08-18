@@ -10,7 +10,7 @@ namespace Allors.Database.Domain
     using System.Xml.Serialization;
     using Allors.Database.Data;
     using Allors.Database.Protocol.Json;
-    using Allors.Protocol.Json.SystemTextJson;
+    using Allors.Protocol.Json.SystemText;
 
     public partial class PersistentPreparedExtent
     {

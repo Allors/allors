@@ -23,7 +23,7 @@ public partial class Paths
     public AbsolutePath DotnetCoreDatabaseResourcesCustom => DotnetCoreDatabaseResources / "Custom";
 
     public AbsolutePath DotnetCoreWorkspace => DotnetCore / "Workspace";
-    public AbsolutePath DotnetCoreWorkspaceTestsLocal => DotnetCoreWorkspace / "Tests.Local";
-    public AbsolutePath DotnetCoreWorkspaceTestsRemoteJsonSystemText => DotnetCoreWorkspace / "Tests.Remote.Json.SystemText";
-    public AbsolutePath DotnetCoreWorkspaceTestsRemoteJsonRestSharp => DotnetCoreWorkspace / "Tests.Remote.Json.RestSharp";
+    public AbsolutePath DotnetCoreWorkspaceTestsDirect => DotnetCoreWorkspace / "Tests.Direct";
+    public AbsolutePath DotnetCoreWorkspaceTestsJsonNewtonsoftWebClient => DotnetCoreWorkspace / "Tests.Json.Newtonsoft.WebClient";
+    public AbsolutePath DotnetCoreWorkspaceTestsJsonSystemTextHttpClient => DotnetCoreWorkspace / "Tests.Json.SystemText.HttpClient";
 }

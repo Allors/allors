@@ -13,7 +13,7 @@ namespace Allors.Database.Protocol.Json
     using Allors.Protocol.Json.Api.Push;
     using Allors.Protocol.Json.Api.Security;
     using Allors.Protocol.Json.Api.Sync;
-    using Allors.Protocol.Json.SystemTextJson;
+    using Allors.Protocol.Json.SystemText;
     using Data;
     using Derivations;
     using Domain;

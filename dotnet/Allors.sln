@@ -111,8 +111,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Database.Workspace.J
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Workspace.Domain", "Core\Workspace\Domain\Workspace.Domain.csproj", "{FDD12819-0C38-4BC9-BFDB-99BA433C59B4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Workspace.Tests.Local", "Core\Workspace\Tests.Local\Workspace.Tests.Local.csproj", "{B3ED8053-0A33-40F7-AAF5-583B6C45EF3C}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Workspace.Configuration", "Core\Workspace\Configuration\Workspace.Configuration.csproj", "{73EE6897-B0A6-4BD8-A771-34FA71EFDB41}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Meta.Tests", "Core\Database\Meta.Tests\Meta.Tests.csproj", "{94D0FC5A-E2B9-4691-8009-40A8E57A207E}"
@@ -139,21 +137,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Adapters", "Adapters", "{49
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Workspace.Adapters", "System\Workspace\Adapters\Allors.Workspace.Adapters\Allors.Workspace.Adapters.csproj", "{7B5A738C-88CB-4AFC-93FD-9B34316661C2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Workspace.Adapters.Local", "System\Workspace\Adapters\Allors.Workspace.Adapters.Local\Allors.Workspace.Adapters.Local.csproj", "{EE8D0979-3202-4EDD-A02E-B9D187110AA0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Workspace.Adapters.Direct", "System\Workspace\Adapters\Allors.Workspace.Adapters.Direct\Allors.Workspace.Adapters.Direct.csproj", "{EE8D0979-3202-4EDD-A02E-B9D187110AA0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Workspace.Adapters.Remote", "System\Workspace\Adapters\Allors.Workspace.Adapters.Remote\Allors.Workspace.Adapters.Remote.csproj", "{7CE64CC4-F2B2-43EC-98D4-9166AF07E3F5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Workspace.Adapters.Json", "System\Workspace\Adapters\Allors.Workspace.Adapters.Json\Allors.Workspace.Adapters.Json.csproj", "{7CE64CC4-F2B2-43EC-98D4-9166AF07E3F5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Workspace.Adapters.Remote.RestSharp", "System\Workspace\Adapters\Allors.Workspace.Adapters.Remote.RestSharp\Allors.Workspace.Adapters.Remote.RestSharp.csproj", "{3B55B7BD-79D1-4292-8919-485E39F3E16B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Workspace.Adapters.Json.Newtonsoft.WebClient", "System\Workspace\Adapters\Allors.Workspace.Adapters.Json.Newtonsoft.WebClient\Allors.Workspace.Adapters.Json.Newtonsoft.WebClient.csproj", "{3B55B7BD-79D1-4292-8919-485E39F3E16B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Protocol.Json.SimpleJson", "System\Protocol\Allors.Protocol.Json.SimpleJson\Allors.Protocol.Json.SimpleJson.csproj", "{D1681254-792A-453E-BA73-DDF4BF4A2175}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Protocol.Json.Newtonsoft", "System\Protocol\Allors.Protocol.Json.Newtonsoft\Allors.Protocol.Json.Newtonsoft.csproj", "{D1681254-792A-453E-BA73-DDF4BF4A2175}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Protocol.Json.SystemTextJson", "System\Protocol\Allors.Protocol.Json.SystemTextJson\Allors.Protocol.Json.SystemTextJson.csproj", "{0AD34687-9B75-4086-B0CC-3DBFC5B4FEE6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Protocol.Json.SystemText", "System\Protocol\Allors.Protocol.Json.SystemText\Allors.Protocol.Json.SystemText.csproj", "{0AD34687-9B75-4086-B0CC-3DBFC5B4FEE6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Workspace.Adapters.Remote.SystemText", "System\Workspace\Adapters\Allors.Workspace.Adapters.Remote.SystemText\Allors.Workspace.Adapters.Remote.SystemText.csproj", "{500BADB0-E5B5-4C4B-A814-AEAC0C638DFB}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Workspace.Tests.Remote.Json.RestSharp", "Core\Workspace\Tests.Remote.Json.RestSharp\Workspace.Tests.Remote.Json.RestSharp.csproj", "{CD78BBCD-5FEB-4116-8348-D61D4C1C5634}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Workspace.Tests.Remote.Json.SystemText", "Core\Workspace\Tests.Remote.Json.SystemText\Workspace.Tests.Remote.Json.SystemText.csproj", "{41F9151D-F84D-4FFF-87AE-E36139573228}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Workspace.Adapters.Json.SystemText", "System\Workspace\Adapters\Allors.Workspace.Adapters.Json.SystemText\Allors.Workspace.Adapters.Json.SystemText.csproj", "{500BADB0-E5B5-4C4B-A814-AEAC0C638DFB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Blazor", "Blazor", "{6072307B-EF34-4264-866C-49AC54A6C245}"
 EndProject
@@ -177,7 +171,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Database.Adapters.Tr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Workspace", "System\Workspace\Allors.Workspace\Allors.Workspace.csproj", "{136ACCAB-20FE-4E36-9974-E87B5012E1F3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Workspace.Pull", "System\Workspace\Allors.Workspace.Pull\Allors.Workspace.Pull.csproj", "{F3E0A929-9E4A-4E04-939E-02E5408B31A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Workspace.Tests.Direct", "Core\Workspace\Tests.Direct\Workspace.Tests.Direct.csproj", "{4E5C6915-1ADE-4A5B-A9F2-9F8BEF179722}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Workspace.Tests.Json.Newtonsoft.WebClient", "Core\Workspace\Tests.Json.Newtonsoft.WebClient\Workspace.Tests.Json.Newtonsoft.WebClient.csproj", "{93B45DFE-7F5C-49CD-B287-09B9B50FF5AC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Workspace.Tests.Json.SystemText.HttpClient", "Core\Workspace\Tests.Json.SystemText.HttpClient\Workspace.Tests.Json.SystemText.HttpClient.csproj", "{42C852D3-C1CE-4125-8390-A0855CCC8AB6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -345,10 +343,6 @@ Global
 		{FDD12819-0C38-4BC9-BFDB-99BA433C59B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FDD12819-0C38-4BC9-BFDB-99BA433C59B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FDD12819-0C38-4BC9-BFDB-99BA433C59B4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B3ED8053-0A33-40F7-AAF5-583B6C45EF3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B3ED8053-0A33-40F7-AAF5-583B6C45EF3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B3ED8053-0A33-40F7-AAF5-583B6C45EF3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B3ED8053-0A33-40F7-AAF5-583B6C45EF3C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{73EE6897-B0A6-4BD8-A771-34FA71EFDB41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{73EE6897-B0A6-4BD8-A771-34FA71EFDB41}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{73EE6897-B0A6-4BD8-A771-34FA71EFDB41}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -421,14 +415,6 @@ Global
 		{500BADB0-E5B5-4C4B-A814-AEAC0C638DFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{500BADB0-E5B5-4C4B-A814-AEAC0C638DFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{500BADB0-E5B5-4C4B-A814-AEAC0C638DFB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CD78BBCD-5FEB-4116-8348-D61D4C1C5634}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CD78BBCD-5FEB-4116-8348-D61D4C1C5634}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CD78BBCD-5FEB-4116-8348-D61D4C1C5634}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CD78BBCD-5FEB-4116-8348-D61D4C1C5634}.Release|Any CPU.Build.0 = Release|Any CPU
-		{41F9151D-F84D-4FFF-87AE-E36139573228}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{41F9151D-F84D-4FFF-87AE-E36139573228}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{41F9151D-F84D-4FFF-87AE-E36139573228}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{41F9151D-F84D-4FFF-87AE-E36139573228}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7A928166-85A9-4282-9AF1-6FE934692B21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7A928166-85A9-4282-9AF1-6FE934692B21}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7A928166-85A9-4282-9AF1-6FE934692B21}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -469,10 +455,18 @@ Global
 		{136ACCAB-20FE-4E36-9974-E87B5012E1F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{136ACCAB-20FE-4E36-9974-E87B5012E1F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{136ACCAB-20FE-4E36-9974-E87B5012E1F3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F3E0A929-9E4A-4E04-939E-02E5408B31A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F3E0A929-9E4A-4E04-939E-02E5408B31A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F3E0A929-9E4A-4E04-939E-02E5408B31A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F3E0A929-9E4A-4E04-939E-02E5408B31A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E5C6915-1ADE-4A5B-A9F2-9F8BEF179722}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E5C6915-1ADE-4A5B-A9F2-9F8BEF179722}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E5C6915-1ADE-4A5B-A9F2-9F8BEF179722}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E5C6915-1ADE-4A5B-A9F2-9F8BEF179722}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93B45DFE-7F5C-49CD-B287-09B9B50FF5AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93B45DFE-7F5C-49CD-B287-09B9B50FF5AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93B45DFE-7F5C-49CD-B287-09B9B50FF5AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93B45DFE-7F5C-49CD-B287-09B9B50FF5AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42C852D3-C1CE-4125-8390-A0855CCC8AB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42C852D3-C1CE-4125-8390-A0855CCC8AB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42C852D3-C1CE-4125-8390-A0855CCC8AB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42C852D3-C1CE-4125-8390-A0855CCC8AB6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -529,7 +523,6 @@ Global
 		{38817927-B042-4924-8368-97C0906CC2E7} = {B1490308-D849-4F0A-B5AC-5FCB271EE949}
 		{3B8A6385-01FE-4E68-A81B-D1B70BDB13DB} = {9C68988B-09AE-4C63-A5AB-4EE71649283D}
 		{FDD12819-0C38-4BC9-BFDB-99BA433C59B4} = {38DA0455-9724-498A-83EF-B4285EB00AD1}
-		{B3ED8053-0A33-40F7-AAF5-583B6C45EF3C} = {38DA0455-9724-498A-83EF-B4285EB00AD1}
 		{73EE6897-B0A6-4BD8-A771-34FA71EFDB41} = {38DA0455-9724-498A-83EF-B4285EB00AD1}
 		{94D0FC5A-E2B9-4691-8009-40A8E57A207E} = {583954BC-1E23-4E62-B539-131CF3FBC96E}
 		{747D7FD1-C15E-4106-975E-46695E7A8C4C} = {BF224751-0EE7-4C58-ABB9-4072587F1C01}
@@ -549,8 +542,6 @@ Global
 		{D1681254-792A-453E-BA73-DDF4BF4A2175} = {B1490308-D849-4F0A-B5AC-5FCB271EE949}
 		{0AD34687-9B75-4086-B0CC-3DBFC5B4FEE6} = {B1490308-D849-4F0A-B5AC-5FCB271EE949}
 		{500BADB0-E5B5-4C4B-A814-AEAC0C638DFB} = {49B4B74D-15DE-4F38-8BFF-9F29068C895B}
-		{CD78BBCD-5FEB-4116-8348-D61D4C1C5634} = {38DA0455-9724-498A-83EF-B4285EB00AD1}
-		{41F9151D-F84D-4FFF-87AE-E36139573228} = {38DA0455-9724-498A-83EF-B4285EB00AD1}
 		{6072307B-EF34-4264-866C-49AC54A6C245} = {F0CFA0DB-205F-4914-8D96-33D1D500A0CC}
 		{7A928166-85A9-4282-9AF1-6FE934692B21} = {6072307B-EF34-4264-866C-49AC54A6C245}
 		{4DAC07CD-CA41-4DC1-A1EC-4EAE8DAE9225} = {6072307B-EF34-4264-866C-49AC54A6C245}
@@ -562,7 +553,9 @@ Global
 		{A921FD06-EF02-456B-8E01-4537C58C2F3A} = {3FE56C6E-7BA5-43FE-8F63-EDCCE0E9320B}
 		{FDE4EC20-25CB-40F7-9373-03556452B7F7} = {6F829382-0804-4D82-8679-C69B14230287}
 		{136ACCAB-20FE-4E36-9974-E87B5012E1F3} = {F0CFA0DB-205F-4914-8D96-33D1D500A0CC}
-		{F3E0A929-9E4A-4E04-939E-02E5408B31A8} = {F0CFA0DB-205F-4914-8D96-33D1D500A0CC}
+		{4E5C6915-1ADE-4A5B-A9F2-9F8BEF179722} = {38DA0455-9724-498A-83EF-B4285EB00AD1}
+		{93B45DFE-7F5C-49CD-B287-09B9B50FF5AC} = {38DA0455-9724-498A-83EF-B4285EB00AD1}
+		{42C852D3-C1CE-4125-8390-A0855CCC8AB6} = {38DA0455-9724-498A-83EF-B4285EB00AD1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {00D78C3D-8536-4549-B1EE-C19BD0C50387}

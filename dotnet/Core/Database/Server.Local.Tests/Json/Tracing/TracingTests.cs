@@ -15,7 +15,7 @@ namespace Tests
     using Allors.Protocol.Json;
     using Allors.Protocol.Json.Api.Pull;
     using Allors.Protocol.Json.Api.Sync;
-    using Allors.Protocol.Json.SystemTextJson;
+    using Allors.Protocol.Json.SystemText;
     using Xunit;
 
     public class TracingTests : ApiTest, IClassFixture<Fixture>

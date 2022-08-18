@@ -9,7 +9,7 @@ namespace Allors.Database.Domain
     using System.Text;
     using System.Xml.Serialization;
     using Allors.Protocol.Json.Data;
-    using Allors.Protocol.Json.SystemTextJson;
+    using Allors.Protocol.Json.SystemText;
     using Protocol.Json;
 
 
