@@ -5,7 +5,6 @@
 
 namespace Tests.Workspace.Remote
 {
-    using Workspace.Remote;
     using Xunit;
 
     public class RoleManyToOneTests : Workspace.RoleManyToOneTests, IClassFixture<Fixture>

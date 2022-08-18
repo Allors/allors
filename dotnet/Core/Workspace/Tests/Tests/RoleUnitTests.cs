@@ -10,7 +10,6 @@ namespace Tests.Workspace
     using Allors.Workspace.Domain;
     using Xunit;
     using Allors.Workspace.Data;
-    using Allors.Workspace;
 
     public abstract class RoleUnitTests : Test
     {

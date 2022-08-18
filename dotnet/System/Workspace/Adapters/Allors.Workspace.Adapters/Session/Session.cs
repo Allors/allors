@@ -8,7 +8,6 @@ namespace Allors.Workspace.Adapters
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using Collections;
     using Data;
     using Meta;
 

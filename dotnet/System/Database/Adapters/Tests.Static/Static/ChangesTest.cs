@@ -8,7 +8,6 @@ namespace Allors.Database.Adapters
 {
     using System;
     using System.Linq;
-    using System.Runtime.InteropServices;
     using Domain;
     using Xunit;
 

@@ -18,7 +18,6 @@ namespace Allors.Database.Protocol.Json
     using Derivations;
     using Domain;
     using Meta;
-    using Shared.Ranges;
     using Security;
     using Services;
     using Tracing;

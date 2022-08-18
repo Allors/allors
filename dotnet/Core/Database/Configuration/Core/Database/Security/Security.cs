@@ -5,13 +5,11 @@
 
 namespace Allors.Database.Configuration
 {
-    using System;
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Linq;
     using Database.Security;
     using Domain;
-    using Shared.Ranges;
     using Services;
     using Class = Meta.Class;
     using MetaPopulation = Meta.MetaPopulation;

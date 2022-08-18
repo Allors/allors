@@ -13,7 +13,6 @@ namespace Allors.Database.Adapters.Sql
     using Allors.Database.Tracing;
     using Caching;
     using Meta;
-    using Shared.Ranges;
 
     public abstract class Database : IDatabase
     {

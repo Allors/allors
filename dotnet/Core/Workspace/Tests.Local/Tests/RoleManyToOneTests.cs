@@ -5,7 +5,6 @@
 
 namespace Tests.Workspace.Local
 {
-    using Workspace.Local;
     using Xunit;
 
     public class RoleManyToOneTests : Workspace.RoleManyToOneTests, IClassFixture<Fixture>

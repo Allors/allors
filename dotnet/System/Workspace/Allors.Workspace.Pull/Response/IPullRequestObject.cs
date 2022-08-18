@@ -1,6 +1,5 @@
 namespace Allors.Workspace.State
 {
-    using System;
     using Allors.Workspace.Sync.Response;
     using System.Collections.Generic;
 

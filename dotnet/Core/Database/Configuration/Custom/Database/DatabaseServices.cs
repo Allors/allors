@@ -14,7 +14,6 @@ namespace Allors.Database.Configuration
     using Domain;
     using Meta;
     using Microsoft.AspNetCore.Http;
-    using Shared.Ranges;
     using Services;
 
     public abstract class DatabaseServices : IDatabaseServices

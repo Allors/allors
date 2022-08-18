@@ -28,7 +28,6 @@ namespace Allors.Server
     using User = Database.Domain.User;
     using Microsoft.AspNetCore.Mvc;
     using System.Linq;
-    using Database.Services;
 
     public class Startup
     {
