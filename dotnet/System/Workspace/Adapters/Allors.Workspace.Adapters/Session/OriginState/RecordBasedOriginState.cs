@@ -259,7 +259,7 @@ namespace Allors.Workspace.Adapters
                         }
                         else
                         {
-                            changeSet.DiffComposites(this.Strategy, relationType, (ValueRange<long>)(current ?? ValueRange<long>.Empty), (ValueRange<long>)previous);
+                            changeSet.DiffComposites(this.Strategy, relationType, (ValueRange<long>)(current ?? ValueRange<long>.Empty), (ValueRange<long>)(previous ?? ValueRange<long>.Empty));
                         }
                     }
                 }
