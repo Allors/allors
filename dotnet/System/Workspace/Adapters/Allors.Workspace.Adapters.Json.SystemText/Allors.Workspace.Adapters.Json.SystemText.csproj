@@ -9,7 +9,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Protocol\Allors.Protocol.Json.SystemText\Allors.Protocol.Json.SystemText.csproj" />
-    <ProjectReference Include="..\..\..\..\System\Workspace\Allors.Workspace.Protocol.Json\Allors.Workspace.Protocol.Json.csproj" />
     <ProjectReference Include="..\Allors.Workspace.Adapters.Json\Allors.Workspace.Adapters.Json.csproj" />
     <ProjectReference Include="..\Allors.Workspace.Adapters\Allors.Workspace.Adapters.csproj" />
   </ItemGroup>

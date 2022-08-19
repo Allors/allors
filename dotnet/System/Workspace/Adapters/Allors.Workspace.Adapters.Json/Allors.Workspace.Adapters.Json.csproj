@@ -4,7 +4,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\System\Workspace\Allors.Workspace.Protocol.Json\Allors.Workspace.Protocol.Json.csproj" />
+    <ProjectReference Include="..\..\..\..\System\Workspace\Protocol\Allors.Workspace.Protocol.Json\Allors.Workspace.Protocol.Json.csproj" />
     <ProjectReference Include="..\Allors.Workspace.Adapters\Allors.Workspace.Adapters.csproj" />
   </ItemGroup>
 
