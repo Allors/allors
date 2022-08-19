@@ -2,7 +2,7 @@ delimiters "$", "$"
 
 TemplateId() ::= <<07F63139-1791-4F55-AAED-F1A6D8D40055>>
 TemplateName() ::= <<Allors C# Workspace Domain>>
-TemplateVersion() ::= <<3.0.5>>
+TemplateVersion() ::= <<3.0.6>>
 TemplateAllors() ::= <<1.0>>
 TemplateConfiguration(meta, workspaceName) ::= <<
 $!
@@ -54,57 +54,32 @@ $if(roleType.ObjectType.IsUnit)$
 		$roleType_ObjectType(roleType)$ $roleType.SingularName$
 		{
 			get;
-$if(!roleType.RelationType.IsDerived)$
-			set;
-$endif$
 		}
 
 		bool Exist$roleType.SingularName${get;}
-
-$if(!roleType.RelationType.IsDerived)$
-		void Remove$roleType.SingularName$();
-$endif$
-
 $else$
 $if(roleType.IsMany)$
 		System.Collections.Generic.IEnumerable<$roleType_ObjectType(roleType)$> $roleType.PluralName$
 		{
 			get;
-$if(!roleType.RelationType.IsDerived)$
-			set;
-$endif$
 		}
-
-$if(!roleType.RelationType.IsDerived)$
-		void Add$roleType.SingularName$ ($roleType_ObjectType(roleType)$ value);
-
-		void Remove$roleType.SingularName$ ($roleType_ObjectType(roleType)$ value);
-$endif$
 
 		bool Exist$roleType.PluralName$
 		{
 			get;
 		}
 
-		void Remove$roleType.PluralName$();
 $else$
 		$roleType_ObjectType(roleType)$ $roleType.SingularName$
 		{
 			get;
-$if(!roleType.RelationType.IsDerived)$
-			set;
-$endif$
 		}
 
 		bool Exist$roleType.SingularName$
 		{
 			get;
 		}
-
-$if(!roleType.RelationType.IsDerived)$
-		void Remove$roleType.SingularName$();
-$endif$
-$endif$
+		$endif$
 $endif$
 >>
 
@@ -237,10 +212,6 @@ $if(concreteRoleType.ObjectType.IsUnit)$
 			{
 				return ($concreteRoleType_ObjectType(concreteRoleType)$) this.Strategy.GetUnitRole(Meta.$concreteRoleType.Name$);
 			}
-			set
-			{
-				this.Strategy.SetUnitRole(Meta.$concreteRoleType.Name$, value);
-			}
 		}
 
 		virtual public bool Exist$concreteRoleType.SingularName${
@@ -250,10 +221,6 @@ $if(concreteRoleType.ObjectType.IsUnit)$
 			}
 		}
 
-		virtual public void Remove$concreteRoleType.SingularName$()
-		{
-			this.Strategy.RemoveRole(Meta.$concreteRoleType.Name$);
-		}
 $else$
 $if(concreteRoleType.IsMany)$
 		virtual public System.Collections.Generic.IEnumerable<$concreteRoleType_ObjectType(concreteRoleType)$> $concreteRoleType.PluralName$
@@ -262,20 +229,6 @@ $if(concreteRoleType.IsMany)$
 			{
 				return this.Strategy.GetCompositesRole<$concreteRoleType_ObjectType(concreteRoleType)$>(Meta.$concreteRoleType.Name$);
 			}
-			set
-			{
-				this.Strategy.SetCompositesRole(Meta.$concreteRoleType.Name$, value);
-			}
-		}
-
-		virtual public void Add$concreteRoleType.SingularName$ ($concreteRoleType_ObjectType(concreteRoleType)$ value)
-		{
-			this.Strategy.AddCompositesRole(Meta.$concreteRoleType.Name$, value);
-		}
-
-		virtual public void Remove$concreteRoleType.SingularName$ ($concreteRoleType_ObjectType(concreteRoleType)$ value)
-		{
-			this.Strategy.RemoveCompositesRole(Meta.$concreteRoleType.Name$, value);
 		}
 
 		virtual public bool Exist$concreteRoleType.PluralName$
@@ -286,20 +239,12 @@ $if(concreteRoleType.IsMany)$
 			}
 		}
 
-		virtual public void Remove$concreteRoleType.PluralName$()
-		{
-			this.Strategy.RemoveRole(Meta.$concreteRoleType.Name$);
-		}
 $else$
 		virtual public $concreteRoleType_ObjectType(concreteRoleType)$ $concreteRoleType.SingularName$
 		{
 			get
 			{
 				return this.Strategy.GetCompositeRole<$concreteRoleType_ObjectType(concreteRoleType)$>(Meta.$concreteRoleType.Name$);
-			}
-			set
-			{
-				this.Strategy.SetCompositeRole(Meta.$concreteRoleType.Name$, value);
 			}
 		}
 
@@ -309,11 +254,6 @@ $else$
 			{
 				return this.Strategy.ExistRole(Meta.$concreteRoleType.Name$);
 			}
-		}
-
-		virtual public void Remove$concreteRoleType.SingularName$()
-		{
-			this.Strategy.RemoveRole(Meta.$concreteRoleType.Name$);
 		}
 $endif$
 $endif$
