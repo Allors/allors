@@ -3,9 +3,6 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Shared\Allors.Shared.csproj" />
-    <ProjectReference Include="..\Allors.Workspace.Meta\Allors.Workspace.Meta.csproj" />
+    <ProjectReference Include="..\Allors.Workspace.Store\Allors.Workspace.Store.csproj" />
   </ItemGroup>
-  
- 
 </Project>

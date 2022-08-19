@@ -169,7 +169,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Attributes", "System\Reposi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Database.Adapters.Tracing", "System\Database\Adapters\Allors.Database.Adapters.Tracing\Allors.Database.Adapters.Tracing.csproj", "{FDE4EC20-25CB-40F7-9373-03556452B7F7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Workspace.Session", "System\Workspace\Allors.Workspace.Session\Allors.Workspace.Session.csproj", "{136ACCAB-20FE-4E36-9974-E87B5012E1F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Workspace.Domain", "System\Workspace\Allors.Workspace.Domain\Allors.Workspace.Domain.csproj", "{136ACCAB-20FE-4E36-9974-E87B5012E1F3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Workspace.Tests.Direct", "Core\Workspace\Tests.Direct\Workspace.Tests.Direct.csproj", "{4E5C6915-1ADE-4A5B-A9F2-9F8BEF179722}"
 EndProject
