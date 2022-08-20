@@ -13,6 +13,6 @@ namespace Allors.Workspace.Adapters.Direct
 
         public long UserId => this.DatabaseConnection.UserId;
 
-        public override IWorkspace CreateSession() => new Workspace(this, this.Services);
+        public override IWorkspace CreateWorkspace() => new Workspace(this, this.Services);
     }
 }

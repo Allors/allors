@@ -8,6 +8,7 @@ namespace Allors.Workspace.Adapters.Direct
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Allors.Workspace.Adapters;
     using Database;
     using Database.Data;
     using Database.Domain;

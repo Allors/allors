@@ -12,5 +12,4 @@
     <ProjectReference Include="..\..\..\Database\Allors.Database.Workspace\Allors.Database.Workspace.csproj" />
     <ProjectReference Include="..\Allors.Workspace.Adapters\Allors.Workspace.Adapters.csproj" />
   </ItemGroup>
-
 </Project>

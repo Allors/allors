@@ -25,7 +25,6 @@ namespace Tests.Workspace.Json
         public const string LoginUrl = "TestAuthentication/Token";
 
         private readonly Configuration configuration;
-        private readonly IdGenerator idGenerator;
 
         private Client client;
 
@@ -42,7 +41,6 @@ namespace Tests.Workspace.Json
             var metaPopulation = new MetaBuilder().Build();
             var objectFactory = new ReflectionObjectFactory(metaPopulation, typeof(Allors.Workspace.Domain.Person));
             this.configuration = new Configuration("Default", metaPopulation, objectFactory);
-            this.idGenerator = new IdGenerator();
         }
 
         public async Task InitializeAsync()
@@ -53,8 +51,8 @@ namespace Tests.Workspace.Json
             Assert.True(response.IsSuccessful);
 
             this.client = new Client(this.CreateRestClient);
-            this.DatabaseConnection = new DatabaseConnection(this.configuration, () => new WorkspaceServices(), this.client, this.idGenerator);
-            this.Workspace = this.DatabaseConnection.CreateWorkspace();
+            this.DatabaseConnection = new DatabaseConnection(this.configuration, () => new WorkspaceServices(), this.client);
+            this.Workspace = this.DatabaseConnection.CreateWorkspaceConnection();
 
             await this.Login("administrator");
         }
@@ -63,11 +61,11 @@ namespace Tests.Workspace.Json
 
         public IWorkspaceConnection CreateExclusiveWorkspace()
         {
-            var database = new DatabaseConnection(this.configuration, () => new WorkspaceServices(), this.client, this.idGenerator);
-            return database.CreateWorkspace();
+            var database = new DatabaseConnection(this.configuration, () => new WorkspaceServices(), this.client);
+            return database.CreateWorkspaceConnection();
         }
 
-        public IWorkspaceConnection CreateWorkspace() => this.DatabaseConnection.CreateWorkspace();
+        public IWorkspaceConnection CreateWorkspace() => this.DatabaseConnection.CreateWorkspaceConnection();
 
         public async Task Login(string user)
         {

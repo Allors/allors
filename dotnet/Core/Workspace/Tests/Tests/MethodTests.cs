@@ -22,7 +22,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace.CreateWorkspace();
 
             var pull = new[] { new Pull { Extent = new Filter(this.M.Organization) } };
 
@@ -45,7 +45,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace.CreateWorkspace();
 
             var pull = new[] { new Pull { Extent = new Filter(this.M.Organization) } };
 
@@ -72,7 +72,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace.CreateWorkspace();
 
             var pull = new[] { new Pull { Extent = new Filter(this.M.Organization) } };
 

@@ -9,22 +9,14 @@ namespace Allors.Workspace.Adapters
 
     public abstract class DatabaseConnection
     {
-        private readonly IdGenerator idGenerator;
-
-        protected DatabaseConnection(Configuration configuration, IdGenerator idGenerator)
-        {
-            this.Configuration = configuration;
-            this.idGenerator = idGenerator;
-        }
+        protected DatabaseConnection(Configuration configuration) => this.Configuration = configuration;
 
         public Configuration Configuration { get; }
 
-        public abstract IWorkspaceConnection CreateWorkspace();
+        public abstract IWorkspaceConnection CreateWorkspaceConnection();
 
         public abstract DatabaseRecord GetRecord(long id);
 
         public abstract long GetPermission(Class @class, IOperandType operandType, Operations operation);
-
-        public long NextId() => this.idGenerator.Next();
     }
 }

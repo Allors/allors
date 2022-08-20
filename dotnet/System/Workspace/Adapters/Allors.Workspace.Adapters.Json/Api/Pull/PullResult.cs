@@ -8,6 +8,7 @@ namespace Allors.Workspace.Adapters.Json
     using System.Collections.Generic;
     using System.Linq;
     using Allors.Protocol.Json.Api.Pull;
+    using Allors.Workspace.Adapters;
 
     public class PullResult : Result, IPullResultInternals
     {

@@ -11,6 +11,6 @@ namespace Allors.Workspace
 
         IWorkspaceServices Services { get; }
 
-        IWorkspace CreateSession();
+        IWorkspace CreateWorkspace();
     }
 }

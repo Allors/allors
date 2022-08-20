@@ -25,7 +25,7 @@ namespace Allors.Workspace.Adapters.Direct
 
         private readonly Func<IWorkspaceServices> servicesBuilder;
 
-        public DatabaseConnection(Configuration configuration, IDatabase database, Func<IWorkspaceServices> servicesBuilder) : base(configuration, new IdGenerator())
+        public DatabaseConnection(Configuration configuration, IDatabase database, Func<IWorkspaceServices> servicesBuilder) : base(configuration)
         {
             this.Database = database;
             this.servicesBuilder = servicesBuilder;
@@ -61,7 +61,7 @@ namespace Allors.Workspace.Adapters.Direct
             }
         }
 
-        public override IWorkspaceConnection CreateWorkspace() => new WorkspaceConnection(this, this.servicesBuilder());
+        public override IWorkspaceConnection CreateWorkspaceConnection() => new WorkspaceConnection(this, this.servicesBuilder());
 
         public override Adapters.DatabaseRecord GetRecord(long id)
         {

@@ -19,6 +19,6 @@ namespace Allors.Workspace.Adapters
 
         public IWorkspaceServices Services { get; }
 
-        public abstract IWorkspace CreateSession();
+        public abstract IWorkspace CreateWorkspace();
     }
 }

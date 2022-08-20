@@ -15,9 +15,9 @@ namespace Tests.Workspace
             this.Test = test;
             this.Name = name;
             this.SharedDatabaseWorkspace = this.Test.Profile.CreateWorkspace();
-            this.SharedDatabaseSession = this.SharedDatabaseWorkspace.CreateSession();
+            this.SharedDatabaseSession = this.SharedDatabaseWorkspace.CreateWorkspace();
             this.ExclusiveDatabaseWorkspace = this.Test.Profile.CreateExclusiveWorkspace();
-            this.ExclusiveDatabaseSession = this.ExclusiveDatabaseWorkspace.CreateSession();
+            this.ExclusiveDatabaseSession = this.ExclusiveDatabaseWorkspace.CreateWorkspace();
         }
 
         public Test Test { get; }

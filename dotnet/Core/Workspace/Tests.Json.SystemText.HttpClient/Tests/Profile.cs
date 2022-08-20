@@ -25,7 +25,6 @@ namespace Tests.Workspace.Json
         public const string LoginUrl = "TestAuthentication/Token";
 
         private readonly Func<IWorkspaceServices> servicesBuilder;
-        private readonly IdGenerator idGenerator;
         private readonly Configuration configuration;
 
         private HttpClient httpClient;
@@ -33,7 +32,6 @@ namespace Tests.Workspace.Json
         public Profile()
         {
             this.servicesBuilder = () => new WorkspaceServices();
-            this.idGenerator = new IdGenerator();
 
             var metaPopulation = new MetaBuilder().Build();
             var objectFactory = new ReflectionObjectFactory(metaPopulation, typeof(Allors.Workspace.Domain.Person));
@@ -54,8 +52,8 @@ namespace Tests.Workspace.Json
             var response = await this.httpClient.GetAsync(SetupUrl);
             Assert.True(response.IsSuccessStatusCode);
 
-            this.DatabaseConnection = new DatabaseConnection(this.configuration, this.servicesBuilder, new Client(() => this.httpClient), this.idGenerator);
-            this.Workspace = this.DatabaseConnection.CreateWorkspace();
+            this.DatabaseConnection = new DatabaseConnection(this.configuration, this.servicesBuilder, new Client(() => this.httpClient));
+            this.Workspace = this.DatabaseConnection.CreateWorkspaceConnection();
 
             await this.Login("administrator");
         }
@@ -64,11 +62,11 @@ namespace Tests.Workspace.Json
 
         public IWorkspaceConnection CreateExclusiveWorkspace()
         {
-            var database = new DatabaseConnection(this.configuration, this.servicesBuilder, new Client(() => this.httpClient), this.idGenerator);
-            return database.CreateWorkspace();
+            var database = new DatabaseConnection(this.configuration, this.servicesBuilder, new Client(() => this.httpClient));
+            return database.CreateWorkspaceConnection();
         }
 
-        public IWorkspaceConnection CreateWorkspace() => this.DatabaseConnection.CreateWorkspace();
+        public IWorkspaceConnection CreateWorkspace() => this.DatabaseConnection.CreateWorkspaceConnection();
 
         public async Task Login(string user)
         {

@@ -76,9 +76,9 @@ namespace Tests.Workspace.Direct
         public IWorkspaceConnection CreateExclusiveWorkspace()
         {
             var database = new DatabaseConnection(this.configuration, this.Database, this.servicesBuilder) { UserId = this.user.Id };
-            return database.CreateWorkspace();
+            return database.CreateWorkspaceConnection();
         }
-        public IWorkspaceConnection CreateWorkspace() => this.DatabaseConnection.CreateWorkspace();
+        public IWorkspaceConnection CreateWorkspace() => this.DatabaseConnection.CreateWorkspaceConnection();
 
         public Task Login(string userName)
         {
@@ -88,7 +88,7 @@ namespace Tests.Workspace.Direct
 
             this.DatabaseConnection = new DatabaseConnection(this.configuration, this.Database, this.servicesBuilder) { UserId = this.user.Id };
 
-            this.Workspace = this.DatabaseConnection.CreateWorkspace();
+            this.Workspace = this.DatabaseConnection.CreateWorkspaceConnection();
 
             return Task.CompletedTask;
         }

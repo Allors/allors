@@ -20,7 +20,7 @@ namespace Allors.Workspace.Adapters.Json.SystemText
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "RCS1090:Add call to 'ConfigureAwait' (or vice versa).", Justification = "<Pending>")]
     public class DatabaseConnection : Json.DatabaseConnection
     {
-        public DatabaseConnection(Configuration configuration, Func<IWorkspaceServices> servicesBuilder, Client client, IdGenerator idGenerator) : base(configuration, idGenerator, servicesBuilder)
+        public DatabaseConnection(Configuration configuration, Func<IWorkspaceServices> servicesBuilder, Client client) : base(configuration, servicesBuilder)
         {
             this.Client = client;
             this.UnitConvert = new UnitConvert();

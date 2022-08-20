@@ -11,6 +11,6 @@ namespace Allors.Workspace.Adapters.Json
 
         public new DatabaseConnection DatabaseConnection => (DatabaseConnection)base.DatabaseConnection;
 
-        public override IWorkspace CreateSession() => new Workspace(this, this.Services);
+        public override IWorkspace CreateWorkspace() => new Workspace(this, this.Services);
     }
 }

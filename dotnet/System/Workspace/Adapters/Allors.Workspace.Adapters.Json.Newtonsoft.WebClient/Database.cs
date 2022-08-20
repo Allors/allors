@@ -20,7 +20,7 @@ namespace Allors.Workspace.Adapters.Json.Newtonsoft.WebClient
     {
         private readonly Client client;
 
-        public DatabaseConnection(Configuration configuration, Func<IWorkspaceServices> servicesBuilder, Client client, IdGenerator idGenerator) : base(configuration, idGenerator, servicesBuilder)
+        public DatabaseConnection(Configuration configuration, Func<IWorkspaceServices> servicesBuilder, Client client) : base(configuration, servicesBuilder)
         {
             this.client = client;
             this.UnitConvert = new UnitConvert();

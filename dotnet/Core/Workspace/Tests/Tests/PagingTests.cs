@@ -24,7 +24,7 @@ namespace Tests.Workspace
         public async void Take()
         {
             await this.Login("administrator");
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace.CreateWorkspace();
 
             var pull = new Pull
             {

@@ -28,7 +28,7 @@ namespace Allors.Workspace.Adapters.Json
         private readonly Dictionary<Class, Dictionary<IOperandType, long>> writePermissionByOperandTypeByClass;
         private readonly Dictionary<Class, Dictionary<IOperandType, long>> executePermissionByOperandTypeByClass;
 
-        protected DatabaseConnection(Adapters.Configuration configuration, IdGenerator idGenerator, Func<IWorkspaceServices> servicesBuilder) : base(configuration, idGenerator)
+        protected DatabaseConnection(Adapters.Configuration configuration, Func<IWorkspaceServices> servicesBuilder) : base(configuration)
         {
             this.servicesBuilder = servicesBuilder;
 
@@ -53,7 +53,7 @@ namespace Allors.Workspace.Adapters.Json
 
         protected abstract string UserId { get; }
 
-        public override IWorkspaceConnection CreateWorkspace() => new WorkspaceConnection(this, this.servicesBuilder());
+        public override IWorkspaceConnection CreateWorkspaceConnection() => new WorkspaceConnection(this, this.servicesBuilder());
 
         internal SyncRequest OnPullResponse(PullResponse response) =>
             new SyncRequest

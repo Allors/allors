@@ -27,7 +27,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace.CreateWorkspace();
 
             var pull = new Pull
             {
@@ -52,7 +52,7 @@ namespace Tests.Workspace
         {
             await this.Login("noacl");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace.CreateWorkspace();
 
             var pull = new Pull
             {
@@ -76,7 +76,7 @@ namespace Tests.Workspace
         {
             await this.Login("noperm");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace.CreateWorkspace();
 
             var pull = new Pull
             {
@@ -98,7 +98,7 @@ namespace Tests.Workspace
         [Fact]
         public async void DeniedPermissions()
         {
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace.CreateWorkspace();
 
             var result = await session.PullAsync(new Pull { Extent = new Filter(this.M.Denied) });
 
