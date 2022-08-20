@@ -94,7 +94,7 @@ namespace Allors.Workspace.Adapters
 
         protected Class Class => this.Strategy.Class;
 
-        protected Workspace Session => this.Strategy.Session;
+        protected Workspace Session => this.Strategy.Workspace;
 
         protected WorkspaceConnection Workspace => this.Session.WorkspaceConnection;
 

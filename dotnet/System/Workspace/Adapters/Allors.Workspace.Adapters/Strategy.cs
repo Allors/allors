@@ -16,17 +16,17 @@ namespace Allors.Workspace.Adapters
 
         private IObject @object;
 
-        protected Strategy(Workspace session, Class @class, long id)
+        protected Strategy(Workspace workspace, Class @class, long id)
         {
-            this.Session = session;
+            this.Workspace = workspace;
             this.Id = id;
             this.rangeId = this.Id;
             this.Class = @class;
         }
 
-        protected Strategy(Workspace session, DatabaseRecord databaseRecord)
+        protected Strategy(Workspace workspace, DatabaseRecord databaseRecord)
         {
-            this.Session = session;
+            this.Workspace = workspace;
             this.Id = databaseRecord.Id;
             this.rangeId = this.Id;
             this.Class = databaseRecord.Class;
@@ -34,17 +34,17 @@ namespace Allors.Workspace.Adapters
 
         public long Version => this.DatabaseOriginState.Version;
 
-        public Workspace Session { get; }
+        public Workspace Workspace { get; }
 
         public DatabaseOriginState DatabaseOriginState { get; protected set; }
 
-        IWorkspace IStrategy.Workspace => this.Session;
+        IWorkspace IStrategy.Workspace => this.Workspace;
 
         public Class Class { get; }
 
         public long Id { get; private set; }
 
-        public IObject Object => this.@object ??= this.Session.WorkspaceConnection.DatabaseConnection.Configuration.ObjectFactory.Create(this);
+        public IObject Object => this.@object ??= this.Workspace.WorkspaceConnection.DatabaseConnection.Configuration.ObjectFactory.Create(this);
 
         public bool ExistRole(RoleType roleType)
         {
@@ -93,9 +93,9 @@ namespace Allors.Workspace.Adapters
                 ? this.DatabaseOriginState.GetCompositesRole(roleType).Select(v => (T)v.Object)
                 : Array.Empty<T>();
 
-        public T GetCompositeAssociation<T>(AssociationType associationType) where T : class, IObject => (T)this.Session.GetCompositeAssociation(this, associationType)?.Object;
+        public T GetCompositeAssociation<T>(AssociationType associationType) where T : class, IObject => (T)this.Workspace.GetCompositeAssociation(this, associationType)?.Object;
 
-        public IEnumerable<T> GetCompositesAssociation<T>(AssociationType associationType) where T : class, IObject => this.Session.GetCompositesAssociation(this, associationType).Select(v => v.Object).Cast<T>();
+        public IEnumerable<T> GetCompositesAssociation<T>(AssociationType associationType) where T : class, IObject => this.Workspace.GetCompositesAssociation(this, associationType).Select(v => v.Object).Cast<T>();
 
         public bool CanRead(RoleType roleType) => this.DatabaseOriginState.CanRead(roleType);
 

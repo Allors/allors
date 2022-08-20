@@ -18,8 +18,6 @@ namespace Allors.Workspace.Adapters
 
         public long Version => this.DatabaseRecord?.Version ?? Allors.Version.WorkspaceInitial;
 
-        private bool IsVersionInitial => this.Version == Allors.Version.WorkspaceInitial.Value;
-
         protected override IEnumerable<RoleType> RoleTypes => this.Class.DatabaseOriginRoleTypes;
 
         // TODO: Remove
@@ -33,12 +31,6 @@ namespace Allors.Workspace.Adapters
         {
             if (!this.ExistRecord)
             {
-                return true;
-            }
-
-            if (this.IsVersionInitial)
-            {
-                // TODO: Security
                 return true;
             }
 
@@ -61,12 +53,6 @@ namespace Allors.Workspace.Adapters
         {
             if (!this.ExistRecord)
             {
-                return true;
-            }
-
-            if (this.IsVersionInitial)
-            {
-                // TODO: Security
                 return true;
             }
 
