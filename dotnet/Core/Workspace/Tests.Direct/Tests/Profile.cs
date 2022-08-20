@@ -32,9 +32,9 @@ namespace Tests.Workspace.Direct
 
         public DatabaseConnection DatabaseConnection { get; private set; }
 
-        IWorkspace IProfile.Workspace => this.Workspace;
+        IWorkspaceConnection IProfile.Workspace => this.Workspace;
 
-        public IWorkspace Workspace { get; private set; }
+        public IWorkspaceConnection Workspace { get; private set; }
 
         public M M => this.Workspace.Services.Get<M>();
 
@@ -73,12 +73,12 @@ namespace Tests.Workspace.Direct
 
         public Task DisposeAsync() => Task.CompletedTask;
 
-        public IWorkspace CreateExclusiveWorkspace()
+        public IWorkspaceConnection CreateExclusiveWorkspace()
         {
             var database = new DatabaseConnection(this.configuration, this.Database, this.servicesBuilder) { UserId = this.user.Id };
             return database.CreateWorkspace();
         }
-        public IWorkspace CreateWorkspace() => this.DatabaseConnection.CreateWorkspace();
+        public IWorkspaceConnection CreateWorkspace() => this.DatabaseConnection.CreateWorkspace();
 
         public Task Login(string userName)
         {

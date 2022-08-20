@@ -61,7 +61,7 @@ namespace Allors.Workspace.Adapters.Direct
             }
         }
 
-        public override IWorkspace CreateWorkspace() => new Workspace(this, this.servicesBuilder());
+        public override IWorkspaceConnection CreateWorkspace() => new WorkspaceConnection(this, this.servicesBuilder());
 
         public override Adapters.DatabaseRecord GetRecord(long id)
         {

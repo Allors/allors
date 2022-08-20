@@ -11,11 +11,11 @@ namespace Tests.Workspace
 
     public interface IProfile : IAsyncLifetime
     {
-        IWorkspace CreateExclusiveWorkspace();
+        IWorkspaceConnection CreateExclusiveWorkspace();
 
-        IWorkspace CreateWorkspace();
+        IWorkspaceConnection CreateWorkspace();
 
-        IWorkspace Workspace { get; }
+        IWorkspaceConnection Workspace { get; }
 
         Task Login(string userName);
     }

@@ -5,12 +5,12 @@
 
 namespace Allors.Workspace.Adapters.Json
 {
-    public class Workspace : Adapters.Workspace
+    public class WorkspaceConnection : Adapters.WorkspaceConnection
     {
-        public Workspace(DatabaseConnection database, IWorkspaceServices services) : base(database, services) => this.Services.OnInit(this);
+        public WorkspaceConnection(DatabaseConnection database, IWorkspaceServices services) : base(database, services) => this.Services.OnInit(this);
 
         public new DatabaseConnection DatabaseConnection => (DatabaseConnection)base.DatabaseConnection;
 
-        public override ISession CreateSession() => new Session(this, this.Services.CreateSessionServices());
+        public override IWorkspace CreateSession() => new Workspace(this, this.Services);
     }
 }

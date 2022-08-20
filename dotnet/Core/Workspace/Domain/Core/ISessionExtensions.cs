@@ -10,11 +10,11 @@ namespace Allors.Workspace.Domain
 
     public static partial class ISessionExtensions
     {
-        public static DateTime Now(this ISession transaction)
+        public static DateTime Now(this IWorkspace transaction)
         {
             var now = DateTime.UtcNow;
 
-            var timeService = ((IWorkspaceServices)transaction.Workspace.Services).Get<ITime>();
+            var timeService = ((IWorkspaceServices)transaction.WorkspaceConnection.Services).Get<ITime>();
             var timeShift = timeService.Shift;
             if (timeShift != null)
             {

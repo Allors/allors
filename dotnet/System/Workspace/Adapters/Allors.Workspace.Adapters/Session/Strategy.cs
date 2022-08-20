@@ -16,7 +16,7 @@ namespace Allors.Workspace.Adapters
 
         private IObject @object;
 
-        protected Strategy(Session session, Class @class, long id)
+        protected Strategy(Workspace session, Class @class, long id)
         {
             this.Session = session;
             this.Id = id;
@@ -24,7 +24,7 @@ namespace Allors.Workspace.Adapters
             this.Class = @class;
         }
 
-        protected Strategy(Session session, DatabaseRecord databaseRecord)
+        protected Strategy(Workspace session, DatabaseRecord databaseRecord)
         {
             this.Session = session;
             this.Id = databaseRecord.Id;
@@ -34,17 +34,17 @@ namespace Allors.Workspace.Adapters
 
         public long Version => this.DatabaseOriginState.Version;
 
-        public Session Session { get; }
+        public Workspace Session { get; }
 
         public DatabaseOriginState DatabaseOriginState { get; protected set; }
 
-        ISession IStrategy.Session => this.Session;
+        IWorkspace IStrategy.Workspace => this.Session;
 
         public Class Class { get; }
 
         public long Id { get; private set; }
 
-        public IObject Object => this.@object ??= this.Session.Workspace.DatabaseConnection.Configuration.ObjectFactory.Create(this);
+        public IObject Object => this.@object ??= this.Session.WorkspaceConnection.DatabaseConnection.Configuration.ObjectFactory.Create(this);
 
         public bool ExistRole(RoleType roleType)
         {

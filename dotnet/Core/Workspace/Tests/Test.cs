@@ -16,7 +16,7 @@ namespace Tests.Workspace
         {
         }
 
-        public IWorkspace Workspace => this.Profile.Workspace;
+        public IWorkspaceConnection Workspace => this.Profile.Workspace;
 
         public M M => (M)this.Workspace.Configuration.MetaPopulation;
 

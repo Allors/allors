@@ -40,11 +40,11 @@ namespace Tests.Workspace.Json
             this.configuration = new Configuration("Default", metaPopulation, objectFactory);
         }
 
-        IWorkspace IProfile.Workspace => this.Workspace;
+        IWorkspaceConnection IProfile.Workspace => this.Workspace;
 
         public DatabaseConnection DatabaseConnection { get; private set; }
 
-        public IWorkspace Workspace { get; private set; }
+        public IWorkspaceConnection Workspace { get; private set; }
 
         public M M => this.Workspace.Services.Get<M>();
 
@@ -62,13 +62,13 @@ namespace Tests.Workspace.Json
 
         public Task DisposeAsync() => Task.CompletedTask;
 
-        public IWorkspace CreateExclusiveWorkspace()
+        public IWorkspaceConnection CreateExclusiveWorkspace()
         {
             var database = new DatabaseConnection(this.configuration, this.servicesBuilder, new Client(() => this.httpClient), this.idGenerator);
             return database.CreateWorkspace();
         }
 
-        public IWorkspace CreateWorkspace() => this.DatabaseConnection.CreateWorkspace();
+        public IWorkspaceConnection CreateWorkspace() => this.DatabaseConnection.CreateWorkspace();
 
         public async Task Login(string user)
         {

@@ -12,9 +12,9 @@ namespace Allors.Workspace.Adapters.Direct
     public class DerivationError : IDerivationError
     {
         private readonly Database.Derivations.IDerivationError derivationError;
-        private readonly Session session;
+        private readonly Workspace session;
 
-        public DerivationError(Session session, Database.Derivations.IDerivationError derivationError)
+        public DerivationError(Workspace session, Database.Derivations.IDerivationError derivationError)
         {
             this.session = session;
             this.derivationError = derivationError;
@@ -24,7 +24,7 @@ namespace Allors.Workspace.Adapters.Direct
             .Select(v =>
                 new Role(
                     this.session.Instantiate<IObject>(v.Association.Id),
-                    (RelationType)this.session.Workspace.DatabaseConnection.Configuration.MetaPopulation.FindByTag(v.RelationType.Tag)));
+                    (RelationType)this.session.WorkspaceConnection.DatabaseConnection.Configuration.MetaPopulation.FindByTag(v.RelationType.Tag)));
 
         public string Message => this.derivationError.Message;
     }

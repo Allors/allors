@@ -8,7 +8,7 @@ namespace Allors.Workspace.Blazor.Ant.Forms.Roles
         public long ModelId
         {
             get => ((IObject)this.Model)?.Id ?? 0;
-            set => this.Model = value != 0 ? this.Object.Strategy.Session.Instantiate<IObject>(value) : null;
+            set => this.Model = value != 0 ? this.Object.Strategy.Workspace.Instantiate<IObject>(value) : null;
         }
 
         [Parameter]

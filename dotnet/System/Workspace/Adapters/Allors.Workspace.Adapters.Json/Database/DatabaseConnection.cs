@@ -53,7 +53,7 @@ namespace Allors.Workspace.Adapters.Json
 
         protected abstract string UserId { get; }
 
-        public override IWorkspace CreateWorkspace() => new Workspace(this, this.servicesBuilder());
+        public override IWorkspaceConnection CreateWorkspace() => new WorkspaceConnection(this, this.servicesBuilder());
 
         internal SyncRequest OnPullResponse(PullResponse response) =>
             new SyncRequest

@@ -16,7 +16,7 @@ namespace Tests.Workspace.Direct
         {
         }
 
-        public IWorkspace Workspace => this.Profile.Workspace;
+        public IWorkspaceConnection Workspace => this.Profile.Workspace;
 
         public M M => this.Workspace.Services.Get<M>();
 

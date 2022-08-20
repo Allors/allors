@@ -19,7 +19,7 @@ namespace Allors.Workspace.Adapters
 
         public Configuration Configuration { get; }
 
-        public abstract IWorkspace CreateWorkspace();
+        public abstract IWorkspaceConnection CreateWorkspace();
 
         public abstract DatabaseRecord GetRecord(long id);
 

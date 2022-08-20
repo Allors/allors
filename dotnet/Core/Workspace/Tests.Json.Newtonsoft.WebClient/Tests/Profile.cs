@@ -29,11 +29,11 @@ namespace Tests.Workspace.Json
 
         private Client client;
 
-        IWorkspace IProfile.Workspace => this.Workspace;
+        IWorkspaceConnection IProfile.Workspace => this.Workspace;
 
         public DatabaseConnection DatabaseConnection { get; private set; }
 
-        public IWorkspace Workspace { get; private set; }
+        public IWorkspaceConnection Workspace { get; private set; }
 
         public M M => this.Workspace.Services.Get<M>();
 
@@ -61,13 +61,13 @@ namespace Tests.Workspace.Json
 
         public Task DisposeAsync() => Task.CompletedTask;
 
-        public IWorkspace CreateExclusiveWorkspace()
+        public IWorkspaceConnection CreateExclusiveWorkspace()
         {
             var database = new DatabaseConnection(this.configuration, () => new WorkspaceServices(), this.client, this.idGenerator);
             return database.CreateWorkspace();
         }
 
-        public IWorkspace CreateWorkspace() => this.DatabaseConnection.CreateWorkspace();
+        public IWorkspaceConnection CreateWorkspace() => this.DatabaseConnection.CreateWorkspace();
 
         public async Task Login(string user)
         {

@@ -5,9 +5,9 @@
 
 namespace Allors.Workspace.Adapters
 {
-    public abstract class Workspace : IWorkspace
+    public abstract class WorkspaceConnection : IWorkspaceConnection
     {
-        protected Workspace(DatabaseConnection database, IWorkspaceServices services)
+        protected WorkspaceConnection(DatabaseConnection database, IWorkspaceServices services)
         {
             this.DatabaseConnection = database;
             this.Services = services;
@@ -19,6 +19,6 @@ namespace Allors.Workspace.Adapters
 
         public IWorkspaceServices Services { get; }
 
-        public abstract ISession CreateSession();
+        public abstract IWorkspace CreateSession();
     }
 }

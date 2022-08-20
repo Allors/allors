@@ -9,9 +9,7 @@ namespace Allors.Workspace
 
     public interface IWorkspaceServices : IDisposable
     {
-        void OnInit(IWorkspace workspace);
-
-        ISessionServices CreateSessionServices();
+        void OnInit(IWorkspaceConnection workspace);
 
         T Get<T>();
     }

@@ -24,19 +24,19 @@ namespace Tests.Workspace
 
         public string Name { get; }
 
-        public ISession Session1 { get; protected set; }
+        public IWorkspace Session1 { get; protected set; }
 
-        public ISession Session2 { get; protected set; }
+        public IWorkspace Session2 { get; protected set; }
 
-        public IWorkspace SharedDatabaseWorkspace { get; }
+        public IWorkspaceConnection SharedDatabaseWorkspace { get; }
 
-        public ISession SharedDatabaseSession { get; }
+        public IWorkspace SharedDatabaseSession { get; }
 
-        public IWorkspace ExclusiveDatabaseWorkspace { get; }
+        public IWorkspaceConnection ExclusiveDatabaseWorkspace { get; }
 
-        public ISession ExclusiveDatabaseSession { get; }
+        public IWorkspace ExclusiveDatabaseSession { get; }
 
-        public void Deconstruct(out ISession session1, out ISession session2)
+        public void Deconstruct(out IWorkspace session1, out IWorkspace session2)
         {
             session1 = this.Session1;
             session2 = this.Session2;

@@ -14,21 +14,17 @@ namespace Allors.Workspace.Adapters.Json
     using Protocol.Json;
     using InvokeOptions = Allors.Workspace.InvokeOptions;
 
-    public class Session : Adapters.Session
+    public class Workspace : Adapters.Workspace
     {
-        internal Session(Workspace workspace, ISessionServices sessionServices) : base(workspace, sessionServices)
-        {
-            this.Services.OnInit(this);
-            this.DatabaseConnection = workspace.DatabaseConnection;
-        }
+        internal Workspace(WorkspaceConnection workspace, IWorkspaceServices workspaceServices) : base(workspace, workspaceServices) => this.DatabaseConnection = workspace.DatabaseConnection;
 
         private DatabaseConnection DatabaseConnection { get; }
 
-        public new Workspace Workspace => (Workspace)base.Workspace;
+        public new WorkspaceConnection WorkspaceConnection => (WorkspaceConnection)base.WorkspaceConnection;
 
         private void InstantiateDatabaseStrategy(long id)
         {
-            var databaseRecord = (DatabaseRecord)base.Workspace.DatabaseConnection.GetRecord(id);
+            var databaseRecord = (DatabaseRecord)base.WorkspaceConnection.DatabaseConnection.GetRecord(id);
             var strategy = new Strategy(this, databaseRecord);
             this.AddStrategy(strategy);
         }
@@ -42,10 +38,10 @@ namespace Allors.Workspace.Adapters.Json
                 return pullResult;
             }
 
-            var syncRequest = this.Workspace.DatabaseConnection.OnPullResponse(pullResponse);
+            var syncRequest = this.WorkspaceConnection.DatabaseConnection.OnPullResponse(pullResponse);
             if (syncRequest.o.Length > 0)
             {
-                var database = (DatabaseConnection)base.Workspace.DatabaseConnection;
+                var database = (DatabaseConnection)base.WorkspaceConnection.DatabaseConnection;
                 var syncResponse = await database.Sync(syncRequest);
                 var accessRequest = database.OnSyncResponse(syncResponse);
 

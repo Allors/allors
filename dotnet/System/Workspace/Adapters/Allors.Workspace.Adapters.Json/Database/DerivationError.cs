@@ -12,10 +12,10 @@ namespace Allors.Workspace.Adapters.Json
 
     public class DerivationError : IDerivationError
     {
-        private readonly ISession session;
+        private readonly IWorkspace session;
         private readonly ResponseDerivationError responseDerivationError;
 
-        public DerivationError(ISession session, ResponseDerivationError responseDerivationError)
+        public DerivationError(IWorkspace session, ResponseDerivationError responseDerivationError)
         {
             this.session = session;
             this.responseDerivationError = responseDerivationError;
@@ -26,7 +26,7 @@ namespace Allors.Workspace.Adapters.Json
         public IEnumerable<Role> Roles =>
             from r in this.responseDerivationError.r
             let association = this.session.Instantiate<IObject>(r.i)
-            let relationType = (RelationType)this.session.Workspace.Configuration.MetaPopulation.FindByTag(r.r)
+            let relationType = (RelationType)this.session.WorkspaceConnection.Configuration.MetaPopulation.FindByTag(r.r)
             select new Role(association, relationType);
     }
 }

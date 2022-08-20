@@ -19,13 +19,13 @@ namespace Allors.Workspace.Adapters.Json
 
         private readonly PullResponse pullResponse;
 
-        public PullResult(Adapters.Session session, PullResponse response) : base(session, response)
+        public PullResult(Adapters.Workspace session, PullResponse response) : base(session, response)
         {
-            this.Workspace = session.Workspace;
+            this.Workspace = session.WorkspaceConnection;
             this.pullResponse = response;
         }
 
-        private IWorkspace Workspace { get; }
+        private IWorkspaceConnection Workspace { get; }
 
         public IDictionary<string, IObject> Objects => this.objects ??= this.pullResponse.o.ToDictionary(pair => pair.Key.ToUpperInvariant(), pair => this.Session.Instantiate<IObject>(pair.Value));
 

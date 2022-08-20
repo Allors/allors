@@ -16,7 +16,7 @@ namespace Allors.Workspace
 
         public ITime Time { get; private set; }
 
-        public void OnInit(IWorkspace workspace)
+        public void OnInit(IWorkspaceConnection workspace)
         {
             this.M = (M)workspace.Configuration.MetaPopulation;
             this.Time = new Time();
@@ -25,8 +25,6 @@ namespace Allors.Workspace
         public void Dispose()
         {
         }
-
-        public ISessionServices CreateSessionServices() => new SessionServices();
 
         public T Get<T>() =>
            typeof(T) switch

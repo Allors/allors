@@ -17,9 +17,9 @@ namespace Allors.Workspace.Adapters.Direct
 
     public class Invoke : Result
     {
-        internal Invoke(Session session) : base(session)
+        internal Invoke(Workspace session) : base(session)
         {
-            this.Workspace = session.Workspace;
+            this.Workspace = session.WorkspaceConnection;
             this.Transaction = this.Workspace.DatabaseConnection.Database.CreateTransaction();
 
             var metaCache = this.Transaction.Database.Services.Get<IMetaCache>();
@@ -29,7 +29,7 @@ namespace Allors.Workspace.Adapters.Direct
             this.Derive = () => this.Transaction.Database.Services.Get<IDerivationService>().CreateDerivation(this.Transaction).Derive();
         }
 
-        private Workspace Workspace { get; }
+        private WorkspaceConnection Workspace { get; }
 
         private ITransaction Transaction { get; }
 

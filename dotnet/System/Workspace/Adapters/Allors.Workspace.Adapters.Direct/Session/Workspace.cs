@@ -8,15 +8,17 @@ namespace Allors.Workspace.Adapters.Direct
     using System;
     using System.Threading.Tasks;
 
-    public class Session : Adapters.Session
+    public class Workspace : Adapters.Workspace
     {
-        internal Session(Adapters.Workspace workspace, ISessionServices sessionServices) : base(workspace, sessionServices) => this.Services.OnInit(this);
+        internal Workspace(Adapters.WorkspaceConnection workspaceConnection, IWorkspaceServices workspaceServices) : base(workspaceConnection, workspaceServices)
+        {
+        }
 
-        public new Workspace Workspace => (Workspace)base.Workspace;
+        public new WorkspaceConnection WorkspaceConnection => (WorkspaceConnection)base.WorkspaceConnection;
 
         private void InstantiateDatabaseStrategy(long id)
         {
-            var databaseRecord = this.Workspace.DatabaseConnection.GetRecord(id);
+            var databaseRecord = this.WorkspaceConnection.DatabaseConnection.GetRecord(id);
             var strategy = new Strategy(this, (DatabaseRecord)databaseRecord);
             this.AddStrategy(strategy);
         }
@@ -72,8 +74,8 @@ namespace Allors.Workspace.Adapters.Direct
 
         internal void OnPulled(Pull pull)
         {
-            var syncObjects = this.Workspace.DatabaseConnection.ObjectsToSync(pull);
-            this.Workspace.DatabaseConnection.Sync(syncObjects, pull.AccessControl);
+            var syncObjects = this.WorkspaceConnection.DatabaseConnection.ObjectsToSync(pull);
+            this.WorkspaceConnection.DatabaseConnection.Sync(syncObjects, pull.AccessControl);
 
             foreach (var databaseObject in pull.DatabaseObjects)
             {
