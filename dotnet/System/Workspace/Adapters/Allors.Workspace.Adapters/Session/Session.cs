@@ -23,73 +23,17 @@ namespace Allors.Workspace.Adapters
             this.StrategyByWorkspaceId = new Dictionary<long, Strategy>();
             this.strategiesByClass = new Dictionary<Class, ISet<Strategy>>();
 
-            this.ChangeSetTracker = new ChangeSetTracker();
-            this.PushToDatabaseTracker = new PushToDatabaseTracker();
-
             this.Services.OnInit(this);
         }
-
-        public bool HasChanges => this.StrategyByWorkspaceId.Any(kvp => kvp.Value.HasChanges);
 
         public ISessionServices Services { get; }
 
         IWorkspace ISession.Workspace => this.Workspace;
         public Workspace Workspace { get; }
 
-        public ChangeSetTracker ChangeSetTracker { get; }
-
-        public PushToDatabaseTracker PushToDatabaseTracker { get; }
-
         protected Dictionary<long, Strategy> StrategyByWorkspaceId { get; }
 
         public override string ToString() => $"session: {base.ToString()}";
-
-        internal static bool IsNewId(long id) => id < 0;
-
-        public void Reset()
-        {
-            var changeSet = this.Checkpoint();
-
-            var strategies = new HashSet<IStrategy>(changeSet.Created);
-
-            foreach (var roles in changeSet.RolesByAssociationType.Values)
-            {
-                strategies.UnionWith(roles);
-            }
-
-            foreach (var associations in changeSet.AssociationsByRoleType.Values)
-            {
-                strategies.UnionWith(associations);
-            }
-
-            //TODO: Koen, fix strategy = null
-            foreach (var strategy in strategies.Where(v => v != null))
-            {
-                strategy.Reset();
-            }
-        }
-
-        public abstract T Create<T>(Class @class) where T : class, IObject;
-
-        public T Create<T>() where T : class, IObject => this.Create<T>((Class)this.Workspace.DatabaseConnection.Configuration.ObjectFactory.GetObjectType<T>());
-        public IChangeSet Checkpoint()
-        {
-            var changeSet = new ChangeSet(this, this.ChangeSetTracker.Created, this.ChangeSetTracker.Instantiated);
-
-            if (this.ChangeSetTracker.DatabaseOriginStates != null)
-            {
-                foreach (var databaseOriginState in this.ChangeSetTracker.DatabaseOriginStates)
-                {
-                    databaseOriginState.Checkpoint(changeSet);
-                }
-            }
-
-            this.ChangeSetTracker.Created = null;
-            this.ChangeSetTracker.Instantiated = null;
-            this.ChangeSetTracker.DatabaseOriginStates = null;
-
-            return changeSet;
-        }
 
         #region Instantiate
         public T Instantiate<T>(IObject @object) where T : class, IObject => this.Instantiate<T>(@object.Id);
@@ -200,15 +144,6 @@ namespace Allors.Workspace.Adapters
             }
         }
 
-        public void OnDatabasePushResponseNew(long workspaceId, long databaseId)
-        {
-            var strategy = this.StrategyByWorkspaceId[workspaceId];
-            this.PushToDatabaseTracker.Created.Remove(strategy);
-            strategy.OnDatabasePushNewId(databaseId);
-            this.AddStrategy(strategy);
-            strategy.OnDatabasePushed();
-        }
-
         private IEnumerable<Strategy> StrategiesForClass(IComposite objectType)
         {
             // TODO: Optimize
@@ -221,8 +156,5 @@ namespace Allors.Workspace.Adapters
         public abstract Task<IPullResult> CallAsync(Procedure procedure, params Pull[] pull);
         public abstract Task<IPullResult> CallAsync(object args, string name);
         public abstract Task<IPullResult> PullAsync(params Pull[] pull);
-        public abstract Task<IPushResult> PushAsync();
-
-
     }
 }

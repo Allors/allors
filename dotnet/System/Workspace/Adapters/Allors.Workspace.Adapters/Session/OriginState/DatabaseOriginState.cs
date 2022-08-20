@@ -14,7 +14,6 @@ namespace Allors.Workspace.Adapters
         {
             this.DatabaseRecord = record;
             this.PreviousRecord = this.DatabaseRecord;
-            this.IsPushed = false;
         }
 
         public long Version => this.DatabaseRecord?.Version ?? Allors.Version.WorkspaceInitial;
@@ -23,13 +22,12 @@ namespace Allors.Workspace.Adapters
 
         protected override IEnumerable<RoleType> RoleTypes => this.Class.DatabaseOriginRoleTypes;
 
+        // TODO: Remove
         protected bool ExistRecord => this.Record != null;
 
         protected override IRecord Record => this.DatabaseRecord;
 
         protected DatabaseRecord DatabaseRecord { get; private set; }
-
-        private bool IsPushed { get; set; }
 
         public bool CanRead(RoleType roleType)
         {
@@ -50,16 +48,6 @@ namespace Allors.Workspace.Adapters
 
         public bool CanWrite(RoleType roleType)
         {
-            if (this.IsVersionInitial)
-            {
-                return !this.IsPushed;
-            }
-
-            if (this.IsPushed)
-            {
-                return false;
-            }
-
             if (!this.ExistRecord)
             {
                 return true;
@@ -86,33 +74,10 @@ namespace Allors.Workspace.Adapters
             return this.DatabaseRecord.IsPermitted(permission);
         }
 
-        public void OnPushed() => this.IsPushed = true;
-
         public void OnPulled(IPullResultInternals pull)
         {
             var newRecord = this.Session.Workspace.DatabaseConnection.GetRecord(this.Id);
-
-            if (!this.IsPushed)
-            {
-                if (!this.CanMerge(newRecord))
-                {
-                    pull.AddMergeError(this.Strategy.Object);
-                    return;
-                }
-            }
-            else
-            {
-                this.Reset();
-                this.IsPushed = false;
-            }
-
             this.DatabaseRecord = newRecord;
-        }
-
-        protected override void OnChange()
-        {
-            this.Session.ChangeSetTracker.OnDatabaseChanged(this);
-            this.Session.PushToDatabaseTracker.OnChanged(this);
         }
     }
 }

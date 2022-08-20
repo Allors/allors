@@ -43,7 +43,8 @@ namespace Allors.Workspace.Blazor
                         value = null;
                     }
 
-                    this.Object.Strategy.SetRole(this.RoleType, value);
+                    // TODO: ChangeTracking
+                    //this.Object.Strategy.SetRole(this.RoleType, value);
                 }
             }
         }
@@ -121,7 +122,8 @@ namespace Allors.Workspace.Blazor
         {
             if (this.ExistObject)
             {
-                this.Object.Strategy.AddCompositesRole(this.RoleType, value);
+                // TODO: ChangeTracking
+                //this.Object.Strategy.AddCompositesRole(this.RoleType, value);
             }
         }
 
@@ -129,7 +131,8 @@ namespace Allors.Workspace.Blazor
         {
             if (this.ExistObject)
             {
-                this.Object.Strategy.RemoveCompositesRole(this.RoleType, value);
+                // TODO: ChangeTracking
+                //this.Object.Strategy.RemoveCompositesRole(this.RoleType, value);
             }
         }
 

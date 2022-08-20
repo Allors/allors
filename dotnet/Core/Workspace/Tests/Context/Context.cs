@@ -42,47 +42,6 @@ namespace Tests.Workspace
             session2 = this.Session2;
         }
 
-        public async Task<T> Create<T>(ISession session, DatabaseMode mode) where T : class, IObject
-        {
-            var @class = (Class)session.Workspace.Configuration.ObjectFactory.GetObjectType<T>();
-
-            T result;
-            switch (mode)
-            {
-                case DatabaseMode.NoPush:
-                    result = session.Create<T>();
-                    break;
-                case DatabaseMode.Push:
-                    var pushObject = session.Create<T>();
-                    await session.PushAsync();
-                    result = pushObject;
-                    break;
-                case DatabaseMode.PushAndPull:
-                    result = session.Create<T>();
-                    var pushResult = await session.PushAsync();
-                    Assert.False(pushResult.HasErrors);
-                    await session.PullAsync(new Pull { Object = result });
-                    break;
-                case DatabaseMode.SharedDatabase:
-                    var sharedDatabaseObject = this.SharedDatabaseSession.Create<T>();
-                    await this.SharedDatabaseSession.PushAsync();
-                    var sharedResult = await session.PullAsync(new Pull { Object = sharedDatabaseObject });
-                    result = (T)sharedResult.Objects.Values.First();
-                    break;
-                case DatabaseMode.ExclusiveDatabase:
-                    var exclusiveDatabaseObject = this.ExclusiveDatabaseSession.Create<T>();
-                    await this.ExclusiveDatabaseSession.PushAsync();
-                    var exclusiveResult = await session.PullAsync(new Pull { Object = exclusiveDatabaseObject });
-                    result = (T)exclusiveResult.Objects.Values.First();
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(mode), mode, $@"Mode [{string.Join(", ", Enum.GetNames(typeof(DatabaseMode)))}]");
-            }
-
-            Assert.NotNull(result);
-            return result;
-        }
-        
         public override string ToString() => this.Name;
     }
 }

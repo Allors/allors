@@ -14,17 +14,7 @@ namespace Allors.Workspace
     {
         IWorkspace Workspace { get; }
 
-        bool HasChanges { get; }
-
         ISessionServices Services { get; }
-
-        void Reset();
-
-        IChangeSet Checkpoint();
-
-        T Create<T>() where T : class, IObject;
-
-        T Create<T>(Class @class) where T : class, IObject;
 
         #region Instantiate
         T Instantiate<T>(IObject @object) where T : class, IObject;
@@ -59,7 +49,5 @@ namespace Allors.Workspace
         Task<IPullResult> CallAsync(object args, string name);
 
         Task<IPullResult> PullAsync(params Pull[] pull);
-
-        Task<IPushResult> PushAsync();
     }
 }

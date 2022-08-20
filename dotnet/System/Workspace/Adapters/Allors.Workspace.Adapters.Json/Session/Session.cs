@@ -10,9 +10,7 @@ namespace Allors.Workspace.Adapters.Json
     using System.Threading.Tasks;
     using Allors.Protocol.Json.Api.Invoke;
     using Allors.Protocol.Json.Api.Pull;
-    using Allors.Protocol.Json.Api.Push;
     using Data;
-    using Meta;
     using Protocol.Json;
     using InvokeOptions = Allors.Workspace.InvokeOptions;
 
@@ -28,23 +26,11 @@ namespace Allors.Workspace.Adapters.Json
 
         public new Workspace Workspace => (Workspace)base.Workspace;
 
-        public override T Create<T>(Class @class)
-        {
-            var workspaceId = base.Workspace.DatabaseConnection.NextId();
-            var strategy = new Strategy(this, @class, workspaceId);
-            this.AddStrategy(strategy);
-            this.PushToDatabaseTracker.OnCreated(strategy);
-            this.ChangeSetTracker.OnCreated(strategy);
-            return (T)strategy.Object;
-        }
-
         private void InstantiateDatabaseStrategy(long id)
         {
             var databaseRecord = (DatabaseRecord)base.Workspace.DatabaseConnection.GetRecord(id);
             var strategy = new Strategy(this, databaseRecord);
             this.AddStrategy(strategy);
-
-            this.ChangeSetTracker.OnInstantiated(strategy);
         }
 
         internal async Task<IPullResult> OnPull(PullResponse pullResponse)
@@ -147,48 +133,6 @@ namespace Allors.Workspace.Adapters.Json
 
             var pullResponse = await this.DatabaseConnection.Pull(pullRequest);
             return await this.OnPull(pullResponse);
-        }
-
-        public override async Task<IPushResult> PushAsync()
-        {
-            var databaseTracker = this.PushToDatabaseTracker;
-
-            var pushRequest = new PushRequest
-            {
-                n = databaseTracker.Created?.Select(v => ((DatabaseOriginState)v.DatabaseOriginState).PushNew()).ToArray(),
-                o = databaseTracker.Changed?.Select(v => ((DatabaseOriginState)v.Strategy.DatabaseOriginState).PushExisting()).ToArray()
-            };
-            var pushResponse = await this.DatabaseConnection.Push(pushRequest);
-
-            if (pushResponse.HasErrors)
-            {
-                return new PushResult(this, pushResponse);
-            }
-
-
-            if (pushResponse.n != null)
-            {
-                foreach (var pushResponseNewObject in pushResponse.n)
-                {
-                    var workspaceId = pushResponseNewObject.w;
-                    var databaseId = pushResponseNewObject.d;
-                    this.OnDatabasePushResponseNew(workspaceId, databaseId);
-                }
-            }
-
-            databaseTracker.Created = null;
-            databaseTracker.Changed = null;
-
-            if (pushRequest.o != null)
-            {
-                foreach (var id in pushRequest.o.Select(v => v.d))
-                {
-                    var strategy = this.GetStrategy(id);
-                    strategy.OnDatabasePushed();
-                }
-            }
-
-            return new PushResult(this, pushResponse);
         }
     }
 }

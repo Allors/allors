@@ -7,7 +7,6 @@ namespace Allors.Workspace.Adapters.Direct
 {
     using System;
     using System.Threading.Tasks;
-    using Meta;
 
     public class Session : Adapters.Session
     {
@@ -15,23 +14,11 @@ namespace Allors.Workspace.Adapters.Direct
 
         public new Workspace Workspace => (Workspace)base.Workspace;
 
-        public override T Create<T>(Class @class)
-        {
-            var workspaceId = this.Workspace.DatabaseConnection.NextId();
-            var strategy = new Strategy(this, @class, workspaceId);
-            this.AddStrategy(strategy);
-            this.PushToDatabaseTracker.OnCreated(strategy);
-            this.ChangeSetTracker.OnCreated(strategy);
-            return (T)strategy.Object;
-        }
-
         private void InstantiateDatabaseStrategy(long id)
         {
             var databaseRecord = this.Workspace.DatabaseConnection.GetRecord(id);
             var strategy = new Strategy(this, (DatabaseRecord)databaseRecord);
             this.AddStrategy(strategy);
-
-            this.ChangeSetTracker.OnInstantiated(strategy);
         }
 
         public override Task<IInvokeResult> InvokeAsync(Method method, InvokeOptions options = null) =>
@@ -81,43 +68,6 @@ namespace Allors.Workspace.Adapters.Direct
             this.OnPulled(result);
 
             return Task.FromResult<IPullResult>(result);
-        }
-
-        public override Task<IPushResult> PushAsync()
-        {
-            var databaseTracker = this.PushToDatabaseTracker;
-
-            var result = new Push(this);
-
-            result.Execute(databaseTracker);
-
-            if (result.HasErrors)
-            {
-                return Task.FromResult<IPushResult>(result);
-            }
-
-            databaseTracker.Changed = null;
-
-            if (result.ObjectByNewId?.Count > 0)
-            {
-                foreach (var kvp in result.ObjectByNewId)
-                {
-                    var workspaceId = kvp.Key;
-                    var databaseId = kvp.Value.Id;
-
-                    this.OnDatabasePushResponseNew(workspaceId, databaseId);
-                }
-            }
-
-            databaseTracker.Created = null;
-
-            foreach (var @object in result.Objects)
-            {
-                var strategy = this.GetStrategy(@object.Id);
-                strategy.OnDatabasePushed();
-            }
-
-            return Task.FromResult<IPushResult>(result);
         }
 
         internal void OnPulled(Pull pull)

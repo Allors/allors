@@ -25,11 +25,13 @@ namespace Allors.Workspace.Blazor.Ant.Forms.Roles
         {
             if ((bool)checkedValue)
             {
-                this.Object.Strategy.AddCompositesRole(this.RoleType, option);
+                // TODO: ChangeTracking
+                //this.Object.Strategy.AddCompositesRole(this.RoleType, option);
             }
             else
             {
-                this.Object.Strategy.RemoveCompositesRole(this.RoleType, option);
+                // TODO: ChangeTracking
+                //this.Object.Strategy.RemoveCompositesRole(this.RoleType, option);
             }
         }
     }
