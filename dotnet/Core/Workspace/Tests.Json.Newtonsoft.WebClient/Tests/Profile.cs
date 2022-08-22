@@ -14,8 +14,6 @@ namespace Tests.Workspace.Json
     using RestSharp;
     using RestSharp.Serializers.NewtonsoftJson;
     using Xunit;
-    using Configuration = Allors.Workspace.Adapters.Json.Configuration;
-    using DatabaseConnection = Allors.Workspace.Adapters.Json.Newtonsoft.WebClient.DatabaseConnection;
 
     public class Profile : IProfile
     {
@@ -24,23 +22,21 @@ namespace Tests.Workspace.Json
         public const string SetupUrl = "Test/Setup?population=full";
         public const string LoginUrl = "TestAuthentication/Token";
 
-        private readonly Configuration configuration;
+        private readonly M metaPopulation;
+        private readonly ReflectionObjectFactory objectFactory;
 
         private Client client;
 
-        IWorkspaceConnection IProfile.Workspace => this.Workspace;
+        IWorkspaceConnection IProfile.WorkspaceConnection => this.WorkspaceConnection;
 
-        public DatabaseConnection DatabaseConnection { get; private set; }
+        public Allors.Workspace.Adapters.Json.Newtonsoft.WebClient.WorkspaceConnection WorkspaceConnection { get; private set; }
 
-        public IWorkspaceConnection Workspace { get; private set; }
-
-        public M M => this.Workspace.Services.Get<M>();
+        public M M => (M)this.WorkspaceConnection.MetaPopulation;
 
         public Profile()
         {
-            var metaPopulation = new MetaBuilder().Build();
-            var objectFactory = new ReflectionObjectFactory(metaPopulation, typeof(Allors.Workspace.Domain.Person));
-            this.configuration = new Configuration("Default", metaPopulation, objectFactory);
+            this.metaPopulation = new MetaBuilder().Build();
+            this.objectFactory = new ReflectionObjectFactory(this.metaPopulation, typeof(Allors.Workspace.Domain.Person));
         }
 
         public async Task InitializeAsync()
@@ -51,21 +47,16 @@ namespace Tests.Workspace.Json
             Assert.True(response.IsSuccessful);
 
             this.client = new Client(this.CreateRestClient);
-            this.DatabaseConnection = new DatabaseConnection(this.configuration, () => new WorkspaceServices(), this.client);
-            this.Workspace = this.DatabaseConnection.CreateWorkspaceConnection();
+            this.WorkspaceConnection = new Allors.Workspace.Adapters.Json.Newtonsoft.WebClient.WorkspaceConnection(this.client, "Default", this.metaPopulation, this.objectFactory);
 
             await this.Login("administrator");
         }
 
         public Task DisposeAsync() => Task.CompletedTask;
 
-        public IWorkspaceConnection CreateExclusiveWorkspace()
-        {
-            var database = new DatabaseConnection(this.configuration, () => new WorkspaceServices(), this.client);
-            return database.CreateWorkspaceConnection();
-        }
+        public IWorkspaceConnection CreateExclusiveWorkspaceConnection() => new Allors.Workspace.Adapters.Json.Newtonsoft.WebClient.WorkspaceConnection(this.client, "Default", this.metaPopulation, this.objectFactory);
 
-        public IWorkspaceConnection CreateWorkspace() => this.DatabaseConnection.CreateWorkspaceConnection();
+        public IWorkspaceConnection CreateWorkspaceConnection() => new Allors.Workspace.Adapters.Json.Newtonsoft.WebClient.WorkspaceConnection(this.client, "Default", this.metaPopulation, this.objectFactory);
 
         public async Task Login(string user)
         {

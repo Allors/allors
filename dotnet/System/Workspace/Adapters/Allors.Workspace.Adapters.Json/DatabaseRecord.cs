@@ -13,15 +13,15 @@ namespace Allors.Workspace.Adapters.Json
 
     internal class DatabaseRecord : Adapters.DatabaseRecord
     {
-        private readonly DatabaseConnection database;
+        private readonly WorkspaceConnection workspaceConnection;
 
         private Dictionary<RelationType, object> roleByRelationType;
         private SyncResponseRole[] syncResponseRoles;
 
-        internal DatabaseRecord(DatabaseConnection database, Class @class, long id, long version) : base(@class, id, version) => this.database = database;
+        internal DatabaseRecord(WorkspaceConnection workspaceConnection, Class @class, long id, long version) : base(@class, id, version) => this.workspaceConnection = workspaceConnection;
 
-        internal static DatabaseRecord FromResponse(DatabaseConnection database, ResponseContext ctx, SyncResponseObject syncResponseObject) =>
-            new DatabaseRecord(database, (Class)database.Configuration.MetaPopulation.FindByTag(syncResponseObject.c), syncResponseObject.i, syncResponseObject.v)
+        internal static DatabaseRecord FromResponse(WorkspaceConnection database, ResponseContext ctx, SyncResponseObject syncResponseObject) =>
+            new DatabaseRecord(database, (Class)database.MetaPopulation.FindByTag(syncResponseObject.c), syncResponseObject.i, syncResponseObject.v)
             {
                 syncResponseRoles = syncResponseObject.ro,
                 GrantIds = ValueRange<long>.Load(ctx.CheckForMissingGrants(syncResponseObject.g)),
@@ -38,7 +38,7 @@ namespace Allors.Workspace.Adapters.Json
             {
                 if (this.syncResponseRoles != null)
                 {
-                    var metaPopulation = this.database.Configuration.MetaPopulation;
+                    var metaPopulation = this.workspaceConnection.MetaPopulation;
                     this.roleByRelationType = this.syncResponseRoles.ToDictionary(
                         v => (RelationType)metaPopulation.FindByTag(v.t),
                         v =>
@@ -48,7 +48,7 @@ namespace Allors.Workspace.Adapters.Json
 
                             if (objectType.IsUnit)
                             {
-                                return this.database.UnitConvert.UnitFromJson(objectType.Tag, v.v);
+                                return this.workspaceConnection.UnitConvert.UnitFromJson(objectType.Tag, v.v);
                             }
 
                             if (roleType.IsOne)
@@ -80,13 +80,13 @@ namespace Allors.Workspace.Adapters.Json
                 return false;
             }
 
-            if (this.RevocationIds.Any(v => this.database.RevocationById[v].PermissionIds.Contains(permission)))
+            if (this.RevocationIds.Any(v => this.workspaceConnection.RevocationById[v].PermissionIds.Contains(permission)))
             {
                 return false;
             }
 
 
-            return this.GrantIds.Any(v => this.database.GrantById[v].PermissionIds.Contains(permission));
+            return this.GrantIds.Any(v => this.workspaceConnection.GrantById[v].PermissionIds.Contains(permission));
         }
     }
 }

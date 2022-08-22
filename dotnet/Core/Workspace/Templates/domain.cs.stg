@@ -122,7 +122,7 @@ namespace Allors.Workspace.Domain
 		public $class.name$(IStrategy strategy)
 		{
             this.Strategy = strategy;
-            this.M = (Allors.Workspace.Meta.M)strategy.Session.Workspace.Configuration.MetaPopulation;
+			this.M = (Allors.Workspace.Meta.M)strategy.Workspace.WorkspaceConnection.MetaPopulation;
         }
 
         IStrategy IObject.Strategy => this.Strategy;

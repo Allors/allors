@@ -8,52 +8,45 @@ namespace Tests.Workspace.Direct
     using System;
     using System.Linq;
     using System.Threading.Tasks;
-    using Allors.Database;
     using Allors.Database.Adapters.Memory;
     using Allors.Database.Configuration;
     using Allors.Database.Domain;
     using Allors.Workspace;
     using Allors.Workspace.Adapters;
     using Allors.Workspace.Meta;
-    using Configuration = Allors.Workspace.Adapters.Direct.Configuration;
-    using DatabaseConnection = Allors.Workspace.Adapters.Direct.DatabaseConnection;
-    using IWorkspaceServices = Allors.Workspace.IWorkspaceServices;
     using Person = Allors.Workspace.Domain.Person;
     using User = Allors.Database.Domain.User;
 
     public class Profile : IProfile
     {
-        private readonly Func<IWorkspaceServices> servicesBuilder;
-        private readonly Configuration configuration;
-
         private User user;
+        private readonly M metaPopulation;
+        private readonly ReflectionObjectFactory objectFactory;
 
         public Database Database { get; }
 
-        public DatabaseConnection DatabaseConnection { get; private set; }
+        IWorkspaceConnection IProfile.WorkspaceConnection => this.WorkspaceConnection;
 
-        IWorkspaceConnection IProfile.Workspace => this.Workspace;
+        public Allors.Workspace.Adapters.Direct.WorkspaceConnection WorkspaceConnection { get; private set; }
 
-        public IWorkspaceConnection Workspace { get; private set; }
-
-        public M M => this.Workspace.Services.Get<M>();
+        public M M => (M)this.WorkspaceConnection.MetaPopulation;
 
         public Profile(Fixture fixture)
         {
-            this.servicesBuilder = () => new WorkspaceServices();
 
-            var metaPopulation = new MetaBuilder().Build();
-            var objectFactory = new ReflectionObjectFactory(metaPopulation, typeof(Person));
-            this.configuration = new Configuration("Default", metaPopulation, objectFactory);
+            this.metaPopulation = new MetaBuilder().Build();
+            this.objectFactory = new ReflectionObjectFactory(this.metaPopulation, typeof(Person));
 
             this.Database = new Database(
                 new DefaultDatabaseServices(fixture.Engine),
                 new Allors.Database.Adapters.Memory.Configuration
                 {
-                    ObjectFactory = new ObjectFactory(fixture.M, typeof(Allors.Database.Domain.Person)),
+                    ObjectFactory = new Allors.Database.ObjectFactory(fixture.M, typeof(Allors.Database.Domain.Person)),
                 });
 
             this.Database.Init();
+
+            this.WorkspaceConnection = new Allors.Workspace.Adapters.Direct.WorkspaceConnection(this.Database, "Default", this.metaPopulation, this.objectFactory);
 
             var config = new Config();
             new Setup(this.Database, config).Apply();
@@ -73,22 +66,17 @@ namespace Tests.Workspace.Direct
 
         public Task DisposeAsync() => Task.CompletedTask;
 
-        public IWorkspaceConnection CreateExclusiveWorkspace()
-        {
-            var database = new DatabaseConnection(this.configuration, this.Database, this.servicesBuilder) { UserId = this.user.Id };
-            return database.CreateWorkspaceConnection();
-        }
-        public IWorkspaceConnection CreateWorkspace() => this.DatabaseConnection.CreateWorkspaceConnection();
+        public IWorkspaceConnection CreateExclusiveWorkspaceConnection() => new Allors.Workspace.Adapters.Direct.WorkspaceConnection(this.Database, "Default", this.metaPopulation, this.objectFactory) { UserId = this.user.Id };
+
+        public IWorkspaceConnection CreateWorkspaceConnection() => new Allors.Workspace.Adapters.Direct.WorkspaceConnection(this.Database, "Default", this.metaPopulation, this.objectFactory) { UserId = this.user.Id };
 
         public Task Login(string userName)
         {
             using var transaction = this.Database.CreateTransaction();
-            this.user = new Users(transaction).Extent().ToArray().First(v => v.UserName.Equals(userName, StringComparison.InvariantCultureIgnoreCase));
+            this.user = new Users(transaction).Extent().ToArray().First(v => v.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase));
             transaction.Services.Get<IUserService>().User = this.user;
 
-            this.DatabaseConnection = new DatabaseConnection(this.configuration, this.Database, this.servicesBuilder) { UserId = this.user.Id };
-
-            this.Workspace = this.DatabaseConnection.CreateWorkspaceConnection();
+            this.WorkspaceConnection.UserId = this.user.Id;
 
             return Task.CompletedTask;
         }

@@ -16,15 +16,13 @@ namespace Allors.Workspace.Adapters.Json
 
     public class Workspace : Adapters.Workspace
     {
-        internal Workspace(WorkspaceConnection workspace, IWorkspaceServices workspaceServices) : base(workspace, workspaceServices) => this.DatabaseConnection = workspace.DatabaseConnection;
-
-        private DatabaseConnection DatabaseConnection { get; }
+        internal Workspace(WorkspaceConnection workspace) : base(workspace) { }
 
         public new WorkspaceConnection WorkspaceConnection => (WorkspaceConnection)base.WorkspaceConnection;
 
         private void InstantiateDatabaseStrategy(long id)
         {
-            var databaseRecord = (DatabaseRecord)base.WorkspaceConnection.DatabaseConnection.GetRecord(id);
+            var databaseRecord = (DatabaseRecord)base.WorkspaceConnection.GetRecord(id);
             var strategy = new Strategy(this, databaseRecord);
             this.AddStrategy(strategy);
         }
@@ -38,21 +36,20 @@ namespace Allors.Workspace.Adapters.Json
                 return pullResult;
             }
 
-            var syncRequest = this.WorkspaceConnection.DatabaseConnection.OnPullResponse(pullResponse);
+            var syncRequest = this.WorkspaceConnection.OnPullResponse(pullResponse);
             if (syncRequest.o.Length > 0)
             {
-                var database = (DatabaseConnection)base.WorkspaceConnection.DatabaseConnection;
-                var syncResponse = await database.Sync(syncRequest);
-                var accessRequest = database.OnSyncResponse(syncResponse);
+                var syncResponse = await this.WorkspaceConnection.Sync(syncRequest);
+                var accessRequest = this.WorkspaceConnection.OnSyncResponse(syncResponse);
 
                 if (accessRequest != null)
                 {
-                    var accessResponse = await database.Access(accessRequest);
-                    var permissionRequest = database.AccessResponse(accessResponse);
+                    var accessResponse = await this.WorkspaceConnection.Access(accessRequest);
+                    var permissionRequest = this.WorkspaceConnection.AccessResponse(accessResponse);
                     if (permissionRequest != null)
                     {
-                        var permissionResponse = await database.Permission(permissionRequest);
-                        database.PermissionResponse(permissionResponse);
+                        var permissionResponse = await this.WorkspaceConnection.Permission(permissionRequest);
+                        this.WorkspaceConnection.PermissionResponse(permissionResponse);
                     }
                 }
             }
@@ -93,13 +90,13 @@ namespace Allors.Workspace.Adapters.Json
                     : null
             };
 
-            var invokeResponse = await this.DatabaseConnection.Invoke(invokeRequest);
+            var invokeResponse = await this.WorkspaceConnection.Invoke(invokeRequest);
             return new InvokeResult(this, invokeResponse);
         }
 
         public override async Task<IPullResult> CallAsync(object args, string name)
         {
-            var pullResponse = await this.DatabaseConnection.Pull(args, name);
+            var pullResponse = await this.WorkspaceConnection.Pull(args, name);
             return await this.OnPull(pullResponse);
         }
 
@@ -113,9 +110,9 @@ namespace Allors.Workspace.Adapters.Json
                 }
             }
 
-            var pullRequest = new PullRequest { l = pulls.Select(v => v.ToJson(this.DatabaseConnection.UnitConvert)).ToArray() };
+            var pullRequest = new PullRequest { l = pulls.Select(v => v.ToJson(this.WorkspaceConnection.UnitConvert)).ToArray() };
 
-            var pullResponse = await this.DatabaseConnection.Pull(pullRequest);
+            var pullResponse = await this.WorkspaceConnection.Pull(pullRequest);
             return await this.OnPull(pullResponse);
         }
 
@@ -123,11 +120,11 @@ namespace Allors.Workspace.Adapters.Json
         {
             var pullRequest = new PullRequest
             {
-                p = procedure.ToJson(this.DatabaseConnection.UnitConvert),
-                l = pull.Select(v => v.ToJson(this.DatabaseConnection.UnitConvert)).ToArray()
+                p = procedure.ToJson(this.WorkspaceConnection.UnitConvert),
+                l = pull.Select(v => v.ToJson(this.WorkspaceConnection.UnitConvert)).ToArray()
             };
 
-            var pullResponse = await this.DatabaseConnection.Pull(pullRequest);
+            var pullResponse = await this.WorkspaceConnection.Pull(pullRequest);
             return await this.OnPull(pullResponse);
         }
     }

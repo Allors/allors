@@ -20,12 +20,12 @@ namespace Allors.Workspace.Adapters.Direct
         internal Invoke(Workspace session) : base(session)
         {
             this.Workspace = session.WorkspaceConnection;
-            this.Transaction = this.Workspace.DatabaseConnection.Database.CreateTransaction();
+            this.Transaction = this.Workspace.Database.CreateTransaction();
 
             var metaCache = this.Transaction.Database.Services.Get<IMetaCache>();
 
-            this.AccessControl = this.Transaction.Services.Get<IWorkspaceAclsService>().Create(this.Workspace.DatabaseConnection.Configuration.Name);
-            this.AllowedClasses = metaCache.GetWorkspaceClasses(this.Workspace.DatabaseConnection.Configuration.Name);
+            this.AccessControl = this.Transaction.Services.Get<IWorkspaceAclsService>().Create(this.Workspace.Name);
+            this.AllowedClasses = metaCache.GetWorkspaceClasses(this.Workspace.Name);
             this.Derive = () => this.Transaction.Database.Services.Get<IDerivationService>().CreateDerivation(this.Transaction).Derive();
         }
 

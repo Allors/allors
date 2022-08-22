@@ -15,16 +15,12 @@ namespace Allors.Workspace.Adapters
     {
         private readonly Dictionary<Class, ISet<Strategy>> strategiesByClass;
 
-        protected Workspace(WorkspaceConnection workspaceConnection, IWorkspaceServices workspaceServices)
+        protected Workspace(WorkspaceConnection workspaceConnection)
         {
             this.WorkspaceConnection = workspaceConnection;
-            this.Services = workspaceServices;
-
             this.StrategyByWorkspaceId = new Dictionary<long, Strategy>();
             this.strategiesByClass = new Dictionary<Class, ISet<Strategy>>();
         }
-
-        public IWorkspaceServices Services { get; }
 
         IWorkspaceConnection IWorkspace.WorkspaceConnection => this.WorkspaceConnection;
         public WorkspaceConnection WorkspaceConnection { get; }
@@ -59,7 +55,7 @@ namespace Allors.Workspace.Adapters
 
         public IEnumerable<T> Instantiate<T>() where T : class, IObject
         {
-            var objectType = (IComposite)this.WorkspaceConnection.DatabaseConnection.Configuration.ObjectFactory.GetObjectType<T>();
+            var objectType = (IComposite)this.WorkspaceConnection.ObjectFactory.GetObjectType<T>();
             return this.Instantiate<T>(objectType);
         }
 

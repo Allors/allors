@@ -15,12 +15,13 @@ namespace Allors.Workspace.Adapters.Json.SystemText
     using Allors.Protocol.Json.Api.Security;
     using Allors.Protocol.Json.Api.Sync;
     using Allors.Protocol.Json.SystemText;
+    using Meta;
     using Polly;
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "RCS1090:Add call to 'ConfigureAwait' (or vice versa).", Justification = "<Pending>")]
-    public class DatabaseConnection : Json.DatabaseConnection
+    public class WorkspaceConnection : Json.WorkspaceConnection
     {
-        public DatabaseConnection(Configuration configuration, Func<IWorkspaceServices> servicesBuilder, Client client) : base(configuration, servicesBuilder)
+        public WorkspaceConnection(Client client, string name, MetaPopulation metaPopulation, IObjectFactory objectFactory) : base(name, metaPopulation, objectFactory)
         {
             this.Client = client;
             this.UnitConvert = new UnitConvert();

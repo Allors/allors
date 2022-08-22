@@ -14,8 +14,6 @@ namespace Allors.Workspace
     {
         IWorkspaceConnection WorkspaceConnection { get; }
 
-        IWorkspaceServices Services { get; }
-
         #region Instantiate
         T Instantiate<T>(IObject @object) where T : class, IObject;
 

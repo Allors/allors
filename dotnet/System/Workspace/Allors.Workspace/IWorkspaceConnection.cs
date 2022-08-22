@@ -5,11 +5,15 @@
 
 namespace Allors.Workspace
 {
+    using Allors.Workspace.Meta;
+
     public interface IWorkspaceConnection
     {
-        IConfiguration Configuration { get; }
+        string Name { get; }
 
-        IWorkspaceServices Services { get; }
+        MetaPopulation MetaPopulation { get; }
+
+        IObjectFactory ObjectFactory { get; }
 
         IWorkspace CreateWorkspace();
     }

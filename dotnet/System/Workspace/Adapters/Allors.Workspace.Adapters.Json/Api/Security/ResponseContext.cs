@@ -10,11 +10,11 @@ namespace Allors.Workspace.Adapters.Json
 
     internal class ResponseContext
     {
-        private readonly DatabaseConnection database;
+        private readonly WorkspaceConnection workspaceConnection;
 
-        internal ResponseContext(DatabaseConnection database)
+        internal ResponseContext(WorkspaceConnection workspaceConnection)
         {
-            this.database = database;
+            this.workspaceConnection = workspaceConnection;
 
             this.MissingGrantIds = new HashSet<long>();
             this.MissingRevocationIds = new HashSet<long>();
@@ -31,7 +31,7 @@ namespace Allors.Workspace.Adapters.Json
                 return null;
             }
 
-            foreach (var accessControlId in value.Where(v => !this.database.GrantById.ContainsKey(v)))
+            foreach (var accessControlId in value.Where(v => !this.workspaceConnection.GrantById.ContainsKey(v)))
             {
                 this.MissingGrantIds.Add(accessControlId);
             }
@@ -46,7 +46,7 @@ namespace Allors.Workspace.Adapters.Json
                 return null;
             }
 
-            foreach (var revocationId in value.Where(v => !this.database.RevocationById.ContainsKey(v)))
+            foreach (var revocationId in value.Where(v => !this.workspaceConnection.RevocationById.ContainsKey(v)))
             {
                 this.MissingRevocationIds.Add(revocationId);
             }

@@ -3,18 +3,17 @@
   <Interface Name="Allors.Workspace.IWorkspaceConnection">
     <Position X="0.5" Y="0.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>gAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAgAAAAAAAAAA=</HashCode>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAABAAAQ=</HashCode>
       <FileName>IWorkspaceConnection.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="Configuration" />
-      <Property Name="Services" />
+      <Property Name="ObjectFactory" />
     </ShowAsAssociation>
   </Interface>
   <Interface Name="Allors.Workspace.IWorkspace">
     <Position X="4.25" Y="0.5" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>gAAAAAAAAAAAAAAAAARAAAAQAAAgAAAQAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAARAAAAQAAAgAAAQAAAAAAAAAAA=</HashCode>
       <FileName>IWorkspace.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -43,27 +42,10 @@
     </ShowAsAssociation>
   </Interface>
   <Interface Name="Allors.Workspace.IObjectFactory">
-    <Position X="3.25" Y="5" Width="2.5" />
+    <Position X="0.5" Y="3.75" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAEEAAAAAAAAAAAA=</HashCode>
       <FileName>IObjectFactory.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="Allors.Workspace.IConfiguration">
-    <Position X="0.5" Y="5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAQAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAABAAAA=</HashCode>
-      <FileName>IConfiguration.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="ObjectFactory" />
-    </ShowAsAssociation>
-  </Interface>
-  <Interface Name="Allors.Workspace.IWorkspaceServices">
-    <Position X="2" Y="3" Width="1.75" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAABAAAAAAAAAAAAAAAQAAAAAAAAAAAA=</HashCode>
-      <FileName>Services\IWorkspaceServices.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Font Name="Segoe UI" Size="9" />

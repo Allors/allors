@@ -13,9 +13,7 @@ namespace Tests.Workspace.Json
     using Allors.Workspace.Adapters.Json.SystemText;
     using Allors.Workspace.Meta;
     using Xunit;
-    using Configuration = Allors.Workspace.Adapters.Json.Configuration;
-    using DatabaseConnection = Allors.Workspace.Adapters.Json.SystemText.DatabaseConnection;
-    using IWorkspaceServices = Allors.Workspace.IWorkspaceServices;
+    using WorkspaceConnection = Allors.Workspace.Adapters.Json.SystemText.WorkspaceConnection;
 
     public class Profile : IProfile
     {
@@ -24,27 +22,23 @@ namespace Tests.Workspace.Json
         public const string SetupUrl = "Test/Setup?population=full";
         public const string LoginUrl = "TestAuthentication/Token";
 
-        private readonly Func<IWorkspaceServices> servicesBuilder;
-        private readonly Configuration configuration;
+        private readonly ReflectionObjectFactory objectFactory;
 
         private HttpClient httpClient;
 
+        private Client client;
+
         public Profile()
         {
-            this.servicesBuilder = () => new WorkspaceServices();
-
-            var metaPopulation = new MetaBuilder().Build();
-            var objectFactory = new ReflectionObjectFactory(metaPopulation, typeof(Allors.Workspace.Domain.Person));
-            this.configuration = new Configuration("Default", metaPopulation, objectFactory);
+            this.M = new MetaBuilder().Build();
+            this.objectFactory = new ReflectionObjectFactory(this.M, typeof(Allors.Workspace.Domain.Person));
         }
 
-        IWorkspaceConnection IProfile.Workspace => this.Workspace;
+        IWorkspaceConnection IProfile.WorkspaceConnection => this.WorkspaceConnection;
 
-        public DatabaseConnection DatabaseConnection { get; private set; }
+        public IWorkspaceConnection WorkspaceConnection { get; private set; }
 
-        public IWorkspaceConnection Workspace { get; private set; }
-
-        public M M => this.Workspace.Services.Get<M>();
+        public M M { get; }
 
         public async Task InitializeAsync()
         {
@@ -52,26 +46,23 @@ namespace Tests.Workspace.Json
             var response = await this.httpClient.GetAsync(SetupUrl);
             Assert.True(response.IsSuccessStatusCode);
 
-            this.DatabaseConnection = new DatabaseConnection(this.configuration, this.servicesBuilder, new Client(() => this.httpClient));
-            this.Workspace = this.DatabaseConnection.CreateWorkspaceConnection();
+            this.client = new Client(() => this.httpClient);
+
+            this.WorkspaceConnection = new WorkspaceConnection(this.client, "Default", this.M, this.objectFactory);
 
             await this.Login("administrator");
         }
 
         public Task DisposeAsync() => Task.CompletedTask;
 
-        public IWorkspaceConnection CreateExclusiveWorkspace()
-        {
-            var database = new DatabaseConnection(this.configuration, this.servicesBuilder, new Client(() => this.httpClient));
-            return database.CreateWorkspaceConnection();
-        }
+        public IWorkspaceConnection CreateExclusiveWorkspaceConnection() => new WorkspaceConnection(this.client, "Default", this.M, this.objectFactory);
 
-        public IWorkspaceConnection CreateWorkspace() => this.DatabaseConnection.CreateWorkspaceConnection();
+        public IWorkspaceConnection CreateWorkspaceConnection() => new WorkspaceConnection(this.client, "Default", this.M, this.objectFactory);
 
         public async Task Login(string user)
         {
             var uri = new Uri(LoginUrl, UriKind.Relative);
-            var response = await this.DatabaseConnection.Client.Login(uri, user, null);
+            var response = await this.client.Login(uri, user, null);
             Assert.True(response);
         }
     }

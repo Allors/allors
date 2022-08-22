@@ -27,17 +27,17 @@ namespace Allors.Workspace.Adapters.Direct
         public Pull(Workspace session) : base(session)
         {
             this.Workspace = session.WorkspaceConnection;
-            var database = this.Workspace.DatabaseConnection.Database;
+            var database = this.Workspace.Database;
             this.Transaction = database.CreateTransaction();
 
             this.AllowedClasses = database.Services.Get<IMetaCache>()
-                .GetWorkspaceClasses(this.Workspace.DatabaseConnection.Configuration.Name);
+                .GetWorkspaceClasses(this.Workspace.Name);
             this.PreparedSelects = database.Services.Get<IPreparedSelects>();
             this.PreparedExtents = database.Services.Get<IPreparedExtents>();
             this.PrefetchPolicyCache = database.Services.Get<IPrefetchPolicyCache>();
 
             this.AccessControl = this.Transaction.Services.Get<IWorkspaceAclsService>()
-                .Create(this.Workspace.DatabaseConnection.Configuration.Name);
+                .Create(this.Workspace.Name);
 
             this.DatabaseObjects = new HashSet<Database.IObject>();
         }
@@ -100,7 +100,7 @@ namespace Allors.Workspace.Adapters.Direct
 
         public T[] GetCollection<T>() where T : class, IObject
         {
-            var objectType = this.Workspace.DatabaseConnection.Configuration.ObjectFactory.GetObjectType<T>();
+            var objectType = this.Workspace.ObjectFactory.GetObjectType<T>();
             var key = objectType.PluralName;
             return this.GetCollection<T>(key);
         }
@@ -111,7 +111,7 @@ namespace Allors.Workspace.Adapters.Direct
         public T GetObject<T>()
             where T : class, IObject
         {
-            var objectType = this.Workspace.DatabaseConnection.Configuration.ObjectFactory.GetObjectType<T>();
+            var objectType = this.Workspace.ObjectFactory.GetObjectType<T>();
             var key = objectType.SingularName;
             return this.GetObject<T>(key);
         }

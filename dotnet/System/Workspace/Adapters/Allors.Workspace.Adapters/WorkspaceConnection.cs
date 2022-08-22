@@ -5,20 +5,27 @@
 
 namespace Allors.Workspace.Adapters
 {
+    using Meta;
+
     public abstract class WorkspaceConnection : IWorkspaceConnection
     {
-        protected WorkspaceConnection(DatabaseConnection database, IWorkspaceServices services)
+        protected WorkspaceConnection(string name, MetaPopulation metaPopulation, IObjectFactory objectFactory)
         {
-            this.DatabaseConnection = database;
-            this.Services = services;
+            this.Name = name;
+            this.MetaPopulation = metaPopulation;
+            this.ObjectFactory = objectFactory;
         }
 
-        public DatabaseConnection DatabaseConnection { get; }
+        public string Name { get; }
 
-        public IConfiguration Configuration => this.DatabaseConnection.Configuration;
+        public MetaPopulation MetaPopulation { get; }
 
-        public IWorkspaceServices Services { get; }
+        public IObjectFactory ObjectFactory { get; }
 
         public abstract IWorkspace CreateWorkspace();
+
+        public abstract DatabaseRecord GetRecord(long id);
+
+        public abstract long GetPermission(Class @class, IOperandType operandType, Operations operation);
     }
 }

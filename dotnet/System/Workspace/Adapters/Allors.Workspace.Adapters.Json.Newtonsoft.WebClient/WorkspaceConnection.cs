@@ -14,13 +14,14 @@ namespace Allors.Workspace.Adapters.Json.Newtonsoft.WebClient
     using Allors.Protocol.Json.Api.Security;
     using Allors.Protocol.Json.Api.Sync;
     using Allors.Protocol.Json.Newtonsoft;
+    using Meta;
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "RCS1090:Add call to 'ConfigureAwait' (or vice versa).", Justification = "<Pending>")]
-    public class DatabaseConnection : Json.DatabaseConnection
+    public class WorkspaceConnection : Json.WorkspaceConnection
     {
         private readonly Client client;
 
-        public DatabaseConnection(Configuration configuration, Func<IWorkspaceServices> servicesBuilder, Client client) : base(configuration, servicesBuilder)
+        public WorkspaceConnection(Client client, string name, MetaPopulation metaPopulation, IObjectFactory objectFactory) : base(name, metaPopulation, objectFactory)
         {
             this.client = client;
             this.UnitConvert = new UnitConvert();

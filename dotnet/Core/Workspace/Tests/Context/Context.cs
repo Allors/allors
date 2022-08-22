@@ -1,12 +1,6 @@
 namespace Tests.Workspace
 {
-    using System;
-    using System.Linq;
-    using System.Threading.Tasks;
     using Allors.Workspace;
-    using Allors.Workspace.Data;
-    using Allors.Workspace.Meta;
-    using Xunit;
 
     public abstract class Context
     {
@@ -14,9 +8,9 @@ namespace Tests.Workspace
         {
             this.Test = test;
             this.Name = name;
-            this.SharedDatabaseWorkspace = this.Test.Profile.CreateWorkspace();
+            this.SharedDatabaseWorkspace = this.Test.Profile.CreateWorkspaceConnection();
             this.SharedDatabaseSession = this.SharedDatabaseWorkspace.CreateWorkspace();
-            this.ExclusiveDatabaseWorkspace = this.Test.Profile.CreateExclusiveWorkspace();
+            this.ExclusiveDatabaseWorkspace = this.Test.Profile.CreateExclusiveWorkspaceConnection();
             this.ExclusiveDatabaseSession = this.ExclusiveDatabaseWorkspace.CreateWorkspace();
         }
 
