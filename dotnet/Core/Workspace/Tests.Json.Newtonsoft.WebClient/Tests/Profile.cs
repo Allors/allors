@@ -6,11 +6,14 @@
 namespace Tests.Workspace.Json
 {
     using System;
+    using System.Net;
+    using System.Net.Http;
     using System.Threading.Tasks;
     using Allors.Workspace;
     using Allors.Workspace.Adapters;
     using Allors.Workspace.Adapters.Json.Newtonsoft.WebClient;
     using Allors.Workspace.Meta;
+    using Polly;
     using RestSharp;
     using RestSharp.Serializers.NewtonsoftJson;
     using Xunit;
@@ -33,6 +36,10 @@ namespace Tests.Workspace.Json
 
         public M M => (M)this.WorkspaceConnection.MetaPopulation;
 
+        public IAsyncPolicy Policy { get; set; } = Polly.Policy
+            .Handle<WebException>()
+            .WaitAndRetryAsync(5, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
+
         public Profile()
         {
             this.metaPopulation = new MetaBuilder().Build();
@@ -43,7 +50,7 @@ namespace Tests.Workspace.Json
         {
             var request = new RestRequest($"{Url}{SetupUrl}", RestSharp.Method.GET, DataFormat.Json);
             var restClient = this.CreateRestClient();
-            var response = await restClient.ExecuteAsync(request);
+            var response = await this.Policy.ExecuteAsync(async () => await restClient.ExecuteAsync(request));
             Assert.True(response.IsSuccessful);
 
             this.client = new Client(this.CreateRestClient);

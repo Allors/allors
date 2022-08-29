@@ -12,6 +12,7 @@ namespace Tests.Workspace.Json
     using Allors.Workspace.Adapters;
     using Allors.Workspace.Adapters.Json.SystemText;
     using Allors.Workspace.Meta;
+    using Polly;
     using Xunit;
     using WorkspaceConnection = Allors.Workspace.Adapters.Json.SystemText.WorkspaceConnection;
 
@@ -40,10 +41,14 @@ namespace Tests.Workspace.Json
 
         public M M { get; }
 
+        public IAsyncPolicy Policy { get; set; } = Polly.Policy
+            .Handle<HttpRequestException>()
+            .WaitAndRetryAsync(5, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
+
         public async Task InitializeAsync()
         {
             this.httpClient = new HttpClient { BaseAddress = new Uri(Url), Timeout = TimeSpan.FromMinutes(30) };
-            var response = await this.httpClient.GetAsync(SetupUrl);
+            var response = await this.Policy.ExecuteAsync(async () => await this.httpClient.GetAsync(SetupUrl));
             Assert.True(response.IsSuccessStatusCode);
 
             this.client = new Client(() => this.httpClient);
