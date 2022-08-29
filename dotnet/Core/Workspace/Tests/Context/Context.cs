@@ -8,10 +8,10 @@ namespace Tests.Workspace
         {
             this.Test = test;
             this.Name = name;
-            this.SharedDatabaseWorkspace = this.Test.Profile.CreateWorkspaceConnection();
-            this.SharedDatabaseSession = this.SharedDatabaseWorkspace.CreateWorkspace();
-            this.ExclusiveDatabaseWorkspace = this.Test.Profile.CreateExclusiveWorkspaceConnection();
-            this.ExclusiveDatabaseSession = this.ExclusiveDatabaseWorkspace.CreateWorkspace();
+            this.SharedDatabase = this.Test.Profile.CreateWorkspaceConnection();
+            this.SharedDatabaseSession = this.SharedDatabase.CreateWorkspace();
+            this.ExclusiveDatabase = this.Test.Profile.CreateExclusiveWorkspaceConnection();
+            this.ExclusiveDatabaseSession = this.ExclusiveDatabase.CreateWorkspace();
         }
 
         public Test Test { get; }
@@ -22,11 +22,11 @@ namespace Tests.Workspace
 
         public IWorkspace Session2 { get; protected set; }
 
-        public IWorkspaceConnection SharedDatabaseWorkspace { get; }
+        public IConnection SharedDatabase { get; }
 
         public IWorkspace SharedDatabaseSession { get; }
 
-        public IWorkspaceConnection ExclusiveDatabaseWorkspace { get; }
+        public IConnection ExclusiveDatabase { get; }
 
         public IWorkspace ExclusiveDatabaseSession { get; }
 

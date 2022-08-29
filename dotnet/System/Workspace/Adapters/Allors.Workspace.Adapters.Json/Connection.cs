@@ -18,7 +18,7 @@ namespace Allors.Workspace.Adapters.Json
     using System.Threading.Tasks;
     using Meta;
 
-    public abstract class WorkspaceConnection : Adapters.WorkspaceConnection
+    public abstract class Connection : Adapters.Connection
     {
         private readonly Dictionary<long, DatabaseRecord> recordsById;
 
@@ -27,7 +27,7 @@ namespace Allors.Workspace.Adapters.Json
         private readonly Dictionary<Class, Dictionary<IOperandType, long>> executePermissionByOperandTypeByClass;
 
 
-        protected WorkspaceConnection(string name, MetaPopulation metaPopulation, IObjectFactory objectFactory) : base(name, metaPopulation, objectFactory)
+        protected Connection(string name, MetaPopulation metaPopulation, IObjectFactory objectFactory) : base(name, metaPopulation, objectFactory)
         {
             this.recordsById = new Dictionary<long, DatabaseRecord>();
 

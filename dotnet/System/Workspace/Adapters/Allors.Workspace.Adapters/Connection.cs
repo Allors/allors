@@ -7,9 +7,9 @@ namespace Allors.Workspace.Adapters
 {
     using Meta;
 
-    public abstract class WorkspaceConnection : IWorkspaceConnection
+    public abstract class Connection : IConnection
     {
-        protected WorkspaceConnection(string name, MetaPopulation metaPopulation, IObjectFactory objectFactory)
+        protected Connection(string name, MetaPopulation metaPopulation, IObjectFactory objectFactory)
         {
             this.Name = name;
             this.MetaPopulation = metaPopulation;

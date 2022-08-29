@@ -26,7 +26,7 @@ namespace Allors.Workspace.Adapters.Direct
 
         public Pull(Workspace session) : base(session)
         {
-            this.Workspace = session.WorkspaceConnection;
+            this.Workspace = session.Connection;
             var database = this.Workspace.Database;
             this.Transaction = database.CreateTransaction();
 
@@ -54,7 +54,7 @@ namespace Allors.Workspace.Adapters.Direct
 
         private Dictionary<string, object> ValueByName { get; } = new Dictionary<string, object>();
 
-        private WorkspaceConnection Workspace { get; }
+        private Connection Workspace { get; }
 
         private ITransaction Transaction { get; }
 

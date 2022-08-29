@@ -10,9 +10,9 @@ namespace Allors.Workspace.Blazor
 
         private readonly AllorsAuthenticationStateProviderConfig Config;
 
-        private readonly IWorkspaceConnection workspace;
+        private readonly IConnection workspace;
 
-        public AllorsAuthenticationStateProvider(AllorsAuthenticationStateProviderConfig config, IWorkspaceConnection workspace)
+        public AllorsAuthenticationStateProvider(AllorsAuthenticationStateProviderConfig config, IConnection workspace)
         {
             this.Config = config;
             this.workspace = workspace;

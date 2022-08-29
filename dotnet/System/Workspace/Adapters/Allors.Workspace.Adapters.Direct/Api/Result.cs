@@ -5,7 +5,6 @@
 
 namespace Allors.Workspace.Adapters.Direct
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -15,8 +14,6 @@ namespace Allors.Workspace.Adapters.Direct
         private readonly List<long> databaseMissingIds;
         private List<Database.Derivations.IDerivationError> derivationErrors;
         private readonly List<long> versionErrors;
-
-        private IList<IObject> mergeErrors;
 
         protected Result(Workspace session)
         {
@@ -40,20 +37,11 @@ namespace Allors.Workspace.Adapters.Direct
             ?.Select<Database.Derivations.IDerivationError, IDerivationError>(v =>
                 new DerivationError(this.Session, v)).ToArray();
 
-        public IEnumerable<IObject> MergeErrors => this.mergeErrors ?? Array.Empty<IObject>();
-
         public bool HasErrors => !string.IsNullOrWhiteSpace(this.ErrorMessage) ||
                                  this.accessErrorStrategies?.Count > 0 ||
                                  this.databaseMissingIds?.Count > 0 ||
                                  this.versionErrors?.Count > 0 ||
-                                 this.derivationErrors?.Count > 0 ||
-                                 this.mergeErrors?.Count > 0;
-
-        public void AddMergeError(IObject @object)
-        {
-            this.mergeErrors ??= new List<IObject>();
-            this.mergeErrors.Add(@object);
-        }
+                                 this.derivationErrors?.Count > 0;
 
         internal void AddDerivationErrors(Database.Derivations.IDerivationError[] errors) =>
             (this.derivationErrors ??= new List<Database.Derivations.IDerivationError>()).AddRange(errors);

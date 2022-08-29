@@ -17,11 +17,11 @@ namespace Allors.Workspace.Adapters.Json.Newtonsoft.WebClient
     using Meta;
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "RCS1090:Add call to 'ConfigureAwait' (or vice versa).", Justification = "<Pending>")]
-    public class WorkspaceConnection : Json.WorkspaceConnection
+    public class Connection : Json.Connection
     {
         private readonly Client client;
 
-        public WorkspaceConnection(Client client, string name, MetaPopulation metaPopulation, IObjectFactory objectFactory) : base(name, metaPopulation, objectFactory)
+        public Connection(Client client, string name, MetaPopulation metaPopulation, IObjectFactory objectFactory) : base(name, metaPopulation, objectFactory)
         {
             this.client = client;
             this.UnitConvert = new UnitConvert();

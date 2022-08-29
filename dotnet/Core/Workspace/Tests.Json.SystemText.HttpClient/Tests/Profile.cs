@@ -14,7 +14,7 @@ namespace Tests.Workspace.Json
     using Allors.Workspace.Meta;
     using Polly;
     using Xunit;
-    using WorkspaceConnection = Allors.Workspace.Adapters.Json.SystemText.WorkspaceConnection;
+    using Connection = Allors.Workspace.Adapters.Json.SystemText.Connection;
 
     public class Profile : IProfile
     {
@@ -35,9 +35,9 @@ namespace Tests.Workspace.Json
             this.objectFactory = new ReflectionObjectFactory(this.M, typeof(Allors.Workspace.Domain.Person));
         }
 
-        IWorkspaceConnection IProfile.WorkspaceConnection => this.WorkspaceConnection;
+        IConnection IProfile.Connection => this.Connection;
 
-        public IWorkspaceConnection WorkspaceConnection { get; private set; }
+        public IConnection Connection { get; private set; }
 
         public M M { get; }
 
@@ -53,16 +53,16 @@ namespace Tests.Workspace.Json
 
             this.client = new Client(() => this.httpClient);
 
-            this.WorkspaceConnection = new WorkspaceConnection(this.client, "Default", this.M, this.objectFactory);
+            this.Connection = new Connection(this.client, "Default", this.M, this.objectFactory);
 
             await this.Login("administrator");
         }
 
         public Task DisposeAsync() => Task.CompletedTask;
 
-        public IWorkspaceConnection CreateExclusiveWorkspaceConnection() => new WorkspaceConnection(this.client, "Default", this.M, this.objectFactory);
+        public IConnection CreateExclusiveWorkspaceConnection() => new Connection(this.client, "Default", this.M, this.objectFactory);
 
-        public IWorkspaceConnection CreateWorkspaceConnection() => new WorkspaceConnection(this.client, "Default", this.M, this.objectFactory);
+        public IConnection CreateWorkspaceConnection() => new Connection(this.client, "Default", this.M, this.objectFactory);
 
         public async Task Login(string user)
         {

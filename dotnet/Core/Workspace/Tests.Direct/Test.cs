@@ -16,7 +16,7 @@ namespace Tests.Workspace.Direct
         {
         }
 
-        public IWorkspaceConnection Workspace => this.Profile.WorkspaceConnection;
+        public IConnection Workspace => this.Profile.Connection;
 
         public M M => (M)this.Workspace.MetaPopulation;
 

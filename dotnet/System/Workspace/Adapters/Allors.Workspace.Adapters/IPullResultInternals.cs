@@ -7,6 +7,5 @@ namespace Allors.Workspace.Adapters
 {
     public interface IPullResultInternals : IPullResult
     {
-        void AddMergeError(IObject @object);
     }
 }

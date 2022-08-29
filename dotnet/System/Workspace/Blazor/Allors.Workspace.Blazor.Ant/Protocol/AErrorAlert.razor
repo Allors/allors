@@ -48,18 +48,6 @@
         </ul>
     }
 
-    @if (isMergeError)
-    {
-        <h4>Following errors were encountered during merging.</h4>
-        <ul>
-            @foreach (var error in Response.MergeErrors)
-            {
-                <li>@error.Id</li>
-            }
-        </ul>
-    }
-
-
     @if (isOtherError)
     {
         @Response.ErrorMessage
@@ -82,8 +70,6 @@
 
     bool isDerivationError;
 
-    bool isMergeError;
-
     bool isOtherError;
 
     bool HasErrors => this.Response?.HasErrors == true;
@@ -95,7 +81,6 @@
         isVersionError = false;
         isMissingError = false;
         isDerivationError = false;
-        isMergeError = false;
         isOtherError = false;
 
         if (this.HasErrors)
@@ -119,11 +104,6 @@
             {
                 this.isDerivationError = true;
                 this.title = "Derivation Errors";
-            }
-            else if (this.Response.MergeErrors?.Count() > 0)
-            {
-                this.isMergeError = true;
-                this.title = "Merge Errors";
             }
             else
             {

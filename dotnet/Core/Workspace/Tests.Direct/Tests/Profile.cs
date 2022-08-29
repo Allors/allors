@@ -25,11 +25,11 @@ namespace Tests.Workspace.Direct
 
         public Database Database { get; }
 
-        IWorkspaceConnection IProfile.WorkspaceConnection => this.WorkspaceConnection;
+        IConnection IProfile.Connection => this.Connection;
 
-        public Allors.Workspace.Adapters.Direct.WorkspaceConnection WorkspaceConnection { get; private set; }
+        public Allors.Workspace.Adapters.Direct.Connection Connection { get; private set; }
 
-        public M M => (M)this.WorkspaceConnection.MetaPopulation;
+        public M M => (M)this.Connection.MetaPopulation;
 
         public Profile(Fixture fixture)
         {
@@ -46,7 +46,7 @@ namespace Tests.Workspace.Direct
 
             this.Database.Init();
 
-            this.WorkspaceConnection = new Allors.Workspace.Adapters.Direct.WorkspaceConnection(this.Database, "Default", this.metaPopulation, this.objectFactory);
+            this.Connection = new Allors.Workspace.Adapters.Direct.Connection(this.Database, "Default", this.metaPopulation, this.objectFactory);
 
             var config = new Config();
             new Setup(this.Database, config).Apply();
@@ -66,9 +66,9 @@ namespace Tests.Workspace.Direct
 
         public Task DisposeAsync() => Task.CompletedTask;
 
-        public IWorkspaceConnection CreateExclusiveWorkspaceConnection() => new Allors.Workspace.Adapters.Direct.WorkspaceConnection(this.Database, "Default", this.metaPopulation, this.objectFactory) { UserId = this.user.Id };
+        public IConnection CreateExclusiveWorkspaceConnection() => new Allors.Workspace.Adapters.Direct.Connection(this.Database, "Default", this.metaPopulation, this.objectFactory) { UserId = this.user.Id };
 
-        public IWorkspaceConnection CreateWorkspaceConnection() => new Allors.Workspace.Adapters.Direct.WorkspaceConnection(this.Database, "Default", this.metaPopulation, this.objectFactory) { UserId = this.user.Id };
+        public IConnection CreateWorkspaceConnection() => new Allors.Workspace.Adapters.Direct.Connection(this.Database, "Default", this.metaPopulation, this.objectFactory) { UserId = this.user.Id };
 
         public Task Login(string userName)
         {
@@ -76,7 +76,7 @@ namespace Tests.Workspace.Direct
             this.user = new Users(transaction).Extent().ToArray().First(v => v.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase));
             transaction.Services.Get<IUserService>().User = this.user;
 
-            this.WorkspaceConnection.UserId = this.user.Id;
+            this.Connection.UserId = this.user.Id;
 
             return Task.CompletedTask;
         }

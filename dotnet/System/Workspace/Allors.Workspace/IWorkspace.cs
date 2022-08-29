@@ -12,7 +12,7 @@ namespace Allors.Workspace
 
     public interface IWorkspace
     {
-        IWorkspaceConnection WorkspaceConnection { get; }
+        IConnection Connection { get; }
 
         #region Instantiate
         T Instantiate<T>(IObject @object) where T : class, IObject;

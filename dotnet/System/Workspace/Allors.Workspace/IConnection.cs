@@ -7,7 +7,7 @@ namespace Allors.Workspace
 {
     using Allors.Workspace.Meta;
 
-    public interface IWorkspaceConnection
+    public interface IConnection
     {
         string Name { get; }
 

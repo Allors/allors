@@ -175,6 +175,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Workspace.Tests.Json.System
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Protocol", "Protocol", "{D8985575-4B4A-4BFA-9677-E7BABD17B5D1}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Workspace.Api", "System\Workspace\Allors.Workspace.Api\Allors.Workspace.Api.csproj", "{F6429595-8622-4E97-9BA9-32E21E56FA2A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -457,6 +459,10 @@ Global
 		{42C852D3-C1CE-4125-8390-A0855CCC8AB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{42C852D3-C1CE-4125-8390-A0855CCC8AB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{42C852D3-C1CE-4125-8390-A0855CCC8AB6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6429595-8622-4E97-9BA9-32E21E56FA2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6429595-8622-4E97-9BA9-32E21E56FA2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6429595-8622-4E97-9BA9-32E21E56FA2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6429595-8622-4E97-9BA9-32E21E56FA2A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -545,6 +551,7 @@ Global
 		{93B45DFE-7F5C-49CD-B287-09B9B50FF5AC} = {38DA0455-9724-498A-83EF-B4285EB00AD1}
 		{42C852D3-C1CE-4125-8390-A0855CCC8AB6} = {38DA0455-9724-498A-83EF-B4285EB00AD1}
 		{D8985575-4B4A-4BFA-9677-E7BABD17B5D1} = {F0CFA0DB-205F-4914-8D96-33D1D500A0CC}
+		{F6429595-8622-4E97-9BA9-32E21E56FA2A} = {F0CFA0DB-205F-4914-8D96-33D1D500A0CC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {00D78C3D-8536-4549-B1EE-C19BD0C50387}

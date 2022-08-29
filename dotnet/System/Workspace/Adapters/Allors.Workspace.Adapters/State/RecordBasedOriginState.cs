@@ -96,7 +96,7 @@ namespace Allors.Workspace.Adapters
 
         protected Workspace Session => this.Strategy.Workspace;
 
-        protected WorkspaceConnection Workspace => this.Session.WorkspaceConnection;
+        protected Connection Workspace => this.Session.Connection;
 
         #endregion
     }

@@ -9,8 +9,6 @@ namespace Allors.Workspace
 
     public interface IPullResult : IResult
     {
-        IEnumerable<IObject> MergeErrors { get; }
-
         IDictionary<string, IObject[]> Collections { get; }
 
         IDictionary<string, IObject> Objects { get; }

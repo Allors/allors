@@ -10,15 +10,15 @@ namespace Allors.Workspace.Adapters.Direct
 
     public class Workspace : Adapters.Workspace
     {
-        internal Workspace(Adapters.WorkspaceConnection workspaceConnection) : base(workspaceConnection)
+        internal Workspace(Adapters.Connection connection) : base(connection)
         {
         }
 
-        public new WorkspaceConnection WorkspaceConnection => (WorkspaceConnection)base.WorkspaceConnection;
+        public new Connection Connection => (Connection)base.Connection;
 
         private void InstantiateDatabaseStrategy(long id)
         {
-            var databaseRecord = this.WorkspaceConnection.GetRecord(id);
+            var databaseRecord = this.Connection.GetRecord(id);
             var strategy = new Strategy(this, (DatabaseRecord)databaseRecord);
             this.AddStrategy(strategy);
         }
@@ -74,8 +74,8 @@ namespace Allors.Workspace.Adapters.Direct
 
         internal void OnPulled(Pull pull)
         {
-            var syncObjects = this.WorkspaceConnection.ObjectsToSync(pull);
-            this.WorkspaceConnection.Sync(syncObjects, pull.AccessControl);
+            var syncObjects = this.Connection.ObjectsToSync(pull);
+            this.Connection.Sync(syncObjects, pull.AccessControl);
 
             foreach (var databaseObject in pull.DatabaseObjects)
             {

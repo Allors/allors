@@ -17,13 +17,13 @@ namespace Allors.Workspace.Adapters.Direct
     using System;
     using IOperandType = Meta.IOperandType;
 
-    public class WorkspaceConnection : Adapters.WorkspaceConnection
+    public class Connection : Adapters.Connection
     {
         private readonly Dictionary<long, Grant> accessControlById;
         private readonly IPermissions permission;
         private readonly ConcurrentDictionary<long, DatabaseRecord> recordsById;
 
-        public WorkspaceConnection(IDatabase database, string name, MetaPopulation metaPopulation, Allors.Workspace.IObjectFactory objectFactory) : base(name, metaPopulation, objectFactory)
+        public Connection(IDatabase database, string name, MetaPopulation metaPopulation, Allors.Workspace.IObjectFactory objectFactory) : base(name, metaPopulation, objectFactory)
         {
             this.Database = database;
 

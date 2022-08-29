@@ -16,13 +16,13 @@ namespace Allors.Workspace.Adapters.Json
 
     public class Workspace : Adapters.Workspace
     {
-        internal Workspace(WorkspaceConnection workspace) : base(workspace) { }
+        internal Workspace(Connection workspace) : base(workspace) { }
 
-        public new WorkspaceConnection WorkspaceConnection => (WorkspaceConnection)base.WorkspaceConnection;
+        public new Connection Connection => (Connection)base.Connection;
 
         private void InstantiateDatabaseStrategy(long id)
         {
-            var databaseRecord = (DatabaseRecord)base.WorkspaceConnection.GetRecord(id);
+            var databaseRecord = (DatabaseRecord)base.Connection.GetRecord(id);
             var strategy = new Strategy(this, databaseRecord);
             this.AddStrategy(strategy);
         }
@@ -36,20 +36,20 @@ namespace Allors.Workspace.Adapters.Json
                 return pullResult;
             }
 
-            var syncRequest = this.WorkspaceConnection.OnPullResponse(pullResponse);
+            var syncRequest = this.Connection.OnPullResponse(pullResponse);
             if (syncRequest.o.Length > 0)
             {
-                var syncResponse = await this.WorkspaceConnection.Sync(syncRequest);
-                var accessRequest = this.WorkspaceConnection.OnSyncResponse(syncResponse);
+                var syncResponse = await this.Connection.Sync(syncRequest);
+                var accessRequest = this.Connection.OnSyncResponse(syncResponse);
 
                 if (accessRequest != null)
                 {
-                    var accessResponse = await this.WorkspaceConnection.Access(accessRequest);
-                    var permissionRequest = this.WorkspaceConnection.AccessResponse(accessResponse);
+                    var accessResponse = await this.Connection.Access(accessRequest);
+                    var permissionRequest = this.Connection.AccessResponse(accessResponse);
                     if (permissionRequest != null)
                     {
-                        var permissionResponse = await this.WorkspaceConnection.Permission(permissionRequest);
-                        this.WorkspaceConnection.PermissionResponse(permissionResponse);
+                        var permissionResponse = await this.Connection.Permission(permissionRequest);
+                        this.Connection.PermissionResponse(permissionResponse);
                     }
                 }
             }
@@ -90,13 +90,13 @@ namespace Allors.Workspace.Adapters.Json
                     : null
             };
 
-            var invokeResponse = await this.WorkspaceConnection.Invoke(invokeRequest);
+            var invokeResponse = await this.Connection.Invoke(invokeRequest);
             return new InvokeResult(this, invokeResponse);
         }
 
         public override async Task<IPullResult> CallAsync(object args, string name)
         {
-            var pullResponse = await this.WorkspaceConnection.Pull(args, name);
+            var pullResponse = await this.Connection.Pull(args, name);
             return await this.OnPull(pullResponse);
         }
 
@@ -110,9 +110,9 @@ namespace Allors.Workspace.Adapters.Json
                 }
             }
 
-            var pullRequest = new PullRequest { l = pulls.Select(v => v.ToJson(this.WorkspaceConnection.UnitConvert)).ToArray() };
+            var pullRequest = new PullRequest { l = pulls.Select(v => v.ToJson(this.Connection.UnitConvert)).ToArray() };
 
-            var pullResponse = await this.WorkspaceConnection.Pull(pullRequest);
+            var pullResponse = await this.Connection.Pull(pullRequest);
             return await this.OnPull(pullResponse);
         }
 
@@ -120,11 +120,11 @@ namespace Allors.Workspace.Adapters.Json
         {
             var pullRequest = new PullRequest
             {
-                p = procedure.ToJson(this.WorkspaceConnection.UnitConvert),
-                l = pull.Select(v => v.ToJson(this.WorkspaceConnection.UnitConvert)).ToArray()
+                p = procedure.ToJson(this.Connection.UnitConvert),
+                l = pull.Select(v => v.ToJson(this.Connection.UnitConvert)).ToArray()
             };
 
-            var pullResponse = await this.WorkspaceConnection.Pull(pullRequest);
+            var pullResponse = await this.Connection.Pull(pullRequest);
             return await this.OnPull(pullResponse);
         }
     }

@@ -19,9 +19,9 @@ namespace Allors.Workspace.Adapters.Json.SystemText
     using Polly;
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "RCS1090:Add call to 'ConfigureAwait' (or vice versa).", Justification = "<Pending>")]
-    public class WorkspaceConnection : Json.WorkspaceConnection
+    public class Connection : Json.Connection
     {
-        public WorkspaceConnection(Client client, string name, MetaPopulation metaPopulation, IObjectFactory objectFactory) : base(name, metaPopulation, objectFactory)
+        public Connection(Client client, string name, MetaPopulation metaPopulation, IObjectFactory objectFactory) : base(name, metaPopulation, objectFactory)
         {
             this.Client = client;
             this.UnitConvert = new UnitConvert();

@@ -22,11 +22,11 @@ namespace Allors.Workspace.Adapters.Json
 
         public PullResult(Adapters.Workspace session, PullResponse response) : base(session, response)
         {
-            this.Workspace = session.WorkspaceConnection;
+            this.Workspace = session.Connection;
             this.pullResponse = response;
         }
 
-        private IWorkspaceConnection Workspace { get; }
+        private IConnection Workspace { get; }
 
         public IDictionary<string, IObject> Objects => this.objects ??= this.pullResponse.o.ToDictionary(pair => pair.Key.ToUpperInvariant(), pair => this.Session.Instantiate<IObject>(pair.Value));
 

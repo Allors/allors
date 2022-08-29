@@ -7,7 +7,6 @@ namespace Tests.Workspace.Json
 {
     using System;
     using System.Net;
-    using System.Net.Http;
     using System.Threading.Tasks;
     using Allors.Workspace;
     using Allors.Workspace.Adapters;
@@ -30,11 +29,11 @@ namespace Tests.Workspace.Json
 
         private Client client;
 
-        IWorkspaceConnection IProfile.WorkspaceConnection => this.WorkspaceConnection;
+        IConnection IProfile.Connection => this.Connection;
 
-        public Allors.Workspace.Adapters.Json.Newtonsoft.WebClient.WorkspaceConnection WorkspaceConnection { get; private set; }
+        public Allors.Workspace.Adapters.Json.Newtonsoft.WebClient.Connection Connection { get; private set; }
 
-        public M M => (M)this.WorkspaceConnection.MetaPopulation;
+        public M M => (M)this.Connection.MetaPopulation;
 
         public IAsyncPolicy Policy { get; set; } = Polly.Policy
             .Handle<WebException>()
@@ -54,16 +53,16 @@ namespace Tests.Workspace.Json
             Assert.True(response.IsSuccessful);
 
             this.client = new Client(this.CreateRestClient);
-            this.WorkspaceConnection = new Allors.Workspace.Adapters.Json.Newtonsoft.WebClient.WorkspaceConnection(this.client, "Default", this.metaPopulation, this.objectFactory);
+            this.Connection = new Allors.Workspace.Adapters.Json.Newtonsoft.WebClient.Connection(this.client, "Default", this.metaPopulation, this.objectFactory);
 
             await this.Login("administrator");
         }
 
         public Task DisposeAsync() => Task.CompletedTask;
 
-        public IWorkspaceConnection CreateExclusiveWorkspaceConnection() => new Allors.Workspace.Adapters.Json.Newtonsoft.WebClient.WorkspaceConnection(this.client, "Default", this.metaPopulation, this.objectFactory);
+        public IConnection CreateExclusiveWorkspaceConnection() => new Allors.Workspace.Adapters.Json.Newtonsoft.WebClient.Connection(this.client, "Default", this.metaPopulation, this.objectFactory);
 
-        public IWorkspaceConnection CreateWorkspaceConnection() => new Allors.Workspace.Adapters.Json.Newtonsoft.WebClient.WorkspaceConnection(this.client, "Default", this.metaPopulation, this.objectFactory);
+        public IConnection CreateWorkspaceConnection() => new Allors.Workspace.Adapters.Json.Newtonsoft.WebClient.Connection(this.client, "Default", this.metaPopulation, this.objectFactory);
 
         public async Task Login(string user)
         {
