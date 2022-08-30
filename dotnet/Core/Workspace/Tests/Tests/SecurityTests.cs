@@ -25,6 +25,7 @@ namespace Tests.Workspace
         public async void WithGrant()
         {
             await this.Login("administrator");
+            var m = this.M;
 
             foreach (var connection in this.Connections)
             {
@@ -35,8 +36,7 @@ namespace Tests.Workspace
 
                 var result = await connection.PullAsync(pull);
 
-                var c1s = result.GetCollection("C1s");
-                foreach (var c1 in result.GetCollection(M.C1))
+                foreach (var c1 in result.GetCollection(m.C1))
                 {
                     foreach (var roleType in this.M.C1.DatabaseOriginRoleTypes)
                     {
@@ -51,6 +51,7 @@ namespace Tests.Workspace
         public async void WithoutAccessControl()
         {
             await this.Login("noacl");
+            var m = this.M;
 
             foreach (var connection in this.Connections)
             {
@@ -61,7 +62,7 @@ namespace Tests.Workspace
 
                 var result = await connection.PullAsync(pull);
 
-                foreach (var c1 in result.GetCollection(M.C1))
+                foreach (var c1 in result.GetCollection(m.C1))
                 {
                     foreach (var roleType in this.M.C1.DatabaseOriginRoleTypes)
                     {
@@ -76,6 +77,7 @@ namespace Tests.Workspace
         public async void WithoutPermissions()
         {
             await this.Login("noperm");
+            var m = this.M;
 
             foreach (var connection in this.Connections)
             {
@@ -86,7 +88,7 @@ namespace Tests.Workspace
 
                 var result = await connection.PullAsync(pull);
 
-                foreach (var c1 in result.GetCollection(M.C1))
+                foreach (var c1 in result.GetCollection(m.C1))
                 {
                     foreach (var roleType in this.M.C1.DatabaseOriginRoleTypes)
                     {
@@ -100,11 +102,13 @@ namespace Tests.Workspace
         [Fact]
         public async void DeniedPermissions()
         {
+            var m = this.M;
+
             foreach (var connection in this.Connections)
             {
                 var result = await connection.PullAsync(new Pull { Extent = new Filter(this.M.Denied) });
 
-                foreach (var denied in result.GetCollection(M.Denied))
+                foreach (var denied in result.GetCollection(m.Denied))
                 {
                     foreach (var roleType in this.M.C1.DatabaseOriginRoleTypes)
                     {

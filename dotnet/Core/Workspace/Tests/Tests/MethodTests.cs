@@ -23,22 +23,23 @@ namespace Tests.Workspace
             await this.Login("administrator");
 
             var connection = this.Connection;
+            var m = this.M;
 
-            var pull = new[] { new Pull { Extent = new Filter(this.M.Organization) } };
+            var pull = new[] { new Pull { Extent = new Filter(m.Organization) } };
 
-            var organization = (await connection.PullAsync(pull)).GetCollection(M.Organization)[0];
+            var organization = (await connection.PullAsync(pull)).GetCollection(m.Organization)[0];
 
-            Assert.False((bool)organization.GetUnitRole(M.Organization.JustDidIt));
+            Assert.False((bool)organization.GetUnitRole(m.Organization.JustDidIt));
 
-            var invokeResult = await connection.InvokeAsync(new Method(organization, M.Organization.JustDoIt));
+            var invokeResult = await connection.InvokeAsync(new Method(organization, m.Organization.JustDoIt));
 
             Assert.False(invokeResult.HasErrors);
 
             var result = await connection.PullAsync(new Pull { Object = organization });
-            organization = result.GetObject(M.Organization);
+            organization = result.GetObject(m.Organization);
 
-            Assert.True((bool)organization.GetUnitRole(M.Organization.JustDidIt));
-            Assert.True((bool)organization.GetUnitRole(M.Organization.JustDidItDerived));
+            Assert.True((bool)organization.GetUnitRole(m.Organization.JustDidIt));
+            Assert.True((bool)organization.GetUnitRole(m.Organization.JustDidItDerived));
         }
 
         [Fact]
@@ -46,29 +47,30 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
+            var connection = this.Connection;
+            var m = this.M;
 
-            var pull = new[] { new Pull { Extent = new Filter(this.M.Organization) } };
+            var pull = new[] { new Pull { Extent = new Filter(m.Organization) } };
 
-            var organization1 = (await session.PullAsync(pull)).GetCollection(M.Organization)[0];
-            var organization2 = (await session.PullAsync(pull)).GetCollection(M.Organization).Skip(1).First();
+            var organization1 = (await connection.PullAsync(pull)).GetCollection(m.Organization)[0];
+            var organization2 = (await connection.PullAsync(pull)).GetCollection(m.Organization).Skip(1).First();
 
-            Assert.False((bool)organization1.GetUnitRole(M.Organization.JustDidIt));
+            Assert.False((bool)organization1.GetUnitRole(m.Organization.JustDidIt));
 
-            var invokeResult = await session.InvokeAsync(new[] { new Method(organization1, M.Organization.JustDoIt), new Method(organization2, M.Organization.JustDoIt) });
+            var invokeResult = await connection.InvokeAsync(new[] { new Method(organization1, m.Organization.JustDoIt), new Method(organization2, m.Organization.JustDoIt) });
 
             Assert.False(invokeResult.HasErrors);
 
-            var result = await session.PullAsync(pull);
+            var result = await connection.PullAsync(pull);
 
-            organization1 = result.GetCollection(M.Organization)[0];
-            organization2 = result.GetCollection(M.Organization).Skip(1).First();
+            organization1 = result.GetCollection(m.Organization)[0];
+            organization2 = result.GetCollection(m.Organization).Skip(1).First();
 
-            Assert.True((bool)organization1.GetUnitRole(M.Organization.JustDidIt));
-            Assert.True((bool)organization1.GetUnitRole(M.Organization.JustDidItDerived));
+            Assert.True((bool)organization1.GetUnitRole(m.Organization.JustDidIt));
+            Assert.True((bool)organization1.GetUnitRole(m.Organization.JustDidItDerived));
 
-            Assert.True((bool)organization2.GetUnitRole(M.Organization.JustDidIt));
-            Assert.True((bool)organization2.GetUnitRole(M.Organization.JustDidItDerived));
+            Assert.True((bool)organization2.GetUnitRole(m.Organization.JustDidIt));
+            Assert.True((bool)organization2.GetUnitRole(m.Organization.JustDidItDerived));
         }
 
         [Fact]
@@ -76,30 +78,30 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
+            var connection = this.Connection;
+            var m = this.M;
 
-            var pull = new[] { new Pull { Extent = new Filter(this.M.Organization) } };
+            var pull = new[] { new Pull { Extent = new Filter(m.Organization) } };
 
-            var organization1 = (await session.PullAsync(pull)).GetCollection(M.Organization)[0];
-            var organization2 = (await session.PullAsync(pull)).GetCollection(M.Organization).Skip(1).First();
+            var organization1 = (await connection.PullAsync(pull)).GetCollection(m.Organization)[0];
+            var organization2 = (await connection.PullAsync(pull)).GetCollection(m.Organization).Skip(1).First();
 
-            Assert.False((bool)organization1.GetUnitRole(M.Organization.JustDidIt));
+            Assert.False((bool)organization1.GetUnitRole(m.Organization.JustDidIt));
 
-            var invokeResult = await session.InvokeAsync(new[] { new Method(organization1, M.Organization.JustDoIt), new Method(organization2, M.Organization.JustDoIt) }, new InvokeOptions { Isolated = true });
+            var invokeResult = await connection.InvokeAsync(new[] { new Method(organization1, m.Organization.JustDoIt), new Method(organization2, m.Organization.JustDoIt) }, new InvokeOptions { Isolated = true });
 
             Assert.False(invokeResult.HasErrors);
 
-            var result = await session.PullAsync(pull);
+            var result = await connection.PullAsync(pull);
 
-            organization1 = result.GetCollection(M.Organization)[0];
-            organization2 = result.GetCollection(M.Organization).Skip(1).First();
+            organization1 = result.GetCollection(m.Organization)[0];
+            organization2 = result.GetCollection(m.Organization).Skip(1).First();
 
-            Assert.True((bool)organization1.GetUnitRole(M.Organization.JustDidIt));
-            Assert.True((bool)organization1.GetUnitRole(M.Organization.JustDidItDerived));
+            Assert.True((bool)organization1.GetUnitRole(m.Organization.JustDidIt));
+            Assert.True((bool)organization1.GetUnitRole(m.Organization.JustDidItDerived));
 
-            Assert.True((bool)organization2.GetUnitRole(M.Organization.JustDidIt));
-            Assert.True((bool)organization2.GetUnitRole(M.Organization.JustDidItDerived));
+            Assert.True((bool)organization2.GetUnitRole(m.Organization.JustDidIt));
+            Assert.True((bool)organization2.GetUnitRole(m.Organization.JustDidItDerived));
         }
-
     }
 }

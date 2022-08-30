@@ -24,12 +24,13 @@ namespace Tests.Workspace
         public async void Take()
         {
             await this.Login("administrator");
+            var m = this.M;
 
             foreach (var connection in this.Connections)
             {
                 var pull = new Pull
                 {
-                    Extent = new Filter(this.M.I12) { Sorting = new[] { new Sort(this.M.I12.Order) } },
+                    Extent = new Filter(m.I12) { Sorting = new[] { new Sort(m.I12.Order) } },
                     Results = new[]
                     {
                         new Result
@@ -41,11 +42,11 @@ namespace Tests.Workspace
 
                 var result = await connection.PullAsync(pull);
 
-                var i12s = result.GetCollection(M.I12);
+                var i12s = result.GetCollection(m.I12);
 
                 Assert.Single(i12s);
 
-                Assert.Equal("c2D", i12s[0].GetUnitRole(M.I12.Name));
+                Assert.Equal("c2D", i12s[0].GetUnitRole(m.I12.Name));
             }
         }
     }

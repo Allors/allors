@@ -17,6 +17,7 @@ namespace Tests.Workspace
         public async void Test()
         {
             await this.Login("administrator");
+            var m = this.M;
 
             foreach (var connection in this.Connections)
             {

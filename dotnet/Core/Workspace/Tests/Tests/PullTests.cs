@@ -24,7 +24,6 @@ namespace Tests.Workspace
         public async void AndGreaterThanLessThan()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
@@ -51,7 +50,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C1).Equal(c1B);
+                result.Assert().Collection(m.C1).Equal(c1B);
 
                 // Interface
                 pull = new Pull
@@ -75,7 +74,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.I12).Equal(c1B, c2B);
+                result.Assert().Collection(m.I12).Equal(c1B, c2B);
 
             }
         }
@@ -84,7 +83,6 @@ namespace Tests.Workspace
         public async void AssociationMany2ManyContainedIn()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
@@ -128,7 +126,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C2).Equal(c2B, c2C, c2D);
+                result.Assert().Collection(m.C2).Equal(c2B, c2C, c2D);
 
                 // Filtered
                 pull = new Pull
@@ -151,7 +149,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C2).Equal(c2B);
+                result.Assert().Collection(m.C2).Equal(c2B);
             }
         }
 
@@ -159,12 +157,11 @@ namespace Tests.Workspace
         public async void AssociationMany2ManyContains()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
             {
-                var c1c = await connection.PullObject(M.C1, c1C);
+                var c1c = await connection.PullObject(m.C1, c1C);
 
                 // Full
                 var pull = new Pull
@@ -184,7 +181,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C2).Equal(c2B, c2C);
+                result.Assert().Collection(m.C2).Equal(c2B, c2C);
             }
         }
 
@@ -192,7 +189,6 @@ namespace Tests.Workspace
         public async void AssociationMany2ManyExist()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
@@ -212,7 +208,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C2).Equal(c2B, c2C, c2D);
+                result.Assert().Collection(m.C2).Equal(c2B, c2C, c2D);
             }
         }
 
@@ -220,7 +216,6 @@ namespace Tests.Workspace
         public async void AssociationMany2OneContainedIn()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
@@ -245,7 +240,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C2).Equal(c2B);
+                result.Assert().Collection(m.C2).Equal(c2B);
             }
         }
 
@@ -253,12 +248,11 @@ namespace Tests.Workspace
         public async void AssociationMany2OneContains()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
             {
-                var c1c = await connection.PullObject(M.C1, c1C);
+                var c1c = await connection.PullObject(m.C1, c1C);
 
                 // Full
                 var pull = new Pull
@@ -278,7 +272,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C2).Equal(c2C);
+                result.Assert().Collection(m.C2).Equal(c2C);
             }
         }
 
@@ -286,7 +280,6 @@ namespace Tests.Workspace
         public async void AssociationOne2ManyContainedIn()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
@@ -311,7 +304,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C2).Equal(c2B);
+                result.Assert().Collection(m.C2).Equal(c2B);
             }
         }
 
@@ -319,13 +312,12 @@ namespace Tests.Workspace
         public async void AssociationOne2ManyEquals()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
             {
-                var c1b = await connection.PullObject(M.C1, c1B);
-                var c1c = await connection.PullObject(M.C1, c1C);
+                var c1b = await connection.PullObject(m.C1, c1B);
+                var c1c = await connection.PullObject(m.C1, c1C);
 
                 var pull = new Pull
                 {
@@ -344,7 +336,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C2).Equal(c2B);
+                result.Assert().Collection(m.C2).Equal(c2B);
 
                 pull = new Pull
                 {
@@ -363,7 +355,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C2).Equal(c2C, c2D);
+                result.Assert().Collection(m.C2).Equal(c2C, c2D);
             }
         }
 
@@ -371,7 +363,6 @@ namespace Tests.Workspace
         public async void AssociationOne2ManyExists()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
@@ -391,7 +382,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C2).Equal(c2B, c2C, c2D);
+                result.Assert().Collection(m.C2).Equal(c2B, c2C, c2D);
 
                 // Interface
                 pull = new Pull
@@ -408,7 +399,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.I2).Equal(c2B, c2C, c2D);
+                result.Assert().Collection(m.I2).Equal(c2B, c2C, c2D);
             }
         }
 
@@ -416,7 +407,6 @@ namespace Tests.Workspace
         public async void AssociationOne2ManyInstanceOf()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
@@ -435,7 +425,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C2).Equal(c2B, c2C, c2D);
+                result.Assert().Collection(m.C2).Equal(c2B, c2C, c2D);
             }
         }
 
@@ -443,7 +433,6 @@ namespace Tests.Workspace
         public async void AssociationOne2OneContainedIn()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
@@ -468,7 +457,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C2).Equal(c2B);
+                result.Assert().Collection(m.C2).Equal(c2B);
             }
         }
 
@@ -476,13 +465,12 @@ namespace Tests.Workspace
         public async void AssociationOne2OneEquals()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
             {
-                var c1b = await connection.PullObject(M.C1, c1B);
-                var c1c = await connection.PullObject(M.C1, c1C);
+                var c1b = await connection.PullObject(m.C1, c1B);
+                var c1c = await connection.PullObject(m.C1, c1C);
 
                 var pull = new Pull
                 {
@@ -501,7 +489,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C2).Equal(c2B);
+                result.Assert().Collection(m.C2).Equal(c2B);
 
                 pull = new Pull
                 {
@@ -520,7 +508,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C2).Equal(c2C);
+                result.Assert().Collection(m.C2).Equal(c2C);
             }
         }
 
@@ -528,7 +516,6 @@ namespace Tests.Workspace
         public async void AssociationOne2OneExists()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
@@ -547,7 +534,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C1).Equal(c1B, c1C, c1D);
+                result.Assert().Collection(m.C1).Equal(c1B, c1C, c1D);
 
                 pull = new Pull
                 {
@@ -571,7 +558,6 @@ namespace Tests.Workspace
         public async void AssociationOne2OneInstanceOf()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
@@ -590,7 +576,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.I12).Equal(c1D, c2B, c2C);
+                result.Assert().Collection(m.I12).Equal(c1D, c2B, c2C);
 
                 pull = new Pull
                 {
@@ -606,7 +592,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.I12).Equal(c1B, c1C, c2D);
+                result.Assert().Collection(m.I12).Equal(c1B, c1C, c2D);
             }
         }
 
@@ -614,12 +600,11 @@ namespace Tests.Workspace
         public async void ObjectEquals()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
             {
-                var c1c = await connection.PullObject(M.C1, c1C);
+                var c1c = await connection.PullObject(m.C1, c1C);
 
                 var pull = new Pull
                 {
@@ -635,7 +620,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C1).Equal(c1C);
+                result.Assert().Collection(m.C1).Equal(c1C);
             }
         }
 
@@ -643,7 +628,6 @@ namespace Tests.Workspace
         public async void ExtentInterface()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
@@ -659,7 +643,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.I12).Equal(c1A, c1B, c1C, c1D, c2A, c2B, c2C, c2D);
+                result.Assert().Collection(m.I12).Equal(c1A, c1B, c1C, c1D, c2A, c2B, c2C, c2D);
             }
         }
 
@@ -667,7 +651,6 @@ namespace Tests.Workspace
         public async void InstanceOf()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
@@ -689,7 +672,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.I12).Equal(c1A, c1B, c1C, c1D);
+                result.Assert().Collection(m.I12).Equal(c1A, c1B, c1C, c1D);
             }
         }
 
@@ -697,12 +680,11 @@ namespace Tests.Workspace
         public async void NotEquals()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
             {
-                var c1c = await connection.PullObject(M.C1, c1C);
+                var c1c = await connection.PullObject(m.C1, c1C);
 
                 var pull = new Pull
                 {
@@ -721,7 +703,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C1).Equal(c1A, c1B, c1D);
+                result.Assert().Collection(m.C1).Equal(c1A, c1B, c1D);
             }
         }
 
@@ -729,13 +711,12 @@ namespace Tests.Workspace
         public async void OrEquals()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
             {
-                var c1b = await connection.PullObject(M.C1, c1B);
-                var c1c = await connection.PullObject(M.C1, c1C);
+                var c1b = await connection.PullObject(m.C1, c1B);
+                var c1c = await connection.PullObject(m.C1, c1C);
 
                 var pull = new Pull
                 {
@@ -758,7 +739,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C1).Equal(c1B, c1C);
+                result.Assert().Collection(m.C1).Equal(c1B, c1C);
             }
         }
 
@@ -766,7 +747,6 @@ namespace Tests.Workspace
         public async void OperatorExcept()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
@@ -792,7 +772,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.I12).Equal(c1A, c1B, c1C, c1D);
+                result.Assert().Collection(m.I12).Equal(c1A, c1B, c1C, c1D);
             }
         }
 
@@ -800,7 +780,6 @@ namespace Tests.Workspace
         public async void OperatorIntersect()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
@@ -826,7 +805,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.I12).Equal(c2A, c2B, c2C, c2D);
+                result.Assert().Collection(m.I12).Equal(c2A, c2B, c2C, c2D);
             }
         }
 
@@ -834,7 +813,6 @@ namespace Tests.Workspace
         public async void OperatorUnion()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
@@ -857,7 +835,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C1).Equal(c1A, c1B);
+                result.Assert().Collection(m.C1).Equal(c1A, c1B);
             }
         }
 
@@ -865,7 +843,6 @@ namespace Tests.Workspace
         public async void RoleDateTimeBetweenPath()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
@@ -887,7 +864,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C1).Equal(c1C, c1D);
+                result.Assert().Collection(m.C1).Equal(c1C, c1D);
             }
         }
 
@@ -895,7 +872,6 @@ namespace Tests.Workspace
         public async void RoleDateTimeBetweenValue()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
@@ -908,8 +884,8 @@ namespace Tests.Workspace
                         {
                             Values = new object[]
                             {
-                                new System.DateTime(2000, 1, 1, 0, 0, 4, DateTimeKind.Utc),
-                                new System.DateTime(2000, 1, 1, 0, 0, 6, DateTimeKind.Utc)
+                                new DateTime(2000, 1, 1, 0, 0, 4, DateTimeKind.Utc),
+                                new DateTime(2000, 1, 1, 0, 0, 6, DateTimeKind.Utc)
                             }
                         }
                     }
@@ -921,7 +897,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C1).Equal(c1B, c1C, c1D);
+                result.Assert().Collection(m.C1).Equal(c1B, c1C, c1D);
             }
         }
 
@@ -929,7 +905,6 @@ namespace Tests.Workspace
         public async void RoleDateTimeGreaterThanPath()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
@@ -951,7 +926,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C1).Equal(c1B);
+                result.Assert().Collection(m.C1).Equal(c1B);
             }
         }
 
@@ -959,7 +934,6 @@ namespace Tests.Workspace
         public async void RoleDateTimeGreaterThanValue()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
@@ -970,7 +944,7 @@ namespace Tests.Workspace
                     {
                         Predicate = new GreaterThan(m.C1.C1AllorsDateTime)
                         {
-                            Value = new System.DateTime(2000, 1, 1, 0, 0, 4, DateTimeKind.Utc)
+                            Value = new DateTime(2000, 1, 1, 0, 0, 4, DateTimeKind.Utc)
                         }
                     }
                 };
@@ -981,7 +955,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C1).Equal(c1C, c1D);
+                result.Assert().Collection(m.C1).Equal(c1C, c1D);
             }
         }
 
@@ -989,7 +963,6 @@ namespace Tests.Workspace
         public async void RoleDateTimeLessThanPath()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
@@ -1011,7 +984,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C1).Equal(c1D);
+                result.Assert().Collection(m.C1).Equal(c1D);
             }
         }
 
@@ -1019,7 +992,6 @@ namespace Tests.Workspace
         public async void RoleDateTimeLessThanValue()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
@@ -1030,7 +1002,7 @@ namespace Tests.Workspace
                     {
                         Predicate = new LessThan(m.C1.C1AllorsDateTime)
                         {
-                            Value = new System.DateTime(2000, 1, 1, 0, 0, 5, DateTimeKind.Utc)
+                            Value = new DateTime(2000, 1, 1, 0, 0, 5, DateTimeKind.Utc)
                         }
                     }
                 };
@@ -1041,7 +1013,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C1).Equal(c1B);
+                result.Assert().Collection(m.C1).Equal(c1B);
             }
         }
 
@@ -1049,7 +1021,6 @@ namespace Tests.Workspace
         public async void RoleDateTimeEquals()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
@@ -1060,7 +1031,7 @@ namespace Tests.Workspace
                     {
                         Predicate = new Equals(m.C1.C1AllorsDateTime)
                         {
-                            Value = new System.DateTime(2000, 1, 1, 0, 0, 4, DateTimeKind.Utc)
+                            Value = new DateTime(2000, 1, 1, 0, 0, 4, DateTimeKind.Utc)
                         }
                     }
                 };
@@ -1071,7 +1042,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C1).Equal(c1B);
+                result.Assert().Collection(m.C1).Equal(c1B);
             }
         }
 
@@ -1079,7 +1050,6 @@ namespace Tests.Workspace
         public async void RoleDecimalBetweenPath()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
@@ -1101,7 +1071,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C1).Equal(c1D);
+                result.Assert().Collection(m.C1).Equal(c1D);
             }
         }
 
@@ -1109,7 +1079,6 @@ namespace Tests.Workspace
         public async void RoleDecimalBetweenValue()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
@@ -1131,7 +1100,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C1).Equal(c1C, c1D);
+                result.Assert().Collection(m.C1).Equal(c1C, c1D);
             }
         }
 
@@ -1139,7 +1108,6 @@ namespace Tests.Workspace
         public async void RoleDecimalGreaterThanPath()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
@@ -1161,7 +1129,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C1).Equal(c1B, c1C);
+                result.Assert().Collection(m.C1).Equal(c1B, c1C);
             }
         }
 
@@ -1169,7 +1137,6 @@ namespace Tests.Workspace
         public async void RoleDecimalGreaterThanValue()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
@@ -1191,7 +1158,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C1).Equal(c1C, c1D);
+                result.Assert().Collection(m.C1).Equal(c1C, c1D);
             }
         }
 
@@ -1199,7 +1166,6 @@ namespace Tests.Workspace
         public async void RoleDecimalLessThanPath()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
@@ -1221,7 +1187,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C1).Equal(c1D);
+                result.Assert().Collection(m.C1).Equal(c1D);
             }
         }
 
@@ -1229,7 +1195,6 @@ namespace Tests.Workspace
         public async void RoleDecimalLessThanValue()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
@@ -1251,7 +1216,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C1).Equal(c1B);
+                result.Assert().Collection(m.C1).Equal(c1B);
             }
         }
 
@@ -1259,7 +1224,6 @@ namespace Tests.Workspace
         public async void RoleDecimalEquals()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
@@ -1281,7 +1245,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C1).Equal(c1C, c1D);
+                result.Assert().Collection(m.C1).Equal(c1C, c1D);
             }
         }
 
@@ -1289,7 +1253,6 @@ namespace Tests.Workspace
         public async void RoleDoubleBetweenPath()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
@@ -1311,7 +1274,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C1).Equal(c1D);
+                result.Assert().Collection(m.C1).Equal(c1D);
             }
         }
 
@@ -1319,7 +1282,6 @@ namespace Tests.Workspace
         public async void RoleDoubleBetweenValue()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
@@ -1341,7 +1303,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C1).Equal(c1C, c1D);
+                result.Assert().Collection(m.C1).Equal(c1C, c1D);
             }
         }
 
@@ -1349,7 +1311,6 @@ namespace Tests.Workspace
         public async void RoleDoubleGreaterThanPath()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
@@ -1371,7 +1332,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C1).Equal(c1B, c1C);
+                result.Assert().Collection(m.C1).Equal(c1B, c1C);
             }
         }
 
@@ -1379,7 +1340,6 @@ namespace Tests.Workspace
         public async void RoleDoubleGreaterThanValue()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
@@ -1401,7 +1361,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C1).Equal(c1C, c1D);
+                result.Assert().Collection(m.C1).Equal(c1C, c1D);
             }
         }
 
@@ -1409,7 +1369,6 @@ namespace Tests.Workspace
         public async void RoleDoubleLessThanPath()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
@@ -1431,7 +1390,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C1).Equal(c1D);
+                result.Assert().Collection(m.C1).Equal(c1D);
             }
         }
 
@@ -1439,7 +1398,6 @@ namespace Tests.Workspace
         public async void RoleDoubleLessThanValue()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
@@ -1461,7 +1419,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C1).Equal(c1B);
+                result.Assert().Collection(m.C1).Equal(c1B);
             }
         }
 
@@ -1469,7 +1427,6 @@ namespace Tests.Workspace
         public async void RoleDoubleEquals()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
@@ -1491,7 +1448,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C1).Equal(c1C, c1D);
+                result.Assert().Collection(m.C1).Equal(c1C, c1D);
             }
         }
 
@@ -1499,7 +1456,6 @@ namespace Tests.Workspace
         public async void RoleIntegerBetweenPath()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
@@ -1521,7 +1477,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C1).Equal(c1C, c1D);
+                result.Assert().Collection(m.C1).Equal(c1C, c1D);
             }
         }
 
@@ -1529,7 +1485,6 @@ namespace Tests.Workspace
         public async void RoleIntegerBetweenValue()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
@@ -1551,7 +1506,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C1).Equal(c1B, c1C, c1D);
+                result.Assert().Collection(m.C1).Equal(c1B, c1C, c1D);
             }
         }
 
@@ -1559,7 +1514,6 @@ namespace Tests.Workspace
         public async void RoleIntegerGreaterThanPath()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
@@ -1581,7 +1535,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C1).Equal(c1B);
+                result.Assert().Collection(m.C1).Equal(c1B);
             }
         }
 
@@ -1589,7 +1543,6 @@ namespace Tests.Workspace
         public async void RoleIntegerGreaterThanValue()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
@@ -1611,7 +1564,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C1).Equal(c1C, c1D);
+                result.Assert().Collection(m.C1).Equal(c1C, c1D);
             }
         }
 
@@ -1619,7 +1572,6 @@ namespace Tests.Workspace
         public async void RoleIntegerLessThanPath()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
@@ -1641,7 +1593,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C1).Equal(c1D);
+                result.Assert().Collection(m.C1).Equal(c1D);
             }
         }
 
@@ -1649,7 +1601,6 @@ namespace Tests.Workspace
         public async void RoleIntegerLessThanValue()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
@@ -1671,7 +1622,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C1).Equal(c1B);
+                result.Assert().Collection(m.C1).Equal(c1B);
             }
         }
 
@@ -1679,7 +1630,6 @@ namespace Tests.Workspace
         public async void RoleIntegerEquals()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
@@ -1701,7 +1651,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C1).Equal(c1C, c1D);
+                result.Assert().Collection(m.C1).Equal(c1C, c1D);
             }
         }
 
@@ -1709,7 +1659,6 @@ namespace Tests.Workspace
         public async void RoleIntegerExist()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
@@ -1728,7 +1677,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C1).Equal(c1B, c1C, c1D);
+                result.Assert().Collection(m.C1).Equal(c1B, c1C, c1D);
             }
         }
 
@@ -1736,7 +1685,6 @@ namespace Tests.Workspace
         public async void RoleStringEqualsPath()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
@@ -1758,7 +1706,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C1).Equal(c1C);
+                result.Assert().Collection(m.C1).Equal(c1C);
             }
         }
 
@@ -1766,7 +1714,6 @@ namespace Tests.Workspace
         public async void RoleStringEqualsValue()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
@@ -1788,7 +1735,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C1).Equal(c1B);
+                result.Assert().Collection(m.C1).Equal(c1B);
             }
         }
 
@@ -1796,7 +1743,6 @@ namespace Tests.Workspace
         public async void RoleStringLike()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
@@ -1818,7 +1764,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C1).Equal(c1B, c1C, c1D);
+                result.Assert().Collection(m.C1).Equal(c1B, c1C, c1D);
             }
         }
 
@@ -1826,7 +1772,6 @@ namespace Tests.Workspace
         public async void RoleUniqueEquals()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
@@ -1848,7 +1793,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C1).Equal(c1B);
+                result.Assert().Collection(m.C1).Equal(c1B);
             }
         }
 
@@ -1856,7 +1801,6 @@ namespace Tests.Workspace
         public async void RoleMany2ManyContainedIn()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
@@ -1900,7 +1844,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C1).Equal(c1B, c1C, c1D);
+                result.Assert().Collection(m.C1).Equal(c1B, c1C, c1D);
 
                 // Filtered
                 pull = new Pull
@@ -1923,7 +1867,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C1).Equal(c1B, c1C, c1D);
+                result.Assert().Collection(m.C1).Equal(c1B, c1C, c1D);
             }
         }
 
@@ -1931,12 +1875,11 @@ namespace Tests.Workspace
         public async void RoleMany2ManyContains()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
             {
-                var c2c = await connection.PullObject(M.C2, c2C);
+                var c2c = await connection.PullObject(m.C2, c2C);
 
                 var pull = new Pull
                 {
@@ -1955,7 +1898,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C1).Equal(c1C, c1D);
+                result.Assert().Collection(m.C1).Equal(c1C, c1D);
             }
         }
 
@@ -1963,7 +1906,6 @@ namespace Tests.Workspace
         public async void RoleOne2ManyContainedIn()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
@@ -1988,7 +1930,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C1).Equal(c1B);
+                result.Assert().Collection(m.C1).Equal(c1B);
             }
         }
 
@@ -1996,12 +1938,11 @@ namespace Tests.Workspace
         public async void RoleOne2ManyContains()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
             {
-                var c2d = await connection.PullObject(M.C2, c2D);
+                var c2d = await connection.PullObject(m.C2, c2D);
 
                 var pull = new Pull
                 {
@@ -2020,7 +1961,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C1).Equal(c1C);
+                result.Assert().Collection(m.C1).Equal(c1C);
             }
         }
 
@@ -2028,7 +1969,6 @@ namespace Tests.Workspace
         public async void RoleMany2OneContainedIn()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
@@ -2053,7 +1993,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C1).Equal(c1B);
+                result.Assert().Collection(m.C1).Equal(c1B);
             }
         }
 
@@ -2061,7 +2001,6 @@ namespace Tests.Workspace
         public async void RoleOne2OneContainedIn()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
@@ -2086,7 +2025,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Objects);
                 Assert.Empty(result.Values);
 
-                result.Assert().Collection(M.C1).Equal(c1B, c1C);
+                result.Assert().Collection(m.C1).Equal(c1B, c1C);
             }
         }
 
@@ -2094,7 +2033,6 @@ namespace Tests.Workspace
         public async void WithResultName()
         {
             await this.Login("administrator");
-
             var m = this.M;
 
             foreach (var connection in this.Connections)
@@ -2130,12 +2068,13 @@ namespace Tests.Workspace
         public async void PullWithObjectId()
         {
             await this.Login("administrator");
+            var m = this.M;
 
             foreach (var connection in this.Connections)
             {
                 var pull1 = new Pull { Extent = new Filter(this.M.C1) { Predicate = new Equals(this.M.C1.Name) { Value = "c1A" } } };
                 var result = await connection.PullAsync(pull1);
-                var c1a = result.GetCollection(M.C1)[0];
+                var c1a = result.GetCollection(m.C1)[0];
 
                 var pull2 = new Pull
                 {
@@ -2154,6 +2093,7 @@ namespace Tests.Workspace
         public async void PullWithInclude()
         {
             await this.Login("administrator");
+            var m = this.M;
 
             foreach (var connection in this.Connections)
             {
@@ -2174,16 +2114,16 @@ namespace Tests.Workspace
 
                 var result = await connection.PullAsync(pull);
 
-                var c1s = result.GetCollection(M.C1);
-                var c1b = c1s.Single(v => (string)v.GetUnitRole(M.I12.Name) == "c1B");
-                var c1c = c1s.Single(v => (string)v.GetUnitRole(M.I12.Name) == "c1C");
-                var c1d = c1s.Single(v => (string)v.GetUnitRole(M.I12.Name) == "c1D");
+                var c1s = result.GetCollection(m.C1);
+                var c1b = c1s.Single(v => (string)v.GetUnitRole(m.I12.Name) == "c1B");
+                var c1c = c1s.Single(v => (string)v.GetUnitRole(m.I12.Name) == "c1C");
+                var c1d = c1s.Single(v => (string)v.GetUnitRole(m.I12.Name) == "c1D");
 
-                var c2ByC1 = c1s.ToDictionary(v => v, v => v.GetCompositeRole(M.C1.C1C2One2One));
+                var c2ByC1 = c1s.ToDictionary(v => v, v => v.GetCompositeRole(m.C1.C1C2One2One));
 
-                Assert.Equal("c2B", c2ByC1[c1b].GetUnitRole(M.I12.Name));
-                Assert.Equal("c2C", c2ByC1[c1c].GetUnitRole(M.I12.Name));
-                Assert.Equal("c2D", c2ByC1[c1d].GetUnitRole(M.I12.Name));
+                Assert.Equal("c2B", c2ByC1[c1b].GetUnitRole(m.I12.Name));
+                Assert.Equal("c2C", c2ByC1[c1c].GetUnitRole(m.I12.Name));
+                Assert.Equal("c2D", c2ByC1[c1d].GetUnitRole(m.I12.Name));
             }
         }
 
@@ -2191,6 +2131,7 @@ namespace Tests.Workspace
         public async void SortDirectionDefault()
         {
             await this.Login("administrator");
+            var m = this.M;
 
             foreach (var connection in this.Connections)
             {
@@ -2201,16 +2142,16 @@ namespace Tests.Workspace
 
                 var result = await connection.PullAsync(pull);
 
-                var i12s = result.GetCollection(M.I12);
+                var i12s = result.GetCollection(m.I12);
 
-                Assert.Equal("c2D", i12s[0].GetUnitRole(M.I12.Name));
-                Assert.Equal("c2C", i12s[1].GetUnitRole(M.I12.Name));
-                Assert.Equal("c1B", i12s[2].GetUnitRole(M.I12.Name));
-                Assert.Equal("c1A", i12s[3].GetUnitRole(M.I12.Name));
-                Assert.Equal("c2A", i12s[4].GetUnitRole(M.I12.Name));
-                Assert.Equal("c2B", i12s[5].GetUnitRole(M.I12.Name));
-                Assert.Equal("c1D", i12s[6].GetUnitRole(M.I12.Name));
-                Assert.Equal("c1C", i12s[7].GetUnitRole(M.I12.Name));
+                Assert.Equal("c2D", i12s[0].GetUnitRole(m.I12.Name));
+                Assert.Equal("c2C", i12s[1].GetUnitRole(m.I12.Name));
+                Assert.Equal("c1B", i12s[2].GetUnitRole(m.I12.Name));
+                Assert.Equal("c1A", i12s[3].GetUnitRole(m.I12.Name));
+                Assert.Equal("c2A", i12s[4].GetUnitRole(m.I12.Name));
+                Assert.Equal("c2B", i12s[5].GetUnitRole(m.I12.Name));
+                Assert.Equal("c1D", i12s[6].GetUnitRole(m.I12.Name));
+                Assert.Equal("c1C", i12s[7].GetUnitRole(m.I12.Name));
             }
         }
 
@@ -2218,6 +2159,7 @@ namespace Tests.Workspace
         public async void SortDirectionAscending()
         {
             await this.Login("administrator");
+            var m = this.M;
 
             foreach (var connection in this.Connections)
             {
@@ -2228,24 +2170,24 @@ namespace Tests.Workspace
 
                 var result = await connection.PullAsync(pull);
 
-                var i12s = result.GetCollection(M.I12);
+                var i12s = result.GetCollection(m.I12);
 
-                Assert.Equal("c2D", i12s[0].GetUnitRole(M.I12.Name));
-                Assert.Equal("c2C", i12s[1].GetUnitRole(M.I12.Name));
-                Assert.Equal("c1B", i12s[2].GetUnitRole(M.I12.Name));
-                Assert.Equal("c1A", i12s[3].GetUnitRole(M.I12.Name));
-                Assert.Equal("c2A", i12s[4].GetUnitRole(M.I12.Name));
-                Assert.Equal("c2B", i12s[5].GetUnitRole(M.I12.Name));
-                Assert.Equal("c1D", i12s[6].GetUnitRole(M.I12.Name));
-                Assert.Equal("c1C", i12s[7].GetUnitRole(M.I12.Name));
+                Assert.Equal("c2D", i12s[0].GetUnitRole(m.I12.Name));
+                Assert.Equal("c2C", i12s[1].GetUnitRole(m.I12.Name));
+                Assert.Equal("c1B", i12s[2].GetUnitRole(m.I12.Name));
+                Assert.Equal("c1A", i12s[3].GetUnitRole(m.I12.Name));
+                Assert.Equal("c2A", i12s[4].GetUnitRole(m.I12.Name));
+                Assert.Equal("c2B", i12s[5].GetUnitRole(m.I12.Name));
+                Assert.Equal("c1D", i12s[6].GetUnitRole(m.I12.Name));
+                Assert.Equal("c1C", i12s[7].GetUnitRole(m.I12.Name));
             }
         }
-
 
         [Fact]
         public async void SortDirectionDescending()
         {
             await this.Login("administrator");
+            var m = this.M;
 
             foreach (var connection in this.Connections)
             {
@@ -2256,16 +2198,16 @@ namespace Tests.Workspace
 
                 var result = await connection.PullAsync(pull);
 
-                var i12s = result.GetCollection(M.I12);
+                var i12s = result.GetCollection(m.I12);
 
-                Assert.Equal("c2D", i12s[7].GetUnitRole(M.I12.Name));
-                Assert.Equal("c2C", i12s[6].GetUnitRole(M.I12.Name));
-                Assert.Equal("c1B", i12s[5].GetUnitRole(M.I12.Name));
-                Assert.Equal("c1A", i12s[4].GetUnitRole(M.I12.Name));
-                Assert.Equal("c2A", i12s[3].GetUnitRole(M.I12.Name));
-                Assert.Equal("c2B", i12s[2].GetUnitRole(M.I12.Name));
-                Assert.Equal("c1D", i12s[1].GetUnitRole(M.I12.Name));
-                Assert.Equal("c1C", i12s[0].GetUnitRole(M.I12.Name));
+                Assert.Equal("c2D", i12s[7].GetUnitRole(m.I12.Name));
+                Assert.Equal("c2C", i12s[6].GetUnitRole(m.I12.Name));
+                Assert.Equal("c1B", i12s[5].GetUnitRole(m.I12.Name));
+                Assert.Equal("c1A", i12s[4].GetUnitRole(m.I12.Name));
+                Assert.Equal("c2A", i12s[3].GetUnitRole(m.I12.Name));
+                Assert.Equal("c2B", i12s[2].GetUnitRole(m.I12.Name));
+                Assert.Equal("c1D", i12s[1].GetUnitRole(m.I12.Name));
+                Assert.Equal("c1C", i12s[0].GetUnitRole(m.I12.Name));
             }
         }
     }
