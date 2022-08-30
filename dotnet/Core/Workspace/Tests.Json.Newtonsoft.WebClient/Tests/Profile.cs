@@ -25,7 +25,6 @@ namespace Tests.Workspace.Json
         public const string LoginUrl = "TestAuthentication/Token";
 
         private readonly M metaPopulation;
-        private readonly ReflectionObjectFactory objectFactory;
 
         private Client client;
 
@@ -42,7 +41,6 @@ namespace Tests.Workspace.Json
         public Profile()
         {
             this.metaPopulation = new MetaBuilder().Build();
-            this.objectFactory = new ReflectionObjectFactory(this.metaPopulation, typeof(Allors.Workspace.Domain.Person));
         }
 
         public async Task InitializeAsync()
@@ -53,16 +51,16 @@ namespace Tests.Workspace.Json
             Assert.True(response.IsSuccessful);
 
             this.client = new Client(this.CreateRestClient);
-            this.Connection = new Allors.Workspace.Adapters.Json.Newtonsoft.WebClient.Connection(this.client, "Default", this.metaPopulation, this.objectFactory);
+            this.Connection = new Allors.Workspace.Adapters.Json.Newtonsoft.WebClient.Connection(this.client, "Default", this.metaPopulation);
 
             await this.Login("administrator");
         }
 
         public Task DisposeAsync() => Task.CompletedTask;
 
-        public IConnection CreateExclusiveWorkspaceConnection() => new Allors.Workspace.Adapters.Json.Newtonsoft.WebClient.Connection(this.client, "Default", this.metaPopulation, this.objectFactory);
+        public IConnection CreateExclusiveWorkspaceConnection() => new Allors.Workspace.Adapters.Json.Newtonsoft.WebClient.Connection(this.client, "Default", this.metaPopulation);
 
-        public IConnection CreateWorkspaceConnection() => new Allors.Workspace.Adapters.Json.Newtonsoft.WebClient.Connection(this.client, "Default", this.metaPopulation, this.objectFactory);
+        public IConnection CreateWorkspaceConnection() => new Allors.Workspace.Adapters.Json.Newtonsoft.WebClient.Connection(this.client, "Default", this.metaPopulation);
 
         public async Task Login(string user)
         {

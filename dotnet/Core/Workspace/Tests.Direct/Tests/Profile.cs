@@ -14,14 +14,12 @@ namespace Tests.Workspace.Direct
     using Allors.Workspace;
     using Allors.Workspace.Adapters;
     using Allors.Workspace.Meta;
-    using Person = Allors.Workspace.Domain.Person;
     using User = Allors.Database.Domain.User;
 
     public class Profile : IProfile
     {
         private User user;
         private readonly M metaPopulation;
-        private readonly ReflectionObjectFactory objectFactory;
 
         public Database Database { get; }
 
@@ -35,7 +33,6 @@ namespace Tests.Workspace.Direct
         {
 
             this.metaPopulation = new MetaBuilder().Build();
-            this.objectFactory = new ReflectionObjectFactory(this.metaPopulation, typeof(Person));
 
             this.Database = new Database(
                 new DefaultDatabaseServices(fixture.Engine),
@@ -46,7 +43,7 @@ namespace Tests.Workspace.Direct
 
             this.Database.Init();
 
-            this.Connection = new Allors.Workspace.Adapters.Direct.Connection(this.Database, "Default", this.metaPopulation, this.objectFactory);
+            this.Connection = new Allors.Workspace.Adapters.Direct.Connection(this.Database, "Default", this.metaPopulation);
 
             var config = new Config();
             new Setup(this.Database, config).Apply();
@@ -66,9 +63,9 @@ namespace Tests.Workspace.Direct
 
         public Task DisposeAsync() => Task.CompletedTask;
 
-        public IConnection CreateExclusiveWorkspaceConnection() => new Allors.Workspace.Adapters.Direct.Connection(this.Database, "Default", this.metaPopulation, this.objectFactory) { UserId = this.user.Id };
+        public IConnection CreateExclusiveWorkspaceConnection() => new Allors.Workspace.Adapters.Direct.Connection(this.Database, "Default", this.metaPopulation) { UserId = this.user.Id };
 
-        public IConnection CreateWorkspaceConnection() => new Allors.Workspace.Adapters.Direct.Connection(this.Database, "Default", this.metaPopulation, this.objectFactory) { UserId = this.user.Id };
+        public IConnection CreateWorkspaceConnection() => new Allors.Workspace.Adapters.Direct.Connection(this.Database, "Default", this.metaPopulation) { UserId = this.user.Id };
 
         public Task Login(string userName)
         {

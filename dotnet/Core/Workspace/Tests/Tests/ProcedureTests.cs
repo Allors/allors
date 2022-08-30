@@ -32,16 +32,16 @@ namespace Tests.Workspace
 
             Assert.False(result.HasErrors);
 
-            var unitSample = result.GetObject<UnitSample>("unitSample");
+            var unitSample = result.GetObject("unitSample");
 
-            Assert.False(unitSample.ExistAllorsBinary);
-            Assert.False(unitSample.ExistAllorsBoolean);
-            Assert.False(unitSample.ExistAllorsDateTime);
-            Assert.False(unitSample.ExistAllorsDecimal);
-            Assert.False(unitSample.ExistAllorsDouble);
-            Assert.False(unitSample.ExistAllorsInteger);
-            Assert.False(unitSample.ExistAllorsString);
-            Assert.False(unitSample.ExistAllorsUnique);
+            Assert.False(unitSample.ExistRole(M.UnitSample.AllorsBinary));
+            Assert.False(unitSample.ExistRole(M.UnitSample.AllorsBoolean));
+            Assert.False(unitSample.ExistRole(M.UnitSample.AllorsDateTime));
+            Assert.False(unitSample.ExistRole(M.UnitSample.AllorsDecimal));
+            Assert.False(unitSample.ExistRole(M.UnitSample.AllorsDouble));
+            Assert.False(unitSample.ExistRole(M.UnitSample.AllorsInteger));
+            Assert.False(unitSample.ExistRole(M.UnitSample.AllorsString));
+            Assert.False(unitSample.ExistRole(M.UnitSample.AllorsUnique));
         }
 
         [Fact]
@@ -59,25 +59,25 @@ namespace Tests.Workspace
 
             Assert.False(result.HasErrors);
 
-            var unitSample = result.GetObject<UnitSample>("unitSample");
+            var unitSample = result.GetObject("unitSample");
 
-            Assert.True(unitSample.ExistAllorsBinary);
-            Assert.True(unitSample.ExistAllorsBoolean);
-            Assert.True(unitSample.ExistAllorsDateTime);
-            Assert.True(unitSample.ExistAllorsDecimal);
-            Assert.True(unitSample.ExistAllorsDouble);
-            Assert.True(unitSample.ExistAllorsInteger);
-            Assert.True(unitSample.ExistAllorsString);
-            Assert.True(unitSample.ExistAllorsUnique);
+            Assert.True(unitSample.ExistRole(M.UnitSample.AllorsBinary));
+            Assert.True(unitSample.ExistRole(M.UnitSample.AllorsBoolean));
+            Assert.True(unitSample.ExistRole(M.UnitSample.AllorsDateTime));
+            Assert.True(unitSample.ExistRole(M.UnitSample.AllorsDecimal));
+            Assert.True(unitSample.ExistRole(M.UnitSample.AllorsDouble));
+            Assert.True(unitSample.ExistRole(M.UnitSample.AllorsInteger));
+            Assert.True(unitSample.ExistRole(M.UnitSample.AllorsString));
+            Assert.True(unitSample.ExistRole(M.UnitSample.AllorsUnique));
 
-            Assert.Equal(new byte[] { 1, 2, 3 }, unitSample.AllorsBinary);
-            Assert.True(unitSample.AllorsBoolean);
-            Assert.Equal(new DateTime(1973, 3, 27, 0, 0, 0, DateTimeKind.Utc), unitSample.AllorsDateTime);
-            Assert.Equal(12.34m, unitSample.AllorsDecimal);
-            Assert.Equal(123d, unitSample.AllorsDouble);
-            Assert.Equal(1000, unitSample.AllorsInteger);
-            Assert.Equal("a string", unitSample.AllorsString);
-            Assert.Equal(new Guid("2946CF37-71BE-4681-8FE6-D0024D59BEFF"), unitSample.AllorsUnique);
+            Assert.Equal(new byte[] { 1, 2, 3 }, unitSample.GetUnitRole(M.UnitSample.AllorsBinary));
+            Assert.True((bool)unitSample.GetUnitRole(M.UnitSample.AllorsBoolean));
+            Assert.Equal(new DateTime(1973, 3, 27, 0, 0, 0, DateTimeKind.Utc), unitSample.GetUnitRole(M.UnitSample.AllorsDateTime));
+            Assert.Equal(12.34m, unitSample.GetUnitRole(M.UnitSample.AllorsDecimal));
+            Assert.Equal(123d, unitSample.GetUnitRole(M.UnitSample.AllorsDouble));
+            Assert.Equal(1000, unitSample.GetUnitRole(M.UnitSample.AllorsInteger));
+            Assert.Equal("a string", unitSample.GetUnitRole(M.UnitSample.AllorsString));
+            Assert.Equal(new Guid("2946CF37-71BE-4681-8FE6-D0024D59BEFF"), unitSample.GetUnitRole(M.UnitSample.AllorsUnique));
         }
 
         [Fact]

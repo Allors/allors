@@ -9,15 +9,19 @@ namespace Tests.Workspace
     {
         private readonly IObject[] collection;
 
-        public PullResultCollectionAssert(IPullResult pullResult, IComposite objectType) => pullResult.GetCollection(objectType);
+        public PullResultCollectionAssert(IPullResult pullResult, IComposite objectType) => this.collection = pullResult.GetCollection(objectType);
 
-        public PullResultCollectionAssert(IPullResult pullResult, string name) => pullResult.GetCollection(name);
+        public PullResultCollectionAssert(IPullResult pullResult, string name) => this.collection = pullResult.GetCollection(name);
 
         public void Single() => Assert.Single(this.collection);
 
         public void Equal(params string[] expected)
         {
-            var actual = this.collection.Select(v => (string)((dynamic)v).Name);
+            var actual = this.collection.Select(v =>
+            {
+                var roleType = v.Class.RoleTypes.First(v => v.SingularName == "Name");
+                return v.GetUnitRole(roleType);
+            });
             Assert.Equal(expected, actual);
         }
     }

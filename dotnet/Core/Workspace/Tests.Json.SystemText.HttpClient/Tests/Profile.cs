@@ -23,8 +23,6 @@ namespace Tests.Workspace.Json
         public const string SetupUrl = "Test/Setup?population=full";
         public const string LoginUrl = "TestAuthentication/Token";
 
-        private readonly ReflectionObjectFactory objectFactory;
-
         private HttpClient httpClient;
 
         private Client client;
@@ -32,7 +30,6 @@ namespace Tests.Workspace.Json
         public Profile()
         {
             this.M = new MetaBuilder().Build();
-            this.objectFactory = new ReflectionObjectFactory(this.M, typeof(Allors.Workspace.Domain.Person));
         }
 
         IConnection IProfile.Connection => this.Connection;
@@ -53,16 +50,16 @@ namespace Tests.Workspace.Json
 
             this.client = new Client(() => this.httpClient);
 
-            this.Connection = new Connection(this.client, "Default", this.M, this.objectFactory);
+            this.Connection = new Connection(this.client, "Default", this.M);
 
             await this.Login("administrator");
         }
 
         public Task DisposeAsync() => Task.CompletedTask;
 
-        public IConnection CreateExclusiveWorkspaceConnection() => new Connection(this.client, "Default", this.M, this.objectFactory);
+        public IConnection CreateExclusiveWorkspaceConnection() => new Connection(this.client, "Default", this.M);
 
-        public IConnection CreateWorkspaceConnection() => new Connection(this.client, "Default", this.M, this.objectFactory);
+        public IConnection CreateWorkspaceConnection() => new Connection(this.client, "Default", this.M);
 
         public async Task Login(string user)
         {

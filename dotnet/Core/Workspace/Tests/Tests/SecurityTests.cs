@@ -36,13 +36,13 @@ namespace Tests.Workspace
 
             var result = await session.PullAsync(pull);
 
-            var c1s = result.GetCollection<C1>("C1s");
-            foreach (var c1 in result.GetCollection<C1>())
+            var c1s = result.GetCollection("C1s");
+            foreach (var c1 in result.GetCollection(M.C1))
             {
                 foreach (var roleType in this.M.C1.DatabaseOriginRoleTypes)
                 {
-                    Assert.True(c1.Strategy.CanRead(roleType));
-                    Assert.True(c1.Strategy.CanWrite(roleType));
+                    Assert.True(c1.CanRead(roleType));
+                    Assert.True(c1.CanWrite(roleType));
                 }
             }
         }
@@ -61,12 +61,12 @@ namespace Tests.Workspace
 
             var result = await session.PullAsync(pull);
 
-            foreach (var c1 in result.GetCollection<C1>())
+            foreach (var c1 in result.GetCollection(M.C1))
             {
                 foreach (var roleType in this.M.C1.DatabaseOriginRoleTypes)
                 {
-                    Assert.False(c1.Strategy.CanRead(roleType));
-                    Assert.False(c1.Strategy.CanWrite(roleType));
+                    Assert.False(c1.CanRead(roleType));
+                    Assert.False(c1.CanWrite(roleType));
                 }
             }
         }
@@ -85,12 +85,12 @@ namespace Tests.Workspace
 
             var result = await session.PullAsync(pull);
 
-            foreach (var c1 in result.GetCollection<C1>())
+            foreach (var c1 in result.GetCollection(M.C1))
             {
                 foreach (var roleType in this.M.C1.DatabaseOriginRoleTypes)
                 {
-                    Assert.False(c1.Strategy.CanRead(roleType));
-                    Assert.False(c1.Strategy.CanWrite(roleType));
+                    Assert.False(c1.CanRead(roleType));
+                    Assert.False(c1.CanWrite(roleType));
                 }
             }
         }
@@ -102,12 +102,12 @@ namespace Tests.Workspace
 
             var result = await session.PullAsync(new Pull { Extent = new Filter(this.M.Denied) });
 
-            foreach (var denied in result.GetCollection<Denied>())
+            foreach (var denied in result.GetCollection(M.Denied))
             {
                 foreach (var roleType in this.M.C1.DatabaseOriginRoleTypes)
                 {
-                    Assert.False(denied.Strategy.CanRead(roleType));
-                    Assert.False(denied.Strategy.CanWrite(roleType));
+                    Assert.False(denied.CanRead(roleType));
+                    Assert.False(denied.CanWrite(roleType));
                 }
             }
         }

@@ -9,6 +9,7 @@
 namespace Tests.Workspace
 {
     using Allors.Workspace.Data;
+
     using Xunit;
 
     public abstract class PagingTests : Test
@@ -39,11 +40,11 @@ namespace Tests.Workspace
 
             var result = await session.PullAsync(pull);
 
-            var i12s = result.GetCollection<I12>();
+            var i12s = result.GetCollection(M.I12);
 
             Assert.Single(i12s);
 
-            Assert.Equal("c2D", i12s[0].Name);
+            Assert.Equal("c2D", i12s[0].GetUnitRole(M.I12.Name));
         }
     }
 }

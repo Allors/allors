@@ -32,12 +32,12 @@ namespace Allors.Workspace
 
         object GetUnitRole(RoleType roleType);
 
-        T GetCompositeRole<T>(RoleType roleType) where T : class, IObject;
+        IObject GetCompositeRole(RoleType roleType);
 
-        IEnumerable<T> GetCompositesRole<T>(RoleType roleType) where T : class, IObject;
+        IEnumerable<IObject> GetCompositesRole(RoleType roleType);
 
-        T GetCompositeAssociation<T>(AssociationType associationType) where T : class, IObject;
+        IObject GetCompositeAssociation(AssociationType associationType);
 
-        IEnumerable<T> GetCompositesAssociation<T>(AssociationType associationType) where T : class, IObject;
+        IEnumerable<IObject> GetCompositesAssociation(AssociationType associationType);
     }
 }

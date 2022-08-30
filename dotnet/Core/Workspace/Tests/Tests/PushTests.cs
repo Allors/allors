@@ -25,20 +25,20 @@ namespace Tests.Workspace
 
         //    foreach (var roleType in this.M.C1.RoleTypes)
         //    {
-        //        Assert.True(newObject.Strategy.CanRead(roleType));
-        //        Assert.False(newObject.Strategy.ExistRole(roleType));
+        //        Assert.True(newObject.CanRead(roleType));
+        //        Assert.False(newObject.ExistRole(roleType));
         //    }
 
         //    foreach (var associationType in this.M.C1.AssociationTypes)
         //    {
         //        if (associationType.IsOne)
         //        {
-        //            var association = newObject.Strategy.GetCompositeAssociation<IObject>(associationType);
+        //            var association = newObject.GetCompositeAssociation<IObject>(associationType);
         //            Assert.Null(association);
         //        }
         //        else
         //        {
-        //            var association = newObject.Strategy.GetCompositesAssociation<IObject>(associationType);
+        //            var association = newObject.GetCompositesAssociation<IObject>(associationType);
         //            Assert.Empty(association);
         //        }
         //    }
@@ -60,20 +60,20 @@ namespace Tests.Workspace
 
         //    foreach (var roleType in this.M.C1.RoleTypes)
         //    {
-        //        Assert.True(newObject.Strategy.CanRead(roleType));
-        //        Assert.False(newObject.Strategy.ExistRole(roleType));
+        //        Assert.True(newObject.CanRead(roleType));
+        //        Assert.False(newObject.ExistRole(roleType));
         //    }
 
         //    foreach (var associationType in this.M.C1.AssociationTypes)
         //    {
         //        if (associationType.IsOne)
         //        {
-        //            var association = newObject.Strategy.GetCompositeAssociation<IObject>(associationType);
+        //            var association = newObject.GetCompositeAssociation<IObject>(associationType);
         //            Assert.Null(association);
         //        }
         //        else
         //        {
-        //            var association = newObject.Strategy.GetCompositesAssociation<IObject>(associationType);
+        //            var association = newObject.GetCompositesAssociation<IObject>(associationType);
         //            Assert.Empty(association);
         //        }
         //    }
@@ -113,7 +113,7 @@ namespace Tests.Workspace
         //    };
 
         //    var result = await session.PullAsync(pull);
-        //    var c1a = result.GetCollection<C1>()[0];
+        //    var c1a = result.GetCollection(M.C1)[0];
 
         //    c1a.C1AllorsString = "X";
 
@@ -139,7 +139,7 @@ namespace Tests.Workspace
 
         //    var result = await session.PullAsync(pull);
 
-        //    var c1a = result.GetCollection<C1>().First(v => v.Name.Equals("c1A"));
+        //    var c1a = result.GetCollection(M.C1).First(v => v.Name.Equals("c1A"));
 
         //    c1a.C1AllorsString = "X";
 
@@ -193,11 +193,11 @@ namespace Tests.Workspace
         //    person.FirstName = "Johny";
         //    person.LastName = "Doey";
 
-        //    Assert.Equal(Version.WorkspaceInitial.Value, person.Strategy.Version);
+        //    Assert.Equal(Version.WorkspaceInitial.Value, person.Version);
 
         //    Assert.False((await session.PushAsync()).HasErrors);
 
-        //    Assert.Equal(Version.WorkspaceInitial.Value, person.Strategy.Version);
+        //    Assert.Equal(Version.WorkspaceInitial.Value, person.Version);
         //}
 
         //[Fact]
