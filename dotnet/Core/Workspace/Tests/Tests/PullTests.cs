@@ -2048,9 +2048,9 @@ namespace Tests.Workspace
             var result = await session.PullAsync(pull);
 
             var c1s = result.GetCollection(M.C1);
-            var c1b = c1s.Single(v => v.GetUnitRole(M.I12.Name) == "c1B");
-            var c1c = c1s.Single(v => v.GetUnitRole(M.I12.Name) == "c1C");
-            var c1d = c1s.Single(v => v.GetUnitRole(M.I12.Name) == "c1D");
+            var c1b = c1s.Single(v => (string)v.GetUnitRole(M.I12.Name) == "c1B");
+            var c1c = c1s.Single(v => (string)v.GetUnitRole(M.I12.Name) == "c1C");
+            var c1d = c1s.Single(v => (string)v.GetUnitRole(M.I12.Name) == "c1D");
 
             var c2ByC1 = c1s.ToDictionary(v => v, v => v.GetCompositeRole(M.C1.C1C2One2One));
 

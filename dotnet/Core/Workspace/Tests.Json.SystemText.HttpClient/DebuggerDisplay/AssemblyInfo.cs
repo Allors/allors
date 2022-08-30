@@ -3,8 +3,7 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-using System.Collections.Generic;
 using System.Diagnostics;
+using Allors.Workspace.Adapters.Json;
 
-// General
-[assembly: DebuggerDisplay("[Key={Key}, Value={Value}]", Target = typeof(KeyValuePair<,>))]
+[assembly: DebuggerTypeProxy(typeof(StrategyDebugger), Target = typeof(Strategy))]

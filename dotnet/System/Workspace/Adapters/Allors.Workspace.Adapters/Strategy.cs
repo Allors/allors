@@ -93,10 +93,6 @@ namespace Allors.Workspace.Adapters
                 ? this.DatabaseOriginState.GetCompositesRole(roleType).Select(v => v.Object)
                 : Array.Empty<IObject>();
 
-        public IObject GetCompositeAssociation(AssociationType associationType) => this.Workspace.GetCompositeAssociation(this, associationType)?.Object;
-
-        public IEnumerable<IObject> GetCompositesAssociation(AssociationType associationType) => this.Workspace.GetCompositesAssociation(this, associationType).Select(v => v.Object);
-
         public bool CanRead(RoleType roleType) => this.DatabaseOriginState.CanRead(roleType);
 
         public bool CanWrite(RoleType roleType) => this.DatabaseOriginState.CanWrite(roleType);

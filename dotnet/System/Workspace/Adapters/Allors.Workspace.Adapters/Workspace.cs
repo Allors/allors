@@ -79,44 +79,6 @@ namespace Allors.Workspace.Adapters
             return this.StrategyByWorkspaceId.TryGetValue(id, out var sessionStrategy) ? sessionStrategy : null;
         }
 
-        public Strategy GetCompositeAssociation(Strategy role, AssociationType associationType)
-        {
-            var roleType = associationType.RoleType;
-
-            foreach (var association in this.StrategiesForClass(associationType.ObjectType))
-            {
-                if (!association.CanRead(roleType))
-                {
-                    continue;
-                }
-
-                if (association.IsCompositeAssociationForRole(roleType, role))
-                {
-                    return association;
-                }
-            }
-
-            return null;
-        }
-
-        public IEnumerable<Strategy> GetCompositesAssociation(Strategy role, AssociationType associationType)
-        {
-            var roleType = associationType.RoleType;
-
-            foreach (var association in this.StrategiesForClass(associationType.ObjectType))
-            {
-                if (!association.CanRead(roleType))
-                {
-                    continue;
-                }
-
-                if (association.IsCompositesAssociationForRole(roleType, role))
-                {
-                    yield return association;
-                }
-            }
-        }
-
         protected void AddStrategy(Strategy strategy)
         {
             this.StrategyByWorkspaceId.Add(strategy.Id, strategy);
@@ -130,13 +92,6 @@ namespace Allors.Workspace.Adapters
             {
                 strategies.Add(strategy);
             }
-        }
-
-        private IEnumerable<Strategy> StrategiesForClass(IComposite objectType)
-        {
-            // TODO: Optimize
-            var classes = new HashSet<Class>(objectType.Classes);
-            return this.StrategyByWorkspaceId.Where(v => classes.Contains(v.Value.Class)).Select(v => v.Value).Distinct();
         }
 
         public abstract Task<IInvokeResult> InvokeAsync(Method method, InvokeOptions options = null);

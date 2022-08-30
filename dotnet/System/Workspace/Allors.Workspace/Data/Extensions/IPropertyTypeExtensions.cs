@@ -49,33 +49,7 @@ namespace Allors.Workspace.Data
                 }
             }
 
-            if (@this is AssociationType associationType)
-            {
-                if (associationType.IsOne)
-                {
-                    var association = strategy.GetCompositeAssociation(associationType);
-
-                    if (ofType == null || association == null)
-                    {
-                        return association;
-                    }
-
-                    return !ofType.IsAssignableFrom(association.Class) ? null : association;
-                }
-                else
-                {
-                    var association = strategy.GetCompositesAssociation(associationType);
-
-                    if (ofType == null || association == null)
-                    {
-                        return association;
-                    }
-
-                    return association.Where(v => ofType.IsAssignableFrom(v.Class));
-                }
-            }
-
-            throw new ArgumentException("Get only supports RoleType or AssociationType");
+            throw new ArgumentException("Get only supports RoleType");
         }
     }
 }

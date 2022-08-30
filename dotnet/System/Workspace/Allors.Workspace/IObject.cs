@@ -35,9 +35,5 @@ namespace Allors.Workspace
         IObject GetCompositeRole(RoleType roleType);
 
         IEnumerable<IObject> GetCompositesRole(RoleType roleType);
-
-        IObject GetCompositeAssociation(AssociationType associationType);
-
-        IEnumerable<IObject> GetCompositesAssociation(AssociationType associationType);
     }
 }
