@@ -13,8 +13,6 @@ namespace Tests.Workspace
 
         public PullResultCollectionAssert(IPullResult pullResult, string name) => this.collection = pullResult.GetCollection(name);
 
-        public void Single() => Assert.Single(this.collection);
-
         public void Equal(params string[] expected)
         {
             var actual = this.collection.Select(v =>

@@ -5,6 +5,7 @@
 
 namespace Tests.Workspace
 {
+    using System.Collections.Generic;
     using System.Threading.Tasks;
     using Allors.Workspace;
     using Allors.Workspace.Meta;
@@ -17,6 +18,19 @@ namespace Tests.Workspace
         }
 
         public IConnection Connection => this.Profile.Connection;
+
+        public IEnumerable<IConnection> Connections
+        {
+            get
+            {
+                yield return this.Connection;
+                yield return this.Profile.CreateWorkspaceConnection();
+                yield return this.Profile.CreateExclusiveWorkspaceConnection();
+                yield return this.Connection;
+                yield return this.Profile.CreateWorkspaceConnection();
+                yield return this.Profile.CreateExclusiveWorkspaceConnection();
+            }
+        }
 
         public M M => (M)this.Connection.MetaPopulation;
 

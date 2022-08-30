@@ -5,40 +5,24 @@
 
 namespace Tests.Workspace
 {
-    using System;
-    using System.Threading.Tasks;
     using Xunit;
 
     public abstract class SandboxTests : Test
     {
-        private Func<Context>[] contextFactories;
-
         protected SandboxTests(Fixture fixture) : base(fixture)
         {
-        }
-
-        public override async Task InitializeAsync()
-        {
-            await base.InitializeAsync();
-            await this.Login("administrator");
-
-            var singleSessionContext = new Context(this);
-
-            this.contextFactories = new Func<Context>[]
-            {
-                () => singleSessionContext,
-            };
         }
 
         [Fact]
         public async void Test()
         {
-            var contextFactory = this.contextFactories[0];
+            await this.Login("administrator");
 
+            foreach (var connection in this.Connections)
             {
-                var ctx = contextFactory();
-                var (session1, session2) = ctx;
+
             }
+
         }
     }
 }

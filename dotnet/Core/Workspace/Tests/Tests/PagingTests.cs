@@ -24,27 +24,29 @@ namespace Tests.Workspace
         public async void Take()
         {
             await this.Login("administrator");
-            var session = this.Connection;
 
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(this.M.I12) { Sorting = new[] { new Sort(this.M.I12.Order) } },
-                Results = new[]
+                var pull = new Pull
                 {
-                    new Result
+                    Extent = new Filter(this.M.I12) { Sorting = new[] { new Sort(this.M.I12.Order) } },
+                    Results = new[]
                     {
-                        Take = 1
+                        new Result
+                        {
+                            Take = 1
+                        }
                     }
-                }
-            };
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            var i12s = result.GetCollection(M.I12);
+                var i12s = result.GetCollection(M.I12);
 
-            Assert.Single(i12s);
+                Assert.Single(i12s);
 
-            Assert.Equal("c2D", i12s[0].GetUnitRole(M.I12.Name));
+                Assert.Equal("c2D", i12s[0].GetUnitRole(M.I12.Name));
+            }
         }
     }
 }

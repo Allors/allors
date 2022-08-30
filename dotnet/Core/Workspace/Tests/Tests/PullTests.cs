@@ -25,56 +25,59 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            // Class
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(this.M.C1)
+                // Class
+                var pull = new Pull
                 {
-                    Predicate = new And
+                    Extent = new Filter(this.M.C1)
                     {
-                        Operands = new IPredicate[]
+                        Predicate = new And
                         {
-                            new GreaterThan(m.C1.C1AllorsInteger){Value = 0},
-                            new LessThan(m.C1.C1AllorsInteger){Value = 2}
+                            Operands = new IPredicate[]
+                            {
+                                new GreaterThan(m.C1.C1AllorsInteger){Value = 0},
+                                new LessThan(m.C1.C1AllorsInteger){Value = 2}
+                            }
                         }
                     }
-                }
-            };
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.C1).Equal(c1B);
+                result.Assert().Collection(M.C1).Equal(c1B);
 
-            // Interface
-            pull = new Pull
-            {
-                Extent = new Filter(this.M.I12)
+                // Interface
+                pull = new Pull
                 {
-                    Predicate = new And
+                    Extent = new Filter(this.M.I12)
                     {
-                        Operands = new IPredicate[]
+                        Predicate = new And
                         {
-                            new GreaterThan(m.I12.I12AllorsInteger){Value = 0},
-                            new LessThan(m.I12.I12AllorsInteger){Value = 2}
+                            Operands = new IPredicate[]
+                            {
+                                new GreaterThan(m.I12.I12AllorsInteger){Value = 0},
+                                new LessThan(m.I12.I12AllorsInteger){Value = 2}
+                            }
                         }
                     }
-                }
-            };
+                };
 
-            result = await session.PullAsync(pull);
+                result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.I12).Equal(c1B, c2B);
+                result.Assert().Collection(M.I12).Equal(c1B, c2B);
+
+            }
         }
 
         [Fact]
@@ -82,72 +85,74 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            // Empty
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(this.M.C2)
+                // Empty
+                var pull = new Pull
                 {
-                    Predicate = new ContainedIn(m.C2.C1sWhereC1C2Many2Many)
+                    Extent = new Filter(this.M.C2)
                     {
-                        Extent = new Filter(this.M.C1)
+                        Predicate = new ContainedIn(m.C2.C1sWhereC1C2Many2Many)
                         {
-                            Predicate = new Equals(m.C1.C1AllorsString) { Value = "Nothing here!" }
+                            Extent = new Filter(this.M.C1)
+                            {
+                                Predicate = new Equals(m.C1.C1AllorsString) { Value = "Nothing here!" }
+                            }
                         }
                     }
-                }
-            };
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Empty(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Empty(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            // Full
-            pull = new Pull
-            {
-                Extent = new Filter(this.M.C2)
+                // Full
+                pull = new Pull
                 {
-                    Predicate = new ContainedIn(m.C2.C1sWhereC1C2Many2Many)
+                    Extent = new Filter(this.M.C2)
                     {
-                        Extent = new Filter(this.M.C1)
-                    }
-                }
-            };
-
-            result = await session.PullAsync(pull);
-
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
-
-            result.Assert().Collection(M.C2).Equal(c2B, c2C, c2D);
-
-            // Filtered
-            pull = new Pull
-            {
-                Extent = new Filter(this.M.C2)
-                {
-                    Predicate = new ContainedIn(m.C2.C1sWhereC1C2Many2Many)
-                    {
-                        Extent = new Filter(this.M.C1)
+                        Predicate = new ContainedIn(m.C2.C1sWhereC1C2Many2Many)
                         {
-                            Predicate = new Equals(m.C1.C1AllorsString) { Value = "ᴀbra" }
+                            Extent = new Filter(this.M.C1)
                         }
                     }
-                }
-            };
+                };
 
-            result = await session.PullAsync(pull);
+                result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.C2).Equal(c2B);
+                result.Assert().Collection(M.C2).Equal(c2B, c2C, c2D);
+
+                // Filtered
+                pull = new Pull
+                {
+                    Extent = new Filter(this.M.C2)
+                    {
+                        Predicate = new ContainedIn(m.C2.C1sWhereC1C2Many2Many)
+                        {
+                            Extent = new Filter(this.M.C1)
+                            {
+                                Predicate = new Equals(m.C1.C1AllorsString) { Value = "ᴀbra" }
+                            }
+                        }
+                    }
+                };
+
+                result = await connection.PullAsync(pull);
+
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
+
+                result.Assert().Collection(M.C2).Equal(c2B);
+            }
         }
 
         [Fact]
@@ -155,30 +160,32 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            var c1c = await session.PullObject(M.C1, c1C);
-
-            // Full
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(this.M.C2)
+                var c1c = await connection.PullObject(M.C1, c1C);
+
+                // Full
+                var pull = new Pull
                 {
-                    Predicate = new Contains(m.C2.C1sWhereC1C2Many2Many)
+                    Extent = new Filter(this.M.C2)
                     {
-                        Object = c1c
+                        Predicate = new Contains(m.C2.C1sWhereC1C2Many2Many)
+                        {
+                            Object = c1c
+                        }
                     }
-                }
-            };
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.C2).Equal(c2B, c2C);
+                result.Assert().Collection(M.C2).Equal(c2B, c2C);
+            }
         }
 
         [Fact]
@@ -186,25 +193,27 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            // Full
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(this.M.C2)
+                // Full
+                var pull = new Pull
                 {
-                    Predicate = new Exists(m.C2.C1sWhereC1C2Many2Many)
-                }
-            };
+                    Extent = new Filter(this.M.C2)
+                    {
+                        Predicate = new Exists(m.C2.C1sWhereC1C2Many2Many)
+                    }
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.C2).Equal(c2B, c2C, c2D);
+                result.Assert().Collection(M.C2).Equal(c2B, c2C, c2D);
+            }
         }
 
         [Fact]
@@ -212,30 +221,32 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(this.M.C2)
+                var pull = new Pull
                 {
-                    Predicate = new ContainedIn(m.C2.C1sWhereC1C2Many2One)
+                    Extent = new Filter(this.M.C2)
                     {
-                        Extent = new Filter(this.M.C1)
+                        Predicate = new ContainedIn(m.C2.C1sWhereC1C2Many2One)
                         {
-                            Predicate = new Equals(m.C1.C1AllorsString) { Value = "ᴀbra" }
+                            Extent = new Filter(this.M.C1)
+                            {
+                                Predicate = new Equals(m.C1.C1AllorsString) { Value = "ᴀbra" }
+                            }
                         }
                     }
-                }
-            };
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.C2).Equal(c2B);
+                result.Assert().Collection(M.C2).Equal(c2B);
+            }
         }
 
         [Fact]
@@ -243,30 +254,32 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            var c1c = await session.PullObject(M.C1, c1C);
-
-            // Full
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(this.M.C2)
+                var c1c = await connection.PullObject(M.C1, c1C);
+
+                // Full
+                var pull = new Pull
                 {
-                    Predicate = new Contains(m.C2.C1sWhereC1C2Many2One)
+                    Extent = new Filter(this.M.C2)
                     {
-                        Object = c1c
+                        Predicate = new Contains(m.C2.C1sWhereC1C2Many2One)
+                        {
+                            Object = c1c
+                        }
                     }
-                }
-            };
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.C2).Equal(c2C);
+                result.Assert().Collection(M.C2).Equal(c2C);
+            }
         }
 
         [Fact]
@@ -274,30 +287,32 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(this.M.C2)
+                var pull = new Pull
                 {
-                    Predicate = new ContainedIn(m.C2.C1WhereC1C2One2Many)
+                    Extent = new Filter(this.M.C2)
                     {
-                        Extent = new Filter(this.M.C1)
+                        Predicate = new ContainedIn(m.C2.C1WhereC1C2One2Many)
                         {
-                            Predicate = new Equals(m.C1.C1AllorsString) { Value = "ᴀbra" }
+                            Extent = new Filter(this.M.C1)
+                            {
+                                Predicate = new Equals(m.C1.C1AllorsString) { Value = "ᴀbra" }
+                            }
                         }
                     }
-                }
-            };
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.C2).Equal(c2B);
+                result.Assert().Collection(M.C2).Equal(c2B);
+            }
         }
 
         [Fact]
@@ -305,49 +320,51 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            var c1b = await session.PullObject(M.C1, c1B);
-            var c1c = await session.PullObject(M.C1, c1C);
-
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(this.M.C2)
+                var c1b = await connection.PullObject(M.C1, c1B);
+                var c1c = await connection.PullObject(M.C1, c1C);
+
+                var pull = new Pull
                 {
-                    Predicate = new Equals(m.C2.C1WhereC1C2One2Many)
+                    Extent = new Filter(this.M.C2)
                     {
-                        Object = c1b
+                        Predicate = new Equals(m.C2.C1WhereC1C2One2Many)
+                        {
+                            Object = c1b
+                        }
                     }
-                }
-            };
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.C2).Equal(c2B);
+                result.Assert().Collection(M.C2).Equal(c2B);
 
-            pull = new Pull
-            {
-                Extent = new Filter(this.M.C2)
+                pull = new Pull
                 {
-                    Predicate = new Equals(m.C2.C1WhereC1C2One2Many)
+                    Extent = new Filter(this.M.C2)
                     {
-                        Object = c1c
+                        Predicate = new Equals(m.C2.C1WhereC1C2One2Many)
+                        {
+                            Object = c1c
+                        }
                     }
-                }
-            };
+                };
 
-            result = await session.PullAsync(pull);
+                result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.C2).Equal(c2C, c2D);
+                result.Assert().Collection(M.C2).Equal(c2C, c2D);
+            }
         }
 
         [Fact]
@@ -355,42 +372,44 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            // Class
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(this.M.C2)
+                // Class
+                var pull = new Pull
                 {
-                    Predicate = new Exists(m.C2.C1WhereC1C2One2Many)
-                }
-            };
+                    Extent = new Filter(this.M.C2)
+                    {
+                        Predicate = new Exists(m.C2.C1WhereC1C2One2Many)
+                    }
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.C2).Equal(c2B, c2C, c2D);
+                result.Assert().Collection(M.C2).Equal(c2B, c2C, c2D);
 
-            // Interface
-            pull = new Pull
-            {
-                Extent = new Filter(this.M.I2)
+                // Interface
+                pull = new Pull
                 {
-                    Predicate = new Exists(m.I2.I1WhereI1I2One2Many)
-                }
-            };
+                    Extent = new Filter(this.M.I2)
+                    {
+                        Predicate = new Exists(m.I2.I1WhereI1I2One2Many)
+                    }
+                };
 
-            result = await session.PullAsync(pull);
+                result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.I2).Equal(c2B, c2C, c2D);
+                result.Assert().Collection(M.I2).Equal(c2B, c2C, c2D);
+            }
         }
 
         [Fact]
@@ -398,24 +417,26 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(this.M.C2)
+                var pull = new Pull
                 {
-                    Predicate = new Instanceof(m.C2.C1WhereC1C2One2Many) { ObjectType = m.C1 }
-                }
-            };
+                    Extent = new Filter(this.M.C2)
+                    {
+                        Predicate = new Instanceof(m.C2.C1WhereC1C2One2Many) { ObjectType = m.C1 }
+                    }
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.C2).Equal(c2B, c2C, c2D);
+                result.Assert().Collection(M.C2).Equal(c2B, c2C, c2D);
+            }
         }
 
         [Fact]
@@ -423,30 +444,32 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(this.M.C2)
+                var pull = new Pull
                 {
-                    Predicate = new ContainedIn(m.C2.C1WhereC1C2One2One)
+                    Extent = new Filter(this.M.C2)
                     {
-                        Extent = new Filter(this.M.C1)
+                        Predicate = new ContainedIn(m.C2.C1WhereC1C2One2One)
                         {
-                            Predicate = new Equals(m.C1.C1AllorsString) { Value = "ᴀbra" }
+                            Extent = new Filter(this.M.C1)
+                            {
+                                Predicate = new Equals(m.C1.C1AllorsString) { Value = "ᴀbra" }
+                            }
                         }
                     }
-                }
-            };
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.C2).Equal(c2B);
+                result.Assert().Collection(M.C2).Equal(c2B);
+            }
         }
 
         [Fact]
@@ -454,49 +477,51 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            var c1b = await session.PullObject(M.C1, c1B);
-            var c1c = await session.PullObject(M.C1, c1C);
-
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(this.M.C2)
+                var c1b = await connection.PullObject(M.C1, c1B);
+                var c1c = await connection.PullObject(M.C1, c1C);
+
+                var pull = new Pull
                 {
-                    Predicate = new Equals(m.C2.C1WhereC1C2One2One)
+                    Extent = new Filter(this.M.C2)
                     {
-                        Object = c1b
+                        Predicate = new Equals(m.C2.C1WhereC1C2One2One)
+                        {
+                            Object = c1b
+                        }
                     }
-                }
-            };
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.C2).Equal(c2B);
+                result.Assert().Collection(M.C2).Equal(c2B);
 
-            pull = new Pull
-            {
-                Extent = new Filter(this.M.C2)
+                pull = new Pull
                 {
-                    Predicate = new Equals(m.C2.C1WhereC1C2One2One)
+                    Extent = new Filter(this.M.C2)
                     {
-                        Object = c1c
+                        Predicate = new Equals(m.C2.C1WhereC1C2One2One)
+                        {
+                            Object = c1c
+                        }
                     }
-                }
-            };
+                };
 
-            result = await session.PullAsync(pull);
+                result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.C2).Equal(c2C);
+                result.Assert().Collection(M.C2).Equal(c2C);
+            }
         }
 
         [Fact]
@@ -504,41 +529,42 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(this.M.C1)
+                var pull = new Pull
                 {
-                    Predicate = new Exists(m.C1.C1WhereC1C1One2One)
-                }
-            };
+                    Extent = new Filter(this.M.C1)
+                    {
+                        Predicate = new Exists(m.C1.C1WhereC1C1One2One)
+                    }
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.C1).Equal(c1B, c1C, c1D);
+                result.Assert().Collection(M.C1).Equal(c1B, c1C, c1D);
 
-            pull = new Pull
-            {
-                Extent = new Filter(this.M.C2)
+                pull = new Pull
                 {
-                    Predicate = new Exists(m.C2.C1WhereC1C2One2One)
-                }
-            };
+                    Extent = new Filter(m.C2)
+                    {
+                        Predicate = new Exists(m.C2.C1WhereC1C2One2One)
+                    }
+                };
 
-            result = await session.PullAsync(pull);
+                result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.C2).Equal(c2B, c2C, c2D);
+                result.Assert().Collection(m.C2).Equal(c2B, c2C, c2D);
+            }
         }
 
         [Fact]
@@ -546,40 +572,42 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(this.M.I12)
+                var pull = new Pull
                 {
-                    Predicate = new Instanceof(m.I12.I12WhereI12I12One2One) { ObjectType = m.C1 }
-                }
-            };
+                    Extent = new Filter(this.M.I12)
+                    {
+                        Predicate = new Instanceof(m.I12.I12WhereI12I12One2One) { ObjectType = m.C1 }
+                    }
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.I12).Equal(c1D, c2B, c2C);
+                result.Assert().Collection(M.I12).Equal(c1D, c2B, c2C);
 
-            pull = new Pull
-            {
-                Extent = new Filter(this.M.I12)
+                pull = new Pull
                 {
-                    Predicate = new Instanceof(m.I12.I12WhereI12I12One2One) { ObjectType = m.I2 }
-                }
-            };
+                    Extent = new Filter(this.M.I12)
+                    {
+                        Predicate = new Instanceof(m.I12.I12WhereI12I12One2One) { ObjectType = m.I2 }
+                    }
+                };
 
-            result = await session.PullAsync(pull);
+                result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.I12).Equal(c1B, c1C, c2D);
+                result.Assert().Collection(M.I12).Equal(c1B, c1C, c2D);
+            }
         }
 
         [Fact]
@@ -587,26 +615,28 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            var c1c = await session.PullObject(M.C1, c1C);
-
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(m.C1)
+                var c1c = await connection.PullObject(M.C1, c1C);
+
+                var pull = new Pull
                 {
-                    Predicate = new Equals { Object = c1c }
-                }
-            };
+                    Extent = new Filter(m.C1)
+                    {
+                        Predicate = new Equals { Object = c1c }
+                    }
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.C1).Equal(c1C);
+                result.Assert().Collection(M.C1).Equal(c1C);
+            }
         }
 
         [Fact]
@@ -614,21 +644,23 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(m.I12)
-            };
+                var pull = new Pull
+                {
+                    Extent = new Filter(m.I12)
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.I12).Equal(c1A, c1B, c1C, c1D, c2A, c2B, c2C, c2D);
+                result.Assert().Collection(M.I12).Equal(c1A, c1B, c1C, c1D, c2A, c2B, c2C, c2D);
+            }
         }
 
         [Fact]
@@ -636,27 +668,29 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(m.I12)
+                var pull = new Pull
                 {
-                    Predicate = new Instanceof
+                    Extent = new Filter(m.I12)
                     {
-                        ObjectType = m.C1
+                        Predicate = new Instanceof
+                        {
+                            ObjectType = m.C1
+                        }
                     }
-                }
-            };
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.I12).Equal(c1A, c1B, c1C, c1D);
+                result.Assert().Collection(M.I12).Equal(c1A, c1B, c1C, c1D);
+            }
         }
 
         [Fact]
@@ -664,29 +698,31 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            var c1c = await session.PullObject(M.C1, c1C);
-
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(m.C1)
+                var c1c = await connection.PullObject(M.C1, c1C);
+
+                var pull = new Pull
                 {
-                    Predicate = new Not
+                    Extent = new Filter(m.C1)
                     {
-                        Operand = new Equals { Object = c1c }
+                        Predicate = new Not
+                        {
+                            Operand = new Equals { Object = c1c }
+                        }
                     }
-                }
-            };
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.C1).Equal(c1A, c1B, c1D);
+                result.Assert().Collection(M.C1).Equal(c1A, c1B, c1D);
+            }
         }
 
         [Fact]
@@ -694,34 +730,36 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            var c1b = await session.PullObject(M.C1, c1B);
-            var c1c = await session.PullObject(M.C1, c1C);
-
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(m.C1)
+                var c1b = await connection.PullObject(M.C1, c1B);
+                var c1c = await connection.PullObject(M.C1, c1C);
+
+                var pull = new Pull
                 {
-                    Predicate = new Or
+                    Extent = new Filter(m.C1)
                     {
-                        Operands = new[]
+                        Predicate = new Or
                         {
-                            new Equals { Object = c1b },
-                            new Equals { Object = c1c }
+                            Operands = new[]
+                            {
+                                new Equals { Object = c1b },
+                                new Equals { Object = c1c }
+                            }
                         }
                     }
-                }
-            };
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.C1).Equal(c1B, c1C);
+                result.Assert().Collection(M.C1).Equal(c1B, c1C);
+            }
         }
 
         [Fact]
@@ -729,31 +767,33 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Except
+                var pull = new Pull
                 {
-                    Operands = new Extent[]
+                    Extent = new Except
                     {
-                        new Filter(m.I12),
-                        new Filter(m.I12)
+                        Operands = new Extent[]
                         {
-                            Predicate = new Instanceof{ObjectType = m.C2}
+                            new Filter(m.I12),
+                            new Filter(m.I12)
+                            {
+                                Predicate = new Instanceof{ObjectType = m.C2}
+                            }
                         }
                     }
-                }
-            };
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.I12).Equal(c1A, c1B, c1C, c1D);
+                result.Assert().Collection(M.I12).Equal(c1A, c1B, c1C, c1D);
+            }
         }
 
         [Fact]
@@ -761,31 +801,33 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Intersect()
+                var pull = new Pull
                 {
-                    Operands = new Extent[]
+                    Extent = new Intersect()
                     {
-                        new Filter(m.I12),
-                        new Filter(m.I12)
+                        Operands = new Extent[]
                         {
-                            Predicate = new Instanceof{ObjectType = m.C2}
+                            new Filter(m.I12),
+                            new Filter(m.I12)
+                            {
+                                Predicate = new Instanceof{ObjectType = m.C2}
+                            }
                         }
                     }
-                }
-            };
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.I12).Equal(c2A, c2B, c2C, c2D);
+                result.Assert().Collection(M.I12).Equal(c2A, c2B, c2C, c2D);
+            }
         }
 
         [Fact]
@@ -793,28 +835,30 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Union
+                var pull = new Pull
                 {
-                    Operands = new Extent[]
+                    Extent = new Union
                     {
-                        new Filter(m.C1){Predicate = new Equals(m.C1.Name) {Value = "c1A"}},
-                        new Filter(m.C1){Predicate = new Equals(m.C1.Name) {Value = "c1B"}}
+                        Operands = new Extent[]
+                        {
+                            new Filter(m.C1){Predicate = new Equals(m.C1.Name) {Value = "c1A"}},
+                            new Filter(m.C1){Predicate = new Equals(m.C1.Name) {Value = "c1B"}}
+                        }
                     }
-                }
-            };
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.C1).Equal(c1A, c1B);
+                result.Assert().Collection(M.C1).Equal(c1A, c1B);
+            }
         }
 
         [Fact]
@@ -822,27 +866,29 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(m.C1)
+                var pull = new Pull
                 {
-                    Predicate = new Between(m.C1.C1AllorsDateTime)
+                    Extent = new Filter(m.C1)
                     {
-                        Paths = new RoleType[] { m.C1.C1DateTimeBetweenA, m.C1.C1DateTimeBetweenB }
+                        Predicate = new Between(m.C1.C1AllorsDateTime)
+                        {
+                            Paths = new RoleType[] { m.C1.C1DateTimeBetweenA, m.C1.C1DateTimeBetweenB }
+                        }
                     }
-                }
-            };
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.C1).Equal(c1C, c1D);
+                result.Assert().Collection(M.C1).Equal(c1C, c1D);
+            }
         }
 
         [Fact]
@@ -850,31 +896,33 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(m.C1)
+                var pull = new Pull
                 {
-                    Predicate = new Between(m.C1.C1AllorsDateTime)
+                    Extent = new Filter(m.C1)
                     {
-                        Values = new object[]
+                        Predicate = new Between(m.C1.C1AllorsDateTime)
                         {
-                            new System.DateTime(2000, 1, 1, 0, 0, 4, DateTimeKind.Utc),
-                            new System.DateTime(2000, 1, 1, 0, 0, 6, DateTimeKind.Utc)
+                            Values = new object[]
+                            {
+                                new System.DateTime(2000, 1, 1, 0, 0, 4, DateTimeKind.Utc),
+                                new System.DateTime(2000, 1, 1, 0, 0, 6, DateTimeKind.Utc)
+                            }
                         }
                     }
-                }
-            };
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.C1).Equal(c1B, c1C, c1D);
+                result.Assert().Collection(M.C1).Equal(c1B, c1C, c1D);
+            }
         }
 
         [Fact]
@@ -882,27 +930,29 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(m.C1)
+                var pull = new Pull
                 {
-                    Predicate = new GreaterThan(m.C1.C1AllorsDateTime)
+                    Extent = new Filter(m.C1)
                     {
-                        Path = m.C1.C1DateTimeGreaterThan
+                        Predicate = new GreaterThan(m.C1.C1AllorsDateTime)
+                        {
+                            Path = m.C1.C1DateTimeGreaterThan
+                        }
                     }
-                }
-            };
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.C1).Equal(c1B);
+                result.Assert().Collection(M.C1).Equal(c1B);
+            }
         }
 
         [Fact]
@@ -910,27 +960,29 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(m.C1)
+                var pull = new Pull
                 {
-                    Predicate = new GreaterThan(m.C1.C1AllorsDateTime)
+                    Extent = new Filter(m.C1)
                     {
-                        Value = new System.DateTime(2000, 1, 1, 0, 0, 4, DateTimeKind.Utc)
+                        Predicate = new GreaterThan(m.C1.C1AllorsDateTime)
+                        {
+                            Value = new System.DateTime(2000, 1, 1, 0, 0, 4, DateTimeKind.Utc)
+                        }
                     }
-                }
-            };
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.C1).Equal(c1C, c1D);
+                result.Assert().Collection(M.C1).Equal(c1C, c1D);
+            }
         }
 
         [Fact]
@@ -938,27 +990,29 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(m.C1)
+                var pull = new Pull
                 {
-                    Predicate = new LessThan(m.C1.C1AllorsDateTime)
+                    Extent = new Filter(m.C1)
                     {
-                        Path = m.C1.C1DateTimeLessThan
+                        Predicate = new LessThan(m.C1.C1AllorsDateTime)
+                        {
+                            Path = m.C1.C1DateTimeLessThan
+                        }
                     }
-                }
-            };
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.C1).Equal(c1D);
+                result.Assert().Collection(M.C1).Equal(c1D);
+            }
         }
 
         [Fact]
@@ -966,27 +1020,29 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(m.C1)
+                var pull = new Pull
                 {
-                    Predicate = new LessThan(m.C1.C1AllorsDateTime)
+                    Extent = new Filter(m.C1)
                     {
-                        Value = new System.DateTime(2000, 1, 1, 0, 0, 5, DateTimeKind.Utc)
+                        Predicate = new LessThan(m.C1.C1AllorsDateTime)
+                        {
+                            Value = new System.DateTime(2000, 1, 1, 0, 0, 5, DateTimeKind.Utc)
+                        }
                     }
-                }
-            };
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.C1).Equal(c1B);
+                result.Assert().Collection(M.C1).Equal(c1B);
+            }
         }
 
         [Fact]
@@ -994,27 +1050,29 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(m.C1)
+                var pull = new Pull
                 {
-                    Predicate = new Equals(m.C1.C1AllorsDateTime)
+                    Extent = new Filter(m.C1)
                     {
-                        Value = new System.DateTime(2000, 1, 1, 0, 0, 4, DateTimeKind.Utc)
+                        Predicate = new Equals(m.C1.C1AllorsDateTime)
+                        {
+                            Value = new System.DateTime(2000, 1, 1, 0, 0, 4, DateTimeKind.Utc)
+                        }
                     }
-                }
-            };
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.C1).Equal(c1B);
+                result.Assert().Collection(M.C1).Equal(c1B);
+            }
         }
 
         [Fact]
@@ -1022,27 +1080,29 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(m.C1)
+                var pull = new Pull
                 {
-                    Predicate = new Between(m.C1.C1AllorsDecimal)
+                    Extent = new Filter(m.C1)
                     {
-                        Paths = new RoleType[] { m.C1.C1DecimalBetweenA, m.C1.C1DecimalBetweenB }
+                        Predicate = new Between(m.C1.C1AllorsDecimal)
+                        {
+                            Paths = new RoleType[] { m.C1.C1DecimalBetweenA, m.C1.C1DecimalBetweenB }
+                        }
                     }
-                }
-            };
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.C1).Equal(c1D);
+                result.Assert().Collection(M.C1).Equal(c1D);
+            }
         }
 
         [Fact]
@@ -1050,27 +1110,29 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(m.C1)
+                var pull = new Pull
                 {
-                    Predicate = new Between(m.C1.C1AllorsDecimal)
+                    Extent = new Filter(m.C1)
                     {
-                        Values = new object[] { 2.1m, 2.3m }
+                        Predicate = new Between(m.C1.C1AllorsDecimal)
+                        {
+                            Values = new object[] { 2.1m, 2.3m }
+                        }
                     }
-                }
-            };
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.C1).Equal(c1C, c1D);
+                result.Assert().Collection(M.C1).Equal(c1C, c1D);
+            }
         }
 
         [Fact]
@@ -1078,27 +1140,29 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(m.C1)
+                var pull = new Pull
                 {
-                    Predicate = new GreaterThan(m.C1.C1AllorsDecimal)
+                    Extent = new Filter(m.C1)
                     {
-                        Path = m.C1.C1DecimalGreaterThan
+                        Predicate = new GreaterThan(m.C1.C1AllorsDecimal)
+                        {
+                            Path = m.C1.C1DecimalGreaterThan
+                        }
                     }
-                }
-            };
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.C1).Equal(c1B, c1C);
+                result.Assert().Collection(M.C1).Equal(c1B, c1C);
+            }
         }
 
         [Fact]
@@ -1106,27 +1170,29 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(m.C1)
+                var pull = new Pull
                 {
-                    Predicate = new GreaterThan(m.C1.C1AllorsDecimal)
+                    Extent = new Filter(m.C1)
                     {
-                        Value = 1.5m
+                        Predicate = new GreaterThan(m.C1.C1AllorsDecimal)
+                        {
+                            Value = 1.5m
+                        }
                     }
-                }
-            };
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.C1).Equal(c1C, c1D);
+                result.Assert().Collection(M.C1).Equal(c1C, c1D);
+            }
         }
 
         [Fact]
@@ -1134,27 +1200,29 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(m.C1)
+                var pull = new Pull
                 {
-                    Predicate = new LessThan(m.C1.C1AllorsDecimal)
+                    Extent = new Filter(m.C1)
                     {
-                        Path = m.C1.C1DecimalLessThan
+                        Predicate = new LessThan(m.C1.C1AllorsDecimal)
+                        {
+                            Path = m.C1.C1DecimalLessThan
+                        }
                     }
-                }
-            };
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.C1).Equal(c1D);
+                result.Assert().Collection(M.C1).Equal(c1D);
+            }
         }
 
         [Fact]
@@ -1162,27 +1230,29 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(m.C1)
+                var pull = new Pull
                 {
-                    Predicate = new LessThan(m.C1.C1AllorsDecimal)
+                    Extent = new Filter(m.C1)
                     {
-                        Value = 1.9m
+                        Predicate = new LessThan(m.C1.C1AllorsDecimal)
+                        {
+                            Value = 1.9m
+                        }
                     }
-                }
-            };
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.C1).Equal(c1B);
+                result.Assert().Collection(M.C1).Equal(c1B);
+            }
         }
 
         [Fact]
@@ -1190,27 +1260,29 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(m.C1)
+                var pull = new Pull
                 {
-                    Predicate = new Equals(m.C1.C1AllorsDecimal)
+                    Extent = new Filter(m.C1)
                     {
-                        Value = 2.2m
+                        Predicate = new Equals(m.C1.C1AllorsDecimal)
+                        {
+                            Value = 2.2m
+                        }
                     }
-                }
-            };
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.C1).Equal(c1C, c1D);
+                result.Assert().Collection(M.C1).Equal(c1C, c1D);
+            }
         }
 
         [Fact]
@@ -1218,27 +1290,29 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(m.C1)
+                var pull = new Pull
                 {
-                    Predicate = new Between(m.C1.C1AllorsDouble)
+                    Extent = new Filter(m.C1)
                     {
-                        Paths = new RoleType[] { m.C1.C1DoubleBetweenA, m.C1.C1DoubleBetweenB }
+                        Predicate = new Between(m.C1.C1AllorsDouble)
+                        {
+                            Paths = new RoleType[] { m.C1.C1DoubleBetweenA, m.C1.C1DoubleBetweenB }
+                        }
                     }
-                }
-            };
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.C1).Equal(c1D);
+                result.Assert().Collection(M.C1).Equal(c1D);
+            }
         }
 
         [Fact]
@@ -1246,27 +1320,29 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(m.C1)
+                var pull = new Pull
                 {
-                    Predicate = new Between(m.C1.C1AllorsDouble)
+                    Extent = new Filter(m.C1)
                     {
-                        Values = new object[] { 2.1d, 2.3d }
+                        Predicate = new Between(m.C1.C1AllorsDouble)
+                        {
+                            Values = new object[] { 2.1d, 2.3d }
+                        }
                     }
-                }
-            };
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.C1).Equal(c1C, c1D);
+                result.Assert().Collection(M.C1).Equal(c1C, c1D);
+            }
         }
 
         [Fact]
@@ -1274,27 +1350,29 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(m.C1)
+                var pull = new Pull
                 {
-                    Predicate = new GreaterThan(m.C1.C1AllorsDouble)
+                    Extent = new Filter(m.C1)
                     {
-                        Path = m.C1.C1DoubleGreaterThan
+                        Predicate = new GreaterThan(m.C1.C1AllorsDouble)
+                        {
+                            Path = m.C1.C1DoubleGreaterThan
+                        }
                     }
-                }
-            };
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.C1).Equal(c1B, c1C);
+                result.Assert().Collection(M.C1).Equal(c1B, c1C);
+            }
         }
 
         [Fact]
@@ -1302,27 +1380,29 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(m.C1)
+                var pull = new Pull
                 {
-                    Predicate = new GreaterThan(m.C1.C1AllorsDouble)
+                    Extent = new Filter(m.C1)
                     {
-                        Value = 1.5d
+                        Predicate = new GreaterThan(m.C1.C1AllorsDouble)
+                        {
+                            Value = 1.5d
+                        }
                     }
-                }
-            };
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.C1).Equal(c1C, c1D);
+                result.Assert().Collection(M.C1).Equal(c1C, c1D);
+            }
         }
 
         [Fact]
@@ -1330,27 +1410,29 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(m.C1)
+                var pull = new Pull
                 {
-                    Predicate = new LessThan(m.C1.C1AllorsDouble)
+                    Extent = new Filter(m.C1)
                     {
-                        Path = m.C1.C1DoubleLessThan
+                        Predicate = new LessThan(m.C1.C1AllorsDouble)
+                        {
+                            Path = m.C1.C1DoubleLessThan
+                        }
                     }
-                }
-            };
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.C1).Equal(c1D);
+                result.Assert().Collection(M.C1).Equal(c1D);
+            }
         }
 
         [Fact]
@@ -1358,27 +1440,29 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(m.C1)
+                var pull = new Pull
                 {
-                    Predicate = new LessThan(m.C1.C1AllorsDouble)
+                    Extent = new Filter(m.C1)
                     {
-                        Value = 1.9d
+                        Predicate = new LessThan(m.C1.C1AllorsDouble)
+                        {
+                            Value = 1.9d
+                        }
                     }
-                }
-            };
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.C1).Equal(c1B);
+                result.Assert().Collection(M.C1).Equal(c1B);
+            }
         }
 
         [Fact]
@@ -1386,27 +1470,29 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(m.C1)
+                var pull = new Pull
                 {
-                    Predicate = new Equals(m.C1.C1AllorsDouble)
+                    Extent = new Filter(m.C1)
                     {
-                        Value = 2.2d
+                        Predicate = new Equals(m.C1.C1AllorsDouble)
+                        {
+                            Value = 2.2d
+                        }
                     }
-                }
-            };
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.C1).Equal(c1C, c1D);
+                result.Assert().Collection(M.C1).Equal(c1C, c1D);
+            }
         }
 
         [Fact]
@@ -1414,27 +1500,29 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(m.C1)
+                var pull = new Pull
                 {
-                    Predicate = new Between(m.C1.C1AllorsInteger)
+                    Extent = new Filter(m.C1)
                     {
-                        Paths = new RoleType[] { m.C1.C1IntegerBetweenA, m.C1.C1IntegerBetweenB }
+                        Predicate = new Between(m.C1.C1AllorsInteger)
+                        {
+                            Paths = new RoleType[] { m.C1.C1IntegerBetweenA, m.C1.C1IntegerBetweenB }
+                        }
                     }
-                }
-            };
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.C1).Equal(c1C, c1D);
+                result.Assert().Collection(M.C1).Equal(c1C, c1D);
+            }
         }
 
         [Fact]
@@ -1442,27 +1530,29 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(m.C1)
+                var pull = new Pull
                 {
-                    Predicate = new Between(m.C1.C1AllorsInteger)
+                    Extent = new Filter(m.C1)
                     {
-                        Values = new object[] { 1, 2 }
+                        Predicate = new Between(m.C1.C1AllorsInteger)
+                        {
+                            Values = new object[] { 1, 2 }
+                        }
                     }
-                }
-            };
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.C1).Equal(c1B, c1C, c1D);
+                result.Assert().Collection(M.C1).Equal(c1B, c1C, c1D);
+            }
         }
 
         [Fact]
@@ -1470,27 +1560,29 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(m.C1)
+                var pull = new Pull
                 {
-                    Predicate = new GreaterThan(m.C1.C1AllorsInteger)
+                    Extent = new Filter(m.C1)
                     {
-                        Path = m.C1.C1IntegerGreaterThan
+                        Predicate = new GreaterThan(m.C1.C1AllorsInteger)
+                        {
+                            Path = m.C1.C1IntegerGreaterThan
+                        }
                     }
-                }
-            };
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.C1).Equal(c1B);
+                result.Assert().Collection(M.C1).Equal(c1B);
+            }
         }
 
         [Fact]
@@ -1498,27 +1590,29 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(m.C1)
+                var pull = new Pull
                 {
-                    Predicate = new GreaterThan(m.C1.C1AllorsInteger)
+                    Extent = new Filter(m.C1)
                     {
-                        Value = 1
+                        Predicate = new GreaterThan(m.C1.C1AllorsInteger)
+                        {
+                            Value = 1
+                        }
                     }
-                }
-            };
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.C1).Equal(c1C, c1D);
+                result.Assert().Collection(M.C1).Equal(c1C, c1D);
+            }
         }
 
         [Fact]
@@ -1526,27 +1620,29 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(m.C1)
+                var pull = new Pull
                 {
-                    Predicate = new LessThan(m.C1.C1AllorsInteger)
+                    Extent = new Filter(m.C1)
                     {
-                        Path = m.C1.C1IntegerLessThan
+                        Predicate = new LessThan(m.C1.C1AllorsInteger)
+                        {
+                            Path = m.C1.C1IntegerLessThan
+                        }
                     }
-                }
-            };
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.C1).Equal(c1D);
+                result.Assert().Collection(M.C1).Equal(c1D);
+            }
         }
 
         [Fact]
@@ -1554,27 +1650,29 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(m.C1)
+                var pull = new Pull
                 {
-                    Predicate = new LessThan(m.C1.C1AllorsInteger)
+                    Extent = new Filter(m.C1)
                     {
-                        Value = 2
+                        Predicate = new LessThan(m.C1.C1AllorsInteger)
+                        {
+                            Value = 2
+                        }
                     }
-                }
-            };
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.C1).Equal(c1B);
+                result.Assert().Collection(M.C1).Equal(c1B);
+            }
         }
 
         [Fact]
@@ -1582,27 +1680,29 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(m.C1)
+                var pull = new Pull
                 {
-                    Predicate = new Equals(m.C1.C1AllorsInteger)
+                    Extent = new Filter(m.C1)
                     {
-                        Value = 2
+                        Predicate = new Equals(m.C1.C1AllorsInteger)
+                        {
+                            Value = 2
+                        }
                     }
-                }
-            };
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.C1).Equal(c1C, c1D);
+                result.Assert().Collection(M.C1).Equal(c1C, c1D);
+            }
         }
 
         [Fact]
@@ -1610,24 +1710,26 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(m.C1)
+                var pull = new Pull
                 {
-                    Predicate = new Exists(m.C1.C1AllorsInteger)
-                }
-            };
+                    Extent = new Filter(m.C1)
+                    {
+                        Predicate = new Exists(m.C1.C1AllorsInteger)
+                    }
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.C1).Equal(c1B, c1C, c1D);
+                result.Assert().Collection(M.C1).Equal(c1B, c1C, c1D);
+            }
         }
 
         [Fact]
@@ -1635,27 +1737,29 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(m.C1)
+                var pull = new Pull
                 {
-                    Predicate = new Equals(m.C1.C1AllorsString)
+                    Extent = new Filter(m.C1)
                     {
-                        Path = m.C1.C1AllorsStringEquals
+                        Predicate = new Equals(m.C1.C1AllorsString)
+                        {
+                            Path = m.C1.C1AllorsStringEquals
+                        }
                     }
-                }
-            };
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.C1).Equal(c1C);
+                result.Assert().Collection(M.C1).Equal(c1C);
+            }
         }
 
         [Fact]
@@ -1663,27 +1767,29 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(m.C1)
+                var pull = new Pull
                 {
-                    Predicate = new Equals(m.C1.C1AllorsString)
+                    Extent = new Filter(m.C1)
                     {
-                        Value = "ᴀbra"
+                        Predicate = new Equals(m.C1.C1AllorsString)
+                        {
+                            Value = "ᴀbra"
+                        }
                     }
-                }
-            };
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.C1).Equal(c1B);
+                result.Assert().Collection(M.C1).Equal(c1B);
+            }
         }
 
         [Fact]
@@ -1691,27 +1797,29 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(m.C1)
+                var pull = new Pull
                 {
-                    Predicate = new Like(m.C1.C1AllorsString)
+                    Extent = new Filter(m.C1)
                     {
-                        Value = "ᴀ%"
+                        Predicate = new Like(m.C1.C1AllorsString)
+                        {
+                            Value = "ᴀ%"
+                        }
                     }
-                }
-            };
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.C1).Equal(c1B, c1C, c1D);
+                result.Assert().Collection(M.C1).Equal(c1B, c1C, c1D);
+            }
         }
 
         [Fact]
@@ -1719,27 +1827,29 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(m.C1)
+                var pull = new Pull
                 {
-                    Predicate = new Equals(m.C1.C1AllorsUnique)
+                    Extent = new Filter(m.C1)
                     {
-                        Value = new Guid("8B3C4978-72D3-40BA-B302-114EB331FE04")
+                        Predicate = new Equals(m.C1.C1AllorsUnique)
+                        {
+                            Value = new Guid("8B3C4978-72D3-40BA-B302-114EB331FE04")
+                        }
                     }
-                }
-            };
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.C1).Equal(c1B);
+                result.Assert().Collection(M.C1).Equal(c1B);
+            }
         }
 
         [Fact]
@@ -1747,72 +1857,74 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            // Empty
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(this.M.C1)
+                // Empty
+                var pull = new Pull
                 {
-                    Predicate = new ContainedIn(m.C1.C1I12Many2Manies)
+                    Extent = new Filter(this.M.C1)
                     {
-                        Extent = new Filter(this.M.I12)
+                        Predicate = new ContainedIn(m.C1.C1I12Many2Manies)
                         {
-                            Predicate = new Equals(m.I12.I12AllorsString) { Value = "Nothing here!" }
+                            Extent = new Filter(this.M.I12)
+                            {
+                                Predicate = new Equals(m.I12.I12AllorsString) { Value = "Nothing here!" }
+                            }
                         }
                     }
-                }
-            };
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Empty(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Empty(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            // Full
-            pull = new Pull
-            {
-                Extent = new Filter(this.M.C1)
+                // Full
+                pull = new Pull
                 {
-                    Predicate = new ContainedIn(m.C1.C1I12Many2Manies)
+                    Extent = new Filter(this.M.C1)
                     {
-                        Extent = new Filter(this.M.I12)
-                    }
-                }
-            };
-
-            result = await session.PullAsync(pull);
-
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
-
-            result.Assert().Collection(M.C1).Equal(c1B, c1C, c1D);
-
-            // Filtered
-            pull = new Pull
-            {
-                Extent = new Filter(this.M.C1)
-                {
-                    Predicate = new ContainedIn(m.C1.C1I12Many2Manies)
-                    {
-                        Extent = new Filter(this.M.I12)
+                        Predicate = new ContainedIn(m.C1.C1I12Many2Manies)
                         {
-                            Predicate = new Equals(m.I12.I12AllorsString) { Value = "ᴀbra" }
+                            Extent = new Filter(this.M.I12)
                         }
                     }
-                }
-            };
+                };
 
-            result = await session.PullAsync(pull);
+                result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.C1).Equal(c1B, c1C, c1D);
+                result.Assert().Collection(M.C1).Equal(c1B, c1C, c1D);
+
+                // Filtered
+                pull = new Pull
+                {
+                    Extent = new Filter(this.M.C1)
+                    {
+                        Predicate = new ContainedIn(m.C1.C1I12Many2Manies)
+                        {
+                            Extent = new Filter(this.M.I12)
+                            {
+                                Predicate = new Equals(m.I12.I12AllorsString) { Value = "ᴀbra" }
+                            }
+                        }
+                    }
+                };
+
+                result = await connection.PullAsync(pull);
+
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
+
+                result.Assert().Collection(M.C1).Equal(c1B, c1C, c1D);
+            }
         }
 
         [Fact]
@@ -1820,29 +1932,31 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            var c2c = await session.PullObject(M.C2, c2C);
-
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(this.M.C1)
+                var c2c = await connection.PullObject(M.C2, c2C);
+
+                var pull = new Pull
                 {
-                    Predicate = new Contains(m.C1.C1C2Many2Manies)
+                    Extent = new Filter(this.M.C1)
                     {
-                        Object = c2c
+                        Predicate = new Contains(m.C1.C1C2Many2Manies)
+                        {
+                            Object = c2c
+                        }
                     }
-                }
-            };
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.C1).Equal(c1C, c1D);
+                result.Assert().Collection(M.C1).Equal(c1C, c1D);
+            }
         }
 
         [Fact]
@@ -1850,30 +1964,32 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(this.M.C1)
+                var pull = new Pull
                 {
-                    Predicate = new ContainedIn(m.C1.C1I12One2Manies)
+                    Extent = new Filter(this.M.C1)
                     {
-                        Extent = new Filter(this.M.I12)
+                        Predicate = new ContainedIn(m.C1.C1I12One2Manies)
                         {
-                            Predicate = new Equals(m.I12.I12AllorsString) { Value = "ᴀbra" }
+                            Extent = new Filter(this.M.I12)
+                            {
+                                Predicate = new Equals(m.I12.I12AllorsString) { Value = "ᴀbra" }
+                            }
                         }
                     }
-                }
-            };
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.C1).Equal(c1B);
+                result.Assert().Collection(M.C1).Equal(c1B);
+            }
         }
 
         [Fact]
@@ -1881,29 +1997,31 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            var c2d = await session.PullObject(M.C2, c2D);
-
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(this.M.C1)
+                var c2d = await connection.PullObject(M.C2, c2D);
+
+                var pull = new Pull
                 {
-                    Predicate = new Contains(m.C1.C1C2One2Manies)
+                    Extent = new Filter(this.M.C1)
                     {
-                        Object = c2d
+                        Predicate = new Contains(m.C1.C1C2One2Manies)
+                        {
+                            Object = c2d
+                        }
                     }
-                }
-            };
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.C1).Equal(c1C);
+                result.Assert().Collection(M.C1).Equal(c1C);
+            }
         }
 
         [Fact]
@@ -1911,30 +2029,32 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(this.M.C1)
+                var pull = new Pull
                 {
-                    Predicate = new ContainedIn(m.C1.C1I12Many2One)
+                    Extent = new Filter(this.M.C1)
                     {
-                        Extent = new Filter(this.M.I12)
+                        Predicate = new ContainedIn(m.C1.C1I12Many2One)
                         {
-                            Predicate = new Equals(m.I12.I12AllorsString) { Value = "ᴀbra" }
+                            Extent = new Filter(this.M.I12)
+                            {
+                                Predicate = new Equals(m.I12.I12AllorsString) { Value = "ᴀbra" }
+                            }
                         }
                     }
-                }
-            };
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.C1).Equal(c1B);
+                result.Assert().Collection(M.C1).Equal(c1B);
+            }
         }
 
         [Fact]
@@ -1942,30 +2062,32 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(this.M.C1)
+                var pull = new Pull
                 {
-                    Predicate = new ContainedIn(m.C1.C1I12One2One)
+                    Extent = new Filter(this.M.C1)
                     {
-                        Extent = new Filter(this.M.I12)
+                        Predicate = new ContainedIn(m.C1.C1I12One2One)
                         {
-                            Predicate = new Equals(m.I12.I12AllorsString) { Value = "ᴀbra" }
+                            Extent = new Filter(this.M.I12)
+                            {
+                                Predicate = new Equals(m.I12.I12AllorsString) { Value = "ᴀbra" }
+                            }
                         }
                     }
-                }
-            };
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection(M.C1).Equal(c1B, c1C);
+                result.Assert().Collection(M.C1).Equal(c1B, c1C);
+            }
         }
 
         [Fact]
@@ -1973,33 +2095,35 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
             var m = this.M;
 
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(m.C1)
+                var pull = new Pull
                 {
-                    Predicate = new Equals(m.C1.C1AllorsInteger)
+                    Extent = new Filter(m.C1)
                     {
-                        Value = 2
+                        Predicate = new Equals(m.C1.C1AllorsInteger)
+                        {
+                            Value = 2
+                        }
+                    },
+                    Results = new[]{
+                        new Result
+                        {
+                            Name = "IetsAnders",
+                        }
                     }
-                },
-                Results = new[]{
-                    new Result
-                    {
-                        Name = "IetsAnders",
-                    }
-                }
-            };
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            Assert.Single(result.Collections);
-            Assert.Empty(result.Objects);
-            Assert.Empty(result.Values);
+                Assert.Single(result.Collections);
+                Assert.Empty(result.Objects);
+                Assert.Empty(result.Values);
 
-            result.Assert().Collection("IetsAnders").Equal(c1C, c1D);
+                result.Assert().Collection("IetsAnders").Equal(c1C, c1D);
+            }
         }
 
         [Fact]
@@ -2007,106 +2131,114 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
-            var pull1 = new Pull { Extent = new Filter(this.M.C1) { Predicate = new Equals(this.M.C1.Name) { Value = "c1A" } } };
-            var result = await session.PullAsync(pull1);
-            var c1a = result.GetCollection(M.C1)[0];
-
-            var pull2 = new Pull
+            foreach (var connection in this.Connections)
             {
-                ObjectId = c1a.Id
-            };
+                var pull1 = new Pull { Extent = new Filter(this.M.C1) { Predicate = new Equals(this.M.C1.Name) { Value = "c1A" } } };
+                var result = await connection.PullAsync(pull1);
+                var c1a = result.GetCollection(M.C1)[0];
 
-            result = await session.PullAsync(pull2);
+                var pull2 = new Pull
+                {
+                    ObjectId = c1a.Id
+                };
 
-            Assert.Single(result.Objects);
-            Assert.Empty(result.Collections);
-            Assert.Empty(result.Values);
+                result = await connection.PullAsync(pull2);
+
+                Assert.Single(result.Objects);
+                Assert.Empty(result.Collections);
+                Assert.Empty(result.Values);
+            }
         }
 
         [Fact]
         public async void PullWithInclude()
         {
             await this.Login("administrator");
-            var session = this.Connection;
 
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(this.M.C1),
-                Results = new[]
+                var pull = new Pull
                 {
-                    new Result
+                    Extent = new Filter(this.M.C1),
+                    Results = new[]
                     {
-                        Select = new Select
+                        new Result
                         {
-                            Include = this.M.C1.Nodes(v=>v.C1C2One2One.Node())
+                            Select = new Select
+                            {
+                                Include = this.M.C1.Nodes(v=>v.C1C2One2One.Node())
+                            }
                         }
                     }
-                }
-            };
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            var c1s = result.GetCollection(M.C1);
-            var c1b = c1s.Single(v => (string)v.GetUnitRole(M.I12.Name) == "c1B");
-            var c1c = c1s.Single(v => (string)v.GetUnitRole(M.I12.Name) == "c1C");
-            var c1d = c1s.Single(v => (string)v.GetUnitRole(M.I12.Name) == "c1D");
+                var c1s = result.GetCollection(M.C1);
+                var c1b = c1s.Single(v => (string)v.GetUnitRole(M.I12.Name) == "c1B");
+                var c1c = c1s.Single(v => (string)v.GetUnitRole(M.I12.Name) == "c1C");
+                var c1d = c1s.Single(v => (string)v.GetUnitRole(M.I12.Name) == "c1D");
 
-            var c2ByC1 = c1s.ToDictionary(v => v, v => v.GetCompositeRole(M.C1.C1C2One2One));
+                var c2ByC1 = c1s.ToDictionary(v => v, v => v.GetCompositeRole(M.C1.C1C2One2One));
 
-            Assert.Equal("c2B", c2ByC1[c1b].GetUnitRole(M.I12.Name));
-            Assert.Equal("c2C", c2ByC1[c1c].GetUnitRole(M.I12.Name));
-            Assert.Equal("c2D", c2ByC1[c1d].GetUnitRole(M.I12.Name));
+                Assert.Equal("c2B", c2ByC1[c1b].GetUnitRole(M.I12.Name));
+                Assert.Equal("c2C", c2ByC1[c1c].GetUnitRole(M.I12.Name));
+                Assert.Equal("c2D", c2ByC1[c1d].GetUnitRole(M.I12.Name));
+            }
         }
 
         [Fact]
         public async void SortDirectionDefault()
         {
             await this.Login("administrator");
-            var session = this.Connection;
 
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(this.M.I12) { Sorting = new[] { new Sort(this.M.I12.Order) } },
-            };
+                var pull = new Pull
+                {
+                    Extent = new Filter(this.M.I12) { Sorting = new[] { new Sort(this.M.I12.Order) } },
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            var i12s = result.GetCollection(M.I12);
+                var i12s = result.GetCollection(M.I12);
 
-            Assert.Equal("c2D", i12s[0].GetUnitRole(M.I12.Name));
-            Assert.Equal("c2C", i12s[1].GetUnitRole(M.I12.Name));
-            Assert.Equal("c1B", i12s[2].GetUnitRole(M.I12.Name));
-            Assert.Equal("c1A", i12s[3].GetUnitRole(M.I12.Name));
-            Assert.Equal("c2A", i12s[4].GetUnitRole(M.I12.Name));
-            Assert.Equal("c2B", i12s[5].GetUnitRole(M.I12.Name));
-            Assert.Equal("c1D", i12s[6].GetUnitRole(M.I12.Name));
-            Assert.Equal("c1C", i12s[7].GetUnitRole(M.I12.Name));
+                Assert.Equal("c2D", i12s[0].GetUnitRole(M.I12.Name));
+                Assert.Equal("c2C", i12s[1].GetUnitRole(M.I12.Name));
+                Assert.Equal("c1B", i12s[2].GetUnitRole(M.I12.Name));
+                Assert.Equal("c1A", i12s[3].GetUnitRole(M.I12.Name));
+                Assert.Equal("c2A", i12s[4].GetUnitRole(M.I12.Name));
+                Assert.Equal("c2B", i12s[5].GetUnitRole(M.I12.Name));
+                Assert.Equal("c1D", i12s[6].GetUnitRole(M.I12.Name));
+                Assert.Equal("c1C", i12s[7].GetUnitRole(M.I12.Name));
+            }
         }
 
         [Fact]
         public async void SortDirectionAscending()
         {
             await this.Login("administrator");
-            var session = this.Connection;
 
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(this.M.I12) { Sorting = new[] { new Sort(this.M.I12.Order) { SortDirection = SortDirection.Ascending } } },
-            };
+                var pull = new Pull
+                {
+                    Extent = new Filter(this.M.I12) { Sorting = new[] { new Sort(this.M.I12.Order) { SortDirection = SortDirection.Ascending } } },
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            var i12s = result.GetCollection(M.I12);
+                var i12s = result.GetCollection(M.I12);
 
-            Assert.Equal("c2D", i12s[0].GetUnitRole(M.I12.Name));
-            Assert.Equal("c2C", i12s[1].GetUnitRole(M.I12.Name));
-            Assert.Equal("c1B", i12s[2].GetUnitRole(M.I12.Name));
-            Assert.Equal("c1A", i12s[3].GetUnitRole(M.I12.Name));
-            Assert.Equal("c2A", i12s[4].GetUnitRole(M.I12.Name));
-            Assert.Equal("c2B", i12s[5].GetUnitRole(M.I12.Name));
-            Assert.Equal("c1D", i12s[6].GetUnitRole(M.I12.Name));
-            Assert.Equal("c1C", i12s[7].GetUnitRole(M.I12.Name));
+                Assert.Equal("c2D", i12s[0].GetUnitRole(M.I12.Name));
+                Assert.Equal("c2C", i12s[1].GetUnitRole(M.I12.Name));
+                Assert.Equal("c1B", i12s[2].GetUnitRole(M.I12.Name));
+                Assert.Equal("c1A", i12s[3].GetUnitRole(M.I12.Name));
+                Assert.Equal("c2A", i12s[4].GetUnitRole(M.I12.Name));
+                Assert.Equal("c2B", i12s[5].GetUnitRole(M.I12.Name));
+                Assert.Equal("c1D", i12s[6].GetUnitRole(M.I12.Name));
+                Assert.Equal("c1C", i12s[7].GetUnitRole(M.I12.Name));
+            }
         }
 
 
@@ -2114,25 +2246,27 @@ namespace Tests.Workspace
         public async void SortDirectionDescending()
         {
             await this.Login("administrator");
-            var session = this.Connection;
 
-            var pull = new Pull
+            foreach (var connection in this.Connections)
             {
-                Extent = new Filter(this.M.I12) { Sorting = new[] { new Sort(this.M.I12.Order) { SortDirection = SortDirection.Descending } } },
-            };
+                var pull = new Pull
+                {
+                    Extent = new Filter(this.M.I12) { Sorting = new[] { new Sort(this.M.I12.Order) { SortDirection = SortDirection.Descending } } },
+                };
 
-            var result = await session.PullAsync(pull);
+                var result = await connection.PullAsync(pull);
 
-            var i12s = result.GetCollection(M.I12);
+                var i12s = result.GetCollection(M.I12);
 
-            Assert.Equal("c2D", i12s[7].GetUnitRole(M.I12.Name));
-            Assert.Equal("c2C", i12s[6].GetUnitRole(M.I12.Name));
-            Assert.Equal("c1B", i12s[5].GetUnitRole(M.I12.Name));
-            Assert.Equal("c1A", i12s[4].GetUnitRole(M.I12.Name));
-            Assert.Equal("c2A", i12s[3].GetUnitRole(M.I12.Name));
-            Assert.Equal("c2B", i12s[2].GetUnitRole(M.I12.Name));
-            Assert.Equal("c1D", i12s[1].GetUnitRole(M.I12.Name));
-            Assert.Equal("c1C", i12s[0].GetUnitRole(M.I12.Name));
+                Assert.Equal("c2D", i12s[7].GetUnitRole(M.I12.Name));
+                Assert.Equal("c2C", i12s[6].GetUnitRole(M.I12.Name));
+                Assert.Equal("c1B", i12s[5].GetUnitRole(M.I12.Name));
+                Assert.Equal("c1A", i12s[4].GetUnitRole(M.I12.Name));
+                Assert.Equal("c2A", i12s[3].GetUnitRole(M.I12.Name));
+                Assert.Equal("c2B", i12s[2].GetUnitRole(M.I12.Name));
+                Assert.Equal("c1D", i12s[1].GetUnitRole(M.I12.Name));
+                Assert.Equal("c1C", i12s[0].GetUnitRole(M.I12.Name));
+            }
         }
     }
 }

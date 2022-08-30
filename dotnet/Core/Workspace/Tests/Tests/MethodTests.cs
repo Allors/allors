@@ -16,24 +16,25 @@ namespace Tests.Workspace
         {
         }
 
+
         [Fact]
         public async void CallSingle()
         {
             await this.Login("administrator");
 
-            var session = this.Connection;
+            var connection = this.Connection;
 
             var pull = new[] { new Pull { Extent = new Filter(this.M.Organization) } };
 
-            var organization = (await session.PullAsync(pull)).GetCollection(M.Organization)[0];
+            var organization = (await connection.PullAsync(pull)).GetCollection(M.Organization)[0];
 
             Assert.False((bool)organization.GetUnitRole(M.Organization.JustDidIt));
 
-            var invokeResult = await session.InvokeAsync(new Method(organization, M.Organization.JustDoIt));
+            var invokeResult = await connection.InvokeAsync(new Method(organization, M.Organization.JustDoIt));
 
             Assert.False(invokeResult.HasErrors);
 
-            var result = await session.PullAsync(new Pull { Object = organization });
+            var result = await connection.PullAsync(new Pull { Object = organization });
             organization = result.GetObject(M.Organization);
 
             Assert.True((bool)organization.GetUnitRole(M.Organization.JustDidIt));
