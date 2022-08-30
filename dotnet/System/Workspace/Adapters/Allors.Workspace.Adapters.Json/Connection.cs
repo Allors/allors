@@ -17,6 +17,14 @@ namespace Allors.Workspace.Adapters.Json
     using System.Linq;
     using System.Threading.Tasks;
     using Meta;
+    using System;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Allors.Protocol.Json.Api.Invoke;
+    using Allors.Protocol.Json.Api.Pull;
+    using Data;
+    using Protocol.Json;
+    using InvokeOptions = Allors.Workspace.InvokeOptions;
 
     public abstract class Connection : Adapters.Connection
     {
@@ -39,8 +47,6 @@ namespace Allors.Workspace.Adapters.Json
             this.writePermissionByOperandTypeByClass = new Dictionary<Class, Dictionary<IOperandType, long>>();
             this.executePermissionByOperandTypeByClass = new Dictionary<Class, Dictionary<IOperandType, long>>();
         }
-
-        public override IWorkspace CreateWorkspace() => new Workspace(this);
 
         internal Dictionary<long, Grant> GrantById { get; }
 
@@ -212,6 +218,72 @@ namespace Allors.Workspace.Adapters.Json
                     }
                 }
             }
+        }
+
+        public override async Task<IInvokeResult> InvokeAsync(Method method, InvokeOptions options = null) => await this.InvokeAsync(new[] { method }, options);
+
+        public override async Task<IInvokeResult> InvokeAsync(Method[] methods, InvokeOptions options = null)
+        {
+            var invokeRequest = new InvokeRequest
+            {
+                l = methods.Select(v => new Invocation
+                {
+                    i = v.Object.Id,
+                    v = ((Strategy)v.Object).DatabaseOriginState.Version,
+                    m = v.MethodType.Tag
+                }).ToArray(),
+                o = options != null
+                    ? new Allors.Protocol.Json.Api.Invoke.InvokeOptions
+                    {
+                        c = options.ContinueOnError,
+                        i = options.Isolated
+                    }
+                    : null
+            };
+
+            var invokeResponse = await this.Invoke(invokeRequest);
+
+            var workspace = new Workspace(this);
+            return new InvokeResult(workspace, invokeResponse);
+        }
+
+        public override async Task<IPullResult> CallAsync(object args, string name)
+        {
+            var pullResponse = await this.Pull(args, name);
+
+            var workspace = new Workspace(this);
+            return await workspace.OnPull(pullResponse);
+        }
+
+        public override async Task<IPullResult> PullAsync(params Pull[] pulls)
+        {
+            foreach (var pull in pulls)
+            {
+                if (pull.ObjectId < 0 || pull.Object?.Id < 0)
+                {
+                    throw new ArgumentException($"Id is not in the database");
+                }
+            }
+
+            var pullRequest = new PullRequest { l = pulls.Select(v => v.ToJson(this.UnitConvert)).ToArray() };
+            var pullResponse = await this.Pull(pullRequest);
+
+            var workspace = new Workspace(this);
+            return await workspace.OnPull(pullResponse);
+        }
+
+        public override async Task<IPullResult> CallAsync(Procedure procedure, params Pull[] pull)
+        {
+            var pullRequest = new PullRequest
+            {
+                p = procedure.ToJson(this.UnitConvert),
+                l = pull.Select(v => v.ToJson(this.UnitConvert)).ToArray()
+            };
+
+            var pullResponse = await this.Pull(pullRequest);
+
+            var workspace = new Workspace(this);
+            return await workspace.OnPull(pullResponse);
         }
 
         public override long GetPermission(Class @class, IOperandType operandType, Operations operation)

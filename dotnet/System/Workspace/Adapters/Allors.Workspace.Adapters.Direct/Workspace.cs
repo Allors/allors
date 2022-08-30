@@ -23,55 +23,6 @@ namespace Allors.Workspace.Adapters.Direct
             this.AddStrategy(strategy);
         }
 
-        public override Task<IInvokeResult> InvokeAsync(Method method, InvokeOptions options = null) =>
-               this.InvokeAsync(new[] { method }, options);
-
-        public override Task<IInvokeResult> InvokeAsync(Method[] methods, InvokeOptions options = null)
-        {
-            var result = new Invoke(this);
-            result.Execute(methods, options);
-            return Task.FromResult<IInvokeResult>(result);
-        }
-
-        public override Task<IPullResult> CallAsync(Data.Procedure procedure, params Data.Pull[] pull)
-        {
-            var result = new Pull(this);
-
-            result.Execute(procedure);
-            result.Execute(pull);
-
-            this.OnPulled(result);
-
-            return Task.FromResult<IPullResult>(result);
-        }
-
-        public override Task<IPullResult> CallAsync(object args, string name)
-        {
-            var result = new Pull(this);
-
-            result.Execute(args, name);
-
-            return Task.FromResult<IPullResult>(result);
-        }
-
-        public override Task<IPullResult> PullAsync(params Data.Pull[] pulls)
-        {
-            foreach (var pull in pulls)
-            {
-                if (pull.ObjectId < 0 || pull.Object?.Id < 0)
-                {
-                    throw new ArgumentException($"Id is not in the database");
-                }
-            }
-
-            var result = new Pull(this);
-            result.Execute(pulls);
-
-            this.OnPulled(result);
-
-            return Task.FromResult<IPullResult>(result);
-        }
-
         internal void OnPulled(Pull pull)
         {
             var syncObjects = this.Connection.ObjectsToSync(pull);

@@ -7,8 +7,6 @@ namespace Allors.Workspace
 {
     using Meta;
     using System.Collections.Generic;
-    using System.Threading.Tasks;
-    using Data;
 
     public interface IWorkspace
     {
@@ -35,15 +33,5 @@ namespace Allors.Workspace
 
         IEnumerable<T> Instantiate<T>(IComposite objectType) where T : class, IObject;
         #endregion
-
-        Task<IInvokeResult> InvokeAsync(Method method, InvokeOptions options = null);
-
-        Task<IInvokeResult> InvokeAsync(Method[] methods, InvokeOptions options = null);
-
-        Task<IPullResult> CallAsync(Procedure procedure, params Pull[] pull);
-
-        Task<IPullResult> CallAsync(object args, string name);
-
-        Task<IPullResult> PullAsync(params Pull[] pull);
     }
 }

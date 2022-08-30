@@ -11,9 +11,9 @@ namespace Tests.Workspace
     using Allors.Workspace.Data;
     using Allors.Workspace.Meta;
 
-    public static class ISessionExtensions
+    public static class IConnectionExtensions
     {
-        public static async Task<IObject> PullObject(this IWorkspace @this, IComposite objectType, string name)
+        public static async Task<IObject> PullObject(this IConnection @this, IComposite objectType, string name)
         {
             var roleType = objectType.RoleTypes.First(v => v.Name.Equals("Name"));
             var pull = new Pull { Extent = new Filter(objectType) { Predicate = new Equals(roleType) { Value = name } } };

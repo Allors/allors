@@ -25,7 +25,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             // Class
@@ -82,7 +82,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             // Empty
@@ -155,7 +155,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             var c1c = await session.PullObject(M.C1, c1C);
@@ -186,7 +186,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             // Full
@@ -212,7 +212,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             var pull = new Pull
@@ -243,7 +243,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             var c1c = await session.PullObject(M.C1, c1C);
@@ -274,7 +274,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             var pull = new Pull
@@ -305,7 +305,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             var c1b = await session.PullObject(M.C1, c1B);
@@ -355,7 +355,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             // Class
@@ -398,7 +398,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             var pull = new Pull
@@ -423,7 +423,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             var pull = new Pull
@@ -454,7 +454,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             var c1b = await session.PullObject(M.C1, c1B);
@@ -504,7 +504,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
 
@@ -546,7 +546,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             var pull = new Pull
@@ -587,7 +587,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             var c1c = await session.PullObject(M.C1, c1C);
@@ -614,7 +614,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             var pull = new Pull
@@ -636,7 +636,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             var pull = new Pull
@@ -664,7 +664,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             var c1c = await session.PullObject(M.C1, c1C);
@@ -694,7 +694,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             var c1b = await session.PullObject(M.C1, c1B);
@@ -729,7 +729,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             var pull = new Pull
@@ -761,7 +761,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             var pull = new Pull
@@ -793,7 +793,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             var pull = new Pull
@@ -822,7 +822,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             var pull = new Pull
@@ -850,7 +850,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             var pull = new Pull
@@ -882,7 +882,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             var pull = new Pull
@@ -910,7 +910,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             var pull = new Pull
@@ -938,7 +938,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             var pull = new Pull
@@ -966,7 +966,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             var pull = new Pull
@@ -994,7 +994,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             var pull = new Pull
@@ -1022,7 +1022,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             var pull = new Pull
@@ -1050,7 +1050,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             var pull = new Pull
@@ -1078,7 +1078,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             var pull = new Pull
@@ -1106,7 +1106,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             var pull = new Pull
@@ -1134,7 +1134,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             var pull = new Pull
@@ -1162,7 +1162,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             var pull = new Pull
@@ -1190,7 +1190,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             var pull = new Pull
@@ -1218,7 +1218,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             var pull = new Pull
@@ -1246,7 +1246,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             var pull = new Pull
@@ -1274,7 +1274,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             var pull = new Pull
@@ -1302,7 +1302,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             var pull = new Pull
@@ -1330,7 +1330,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             var pull = new Pull
@@ -1358,7 +1358,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             var pull = new Pull
@@ -1386,7 +1386,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             var pull = new Pull
@@ -1414,7 +1414,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             var pull = new Pull
@@ -1442,7 +1442,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             var pull = new Pull
@@ -1470,7 +1470,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             var pull = new Pull
@@ -1498,7 +1498,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             var pull = new Pull
@@ -1526,7 +1526,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             var pull = new Pull
@@ -1554,7 +1554,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             var pull = new Pull
@@ -1582,7 +1582,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             var pull = new Pull
@@ -1610,7 +1610,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             var pull = new Pull
@@ -1635,7 +1635,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             var pull = new Pull
@@ -1663,7 +1663,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             var pull = new Pull
@@ -1691,7 +1691,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             var pull = new Pull
@@ -1719,7 +1719,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             var pull = new Pull
@@ -1747,7 +1747,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             // Empty
@@ -1820,7 +1820,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             var c2c = await session.PullObject(M.C2, c2C);
@@ -1850,7 +1850,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             var pull = new Pull
@@ -1881,7 +1881,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             var c2d = await session.PullObject(M.C2, c2D);
@@ -1911,7 +1911,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             var pull = new Pull
@@ -1942,7 +1942,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             var pull = new Pull
@@ -1973,7 +1973,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var m = this.M;
 
             var pull = new Pull
@@ -2007,7 +2007,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
             var pull1 = new Pull { Extent = new Filter(this.M.C1) { Predicate = new Equals(this.M.C1.Name) { Value = "c1A" } } };
             var result = await session.PullAsync(pull1);
             var c1a = result.GetCollection(M.C1)[0];
@@ -2028,7 +2028,7 @@ namespace Tests.Workspace
         public async void PullWithInclude()
         {
             await this.Login("administrator");
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
 
             var pull = new Pull
             {
@@ -2063,7 +2063,7 @@ namespace Tests.Workspace
         public async void SortDirectionDefault()
         {
             await this.Login("administrator");
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
 
             var pull = new Pull
             {
@@ -2088,7 +2088,7 @@ namespace Tests.Workspace
         public async void SortDirectionAscending()
         {
             await this.Login("administrator");
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
 
             var pull = new Pull
             {
@@ -2114,7 +2114,7 @@ namespace Tests.Workspace
         public async void SortDirectionDescending()
         {
             await this.Login("administrator");
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
 
             var pull = new Pull
             {

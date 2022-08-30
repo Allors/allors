@@ -5,7 +5,9 @@
 
 namespace Allors.Workspace
 {
+    using System.Threading.Tasks;
     using Allors.Workspace.Meta;
+    using Data;
 
     public interface IConnection
     {
@@ -13,6 +15,14 @@ namespace Allors.Workspace
 
         MetaPopulation MetaPopulation { get; }
 
-        IWorkspace CreateWorkspace();
+        Task<IInvokeResult> InvokeAsync(Method method, InvokeOptions options = null);
+
+        Task<IInvokeResult> InvokeAsync(Method[] methods, InvokeOptions options = null);
+
+        Task<IPullResult> CallAsync(Procedure procedure, params Pull[] pull);
+
+        Task<IPullResult> CallAsync(object args, string name);
+
+        Task<IPullResult> PullAsync(params Pull[] pull);
     }
 }

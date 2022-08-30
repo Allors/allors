@@ -5,6 +5,8 @@
 
 namespace Allors.Workspace.Adapters
 {
+    using System.Threading.Tasks;
+    using Data;
     using Meta;
 
     public abstract class Connection : IConnection
@@ -19,7 +21,15 @@ namespace Allors.Workspace.Adapters
 
         public MetaPopulation MetaPopulation { get; }
 
-        public abstract IWorkspace CreateWorkspace();
+        public abstract Task<IInvokeResult> InvokeAsync(Method method, InvokeOptions options = null);
+
+        public abstract Task<IInvokeResult> InvokeAsync(Method[] methods, InvokeOptions options = null);
+
+        public abstract Task<IPullResult> CallAsync(Procedure procedure, params Pull[] pull);
+
+        public abstract Task<IPullResult> CallAsync(object args, string name);
+
+        public abstract Task<IPullResult> PullAsync(params Pull[] pull);
 
         public abstract DatabaseRecord GetRecord(long id);
 

@@ -21,7 +21,7 @@ namespace Tests.Workspace
         public async void TestUnitSamplesWithNulls()
         {
             await this.Login("administrator");
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
 
             var procedure = new Procedure("TestUnitSamples")
             {
@@ -48,7 +48,7 @@ namespace Tests.Workspace
         public async void TestUnitSamplesWithValues()
         {
             await this.Login("administrator");
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
 
             var procedure = new Procedure("TestUnitSamples")
             {
@@ -85,7 +85,7 @@ namespace Tests.Workspace
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateWorkspace();
+            var session = this.Connection;
 
             var procedure = new Procedure("ThisIsWrong")
             {

@@ -22,15 +22,11 @@ namespace Tests.Workspace
             await base.InitializeAsync();
             await this.Login("administrator");
 
-            var singleSessionContext = new SingleSessionContext(this, "Single shared");
-            var multipleSessionContext = new MultipleSessionContext(this, "Multiple shared");
+            var singleSessionContext = new Context(this);
 
             this.contextFactories = new Func<Context>[]
             {
                 () => singleSessionContext,
-                //() => new SingleSessionContext(this, "Single"),
-                //() => multipleSessionContext,
-                () => new MultipleSessionContext(this, "Multiple"),
             };
         }
 
@@ -40,9 +36,6 @@ namespace Tests.Workspace
             var contextFactory = this.contextFactories[0];
 
             {
-                var mode1 = DatabaseMode.NoPush;
-                var mode2 = DatabaseMode.NoPush;
-
                 var ctx = contextFactory();
                 var (session1, session2) = ctx;
             }

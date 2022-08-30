@@ -16,9 +16,9 @@ namespace Tests.Workspace
         {
         }
 
-        public IConnection Workspace => this.Profile.Connection;
+        public IConnection Connection => this.Profile.Connection;
 
-        public M M => (M)this.Workspace.MetaPopulation;
+        public M M => (M)this.Connection.MetaPopulation;
 
         public abstract IProfile Profile { get; }
 

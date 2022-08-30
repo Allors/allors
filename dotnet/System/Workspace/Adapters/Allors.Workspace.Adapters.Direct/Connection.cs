@@ -16,11 +16,11 @@ namespace Allors.Workspace.Adapters.Direct
     using System.Linq;
     using System;
     using IOperandType = Meta.IOperandType;
+    using System.Threading.Tasks;
 
     public class Connection : Adapters.Connection
     {
         private readonly Dictionary<long, Grant> accessControlById;
-        private readonly IPermissions permission;
         private readonly ConcurrentDictionary<long, DatabaseRecord> recordsById;
 
         public Connection(IDatabase database, string name, MetaPopulation metaPopulation) : base(name, metaPopulation)
@@ -28,15 +28,12 @@ namespace Allors.Workspace.Adapters.Direct
             this.Database = database;
 
             this.recordsById = new ConcurrentDictionary<long, DatabaseRecord>();
-            this.permission = this.Database.Services.Get<IPermissions>();
             this.accessControlById = new Dictionary<long, Grant>();
         }
 
         public long UserId { get; set; }
 
         internal IDatabase Database { get; }
-
-        public override IWorkspace CreateWorkspace() => new Workspace(this);
 
         internal void Sync(IEnumerable<IObject> objects, IAccessControl accessControl)
         {
@@ -58,6 +55,59 @@ namespace Allors.Workspace.Adapters.Direct
                     this.recordsById[id] = new DatabaseRecord(workspaceClass, id, @object.Strategy.ObjectVersion, roleByRoleType, ValueRange<long>.Load(acl.Revocations.Select(v => v.Id)), accessControls);
                 }
             }
+        }
+
+        public override Task<IInvokeResult> InvokeAsync(Method method, InvokeOptions options = null) =>
+           this.InvokeAsync(new[] { method }, options);
+
+        public override Task<IInvokeResult> InvokeAsync(Method[] methods, InvokeOptions options = null)
+        {
+            var workspace = new Workspace(this);
+            var result = new Invoke(workspace);
+            result.Execute(methods, options);
+            return Task.FromResult<IInvokeResult>(result);
+        }
+
+        public override Task<IPullResult> CallAsync(Data.Procedure procedure, params Data.Pull[] pull)
+        {
+            var workspace = new Workspace(this);
+            var result = new Pull(workspace);
+
+            result.Execute(procedure);
+            result.Execute(pull);
+
+            workspace.OnPulled(result);
+
+            return Task.FromResult<IPullResult>(result);
+        }
+
+        public override Task<IPullResult> CallAsync(object args, string name)
+        {
+            var workspace = new Workspace(this);
+            var result = new Pull(workspace);
+
+            result.Execute(args, name);
+
+            return Task.FromResult<IPullResult>(result);
+        }
+
+        public override Task<IPullResult> PullAsync(params Data.Pull[] pulls)
+        {
+            foreach (var pull in pulls)
+            {
+                if (pull.ObjectId < 0 || pull.Object?.Id < 0)
+                {
+                    throw new ArgumentException($"Id is not in the database");
+                }
+            }
+
+            var workspace = new Workspace(this);
+            var result = new Pull(workspace);
+            result.Execute(pulls);
+
+            workspace.OnPulled(result);
+
+            return Task.FromResult<IPullResult>(result);
         }
 
         public override Adapters.DatabaseRecord GetRecord(long id)
