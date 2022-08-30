@@ -53,12 +53,6 @@ namespace Allors.Workspace.Adapters
                 return id;
             }));
 
-        public IEnumerable<T> Instantiate<T>() where T : class, IObject
-        {
-            var objectType = (IComposite)this.Connection.ObjectFactory.GetObjectType<T>();
-            return this.Instantiate<T>(objectType);
-        }
-
         public IEnumerable<T> Instantiate<T>(IComposite objectType) where T : class, IObject
         {
             foreach (var @class in objectType.Classes)

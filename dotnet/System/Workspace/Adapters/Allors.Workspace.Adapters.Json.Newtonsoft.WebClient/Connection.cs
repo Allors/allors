@@ -21,7 +21,7 @@ namespace Allors.Workspace.Adapters.Json.Newtonsoft.WebClient
     {
         private readonly Client client;
 
-        public Connection(Client client, string name, MetaPopulation metaPopulation, IObjectFactory objectFactory) : base(name, metaPopulation, objectFactory)
+        public Connection(Client client, string name, MetaPopulation metaPopulation) : base(name, metaPopulation)
         {
             this.client = client;
             this.UnitConvert = new UnitConvert();

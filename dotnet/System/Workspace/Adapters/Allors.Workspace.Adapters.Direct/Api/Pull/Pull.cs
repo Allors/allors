@@ -12,6 +12,7 @@ namespace Allors.Workspace.Adapters.Direct
     using Database;
     using Database.Data;
     using Database.Domain;
+    using Database.Meta;
     using Database.Security;
     using Database.Services;
     using Protocol.Direct;
@@ -98,26 +99,22 @@ namespace Allors.Workspace.Adapters.Direct
 
         public IDictionary<string, object> Values => this.ValueByName;
 
-        public T[] GetCollection<T>() where T : class, IObject
+        public IObject[] GetCollection(Meta.IComposite objectType)
         {
-            var objectType = this.Workspace.ObjectFactory.GetObjectType<T>();
             var key = objectType.PluralName;
-            return this.GetCollection<T>(key);
+            return this.GetCollection(key);
         }
 
-        public T[] GetCollection<T>(string key) where T : class, IObject =>
-            this.Collections.TryGetValue(key, out var collection) ? collection?.Cast<T>().ToArray() : null;
+        public IObject[] GetCollection(string key) =>
+            this.Collections.TryGetValue(key, out var collection) ? collection?.ToArray() : null;
 
-        public T GetObject<T>()
-            where T : class, IObject
+        public IObject GetObject(Meta.IComposite objectType)
         {
-            var objectType = this.Workspace.ObjectFactory.GetObjectType<T>();
             var key = objectType.SingularName;
-            return this.GetObject<T>(key);
+            return this.GetObject(key);
         }
 
-        public T GetObject<T>(string key)
-            where T : class, IObject => this.Objects.TryGetValue(key, out var @object) ? (T)@object : null;
+        public IObject GetObject(string key) => this.Objects.TryGetValue(key, out var @object) ? @object : null;
 
         public object GetValue(string key) => this.Values[key];
 

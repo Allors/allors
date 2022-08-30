@@ -2,13 +2,16 @@ namespace Tests.Workspace
 {
     using System.Linq;
     using Allors.Workspace;
+    using Allors.Workspace.Meta;
     using Xunit;
 
-    public class PullResultCollectionAssert<T> where T : class, IObject
+    public class PullResultCollectionAssert
     {
-        private readonly T[] collection;
+        private readonly IObject[] collection;
 
-        public PullResultCollectionAssert(IPullResult pullResult, string name = null) => this.collection = name != null ? pullResult.GetCollection<T>(name) : pullResult.GetCollection<T>();
+        public PullResultCollectionAssert(IPullResult pullResult, IComposite objectType) => pullResult.GetCollection(objectType);
+
+        public PullResultCollectionAssert(IPullResult pullResult, string name) => pullResult.GetCollection(name);
 
         public void Single() => Assert.Single(this.collection);
 

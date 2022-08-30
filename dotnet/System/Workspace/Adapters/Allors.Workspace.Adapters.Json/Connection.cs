@@ -27,7 +27,7 @@ namespace Allors.Workspace.Adapters.Json
         private readonly Dictionary<Class, Dictionary<IOperandType, long>> executePermissionByOperandTypeByClass;
 
 
-        protected Connection(string name, MetaPopulation metaPopulation, IObjectFactory objectFactory) : base(name, metaPopulation, objectFactory)
+        protected Connection(string name, MetaPopulation metaPopulation) : base(name, metaPopulation)
         {
             this.recordsById = new Dictionary<long, DatabaseRecord>();
 

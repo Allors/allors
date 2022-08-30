@@ -78,7 +78,7 @@ namespace Allors.Workspace.Adapters.Json
                 l = methods.Select(v => new Invocation
                 {
                     i = v.Object.Id,
-                    v = ((Strategy)v.Object.Strategy).DatabaseOriginState.Version,
+                    v = ((Strategy)v.Object).DatabaseOriginState.Version,
                     m = v.MethodType.Tag
                 }).ToArray(),
                 o = options != null

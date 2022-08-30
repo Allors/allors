@@ -15,10 +15,6 @@ namespace Tests.Workspace
     using Allors.Workspace.Meta;
     using Xunit;
     using static Names;
-    using C1 = Allors.Workspace.Domain.C1;
-    using C2 = Allors.Workspace.Domain.C2;
-    using I12 = Allors.Workspace.Domain.I12;
-    using I2 = Allors.Workspace.Domain.I2;
 
     public abstract class PullTests : Test
     {
@@ -54,7 +50,7 @@ namespace Tests.Workspace
             Assert.Empty(result.Objects);
             Assert.Empty(result.Values);
 
-            result.Assert().Collection<C1>().Equal(c1B);
+            result.Assert().Collection(M.C1).Equal(c1B);
 
             // Interface
             pull = new Pull

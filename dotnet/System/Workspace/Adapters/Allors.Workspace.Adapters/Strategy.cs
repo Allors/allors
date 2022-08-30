@@ -10,7 +10,7 @@ namespace Allors.Workspace.Adapters
     using System.Linq;
     using Meta;
 
-    public abstract class Strategy : IStrategy, IComparable<Strategy>
+    public abstract class Strategy : IObject, IComparable<Strategy>
     {
         private readonly long rangeId;
 
@@ -38,13 +38,13 @@ namespace Allors.Workspace.Adapters
 
         public DatabaseOriginState DatabaseOriginState { get; protected set; }
 
-        IWorkspace IStrategy.Workspace => this.Workspace;
+        IWorkspace IObject.Workspace => this.Workspace;
 
         public Class Class { get; }
 
         public long Id { get; private set; }
 
-        public IObject Object => this.@object ??= this.Workspace.Connection.ObjectFactory.Create(this);
+        public IObject Object => this;
 
         public bool ExistRole(RoleType roleType)
         {

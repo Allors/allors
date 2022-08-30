@@ -13,8 +13,6 @@ namespace Allors.Workspace
 
         MetaPopulation MetaPopulation { get; }
 
-        IObjectFactory ObjectFactory { get; }
-
         IWorkspace CreateWorkspace();
     }
 }

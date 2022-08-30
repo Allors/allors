@@ -16,7 +16,7 @@ namespace Allors.Workspace.Domain
         {
             if (@this.PropertyType.IsOne)
             {
-                var resolved = @this.PropertyType.Get(@object.Strategy);
+                var resolved = @this.PropertyType.Get(@object);
                 if (resolved != null)
                 {
                     if (@this.ExistNext)
@@ -28,13 +28,13 @@ namespace Allors.Workspace.Domain
                     }
                     else
                     {
-                        yield return (IObject)@this.PropertyType.Get(@object.Strategy);
+                        yield return (IObject)@this.PropertyType.Get(@object);
                     }
                 }
             }
             else
             {
-                var resolved = (IEnumerable)@this.PropertyType.Get(@object.Strategy);
+                var resolved = (IEnumerable)@this.PropertyType.Get(@object);
                 if (resolved != null)
                 {
                     if (@this.ExistNext)
@@ -49,7 +49,7 @@ namespace Allors.Workspace.Domain
                     }
                     else
                     {
-                        foreach (var child in (IEnumerable<IObject>)@this.PropertyType.Get(@object.Strategy))
+                        foreach (var child in (IEnumerable<IObject>)@this.PropertyType.Get(@object))
                         {
                             yield return child;
                         }

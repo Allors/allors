@@ -34,23 +34,21 @@ namespace Allors.Workspace.Adapters.Json
 
         public IDictionary<string, object> Values => this.values ??= this.pullResponse.v.ToDictionary(pair => pair.Key.ToUpperInvariant(), pair => pair.Value);
 
-        public T[] GetCollection<T>() where T : class, IObject
+        public IObject[] GetCollection(Meta.IComposite objectType)
         {
-            var objectType = this.Workspace.ObjectFactory.GetObjectType<T>();
             var key = objectType.PluralName.ToUpperInvariant();
-            return this.GetCollection<T>(key);
+            return this.GetCollection(key);
         }
 
-        public T[] GetCollection<T>(string key) where T : class, IObject => this.Collections.TryGetValue(key.ToUpperInvariant(), out var collection) ? collection?.Cast<T>().ToArray() : null;
+        public IObject[] GetCollection(string key) => this.Collections.TryGetValue(key.ToUpperInvariant(), out var collection) ? collection?.ToArray() : null;
 
-        public T GetObject<T>() where T : class, IObject
+        public IObject GetObject(Meta.IComposite objectType)
         {
-            var objectType = this.Workspace.ObjectFactory.GetObjectType<T>();
             var key = objectType.SingularName.ToUpperInvariant();
-            return this.GetObject<T>(key);
+            return this.GetObject(key);
         }
 
-        public T GetObject<T>(string key) where T : class, IObject => this.Objects.TryGetValue(key.ToUpperInvariant(), out var @object) ? (T)@object : null;
+        public IObject GetObject(string key) => this.Objects.TryGetValue(key.ToUpperInvariant(), out var @object) ? @object : null;
 
         public object GetValue(string key) => this.Values[key.ToUpperInvariant()];
 

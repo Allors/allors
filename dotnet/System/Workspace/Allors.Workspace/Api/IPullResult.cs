@@ -6,6 +6,7 @@
 namespace Allors.Workspace
 {
     using System.Collections.Generic;
+    using Meta;
 
     public interface IPullResult : IResult
     {
@@ -15,13 +16,13 @@ namespace Allors.Workspace
 
         IDictionary<string, object> Values { get; }
 
-        public T[] GetCollection<T>() where T : class, IObject;
+        public IObject[] GetCollection(IComposite objectType);
 
-        public T[] GetCollection<T>(string key) where T : class, IObject;
+        public IObject[] GetCollection(string key);
 
-        public T GetObject<T>() where T : class, IObject;
+        public IObject GetObject(IComposite objectType);
 
-        public T GetObject<T>(string key) where T : class, IObject;
+        public IObject GetObject(string key);
 
         public object GetValue(string key);
 

@@ -23,7 +23,7 @@ namespace Allors.Workspace.Adapters.Direct
         private readonly IPermissions permission;
         private readonly ConcurrentDictionary<long, DatabaseRecord> recordsById;
 
-        public Connection(IDatabase database, string name, MetaPopulation metaPopulation, Allors.Workspace.IObjectFactory objectFactory) : base(name, metaPopulation, objectFactory)
+        public Connection(IDatabase database, string name, MetaPopulation metaPopulation) : base(name, metaPopulation)
         {
             this.Database = database;
 

@@ -9,18 +9,15 @@ namespace Allors.Workspace.Adapters
 
     public abstract class Connection : IConnection
     {
-        protected Connection(string name, MetaPopulation metaPopulation, IObjectFactory objectFactory)
+        protected Connection(string name, MetaPopulation metaPopulation)
         {
             this.Name = name;
             this.MetaPopulation = metaPopulation;
-            this.ObjectFactory = objectFactory;
         }
 
         public string Name { get; }
 
         public MetaPopulation MetaPopulation { get; }
-
-        public IObjectFactory ObjectFactory { get; }
 
         public abstract IWorkspace CreateWorkspace();
 

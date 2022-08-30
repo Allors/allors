@@ -21,7 +21,7 @@ namespace Allors.Workspace.Data
 
         public static Node Node<T>(this T @this, Func<T, IEnumerable<Node>> children) where T : IPropertyType => new Node(@this, children(@this));
 
-        public static object Get<T>(this T @this, IStrategy strategy, IComposite ofType = null) where T : IPropertyType
+        public static object Get<T>(this T @this, IObject strategy, IComposite ofType = null) where T : IPropertyType
         {
             if (@this is RoleType roleType)
             {
@@ -34,7 +34,7 @@ namespace Allors.Workspace.Data
                         return association;
                     }
 
-                    return !ofType.IsAssignableFrom(association.Strategy.Class) ? null : association;
+                    return !ofType.IsAssignableFrom(association.Class) ? null : association;
                 }
                 else
                 {
@@ -45,7 +45,7 @@ namespace Allors.Workspace.Data
                         return association;
                     }
 
-                    return association.Where(v => ofType.IsAssignableFrom(v.Strategy.Class));
+                    return association.Where(v => ofType.IsAssignableFrom(v.Class));
                 }
             }
 
@@ -60,7 +60,7 @@ namespace Allors.Workspace.Data
                         return association;
                     }
 
-                    return !ofType.IsAssignableFrom(association.Strategy.Class) ? null : association;
+                    return !ofType.IsAssignableFrom(association.Class) ? null : association;
                 }
                 else
                 {
@@ -71,7 +71,7 @@ namespace Allors.Workspace.Data
                         return association;
                     }
 
-                    return association.Where(v => ofType.IsAssignableFrom(v.Strategy.Class));
+                    return association.Where(v => ofType.IsAssignableFrom(v.Class));
                 }
             }
 

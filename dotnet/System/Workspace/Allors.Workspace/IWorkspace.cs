@@ -33,8 +33,6 @@ namespace Allors.Workspace
 
         IEnumerable<T> Instantiate<T>(IEnumerable<string> ids) where T : class, IObject;
 
-        IEnumerable<T> Instantiate<T>() where T : class, IObject;
-
         IEnumerable<T> Instantiate<T>(IComposite objectType) where T : class, IObject;
         #endregion
 

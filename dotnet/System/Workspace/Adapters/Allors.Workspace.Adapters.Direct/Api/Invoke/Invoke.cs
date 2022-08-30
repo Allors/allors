@@ -102,7 +102,7 @@ namespace Allors.Workspace.Adapters.Direct
                 return true;
             }
 
-            var localStrategy = (Strategy)invocation.Object.Strategy;
+            var localStrategy = (Strategy)invocation.Object;
 
             if (this.AllowedClasses?.Contains(obj.Strategy.Class) != true)
             {

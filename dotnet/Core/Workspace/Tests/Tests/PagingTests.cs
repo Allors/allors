@@ -10,7 +10,6 @@ namespace Tests.Workspace
 {
     using Allors.Workspace.Data;
     using Xunit;
-    using I12 = Allors.Workspace.Domain.I12;
 
     public abstract class PagingTests : Test
     {

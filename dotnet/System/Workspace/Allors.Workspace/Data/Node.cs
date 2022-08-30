@@ -48,7 +48,7 @@ namespace Allors.Workspace.Data
         {
             if (this.PropertyType.IsOne)
             {
-                var resolved = this.PropertyType.Get(@object.Strategy, this.OfType);
+                var resolved = this.PropertyType.Get(@object, this.OfType);
                 if (resolved != null)
                 {
                     if (this.Nodes.Length > 0)
@@ -69,7 +69,7 @@ namespace Allors.Workspace.Data
             }
             else
             {
-                var resolved = (IEnumerable)this.PropertyType.Get(@object.Strategy, this.OfType);
+                var resolved = (IEnumerable)this.PropertyType.Get(@object, this.OfType);
                 if (resolved != null)
                 {
                     if (this.Nodes.Length > 0)

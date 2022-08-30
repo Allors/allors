@@ -1,6 +1,7 @@
 namespace Tests.Workspace
 {
     using Allors.Workspace;
+    using Allors.Workspace.Meta;
 
     public class PullResultAssert
     {
@@ -8,8 +9,8 @@ namespace Tests.Workspace
 
         public PullResultAssert(IPullResult pullResult) => this.pullResult = pullResult;
 
-        public PullResultCollectionAssert<T> Collection<T>() where T : class, IObject => new PullResultCollectionAssert<T>(this.pullResult);
+        public PullResultCollectionAssert Collection(IComposite objectType) => new PullResultCollectionAssert(this.pullResult, objectType);
 
-        public PullResultCollectionAssert<T> Collection<T>(string name) where T : class, IObject => new PullResultCollectionAssert<T>(this.pullResult, name);
+        public PullResultCollectionAssert Collection(string name) => new PullResultCollectionAssert(this.pullResult, name);
     }
 }

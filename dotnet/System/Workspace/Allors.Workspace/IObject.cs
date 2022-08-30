@@ -5,19 +5,39 @@
 
 namespace Allors.Workspace
 {
+    using System.Collections.Generic;
+    using Meta;
+
     public interface IObject
     {
-        /// <summary>
-        /// The id of the object.
-        /// The id is negative
-        /// <ul>
-        /// <li>a database object is new and has never been pushed</li>
-        /// <li>a workspace or session object</li>
-        /// </ul>
-        /// The id is positive for database objects that have been pulled
-        /// </summary>
+        IWorkspace Workspace { get; }
+
+        IObject Object { get; }
+
+        Class Class { get; }
+
         long Id { get; }
 
-        IStrategy Strategy { get; }
+        long Version { get; }
+
+        bool CanRead(RoleType roleType);
+
+        bool CanWrite(RoleType roleType);
+
+        bool CanExecute(MethodType methodType);
+
+        bool ExistRole(RoleType roleType);
+
+        object GetRole(RoleType roleType);
+
+        object GetUnitRole(RoleType roleType);
+
+        T GetCompositeRole<T>(RoleType roleType) where T : class, IObject;
+
+        IEnumerable<T> GetCompositesRole<T>(RoleType roleType) where T : class, IObject;
+
+        T GetCompositeAssociation<T>(AssociationType associationType) where T : class, IObject;
+
+        IEnumerable<T> GetCompositesAssociation<T>(AssociationType associationType) where T : class, IObject;
     }
 }
