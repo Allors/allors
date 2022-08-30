@@ -9,13 +9,13 @@ namespace Allors.Workspace.Domain
 
     public partial class Media
     {
-        public string Source
-        {
-            get
-            {
-                var fileNamePart = !string.IsNullOrWhiteSpace(this.FileName) ? $"/{HttpUtility.UrlEncode(this.FileName)}" : null;
-                return $"/media/{this.UniqueId}{fileNamePart}";
-            }
-        }
+        //public string Source
+        //{
+        //    get
+        //    {
+        //        var fileNamePart = !string.IsNullOrWhiteSpace(this.FileName) ? $"/{HttpUtility.UrlEncode(this.FileName)}" : null;
+        //        return $"/media/{this.UniqueId}{fileNamePart}";
+        //    }
+        //}
     }
 }
