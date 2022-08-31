@@ -22,43 +22,46 @@
     <TypeIdentifier />
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="Allors.Workspace.Adapters.Direct.Connection">
-    <Position X="0.5" Y="5.5" Width="2.25" />
+  <Class Name="Allors.Workspace.Adapters.Record">
+    <Position X="13.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Allors.Workspace.Adapters.Json.Connection">
+    <Position X="0.5" Y="5" Width="3" />
     <TypeIdentifier>
-      <HashCode>AAAABCFAAEAAAACAAABAAggAAAAkAAASAAAAAAAAAAA=</HashCode>
+      <HashCode>IBRAJCBAAAAIQECAgQBIAggAAAAgAAAQEAAAAAAAiAA=</HashCode>
       <FileName>Connection.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
       <Field Name="recordsById" />
     </ShowAsCollectionAssociation>
   </Class>
-  <Class Name="Allors.Workspace.Adapters.Direct.Workspace">
-    <Position X="5" Y="5.75" Width="2.25" />
+  <Class Name="Allors.Workspace.Adapters.Json.Workspace">
+    <Position X="4.75" Y="5" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAgAAgAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAgAAAAAAAAEAAAAAAAAAAEAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Workspace.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="Connection" />
     </ShowAsAssociation>
   </Class>
-  <Class Name="Allors.Workspace.Adapters.Direct.Object">
-    <Position X="9.5" Y="5.75" Width="1.75" />
+  <Class Name="Allors.Workspace.Adapters.Json.Object">
+    <Position X="9.25" Y="5.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Object.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Allors.Workspace.Adapters.Direct.Record">
-    <Position X="13.75" Y="5.75" Width="1.75" />
+  <Class Name="Allors.Workspace.Adapters.Json.Record">
+    <Position X="14" Y="5" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AACAgAEAAAAAAAAAAAAAAAAAAAAAAAAAAAEAIAAAAAA=</HashCode>
+      <HashCode>AACCAAEAAAEAAAAAAAABAAAAAABBEAAEAAAAAAAAAAA=</HashCode>
       <FileName>Record.cs</FileName>
     </TypeIdentifier>
-  </Class>
-  <Class Name="Allors.Workspace.Adapters.Record">
-    <Position X="13.75" Y="0.5" Width="1.5" />
-    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Field Name="connection" />
+    </ShowAsAssociation>
   </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

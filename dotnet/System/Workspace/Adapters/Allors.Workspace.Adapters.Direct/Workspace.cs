@@ -29,7 +29,7 @@ namespace Allors.Workspace.Adapters.Direct
             {
                 if (this.ObjectByWorkspaceId.TryGetValue(databaseObject.Id, out var strategy))
                 {
-                    strategy.DatabaseOriginState.OnPulled(pull);
+                    strategy.OnPulled(pull);
                 }
                 else
                 {

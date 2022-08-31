@@ -20,6 +20,7 @@ namespace Allors.Workspace.Adapters.Json
     using Data;
     using Protocol.Json;
     using InvokeOptions = Allors.Workspace.InvokeOptions;
+    using IPullResult = Allors.Workspace.IPullResult;
 
     public abstract class Connection : Adapters.Connection
     {
@@ -224,7 +225,7 @@ namespace Allors.Workspace.Adapters.Json
                 l = methods.Select(v => new Invocation
                 {
                     i = v.Object.Id,
-                    v = ((Object)v.Object).DatabaseOriginState.Version,
+                    v = ((Object)v.Object).Version,
                     m = v.MethodType.Tag
                 }).ToArray(),
                 o = options != null

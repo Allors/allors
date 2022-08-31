@@ -16,6 +16,7 @@ namespace Allors.Workspace.Adapters.Direct
     using System;
     using IOperandType = Meta.IOperandType;
     using System.Threading.Tasks;
+    using IPullResult = Allors.Workspace.IPullResult;
 
     public class Connection : Adapters.Connection
     {

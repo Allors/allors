@@ -19,7 +19,7 @@ namespace Allors.Workspace.Adapters.Direct
     using IComposite = Database.Meta.IComposite;
     using IObject = IObject;
 
-    public class Pull : Result, IPullResultInternals, IProcedureOutput
+    public class Pull : Result, IPullResult, IProcedureOutput
     {
         private IDictionary<string, IObject[]> collections;
         private IDictionary<string, IObject> objects;

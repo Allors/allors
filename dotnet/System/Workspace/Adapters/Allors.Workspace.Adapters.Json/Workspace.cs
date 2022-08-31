@@ -7,19 +7,13 @@ namespace Allors.Workspace.Adapters.Json
 {
     using System.Threading.Tasks;
     using Allors.Protocol.Json.Api.Pull;
+    using IPullResult = Allors.Workspace.IPullResult;
 
     public class Workspace : Adapters.Workspace
     {
         internal Workspace(Connection workspace) : base(workspace) { }
 
         public new Connection Connection => (Connection)base.Connection;
-
-        private void InstantiateDatabaseStrategy(long id)
-        {
-            var databaseRecord = (Record)base.Connection.GetRecord(id);
-            var strategy = new Object(this, databaseRecord);
-            this.AddObject(strategy);
-        }
 
         internal async Task<IPullResult> OnPull(PullResponse pullResponse)
         {
@@ -52,11 +46,13 @@ namespace Allors.Workspace.Adapters.Json
             {
                 if (this.ObjectByWorkspaceId.TryGetValue(v.i, out var strategy))
                 {
-                    strategy.DatabaseOriginState.OnPulled(pullResult);
+                    strategy.OnPulled(pullResult);
                 }
                 else
                 {
-                    this.InstantiateDatabaseStrategy(v.i);
+                    var record = (Record)base.Connection.GetRecord(v.i);
+                    var @object = new Object(this, record);
+                    this.AddObject(@object);
                 }
             }
 

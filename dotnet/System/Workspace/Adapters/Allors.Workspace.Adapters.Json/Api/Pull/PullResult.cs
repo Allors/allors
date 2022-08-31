@@ -10,7 +10,7 @@ namespace Allors.Workspace.Adapters.Json
     using Allors.Protocol.Json.Api.Pull;
     using Allors.Workspace.Adapters;
 
-    public class PullResult : Result, IPullResultInternals
+    public class PullResult : Result, IPullResult
     {
         private IDictionary<string, IObject> objects;
 

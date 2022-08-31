@@ -9,8 +9,6 @@ namespace Allors.Workspace.Adapters.Json
 
     public sealed class Object : Adapters.Object
     {
-        internal Object(Adapters.Workspace workspace, Class @class, long id) : base(workspace, @class, id) => this.DatabaseOriginState = new DatabaseOriginState(this, (Record)workspace.Connection.GetRecord(this.Id));
-
-        internal Object(Workspace workspace, Record record) : base(workspace, record) => this.DatabaseOriginState = new DatabaseOriginState(this, record);
+        internal Object(Workspace workspace, Record record) : base(workspace, record) { }
     }
 }

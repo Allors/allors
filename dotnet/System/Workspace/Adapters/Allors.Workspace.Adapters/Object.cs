@@ -8,33 +8,25 @@ namespace Allors.Workspace.Adapters
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Allors.Shared.Ranges;
     using Meta;
 
     public abstract class Object : IObject, IComparable<Object>
     {
         private readonly long rangeId;
 
-        protected Object(Workspace workspace, Class @class, long id)
-        {
-            this.Workspace = workspace;
-            this.Id = id;
-            this.rangeId = this.Id;
-            this.Class = @class;
-        }
-
         protected Object(Workspace workspace, Record record)
         {
             this.Workspace = workspace;
+            this.Record = record;
             this.Id = record.Id;
             this.rangeId = this.Id;
             this.Class = record.Class;
         }
 
-        public long Version => this.DatabaseOriginState.Version;
-
         public Workspace Workspace { get; }
 
-        public RecordBasedOriginState DatabaseOriginState { get; protected set; }
+        public Record Record { get; private set; }
 
         IWorkspace IObject.Workspace => this.Workspace;
 
@@ -77,24 +69,6 @@ namespace Allors.Workspace.Adapters
             return this.GetCompositesRole(roleType);
         }
 
-        public object GetUnitRole(RoleType roleType) => this.CanRead(roleType) ? this.DatabaseOriginState.GetUnitRole(roleType) : null;
-
-        public IObject GetCompositeRole(RoleType roleType) =>
-            this.CanRead(roleType)
-                ? this.DatabaseOriginState.GetCompositeRole(roleType)
-                : null;
-
-        public IEnumerable<IObject> GetCompositesRole(RoleType roleType) =>
-            this.CanRead(roleType)
-                ? this.DatabaseOriginState.GetCompositesRole(roleType).Cast<IObject>()
-                : Array.Empty<IObject>();
-
-        public bool CanRead(RoleType roleType) => this.DatabaseOriginState.CanRead(roleType);
-
-        public bool CanWrite(RoleType roleType) => this.DatabaseOriginState.CanWrite(roleType);
-
-        public bool CanExecute(MethodType methodType) => this.DatabaseOriginState.CanExecute(methodType);
-
         int IComparable<Object>.CompareTo(Object other)
         {
             if (ReferenceEquals(this, other))
@@ -103,6 +77,78 @@ namespace Allors.Workspace.Adapters
             }
 
             return other is null ? 1 : this.rangeId.CompareTo(other.rangeId);
+        }
+
+
+        public object GetUnitRole(RoleType roleType) => this.Record?.GetRole(roleType);
+
+        IObject IObject.GetCompositeRole(RoleType roleType) => this.GetCompositeRole(roleType);
+        public Object GetCompositeRole(RoleType roleType)
+        {
+            var role = this.Record?.GetRole(roleType);
+
+            if (role == null)
+            {
+                return null;
+            }
+
+            var @object = this.Workspace.GetObject((long)role);
+            this.AssertObject(@object);
+            return @object;
+        }
+
+        IEnumerable<IObject> IObject.GetCompositesRole(RoleType roleType) => this.GetCompositesRole(roleType);
+        public RefRange<Object> GetCompositesRole(RoleType roleType)
+        {
+            var role = (ValueRange<long>)(this.Record?.GetRole(roleType) ?? ValueRange<long>.Empty);
+
+            if (role.IsEmpty)
+            {
+                return RefRange<Object>.Empty;
+            }
+
+            return RefRange<Object>.Load(role.Select(v =>
+            {
+                var @object = this.Workspace.GetObject(v);
+                this.AssertObject(@object);
+                return @object;
+            }));
+        }
+
+        private void AssertObject(Object @object)
+        {
+            if (@object == null)
+            {
+                throw new Exception("Object is not in Workspace.");
+            }
+        }
+
+        public long Version => this.Record?.Version ?? Allors.Version.WorkspaceInitial;
+
+        protected IEnumerable<RoleType> RoleTypes => this.Class.DatabaseOriginRoleTypes;
+
+        public bool CanRead(RoleType roleType)
+        {
+            var permission = this.Workspace.Connection.GetPermission(this.Class, roleType, Operations.Read);
+            return this.Record.IsPermitted(permission);
+        }
+
+        public bool CanWrite(RoleType roleType)
+        {
+            var permission = this.Workspace.Connection.GetPermission(this.Class, roleType, Operations.Write);
+            return this.Record.IsPermitted(permission);
+        }
+
+        public bool CanExecute(MethodType methodType)
+        {
+            var permission = this.Workspace.Connection.GetPermission(this.Class, methodType, Operations.Execute);
+            return this.Record.IsPermitted(permission);
+        }
+
+        public void OnPulled(IPullResult pull)
+        {
+            var newRecord = this.Workspace.Connection.GetRecord(this.Id);
+            this.Record = newRecord;
         }
     }
 }
