@@ -5,7 +5,6 @@
 
 namespace Allors.Workspace.Adapters.Direct
 {
-    using Allors.Database.Services;
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using Meta;
@@ -21,13 +20,13 @@ namespace Allors.Workspace.Adapters.Direct
     public class Connection : Adapters.Connection
     {
         private readonly Dictionary<long, Grant> accessControlById;
-        private readonly ConcurrentDictionary<long, DatabaseRecord> recordsById;
+        private readonly ConcurrentDictionary<long, Record> recordsById;
 
         public Connection(IDatabase database, string name, MetaPopulation metaPopulation) : base(name, metaPopulation)
         {
             this.Database = database;
 
-            this.recordsById = new ConcurrentDictionary<long, DatabaseRecord>();
+            this.recordsById = new ConcurrentDictionary<long, Record>();
             this.accessControlById = new Dictionary<long, Grant>();
         }
 
@@ -52,7 +51,7 @@ namespace Allors.Workspace.Adapters.Direct
 
                     var accessControls = acl.Grants?.Select(v => (IGrant)transaction.Instantiate(v.Id)).Select(this.GetAccessControl).ToArray() ?? Array.Empty<Grant>();
 
-                    this.recordsById[id] = new DatabaseRecord(workspaceClass, id, @object.Strategy.ObjectVersion, roleByRoleType, ValueRange<long>.Load(acl.Revocations.Select(v => v.Id)), accessControls);
+                    this.recordsById[id] = new Record(workspaceClass, id, @object.Strategy.ObjectVersion, roleByRoleType, ValueRange<long>.Load(acl.Revocations.Select(v => v.Id)), accessControls);
                 }
             }
         }
@@ -110,7 +109,7 @@ namespace Allors.Workspace.Adapters.Direct
             return Task.FromResult<IPullResult>(result);
         }
 
-        public override Adapters.DatabaseRecord GetRecord(long id)
+        public override Adapters.Record GetRecord(long id)
         {
             this.recordsById.TryGetValue(id, out var databaseObjects);
             return databaseObjects;

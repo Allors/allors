@@ -11,17 +11,17 @@ namespace Allors.Workspace.Adapters.Json
     using Meta;
     using Shared.Ranges;
 
-    internal class DatabaseRecord : Adapters.DatabaseRecord
+    internal class Record : Adapters.Record
     {
         private readonly Connection connection;
 
         private Dictionary<RelationType, object> roleByRelationType;
         private SyncResponseRole[] syncResponseRoles;
 
-        internal DatabaseRecord(Connection connection, Class @class, long id, long version) : base(@class, id, version) => this.connection = connection;
+        internal Record(Connection connection, Class @class, long id, long version) : base(@class, id, version) => this.connection = connection;
 
-        internal static DatabaseRecord FromResponse(Connection database, ResponseContext ctx, SyncResponseObject syncResponseObject) =>
-            new DatabaseRecord(database, (Class)database.MetaPopulation.FindByTag(syncResponseObject.c), syncResponseObject.i, syncResponseObject.v)
+        internal static Record FromResponse(Connection database, ResponseContext ctx, SyncResponseObject syncResponseObject) =>
+            new Record(database, (Class)database.MetaPopulation.FindByTag(syncResponseObject.c), syncResponseObject.i, syncResponseObject.v)
             {
                 syncResponseRoles = syncResponseObject.ro,
                 GrantIds = ValueRange<long>.Load(ctx.CheckForMissingGrants(syncResponseObject.g)),

@@ -10,19 +10,19 @@ namespace Allors.Workspace.Adapters.Direct
     using Meta;
     using Shared.Ranges;
 
-    public class DatabaseRecord : Adapters.DatabaseRecord
+    public class Record : Adapters.Record
     {
         private readonly Grant[] accessControls;
         private readonly ValueRange<long> deniedPermissionIds;
 
         private readonly Dictionary<RoleType, object> roleByRoleType;
 
-        internal DatabaseRecord(Class @class, long id)
+        internal Record(Class @class, long id)
             : base(@class, id, 0)
         {
         }
 
-        internal DatabaseRecord(Class @class, long id, long version, Dictionary<RoleType, object> roleByRoleType, ValueRange<long> deniedPermissionIds, Grant[] accessControls)
+        internal Record(Class @class, long id, long version, Dictionary<RoleType, object> roleByRoleType, ValueRange<long> deniedPermissionIds, Grant[] accessControls)
             : base(@class, id, version)
         {
             this.roleByRoleType = roleByRoleType;

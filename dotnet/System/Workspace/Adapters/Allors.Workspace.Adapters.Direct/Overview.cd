@@ -1,53 +1,72 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="Allors.Workspace.Adapters.Direct.WorkspaceConnection">
-    <Position X="1.75" Y="1.25" Width="2" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAgAAAAAACAAAAAAAAAAAAQ=</HashCode>
-      <FileName>WorkspaceConnection.cs</FileName>
-    </TypeIdentifier>
+  <Class Name="Allors.Workspace.Adapters.Workspace">
+    <Position X="4.75" Y="0.5" Width="2" />
+    <TypeIdentifier />
     <ShowAsAssociation>
-      <Property Name="DatabaseConnection" />
+      <Property Name="Connection" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Allors.Workspace.Adapters.Object">
+    <Position X="9" Y="0.5" Width="1.75" />
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Property Name="Workspace" />
+      <Property Name="DatabaseOriginState" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Allors.Workspace.Adapters.Connection">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Allors.Workspace.Adapters.RecordBasedOriginState">
+    <Position X="13.5" Y="0.5" Width="2" />
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Property Name="Record" />
     </ShowAsAssociation>
   </Class>
-  <Class Name="Allors.Workspace.Adapters.Direct.DatabaseConnection">
-    <Position X="1.75" Y="4" Width="1.75" />
+  <Class Name="Allors.Workspace.Adapters.Direct.Connection">
+    <Position X="0.5" Y="5.5" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAABCFAAEAAAACABAAAAggAAAAEAAACIAAAAAAAAAQ=</HashCode>
-      <FileName>DatabaseConnection.cs</FileName>
+      <HashCode>AAAABCFAAEAAAACAAABAAggAAAAkAAASAAAAAAAAAAA=</HashCode>
+      <FileName>Connection.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Allors.Workspace.Adapters.Direct.Workspace">
-    <Position X="6" Y="1.25" Width="1.5" />
+    <Position X="5" Y="5.75" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAgAAgAAAAAAAAABAAAAQAAAgAAAQAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAgAAgAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Workspace.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="WorkspaceConnection" />
-    </ShowAsAssociation>
   </Class>
-  <Class Name="Allors.Workspace.Adapters.Direct.Strategy">
-    <Position X="9.75" Y="1.25" Width="1.5" />
+  <Class Name="Allors.Workspace.Adapters.Direct.Object">
+    <Position X="9.5" Y="5.75" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Strategy.cs</FileName>
+      <FileName>Object.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Allors.Workspace.Adapters.Direct.DatabaseOriginState">
-    <Position X="13" Y="1.25" Width="1.5" />
+    <Position X="13.75" Y="5.75" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAA=</HashCode>
-      <FileName>DatabaseOriginState.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>State\DatabaseOriginState.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="Strategy" />
-    </ShowAsAssociation>
   </Class>
-  <Class Name="Allors.Workspace.Adapters.Strategy" Collapsed="true">
-    <Position X="16.5" Y="1.25" Width="1.5" />
+  <Class Name="Allors.Workspace.Adapters.Direct.Record">
+    <Position X="18" Y="5.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AACAgAEAAAAAAAAAAAAAAAAAAAAAAAAAAAEAIAAAAAA=</HashCode>
+      <FileName>Record.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Allors.Workspace.Adapters.Record">
+    <Position X="18" Y="0.5" Width="1.5" />
     <TypeIdentifier />
-    <Lollipop Position="0.2" />
   </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

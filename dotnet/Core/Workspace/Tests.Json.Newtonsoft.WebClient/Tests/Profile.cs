@@ -9,7 +9,6 @@ namespace Tests.Workspace.Json
     using System.Net;
     using System.Threading.Tasks;
     using Allors.Workspace;
-    using Allors.Workspace.Adapters;
     using Allors.Workspace.Adapters.Json.Newtonsoft.WebClient;
     using Allors.Workspace.Meta;
     using Polly;

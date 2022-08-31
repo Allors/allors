@@ -5,8 +5,6 @@
 
 namespace Allors.Workspace.Domain
 {
-    using System.Web;
-
     public partial class Media
     {
         //public string Source

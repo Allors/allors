@@ -6,4 +6,4 @@
 using System.Diagnostics;
 using Allors.Workspace.Adapters.Direct;
 
-[assembly: DebuggerTypeProxy(typeof(StrategyDebugger), Target = typeof(Strategy))]
+[assembly: DebuggerTypeProxy(typeof(StrategyDebugger), Target = typeof(Object))]

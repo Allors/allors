@@ -5,9 +5,6 @@
 
 namespace Allors.Workspace.Adapters.Direct
 {
-    using System;
-    using System.Threading.Tasks;
-
     public class Workspace : Adapters.Workspace
     {
         internal Workspace(Adapters.Connection connection) : base(connection)
@@ -19,8 +16,8 @@ namespace Allors.Workspace.Adapters.Direct
         private void InstantiateDatabaseStrategy(long id)
         {
             var databaseRecord = this.Connection.GetRecord(id);
-            var strategy = new Strategy(this, (DatabaseRecord)databaseRecord);
-            this.AddStrategy(strategy);
+            var strategy = new Object(this, (Record)databaseRecord);
+            this.AddObject(strategy);
         }
 
         internal void OnPulled(Pull pull)
@@ -30,7 +27,7 @@ namespace Allors.Workspace.Adapters.Direct
 
             foreach (var databaseObject in pull.DatabaseObjects)
             {
-                if (this.StrategyByWorkspaceId.TryGetValue(databaseObject.Id, out var strategy))
+                if (this.ObjectByWorkspaceId.TryGetValue(databaseObject.Id, out var strategy))
                 {
                     strategy.DatabaseOriginState.OnPulled(pull);
                 }

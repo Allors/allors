@@ -5,8 +5,6 @@
 
 namespace Allors.Workspace.Domain
 {
-    using System.Globalization;
-
     public partial class Locale
     {
         //public bool MatchCurrentLanguage => this.Name.StartsWith(CultureInfo.CurrentUICulture.TwoLetterISOLanguageName);

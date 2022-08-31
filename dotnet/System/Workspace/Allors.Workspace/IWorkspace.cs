@@ -5,7 +5,6 @@
 
 namespace Allors.Workspace
 {
-    using Meta;
     using System.Collections.Generic;
 
     public interface IWorkspace

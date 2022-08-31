@@ -25,7 +25,7 @@ namespace Allors.Workspace.Adapters.Json
 
         public IEnumerable<Role> Roles =>
             from r in this.responseDerivationError.r
-            let association = this.workspace.GetStrategy(r.i)
+            let association = this.workspace.GetObject(r.i)
             let relationType = (RelationType)this.workspace.Connection.MetaPopulation.FindByTag(r.r)
             select new Role(association, relationType);
     }

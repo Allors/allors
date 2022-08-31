@@ -10,11 +10,11 @@ namespace Allors.Workspace.Adapters
     using System.Linq;
     using Meta;
 
-    public abstract class Strategy : IObject, IComparable<Strategy>
+    public abstract class Object : IObject, IComparable<Object>
     {
         private readonly long rangeId;
 
-        protected Strategy(Workspace workspace, Class @class, long id)
+        protected Object(Workspace workspace, Class @class, long id)
         {
             this.Workspace = workspace;
             this.Id = id;
@@ -22,19 +22,19 @@ namespace Allors.Workspace.Adapters
             this.Class = @class;
         }
 
-        protected Strategy(Workspace workspace, DatabaseRecord databaseRecord)
+        protected Object(Workspace workspace, Record record)
         {
             this.Workspace = workspace;
-            this.Id = databaseRecord.Id;
+            this.Id = record.Id;
             this.rangeId = this.Id;
-            this.Class = databaseRecord.Class;
+            this.Class = record.Class;
         }
 
         public long Version => this.DatabaseOriginState.Version;
 
         public Workspace Workspace { get; }
 
-        public DatabaseOriginState DatabaseOriginState { get; protected set; }
+        public RecordBasedOriginState DatabaseOriginState { get; protected set; }
 
         IWorkspace IObject.Workspace => this.Workspace;
 
@@ -95,7 +95,7 @@ namespace Allors.Workspace.Adapters
 
         public bool CanExecute(MethodType methodType) => this.DatabaseOriginState.CanExecute(methodType);
 
-        int IComparable<Strategy>.CompareTo(Strategy other)
+        int IComparable<Object>.CompareTo(Object other)
         {
             if (ReferenceEquals(this, other))
             {

@@ -13,18 +13,13 @@ namespace Allors.Workspace.Adapters
 
     public abstract class RecordBasedOriginState
     {
-        public abstract Strategy Strategy { get; }
+        public abstract Object Object { get; }
 
-        protected abstract IEnumerable<RoleType> RoleTypes { get; }
-
-        protected abstract IRecord Record { get; }
-
-        protected IRecord PreviousRecord { get; set; }
-
+        protected RecordBasedOriginState(Record record) => this.Record = record;
 
         public object GetUnitRole(RoleType roleType) => this.Record?.GetRole(roleType);
 
-        public Strategy GetCompositeRole(RoleType roleType)
+        public Object GetCompositeRole(RoleType roleType)
         {
             var role = this.Record?.GetRole(roleType);
 
@@ -33,71 +28,94 @@ namespace Allors.Workspace.Adapters
                 return null;
             }
 
-            var strategy = this.Session.GetStrategy((long)role);
-            this.AssertStrategy(strategy);
-            return strategy;
+            var @object = this.Workspace.GetObject((long)role);
+            this.AssertObject(@object);
+            return @object;
         }
 
-        public RefRange<Strategy> GetCompositesRole(RoleType roleType)
+        public RefRange<Object> GetCompositesRole(RoleType roleType)
         {
             var role = (ValueRange<long>)(this.Record?.GetRole(roleType) ?? ValueRange<long>.Empty);
 
             if (role.IsEmpty)
             {
-                return RefRange<Strategy>.Empty;
+                return RefRange<Object>.Empty;
             }
 
-            return RefRange<Strategy>.Load(role.Select(v =>
+            return RefRange<Object>.Load(role.Select(v =>
             {
-                var strategy = this.Session.GetStrategy(v);
-                this.AssertStrategy(strategy);
-                return strategy;
+                var @object = this.Workspace.GetObject(v);
+                this.AssertObject(@object);
+                return @object;
             }));
         }
 
-        public bool IsAssociationForRole(RoleType roleType, Strategy forRole)
+        private void AssertObject(Object @object)
         {
-            if (roleType.IsOne)
+            if (@object == null)
             {
-                var compositeRole = this.GetCompositeRoleIfInstantiated(roleType);
-                return compositeRole == forRole;
-            }
-
-            var compositesRole = this.GetCompositesRoleIfInstantiated(roleType);
-            return compositesRole.Contains(forRole);
-        }
-
-
-        private Strategy GetCompositeRoleIfInstantiated(RoleType roleType)
-        {
-            var role = this.Record?.GetRole(roleType);
-            return role == null ? null : this.Session.GetStrategy((long)role);
-        }
-
-        private RefRange<Strategy> GetCompositesRoleIfInstantiated(RoleType roleType)
-        {
-            var role = (ValueRange<long>)(this.Record?.GetRole(roleType) ?? ValueRange<long>.Empty);
-            return role.IsEmpty ? RefRange<Strategy>.Empty : RefRange<Strategy>.Load(role.Select(v => this.Session.GetStrategy(v)).Where(v => v != null));
-        }
-
-        private void AssertStrategy(Strategy strategy)
-        {
-            if (strategy == null)
-            {
-                throw new Exception("Strategy is not in Session.");
+                throw new Exception("Object is not in Workspace.");
             }
         }
 
         #region Proxy Properties
 
-        protected long Id => this.Strategy.Id;
+        protected long Id => this.Object.Id;
 
-        protected Class Class => this.Strategy.Class;
+        protected Class Class => this.Object.Class;
 
-        protected Workspace Session => this.Strategy.Workspace;
+        protected Workspace Workspace => this.Object.Workspace;
 
-        protected Connection Workspace => this.Session.Connection;
+        protected Connection Connection => this.Workspace.Connection;
 
         #endregion
+
+        public long Version => this.Record?.Version ?? Allors.Version.WorkspaceInitial;
+
+        protected IEnumerable<RoleType> RoleTypes => this.Class.DatabaseOriginRoleTypes;
+
+        // TODO: Remove
+        protected bool ExistRecord => this.Record != null;
+
+        protected Record Record { get; private set; }
+
+        public bool CanRead(RoleType roleType)
+        {
+            if (!this.ExistRecord)
+            {
+                return true;
+            }
+
+            var permission = this.Workspace.Connection.GetPermission(this.Class, roleType, Operations.Read);
+            return this.Record.IsPermitted(permission);
+        }
+
+        public bool CanWrite(RoleType roleType)
+        {
+            if (!this.ExistRecord)
+            {
+                return true;
+            }
+
+            var permission = this.Workspace.Connection.GetPermission(this.Class, roleType, Operations.Write);
+            return this.Record.IsPermitted(permission);
+        }
+
+        public bool CanExecute(MethodType methodType)
+        {
+            if (!this.ExistRecord)
+            {
+                return true;
+            }
+
+            var permission = this.Workspace.Connection.GetPermission(this.Class, methodType, Operations.Execute);
+            return this.Record.IsPermitted(permission);
+        }
+
+        public void OnPulled(IPullResultInternals pull)
+        {
+            var newRecord = this.Workspace.Connection.GetRecord(this.Id);
+            this.Record = newRecord;
+        }
     }
 }

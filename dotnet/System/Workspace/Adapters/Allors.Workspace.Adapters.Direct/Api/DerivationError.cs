@@ -23,7 +23,7 @@ namespace Allors.Workspace.Adapters.Direct
         public IEnumerable<Role> Roles => this.derivationError.Relations
             .Select(v =>
                 new Role(
-                    this.workspace.GetStrategy(v.Association.Id),
+                    this.workspace.GetObject(v.Association.Id),
                     (RelationType)this.workspace.Connection.MetaPopulation.FindByTag(v.RelationType.Tag)));
 
         public string Message => this.derivationError.Message;

@@ -17,18 +17,13 @@ namespace Allors.Workspace.Adapters.Json
     using System.Linq;
     using System.Threading.Tasks;
     using Meta;
-    using System;
-    using System.Linq;
-    using System.Threading.Tasks;
-    using Allors.Protocol.Json.Api.Invoke;
-    using Allors.Protocol.Json.Api.Pull;
     using Data;
     using Protocol.Json;
     using InvokeOptions = Allors.Workspace.InvokeOptions;
 
     public abstract class Connection : Adapters.Connection
     {
-        private readonly Dictionary<long, DatabaseRecord> recordsById;
+        private readonly Dictionary<long, Record> recordsById;
 
         private readonly Dictionary<Class, Dictionary<IOperandType, long>> readPermissionByOperandTypeByClass;
         private readonly Dictionary<Class, Dictionary<IOperandType, long>> writePermissionByOperandTypeByClass;
@@ -37,7 +32,7 @@ namespace Allors.Workspace.Adapters.Json
 
         protected Connection(string name, MetaPopulation metaPopulation) : base(name, metaPopulation)
         {
-            this.recordsById = new Dictionary<long, DatabaseRecord>();
+            this.recordsById = new Dictionary<long, Record>();
 
             this.GrantById = new Dictionary<long, Grant>();
             this.RevocationById = new Dictionary<long, Revocation>();
@@ -95,7 +90,7 @@ namespace Allors.Workspace.Adapters.Json
 
             foreach (var syncResponseObject in syncResponse.o)
             {
-                var databaseObjects = DatabaseRecord.FromResponse(this, ctx, syncResponseObject);
+                var databaseObjects = Record.FromResponse(this, ctx, syncResponseObject);
                 this.recordsById[databaseObjects.Id] = databaseObjects;
             }
 
@@ -229,7 +224,7 @@ namespace Allors.Workspace.Adapters.Json
                 l = methods.Select(v => new Invocation
                 {
                     i = v.Object.Id,
-                    v = ((Strategy)v.Object).DatabaseOriginState.Version,
+                    v = ((Object)v.Object).DatabaseOriginState.Version,
                     m = v.MethodType.Tag
                 }).ToArray(),
                 o = options != null
@@ -325,7 +320,7 @@ namespace Allors.Workspace.Adapters.Json
             }
         }
 
-        public override Adapters.DatabaseRecord GetRecord(long id)
+        public override Adapters.Record GetRecord(long id)
         {
             this.recordsById.TryGetValue(id, out var databaseObjects);
             return databaseObjects;

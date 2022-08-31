@@ -1,4 +1,4 @@
-// <copyright file="RemoteSession.cs" company="Allors bvba">
+// <copyright file="Workspace.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -10,48 +10,47 @@ namespace Allors.Workspace.Adapters
 
     public abstract class Workspace : IWorkspace
     {
-        private readonly Dictionary<Class, ISet<Strategy>> strategiesByClass;
+        private readonly Dictionary<Class, ISet<Object>> objectsByClass;
 
         protected Workspace(Connection connection)
         {
             this.Connection = connection;
-            this.StrategyByWorkspaceId = new Dictionary<long, Strategy>();
-            this.strategiesByClass = new Dictionary<Class, ISet<Strategy>>();
+            this.ObjectByWorkspaceId = new Dictionary<long, Object>();
+            this.objectsByClass = new Dictionary<Class, ISet<Object>>();
         }
 
         IConnection IWorkspace.Connection => this.Connection;
 
-        public IEnumerable<IObject> Objects => this.StrategyByWorkspaceId.Values;
+        public IEnumerable<IObject> Objects => this.ObjectByWorkspaceId.Values;
 
         public Connection Connection { get; }
 
-        protected Dictionary<long, Strategy> StrategyByWorkspaceId { get; }
+        protected Dictionary<long, Object> ObjectByWorkspaceId { get; }
 
-        public override string ToString() => $"session: {base.ToString()}";
+        public override string ToString() => $"workspace: {base.ToString()}";
 
-
-        public Strategy GetStrategy(long id)
+        public Object GetObject(long id)
         {
             if (id == 0)
             {
                 return null;
             }
 
-            return this.StrategyByWorkspaceId.TryGetValue(id, out var sessionStrategy) ? sessionStrategy : null;
+            return this.ObjectByWorkspaceId.TryGetValue(id, out var @object) ? @object : null;
         }
 
-        protected void AddStrategy(Strategy strategy)
+        protected void AddObject(Object @object)
         {
-            this.StrategyByWorkspaceId.Add(strategy.Id, strategy);
+            this.ObjectByWorkspaceId.Add(@object.Id, @object);
 
-            var @class = strategy.Class;
-            if (!this.strategiesByClass.TryGetValue(@class, out var strategies))
+            var @class = @object.Class;
+            if (!this.objectsByClass.TryGetValue(@class, out var strategies))
             {
-                this.strategiesByClass[@class] = new HashSet<Strategy> { strategy };
+                this.objectsByClass[@class] = new HashSet<Object> { @object };
             }
             else
             {
-                strategies.Add(strategy);
+                strategies.Add(@object);
             }
         }
 

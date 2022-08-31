@@ -22,9 +22,9 @@ namespace Allors.Workspace.Adapters.Json
 
         public PullResult(Workspace workspace, PullResponse response) : base(workspace, response) => this.pullResponse = response;
 
-        public IDictionary<string, IObject> Objects => this.objects ??= this.pullResponse.o.ToDictionary(pair => pair.Key.ToUpperInvariant(), pair => (IObject)this.Workspace.GetStrategy(pair.Value));
+        public IDictionary<string, IObject> Objects => this.objects ??= this.pullResponse.o.ToDictionary(pair => pair.Key.ToUpperInvariant(), pair => (IObject)this.Workspace.GetObject(pair.Value));
 
-        public IDictionary<string, IObject[]> Collections => this.collections ??= this.pullResponse.c.ToDictionary(pair => pair.Key.ToUpperInvariant(), pair => pair.Value.Select(this.Workspace.GetStrategy).Cast<IObject>().ToArray());
+        public IDictionary<string, IObject[]> Collections => this.collections ??= this.pullResponse.c.ToDictionary(pair => pair.Key.ToUpperInvariant(), pair => pair.Value.Select(this.Workspace.GetObject).Cast<IObject>().ToArray());
 
         public IDictionary<string, object> Values => this.values ??= this.pullResponse.v.ToDictionary(pair => pair.Key.ToUpperInvariant(), pair => pair.Value);
 

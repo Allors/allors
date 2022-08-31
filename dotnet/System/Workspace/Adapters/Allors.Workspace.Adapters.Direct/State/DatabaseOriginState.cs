@@ -5,10 +5,10 @@
 
 namespace Allors.Workspace.Adapters.Direct
 {
-    internal sealed class DatabaseOriginState : Adapters.DatabaseOriginState
+    internal sealed class DatabaseOriginState : Adapters.RecordBasedOriginState
     {
-        internal DatabaseOriginState(Strategy strategy, Adapters.DatabaseRecord record) : base(record) => this.Strategy = strategy;
+        internal DatabaseOriginState(Object @object, Adapters.Record record) : base(record) => this.Object = @object;
 
-        public override Adapters.Strategy Strategy { get; }
+        public override Adapters.Object Object { get; }
     }
 }

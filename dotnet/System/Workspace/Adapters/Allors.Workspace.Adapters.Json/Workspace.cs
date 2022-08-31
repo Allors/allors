@@ -5,14 +5,8 @@
 
 namespace Allors.Workspace.Adapters.Json
 {
-    using System;
-    using System.Linq;
     using System.Threading.Tasks;
-    using Allors.Protocol.Json.Api.Invoke;
     using Allors.Protocol.Json.Api.Pull;
-    using Data;
-    using Protocol.Json;
-    using InvokeOptions = Allors.Workspace.InvokeOptions;
 
     public class Workspace : Adapters.Workspace
     {
@@ -22,9 +16,9 @@ namespace Allors.Workspace.Adapters.Json
 
         private void InstantiateDatabaseStrategy(long id)
         {
-            var databaseRecord = (DatabaseRecord)base.Connection.GetRecord(id);
-            var strategy = new Strategy(this, databaseRecord);
-            this.AddStrategy(strategy);
+            var databaseRecord = (Record)base.Connection.GetRecord(id);
+            var strategy = new Object(this, databaseRecord);
+            this.AddObject(strategy);
         }
 
         internal async Task<IPullResult> OnPull(PullResponse pullResponse)
@@ -56,7 +50,7 @@ namespace Allors.Workspace.Adapters.Json
 
             foreach (var v in pullResponse.p)
             {
-                if (this.StrategyByWorkspaceId.TryGetValue(v.i, out var strategy))
+                if (this.ObjectByWorkspaceId.TryGetValue(v.i, out var strategy))
                 {
                     strategy.DatabaseOriginState.OnPulled(pullResult);
                 }

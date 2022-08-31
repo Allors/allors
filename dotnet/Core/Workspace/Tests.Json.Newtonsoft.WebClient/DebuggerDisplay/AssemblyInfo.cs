@@ -6,4 +6,4 @@
 using System.Diagnostics;
 using Allors.Workspace.Adapters.Json;
 
-[assembly: DebuggerTypeProxy(typeof(StrategyDebugger), Target = typeof(Strategy))]
+[assembly: DebuggerTypeProxy(typeof(StrategyDebugger), Target = typeof(Object))]

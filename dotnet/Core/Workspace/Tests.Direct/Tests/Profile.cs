@@ -12,7 +12,6 @@ namespace Tests.Workspace.Direct
     using Allors.Database.Configuration;
     using Allors.Database.Domain;
     using Allors.Workspace;
-    using Allors.Workspace.Adapters;
     using Allors.Workspace.Meta;
     using User = Allors.Database.Domain.User;
 

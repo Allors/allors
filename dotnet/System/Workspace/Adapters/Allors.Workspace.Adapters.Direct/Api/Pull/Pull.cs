@@ -12,7 +12,6 @@ namespace Allors.Workspace.Adapters.Direct
     using Database;
     using Database.Data;
     using Database.Domain;
-    using Database.Meta;
     using Database.Security;
     using Database.Services;
     using Protocol.Direct;
@@ -91,11 +90,11 @@ namespace Allors.Workspace.Adapters.Direct
 
         public IDictionary<string, IObject[]> Collections =>
             this.collections ??= this.DatabaseCollectionsByName.ToDictionary(v => v.Key,
-                v => v.Value.Select(w => (IObject)base.Workspace.GetStrategy(w.Id)).ToArray());
+                v => v.Value.Select(w => (IObject)base.Workspace.GetObject(w.Id)).ToArray());
 
         public IDictionary<string, IObject> Objects =>
             this.objects ??= this.DatabaseObjectByName.ToDictionary(v => v.Key,
-                v => (IObject)base.Workspace.GetStrategy(v.Value.Id));
+                v => (IObject)base.Workspace.GetObject(v.Value.Id));
 
         public IDictionary<string, object> Values => this.ValueByName;
 

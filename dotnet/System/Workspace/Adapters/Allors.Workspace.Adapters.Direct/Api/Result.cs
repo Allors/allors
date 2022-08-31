@@ -10,7 +10,7 @@ namespace Allors.Workspace.Adapters.Direct
 
     public abstract class Result : IInvokeResult
     {
-        private readonly List<Strategy> accessErrorStrategies;
+        private readonly List<Object> accessErrorStrategies;
         private readonly List<long> databaseMissingIds;
         private List<Database.Derivations.IDerivationError> derivationErrors;
         private readonly List<long> versionErrors;
@@ -18,7 +18,7 @@ namespace Allors.Workspace.Adapters.Direct
         protected Result(Workspace workspace)
         {
             this.Workspace = workspace;
-            this.accessErrorStrategies = new List<Strategy>();
+            this.accessErrorStrategies = new List<Object>();
             this.databaseMissingIds = new List<long>();
             this.versionErrors = new List<long>();
         }
@@ -27,11 +27,11 @@ namespace Allors.Workspace.Adapters.Direct
 
         public string ErrorMessage { get; set; }
 
-        public IEnumerable<IObject> VersionErrors => this.versionErrors?.Select(v => this.Workspace.GetStrategy(v));
+        public IEnumerable<IObject> VersionErrors => this.versionErrors?.Select(v => this.Workspace.GetObject(v));
 
         public IEnumerable<IObject> AccessErrors => this.accessErrorStrategies;
 
-        public IEnumerable<IObject> MissingErrors => this.databaseMissingIds?.Select(this.Workspace.GetStrategy);
+        public IEnumerable<IObject> MissingErrors => this.databaseMissingIds?.Select(this.Workspace.GetObject);
 
         public IEnumerable<IDerivationError> DerivationErrors => this.derivationErrors
             ?.Select<Database.Derivations.IDerivationError, IDerivationError>(v =>
@@ -48,7 +48,7 @@ namespace Allors.Workspace.Adapters.Direct
 
         internal void AddMissingId(long id) => this.databaseMissingIds.Add(id);
 
-        internal void AddAccessError(Strategy strategy) => this.accessErrorStrategies.Add(strategy);
+        internal void AddAccessError(Object @object) => this.accessErrorStrategies.Add(@object);
 
         internal void AddVersionError(long id) => this.versionErrors.Add(id);
     }

@@ -31,7 +31,7 @@ namespace Allors.Workspace.Adapters
 
         public abstract Task<IPullResult> PullAsync(params Pull[] pull);
 
-        public abstract DatabaseRecord GetRecord(long id);
+        public abstract Record GetRecord(long id);
 
         public abstract long GetPermission(Class @class, IOperandType operandType, Operations operation);
     }
