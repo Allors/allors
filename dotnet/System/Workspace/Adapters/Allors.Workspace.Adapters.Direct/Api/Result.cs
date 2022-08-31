@@ -15,27 +15,27 @@ namespace Allors.Workspace.Adapters.Direct
         private List<Database.Derivations.IDerivationError> derivationErrors;
         private readonly List<long> versionErrors;
 
-        protected Result(Workspace session)
+        protected Result(Workspace workspace)
         {
-            this.Session = session;
+            this.Workspace = workspace;
             this.accessErrorStrategies = new List<Strategy>();
             this.databaseMissingIds = new List<long>();
             this.versionErrors = new List<long>();
         }
 
-        protected Workspace Session { get; }
+        protected Workspace Workspace { get; }
 
         public string ErrorMessage { get; set; }
 
-        public IEnumerable<IObject> VersionErrors => this.versionErrors?.Select(v => this.Session.Instantiate<IObject>(v));
+        public IEnumerable<IObject> VersionErrors => this.versionErrors?.Select(v => this.Workspace.GetStrategy(v));
 
-        public IEnumerable<IObject> AccessErrors => this.accessErrorStrategies?.Select(v => v.Object);
+        public IEnumerable<IObject> AccessErrors => this.accessErrorStrategies;
 
-        public IEnumerable<IObject> MissingErrors => this.Session.Instantiate<IObject>(this.databaseMissingIds);
+        public IEnumerable<IObject> MissingErrors => this.databaseMissingIds?.Select(this.Workspace.GetStrategy);
 
         public IEnumerable<IDerivationError> DerivationErrors => this.derivationErrors
             ?.Select<Database.Derivations.IDerivationError, IDerivationError>(v =>
-                new DerivationError(this.Session, v)).ToArray();
+                new DerivationError(this.Workspace, v)).ToArray();
 
         public bool HasErrors => !string.IsNullOrWhiteSpace(this.ErrorMessage) ||
                                  this.accessErrorStrategies?.Count > 0 ||

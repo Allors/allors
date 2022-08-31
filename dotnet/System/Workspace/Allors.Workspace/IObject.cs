@@ -12,8 +12,6 @@ namespace Allors.Workspace
     {
         IWorkspace Workspace { get; }
 
-        IObject Object { get; }
-
         Class Class { get; }
 
         long Id { get; }

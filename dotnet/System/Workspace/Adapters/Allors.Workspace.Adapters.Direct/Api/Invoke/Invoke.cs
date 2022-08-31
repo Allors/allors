@@ -17,19 +17,19 @@ namespace Allors.Workspace.Adapters.Direct
 
     public class Invoke : Result
     {
-        internal Invoke(Workspace session) : base(session)
+        internal Invoke(Workspace workspace) : base(workspace)
         {
-            this.Workspace = session.Connection;
-            this.Transaction = this.Workspace.Database.CreateTransaction();
+            this.Connection = workspace.Connection;
+            this.Transaction = this.Connection.Database.CreateTransaction();
 
             var metaCache = this.Transaction.Database.Services.Get<IMetaCache>();
 
-            this.AccessControl = this.Transaction.Services.Get<IWorkspaceAclsService>().Create(this.Workspace.Name);
-            this.AllowedClasses = metaCache.GetWorkspaceClasses(this.Workspace.Name);
+            this.AccessControl = this.Transaction.Services.Get<IWorkspaceAclsService>().Create(this.Connection.Name);
+            this.AllowedClasses = metaCache.GetWorkspaceClasses(this.Connection.Name);
             this.Derive = () => this.Transaction.Database.Services.Get<IDerivationService>().CreateDerivation(this.Transaction).Derive();
         }
 
-        private Connection Workspace { get; }
+        private Connection Connection { get; }
 
         private ITransaction Transaction { get; }
 

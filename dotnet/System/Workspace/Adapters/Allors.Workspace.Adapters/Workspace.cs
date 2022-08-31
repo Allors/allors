@@ -6,9 +6,6 @@
 namespace Allors.Workspace.Adapters
 {
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
-    using Data;
     using Meta;
 
     public abstract class Workspace : IWorkspace
@@ -23,51 +20,15 @@ namespace Allors.Workspace.Adapters
         }
 
         IConnection IWorkspace.Connection => this.Connection;
+
+        public IEnumerable<IObject> Objects => this.StrategyByWorkspaceId.Values;
+
         public Connection Connection { get; }
 
         protected Dictionary<long, Strategy> StrategyByWorkspaceId { get; }
 
         public override string ToString() => $"session: {base.ToString()}";
 
-        #region Instantiate
-        public T Instantiate<T>(IObject @object) where T : class, IObject => this.Instantiate<T>(@object.Id);
-
-        public T Instantiate<T>(T @object) where T : class, IObject => this.Instantiate<T>(@object.Id);
-
-        public T Instantiate<T>(long? id) where T : class, IObject => id.HasValue ? this.Instantiate<T>((long)id) : default;
-
-        public T Instantiate<T>(long id) where T : class, IObject => (T)this.GetStrategy(id)?.Object;
-
-        public T Instantiate<T>(string idAsString) where T : class, IObject => long.TryParse(idAsString, out var id) ? (T)this.GetStrategy(id)?.Object : default;
-
-        public IEnumerable<T> Instantiate<T>(IEnumerable<IObject> objects) where T : class, IObject => objects.Select(this.Instantiate<T>);
-
-        public IEnumerable<T> Instantiate<T>(IEnumerable<T> objects) where T : class, IObject => objects.Select(this.Instantiate);
-
-        public IEnumerable<T> Instantiate<T>(IEnumerable<long> ids) where T : class, IObject => ids.Select(this.Instantiate<T>);
-
-        public IEnumerable<T> Instantiate<T>(IEnumerable<string> ids) where T : class, IObject => this.Instantiate<T>(ids.Select(
-            v =>
-            {
-                long.TryParse(v, out var id);
-                return id;
-            }));
-
-        public IEnumerable<T> Instantiate<T>(IComposite objectType) where T : class, IObject
-        {
-            foreach (var @class in objectType.Classes)
-            {
-                if (this.strategiesByClass.TryGetValue(@class, out var strategies))
-                {
-                    foreach (var strategy in strategies)
-                    {
-                        yield return (T)strategy.Object;
-                    }
-                }
-            }
-        }
-
-        #endregion
 
         public Strategy GetStrategy(long id)
         {

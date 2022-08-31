@@ -9,7 +9,7 @@ namespace Allors.Workspace.Adapters.Json
 
     public class InvokeResult : Result, IInvokeResult
     {
-        public InvokeResult(IWorkspace session, InvokeResponse invokeResponse) : base(session, invokeResponse)
+        public InvokeResult(Workspace workspace, InvokeResponse invokeResponse) : base(workspace, invokeResponse)
         {
         }
     }

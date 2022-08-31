@@ -14,8 +14,6 @@ namespace Allors.Workspace.Adapters
     {
         private readonly long rangeId;
 
-        private IObject @object;
-
         protected Strategy(Workspace workspace, Class @class, long id)
         {
             this.Workspace = workspace;
@@ -43,8 +41,6 @@ namespace Allors.Workspace.Adapters
         public Class Class { get; }
 
         public long Id { get; private set; }
-
-        public IObject Object => this;
 
         public bool ExistRole(RoleType roleType)
         {
@@ -85,12 +81,12 @@ namespace Allors.Workspace.Adapters
 
         public IObject GetCompositeRole(RoleType roleType) =>
             this.CanRead(roleType)
-                ? this.DatabaseOriginState.GetCompositeRole(roleType)?.Object
+                ? this.DatabaseOriginState.GetCompositeRole(roleType)
                 : null;
 
         public IEnumerable<IObject> GetCompositesRole(RoleType roleType) =>
             this.CanRead(roleType)
-                ? this.DatabaseOriginState.GetCompositesRole(roleType).Select(v => v.Object)
+                ? this.DatabaseOriginState.GetCompositesRole(roleType).Cast<IObject>()
                 : Array.Empty<IObject>();
 
         public bool CanRead(RoleType roleType) => this.DatabaseOriginState.CanRead(roleType);
@@ -98,10 +94,6 @@ namespace Allors.Workspace.Adapters
         public bool CanWrite(RoleType roleType) => this.DatabaseOriginState.CanWrite(roleType);
 
         public bool CanExecute(MethodType methodType) => this.DatabaseOriginState.CanExecute(methodType);
-
-        public bool IsCompositeAssociationForRole(RoleType roleType, Strategy forRole) => this.DatabaseOriginState.IsAssociationForRole(roleType, forRole);
-
-        public bool IsCompositesAssociationForRole(RoleType roleType, Strategy forRoleId) => this.DatabaseOriginState.IsAssociationForRole(roleType, forRoleId);
 
         int IComparable<Strategy>.CompareTo(Strategy other)
         {

@@ -20,17 +20,11 @@ namespace Allors.Workspace.Adapters.Json
 
         private readonly PullResponse pullResponse;
 
-        public PullResult(Adapters.Workspace session, PullResponse response) : base(session, response)
-        {
-            this.Workspace = session.Connection;
-            this.pullResponse = response;
-        }
+        public PullResult(Workspace workspace, PullResponse response) : base(workspace, response) => this.pullResponse = response;
 
-        private IConnection Workspace { get; }
+        public IDictionary<string, IObject> Objects => this.objects ??= this.pullResponse.o.ToDictionary(pair => pair.Key.ToUpperInvariant(), pair => (IObject)this.Workspace.GetStrategy(pair.Value));
 
-        public IDictionary<string, IObject> Objects => this.objects ??= this.pullResponse.o.ToDictionary(pair => pair.Key.ToUpperInvariant(), pair => this.Session.Instantiate<IObject>(pair.Value));
-
-        public IDictionary<string, IObject[]> Collections => this.collections ??= this.pullResponse.c.ToDictionary(pair => pair.Key.ToUpperInvariant(), pair => pair.Value.Select(this.Session.Instantiate<IObject>).ToArray());
+        public IDictionary<string, IObject[]> Collections => this.collections ??= this.pullResponse.c.ToDictionary(pair => pair.Key.ToUpperInvariant(), pair => pair.Value.Select(this.Workspace.GetStrategy).Cast<IObject>().ToArray());
 
         public IDictionary<string, object> Values => this.values ??= this.pullResponse.v.ToDictionary(pair => pair.Key.ToUpperInvariant(), pair => pair.Value);
 
