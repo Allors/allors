@@ -23,7 +23,7 @@ namespace Allors.Workspace.Protocol.Direct
             this.metaPopulation = transaction.Database.MetaPopulation;
         }
 
-        public Pull Visit(Data.Pull ws) =>
+        public Pull Visit(Request.Pull ws) =>
             new Pull
             {
                 ExtentRef = ws.ExtentRef,
@@ -34,7 +34,7 @@ namespace Allors.Workspace.Protocol.Direct
                 Arguments = this.Visit(ws.Arguments)
             };
 
-        public Procedure Visit(Data.Procedure ws) =>
+        public Procedure Visit(Request.Procedure ws) =>
             new Procedure(ws.Name)
             {
                 Collections = ws.Collections?.ToDictionary(v => v.Key, v => this.transaction.Instantiate(v.Value?.Select(w => w.Id))),
@@ -43,65 +43,65 @@ namespace Allors.Workspace.Protocol.Direct
                 Pool = ws.Pool?.ToDictionary(v => this.transaction.Instantiate(v.Key.Id), v => v.Value),
             };
 
-        private IExtent Visit(Data.Extent ws) =>
+        private IExtent Visit(Request.IExtent ws) =>
             ws switch
             {
-                Data.Filter filter => this.Visit(filter),
-                Data.Except except => this.Visit(except),
-                Data.Intersect intersect => this.Visit(intersect),
-                Data.Union union => this.Visit(union),
+                Request.Filter filter => this.Visit(filter),
+                Request.Except except => this.Visit(except),
+                Request.Intersect intersect => this.Visit(intersect),
+                Request.Union union => this.Visit(union),
                 null => null,
                 _ => throw new Exception($"Unknown implementation of IExtent: {ws.GetType()}")
             };
 
-        private Database.Data.Extent Visit(Data.Filter ws) => new Database.Data.Extent(this.Visit(ws.ObjectType))
+        private Database.Data.Extent Visit(Request.Filter ws) => new Database.Data.Extent(this.Visit(ws.ObjectType))
         {
             Predicate = this.Visit(ws.Predicate),
             Sorting = this.Visit(ws.Sorting)
         };
 
-        private IPredicate Visit(Data.IPredicate ws) =>
+        private IPredicate Visit(Request.IPredicate ws) =>
             ws switch
             {
-                Data.And and => this.Visit(and),
-                Data.Between between => this.Visit(between),
-                Data.ContainedIn containedIn => this.Visit(containedIn),
-                Data.Contains contains => this.Visit(contains),
-                Data.Equals equals => this.Visit(equals),
-                Data.Exists exists => this.Visit(exists),
-                Data.GreaterThan greaterThan => this.Visit(greaterThan),
-                Data.Instanceof instanceOf => this.Visit(instanceOf),
-                Data.LessThan lessThan => this.Visit(lessThan),
-                Data.Like like => this.Visit(like),
-                Data.Not not => this.Visit(not),
-                Data.Or or => this.Visit(or),
+                Request.And and => this.Visit(and),
+                Request.Between between => this.Visit(between),
+                Request.ContainedIn containedIn => this.Visit(containedIn),
+                Request.Contains contains => this.Visit(contains),
+                Request.Equals equals => this.Visit(equals),
+                Request.Exists exists => this.Visit(exists),
+                Request.GreaterThan greaterThan => this.Visit(greaterThan),
+                Request.Instanceof instanceOf => this.Visit(instanceOf),
+                Request.LessThan lessThan => this.Visit(lessThan),
+                Request.Like like => this.Visit(like),
+                Request.Not not => this.Visit(not),
+                Request.Or or => this.Visit(or),
                 null => null,
                 _ => throw new Exception($"Unknown implementation of IExtent: {ws.GetType()}")
             };
 
-        private IPredicate Visit(Data.And ws) => new And(ws.Operands?.Select(this.Visit).ToArray());
+        private IPredicate Visit(Request.And ws) => new And(ws.Operands?.Select(this.Visit).ToArray());
 
-        private IPredicate Visit(Data.Between ws) => new Between(this.Visit(ws.RoleType))
+        private IPredicate Visit(Request.Between ws) => new Between(this.Visit(ws.RoleType))
         {
             Parameter = ws.Parameter,
             Values = ws.Values,
             Paths = this.Visit(ws.Paths)
         };
 
-        private IPredicate Visit(Data.ContainedIn ws) => new ContainedIn(this.Visit(ws.PropertyType))
+        private IPredicate Visit(Request.ContainedIn ws) => new ContainedIn(this.Visit(ws.PropertyType))
         {
             Parameter = ws.Parameter,
             Objects = this.Visit(ws.Objects),
             Extent = this.Visit(ws.Extent),
         };
 
-        private IPredicate Visit(Data.Contains ws) => new Contains(this.Visit(ws.PropertyType))
+        private IPredicate Visit(Request.Contains ws) => new Contains(this.Visit(ws.PropertyType))
         {
             Parameter = ws.Parameter,
             Object = this.Visit(ws.Object)
         };
 
-        private IPredicate Visit(Data.Equals ws) => new Equals(this.Visit(ws.PropertyType))
+        private IPredicate Visit(Request.Equals ws) => new Equals(this.Visit(ws.PropertyType))
         {
             Parameter = ws.Parameter,
             Object = this.Visit(ws.Object),
@@ -109,52 +109,52 @@ namespace Allors.Workspace.Protocol.Direct
             Path = this.Visit(ws.Path),
         };
 
-        private IPredicate Visit(Data.Exists ws) => new Exists(this.Visit(ws.PropertyType))
+        private IPredicate Visit(Request.Exists ws) => new Exists(this.Visit(ws.PropertyType))
         {
             Parameter = ws.Parameter,
         };
 
-        private IPredicate Visit(Data.GreaterThan ws) => new GreaterThan(this.Visit(ws.RoleType))
+        private IPredicate Visit(Request.GreaterThan ws) => new GreaterThan(this.Visit(ws.RoleType))
         {
             Parameter = ws.Parameter,
             Value = ws.Value,
             Path = this.Visit(ws.Path)
         };
 
-        private IPredicate Visit(Data.Instanceof ws) => new Instanceof(this.Visit(ws.PropertyType))
+        private IPredicate Visit(Request.Instanceof ws) => new Instanceof(this.Visit(ws.PropertyType))
         {
             Parameter = ws.Parameter,
             ObjectType = this.Visit(ws.ObjectType)
         };
 
-        private IPredicate Visit(Data.LessThan ws) => new LessThan(this.Visit(ws.RoleType))
+        private IPredicate Visit(Request.LessThan ws) => new LessThan(this.Visit(ws.RoleType))
         {
             Parameter = ws.Parameter,
             Value = ws.Value,
             Path = this.Visit(ws.Path)
         };
 
-        private IPredicate Visit(Data.Like ws) => new Like(this.Visit(ws.RoleType))
+        private IPredicate Visit(Request.Like ws) => new Like(this.Visit(ws.RoleType))
         {
             Parameter = ws.Parameter,
             Value = ws.Value,
         };
 
-        private IPredicate Visit(Data.Not ws) => new Not(this.Visit(ws.Operand));
+        private IPredicate Visit(Request.Not ws) => new Not(this.Visit(ws.Operand));
 
-        private IPredicate Visit(Data.Or ws) => new Or(ws.Operands?.Select(this.Visit).ToArray());
+        private IPredicate Visit(Request.Or ws) => new Or(ws.Operands?.Select(this.Visit).ToArray());
 
-        private Except Visit(Data.Except ws) => new Except(ws.Operands?.Select(this.Visit).ToArray()) { Sorting = this.Visit(ws.Sorting) };
+        private Except Visit(Request.Except ws) => new Except(ws.Operands?.Select(this.Visit).ToArray()) { Sorting = this.Visit(ws.Sorting) };
 
-        private Intersect Visit(Data.Intersect ws) => new Intersect(ws.Operands?.Select(this.Visit).ToArray()) { Sorting = this.Visit(ws.Sorting) };
+        private Intersect Visit(Request.Intersect ws) => new Intersect(ws.Operands?.Select(this.Visit).ToArray()) { Sorting = this.Visit(ws.Sorting) };
 
-        private Union Visit(Data.Union ws) => new Union(ws.Operands?.Select(this.Visit).ToArray()) { Sorting = this.Visit(ws.Sorting) };
+        private Union Visit(Request.Union ws) => new Union(ws.Operands?.Select(this.Visit).ToArray()) { Sorting = this.Visit(ws.Sorting) };
 
-        private IObject Visit(Workspace.IObject ws) => ws != null ? this.transaction.Instantiate(ws.Id) : null;
+        private IObject Visit(Response.IObject ws) => ws != null ? this.transaction.Instantiate(ws.Id) : null;
 
         private IObject Visit(long? id) => id != null ? this.transaction.Instantiate(id.Value) : null;
 
-        private Result[] Visit(Data.Result[] ws) =>
+        private Result[] Visit(Request.Result[] ws) =>
             ws?.Select(v => new Result
             {
                 Name = v.Name,
@@ -165,13 +165,13 @@ namespace Allors.Workspace.Protocol.Direct
                 Include = this.Visit(v.Include)
             }).ToArray();
 
-        private Select Visit(Data.Select ws) => ws != null ? new Select { Include = this.Visit(ws.Include), PropertyType = this.Visit(ws.PropertyType), Next = this.Visit(ws.Next) } : null;
+        private Select Visit(Request.Select ws) => ws != null ? new Select { Include = this.Visit(ws.Include), PropertyType = this.Visit(ws.PropertyType), Next = this.Visit(ws.Next) } : null;
 
-        private Node[] Visit(IEnumerable<Data.Node> ws) => ws?.Select(this.Visit).ToArray();
+        private Node[] Visit(IEnumerable<Request.Node> ws) => ws?.Select(this.Visit).ToArray();
 
-        private Node Visit(Data.Node ws) => ws != null ? new Node(this.Visit(ws.PropertyType), ws.Nodes?.Select(this.Visit).ToArray()) : null;
+        private Node Visit(Request.Node ws) => ws != null ? new Node(this.Visit(ws.PropertyType), ws.Nodes?.Select(this.Visit).ToArray()) : null;
 
-        private Database.Data.Sort[] Visit(Data.Sort[] ws) => ws?.Select(v =>
+        private Database.Data.Sort[] Visit(Request.Sort[] ws) => ws?.Select(v =>
         {
             return new Database.Data.Sort
             {
@@ -199,7 +199,7 @@ namespace Allors.Workspace.Protocol.Direct
 
         private IRoleType[] Visit(IEnumerable<Meta.RoleType> ws) => ws?.Select(v => ((IRelationType)this.metaPopulation.FindByTag(v.OperandTag)).RoleType).ToArray();
 
-        private IObject[] Visit(IEnumerable<Workspace.IObject> ws) => ws != null ? this.transaction.Instantiate(ws.Select(v => v.Id)) : null;
+        private IObject[] Visit(IEnumerable<Response.IObject> ws) => ws != null ? this.transaction.Instantiate(ws.Select(v => v.Id)) : null;
 
         private IArguments Visit(IDictionary<string, object> ws) => new Arguments(ws);
     }

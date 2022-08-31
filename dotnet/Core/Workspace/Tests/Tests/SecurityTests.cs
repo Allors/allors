@@ -6,7 +6,7 @@
 namespace Tests.Workspace
 {
     using System.Threading.Tasks;
-    using Allors.Workspace.Data;
+    using Allors.Workspace.Request;
     using Xunit;
 
     public abstract class SecurityTests : Test

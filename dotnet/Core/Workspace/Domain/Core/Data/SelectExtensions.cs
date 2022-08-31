@@ -7,7 +7,9 @@ namespace Allors.Workspace.Domain
 {
     using System.Collections;
     using System.Collections.Generic;
-    using Data;
+    using Request;
+    using Request.Extensions;
+    using Response;
 
     public static class SelectExtensions
     {

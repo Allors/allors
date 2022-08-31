@@ -14,7 +14,10 @@ namespace Allors.Workspace.Adapters.Direct
     using Database.Meta;
     using Database.Security;
     using Meta;
+    using Request;
+    using Response;
     using Shared.Ranges;
+    using IObject = Database.IObject;
     using IOperandType = Meta.IOperandType;
 
     public class Connection : Adapters.Connection
@@ -67,7 +70,7 @@ namespace Allors.Workspace.Adapters.Direct
             return Task.FromResult<IInvokeResult>(result);
         }
 
-        public override Task<IPullResult> CallAsync(Data.Procedure procedure, params Data.Pull[] pull)
+        public override Task<IPullResult> CallAsync(Request.Procedure procedure, params Request.Pull[] pull)
         {
             var workspace = new Workspace(this);
             var result = new Pull(workspace);
@@ -90,7 +93,7 @@ namespace Allors.Workspace.Adapters.Direct
             return Task.FromResult<IPullResult>(result);
         }
 
-        public override Task<IPullResult> PullAsync(params Data.Pull[] pulls)
+        public override Task<IPullResult> PullAsync(params Request.Pull[] pulls)
         {
             foreach (var pull in pulls)
             {

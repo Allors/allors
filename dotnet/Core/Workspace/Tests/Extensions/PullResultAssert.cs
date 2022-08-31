@@ -2,6 +2,7 @@ namespace Tests.Workspace
 {
     using Allors.Workspace;
     using Allors.Workspace.Meta;
+    using Allors.Workspace.Response;
 
     public class PullResultAssert
     {

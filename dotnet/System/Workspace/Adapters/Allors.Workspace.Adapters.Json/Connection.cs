@@ -15,11 +15,12 @@ namespace Allors.Workspace.Adapters.Json
     using Allors.Protocol.Json.Api.Push;
     using Allors.Protocol.Json.Api.Security;
     using Allors.Protocol.Json.Api.Sync;
-    using Data;
     using Meta;
     using Protocol.Json;
+    using Request;
+    using Response;
     using Shared.Ranges;
-    using InvokeOptions = Allors.Workspace.InvokeOptions;
+    using InvokeOptions = Request.InvokeOptions;
 
     public abstract class Connection : Adapters.Connection
     {

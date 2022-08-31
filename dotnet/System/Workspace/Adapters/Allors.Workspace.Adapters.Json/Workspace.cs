@@ -7,6 +7,7 @@ namespace Allors.Workspace.Adapters.Json
 {
     using System.Threading.Tasks;
     using Allors.Protocol.Json.Api.Pull;
+    using Response;
 
     public class Workspace : Adapters.Workspace
     {

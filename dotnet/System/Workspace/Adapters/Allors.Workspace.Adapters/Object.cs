@@ -9,6 +9,7 @@ namespace Allors.Workspace.Adapters
     using System.Collections.Generic;
     using System.Linq;
     using Meta;
+    using Response;
     using Shared.Ranges;
 
     public abstract class Object : IObject, IComparable<Object>

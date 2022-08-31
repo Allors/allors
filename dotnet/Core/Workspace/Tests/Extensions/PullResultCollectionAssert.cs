@@ -3,6 +3,7 @@ namespace Tests.Workspace
     using System.Linq;
     using Allors.Workspace;
     using Allors.Workspace.Meta;
+    using Allors.Workspace.Response;
     using Xunit;
 
     public class PullResultCollectionAssert

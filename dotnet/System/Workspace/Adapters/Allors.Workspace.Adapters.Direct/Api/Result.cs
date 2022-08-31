@@ -7,6 +7,7 @@ namespace Allors.Workspace.Adapters.Direct
 {
     using System.Collections.Generic;
     using System.Linq;
+    using Response;
 
     public abstract class Result : IInvokeResult
     {

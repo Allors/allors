@@ -11,7 +11,8 @@ namespace Tests.Workspace
     using System;
     using System.Linq;
     using Allors;
-    using Allors.Workspace.Data;
+    using Allors.Workspace.Request;
+    using Allors.Workspace.Request.Extensions;
     using Allors.Workspace.Meta;
     using Xunit;
     using static Names;
@@ -755,7 +756,7 @@ namespace Tests.Workspace
                 {
                     Extent = new Except
                     {
-                        Operands = new Extent[]
+                        Operands = new IExtent[]
                         {
                             new Filter(m.I12),
                             new Filter(m.I12)
@@ -788,7 +789,7 @@ namespace Tests.Workspace
                 {
                     Extent = new Intersect
                     {
-                        Operands = new Extent[]
+                        Operands = new IExtent[]
                         {
                             new Filter(m.I12),
                             new Filter(m.I12)
@@ -821,7 +822,7 @@ namespace Tests.Workspace
                 {
                     Extent = new Union
                     {
-                        Operands = new Extent[]
+                        Operands = new IExtent[]
                         {
                             new Filter(m.C1){Predicate = new Equals(m.C1.Name) {Value = "c1A"}},
                             new Filter(m.C1){Predicate = new Equals(m.C1.Name) {Value = "c1B"}}

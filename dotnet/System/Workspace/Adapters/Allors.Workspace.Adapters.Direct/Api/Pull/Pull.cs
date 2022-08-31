@@ -15,7 +15,8 @@ namespace Allors.Workspace.Adapters.Direct
     using Database.Security;
     using Database.Services;
     using Protocol.Direct;
-    using IObject = Allors.Workspace.IObject;
+    using Response;
+    using IObject = Response.IObject;
 
     public class Pull : Result, IPullResult, IProcedureOutput
     {
@@ -123,7 +124,7 @@ namespace Allors.Workspace.Adapters.Direct
             throw new NotImplementedException();
         }
 
-        public void Execute(Data.Procedure workspaceProcedure)
+        public void Execute(Request.Procedure workspaceProcedure)
         {
             var visitor = new ToDatabaseVisitor(this.Transaction);
             var procedure = visitor.Visit(workspaceProcedure);
@@ -131,7 +132,7 @@ namespace Allors.Workspace.Adapters.Direct
             localProcedure.Execute(this);
         }
 
-        public void Execute(IEnumerable<Data.Pull> workspacePulls)
+        public void Execute(IEnumerable<Request.Pull> workspacePulls)
         {
             var visitor = new ToDatabaseVisitor(this.Transaction);
             foreach (var pull in workspacePulls.Select(v => visitor.Visit(v)))

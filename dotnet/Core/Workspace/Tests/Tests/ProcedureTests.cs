@@ -7,7 +7,7 @@ namespace Tests.Workspace
 {
     using System;
     using System.Collections.Generic;
-    using Allors.Workspace.Data;
+    using Allors.Workspace.Request;
     using Xunit;
 
     public abstract class ProcedureTests : Test

@@ -6,8 +6,9 @@
 namespace Allors.Workspace
 {
     using System.Threading.Tasks;
-    using Data;
     using Meta;
+    using Request;
+    using Response;
 
     public interface IConnection
     {

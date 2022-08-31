@@ -7,6 +7,7 @@ namespace Allors.Workspace.Adapters
 {
     using System.Collections.Generic;
     using Meta;
+    using Response;
 
     public abstract class Workspace : IWorkspace
     {

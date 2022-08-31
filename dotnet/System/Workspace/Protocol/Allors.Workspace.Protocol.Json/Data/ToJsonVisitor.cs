@@ -9,10 +9,10 @@ namespace Allors.Workspace.Protocol.Json
     using System.Linq;
     using Allors.Protocol.Json;
     using Allors.Protocol.Json.Data;
-    using Data;
+    using Request;
     using Meta;
     using Extent = Allors.Protocol.Json.Data.Extent;
-    using IVisitor = Data.IVisitor;
+    using IVisitor = Request.Visitor.IVisitor;
     using Node = Allors.Protocol.Json.Data.Node;
     using Procedure = Allors.Protocol.Json.Data.Procedure;
     using Pull = Allors.Protocol.Json.Data.Pull;
@@ -20,7 +20,7 @@ namespace Allors.Workspace.Protocol.Json
     using Select = Allors.Protocol.Json.Data.Select;
     using Sort = Allors.Protocol.Json.Data.Sort;
 
-    public class ToJsonVisitor : IVisitor
+    public class ToJsonVisitor : Request.Visitor.IVisitor
     {
         private readonly IUnitConvert unitConvert;
 
@@ -205,7 +205,7 @@ namespace Allors.Workspace.Protocol.Json
             }
         }
 
-        public void VisitSelect(Data.Select visited)
+        public void VisitSelect(Request.Select visited)
         {
             var select = new Select
             {
@@ -324,7 +324,7 @@ namespace Allors.Workspace.Protocol.Json
             this.predicates.Push(predicate);
         }
 
-        public void VisitNode(Data.Node visited)
+        public void VisitNode(Request.Node visited)
         {
             var node = new Node
             {
@@ -384,7 +384,7 @@ namespace Allors.Workspace.Protocol.Json
             }
         }
 
-        public void VisitPull(Data.Pull visited)
+        public void VisitPull(Request.Pull visited)
         {
             var pull = new Pull
             {
@@ -415,7 +415,7 @@ namespace Allors.Workspace.Protocol.Json
             this.Pull = pull;
         }
 
-        public void VisitResult(Data.Result visited)
+        public void VisitResult(Request.Result visited)
         {
             var result = new Result
             {
@@ -447,7 +447,7 @@ namespace Allors.Workspace.Protocol.Json
             }
         }
 
-        public void VisitSort(Data.Sort visited)
+        public void VisitSort(Request.Sort visited)
         {
             var sort = new Sort
             {
@@ -492,7 +492,7 @@ namespace Allors.Workspace.Protocol.Json
             }
         }
 
-        public void VisitProcedure(Data.Procedure procedure) => this.Procedure = new Procedure
+        public void VisitProcedure(Request.Procedure procedure) => this.Procedure = new Procedure
         {
             n = procedure.Name,
             c = procedure.Collections?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value.Select(v => v.Id).ToArray()),
