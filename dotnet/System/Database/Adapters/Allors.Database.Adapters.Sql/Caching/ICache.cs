@@ -6,7 +6,6 @@
 namespace Allors.Database.Adapters.Sql.Caching
 {
     using System.Collections.Generic;
-
     using Meta;
 
     /// <summary>

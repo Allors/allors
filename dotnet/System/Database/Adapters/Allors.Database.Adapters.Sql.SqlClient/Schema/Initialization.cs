@@ -5,11 +5,9 @@
 
 namespace Allors.Database.Adapters.Sql.SqlClient
 {
-    using System;
-    using Microsoft.Data.SqlClient;
     using System.Text;
-
     using Meta;
+    using Microsoft.Data.SqlClient;
 
     public class Initialization
     {
@@ -329,14 +327,7 @@ CREATE SCHEMA {this.database.SchemaName}";
                 {
                     var definition = dictionaryEntry.Value;
                     using var command = new SqlCommand(definition, connection);
-                    try
-                    {
-                        command.ExecuteNonQuery();
-                    }
-                    catch (Exception e)
-                    {
-                        throw;
-                    }
+                    command.ExecuteNonQuery();
                 }
             }
             finally

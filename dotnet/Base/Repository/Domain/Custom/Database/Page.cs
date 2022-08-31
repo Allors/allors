@@ -12,7 +12,7 @@ namespace Allors.Repository
     #region Allors
     [Id("0777C78C-CB50-4FDD-8386-5BCEC00B208C")]
     #endregion
-    public partial class Page : UniquelyIdentifiable
+    public class Page : UniquelyIdentifiable
     {
         #region Allors
         [Id("9B2F32B4-DF88-41DA-AE4C-A7A8D4232C1C")]

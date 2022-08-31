@@ -8,9 +8,9 @@ namespace Allors.Database.Protocol.Json
     using System.Collections.Generic;
     using System.Linq;
     using Allors.Protocol.Json;
-    using Meta;
     using Allors.Protocol.Json.Data;
     using Data;
+    using Meta;
     using Extent = Allors.Protocol.Json.Data.Extent;
     using IVisitor = Data.IVisitor;
     using Node = Allors.Protocol.Json.Data.Node;
@@ -203,14 +203,14 @@ namespace Allors.Database.Protocol.Json
 
         public void VisitSelect(Data.Select visited)
         {
-            var @select = new Select
+            var select = new Select
             {
                 a = (visited.PropertyType as IAssociationType)?.RelationType.Tag,
                 r = (visited.PropertyType as IRoleType)?.RelationType.Tag,
                 o = visited.OfType?.Tag
             };
 
-            this.selects.Push(@select);
+            this.selects.Push(select);
 
             if (visited.Next != null)
             {
@@ -221,12 +221,12 @@ namespace Allors.Database.Protocol.Json
             if (visited.Include?.Length > 0)
             {
                 var length = visited.Include.Length;
-                @select.i = new Node[length];
+                select.i = new Node[length];
                 for (var i = 0; i < length; i++)
                 {
                     var node = visited.Include[i];
                     node.Accept(this);
-                    @select.i[i] = this.nodes.Pop();
+                    select.i[i] = this.nodes.Pop();
                 }
             }
         }
@@ -343,7 +343,7 @@ namespace Allors.Database.Protocol.Json
 
         public void VisitNot(Not visited)
         {
-            var predicate = new Predicate()
+            var predicate = new Predicate
             {
                 k = PredicateKind.Not,
             };
@@ -359,7 +359,7 @@ namespace Allors.Database.Protocol.Json
 
         public void VisitOr(Or visited)
         {
-            var predicate = new Predicate()
+            var predicate = new Predicate
             {
                 k = PredicateKind.Or,
             };

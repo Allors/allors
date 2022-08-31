@@ -14,7 +14,7 @@ namespace Allors.Repository
     #endregion
     [Relationship]
     [Workspace(Default)]
-    public partial class Employment : Period, Deletable
+    public class Employment : Period, Deletable
     {
         #region Allors
         [Id("93B8F2E1-9902-4C0B-BFAC-74629C494346")]

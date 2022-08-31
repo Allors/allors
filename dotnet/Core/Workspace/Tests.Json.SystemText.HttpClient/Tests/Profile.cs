@@ -13,7 +13,6 @@ namespace Tests.Workspace.Json
     using Allors.Workspace.Meta;
     using Polly;
     using Xunit;
-    using Connection = Allors.Workspace.Adapters.Json.SystemText.Connection;
 
     public class Profile : IProfile
     {

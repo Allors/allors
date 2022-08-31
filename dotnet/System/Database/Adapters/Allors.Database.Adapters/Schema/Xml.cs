@@ -8,7 +8,7 @@ namespace Allors.Database.Adapters.Schema
     using System.Xml.Serialization;
 
     [XmlRoot("allors")]
-    public partial class Xml
+    public class Xml
     {
         [XmlElement("population")]
         public Population Population { get; set; }

@@ -7,7 +7,7 @@ namespace Allors.Database.Meta
 {
     using System;
 
-    public partial class MethodInvocation
+    public class MethodInvocation
     {
         public MethodInvocation(IClass @class, IMethodType methodType)
         {

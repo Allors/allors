@@ -7,7 +7,7 @@ namespace Allors.Database.Adapters.Schema
 {
     using System.Xml.Serialization;
 
-    public partial class Relations
+    public class Relations
     {
         [XmlArray("database")]
         [XmlArrayItem("rtc", typeof(RelationTypeComposite))]

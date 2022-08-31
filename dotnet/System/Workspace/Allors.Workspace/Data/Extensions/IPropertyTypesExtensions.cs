@@ -6,9 +6,9 @@
 
 namespace Allors.Workspace.Data
 {
-    using Allors.Workspace.Meta;
+    using Meta;
 
-    public static partial class IPropertyTypesExtensions
+    public static class IPropertyTypesExtensions
     {
         public static Node Path(this IPropertyType[] @this)
         {

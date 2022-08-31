@@ -9,7 +9,6 @@
 namespace Allors.Database.Domain.Tests
 {
     using System.Linq;
-    using Domain;
     using Xunit;
 
     public class TransitionalTests : DomainTest, IClassFixture<Fixture>

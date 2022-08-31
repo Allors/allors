@@ -7,7 +7,6 @@
 namespace Allors.Repository
 {
     using System;
-
     using Attributes;
     using static Workspaces;
 

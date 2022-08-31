@@ -8,16 +8,14 @@ namespace Allors.Workspace.Adapters.Direct
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Allors.Workspace.Adapters;
     using Database;
     using Database.Data;
     using Database.Domain;
+    using Database.Meta;
     using Database.Security;
     using Database.Services;
     using Protocol.Direct;
-    using IClass = Database.Meta.IClass;
-    using IComposite = Database.Meta.IComposite;
-    using IObject = IObject;
+    using IObject = Allors.Workspace.IObject;
 
     public class Pull : Result, IPullResult, IProcedureOutput
     {

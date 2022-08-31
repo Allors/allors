@@ -7,8 +7,6 @@ namespace Allors.Database.Adapters.Memory
 {
     using System;
 
-    using Adapters;
-
     public class SandboxTest : Adapters.SandboxTest, IDisposable
     {
         private readonly Profile profile = new Profile();

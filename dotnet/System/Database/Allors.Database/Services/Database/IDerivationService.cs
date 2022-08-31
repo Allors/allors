@@ -5,8 +5,6 @@
 
 namespace Allors.Database.Derivations
 {
-    using Database;
-
     public interface IDerivationService
     {
         IDerivation CreateDerivation(ITransaction transaction, bool continueOnError = false);

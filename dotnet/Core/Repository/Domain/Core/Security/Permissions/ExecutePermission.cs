@@ -7,13 +7,12 @@
 namespace Allors.Repository
 {
     using System;
-
     using Attributes;
 
     #region Allors
     [Id("2E839427-58D6-4567-B9AA-FBE6071590E3")]
     #endregion
-    public partial class ExecutePermission : Permission
+    public class ExecutePermission : Permission
     {
         #region Allors
         [Id("CB76C8B7-681E-450B-A3EC-95C32E1ED5B6")]

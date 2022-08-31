@@ -7,13 +7,12 @@
 namespace Allors.Repository
 {
     using System;
-
     using Attributes;
 
     #region Allors
     [Id("ab20998b-62b1-4064-a7b9-cc9416edf77a")]
     #endregion
-    public partial class EmailMessage : Object
+    public class EmailMessage : Object
     {
         #region Allors
         [Id("5de25d18-3c36-418f-9c85-55a480d58bc5")]

@@ -10,7 +10,7 @@ namespace Allors.Repository
     #region Allors
     [Id("FBC46730-B636-4333-989C-53D5F76A32A0")]
     #endregion
-    public partial interface SyncDepthI1 : Object, DerivationCounted
+    public interface SyncDepthI1 : Object, DerivationCounted
     {
         #region Allors
         [Id("BC3991AE-475D-4CA2-A8E1-6DF5CCC65CE0")]

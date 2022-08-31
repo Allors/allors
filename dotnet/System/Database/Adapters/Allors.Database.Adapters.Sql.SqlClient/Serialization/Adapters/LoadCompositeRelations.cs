@@ -9,7 +9,6 @@ namespace Allors.Database.Adapters.Sql.SqlClient
     using System.Collections;
     using System.Collections.Generic;
     using System.Xml;
-    using Adapters;
     using Meta;
 
     internal class LoadCompositeRelations : IEnumerable<CompositeRelation>

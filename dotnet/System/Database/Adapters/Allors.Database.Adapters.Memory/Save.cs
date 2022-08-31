@@ -7,7 +7,6 @@ namespace Allors.Database.Adapters.Memory
 {
     using System.Collections.Generic;
     using System.Xml;
-    using Adapters;
     using Meta;
 
     public class Save

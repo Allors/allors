@@ -10,7 +10,7 @@ namespace Allors.Repository
     #region Allors
     [Id("bdaed62e-6369-46c0-a379-a1eef81b1c3d")]
     #endregion
-    public partial class Three : Shared
+    public class Three : Shared
     {
         #region Allors
         [Id("1697f09c-0d3d-4e5e-9f3f-9d3ae0718fd3")]

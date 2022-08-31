@@ -6,11 +6,12 @@
 namespace Allors.Workspace.Adapters.Json.Newtonsoft.WebClient
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Threading.Tasks;
     using Allors.Protocol.Json.Auth;
     using RestSharp;
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "RCS1090:Add call to 'ConfigureAwait' (or vice versa).", Justification = "<Pending>")]
+    [SuppressMessage("Design", "RCS1090:Add call to 'ConfigureAwait' (or vice versa).", Justification = "<Pending>")]
     public class Client
     {
         public int[] SecondsBeforeRetry { get; set; } = { 1, 2, 4, 8, 16 };

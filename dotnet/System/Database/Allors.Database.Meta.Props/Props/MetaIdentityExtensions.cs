@@ -8,7 +8,7 @@ namespace Allors.Database.Meta
 {
     using System;
 
-    public static partial class MetaIdentityExtensions
+    public static class MetaIdentityExtensions
     {
         internal static void ValidateIdentity(this IMetaIdentifiableObject @this, ValidationLog validationLog)
         {

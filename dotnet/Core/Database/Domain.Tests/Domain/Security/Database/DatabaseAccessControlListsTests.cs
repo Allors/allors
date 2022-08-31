@@ -7,9 +7,6 @@ namespace Allors.Database.Domain.Tests
 {
     using System.Linq;
     using Xunit;
-    using Grant = Domain.Grant;
-    using Object = Domain.Object;
-    using Role = Domain.Role;
 
     public class DatabaseAccessControlListsTests : DomainTest, IClassFixture<Fixture>
     {

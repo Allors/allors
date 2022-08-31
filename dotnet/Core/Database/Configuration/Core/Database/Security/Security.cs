@@ -10,10 +10,8 @@ namespace Allors.Database.Configuration
     using System.Linq;
     using Database.Security;
     using Domain;
+    using Meta;
     using Services;
-    using Class = Meta.Class;
-    using MetaPopulation = Meta.MetaPopulation;
-    using Revocation = Domain.Revocation;
 
     public class Security : ISecurity
     {

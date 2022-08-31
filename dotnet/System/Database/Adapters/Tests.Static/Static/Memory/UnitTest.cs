@@ -8,8 +8,6 @@
 
 namespace Allors.Database.Adapters.Memory
 {
-    using Adapters;
-
     public class UnitTest : Adapters.UnitTest
     {
         private readonly Profile profile = new Profile();

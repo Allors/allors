@@ -8,7 +8,6 @@ namespace Allors.Database.Adapters.Sql.Npgsql
     using System;
     using System.Collections.Generic;
     using global::Npgsql;
-
     using NpgsqlTypes;
 
     public class Schema

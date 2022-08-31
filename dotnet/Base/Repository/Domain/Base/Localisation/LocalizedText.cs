@@ -14,7 +14,7 @@ namespace Allors.Repository
     [Id("020f5d4d-4a59-4d7b-865a-d72fc70e4d97")]
     #endregion
     [Workspace(Default)]
-    public partial class LocalizedText : Localized, Deletable, Object
+    public class LocalizedText : Localized, Deletable, Object
     {
         #region Allors
         [Id("50dc85f0-3d22-4bc1-95d9-153674b89f7a")]

@@ -10,7 +10,7 @@ namespace Allors.Repository
     #region Allors
     [Id("1937b42e-954b-4ef9-bc63-5b8ae7903e9d")]
     #endregion
-    public partial class First : Object, DerivationCounted
+    public class First : Object, DerivationCounted
     {
         #region Allors
         [Id("24886999-11f0-408f-b094-14b36ac4129b")]

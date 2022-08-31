@@ -555,36 +555,36 @@ namespace Allors.Database.Adapters
                         Assert.Empty(from.C1C1one2manies);
 
                         // Set Array with a null in the front
-                        from.C1C1one2manies = new C1[] { null, to1, to2 };
+                        from.C1C1one2manies = new[] { null, to1, to2 };
                         mark();
                         Assert.Equal(2, from.C1C1one2manies.Count());
                         Assert.Contains(to1, from.C1C1one2manies);
                         Assert.Contains(to2, from.C1C1one2manies);
-                        from.C1C1one2manies = new C1[] { null, to1, to2 };
+                        from.C1C1one2manies = new[] { null, to1, to2 };
                         mark();
                         Assert.Equal(2, from.C1C1one2manies.Count());
                         Assert.Contains(to1, from.C1C1one2manies);
                         Assert.Contains(to2, from.C1C1one2manies);
 
                         // Set Array with a null in the middle
-                        from.C1C1one2manies = new C1[] { to1, null, to2 };
+                        from.C1C1one2manies = new[] { to1, null, to2 };
                         mark();
                         Assert.Equal(2, from.C1C1one2manies.Count());
                         Assert.Contains(to1, from.C1C1one2manies);
                         Assert.Contains(to2, from.C1C1one2manies);
-                        from.C1C1one2manies = new C1[] { to1, null, to2 };
+                        from.C1C1one2manies = new[] { to1, null, to2 };
                         mark();
                         Assert.Equal(2, from.C1C1one2manies.Count());
                         Assert.Contains(to1, from.C1C1one2manies);
                         Assert.Contains(to2, from.C1C1one2manies);
 
                         // Set Array with a null in the back
-                        from.C1C1one2manies = new C1[] { to1, to2, null };
+                        from.C1C1one2manies = new[] { to1, to2, null };
                         mark();
                         Assert.Equal(2, from.C1C1one2manies.Count());
                         Assert.Contains(to1, from.C1C1one2manies);
                         Assert.Contains(to2, from.C1C1one2manies);
-                        from.C1C1one2manies = new C1[] { to1, to2, null };
+                        from.C1C1one2manies = new[] { to1, to2, null };
                         mark();
                         Assert.Equal(2, from.C1C1one2manies.Count());
                         Assert.Contains(to1, from.C1C1one2manies);

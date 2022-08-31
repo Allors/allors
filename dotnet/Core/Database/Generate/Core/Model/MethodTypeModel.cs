@@ -1,7 +1,7 @@
 namespace Allors.Meta.Generation.Model
 {
     using System;
-    using Allors.Database.Meta;
+    using Database.Meta;
 
     public class MethodTypeModel : OperandTypeModel, IMetaIdentifiableObjectModel
     {

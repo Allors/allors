@@ -6,7 +6,6 @@
 namespace Allors.Repository
 {
     using System;
-
     using Attributes;
     using static Workspaces;
 
@@ -14,7 +13,7 @@ namespace Allors.Repository
     [Id("2F34A198-F93A-4AC7-A570-EF84041421EA")]
     #endregion
     [Workspace(Default)]
-    public partial class TraceY : Object
+    public class TraceY : Object
     {
         #region Unit
         #region Allors

@@ -11,7 +11,7 @@ namespace Allors.Repository
     #region Allors
     [Id("A13C9057-8786-40CA-8421-476E55787D73")]
     #endregion
-    public partial interface TransitionalVersion : Object
+    public interface TransitionalVersion : Object
     {
         #region Allors
         [Id("96685F17-ABE3-459C-BF9F-8C5F05788C04")]

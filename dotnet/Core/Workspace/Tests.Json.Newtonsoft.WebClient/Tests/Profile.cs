@@ -29,7 +29,7 @@ namespace Tests.Workspace.Json
 
         IConnection IProfile.Connection => this.Connection;
 
-        public Allors.Workspace.Adapters.Json.Newtonsoft.WebClient.Connection Connection { get; private set; }
+        public Connection Connection { get; private set; }
 
         public M M => (M)this.Connection.MetaPopulation;
 
@@ -37,10 +37,7 @@ namespace Tests.Workspace.Json
             .Handle<WebException>()
             .WaitAndRetryAsync(5, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
 
-        public Profile()
-        {
-            this.metaPopulation = new MetaBuilder().Build();
-        }
+        public Profile() => this.metaPopulation = new MetaBuilder().Build();
 
         public async Task InitializeAsync()
         {
@@ -50,16 +47,16 @@ namespace Tests.Workspace.Json
             Assert.True(response.IsSuccessful);
 
             this.client = new Client(this.CreateRestClient);
-            this.Connection = new Allors.Workspace.Adapters.Json.Newtonsoft.WebClient.Connection(this.client, "Default", this.metaPopulation);
+            this.Connection = new Connection(this.client, "Default", this.metaPopulation);
 
             await this.Login("administrator");
         }
 
         public Task DisposeAsync() => Task.CompletedTask;
 
-        public IConnection CreateExclusiveWorkspaceConnection() => new Allors.Workspace.Adapters.Json.Newtonsoft.WebClient.Connection(this.client, "Default", this.metaPopulation);
+        public IConnection CreateExclusiveWorkspaceConnection() => new Connection(this.client, "Default", this.metaPopulation);
 
-        public IConnection CreateWorkspaceConnection() => new Allors.Workspace.Adapters.Json.Newtonsoft.WebClient.Connection(this.client, "Default", this.metaPopulation);
+        public IConnection CreateWorkspaceConnection() => new Connection(this.client, "Default", this.metaPopulation);
 
         public async Task Login(string user)
         {

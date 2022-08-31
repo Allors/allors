@@ -6,12 +6,12 @@
 
 namespace Allors.Database.Data
 {
-    using Allors.Database.Meta;
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Meta;
 
-    public static partial class IPropertyTypeExtensions
+    public static class IPropertyTypeExtensions
     {
         public static Node Node<T>(this T @this) where T : IPropertyType => new Node(@this);
 

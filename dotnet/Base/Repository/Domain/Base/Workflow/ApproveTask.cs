@@ -14,7 +14,7 @@ namespace Allors.Repository
     #region Allors
     [Id("b86d8407-c411-49e4-aae3-64192457c701")]
     #endregion
-    public partial interface ApproveTask : Task
+    public interface ApproveTask : Task
     {
         /// <summary>
         /// A text the user can enter when approving or rejecting a task.

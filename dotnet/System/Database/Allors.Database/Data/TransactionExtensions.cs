@@ -7,7 +7,6 @@ namespace Allors.Database.Data
 {
     using System;
     using System.Linq;
-
     using Meta;
 
     internal static class TransactionExtensions

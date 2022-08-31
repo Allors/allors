@@ -7,7 +7,7 @@ namespace Allors.Database.Meta
 {
     using System.Collections.Generic;
 
-    public partial interface IClassBase : ICompositeBase, IClass
+    public interface IClassBase : ICompositeBase, IClass
     {
         void DeriveRequiredRoleTypes();
 

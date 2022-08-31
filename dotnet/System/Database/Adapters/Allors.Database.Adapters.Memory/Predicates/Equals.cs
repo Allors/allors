@@ -5,8 +5,6 @@
 
 namespace Allors.Database.Adapters.Memory
 {
-    using Adapters;
-
     internal sealed class Equals : Predicate
     {
         private readonly IObject equals;

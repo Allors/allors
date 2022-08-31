@@ -7,7 +7,7 @@ namespace Allors.Database.Adapters.Tracing
 {
     using System;
     using System.Text;
-    using Allors.Database.Tracing;
+    using Database.Tracing;
 
     public abstract class Event : IEvent
     {

@@ -8,7 +8,6 @@ namespace Allors.Database.Adapters.Sql
     using System;
     using System.Collections.Generic;
     using System.Linq;
-
     using Meta;
 
     internal abstract class CompositePredicate : Predicate, ICompositePredicate

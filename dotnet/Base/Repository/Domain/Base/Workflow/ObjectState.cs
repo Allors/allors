@@ -12,7 +12,7 @@ namespace Allors.Repository
     #region Allors
     [Id("f991813f-3146-4431-96d0-554aa2186887")]
     #endregion
-    public partial interface ObjectState : UniquelyIdentifiable
+    public interface ObjectState : UniquelyIdentifiable
     {
         #region Allors
         [Id("913C994F-15B0-40D2-AC4F-81E362B9142C")]

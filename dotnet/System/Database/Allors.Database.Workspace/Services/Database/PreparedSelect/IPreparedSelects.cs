@@ -7,7 +7,7 @@ namespace Allors.Database.Data
 {
     using System;
 
-    public partial interface IPreparedSelects
+    public interface IPreparedSelects
     {
         Select Get(Guid id);
     }

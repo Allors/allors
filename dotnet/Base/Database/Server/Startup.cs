@@ -6,28 +6,27 @@
 namespace Allors.Server
 {
     using System.Collections.Generic;
+    using System.Linq;
     using System.Text;
+    using Database.Adapters;
+    using Database.Configuration;
+    using Database.Configuration.Derivations.Default;
     using Database.Domain;
-    using Services;
-    using Security;
+    using Database.Meta;
     using JSNLog;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
     using Microsoft.IdentityModel.Tokens;
+    using Security;
+    using Services;
     using ObjectFactory = Database.ObjectFactory;
-    using Database.Adapters;
-    using Database.Configuration;
-    using Database.Configuration.Derivations.Default;
-    using Database.Meta;
-    using User = Database.Domain.User;
-    using Microsoft.AspNetCore.Mvc;
-    using System.Linq;
 
     public class Startup
     {

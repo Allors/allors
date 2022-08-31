@@ -7,13 +7,12 @@
 namespace Allors.Repository
 {
     using System;
-
     using Attributes;
 
     #region Allors
     [Id("0568354f-e3d9-439e-baac-b7dce31b956a")]
     #endregion
-    public partial class Counter : UniquelyIdentifiable
+    public class Counter : UniquelyIdentifiable
     {
         #region Allors
         [Id("309d07d9-8dea-4e99-a3b8-53c0d360bc54")]

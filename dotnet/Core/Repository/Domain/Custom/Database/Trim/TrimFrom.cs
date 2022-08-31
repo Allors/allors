@@ -12,7 +12,7 @@ namespace Allors.Repository
     [Id("A32F39D4-2A0F-4270-9CE9-0FADB1121113")]
     #endregion
     [Workspace(Default)]
-    public partial class TrimFrom : Object
+    public class TrimFrom : Object
     {
         #region Allors
         [Id("F5EEBEF2-A317-4A4A-9D51-3B00FCFBF7F9")]

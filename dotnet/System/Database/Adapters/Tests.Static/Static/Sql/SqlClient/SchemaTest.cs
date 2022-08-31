@@ -7,7 +7,7 @@ namespace Allors.Database.Adapters.Sql.SqlClient
 {
     using Xunit;
 
-    public class SchemaTest : Adapters.Sql.SchemaTest, IClassFixture<Fixture<SchemaTest>>
+    public class SchemaTest : Sql.SchemaTest, IClassFixture<Fixture<SchemaTest>>
     {
         private readonly Profile profile;
 

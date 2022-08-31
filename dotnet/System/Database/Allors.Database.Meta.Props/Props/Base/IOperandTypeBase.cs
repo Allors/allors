@@ -5,7 +5,7 @@
 
 namespace Allors.Database.Meta
 {
-    public partial interface IOperandTypeBase : IMetaObjectBase, IOperandType
+    public interface IOperandTypeBase : IMetaObjectBase, IOperandType
     {
     }
 }

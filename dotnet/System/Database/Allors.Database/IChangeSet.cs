@@ -7,7 +7,6 @@
 namespace Allors.Database
 {
     using System.Collections.Generic;
-
     using Meta;
 
     /// <summary>

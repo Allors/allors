@@ -7,7 +7,6 @@ namespace Allors.Database.Data
 {
     using Meta;
 
-
     public class Like : IRolePredicate
     {
         public Like(IRoleType roleType = null) => this.RoleType = roleType;

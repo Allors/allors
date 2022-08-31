@@ -14,7 +14,6 @@ namespace Allors.Server.Controllers
     using Database.Protocol.Json;
     using Microsoft.AspNetCore.Mvc;
     using Services;
-    using User = Database.Domain.User;
 
     public class TestShareHoldersController : Controller
     {

@@ -7,13 +7,12 @@
 namespace Allors.Repository
 {
     using System;
-
     using Attributes;
 
     #region Allors
     [Id("02C7569C-8F54-4F8D-AC09-1BACD9528F1F")]
     #endregion
-    public partial class PersistentPreparedSelect : UniquelyIdentifiable, Deletable
+    public class PersistentPreparedSelect : UniquelyIdentifiable, Deletable
     {
         #region Allors
         [Id("A8CFE3FC-EC2E-4407-B3C5-681603AA2B67")]

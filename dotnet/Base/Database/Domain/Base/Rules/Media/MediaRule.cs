@@ -7,10 +7,11 @@ namespace Allors.Database.Domain
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using Database.Derivations;
-    using Derivations.Rules;
     using DataUtils;
+    using Derivations.Rules;
     using HeyRed.Mime;
     using Meta;
 
@@ -29,7 +30,7 @@ namespace Allors.Database.Domain
         {
             foreach (var media in matches.Cast<Media>())
             {
-                var InvalidFileNameChars = System.IO.Path.GetInvalidFileNameChars();
+                var InvalidFileNameChars = Path.GetInvalidFileNameChars();
                 var InvalidFileNames = new[]
                 {
                             "CON", "PRN", "AUX", "NUL", "COM", "LPT"
@@ -56,7 +57,7 @@ namespace Allors.Database.Domain
 
                 if (media.ExistInFileName)
                 {
-                    media.Name = System.IO.Path.GetFileNameWithoutExtension(media.InFileName);
+                    media.Name = Path.GetFileNameWithoutExtension(media.InFileName);
                     media.RemoveInFileName();
                 }
 

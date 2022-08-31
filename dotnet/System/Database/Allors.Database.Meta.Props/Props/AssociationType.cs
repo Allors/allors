@@ -15,7 +15,7 @@ namespace Allors.Database.Meta
     /// This is also called the 'active', 'controlling' or 'owning' side.
     /// AssociationTypes can only have composite <see cref="ObjectType"/>s.
     /// </summary>
-    public abstract partial class AssociationType : IAssociationTypeBase, IComparable
+    public abstract class AssociationType : IAssociationTypeBase, IComparable
     {
         /// <summary>
         /// Used to create property names.

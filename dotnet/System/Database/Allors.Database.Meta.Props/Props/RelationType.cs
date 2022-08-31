@@ -13,7 +13,7 @@ namespace Allors.Database.Meta
     /// A <see cref="RelationType"/> defines the state and behavior for
     /// a set of <see cref="AssociationType"/>s and <see cref="RoleType"/>s.
     /// </summary>
-    public sealed partial class RelationType : IRelationTypeBase
+    public sealed class RelationType : IRelationTypeBase
     {
         private readonly IMetaPopulationBase metaPopulation;
 
@@ -231,7 +231,7 @@ namespace Allors.Database.Meta
             }
             catch
             {
-                return this.Tag.ToString();
+                return this.Tag;
             }
         }
 

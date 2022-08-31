@@ -10,7 +10,7 @@ namespace Allors.Repository
     #region Allors
     [Id("4EA6AD12-C1FB-4661-B4F7-72B81435DD70")]
     #endregion
-    public partial class SyncDepthC1 : SyncDepthI1
+    public class SyncDepthC1 : SyncDepthI1
     {
         #region inherited
 

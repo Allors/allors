@@ -5,10 +5,9 @@
 
 namespace Allors.Database.Protocol.Json
 {
-    using Tracing;
-
     using System;
     using System.Text;
+    using Tracing;
 
     public abstract class Event : IEvent
     {

@@ -7,7 +7,7 @@ namespace Allors.Database.Meta
 {
     using System.Collections.Generic;
 
-    public partial interface IMetaPopulationBase : IMetaPopulation
+    public interface IMetaPopulationBase : IMetaPopulation
     {
         new IEnumerable<IDomainBase> Domains { get; }
 

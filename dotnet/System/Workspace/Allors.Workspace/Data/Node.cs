@@ -34,7 +34,7 @@ namespace Allors.Workspace.Data
 
         public Node Add(IPropertyType propertyType)
         {
-            var node = new Node(propertyType, null);
+            var node = new Node(propertyType);
             return this.Add(node);
         }
 

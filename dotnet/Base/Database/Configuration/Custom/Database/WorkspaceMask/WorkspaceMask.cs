@@ -14,9 +14,7 @@ namespace Allors.Database.Configuration
         private readonly Dictionary<IClass, IRoleType> masks;
 
         public WorkspaceMask(MetaPopulation m) =>
-            this.masks = new Dictionary<IClass, IRoleType>
-            {
-            };
+            this.masks = new Dictionary<IClass, IRoleType>();
 
         public IDictionary<IClass, IRoleType> GetMasks(string workspaceName) => this.masks;
     }

@@ -6,7 +6,6 @@
 namespace Allors.Database.Adapters.Memory
 {
     using System;
-    using Adapters;
 
     public class ChangesTest : Adapters.ChangesTest, IDisposable
     {

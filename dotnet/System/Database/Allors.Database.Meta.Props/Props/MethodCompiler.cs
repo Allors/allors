@@ -12,7 +12,7 @@ namespace Allors.Database.Meta
     using System.Linq.Expressions;
     using System.Reflection;
 
-    public partial class MethodCompiler
+    public class MethodCompiler
     {
         private readonly Dictionary<Type, MethodInfo[]> extensionMethodsByInterface;
         private readonly List<IDomainBase> sortedDomains;

@@ -8,7 +8,6 @@ namespace Allors.Database.Data
     using System.Linq;
     using Meta;
 
-
     public class Intersect : IExtentOperator
     {
         public Intersect(params IExtent[] operands) => this.Operands = operands;

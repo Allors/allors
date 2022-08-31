@@ -11,7 +11,7 @@ namespace Allors.Repository
     #region Allors
     [Id("DCCF9B09-308D-4FF3-953A-A15F7E332BAC")]
     #endregion
-    public partial class WorkspaceNoneObject1 : Object
+    public class WorkspaceNoneObject1 : Object
     {
         #region Allors
         [Id("C4AD393A-AA2A-4A72-AA51-24C68214828D")]

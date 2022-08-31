@@ -5,8 +5,6 @@
 
 namespace Allors.Database.Adapters.Memory
 {
-    using Adapters;
-
     public class ExtentTest : Adapters.ExtentTest
     {
         private readonly Profile profile = new Profile();

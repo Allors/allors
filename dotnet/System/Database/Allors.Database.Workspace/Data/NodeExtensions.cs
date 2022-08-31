@@ -41,7 +41,7 @@ namespace Allors.Database.Data
             }
 
             var prefetchPolicy = prefetchPolicyCache.ForNodes(treeNodes);
-            transaction.Prefetch(prefetchPolicy, new[] { @object });
+            transaction.Prefetch(prefetchPolicy, @object);
 
             foreach (var node in treeNodes)
             {

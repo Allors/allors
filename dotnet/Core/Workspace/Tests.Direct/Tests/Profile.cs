@@ -8,12 +8,13 @@ namespace Tests.Workspace.Direct
     using System;
     using System.Linq;
     using System.Threading.Tasks;
+    using Allors.Database;
     using Allors.Database.Adapters.Memory;
     using Allors.Database.Configuration;
     using Allors.Database.Domain;
     using Allors.Workspace;
+    using Allors.Workspace.Adapters.Direct;
     using Allors.Workspace.Meta;
-    using User = Allors.Database.Domain.User;
 
     public class Profile : IProfile
     {
@@ -24,7 +25,7 @@ namespace Tests.Workspace.Direct
 
         IConnection IProfile.Connection => this.Connection;
 
-        public Allors.Workspace.Adapters.Direct.Connection Connection { get; private set; }
+        public Connection Connection { get; private set; }
 
         public M M => (M)this.Connection.MetaPopulation;
 
@@ -35,21 +36,21 @@ namespace Tests.Workspace.Direct
 
             this.Database = new Database(
                 new DefaultDatabaseServices(fixture.Engine),
-                new Allors.Database.Adapters.Memory.Configuration
+                new Configuration
                 {
-                    ObjectFactory = new Allors.Database.ObjectFactory(fixture.M, typeof(Allors.Database.Domain.Person)),
+                    ObjectFactory = new ObjectFactory(fixture.M, typeof(Person)),
                 });
 
             this.Database.Init();
 
-            this.Connection = new Allors.Workspace.Adapters.Direct.Connection(this.Database, "Default", this.metaPopulation);
+            this.Connection = new Connection(this.Database, "Default", this.metaPopulation);
 
             var config = new Config();
             new Setup(this.Database, config).Apply();
 
             using var transaction = this.Database.CreateTransaction();
 
-            var administrator = transaction.Build<Allors.Database.Domain.Person>(v => v.UserName = "administrator");
+            var administrator = transaction.Build<Person>(v => v.UserName = "administrator");
             new UserGroups(transaction).Administrators.AddMember(administrator);
             transaction.Services.Get<IUserService>().User = administrator;
 
@@ -62,9 +63,9 @@ namespace Tests.Workspace.Direct
 
         public Task DisposeAsync() => Task.CompletedTask;
 
-        public IConnection CreateExclusiveWorkspaceConnection() => new Allors.Workspace.Adapters.Direct.Connection(this.Database, "Default", this.metaPopulation) { UserId = this.user.Id };
+        public IConnection CreateExclusiveWorkspaceConnection() => new Connection(this.Database, "Default", this.metaPopulation) { UserId = this.user.Id };
 
-        public IConnection CreateWorkspaceConnection() => new Allors.Workspace.Adapters.Direct.Connection(this.Database, "Default", this.metaPopulation) { UserId = this.user.Id };
+        public IConnection CreateWorkspaceConnection() => new Connection(this.Database, "Default", this.metaPopulation) { UserId = this.user.Id };
 
         public Task Login(string userName)
         {

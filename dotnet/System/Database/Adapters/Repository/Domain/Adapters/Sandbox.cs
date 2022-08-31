@@ -10,7 +10,7 @@ namespace Allors.Repository
     #region Allors
     [Id("73970b0f-1ff4-4d39-aad8-fdbfbaae472f")]
     #endregion
-    public partial class Sandbox : System.Object
+    public class Sandbox : System.Object
     {
         #region inherited properties
         #endregion

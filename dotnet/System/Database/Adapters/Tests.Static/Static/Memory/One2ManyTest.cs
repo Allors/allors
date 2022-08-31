@@ -7,8 +7,6 @@ namespace Allors.Database.Adapters.Memory
 {
     using System;
 
-    using Adapters;
-
     public class One2ManyTest : Adapters.One2ManyTest, IDisposable
     {
         private readonly Profile profile = new Profile();

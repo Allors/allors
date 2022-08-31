@@ -14,7 +14,7 @@ namespace Allors.Repository
     [Id("6c20422e-cb3e-4402-bb40-dacaf584405e")]
     #endregion
     [Workspace(Default)]
-    public partial class MediaContent : Deletable, Object
+    public class MediaContent : Deletable, Object
     {
         #region Allors
         [Id("890598a9-0be4-49ee-8dd8-3581ee9355e6")]

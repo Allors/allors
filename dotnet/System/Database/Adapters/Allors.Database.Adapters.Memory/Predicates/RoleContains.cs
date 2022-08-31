@@ -6,7 +6,6 @@
 namespace Allors.Database.Adapters.Memory
 {
     using System.Linq;
-    using Adapters;
     using Meta;
 
     internal sealed class RoleContains : Predicate

@@ -20,9 +20,6 @@ namespace Allors.Database.Adapters
     using System.Collections;
     using System.Linq;
     using System.Xml;
-
-    using Allors;
-
     using Meta;
     using Xunit;
 
@@ -419,6 +416,6 @@ namespace Allors.Database.Adapters
             }
         }
 
-        private IClass[] GetTestTypes() => Enumerable.ToArray(this.GetMetaPopulation().Classes);
+        private IClass[] GetTestTypes() => this.GetMetaPopulation().Classes.ToArray();
     }
 }

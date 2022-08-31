@@ -7,7 +7,6 @@
 namespace Allors.Repository
 {
     using System;
-
     using Attributes;
     using static Workspaces;
 
@@ -16,7 +15,7 @@ namespace Allors.Repository
     [Id("da5b86a3-4f33-4c0d-965d-f4fbc1179374")]
     #endregion
     [Workspace(Default)]
-    public partial class Media : UniquelyIdentifiable, Deletable, Object
+    public class Media : UniquelyIdentifiable, Deletable, Object
     {
         #region Allors
         [Id("B74C2159-739A-4F1C-ADA7-C2DCC3CDCF83")]

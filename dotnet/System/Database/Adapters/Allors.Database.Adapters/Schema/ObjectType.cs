@@ -8,7 +8,7 @@ namespace Allors.Database.Adapters.Schema
     using System;
     using System.Xml.Serialization;
 
-    public partial class ObjectType
+    public class ObjectType
     {
         [XmlAttribute("i")]
         public Guid Id { get; set; }

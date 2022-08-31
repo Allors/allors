@@ -7,7 +7,6 @@
 namespace Allors.Repository
 {
     using System;
-
     using Attributes;
     using static Workspaces;
 
@@ -15,7 +14,7 @@ namespace Allors.Repository
     #region Allors
     [Id("73dcdc68-7571-4ed1-86db-77c914fe2f62")]
     #endregion
-    public partial class Notification : Deletable, Object
+    public class Notification : Deletable, Object
     {
         #region Allors
         [Id("9a226bec-31b9-413e-bec1-8dcdf36fa6fb")]

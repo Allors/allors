@@ -8,7 +8,7 @@ namespace Allors.Database.Meta
     using System;
     using System.Linq;
 
-    public sealed partial class MethodType : IMethodTypeBase, IComparable
+    public sealed class MethodType : IMethodTypeBase, IComparable
     {
         private readonly IMetaPopulationBase metaPopulation;
 

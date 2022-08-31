@@ -18,17 +18,11 @@ namespace Commands
     [Command(Description = "Add file contents to the index")]
     public class Upgrade
     {
-        private readonly HashSet<Guid> excludedObjectTypes = new HashSet<Guid>
-        {
-        };
+        private readonly HashSet<Guid> excludedObjectTypes = new HashSet<Guid>();
 
-        private readonly HashSet<Guid> excludedRelationTypes = new HashSet<Guid>
-        {
-        };
+        private readonly HashSet<Guid> excludedRelationTypes = new HashSet<Guid>();
 
-        private readonly HashSet<Guid> movedRelationTypes = new HashSet<Guid>
-        {
-        };
+        private readonly HashSet<Guid> movedRelationTypes = new HashSet<Guid>();
 
         public Program Parent { get; set; }
 

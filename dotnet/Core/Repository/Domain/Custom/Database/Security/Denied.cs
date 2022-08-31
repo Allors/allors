@@ -12,7 +12,7 @@ namespace Allors.Repository
     [Id("437A152B-09EF-4DAD-BD35-E629F46A9249")]
     #endregion
     [Workspace(Default)]
-    public partial class Denied : Object
+    public class Denied : Object
     {
         #region Allors
         [Id("449C1F0C-A63C-47B0-ABAC-3EE3511C6B23")]

@@ -7,7 +7,6 @@ namespace Allors.Database.Data
 {
     using Meta;
 
-
     public class GreaterThan : IRolePredicate
     {
         public GreaterThan(IRoleType roleType = null) => this.RoleType = roleType;

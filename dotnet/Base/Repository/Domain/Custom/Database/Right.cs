@@ -12,7 +12,7 @@ namespace Allors.Repository
     [Id("E4BC4E69-831C-4D9B-93D9-531D226819E1")]
 
     #endregion
-    public partial class Right : DerivationCounted
+    public class Right : DerivationCounted
     {
         #region Allors
         [Id("658FE4F7-FC40-4B3A-ABB1-84723E66F20C")]

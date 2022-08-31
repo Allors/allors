@@ -6,13 +6,12 @@
 namespace Allors.Repository
 {
     using System;
-
     using Attributes;
 
     #region Allors
     [Id("07E8F845-5ECC-4B42-83EF-BB86E6B10A69")]
     #endregion
-    public partial class PaymentState : Object, ObjectState
+    public class PaymentState : Object, ObjectState
     {
         #region inherited
 

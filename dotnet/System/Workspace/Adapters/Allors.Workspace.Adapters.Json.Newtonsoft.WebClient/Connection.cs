@@ -6,6 +6,7 @@
 namespace Allors.Workspace.Adapters.Json.Newtonsoft.WebClient
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Threading.Tasks;
     using Allors.Protocol.Json;
     using Allors.Protocol.Json.Api.Invoke;
@@ -16,7 +17,7 @@ namespace Allors.Workspace.Adapters.Json.Newtonsoft.WebClient
     using Allors.Protocol.Json.Newtonsoft;
     using Meta;
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "RCS1090:Add call to 'ConfigureAwait' (or vice versa).", Justification = "<Pending>")]
+    [SuppressMessage("Design", "RCS1090:Add call to 'ConfigureAwait' (or vice versa).", Justification = "<Pending>")]
     public class Connection : Json.Connection
     {
         private readonly Client client;

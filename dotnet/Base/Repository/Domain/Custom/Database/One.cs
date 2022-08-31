@@ -10,7 +10,7 @@ namespace Allors.Repository
     #region Allors
     [Id("5d9b9cad-3720-47c3-9693-289698bf3dd0")]
     #endregion
-    public partial class One : Object, Shared
+    public class One : Object, Shared
     {
 
         #region Allors

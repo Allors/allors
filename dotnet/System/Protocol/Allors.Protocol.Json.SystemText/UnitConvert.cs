@@ -23,7 +23,7 @@ namespace Allors.Protocol.Json.SystemText
                 double @double => @double,
                 int @int => @int,
                 string @string => @string,
-                Guid @guid => @guid.ToString("D"),
+                Guid guid => guid.ToString("D"),
                 null => null,
                 _ => throw new ArgumentException()
             };

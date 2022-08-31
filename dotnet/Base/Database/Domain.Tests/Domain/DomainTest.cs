@@ -9,15 +9,12 @@ namespace Allors.Database.Domain.Tests
     using System;
     using System.IO;
     using System.Reflection;
-    using Database;
     using Adapters.Memory;
-    using Domain;
-    using Allors.Database.Security;
     using Configuration;
     using Database.Derivations;
+    using Database.Security;
     using Meta;
     using Moq;
-    using User = Domain.User;
 
     public class DomainTest : IDisposable
     {

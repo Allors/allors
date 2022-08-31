@@ -7,7 +7,6 @@
 namespace Allors.Database.Configuration
 {
     using System;
-    using Database;
     using Domain;
     using Microsoft.AspNetCore.Http;
     using Services;

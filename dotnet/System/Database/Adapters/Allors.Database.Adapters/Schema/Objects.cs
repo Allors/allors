@@ -7,7 +7,7 @@ namespace Allors.Database.Adapters.Schema
 {
     using System.Xml.Serialization;
 
-    public partial class Objects
+    public class Objects
     {
         [XmlArray("database")]
         [XmlArrayItem("ot")]

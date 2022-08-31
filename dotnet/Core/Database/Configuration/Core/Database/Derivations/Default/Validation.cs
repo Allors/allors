@@ -10,7 +10,7 @@ namespace Allors.Database.Configuration.Derivations.Default
     using Database.Derivations;
     using Meta;
 
-    public partial class Validation : IValidation
+    public class Validation : IValidation
     {
         private readonly List<IDerivationError> errors;
 

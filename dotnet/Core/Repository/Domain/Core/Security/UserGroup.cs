@@ -7,7 +7,6 @@
 namespace Allors.Repository
 {
     using System;
-
     using Attributes;
     using static Workspaces;
 
@@ -15,7 +14,7 @@ namespace Allors.Repository
     #region Allors
     [Id("60065f5d-a3c2-4418-880d-1026ab607319")]
     #endregion
-    public partial class UserGroup : UniquelyIdentifiable
+    public class UserGroup : UniquelyIdentifiable
     {
         #region Allors
         [Id("585bb5cf-9ba4-4865-9027-3667185abc4f")]

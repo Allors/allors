@@ -58,6 +58,6 @@ namespace Allors.Database.Adapters.Sql.Tracing
             this.PostOnAfter?.Invoke(@event);
         }
 
-        private SinkTree GetTransactionSink(IEvent @event) => this.TreeByTransaction.GetOrAdd(@event.Transaction, (v) => new SinkTree(v, ++this.counter));
+        private SinkTree GetTransactionSink(IEvent @event) => this.TreeByTransaction.GetOrAdd(@event.Transaction, v => new SinkTree(v, ++this.counter));
     }
 }

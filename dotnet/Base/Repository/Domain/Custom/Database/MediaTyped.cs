@@ -12,7 +12,7 @@ namespace Allors.Repository
     #region Allors
     [Id("355AEFD2-F5B2-499A-81D2-DD9C9F62832C")]
     #endregion
-    public partial class MediaTyped : Object
+    public class MediaTyped : Object
     {
         #region Allors
         [Id("D23961DF-6688-44D1-87D4-0E5D0C2ED533")]

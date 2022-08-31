@@ -7,7 +7,6 @@ namespace Allors.Database.Adapters.Memory
 {
     using System;
     using System.Collections.Generic;
-    using Adapters;
 
     public class Profile : Adapters.Profile
     {

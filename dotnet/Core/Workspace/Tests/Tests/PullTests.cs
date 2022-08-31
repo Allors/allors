@@ -786,7 +786,7 @@ namespace Tests.Workspace
             {
                 var pull = new Pull
                 {
-                    Extent = new Intersect()
+                    Extent = new Intersect
                     {
                         Operands = new Extent[]
                         {

@@ -8,8 +8,8 @@ namespace Allors.Database.Protocol.Json
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Meta;
     using Data;
+    using Meta;
     using Security;
 
     public class PullInstantiate
@@ -46,32 +46,32 @@ namespace Allors.Database.Protocol.Json
                     {
                         var name = result.Name;
 
-                        var @select = result.Select;
-                        if (@select == null && result.SelectRef.HasValue)
+                        var select = result.Select;
+                        if (select == null && result.SelectRef.HasValue)
                         {
-                            @select = this.preparedSelects.Get(result.SelectRef.Value);
+                            select = this.preparedSelects.Get(result.SelectRef.Value);
                         }
 
-                        if (@select != null)
+                        if (select != null)
                         {
-                            var include = @select.End.Include;
+                            var include = select.End.Include;
 
-                            if (@select.PropertyType != null)
+                            if (select.PropertyType != null)
                             {
-                                var propertyType = @select.End.PropertyType;
+                                var propertyType = select.End.PropertyType;
 
-                                if (@select.IsOne)
+                                if (select.IsOne)
                                 {
                                     name ??= propertyType.SingularName;
 
-                                    @object = (IObject)@select.Get(@object, this.acls);
+                                    @object = (IObject)select.Get(@object, this.acls);
                                     response.AddObject(name, @object, include);
                                 }
                                 else
                                 {
                                     name ??= propertyType.PluralName;
 
-                                    var stepResult = @select.Get(@object, this.acls);
+                                    var stepResult = select.Get(@object, this.acls);
 
                                     IObject[] objects;
                                     if (stepResult is IObject obj)
@@ -110,7 +110,7 @@ namespace Allors.Database.Protocol.Json
                                         objects = Array.Empty<IObject>();
                                     }
 
-                                    response.AddCollection(name, (IComposite)@select.GetObjectType() ?? @class, objects, include);
+                                    response.AddCollection(name, (IComposite)select.GetObjectType() ?? @class, objects, include);
                                 }
                             }
                             else

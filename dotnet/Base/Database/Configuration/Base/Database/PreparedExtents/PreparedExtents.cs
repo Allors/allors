@@ -9,9 +9,9 @@ namespace Allors.Database.Configuration
     using System.Collections.Concurrent;
     using System.Linq;
     using Data;
+    using Domain;
     using Meta;
     using Services;
-    using PersistentPreparedExtent = Domain.PersistentPreparedExtent;
 
     public class PreparedExtents : IPreparedExtents
     {

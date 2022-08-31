@@ -15,11 +15,8 @@ namespace Commands
     using Allors.Database.Domain;
     using Allors.Database.Meta;
     using McMaster.Extensions.CommandLineUtils;
-
     using Microsoft.Extensions.Configuration;
     using NLog;
-    using ObjectFactory = Allors.Database.ObjectFactory;
-    using User = Allors.Database.Domain.User;
 
     [Command(Description = "Allors Core Commands")]
     [Subcommand(
@@ -59,7 +56,7 @@ namespace Commands
 
                     configurationBuilder.AddCrossPlatform(".");
                     configurationBuilder.AddCrossPlatform(root);
-                    configurationBuilder.AddCrossPlatform(System.IO.Path.Combine(root, "commands"));
+                    configurationBuilder.AddCrossPlatform(Path.Combine(root, "commands"));
                     configurationBuilder.AddEnvironmentVariables();
 
                     this.configuration = configurationBuilder.Build();

@@ -10,17 +10,17 @@ namespace Allors.Database.Protocol.Json
 
     public class EqualsResolver : IResolver
     {
-        private readonly Equals @equals;
+        private readonly Equals equals;
         private readonly long objectId;
 
         public EqualsResolver(Equals equals, long objectId)
         {
-            this.@equals = @equals;
+            this.equals = equals;
             this.objectId = objectId;
         }
 
         public void Prepare(HashSet<long> objectIds) => objectIds.Add(this.objectId);
 
-        public void Resolve(Dictionary<long, IObject> objectById) => this.@equals.Object = objectById[this.objectId];
+        public void Resolve(Dictionary<long, IObject> objectById) => this.equals.Object = objectById[this.objectId];
     }
 }

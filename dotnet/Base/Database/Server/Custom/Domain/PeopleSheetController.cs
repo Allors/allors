@@ -11,9 +11,7 @@ namespace Allors.Database.Server.Controllers
     using Domain;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using Database;
     using Protocol.Json;
-
 
     public class PeopleSheetController : Controller
     {

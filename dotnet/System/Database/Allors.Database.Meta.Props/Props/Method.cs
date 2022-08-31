@@ -5,7 +5,7 @@
 
 namespace Allors.Database.Meta
 {
-    public abstract partial class Method
+    public abstract class Method
     {
         protected Method(IObject @object)
         {

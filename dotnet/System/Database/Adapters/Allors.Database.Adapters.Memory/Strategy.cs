@@ -9,7 +9,6 @@ namespace Allors.Database.Adapters.Memory
     using System.Collections.Generic;
     using System.Linq;
     using System.Xml;
-    using Adapters;
     using Meta;
 
     public sealed class Strategy : IStrategy

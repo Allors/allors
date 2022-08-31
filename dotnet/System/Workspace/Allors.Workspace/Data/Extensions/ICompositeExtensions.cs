@@ -6,12 +6,12 @@
 
 namespace Allors.Workspace.Data
 {
-    using Allors.Workspace.Meta;
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Meta;
 
-    public static partial class ICompositeExtensions
+    public static class ICompositeExtensions
     {
         public static IEnumerable<Node> Nodes<T>(this T @this, params Func<T, Node>[] children) where T : IComposite => children.Select(v => v(@this));
 

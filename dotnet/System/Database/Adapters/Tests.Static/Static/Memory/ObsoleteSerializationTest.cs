@@ -6,7 +6,6 @@
 namespace Allors.Database.Adapters.Memory
 {
     using System;
-    using Adapters;
 
     public class ObsoleteSerializationTest : Adapters.ObsoleteSerializationTest, IDisposable
     {

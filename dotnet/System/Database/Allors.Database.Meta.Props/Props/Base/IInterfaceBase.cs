@@ -7,7 +7,7 @@ namespace Allors.Database.Meta
 {
     using System.Collections.Generic;
 
-    public partial interface IInterfaceBase : ICompositeBase, IInterface
+    public interface IInterfaceBase : ICompositeBase, IInterface
     {
         void StructuralDeriveDirectSubtypes(HashSet<ICompositeBase> sharedCompositeTypes);
 

@@ -11,14 +11,9 @@ namespace Allors.Database.Adapters
     using System.IO;
     using System.Linq;
     using System.Xml;
+    using Domain;
     using Meta;
     using Xunit;
-    using C1 = Domain.C1;
-    using C2 = Domain.C2;
-    using C3 = Domain.C3;
-    using C4 = Domain.C4;
-    using DateTime = System.DateTime;
-    using S1234 = Domain.S1234;
 
     public abstract class ObsoleteSerializationTest : IDisposable
     {

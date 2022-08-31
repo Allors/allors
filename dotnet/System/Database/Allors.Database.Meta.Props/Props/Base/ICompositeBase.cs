@@ -7,7 +7,7 @@ namespace Allors.Database.Meta
 {
     using System.Collections.Generic;
 
-    public partial interface ICompositeBase : IObjectTypeBase, IComposite
+    public interface ICompositeBase : IObjectTypeBase, IComposite
     {
         new IEnumerable<IInterfaceBase> Supertypes { get; }
 

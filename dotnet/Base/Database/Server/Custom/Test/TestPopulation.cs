@@ -7,7 +7,6 @@ namespace Allors.Database.Server.Controllers
 {
     using System;
     using Domain;
-    using Database;
 
     public class TestPopulation
     {

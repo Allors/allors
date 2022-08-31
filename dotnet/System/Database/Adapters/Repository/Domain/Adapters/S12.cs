@@ -11,7 +11,7 @@ namespace Allors.Repository
     #region Allors
     [Id("c5747a64-f468-4d0d-80f3-6463bd32b0ca")]
     #endregion
-    public partial interface S12 : Object
+    public interface S12 : Object
     {
         #region Allors
         [Id("06fabe71-737a-4cff-ac10-2d15dafce503")]

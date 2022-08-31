@@ -9,7 +9,6 @@
 namespace Tests.Workspace
 {
     using Allors.Workspace.Data;
-
     using Xunit;
 
     public abstract class PagingTests : Test

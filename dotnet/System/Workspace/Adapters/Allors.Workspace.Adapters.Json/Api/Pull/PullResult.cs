@@ -8,7 +8,7 @@ namespace Allors.Workspace.Adapters.Json
     using System.Collections.Generic;
     using System.Linq;
     using Allors.Protocol.Json.Api.Pull;
-    using Allors.Workspace.Adapters;
+    using Meta;
 
     public class PullResult : Result, IPullResult
     {
@@ -28,7 +28,7 @@ namespace Allors.Workspace.Adapters.Json
 
         public IDictionary<string, object> Values => this.values ??= this.pullResponse.v.ToDictionary(pair => pair.Key.ToUpperInvariant(), pair => pair.Value);
 
-        public IObject[] GetCollection(Meta.IComposite objectType)
+        public IObject[] GetCollection(IComposite objectType)
         {
             var key = objectType.PluralName.ToUpperInvariant();
             return this.GetCollection(key);
@@ -36,7 +36,7 @@ namespace Allors.Workspace.Adapters.Json
 
         public IObject[] GetCollection(string key) => this.Collections.TryGetValue(key.ToUpperInvariant(), out var collection) ? collection?.ToArray() : null;
 
-        public IObject GetObject(Meta.IComposite objectType)
+        public IObject GetObject(IComposite objectType)
         {
             var key = objectType.SingularName.ToUpperInvariant();
             return this.GetObject(key);

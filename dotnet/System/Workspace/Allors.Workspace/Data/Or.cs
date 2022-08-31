@@ -7,7 +7,6 @@ namespace Allors.Workspace.Data
 {
     using System.Collections.Generic;
 
-
     public class Or : ICompositePredicate
     {
         public Or(params IPredicate[] operands) => this.Operands = operands;

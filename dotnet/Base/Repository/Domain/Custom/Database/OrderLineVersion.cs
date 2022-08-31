@@ -6,13 +6,12 @@
 namespace Allors.Repository
 {
     using System;
-
     using Attributes;
 
     #region
     [Id("BA589BE8-049B-4107-9E20-FBFEC19477C4")]
     #endregion
-    public partial class OrderLineVersion : Version
+    public class OrderLineVersion : Version
     {
         #region Allors
         [Id("0B9340C2-CE9B-48C7-A476-6D73B8829944")]

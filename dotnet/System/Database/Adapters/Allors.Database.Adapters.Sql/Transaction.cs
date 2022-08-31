@@ -9,7 +9,6 @@ namespace Allors.Database.Adapters.Sql
     using System;
     using System.Collections.Generic;
     using System.Linq;
-
     using Meta;
 
     public sealed class Transaction : ITransaction

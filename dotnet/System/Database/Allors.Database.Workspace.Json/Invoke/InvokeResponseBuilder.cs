@@ -8,9 +8,9 @@ namespace Allors.Database.Protocol.Json
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Meta;
     using Allors.Protocol.Json.Api.Invoke;
     using Derivations;
+    using Meta;
     using Security;
 
     public class InvokeResponseBuilder

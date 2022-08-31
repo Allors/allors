@@ -8,7 +8,6 @@ namespace Commands
     using Allors.Database.Domain;
     using McMaster.Extensions.CommandLineUtils;
     using NLog;
-    using Setup = Allors.Database.Domain.Setup;
 
     [Command(Description = "Add file contents to the index")]
     public class Populate

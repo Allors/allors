@@ -10,7 +10,6 @@ namespace Allors.Database.Adapters.Sql
     using System.Data;
     using System.Linq;
     using System.Text;
-
     using Meta;
 
     public abstract class Commands

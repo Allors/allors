@@ -15,6 +15,7 @@ namespace Tests
     using Allors.Protocol.Json;
     using Allors.Protocol.Json.Api.Pull;
     using Allors.Protocol.Json.Api.Sync;
+    using Allors.Protocol.Json.Data;
     using Allors.Protocol.Json.SystemText;
     using Xunit;
 
@@ -49,7 +50,7 @@ namespace Tests
 
             var pullRequest = new PullRequest
             {
-                l = Enumerable.Range(0, 100).Select(v => new Allors.Protocol.Json.Data.Pull
+                l = Enumerable.Range(0, 100).Select(v => new Pull
                 {
                     o = this.x[v].Id
                 }).ToArray()
@@ -98,7 +99,7 @@ namespace Tests
 
             var pullRequest = new PullRequest
             {
-                l = Enumerable.Range(0, 100).Select(v => new Allors.Protocol.Json.Data.Pull
+                l = Enumerable.Range(0, 100).Select(v => new Pull
                 {
                     o = this.x[v].Id
                 }).ToArray()

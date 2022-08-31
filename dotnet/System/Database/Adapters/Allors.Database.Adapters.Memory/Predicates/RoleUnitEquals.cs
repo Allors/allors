@@ -6,7 +6,6 @@
 namespace Allors.Database.Adapters.Memory
 {
     using System;
-    using Adapters;
     using Meta;
 
     internal sealed class RoleUnitEquals : Predicate
@@ -57,7 +56,7 @@ namespace Allors.Database.Adapters.Memory
             }
             else if (this.roleType.ObjectType is IUnit)
             {
-                equalsValue = this.roleType.Normalize(this.@equals);
+                equalsValue = this.roleType.Normalize(this.equals);
             }
 
             if (equalsValue == null)

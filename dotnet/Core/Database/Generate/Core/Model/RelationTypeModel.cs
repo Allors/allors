@@ -2,7 +2,7 @@ namespace Allors.Meta.Generation.Model
 {
     using System;
     using System.Collections.Generic;
-    using Allors.Database.Meta;
+    using Database.Meta;
 
     public class RelationTypeModel : MetaObjectModel, IMetaIdentifiableObjectModel
     {

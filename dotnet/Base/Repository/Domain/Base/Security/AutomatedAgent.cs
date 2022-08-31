@@ -12,7 +12,7 @@ namespace Allors.Repository
     #region Allors
     [Id("3587d2e1-c3f6-4c55-a96c-016e0501d99c")]
     #endregion
-    public partial class AutomatedAgent : User
+    public class AutomatedAgent : User
     {
         #region Allors
         [Id("4e158d75-d0b5-4cb7-ad41-e8ed3002d175")]

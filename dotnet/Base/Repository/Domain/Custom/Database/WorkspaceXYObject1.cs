@@ -12,7 +12,7 @@ namespace Allors.Repository
     [Id("98C0FF20-FE92-49EB-B99D-D0008F17AE98")]
     #endregion
     [Workspace(X, Y)]
-    public partial class WorkspaceXYObject1 : Object
+    public class WorkspaceXYObject1 : Object
     {
         #region Allors
         [Id("C5213C10-7594-4738-810A-9E20231E12BC")]

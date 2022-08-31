@@ -45,9 +45,9 @@ namespace Allors.Database.Data
                 case IRoleType roleType when roleType.ObjectType.IsUnit:
                 {
                     var equals = this.Path ?? (this.Parameter != null ? arguments.ResolveUnit(roleType.ObjectType.Tag, this.Parameter) : this.Value);
-                    if (@equals != null)
+                    if (equals != null)
                     {
-                        compositePredicate.AddEquals(roleType, @equals);
+                        compositePredicate.AddEquals(roleType, equals);
                     }
 
                     break;
@@ -56,9 +56,9 @@ namespace Allors.Database.Data
                 case IRoleType roleType:
                 {
                     var equals = this.Parameter != null ? transaction.GetObject(arguments.ResolveObject(this.Parameter)) : this.Object;
-                    if (@equals != null)
+                    if (equals != null)
                     {
-                        compositePredicate.AddEquals(roleType, @equals);
+                        compositePredicate.AddEquals(roleType, equals);
                     }
 
                     break;
@@ -67,9 +67,9 @@ namespace Allors.Database.Data
                 {
                     var associationType = (IAssociationType)this.PropertyType;
                     var equals = this.Parameter != null ? transaction.GetObject(arguments.ResolveObject(this.Parameter)) : this.Object;
-                    if (@equals != null)
+                    if (equals != null)
                     {
-                        compositePredicate.AddEquals(associationType, @equals);
+                        compositePredicate.AddEquals(associationType, equals);
                     }
 
                     break;

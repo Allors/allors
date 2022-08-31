@@ -25,11 +25,11 @@ namespace Allors.Workspace.Adapters
 
         public abstract Task<IInvokeResult> InvokeAsync(Method[] methods, InvokeOptions options = null);
 
-        public abstract Task<Allors.Workspace.IPullResult> CallAsync(Procedure procedure, params Pull[] pull);
+        public abstract Task<IPullResult> CallAsync(Procedure procedure, params Pull[] pull);
 
-        public abstract Task<Allors.Workspace.IPullResult> CallAsync(object args, string name);
+        public abstract Task<IPullResult> CallAsync(object args, string name);
 
-        public abstract Task<Allors.Workspace.IPullResult> PullAsync(params Pull[] pull);
+        public abstract Task<IPullResult> PullAsync(params Pull[] pull);
 
         public abstract Record GetRecord(long id);
 

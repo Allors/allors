@@ -15,11 +15,7 @@ namespace Allors.Security
     using Database.Meta;
     using Microsoft.AspNetCore.Identity;
     using Services;
-    using Deletable = Database.Domain.Deletable;
     using Task = System.Threading.Tasks.Task;
-    using User = Database.Domain.User;
-    using Person = Database.Domain.Person;
-    using Login = Database.Domain.Login;
 
     public class AllorsUserStore : IUserPasswordStore<IdentityUser>,
                                    IUserLoginStore<IdentityUser>,

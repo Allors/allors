@@ -15,7 +15,6 @@ namespace Allors.Database.Server.Controllers
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Primitives;
     using Microsoft.Net.Http.Headers;
-    using Printable = Domain.Printable;
 
     public abstract class BaseMediaController : Controller
     {

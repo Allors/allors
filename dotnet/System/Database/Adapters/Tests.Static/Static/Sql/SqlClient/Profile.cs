@@ -8,13 +8,11 @@ namespace Allors.Database.Adapters.Sql.SqlClient
     using System;
     using System.Collections.Generic;
     using System.Data;
-    using Microsoft.Data.SqlClient;
     using System.Text;
-    using Adapters;
     using Caching;
+    using Domain;
     using Meta;
-    using C1 = Domain.C1;
-    using ObjectFactory = ObjectFactory;
+    using Microsoft.Data.SqlClient;
 
     public class Profile : Adapters.Profile
     {
@@ -64,7 +62,7 @@ namespace Allors.Database.Adapters.Sql.SqlClient
         {
             var metaPopulation = new MetaBuilder().Build();
             var scope = new DefaultDomainDatabaseServices();
-            return new Database(scope, new Sql.Configuration
+            return new Database(scope, new Configuration
             {
                 ObjectFactory = new ObjectFactory(metaPopulation, typeof(C1)),
                 ConnectionString = this.ConnectionString,

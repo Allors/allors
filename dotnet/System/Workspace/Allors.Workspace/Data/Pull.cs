@@ -7,7 +7,6 @@ namespace Allors.Workspace.Data
 {
     using System;
     using System.Collections.Generic;
-    using Workspace;
     using Meta;
 
     public class Pull : IVisitable

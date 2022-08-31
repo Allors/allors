@@ -10,21 +10,23 @@ namespace Allors.Database.Protocol.Json
     using System.Linq;
     using System.Xml;
     using Allors.Protocol.Json.Data;
+    using Data;
     using Meta;
-    using Extent = Data.Extent;
+    using Extent = Allors.Protocol.Json.Data.Extent;
+    using IVisitor = Allors.Protocol.Json.Data.IVisitor;
     using Node = Data.Node;
+    using Procedure = Data.Procedure;
     using Pull = Data.Pull;
     using Result = Data.Result;
     using Select = Data.Select;
     using Sort = Data.Sort;
-    using Procedure = Data.Procedure;
 
-    public class FromJsonVisitor : Allors.Protocol.Json.Data.IVisitor
+    public class FromJsonVisitor : IVisitor
     {
         private readonly FromJson fromJson;
 
-        private readonly Stack<Data.IExtent> extents;
-        private readonly Stack<Data.IPredicate> predicates;
+        private readonly Stack<IExtent> extents;
+        private readonly Stack<IPredicate> predicates;
         private readonly Stack<Result> results;
         private readonly Stack<Select> selects;
         private readonly Stack<Node> nodes;
@@ -34,8 +36,8 @@ namespace Allors.Database.Protocol.Json
         {
             this.fromJson = fromJson;
 
-            this.extents = new Stack<Data.IExtent>();
-            this.predicates = new Stack<Data.IPredicate>();
+            this.extents = new Stack<IExtent>();
+            this.predicates = new Stack<IPredicate>();
             this.results = new Stack<Result>();
             this.selects = new Stack<Select>();
             this.nodes = new Stack<Node>();
@@ -44,16 +46,16 @@ namespace Allors.Database.Protocol.Json
 
         public Pull Pull { get; private set; }
 
-        public Data.IExtent Extent => this.extents?.Peek();
+        public IExtent Extent => this.extents?.Peek();
 
         public Select Select => this.selects?.Peek();
 
         public Procedure Procedure { get; private set; }
 
-        public void VisitExtent(Allors.Protocol.Json.Data.Extent visited)
+        public void VisitExtent(Extent visited)
         {
-            Data.IExtentOperator extentOperator = null;
-            Data.IExtent sortable = null;
+            IExtentOperator extentOperator = null;
+            IExtent sortable = null;
 
             switch (visited.k)
             {
@@ -64,7 +66,7 @@ namespace Allors.Database.Protocol.Json
                     }
 
                     var objectType = (IComposite)this.fromJson.MetaPopulation.FindByTag(visited.t);
-                    var extent = new Extent(objectType);
+                    var extent = new Data.Extent(objectType);
                     sortable = extent;
 
                     this.extents.Push(extent);
@@ -78,15 +80,15 @@ namespace Allors.Database.Protocol.Json
                     break;
 
                 case ExtentKind.Union:
-                    extentOperator = new Data.Union();
+                    extentOperator = new Union();
                     break;
 
                 case ExtentKind.Except:
-                    extentOperator = new Data.Except();
+                    extentOperator = new Except();
                     break;
 
                 case ExtentKind.Intersect:
-                    extentOperator = new Data.Intersect();
+                    extentOperator = new Intersect();
                     break;
 
                 default:
@@ -99,7 +101,7 @@ namespace Allors.Database.Protocol.Json
             {
                 var length = visited.s.Length;
 
-                sortable.Sorting = new Data.Sort[length];
+                sortable.Sorting = new Sort[length];
                 for (var i = 0; i < length; i++)
                 {
                     var sorting = visited.s[i];
@@ -116,7 +118,7 @@ namespace Allors.Database.Protocol.Json
                 {
                     var length = visited.o.Length;
 
-                    extentOperator.Operands = new Data.IExtent[length];
+                    extentOperator.Operands = new IExtent[length];
                     for (var i = 0; i < length; i++)
                     {
                         var operand = visited.o[i];
@@ -129,27 +131,27 @@ namespace Allors.Database.Protocol.Json
 
         public void VisitSelect(Allors.Protocol.Json.Data.Select visited)
         {
-            var @select = new Select
+            var select = new Select
             {
                 PropertyType = (IPropertyType)this.fromJson.MetaPopulation.FindAssociationType(visited.a) ?? this.fromJson.MetaPopulation.FindRoleType(visited.r),
                 OfType = this.fromJson.MetaPopulation.FindComposite(visited.o)
             };
 
-            this.selects.Push(@select);
+            this.selects.Push(select);
 
             if (visited.n != null)
             {
                 visited.n.Accept(this);
-                @select.Next = this.selects.Pop();
+                select.Next = this.selects.Pop();
             }
 
             if (visited.i?.Length > 0)
             {
-                @select.Include = new Node[visited.i.Length];
+                select.Include = new Node[visited.i.Length];
                 for (var i = 0; i < visited.i.Length; i++)
                 {
                     visited.i[i].Accept(this);
-                    @select.Include[i] = this.nodes.Pop();
+                    select.Include[i] = this.nodes.Pop();
                 }
             }
         }
@@ -176,7 +178,7 @@ namespace Allors.Database.Protocol.Json
             switch (visited.k)
             {
                 case PredicateKind.And:
-                    var and = new Data.And();
+                    var and = new And();
 
                     this.predicates.Push(and);
 
@@ -184,7 +186,7 @@ namespace Allors.Database.Protocol.Json
                     {
                         var length = visited.ops.Length;
 
-                        and.Operands = new Data.IPredicate[length];
+                        and.Operands = new IPredicate[length];
                         for (var i = 0; i < length; i++)
                         {
                             var operand = visited.ops[i];
@@ -196,7 +198,7 @@ namespace Allors.Database.Protocol.Json
                     break;
 
                 case PredicateKind.Or:
-                    var or = new Data.Or();
+                    var or = new Or();
 
                     this.predicates.Push(or);
 
@@ -204,7 +206,7 @@ namespace Allors.Database.Protocol.Json
                     {
                         var length = visited.ops.Length;
 
-                        or.Operands = new Data.IPredicate[length];
+                        or.Operands = new IPredicate[length];
                         for (var i = 0; i < length; i++)
                         {
                             var operand = visited.ops[i];
@@ -216,7 +218,7 @@ namespace Allors.Database.Protocol.Json
                     break;
 
                 case PredicateKind.Not:
-                    var not = new Data.Not();
+                    var not = new Not();
 
                     this.predicates.Push(not);
 
@@ -237,7 +239,7 @@ namespace Allors.Database.Protocol.Json
                     {
                         case PredicateKind.InstanceOf:
 
-                            var instanceOf = new Data.Instanceof(propertyType)
+                            var instanceOf = new Instanceof(propertyType)
                             {
                                 ObjectType = visited.o != null ? (IComposite)this.fromJson.MetaPopulation.FindByTag(visited.o) : null,
                                 Parameter = visited.p,
@@ -248,7 +250,7 @@ namespace Allors.Database.Protocol.Json
 
                         case PredicateKind.Exists:
 
-                            var exists = new Data.Exists(propertyType)
+                            var exists = new Exists(propertyType)
                             {
                                 Parameter = visited.p,
                             };
@@ -258,7 +260,7 @@ namespace Allors.Database.Protocol.Json
 
                         case PredicateKind.Contains:
 
-                            var contains = new Data.Contains(propertyType)
+                            var contains = new Contains(propertyType)
                             {
                                 Parameter = visited.p,
                             };
@@ -273,7 +275,7 @@ namespace Allors.Database.Protocol.Json
 
                         case PredicateKind.ContainedIn:
 
-                            var containedIn = new Data.ContainedIn(propertyType)
+                            var containedIn = new ContainedIn(propertyType)
                             {
                                 Parameter = visited.p
                             };
@@ -294,7 +296,7 @@ namespace Allors.Database.Protocol.Json
 
                         case PredicateKind.Equals:
 
-                            var equals = new Data.Equals(propertyType)
+                            var equals = new Equals(propertyType)
                             {
                                 Parameter = visited.p,
                                 Path = this.fromJson.MetaPopulation.FindRoleType(visited.pa)
@@ -323,7 +325,7 @@ namespace Allors.Database.Protocol.Json
 
                         case PredicateKind.Between:
 
-                            var between = new Data.Between(roleType)
+                            var between = new Between(roleType)
                             {
                                 Parameter = visited.p,
                                 Values = visited.vs?.Select(v => this.fromJson.UnitConvert.UnitFromJson(roleType.ObjectType.Tag, v)).ToArray(),
@@ -336,7 +338,7 @@ namespace Allors.Database.Protocol.Json
 
                         case PredicateKind.GreaterThan:
 
-                            var greaterThan = new Data.GreaterThan(roleType)
+                            var greaterThan = new GreaterThan(roleType)
                             {
                                 Parameter = visited.p,
                                 Value = this.fromJson.UnitConvert.UnitFromJson(roleType.ObjectType.Tag, visited.v),
@@ -349,7 +351,7 @@ namespace Allors.Database.Protocol.Json
 
                         case PredicateKind.LessThan:
 
-                            var lessThan = new Data.LessThan(roleType)
+                            var lessThan = new LessThan(roleType)
                             {
                                 Parameter = visited.p,
                                 Value = this.fromJson.UnitConvert.UnitFromJson(roleType.ObjectType.Tag, visited.v),
@@ -362,7 +364,7 @@ namespace Allors.Database.Protocol.Json
 
                         case PredicateKind.Like:
 
-                            var like = new Data.Like(roleType)
+                            var like = new Like(roleType)
                             {
                                 Parameter = visited.p,
                                 Value = this.fromJson.UnitConvert.UnitFromJson(roleType.ObjectType.Tag, visited.v)?.ToString(),

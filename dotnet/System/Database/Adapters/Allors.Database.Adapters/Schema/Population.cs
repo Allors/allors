@@ -7,7 +7,7 @@ namespace Allors.Database.Adapters.Schema
 {
     using System.Xml.Serialization;
 
-    public partial class Population
+    public class Population
     {
         [XmlAttribute("version")]
         public int Version { get; set; }

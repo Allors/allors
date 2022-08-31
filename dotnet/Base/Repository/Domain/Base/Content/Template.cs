@@ -7,13 +7,12 @@
 namespace Allors.Repository
 {
     using System;
-
     using Attributes;
 
     #region Allors
     [Id("93F8B97B-2D9A-42FC-A823-7BDCC5A92203")]
     #endregion
-    public partial class Template : UniquelyIdentifiable, Deletable, Object
+    public class Template : UniquelyIdentifiable, Deletable, Object
     {
         #region Allors
         [Id("64DD490F-2B13-4D63-94A4-6BCE96FA14C2")]

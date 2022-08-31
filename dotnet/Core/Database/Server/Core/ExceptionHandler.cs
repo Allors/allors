@@ -13,8 +13,8 @@ namespace Allors.Server
     using Microsoft.AspNetCore.Diagnostics;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
-    using NLog;
     using Microsoft.IdentityModel.Tokens;
+    using NLog;
 
     public static class ExceptionHandler
     {

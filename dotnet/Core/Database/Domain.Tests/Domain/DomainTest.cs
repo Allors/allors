@@ -15,18 +15,7 @@ namespace Allors.Database.Domain.Tests
     using Database.Security;
     using Meta;
     using Moq;
-    using UserGroup = Domain.UserGroup;
-    using Permission = Domain.Permission;
     using Permissions = Domain.Permissions;
-    using Person = Domain.Person;
-    using Role = Domain.Role;
-    using User = Domain.User;
-    using Grant = Domain.Grant;
-    using Revocation = Domain.Revocation;
-    using Organization = Domain.Organization;
-    using SecurityToken = Domain.SecurityToken;
-    using C1 = Domain.C1;
-    using C2 = Domain.C2;
 
     public class DomainTest : IDisposable
     {
@@ -167,14 +156,14 @@ namespace Allors.Database.Domain.Tests
 
         protected C1 BuildC1(params Action<C1>[] builders) => this.Transaction.Build(builders);
 
-        protected C1 BuildC1(string c1AllorsString = null, Action<C1> builder = null) => this.Transaction.Build<C1>((v =>
+        protected C1 BuildC1(string c1AllorsString = null, Action<C1> builder = null) => this.Transaction.Build((v =>
         {
             v.C1AllorsString = c1AllorsString;
         }), builder);
 
         protected C2 BuildC2(params Action<C2>[] builders) => this.Transaction.Build(builders);
 
-        protected C2 BuildC2(string c2AllorsString = null, Action<C2> builder = null) => this.Transaction.Build<C2>(v =>
+        protected C2 BuildC2(string c2AllorsString = null, Action<C2> builder = null) => this.Transaction.Build(v =>
         {
             v.C2AllorsString = c2AllorsString;
         }, builder);

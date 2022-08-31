@@ -7,7 +7,6 @@
 namespace Allors.Database.Domain
 {
     using System;
-   
 
     public partial class OrderStates
     {

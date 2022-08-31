@@ -6,10 +6,10 @@
 namespace Allors.Database.Adapters.Sql
 {
     using System;
+    using Domain;
     using Meta;
     using Tracing;
     using Xunit;
-    using C1 = Domain.C1;
 
     public abstract class TracingTest : IDisposable
     {

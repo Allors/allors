@@ -5,7 +5,7 @@
 
 namespace Allors.Database.Meta
 {
-    public partial interface IObjectTypeBase : IMetaIdentifiableObjectBase, IObjectType
+    public interface IObjectTypeBase : IMetaIdentifiableObjectBase, IObjectType
     {
         void Validate(ValidationLog log);
     }

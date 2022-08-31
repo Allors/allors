@@ -7,20 +7,19 @@ namespace Allors.Workspace.Adapters.Json
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Allors.Protocol.Json;
     using Allors.Protocol.Json.Api.Invoke;
     using Allors.Protocol.Json.Api.Pull;
     using Allors.Protocol.Json.Api.Push;
     using Allors.Protocol.Json.Api.Security;
     using Allors.Protocol.Json.Api.Sync;
-    using Allors.Protocol.Json;
-    using Allors.Shared.Ranges;
-    using System.Linq;
-    using System.Threading.Tasks;
-    using Meta;
     using Data;
+    using Meta;
     using Protocol.Json;
+    using Shared.Ranges;
     using InvokeOptions = Allors.Workspace.InvokeOptions;
-    using IPullResult = Allors.Workspace.IPullResult;
 
     public abstract class Connection : Adapters.Connection
     {
@@ -60,22 +59,22 @@ namespace Allors.Workspace.Adapters.Json
                 o = response.p
                     .Where(v =>
                     {
-                        if (!this.recordsById.TryGetValue(v.i, out var @record))
+                        if (!this.recordsById.TryGetValue(v.i, out var record))
                         {
                             return true;
                         }
 
-                        if (!@record.Version.Equals(v.v))
+                        if (!record.Version.Equals(v.v))
                         {
                             return true;
                         }
 
-                        if (!@record.GrantIds.Equals(ValueRange<long>.Load(v.g)))
+                        if (!record.GrantIds.Equals(ValueRange<long>.Load(v.g)))
                         {
                             return true;
                         }
 
-                        if (!@record.RevocationIds.Equals(ValueRange<long>.Load(v.r)))
+                        if (!record.RevocationIds.Equals(ValueRange<long>.Load(v.r)))
                         {
                             return true;
                         }
@@ -257,7 +256,7 @@ namespace Allors.Workspace.Adapters.Json
             {
                 if (pull.ObjectId < 0 || pull.Object?.Id < 0)
                 {
-                    throw new ArgumentException($"Id is not in the database");
+                    throw new ArgumentException("Id is not in the database");
                 }
             }
 

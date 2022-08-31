@@ -5,7 +5,7 @@
 
 namespace Allors.Workspace.Domain
 {
-    public partial class Media
+    public class Media
     {
         //public string Source
         //{

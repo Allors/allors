@@ -6,7 +6,6 @@
 namespace Allors.Database.Domain.Tests
 {
     using Xunit;
-    using AccessClass = Domain.AccessClass;
 
     public class WorkspaceDelegatedAccessTests : DomainTest, IClassFixture<Fixture>
     {

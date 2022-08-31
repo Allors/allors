@@ -15,12 +15,8 @@ namespace Commands
     using Allors.Database.Domain;
     using Allors.Database.Meta;
     using McMaster.Extensions.CommandLineUtils;
-
     using Microsoft.Extensions.Configuration;
     using NLog;
-    using ObjectFactory = Allors.Database.ObjectFactory;
-    using Path = System.IO.Path;
-    using User = Allors.Database.Domain.User;
 
     [Command(Description = "Allors Core Commands")]
     [Subcommand(
@@ -88,7 +84,7 @@ namespace Commands
             }
         }
 
-        public MetaPopulation M => this.Database.Services.Get<Allors.Database.Meta.MetaPopulation>();
+        public MetaPopulation M => this.Database.Services.Get<MetaPopulation>();
 
         public static int Main(string[] args)
         {

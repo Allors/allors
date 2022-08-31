@@ -10,7 +10,7 @@ namespace Allors.Database
     using Collections;
     using Meta;
 
-    public static partial class IChangeSetExtensions
+    public static class IChangeSetExtensions
     {
         private static readonly ISet<IRoleType> EmptyRoleTypeSet = new EmptySet<IRoleType>();
 

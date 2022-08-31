@@ -6,7 +6,6 @@
 namespace Allors.Database.Adapters.Sql.Caching
 {
     using System.Collections.Concurrent;
-
     using Meta;
 
     public sealed class DefaultCachedObject : ICachedObject

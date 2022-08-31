@@ -5,7 +5,6 @@
 
 namespace Allors.Database.Adapters.Sql.Npgsql
 {
-    using Adapters;
     using Xunit;
 
     public class ChangesTest : Adapters.ChangesTest, IClassFixture<Fixture<ChangesTest>>

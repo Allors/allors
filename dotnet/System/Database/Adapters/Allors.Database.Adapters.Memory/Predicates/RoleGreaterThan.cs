@@ -9,7 +9,6 @@
 namespace Allors.Database.Adapters.Memory
 {
     using System;
-    using Adapters;
     using Meta;
 
     internal sealed class RoleGreaterThan : Predicate

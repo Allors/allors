@@ -26,7 +26,7 @@ namespace Allors.Database.Data
         }
     }
 
-    public static partial class ExpressionExtensions
+    public static class ExpressionExtensions
     {
         public static Node Node<T>(this Expression<Func<T, IPropertyType>> @this, IMetaPopulation metaPopulation) where T : IComposite
         {
@@ -74,7 +74,7 @@ namespace Allors.Database.Data
                 {
                     var propertyInfo = (PropertyInfo)memberExpression.Member;
                     var propertyType = propertyInfo.PropertyType;
-                    composite = (IComposite)metaPopulation.FindDatabaseCompositeByName(propertyType.Name.Substring(4));
+                    composite = metaPopulation.FindDatabaseCompositeByName(propertyType.Name.Substring(4));
 
                     if (currentPath != null && !currentPath.PropertyType.ObjectType.Equals(composite))
                     {

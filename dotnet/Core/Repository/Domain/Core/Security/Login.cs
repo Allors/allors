@@ -11,7 +11,7 @@ namespace Allors.Repository
     #region Allors
     [Id("ad7277a8-eda4-4128-a990-b47fe43d120a")]
     #endregion
-    public partial class Login : Deletable
+    public class Login : Deletable
     {
         #region Allors
         [Id("18262218-a14f-48c3-87a5-87196d3b5974")]

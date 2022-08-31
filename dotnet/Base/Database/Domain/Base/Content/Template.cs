@@ -7,8 +7,7 @@ namespace Allors.Database.Domain
 {
     using System.Collections.Generic;
     using System.Linq;
-
-    using Allors.Document.OpenDocument;
+    using Document.OpenDocument;
 
     public partial class Template
     {

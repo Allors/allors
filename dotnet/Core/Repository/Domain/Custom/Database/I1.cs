@@ -6,7 +6,6 @@
 namespace Allors.Repository
 {
     using System;
-
     using Attributes;
     using static Workspaces;
 
@@ -14,7 +13,7 @@ namespace Allors.Repository
     #region Allors
     [Id("fefcf1b6-ac8f-47b0-bed5-939207a2833e")]
     #endregion
-    public partial interface I1 : Object, I12, S1
+    public interface I1 : Object, I12, S1
     {
         #region Allors
         [Id("06b72534-49a8-4f6d-a991-bc4aaf6f939f")]

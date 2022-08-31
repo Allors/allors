@@ -13,7 +13,7 @@ namespace Allors.Repository
     #endregion
     [Plural("HomeAddresses")]
     [Workspace(Default)]
-    public partial class HomeAddress : Object, Address
+    public class HomeAddress : Object, Address
     {
         #region Allors
         [Id("6f0f42c4-9b47-47c2-a632-da8e08116be4")]

@@ -9,7 +9,7 @@ namespace Allors.Database.Meta
     using System;
     using System.Linq;
 
-    public sealed partial class Inheritance : IInheritanceBase, IComparable
+    public sealed class Inheritance : IInheritanceBase, IComparable
     {
         private readonly IMetaPopulationBase metaPopulation;
 

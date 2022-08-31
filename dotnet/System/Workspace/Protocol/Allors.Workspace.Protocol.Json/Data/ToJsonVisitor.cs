@@ -183,7 +183,7 @@ namespace Allors.Workspace.Protocol.Json
             this.predicates.Push(predicate);
         }
 
-        public void VisitFilter(Data.Filter visited)
+        public void VisitFilter(Filter visited)
         {
             var extent = new Extent
             {
@@ -207,14 +207,14 @@ namespace Allors.Workspace.Protocol.Json
 
         public void VisitSelect(Data.Select visited)
         {
-            var @select = new Select
+            var select = new Select
             {
                 a = (visited.PropertyType as AssociationType)?.RelationType.Tag,
                 r = (visited.PropertyType as RoleType)?.RelationType.Tag,
                 o = visited.OfType?.Tag
             };
 
-            this.selects.Push(@select);
+            this.selects.Push(select);
 
             if (visited.Next != null)
             {
@@ -226,12 +226,12 @@ namespace Allors.Workspace.Protocol.Json
             {
                 var includes = visited.Include.ToArray();
                 var length = includes.Length;
-                @select.i = new Node[length];
+                select.i = new Node[length];
                 for (var i = 0; i < length; i++)
                 {
                     var node = includes[i];
                     node.Accept(this);
-                    @select.i[i] = this.nodes.Pop();
+                    select.i[i] = this.nodes.Pop();
                 }
             }
         }
@@ -348,7 +348,7 @@ namespace Allors.Workspace.Protocol.Json
 
         public void VisitNot(Not visited)
         {
-            var predicate = new Predicate()
+            var predicate = new Predicate
             {
                 k = PredicateKind.Not,
             };
@@ -364,7 +364,7 @@ namespace Allors.Workspace.Protocol.Json
 
         public void VisitOr(Or visited)
         {
-            var predicate = new Predicate()
+            var predicate = new Predicate
             {
                 k = PredicateKind.Or,
             };
@@ -498,7 +498,7 @@ namespace Allors.Workspace.Protocol.Json
             c = procedure.Collections?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value.Select(v => v.Id).ToArray()),
             o = procedure.Objects?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value.Id),
             v = procedure.Values,
-            p = procedure.Pool?.Select(kvp => new long[] { kvp.Key.Id, kvp.Value }).ToArray(),
+            p = procedure.Pool?.Select(kvp => new[] { kvp.Key.Id, kvp.Value }).ToArray(),
         };
     }
 }

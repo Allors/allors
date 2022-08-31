@@ -6,6 +6,7 @@
 namespace Allors.Workspace.Adapters.Json.SystemText
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Net.Http;
     using System.Threading.Tasks;
     using Allors.Protocol.Json;
@@ -18,7 +19,7 @@ namespace Allors.Workspace.Adapters.Json.SystemText
     using Meta;
     using Polly;
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "RCS1090:Add call to 'ConfigureAwait' (or vice versa).", Justification = "<Pending>")]
+    [SuppressMessage("Design", "RCS1090:Add call to 'ConfigureAwait' (or vice versa).", Justification = "<Pending>")]
     public class Connection : Json.Connection
     {
         public Connection(Client client, string name, MetaPopulation metaPopulation) : base(name, metaPopulation)

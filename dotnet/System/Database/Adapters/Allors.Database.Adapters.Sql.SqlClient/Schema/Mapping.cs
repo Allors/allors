@@ -11,6 +11,7 @@ namespace Allors.Database.Adapters.Sql.SqlClient
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using Meta;
+    using Version = Allors.Version;
 
     [SuppressMessage("ReSharper", "PossibleInvalidOperationException")]
     public class Mapping : Sql.Mapping
@@ -676,7 +677,7 @@ BEGIN
     DECLARE  {this.ParamNameForObject} AS {SqlTypeForObject}
 
     INSERT INTO {this.TableNameForObjects} ({ColumnNameForClass}, {ColumnNameForVersion})
-    VALUES ({this.ParamNameForClass}, {(long)Allors.Version.DatabaseInitial});
+    VALUES ({this.ParamNameForClass}, {(long)Version.DatabaseInitial});
 
     SELECT {this.ParamNameForObject} = SCOPE_IDENTITY();
 
@@ -710,7 +711,7 @@ BEGIN
         BEGIN
 
         INSERT INTO {this.TableNameForObjects} ({ColumnNameForClass}, {ColumnNameForVersion})
-        VALUES ({this.ParamNameForClass}, {(long)Allors.Version.DatabaseInitial} );
+        VALUES ({this.ParamNameForClass}, {(long)Version.DatabaseInitial} );
 
         INSERT INTO @IDS(id)
         VALUES (SCOPE_IDENTITY());

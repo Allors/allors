@@ -2,7 +2,7 @@ namespace Allors.Meta.Generation.Model
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Allors.Database.Meta;
+    using Database.Meta;
 
     public sealed class ClassModel : CompositeModel
     {

@@ -10,7 +10,7 @@ namespace Allors.Repository
     #region Allors
     [Id("8E66F2E1-27FA-4A1C-B410-F082CA1621C7")]
     #endregion
-    public partial class AccessClass : AccessInterface
+    public class AccessClass : AccessInterface
     {
         #region Allors
         [Id("A67189D3-CD06-425B-98BB-59E0E73AC211")]

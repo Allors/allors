@@ -12,7 +12,7 @@ namespace Allors.Repository
     #region Allors
     [Id("2e5cd966-d85d-4ad8-ba2a-48fd0c2894dd")]
     #endregion
-    public partial interface UserPasswordReset
+    public interface UserPasswordReset
     {
         #region Allors
         [Id("1a03a20b-9cfe-4052-807b-2780ef81cffb")]

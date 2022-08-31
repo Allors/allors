@@ -27,7 +27,6 @@ namespace Allors.Server
     using Security;
     using Services;
     using ObjectFactory = Database.ObjectFactory;
-    using User = Database.Domain.User;
 
     public class Startup
     {

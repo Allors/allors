@@ -6,7 +6,6 @@
 namespace Allors.Workspace.Data
 {
     using System.Collections.Generic;
-    using Workspace;
 
     public class Procedure : IVisitable
     {

@@ -7,7 +7,7 @@ namespace Allors.Database.Domain
 {
     using System.Linq;
 
-    public static partial class TransitionalExtensions
+    public static class TransitionalExtensions
     {
         public static void CoreOnPostDerive(this Transitional @this, ObjectOnPostDerive method)
         {

@@ -8,9 +8,8 @@ namespace Allors.Database.Adapters.Sql.SqlClient
     using System;
     using System.Collections.Generic;
     using System.Data;
-    using Microsoft.Data.SqlClient;
-
     using Meta;
+    using Microsoft.Data.SqlClient;
 
     public class Command : ICommand
     {

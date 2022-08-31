@@ -8,8 +8,7 @@ namespace Allors.Workspace.Protocol.Json
     using System.Collections.Generic;
     using System.Linq;
     using Allors.Protocol.Json;
-    using Procedure = Allors.Protocol.Json.Data.Procedure;
-    using Pull = Allors.Protocol.Json.Data.Pull;
+    using Allors.Protocol.Json.Data;
 
     public static class Extensions
     {

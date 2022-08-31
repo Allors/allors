@@ -6,7 +6,6 @@
 namespace Allors.Database.Adapters.Sql.Npgsql
 {
     using Xunit;
-    using Adapters;
 
     public class SandboxTest : Adapters.SandboxTest, IClassFixture<Fixture<SandboxTest>>
     {

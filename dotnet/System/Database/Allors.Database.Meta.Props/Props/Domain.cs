@@ -10,7 +10,7 @@ namespace Allors.Database.Meta
     using System.Collections.Generic;
     using System.Linq;
 
-    public sealed partial class Domain : IDomainBase
+    public sealed class Domain : IDomainBase
     {
         private readonly IMetaPopulationBase metaPopulation;
 
@@ -110,7 +110,7 @@ namespace Allors.Database.Meta
                 return this.Name;
             }
 
-            return this.Tag.ToString();
+            return this.Tag;
         }
 
         internal void Bind() => this.directSuperdomains = this.directSuperdomains.ToArray();

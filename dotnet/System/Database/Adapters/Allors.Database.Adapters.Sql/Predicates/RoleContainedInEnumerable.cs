@@ -7,9 +7,6 @@ namespace Allors.Database.Adapters.Sql
 {
     using System.Collections.Generic;
     using System.Text;
-
-    using Adapters;
-
     using Meta;
 
     internal sealed class RoleContainedInEnumerable : ContainedIn

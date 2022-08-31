@@ -5,6 +5,7 @@
 
 namespace Commands
 {
+    using System;
     using System.IO;
     using System.Linq;
 
@@ -21,7 +22,7 @@ namespace Commands
                 }
 
                 var sibling = ancestor.GetDirectories()
-                    .FirstOrDefault(v => v.Name.Equals(name, System.StringComparison.InvariantCultureIgnoreCase));
+                    .FirstOrDefault(v => v.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase));
                 if (sibling != null)
                 {
                     return sibling;

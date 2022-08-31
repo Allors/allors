@@ -6,7 +6,6 @@
 namespace Allors.Database.Adapters
 {
     using System;
-
     using Meta;
 
     public static class RoleTypeExtensions

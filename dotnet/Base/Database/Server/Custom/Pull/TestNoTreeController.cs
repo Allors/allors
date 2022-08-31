@@ -9,9 +9,7 @@ namespace Allors.Database.Server.Controllers
     using Allors.Services;
     using Domain;
     using Microsoft.AspNetCore.Mvc;
-    using Database;
     using Protocol.Json;
-
 
     public class TestNoTreeController : Controller
     {

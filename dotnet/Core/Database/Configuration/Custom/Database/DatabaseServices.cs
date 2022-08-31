@@ -7,7 +7,6 @@
 namespace Allors.Database.Configuration
 {
     using System;
-    using Database;
     using Data;
     using Database.Derivations;
     using Derivations.Default;

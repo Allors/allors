@@ -8,19 +8,18 @@ namespace Allors.Database.Domain
     using System.IO;
     using System.Text;
     using System.Xml.Serialization;
-    using Allors.Protocol.Json.Data;
     using Allors.Protocol.Json.SystemText;
+    using Database.Data;
     using Protocol.Json;
-
 
     public partial class PersistentPreparedSelect
     {
-        public Database.Data.Select Select
+        public Select Select
         {
             get
             {
                 using TextReader reader = new StringReader(this.Content);
-                var protocolSelect = (Select)XmlSerializer.Deserialize(reader);
+                var protocolSelect = (Allors.Protocol.Json.Data.Select)XmlSerializer.Deserialize(reader);
                 return protocolSelect.FromJson(this.Strategy.Transaction, new UnitConvert());
             }
 
@@ -33,6 +32,6 @@ namespace Allors.Database.Domain
             }
         }
 
-        private static XmlSerializer XmlSerializer => new XmlSerializer(typeof(Select));
+        private static XmlSerializer XmlSerializer => new XmlSerializer(typeof(Allors.Protocol.Json.Data.Select));
     }
 }

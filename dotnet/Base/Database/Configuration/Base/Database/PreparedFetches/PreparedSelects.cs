@@ -9,8 +9,8 @@ namespace Allors.Database.Configuration
     using System.Collections.Concurrent;
     using System.Linq;
     using Data;
+    using Domain;
     using Meta;
-    using PersistentPreparedSelect = Domain.PersistentPreparedSelect;
 
     public class PreparedSelects : IPreparedSelects
     {

@@ -12,7 +12,7 @@ namespace Allors.Repository
     #region Allors
     [Id("b6579993-4ff1-4853-b048-1f8e67419c00")]
     #endregion
-    public partial class NotificationList : Deletable, Object
+    public class NotificationList : Deletable, Object
     {
         #region Allors
         [Id("4516c5c1-73a0-4fdc-ac3c-aefaf417c8ba")]

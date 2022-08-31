@@ -7,11 +7,9 @@ namespace Allors.Database.Adapters
 {
     using System;
     using Data;
+    using Domain;
     using Moq;
     using Xunit;
-    using C1 = Domain.C1;
-    using Extent = Data.Extent;
-    using User = Domain.User;
 
     public abstract class SandboxTest : IDisposable
     {

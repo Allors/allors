@@ -8,7 +8,7 @@ namespace Allors.Database.Domain
     using System.Collections.Generic;
     using System.Linq;
 
-    public static partial class TaskExtensions
+    public static class TaskExtensions
     {
         public static void BaseOnPostBuild(this Task @this, ObjectOnPostBuild _)
         {

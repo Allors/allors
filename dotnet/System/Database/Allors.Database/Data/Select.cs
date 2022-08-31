@@ -91,11 +91,11 @@ namespace Allors.Database.Data
             }
         }
 
-        public static bool TryParse(IComposite composite, string selectString, out Select @select)
+        public static bool TryParse(IComposite composite, string selectString, out Select select)
         {
             var propertyType = Resolve(composite, selectString);
-            @select = propertyType == null ? null : new Select(propertyType);
-            return @select != null;
+            select = propertyType == null ? null : new Select(propertyType);
+            return select != null;
         }
 
         private static IPropertyType Resolve(IComposite composite, string propertyName)

@@ -6,7 +6,6 @@
 namespace Allors.Database
 {
     using System.Xml;
-
     using Meta;
     using Tracing;
 

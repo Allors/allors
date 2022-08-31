@@ -23,7 +23,6 @@ namespace Allors.Database.Adapters.Memory
 {
     using Meta;
 
-
     public class SerializationTest : Adapters.SerializationTest
     {
         private readonly Profile profile = new Profile();

@@ -9,12 +9,9 @@ namespace Allors.Database.Adapters
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
+    using Domain;
     using Meta;
     using Xunit;
-    using C1 = Domain.C1;
-    using C2 = Domain.C2;
-    using ClassWithoutRoles = Domain.ClassWithoutRoles;
-    using ClassWithoutUnitRoles = Domain.ClassWithoutUnitRoles;
 
     public abstract class ServicesTest : IDisposable
     {

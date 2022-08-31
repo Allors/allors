@@ -6,7 +6,7 @@
 namespace Allors.Database.Data
 {
     using Meta;
-    
+
     public class Extent : IExtent, IPredicateContainer
     {
         public Extent(IComposite objectType) => this.ObjectType = objectType;

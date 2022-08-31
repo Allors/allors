@@ -11,7 +11,6 @@ namespace Allors.Database
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
-
     using Meta;
 
     public sealed class PrefetchPolicy : IEnumerable<PrefetchRule>

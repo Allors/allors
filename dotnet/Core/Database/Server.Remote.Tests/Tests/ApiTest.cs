@@ -16,18 +16,14 @@ namespace Allors.Server.Tests
     using System.Threading.Tasks;
     using Database;
     using Database.Adapters.Sql;
-    using Database.Domain;
     using Database.Configuration;
     using Database.Configuration.Derivations.Default;
+    using Database.Domain;
     using Database.Meta;
     using Microsoft.Extensions.Configuration;
     using Protocol.Json.Auth;
     using Xunit;
-    using C1 = Database.Domain.C1;
     using Database = Database.Adapters.Sql.SqlClient.Database;
-    using ObjectFactory = Database.ObjectFactory;
-    using Path = System.IO.Path;
-    using User = Database.Domain.User;
 
     public abstract class ApiTest : IDisposable
     {
@@ -73,7 +69,7 @@ namespace Allors.Server.Tests
             this.Transaction = database.CreateTransaction();
         }
 
-        public MetaPopulation M => this.Transaction.Database.Services.Get<Allors.Database.Meta.MetaPopulation>();
+        public MetaPopulation M => this.Transaction.Database.Services.Get<MetaPopulation>();
 
         public IConfigurationRoot Configuration { get; set; }
 

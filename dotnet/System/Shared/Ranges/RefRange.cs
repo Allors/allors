@@ -9,7 +9,7 @@ namespace Allors.Shared.Ranges
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
-    using Allors.Collections;
+    using Collections;
 
     public struct RefRange<T> : IEquatable<RefRange<T>>, IEnumerable<T> where T : class, IComparable<T>
     {

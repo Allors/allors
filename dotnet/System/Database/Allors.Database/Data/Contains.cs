@@ -7,7 +7,6 @@ namespace Allors.Database.Data
 {
     using Meta;
 
-
     public class Contains : IPropertyPredicate
     {
         public Contains(IPropertyType propertyType = null) => this.PropertyType = propertyType;

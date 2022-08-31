@@ -12,7 +12,7 @@ namespace Allors.Repository
     #region Allors
     [Id("a53f1aed-0e3f-4c3c-9600-dc579cccf893")]
     #endregion
-    public partial class SecurityToken : UniquelyIdentifiable, Deletable
+    public class SecurityToken : UniquelyIdentifiable, Deletable
     {
         #region Allors
         [Id("6503574b-8bab-4da8-a19d-23a9bcffe01e")]

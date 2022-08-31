@@ -5,8 +5,6 @@
 
 namespace Allors.Workspace.Adapters.Direct
 {
-    using Meta;
-
     public sealed class Object : Adapters.Object
     {
         internal Object(Adapters.Workspace workspace, Adapters.Record record) : base(workspace, record) { }

@@ -5,7 +5,7 @@
 
 namespace Allors.Database.Domain
 {
-    public abstract partial class DelegatedAccessObjectDelegateAccess
+    public abstract class DelegatedAccessObjectDelegateAccess
     {
         public SecurityToken[] SecurityTokens { get; set; }
 

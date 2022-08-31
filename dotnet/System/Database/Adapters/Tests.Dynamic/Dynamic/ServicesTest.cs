@@ -22,7 +22,6 @@ namespace Allors.Database.Adapters
     using System.Linq;
     using Meta;
     using Xunit;
-    using DateTime = System.DateTime;
 
     public abstract class ServicesTest : Test
     {

@@ -5,7 +5,7 @@
 
 namespace Allors.Database.Meta
 {
-    public partial interface IMetaObjectBase : IMetaObject
+    public interface IMetaObjectBase : IMetaObject
     {
         new IMetaPopulationBase MetaPopulation { get; }
     }

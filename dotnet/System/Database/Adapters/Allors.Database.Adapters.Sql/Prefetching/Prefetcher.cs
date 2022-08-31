@@ -9,7 +9,6 @@ namespace Allors.Database.Adapters.Sql
     using System.Collections.Generic;
     using System.Data;
     using System.Linq;
-
     using Meta;
 
     internal abstract class Prefetcher

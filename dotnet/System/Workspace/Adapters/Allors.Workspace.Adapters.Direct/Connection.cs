@@ -5,18 +5,17 @@
 
 namespace Allors.Workspace.Adapters.Direct
 {
+    using System;
     using System.Collections.Concurrent;
     using System.Collections.Generic;
-    using Meta;
-    using Allors.Database;
-    using Allors.Database.Meta;
-    using Allors.Database.Security;
-    using Allors.Shared.Ranges;
     using System.Linq;
-    using System;
-    using IOperandType = Meta.IOperandType;
     using System.Threading.Tasks;
-    using IPullResult = Allors.Workspace.IPullResult;
+    using Database;
+    using Database.Meta;
+    using Database.Security;
+    using Meta;
+    using Shared.Ranges;
+    using IOperandType = Meta.IOperandType;
 
     public class Connection : Adapters.Connection
     {
@@ -97,7 +96,7 @@ namespace Allors.Workspace.Adapters.Direct
             {
                 if (pull.ObjectId < 0 || pull.Object?.Id < 0)
                 {
-                    throw new ArgumentException($"Id is not in the database");
+                    throw new ArgumentException("Id is not in the database");
                 }
             }
 
@@ -118,7 +117,7 @@ namespace Allors.Workspace.Adapters.Direct
 
         public override long GetPermission(Class workspaceClass, IOperandType operandType, Operations operation)
         {
-            var @class = (Database.Meta.IClass)this.Database.MetaPopulation.FindByTag(workspaceClass.Tag);
+            var @class = (IClass)this.Database.MetaPopulation.FindByTag(workspaceClass.Tag);
             var operandId = this.Database.MetaPopulation.FindByTag(operandType.OperandTag).Id;
 
             long permission;

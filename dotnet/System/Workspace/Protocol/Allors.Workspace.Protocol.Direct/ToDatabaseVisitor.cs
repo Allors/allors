@@ -17,14 +17,14 @@ namespace Allors.Workspace.Protocol.Direct
         private readonly ITransaction transaction;
         private readonly IMetaPopulation metaPopulation;
 
-        public ToDatabaseVisitor(Database.ITransaction transaction)
+        public ToDatabaseVisitor(ITransaction transaction)
         {
             this.transaction = transaction;
             this.metaPopulation = transaction.Database.MetaPopulation;
         }
 
-        public Database.Data.Pull Visit(Data.Pull ws) =>
-            new Database.Data.Pull
+        public Pull Visit(Data.Pull ws) =>
+            new Pull
             {
                 ExtentRef = ws.ExtentRef,
                 Extent = this.Visit(ws.Extent),
@@ -34,8 +34,8 @@ namespace Allors.Workspace.Protocol.Direct
                 Arguments = this.Visit(ws.Arguments)
             };
 
-        public Database.Data.Procedure Visit(Data.Procedure ws) =>
-            new Database.Data.Procedure(ws.Name)
+        public Procedure Visit(Data.Procedure ws) =>
+            new Procedure(ws.Name)
             {
                 Collections = ws.Collections?.ToDictionary(v => v.Key, v => this.transaction.Instantiate(v.Value?.Select(w => w.Id))),
                 Objects = ws.Objects?.ToDictionary(v => v.Key, v => v.Value != null ? this.transaction.Instantiate(v.Value.Id) : null),
@@ -43,7 +43,7 @@ namespace Allors.Workspace.Protocol.Direct
                 Pool = ws.Pool?.ToDictionary(v => this.transaction.Instantiate(v.Key.Id), v => v.Value),
             };
 
-        private Database.Data.IExtent Visit(Data.Extent ws) =>
+        private IExtent Visit(Data.Extent ws) =>
             ws switch
             {
                 Data.Filter filter => this.Visit(filter),
@@ -155,7 +155,7 @@ namespace Allors.Workspace.Protocol.Direct
         private IObject Visit(long? id) => id != null ? this.transaction.Instantiate(id.Value) : null;
 
         private Result[] Visit(Data.Result[] ws) =>
-            ws?.Select(v => new Database.Data.Result
+            ws?.Select(v => new Result
             {
                 Name = v.Name,
                 Select = this.Visit(v.Select),

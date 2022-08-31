@@ -9,8 +9,8 @@ namespace Allors.Database.Domain
     using System.Collections.Generic;
     using System.Linq;
     using Database.Derivations;
-    using Meta;
     using Derivations.Rules;
+    using Meta;
 
     public class PersonAddressRule : Rule
     {

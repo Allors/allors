@@ -5,10 +5,9 @@
 
 namespace Allors.Database.Adapters.Sql.Npgsql
 {
-    using System;
     using System.Text;
-    using Meta;
     using global::Npgsql;
+    using Meta;
 
     public class Initialization
     {
@@ -275,14 +274,7 @@ $@"CREATE TABLE {tableName}(
                         var definition = dictionaryEntry.Value;
                         using (var command = new NpgsqlCommand(definition, connection))
                         {
-                            try
-                            {
-                                command.ExecuteNonQuery();
-                            }
-                            catch (Exception e)
-                            {
-                                throw;
-                            }
+                            command.ExecuteNonQuery();
                         }
                     }
                 }

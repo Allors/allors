@@ -7,7 +7,7 @@ namespace Allors.Database.Domain
 {
     using System;
 
-    public static partial class Rounder
+    public static class Rounder
     {
         public static decimal RoundDecimal(decimal value, int digits) => Math.Round(value, digits, MidpointRounding.AwayFromZero);
     }

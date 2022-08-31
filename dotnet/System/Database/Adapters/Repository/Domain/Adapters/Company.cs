@@ -10,7 +10,7 @@ namespace Allors.Repository
     #region Allors
     [Id("b1b6361e-5ee5-434c-9c92-46c6166195c4")]
     #endregion
-    public partial class Company : System.Object, Named
+    public class Company : System.Object, Named
     {
         #region inherited properties
         public string Name { get; set; }

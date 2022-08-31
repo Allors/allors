@@ -11,6 +11,7 @@ namespace Allors.Database.Adapters
     using System;
     using System.Data;
     using Microsoft.Extensions.Configuration;
+    using Sql.Npgsql;
 
     public class DatabaseBuilder
     {
@@ -41,7 +42,7 @@ namespace Allors.Database.Adapters
 
                 case "NPGSQL":
 
-                    return new Sql.Npgsql.Database(this.scope, new Sql.Configuration
+                    return new Database(this.scope, new Sql.Configuration
                     {
                         ObjectFactory = this.objectFactory,
                         ConnectionString = connectionString,

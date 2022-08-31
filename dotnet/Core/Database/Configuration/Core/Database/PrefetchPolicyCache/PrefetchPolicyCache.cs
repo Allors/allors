@@ -7,12 +7,11 @@ namespace Allors.Database.Configuration
 {
     using System.Collections.Generic;
     using Data;
-    using Database;
     using Domain;
     using Meta;
     using Services;
 
-    public partial class PrefetchPolicyCache : IPrefetchPolicyCache
+    public class PrefetchPolicyCache : IPrefetchPolicyCache
     {
         private readonly MetaPopulation m;
         private readonly IDictionary<string, IDictionary<IClass, PrefetchPolicy>> prefetchPolicyByClassByWorkspace;

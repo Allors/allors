@@ -5,7 +5,6 @@
 
 namespace Allors.Database.Adapters.Sql.SqlClient
 {
-    using Adapters;
     using Xunit;
 
     public class One2ManyTest : Adapters.One2ManyTest, IClassFixture<Fixture<One2ManyTest>>

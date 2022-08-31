@@ -11,6 +11,5 @@ namespace Allors.Repository.Attributes
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface)]
     public class RelationshipAttribute : RepositoryAttribute
     {
-        public RelationshipAttribute() { }
     }
 }

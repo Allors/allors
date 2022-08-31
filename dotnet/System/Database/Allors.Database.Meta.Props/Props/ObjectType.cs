@@ -10,7 +10,7 @@ namespace Allors.Database.Meta
     using System.Collections.Generic;
     using Text;
 
-    public abstract partial class ObjectType : IObjectTypeBase
+    public abstract class ObjectType : IObjectTypeBase
     {
         private string singularName;
 
@@ -119,7 +119,7 @@ namespace Allors.Database.Meta
                 return this.SingularName;
             }
 
-            return this.Tag.ToString();
+            return this.Tag;
         }
 
         /// <summary>

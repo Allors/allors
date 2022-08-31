@@ -12,7 +12,7 @@ namespace Allors.Repository
     [Id("EF49F009-8532-429D-988D-B2626BD4D56E")]
     #endregion
     [Workspace(Default)]
-    public partial class OverrideClass : OverrideInterface
+    public class OverrideClass : OverrideInterface
     {
         [Required]
         public string OverrideRequired { get; set; }

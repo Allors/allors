@@ -10,7 +10,6 @@ namespace Allors.Database.Domain.Tests
 {
     using System.Collections.Generic;
     using System.IO;
-    using Domain;
     using Xunit;
 
     public class TemplateTests : DomainTest, IClassFixture<Fixture>

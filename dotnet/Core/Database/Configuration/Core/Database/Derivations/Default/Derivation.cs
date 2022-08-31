@@ -113,7 +113,7 @@ namespace Allors.Database.Configuration.Derivations.Default
                                     matchesByRule.Add(rule, matches);
                                 }
 
-                                IEnumerable<IObject> source = new IObject[] { association };
+                                IEnumerable<IObject> source = new[] { association };
 
                                 if (pattern.Tree != null)
                                 {
@@ -150,7 +150,7 @@ namespace Allors.Database.Configuration.Derivations.Default
                                     matchesByRule.Add(rule, matches);
                                 }
 
-                                IEnumerable<IObject> source = new IObject[] { role };
+                                IEnumerable<IObject> source = new[] { role };
 
                                 if (pattern.Tree != null)
                                 {

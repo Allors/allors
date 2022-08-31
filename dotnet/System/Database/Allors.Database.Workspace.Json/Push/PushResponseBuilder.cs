@@ -9,9 +9,9 @@ namespace Allors.Database.Protocol.Json
     using System.Collections.Generic;
     using System.Linq;
     using Allors.Protocol.Json;
-    using Meta;
     using Allors.Protocol.Json.Api.Push;
     using Derivations;
+    using Meta;
     using Security;
 
     public class PushResponseBuilder

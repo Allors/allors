@@ -9,9 +9,8 @@ namespace Allors.Database.Adapters.Sql.SqlClient
     using System.Collections;
     using System.Collections.Generic;
     using System.Xml;
-    using Adapters;
     using Meta;
-    using Version = Version;
+    using Version = Allors.Version;
 
     public class Objects : IEnumerable<object[]>
     {

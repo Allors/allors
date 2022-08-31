@@ -5,7 +5,6 @@
 
 namespace Allors.Database.Adapters.Memory
 {
-    using Adapters;
     using Meta;
 
     internal sealed class AssociationEquals : Predicate
@@ -25,7 +24,7 @@ namespace Allors.Database.Adapters.Memory
         internal override ThreeValuedLogic Evaluate(Strategy strategy)
         {
             var association = strategy.GetCompositeAssociation(this.associationType);
-            return association?.Equals(this.@equals) == true
+            return association?.Equals(this.equals) == true
                        ? ThreeValuedLogic.True
                        : ThreeValuedLogic.False;
         }

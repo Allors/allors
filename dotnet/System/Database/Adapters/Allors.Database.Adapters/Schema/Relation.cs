@@ -7,7 +7,7 @@ namespace Allors.Database.Adapters.Schema
 {
     using System.Xml.Serialization;
 
-    public partial class Relation
+    public class Relation
     {
         [XmlAttribute("a")]
         public long Association { get; set; }

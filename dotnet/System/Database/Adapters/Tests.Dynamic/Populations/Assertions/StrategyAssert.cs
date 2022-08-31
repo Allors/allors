@@ -22,7 +22,6 @@ namespace Allors.Database.Adapters
 {
     using System;
     using Meta;
-
     using Xunit;
 
     public class StrategyAssert

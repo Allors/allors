@@ -24,7 +24,7 @@ namespace Allors.Database.Adapters.Sql.SqlClient
         public IEnumerator<SqlDataRecord> GetEnumerator()
         {
             var objectArrayElement = this.mapping.TableTypeColumnNameForObject;
-            var metaData = new SqlMetaData[]
+            var metaData = new[]
             {
                 new SqlMetaData(objectArrayElement, SqlDbType.BigInt),
                 new SqlMetaData(objectArrayElement, SqlDbType.BigInt),

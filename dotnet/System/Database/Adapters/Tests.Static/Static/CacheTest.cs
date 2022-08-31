@@ -9,7 +9,6 @@ namespace Allors.Database.Adapters
     using System.Linq;
     using Domain;
     using Xunit;
-    using IDatabase = IDatabase;
 
     public abstract class CacheTest : IDisposable
     {
@@ -195,7 +194,7 @@ namespace Allors.Database.Adapters
                 var prefetchPolicyBuilder = new PrefetchPolicyBuilder();
                 prefetchPolicyBuilder.WithRule(m.C1.C1C2many2one, nestedPrefetchPolicy);
                 var prefetchPolicy = prefetchPolicyBuilder.Build();
-                transaction.Prefetch(prefetchPolicy, new[] { c1a, c1b });
+                transaction.Prefetch(prefetchPolicy, c1a, c1b);
 
                 var result = c1a.C1C2many2one;
 
@@ -238,7 +237,7 @@ namespace Allors.Database.Adapters
                 var prefetchPolicyBuilder = new PrefetchPolicyBuilder();
                 prefetchPolicyBuilder.WithRule(m.C1.C1C2one2manies, nestedPrefetchPolicy);
                 var prefetchPolicy = prefetchPolicyBuilder.Build();
-                transaction.Prefetch(prefetchPolicy, new[] { c1a, c1b });
+                transaction.Prefetch(prefetchPolicy, c1a, c1b);
 
                 var result = c1a.C1C2one2manies;
 

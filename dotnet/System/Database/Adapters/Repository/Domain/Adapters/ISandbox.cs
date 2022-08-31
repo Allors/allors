@@ -10,7 +10,7 @@ namespace Allors.Repository
     #region Allors
     [Id("7ba2ab26-491b-49eb-944c-26f6bb66e50f")]
     #endregion
-    public partial interface ISandbox : Object
+    public interface ISandbox : Object
     {
         #region Allors
         [Id("38361bff-62b3-4607-8291-cfdaeedbd36d")]

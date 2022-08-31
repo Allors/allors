@@ -8,9 +8,6 @@ namespace Allors.Database.Adapters.Sql
     using System;
     using System.Text;
     using System.Xml;
-
-    using Adapters;
-
     using Meta;
 
     /// <summary>

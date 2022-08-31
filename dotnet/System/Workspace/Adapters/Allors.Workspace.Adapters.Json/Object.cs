@@ -5,8 +5,6 @@
 
 namespace Allors.Workspace.Adapters.Json
 {
-    using Meta;
-
     public sealed class Object : Adapters.Object
     {
         internal Object(Workspace workspace, Record record) : base(workspace, record) { }

@@ -5,7 +5,7 @@
 
 namespace Allors.Database.Domain
 {
-    using Allors.Database.Derivations;
+    using Database.Derivations;
 
     public abstract partial class ObjectOnPostDerive
     {

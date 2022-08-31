@@ -5,7 +5,6 @@
 
 namespace Allors.Database.Adapters.Memory
 {
-    using Adapters;
     using Meta;
 
     internal sealed class Instanceof : Predicate

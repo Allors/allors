@@ -8,6 +8,7 @@ namespace Allors.Database.Configuration
     using Domain;
     using MailKit.Net.Smtp;
     using MimeKit;
+    using MailboxAddress = MimeKit.MailboxAddress;
 
     public class MailKitMailer : IMailer
     {
@@ -38,17 +39,17 @@ namespace Allors.Database.Configuration
             var sender = emailMesssage.Sender?.UserEmail ?? this.DefaultSender;
             var senderName = emailMesssage.Sender?.UserName ?? this.DefaultSenderName;
 
-            message.From.Add(new MimeKit.MailboxAddress(senderName, sender));
+            message.From.Add(new MailboxAddress(senderName, sender));
 
             if (emailMesssage.ExistRecipientEmailAddress)
             {
-                var address = new MimeKit.MailboxAddress(emailMesssage.RecipientEmailAddress, emailMesssage.RecipientEmailAddress);
+                var address = new MailboxAddress(emailMesssage.RecipientEmailAddress, emailMesssage.RecipientEmailAddress);
                 message.To.Add(address);
             }
 
             foreach (var recipient in emailMesssage.Recipients)
             {
-                var address = new MimeKit.MailboxAddress(recipient.UserName, recipient.UserEmail);
+                var address = new MailboxAddress(recipient.UserName, recipient.UserEmail);
                 message.To.Add(address);
             }
 

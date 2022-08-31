@@ -7,10 +7,7 @@ namespace Allors.Database.Adapters
 {
     using System;
     using Meta;
-
     using Xunit;
-
-    using IDatabase = IDatabase;
 
     public enum ColumnTypes
     {

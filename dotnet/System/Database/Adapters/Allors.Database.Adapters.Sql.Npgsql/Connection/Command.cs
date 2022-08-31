@@ -9,8 +9,8 @@ namespace Allors.Database.Adapters.Sql.Npgsql
     using System.Collections.Generic;
     using System.Data;
     using System.Linq;
-    using Meta;
     using global::Npgsql;
+    using Meta;
     using NpgsqlTypes;
 
     public class Command : ICommand

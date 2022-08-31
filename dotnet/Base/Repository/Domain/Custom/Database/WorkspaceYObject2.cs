@@ -11,7 +11,7 @@ namespace Allors.Repository
     [Id("26FD28AD-75CE-4797-8B38-99D9444302B8")]
     #endregion
     [Workspace(Workspaces.Y)]
-    public partial class WorkspaceYObject2 : Object
+    public class WorkspaceYObject2 : Object
     {
 
         #region inherited

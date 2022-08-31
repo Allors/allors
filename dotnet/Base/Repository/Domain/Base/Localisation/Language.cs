@@ -14,7 +14,7 @@ namespace Allors.Repository
     [Id("4a0eca4b-281f-488d-9c7e-497de882c044")]
     #endregion
     [Workspace(Default)]
-    public partial class Language : Object
+    public class Language : Object
     {
         #region Allors
         [Id("d2a32d9f-21cc-4f9d-b0d3-a9b75da66907")]

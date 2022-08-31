@@ -8,7 +8,6 @@ namespace Allors
     using System;
     using System.IO;
     using System.Linq;
-
     using R1.Development.Resources;
 
     class Program

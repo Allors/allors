@@ -6,7 +6,7 @@
 namespace Allors.Database.Domain
 {
     using System;
-    using Allors.Document.OpenDocument;
+    using Document.OpenDocument;
 
     public class TemplateObjectCacheEntry
     {

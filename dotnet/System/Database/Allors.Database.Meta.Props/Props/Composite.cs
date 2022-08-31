@@ -10,7 +10,7 @@ namespace Allors.Database.Meta
     using System.Collections.Generic;
     using System.Linq;
 
-    public abstract partial class Composite : ObjectType, ICompositeBase
+    public abstract class Composite : ObjectType, ICompositeBase
     {
         private readonly IMetaPopulationBase metaPopulation;
 

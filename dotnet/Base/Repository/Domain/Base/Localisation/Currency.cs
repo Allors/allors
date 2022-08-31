@@ -7,7 +7,6 @@
 namespace Allors.Repository
 {
     using System;
-
     using Attributes;
     using static Workspaces;
 
@@ -16,7 +15,7 @@ namespace Allors.Repository
     [Id("fd397adf-40b4-4ef8-b449-dd5a24273df3")]
     #endregion
     [Plural("Currencies")]
-    public partial class Currency : Enumeration, Object
+    public class Currency : Enumeration, Object
     {
         #region Allors
         [Id("294a4bdc-f03a-47a2-a649-419e6b9021a3")]

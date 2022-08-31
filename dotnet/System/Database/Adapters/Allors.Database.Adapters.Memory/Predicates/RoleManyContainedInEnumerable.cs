@@ -7,7 +7,6 @@ namespace Allors.Database.Adapters.Memory
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Adapters;
     using Meta;
 
     internal sealed class RoleManyContainedInEnumerable : Predicate

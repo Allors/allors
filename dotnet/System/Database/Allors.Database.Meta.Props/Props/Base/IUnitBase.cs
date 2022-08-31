@@ -5,7 +5,7 @@
 
 namespace Allors.Database.Meta
 {
-    public partial interface IUnitBase : IObjectTypeBase, IUnit
+    public interface IUnitBase : IObjectTypeBase, IUnit
     {
         void Bind();
     }

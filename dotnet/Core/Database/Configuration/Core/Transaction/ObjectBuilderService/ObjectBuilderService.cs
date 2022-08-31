@@ -5,8 +5,7 @@
 
 namespace Allors.Database.Configuration
 {
-    using Allors.Database;
-    using Allors.Database.Meta;
+    using Meta;
     using Services;
 
     public class ObjectBuilderService : IObjectBuilderService

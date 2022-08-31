@@ -7,8 +7,6 @@ namespace Allors.Database.Domain.Tests
 {
     using System.Collections.Generic;
     using Allors.Protocol.Json.SystemText;
-    using Database;
-    using Domain;
     using Protocol.Json;
     using Services;
     using Xunit;

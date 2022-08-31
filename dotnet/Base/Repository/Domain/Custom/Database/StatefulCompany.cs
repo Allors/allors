@@ -11,7 +11,7 @@ namespace Allors.Repository
     [Id("62859bfb-7949-4f7f-a428-658447576d0a")]
     #endregion
     [Plural("StatefulCompanies")]
-    public partial class StatefulCompany : Object
+    public class StatefulCompany : Object
     {
         #region Allors
         [Id("6c848eeb-7b42-45ea-81ac-fa983e1e0fa9")]

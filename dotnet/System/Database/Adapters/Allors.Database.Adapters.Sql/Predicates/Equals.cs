@@ -5,8 +5,6 @@
 
 namespace Allors.Database.Adapters.Sql
 {
-    using Adapters;
-
     internal sealed class Equals : Predicate
     {
         private readonly IObject obj;

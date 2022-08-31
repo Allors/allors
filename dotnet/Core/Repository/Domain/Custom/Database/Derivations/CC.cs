@@ -10,7 +10,7 @@ namespace Allors.Repository
     #region Allors
     [Id("4AD76347-A82F-4AA0-9478-2B6BEF5985A2")]
     #endregion
-    public partial class CC : Object
+    public class CC : Object
     {
         #region Allors
         [Id("F12C9ECE-1B0F-4449-910B-6AC935805432")]

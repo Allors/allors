@@ -7,7 +7,6 @@ namespace Allors.Database.Adapters.Sql
 {
     using System.Collections.Generic;
     using System.Text;
-
     using Meta;
 
     internal class ExtentStatementRoot : ExtentStatement

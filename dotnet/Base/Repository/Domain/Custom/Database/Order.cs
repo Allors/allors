@@ -12,7 +12,7 @@ namespace Allors.Repository
     #region Allors
     [Id("94be4938-77c1-488f-b116-6d4daeffcc8d")]
     #endregion
-    public partial class Order : Transitional, Versioned
+    public class Order : Transitional, Versioned
     {
         #region ObjectStates
         #region OrderState

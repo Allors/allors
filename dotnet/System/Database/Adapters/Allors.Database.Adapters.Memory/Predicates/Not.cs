@@ -7,7 +7,6 @@ namespace Allors.Database.Adapters.Memory
 {
     using System;
     using System.Collections.Generic;
-
     using Meta;
 
     internal sealed class Not : Predicate, ICompositePredicate

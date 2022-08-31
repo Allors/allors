@@ -8,10 +8,10 @@ namespace Allors.Database.Protocol.Json
     using System.Collections.Generic;
     using System.Linq;
     using Allors.Protocol.Json;
-    using Meta;
     using Allors.Protocol.Json.Api.Sync;
-    using Shared.Ranges;
+    using Meta;
     using Security;
+    using Shared.Ranges;
 
     public class SyncResponseBuilder
     {

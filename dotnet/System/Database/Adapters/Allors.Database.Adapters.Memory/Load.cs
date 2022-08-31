@@ -8,11 +8,8 @@ namespace Allors.Database.Adapters.Memory
     using System;
     using System.Collections.Generic;
     using System.Xml;
-
-    using Adapters;
-
     using Meta;
-    using Version = Version;
+    using Version = Allors.Version;
 
     public class Load
     {

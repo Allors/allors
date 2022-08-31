@@ -7,7 +7,6 @@ namespace Allors.Database.Data
 {
     using Meta;
 
-
     public class Instanceof : IPropertyPredicate
     {
         public Instanceof(IPropertyType propertyType = null) => this.PropertyType = propertyType;

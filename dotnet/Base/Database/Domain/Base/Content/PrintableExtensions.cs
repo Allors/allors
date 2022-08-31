@@ -7,7 +7,7 @@ namespace Allors.Database.Domain
 {
     using System.Collections.Generic;
 
-    public static partial class PrintableExtensions
+    public static class PrintableExtensions
     {
         public static void RenderPrintDocument(this Printable @this, Template template, object model, IDictionary<string, byte[]> images)
         {

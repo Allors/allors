@@ -13,7 +13,7 @@ namespace Allors.Repository
     [Id("4092d0b4-c6f4-4b81-b023-66be3f4c90bd")]
     #endregion
     [Workspace(Default)]
-    public partial class TaskAssignment : Deletable, Object
+    public class TaskAssignment : Deletable, Object
     {
         #region Allors
         [Id("c32c19f1-3f41-4d11-b19d-b8b2aa360166")]

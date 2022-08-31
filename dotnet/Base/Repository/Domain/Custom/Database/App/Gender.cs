@@ -11,7 +11,7 @@ namespace Allors.Repository
     #region Allors
     [Id("270f0dc8-1bc2-4a42-9617-45e93d5403c8")]
     #endregion
-    public partial class Gender : Enumeration
+    public class Gender : Enumeration
     {
         #region inherited
         public LocalizedText[] LocalizedNames { get; set; }

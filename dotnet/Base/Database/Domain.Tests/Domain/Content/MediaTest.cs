@@ -8,7 +8,6 @@ namespace Allors.Database.Domain.Tests
 {
     using System;
     using System.IO;
-    using Domain;
     using Xunit;
 
     public class MediaTest : ContentTests, IClassFixture<Fixture>

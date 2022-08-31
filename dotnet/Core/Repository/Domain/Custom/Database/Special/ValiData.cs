@@ -12,7 +12,7 @@ namespace Allors.Repository
     [Id("CC635728-B7AE-4A07-BBF1-E16AEEC07750")]
     #endregion
     [Workspace(Default)]
-    public partial class ValiData : Object
+    public class ValiData : Object
     {
         #region Allors
         [Id("C90E7744-9AFD-46A2-9F6F-3D76D681106A")]

@@ -8,9 +8,6 @@ namespace Allors.Database.Adapters.Sql.SqlClient
 {
     using System;
     using System.Xml;
-
-    using Adapters;
-
     using Meta;
 
     /// <summary>

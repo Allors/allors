@@ -6,7 +6,6 @@
 namespace Allors.Database.Data
 {
     using System.Linq;
-
     using Meta;
 
     public class Union : IExtentOperator

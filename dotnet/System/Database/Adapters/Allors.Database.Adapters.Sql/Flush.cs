@@ -6,7 +6,6 @@
 namespace Allors.Database.Adapters.Sql
 {
     using System.Collections.Generic;
-
     using Meta;
 
     internal class Flush

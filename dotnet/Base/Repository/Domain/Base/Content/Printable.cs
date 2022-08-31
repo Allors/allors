@@ -11,7 +11,7 @@ namespace Allors.Repository
     #region Allors
     [Id("61207a42-3199-4249-baa4-9dd11dc0f5b1")]
     #endregion
-    public partial interface Printable : Object
+    public interface Printable : Object
     {
         #region Allors
         [Id("079C31BA-0D20-4CD7-921C-A1829E226970")]

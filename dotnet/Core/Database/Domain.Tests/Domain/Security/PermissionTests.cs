@@ -11,7 +11,6 @@ namespace Allors.Database.Domain.Tests
     using Meta;
     using Services;
     using Xunit;
-    using ExecutePermission = Domain.ExecutePermission;
 
     public class PermissionTests : DomainTest, IClassFixture<Fixture>
     {
@@ -99,7 +98,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void WhenSyncingPermissionsThenDanglingPermissionsAreDeleted()
         {
-            var permission = this.Transaction.Build<Database.Domain.ReadPermission>();
+            var permission = this.Transaction.Build<ReadPermission>();
 
             this.Transaction.Database.Services.Get<IPermissions>().Sync(this.Transaction);
 

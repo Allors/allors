@@ -7,10 +7,9 @@ namespace Allors.Database.Domain
 {
     using System;
     using System.Linq;
-
     using Meta;
 
-    public partial class TransitionalConfiguration
+    public class TransitionalConfiguration
     {
         public TransitionalConfiguration(IClass objectType, IRoleType roleType)
         {

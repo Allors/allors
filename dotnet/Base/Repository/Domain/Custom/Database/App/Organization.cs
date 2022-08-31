@@ -13,7 +13,7 @@ namespace Allors.Repository
     [Id("3a5dcec7-308f-48c7-afee-35d38415aa0b")]
     #endregion
     [Workspace(Default)]
-    public partial class Organization : Addressable, Deletable, UniquelyIdentifiable
+    public class Organization : Addressable, Deletable, UniquelyIdentifiable
     {
         #region Allors
         [Id("2cfea5d4-e893-4264-a966-a68716839acd")]

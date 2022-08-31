@@ -6,7 +6,6 @@
 namespace Allors.Database.Domain
 {
     using System.Collections.Concurrent;
-    using Database;
 
     public class TemplateObjectCache : ITemplateObjectCache
     {

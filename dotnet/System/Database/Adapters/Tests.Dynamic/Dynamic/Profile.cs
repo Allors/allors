@@ -17,10 +17,9 @@
 namespace Allors.Database.Adapters
 {
     using System;
+    using Domain;
     using Memory;
     using Meta;
-    using C1 = Domain.C1;
-    using ObjectFactory = ObjectFactory;
 
     public abstract class Profile : IDisposable
     {

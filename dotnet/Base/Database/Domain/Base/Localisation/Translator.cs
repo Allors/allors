@@ -8,8 +8,7 @@ namespace Allors.Database.Domain
     using System;
     using System.Linq;
 
-
-    public partial class Translator<T>
+    public class Translator<T>
         where T : IObject
     {
         private readonly Locale locale;

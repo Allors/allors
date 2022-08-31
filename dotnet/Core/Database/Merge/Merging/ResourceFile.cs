@@ -8,6 +8,7 @@
 
 namespace Allors.R1.Development.Resources
 {
+    using System;
     using System.IO;
     using System.Linq;
     using System.Xml.Linq;
@@ -21,9 +22,9 @@ namespace Allors.R1.Development.Resources
             {
                 this.Document = XDocument.Load(fileInfo.FullName);
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
-                System.Console.WriteLine(e);
+                Console.WriteLine(e);
                 throw;
             }
         }

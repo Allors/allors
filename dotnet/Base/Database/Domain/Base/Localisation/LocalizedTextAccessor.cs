@@ -7,7 +7,7 @@ namespace Allors.Database.Domain
 {
     using Meta;
 
-    public partial class LocalizedTextAccessor
+    public class LocalizedTextAccessor
     {
         private readonly IRoleType roleType;
 

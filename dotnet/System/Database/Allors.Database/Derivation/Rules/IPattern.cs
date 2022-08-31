@@ -7,7 +7,7 @@
 namespace Allors.Database.Derivations
 {
     using System.Collections.Generic;
-    using Database.Data;
+    using Data;
     using Meta;
 
     public interface IPattern

@@ -8,8 +8,8 @@ namespace Allors.Workspace.Adapters
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Allors.Shared.Ranges;
     using Meta;
+    using Shared.Ranges;
 
     public abstract class Object : IObject, IComparable<Object>
     {

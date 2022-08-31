@@ -7,7 +7,6 @@ namespace Allors.Database.Adapters.Sql
 {
     using System.Collections.Generic;
     using System.Linq;
-
     using Meta;
 
     public sealed class State

@@ -24,8 +24,8 @@ namespace Allors.Database.Configuration
 
         public Select Get(Guid id)
         {
-            this.SelectById.TryGetValue(id, out var @select);
-            return @select;
+            this.SelectById.TryGetValue(id, out var select);
+            return select;
         }
     }
 }

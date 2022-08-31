@@ -9,8 +9,8 @@ namespace Allors.Database.Adapters.Sql.Npgsql
     using System.Collections;
     using System.Collections.Generic;
     using System.Xml;
-    using Adapters;
     using Meta;
+    using Version = Allors.Version;
 
     public class Objects : IEnumerable<object[]>
     {
@@ -63,7 +63,7 @@ namespace Allors.Database.Adapters.Sql.Npgsql
                                     var objectId = long.Parse(objectArray[0]);
                                     var objectVersion = objectArray.Length > 1
                                         ? long.Parse(objectArray[1])
-                                        : (long) Allors.Version.DatabaseInitial;
+                                        : (long) Version.DatabaseInitial;
 
                                     if (objectType is IClass @class)
                                     {

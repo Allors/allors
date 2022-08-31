@@ -7,10 +7,9 @@ namespace Allors.Database.Adapters
 {
     using System;
     using System.Collections.Generic;
+    using Domain;
     using Memory;
     using Meta;
-    using C1 = Domain.C1;
-    using ObjectFactory = ObjectFactory;
 
     public abstract class Profile : IProfile
     {

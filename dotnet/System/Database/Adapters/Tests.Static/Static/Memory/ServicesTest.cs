@@ -6,7 +6,6 @@
 namespace Allors.Database.Adapters.Memory
 {
     using System;
-    using Adapters;
     using Xunit;
 
     public class ServicesTest : Adapters.ServicesTest, IDisposable

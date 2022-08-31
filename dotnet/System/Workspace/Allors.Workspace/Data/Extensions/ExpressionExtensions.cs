@@ -26,7 +26,7 @@ namespace Allors.Workspace.Data
         }
     }
 
-    public static partial class ExpressionExtensions
+    public static class ExpressionExtensions
     {
         public static Node Node<T>(this Expression<Func<T, IPropertyType>> @this, MetaPopulation metaPopulation) where T : IComposite
         {

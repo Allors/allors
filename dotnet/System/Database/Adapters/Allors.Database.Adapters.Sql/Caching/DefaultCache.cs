@@ -7,7 +7,6 @@ namespace Allors.Database.Adapters.Sql.Caching
 {
     using System.Collections.Concurrent;
     using System.Collections.Generic;
-
     using Meta;
 
     /// <summary>

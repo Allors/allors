@@ -10,7 +10,7 @@ namespace Allors.Repository
     #region Allors
     [Id("6CF7B2FD-7A8F-422A-8D9C-E1B6A27EBAAB")]
     #endregion
-    public partial class WorkspaceNonObject2 : Object
+    public class WorkspaceNonObject2 : Object
     {
         #region inherited
 

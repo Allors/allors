@@ -13,7 +13,7 @@ namespace Allors.Repository
     #region Allors
     [Id("2288E1F3-5DC5-458B-9F5E-076F133890C0")]
     #endregion
-    public partial class LocalizedMedia : Localized, Deletable
+    public class LocalizedMedia : Localized, Deletable
     {
         #region Allors
         [Id("B6AE19AE-76BF-4B84-9CBE-176217D94B9E")]

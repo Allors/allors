@@ -9,7 +9,6 @@
 namespace Allors.Database.Adapters.Sql
 {
     using System;
-    using Adapters;
     using Meta;
 
     internal sealed class RoleEqualsRole : Predicate

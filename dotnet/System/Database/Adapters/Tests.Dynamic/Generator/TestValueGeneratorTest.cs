@@ -20,7 +20,6 @@ namespace Allors.Database.Adapters
     using System.Linq;
     using Xunit;
 
-
     public class TestValueGeneratorTest
     {
         private readonly TestValueGenerator testValueGenerator = new TestValueGenerator();

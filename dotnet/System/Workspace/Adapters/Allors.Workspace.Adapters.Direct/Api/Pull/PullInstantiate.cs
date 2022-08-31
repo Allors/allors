@@ -79,7 +79,7 @@ namespace Allors.Workspace.Adapters.Direct
                                         ? set.Cast<IObject>().ToArray()
                                         : ((Extent)stepResult)?.ToArray() ?? Array.Empty<IObject>();
 
-                                    response.AddCollection(name, (IComposite)@select.GetObjectType() ?? @class, objects, include);
+                                    response.AddCollection(name, (IComposite)select.GetObjectType() ?? @class, objects, include);
                                 }
                             }
                             else

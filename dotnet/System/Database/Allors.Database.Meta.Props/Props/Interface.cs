@@ -10,7 +10,7 @@ namespace Allors.Database.Meta
     using System.Collections.Generic;
     using System.Linq;
 
-    public abstract partial class Interface : Composite, IInterfaceBase
+    public abstract class Interface : Composite, IInterfaceBase
     {
         private string[] derivedWorkspaceNames;
 

@@ -40,7 +40,7 @@ namespace Allors.Workspace.Meta
         {
             this.IsDerived = isDerived;
 
-            ((AssociationType)this.AssociationType).Init();
+            this.AssociationType.Init();
         }
     }
 }

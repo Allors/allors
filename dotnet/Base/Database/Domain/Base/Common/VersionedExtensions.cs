@@ -8,10 +8,9 @@ namespace Allors.Database.Domain
     using System;
     using System.Linq;
     using System.Text.RegularExpressions;
-
     using Meta;
 
-    public static partial class VersionedExtensions
+    public static class VersionedExtensions
     {
         public static void CoreOnPostDerive(this Versioned @this, ObjectOnPostDerive method)
         {

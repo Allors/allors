@@ -11,7 +11,7 @@ namespace Allors.Database.Meta
     using System.Collections.Generic;
     using System.Linq;
 
-    public abstract partial class Class : Composite, IClassBase
+    public abstract class Class : Composite, IClassBase
     {
         private string[] assignedWorkspaceNames;
         private string[] derivedWorkspaceNames;

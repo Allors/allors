@@ -9,7 +9,6 @@
 namespace Allors.Database.Adapters.Sql.Npgsql
 {
     using Xunit;
-    using Adapters;
 
     public class Many2ManyTest : Adapters.Many2ManyTest, IClassFixture<Fixture<Many2ManyTest>>
     {

@@ -8,7 +8,6 @@ namespace Allors.Database
 {
     using System;
     using System.Reflection;
-
     using Meta;
 
     /// <summary>

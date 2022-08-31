@@ -7,8 +7,7 @@ namespace Allors.Database.Adapters.Sql
 {
     using System;
     using System.Collections.Generic;
-
-    using Allors.Database.Meta;
+    using Meta;
 
     public class Reference
     {

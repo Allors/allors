@@ -6,11 +6,10 @@
 namespace Allors.Database.Server.Controllers
 {
     using Allors.Services;
-    using Database;
     using Domain;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    
+
     public class TestSessionController : Controller
     {
         public TestSessionController(ITransactionService sessionService, IWorkspaceService workspaceService)

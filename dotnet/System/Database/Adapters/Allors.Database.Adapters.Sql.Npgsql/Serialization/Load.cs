@@ -10,9 +10,8 @@ namespace Allors.Database.Adapters.Sql.Npgsql
     using System.Data;
     using System.Linq;
     using System.Xml;
-    using Adapters;
-    using Meta;
     using global::Npgsql;
+    using Meta;
     using NpgsqlTypes;
 
     public class Load

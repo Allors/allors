@@ -5,11 +5,12 @@
 
 namespace Allors.Services
 {
+    using System;
     using Database;
 
     public class DatabaseService : IDatabaseService
     {
-        public System.Func<IDatabase> Build { get; set; }
+        public Func<IDatabase> Build { get; set; }
 
         public IDatabase Database { get; set; }
     }
