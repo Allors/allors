@@ -3,29 +3,9 @@
   <Interface Name="Allors.Workspace.IConnection">
     <Position X="0.5" Y="0.5" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAABAAAQ=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAABAAAQAAAAgAAAQAAAAAABAAAA=</HashCode>
       <FileName>IConnection.cs</FileName>
     </TypeIdentifier>
-  </Interface>
-  <Interface Name="Allors.Workspace.IWorkspace">
-    <Position X="3.75" Y="0.5" Width="2.25" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAEAAARAAAAAAAAgAAAQAAAAAAAAAAA=</HashCode>
-      <FileName>IWorkspace.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="Connection" />
-    </ShowAsAssociation>
-  </Interface>
-  <Interface Name="Allors.Workspace.IObject">
-    <Position X="7.5" Y="0.5" Width="2.25" />
-    <TypeIdentifier>
-      <HashCode>IEBCAAEIAABQAAAgEEYQAAAAAAAAAAAAAAAAAAAIAAA=</HashCode>
-      <FileName>IObject.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="Workspace" />
-    </ShowAsAssociation>
   </Interface>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>
