@@ -9,7 +9,7 @@ namespace Allors.Workspace.Request.Extensions
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Request;
+    using Workspace.Request;
     using Meta;
 
     public static class ICompositeExtensions

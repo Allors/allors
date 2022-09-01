@@ -9,11 +9,11 @@ namespace Allors.Workspace.Request
     using Response;
     using Visitor;
 
-    public class Procedure : IVisitable
+    public class ProcedureCall : IInvocable
     {
-        public Procedure(string name) => this.Name = name;
+        public ProcedureCall(string procedureName) => this.ProcedureName = procedureName;
 
-        public string Name { get; }
+        public string ProcedureName { get; }
 
         public IDictionary<string, IObject[]> Collections { get; set; }
 
@@ -23,6 +23,6 @@ namespace Allors.Workspace.Request
 
         public IDictionary<IObject, long> Pool { get; set; }
 
-        public void Accept(IVisitor visitor) => visitor.VisitProcedure(this);
+        public void Accept(IVisitor visitor) => visitor.VisitProcedureCall(this);
     }
 }

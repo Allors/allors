@@ -40,7 +40,7 @@ namespace Allors.Workspace.Adapters.Direct
 
         private Func<IValidation> Derive { get; }
 
-        internal void Execute(Method[] methods, InvokeOptions options)
+        internal void Execute(MethodCall[] methods, InvokeOptions options)
         {
             var isolated = options?.Isolated ?? false;
             var continueOnError = options?.ContinueOnError ?? false;
@@ -94,7 +94,7 @@ namespace Allors.Workspace.Adapters.Direct
             }
         }
 
-        private bool Execute(Method invocation)
+        private bool Execute(MethodCall invocation)
         {
             var obj = this.Transaction.Instantiate(invocation.Object.Id);
             if (obj == null)

@@ -32,7 +32,7 @@ namespace Tests.Workspace
 
             Assert.False((bool)organization.GetUnitRole(m.Organization.JustDidIt));
 
-            var invokeResult = await connection.InvokeAsync(new Method(organization, m.Organization.JustDoIt));
+            var invokeResult = await connection.InvokeAsync(new MethodCall(organization, m.Organization.JustDoIt));
 
             Assert.False(invokeResult.HasErrors);
 
@@ -58,7 +58,7 @@ namespace Tests.Workspace
 
             Assert.False((bool)organization1.GetUnitRole(m.Organization.JustDidIt));
 
-            var invokeResult = await connection.InvokeAsync(new[] { new Method(organization1, m.Organization.JustDoIt), new Method(organization2, m.Organization.JustDoIt) });
+            var invokeResult = await connection.InvokeAsync(new[] { new MethodCall(organization1, m.Organization.JustDoIt), new MethodCall(organization2, m.Organization.JustDoIt) });
 
             Assert.False(invokeResult.HasErrors);
 
@@ -89,7 +89,7 @@ namespace Tests.Workspace
 
             Assert.False((bool)organization1.GetUnitRole(m.Organization.JustDidIt));
 
-            var invokeResult = await connection.InvokeAsync(new[] { new Method(organization1, m.Organization.JustDoIt), new Method(organization2, m.Organization.JustDoIt) }, new InvokeOptions { Isolated = true });
+            var invokeResult = await connection.InvokeAsync(new[] { new MethodCall(organization1, m.Organization.JustDoIt), new MethodCall(organization2, m.Organization.JustDoIt) }, new InvokeOptions { Isolated = true });
 
             Assert.False(invokeResult.HasErrors);
 

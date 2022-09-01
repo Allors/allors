@@ -22,11 +22,11 @@ namespace Allors.Workspace.Adapters
 
         public MetaPopulation MetaPopulation { get; }
 
-        public abstract Task<IInvokeResult> InvokeAsync(Method method, InvokeOptions options = null);
+        public abstract Task<IInvokeResult> InvokeAsync(MethodCall method, InvokeOptions options = null);
 
-        public abstract Task<IInvokeResult> InvokeAsync(Method[] methods, InvokeOptions options = null);
+        public abstract Task<IInvokeResult> InvokeAsync(MethodCall[] methods, InvokeOptions options = null);
 
-        public abstract Task<IPullResult> CallAsync(Procedure procedure, params Pull[] pull);
+        public abstract Task<IPullResult> CallAsync(ProcedureCall procedureCall, params Pull[] pull);
 
         public abstract Task<IPullResult> CallAsync(object args, string name);
 

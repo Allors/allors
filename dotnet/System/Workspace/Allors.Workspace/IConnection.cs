@@ -16,11 +16,11 @@ namespace Allors.Workspace
 
         MetaPopulation MetaPopulation { get; }
 
-        Task<IInvokeResult> InvokeAsync(Method method, InvokeOptions options = null);
+        Task<IInvokeResult> InvokeAsync(MethodCall method, InvokeOptions options = null);
 
-        Task<IInvokeResult> InvokeAsync(Method[] methods, InvokeOptions options = null);
+        Task<IInvokeResult> InvokeAsync(MethodCall[] methods, InvokeOptions options = null);
 
-        Task<IPullResult> CallAsync(Procedure procedure, params Pull[] pull);
+        Task<IPullResult> CallAsync(ProcedureCall procedureCall, params Pull[] pull);
 
         Task<IPullResult> CallAsync(object args, string name);
 

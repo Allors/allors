@@ -216,9 +216,9 @@ namespace Allors.Workspace.Adapters.Json
             }
         }
 
-        public override async Task<IInvokeResult> InvokeAsync(Method method, InvokeOptions options = null) => await this.InvokeAsync(new[] { method }, options);
+        public override async Task<IInvokeResult> InvokeAsync(MethodCall method, InvokeOptions options = null) => await this.InvokeAsync(new[] { method }, options);
 
-        public override async Task<IInvokeResult> InvokeAsync(Method[] methods, InvokeOptions options = null)
+        public override async Task<IInvokeResult> InvokeAsync(MethodCall[] methods, InvokeOptions options = null)
         {
             var invokeRequest = new InvokeRequest
             {
@@ -268,11 +268,11 @@ namespace Allors.Workspace.Adapters.Json
             return await workspace.OnPull(pullResponse);
         }
 
-        public override async Task<IPullResult> CallAsync(Procedure procedure, params Pull[] pull)
+        public override async Task<IPullResult> CallAsync(ProcedureCall procedureCall, params Pull[] pull)
         {
             var pullRequest = new PullRequest
             {
-                p = procedure.ToJson(this.UnitConvert),
+                p = procedureCall.ToJson(this.UnitConvert),
                 l = pull.Select(v => v.ToJson(this.UnitConvert)).ToArray()
             };
 

@@ -31,15 +31,21 @@ namespace Allors.Workspace.Request.Visitor
 
         void VisitIntersect(Intersect visited);
 
+        void VisitInvocation(Request request);
+
         void VisitLessThan(LessThan visited);
 
         void VisitLike(Like visited);
+
+        void VisitMethodCall(MethodCall methodCall);
 
         void VisitNode(Node visited);
 
         void VisitNot(Not visited);
 
         void VisitOr(Or visited);
+
+        void VisitProcedureCall(ProcedureCall procedureCall);
 
         void VisitPull(Pull visited);
 
@@ -48,7 +54,5 @@ namespace Allors.Workspace.Request.Visitor
         void VisitSort(Sort visited);
 
         void VisitUnion(Union visited);
-
-        void VisitProcedure(Procedure procedure);
     }
 }

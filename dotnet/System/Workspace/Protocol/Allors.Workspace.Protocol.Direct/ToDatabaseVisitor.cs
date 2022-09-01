@@ -34,8 +34,8 @@ namespace Allors.Workspace.Protocol.Direct
                 Arguments = this.Visit(ws.Arguments)
             };
 
-        public Procedure Visit(Request.Procedure ws) =>
-            new Procedure(ws.Name)
+        public Procedure Visit(Request.ProcedureCall ws) =>
+            new Procedure(ws.ProcedureName)
             {
                 Collections = ws.Collections?.ToDictionary(v => v.Key, v => this.transaction.Instantiate(v.Value?.Select(w => w.Id))),
                 Objects = ws.Objects?.ToDictionary(v => v.Key, v => v.Value != null ? this.transaction.Instantiate(v.Value.Id) : null),

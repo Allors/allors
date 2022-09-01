@@ -124,10 +124,10 @@ namespace Allors.Workspace.Adapters.Direct
             throw new NotImplementedException();
         }
 
-        public void Execute(Request.Procedure workspaceProcedure)
+        public void Execute(Request.ProcedureCall workspaceProcedureCall)
         {
             var visitor = new ToDatabaseVisitor(this.Transaction);
-            var procedure = visitor.Visit(workspaceProcedure);
+            var procedure = visitor.Visit(workspaceProcedureCall);
             var localProcedure = new Procedure(this.Transaction, procedure, this.AccessControl);
             localProcedure.Execute(this);
         }

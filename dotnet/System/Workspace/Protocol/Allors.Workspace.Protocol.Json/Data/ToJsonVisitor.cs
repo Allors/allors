@@ -12,7 +12,6 @@ namespace Allors.Workspace.Protocol.Json
     using Request;
     using Meta;
     using Extent = Allors.Protocol.Json.Data.Extent;
-    using IVisitor = Request.Visitor.IVisitor;
     using Node = Allors.Protocol.Json.Data.Node;
     using Procedure = Allors.Protocol.Json.Data.Procedure;
     using Pull = Allors.Protocol.Json.Data.Pull;
@@ -20,7 +19,7 @@ namespace Allors.Workspace.Protocol.Json
     using Select = Allors.Protocol.Json.Data.Select;
     using Sort = Allors.Protocol.Json.Data.Sort;
 
-    public class ToJsonVisitor : Request.Visitor.IVisitor
+    public class ToJsonVisitor : Workspace.Request.Visitor.IVisitor
     {
         private readonly IUnitConvert unitConvert;
 
@@ -205,7 +204,7 @@ namespace Allors.Workspace.Protocol.Json
             }
         }
 
-        public void VisitSelect(Request.Select visited)
+        public void VisitSelect(Workspace.Request.Select visited)
         {
             var select = new Select
             {
@@ -297,6 +296,8 @@ namespace Allors.Workspace.Protocol.Json
             }
         }
 
+        public void VisitInvocation(Request request) => throw new System.NotImplementedException();
+
         public void VisitLessThan(LessThan visited)
         {
             var predicate = new Predicate
@@ -324,7 +325,9 @@ namespace Allors.Workspace.Protocol.Json
             this.predicates.Push(predicate);
         }
 
-        public void VisitNode(Request.Node visited)
+        public void VisitMethodCall(MethodCall methodCall) => throw new System.NotImplementedException();
+
+        public void VisitNode(Workspace.Request.Node visited)
         {
             var node = new Node
             {
@@ -384,7 +387,7 @@ namespace Allors.Workspace.Protocol.Json
             }
         }
 
-        public void VisitPull(Request.Pull visited)
+        public void VisitPull(Workspace.Request.Pull visited)
         {
             var pull = new Pull
             {
@@ -415,7 +418,7 @@ namespace Allors.Workspace.Protocol.Json
             this.Pull = pull;
         }
 
-        public void VisitResult(Request.Result visited)
+        public void VisitResult(Workspace.Request.Result visited)
         {
             var result = new Result
             {
@@ -447,7 +450,7 @@ namespace Allors.Workspace.Protocol.Json
             }
         }
 
-        public void VisitSort(Request.Sort visited)
+        public void VisitSort(Workspace.Request.Sort visited)
         {
             var sort = new Sort
             {
@@ -492,13 +495,13 @@ namespace Allors.Workspace.Protocol.Json
             }
         }
 
-        public void VisitProcedure(Request.Procedure procedure) => this.Procedure = new Procedure
+        public void VisitProcedureCall(ProcedureCall procedureCall) => this.Procedure = new Procedure
         {
-            n = procedure.Name,
-            c = procedure.Collections?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value.Select(v => v.Id).ToArray()),
-            o = procedure.Objects?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value.Id),
-            v = procedure.Values,
-            p = procedure.Pool?.Select(kvp => new[] { kvp.Key.Id, kvp.Value }).ToArray(),
+            n = procedureCall.ProcedureName,
+            c = procedureCall.Collections?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value.Select(v => v.Id).ToArray()),
+            o = procedureCall.Objects?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value.Id),
+            v = procedureCall.Values,
+            p = procedureCall.Pool?.Select(kvp => new[] { kvp.Key.Id, kvp.Value }).ToArray(),
         };
     }
 }

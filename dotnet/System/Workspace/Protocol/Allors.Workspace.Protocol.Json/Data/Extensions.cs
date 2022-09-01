@@ -20,10 +20,10 @@ namespace Allors.Workspace.Protocol.Json
             return toJsonVisitor.Pull;
         }
 
-        public static Procedure ToJson(this Request.Procedure procedure, IUnitConvert unitConvert)
+        public static Procedure ToJson(this Request.ProcedureCall procedureCall, IUnitConvert unitConvert)
         {
             var toJsonVisitor = new ToJsonVisitor(unitConvert);
-            procedure.Accept(toJsonVisitor);
+            procedureCall.Accept(toJsonVisitor);
             return toJsonVisitor.Procedure;
         }
 

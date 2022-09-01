@@ -7,10 +7,11 @@ namespace Allors.Workspace.Request
 {
     using Meta;
     using Response;
+    using Visitor;
 
-    public readonly struct Method
+    public class MethodCall : IInvocable
     {
-        public Method(IObject @object, MethodType methodType)
+        public MethodCall(IObject @object, MethodType methodType)
         {
             this.Object = @object;
             this.MethodType = methodType;
@@ -19,5 +20,7 @@ namespace Allors.Workspace.Request
         public IObject Object { get; }
 
         public MethodType MethodType { get; }
+
+        public void Accept(IVisitor visitor) => visitor.VisitMethodCall(this);
     }
 }

@@ -24,7 +24,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var procedure = new Procedure("TestUnitSamples")
+                var procedure = new ProcedureCall("TestUnitSamples")
                 {
                     Values = new Dictionary<string, string> { { "step", "0" } }
                 };
@@ -55,7 +55,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var procedure = new Procedure("TestUnitSamples")
+                var procedure = new ProcedureCall("TestUnitSamples")
                 {
                     Values = new Dictionary<string, string> { { "step", "1" } }
                 };
@@ -94,7 +94,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var procedure = new Procedure("ThisIsWrong")
+                var procedure = new ProcedureCall("ThisIsWrong")
                 {
                     Values = new Dictionary<string, string> { { "step", "0" } }
                 };
