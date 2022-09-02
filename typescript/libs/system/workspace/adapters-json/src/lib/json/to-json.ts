@@ -8,7 +8,6 @@ import {
 import {
   IUnit,
   TypeForParameter,
-  Procedure as DataProcedure,
   Pull as DataPull,
   Extent as DataExtent,
   Predicate as DataPredicate,
@@ -22,7 +21,6 @@ import {
   Extent,
   ExtentKind,
   Predicate,
-  Procedure,
   Pull,
   Result,
   Select,
@@ -48,20 +46,6 @@ export function unitToJson(from: unknown): IUnit {
   }
 
   throw new Error(`Unsupported value: ${from}`);
-}
-
-export function procedureToJson(from: DataProcedure): Procedure {
-  if (from == null) {
-    return null;
-  }
-
-  return {
-    n: from.name,
-    c: collectionToJson(from.collections),
-    o: objectsToJson(from.objects),
-    v: valuesToJson(from.values),
-    p: poolToJson(from.pool),
-  };
 }
 
 export function pullToJson(from: DataPull): Pull {

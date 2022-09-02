@@ -12,7 +12,6 @@ import {
   IPullResult,
   IPushResult,
   Method,
-  Procedure,
   Pull,
   ResultError,
 } from '@allors/system/workspace/domain';
@@ -22,7 +21,7 @@ import { DatabaseRecord } from '../database/database-record';
 import { InvokeResult } from '../database/invoke/invoke-result';
 import { PullResult } from '../database/pull/pull-result';
 import { PushResult } from '../database/push/push-result';
-import { procedureToJson, pullToJson } from '../json/to-json';
+import { pullToJson } from '../json/to-json';
 import { Workspace } from '../workspace/workspace';
 import { DatabaseState } from './originstate/database-origin-state';
 import { Strategy } from './strategy';
@@ -98,17 +97,6 @@ export class Session extends SystemSession {
     }
 
     return result;
-  }
-
-  async call(procedure: Procedure, ...pulls: Pull[]): Promise<IPullResult> {
-    const pullRequest: PullRequest = {
-      x: this.context,
-      p: procedureToJson(procedure),
-      l: pulls.map((v) => pullToJson(v)),
-    };
-
-    const pullResponse = await this.database.client.pull(pullRequest);
-    return await this.onPull(pullResponse);
   }
 
   async pull(pullOrPulls: Pull | Pull[]): Promise<IPullResult> {
