@@ -20,7 +20,7 @@ namespace Allors.Workspace.Adapters.Json
     using Request;
     using Response;
     using Shared.Ranges;
-    using InvokeOptions = Request.InvokeOptions;
+    using PullRequest = Request.PullRequest;
 
     public abstract class Connection : Adapters.Connection
     {
@@ -216,9 +216,9 @@ namespace Allors.Workspace.Adapters.Json
             }
         }
 
-        public override async Task<IInvokeResult> InvokeAsync(MethodCall method, InvokeOptions options = null) => await this.InvokeAsync(new[] { method }, options);
+        public override async Task<IInvokeResult> InvokeAsync(MethodRequest method, BatchOptions options = null) => await this.InvokeAsync(new[] { method }, options);
 
-        public override async Task<IInvokeResult> InvokeAsync(MethodCall[] methods, InvokeOptions options = null)
+        public override async Task<IInvokeResult> InvokeAsync(MethodRequest[] methods, BatchOptions options = null)
         {
             var invokeRequest = new InvokeRequest
             {
@@ -229,7 +229,7 @@ namespace Allors.Workspace.Adapters.Json
                     m = v.MethodType.Tag
                 }).ToArray(),
                 o = options != null
-                    ? new Allors.Protocol.Json.Api.Invoke.InvokeOptions
+                    ? new InvokeOptions
                     {
                         c = options.ContinueOnError,
                         i = options.Isolated
@@ -243,15 +243,7 @@ namespace Allors.Workspace.Adapters.Json
             return new InvokeResult(workspace, invokeResponse);
         }
 
-        public override async Task<IPullResult> CallAsync(object args, string name)
-        {
-            var pullResponse = await this.Pull(args, name);
-
-            var workspace = new Workspace(this);
-            return await workspace.OnPull(pullResponse);
-        }
-
-        public override async Task<IPullResult> PullAsync(params Pull[] pulls)
+        public override async Task<IPullResult> PullAsync(params PullRequest[] pulls)
         {
             foreach (var pull in pulls)
             {
@@ -261,21 +253,7 @@ namespace Allors.Workspace.Adapters.Json
                 }
             }
 
-            var pullRequest = new PullRequest { l = pulls.Select(v => v.ToJson(this.UnitConvert)).ToArray() };
-            var pullResponse = await this.Pull(pullRequest);
-
-            var workspace = new Workspace(this);
-            return await workspace.OnPull(pullResponse);
-        }
-
-        public override async Task<IPullResult> CallAsync(ProcedureCall procedureCall, params Pull[] pull)
-        {
-            var pullRequest = new PullRequest
-            {
-                p = procedureCall.ToJson(this.UnitConvert),
-                l = pull.Select(v => v.ToJson(this.UnitConvert)).ToArray()
-            };
-
+            var pullRequest = new Allors.Protocol.Json.Api.Pull.PullRequest { l = pulls.Select(v => v.ToJson(this.UnitConvert)).ToArray() };
             var pullResponse = await this.Pull(pullRequest);
 
             var workspace = new Workspace(this);
@@ -329,7 +307,7 @@ namespace Allors.Workspace.Adapters.Json
 
         public abstract Task<PullResponse> Pull(object args, string name);
 
-        public abstract Task<PullResponse> Pull(PullRequest pullRequest);
+        public abstract Task<PullResponse> Pull(Allors.Protocol.Json.Api.Pull.PullRequest pullRequest);
 
         public abstract Task<SyncResponse> Sync(SyncRequest syncRequest);
 

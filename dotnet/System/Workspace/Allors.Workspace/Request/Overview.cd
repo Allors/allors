@@ -1,48 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="Allors.Workspace.Request.InvokeOptions">
+  <Class Name="Allors.Workspace.Request.BatchOptions">
     <Position X="3.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
-      <FileName>Request\InvokeOptions.cs</FileName>
+      <FileName>Request\BatchOptions.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Allors.Workspace.Request.ProcedureCall">
-    <Position X="10" Y="3.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AIAAAAAAAAAAAAAAAAAAAAAAAAAACAEAACAgAIAAAAA=</HashCode>
-      <FileName>Request\ProcedureCall.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="Allors.Workspace.Request.Pull">
-    <Position X="6" Y="3.25" Width="1.5" />
+  <Class Name="Allors.Workspace.Request.PullRequest">
+    <Position X="5.75" Y="4" Width="1.5" />
     <TypeIdentifier>
       <HashCode>UIAAAAAAAAAAAAAgAAAAAAAACAAAAAAAIIAACAAAAAA=</HashCode>
-      <FileName>Request\Pull.cs</FileName>
+      <FileName>Request\PullRequest.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="Allors.Workspace.Request.Request">
-    <Position X="3.5" Y="2.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AIAAAAAAAAAAAQAAAIAABAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Request\Request.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="InvokeOptions" />
-    </ShowAsAssociation>
-    <ShowAsCollectionAssociation>
-      <Property Name="Invocables" />
-      <Property Name="Pulls" />
-    </ShowAsCollectionAssociation>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="Allors.Workspace.Request.MethodCall">
-    <Position X="8.25" Y="3.25" Width="1.5" />
+  <Class Name="Allors.Workspace.Request.MethodRequest">
+    <Position X="4" Y="4" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AIAAAAAAAIAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Request\MethodCall.cs</FileName>
+      <FileName>Request\MethodRequest.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
@@ -53,11 +30,11 @@
       <FileName>IConnection.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="Allors.Workspace.Request.IInvocable">
-    <Position X="9" Y="1.75" Width="1.5" />
+  <Interface Name="Allors.Workspace.Request.IRequest">
+    <Position X="4.75" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Request\IInvocable.cs</FileName>
+      <FileName>Request\IRequest.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Font Name="Segoe UI" Size="9" />

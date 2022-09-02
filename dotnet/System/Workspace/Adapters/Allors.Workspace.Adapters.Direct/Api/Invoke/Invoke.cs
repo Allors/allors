@@ -14,7 +14,6 @@ namespace Allors.Workspace.Adapters.Direct
     using Database.Security;
     using Database.Services;
     using Request;
-    using Response;
 
     public class Invoke : Result
     {
@@ -40,7 +39,7 @@ namespace Allors.Workspace.Adapters.Direct
 
         private Func<IValidation> Derive { get; }
 
-        internal void Execute(MethodCall[] methods, InvokeOptions options)
+        internal void Execute(MethodRequest[] methods, BatchOptions options)
         {
             var isolated = options?.Isolated ?? false;
             var continueOnError = options?.ContinueOnError ?? false;
@@ -94,7 +93,7 @@ namespace Allors.Workspace.Adapters.Direct
             }
         }
 
-        private bool Execute(MethodCall invocation)
+        private bool Execute(MethodRequest invocation)
         {
             var obj = this.Transaction.Instantiate(invocation.Object.Id);
             if (obj == null)

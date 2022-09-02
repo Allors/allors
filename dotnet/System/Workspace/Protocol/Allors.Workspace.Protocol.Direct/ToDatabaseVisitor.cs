@@ -23,7 +23,7 @@ namespace Allors.Workspace.Protocol.Direct
             this.metaPopulation = transaction.Database.MetaPopulation;
         }
 
-        public Pull Visit(Request.Pull ws) =>
+        public Pull Visit(Request.PullRequest ws) =>
             new Pull
             {
                 ExtentRef = ws.ExtentRef,
@@ -32,15 +32,6 @@ namespace Allors.Workspace.Protocol.Direct
                 Object = this.Visit(ws.Object) ?? this.Visit(ws.ObjectId),
                 Results = this.Visit(ws.Results),
                 Arguments = this.Visit(ws.Arguments)
-            };
-
-        public Procedure Visit(Request.ProcedureCall ws) =>
-            new Procedure(ws.ProcedureName)
-            {
-                Collections = ws.Collections?.ToDictionary(v => v.Key, v => this.transaction.Instantiate(v.Value?.Select(w => w.Id))),
-                Objects = ws.Objects?.ToDictionary(v => v.Key, v => v.Value != null ? this.transaction.Instantiate(v.Value.Id) : null),
-                Values = ws.Values,
-                Pool = ws.Pool?.ToDictionary(v => this.transaction.Instantiate(v.Key.Id), v => v.Value),
             };
 
         private IExtent Visit(Request.IExtent ws) =>

@@ -5,7 +5,7 @@
 
 namespace Allors.Workspace.Request
 {
-    public class InvokeOptions
+    public class BatchOptions
     {
         public bool Isolated { get; set; } = false;
 

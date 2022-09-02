@@ -30,7 +30,7 @@ namespace Tests.Workspace
             foreach (var connection in this.Connections)
             {
                 // Class
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(this.M.C1)
                     {
@@ -54,7 +54,7 @@ namespace Tests.Workspace
                 result.Assert().Collection(m.C1).Equal(c1B);
 
                 // Interface
-                pull = new Pull
+                pull = new PullRequest
                 {
                     Extent = new Filter(this.M.I12)
                     {
@@ -89,7 +89,7 @@ namespace Tests.Workspace
             foreach (var connection in this.Connections)
             {
                 // Empty
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(this.M.C2)
                     {
@@ -110,7 +110,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Values);
 
                 // Full
-                pull = new Pull
+                pull = new PullRequest
                 {
                     Extent = new Filter(this.M.C2)
                     {
@@ -130,7 +130,7 @@ namespace Tests.Workspace
                 result.Assert().Collection(m.C2).Equal(c2B, c2C, c2D);
 
                 // Filtered
-                pull = new Pull
+                pull = new PullRequest
                 {
                     Extent = new Filter(this.M.C2)
                     {
@@ -165,7 +165,7 @@ namespace Tests.Workspace
                 var c1c = await connection.PullObject(m.C1, c1C);
 
                 // Full
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(this.M.C2)
                     {
@@ -195,7 +195,7 @@ namespace Tests.Workspace
             foreach (var connection in this.Connections)
             {
                 // Full
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(this.M.C2)
                     {
@@ -221,7 +221,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(this.M.C2)
                     {
@@ -256,7 +256,7 @@ namespace Tests.Workspace
                 var c1c = await connection.PullObject(m.C1, c1C);
 
                 // Full
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(this.M.C2)
                     {
@@ -285,7 +285,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(this.M.C2)
                     {
@@ -320,7 +320,7 @@ namespace Tests.Workspace
                 var c1b = await connection.PullObject(m.C1, c1B);
                 var c1c = await connection.PullObject(m.C1, c1C);
 
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(this.M.C2)
                     {
@@ -339,7 +339,7 @@ namespace Tests.Workspace
 
                 result.Assert().Collection(m.C2).Equal(c2B);
 
-                pull = new Pull
+                pull = new PullRequest
                 {
                     Extent = new Filter(this.M.C2)
                     {
@@ -369,7 +369,7 @@ namespace Tests.Workspace
             foreach (var connection in this.Connections)
             {
                 // Class
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(this.M.C2)
                     {
@@ -386,7 +386,7 @@ namespace Tests.Workspace
                 result.Assert().Collection(m.C2).Equal(c2B, c2C, c2D);
 
                 // Interface
-                pull = new Pull
+                pull = new PullRequest
                 {
                     Extent = new Filter(this.M.I2)
                     {
@@ -412,7 +412,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(this.M.C2)
                     {
@@ -438,7 +438,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(this.M.C2)
                     {
@@ -473,7 +473,7 @@ namespace Tests.Workspace
                 var c1b = await connection.PullObject(m.C1, c1B);
                 var c1c = await connection.PullObject(m.C1, c1C);
 
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(this.M.C2)
                     {
@@ -492,7 +492,7 @@ namespace Tests.Workspace
 
                 result.Assert().Collection(m.C2).Equal(c2B);
 
-                pull = new Pull
+                pull = new PullRequest
                 {
                     Extent = new Filter(this.M.C2)
                     {
@@ -521,7 +521,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(this.M.C1)
                     {
@@ -537,7 +537,7 @@ namespace Tests.Workspace
 
                 result.Assert().Collection(m.C1).Equal(c1B, c1C, c1D);
 
-                pull = new Pull
+                pull = new PullRequest
                 {
                     Extent = new Filter(m.C2)
                     {
@@ -563,7 +563,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(this.M.I12)
                     {
@@ -579,7 +579,7 @@ namespace Tests.Workspace
 
                 result.Assert().Collection(m.I12).Equal(c1D, c2B, c2C);
 
-                pull = new Pull
+                pull = new PullRequest
                 {
                     Extent = new Filter(this.M.I12)
                     {
@@ -607,7 +607,7 @@ namespace Tests.Workspace
             {
                 var c1c = await connection.PullObject(m.C1, c1C);
 
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(m.C1)
                     {
@@ -633,7 +633,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(m.I12)
                 };
@@ -656,7 +656,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(m.I12)
                     {
@@ -687,7 +687,7 @@ namespace Tests.Workspace
             {
                 var c1c = await connection.PullObject(m.C1, c1C);
 
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(m.C1)
                     {
@@ -719,7 +719,7 @@ namespace Tests.Workspace
                 var c1b = await connection.PullObject(m.C1, c1B);
                 var c1c = await connection.PullObject(m.C1, c1C);
 
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(m.C1)
                     {
@@ -752,7 +752,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Except
                     {
@@ -785,7 +785,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Intersect
                     {
@@ -818,7 +818,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Union
                     {
@@ -848,7 +848,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(m.C1)
                     {
@@ -877,7 +877,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(m.C1)
                     {
@@ -910,7 +910,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(m.C1)
                     {
@@ -939,7 +939,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(m.C1)
                     {
@@ -968,7 +968,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(m.C1)
                     {
@@ -997,7 +997,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(m.C1)
                     {
@@ -1026,7 +1026,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(m.C1)
                     {
@@ -1055,7 +1055,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(m.C1)
                     {
@@ -1084,7 +1084,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(m.C1)
                     {
@@ -1113,7 +1113,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(m.C1)
                     {
@@ -1142,7 +1142,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(m.C1)
                     {
@@ -1171,7 +1171,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(m.C1)
                     {
@@ -1200,7 +1200,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(m.C1)
                     {
@@ -1229,7 +1229,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(m.C1)
                     {
@@ -1258,7 +1258,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(m.C1)
                     {
@@ -1287,7 +1287,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(m.C1)
                     {
@@ -1316,7 +1316,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(m.C1)
                     {
@@ -1345,7 +1345,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(m.C1)
                     {
@@ -1374,7 +1374,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(m.C1)
                     {
@@ -1403,7 +1403,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(m.C1)
                     {
@@ -1432,7 +1432,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(m.C1)
                     {
@@ -1461,7 +1461,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(m.C1)
                     {
@@ -1490,7 +1490,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(m.C1)
                     {
@@ -1519,7 +1519,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(m.C1)
                     {
@@ -1548,7 +1548,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(m.C1)
                     {
@@ -1577,7 +1577,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(m.C1)
                     {
@@ -1606,7 +1606,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(m.C1)
                     {
@@ -1635,7 +1635,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(m.C1)
                     {
@@ -1664,7 +1664,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(m.C1)
                     {
@@ -1690,7 +1690,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(m.C1)
                     {
@@ -1719,7 +1719,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(m.C1)
                     {
@@ -1748,7 +1748,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(m.C1)
                     {
@@ -1777,7 +1777,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(m.C1)
                     {
@@ -1807,7 +1807,7 @@ namespace Tests.Workspace
             foreach (var connection in this.Connections)
             {
                 // Empty
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(this.M.C1)
                     {
@@ -1828,7 +1828,7 @@ namespace Tests.Workspace
                 Assert.Empty(result.Values);
 
                 // Full
-                pull = new Pull
+                pull = new PullRequest
                 {
                     Extent = new Filter(this.M.C1)
                     {
@@ -1848,7 +1848,7 @@ namespace Tests.Workspace
                 result.Assert().Collection(m.C1).Equal(c1B, c1C, c1D);
 
                 // Filtered
-                pull = new Pull
+                pull = new PullRequest
                 {
                     Extent = new Filter(this.M.C1)
                     {
@@ -1882,7 +1882,7 @@ namespace Tests.Workspace
             {
                 var c2c = await connection.PullObject(m.C2, c2C);
 
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(this.M.C1)
                     {
@@ -1911,7 +1911,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(this.M.C1)
                     {
@@ -1945,7 +1945,7 @@ namespace Tests.Workspace
             {
                 var c2d = await connection.PullObject(m.C2, c2D);
 
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(this.M.C1)
                     {
@@ -1974,7 +1974,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(this.M.C1)
                     {
@@ -2006,7 +2006,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(this.M.C1)
                     {
@@ -2038,7 +2038,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(m.C1)
                     {
@@ -2073,11 +2073,11 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var pull1 = new Pull { Extent = new Filter(this.M.C1) { Predicate = new Equals(this.M.C1.Name) { Value = "c1A" } } };
+                var pull1 = new PullRequest { Extent = new Filter(this.M.C1) { Predicate = new Equals(this.M.C1.Name) { Value = "c1A" } } };
                 var result = await connection.PullAsync(pull1);
                 var c1a = result.GetCollection(m.C1)[0];
 
-                var pull2 = new Pull
+                var pull2 = new PullRequest
                 {
                     ObjectId = c1a.Id
                 };
@@ -2098,7 +2098,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(this.M.C1),
                     Results = new[]
@@ -2136,7 +2136,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(this.M.I12) { Sorting = new[] { new Sort(this.M.I12.Order) } },
                 };
@@ -2164,7 +2164,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(this.M.I12) { Sorting = new[] { new Sort(this.M.I12.Order) { SortDirection = SortDirection.Ascending } } },
                 };
@@ -2192,7 +2192,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(this.M.I12) { Sorting = new[] { new Sort(this.M.I12.Order) { SortDirection = SortDirection.Descending } } },
                 };

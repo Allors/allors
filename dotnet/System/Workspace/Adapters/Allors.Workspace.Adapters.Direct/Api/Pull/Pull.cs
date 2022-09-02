@@ -15,10 +15,12 @@ namespace Allors.Workspace.Adapters.Direct
     using Database.Security;
     using Database.Services;
     using Protocol.Direct;
+    using Request;
     using Response;
     using IObject = Response.IObject;
+    using Node = Database.Data.Node;
 
-    public class Pull : Result, IPullResult, IProcedureOutput
+    public class Pull : Result, IPullResult
     {
         private IDictionary<string, IObject[]> collections;
         private IDictionary<string, IObject> objects;
@@ -118,21 +120,7 @@ namespace Allors.Workspace.Adapters.Direct
 
         public T GetValue<T>(string key) => (T)this.GetValue(key);
 
-        public void Execute(object args, string name)
-        {
-            // TODO: Use a Service for raw procedures
-            throw new NotImplementedException();
-        }
-
-        public void Execute(Request.ProcedureCall workspaceProcedureCall)
-        {
-            var visitor = new ToDatabaseVisitor(this.Transaction);
-            var procedure = visitor.Visit(workspaceProcedureCall);
-            var localProcedure = new Procedure(this.Transaction, procedure, this.AccessControl);
-            localProcedure.Execute(this);
-        }
-
-        public void Execute(IEnumerable<Request.Pull> workspacePulls)
+        public void Execute(IEnumerable<PullRequest> workspacePulls)
         {
             var visitor = new ToDatabaseVisitor(this.Transaction);
             foreach (var pull in workspacePulls.Select(v => visitor.Visit(v)))

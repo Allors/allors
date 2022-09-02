@@ -59,10 +59,10 @@ namespace Allors.Workspace.Adapters.Direct
             }
         }
 
-        public override Task<IInvokeResult> InvokeAsync(MethodCall method, InvokeOptions options = null) =>
+        public override Task<IInvokeResult> InvokeAsync(MethodRequest method, BatchOptions options = null) =>
            this.InvokeAsync(new[] { method }, options);
 
-        public override Task<IInvokeResult> InvokeAsync(MethodCall[] methods, InvokeOptions options = null)
+        public override Task<IInvokeResult> InvokeAsync(MethodRequest[] methods, BatchOptions options = null)
         {
             var workspace = new Workspace(this);
             var result = new Invoke(workspace);
@@ -70,30 +70,7 @@ namespace Allors.Workspace.Adapters.Direct
             return Task.FromResult<IInvokeResult>(result);
         }
 
-        public override Task<IPullResult> CallAsync(Allors.Workspace.Request.ProcedureCall procedureCall, params Allors.Workspace.Request.Pull[] pull)
-        {
-            var workspace = new Workspace(this);
-            var result = new Pull(workspace);
-
-            result.Execute(procedureCall);
-            result.Execute(pull);
-
-            workspace.OnPulled(result);
-
-            return Task.FromResult<IPullResult>(result);
-        }
-
-        public override Task<IPullResult> CallAsync(object args, string name)
-        {
-            var workspace = new Workspace(this);
-            var result = new Pull(workspace);
-
-            result.Execute(args, name);
-
-            return Task.FromResult<IPullResult>(result);
-        }
-
-        public override Task<IPullResult> PullAsync(params Allors.Workspace.Request.Pull[] pulls)
+        public override Task<IPullResult> PullAsync(params PullRequest[] pulls)
         {
             foreach (var pull in pulls)
             {

@@ -29,7 +29,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(this.M.C1)
                 };
@@ -55,7 +55,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(this.M.C1)
                 };
@@ -81,7 +81,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(this.M.C1)
                 };
@@ -106,7 +106,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var result = await connection.PullAsync(new Pull { Extent = new Filter(this.M.Denied) });
+                var result = await connection.PullAsync(new PullRequest { Extent = new Filter(this.M.Denied) });
 
                 foreach (var denied in result.GetCollection(m.Denied))
                 {

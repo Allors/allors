@@ -8,12 +8,13 @@ namespace Allors.Workspace.Adapters.Direct
     using System.Collections.Generic;
     using System.Linq;
     using Response;
+    using IDerivationError = Database.Derivations.IDerivationError;
 
     public abstract class Result : IInvokeResult
     {
         private readonly List<Object> accessErrorStrategies;
         private readonly List<long> databaseMissingIds;
-        private List<Database.Derivations.IDerivationError> derivationErrors;
+        private List<IDerivationError> derivationErrors;
         private readonly List<long> versionErrors;
 
         protected Result(Workspace workspace)
@@ -34,8 +35,8 @@ namespace Allors.Workspace.Adapters.Direct
 
         public IEnumerable<IObject> MissingErrors => this.databaseMissingIds?.Select(this.Workspace.GetObject);
 
-        public IEnumerable<IDerivationError> DerivationErrors => this.derivationErrors
-            ?.Select<Database.Derivations.IDerivationError, IDerivationError>(v =>
+        public IEnumerable<Response.IDerivationError> DerivationErrors => this.derivationErrors
+            ?.Select<IDerivationError, Response.IDerivationError>(v =>
                 new DerivationError(this.Workspace, v)).ToArray();
 
         public bool HasErrors => !string.IsNullOrWhiteSpace(this.ErrorMessage) ||
@@ -44,8 +45,8 @@ namespace Allors.Workspace.Adapters.Direct
                                  this.versionErrors?.Count > 0 ||
                                  this.derivationErrors?.Count > 0;
 
-        internal void AddDerivationErrors(Database.Derivations.IDerivationError[] errors) =>
-            (this.derivationErrors ??= new List<Database.Derivations.IDerivationError>()).AddRange(errors);
+        internal void AddDerivationErrors(IDerivationError[] errors) =>
+            (this.derivationErrors ??= new List<IDerivationError>()).AddRange(errors);
 
         internal void AddMissingId(long id) => this.databaseMissingIds.Add(id);
 

@@ -13,7 +13,6 @@ namespace Allors.Workspace.Protocol.Json
     using Meta;
     using Extent = Allors.Protocol.Json.Data.Extent;
     using Node = Allors.Protocol.Json.Data.Node;
-    using Procedure = Allors.Protocol.Json.Data.Procedure;
     using Pull = Allors.Protocol.Json.Data.Pull;
     using Result = Allors.Protocol.Json.Data.Result;
     using Select = Allors.Protocol.Json.Data.Select;
@@ -46,8 +45,6 @@ namespace Allors.Workspace.Protocol.Json
         public Extent Extent => this.extents?.Peek();
 
         public Select Select => this.selects?.Peek();
-
-        public Procedure Procedure { get; private set; }
 
         public void VisitAnd(And visited)
         {
@@ -296,8 +293,6 @@ namespace Allors.Workspace.Protocol.Json
             }
         }
 
-        public void VisitInvocation(Request request) => throw new System.NotImplementedException();
-
         public void VisitLessThan(LessThan visited)
         {
             var predicate = new Predicate
@@ -325,7 +320,7 @@ namespace Allors.Workspace.Protocol.Json
             this.predicates.Push(predicate);
         }
 
-        public void VisitMethodCall(MethodCall methodCall) => throw new System.NotImplementedException();
+        public void VisitMethodCall(MethodRequest methodRequest) => throw new System.NotImplementedException();
 
         public void VisitNode(Workspace.Request.Node visited)
         {
@@ -387,7 +382,7 @@ namespace Allors.Workspace.Protocol.Json
             }
         }
 
-        public void VisitPull(Workspace.Request.Pull visited)
+        public void VisitPull(Workspace.Request.PullRequest visited)
         {
             var pull = new Pull
             {
@@ -494,14 +489,5 @@ namespace Allors.Workspace.Protocol.Json
                 }
             }
         }
-
-        public void VisitProcedureCall(ProcedureCall procedureCall) => this.Procedure = new Procedure
-        {
-            n = procedureCall.ProcedureName,
-            c = procedureCall.Collections?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value.Select(v => v.Id).ToArray()),
-            o = procedureCall.Objects?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value.Id),
-            v = procedureCall.Values,
-            p = procedureCall.Pool?.Select(kvp => new[] { kvp.Key.Id, kvp.Value }).ToArray(),
-        };
     }
 }

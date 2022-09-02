@@ -53,8 +53,6 @@ namespace Allors.Database.Configuration
 
         private IDerivationService derivationService;
 
-        private IProcedures procedures;
-
         private IWorkspaceMask workspaceMask;
 
         protected DatabaseServices(Engine engine, IHttpContextAccessor httpContextAccessor = null)
@@ -82,7 +80,6 @@ namespace Allors.Database.Configuration
                 // System
                 { } type when type == typeof(IMetaCache) => (T)this.metaCache,
                 { } type when type == typeof(IDerivationService) => (T)(this.derivationService ??= this.CreateDerivationFactory()),
-                { } type when type == typeof(IProcedures) => (T)(this.procedures ??= new Procedures(this.Database.ObjectFactory.Assembly)),
                 { } type when type == typeof(ISecurity) => (T)(this.security ??= new Security(this)),
                 { } type when type == typeof(IPrefetchPolicyCache) => (T)(this.prefetchPolicyCache ??= new PrefetchPolicyCache(this.Database, this.metaCache)),
                 // Core

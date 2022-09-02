@@ -13,18 +13,11 @@ namespace Allors.Workspace.Protocol.Json
 
     public static class Extensions
     {
-        public static Pull ToJson(this Request.Pull pull, IUnitConvert unitConvert)
+        public static Pull ToJson(this Request.PullRequest pullRequest, IUnitConvert unitConvert)
         {
             var toJsonVisitor = new ToJsonVisitor(unitConvert);
-            pull.Accept(toJsonVisitor);
+            pullRequest.Accept(toJsonVisitor);
             return toJsonVisitor.Pull;
-        }
-
-        public static Procedure ToJson(this Request.ProcedureCall procedureCall, IUnitConvert unitConvert)
-        {
-            var toJsonVisitor = new ToJsonVisitor(unitConvert);
-            procedureCall.Accept(toJsonVisitor);
-            return toJsonVisitor.Procedure;
         }
 
         public static string[][] ToJsonForCollectionByName(this IDictionary<string, IObject[]> collectionByName) =>

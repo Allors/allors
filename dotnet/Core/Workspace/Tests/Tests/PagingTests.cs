@@ -27,7 +27,7 @@ namespace Tests.Workspace
 
             foreach (var connection in this.Connections)
             {
-                var pull = new Pull
+                var pull = new PullRequest
                 {
                     Extent = new Filter(m.I12) { Sorting = new[] { new Sort(m.I12.Order) } },
                     Results = new[]

@@ -9,9 +9,9 @@ namespace Allors.Workspace.Request
     using Response;
     using Visitor;
 
-    public class MethodCall : IInvocable
+    public class MethodRequest : IRequest, IVisitable
     {
-        public MethodCall(IObject @object, MethodType methodType)
+        public MethodRequest(IObject @object, MethodType methodType)
         {
             this.Object = @object;
             this.MethodType = methodType;

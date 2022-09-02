@@ -11,7 +11,7 @@ namespace Allors.Workspace.Request
     using Response;
     using Visitor;
 
-    public class Pull : IVisitable
+    public class PullRequest : IRequest, IVisitable
     {
         public Guid? ExtentRef { get; set; }
 

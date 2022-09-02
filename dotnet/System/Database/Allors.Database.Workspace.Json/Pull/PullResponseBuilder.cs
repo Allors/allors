@@ -18,7 +18,7 @@ namespace Allors.Database.Protocol.Json
     using Services;
     using Shared.Ranges;
 
-    public class PullResponseBuilder : IProcedureContext, IProcedureOutput
+    public class PullResponseBuilder 
     {
         private readonly IUnitConvert unitConvert;
 
@@ -175,55 +175,6 @@ namespace Allors.Database.Protocol.Json
 
         public PullResponse Build(PullRequest pullRequest = null)
         {
-            var pullResponse = new PullResponse();
-
-            var procedure = pullRequest?.p?.FromJson(this.Transaction, this.unitConvert);
-
-            if (procedure != null)
-            {
-                if (procedure.Pool != null)
-                {
-                    foreach (var kvp in procedure.Pool)
-                    {
-                        var @object = kvp.Key;
-                        var version = kvp.Value;
-
-                        if (!@object.Strategy.ObjectVersion.Equals(version))
-                        {
-                            pullResponse.AddVersionError(@object);
-                        }
-                    }
-
-                    if (pullResponse.HasErrors)
-                    {
-                        return pullResponse;
-                    }
-                }
-
-                var procedures = this.Transaction.Database.Services.Get<IProcedures>();
-                var proc = procedures.Get(procedure.Name);
-                if (proc == null)
-                {
-                    pullResponse._e = $"Missing procedure {procedure.Name}";
-                    return pullResponse;
-                }
-
-                var input = new ProcedureInput(this.Transaction.Database.ObjectFactory, procedure);
-
-                this.ThrowIfCancellationRequested();
-                proc.Execute(this, input, this);
-
-                if (this.errors?.Count > 0)
-                {
-                    foreach (var error in this.errors)
-                    {
-                        pullResponse.AddDerivationErrors(error);
-                    }
-
-                    return pullResponse;
-                }
-            }
-
             if (pullRequest?.l != null)
             {
                 var pulls = pullRequest.l.FromJson(this.Transaction, this.unitConvert);
@@ -251,7 +202,7 @@ namespace Allors.Database.Protocol.Json
 
             this.ThrowIfCancellationRequested();
 
-            pullResponse = new PullResponse
+            var pullResponse = new PullResponse
             {
                 p = this.unmaskedObjects.Select(v =>
                 {
