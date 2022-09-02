@@ -359,9 +359,13 @@ namespace Allors.Repository
         public void ClassMethod() { }
 
         #region Allors
+
         [Id("26FE4FD7-68C3-4DDA-8A44-87857B35B000")]
+
         #endregion
-        public void Sum() { }
+
+        [Workspace(Default)]
+        public SumOutput Sum(SumInput input) => default;
 
         #region inherited
 
@@ -483,7 +487,7 @@ namespace Allors.Repository
 
         public DelegatedAccess AccessDelegation { get; set; }
         public Revocation[] Revocations { get; set; }
-        
+
 
         public SecurityToken[] SecurityTokens { get; set; }
 
@@ -511,5 +515,17 @@ namespace Allors.Repository
         public void SuperinterfaceMethod() { }
 
         #endregion
+    }
+
+    public partial record SumInput
+    {
+        public int ValueA { get; set; }
+
+        public int ValueB { get; set; }
+    }
+
+    public partial struct SumOutput
+    {
+        public int Result { get; set; }
     }
 }
