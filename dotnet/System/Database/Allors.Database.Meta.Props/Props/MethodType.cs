@@ -128,13 +128,13 @@ namespace Allors.Database.Meta
 
         public string FullName => $"{this.ObjectType.Name}{this.Name}";
 
-        public IRecord Input { get; }
+        public IRecordType Input { get; }
 
-        public IRecord Output { get; }
+        public IRecordType Output { get; }
 
         public void DeriveWorkspaceNames() =>
-            this.derivedWorkspaceNames = this.assignedWorkspaceNames != null
-                ? this.assignedWorkspaceNames.Intersect(this.ObjectType.Classes.SelectMany(v => v.WorkspaceNames)).ToArray()
-                : Array.Empty<string>();
+             this.derivedWorkspaceNames = this.assignedWorkspaceNames != null
+                 ? this.assignedWorkspaceNames.Intersect(this.ObjectType.Classes.SelectMany(v => v.WorkspaceNames)).ToArray()
+                 : Array.Empty<string>();
     }
 }
