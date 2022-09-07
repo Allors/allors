@@ -3,9 +3,10 @@
     <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\..\..\System\Database\Allors.Database.Meta.Props\Props*\**\*.cs" />
+    <Compile Include="..\..\..\System\Database\Allors.Database.Meta\Props*\**\*.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\System\Database\Allors.Database.Workspace\Allors.Database.Workspace.csproj" />
+    <ProjectReference Include="..\..\..\System\Database\Allors.Database\Allors.Database.csproj" />
   </ItemGroup>
+
 </Project>

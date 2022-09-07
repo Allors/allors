@@ -153,7 +153,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Workspace.Meta", "Sy
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Database.Builder", "System\Database\Adapters\Allors.Database.Builder\Allors.Database.Builder.csproj", "{BBC67A1E-15B4-44C5-8F9A-EF1FCA8E646B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Database.Meta.Props", "System\Database\Allors.Database.Meta.Props\Allors.Database.Meta.Props.csproj", "{5E08595C-5937-46C1-B50C-F0827C7548ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Database.Meta", "System\Database\Allors.Database.Meta\Allors.Database.Meta.csproj", "{5E08595C-5937-46C1-B50C-F0827C7548ED}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Database.Workspace", "System\Database\Allors.Database.Workspace\Allors.Database.Workspace.csproj", "{FC7300E2-7C54-4602-A258-AA69AD6496E9}"
 EndProject
