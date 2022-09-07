@@ -15,7 +15,7 @@ namespace Allors.Database.Domain
     // TODO: Martien
     public class OrderOrderStateRule : Rule
     {
-        public OrderOrderStateRule(MetaPopulation m) : base(m, new Guid("C9895CF4-98B2-4023-A3EA-582107C7D80D")) =>
+        public OrderOrderStateRule(M m) : base(m, new Guid("C9895CF4-98B2-4023-A3EA-582107C7D80D")) =>
             this.Patterns = new Pattern[]
             {
                 m.Order.RolePattern(v=>v.OrderState)

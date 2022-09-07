@@ -23,15 +23,15 @@ namespace Allors.Database.Meta
 
         private Type clrType;
 
-        internal Interface(IMetaPopulationBase metaPopulation, Guid id, string tag) : base(metaPopulation, id, tag) => metaPopulation.OnInterfaceCreated(this);
+        protected Interface(IMetaPopulationBase metaPopulation, Guid id, string tag) : base(metaPopulation, id, tag) => metaPopulation.OnInterfaceCreated(this);
 
-        public MetaPopulation M => (MetaPopulation)this.MetaPopulation;
+        public MetaPopulation MetaPopulation => (MetaPopulation)((ObjectType) this).MetaPopulation;
 
         public override IEnumerable<string> WorkspaceNames
         {
             get
             {
-                this.MetaPopulation.Derive();
+                ((ObjectType) this).MetaPopulation.Derive();
                 return this.derivedWorkspaceNames;
             }
         }
@@ -90,7 +90,7 @@ namespace Allors.Database.Meta
         public void StructuralDeriveDirectSubtypes(HashSet<ICompositeBase> directSubtypes)
         {
             directSubtypes.Clear();
-            foreach (var inheritance in this.MetaPopulation.Inheritances.Where(inheritance => this.Equals(inheritance.Supertype)))
+            foreach (var inheritance in ((ObjectType) this).MetaPopulation.Inheritances.Where(inheritance => this.Equals(inheritance.Supertype)))
             {
                 directSubtypes.Add(inheritance.Subtype);
             }

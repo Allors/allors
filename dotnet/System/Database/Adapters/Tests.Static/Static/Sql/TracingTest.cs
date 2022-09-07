@@ -23,10 +23,10 @@ namespace Allors.Database.Adapters.Sql
             this.population = new TestPopulation(transaction);
             transaction.Commit();
 
-            this.M = (MetaPopulation)database.MetaPopulation;
+            this.M = (M)database.MetaPopulation;
         }
 
-        public MetaPopulation M { get; private set; }
+        public M M { get; private set; }
 
         public abstract void Dispose();
 

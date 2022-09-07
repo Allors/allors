@@ -13,12 +13,12 @@ namespace Allors.Database.Configuration
 
     public class PrefetchPolicyCache : IPrefetchPolicyCache
     {
-        private readonly MetaPopulation m;
+        private readonly M m;
         private readonly IDictionary<string, IDictionary<IClass, PrefetchPolicy>> prefetchPolicyByClassByWorkspace;
 
         public PrefetchPolicyCache(IDatabase database, IMetaCache metaCache)
         {
-            this.m = database.Services.Get<MetaPopulation>();
+            this.m = database.Services.Get<M>();
 
             this.PermissionsWithClass = new PrefetchPolicyBuilder()
                     .WithRule(this.m.Permission.ClassPointer)

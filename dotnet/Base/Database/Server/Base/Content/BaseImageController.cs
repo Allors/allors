@@ -40,7 +40,7 @@ namespace Allors.Database.Server.Controllers
         [ResponseCache(Location = ResponseCacheLocation.Any, Duration = OneYearInSeconds)]
         public virtual IActionResult Get(string idString, string revisionString, string name, int? w, int? q, string t, string b, string o)
         {
-            var m = this.Transaction.Database.Services.Get<MetaPopulation>();
+            var m = this.Transaction.Database.Services.Get<M>();
 
             this.Request.Headers.TryGetValue(HeaderNames.IfNoneMatch, out var requestEtagValues);
             var requestEtag = requestEtagValues.FirstOrDefault();

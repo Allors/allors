@@ -165,7 +165,7 @@ namespace Allors.Security
 
         public async Task<IdentityUser> FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken)
         {
-            var m = this.database.Services.Get<MetaPopulation>();
+            var m = this.database.Services.Get<M>();
 
             cancellationToken.ThrowIfCancellationRequested();
             using var transaction = this.database.CreateTransaction();
@@ -220,7 +220,7 @@ namespace Allors.Security
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            var m = this.database.Services.Get<MetaPopulation>();
+            var m = this.database.Services.Get<M>();
 
             using var transaction = this.database.CreateTransaction();
             var extent = new Logins(transaction).Extent();
@@ -244,7 +244,7 @@ namespace Allors.Security
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            var m = this.database.Services.Get<MetaPopulation>();
+            var m = this.database.Services.Get<M>();
 
             using var transaction = this.database.CreateTransaction();
             var extent = new Logins(transaction).Extent();
@@ -295,7 +295,7 @@ namespace Allors.Security
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            var m = this.database.Services.Get<MetaPopulation>();
+            var m = this.database.Services.Get<M>();
 
             using var transaction = this.database.CreateTransaction();
             var user = new Users(transaction).FindBy(m.User.NormalizedUserEmail, normalizedEmail);

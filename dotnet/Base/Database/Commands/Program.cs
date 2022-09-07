@@ -85,7 +85,7 @@ namespace Commands
             }
         }
 
-        public MetaPopulation M => this.Database.Services.Get<MetaPopulation>();
+        public M M => this.Database.Services.Get<M>();
 
         public static int Main(string[] args)
         {

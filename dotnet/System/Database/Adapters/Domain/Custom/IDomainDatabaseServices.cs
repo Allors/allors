@@ -11,6 +11,6 @@ namespace Allors.Database
 
     public interface IDomainDatabaseServices : IDatabaseServices
     {
-        MetaPopulation M { get; }
+        M M { get; }
     }
 }

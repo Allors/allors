@@ -66,11 +66,11 @@ namespace Allors.Database.Configuration
         public virtual void OnInit(IDatabase database)
         {
             this.Database = database;
-            this.M = (MetaPopulation)this.Database.MetaPopulation;
+            this.M = (M)this.Database.MetaPopulation;
             this.metaCache = new MetaCache(this.Database);
         }
 
-        public MetaPopulation M { get; private set; }
+        public M M { get; private set; }
 
         public ITransactionServices CreateTransactionServices() => new TransactionServices(this.httpContextAccessor);
 
@@ -83,7 +83,7 @@ namespace Allors.Database.Configuration
                 { } type when type == typeof(ISecurity) => (T)(this.security ??= new Security(this)),
                 { } type when type == typeof(IPrefetchPolicyCache) => (T)(this.prefetchPolicyCache ??= new PrefetchPolicyCache(this.Database, this.metaCache)),
                 // Core
-                { } type when type == typeof(MetaPopulation) => (T)(object)this.M,
+                { } type when type == typeof(M) => (T)(object)this.M,
                 { } type when type == typeof(IClassById) => (T)(this.classById ??= new ClassById()),
                 { } type when type == typeof(IVersionedIdByStrategy) => (T)(this.versionedIdByStrategy ??= new VersionedIdByStrategy()),
                 { } type when type == typeof(IPreparedSelects) => (T)(this.preparedSelects ??= new PreparedSelects(this.Database)),

@@ -16,18 +16,18 @@ namespace Allors.Database.Meta
 
         static void AddWorkspace(RelationType relationType, string workspaceName) => relationType.AssignedWorkspaceNames = (relationType.AssignedWorkspaceNames ?? Array.Empty<string>()).Append(workspaceName).Distinct().ToArray();
 
-        private void BuildCustom(MetaPopulation meta, Domains domains, RelationTypes relationTypes, MethodTypes methodTypes)
+        private void BuildCustom(M m, Domains domains, RelationTypes relationTypes, MethodTypes methodTypes)
         {
-            this.DefaultWorkspace(meta, domains, relationTypes, methodTypes);
+            this.DefaultWorkspace(m, domains, relationTypes, methodTypes);
         }
 
-        private void DefaultWorkspace(MetaPopulation meta, Domains domains, RelationTypes relationTypes, MethodTypes methodTypes)
+        private void DefaultWorkspace(M m, Domains domains, RelationTypes relationTypes, MethodTypes methodTypes)
         {
             const string workspaceName = "Default";
 
             relationTypes.OrganizationName.RoleType.IsRequired = true;
 
-            AddWorkspace(meta.Gender, workspaceName);
+            AddWorkspace(m.Gender, workspaceName);
         }
     }
 }

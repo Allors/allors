@@ -12,7 +12,7 @@ namespace Allors.Database.Domain
 
     public static class PrefetchPolicyBuilderExtensions
     {
-        public static PrefetchPolicyBuilder WithSecurityRules(this PrefetchPolicyBuilder @this, MetaPopulation m)
+        public static PrefetchPolicyBuilder WithSecurityRules(this PrefetchPolicyBuilder @this, M m)
         {
             // Object
             @this.WithRule(m.Object.SecurityTokens);
@@ -30,7 +30,7 @@ namespace Allors.Database.Domain
             return @this;
         }
 
-        public static PrefetchPolicyBuilder WithWorkspaceRules(this PrefetchPolicyBuilder @this, MetaPopulation m, ISet<IRoleType> roleTypes)
+        public static PrefetchPolicyBuilder WithWorkspaceRules(this PrefetchPolicyBuilder @this, M m, ISet<IRoleType> roleTypes)
         {
             @this.WithSecurityRules(m);
 
@@ -50,7 +50,7 @@ namespace Allors.Database.Domain
             return @this;
         }
 
-        public static PrefetchPolicyBuilder WithNodes(this PrefetchPolicyBuilder @this, Node[] treeNodes, MetaPopulation m)
+        public static PrefetchPolicyBuilder WithNodes(this PrefetchPolicyBuilder @this, Node[] treeNodes, M m)
         {
             foreach (var node in treeNodes)
             {
@@ -60,7 +60,7 @@ namespace Allors.Database.Domain
             return @this;
         }
 
-        private static PrefetchPolicyBuilder WithNode(this PrefetchPolicyBuilder @this, Node treeNode, MetaPopulation m)
+        private static PrefetchPolicyBuilder WithNode(this PrefetchPolicyBuilder @this, Node treeNode, M m)
         {
             if (treeNode.Nodes == null || treeNode.Nodes.Length == 0)
             {

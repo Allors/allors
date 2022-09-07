@@ -24,15 +24,15 @@ namespace Allors.Database.Domain.Tests
                 new TestDatabaseServices(fixture.Engine),
                 new Configuration
                 {
-                    ObjectFactory = new ObjectFactory(fixture.MetaPopulation, typeof(User)),
+                    ObjectFactory = new ObjectFactory(fixture.M, typeof(User)),
                 });
 
-            this.M = database.Services.Get<MetaPopulation>();
+            this.M = database.Services.Get<M>();
 
             this.Setup(database, populate);
         }
 
-        public MetaPopulation M { get; }
+        public M M { get; }
 
         public virtual Config Config { get; } = new Config { SetupSecurity = false };
 

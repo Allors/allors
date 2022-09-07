@@ -14,7 +14,7 @@ namespace Allors.Database.Domain
 
     public class UserNormalizedUserNameRule : Rule
     {
-        public UserNormalizedUserNameRule(MetaPopulation m) : base(m, new Guid("FD6F30D8-FF50-44FA-8863-343D2B08783B")) =>
+        public UserNormalizedUserNameRule(M m) : base(m, new Guid("FD6F30D8-FF50-44FA-8863-343D2B08783B")) =>
             this.Patterns = new Pattern[]
             {
                 m.User.RolePattern(v=>v.UserName),

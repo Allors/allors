@@ -31,7 +31,7 @@ namespace Allors.Database.Configuration
                 var transaction = this.Database.CreateTransaction();
                 try
                 {
-                    var m = transaction.Database.Services.Get<MetaPopulation>();
+                    var m = transaction.Database.Services.Get<M>();
 
                     var filter = new Extent(m.PersistentPreparedSelect)
                     {

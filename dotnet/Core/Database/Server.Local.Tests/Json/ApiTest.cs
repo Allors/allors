@@ -49,7 +49,7 @@ namespace Tests
             this.Setup(database, populate);
         }
 
-        public MetaPopulation M { get; }
+        public M M { get; }
 
         public virtual Config Config { get; } = new Config { SetupSecurity = true };
 

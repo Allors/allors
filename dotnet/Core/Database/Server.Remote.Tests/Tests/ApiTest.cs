@@ -69,7 +69,7 @@ namespace Allors.Server.Tests
             this.Transaction = database.CreateTransaction();
         }
 
-        public MetaPopulation M => this.Transaction.Database.Services.Get<MetaPopulation>();
+        public M M => this.Transaction.Database.Services.Get<M>();
 
         public IConfigurationRoot Configuration { get; set; }
 

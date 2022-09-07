@@ -15,7 +15,7 @@ namespace Allors.Database.Domain
 
     public class PersonCustomFullNameRule : Rule
     {
-        public PersonCustomFullNameRule(MetaPopulation m) : base(m, new Guid("C9895CF4-98B2-4023-A3EA-582107C7D80D")) =>
+        public PersonCustomFullNameRule(M m) : base(m, new Guid("C9895CF4-98B2-4023-A3EA-582107C7D80D")) =>
             this.Patterns = new IRolePattern[]
             {
                 new CustomRolePattern(m.Person.FirstName),

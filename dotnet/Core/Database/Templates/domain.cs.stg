@@ -141,15 +141,15 @@ namespace Allors.Database.Domain
 	public partial class $class.name$ : Allors.Database.IObject $class.directSupertypes:{directSupertype|, $directSupertype.SingularName$}$
 	{
 		private readonly IStrategy strategy;
-		private readonly Allors.Database.Meta.MetaPopulation m;
+		private readonly Allors.Database.Meta.M m;
 
 		public $class.name$(Allors.Database.IStrategy strategy)
 		{
 			this.strategy = strategy;
-            this.m = strategy.Transaction.Database.Services.Get<Allors.Database.Meta.MetaPopulation>();
+            this.m = strategy.Transaction.Database.Services.Get<Allors.Database.Meta.M>();
 		}
 
-		public Allors.Database.Meta.MetaPopulation M => m;
+		public Allors.Database.Meta.M M => m;
 
 		public Allors.Database.Meta.Meta$class.name$ Meta => m.$class.name$;
 
@@ -388,7 +388,7 @@ $if(methodType.ObjectType.IsClass)$
 		{
 			get
 			{
-			    var m = this.Object.Strategy.Transaction.Database.Services.Get<Allors.Database.Meta.MetaPopulation>();
+			    var m = this.Object.Strategy.Transaction.Database.Services.Get<Allors.Database.Meta.M>();
 				return new Allors.Database.Meta.MethodInvocation(m.$methodType.ObjectType.SingularName$, m.$methodType.ObjectType.SingularName$.$methodType.Name$);
 			}
 		}
@@ -417,7 +417,7 @@ methodTypeLeafClass() ::= <<
 		{
 			get
 			{
-			    var m = this.Object.Strategy.Transaction.Database.Services.Get<Allors.Database.Meta.MetaPopulation>();;
+			    var m = this.Object.Strategy.Transaction.Database.Services.Get<Allors.Database.Meta.M>();;
 				return new Allors.Database.Meta.MethodInvocation(m.$class.SingularName$, m.$class.SingularName$.$methodType.Name$);
 			}
 		}

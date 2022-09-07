@@ -10,7 +10,7 @@ namespace Allors.Database.Domain
 
     public static class Rules
     {
-        public static Rule[] Create(MetaPopulation m) =>
+        public static Rule[] Create(M m) =>
             new Rule[]
             {
                 // Core

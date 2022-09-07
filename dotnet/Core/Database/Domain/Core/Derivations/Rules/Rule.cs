@@ -13,7 +13,7 @@ namespace Allors.Database.Domain.Derivations.Rules
 
     public abstract class Rule : IRule
     {
-        protected Rule(MetaPopulation m, Guid id)
+        protected Rule(M m, Guid id)
         {
             this.M = m;
             this.Id = id;

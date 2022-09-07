@@ -14,7 +14,7 @@ namespace Allors.Database.Domain
 
     public class GrantEffectivePermissionsRule : Rule
     {
-        public GrantEffectivePermissionsRule(MetaPopulation m) : base(m, new Guid("1F897B84-EF92-4E94-8877-3501D56D426B")) =>
+        public GrantEffectivePermissionsRule(M m) : base(m, new Guid("1F897B84-EF92-4E94-8877-3501D56D426B")) =>
             this.Patterns = new Pattern[]
             {
                 m.Grant.RolePattern(v=>v.Role),

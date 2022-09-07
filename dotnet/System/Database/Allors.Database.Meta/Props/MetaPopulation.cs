@@ -11,7 +11,7 @@ namespace Allors.Database.Meta
     using System.Linq;
     using System.Reflection;
 
-    public sealed partial class MetaPopulation : IMetaPopulationBase
+    public abstract class MetaPopulation : IMetaPopulationBase
     {
         private readonly Dictionary<Guid, IMetaIdentifiableObjectBase> metaObjectById;
         private readonly Dictionary<string, IMetaIdentifiableObjectBase> metaObjectByTag;
@@ -41,7 +41,7 @@ namespace Allors.Database.Meta
         private IClassBase[] structuralDerivedDatabaseClasses;
         private IRelationTypeBase[] structuralDerivedDatabaseRelationTypes;
 
-        public MetaPopulation()
+        protected MetaPopulation()
         {
             this.isStale = true;
             this.isDeriving = false;
@@ -374,7 +374,7 @@ namespace Allors.Database.Meta
                 {
                     type.StructuralDeriveExclusiveSubclass();
                 }
-                
+
                 // RoleTypes & AssociationTypes
                 var roleTypesByAssociationTypeObjectType = this.RelationTypes
                     .GroupBy(v => v.AssociationType.ObjectType)

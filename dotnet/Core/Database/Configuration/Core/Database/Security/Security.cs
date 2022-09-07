@@ -28,7 +28,7 @@ namespace Allors.Database.Configuration
         public Security(DatabaseServices databaseServices)
         {
             var database = databaseServices.Database;
-            var m = database.Services.Get<MetaPopulation>();
+            var m = database.Services.Get<M>();
             var metaCache = databaseServices.Get<IMetaCache>();
 
             this.databaseVersionedSecurityTokens = new ConcurrentDictionary<long, IVersionedSecurityToken>();

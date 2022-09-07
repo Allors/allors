@@ -10,10 +10,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Allors.Database.Meta\Allors.Database.Meta.csproj" />
     <ProjectReference Include="..\..\Allors.Database\Allors.Database.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Include="..\..\Allors.Database.Meta\Props*\**\*.cs" />
-  </ItemGroup>
 </Project>

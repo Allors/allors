@@ -13,13 +13,13 @@ namespace Allors.Database.Configuration
 
     public class PreparedExtents : IPreparedExtents
     {
-        public PreparedExtents(MetaPopulation m )
+        public PreparedExtents(M m)
         {
             this.M = m;
             this.ExtentById = new ConcurrentDictionary<Guid, IExtent>();
         }
 
-        public MetaPopulation M { get; }
+        public M M { get; }
 
         public ConcurrentDictionary<Guid, IExtent> ExtentById { get; }
 

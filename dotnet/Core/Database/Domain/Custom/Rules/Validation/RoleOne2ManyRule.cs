@@ -14,7 +14,7 @@ namespace Allors.Database.Domain
 
     public class RoleOne2ManyRule : Rule
     {
-        public RoleOne2ManyRule(MetaPopulation m) : base(m, new Guid("d40ab5c5-c248-4455-bad4-8c825f48e080")) =>
+        public RoleOne2ManyRule(M m) : base(m, new Guid("d40ab5c5-c248-4455-bad4-8c825f48e080")) =>
             this.Patterns = new Pattern[]
             {
                 m.CC.RolePattern(v=>v.Assigned, v=>v.BBWhereOne2Many.BB.AAWhereOne2Many),

@@ -16,7 +16,7 @@ namespace Allors.Database.Meta
         private Composite subtype;
         private Interface supertype;
 
-        internal Inheritance(MetaPopulation metaPopulation)
+        public Inheritance(MetaPopulation metaPopulation)
         {
             this.metaPopulation = metaPopulation;
             this.metaPopulation.OnInheritanceCreated(this);

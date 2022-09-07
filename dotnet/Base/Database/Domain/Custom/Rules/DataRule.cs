@@ -14,7 +14,7 @@ namespace Allors.Database.Domain
 
     public class DataRule : Rule
     {
-        public DataRule(MetaPopulation m) : base(m, new Guid("B3CADA5C-B844-40BF-82B9-CF4EC41AF198")) =>
+        public DataRule(M m) : base(m, new Guid("B3CADA5C-B844-40BF-82B9-CF4EC41AF198")) =>
             this.Patterns = new Pattern[]
             {
                 m.Data.RolePattern(v=>v.AutocompleteAssignedFilter),

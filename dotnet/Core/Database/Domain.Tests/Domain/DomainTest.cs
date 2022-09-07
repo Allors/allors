@@ -28,12 +28,12 @@ namespace Allors.Database.Domain.Tests
                     ObjectFactory = new ObjectFactory(fixture.MetaPopulation, typeof(User)),
                 });
 
-            this.M = ((IDatabase)database).Services.Get<MetaPopulation>();
+            this.M = ((IDatabase)database).Services.Get<M>();
 
             this.Setup(database, populate);
         }
 
-        public MetaPopulation M { get; set; }
+        public M M { get; set; }
 
         public virtual Config Config { get; } = new Config { SetupSecurity = false };
 

@@ -40,7 +40,7 @@ namespace Allors.Database.Protocol.Json
             this.AccessControl = transactionServices.Get<IWorkspaceAclsService>().Create(this.WorkspaceName);
             this.AllowedClasses = metaCache.GetWorkspaceClasses(this.WorkspaceName);
             this.RoleTypesByClass = metaCache.GetWorkspaceRoleTypesByClass(this.WorkspaceName);
-            this.M = databaseServices.Get<MetaPopulation>();
+            this.M = databaseServices.Get<M>();
             this.MetaPopulation = this.M;
             this.PreparedSelects = databaseServices.Get<IPreparedSelects>();
             this.PreparedExtents = databaseServices.Get<IPreparedExtents>();

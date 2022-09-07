@@ -11,11 +11,11 @@ namespace Allors.Database
 
     public class DefaultDomainDatabaseServices : IDomainDatabaseServices
     {
-        public void OnInit(IDatabase database) => this.M = (MetaPopulation)database.ObjectFactory.MetaPopulation;
+        public void OnInit(IDatabase database) => this.M = (M)database.ObjectFactory.MetaPopulation;
 
         public ITransactionServices CreateTransactionServices() => new DefaultDomainTransactionServices();
 
-        public MetaPopulation M { get; private set; }
+        public M M { get; private set; }
 
         public T Get<T>() => default;
 

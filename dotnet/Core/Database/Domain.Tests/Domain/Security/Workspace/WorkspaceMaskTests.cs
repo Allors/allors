@@ -57,12 +57,12 @@ namespace Allors.Database.Domain.Tests
 
             Assert.True(acl.IsMasked());
         }
-        
+
         private class WorkspaceMask : IWorkspaceMask
         {
             private readonly Dictionary<IClass, IRoleType> masks;
 
-            public WorkspaceMask(MetaPopulation m) =>
+            public WorkspaceMask(M m) =>
                 this.masks = new Dictionary<IClass, IRoleType>
                 {
                     {m.Organization, m.Organization.Name},

@@ -75,7 +75,7 @@ ids_composite_methodType(method) ::= <<
 m(repository) ::= <<
 namespace Allors.Database.Meta
 {
-    public partial class MetaPopulation {
+    public partial class M : MetaPopulation {
 $repository.Units:{unit|        public Meta$unit.SingularName$ $unit.SingularName$;}; separator="\n"$
 $repository.Interfaces:{interface|        public Meta$interface.SingularName$ $interface.SingularName$;}; separator="\n"$
 $repository.Classes:{class|        public Meta$class.SingularName$ $class.SingularName$;}; separator="\n"$
@@ -92,7 +92,7 @@ $repository.Units:{unit|$define_unit(unit)$}; separator="\n"$
 
 define_unit(unit) ::= <<
     public class Meta$unit.SingularName$ : Unit {
-        public Meta$unit.SingularName$(MetaPopulation metaPopulation, System.Guid id) : base(metaPopulation, id, UnitTags.$unit.SingularName$)
+        public Meta$unit.SingularName$(M metaPopulation, System.Guid id) : base(metaPopulation, id, UnitTags.$unit.SingularName$)
         {
         }
     }
@@ -107,11 +107,11 @@ $repository.Interfaces:{interface|$define_interface(interface)$}; separator="\n"
 
 define_interface(interface) ::= <<
     public partial class Meta$interface.SingularName$ : Interface {
-        public Meta$interface.SingularName$(MetaPopulation metaPopulation, System.Guid id, string tag = null) : base(metaPopulation, id, tag)
+        public Meta$interface.SingularName$(M metaPopulation, System.Guid id, string tag = null) : base(metaPopulation, id, tag)
         {
         }
 
-        MetaPopulation M;
+        M M;
 
 $interface.Subtypes:{subtype|        public Meta$subtype.SingularName$ As$subtype.SingularName$ => this.M.$subtype.SingularName$;}; separator="\n"$
 
@@ -138,11 +138,11 @@ $repository.Classes:{class|$define_class(class)$}; separator="\n"$
 
 define_class(class) ::= <<
     public partial class Meta$class.SingularName$ : Class {
-        public Meta$class.SingularName$(MetaPopulation metaPopulation, System.Guid id, string tag = null) : base(metaPopulation, id, tag)
+        public Meta$class.SingularName$(M metaPopulation, System.Guid id, string tag = null) : base(metaPopulation, id, tag)
         {
         }
         
-        public MetaPopulation M => (MetaPopulation)this.MetaPopulation;
+        public M M => (M)this.MetaPopulation;
 
         $class.DefinedProperties:{property|$define_propertyType(property)$}; separator="\n"$
 
@@ -172,6 +172,8 @@ $composite.DefinedProperties:{property|$define_associationType(property)$}; sepa
 define_associationType(property) ::= <<
     public class Meta$property.AssociationName$ : AssociationType
     {
+        public M M => (M)this.MetaPopulation;
+
         public Meta$property.AssociationName$(IRelationTypeBase relationType) : base(relationType)
         {
         }
@@ -194,6 +196,8 @@ $composite.DefinedProperties:{property|$define_roleType(property)$}; separator="
 define_roleType(property) ::= <<
     public class Meta$property.DefiningType.SingularName$$property.RoleName$ : RoleType
     {
+        public M M => (M)this.MetaPopulation;
+
         public Meta$property.DefiningType.SingularName$$property.RoleName$(IRelationTypeBase relationType) : base(relationType)
         {
         }
@@ -254,8 +258,8 @@ $repository.Composites:{composite|$define_methods(composite)$}; separator="\n"$
         }
         #endregion
 
-        public MetaPopulation Build() {
-            var meta =  new MetaPopulation();
+        public M Build() {
+            var meta =  new M();
             var domains = new Domains();
             var relationTypes = new RelationTypes();
             var methodTypes = new MethodTypes();
@@ -282,64 +286,64 @@ $repository.Domains:{assembly|             this.Build$assembly.Name$(meta, domai
             return meta;
         }
 
-		private void BuildDomains(MetaPopulation meta, Domains domains)
+		private void BuildDomains(M meta, Domains domains)
 		{
 $repository.Domains:{assembly|$build_domain(assembly)$}; separator="\n"$
 		}
 
-		private void BuildDomainInheritances(MetaPopulation meta, Domains domains)
+		private void BuildDomainInheritances(M meta, Domains domains)
 		{
 $repository.Domains:{domain|$build_domain_inheritance(domain)$}; separator="\n"$
 		}
 
-		private void BuildUnits(MetaPopulation meta, Domains domains)
+		private void BuildUnits(M meta, Domains domains)
 		{
 $repository.Units:{unit|$build_unit(unit)$}; separator="\n"$
 		}
 
-		private void BuildInterfaces(MetaPopulation meta, Domains domains)
+		private void BuildInterfaces(M meta, Domains domains)
 		{
 $repository.Interfaces:{interface|$build_interface(interface)$}; separator="\n"$
 		}
 
-		private void BuildClasses(MetaPopulation meta, Domains domains)
+		private void BuildClasses(M meta, Domains domains)
 		{
 $repository.Classes:{class|$build_class(class)$}; separator="\n"$
 		}
 
-		private void BuildInheritances(MetaPopulation meta, Domains domains)
+		private void BuildInheritances(M meta, Domains domains)
 		{
 $repository.Composites:{composite|$inheritance(composite)$}; separator="\n"$
 		}
 
-		private void BuildRelationTypes(MetaPopulation meta, Domains domains, RelationTypes relationTypes)
+		private void BuildRelationTypes(M meta, Domains domains, RelationTypes relationTypes)
 		{
 $repository.Composites:{composite|$build_relations(composite)$}; separator="\n"$
 		}
 
 $repository.Composites:{composite|$relations(composite)$}; separator="\n"$
 
-		private void BuildMethodTypes(MetaPopulation meta, Domains domains, MethodTypes methodTypes)
+		private void BuildMethodTypes(M meta, Domains domains, MethodTypes methodTypes)
 		{
 $repository.Composites:{composite|$build_methods(composite)$}; separator="\n"$
 		}
 
-        private void OverrideRequired(MetaPopulation meta, RelationTypes relationTypes)
+        private void OverrideRequired(M meta, RelationTypes relationTypes)
         {
 $repository.Classes:{class|$override_required(class)$}; separator="\n"$
         }
 
-        private void OverrideUnique(MetaPopulation meta, RelationTypes relationTypes)
+        private void OverrideUnique(M meta, RelationTypes relationTypes)
         {
 $repository.Classes:{class|$override_unique(class)$}; separator="\n"$
         }
 
-        private void AssignPropertyTypes(MetaPopulation meta, RelationTypes relationTypes)
+        private void AssignPropertyTypes(M meta, RelationTypes relationTypes)
         {
 $repository.Composites:{composite|$assign_properties(composite)$}; separator="\n"$
         }
 
-        private void AssignMethodTypes(MetaPopulation meta, MethodTypes methodTypes)
+        private void AssignMethodTypes(M meta, MethodTypes methodTypes)
         {
 $repository.Composites:{composite|$assign_methods(composite)$}; separator="\n"$
         }
@@ -417,7 +421,7 @@ $composite.DefinedProperties:{property|$relation(property)$}; separator="\n"$
 >>
 
 relation(property) ::= <<
-        private void Build$property.DefiningType.SingularName$$property.RoleName$(MetaPopulation meta, Domains domains, RelationTypes relationTypes)
+        private void Build$property.DefiningType.SingularName$$property.RoleName$(M meta, Domains domains, RelationTypes relationTypes)
         {
             relationTypes.$property.DefiningType.SingularName$$property.RoleName$ = new RelationType(meta.$property.DefiningType.SingularName$, Ids.$property.DefiningType.SingularName$$property.RoleName$, v => new Meta$property.AssociationName$(v), v => new Meta$property.DefiningType.SingularName$$property.RoleName$(v))
             {
@@ -497,7 +501,7 @@ $composite.DefinedMethods:{method|     this.Build$method.DefiningType.SingularNa
 
 methods(composite) ::= <<$composite.DefinedMethods:{method|$method(method)$}; separator="\n"$>>
 method(method) ::= <<
-        private void Build$method.DefiningType.SingularName$$method.Name$(MetaPopulation meta, Domains domains, MethodTypes methodTypes)
+        private void Build$method.DefiningType.SingularName$$method.Name$(M meta, Domains domains, MethodTypes methodTypes)
         {
             methodTypes.$method.DefiningType.SingularName$$method.Name$ = new MethodType(meta.$method.DefiningType.SingularName$, Ids.$method.DefiningType.SingularName$$method.Name$)
             {

@@ -159,7 +159,7 @@ namespace Allors.Database.Domain
 	public partial class $class.name$ : Allors.Database.IObject $class.directSupertypes:{directSupertype|, $directSupertype.SingularName$}$
 	{
 		private readonly IStrategy strategy;
-		private readonly Allors.Database.Meta.MetaPopulation m;
+		private readonly Allors.Database.Meta.M m;
 
 		public $class.name$(Allors.Database.IStrategy strategy)
 		{
@@ -167,7 +167,7 @@ namespace Allors.Database.Domain
 			this.m = this.DatabaseContext().M;
 		}
 
-		public Allors.Database.Meta.MetaPopulation M => m;
+		public Allors.Database.Meta.M M => m;
 
 		public Allors.Database.Meta.Meta$class.name$ Meta => this.m.$class.name$;
 

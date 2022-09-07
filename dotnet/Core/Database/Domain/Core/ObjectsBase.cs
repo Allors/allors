@@ -14,10 +14,10 @@ namespace Allors.Database.Domain
         protected ObjectsBase(ITransaction transaction)
         {
             this.Transaction = transaction;
-            this.M = this.Transaction.Database.Services.Get<MetaPopulation>();
+            this.M = this.Transaction.Database.Services.Get<M>();
         }
 
-        public MetaPopulation M { get; }
+        public M M { get; }
 
         public abstract Composite ObjectType { get; }
 

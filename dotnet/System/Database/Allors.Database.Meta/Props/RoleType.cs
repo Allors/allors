@@ -37,7 +37,7 @@ namespace Allors.Database.Meta
             this.metaPopulation.OnRoleTypeCreated(this);
         }
 
-        public MetaPopulation M => (MetaPopulation)this.metaPopulation;
+        public MetaPopulation MetaPopulation => (MetaPopulation)this.metaPopulation;
 
         IMetaPopulationBase IMetaObjectBase.MetaPopulation => this.metaPopulation;
         IMetaPopulation IMetaObject.MetaPopulation => this.metaPopulation;

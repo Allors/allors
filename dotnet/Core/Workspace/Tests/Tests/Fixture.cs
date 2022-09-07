@@ -22,7 +22,7 @@ namespace Tests.Workspace
             this.Engine = new Engine(rules);
         }
 
-        public MetaPopulation M { get; private set; }
+        public M M { get; private set; }
 
         public Engine Engine { get; }
 

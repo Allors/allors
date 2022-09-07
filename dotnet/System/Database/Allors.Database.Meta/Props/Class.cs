@@ -24,7 +24,7 @@ namespace Allors.Database.Meta
 
         private ConcurrentDictionary<IMethodType, Action<object, object>[]> actionsByMethodType;
 
-        internal Class(IMetaPopulationBase metaPopulation, Guid id, string tag) : base(metaPopulation, id, tag)
+        protected Class(IMetaPopulationBase metaPopulation, Guid id, string tag) : base(metaPopulation, id, tag)
         {
             this.classes = new[] { this };
             metaPopulation.OnClassCreated(this);

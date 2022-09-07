@@ -19,7 +19,7 @@ namespace Allors.Database.Meta
 
         private string name;
 
-        internal Domain(MetaPopulation metaPopulation, Guid id)
+        public Domain(MetaPopulation metaPopulation, Guid id)
         {
             this.metaPopulation = metaPopulation;
 

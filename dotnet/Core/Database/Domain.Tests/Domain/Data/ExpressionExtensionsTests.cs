@@ -22,7 +22,7 @@ namespace Allors.Database.Data.Tests
             this.M = metaBuilder.Build();
         }
 
-        private MetaPopulation M { get; }
+        private M M { get; }
 
         [Fact]
         public void InterfaceAssociation()

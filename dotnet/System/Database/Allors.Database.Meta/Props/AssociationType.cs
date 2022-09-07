@@ -33,7 +33,7 @@ namespace Allors.Database.Meta
             relationType.MetaPopulation.OnAssociationTypeCreated(this);
         }
 
-        public MetaPopulation M => (MetaPopulation)this.metaPopulation;
+        public MetaPopulation MetaPopulation => (MetaPopulation)this.metaPopulation;
 
         #region IMetaObject & IMetaObjectBase
         IMetaPopulation IMetaObject.MetaPopulation => this.metaPopulation;

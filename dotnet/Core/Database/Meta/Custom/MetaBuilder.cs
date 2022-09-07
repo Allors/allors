@@ -16,7 +16,7 @@ namespace Allors.Database.Meta
 
         static void AddWorkspace(RelationType relationType, string workspaceName) => relationType.AssignedWorkspaceNames = (relationType.AssignedWorkspaceNames ?? Array.Empty<string>()).Append(workspaceName).Distinct().ToArray();
 
-        private void BuildCustom(MetaPopulation meta, Domains domains, RelationTypes relationTypes, MethodTypes methodTypes)
+        private void BuildCustom(M m, Domains domains, RelationTypes relationTypes, MethodTypes methodTypes)
         {
             // Methods
             AddWorkspace(methodTypes.DeletableDelete, "Default");
@@ -28,10 +28,10 @@ namespace Allors.Database.Meta
             AddWorkspace(relationTypes.RoleName, "Default");
 
             // Objects
-            AddWorkspace(meta.UserGroup, "Default");
+            AddWorkspace(m.UserGroup, "Default");
 
             // Classes
-            var classes = meta.Classes.Where(@class =>
+            var classes = m.Classes.Where(@class =>
                 @class.RoleTypes.Any(v => v.AssignedWorkspaceNames.Contains("Default")) ||
                 @class.AssociationTypes.Any(v => v.AssignedWorkspaceNames.Contains("Default")) ||
                 @class.MethodTypes.Any(v => v.AssignedWorkspaceNames.Contains("Default")))

@@ -21,7 +21,7 @@ namespace Allors.Database.Domain.Tests
             this.Engine = new Engine(rules);
         }
 
-        public MetaPopulation MetaPopulation { get; set; }
+        public M MetaPopulation { get; set; }
 
         public Engine Engine { get; set; }
 

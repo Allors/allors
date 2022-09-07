@@ -4,14 +4,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\..\..\System\Database\Allors.Database.Meta\Props*\**\*.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Include="..\..\..\Core\Database\Meta\Core*\**\*.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\System\Database\Allors.Database.Meta\Allors.Database.Meta.csproj" />
     <ProjectReference Include="..\..\..\System\Database\Allors.Database\Allors.Database.csproj" />
   </ItemGroup>
 
