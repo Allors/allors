@@ -15,58 +15,37 @@ namespace Allors.Database.Meta
     /// This is also called the 'active', 'controlling' or 'owning' side.
     /// AssociationTypes can only have composite <see cref="ObjectType"/>s.
     /// </summary>
-    public abstract class AssociationType : IAssociationTypeBase, IComparable
+    public abstract class AssociationType : IAssociationType, IComparable
     {
         /// <summary>
         /// Used to create property names.
         /// </summary>
         private const string Where = "Where";
+        private readonly RelationType relationType;
+        private Composite objectType;
 
-        private readonly IMetaPopulationBase metaPopulation;
-        private readonly IRelationTypeBase relationType;
-        private ICompositeBase objectType;
-
-        protected AssociationType(IRelationTypeBase relationType)
+        protected AssociationType(RelationType relationType)
         {
-            this.metaPopulation = relationType.MetaPopulation;
+            this.MetaPopulation = relationType.MetaPopulation;
             this.relationType = relationType;
             relationType.MetaPopulation.OnAssociationTypeCreated(this);
         }
 
-        public MetaPopulation MetaPopulation => (MetaPopulation)this.metaPopulation;
+        IMetaPopulation IMetaObject.MetaPopulation => this.MetaPopulation;
+        public MetaPopulation MetaPopulation { get; }
 
-        #region IMetaObject & IMetaObjectBase
-        IMetaPopulation IMetaObject.MetaPopulation => this.metaPopulation;
+        public string[] WorkspaceNames => this.relationType.WorkspaceNames;
 
-        IMetaPopulationBase IMetaObjectBase.MetaPopulation => this.metaPopulation;
+        public string[] AssignedWorkspaceNames => this.relationType.AssignedWorkspaceNames;
 
-        #endregion
+        public string SingularFullName => this.SingularName;
+        public string PluralFullName => this.PluralName;
 
-        #region IOperandType & IOperandTypeBase
-        string[] IOperandType.WorkspaceNames => this.relationType.WorkspaceNames;
+        IObjectType IPropertyType.ObjectType => this.ObjectType;
 
-        string[] IOperandType.AssignedWorkspaceNames => this.relationType.AssignedWorkspaceNames;
+        public bool IsOne => !this.IsMany;
 
-        #endregion
-
-        #region IPropertyType & IPropertyTypeBase
-        string IPropertyType.Name => this.Name;
-
-        string IPropertyType.SingularName => this.SingularName;
-
-        string IPropertyType.SingularFullName => this.SingularName;
-
-        string IPropertyType.PluralName => this.PluralName;
-
-        string IPropertyType.PluralFullName => this.PluralName;
-
-        IObjectType IPropertyType.ObjectType => this.objectType;
-
-        bool IPropertyType.IsOne => !this.IsMany;
-
-        bool IPropertyType.IsMany => this.IsMany;
-
-        object IPropertyType.Get(IStrategy strategy, IComposite ofType)
+        public object Get(IStrategy strategy, IComposite ofType)
         {
             var association = strategy.GetAssociation(this);
 
@@ -84,32 +63,27 @@ namespace Allors.Database.Meta
             return !ofType.IsAssignableFrom(((IObject)association).Strategy.Class) ? null : association;
         }
 
-        #endregion
-
-        #region IAssociationType & IAssociationTypeBase
-        IRelationType IAssociationType.RelationType => this.relationType;
+        IRelationType IAssociationType.RelationType => this.RelationType;
 
         IRoleType IAssociationType.RoleType => this.RoleType;
 
-        IComposite IAssociationType.ObjectType => this.objectType;
+        IComposite IAssociationType.ObjectType => this.ObjectType;
 
-        ICompositeBase IAssociationTypeBase.ObjectType
+        public Composite ObjectType
         {
             get => this.objectType;
 
             set
             {
-                this.metaPopulation.AssertUnlocked();
+                this.MetaPopulation.AssertUnlocked();
                 this.objectType = value;
-                this.metaPopulation.Stale();
+                this.MetaPopulation.Stale();
             }
         }
 
-        IRelationTypeBase IAssociationTypeBase.RelationType => this.relationType;
+        public RelationType RelationType => this.relationType;
 
-        IRoleTypeBase IAssociationTypeBase.RoleType => this.RoleType;
-
-        void IAssociationTypeBase.Validate(ValidationLog validationLog)
+        public void Validate(ValidationLog validationLog)
         {
             if (this.objectType == null)
             {
@@ -124,11 +98,9 @@ namespace Allors.Database.Meta
             }
         }
 
-        #endregion
+        public RoleType RoleType => this.relationType.RoleType;
 
-        public IRoleTypeBase RoleType => this.relationType.RoleType;
-
-        private bool IsMany
+        public bool IsMany
         {
             get
             {
@@ -144,11 +116,11 @@ namespace Allors.Database.Meta
             }
         }
 
-        private string Name => this.IsMany ? this.PluralName : this.SingularName;
+        public string Name => this.IsMany ? this.PluralName : this.SingularName;
 
-        private string SingularName => this.objectType.SingularName + Where + this.RoleType.SingularName;
+        public string SingularName => this.objectType.SingularName + Where + this.RoleType.SingularName;
 
-        private string PluralName => this.objectType.PluralName + Where + this.RoleType.SingularName;
+        public string PluralName => this.objectType.PluralName + Where + this.RoleType.SingularName;
 
         private string DisplayName => this.Name;
 

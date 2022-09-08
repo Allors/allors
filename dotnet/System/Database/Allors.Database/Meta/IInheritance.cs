@@ -6,7 +6,7 @@
 
 namespace Allors.Database.Meta
 {
-    public interface IInheritance
+    public interface IInheritance 
     {
         IInterface Supertype { get; }
 

@@ -15,13 +15,13 @@ namespace Allors.Database.Meta
     public class MethodCompiler
     {
         private readonly Dictionary<Type, MethodInfo[]> extensionMethodsByInterface;
-        private readonly List<IDomainBase> sortedDomains;
+        private readonly List<Domain> sortedDomains;
         private readonly ConcurrentDictionary<Type, Dictionary<MethodInfo, Action<object, object>>> actionByMethodInfoByType;
 
-        public MethodCompiler(IMetaPopulationBase metaPopulation, Dictionary<Type, MethodInfo[]> extensionMethodsByInterface)
+        public MethodCompiler(MetaPopulation metaPopulation, Dictionary<Type, MethodInfo[]> extensionMethodsByInterface)
         {
             this.extensionMethodsByInterface = extensionMethodsByInterface;
-            this.sortedDomains = new List<IDomainBase>(metaPopulation.Domains);
+            this.sortedDomains = new List<Domain>(metaPopulation.Domains);
             this.sortedDomains.Sort((a, b) => a.Superdomains.Contains(b) ? -1 : 1);
 
             this.actionByMethodInfoByType = new ConcurrentDictionary<Type, Dictionary<MethodInfo, Action<object, object>>>();

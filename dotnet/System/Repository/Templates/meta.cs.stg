@@ -2,7 +2,7 @@ group AllorsCSharpRepository;
 
 TemplateId() ::= <<14F49218-A676-43ba-9CBD-B8FFA059D1BF>>
 TemplateName() ::= <<Allors C# Meta>>
-TemplateVersion() ::= <<1.0.9>>
+TemplateVersion() ::= <<1.0.10>>
 TemplateAllors() ::= <<1.0>>
 TemplateConfiguration(repository) ::= <<
 $!
@@ -174,7 +174,7 @@ define_associationType(property) ::= <<
     {
         public M M => (M)this.MetaPopulation;
 
-        public Meta$property.AssociationName$(IRelationTypeBase relationType) : base(relationType)
+        public Meta$property.AssociationName$(RelationType relationType) : base(relationType)
         {
         }
 
@@ -198,7 +198,7 @@ define_roleType(property) ::= <<
     {
         public M M => (M)this.MetaPopulation;
 
-        public Meta$property.DefiningType.SingularName$$property.RoleName$(IRelationTypeBase relationType) : base(relationType)
+        public Meta$property.DefiningType.SingularName$$property.RoleName$(RelationType relationType) : base(relationType)
         {
         }
 $if(property.Type.IsComposite)$

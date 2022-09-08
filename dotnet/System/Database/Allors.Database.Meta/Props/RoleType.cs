@@ -11,15 +11,15 @@ namespace Allors.Database.Meta
     using System.Linq;
     using Text;
 
-    public abstract class RoleType : IRoleTypeBase, IComparable
+    public abstract class RoleType : IRoleType, IComparable
     {
         /// <summary>
         /// The maximum size value.
         /// </summary>
         public const int MaximumSize = -1;
 
-        private readonly IMetaPopulationBase metaPopulation;
-        private IObjectTypeBase objectType;
+        private readonly MetaPopulation metaPopulation;
+        private ObjectType objectType;
 
         private string singularName;
         private string pluralName;
@@ -29,7 +29,7 @@ namespace Allors.Database.Meta
         private bool? isRequired;
         private bool? isUnique;
 
-        protected RoleType(IRelationTypeBase relationType)
+        protected RoleType(RelationType relationType)
         {
             this.metaPopulation = relationType.MetaPopulation;
             this.RelationType = relationType;
@@ -37,22 +37,20 @@ namespace Allors.Database.Meta
             this.metaPopulation.OnRoleTypeCreated(this);
         }
 
-        public MetaPopulation MetaPopulation => (MetaPopulation)this.metaPopulation;
-
-        IMetaPopulationBase IMetaObjectBase.MetaPopulation => this.metaPopulation;
+        public MetaPopulation MetaPopulation => this.metaPopulation;
         IMetaPopulation IMetaObject.MetaPopulation => this.metaPopulation;
 
-        public IRelationTypeBase RelationType { get; }
+        public RelationType RelationType { get; }
         IRelationType IRoleType.RelationType => this.RelationType;
 
         /// <summary>
         /// Gets the association.
         /// </summary>
         /// <value>The association.</value>
-        public IAssociationTypeBase AssociationType => this.RelationType.AssociationType;
+        public AssociationType AssociationType => this.RelationType.AssociationType;
         IAssociationType IRoleType.AssociationType => this.AssociationType;
 
-        public IObjectTypeBase ObjectType
+        public ObjectType ObjectType
         {
             get => this.objectType;
 
@@ -66,9 +64,9 @@ namespace Allors.Database.Meta
 
         IObjectType IPropertyType.ObjectType => this.ObjectType;
 
-        string[] IOperandType.WorkspaceNames => this.RelationType.WorkspaceNames;
+        public string[] WorkspaceNames => this.RelationType.WorkspaceNames;
 
-        string[] IOperandType.AssignedWorkspaceNames => this.RelationType.AssignedWorkspaceNames;
+        public string[] AssignedWorkspaceNames => this.RelationType.AssignedWorkspaceNames;
 
         /// <summary>
         /// Gets the name.

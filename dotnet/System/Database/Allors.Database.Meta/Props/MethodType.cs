@@ -8,16 +8,16 @@ namespace Allors.Database.Meta
     using System;
     using System.Linq;
 
-    public sealed class MethodType : IMethodTypeBase, IComparable
+    public sealed class MethodType : IMethodType, IComparable
     {
-        private readonly IMetaPopulationBase metaPopulation;
+        private readonly MetaPopulation metaPopulation;
 
         private string[] assignedWorkspaceNames;
         private string[] derivedWorkspaceNames;
 
         private string name;
 
-        public MethodType(ICompositeBase objectType, Guid id, string tag = null)
+        public MethodType(Composite objectType, Guid id, string tag = null)
         {
             this.metaPopulation = objectType.MetaPopulation;
             this.ObjectType = objectType;
@@ -27,7 +27,7 @@ namespace Allors.Database.Meta
             this.metaPopulation.OnMethodTypeCreated(this);
         }
 
-        IMetaPopulationBase IMetaObjectBase.MetaPopulation => this.metaPopulation;
+        public MetaPopulation MetaPopulation => this.metaPopulation;
         IMetaPopulation IMetaObject.MetaPopulation => this.metaPopulation;
 
         IComposite IMethodType.ObjectType => this.ObjectType;
@@ -63,7 +63,7 @@ namespace Allors.Database.Meta
         /// Validates the state.
         /// </summary>
         /// <param name="validationLog">The validation.</param>
-        void IMethodTypeBase.Validate(ValidationLog validationLog)
+        public void Validate(ValidationLog validationLog)
         {
             if (string.IsNullOrEmpty(this.Name))
             {
@@ -72,7 +72,7 @@ namespace Allors.Database.Meta
             }
         }
 
-        public override bool Equals(object other) => this.Id.Equals((other as IMethodTypeBase)?.Id);
+        public override bool Equals(object other) => this.Id.Equals((other as MethodType)?.Id);
 
         public override int GetHashCode() => this.Id.GetHashCode();
 
@@ -85,13 +85,13 @@ namespace Allors.Database.Meta
         /// </returns>
         /// <exception cref="T:System.ArgumentException">
         /// <paramref name="other"/> is not the same type as this state. </exception>
-        public int CompareTo(object other) => this.Id.CompareTo((other as IMethodTypeBase)?.Id);
+        public int CompareTo(object other) => this.Id.CompareTo((other as MethodType)?.Id);
 
         public Guid Id { get; }
 
         public string Tag { get; }
 
-        public ICompositeBase ObjectType { get; }
+        public Composite ObjectType { get; }
 
         public string[] AssignedWorkspaceNames
         {

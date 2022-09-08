@@ -11,7 +11,7 @@ namespace Allors.Database.Meta
     using System.Collections.Generic;
     using System.Linq;
 
-    public abstract class Class : Composite, IClassBase
+    public abstract class Class : Composite, IClass
     {
         private string[] assignedWorkspaceNames;
         private string[] derivedWorkspaceNames;
@@ -24,7 +24,7 @@ namespace Allors.Database.Meta
 
         private ConcurrentDictionary<IMethodType, Action<object, object>[]> actionsByMethodType;
 
-        protected Class(IMetaPopulationBase metaPopulation, Guid id, string tag) : base(metaPopulation, id, tag)
+        protected Class(MetaPopulation metaPopulation, Guid id, string tag) : base(metaPopulation, id, tag)
         {
             this.classes = new[] { this };
             metaPopulation.OnClassCreated(this);
@@ -80,19 +80,19 @@ namespace Allors.Database.Meta
             }
         }
 
-        public override IEnumerable<IClassBase> Classes => this.classes;
+        public override IEnumerable<Class> Classes => this.classes;
 
         public override IEnumerable<IClass> DatabaseClasses => this.classes;
 
         public override bool ExistClass => true;
 
-        public override IClassBase ExclusiveClass => this;
+        public override Class ExclusiveClass => this;
 
         public override Type ClrType => this.clrType;
 
-        public override IEnumerable<ICompositeBase> Subtypes => Array.Empty<ICompositeBase>();
+        public override IEnumerable<Composite> Subtypes => Array.Empty<Composite>();
 
-        public override IEnumerable<ICompositeBase> DatabaseSubtypes => this.Subtypes;
+        public override IEnumerable<Composite> DatabaseSubtypes => this.Subtypes;
 
         public void DeriveWorkspaceNames(HashSet<string> workspaceNames)
         {

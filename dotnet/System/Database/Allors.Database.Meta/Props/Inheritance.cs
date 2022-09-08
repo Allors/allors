@@ -9,9 +9,9 @@ namespace Allors.Database.Meta
     using System;
     using System.Linq;
 
-    public sealed class Inheritance : IInheritanceBase, IComparable
+    public sealed class Inheritance : IInheritance, IComparable
     {
-        private readonly IMetaPopulationBase metaPopulation;
+        private readonly MetaPopulation metaPopulation;
 
         private Composite subtype;
         private Interface supertype;
@@ -22,7 +22,6 @@ namespace Allors.Database.Meta
             this.metaPopulation.OnInheritanceCreated(this);
         }
 
-        ICompositeBase IInheritanceBase.Subtype => this.Subtype;
         IComposite IInheritance.Subtype => this.Subtype;
         public Composite Subtype
         {
@@ -36,7 +35,6 @@ namespace Allors.Database.Meta
             }
         }
 
-        IInterfaceBase IInheritanceBase.Supertype => this.Supertype;
         IInterface IInheritance.Supertype => this.Supertype;
         public Interface Supertype
         {
@@ -50,8 +48,7 @@ namespace Allors.Database.Meta
             }
         }
 
-        IMetaPopulationBase IMetaObjectBase.MetaPopulation => this.metaPopulation;
-        IMetaPopulation IMetaObject.MetaPopulation => this.metaPopulation;
+        public MetaPopulation MetaPopulation => this.metaPopulation;
 
         /// <summary>
         /// Gets the validation name.
@@ -100,7 +97,7 @@ namespace Allors.Database.Meta
         /// Validates this state.
         /// </summary>
         /// <param name="validationLog">The validation.</param>
-        protected internal void Validate(ValidationLog validationLog)
+        public void Validate(ValidationLog validationLog)
         {
             if (this.Subtype != null && this.Supertype != null)
             {

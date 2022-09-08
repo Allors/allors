@@ -10,14 +10,14 @@ namespace Allors.Database.Meta
     using System.Collections.Generic;
     using Text;
 
-    public abstract class ObjectType : IObjectTypeBase
+    public abstract class ObjectType : IObjectType
     {
         private string singularName;
 
         private string pluralName;
 
 
-        protected ObjectType(IMetaPopulationBase metaPopulation, Guid id, string tag = null)
+        protected ObjectType(MetaPopulation metaPopulation, Guid id, string tag = null)
         {
             this.MetaPopulation = metaPopulation;
             this.Id = id;
@@ -72,7 +72,7 @@ namespace Allors.Database.Meta
 
         public abstract IEnumerable<string> WorkspaceNames { get; }
 
-        public IMetaPopulationBase MetaPopulation { get; }
+        public MetaPopulation MetaPopulation { get; }
 
         /// <summary>
         /// Gets the validation name.

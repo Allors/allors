@@ -82,7 +82,7 @@ namespace Allors.Meta.Generation.Model
 
         public bool ExistClass => ((Composite)this.Composite).ExistClass;
 
-        public IClassBase ExclusiveClass => ((Composite)this.Composite).ExclusiveClass;
+        public Class ExclusiveClass => ((Composite)this.Composite).ExclusiveClass;
 
         public IEnumerable<RoleTypeModel> UnitRoleTypes => this.RoleTypes.Where(roleType => roleType.ObjectType.IsUnit).ToArray();
 

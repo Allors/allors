@@ -11,35 +11,35 @@ namespace Allors.Database.Meta
     using System.Linq;
     using System.Reflection;
 
-    public abstract class MetaPopulation : IMetaPopulationBase
+    public abstract class MetaPopulation : IMetaPopulation
     {
-        private readonly Dictionary<Guid, IMetaIdentifiableObjectBase> metaObjectById;
-        private readonly Dictionary<string, IMetaIdentifiableObjectBase> metaObjectByTag;
+        private readonly Dictionary<Guid, IMetaIdentifiableObject> metaObjectById;
+        private readonly Dictionary<string, IMetaIdentifiableObject> metaObjectByTag;
 
         private string[] derivedWorkspaceNames;
 
-        private Dictionary<string, ICompositeBase> derivedDatabaseCompositeByLowercaseName;
+        private Dictionary<string, Composite> derivedDatabaseCompositeByLowercaseName;
 
         private IList<Domain> domains;
-        private IList<IUnitBase> units;
-        private IList<IInterfaceBase> interfaces;
-        private IList<IClassBase> classes;
+        private IList<Unit> units;
+        private IList<Interface> interfaces;
+        private IList<Class> classes;
         private IList<Inheritance> inheritances;
-        private IList<IRelationTypeBase> relationTypes;
-        private IList<IAssociationTypeBase> associationTypes;
-        private IList<IRoleTypeBase> roleTypes;
-        private IList<IMethodTypeBase> methodTypes;
+        private IList<RelationType> relationTypes;
+        private IList<AssociationType> associationTypes;
+        private IList<RoleType> roleTypes;
+        private IList<MethodType> methodTypes;
 
         private bool isStale;
         private bool isDeriving;
         private bool isStructuralDeriving;
 
-        private ICompositeBase[] structuralDerivedComposites;
+        private Composite[] structuralDerivedComposites;
 
-        private ICompositeBase[] structuralDerivedDatabaseComposites;
-        private IInterfaceBase[] structuralDerivedDatabaseInterfaces;
-        private IClassBase[] structuralDerivedDatabaseClasses;
-        private IRelationTypeBase[] structuralDerivedDatabaseRelationTypes;
+        private Composite[] structuralDerivedDatabaseComposites;
+        private Interface[] structuralDerivedDatabaseInterfaces;
+        private Class[] structuralDerivedDatabaseClasses;
+        private RelationType[] structuralDerivedDatabaseRelationTypes;
 
         protected MetaPopulation()
         {
@@ -47,17 +47,17 @@ namespace Allors.Database.Meta
             this.isDeriving = false;
 
             this.domains = new List<Domain>();
-            this.units = new List<IUnitBase>();
-            this.interfaces = new List<IInterfaceBase>();
-            this.classes = new List<IClassBase>();
+            this.units = new List<Unit>();
+            this.interfaces = new List<Interface>();
+            this.classes = new List<Class>();
             this.inheritances = new List<Inheritance>();
-            this.relationTypes = new List<IRelationTypeBase>();
-            this.associationTypes = new List<IAssociationTypeBase>();
-            this.roleTypes = new List<IRoleTypeBase>();
-            this.methodTypes = new List<IMethodTypeBase>();
+            this.relationTypes = new List<RelationType>();
+            this.associationTypes = new List<AssociationType>();
+            this.roleTypes = new List<RoleType>();
+            this.methodTypes = new List<MethodType>();
 
-            this.metaObjectById = new Dictionary<Guid, IMetaIdentifiableObjectBase>();
-            this.metaObjectByTag = new Dictionary<string, IMetaIdentifiableObjectBase>();
+            this.metaObjectById = new Dictionary<Guid, IMetaIdentifiableObject>();
+            this.metaObjectByTag = new Dictionary<string, IMetaIdentifiableObject>();
         }
 
         public MethodCompiler MethodCompiler { get; private set; }
@@ -74,26 +74,24 @@ namespace Allors.Database.Meta
         private bool IsBound { get; set; }
 
         IEnumerable<IDomain> IMetaPopulation.Domains => this.Domains;
-        public IEnumerable<IDomainBase> Domains => this.domains;
+        public IEnumerable<Domain> Domains => this.domains;
 
         IEnumerable<IClass> IMetaPopulation.Classes => this.classes;
-        public IEnumerable<IClassBase> Classes => this.classes;
-
-        IEnumerable<IInheritanceBase> IMetaPopulationBase.Inheritances => this.Inheritances;
+        public IEnumerable<Class> Classes => this.classes;
 
         public IEnumerable<Inheritance> Inheritances => this.inheritances;
 
         IEnumerable<IRelationType> IMetaPopulation.RelationTypes => this.relationTypes;
-        public IEnumerable<IRelationTypeBase> RelationTypes => this.relationTypes;
+        public IEnumerable<RelationType> RelationTypes => this.relationTypes;
 
-        public IEnumerable<IAssociationTypeBase> AssociationTypes => this.associationTypes;
+        public IEnumerable<AssociationType> AssociationTypes => this.associationTypes;
 
-        public IEnumerable<IRoleTypeBase> RoleTypes => this.roleTypes;
+        public IEnumerable<RoleType> RoleTypes => this.roleTypes;
 
         IEnumerable<IInterface> IMetaPopulation.Interfaces => this.interfaces;
 
         IEnumerable<IComposite> IMetaPopulation.Composites => this.Composites;
-        public IEnumerable<ICompositeBase> Composites => this.structuralDerivedComposites;
+        public IEnumerable<Composite> Composites => this.structuralDerivedComposites;
 
         /// <summary>
         /// Gets a value indicating whether this state is valid.
@@ -109,22 +107,22 @@ namespace Allors.Database.Meta
         }
 
         IEnumerable<IUnit> IMetaPopulation.Units => this.Units;
-        public IEnumerable<IUnitBase> Units => this.units;
+        public IEnumerable<Unit> Units => this.units;
 
         IEnumerable<IComposite> IMetaPopulation.DatabaseComposites => this.DatabaseComposites;
-        public IEnumerable<ICompositeBase> DatabaseComposites => this.structuralDerivedDatabaseComposites;
+        public IEnumerable<Composite> DatabaseComposites => this.structuralDerivedDatabaseComposites;
 
         IEnumerable<IInterface> IMetaPopulation.DatabaseInterfaces => this.DatabaseInterfaces;
-        public IEnumerable<IInterfaceBase> DatabaseInterfaces => this.structuralDerivedDatabaseInterfaces;
+        public IEnumerable<Interface> DatabaseInterfaces => this.structuralDerivedDatabaseInterfaces;
 
         IEnumerable<IClass> IMetaPopulation.DatabaseClasses => this.DatabaseClasses;
-        public IEnumerable<IClassBase> DatabaseClasses => this.structuralDerivedDatabaseClasses;
+        public IEnumerable<Class> DatabaseClasses => this.structuralDerivedDatabaseClasses;
 
         IEnumerable<IRelationType> IMetaPopulation.DatabaseRelationTypes => this.DatabaseRelationTypes;
-        public IEnumerable<IRelationTypeBase> DatabaseRelationTypes => this.structuralDerivedDatabaseRelationTypes;
+        public IEnumerable<RelationType> DatabaseRelationTypes => this.structuralDerivedDatabaseRelationTypes;
 
         IEnumerable<IMethodType> IMetaPopulation.MethodTypes => this.MethodTypes;
-        public IEnumerable<IMethodTypeBase> MethodTypes => this.methodTypes;
+        public IEnumerable<MethodType> MethodTypes => this.methodTypes;
 
         IMetaIdentifiableObject IMetaPopulation.FindById(Guid id) => this.FindById(id);
 
@@ -139,7 +137,7 @@ namespace Allors.Database.Meta
         /// <returns>
         /// The <see cref="IMetaObject"/>.
         /// </returns>
-        public IMetaIdentifiableObjectBase FindById(Guid id)
+        public IMetaIdentifiableObject FindById(Guid id)
         {
             this.metaObjectById.TryGetValue(id, out var metaObject);
 
@@ -153,7 +151,7 @@ namespace Allors.Database.Meta
         /// <returns>
         /// The <see cref="IMetaObject"/>.
         /// </returns>
-        public IMetaIdentifiableObjectBase FindByTag(string tag)
+        public IMetaIdentifiableObject FindByTag(string tag)
         {
             this.metaObjectByTag.TryGetValue(tag, out var metaObject);
 
@@ -169,7 +167,7 @@ namespace Allors.Database.Meta
         /// <returns>
         /// The <see cref="IMetaObject"/>.
         /// </returns>
-        public ICompositeBase FindDatabaseCompositeByName(string name)
+        public Composite FindDatabaseCompositeByName(string name)
         {
             this.Derive();
 
@@ -288,15 +286,13 @@ namespace Allors.Database.Meta
             }
         }
 
-        void IMetaPopulationBase.AssertUnlocked()
+        public void AssertUnlocked()
         {
             if (this.IsBound)
             {
                 throw new Exception("Environment is locked");
             }
         }
-
-        void IMetaPopulationBase.Derive() => this.Derive();
 
         public void StructuralDerive()
         {
@@ -315,12 +311,12 @@ namespace Allors.Database.Meta
                 this.methodTypes = this.methodTypes.ToArray();
 
                 var sharedDomains = new HashSet<Domain>();
-                var sharedComposites = new HashSet<ICompositeBase>();
-                var sharedInterfaces = new HashSet<IInterfaceBase>();
-                var sharedClasses = new HashSet<IClassBase>();
-                var sharedAssociationTypes = new HashSet<IAssociationTypeBase>();
-                var sharedRoleTypes = new HashSet<IRoleTypeBase>();
-                var sharedMethodTypeList = new HashSet<IMethodTypeBase>();
+                var sharedComposites = new HashSet<Composite>();
+                var sharedInterfaces = new HashSet<Interface>();
+                var sharedClasses = new HashSet<Class>();
+                var sharedAssociationTypes = new HashSet<AssociationType>();
+                var sharedRoleTypes = new HashSet<RoleType>();
+                var sharedMethodTypeList = new HashSet<MethodType>();
 
                 // Domains
                 foreach (var domain in this.domains)
@@ -329,7 +325,7 @@ namespace Allors.Database.Meta
                 }
 
                 // Unit & IComposite ObjectTypes
-                var compositeTypes = new List<ICompositeBase>(this.interfaces);
+                var compositeTypes = new List<Composite>(this.interfaces);
                 compositeTypes.AddRange(this.Classes);
                 this.structuralDerivedComposites = compositeTypes.ToArray();
 
@@ -378,12 +374,12 @@ namespace Allors.Database.Meta
                 // RoleTypes & AssociationTypes
                 var roleTypesByAssociationTypeObjectType = this.RelationTypes
                     .GroupBy(v => v.AssociationType.ObjectType)
-                    .ToDictionary(g => g.Key, g => new HashSet<IRoleTypeBase>(g.Select(v => v.RoleType)));
+                    .ToDictionary(g => g.Key, g => new HashSet<RoleType>(g.Select(v => v.RoleType)));
 
 
                 var associationTypesByRoleTypeObjectType = this.RelationTypes
                     .GroupBy(v => v.RoleType.ObjectType)
-                    .ToDictionary(g => g.Key, g => new HashSet<IAssociationTypeBase>(g.Select(v => v.AssociationType)));
+                    .ToDictionary(g => g.Key, g => new HashSet<AssociationType>(g.Select(v => v.AssociationType)));
 
                 // RoleTypes
                 foreach (var composite in this.Composites)
@@ -400,7 +396,7 @@ namespace Allors.Database.Meta
                 // MethodTypes
                 var methodTypeByClass = this.MethodTypes
                     .GroupBy(v => v.ObjectType)
-                    .ToDictionary(g => g.Key, g => new HashSet<IMethodTypeBase>(g));
+                    .ToDictionary(g => g.Key, g => new HashSet<MethodType>(g));
 
                 foreach (var composite in this.Composites)
                 {
@@ -413,8 +409,7 @@ namespace Allors.Database.Meta
             }
         }
 
-
-        private void Derive()
+        public void Derive()
         {
             if (this.isStructuralDeriving)
             {
@@ -486,7 +481,7 @@ namespace Allors.Database.Meta
             }
         }
 
-        void IMetaPopulationBase.OnDomainCreated(Domain domain)
+        public void OnDomainCreated(Domain domain)
         {
             this.domains.Add(domain);
             this.metaObjectById.Add(domain.Id, domain);
@@ -513,7 +508,7 @@ namespace Allors.Database.Meta
             this.Stale();
         }
 
-        void IMetaPopulationBase.OnClassCreated(Class @class)
+        public void OnClassCreated(Class @class)
         {
             this.classes.Add(@class);
             this.metaObjectById.Add(@class.Id, @class);
@@ -522,13 +517,13 @@ namespace Allors.Database.Meta
             this.Stale();
         }
 
-        void IMetaPopulationBase.OnInheritanceCreated(Inheritance inheritance)
+        public void OnInheritanceCreated(Inheritance inheritance)
         {
             this.inheritances.Add(inheritance);
             this.Stale();
         }
 
-        void IMetaPopulationBase.OnRelationTypeCreated(RelationType relationType)
+        public void OnRelationTypeCreated(RelationType relationType)
         {
             this.relationTypes.Add(relationType);
             this.metaObjectById.Add(relationType.Id, relationType);
@@ -537,11 +532,11 @@ namespace Allors.Database.Meta
             this.Stale();
         }
 
-        void IMetaPopulationBase.OnAssociationTypeCreated(AssociationType associationType) => this.Stale();
+        public void OnAssociationTypeCreated(AssociationType associationType) => this.Stale();
 
-        void IMetaPopulationBase.OnRoleTypeCreated(RoleType roleType) => this.Stale();
+        public void OnRoleTypeCreated(RoleType roleType) => this.Stale();
 
-        void IMetaPopulationBase.OnMethodTypeCreated(MethodType methodType)
+        public void OnMethodTypeCreated(MethodType methodType)
         {
             this.methodTypes.Add(methodType);
             this.metaObjectById.Add(methodType.Id, methodType);
@@ -550,8 +545,7 @@ namespace Allors.Database.Meta
             this.Stale();
         }
 
-        void IMetaPopulationBase.Stale() => this.Stale();
-        private void Stale() => this.isStale = true;
+        public void Stale() => this.isStale = true;
 
         private bool HasCycle(Composite subtype, HashSet<Interface> supertypes, Dictionary<Composite, List<Inheritance>> inheritancesBySubtype)
         {
@@ -594,9 +588,9 @@ namespace Allors.Database.Meta
             return false;
         }
 
-        public IMethodTypeBase MethodType(string id) => (IMethodTypeBase)this.FindById(new Guid(id));
+        public MethodType MethodType(string id) => (MethodType)this.FindById(new Guid(id));
 
-        public IRoleTypeBase RoleType(string id) => ((RelationType)this.FindById(new Guid(id))).RoleType;
+        public RoleType RoleType(string id) => ((RelationType)this.FindById(new Guid(id))).RoleType;
         IComposite IMetaPopulation.FindDatabaseCompositeByName(string name) => this.FindDatabaseCompositeByName(name);
     }
 }

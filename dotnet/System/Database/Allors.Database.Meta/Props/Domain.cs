@@ -10,9 +10,9 @@ namespace Allors.Database.Meta
     using System.Collections.Generic;
     using System.Linq;
 
-    public sealed class Domain : IDomainBase
+    public sealed class Domain : IDomain
     {
-        private readonly IMetaPopulationBase metaPopulation;
+        private readonly MetaPopulation metaPopulation;
 
         private IList<Domain> directSuperdomains;
         private Domain[] structuralDerivedSuperdomains;
@@ -50,9 +50,9 @@ namespace Allors.Database.Meta
         IEnumerable<IDomain> IDomain.DirectSuperdomains => this.directSuperdomains;
         public IEnumerable<Domain> DirectSuperdomains => this.directSuperdomains;
 
-        public IEnumerable<IDomainBase> Superdomains => this.structuralDerivedSuperdomains;
+        public IEnumerable<Domain> Superdomains => this.structuralDerivedSuperdomains;
 
-        IMetaPopulationBase IMetaObjectBase.MetaPopulation => this.metaPopulation;
+        public MetaPopulation MetaPopulation => this.metaPopulation;
         IMetaPopulation IMetaObject.MetaPopulation => this.metaPopulation;
 
         /// <summary>

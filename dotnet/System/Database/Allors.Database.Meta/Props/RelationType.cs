@@ -13,9 +13,9 @@ namespace Allors.Database.Meta
     /// A <see cref="RelationType"/> defines the state and behavior for
     /// a set of <see cref="AssociationType"/>s and <see cref="RoleType"/>s.
     /// </summary>
-    public sealed class RelationType : IRelationTypeBase
+    public sealed class RelationType : IRelationType
     {
-        private readonly IMetaPopulationBase metaPopulation;
+        private readonly MetaPopulation metaPopulation;
 
         private Multiplicity assignedMultiplicity;
         private Multiplicity multiplicity;
@@ -26,7 +26,7 @@ namespace Allors.Database.Meta
         private string[] assignedWorkspaceNames;
         private string[] derivedWorkspaceNames;
 
-        public RelationType(ICompositeBase associationTypeComposite, Guid id, Func<IRelationTypeBase, IAssociationTypeBase> associationTypeFactory, Func<IRelationTypeBase, IRoleTypeBase> roleTypeFactory, string tag = null)
+        public RelationType(Composite associationTypeComposite, Guid id, Func<RelationType, AssociationType> associationTypeFactory, Func<RelationType, RoleType> roleTypeFactory, string tag = null)
         {
             this.metaPopulation = associationTypeComposite.MetaPopulation;
             this.Id = id;
@@ -65,7 +65,7 @@ namespace Allors.Database.Meta
             }
         }
 
-        IMetaPopulationBase IMetaObjectBase.MetaPopulation => this.metaPopulation;
+        public MetaPopulation MetaPopulation => this.metaPopulation;
         IMetaPopulation IMetaObject.MetaPopulation => this.metaPopulation;
 
         public bool IsDerived
@@ -128,10 +128,10 @@ namespace Allors.Database.Meta
         }
 
         IAssociationType IRelationType.AssociationType => this.AssociationType;
-        public IAssociationTypeBase AssociationType { get; }
+        public AssociationType AssociationType { get; }
 
         IRoleType IRelationType.RoleType => this.RoleType;
-        public IRoleTypeBase RoleType { get; }
+        public RoleType RoleType { get; }
 
         /// <summary>
         /// Gets a value indicating whether there exist exclusive classes.

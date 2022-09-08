@@ -9,7 +9,7 @@ namespace Allors.Database.Meta
     using System;
     using System.Collections.Generic;
 
-    public abstract class Unit : ObjectType, IUnitBase
+    public abstract class Unit : ObjectType, IUnit
     {
         private Type clrType;
 
