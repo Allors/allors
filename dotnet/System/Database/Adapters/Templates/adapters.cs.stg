@@ -2,7 +2,7 @@ delimiters "$", "$"
 
 TemplateId() ::= <<17ED40F8-BDF8-4A7C-9AE9-1C4D2AD6BA2B>>
 TemplateName() ::= <<C# Adapters>>
-TemplateVersion() ::= <<3.0.82>>
+TemplateVersion() ::= <<3.0.83>>
 TemplateAllors() ::= <<1.0>>
 TemplateConfiguration(meta, grp) ::= <<
 $!
@@ -23,8 +23,8 @@ GNU General Public License for more details.
 For more information visit http://www.allors.com/legal
 !$
 <generations>
-	$meta.DatabaseInterfaces:{interface|<generation template="castInterface" input="$interface.Id $" output="$interface.SingularName$.g.cs"/>}$
-	$meta.DatabaseClasses:{class|<generation template="castClass" input="$class.Id $" output="$class.SingularName$.g.cs"/>}$
+	$meta.Interfaces:{interface|<generation template="castInterface" input="$interface.Id $" output="$interface.SingularName$.g.cs"/>}$
+	$meta.Classes:{class|<generation template="castClass" input="$class.Id $" output="$class.SingularName$.g.cs"/>}$
 	$meta.MethodTypes:{methodType|<generation template="methodType" input="$methodType.Id $" output="$methodType.FullName$.g.cs"/>}$
 </generations>
 >>
@@ -203,8 +203,8 @@ namespace Allors.Database.Domain
             return this.Strategy.ObjectId.GetHashCode();
         }
 
-$class.DatabaseRoleTypes:{roleClass|$classRoleClass_Class()$}$
-$class.DatabaseAssociationTypes:{associationType|$classAssociationType_Class()$}$
+$class.RoleTypes:{roleClass|$classRoleClass_Class()$}$
+$class.AssociationTypes:{associationType|$classAssociationType_Class()$}$
 $class.MethodTypes:{methodType|$classMethodType_Method()$}$
 
         #region Test Helpers

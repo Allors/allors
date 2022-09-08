@@ -188,7 +188,7 @@ namespace Allors.Database.Protocol.Json
                 var composite = (IComposite)obj.Strategy.Class;
 
                 // TODO: Cache and filter for workspace
-                var roleTypes = composite.DatabaseRoleTypes.Where(v => v.RelationType.WorkspaceNames.Length > 0);
+                var roleTypes = composite.RoleTypes.Where(v => v.RelationType.WorkspaceNames.Length > 0);
                 var acl = this.AccessControl[obj];
 
                 var roleType = ((IRelationType)this.metaPopulation.FindByTag(pushRequestRole.t)).RoleType;

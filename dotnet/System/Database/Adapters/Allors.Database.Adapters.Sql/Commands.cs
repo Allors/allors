@@ -204,7 +204,7 @@ namespace Allors.Database.Adapters.Sql
         {
             this.setUnitRolesByRoleTypeByClass ??= new Dictionary<IClass, Dictionary<IList<IRoleType>, ICommand>>();
 
-            var exclusiveRootClass = strategy.Reference.Class.ExclusiveDatabaseClass;
+            var exclusiveRootClass = strategy.Reference.Class.ExclusiveClass;
 
             if (!this.setUnitRolesByRoleTypeByClass.TryGetValue(exclusiveRootClass, out var setUnitRoleByRoleType))
             {
@@ -427,8 +427,8 @@ namespace Allors.Database.Adapters.Sql
             {
                 var id = this.Transaction.State.GetObjectIdForExistingObject(result.ToString());
 
-                associationObject = associationType.ObjectType.ExistExclusiveDatabaseClass ?
-                                        this.Transaction.State.GetOrCreateReferenceForExistingObject(associationType.ObjectType.ExclusiveDatabaseClass, id, this.Transaction) :
+                associationObject = associationType.ObjectType.ExistExclusiveClass ?
+                                        this.Transaction.State.GetOrCreateReferenceForExistingObject(associationType.ObjectType.ExclusiveClass, id, this.Transaction) :
                                         this.Transaction.State.GetOrCreateReferenceForExistingObject(id, this.Transaction);
             }
 

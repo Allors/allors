@@ -82,8 +82,6 @@ namespace Allors.Database.Meta
 
         public override IEnumerable<Class> Classes => this.classes;
 
-        public override IEnumerable<IClass> DatabaseClasses => this.classes;
-
         public override bool ExistClass => true;
 
         public override Class ExclusiveClass => this;

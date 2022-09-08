@@ -10,7 +10,7 @@ namespace Allors.Meta.Generation.Model
         {
         }
 
-        protected abstract IComposite Composite { get; }
+        protected abstract Composite Composite { get; }
 
         // IComposite
         public IEnumerable<string> WorkspaceNames => this.Composite.WorkspaceNames;
@@ -25,29 +25,21 @@ namespace Allors.Meta.Generation.Model
 
         public IEnumerable<AssociationTypeModel> InheritedAssociationTypes => this.Composite.InheritedAssociationTypes.Select(this.MetaModel.Map);
 
-        public IEnumerable<AssociationTypeModel> DatabaseAssociationTypes => this.Composite.DatabaseAssociationTypes.Select(this.MetaModel.Map);
+        public IEnumerable<AssociationTypeModel> DatabaseAssociationTypes => this.Composite.AssociationTypes.Select(this.MetaModel.Map);
 
-        public IEnumerable<AssociationTypeModel> ExclusiveDatabaseAssociationTypes => this.Composite.ExclusiveDatabaseAssociationTypes.Select(this.MetaModel.Map);
+        public IEnumerable<AssociationTypeModel> ExclusiveDatabaseAssociationTypes => this.Composite.ExclusiveAssociationTypes.Select(this.MetaModel.Map);
 
         public IEnumerable<RoleTypeModel> InheritedRoleTypes => this.Composite.InheritedRoleTypes.Select(this.MetaModel.Map);
 
-        public IEnumerable<RoleTypeModel> DatabaseRoleTypes => this.Composite.DatabaseRoleTypes.Select(this.MetaModel.Map);
+        public IEnumerable<RoleTypeModel> DatabaseRoleTypes => this.Composite.RoleTypes.Select(this.MetaModel.Map);
 
-        public IEnumerable<RoleTypeModel> ExclusiveDatabaseRoleTypes => this.Composite.ExclusiveDatabaseRoleTypes.Select(this.MetaModel.Map);
+        public IEnumerable<RoleTypeModel> ExclusiveDatabaseRoleTypes => this.Composite.ExclusiveRoleTypes.Select(this.MetaModel.Map);
 
         public IEnumerable<MethodTypeModel> MethodTypes => this.Composite.MethodTypes.Select(this.MetaModel.Map);
 
         public IEnumerable<MethodTypeModel> InheritedMethodTypes => this.Composite.InheritedMethodTypes.Select(this.MetaModel.Map);
 
         public IEnumerable<MethodTypeModel> ExclusiveMethodTypes => this.Composite.ExclusiveMethodTypes.Select(this.MetaModel.Map);
-
-        public bool ExistDatabaseClass => this.Composite.ExistDatabaseClass;
-
-        public IEnumerable<ClassModel> DatabaseClasses => this.Composite.DatabaseClasses.Select(this.MetaModel.Map);
-
-        public bool ExistExclusiveDatabaseClass => this.Composite.ExistExclusiveDatabaseClass;
-
-        public ClassModel ExclusiveDatabaseClass => this.MetaModel.Map(this.Composite.ExclusiveDatabaseClass);
 
         public bool IsRelationship => this.Composite.IsRelationship;
 
@@ -80,9 +72,9 @@ namespace Allors.Meta.Generation.Model
 
         public IEnumerable<RoleTypeModel> ExclusiveRoleTypes => ((Composite)this.Composite).ExclusiveRoleTypes.Select(this.MetaModel.Map);
 
-        public bool ExistClass => ((Composite)this.Composite).ExistClass;
+        public bool ExistClass => this.Composite.ExistClass;
 
-        public Class ExclusiveClass => ((Composite)this.Composite).ExclusiveClass;
+        public Class ExclusiveClass => this.Composite.ExclusiveClass;
 
         public IEnumerable<RoleTypeModel> UnitRoleTypes => this.RoleTypes.Where(roleType => roleType.ObjectType.IsUnit).ToArray();
 

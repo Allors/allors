@@ -163,7 +163,7 @@ namespace Allors.Database.Adapters.Sql.Npgsql
             {
                 this.tableNameForObjectByClass.Add(@class, this.Database.SchemaName + "." + this.NormalizeName(@class.SingularName));
 
-                foreach (var associationType in @class.DatabaseAssociationTypes)
+                foreach (var associationType in @class.AssociationTypes)
                 {
                     var relationType = associationType.RelationType;
                     var roleType = relationType.RoleType;
@@ -173,7 +173,7 @@ namespace Allors.Database.Adapters.Sql.Npgsql
                     }
                 }
 
-                foreach (var roleType in @class.DatabaseRoleTypes)
+                foreach (var roleType in @class.RoleTypes)
                 {
                     var relationType = roleType.RelationType;
                     var associationType3 = relationType.AssociationType;
@@ -240,7 +240,7 @@ namespace Allors.Database.Adapters.Sql.Npgsql
                     this.PrefetchUnitRoles(@class);
                 }
 
-                foreach (var associationType in @class.DatabaseAssociationTypes)
+                foreach (var associationType in @class.AssociationTypes)
                 {
                     if (!(associationType.IsMany && associationType.RoleType.IsMany) && associationType.RelationType.ExistExclusiveDatabaseClasses && associationType.RoleType.IsMany)
                     {
@@ -259,7 +259,7 @@ namespace Allors.Database.Adapters.Sql.Npgsql
                     }
                 }
 
-                foreach (var roleType in @class.DatabaseRoleTypes)
+                foreach (var roleType in @class.RoleTypes)
                 {
                     if (roleType.ObjectType.IsUnit)
                     {
@@ -485,7 +485,7 @@ BEGIN
         VALUES ({this.ParamNameForClass}, {(long)Version.DatabaseInitial} )
         RETURNING {ColumnNameForObject} INTO ID;
 
-        INSERT INTO {this.tableNameForObjectByClass[@class.ExclusiveDatabaseClass]} ({ColumnNameForObject},{ColumnNameForClass})
+        INSERT INTO {this.tableNameForObjectByClass[@class.ExclusiveClass]} ({ColumnNameForObject},{ColumnNameForClass})
         VALUES (ID,{this.ParamNameForClass});
 
         COUNTER := COUNTER+1;
@@ -536,7 +536,7 @@ CREATE FUNCTION {name}({this.ParamNameForObject} {SqlTypeForObject})
     LANGUAGE sql
 AS $$
     SELECT {string.Join(", ", sortedUnitRoleTypes.Select(v => this.columnNameByRelationType[v.RelationType]))}
-    FROM {this.tableNameForObjectByClass[@class.ExclusiveDatabaseClass]}
+    FROM {this.tableNameForObjectByClass[@class.ExclusiveClass]}
     WHERE {ColumnNameForObject}={this.ParamNameForObject};
 $$;";
             this.ProcedureDefinitionByName.Add(name, definition);
@@ -545,7 +545,7 @@ $$;";
         private void PrefetchUnitRoles(IClass @class)
         {
             var sortedUnitRoleTypes = this.Database.GetSortedUnitRolesByObjectType(@class);
-            var table = this.tableNameForObjectByClass[@class.ExclusiveDatabaseClass];
+            var table = this.tableNameForObjectByClass[@class.ExclusiveClass];
             var objects = this.ObjectArrayParam;
             var objectsType = objects.TypeName;
             var name = this.Database.SchemaName + "." + ProcedurePrefixForPrefetchUnits + @class.Name.ToLowerInvariant();

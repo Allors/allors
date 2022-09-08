@@ -2,7 +2,7 @@ delimiters "$", "$"
 
 TemplateId() ::= <<17ED40F8-BDF8-4A7C-9AE9-1C4D2AD6BA2B>>
 TemplateName() ::= <<Allors C# Domain>>
-TemplateVersion() ::= <<3.0.8>>
+TemplateVersion() ::= <<3.0.9>>
 TemplateAllors() ::= <<1.0>>
 TemplateConfiguration(meta) ::= <<
 $!
@@ -23,8 +23,8 @@ GNU General Public License for more details.
 For more information visit http://www.allors.com/legal
 !$
 <generations>
-	$meta.DatabaseInterfaces:{interface|<generation template="castInterface" input="$interface.Id $" output="$interface.SingularName$.g.cs"/>}$
-	$meta.DatabaseClasses:{class|<generation template="castClass" input="$class.Id $" output="$class.SingularName$.g.cs"/>}$
+	$meta.Interfaces:{interface|<generation template="castInterface" input="$interface.Id $" output="$interface.SingularName$.g.cs"/>}$
+	$meta.Classes:{class|<generation template="castClass" input="$class.Id $" output="$class.SingularName$.g.cs"/>}$
 	$meta.MethodTypes:{methodType|<generation template="methodType" input="$methodType.Id $" output="$methodType.FullName$.g.cs"/>}$
 </generations>
 >>
@@ -40,8 +40,8 @@ namespace Allors.Database.Domain
 {
 	public partial interface $interface.name$ : $if(interface.ExistDirectSupertypes)$ $interface.directSupertypes:{directSupertype|$directSupertype.SingularName$,}$ $endif$ Allors.Database.IObject
 	{
-$interface.ExclusiveDatabaseRoleTypes:{roleType|$interfaceExclusiveRoleType_Interface()$}$
-$interface.ExclusiveDatabaseAssociationTypes:{associationType|$interfaceExclusiveAssociationType_Interface()$}$
+$interface.ExclusiveRoleTypes:{roleType|$interfaceExclusiveRoleType_Interface()$}$
+$interface.ExclusiveAssociationTypes:{associationType|$interfaceExclusiveAssociationType_Interface()$}$
 $interface.ExclusiveMethodTypes:{methodType|$interfaceExclusiveMethodType_Interface()$}$
 	}
 
@@ -184,8 +184,8 @@ namespace Allors.Database.Domain
             return this.Strategy.ObjectId.GetHashCode();
         }
 
-$class.DatabaseRoleTypes:{roleClass|$classConcreteRoleType_Class()$}$
-$class.DatabaseAssociationTypes:{associationType|$classAssociationType_Class()$}$
+$class.RoleTypes:{roleClass|$classConcreteRoleType_Class()$}$
+$class.AssociationTypes:{associationType|$classAssociationType_Class()$}$
 $class.MethodTypes:{methodType|$classMethodType_Method()$}$
 	}
 

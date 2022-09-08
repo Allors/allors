@@ -45,7 +45,7 @@ namespace Allors.Workspace.Adapters.Direct
                 {
                     var id = @object.Id;
                     var databaseClass = @object.Strategy.Class;
-                    var roleTypes = databaseClass.DatabaseRoleTypes.Where(w => w.RelationType.WorkspaceNames.Length > 0);
+                    var roleTypes = databaseClass.RoleTypes.Where(w => w.RelationType.WorkspaceNames.Length > 0);
 
                     var workspaceClass = (Class)this.MetaPopulation.FindByTag(databaseClass.Tag);
                     var roleByRoleType = roleTypes.ToDictionary(w => ((RelationType)this.MetaPopulation.FindByTag(w.RelationType.Tag)).RoleType, w => this.GetRole(@object, w));

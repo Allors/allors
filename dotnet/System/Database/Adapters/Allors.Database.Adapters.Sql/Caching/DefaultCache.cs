@@ -29,7 +29,7 @@ namespace Allors.Database.Adapters.Sql.Caching
                 this.excludedClasses = new HashSet<IClass>();
                 foreach (var transientObjectType in excludedClasses)
                 {
-                    foreach (var transientClass in transientObjectType.DatabaseClasses)
+                    foreach (var transientClass in transientObjectType.Classes)
                     {
                         this.excludedClasses.Add(transientClass);
                     }

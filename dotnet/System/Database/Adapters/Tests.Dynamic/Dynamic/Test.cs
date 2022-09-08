@@ -141,12 +141,12 @@ namespace Allors.Database.Adapters
             return (RelationType[])relations.ToArray(typeof(RelationType));
         }
 
-        public IClass[] GetClasses(IRelationType relationType) => ((IComposite)relationType.RoleType.ObjectType).DatabaseClasses.ToArray();
+        public IClass[] GetClasses(IRelationType relationType) => ((IComposite)relationType.RoleType.ObjectType).Classes.ToArray();
 
         public IRelationType[] GetBinaryRoles(IComposite type)
         {
             var roleList = new List<IRelationType>();
-            foreach (var metaRole in type.DatabaseRoleTypes)
+            foreach (var metaRole in type.RoleTypes)
             {
                 if (metaRole.ObjectType is Unit unit && unit.IsBinary)
                 {
@@ -160,7 +160,7 @@ namespace Allors.Database.Adapters
         public IRelationType[] GetBooleanRoles(IComposite type)
         {
             var roleList = new List<IRelationType>();
-            foreach (var metaRole in type.DatabaseRoleTypes)
+            foreach (var metaRole in type.RoleTypes)
             {
                 if (metaRole.ObjectType is Unit unit && unit.IsBoolean)
                 {
@@ -174,7 +174,7 @@ namespace Allors.Database.Adapters
         public IRelationType[] GetDateTimeRoles(IComposite type)
         {
             var roleList = new List<IRelationType>();
-            foreach (var metaRole in type.DatabaseRoleTypes)
+            foreach (var metaRole in type.RoleTypes)
             {
                 if (metaRole.ObjectType is Unit unit && unit.IsDateTime)
                 {
@@ -188,7 +188,7 @@ namespace Allors.Database.Adapters
         public IRelationType[] GetDecimalRoles(IComposite type)
         {
             var roleList = new List<IRelationType>();
-            foreach (var metaRole in type.DatabaseRoleTypes)
+            foreach (var metaRole in type.RoleTypes)
             {
                 if (metaRole.ObjectType is Unit unit && unit.IsDecimal)
                 {
@@ -202,7 +202,7 @@ namespace Allors.Database.Adapters
         public IRelationType[] GetFloatRoles(IComposite type)
         {
             var roleList = new List<IRelationType>();
-            foreach (var metaRole in type.DatabaseRoleTypes)
+            foreach (var metaRole in type.RoleTypes)
             {
                 if (metaRole.ObjectType is Unit unit && unit.IsFloat)
                 {
@@ -216,7 +216,7 @@ namespace Allors.Database.Adapters
         public IRelationType[] GetIntegerRoles(IComposite type)
         {
             var roleList = new List<IRelationType>();
-            foreach (var metaRole in type.DatabaseRoleTypes)
+            foreach (var metaRole in type.RoleTypes)
             {
                 if (metaRole.ObjectType is Unit unit && unit.IsInteger)
                 {
@@ -230,7 +230,7 @@ namespace Allors.Database.Adapters
         public IRelationType[] GetStringRoles(IComposite type)
         {
             var roleList = new List<IRelationType>();
-            foreach (var metaRole in type.DatabaseRoleTypes)
+            foreach (var metaRole in type.RoleTypes)
             {
                 if (metaRole.ObjectType is Unit unit && unit.IsString)
                 {
@@ -244,7 +244,7 @@ namespace Allors.Database.Adapters
         public IRelationType[] GetUniqueRoles(IComposite type)
         {
             var roleList = new List<IRelationType>();
-            foreach (var metaRole in type.DatabaseRoleTypes)
+            foreach (var metaRole in type.RoleTypes)
             {
                 if (metaRole.ObjectType is Unit unit && unit.IsUnique)
                 {
@@ -272,7 +272,7 @@ namespace Allors.Database.Adapters
         public IRelationType[] GetUnitRoles(IComposite type)
         {
             var roleList = new List<IRelationType>();
-            foreach (var metaRole in type.DatabaseRoleTypes)
+            foreach (var metaRole in type.RoleTypes)
             {
                 if (metaRole.ObjectType.IsUnit)
                 {

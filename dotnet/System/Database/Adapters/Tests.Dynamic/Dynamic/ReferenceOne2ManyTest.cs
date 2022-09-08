@@ -45,7 +45,7 @@ namespace Allors.Database.Adapters
                                 IObject[] emptyRoles = this.CreateArray(relationType.RoleType.ObjectType, 0);
 
                                 // Different AssociationTypes With Same ObjectType
-                                var associationTypes = relationType.AssociationType.ObjectType.DatabaseClasses.ToArray();
+                                var associationTypes = relationType.AssociationType.ObjectType.Classes.ToArray();
                                 for (int iAssociationType = 0; iAssociationType < associationTypes.Count(); iAssociationType++)
                                 {
                                     var associationType = associationTypes[iAssociationType];
@@ -177,7 +177,7 @@ namespace Allors.Database.Adapters
                                 var relationType = this.GetRelations()[iRelation];
                                 IObject[] emptyRoles = this.CreateArray(relationType.RoleType.ObjectType, 0);
 
-                                var associationTypes = relationType.AssociationType.ObjectType.DatabaseClasses.ToArray();
+                                var associationTypes = relationType.AssociationType.ObjectType.Classes.ToArray();
                                 for (int iAssociationType = 0; iAssociationType < associationTypes.Count(); iAssociationType++)
                                 {
                                     var associationType = associationTypes[iAssociationType];
@@ -255,7 +255,7 @@ namespace Allors.Database.Adapters
         private IObject[] CreateAssociationsWithDifferentClass(IRelationType relationType)
         {
             IObject[] associations = this.CreateArray(relationType.AssociationType.ObjectType, this.GetAssociationCount());
-            var concreteClasses = relationType.AssociationType.ObjectType.DatabaseClasses.ToArray();
+            var concreteClasses = relationType.AssociationType.ObjectType.Classes.ToArray();
             for (int i = 0; i < associations.Count(); i++)
             {
                 int classIndex = i % concreteClasses.Count();

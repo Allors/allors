@@ -8,7 +8,7 @@ namespace Allors.Meta.Generation.Model
     {
         private readonly Dictionary<IMetaObject, MetaObjectModel> mapping;
 
-        public MetaModel(IMetaPopulation metaPopulation)
+        public MetaModel(MetaPopulation metaPopulation)
         {
             this.MetaPopulation = metaPopulation;
 
@@ -48,7 +48,7 @@ namespace Allors.Meta.Generation.Model
             }
         }
 
-        public IMetaPopulation MetaPopulation { get; }
+        public MetaPopulation MetaPopulation { get; }
 
         public IEnumerable<DomainModel> Domains => this.MetaPopulation.Domains.Select(this.Map);
 

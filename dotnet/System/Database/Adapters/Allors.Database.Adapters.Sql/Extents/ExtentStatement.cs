@@ -54,7 +54,7 @@ namespace Allors.Database.Adapters.Sql
                     }
                     else if (role.IsMany)
                     {
-                        this.Append(" LEFT OUTER JOIN " + this.Mapping.TableNameForObjectByClass[((IComposite)role.ObjectType).ExclusiveDatabaseClass] + " " + role.SingularFullName + "_R");
+                        this.Append(" LEFT OUTER JOIN " + this.Mapping.TableNameForObjectByClass[((IComposite)role.ObjectType).ExclusiveClass] + " " + role.SingularFullName + "_R");
                         this.Append(" ON " + alias + "." + Mapping.ColumnNameForObject + "=" + role.SingularFullName + "_R." + this.Mapping.ColumnNameByRelationType[relationType]);
                     }
                 }
@@ -91,7 +91,7 @@ namespace Allors.Database.Adapters.Sql
                 }
                 else if (!role.IsMany)
                 {
-                    this.Append(" LEFT OUTER JOIN " + this.Mapping.TableNameForObjectByClass[association.ObjectType.ExclusiveDatabaseClass] + " " + association.SingularFullName + "_A");
+                    this.Append(" LEFT OUTER JOIN " + this.Mapping.TableNameForObjectByClass[association.ObjectType.ExclusiveClass] + " " + association.SingularFullName + "_A");
                     this.Append(" ON " + alias + "." + Mapping.ColumnNameForObject + "=" + association.SingularFullName + "_A." + this.Mapping.ColumnNameByRelationType[relationType]);
                 }
             }
@@ -126,7 +126,7 @@ namespace Allors.Database.Adapters.Sql
 
         internal bool AddWhere(IObjectType rootClass, string alias)
         {
-            var useWhere = !this.Extent.ObjectType.ExistExclusiveDatabaseClass;
+            var useWhere = !this.Extent.ObjectType.ExistExclusiveClass;
 
             if (useWhere)
             {
@@ -138,7 +138,7 @@ namespace Allors.Database.Adapters.Sql
                 else
                 {
                     var first = true;
-                    foreach (var subClass in ((IInterface)this.Type).DatabaseClasses)
+                    foreach (var subClass in ((IInterface)this.Type).Classes)
                     {
                         if (first)
                         {

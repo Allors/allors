@@ -119,7 +119,7 @@ namespace Allors.Database.Adapters.Sql
                 this.setUnitRoleRelationsByRoleTypeByExclusiveClass = new Dictionary<IClass, Dictionary<IRoleType, List<UnitRelation>>>();
             }
 
-            var exclusiveClass = association.Class.ExclusiveDatabaseClass;
+            var exclusiveClass = association.Class.ExclusiveClass;
 
             if (!this.setUnitRoleRelationsByRoleTypeByExclusiveClass.TryGetValue(exclusiveClass, out var setUnitRoleRelationsByRoleType))
             {

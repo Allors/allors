@@ -6,12 +6,13 @@ namespace Allors.Meta.Generation.Model
 
     public sealed class ClassModel : CompositeModel
     {
-        public ClassModel(MetaModel metaModel, IClass @class) : base(metaModel) => this.Class = @class;
+        public ClassModel(MetaModel metaModel, Class @class) : base(metaModel) => this.Class = @class;
 
-        public IClass Class { get; }
+        public Class Class { get; }
+
         protected override IMetaObject MetaObject => this.Class;
         protected override IObjectType ObjectType => this.Class;
-        protected override IComposite Composite => this.Class;
+        protected override Composite Composite => this.Class;
 
         // IClass
         public IEnumerable<RoleTypeModel> OverriddenRequiredRoleTypes => this.Class.OverriddenRequiredRoleTypes.Select(this.MetaModel.Map);

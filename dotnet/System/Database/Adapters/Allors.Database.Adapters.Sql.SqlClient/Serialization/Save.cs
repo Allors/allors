@@ -116,7 +116,7 @@ namespace Allors.Database.Adapters.Sql.SqlClient
             {
                 var associationType = relation.AssociationType;
 
-                if (associationType.ObjectType.ExistDatabaseClass)
+                if (associationType.ObjectType.ExistClass)
                 {
                     var roleType = relation.RoleType;
 
@@ -126,9 +126,9 @@ namespace Allors.Database.Adapters.Sql.SqlClient
                         if (!exclusiveRootClassesByObjectType.TryGetValue(associationType.ObjectType, out var exclusiveRootClasses))
                         {
                             exclusiveRootClasses = new HashSet<IObjectType>();
-                            foreach (var concreteClass in associationType.ObjectType.DatabaseClasses)
+                            foreach (var concreteClass in associationType.ObjectType.Classes)
                             {
-                                exclusiveRootClasses.Add(concreteClass.ExclusiveDatabaseClass);
+                                exclusiveRootClasses.Add(concreteClass.ExclusiveClass);
                             }
 
                             exclusiveRootClassesByObjectType[associationType.ObjectType] = exclusiveRootClasses;
@@ -170,7 +170,7 @@ namespace Allors.Database.Adapters.Sql.SqlClient
                             sql +=
                                 $"SELECT {Sql.Mapping.ColumnNameForObject} As {Sql.Mapping.ColumnNameForAssociation}, {this.database.Mapping.ColumnNameByRelationType[roleType.RelationType]} As {Sql.Mapping.ColumnNameForRole}\n";
                             sql +=
-                                $"FROM {this.database.Mapping.TableNameForObjectByClass[associationType.ObjectType.ExclusiveDatabaseClass]}\n";
+                                $"FROM {this.database.Mapping.TableNameForObjectByClass[associationType.ObjectType.ExclusiveClass]}\n";
                             sql +=
                                 $"WHERE {this.database.Mapping.ColumnNameByRelationType[roleType.RelationType]} IS NOT NULL\n";
                             sql += $"ORDER BY {Sql.Mapping.ColumnNameForAssociation}";
@@ -181,7 +181,7 @@ namespace Allors.Database.Adapters.Sql.SqlClient
                             sql +=
                                 $"SELECT {this.database.Mapping.ColumnNameByRelationType[associationType.RelationType]} As {Sql.Mapping.ColumnNameForAssociation}, {Sql.Mapping.ColumnNameForObject} As {Sql.Mapping.ColumnNameForRole}\n";
                             sql +=
-                                $"FROM {this.database.Mapping.TableNameForObjectByClass[((IComposite)roleType.ObjectType).ExclusiveDatabaseClass]}\n";
+                                $"FROM {this.database.Mapping.TableNameForObjectByClass[((IComposite)roleType.ObjectType).ExclusiveClass]}\n";
                             sql +=
                                 $"WHERE {this.database.Mapping.ColumnNameByRelationType[associationType.RelationType]} IS NOT NULL\n";
                             sql += $"ORDER BY {Sql.Mapping.ColumnNameForAssociation},{Sql.Mapping.ColumnNameForRole}";

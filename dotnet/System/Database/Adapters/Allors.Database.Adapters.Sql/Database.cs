@@ -147,7 +147,7 @@ namespace Allors.Database.Adapters.Sql
 
             if (!this.concreteClassesByObjectType.TryGetValue(container, out var concreteClasses))
             {
-                concreteClasses = new HashSet<IObjectType>(((IInterface)container).DatabaseClasses);
+                concreteClasses = new HashSet<IObjectType>(((IInterface)container).Classes);
                 this.concreteClassesByObjectType[container] = concreteClasses;
             }
 
@@ -161,7 +161,7 @@ namespace Allors.Database.Adapters.Sql
         {
             if (!this.sortedUnitRolesByObjectType.TryGetValue(objectType, out var sortedUnitRoles))
             {
-                var sortedUnitRoleList = new List<IRoleType>(((IComposite)objectType).DatabaseRoleTypes.Where(r => r.ObjectType.IsUnit));
+                var sortedUnitRoleList = new List<IRoleType>(((IComposite)objectType).RoleTypes.Where(r => r.ObjectType.IsUnit));
                 sortedUnitRoleList.Sort();
                 sortedUnitRoles = sortedUnitRoleList.ToArray();
                 this.sortedUnitRolesByObjectType[objectType] = sortedUnitRoles;

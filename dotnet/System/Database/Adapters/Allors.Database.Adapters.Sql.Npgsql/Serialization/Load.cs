@@ -232,7 +232,7 @@ where c = '{@class.Id}'";
 
         private void LoadUnitRelations(XmlReader reader, IRelationType relationType)
         {
-            var allowedClasses = new HashSet<IClass>(relationType.AssociationType.ObjectType.DatabaseClasses);
+            var allowedClasses = new HashSet<IClass>(relationType.AssociationType.ObjectType.Classes);
             var unitRelationsByClass = new Dictionary<IClass, List<UnitRelation>>();
 
             var skip = false;

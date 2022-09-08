@@ -102,7 +102,7 @@ namespace Allors.Database.Data
         {
             var lowerCasePropertyName = propertyName.ToLowerInvariant();
 
-            foreach (var roleType in composite.DatabaseRoleTypes)
+            foreach (var roleType in composite.RoleTypes)
             {
                 if (roleType.SingularName.ToLowerInvariant().Equals(lowerCasePropertyName) ||
                     roleType.SingularFullName.ToLowerInvariant().Equals(lowerCasePropertyName) ||
@@ -113,7 +113,7 @@ namespace Allors.Database.Data
                 }
             }
 
-            foreach (var associationType in composite.DatabaseAssociationTypes)
+            foreach (var associationType in composite.AssociationTypes)
             {
                 if (associationType.SingularName.ToLowerInvariant().Equals(lowerCasePropertyName) ||
                     associationType.SingularFullName.ToLowerInvariant().Equals(lowerCasePropertyName) ||

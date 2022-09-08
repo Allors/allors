@@ -37,11 +37,11 @@ namespace Allors.Database.Configuration.Derivations.Default
 
                     var patternClasses = pattern switch
                     {
-                        IRolePattern { ObjectType: null } rolePattern => rolePattern.RoleType.AssociationType.ObjectType.DatabaseClasses.ToArray(),
-                        IRolePattern { ObjectType: { } } rolePattern => rolePattern.ObjectType.DatabaseClasses.ToArray(),
+                        IRolePattern { ObjectType: null } rolePattern => rolePattern.RoleType.AssociationType.ObjectType.Classes.ToArray(),
+                        IRolePattern { ObjectType: { } } rolePattern => rolePattern.ObjectType.Classes.ToArray(),
 
-                        IAssociationPattern { ObjectType: null } associationPattern => associationPattern.AssociationType.RoleType.ObjectType.IsComposite ? ((Composite)associationPattern.AssociationType.RoleType.ObjectType).DatabaseClasses.ToArray() : Array.Empty<IClass>(),
-                        IAssociationPattern { ObjectType: { } } associationPattern => associationPattern.ObjectType.DatabaseClasses.ToArray(),
+                        IAssociationPattern { ObjectType: null } associationPattern => associationPattern.AssociationType.RoleType.ObjectType.IsComposite ? ((Composite)associationPattern.AssociationType.RoleType.ObjectType).Classes.ToArray() : Array.Empty<IClass>(),
+                        IAssociationPattern { ObjectType: { } } associationPattern => associationPattern.ObjectType.Classes.ToArray(),
 
                         _ => Array.Empty<IClass>()
                     };

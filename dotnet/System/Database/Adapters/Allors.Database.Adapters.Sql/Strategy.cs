@@ -91,7 +91,7 @@ namespace Allors.Database.Adapters.Sql
         {
             this.AssertExist();
 
-            foreach (var roleType in this.Class.DatabaseRoleTypes)
+            foreach (var roleType in this.Class.RoleTypes)
             {
                 if (roleType.ObjectType.IsComposite)
                 {
@@ -99,7 +99,7 @@ namespace Allors.Database.Adapters.Sql
                 }
             }
 
-            foreach (var associationType in this.Class.DatabaseAssociationTypes)
+            foreach (var associationType in this.Class.AssociationTypes)
             {
                 var roleType = associationType.RoleType;
 

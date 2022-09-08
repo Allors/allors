@@ -38,8 +38,8 @@ namespace Allors.Database.Adapters.Sql.SqlClient
 
         public IEnumerator<CompositeRelation> GetEnumerator()
         {
-            var allowedAssociationClasses = new HashSet<IClass>(this.relationType.AssociationType.ObjectType.DatabaseClasses);
-            var allowedRoleClasses = new HashSet<IClass>(((IComposite)this.relationType.RoleType.ObjectType).DatabaseClasses);
+            var allowedAssociationClasses = new HashSet<IClass>(this.relationType.AssociationType.ObjectType.Classes);
+            var allowedRoleClasses = new HashSet<IClass>(((IComposite)this.relationType.RoleType.ObjectType).Classes);
 
             var skip = false;
             while (skip || this.reader.Read())

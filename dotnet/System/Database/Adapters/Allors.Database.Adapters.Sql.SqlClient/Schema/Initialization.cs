@@ -252,7 +252,7 @@ CREATE SCHEMA {this.database.SchemaName}";
                     sql.Append($"{Sql.Mapping.ColumnNameForObject} {Mapping.SqlTypeForObject} PRIMARY KEY,\n");
                     sql.Append($"{Sql.Mapping.ColumnNameForClass} {Mapping.SqlTypeForClass}");
 
-                    foreach (var associationType in @class.DatabaseAssociationTypes)
+                    foreach (var associationType in @class.AssociationTypes)
                     {
                         var relationType = associationType.RelationType;
                         var roleType = relationType.RoleType;
@@ -263,7 +263,7 @@ CREATE SCHEMA {this.database.SchemaName}";
                         }
                     }
 
-                    foreach (var roleType in @class.DatabaseRoleTypes)
+                    foreach (var roleType in @class.RoleTypes)
                     {
                         var relationType = roleType.RelationType;
                         var associationType3 = relationType.AssociationType;
@@ -345,7 +345,7 @@ CREATE SCHEMA {this.database.SchemaName}";
                 foreach (var @class in this.mapping.Database.MetaPopulation.Classes)
                 {
                     var tableName = this.mapping.TableNameForObjectByClass[@class];
-                    foreach (var associationType in @class.DatabaseAssociationTypes)
+                    foreach (var associationType in @class.AssociationTypes)
                     {
                         var relationType = associationType.RelationType;
                         if (relationType.IsIndexed)
@@ -361,7 +361,7 @@ CREATE SCHEMA {this.database.SchemaName}";
                         }
                     }
 
-                    foreach (var roleType in @class.DatabaseRoleTypes)
+                    foreach (var roleType in @class.RoleTypes)
                     {
                         var relationType = roleType.RelationType;
                         if (relationType.IsIndexed)

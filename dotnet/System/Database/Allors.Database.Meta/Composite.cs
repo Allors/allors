@@ -18,9 +18,7 @@ namespace Allors.Database.Meta
         private HashSet<Interface> structuralDerivedSupertypes;
 
         private HashSet<AssociationType> structuralDerivedAssociationTypes;
-        private HashSet<AssociationType> structuralDerivedDatabaseAssociationTypes;
         private HashSet<RoleType> structuralDerivedRoleTypes;
-        private HashSet<RoleType> structuralDerivedDatabaseRoleTypes;
 
         private HashSet<MethodType> structuralDerivedMethodTypes;
 
@@ -61,10 +59,7 @@ namespace Allors.Database.Meta
 
         public abstract bool ExistClass { get; }
 
-        /// <summary>
-        /// Gets the exclusive concrete subclass.
-        /// </summary>
-        /// <value>The exclusive concrete subclass.</value>
+        IClass IComposite.ExclusiveClass => this.ExclusiveClass;
         public abstract Class ExclusiveClass { get; }
 
         /// <summary>
@@ -73,25 +68,28 @@ namespace Allors.Database.Meta
         /// <value>The root classes.</value>
         public abstract IEnumerable<Class> Classes { get; }
 
-        public abstract IEnumerable<IClass> DatabaseClasses { get; }
-
         public IEnumerable<Interface> DirectSupertypes => this.structuralDerivedDirectSupertypes;
 
         IEnumerable<IInterface> IComposite.Supertypes => this.Supertypes;
         public IEnumerable<Interface> Supertypes => this.structuralDerivedSupertypes;
 
+        IEnumerable<IAssociationType> IComposite.AssociationTypes => this.AssociationTypes;
         public IEnumerable<AssociationType> AssociationTypes => this.structuralDerivedAssociationTypes;
 
         public IEnumerable<AssociationType> ExclusiveAssociationTypes => this.AssociationTypes.Where(associationType => this.Equals(associationType.RoleType.ObjectType)).ToArray();
 
-        IEnumerable<IAssociationType> IComposite.ExclusiveDatabaseAssociationTypes => this.ExclusiveDatabaseAssociationTypes;
+        IEnumerable<IAssociationType> IComposite.ExclusiveAssociationTypes => this.ExclusiveDatabaseAssociationTypes;
         public IEnumerable<AssociationType> ExclusiveDatabaseAssociationTypes => this.ExclusiveAssociationTypes.ToArray();
 
+        IEnumerable<IAssociationType> IComposite.InheritedAssociationTypes => this.InheritedAssociationTypes;
+        public IEnumerable<AssociationType> InheritedAssociationTypes => this.AssociationTypes.Except(this.ExclusiveAssociationTypes);
+
+        IEnumerable<IRoleType> IComposite.RoleTypes => this.RoleTypes;
         public IEnumerable<RoleType> RoleTypes => this.structuralDerivedRoleTypes;
 
         public IEnumerable<RoleType> ExclusiveRoleTypes => this.RoleTypes.Where(roleType => this.Equals(roleType.AssociationType.ObjectType)).ToArray();
 
-        IEnumerable<IRoleType> IComposite.ExclusiveDatabaseRoleTypes => this.ExclusiveDatabaseRoleTypes;
+        IEnumerable<IRoleType> IComposite.ExclusiveRoleTypes => this.ExclusiveDatabaseRoleTypes;
         public IEnumerable<RoleType> ExclusiveDatabaseRoleTypes => this.ExclusiveRoleTypes.ToArray();
 
         IEnumerable<IMethodType> IComposite.MethodTypes => this.MethodTypes;
@@ -105,13 +103,6 @@ namespace Allors.Database.Meta
 
         IEnumerable<IRoleType> IComposite.InheritedRoleTypes => this.InheritedRoleTypes;
         public IEnumerable<RoleType> InheritedRoleTypes => this.RoleTypes.Except(this.ExclusiveRoleTypes);
-
-        IEnumerable<IAssociationType> IComposite.InheritedAssociationTypes => this.InheritedAssociationTypes;
-        public IEnumerable<AssociationType> InheritedAssociationTypes => this.AssociationTypes.Except(this.ExclusiveAssociationTypes);
-
-        public IEnumerable<RoleType> InheritedDatabaseRoleTypes => this.InheritedRoleTypes;
-
-        public IEnumerable<AssociationType> InheritedDatabaseAssociationTypes => this.InheritedAssociationTypes;
 
         #region Workspace
 
@@ -138,16 +129,6 @@ namespace Allors.Database.Meta
         public IEnumerable<AssociationType> ExclusiveAssociationTypesWithSessionOrigin => this.ExclusiveAssociationTypes;
 
         #endregion Workspace
-
-        public IEnumerable<IAssociationType> DatabaseAssociationTypes => this.structuralDerivedDatabaseAssociationTypes;
-
-        public IEnumerable<IRoleType> DatabaseRoleTypes => this.structuralDerivedDatabaseRoleTypes;
-
-        public bool ExistDatabaseClass => this.DatabaseClasses.Any();
-
-        public bool ExistExclusiveDatabaseClass => this.DatabaseClasses.Count() == 1;
-
-        public IClass ExclusiveDatabaseClass => this.ExistExclusiveDatabaseClass ? this.DatabaseClasses.Single() : null;
 
         IEnumerable<IClass> IComposite.Classes => this.Classes;
 
@@ -215,7 +196,6 @@ namespace Allors.Database.Meta
             }
 
             this.structuralDerivedRoleTypes = new HashSet<RoleType>(roleTypes);
-            this.structuralDerivedDatabaseRoleTypes = new HashSet<RoleType>(roleTypes);
         }
 
         /// <summary>
@@ -241,7 +221,6 @@ namespace Allors.Database.Meta
             }
 
             this.structuralDerivedAssociationTypes = new HashSet<AssociationType>(associationTypes);
-            this.structuralDerivedDatabaseAssociationTypes = new HashSet<AssociationType>(associationTypes);
         }
 
         /// <summary>

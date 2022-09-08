@@ -19,35 +19,31 @@ namespace Allors.Database.Meta
 
         IEnumerable<IComposite> Subtypes { get; }
 
+        bool ExistClass { get; }
+
         IEnumerable<IClass> Classes { get; }
 
         bool ExistExclusiveClass { get; }
 
+        IClass ExclusiveClass { get; }
+
+        IEnumerable<IAssociationType> AssociationTypes { get; }
+
         IEnumerable<IAssociationType> InheritedAssociationTypes { get; }
 
-        IEnumerable<IAssociationType> DatabaseAssociationTypes { get; }
+        IEnumerable<IAssociationType> ExclusiveAssociationTypes { get; }
 
-        IEnumerable<IAssociationType> ExclusiveDatabaseAssociationTypes { get; }
+        IEnumerable<IRoleType> RoleTypes { get; }
 
         IEnumerable<IRoleType> InheritedRoleTypes { get; }
 
-        IEnumerable<IRoleType> DatabaseRoleTypes { get; }
-
-        IEnumerable<IRoleType> ExclusiveDatabaseRoleTypes { get; }
+        IEnumerable<IRoleType> ExclusiveRoleTypes { get; }
 
         IEnumerable<IMethodType> MethodTypes { get; }
 
         IEnumerable<IMethodType> InheritedMethodTypes { get; }
 
         IEnumerable<IMethodType> ExclusiveMethodTypes { get; }
-
-        bool ExistDatabaseClass { get; }
-
-        IEnumerable<IClass> DatabaseClasses { get; }
-
-        bool ExistExclusiveDatabaseClass { get; }
-
-        IClass ExclusiveDatabaseClass { get; }
 
         bool ExistSupertype(IInterface @interface);
 

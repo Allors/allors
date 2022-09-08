@@ -18,7 +18,7 @@ namespace Allors.Database.Domain
 
         public static void Merge<T>(this T @this, IObject inTo) where T : IObject
         {
-            foreach (var associationType in @this.Strategy.Class.DatabaseAssociationTypes.Where(v => v.RoleType.ObjectType == @this.Strategy.Class))
+            foreach (var associationType in @this.Strategy.Class.AssociationTypes.Where(v => v.RoleType.ObjectType == @this.Strategy.Class))
             {
                 var roleType = associationType.RoleType;
                 var fromRole = @this.Strategy.GetRole(roleType);
@@ -40,7 +40,7 @@ namespace Allors.Database.Domain
                 }
             }
 
-            foreach (var roleType in @this.Strategy.Class.DatabaseRoleTypes.Where(v => v.IsMergeable()))
+            foreach (var roleType in @this.Strategy.Class.RoleTypes.Where(v => v.IsMergeable()))
             {
                 var fromRole = @this.Strategy.GetRole(roleType);
 
@@ -66,7 +66,7 @@ namespace Allors.Database.Domain
         {
             var clone = (T)@this.Strategy.Transaction.Build(@this.Strategy.Class);
 
-            foreach (var roleType in @this.Strategy.Class.DatabaseRoleTypes.Where(v => v.IsCloneable()))
+            foreach (var roleType in @this.Strategy.Class.RoleTypes.Where(v => v.IsCloneable()))
             {
                 var role = @this.Strategy.GetRole(roleType);
                 clone.Strategy.SetRole(roleType, role);
@@ -88,7 +88,7 @@ namespace Allors.Database.Domain
 
             var clone = (T)strategy.Transaction.Build(strategy.Class);
 
-            foreach (var roleType in strategy.Class.DatabaseRoleTypes.Where(v => v.IsCloneable() && !deepClone.Any(w => w.PropertyType.Equals(v))))
+            foreach (var roleType in strategy.Class.RoleTypes.Where(v => v.IsCloneable() && !deepClone.Any(w => w.PropertyType.Equals(v))))
             {
                 var role = strategy.GetRole(roleType);
                 clone.Strategy.SetRole(roleType, role);

@@ -38,7 +38,7 @@ namespace Allors.Database.Configuration
                 var roleTypesByClass = new Dictionary<IClass, ISet<IRoleType>>();
                 foreach (var @class in classes)
                 {
-                    var roleTypes = new HashSet<IRoleType>(@class.DatabaseRoleTypes.Where(v => v.RelationType.WorkspaceNames.Contains(workspaceName)));
+                    var roleTypes = new HashSet<IRoleType>(@class.RoleTypes.Where(v => v.RelationType.WorkspaceNames.Contains(workspaceName)));
                     roleTypesByClass[@class] = roleTypes;
                 }
 

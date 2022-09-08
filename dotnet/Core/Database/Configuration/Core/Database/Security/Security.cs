@@ -59,7 +59,7 @@ namespace Allors.Database.Configuration
                     var permissionIds = new HashSet<long>();
                     permissionIds.Add(@class.CreatePermissionId);
 
-                    foreach (var relationType in @class.DatabaseRoleTypes.Select(v => v.RelationType).Where(w => w.WorkspaceNames.Contains(v)))
+                    foreach (var relationType in @class.RoleTypes.Select(v => v.RelationType).Where(w => w.WorkspaceNames.Contains(v)))
                     {
                         permissionIds.Add(@class.ReadPermissionIdByRelationTypeId[relationType.Id]);
                         permissionIds.Add(@class.WritePermissionIdByRelationTypeId[relationType.Id]);

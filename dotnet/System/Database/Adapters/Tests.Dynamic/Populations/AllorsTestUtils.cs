@@ -24,7 +24,7 @@ namespace Allors.Database.Adapters
     {
         public static void ForceRoleCaching(IObject allorsObject)
         {
-            foreach (var role in allorsObject.Strategy.Class.DatabaseRoleTypes)
+            foreach (var role in allorsObject.Strategy.Class.RoleTypes)
             {
                 allorsObject.Strategy.GetRole(role);
             }
@@ -32,7 +32,7 @@ namespace Allors.Database.Adapters
 
         public static void ForceAssociationCaching(IObject allorsObject)
         {
-            foreach (var association in allorsObject.Strategy.Class.DatabaseAssociationTypes)
+            foreach (var association in allorsObject.Strategy.Class.AssociationTypes)
             {
                 allorsObject.Strategy.GetAssociation(association);
             }

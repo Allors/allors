@@ -127,7 +127,7 @@ namespace Allors.Database.Data
                     addedComposite = (IComposite)associationType.RoleType.ObjectType;
                 }
 
-                if (addedComposite == null || !(this.Composite.Equals(addedComposite) || this.Composite.DatabaseClasses.Intersect(addedComposite.DatabaseClasses).Any()))
+                if (addedComposite == null || !(this.Composite.Equals(addedComposite) || this.Composite.Classes.Intersect(addedComposite.Classes).Any()))
                 {
                     throw new ArgumentException(node.PropertyType + " is not a valid tree node on " + this.Composite + ".");
                 }

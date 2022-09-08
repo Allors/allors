@@ -84,7 +84,7 @@ namespace Allors.Database.Adapters
             {
                 var extent = this.GetTransaction().Extent(concreteClass);
 
-                foreach (var role in concreteClass.DatabaseRoleTypes)
+                foreach (var role in concreteClass.RoleTypes)
                 {
                     if (role.ObjectType.IsUnit)
                     {
@@ -100,11 +100,11 @@ namespace Allors.Database.Adapters
                     }
                 }
 
-                foreach (var association in concreteClass.DatabaseAssociationTypes)
+                foreach (var association in concreteClass.AssociationTypes)
                 {
                     if (association.IsOne)
                     {
-                        foreach (var concreteType in association.ObjectType.DatabaseClasses)
+                        foreach (var concreteType in association.ObjectType.Classes)
                         {
                             var associationObject = this.GetTransaction().Build(concreteType);
                             extent.Filter.AddEquals(association, associationObject);
@@ -122,12 +122,12 @@ namespace Allors.Database.Adapters
         {
             foreach (var concreteClass in this.GetTestTypes())
             {
-                foreach (var role in concreteClass.DatabaseRoleTypes)
+                foreach (var role in concreteClass.RoleTypes)
                 {
                     var extent = this.GetTransaction().Extent(concreteClass);
                     extent.Filter.AddExists(role);
 
-                    foreach (var association in concreteClass.DatabaseAssociationTypes)
+                    foreach (var association in concreteClass.AssociationTypes)
                     {
                         extent.Filter.AddExists(association);
                     }

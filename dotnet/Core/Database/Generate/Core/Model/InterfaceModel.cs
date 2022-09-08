@@ -4,11 +4,11 @@ namespace Allors.Meta.Generation.Model
 
     public class InterfaceModel : CompositeModel
     {
-        public InterfaceModel(MetaModel metaModel, IInterface @interface) : base(metaModel) => this.Interface = @interface;
+        public InterfaceModel(MetaModel metaModel, Interface @interface) : base(metaModel) => this.Interface = @interface;
 
-        public IInterface Interface { get; }
+        public Interface Interface { get; }
         protected override IMetaObject MetaObject => this.Interface;
         protected override IObjectType ObjectType => this.Interface;
-        protected override IComposite Composite => this.Interface;
+        protected override Composite Composite => this.Interface;
     }
 }

@@ -153,7 +153,7 @@ namespace Allors.Database.Adapters.Sql.SqlClient
                     this.ValidateColumn(table, Sql.Mapping.ColumnNameForObject, SqlTypeForObject);
                     this.ValidateColumn(table, Sql.Mapping.ColumnNameForClass, SqlTypeForClass);
 
-                    foreach (var associationType in @class.DatabaseAssociationTypes)
+                    foreach (var associationType in @class.AssociationTypes)
                     {
                         var relationType = associationType.RelationType;
                         var roleType = relationType.RoleType;
@@ -167,7 +167,7 @@ namespace Allors.Database.Adapters.Sql.SqlClient
                         }
                     }
 
-                    foreach (var roleType in @class.DatabaseRoleTypes)
+                    foreach (var roleType in @class.RoleTypes)
                     {
                         var relationType = roleType.RelationType;
                         var associationType = relationType.AssociationType;

@@ -367,7 +367,7 @@ namespace Allors.Database.Adapters.Sql.SqlClient
             {
                 this.tableNameForObjectByClass.Add(@class, $"{this.Database.SchemaName}.{this.NormalizeName(@class.SingularName)}");
 
-                foreach (var associationType in @class.DatabaseAssociationTypes)
+                foreach (var associationType in @class.AssociationTypes)
                 {
                     var relationType = associationType.RelationType;
                     var roleType = relationType.RoleType;
@@ -377,7 +377,7 @@ namespace Allors.Database.Adapters.Sql.SqlClient
                     }
                 }
 
-                foreach (var roleType in @class.DatabaseRoleTypes)
+                foreach (var roleType in @class.RoleTypes)
                 {
                     var relationType = roleType.RelationType;
                     var associationType3 = relationType.AssociationType;
@@ -444,7 +444,7 @@ namespace Allors.Database.Adapters.Sql.SqlClient
                     this.PrefetchUnitRoles(@class);
                 }
 
-                foreach (var associationType in @class.DatabaseAssociationTypes)
+                foreach (var associationType in @class.AssociationTypes)
                 {
                     if (!(associationType.IsMany && associationType.RoleType.IsMany) && associationType.RelationType.ExistExclusiveDatabaseClasses && associationType.RoleType.IsMany)
                     {
@@ -463,7 +463,7 @@ namespace Allors.Database.Adapters.Sql.SqlClient
                     }
                 }
 
-                foreach (var roleType in @class.DatabaseRoleTypes)
+                foreach (var roleType in @class.RoleTypes)
                 {
                     if (roleType.ObjectType.IsUnit)
                     {
@@ -692,7 +692,7 @@ END";
 
         private void CreateObjects(IClass @class)
         {
-            var table = this.tableNameForObjectByClass[@class.ExclusiveDatabaseClass];
+            var table = this.tableNameForObjectByClass[@class.ExclusiveClass];
             var name = $"{this.Database.SchemaName}.{ProcedurePrefixForCreateObjects}{@class.Name.ToLowerInvariant()}";
             this.procedureNameForCreateObjectsByClass.Add(@class, name);
 
@@ -730,7 +730,7 @@ END";
 
         private void DeleteObject(IClass @class)
         {
-            var table = this.tableNameForObjectByClass[@class.ExclusiveDatabaseClass];
+            var table = this.tableNameForObjectByClass[@class.ExclusiveClass];
             var name = $"{this.Database.SchemaName}.{ProcedurePrefixForDeleteObject}{@class.Name.ToLowerInvariant()}";
             this.procedureNameForDeleteObjectByClass.Add(@class, name);
 
@@ -752,7 +752,7 @@ END";
         private void GetUnitRoles(IClass @class)
         {
             var sortedUnitRoleTypes = this.Database.GetSortedUnitRolesByObjectType(@class);
-            var table = this.tableNameForObjectByClass[@class.ExclusiveDatabaseClass];
+            var table = this.tableNameForObjectByClass[@class.ExclusiveClass];
             var name = $"{this.Database.SchemaName}.{ProcedurePrefixForGetUnits}{@class.Name.ToLowerInvariant()}";
             this.procedureNameForGetUnitRolesByClass.Add(@class, name);
 
@@ -774,7 +774,7 @@ END
         private void PrefetchUnitRoles(IClass @class)
         {
             var sortedUnitRoleTypes = this.Database.GetSortedUnitRolesByObjectType(@class);
-            var table = this.tableNameForObjectByClass[@class.ExclusiveDatabaseClass];
+            var table = this.tableNameForObjectByClass[@class.ExclusiveClass];
             var name = $"{this.Database.SchemaName}.{ProcedurePrefixForPrefetchUnits}{@class.Name.ToLowerInvariant()}";
             this.procedureNameForPrefetchUnitRolesByClass.Add(@class, name);
 

@@ -18,7 +18,6 @@ namespace Allors.Database.Meta
         private HashSet<Composite> structuralDerivedSubtypes;
         private HashSet<Composite> structuralDerivedDatabaseSubtypes;
         private HashSet<Class> structuralDerivedClasses;
-        private HashSet<Class> structuralDerivedDatabaseClasses;
         private Class structuralDerivedExclusiveClass;
 
         private Type clrType;
@@ -47,9 +46,7 @@ namespace Allors.Database.Meta
         /// </summary>
         /// <value>The subclasses.</value>
         public override IEnumerable<Class> Classes => this.structuralDerivedClasses;
-
-        public override IEnumerable<IClass> DatabaseClasses => this.structuralDerivedDatabaseClasses;
-
+        
         /// <summary>
         /// Gets the sub types.
         /// </summary>
@@ -116,7 +113,6 @@ namespace Allors.Database.Meta
             }
 
             this.structuralDerivedClasses = new HashSet<Class>(subClasses);
-            this.structuralDerivedDatabaseClasses = new HashSet<Class>(subClasses);
         }
 
         /// <summary>

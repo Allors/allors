@@ -269,7 +269,7 @@ namespace Allors.Database.Adapters.Sql
         {
             if (type.IsInterface)
             {
-                return ((IInterface)type).DatabaseClasses.ToArray();
+                return ((IInterface)type).Classes.ToArray();
             }
 
             var concreteSubclasses = new IObjectType[1];

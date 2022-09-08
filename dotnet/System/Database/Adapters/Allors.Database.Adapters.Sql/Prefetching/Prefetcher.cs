@@ -458,8 +458,8 @@ namespace Allors.Database.Adapters.Sql
                         if (associationIdValue != null && associationIdValue != DBNull.Value)
                         {
                             var associationId = (long)associationIdValue;
-                            association = associationType.ObjectType.ExistExclusiveDatabaseClass ?
-                                              this.Transaction.State.GetOrCreateReferenceForExistingObject(associationType.ObjectType.ExclusiveDatabaseClass, associationId, this.Transaction) :
+                            association = associationType.ObjectType.ExistExclusiveClass ?
+                                              this.Transaction.State.GetOrCreateReferenceForExistingObject(associationType.ObjectType.ExclusiveClass, associationId, this.Transaction) :
                                               this.Transaction.State.GetOrCreateReferenceForExistingObject(associationId, this.Transaction);
 
                             nestedObjectIds?.Add(association.ObjectId);
@@ -518,8 +518,8 @@ namespace Allors.Database.Adapters.Sql
 
                     if (prefetchedAssociationByRole.TryGetValue(role, out var associationId))
                     {
-                        association = associationType.ObjectType.ExistExclusiveDatabaseClass ?
-                                          this.Transaction.State.GetOrCreateReferenceForExistingObject(associationType.ObjectType.ExclusiveDatabaseClass, associationId, this.Transaction) :
+                        association = associationType.ObjectType.ExistExclusiveClass ?
+                                          this.Transaction.State.GetOrCreateReferenceForExistingObject(associationType.ObjectType.ExclusiveClass, associationId, this.Transaction) :
                                           this.Transaction.State.GetOrCreateReferenceForExistingObject(associationId, this.Transaction);
 
                         nestedObjectIds?.Add(associationId);
@@ -576,9 +576,9 @@ namespace Allors.Database.Adapters.Sql
                         var associationId = (long)associationIdValue;
                         associations.Add(associationId);
 
-                        if (associationType.ObjectType.ExistExclusiveDatabaseClass)
+                        if (associationType.ObjectType.ExistExclusiveClass)
                         {
-                            this.Transaction.State.GetOrCreateReferenceForExistingObject(associationType.ObjectType.ExclusiveDatabaseClass, associationId, this.Transaction);
+                            this.Transaction.State.GetOrCreateReferenceForExistingObject(associationType.ObjectType.ExclusiveClass, associationId, this.Transaction);
                         }
                         else
                         {
@@ -657,9 +657,9 @@ namespace Allors.Database.Adapters.Sql
 
             foreach (var associationId in prefetchedAssociations)
             {
-                if (associationType.ObjectType.ExistExclusiveDatabaseClass)
+                if (associationType.ObjectType.ExistExclusiveClass)
                 {
-                    this.Transaction.State.GetOrCreateReferenceForExistingObject(associationType.ObjectType.ExclusiveDatabaseClass, associationId, this.Transaction);
+                    this.Transaction.State.GetOrCreateReferenceForExistingObject(associationType.ObjectType.ExclusiveClass, associationId, this.Transaction);
                 }
                 else
                 {

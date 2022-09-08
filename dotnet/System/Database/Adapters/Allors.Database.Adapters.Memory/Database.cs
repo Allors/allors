@@ -90,14 +90,14 @@ namespace Allors.Database.Adapters.Memory
         {
             if (!this.concreteClassesByObjectType.TryGetValue(objectType, out var concreteClassOrClasses))
             {
-                if (objectType.ExistExclusiveDatabaseClass)
+                if (objectType.ExistExclusiveClass)
                 {
-                    concreteClassOrClasses = objectType.ExclusiveDatabaseClass;
+                    concreteClassOrClasses = objectType.ExclusiveClass;
                     this.concreteClassesByObjectType[objectType] = concreteClassOrClasses;
                 }
                 else
                 {
-                    concreteClassOrClasses = new HashSet<IObjectType>(objectType.DatabaseClasses);
+                    concreteClassOrClasses = new HashSet<IObjectType>(objectType.Classes);
                     this.concreteClassesByObjectType[objectType] = concreteClassOrClasses;
                 }
             }
