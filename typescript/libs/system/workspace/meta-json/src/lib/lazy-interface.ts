@@ -17,12 +17,8 @@ export class LazyInterface extends LazyComposite implements InternalInterface {
   subtypes: Set<InternalComposite>;
   classes: Set<InternalClass>;
 
-  constructor(
-    metaPopulation: InternalMetaPopulation,
-    data: ObjectTypeData,
-    lookup: Lookup
-  ) {
-    super(metaPopulation, data, lookup);
+  constructor(metaPopulation: InternalMetaPopulation, data: ObjectTypeData) {
+    super(metaPopulation, data);
     this.subtypes = new Set();
     this.classes = new Set();
   }

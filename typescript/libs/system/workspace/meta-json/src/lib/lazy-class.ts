@@ -19,12 +19,8 @@ export class LazyClass extends LazyComposite implements InternalClass {
 
   requiredRoleTypes: Set<RoleType>;
 
-  constructor(
-    metaPopulation: InternalMetaPopulation,
-    data: ObjectTypeData,
-    lookup: Lookup
-  ) {
-    super(metaPopulation, data, lookup);
+  constructor(metaPopulation: InternalMetaPopulation, data: ObjectTypeData) {
+    super(metaPopulation, data);
     this.classes = new Set([this]);
   }
 

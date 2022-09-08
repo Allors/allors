@@ -51,10 +51,10 @@ export class LazyMetaPopulation implements InternalMetaPopulation {
       ].map((name, i) => new LazyUnit(this, (i + 1).toString(), name))
     );
     this.interfaces = new Set(
-      data.i?.map((v) => new LazyInterface(this, v, lookup)) ?? []
+      data.i?.map((v) => new LazyInterface(this, v)) ?? []
     );
     this.classes = new Set(
-      data.c?.map((v) => new LazyClass(this, v, lookup)) ?? []
+      data.c?.map((v) => new LazyClass(this, v)) ?? []
     );
     this.relationTypes = new Set();
     this.methodTypes = new Set();

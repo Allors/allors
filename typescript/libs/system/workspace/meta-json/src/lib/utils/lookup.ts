@@ -7,7 +7,6 @@ export class Lookup {
   r: Set<string>;
   t: Map<string, string>;
   or: Map<string, string[]>;
-  rel: Set<string>;
 
   constructor(data: MetaData) {
     this.m = new Map();
@@ -37,7 +36,5 @@ export class Lookup {
         this.or.set(classTag, roleTypeTags);
       }
     }
-
-    this.rel = new Set(data.rel ?? []);
   }
 }
