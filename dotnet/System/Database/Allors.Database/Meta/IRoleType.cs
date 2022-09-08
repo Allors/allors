@@ -33,7 +33,7 @@ namespace Allors.Database.Meta
 
         string MediaType { get; set; }
 
-        // TODO: redundant?
+        // TODO: move to extension method
         void Set(IStrategy strategy, object value);
     }
 }

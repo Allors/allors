@@ -31,7 +31,7 @@ namespace Allors.Meta.Generation.Model
 
         public bool IsManyToMany => this.RelationType.IsManyToMany;
 
-        public bool ExistExclusiveDatabaseClasses => this.RelationType.ExistExclusiveDatabaseClasses;
+        public bool ExistExclusiveDatabaseClasses => this.RelationType.ExistExclusiveClasses;
 
         public bool IsIndexed => this.RelationType.IsIndexed;
 

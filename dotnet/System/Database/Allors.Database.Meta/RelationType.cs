@@ -98,8 +98,13 @@ namespace Allors.Database.Meta
                 return this.multiplicity;
             }
         }
-
-        public bool ExistExclusiveDatabaseClasses
+        /// <summary>
+        /// Gets a value indicating whether there exist exclusive classes.
+        /// </summary>
+        /// <value>
+        ///  <c>true</c> if [exist exclusive classes]; otherwise, <c>false</c>.
+        /// </value>
+        public bool ExistExclusiveClasses
         {
             get
             {
@@ -110,7 +115,6 @@ namespace Allors.Database.Meta
 
                 return false;
             }
-
         }
 
         public bool IsIndexed
@@ -131,24 +135,7 @@ namespace Allors.Database.Meta
         IRoleType IRelationType.RoleType => this.RoleType;
         public RoleType RoleType { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether there exist exclusive classes.
-        /// </summary>
-        /// <value>
-        ///  <c>true</c> if [exist exclusive classes]; otherwise, <c>false</c>.
-        /// </value>
-        public bool ExistExclusiveClasses
-        {
-            get
-            {
-                if (this.AssociationType?.ObjectType != null && this.RoleType?.ObjectType != null)
-                {
-                    return this.AssociationType.ObjectType.ExistExclusiveClass && this.RoleType.ObjectType is Composite roleCompositeType && roleCompositeType.ExistExclusiveClass;
-                }
 
-                return false;
-            }
-        }
 
         /// <summary>
         /// Gets a value indicating whether this state is many to many.

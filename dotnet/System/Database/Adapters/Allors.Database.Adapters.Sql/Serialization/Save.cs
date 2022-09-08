@@ -153,7 +153,7 @@ namespace Allors.Database.Adapters.Sql
 
                         sql += "ORDER BY " + Mapping.ColumnNameForAssociation;
                     }
-                    else if ((roleType.IsMany && associationType.IsMany) || !relation.ExistExclusiveDatabaseClasses)
+                    else if ((roleType.IsMany && associationType.IsMany) || !relation.ExistExclusiveClasses)
                     {
                         sql += "SELECT " + Mapping.ColumnNameForAssociation + "," + Mapping.ColumnNameForRole + "\n";
                         sql += "FROM " + this.database.Mapping.TableNameForRelationByRelationType[relation] + "\n";

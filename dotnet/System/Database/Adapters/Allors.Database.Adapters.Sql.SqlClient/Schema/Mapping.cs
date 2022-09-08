@@ -371,7 +371,7 @@ namespace Allors.Database.Adapters.Sql.SqlClient
                 {
                     var relationType = associationType.RelationType;
                     var roleType = relationType.RoleType;
-                    if (!(associationType.IsMany && roleType.IsMany) && relationType.ExistExclusiveDatabaseClasses && roleType.IsMany)
+                    if (!(associationType.IsMany && roleType.IsMany) && relationType.ExistExclusiveClasses && roleType.IsMany)
                     {
                         this.columnNameByRelationType[relationType] = this.NormalizeName(associationType.SingularName);
                     }
@@ -386,7 +386,7 @@ namespace Allors.Database.Adapters.Sql.SqlClient
                         this.columnNameByRelationType[relationType] = this.NormalizeName(roleType.SingularName);
                         this.ParamNameByRoleType[roleType] = string.Format(ParamFormat, roleType.SingularFullName);
                     }
-                    else if (!(associationType3.IsMany && roleType.IsMany) && relationType.ExistExclusiveDatabaseClasses && !roleType.IsMany)
+                    else if (!(associationType3.IsMany && roleType.IsMany) && relationType.ExistExclusiveClasses && !roleType.IsMany)
                     {
                         this.columnNameByRelationType[relationType] = this.NormalizeName(roleType.SingularName);
                     }
@@ -400,7 +400,7 @@ namespace Allors.Database.Adapters.Sql.SqlClient
                 var associationType = relationType.AssociationType;
                 var roleType = relationType.RoleType;
 
-                if (!roleType.ObjectType.IsUnit && ((associationType.IsMany && roleType.IsMany) || !relationType.ExistExclusiveDatabaseClasses))
+                if (!roleType.ObjectType.IsUnit && ((associationType.IsMany && roleType.IsMany) || !relationType.ExistExclusiveClasses))
                 {
                     this.tableNameForRelationByRelationType.Add(relationType, $"{this.Database.SchemaName}.{this.NormalizeName(relationType.RoleType.SingularFullName)}");
                 }
@@ -446,7 +446,7 @@ namespace Allors.Database.Adapters.Sql.SqlClient
 
                 foreach (var associationType in @class.AssociationTypes)
                 {
-                    if (!(associationType.IsMany && associationType.RoleType.IsMany) && associationType.RelationType.ExistExclusiveDatabaseClasses && associationType.RoleType.IsMany)
+                    if (!(associationType.IsMany && associationType.RoleType.IsMany) && associationType.RelationType.ExistExclusiveClasses && associationType.RoleType.IsMany)
                     {
                         this.GetCompositesRoleObjectTable(associationType, @class);
                         this.PrefetchCompositesRoleObjectTable(associationType, @class);
@@ -469,7 +469,7 @@ namespace Allors.Database.Adapters.Sql.SqlClient
                     {
                         this.SetUnitRoleType(roleType, @class);
                     }
-                    else if (!(roleType.AssociationType.IsMany && roleType.IsMany) && roleType.RelationType.ExistExclusiveDatabaseClasses && roleType.IsOne)
+                    else if (!(roleType.AssociationType.IsMany && roleType.IsMany) && roleType.RelationType.ExistExclusiveClasses && roleType.IsOne)
                     {
                         this.GetCompositeRoleObjectTable(roleType, @class);
                         this.PrefetchCompositeRoleObjectTable(roleType, @class);
@@ -493,7 +493,7 @@ namespace Allors.Database.Adapters.Sql.SqlClient
 
             foreach (var relationType in this.Database.MetaPopulation.RelationTypes)
             {
-                if (!relationType.RoleType.ObjectType.IsUnit && ((relationType.AssociationType.IsMany && relationType.RoleType.IsMany) || !relationType.ExistExclusiveDatabaseClasses))
+                if (!relationType.RoleType.ObjectType.IsUnit && ((relationType.AssociationType.IsMany && relationType.RoleType.IsMany) || !relationType.ExistExclusiveClasses))
                 {
                     this.procedureNameForPrefetchAssociationByRelationType.Add(relationType,
                         $"{this.Database.SchemaName}.{ProcedurePrefixForPrefetchAssociation}{relationType.RoleType.SingularFullName.ToLowerInvariant()}");

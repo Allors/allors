@@ -27,6 +27,7 @@ namespace Allors.Database.Meta
 
         bool IsMany { get; }
 
+        // TODO: Move to extension method
         object Get(IStrategy strategy, IComposite ofType = null);
     }
 }

@@ -156,7 +156,7 @@ namespace Allors.Database.Adapters.Sql.SqlClient
 
                         sql += $"ORDER BY {Sql.Mapping.ColumnNameForAssociation}";
                     }
-                    else if ((roleType.IsMany && associationType.IsMany) || !relation.ExistExclusiveDatabaseClasses)
+                    else if ((roleType.IsMany && associationType.IsMany) || !relation.ExistExclusiveClasses)
                     {
                         sql += $"SELECT {Sql.Mapping.ColumnNameForAssociation},{Sql.Mapping.ColumnNameForRole}\n";
                         sql += $"FROM {this.database.Mapping.TableNameForRelationByRelationType[relation]}\n";

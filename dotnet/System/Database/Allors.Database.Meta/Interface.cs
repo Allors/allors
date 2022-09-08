@@ -24,13 +24,13 @@ namespace Allors.Database.Meta
 
         protected Interface(MetaPopulation metaPopulation, Guid id, string tag) : base(metaPopulation, id, tag) => metaPopulation.OnInterfaceCreated(this);
 
-        public MetaPopulation MetaPopulation => (MetaPopulation)((ObjectType) this).MetaPopulation;
+        public MetaPopulation MetaPopulation => (MetaPopulation)((ObjectType)this).MetaPopulation;
 
         public override IEnumerable<string> WorkspaceNames
         {
             get
             {
-                ((ObjectType) this).MetaPopulation.Derive();
+                ((ObjectType)this).MetaPopulation.Derive();
                 return this.derivedWorkspaceNames;
             }
         }
@@ -46,12 +46,12 @@ namespace Allors.Database.Meta
         /// </summary>
         /// <value>The subclasses.</value>
         public override IEnumerable<Class> Classes => this.structuralDerivedClasses;
-        
+
         /// <summary>
         /// Gets the sub types.
         /// </summary>
         /// <value>The super types.</value>
-        IEnumerable<IComposite> IInterface.Subtypes => this.Subtypes;
+        IEnumerable<IComposite> IComposite.Subtypes => this.Subtypes;
         public override IEnumerable<Composite> Subtypes => this.structuralDerivedSubtypes;
 
         public override IEnumerable<Composite> DatabaseSubtypes => this.structuralDerivedDatabaseSubtypes;
@@ -89,7 +89,7 @@ namespace Allors.Database.Meta
         public void StructuralDeriveDirectSubtypes(HashSet<Composite> directSubtypes)
         {
             directSubtypes.Clear();
-            foreach (var inheritance in ((ObjectType) this).MetaPopulation.Inheritances.Where(inheritance => this.Equals(inheritance.Supertype)))
+            foreach (var inheritance in ((ObjectType)this).MetaPopulation.Inheritances.Where(inheritance => this.Equals(inheritance.Supertype)))
             {
                 directSubtypes.Add(inheritance.Subtype);
             }

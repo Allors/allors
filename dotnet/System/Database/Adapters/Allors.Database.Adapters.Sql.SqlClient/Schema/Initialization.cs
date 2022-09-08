@@ -177,7 +177,7 @@ CREATE SCHEMA {this.database.SchemaName}";
                     var associationType = relationType.AssociationType;
                     var roleType = relationType.RoleType;
 
-                    if (!roleType.ObjectType.IsUnit && ((associationType.IsMany && roleType.IsMany) || !relationType.ExistExclusiveDatabaseClasses))
+                    if (!roleType.ObjectType.IsUnit && ((associationType.IsMany && roleType.IsMany) || !relationType.ExistExclusiveClasses))
                     {
                         var tableName = this.mapping.TableNameForRelationByRelationType[relationType];
                         this.TruncateTable(connection, tableName);
@@ -210,7 +210,7 @@ CREATE SCHEMA {this.database.SchemaName}";
                     var associationType = relationType.AssociationType;
                     var roleType = relationType.RoleType;
 
-                    if (!roleType.ObjectType.IsUnit && ((associationType.IsMany && roleType.IsMany) || !relationType.ExistExclusiveDatabaseClasses))
+                    if (!roleType.ObjectType.IsUnit && ((associationType.IsMany && roleType.IsMany) || !relationType.ExistExclusiveClasses))
                     {
                         var tableName = this.mapping.TableNameForRelationByRelationType[relationType];
                         this.DropTable(connection, tableName);
@@ -256,7 +256,7 @@ CREATE SCHEMA {this.database.SchemaName}";
                     {
                         var relationType = associationType.RelationType;
                         var roleType = relationType.RoleType;
-                        if (!(associationType.IsMany && roleType.IsMany) && relationType.ExistExclusiveDatabaseClasses && roleType.IsMany)
+                        if (!(associationType.IsMany && roleType.IsMany) && relationType.ExistExclusiveClasses && roleType.IsMany)
                         {
                             sql.Append(
                                 $",\n{this.mapping.ColumnNameByRelationType[relationType]} {Mapping.SqlTypeForObject}");
@@ -272,7 +272,7 @@ CREATE SCHEMA {this.database.SchemaName}";
                             sql.Append(
                                 $",\n{this.mapping.ColumnNameByRelationType[relationType]} {this.mapping.GetSqlType(roleType)}");
                         }
-                        else if (!(associationType3.IsMany && roleType.IsMany) && relationType.ExistExclusiveDatabaseClasses && !roleType.IsMany)
+                        else if (!(associationType3.IsMany && roleType.IsMany) && relationType.ExistExclusiveClasses && !roleType.IsMany)
                         {
                             sql.Append(
                                 $",\n{this.mapping.ColumnNameByRelationType[relationType]} {Mapping.SqlTypeForObject}");
@@ -290,7 +290,7 @@ CREATE SCHEMA {this.database.SchemaName}";
                     var associationType = relationType.AssociationType;
                     var roleType = relationType.RoleType;
 
-                    if (!roleType.ObjectType.IsUnit && ((associationType.IsMany && roleType.IsMany) || !relationType.ExistExclusiveDatabaseClasses))
+                    if (!roleType.ObjectType.IsUnit && ((associationType.IsMany && roleType.IsMany) || !relationType.ExistExclusiveClasses))
                     {
                         var tableName = this.mapping.TableNameForRelationByRelationType[relationType];
 
@@ -352,7 +352,7 @@ CREATE SCHEMA {this.database.SchemaName}";
                         {
                             var roleType = relationType.RoleType;
 
-                            if (!(associationType.IsMany && roleType.IsMany) && relationType.ExistExclusiveDatabaseClasses && roleType.IsMany)
+                            if (!(associationType.IsMany && roleType.IsMany) && relationType.ExistExclusiveClasses && roleType.IsMany)
                             {
                                 var indexName =
                                     $"idx_{@class.Name.ToLowerInvariant()}_{relationType.AssociationType.SingularFullName.ToLowerInvariant()}";
@@ -385,7 +385,7 @@ CREATE SCHEMA {this.database.SchemaName}";
                                     $"idx_{@class.Name.ToLowerInvariant()}_{relationType.RoleType.SingularFullName.ToLowerInvariant()}";
                                 this.CreateIndex(connection, indexName, relationType, tableName);
                             }
-                            else if (!(associationType.IsMany && roleType.IsMany) && relationType.ExistExclusiveDatabaseClasses && !roleType.IsMany)
+                            else if (!(associationType.IsMany && roleType.IsMany) && relationType.ExistExclusiveClasses && !roleType.IsMany)
                             {
                                 var indexName =
                                     $"idx_{@class.Name.ToLowerInvariant()}_{relationType.RoleType.SingularFullName.ToLowerInvariant()}";
@@ -401,7 +401,7 @@ CREATE SCHEMA {this.database.SchemaName}";
                     {
                         var associationType = relationType.AssociationType;
                         var roleType = relationType.RoleType;
-                        if (!roleType.ObjectType.IsUnit && ((associationType.IsMany && roleType.IsMany) || !relationType.ExistExclusiveDatabaseClasses))
+                        if (!roleType.ObjectType.IsUnit && ((associationType.IsMany && roleType.IsMany) || !relationType.ExistExclusiveClasses))
                         {
                             var tableName = this.mapping.TableNameForRelationByRelationType[relationType];
                             var indexName =

@@ -47,7 +47,7 @@ namespace Allors.Database.Adapters.Sql
 
                 if (!role.ObjectType.IsUnit)
                 {
-                    if ((association.IsMany && role.IsMany) || !relationType.ExistExclusiveDatabaseClasses)
+                    if ((association.IsMany && role.IsMany) || !relationType.ExistExclusiveClasses)
                     {
                         this.Append(" LEFT OUTER JOIN " + this.Mapping.TableNameForRelationByRelationType[relationType] + " " + role.SingularFullName + "_R");
                         this.Append(" ON " + alias + "." + Mapping.ColumnNameForObject + "=" + role.SingularFullName + "_R." + Mapping.ColumnNameForAssociation);
@@ -66,7 +66,7 @@ namespace Allors.Database.Adapters.Sql
 
                 if (!role.ObjectType.IsUnit && role.IsOne)
                 {
-                    if (!relationType.ExistExclusiveDatabaseClasses)
+                    if (!relationType.ExistExclusiveClasses)
                     {
                         this.Append(" LEFT OUTER JOIN " + this.Mapping.TableNameForObjects + " " + this.GetJoinName(role));
                         this.Append(" ON " + this.GetJoinName(role) + "." + Mapping.ColumnNameForObject + "=" + role.SingularFullName + "_R." + Mapping.ColumnNameForRole + " ");
@@ -84,7 +84,7 @@ namespace Allors.Database.Adapters.Sql
                 var relationType = association.RelationType;
                 var role = relationType.RoleType;
 
-                if ((association.IsMany && role.IsMany) || !relationType.ExistExclusiveDatabaseClasses)
+                if ((association.IsMany && role.IsMany) || !relationType.ExistExclusiveClasses)
                 {
                     this.Append(" LEFT OUTER JOIN " + this.Mapping.TableNameForRelationByRelationType[relationType] + " " + association.SingularFullName + "_A");
                     this.Append(" ON " + alias + "." + Mapping.ColumnNameForObject + "=" + association.SingularFullName + "_A." + Mapping.ColumnNameForRole);
@@ -103,7 +103,7 @@ namespace Allors.Database.Adapters.Sql
 
                 if (!association.ObjectType.IsUnit && association.IsOne)
                 {
-                    if (!relationType.ExistExclusiveDatabaseClasses)
+                    if (!relationType.ExistExclusiveClasses)
                     {
                         this.Append(" LEFT OUTER JOIN " + this.Mapping.TableNameForObjects + " " + this.GetJoinName(association));
                         this.Append(" ON " + this.GetJoinName(association) + "." + Mapping.ColumnNameForObject + "=" + association.SingularFullName + "_A." + Mapping.ColumnNameForAssociation + " ");

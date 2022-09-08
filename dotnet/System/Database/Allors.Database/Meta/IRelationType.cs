@@ -28,7 +28,7 @@ namespace Allors.Database.Meta
 
         bool IsManyToMany { get; }
 
-        bool ExistExclusiveDatabaseClasses { get; }
+        bool ExistExclusiveClasses { get; }
 
         bool IsIndexed { get; }
 
