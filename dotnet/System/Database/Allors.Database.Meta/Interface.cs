@@ -48,6 +48,8 @@ namespace Allors.Database.Meta
         /// <value>The subclasses.</value>
         public override IEnumerable<Class> Classes => this.structuralDerivedClasses;
 
+        public override IEnumerable<IClass> DatabaseClasses => this.structuralDerivedDatabaseClasses;
+
         /// <summary>
         /// Gets the sub types.
         /// </summary>
@@ -154,7 +156,5 @@ namespace Allors.Database.Meta
                 }
             }
         }
-
-        public override IEnumerable<IClass> DatabaseClasses => this.structuralDerivedDatabaseClasses;
     }
 }

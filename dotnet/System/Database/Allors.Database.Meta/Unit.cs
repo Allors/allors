@@ -73,43 +73,19 @@ namespace Allors.Database.Meta
 
         public override Type ClrType => this.clrType;
 
-        public void Bind()
-        {
-            switch (this.Tag)
+        public void Bind() =>
+            this.clrType = this.Tag switch
             {
-                case UnitTags.Binary:
-                    this.clrType = typeof(byte[]);
-                    break;
-
-                case UnitTags.Boolean:
-                    this.clrType = typeof(bool);
-                    break;
-
-                case UnitTags.DateTime:
-                    this.clrType = typeof(DateTime);
-                    break;
-
-                case UnitTags.Decimal:
-                    this.clrType = typeof(decimal);
-                    break;
-
-                case UnitTags.Float:
-                    this.clrType = typeof(double);
-                    break;
-
-                case UnitTags.Integer:
-                    this.clrType = typeof(int);
-                    break;
-
-                case UnitTags.String:
-                    this.clrType = typeof(string);
-                    break;
-
-                case UnitTags.Unique:
-                    this.clrType = typeof(Guid);
-                    break;
-            }
-        }
+                UnitTags.Binary => typeof(byte[]),
+                UnitTags.Boolean => typeof(bool),
+                UnitTags.DateTime => typeof(DateTime),
+                UnitTags.Decimal => typeof(decimal),
+                UnitTags.Float => typeof(double),
+                UnitTags.Integer => typeof(int),
+                UnitTags.String => typeof(string),
+                UnitTags.Unique => typeof(Guid),
+                _ => this.clrType
+            };
 
         public override IEnumerable<string> WorkspaceNames => this.MetaPopulation.WorkspaceNames;
     }

@@ -17,8 +17,6 @@ namespace Allors.Database.Meta
         /// The maximum size value.
         /// </summary>
         public const int MaximumSize = -1;
-
-        private readonly MetaPopulation metaPopulation;
         private ObjectType objectType;
 
         private string singularName;
@@ -31,14 +29,14 @@ namespace Allors.Database.Meta
 
         protected RoleType(RelationType relationType)
         {
-            this.metaPopulation = relationType.MetaPopulation;
+            this.MetaPopulation = relationType.MetaPopulation;
             this.RelationType = relationType;
 
-            this.metaPopulation.OnRoleTypeCreated(this);
+            this.MetaPopulation.OnRoleTypeCreated(this);
         }
 
-        public MetaPopulation MetaPopulation => this.metaPopulation;
-        IMetaPopulation IMetaObject.MetaPopulation => this.metaPopulation;
+        public MetaPopulation MetaPopulation { get; }
+        IMetaPopulation IMetaObject.MetaPopulation => this.MetaPopulation;
 
         public RelationType RelationType { get; }
         IRelationType IRoleType.RelationType => this.RelationType;
@@ -56,9 +54,9 @@ namespace Allors.Database.Meta
 
             set
             {
-                this.metaPopulation.AssertUnlocked();
+                this.MetaPopulation.AssertUnlocked();
                 this.objectType = value;
-                this.metaPopulation.Stale();
+                this.MetaPopulation.Stale();
             }
         }
 
@@ -97,9 +95,9 @@ namespace Allors.Database.Meta
 
             set
             {
-                this.metaPopulation.AssertUnlocked();
+                this.MetaPopulation.AssertUnlocked();
                 this.singularName = value;
-                this.metaPopulation.Stale();
+                this.MetaPopulation.Stale();
             }
         }
 
@@ -130,9 +128,9 @@ namespace Allors.Database.Meta
 
             set
             {
-                this.metaPopulation.AssertUnlocked();
+                this.MetaPopulation.AssertUnlocked();
                 this.pluralName = value;
-                this.metaPopulation.Stale();
+                this.MetaPopulation.Stale();
             }
         }
 
@@ -144,21 +142,13 @@ namespace Allors.Database.Meta
         /// <value>The full plural name.</value>
         public string PluralFullName => this.RelationType.AssociationType.ObjectType + this.PluralName;
 
-        public bool IsMany
-        {
-            get
+        public bool IsMany =>
+            this.RelationType.Multiplicity switch
             {
-                switch (this.RelationType.Multiplicity)
-                {
-                    case Multiplicity.OneToMany:
-                    case Multiplicity.ManyToMany:
-                        return true;
-
-                    default:
-                        return false;
-                }
-            }
-        }
+                Multiplicity.OneToMany => true,
+                Multiplicity.ManyToMany => true,
+                _ => false
+            };
 
         /// <summary>
         /// Gets a value indicating whether this state has a multiplicity of one.
@@ -170,15 +160,15 @@ namespace Allors.Database.Meta
         {
             get
             {
-                this.metaPopulation.Derive();
+                this.MetaPopulation.Derive();
                 return this.size;
             }
 
             set
             {
-                this.metaPopulation.AssertUnlocked();
+                this.MetaPopulation.AssertUnlocked();
                 this.size = value;
-                this.metaPopulation.Stale();
+                this.MetaPopulation.Stale();
             }
         }
 
@@ -186,15 +176,15 @@ namespace Allors.Database.Meta
         {
             get
             {
-                this.metaPopulation.Derive();
+                this.MetaPopulation.Derive();
                 return this.precision;
             }
 
             set
             {
-                this.metaPopulation.AssertUnlocked();
+                this.MetaPopulation.AssertUnlocked();
                 this.precision = value;
-                this.metaPopulation.Stale();
+                this.MetaPopulation.Stale();
             }
         }
 
@@ -202,15 +192,15 @@ namespace Allors.Database.Meta
         {
             get
             {
-                this.metaPopulation.Derive();
+                this.MetaPopulation.Derive();
                 return this.scale;
             }
 
             set
             {
-                this.metaPopulation.AssertUnlocked();
+                this.MetaPopulation.AssertUnlocked();
                 this.scale = value;
-                this.metaPopulation.Stale();
+                this.MetaPopulation.Stale();
             }
         }
 

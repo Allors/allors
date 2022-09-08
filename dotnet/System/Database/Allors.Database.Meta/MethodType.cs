@@ -10,8 +10,6 @@ namespace Allors.Database.Meta
 
     public sealed class MethodType : IMethodType, IComparable
     {
-        private readonly MetaPopulation metaPopulation;
-
         private string[] assignedWorkspaceNames;
         private string[] derivedWorkspaceNames;
 
@@ -19,18 +17,63 @@ namespace Allors.Database.Meta
 
         public MethodType(Composite objectType, Guid id, string tag = null)
         {
-            this.metaPopulation = objectType.MetaPopulation;
+            this.MetaPopulation = objectType.MetaPopulation;
             this.ObjectType = objectType;
             this.Id = id;
             this.Tag = tag ?? id.Tag();
 
-            this.metaPopulation.OnMethodTypeCreated(this);
+            this.MetaPopulation.OnMethodTypeCreated(this);
         }
 
-        public MetaPopulation MetaPopulation => this.metaPopulation;
-        IMetaPopulation IMetaObject.MetaPopulation => this.metaPopulation;
+        public MetaPopulation MetaPopulation { get; }
+        IMetaPopulation IMetaObject.MetaPopulation => this.MetaPopulation;
 
         IComposite IMethodType.ObjectType => this.ObjectType;
+
+        public Guid Id { get; }
+
+        public string Tag { get; }
+
+        public Composite ObjectType { get; }
+
+        public string[] AssignedWorkspaceNames
+        {
+            get => this.assignedWorkspaceNames ?? Array.Empty<string>();
+
+            set
+            {
+                this.MetaPopulation.AssertUnlocked();
+                this.assignedWorkspaceNames = value;
+                this.MetaPopulation.Stale();
+            }
+        }
+
+        public string[] WorkspaceNames
+        {
+            get
+            {
+                this.MetaPopulation.Derive();
+                return this.derivedWorkspaceNames;
+            }
+        }
+
+        public string Name
+        {
+            get => this.name;
+
+            set
+            {
+                this.MetaPopulation.AssertUnlocked();
+                this.name = value;
+                this.MetaPopulation.Stale();
+            }
+        }
+
+        public string FullName => $"{this.ObjectType.Name}{this.Name}";
+
+        public IRecordType Input { get; }
+
+        public IRecordType Output { get; }
 
         public string DisplayName => this.Name;
 
@@ -86,51 +129,6 @@ namespace Allors.Database.Meta
         /// <exception cref="T:System.ArgumentException">
         /// <paramref name="other"/> is not the same type as this state. </exception>
         public int CompareTo(object other) => this.Id.CompareTo((other as MethodType)?.Id);
-
-        public Guid Id { get; }
-
-        public string Tag { get; }
-
-        public Composite ObjectType { get; }
-
-        public string[] AssignedWorkspaceNames
-        {
-            get => this.assignedWorkspaceNames ?? Array.Empty<string>();
-
-            set
-            {
-                this.metaPopulation.AssertUnlocked();
-                this.assignedWorkspaceNames = value;
-                this.metaPopulation.Stale();
-            }
-        }
-
-        public string[] WorkspaceNames
-        {
-            get
-            {
-                this.metaPopulation.Derive();
-                return this.derivedWorkspaceNames;
-            }
-        }
-
-        public string Name
-        {
-            get => this.name;
-
-            set
-            {
-                this.metaPopulation.AssertUnlocked();
-                this.name = value;
-                this.metaPopulation.Stale();
-            }
-        }
-
-        public string FullName => $"{this.ObjectType.Name}{this.Name}";
-
-        public IRecordType Input { get; }
-
-        public IRecordType Output { get; }
 
         public void DeriveWorkspaceNames() =>
              this.derivedWorkspaceNames = this.assignedWorkspaceNames != null

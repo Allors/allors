@@ -28,7 +28,7 @@ namespace Allors.Database.Meta
         private bool isRelationship;
 
         protected Composite(MetaPopulation metaPopulation, Guid id, string tag) : base(metaPopulation, id, tag) => this.metaPopulation = metaPopulation;
-        
+
         public bool? AssignedIsRelationship
         {
             get => this.assignedIsRelationship;
@@ -78,11 +78,6 @@ namespace Allors.Database.Meta
         public IEnumerable<Interface> DirectSupertypes => this.structuralDerivedDirectSupertypes;
 
         IEnumerable<IInterface> IComposite.Supertypes => this.Supertypes;
-
-        /// <summary>
-        /// Gets the super types.
-        /// </summary>
-        /// <value>The super types.</value>
         public IEnumerable<Interface> Supertypes => this.structuralDerivedSupertypes;
 
         public IEnumerable<AssociationType> AssociationTypes => this.structuralDerivedAssociationTypes;
@@ -100,11 +95,6 @@ namespace Allors.Database.Meta
         public IEnumerable<RoleType> ExclusiveDatabaseRoleTypes => this.ExclusiveRoleTypes.ToArray();
 
         IEnumerable<IMethodType> IComposite.MethodTypes => this.MethodTypes;
-
-        /// <summary>
-        /// Gets the method types.
-        /// </summary>
-        /// <value>The method types.</value>
         public IEnumerable<MethodType> MethodTypes => this.structuralDerivedMethodTypes;
 
         IEnumerable<IMethodType> IComposite.ExclusiveMethodTypes => this.ExclusiveMethodTypes;

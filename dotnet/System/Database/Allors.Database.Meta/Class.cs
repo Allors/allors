@@ -94,17 +94,6 @@ namespace Allors.Database.Meta
 
         public override IEnumerable<Composite> DatabaseSubtypes => this.Subtypes;
 
-        public void DeriveWorkspaceNames(HashSet<string> workspaceNames)
-        {
-            this.derivedWorkspaceNames = this.assignedWorkspaceNames ?? Array.Empty<string>();
-            workspaceNames.UnionWith(this.derivedWorkspaceNames);
-        }
-
-        public void DeriveRequiredRoleTypes() =>
-            this.derivedRequiredRoleTypes = this.RoleTypes
-                .Where(v => v.IsRequired)
-                .Union(this.OverriddenRequiredRoleTypes).ToArray();
-
         public override bool IsAssignableFrom(IComposite objectType) => this.Equals(objectType);
 
         public override void Bind(Dictionary<string, Type> typeByTypeName) => this.clrType = typeByTypeName[this.Name];
@@ -120,5 +109,16 @@ namespace Allors.Database.Meta
 
             return actions;
         }
+
+        public void DeriveWorkspaceNames(HashSet<string> workspaceNames)
+        {
+            this.derivedWorkspaceNames = this.assignedWorkspaceNames ?? Array.Empty<string>();
+            workspaceNames.UnionWith(this.derivedWorkspaceNames);
+        }
+
+        public void DeriveRequiredRoleTypes() =>
+            this.derivedRequiredRoleTypes = this.RoleTypes
+                .Where(v => v.IsRequired)
+                .Union(this.OverriddenRequiredRoleTypes).ToArray();
     }
 }

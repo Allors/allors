@@ -12,8 +12,6 @@ namespace Allors.Database.Meta
 
     public sealed class Domain : IDomain
     {
-        private readonly MetaPopulation metaPopulation;
-
         private IList<Domain> directSuperdomains;
         private Domain[] structuralDerivedSuperdomains;
 
@@ -21,14 +19,14 @@ namespace Allors.Database.Meta
 
         public Domain(MetaPopulation metaPopulation, Guid id)
         {
-            this.metaPopulation = metaPopulation;
+            this.MetaPopulation = metaPopulation;
 
             this.Id = id;
             this.Tag = id.Tag();
 
             this.directSuperdomains = new List<Domain>();
 
-            this.metaPopulation.OnDomainCreated(this);
+            this.MetaPopulation.OnDomainCreated(this);
         }
 
         public Guid Id { get; }
@@ -41,9 +39,9 @@ namespace Allors.Database.Meta
 
             set
             {
-                this.metaPopulation.AssertUnlocked();
+                this.MetaPopulation.AssertUnlocked();
                 this.name = value;
-                this.metaPopulation.Stale();
+                this.MetaPopulation.Stale();
             }
         }
 
@@ -52,8 +50,8 @@ namespace Allors.Database.Meta
 
         public IEnumerable<Domain> Superdomains => this.structuralDerivedSuperdomains;
 
-        public MetaPopulation MetaPopulation => this.metaPopulation;
-        IMetaPopulation IMetaObject.MetaPopulation => this.metaPopulation;
+        public MetaPopulation MetaPopulation { get; }
+        IMetaPopulation IMetaObject.MetaPopulation => this.MetaPopulation;
 
         /// <summary>
         /// Gets the validation name.
@@ -70,18 +68,7 @@ namespace Allors.Database.Meta
                 return "unknown domain";
             }
         }
-
-        public void AddDirectSuperdomain(Domain superdomain)
-        {
-            // TODO: Cyclic check
-            //if (superdomain.Equals(this) || superdomain.Superdomains.Contains(this))
-            //{
-            //    throw new Exception("Cycle in domain inheritance");
-            //}
-
-            this.directSuperdomains.Add(superdomain);
-        }
-
+        
         public override bool Equals(object other) => this.Id.Equals((other as Domain)?.Id);
 
         public override int GetHashCode() => this.Id.GetHashCode();
@@ -113,17 +100,15 @@ namespace Allors.Database.Meta
             return this.Tag;
         }
 
-        internal void Bind() => this.directSuperdomains = this.directSuperdomains.ToArray();
-
-        internal void StructuralDeriveSuperdomains(HashSet<Domain> sharedDomains)
+        public void AddDirectSuperdomain(Domain superdomain)
         {
-            sharedDomains.Clear();
-            foreach (var directSuperdomain in this.DirectSuperdomains)
-            {
-                directSuperdomain.StructuralDeriveSuperdomains(this, sharedDomains);
-            }
+            // TODO: Cyclic check
+            //if (superdomain.Equals(this) || superdomain.Superdomains.Contains(this))
+            //{
+            //    throw new Exception("Cycle in domain inheritance");
+            //}
 
-            this.structuralDerivedSuperdomains = sharedDomains.ToArray();
+            this.directSuperdomains.Add(superdomain);
         }
 
         /// <summary>
@@ -161,6 +146,19 @@ namespace Allors.Database.Meta
             {
                 validationLog.AddError(this.ValidationName + " has no id", this, ValidationKind.Required, "IMetaObject.Id");
             }
+        }
+
+        internal void Bind() => this.directSuperdomains = this.directSuperdomains.ToArray();
+
+        internal void StructuralDeriveSuperdomains(HashSet<Domain> sharedDomains)
+        {
+            sharedDomains.Clear();
+            foreach (var directSuperdomain in this.DirectSuperdomains)
+            {
+                directSuperdomain.StructuralDeriveSuperdomains(this, sharedDomains);
+            }
+
+            this.structuralDerivedSuperdomains = sharedDomains.ToArray();
         }
 
         private void StructuralDeriveSuperdomains(Domain subdomain, HashSet<Domain> superdomains)

@@ -15,8 +15,6 @@ namespace Allors.Database.Meta
     /// </summary>
     public sealed class RelationType : IRelationType
     {
-        private readonly MetaPopulation metaPopulation;
-
         private Multiplicity assignedMultiplicity;
         private Multiplicity multiplicity;
 
@@ -28,7 +26,7 @@ namespace Allors.Database.Meta
 
         public RelationType(Composite associationTypeComposite, Guid id, Func<RelationType, AssociationType> associationTypeFactory, Func<RelationType, RoleType> roleTypeFactory, string tag = null)
         {
-            this.metaPopulation = associationTypeComposite.MetaPopulation;
+            this.MetaPopulation = associationTypeComposite.MetaPopulation;
             this.Id = id;
             this.Tag = tag ?? id.Tag();
 
@@ -37,7 +35,7 @@ namespace Allors.Database.Meta
 
             this.RoleType = roleTypeFactory(this);
 
-            this.metaPopulation.OnRelationTypeCreated(this);
+            this.MetaPopulation.OnRelationTypeCreated(this);
         }
 
         public Guid Id { get; }
@@ -50,9 +48,9 @@ namespace Allors.Database.Meta
 
             set
             {
-                this.metaPopulation.AssertUnlocked();
+                this.MetaPopulation.AssertUnlocked();
                 this.assignedWorkspaceNames = value;
-                this.metaPopulation.Stale();
+                this.MetaPopulation.Stale();
             }
         }
 
@@ -60,13 +58,13 @@ namespace Allors.Database.Meta
         {
             get
             {
-                this.metaPopulation.Derive();
+                this.MetaPopulation.Derive();
                 return this.derivedWorkspaceNames;
             }
         }
 
-        public MetaPopulation MetaPopulation => this.metaPopulation;
-        IMetaPopulation IMetaObject.MetaPopulation => this.metaPopulation;
+        public MetaPopulation MetaPopulation { get; }
+        IMetaPopulation IMetaObject.MetaPopulation => this.MetaPopulation;
 
         public bool IsDerived
         {
@@ -74,9 +72,9 @@ namespace Allors.Database.Meta
 
             set
             {
-                this.metaPopulation.AssertUnlocked();
+                this.MetaPopulation.AssertUnlocked();
                 this.isDerived = value;
-                this.metaPopulation.Stale();
+                this.MetaPopulation.Stale();
             }
         }
 
@@ -86,9 +84,9 @@ namespace Allors.Database.Meta
 
             set
             {
-                this.metaPopulation.AssertUnlocked();
+                this.MetaPopulation.AssertUnlocked();
                 this.assignedMultiplicity = value;
-                this.metaPopulation.Stale();
+                this.MetaPopulation.Stale();
             }
         }
 
@@ -96,7 +94,7 @@ namespace Allors.Database.Meta
         {
             get
             {
-                this.metaPopulation.Derive();
+                this.MetaPopulation.Derive();
                 return this.multiplicity;
             }
         }
@@ -121,9 +119,9 @@ namespace Allors.Database.Meta
 
             set
             {
-                this.metaPopulation.AssertUnlocked();
+                this.MetaPopulation.AssertUnlocked();
                 this.isIndexed = value;
-                this.metaPopulation.Stale();
+                this.MetaPopulation.Stale();
             }
         }
 

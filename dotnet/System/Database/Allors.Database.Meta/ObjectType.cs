@@ -16,7 +16,6 @@ namespace Allors.Database.Meta
 
         private string pluralName;
 
-
         protected ObjectType(MetaPopulation metaPopulation, Guid id, string tag = null)
         {
             this.MetaPopulation = metaPopulation;
@@ -67,11 +66,12 @@ namespace Allors.Database.Meta
         public bool IsInterface => this is IInterface;
 
         public bool IsClass => this is IClass;
-                
+
         public abstract Type ClrType { get; }
 
         public abstract IEnumerable<string> WorkspaceNames { get; }
 
+        IMetaPopulation IMetaObject.MetaPopulation => this.MetaPopulation;
         public MetaPopulation MetaPopulation { get; }
 
         /// <summary>
@@ -208,7 +208,5 @@ namespace Allors.Database.Meta
                 }
             }
         }
-
-        IMetaPopulation IMetaObject.MetaPopulation => this.MetaPopulation;
     }
 }

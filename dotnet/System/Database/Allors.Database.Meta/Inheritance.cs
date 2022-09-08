@@ -11,15 +11,13 @@ namespace Allors.Database.Meta
 
     public sealed class Inheritance : IInheritance, IComparable
     {
-        private readonly MetaPopulation metaPopulation;
-
         private Composite subtype;
         private Interface supertype;
 
         public Inheritance(MetaPopulation metaPopulation)
         {
-            this.metaPopulation = metaPopulation;
-            this.metaPopulation.OnInheritanceCreated(this);
+            this.MetaPopulation = metaPopulation;
+            this.MetaPopulation.OnInheritanceCreated(this);
         }
 
         IComposite IInheritance.Subtype => this.Subtype;
@@ -29,9 +27,9 @@ namespace Allors.Database.Meta
 
             set
             {
-                this.metaPopulation.AssertUnlocked();
+                this.MetaPopulation.AssertUnlocked();
                 this.subtype = value;
-                this.metaPopulation.Stale();
+                this.MetaPopulation.Stale();
             }
         }
 
@@ -42,13 +40,13 @@ namespace Allors.Database.Meta
 
             set
             {
-                this.metaPopulation.AssertUnlocked();
+                this.MetaPopulation.AssertUnlocked();
                 this.supertype = value;
-                this.metaPopulation.Stale();
+                this.MetaPopulation.Stale();
             }
         }
 
-        public MetaPopulation MetaPopulation => this.metaPopulation;
+        public MetaPopulation MetaPopulation { get; }
 
         /// <summary>
         /// Gets the validation name.
@@ -101,7 +99,7 @@ namespace Allors.Database.Meta
         {
             if (this.Subtype != null && this.Supertype != null)
             {
-                if (this.metaPopulation.Inheritances.Count(inheritance => this.Subtype.Equals(inheritance.Subtype) && this.Supertype.Equals(inheritance.Supertype)) != 1)
+                if (this.MetaPopulation.Inheritances.Count(inheritance => this.Subtype.Equals(inheritance.Subtype) && this.Supertype.Equals(inheritance.Supertype)) != 1)
                 {
                     var message = "name of " + this.ValidationName + " is already in use";
                     validationLog.AddError(message, this, ValidationKind.Unique, "Inheritance.Supertype");

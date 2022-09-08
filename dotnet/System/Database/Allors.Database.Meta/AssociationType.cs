@@ -21,29 +21,52 @@ namespace Allors.Database.Meta
         /// Used to create property names.
         /// </summary>
         private const string Where = "Where";
-        private readonly RelationType relationType;
+
         private Composite objectType;
 
         protected AssociationType(RelationType relationType)
         {
-            this.MetaPopulation = relationType.MetaPopulation;
-            this.relationType = relationType;
-            relationType.MetaPopulation.OnAssociationTypeCreated(this);
+            this.RelationType = relationType;
+            this.MetaPopulation = this.RelationType.MetaPopulation;
+            this.RelationType.MetaPopulation.OnAssociationTypeCreated(this);
         }
 
         IMetaPopulation IMetaObject.MetaPopulation => this.MetaPopulation;
         public MetaPopulation MetaPopulation { get; }
 
-        public string[] WorkspaceNames => this.relationType.WorkspaceNames;
+        public string[] WorkspaceNames => this.RelationType.WorkspaceNames;
 
-        public string[] AssignedWorkspaceNames => this.relationType.AssignedWorkspaceNames;
+        public string[] AssignedWorkspaceNames => this.RelationType.AssignedWorkspaceNames;
+
+        public string Name => this.IsMany ? this.PluralName : this.SingularName;
+
+        public string SingularName => this.objectType.SingularName + Where + this.RoleType.SingularName;
 
         public string SingularFullName => this.SingularName;
+
+        public string PluralName => this.objectType.PluralName + Where + this.RoleType.SingularName;
+
         public string PluralFullName => this.PluralName;
 
         IObjectType IPropertyType.ObjectType => this.ObjectType;
 
         public bool IsOne => !this.IsMany;
+
+        public bool IsMany
+        {
+            get
+            {
+                switch (this.RelationType.Multiplicity)
+                {
+                    case Multiplicity.ManyToOne:
+                    case Multiplicity.ManyToMany:
+                        return true;
+
+                    default:
+                        return false;
+                }
+            }
+        }
 
         public object Get(IStrategy strategy, IComposite ofType)
         {
@@ -66,6 +89,7 @@ namespace Allors.Database.Meta
         IRelationType IAssociationType.RelationType => this.RelationType;
 
         IRoleType IAssociationType.RoleType => this.RoleType;
+        public RoleType RoleType => this.RelationType.RoleType;
 
         IComposite IAssociationType.ObjectType => this.ObjectType;
 
@@ -81,7 +105,9 @@ namespace Allors.Database.Meta
             }
         }
 
-        public RelationType RelationType => this.relationType;
+        public RelationType RelationType { get; }
+
+        private string ValidationName => "association type " + this.Name;
 
         public void Validate(ValidationLog validationLog)
         {
@@ -91,47 +117,19 @@ namespace Allors.Database.Meta
                 validationLog.AddError(message, this, ValidationKind.Required, "AssociationType.IObjectType");
             }
 
-            if (this.relationType == null)
+            if (this.RelationType == null)
             {
                 var message = this.ValidationName + " has no relation type";
                 validationLog.AddError(message, this, ValidationKind.Required, "AssociationType.RelationType");
             }
         }
 
-        public RoleType RoleType => this.relationType.RoleType;
+        public override bool Equals(object other) => this.RelationType.Id.Equals((other as AssociationType)?.RelationType.Id);
 
-        public bool IsMany
-        {
-            get
-            {
-                switch (this.relationType.Multiplicity)
-                {
-                    case Multiplicity.ManyToOne:
-                    case Multiplicity.ManyToMany:
-                        return true;
+        public override int GetHashCode() => this.RelationType.Id.GetHashCode();
 
-                    default:
-                        return false;
-                }
-            }
-        }
+        public int CompareTo(object other) => this.RelationType.Id.CompareTo((other as AssociationType)?.RelationType.Id);
 
-        public string Name => this.IsMany ? this.PluralName : this.SingularName;
-
-        public string SingularName => this.objectType.SingularName + Where + this.RoleType.SingularName;
-
-        public string PluralName => this.objectType.PluralName + Where + this.RoleType.SingularName;
-
-        private string DisplayName => this.Name;
-
-        private string ValidationName => "association type " + this.Name;
-
-        public override bool Equals(object other) => this.relationType.Id.Equals((other as AssociationType)?.relationType.Id);
-
-        public override int GetHashCode() => this.relationType.Id.GetHashCode();
-
-        public int CompareTo(object other) => this.relationType.Id.CompareTo((other as AssociationType)?.relationType.Id);
-
-        public override string ToString() => $"{this.RoleType.ObjectType.Name}.{this.DisplayName}";
+        public override string ToString() => $"{this.RoleType.ObjectType.Name}.{this.Name}";
     }
 }
