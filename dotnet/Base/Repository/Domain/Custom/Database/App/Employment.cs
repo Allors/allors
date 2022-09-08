@@ -12,7 +12,6 @@ namespace Allors.Repository
     #region Allors
     [Id("CE633852-D115-468E-A52F-22A777E27198")]
     #endregion
-    [Relationship]
     [Workspace(Default)]
     public class Employment : Period, Deletable
     {
