@@ -61,7 +61,6 @@ $meta.WorkspaceClassesByWorkspaceName.(workspaceName):{objectType|$data_objectTy
     $meta.WorkspaceMediaTagsByMediaTypeNameByWorkspaceName.(workspaceName):{mediaTypeName|'$mediaTypeName$': [$data_mediaType(mediaTypeName)$]}; separator=",\n"$
   },
   or: [$meta.WorkspaceClassesByWorkspaceName.(workspaceName):{objectType|$data_overridden_required(objectType)$}; separator=""$],
-  rel: [$meta.WorkspaceRelationshipsByWorkspaceName.(workspaceName):{objectType|'$objectType.tag$'}; separator=","$],
 }
 
 >>

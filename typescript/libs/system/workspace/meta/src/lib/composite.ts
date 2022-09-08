@@ -21,7 +21,5 @@ export interface Composite extends ObjectType {
 
   databaseOriginRoleTypes: Set<RoleType>;
 
-  isRelationship: boolean;
-
   isAssignableFrom(objectType: Composite): boolean;
 }

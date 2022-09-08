@@ -41,7 +41,7 @@ namespace Allors.Meta.Generation.Model
 
         public IEnumerable<MethodTypeModel> ExclusiveMethodTypes => this.Composite.ExclusiveMethodTypes.Select(this.MetaModel.Map);
 
-        public bool IsRelationship => this.Composite.IsRelationship;
+        //public bool IsRelationship => this.Composite.IsRelationship;
 
         // IComposite Extra
         public bool ExistDirectSupertypes => this.DirectSupertypes.Any();

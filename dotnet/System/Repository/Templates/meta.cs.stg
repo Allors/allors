@@ -2,7 +2,7 @@ group AllorsCSharpRepository;
 
 TemplateId() ::= <<14F49218-A676-43ba-9CBD-B8FFA059D1BF>>
 TemplateName() ::= <<Allors C# Meta>>
-TemplateVersion() ::= <<1.0.10>>
+TemplateVersion() ::= <<1.0.11>>
 TemplateAllors() ::= <<1.0>>
 TemplateConfiguration(repository) ::= <<
 $!
@@ -394,7 +394,6 @@ build_interface(interface) ::= <<
             {
                 SingularName = "$interface.SingularName$",
                 $if(interface.AssignedPluralName)$PluralName = "$interface.AssignedPluralName$",$endif$
-                $if(interface.AttributeByName.Relationship)$AssignedIsRelationship = true,$endif$
             };
 >>
 

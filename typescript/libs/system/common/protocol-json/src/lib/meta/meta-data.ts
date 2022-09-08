@@ -29,8 +29,7 @@ export type ObjectTypeData = [
   directSupertypes?: string[],
   relationTypes?: RelationTypeData[],
   methodTypes?: MethodTypeData[],
-  pluralName?: string,
-  isRelationship?: boolean
+  pluralName?: string
 ];
 
 export interface MetaData {
@@ -58,12 +57,7 @@ export interface MetaData {
    * IsRequired
    */
   r?: string[];
-
-  /**
-   * Relationship
-   */
-  rel?: string[];
-
+ 
   /**
    * MediaType
    */

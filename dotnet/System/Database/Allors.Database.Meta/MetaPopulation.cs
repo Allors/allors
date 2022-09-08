@@ -442,11 +442,6 @@ namespace Allors.Database.Meta
                         @interface.DeriveWorkspaceNames();
                     }
 
-                    foreach (var composite in this.Composites)
-                    {
-                        composite.DeriveIsRelationship();
-                    }
-
                     // MetaPopulation
                     this.derivedDatabaseCompositeByLowercaseName = this.Composites.ToDictionary(v => v.Name.ToLowerInvariant());
                 }

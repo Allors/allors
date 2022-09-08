@@ -25,7 +25,6 @@ describe('Class in MetaPopulation', () => {
       expect(Organization.isComposite).toBeTruthy();
       expect(Organization.isInterface).toBeFalsy();
       expect(Organization.isClass).toBeTruthy();
-      expect(Organization.isRelationship).toBeFalsy();
     });
   });
 
@@ -57,7 +56,6 @@ describe('Class in MetaPopulation', () => {
       expect(C1.isComposite).toBeTruthy();
       expect(C1.isInterface).toBeFalsy();
       expect(C1.isClass).toBeTruthy();
-      expect(C1.isRelationship).toBeFalsy();
 
       expect(C2).toBeDefined();
       expect(C2.metaPopulation).toBe(metaPopulation);
@@ -68,7 +66,6 @@ describe('Class in MetaPopulation', () => {
       expect(C2.isComposite).toBeTruthy();
       expect(C2.isInterface).toBeFalsy();
       expect(C2.isClass).toBeTruthy();
-      expect(C2.isRelationship).toBeFalsy();
     });
   });
 });

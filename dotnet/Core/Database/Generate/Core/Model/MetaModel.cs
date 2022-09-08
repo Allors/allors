@@ -99,10 +99,6 @@ namespace Allors.Meta.Generation.Model
             this.WorkspaceNames
                 .ToDictionary(v => v, v => this.Composites.Where(w => w.WorkspaceNames.Contains(v)).OrderBy(w => w.Tag));
 
-        public IReadOnlyDictionary<string, IOrderedEnumerable<CompositeModel>> WorkspaceRelationshipsByWorkspaceName =>
-            this.WorkspaceNames
-                .ToDictionary(v => v, v => this.Composites.Where(w => w.WorkspaceNames.Contains(v) && w.IsRelationship).OrderBy(w => w.Tag));
-
         public IReadOnlyDictionary<string, IOrderedEnumerable<InterfaceModel>> WorkspaceInterfacesByWorkspaceName =>
             this.WorkspaceNames
                 .ToDictionary(v => v, v => this.Interfaces.Where(w => w.WorkspaceNames.Contains(v)).OrderBy(w => w.Tag));

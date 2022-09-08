@@ -22,31 +22,7 @@ namespace Allors.Database.Meta
 
         private HashSet<MethodType> structuralDerivedMethodTypes;
 
-        private bool? assignedIsRelationship;
-        private bool isRelationship;
-
         protected Composite(MetaPopulation metaPopulation, Guid id, string tag) : base(metaPopulation, id, tag) => this.metaPopulation = metaPopulation;
-
-        public bool? AssignedIsRelationship
-        {
-            get => this.assignedIsRelationship;
-
-            set
-            {
-                this.metaPopulation.AssertUnlocked();
-                this.assignedIsRelationship = value;
-                this.metaPopulation.Stale();
-            }
-        }
-
-        public bool IsRelationship
-        {
-            get
-            {
-                this.metaPopulation.Derive();
-                return this.isRelationship;
-            }
-        }
 
         public bool ExistExclusiveClass
         {
@@ -141,9 +117,6 @@ namespace Allors.Database.Meta
         public abstract bool IsAssignableFrom(IComposite objectType);
 
         public abstract void Bind(Dictionary<string, Type> typeByName);
-
-        public void DeriveIsRelationship() =>
-            this.isRelationship = this.assignedIsRelationship ?? this.Supertypes.Any(v => v.AssignedIsRelationship == true);
 
         /// <summary>
         /// Derive direct super type derivations.

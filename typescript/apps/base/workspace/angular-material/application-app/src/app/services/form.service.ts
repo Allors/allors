@@ -26,7 +26,6 @@ export class AppFormService implements FormService {
 
   editForm(composite: Composite) {
     switch (composite.tag) {
-      // Objects
       case tags.Country:
         return CountryFormComponent;
 
@@ -36,7 +35,6 @@ export class AppFormService implements FormService {
       case tags.Person:
         return PersonFormComponent;
 
-      // Relationships
       case tags.Employment:
         return EmploymentFormComponent;
     }

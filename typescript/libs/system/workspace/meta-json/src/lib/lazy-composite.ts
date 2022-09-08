@@ -39,8 +39,6 @@ export abstract class LazyComposite implements InternalComposite {
 
   databaseOriginRoleTypes: Set<RoleType>;
 
-  isRelationship: boolean;
-
   abstract isInterface: boolean;
   abstract isClass: boolean;
   abstract classes: Set<InternalClass>;
@@ -55,13 +53,11 @@ export abstract class LazyComposite implements InternalComposite {
 
   constructor(
     public metaPopulation: InternalMetaPopulation,
-    public d: ObjectTypeData,
-    lookup: Lookup
+    public d: ObjectTypeData
   ) {
     const [t, s] = this.d;
     this.tag = t;
     this.singularName = s;
-    this.isRelationship = lookup.rel.has(t) ?? false;
     metaPopulation.onNewComposite(this);
   }
 
