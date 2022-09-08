@@ -258,7 +258,7 @@ namespace Allors.Database.Adapters
         public IRelationType[] GetUnitRelations(IMetaPopulation metaPopulation)
         {
             var relations = new ArrayList();
-            foreach (var metaRelation in metaPopulation.DatabaseRelationTypes)
+            foreach (var metaRelation in metaPopulation.RelationTypes)
             {
                 if (metaRelation.RoleType.ObjectType.IsUnit)
                 {

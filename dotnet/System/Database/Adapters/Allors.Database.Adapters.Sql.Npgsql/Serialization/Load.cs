@@ -132,7 +132,7 @@ namespace Allors.Database.Adapters.Sql.Npgsql
             // insert from _o table into class tables
             using (var transaction = this.connection.BeginTransaction())
             {
-                foreach (var @class in this.database.MetaPopulation.DatabaseClasses)
+                foreach (var @class in this.database.MetaPopulation.Classes)
                 {
                     var tableName = this.database.Mapping.TableNameForObjectByClass[@class];
 

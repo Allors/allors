@@ -22,7 +22,7 @@ namespace Allors.Database.Configuration
             var metaPopulation = (MetaPopulation)database.MetaPopulation;
             var assembly = database.ObjectFactory.Assembly;
 
-            this.builderTypeByClass = metaPopulation.DatabaseClasses.
+            this.builderTypeByClass = metaPopulation.Classes.
                 ToDictionary(
                     v => (IClass)v,
                     v => assembly.GetType($"Allors.Database.Domain.{v.Name}Builder", false));

@@ -139,7 +139,7 @@ namespace Allors.Database.Adapters.Sql.Npgsql
             }
 
             // Object Tables
-            foreach (var @class in this.Database.MetaPopulation.DatabaseClasses)
+            foreach (var @class in this.Database.MetaPopulation.Classes)
             {
                 var tableName = this.mapping.TableNameForObjectByClass[@class];
                 var table = this.Schema.GetTable(tableName);
@@ -190,7 +190,7 @@ namespace Allors.Database.Adapters.Sql.Npgsql
             }
 
             // Relation Tables
-            foreach (var relationType in this.Database.MetaPopulation.DatabaseRelationTypes)
+            foreach (var relationType in this.Database.MetaPopulation.RelationTypes)
             {
                 var associationType = relationType.AssociationType;
                 var roleType = relationType.RoleType;

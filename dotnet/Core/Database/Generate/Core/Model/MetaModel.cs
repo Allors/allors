@@ -64,14 +64,6 @@ namespace Allors.Meta.Generation.Model
 
         public IEnumerable<MethodTypeModel> MethodTypes => this.MetaPopulation.MethodTypes.Select(this.Map);
 
-        public IEnumerable<CompositeModel> DatabaseComposites => this.MetaPopulation.DatabaseComposites.Select(this.Map);
-
-        public IEnumerable<InterfaceModel> DatabaseInterfaces => this.MetaPopulation.DatabaseInterfaces.Select(this.Map);
-
-        public IEnumerable<ClassModel> DatabaseClasses => this.MetaPopulation.DatabaseClasses.Select(this.Map);
-
-        public IEnumerable<RelationTypeModel> DatabaseRelationTypes => this.MetaPopulation.DatabaseRelationTypes.Select(this.Map);
-
         public IEnumerable<string> WorkspaceNames => this.MetaPopulation.WorkspaceNames;
 
         public IReadOnlyDictionary<string, IOrderedEnumerable<string>> WorkspaceMultiplicityTagsByWorkspaceName(Multiplicity multiplicity) =>

@@ -89,7 +89,7 @@ namespace Allors.Database
 
             var typeByName = types.ToDictionary(type => type.Name, type => type);
 
-            foreach (var objectType in metaPopulation.DatabaseComposites)
+            foreach (var objectType in metaPopulation.Composites)
             {
                 var type = typeByName[objectType.Name];
 

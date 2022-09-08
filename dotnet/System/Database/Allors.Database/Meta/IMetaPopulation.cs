@@ -26,14 +26,6 @@ namespace Allors.Database.Meta
 
         IEnumerable<IMethodType> MethodTypes { get; }
 
-        IEnumerable<IComposite> DatabaseComposites { get; }
-
-        IEnumerable<IInterface> DatabaseInterfaces { get; }
-
-        IEnumerable<IClass> DatabaseClasses { get; }
-
-        IEnumerable<IRelationType> DatabaseRelationTypes { get; }
-
         IEnumerable<string> WorkspaceNames { get; }
 
         bool IsValid { get; }

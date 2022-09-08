@@ -159,7 +159,7 @@ namespace Allors.Database.Adapters.Sql.Npgsql
             this.columnNameByRelationType = new Dictionary<IRelationType, string>();
             this.paramInvocationNameByRoleType = new Dictionary<IRoleType, string>();
 
-            foreach (var @class in this.Database.MetaPopulation.DatabaseClasses)
+            foreach (var @class in this.Database.MetaPopulation.Classes)
             {
                 this.tableNameForObjectByClass.Add(@class, this.Database.SchemaName + "." + this.NormalizeName(@class.SingularName));
 
@@ -191,7 +191,7 @@ namespace Allors.Database.Adapters.Sql.Npgsql
 
             this.tableNameForRelationByRelationType = new Dictionary<IRelationType, string>();
 
-            foreach (var relationType in this.Database.MetaPopulation.DatabaseRelationTypes)
+            foreach (var relationType in this.Database.MetaPopulation.RelationTypes)
             {
                 var associationType = relationType.AssociationType;
                 var roleType = relationType.RoleType;
@@ -227,7 +227,7 @@ namespace Allors.Database.Adapters.Sql.Npgsql
             this.GetVersionIds();
             this.UpdateVersionIds();
 
-            foreach (var @class in this.Database.MetaPopulation.DatabaseClasses)
+            foreach (var @class in this.Database.MetaPopulation.Classes)
             {
                 this.LoadObjects(@class);
                 this.CreateObject(@class);
@@ -287,7 +287,7 @@ namespace Allors.Database.Adapters.Sql.Npgsql
                 }
             }
 
-            foreach (var relationType in this.Database.MetaPopulation.DatabaseRelationTypes)
+            foreach (var relationType in this.Database.MetaPopulation.RelationTypes)
             {
                 if (!relationType.RoleType.ObjectType.IsUnit && ((relationType.AssociationType.IsMany && relationType.RoleType.IsMany) || !relationType.ExistExclusiveDatabaseClasses))
                 {

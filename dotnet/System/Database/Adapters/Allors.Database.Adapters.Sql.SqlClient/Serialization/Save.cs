@@ -58,7 +58,7 @@ namespace Allors.Database.Adapters.Sql.SqlClient
         {
             var mapping = this.database.Mapping;
 
-            var concreteCompositeType = new List<IClass>(this.database.MetaPopulation.DatabaseClasses);
+            var concreteCompositeType = new List<IClass>(this.database.MetaPopulation.Classes);
             concreteCompositeType.Sort();
             foreach (var type in concreteCompositeType)
             {
@@ -109,7 +109,7 @@ namespace Allors.Database.Adapters.Sql.SqlClient
         {
             var exclusiveRootClassesByObjectType = new Dictionary<IObjectType, HashSet<IObjectType>>();
 
-            var relations = new List<IRelationType>(this.database.MetaPopulation.DatabaseRelationTypes);
+            var relations = new List<IRelationType>(this.database.MetaPopulation.RelationTypes);
             relations.Sort();
 
             foreach (var relation in relations)

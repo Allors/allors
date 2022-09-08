@@ -205,7 +205,7 @@ namespace Allors.Database.Adapters.Sql.SqlClient
 
             this.TableTypeNameForDecimalRelationByScaleByPrecision = new Dictionary<int, Dictionary<int, string>>();
             this.TableTypeNameForDecimalInByScaleByPrecision = new Dictionary<int, Dictionary<int, string>>();
-            foreach (var relationType in database.MetaPopulation.DatabaseRelationTypes)
+            foreach (var relationType in database.MetaPopulation.RelationTypes)
             {
                 var roleType = relationType.RoleType;
                 if (roleType.ObjectType.IsUnit && ((IUnit)roleType.ObjectType).IsDecimal)
@@ -363,7 +363,7 @@ namespace Allors.Database.Adapters.Sql.SqlClient
             this.columnNameByRelationType = new Dictionary<IRelationType, string>();
             this.ParamNameByRoleType = new Dictionary<IRoleType, string>();
 
-            foreach (var @class in this.Database.MetaPopulation.DatabaseClasses)
+            foreach (var @class in this.Database.MetaPopulation.Classes)
             {
                 this.tableNameForObjectByClass.Add(@class, $"{this.Database.SchemaName}.{this.NormalizeName(@class.SingularName)}");
 
@@ -395,7 +395,7 @@ namespace Allors.Database.Adapters.Sql.SqlClient
 
             this.tableNameForRelationByRelationType = new Dictionary<IRelationType, string>();
 
-            foreach (var relationType in this.Database.MetaPopulation.DatabaseRelationTypes)
+            foreach (var relationType in this.Database.MetaPopulation.RelationTypes)
             {
                 var associationType = relationType.AssociationType;
                 var roleType = relationType.RoleType;
@@ -431,7 +431,7 @@ namespace Allors.Database.Adapters.Sql.SqlClient
             this.GetVersionIds();
             this.UpdateVersionIds();
 
-            foreach (var @class in this.Database.MetaPopulation.DatabaseClasses)
+            foreach (var @class in this.Database.MetaPopulation.Classes)
             {
                 this.LoadObjects(@class);
                 this.CreateObject(@class);
@@ -491,7 +491,7 @@ namespace Allors.Database.Adapters.Sql.SqlClient
                 }
             }
 
-            foreach (var relationType in this.Database.MetaPopulation.DatabaseRelationTypes)
+            foreach (var relationType in this.Database.MetaPopulation.RelationTypes)
             {
                 if (!relationType.RoleType.ObjectType.IsUnit && ((relationType.AssociationType.IsMany && relationType.RoleType.IsMany) || !relationType.ExistExclusiveDatabaseClasses))
                 {

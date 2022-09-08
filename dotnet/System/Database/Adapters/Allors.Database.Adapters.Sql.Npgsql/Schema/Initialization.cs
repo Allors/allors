@@ -102,14 +102,14 @@ CREATE SCHEMA " + this.database.SchemaName;
                 {
                     this.TruncateTable(connection, this.mapping.TableNameForObjects);
 
-                    foreach (var @class in this.mapping.Database.MetaPopulation.DatabaseClasses)
+                    foreach (var @class in this.mapping.Database.MetaPopulation.Classes)
                     {
                         var tableName = this.mapping.TableNameForObjectByClass[@class];
 
                         this.TruncateTable(connection, tableName);
                     }
 
-                    foreach (var relationType in this.mapping.Database.MetaPopulation.DatabaseRelationTypes)
+                    foreach (var relationType in this.mapping.Database.MetaPopulation.RelationTypes)
                     {
                         var associationType = relationType.AssociationType;
                         var roleType = relationType.RoleType;
@@ -137,14 +137,14 @@ CREATE SCHEMA " + this.database.SchemaName;
                 {
                     this.DropTable(connection, this.mapping.TableNameForObjects);
 
-                    foreach (var @class in this.mapping.Database.MetaPopulation.DatabaseClasses)
+                    foreach (var @class in this.mapping.Database.MetaPopulation.Classes)
                     {
                         var tableName = this.mapping.TableNameForObjectByClass[@class];
 
                         this.DropTable(connection, tableName);
                     }
 
-                    foreach (var relationType in this.mapping.Database.MetaPopulation.DatabaseRelationTypes)
+                    foreach (var relationType in this.mapping.Database.MetaPopulation.RelationTypes)
                     {
                         var associationType = relationType.AssociationType;
                         var roleType = relationType.RoleType;
@@ -185,7 +185,7 @@ CREATE SCHEMA " + this.database.SchemaName;
                         }
                     }
 
-                    foreach (var @class in this.mapping.Database.MetaPopulation.DatabaseClasses)
+                    foreach (var @class in this.mapping.Database.MetaPopulation.Classes)
                     {
                         var tableName = this.mapping.TableNameForObjectByClass[@class];
 
@@ -227,7 +227,7 @@ CREATE SCHEMA " + this.database.SchemaName;
                         }
                     }
 
-                    foreach (var relationType in this.mapping.Database.MetaPopulation.DatabaseRelationTypes)
+                    foreach (var relationType in this.mapping.Database.MetaPopulation.RelationTypes)
                     {
                         var associationType = relationType.AssociationType;
                         var roleType = relationType.RoleType;
@@ -292,7 +292,7 @@ $@"CREATE TABLE {tableName}(
                 connection.Open();
                 try
                 {
-                    foreach (var @class in this.mapping.Database.MetaPopulation.DatabaseClasses)
+                    foreach (var @class in this.mapping.Database.MetaPopulation.Classes)
                     {
                         var tableName = this.mapping.TableNameForObjectByClass[@class];
                         foreach (var associationType in @class.DatabaseAssociationTypes)
@@ -342,7 +342,7 @@ $@"CREATE TABLE {tableName}(
                         }
                     }
 
-                    foreach (var relationType in this.mapping.Database.MetaPopulation.DatabaseRelationTypes)
+                    foreach (var relationType in this.mapping.Database.MetaPopulation.RelationTypes)
                     {
                         if (relationType.IsIndexed)
                         {

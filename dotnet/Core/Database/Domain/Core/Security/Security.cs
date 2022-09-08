@@ -31,7 +31,7 @@ namespace Allors.Database.Domain
             this.transaction = transaction;
 
             this.objectsByObjectType = new Dictionary<ObjectType, IObjects>();
-            foreach (ObjectType objectType in transaction.Database.MetaPopulation.DatabaseComposites)
+            foreach (ObjectType objectType in transaction.Database.MetaPopulation.Composites)
             {
                 this.objectsByObjectType[objectType] = objectType.GetObjects(transaction);
             }

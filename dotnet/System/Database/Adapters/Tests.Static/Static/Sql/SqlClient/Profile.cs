@@ -44,7 +44,7 @@ namespace Allors.Database.Adapters.Sql.SqlClient
                     markers.Add(
                         () =>
                         {
-                            foreach (var @class in this.Transaction.Database.MetaPopulation.DatabaseClasses)
+                            foreach (var @class in this.Transaction.Database.MetaPopulation.Classes)
                             {
                                 var prefetchPolicy = this.prefetchers[@class];
                                 this.Transaction.Prefetch(prefetchPolicy, this.Transaction.Extent(@class).ToArray());

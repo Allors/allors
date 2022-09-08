@@ -36,11 +36,6 @@ namespace Allors.Database.Meta
 
         private Composite[] structuralDerivedComposites;
 
-        private Composite[] structuralDerivedDatabaseComposites;
-        private Interface[] structuralDerivedDatabaseInterfaces;
-        private Class[] structuralDerivedDatabaseClasses;
-        private RelationType[] structuralDerivedDatabaseRelationTypes;
-
         protected MetaPopulation()
         {
             this.isStale = true;
@@ -89,6 +84,7 @@ namespace Allors.Database.Meta
         public IEnumerable<RoleType> RoleTypes => this.roleTypes;
 
         IEnumerable<IInterface> IMetaPopulation.Interfaces => this.interfaces;
+        public IEnumerable<Interface> Interfaces => this.interfaces;
 
         IEnumerable<IComposite> IMetaPopulation.Composites => this.Composites;
         public IEnumerable<Composite> Composites => this.structuralDerivedComposites;
@@ -108,18 +104,6 @@ namespace Allors.Database.Meta
 
         IEnumerable<IUnit> IMetaPopulation.Units => this.Units;
         public IEnumerable<Unit> Units => this.units;
-
-        IEnumerable<IComposite> IMetaPopulation.DatabaseComposites => this.DatabaseComposites;
-        public IEnumerable<Composite> DatabaseComposites => this.structuralDerivedDatabaseComposites;
-
-        IEnumerable<IInterface> IMetaPopulation.DatabaseInterfaces => this.DatabaseInterfaces;
-        public IEnumerable<Interface> DatabaseInterfaces => this.structuralDerivedDatabaseInterfaces;
-
-        IEnumerable<IClass> IMetaPopulation.DatabaseClasses => this.DatabaseClasses;
-        public IEnumerable<Class> DatabaseClasses => this.structuralDerivedDatabaseClasses;
-
-        IEnumerable<IRelationType> IMetaPopulation.DatabaseRelationTypes => this.DatabaseRelationTypes;
-        public IEnumerable<RelationType> DatabaseRelationTypes => this.structuralDerivedDatabaseRelationTypes;
 
         IEnumerable<IMethodType> IMetaPopulation.MethodTypes => this.MethodTypes;
         public IEnumerable<MethodType> MethodTypes => this.methodTypes;
@@ -272,12 +256,12 @@ namespace Allors.Database.Meta
                 }
 
                 this.Derive();
-                foreach (var @interface in this.DatabaseInterfaces)
+                foreach (var @interface in this.Interfaces)
                 {
                     @interface.Bind(typeByName);
                 }
 
-                foreach (var @class in this.DatabaseClasses)
+                foreach (var @class in this.Classes)
                 {
                     @class.Bind(typeByName);
                 }
@@ -328,12 +312,6 @@ namespace Allors.Database.Meta
                 var compositeTypes = new List<Composite>(this.interfaces);
                 compositeTypes.AddRange(this.Classes);
                 this.structuralDerivedComposites = compositeTypes.ToArray();
-
-                // Database
-                this.structuralDerivedDatabaseComposites = this.Composites.ToArray();
-                this.structuralDerivedDatabaseInterfaces = this.interfaces.ToArray();
-                this.structuralDerivedDatabaseClasses = this.classes.ToArray();
-                this.structuralDerivedDatabaseRelationTypes = this.relationTypes.ToArray();
 
                 // DirectSupertypes
                 foreach (var type in this.Composites)
@@ -470,7 +448,7 @@ namespace Allors.Database.Meta
                     }
 
                     // MetaPopulation
-                    this.derivedDatabaseCompositeByLowercaseName = this.DatabaseComposites.ToDictionary(v => v.Name.ToLowerInvariant());
+                    this.derivedDatabaseCompositeByLowercaseName = this.Composites.ToDictionary(v => v.Name.ToLowerInvariant());
                 }
                 finally
                 {
