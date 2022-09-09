@@ -12,7 +12,6 @@ namespace Allors.Database.Meta
 
     public abstract class Composite : ObjectType, IComposite
     {
-        private readonly MetaPopulation metaPopulation;
 
         private HashSet<Interface> structuralDerivedDirectSupertypes;
         private HashSet<Interface> structuralDerivedSupertypes;
@@ -22,7 +21,11 @@ namespace Allors.Database.Meta
 
         private HashSet<MethodType> structuralDerivedMethodTypes;
 
-        protected Composite(MetaPopulation metaPopulation, Guid id, string tag) : base(metaPopulation, id, tag) => this.metaPopulation = metaPopulation;
+        protected Composite(MetaPopulation metaPopulation, Guid id, string tag) : base(metaPopulation, id, tag) { }
+
+        public abstract IEnumerable<Class> Classes { get; }
+
+        public abstract bool ExistClass { get; }
 
         public bool ExistExclusiveClass
         {
@@ -33,16 +36,8 @@ namespace Allors.Database.Meta
             }
         }
 
-        public abstract bool ExistClass { get; }
-
         IClass IComposite.ExclusiveClass => this.ExclusiveClass;
         public abstract Class ExclusiveClass { get; }
-
-        /// <summary>
-        /// Gets the root classes.
-        /// </summary>
-        /// <value>The root classes.</value>
-        public abstract IEnumerable<Class> Classes { get; }
 
         public IEnumerable<Interface> DirectSupertypes => this.structuralDerivedDirectSupertypes;
 
@@ -80,8 +75,6 @@ namespace Allors.Database.Meta
         IEnumerable<IRoleType> IComposite.InheritedRoleTypes => this.InheritedRoleTypes;
         public IEnumerable<RoleType> InheritedRoleTypes => this.RoleTypes.Except(this.ExclusiveRoleTypes);
 
-        #region Workspace
-
         public IEnumerable<RoleType> ExclusiveCompositeRoleTypes
         {
             get
@@ -93,18 +86,6 @@ namespace Allors.Database.Meta
 
         IEnumerable<IComposite> IComposite.Subtypes => this.Subtypes;
         public abstract IEnumerable<Composite> Subtypes { get; }
-
-        public abstract IEnumerable<Composite> DatabaseSubtypes { get; }
-
-        public IEnumerable<RoleType> ExclusiveRoleTypesWithDatabaseOrigin => this.ExclusiveRoleTypes;
-
-        public IEnumerable<RoleType> ExclusiveRoleTypesWithSessionOrigin => this.ExclusiveRoleTypes;
-
-        public IEnumerable<AssociationType> ExclusiveAssociationTypesWithDatabaseOrigin => this.ExclusiveAssociationTypes;
-
-        public IEnumerable<AssociationType> ExclusiveAssociationTypesWithSessionOrigin => this.ExclusiveAssociationTypes;
-
-        #endregion Workspace
 
         IEnumerable<IClass> IComposite.Classes => this.Classes;
 
@@ -118,11 +99,7 @@ namespace Allors.Database.Meta
 
         public abstract void Bind(Dictionary<string, Type> typeByName);
 
-        /// <summary>
-        /// Derive direct super type derivations.
-        /// </summary>
-        /// <param name="directSupertypes">The direct super types.</param>
-        public void StructuralDeriveDirectSupertypes(HashSet<Interface> directSupertypes)
+        internal void StructuralDeriveDirectSupertypes(HashSet<Interface> directSupertypes)
         {
             directSupertypes.Clear();
             foreach (var inheritance in this.MetaPopulation.Inheritances.Where(inheritance => this.Equals(inheritance.Subtype)))
@@ -133,11 +110,7 @@ namespace Allors.Database.Meta
             this.structuralDerivedDirectSupertypes = new HashSet<Interface>(directSupertypes);
         }
 
-        /// <summary>
-        /// Derive super types.
-        /// </summary>
-        /// <param name="superTypes">The super types.</param>
-        public void StructuralDeriveSupertypes(HashSet<Interface> superTypes)
+        internal void StructuralDeriveSupertypes(HashSet<Interface> superTypes)
         {
             superTypes.Clear();
 
@@ -146,12 +119,7 @@ namespace Allors.Database.Meta
             this.structuralDerivedSupertypes = new HashSet<Interface>(superTypes);
         }
 
-        /// <summary>
-        /// Derive role types.
-        /// </summary>
-        /// <param name="roleTypes">The role types.</param>
-        /// <param name="roleTypesByAssociationObjectType">RoleTypes grouped by the ObjectType of the Association.</param>
-        public void StructuralDeriveRoleTypes(HashSet<RoleType> roleTypes, Dictionary<Composite, HashSet<RoleType>> roleTypesByAssociationObjectType)
+        internal void StructuralDeriveRoleTypes(HashSet<RoleType> roleTypes, Dictionary<Composite, HashSet<RoleType>> roleTypesByAssociationObjectType)
         {
             roleTypes.Clear();
 
@@ -171,12 +139,7 @@ namespace Allors.Database.Meta
             this.structuralDerivedRoleTypes = new HashSet<RoleType>(roleTypes);
         }
 
-        /// <summary>
-        /// Derive association types.
-        /// </summary>
-        /// <param name="associationTypes">The associations.</param>
-        /// <param name="relationTypesByRoleObjectType">AssociationTypes grouped by the ObjectType of the Role.</param>
-        public void StructuralDeriveAssociationTypes(HashSet<AssociationType> associationTypes, Dictionary<ObjectType, HashSet<AssociationType>> relationTypesByRoleObjectType)
+        internal void StructuralDeriveAssociationTypes(HashSet<AssociationType> associationTypes, Dictionary<ObjectType, HashSet<AssociationType>> relationTypesByRoleObjectType)
         {
             associationTypes.Clear();
 
@@ -196,14 +159,7 @@ namespace Allors.Database.Meta
             this.structuralDerivedAssociationTypes = new HashSet<AssociationType>(associationTypes);
         }
 
-        /// <summary>
-        /// Derive method types.
-        /// </summary>
-        /// <param name="methodTypes">
-        ///     The method types.
-        /// </param>
-        /// <param name="methodTypeByClass"></param>
-        public void StructuralDeriveMethodTypes(HashSet<MethodType> methodTypes, Dictionary<Composite, HashSet<MethodType>> methodTypeByClass)
+        internal void StructuralDeriveMethodTypes(HashSet<MethodType> methodTypes, Dictionary<Composite, HashSet<MethodType>> methodTypeByClass)
         {
             methodTypes.Clear();
 
@@ -223,12 +179,7 @@ namespace Allors.Database.Meta
             this.structuralDerivedMethodTypes = new HashSet<MethodType>(methodTypes);
         }
 
-        /// <summary>
-        /// Derive super types recursively.
-        /// </summary>
-        /// <param name="type">The type .</param>
-        /// <param name="superTypes">The super types.</param>
-        public void StructuralDeriveSupertypesRecursively(ObjectType type, HashSet<Interface> superTypes)
+        internal void StructuralDeriveSupertypesRecursively(ObjectType type, HashSet<Interface> superTypes)
         {
             foreach (var directSupertype in this.DirectSupertypes)
             {

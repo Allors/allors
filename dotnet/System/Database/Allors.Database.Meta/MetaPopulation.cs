@@ -26,8 +26,6 @@ namespace Allors.Database.Meta
         private IList<Class> classes;
         private IList<Inheritance> inheritances;
         private IList<RelationType> relationTypes;
-        private IList<AssociationType> associationTypes;
-        private IList<RoleType> roleTypes;
         private IList<MethodType> methodTypes;
 
         private bool isStale;
@@ -47,8 +45,6 @@ namespace Allors.Database.Meta
             this.classes = new List<Class>();
             this.inheritances = new List<Inheritance>();
             this.relationTypes = new List<RelationType>();
-            this.associationTypes = new List<AssociationType>();
-            this.roleTypes = new List<RoleType>();
             this.methodTypes = new List<MethodType>();
 
             this.metaObjectById = new Dictionary<Guid, IMetaIdentifiableObject>();
@@ -79,20 +75,12 @@ namespace Allors.Database.Meta
         IEnumerable<IRelationType> IMetaPopulation.RelationTypes => this.relationTypes;
         public IEnumerable<RelationType> RelationTypes => this.relationTypes;
 
-        public IEnumerable<AssociationType> AssociationTypes => this.associationTypes;
-
-        public IEnumerable<RoleType> RoleTypes => this.roleTypes;
-
         IEnumerable<IInterface> IMetaPopulation.Interfaces => this.interfaces;
         public IEnumerable<Interface> Interfaces => this.interfaces;
 
         IEnumerable<IComposite> IMetaPopulation.Composites => this.Composites;
         public IEnumerable<Composite> Composites => this.structuralDerivedComposites;
 
-        /// <summary>
-        /// Gets a value indicating whether this state is valid.
-        /// </summary>
-        /// <value><c>true</c> if this state is valid; otherwise, <c>false</c>.</value>
         public bool IsValid
         {
             get
@@ -109,18 +97,6 @@ namespace Allors.Database.Meta
         public IEnumerable<MethodType> MethodTypes => this.methodTypes;
 
         IMetaIdentifiableObject IMetaPopulation.FindById(Guid id) => this.FindById(id);
-
-        IMetaIdentifiableObject IMetaPopulation.FindByTag(string tag) => this.FindByTag(tag);
-
-        /// <summary>
-        /// Find a meta object by id.
-        /// </summary>
-        /// <param name="id">
-        /// The meta object id.
-        /// </param>
-        /// <returns>
-        /// The <see cref="IMetaObject"/>.
-        /// </returns>
         public IMetaIdentifiableObject FindById(Guid id)
         {
             this.metaObjectById.TryGetValue(id, out var metaObject);
@@ -128,13 +104,7 @@ namespace Allors.Database.Meta
             return metaObject;
         }
 
-        /// <summary>
-        /// Find a meta object by tag.
-        /// </summary>
-        /// <param name="tag"></param>
-        /// <returns>
-        /// The <see cref="IMetaObject"/>.
-        /// </returns>
+        IMetaIdentifiableObject IMetaPopulation.FindByTag(string tag) => this.FindByTag(tag);
         public IMetaIdentifiableObject FindByTag(string tag)
         {
             this.metaObjectByTag.TryGetValue(tag, out var metaObject);
@@ -142,15 +112,7 @@ namespace Allors.Database.Meta
             return metaObject;
         }
 
-        /// <summary>
-        /// Find a meta object by name.
-        /// </summary>
-        /// <param name="name">
-        /// The meta object id.
-        /// </param>
-        /// <returns>
-        /// The <see cref="IMetaObject"/>.
-        /// </returns>
+        IComposite IMetaPopulation.FindDatabaseCompositeByName(string name) => this.FindDatabaseCompositeByName(name);
         public Composite FindDatabaseCompositeByName(string name)
         {
             this.Derive();
@@ -162,10 +124,6 @@ namespace Allors.Database.Meta
 
         IValidationLog IMetaPopulation.Validate() => this.Validate();
 
-        /// <summary>
-        /// Validates this state.
-        /// </summary>
-        /// <returns>The Validate.</returns>
         public ValidationLog Validate()
         {
             var log = new ValidationLog();
@@ -290,8 +248,6 @@ namespace Allors.Database.Meta
                 this.classes = this.classes.ToArray();
                 this.inheritances = this.inheritances.ToArray();
                 this.relationTypes = this.relationTypes.ToArray();
-                this.associationTypes = this.associationTypes.ToArray();
-                this.roleTypes = this.roleTypes.ToArray();
                 this.methodTypes = this.methodTypes.ToArray();
 
                 var sharedDomains = new HashSet<Domain>();
@@ -454,7 +410,7 @@ namespace Allors.Database.Meta
             }
         }
 
-        public void OnDomainCreated(Domain domain)
+        internal void OnDomainCreated(Domain domain)
         {
             this.domains.Add(domain);
             this.metaObjectById.Add(domain.Id, domain);
@@ -472,7 +428,7 @@ namespace Allors.Database.Meta
             this.Stale();
         }
 
-        public void OnInterfaceCreated(Interface @interface)
+        internal void OnInterfaceCreated(Interface @interface)
         {
             this.interfaces.Add(@interface);
             this.metaObjectById.Add(@interface.Id, @interface);
@@ -481,7 +437,7 @@ namespace Allors.Database.Meta
             this.Stale();
         }
 
-        public void OnClassCreated(Class @class)
+        internal void OnClassCreated(Class @class)
         {
             this.classes.Add(@class);
             this.metaObjectById.Add(@class.Id, @class);
@@ -490,13 +446,13 @@ namespace Allors.Database.Meta
             this.Stale();
         }
 
-        public void OnInheritanceCreated(Inheritance inheritance)
+        internal void OnInheritanceCreated(Inheritance inheritance)
         {
             this.inheritances.Add(inheritance);
             this.Stale();
         }
 
-        public void OnRelationTypeCreated(RelationType relationType)
+        internal void OnRelationTypeCreated(RelationType relationType)
         {
             this.relationTypes.Add(relationType);
             this.metaObjectById.Add(relationType.Id, relationType);
@@ -505,11 +461,11 @@ namespace Allors.Database.Meta
             this.Stale();
         }
 
-        public void OnAssociationTypeCreated(AssociationType associationType) => this.Stale();
+        internal void OnAssociationTypeCreated(AssociationType associationType) => this.Stale();
 
-        public void OnRoleTypeCreated(RoleType roleType) => this.Stale();
+        internal void OnRoleTypeCreated(RoleType roleType) => this.Stale();
 
-        public void OnMethodTypeCreated(MethodType methodType)
+        internal void OnMethodTypeCreated(MethodType methodType)
         {
             this.methodTypes.Add(methodType);
             this.metaObjectById.Add(methodType.Id, methodType);
@@ -518,7 +474,7 @@ namespace Allors.Database.Meta
             this.Stale();
         }
 
-        public void Stale() => this.isStale = true;
+        internal void Stale() => this.isStale = true;
 
         private bool HasCycle(Composite subtype, HashSet<Interface> supertypes, Dictionary<Composite, List<Inheritance>> inheritancesBySubtype)
         {
@@ -560,10 +516,5 @@ namespace Allors.Database.Meta
 
             return false;
         }
-
-        public MethodType MethodType(string id) => (MethodType)this.FindById(new Guid(id));
-
-        public RoleType RoleType(string id) => ((RelationType)this.FindById(new Guid(id))).RoleType;
-        IComposite IMetaPopulation.FindDatabaseCompositeByName(string name) => this.FindDatabaseCompositeByName(name);
     }
 }

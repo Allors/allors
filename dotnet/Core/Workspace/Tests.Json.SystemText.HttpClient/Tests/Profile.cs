@@ -25,10 +25,7 @@ namespace Tests.Workspace.Json
 
         private Client client;
 
-        public Profile()
-        {
-            this.M = new MetaBuilder().Build();
-        }
+        public Profile() => this.M = new MetaBuilder().Build();
 
         IConnection IProfile.Connection => this.Connection;
 

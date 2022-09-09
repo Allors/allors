@@ -48,9 +48,6 @@ namespace Allors.Database.Meta
 
         public MetaPopulation MetaPopulation { get; }
 
-        /// <summary>
-        /// Gets the validation name.
-        /// </summary>
         public string ValidationName
         {
             get
@@ -68,34 +65,15 @@ namespace Allors.Database.Meta
 
         public override int GetHashCode() => this.Subtype.Id.GetHashCode() ^ this.Supertype.Id.GetHashCode();
 
-        /// <summary>
-        /// Compares the current state with another object of the same type.
-        /// </summary>
-        /// <param name="otherObject">An object to compare with this state.</param>
-        /// <returns>
-        /// A 32-bit signed integer that indicates the relative order of the objects being compared. The return value has these meanings: Value Meaning Less than zero This state is less than <paramref name="obj"/>. Zero This state is equal to <paramref name="obj"/>. Greater than zero This state is greater than <paramref name="obj"/>.
-        /// </returns>
-        /// <exception cref="T:System.ArgumentException">
-        /// <paramref name="otherObject"/> is not the same type as this state. </exception>
         public int CompareTo(object otherObject)
         {
             var other = otherObject as Inheritance;
             return string.CompareOrdinal($"{this.Subtype.Id}{this.Supertype.Id}", $"{other?.Subtype.Id}{other?.Supertype.Id}");
         }
 
-        /// <summary>
-        /// Returns a <see cref="T:System.String"/> that represents the current <see cref="T:System.Object"/>.
-        /// </summary>
-        /// <returns>
-        /// A <see cref="T:System.String"/> that represents the current <see cref="T:System.Object"/>.
-        /// </returns>
         public override string ToString() => (this.Subtype != null ? this.Subtype.Name : string.Empty) + "::" + (this.Supertype != null ? this.Supertype.Name : string.Empty);
 
-        /// <summary>
-        /// Validates this state.
-        /// </summary>
-        /// <param name="validationLog">The validation.</param>
-        public void Validate(ValidationLog validationLog)
+        internal void Validate(ValidationLog validationLog)
         {
             if (this.Subtype != null && this.Supertype != null)
             {

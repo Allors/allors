@@ -16,10 +16,7 @@ namespace Allors.Database.Meta
 
         static void AddWorkspace(RelationType relationType, string workspaceName) => relationType.AssignedWorkspaceNames = (relationType.AssignedWorkspaceNames ?? Array.Empty<string>()).Append(workspaceName).Distinct().ToArray();
 
-        private void BuildCustom(M m, Domains domains, RelationTypes relationTypes, MethodTypes methodTypes)
-        {
-            this.DefaultWorkspace(m, domains, relationTypes, methodTypes);
-        }
+        private void BuildCustom(M m, Domains domains, RelationTypes relationTypes, MethodTypes methodTypes) => this.DefaultWorkspace(m, domains, relationTypes, methodTypes);
 
         private void DefaultWorkspace(M m, Domains domains, RelationTypes relationTypes, MethodTypes methodTypes)
         {

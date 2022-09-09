@@ -75,39 +75,23 @@ namespace Allors.Repository.Domain
 
         public bool IsRoleOne => !this.IsRoleMany;
 
-        public bool IsRoleMany
-        {
-            get
+        public bool IsRoleMany =>
+            this.Multiplicity switch
             {
-                switch (this.Multiplicity)
-                {
-                    case Multiplicity.OneToMany:
-                    case Multiplicity.ManyToMany:
-                        return true;
-
-                    default:
-                        return false;
-                }
-            }
-        }
+                Multiplicity.OneToMany => true,
+                Multiplicity.ManyToMany => true,
+                _ => false
+            };
 
         public bool IsAssociationOne => !this.IsAssociationMany;
 
-        public bool IsAssociationMany
-        {
-            get
+        public bool IsAssociationMany =>
+            this.Multiplicity switch
             {
-                switch (this.Multiplicity)
-                {
-                    case Multiplicity.ManyToOne:
-                    case Multiplicity.ManyToMany:
-                        return true;
-
-                    default:
-                        return false;
-                }
-            }
-        }
+                Multiplicity.ManyToOne => true,
+                Multiplicity.ManyToMany => true,
+                _ => false
+            };
 
         public string RoleName { get; }
 

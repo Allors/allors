@@ -15,63 +15,25 @@ namespace Allors.Database.Meta
 
         protected Unit(MetaPopulation metaPopulation, Guid id, string tag) : base(metaPopulation, id, tag) => metaPopulation.OnUnitCreated(this);
 
-        /// <summary>
-        /// Gets a value indicating whether this state is a binary.
-        /// </summary>
-        /// <value><c>true</c> if this state is a binary; otherwise, <c>false</c>.</value>
         public bool IsBinary => this.Tag == UnitTags.Binary;
 
-        /// <summary>
-        /// Gets a value indicating whether this state is a boolean.
-        /// </summary>
-        /// <value>
-        /// <c>true</c> if this state is a boolean; otherwise, <c>false</c>.
-        /// </value>
         public bool IsBoolean => this.Tag == UnitTags.Boolean;
 
-        /// <summary>
-        /// Gets a value indicating whether this state is a date time.
-        /// </summary>
-        /// <value>
-        /// <c>true</c> if this state is a date time; otherwise, <c>false</c>.
-        /// </value>
         public bool IsDateTime => this.Tag == UnitTags.DateTime;
 
-        /// <summary>
-        /// Gets a value indicating whether this state is a decimal.
-        /// </summary>
-        /// <value>
-        ///  <c>true</c> if this state is a decimal; otherwise, <c>false</c>.
-        /// </value>
         public bool IsDecimal => this.Tag == UnitTags.Decimal;
 
-        /// <summary>
-        /// Gets a value indicating whether this state is a float.
-        /// </summary>
-        /// <value><c>true</c> if this state is a float; otherwise, <c>false</c>.</value>
         public bool IsFloat => this.Tag == UnitTags.Float;
 
-        /// <summary>
-        /// Gets a value indicating whether this state is an integer.
-        /// </summary>
-        /// <value>
-        ///  <c>true</c> if this state is an integer; otherwise, <c>false</c>.
-        /// </value>
         public bool IsInteger => this.Tag == UnitTags.Integer;
 
-        /// <summary>
-        /// Gets a value indicating whether this state is a string.
-        /// </summary>
-        /// <value><c>true</c> if this state is a string; otherwise, <c>false</c>.</value>
         public bool IsString => this.Tag == UnitTags.String;
 
-        /// <summary>
-        /// Gets a value indicating whether this state is a unique.
-        /// </summary>
-        /// <value><c>true</c> if this state is a unique; otherwise, <c>false</c>.</value>
         public bool IsUnique => this.Id.Equals(UnitIds.Unique);
 
         public override Type ClrType => this.clrType;
+
+        public override IEnumerable<string> WorkspaceNames => this.MetaPopulation.WorkspaceNames;
 
         public void Bind() =>
             this.clrType = this.Tag switch
@@ -86,7 +48,5 @@ namespace Allors.Database.Meta
                 UnitTags.Unique => typeof(Guid),
                 _ => this.clrType
             };
-
-        public override IEnumerable<string> WorkspaceNames => this.MetaPopulation.WorkspaceNames;
     }
 }

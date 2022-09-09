@@ -513,41 +513,24 @@ namespace Allors.Repository.Domain
                 typeName = typeName.Substring(0, typeName.Length - "[]".Length);
             }
 
-            switch (typeName)
+            return typeName switch
             {
-                case "Byte":
-                case "byte":
-                    return "Binary";
-
-                case "Boolean":
-                case "bool":
-                    return "Boolean";
-
-                case "Decimal":
-                case "decimal":
-                    return "Decimal";
-
-                case "DateTime":
-                    return "DateTime";
-
-                case "Double":
-                case "double":
-                    return "Float";
-
-                case "Int32":
-                case "int":
-                    return "Integer";
-
-                case "String":
-                case "string":
-                    return "String";
-
-                case "Guid":
-                    return "Unique";
-
-                default:
-                    return typeName;
-            }
+                "Byte" => "Binary",
+                "byte" => "Binary",
+                "Boolean" => "Boolean",
+                "bool" => "Boolean",
+                "Decimal" => "Decimal",
+                "decimal" => "Decimal",
+                "DateTime" => "DateTime",
+                "Double" => "Float",
+                "double" => "Float",
+                "Int32" => "Integer",
+                "int" => "Integer",
+                "String" => "String",
+                "string" => "String",
+                "Guid" => "Unique",
+                _ => typeName
+            };
         }
 
         private void CreateInheritedProperties()

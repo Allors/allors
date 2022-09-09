@@ -25,23 +25,13 @@ namespace Allors.Meta.Generation.Model
 
         public IEnumerable<AssociationTypeModel> InheritedAssociationTypes => this.Composite.InheritedAssociationTypes.Select(this.MetaModel.Map);
 
-        public IEnumerable<AssociationTypeModel> DatabaseAssociationTypes => this.Composite.AssociationTypes.Select(this.MetaModel.Map);
-
-        public IEnumerable<AssociationTypeModel> ExclusiveDatabaseAssociationTypes => this.Composite.ExclusiveAssociationTypes.Select(this.MetaModel.Map);
-
         public IEnumerable<RoleTypeModel> InheritedRoleTypes => this.Composite.InheritedRoleTypes.Select(this.MetaModel.Map);
-
-        public IEnumerable<RoleTypeModel> DatabaseRoleTypes => this.Composite.RoleTypes.Select(this.MetaModel.Map);
-
-        public IEnumerable<RoleTypeModel> ExclusiveDatabaseRoleTypes => this.Composite.ExclusiveRoleTypes.Select(this.MetaModel.Map);
 
         public IEnumerable<MethodTypeModel> MethodTypes => this.Composite.MethodTypes.Select(this.MetaModel.Map);
 
         public IEnumerable<MethodTypeModel> InheritedMethodTypes => this.Composite.InheritedMethodTypes.Select(this.MetaModel.Map);
 
         public IEnumerable<MethodTypeModel> ExclusiveMethodTypes => this.Composite.ExclusiveMethodTypes.Select(this.MetaModel.Map);
-
-        //public bool IsRelationship => this.Composite.IsRelationship;
 
         // IComposite Extra
         public bool ExistDirectSupertypes => this.DirectSupertypes.Any();
@@ -54,7 +44,7 @@ namespace Allors.Meta.Generation.Model
 
         public bool ExistMethodTypes => this.MethodTypes.Any();
 
-        public IEnumerable<InterfaceModel> DirectSupertypes => ((Composite)this.Composite).DirectSupertypes.Select(this.MetaModel.Map);
+        public IEnumerable<InterfaceModel> DirectSupertypes => this.Composite.DirectSupertypes.Select(this.MetaModel.Map);
 
         public IEnumerable<CompositeModel> RelatedComposites =>
             this
@@ -64,13 +54,13 @@ namespace Allors.Meta.Generation.Model
                 .Except(new[] { this })
                 .Cast<CompositeModel>();
 
-        public IEnumerable<AssociationTypeModel> AssociationTypes => ((Composite)this.Composite).AssociationTypes.Select(this.MetaModel.Map);
+        public IEnumerable<AssociationTypeModel> AssociationTypes => this.Composite.AssociationTypes.Select(this.MetaModel.Map);
 
-        public IEnumerable<AssociationTypeModel> ExclusiveAssociationTypes => ((Composite)this.Composite).ExclusiveAssociationTypes.Select(this.MetaModel.Map);
+        public IEnumerable<AssociationTypeModel> ExclusiveAssociationTypes => this.Composite.ExclusiveAssociationTypes.Select(this.MetaModel.Map);
 
-        public IEnumerable<RoleTypeModel> RoleTypes => ((Composite)this.Composite).RoleTypes.Select(this.MetaModel.Map);
+        public IEnumerable<RoleTypeModel> RoleTypes => this.Composite.RoleTypes.Select(this.MetaModel.Map);
 
-        public IEnumerable<RoleTypeModel> ExclusiveRoleTypes => ((Composite)this.Composite).ExclusiveRoleTypes.Select(this.MetaModel.Map);
+        public IEnumerable<RoleTypeModel> ExclusiveRoleTypes => this.Composite.ExclusiveRoleTypes.Select(this.MetaModel.Map);
 
         public bool ExistClass => this.Composite.ExistClass;
 
@@ -78,29 +68,11 @@ namespace Allors.Meta.Generation.Model
 
         public IEnumerable<RoleTypeModel> UnitRoleTypes => this.RoleTypes.Where(roleType => roleType.ObjectType.IsUnit).ToArray();
 
-        public IEnumerable<RoleTypeModel> UnitDatabaseRoleTypes => this.UnitRoleTypes.ToArray();
-
         public IEnumerable<RoleTypeModel> CompositeRoleTypes => this.RoleTypes.Where(roleType => roleType.ObjectType.IsComposite).ToArray();
-
-        public IEnumerable<RoleTypeModel> CompositeDatabaseRoleTypes => this.CompositeRoleTypes.ToArray();
 
         public IEnumerable<RoleTypeModel> SortedExclusiveRoleTypes => this.ExclusiveRoleTypes.OrderBy(v => v.Name);
 
-        public IEnumerable<RoleTypeModel> InheritedDatabaseRoleTypes => this.InheritedRoleTypes;
-
-        public IEnumerable<AssociationTypeModel> InheritedDatabaseAssociationTypes => this.InheritedAssociationTypes;
-
         public IEnumerable<RoleTypeModel> ExclusiveCompositeRoleTypes => this.ExclusiveRoleTypes.Where(roleType => roleType.ObjectType.IsComposite);
-
-        public IEnumerable<CompositeModel> DatabaseSubtypes => ((Composite)this.Composite).DatabaseSubtypes.Select(this.MetaModel.Map);
-
-        public IEnumerable<RoleTypeModel> ExclusiveRoleTypesWithDatabaseOrigin => this.ExclusiveRoleTypes;
-
-        public IEnumerable<RoleTypeModel> ExclusiveRoleTypesWithSessionOrigin => this.ExclusiveRoleTypes;
-
-        public IEnumerable<AssociationTypeModel> ExclusiveAssociationTypesWithDatabaseOrigin => this.ExclusiveAssociationTypes;
-
-        public IEnumerable<AssociationTypeModel> ExclusiveAssociationTypesWithSessionOrigin => this.ExclusiveAssociationTypes;
 
         public IReadOnlyDictionary<string, IOrderedEnumerable<AssociationTypeModel>> WorkspaceAssociationTypesByWorkspaceName =>
             this.WorkspaceNames
@@ -130,16 +102,6 @@ namespace Allors.Meta.Generation.Model
                     v => this.InheritedRoleTypes.Where(w => w.RelationType.WorkspaceNames.Contains(v)).OrderBy(w => w.RelationType.Tag));
 
         public IReadOnlyDictionary<string, IOrderedEnumerable<RoleTypeModel>> WorkspaceExclusiveRoleTypesByWorkspaceName =>
-            this.WorkspaceNames
-                .ToDictionary(v => v,
-                    v => this.ExclusiveRoleTypes.Where(w => w.RelationType.WorkspaceNames.Contains(v)).OrderBy(w => w.RelationType.Tag));
-
-        public IReadOnlyDictionary<string, IOrderedEnumerable<RoleTypeModel>> WorkspaceExclusiveRoleTypesWithDatabaseOriginByWorkspaceName =>
-            this.WorkspaceNames
-                .ToDictionary(v => v,
-                    v => this.ExclusiveRoleTypes.Where(w => w.RelationType.WorkspaceNames.Contains(v)).OrderBy(w => w.RelationType.Tag));
-
-        public IReadOnlyDictionary<string, IOrderedEnumerable<RoleTypeModel>> WorkspaceExclusiveRoleTypesWithWorkspaceOrSessionOriginByWorkspaceName =>
             this.WorkspaceNames
                 .ToDictionary(v => v,
                     v => this.ExclusiveRoleTypes.Where(w => w.RelationType.WorkspaceNames.Contains(v)).OrderBy(w => w.RelationType.Tag));

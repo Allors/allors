@@ -53,9 +53,6 @@ namespace Allors.Database.Meta
         public MetaPopulation MetaPopulation { get; }
         IMetaPopulation IMetaObject.MetaPopulation => this.MetaPopulation;
 
-        /// <summary>
-        /// Gets the validation name.
-        /// </summary>
         public string ValidationName
         {
             get
@@ -68,28 +65,13 @@ namespace Allors.Database.Meta
                 return "unknown domain";
             }
         }
-        
+
         public override bool Equals(object other) => this.Id.Equals((other as Domain)?.Id);
 
         public override int GetHashCode() => this.Id.GetHashCode();
 
-        /// <summary>
-        /// Compares the current state with another object of the same type.
-        /// </summary>
-        /// <param name="other">An object to compare with this state.</param>
-        /// <returns>
-        /// A 32-bit signed integer that indicates the relative order of the objects being compared. The return value has these meanings: Value Meaning Less than zero This state is less than <paramref name="obj"/>. Zero This state is equal to <paramref name="obj"/>. Greater than zero This state is greater than <paramref name="obj"/>.
-        /// </returns>
-        /// <exception cref="T:System.ArgumentException">
-        /// <paramref name="other"/> is not the same type as this state. </exception>
         public int CompareTo(object other) => this.Id.CompareTo((other as Domain)?.Id);
 
-        /// <summary>
-        /// Returns a <see cref="T:System.String"/> that represents the current <see cref="T:System.Object"/>.
-        /// </summary>
-        /// <returns>
-        /// A <see cref="T:System.String"/> that represents the current <see cref="T:System.Object"/>.
-        /// </returns>
         public override string ToString()
         {
             if (!string.IsNullOrEmpty(this.Name))
@@ -100,16 +82,13 @@ namespace Allors.Database.Meta
             return this.Tag;
         }
 
-        public void AddDirectSuperdomain(Domain superdomain)
-        {
+        public void AddDirectSuperdomain(Domain superdomain) =>
             // TODO: Cyclic check
             //if (superdomain.Equals(this) || superdomain.Superdomains.Contains(this))
             //{
             //    throw new Exception("Cycle in domain inheritance");
             //}
-
             this.directSuperdomains.Add(superdomain);
-        }
 
         /// <summary>
         /// Validates the domain.

@@ -49,25 +49,46 @@ namespace Allors.Database.Meta
         public string PluralFullName => this.PluralName;
 
         IObjectType IPropertyType.ObjectType => this.ObjectType;
-
-        public bool IsOne => !this.IsMany;
-
-        public bool IsMany
+        IComposite IAssociationType.ObjectType => this.ObjectType;
+        public Composite ObjectType
         {
-            get
-            {
-                switch (this.RelationType.Multiplicity)
-                {
-                    case Multiplicity.ManyToOne:
-                    case Multiplicity.ManyToMany:
-                        return true;
+            get => this.objectType;
 
-                    default:
-                        return false;
-                }
+            set
+            {
+                this.MetaPopulation.AssertUnlocked();
+                this.objectType = value;
+                this.MetaPopulation.Stale();
             }
         }
 
+        public bool IsOne => !this.IsMany;
+
+        public bool IsMany =>
+            this.RelationType.Multiplicity switch
+            {
+                Multiplicity.ManyToOne => true,
+                Multiplicity.ManyToMany => true,
+                _ => false
+            };
+
+        IRoleType IAssociationType.RoleType => this.RoleType;
+        public RoleType RoleType => this.RelationType.RoleType;
+
+        IRelationType IAssociationType.RelationType => this.RelationType;
+        public RelationType RelationType { get; }
+
+        internal string ValidationName => "association type " + this.Name;
+
+        public override bool Equals(object other) => this.RelationType.Id.Equals((other as AssociationType)?.RelationType.Id);
+
+        public override int GetHashCode() => this.RelationType.Id.GetHashCode();
+
+        public int CompareTo(object other) => this.RelationType.Id.CompareTo((other as AssociationType)?.RelationType.Id);
+
+        public override string ToString() => $"{this.RoleType.ObjectType.Name}.{this.Name}";
+
+        // TODO: move to extension method
         public object Get(IStrategy strategy, IComposite ofType)
         {
             var association = strategy.GetAssociation(this);
@@ -86,30 +107,7 @@ namespace Allors.Database.Meta
             return !ofType.IsAssignableFrom(((IObject)association).Strategy.Class) ? null : association;
         }
 
-        IRelationType IAssociationType.RelationType => this.RelationType;
-
-        IRoleType IAssociationType.RoleType => this.RoleType;
-        public RoleType RoleType => this.RelationType.RoleType;
-
-        IComposite IAssociationType.ObjectType => this.ObjectType;
-
-        public Composite ObjectType
-        {
-            get => this.objectType;
-
-            set
-            {
-                this.MetaPopulation.AssertUnlocked();
-                this.objectType = value;
-                this.MetaPopulation.Stale();
-            }
-        }
-
-        public RelationType RelationType { get; }
-
-        private string ValidationName => "association type " + this.Name;
-
-        public void Validate(ValidationLog validationLog)
+        internal void Validate(ValidationLog validationLog)
         {
             if (this.objectType == null)
             {
@@ -123,13 +121,5 @@ namespace Allors.Database.Meta
                 validationLog.AddError(message, this, ValidationKind.Required, "AssociationType.RelationType");
             }
         }
-
-        public override bool Equals(object other) => this.RelationType.Id.Equals((other as AssociationType)?.RelationType.Id);
-
-        public override int GetHashCode() => this.RelationType.Id.GetHashCode();
-
-        public int CompareTo(object other) => this.RelationType.Id.CompareTo((other as AssociationType)?.RelationType.Id);
-
-        public override string ToString() => $"{this.RoleType.ObjectType.Name}.{this.Name}";
     }
 }

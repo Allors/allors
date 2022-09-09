@@ -98,12 +98,7 @@ namespace Allors.Database.Meta
                 return this.multiplicity;
             }
         }
-        /// <summary>
-        /// Gets a value indicating whether there exist exclusive classes.
-        /// </summary>
-        /// <value>
-        ///  <c>true</c> if [exist exclusive classes]; otherwise, <c>false</c>.
-        /// </value>
+
         public bool ExistExclusiveClasses
         {
             get
@@ -135,79 +130,26 @@ namespace Allors.Database.Meta
         IRoleType IRelationType.RoleType => this.RoleType;
         public RoleType RoleType { get; }
 
-
-
-        /// <summary>
-        /// Gets a value indicating whether this state is many to many.
-        /// </summary>
-        /// <value>
-        ///  <c>true</c> if this state is many to many; otherwise, <c>false</c>.
-        /// </value>
         public bool IsManyToMany => this.AssociationType.IsMany && this.RoleType.IsMany;
 
-        /// <summary>
-        /// Gets a value indicating whether this state is many to one.
-        /// </summary>
-        /// <value>
-        ///  <c>true</c> if this state is many to one; otherwise, <c>false</c>.
-        /// </value>
         public bool IsManyToOne => this.AssociationType.IsMany && !this.RoleType.IsMany;
 
-        /// <summary>
-        /// Gets a value indicating whether this state is one to many.
-        /// </summary>
-        /// <value>
-        ///  <c>true</c> if this state is one to many; otherwise, <c>false</c>.
-        /// </value>
         public bool IsOneToMany => this.AssociationType.IsOne && this.RoleType.IsMany;
 
-        /// <summary>
-        /// Gets a value indicating whether this state is one to one.
-        /// </summary>
-        /// <value>
-        ///  <c>true</c> if this state is one to one; otherwise, <c>false</c>.
-        /// </value>
         public bool IsOneToOne => this.AssociationType.IsOne && !this.RoleType.IsMany;
 
-        /// <summary>
-        /// Gets the name.
-        /// </summary>
-        /// <value>The name  .</value>
         public string Name => this.AssociationType.ObjectType + this.RoleType.SingularName;
 
-        /// <summary>
-        /// Gets the name of the reverse.
-        /// </summary>
-        /// <value>The name of the reverse.</value>
         public string ReverseName => this.RoleType.SingularName + this.AssociationType.ObjectType;
 
-        /// <summary>
-        /// Gets the validation name.
-        /// </summary>
-        /// <value>The validation name.</value>
-        public string ValidationName => "relation type" + this.Name;
+        internal string ValidationName => "relation type" + this.Name;
 
         public override bool Equals(object other) => this.Id.Equals((other as RelationType)?.Id);
 
         public override int GetHashCode() => this.Id.GetHashCode();
 
-        /// <summary>
-        /// Compares the current state with another object of the same type.
-        /// </summary>
-        /// <param name="other">An object to compare with this state.</param>
-        /// <returns>
-        /// A 32-bit signed integer that indicates the relative order of the objects being compared. The return value has these meanings: Value Meaning Less than zero This state is less than <paramref name="obj"/>. Zero This state is equal to <paramref name="obj"/>. Greater than zero This state is greater than <paramref name="obj"/>.
-        /// </returns>
-        /// <exception cref="T:System.ArgumentException">
-        /// <paramref name="other"/> is not the same type as this state. </exception>
         public int CompareTo(object other) => this.Id.CompareTo((other as RelationType)?.Id);
 
-        /// <summary>
-        /// Returns a <see cref="T:System.String"/> that represents the current <see cref="T:System.Object"/>.
-        /// </summary>
-        /// <returns>
-        /// A <see cref="T:System.String"/> that represents the current <see cref="T:System.Object"/>.
-        /// </returns>
         public override string ToString()
         {
             try
@@ -220,7 +162,7 @@ namespace Allors.Database.Meta
             }
         }
 
-        public void DeriveMultiplicity()
+        internal void DeriveMultiplicity()
         {
             if (this.RoleType?.ObjectType != null && this.RoleType.ObjectType.IsUnit)
             {
@@ -232,7 +174,7 @@ namespace Allors.Database.Meta
             }
         }
 
-        public void DeriveWorkspaceNames() =>
+        internal void DeriveWorkspaceNames() =>
             this.derivedWorkspaceNames = this.assignedWorkspaceNames != null ?
                 this.assignedWorkspaceNames.Intersect(this.AssociationType.ObjectType switch
                 {
@@ -248,11 +190,7 @@ namespace Allors.Database.Meta
                 }).ToArray() :
                 Array.Empty<string>();
 
-        /// <summary>
-        /// Validates this. state.
-        /// </summary>
-        /// <param name="validationLog">The validation.</param>
-        public void Validate(ValidationLog validationLog)
+        internal void Validate(ValidationLog validationLog)
         {
             this.ValidateIdentity(validationLog);
 

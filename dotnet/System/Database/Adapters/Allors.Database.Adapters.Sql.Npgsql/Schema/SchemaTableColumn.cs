@@ -26,30 +26,16 @@ namespace Allors.Database.Adapters.Sql.Npgsql
 
         public string DataType { get; }
 
-        public string SqlType
-        {
-            get
+        public string SqlType =>
+            this.DataType switch
             {
-                switch (this.DataType)
-                {
-                    case "varchar":
-                    case "character varying":
-                        return $"varchar({this.CharacterMaximumLength})";
-
-                    case "int4":
-                        return "integer";
-
-                    case "numeric":
-                        return "numeric(" + this.NumericPrecision + "," + this.NumericScale + ")";
-
-                    case "timestamp without time zone":
-                        return "timestamp";
-
-                    default:
-                        return this.DataType;
-                }
-            }
-        }
+                "varchar" => $"varchar({this.CharacterMaximumLength})",
+                "character varying" => $"varchar({this.CharacterMaximumLength})",
+                "int4" => "integer",
+                "numeric" => "numeric(" + this.NumericPrecision + "," + this.NumericScale + ")",
+                "timestamp without time zone" => "timestamp",
+                _ => this.DataType
+            };
 
         public int? CharacterMaximumLength { get; }
 

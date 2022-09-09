@@ -35,34 +35,27 @@ namespace Allors.Database.Adapters
             var adapter = this.configuration["adapter"]?.Trim().ToUpperInvariant();
             var connectionString = this.configuration["ConnectionStrings:DefaultConnection"];
 
-            switch (adapter)
+            return adapter switch
             {
-                case "MEMORY":
-                    throw new NotImplementedException();
-
-                case "NPGSQL":
-
-                    return new Database(this.scope, new Sql.Configuration
+                "MEMORY" => throw new NotImplementedException(),
+                "NPGSQL" => new Database(this.scope,
+                    new Sql.Configuration
                     {
                         ObjectFactory = this.objectFactory,
                         ConnectionString = connectionString,
                         IsolationLevel = this.isolationLevel,
                         CommandTimeout = this.commandTimeout,
-                    });
-
-                case "SQLCLIENT":
-
-                    return new Sql.SqlClient.Database(this.scope, new Sql.Configuration
+                    }),
+                "SQLCLIENT" => new Sql.SqlClient.Database(this.scope,
+                    new Sql.Configuration
                     {
                         ObjectFactory = this.objectFactory,
                         ConnectionString = connectionString,
                         IsolationLevel = this.isolationLevel,
                         CommandTimeout = this.commandTimeout,
-                    });
-
-                default:
-                    throw new ArgumentOutOfRangeException(adapter);
-            }
+                    }),
+                _ => throw new ArgumentOutOfRangeException(adapter)
+            };
         }
     }
 }

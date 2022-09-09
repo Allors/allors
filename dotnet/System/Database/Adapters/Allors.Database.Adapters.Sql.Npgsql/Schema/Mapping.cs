@@ -381,35 +381,18 @@ namespace Allors.Database.Adapters.Sql.Npgsql
         internal NpgsqlDbType GetNpgsqlDbType(IRoleType roleType)
         {
             var unit = (IUnit)roleType.ObjectType;
-            switch (unit.Tag)
+            return unit.Tag switch
             {
-                case UnitTags.String:
-                    return NpgsqlDbType.Varchar;
-
-                case UnitTags.Integer:
-                    return NpgsqlDbType.Integer;
-
-                case UnitTags.Decimal:
-                    return NpgsqlDbType.Numeric;
-
-                case UnitTags.Float:
-                    return NpgsqlDbType.Double;
-
-                case UnitTags.Boolean:
-                    return NpgsqlDbType.Boolean;
-
-                case UnitTags.DateTime:
-                    return NpgsqlDbType.Timestamp;
-
-                case UnitTags.Unique:
-                    return NpgsqlDbType.Uuid;
-
-                case UnitTags.Binary:
-                    return NpgsqlDbType.Bytea;
-
-                default:
-                    throw new Exception("Unknown Unit Type");
-            }
+                UnitTags.String => NpgsqlDbType.Varchar,
+                UnitTags.Integer => NpgsqlDbType.Integer,
+                UnitTags.Decimal => NpgsqlDbType.Numeric,
+                UnitTags.Float => NpgsqlDbType.Double,
+                UnitTags.Boolean => NpgsqlDbType.Boolean,
+                UnitTags.DateTime => NpgsqlDbType.Timestamp,
+                UnitTags.Unique => NpgsqlDbType.Uuid,
+                UnitTags.Binary => NpgsqlDbType.Bytea,
+                _ => throw new Exception("Unknown Unit Type")
+            };
         }
 
         private void LoadObjects(IClass @class)
@@ -782,44 +765,18 @@ $$;";
             var name = this.Database.SchemaName + "." + ProcedurePrefixForSetRole + @class.Name.ToLowerInvariant() + "_" + roleType.SingularFullName.ToLowerInvariant();
             procedureNameForSetUnitRoleByRelationType.Add(relationType, name);
 
-            MappingArrayParameter roles;
-            switch (unitTypeTag)
+            MappingArrayParameter roles = unitTypeTag switch
             {
-                case UnitTags.String:
-                    roles = this.StringMaxRoleArrayParam;
-                    break;
-
-                case UnitTags.Integer:
-                    roles = this.IntegerRoleArrayParam;
-                    break;
-
-                case UnitTags.Float:
-                    roles = this.DoubleRoleArrayParam;
-                    break;
-
-                case UnitTags.Decimal:
-                    roles = this.DecimalRoleArrayParam;
-                    break;
-
-                case UnitTags.Boolean:
-                    roles = this.BooleanRoleArrayParam;
-                    break;
-
-                case UnitTags.DateTime:
-                    roles = this.DateTimeRoleArrayParam;
-                    break;
-
-                case UnitTags.Unique:
-                    roles = this.UniqueRoleArrayParam;
-                    break;
-
-                case UnitTags.Binary:
-                    roles = this.BinaryRoleArrayParam;
-                    break;
-
-                default:
-                    throw new ArgumentException("Unknown Unit ObjectType: " + roleType.ObjectType.SingularName);
-            }
+                UnitTags.String => this.StringMaxRoleArrayParam,
+                UnitTags.Integer => this.IntegerRoleArrayParam,
+                UnitTags.Float => this.DoubleRoleArrayParam,
+                UnitTags.Decimal => this.DecimalRoleArrayParam,
+                UnitTags.Boolean => this.BooleanRoleArrayParam,
+                UnitTags.DateTime => this.DateTimeRoleArrayParam,
+                UnitTags.Unique => this.UniqueRoleArrayParam,
+                UnitTags.Binary => this.BinaryRoleArrayParam,
+                _ => throw new ArgumentException("Unknown Unit ObjectType: " + roleType.ObjectType.SingularName)
+            };
 
             var rolesType = roles.TypeName;
 

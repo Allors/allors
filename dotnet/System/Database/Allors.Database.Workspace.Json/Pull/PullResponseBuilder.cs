@@ -265,14 +265,11 @@ namespace Allors.Database.Protocol.Json
             }
         }
 
-        private void ThrowIfCancellationRequested()
-        {
+        private void ThrowIfCancellationRequested() =>
             //if (this.CancellationToken.IsCancellationRequested)
             //{
             //    Debugger.Break();
             //}
-
             this.CancellationToken.ThrowIfCancellationRequested();
-        }
     }
 }

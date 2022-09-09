@@ -275,16 +275,12 @@ where c = '{@class.Id}'";
                                     if (reader.IsEmptyElement)
                                     {
                                         var unitType = (IUnit)relationType.RoleType.ObjectType;
-                                        switch (unitType.Tag)
+                                        unit = unitType.Tag switch
                                         {
-                                            case UnitTags.String:
-                                                unit = string.Empty;
-                                                break;
-
-                                            case UnitTags.Binary:
-                                                unit = Array.Empty<byte>();
-                                                break;
-                                        }
+                                            UnitTags.String => string.Empty,
+                                            UnitTags.Binary => Array.Empty<byte>(),
+                                            _ => unit
+                                        };
                                     }
                                     else
                                     {

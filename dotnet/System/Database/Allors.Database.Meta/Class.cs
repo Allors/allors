@@ -90,8 +90,6 @@ namespace Allors.Database.Meta
 
         public override IEnumerable<Composite> Subtypes => Array.Empty<Composite>();
 
-        public override IEnumerable<Composite> DatabaseSubtypes => this.Subtypes;
-
         public override bool IsAssignableFrom(IComposite objectType) => this.Equals(objectType);
 
         public override void Bind(Dictionary<string, Type> typeByTypeName) => this.clrType = typeByTypeName[this.Name];

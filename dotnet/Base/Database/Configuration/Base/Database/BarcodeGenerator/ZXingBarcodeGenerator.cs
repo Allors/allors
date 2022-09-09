@@ -17,72 +17,30 @@ namespace Allors.Database.Configuration
     {
         public byte[] Generate(string content, BarcodeType type, int? width, int? height, int? margin, bool? pure)
         {
-            BarcodeFormat barcodeFormat;
-            switch (type)
+            BarcodeFormat barcodeFormat = type switch
             {
-                case BarcodeType.AZTEC:
-                    barcodeFormat = BarcodeFormat.AZTEC;
-                    break;
-                case BarcodeType.CODABAR:
-                    barcodeFormat = BarcodeFormat.CODABAR;
-                    break;
-                case BarcodeType.CODE_39:
-                    barcodeFormat = BarcodeFormat.CODE_39;
-                    break;
-                case BarcodeType.CODE_93:
-                    barcodeFormat = BarcodeFormat.CODE_93;
-                    break;
-                case BarcodeType.CODE_128:
-                    barcodeFormat = BarcodeFormat.CODE_128;
-                    break;
-                case BarcodeType.DATA_MATRIX:
-                    barcodeFormat = BarcodeFormat.DATA_MATRIX;
-                    break;
-                case BarcodeType.EAN_8:
-                    barcodeFormat = BarcodeFormat.EAN_8;
-                    break;
-                case BarcodeType.EAN_13:
-                    barcodeFormat = BarcodeFormat.EAN_13;
-                    break;
-                case BarcodeType.ITF:
-                    barcodeFormat = BarcodeFormat.ITF;
-                    break;
-                case BarcodeType.MAXICODE:
-                    barcodeFormat = BarcodeFormat.MAXICODE;
-                    break;
-                case BarcodeType.PDF_417:
-                    barcodeFormat = BarcodeFormat.PDF_417;
-                    break;
-                case BarcodeType.QR_CODE:
-                    barcodeFormat = BarcodeFormat.QR_CODE;
-                    break;
-                case BarcodeType.RSS_14:
-                    barcodeFormat = BarcodeFormat.RSS_14;
-                    break;
-                case BarcodeType.RSS_EXPANDED:
-                    barcodeFormat = BarcodeFormat.RSS_EXPANDED;
-                    break;
-                case BarcodeType.UPC_A:
-                    barcodeFormat = BarcodeFormat.UPC_A;
-                    break;
-                case BarcodeType.UPC_E:
-                    barcodeFormat = BarcodeFormat.UPC_E;
-                    break;
-                case BarcodeType.UPC_EAN_EXTENSION:
-                    barcodeFormat = BarcodeFormat.UPC_EAN_EXTENSION;
-                    break;
-                case BarcodeType.MSI:
-                    barcodeFormat = BarcodeFormat.MSI;
-                    break;
-                case BarcodeType.PLESSEY:
-                    barcodeFormat = BarcodeFormat.PLESSEY;
-                    break;
-                case BarcodeType.IMB:
-                    barcodeFormat = BarcodeFormat.IMB;
-                    break;
-                default:
-                    throw new ArgumentException();
-            }
+                BarcodeType.AZTEC => BarcodeFormat.AZTEC,
+                BarcodeType.CODABAR => BarcodeFormat.CODABAR,
+                BarcodeType.CODE_39 => BarcodeFormat.CODE_39,
+                BarcodeType.CODE_93 => BarcodeFormat.CODE_93,
+                BarcodeType.CODE_128 => BarcodeFormat.CODE_128,
+                BarcodeType.DATA_MATRIX => BarcodeFormat.DATA_MATRIX,
+                BarcodeType.EAN_8 => BarcodeFormat.EAN_8,
+                BarcodeType.EAN_13 => BarcodeFormat.EAN_13,
+                BarcodeType.ITF => BarcodeFormat.ITF,
+                BarcodeType.MAXICODE => BarcodeFormat.MAXICODE,
+                BarcodeType.PDF_417 => BarcodeFormat.PDF_417,
+                BarcodeType.QR_CODE => BarcodeFormat.QR_CODE,
+                BarcodeType.RSS_14 => BarcodeFormat.RSS_14,
+                BarcodeType.RSS_EXPANDED => BarcodeFormat.RSS_EXPANDED,
+                BarcodeType.UPC_A => BarcodeFormat.UPC_A,
+                BarcodeType.UPC_E => BarcodeFormat.UPC_E,
+                BarcodeType.UPC_EAN_EXTENSION => BarcodeFormat.UPC_EAN_EXTENSION,
+                BarcodeType.MSI => BarcodeFormat.MSI,
+                BarcodeType.PLESSEY => BarcodeFormat.PLESSEY,
+                BarcodeType.IMB => BarcodeFormat.IMB,
+                _ => throw new ArgumentException()
+            };
 
             var barcodeWriter = new BarcodeWriter
             {

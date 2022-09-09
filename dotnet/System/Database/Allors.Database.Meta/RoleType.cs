@@ -35,19 +35,16 @@ namespace Allors.Database.Meta
             this.MetaPopulation.OnRoleTypeCreated(this);
         }
 
-        public MetaPopulation MetaPopulation { get; }
         IMetaPopulation IMetaObject.MetaPopulation => this.MetaPopulation;
+        public MetaPopulation MetaPopulation { get; }
 
-        public RelationType RelationType { get; }
         IRelationType IRoleType.RelationType => this.RelationType;
+        public RelationType RelationType { get; }
 
-        /// <summary>
-        /// Gets the association.
-        /// </summary>
-        /// <value>The association.</value>
-        public AssociationType AssociationType => this.RelationType.AssociationType;
         IAssociationType IRoleType.AssociationType => this.AssociationType;
+        public AssociationType AssociationType => this.RelationType.AssociationType;
 
+        IObjectType IPropertyType.ObjectType => this.ObjectType;
         public ObjectType ObjectType
         {
             get => this.objectType;
@@ -60,34 +57,13 @@ namespace Allors.Database.Meta
             }
         }
 
-        IObjectType IPropertyType.ObjectType => this.ObjectType;
-
         public string[] WorkspaceNames => this.RelationType.WorkspaceNames;
 
         public string[] AssignedWorkspaceNames => this.RelationType.AssignedWorkspaceNames;
 
-        /// <summary>
-        /// Gets the name.
-        /// </summary>
-        /// <value>The name .</value>
         public string Name => this.IsMany ? this.PluralName : this.SingularName;
 
-        /// <summary>
-        /// Gets the display name.
-        /// </summary>
-        public string DisplayName => this.Name;
-
-        /// <summary>
-        /// Gets the full name.
-        /// </summary>
-        /// <value>The full name.</value>
         public string FullName => this.IsMany ? this.PluralFullName : this.SingularFullName;
-
-        /// <summary>
-        /// Gets the validation name.
-        /// </summary>
-        /// <value>The validation name.</value>
-        public string ValidationName => "RoleType: " + this.RelationType.Name;
 
         public string SingularName
         {
@@ -101,7 +77,7 @@ namespace Allors.Database.Meta
             }
         }
 
-        public bool ExistAssignedSingularName => !this.SingularName.Equals(this.ObjectType.SingularName);
+        public bool ExistAssignedSingularName => !this.SingularName.Equals(this.ObjectType.SingularName, StringComparison.Ordinal);
 
         /// <summary>
         /// Gets the full singular name.
@@ -134,7 +110,7 @@ namespace Allors.Database.Meta
             }
         }
 
-        public bool ExistAssignedPluralName => !this.PluralName.Equals(Pluralizer.Pluralize(this.SingularName));
+        public bool ExistAssignedPluralName => !this.PluralName.Equals(Pluralizer.Pluralize(this.SingularName), StringComparison.Ordinal);
 
         /// <summary>
         /// Gets the full plural name.
@@ -218,6 +194,15 @@ namespace Allors.Database.Meta
 
         public string MediaType { get; set; }
 
+        internal string ValidationName => "RoleType: " + this.RelationType.Name;
+        public override bool Equals(object other) => this.RelationType.Id.Equals((other as RoleType)?.RelationType.Id);
+
+        public override int GetHashCode() => this.RelationType.Id.GetHashCode();
+
+        public int CompareTo(object other) => this.RelationType.Id.CompareTo((other as RoleType)?.RelationType.Id);
+
+        public override string ToString() => $"{this.AssociationType.ObjectType.Name}.{this.Name}";
+
         /// <summary>
         /// Get the value of the role on this object.
         /// </summary>
@@ -256,33 +241,10 @@ namespace Allors.Database.Meta
         /// </param>
         public void Set(IStrategy strategy, object value) => strategy.SetRole(this, value);
 
-        public override bool Equals(object other) => this.RelationType.Id.Equals((other as RoleType)?.RelationType.Id);
-
-        public override int GetHashCode() => this.RelationType.Id.GetHashCode();
-
-        /// <summary>
-        /// Compares the current state with another object of the same type.
-        /// </summary>
-        /// <param name="other">An object to compare with this state.</param>
-        /// <returns>
-        /// A 32-bit signed integer that indicates the relative order of the objects being compared. The return value has these meanings: Value Meaning Less than zero This state is less than <paramref name="obj"/>. Zero This state is equal to <paramref name="obj"/>. Greater than zero This state is greater than <paramref name="obj"/>.
-        /// </returns>
-        /// <exception cref="T:System.ArgumentException">
-        /// <paramref name="other"/> is not the same type as this state. </exception>
-        public int CompareTo(object other) => this.RelationType.Id.CompareTo((other as RoleType)?.RelationType.Id);
-
-        /// <summary>
-        /// Returns a <see cref="T:System.String"/> that represents the current <see cref="T:System.Object"/>.
-        /// </summary>
-        /// <returns>
-        /// A <see cref="T:System.String"/> that represents the current <see cref="T:System.Object"/>.
-        /// </returns>
-        public override string ToString() => $"{this.AssociationType.ObjectType.Name}.{this.Name}";
-
         /// <summary>
         /// Derive multiplicity, scale and size.
         /// </summary>
-        public void DeriveScaleAndSize()
+        internal void DeriveScaleAndSize()
         {
             if (this.ObjectType is IUnit unitType)
             {
@@ -345,7 +307,7 @@ namespace Allors.Database.Meta
         /// Validates the state.
         /// </summary>
         /// <param name="validationLog">The validation.</param>
-        public void Validate(ValidationLog validationLog)
+        internal void Validate(ValidationLog validationLog)
         {
             if (this.ObjectType == null)
             {

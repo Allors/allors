@@ -56,42 +56,18 @@ namespace Allors.Workspace.Meta
             return this;
         }
 
-        public void Bind()
-        {
-            switch (this.Tag)
+        public void Bind() =>
+            this.ClrType = this.Tag switch
             {
-                case UnitTags.Binary:
-                    this.ClrType = typeof(byte[]);
-                    break;
-
-                case UnitTags.Boolean:
-                    this.ClrType = typeof(bool);
-                    break;
-
-                case UnitTags.DateTime:
-                    this.ClrType = typeof(DateTime);
-                    break;
-
-                case UnitTags.Decimal:
-                    this.ClrType = typeof(decimal);
-                    break;
-
-                case UnitTags.Float:
-                    this.ClrType = typeof(double);
-                    break;
-
-                case UnitTags.Integer:
-                    this.ClrType = typeof(int);
-                    break;
-
-                case UnitTags.String:
-                    this.ClrType = typeof(string);
-                    break;
-
-                case UnitTags.Unique:
-                    this.ClrType = typeof(Guid);
-                    break;
-            }
-        }
+                UnitTags.Binary => typeof(byte[]),
+                UnitTags.Boolean => typeof(bool),
+                UnitTags.DateTime => typeof(DateTime),
+                UnitTags.Decimal => typeof(decimal),
+                UnitTags.Float => typeof(double),
+                UnitTags.Integer => typeof(int),
+                UnitTags.String => typeof(string),
+                UnitTags.Unique => typeof(Guid),
+                _ => this.ClrType
+            };
     }
 }

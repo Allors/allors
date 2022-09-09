@@ -210,20 +210,13 @@ namespace Allors.Database.Adapters.Memory
             return (ICompositePredicate)this.predicate;
         }
 
-        internal override ThreeValuedLogic Evaluate(Strategy strategy)
-        {
-            switch (this.predicate.Evaluate(strategy))
+        internal override ThreeValuedLogic Evaluate(Strategy strategy) =>
+            this.predicate.Evaluate(strategy) switch
             {
-                case ThreeValuedLogic.True:
-                    return ThreeValuedLogic.False;
-
-                case ThreeValuedLogic.False:
-                    return ThreeValuedLogic.True;
-
-                default:
-                    return ThreeValuedLogic.Unknown;
-            }
-        }
+                ThreeValuedLogic.True => ThreeValuedLogic.False,
+                ThreeValuedLogic.False => ThreeValuedLogic.True,
+                _ => ThreeValuedLogic.Unknown
+            };
 
         private void CheckUnarity()
         {

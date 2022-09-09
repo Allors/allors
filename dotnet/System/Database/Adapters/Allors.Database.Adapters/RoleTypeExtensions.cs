@@ -63,14 +63,13 @@ namespace Allors.Database.Adapters
                         var dateTime = (DateTime)normalizedUnit;
                         if (dateTime != DateTime.MinValue && dateTime != DateTime.MaxValue)
                         {
-                            switch (dateTime.Kind)
+                            dateTime = dateTime.Kind switch
                             {
-                                case DateTimeKind.Local:
-                                    dateTime = dateTime.ToUniversalTime();
-                                    break;
-                                case DateTimeKind.Unspecified:
-                                    throw new ArgumentException("DateTime value is of DateTimeKind.Kind Unspecified. \nUnspecified is only allowed for DateTime.MaxValue and DateTime.MinValue, use DateTimeKind.Utc or DateTimeKind.Local instead.");
-                            }
+                                DateTimeKind.Local => dateTime.ToUniversalTime(),
+                                DateTimeKind.Unspecified => throw new ArgumentException(
+                                    "DateTime value is of DateTimeKind.Kind Unspecified. \nUnspecified is only allowed for DateTime.MaxValue and DateTime.MinValue, use DateTimeKind.Utc or DateTimeKind.Local instead."),
+                                _ => dateTime
+                            };
 
                             normalizedUnit = new DateTime(dateTime.Year, dateTime.Month, dateTime.Day, dateTime.Hour, dateTime.Minute, dateTime.Second, dateTime.Millisecond, DateTimeKind.Utc);
                         }

@@ -77,24 +77,14 @@ namespace Allors.Database.Domain
                     deniablePermissionByOperandTypeId.Add(operandType, permission);
                 }
 
-                Dictionary<Guid, Dictionary<IOperandType, Permission>> permissionByOperandTypeByObjectTypeId;
-                switch (permission.Operation)
-                {
-                    case Operations.Read:
-                        permissionByOperandTypeByObjectTypeId = this.readPermissionsByObjectTypeId;
-                        break;
-
-                    case Operations.Write:
-                        permissionByOperandTypeByObjectTypeId = this.writePermissionsByObjectTypeId;
-                        break;
-
-                    case Operations.Execute:
-                        permissionByOperandTypeByObjectTypeId = this.executePermissionsByObjectTypeId;
-                        break;
-
-                    default:
-                        throw new Exception("Unkown operation: " + permission.Operation);
-                }
+                Dictionary<Guid, Dictionary<IOperandType, Permission>> permissionByOperandTypeByObjectTypeId =
+                    permission.Operation switch
+                    {
+                        Operations.Read => this.readPermissionsByObjectTypeId,
+                        Operations.Write => this.writePermissionsByObjectTypeId,
+                        Operations.Execute => this.executePermissionsByObjectTypeId,
+                        _ => throw new Exception("Unkown operation: " + permission.Operation)
+                    };
 
                 if (!permissionByOperandTypeByObjectTypeId.TryGetValue(objectId, out var permissionByOperandType))
                 {

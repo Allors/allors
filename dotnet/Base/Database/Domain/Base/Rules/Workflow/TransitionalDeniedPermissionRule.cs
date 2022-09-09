@@ -34,9 +34,6 @@ namespace Allors.Database.Domain
 
     public static class TransitionalDeniedPermissionRuleExtensions
     {
-        public static void DeriveTransitionalDeniedPermission(this Transitional @this, IValidation validation)
-        {
-            @this.TransitionalRevocations = @this.ObjectStates.Select(v => v.ObjectRevocation).ToArray();
-        }
+        public static void DeriveTransitionalDeniedPermission(this Transitional @this, IValidation validation) => @this.TransitionalRevocations = @this.ObjectStates.Select(v => v.ObjectRevocation).ToArray();
     }
 }
