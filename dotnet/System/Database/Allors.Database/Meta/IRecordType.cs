@@ -4,9 +4,6 @@ namespace Allors.Database.Meta
 
     public interface IRecordType : IFieldObjectType
     {
-        string Name { get; }
-
-        IEnumerable<string> WorkspaceNames { get; }
 
         IEnumerable<IFieldType> FieldTypes { get; }
     }

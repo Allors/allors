@@ -517,14 +517,14 @@ namespace Allors.Repository
         #endregion
     }
 
-    public partial record SumInput
+    public record SumInput
     {
         public int ValueA { get; set; }
 
         public int ValueB { get; set; }
     }
 
-    public partial struct SumOutput
+    public struct SumOutput
     {
         public int Result { get; set; }
     }

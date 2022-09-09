@@ -9,11 +9,12 @@ namespace Allors.Workspace.Protocol.Json
     using System.Linq;
     using Allors.Protocol.Json;
     using Allors.Protocol.Json.Data;
+    using Request;
     using Response;
 
     public static class Extensions
     {
-        public static Pull ToJson(this Request.PullRequest pullRequest, IUnitConvert unitConvert)
+        public static Pull ToJson(this PullRequest pullRequest, IUnitConvert unitConvert)
         {
             var toJsonVisitor = new ToJsonVisitor(unitConvert);
             pullRequest.Accept(toJsonVisitor);

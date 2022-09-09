@@ -330,7 +330,7 @@ namespace Allors.Database.Adapters.Memory
             return roleStrategies != null;
         }
 
-        public object GetAssociation(IAssociationType associationType) => associationType.IsMany ? this.GetCompositesAssociation<IObject>(associationType) : (object)this.GetCompositeAssociation(associationType);
+        public object GetAssociation(IAssociationType associationType) => associationType.IsMany ? this.GetCompositesAssociation<IObject>(associationType) : this.GetCompositeAssociation(associationType);
 
         public bool ExistAssociation(IAssociationType associationType) => associationType.IsMany ? this.ExistCompositesAssociation(associationType) : this.ExistCompositeAssociation(associationType);
 

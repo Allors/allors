@@ -17,8 +17,7 @@ namespace Allors.Database.Meta
         private readonly Dictionary<string, IMetaIdentifiableObject> metaObjectByTag;
 
         private string[] derivedWorkspaceNames;
-
-        private Dictionary<string, Composite> derivedDatabaseCompositeByLowercaseName;
+        private Dictionary<string, Composite> derivedCompositeByLowercaseName;
 
         private IList<Domain> domains;
         private IList<Unit> units;
@@ -27,6 +26,7 @@ namespace Allors.Database.Meta
         private IList<Inheritance> inheritances;
         private IList<RelationType> relationTypes;
         private IList<MethodType> methodTypes;
+        private IList<RecordType> recordTypes;
 
         private bool isStale;
         private bool isDeriving;
@@ -46,6 +46,7 @@ namespace Allors.Database.Meta
             this.inheritances = new List<Inheritance>();
             this.relationTypes = new List<RelationType>();
             this.methodTypes = new List<MethodType>();
+            this.recordTypes = new List<RecordType>();
 
             this.metaObjectById = new Dictionary<Guid, IMetaIdentifiableObject>();
             this.metaObjectByTag = new Dictionary<string, IMetaIdentifiableObject>();
@@ -117,7 +118,7 @@ namespace Allors.Database.Meta
         {
             this.Derive();
 
-            this.derivedDatabaseCompositeByLowercaseName.TryGetValue(name.ToLowerInvariant(), out var composite);
+            this.derivedCompositeByLowercaseName.TryGetValue(name.ToLowerInvariant(), out var composite);
 
             return composite;
         }
@@ -381,6 +382,11 @@ namespace Allors.Database.Meta
                         @class.DeriveWorkspaceNames(workspaceNames);
                     }
 
+                    foreach (var recordType in this.recordTypes)
+                    {
+                        recordType.DeriveWorkspaceNames(workspaceNames);
+                    }
+
                     this.derivedWorkspaceNames = workspaceNames.ToArray();
 
                     foreach (var relationType in this.relationTypes)
@@ -399,7 +405,7 @@ namespace Allors.Database.Meta
                     }
 
                     // MetaPopulation
-                    this.derivedDatabaseCompositeByLowercaseName = this.Composites.ToDictionary(v => v.Name.ToLowerInvariant());
+                    this.derivedCompositeByLowercaseName = this.Composites.ToDictionary(v => v.Name.ToLowerInvariant());
                 }
                 finally
                 {
@@ -462,6 +468,15 @@ namespace Allors.Database.Meta
         }
 
         internal void OnAssociationTypeCreated(AssociationType associationType) => this.Stale();
+
+        internal void OnRecordCreated(RecordType recordType)
+        {
+            this.recordTypes.Add(recordType);
+            this.metaObjectById.Add(recordType.Id, recordType);
+            this.metaObjectByTag.Add(recordType.Tag, recordType);
+
+            this.Stale();
+        }
 
         internal void OnRoleTypeCreated(RoleType roleType) => this.Stale();
 

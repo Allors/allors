@@ -8,8 +8,8 @@ namespace Tests.Workspace
     using System.Linq;
     using System.Threading.Tasks;
     using Allors.Workspace;
-    using Allors.Workspace.Request;
     using Allors.Workspace.Meta;
+    using Allors.Workspace.Request;
     using Allors.Workspace.Response;
 
     public static class IConnectionExtensions

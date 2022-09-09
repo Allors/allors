@@ -16,7 +16,6 @@ namespace Allors.Database.Meta
 
         private HashSet<Composite> structuralDerivedDirectSubtypes;
         private HashSet<Composite> structuralDerivedSubtypes;
-        private HashSet<Composite> structuralDerivedDatabaseSubtypes;
         private HashSet<Class> structuralDerivedClasses;
         private Class structuralDerivedExclusiveClass;
 
@@ -24,7 +23,7 @@ namespace Allors.Database.Meta
 
         protected Interface(MetaPopulation metaPopulation, Guid id, string tag) : base(metaPopulation, id, tag) => metaPopulation.OnInterfaceCreated(this);
 
-        public MetaPopulation MetaPopulation => (MetaPopulation)((ObjectType)this).MetaPopulation;
+        public MetaPopulation MetaPopulation => ((ObjectType)this).MetaPopulation;
 
         public override IEnumerable<string> WorkspaceNames
         {
@@ -94,7 +93,6 @@ namespace Allors.Database.Meta
             this.StructuralDeriveSubtypesRecursively(this, subTypes);
 
             this.structuralDerivedSubtypes = new HashSet<Composite>(subTypes);
-            this.structuralDerivedDatabaseSubtypes = new HashSet<Composite>(subTypes);
         }
 
         internal void StructuralDeriveExclusiveSubclass() => this.structuralDerivedExclusiveClass = this.structuralDerivedClasses.Count == 1 ? this.structuralDerivedClasses.First() : null;

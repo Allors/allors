@@ -161,7 +161,7 @@ namespace Allors.Database.Adapters.Sql
             }
 
             return roleType.IsMany
-                       ? (object)this.GetCompositesRole<IObject>(roleType)
+                       ? this.GetCompositesRole<IObject>(roleType)
                        : this.GetCompositeRole(roleType);
         }
 
@@ -409,7 +409,7 @@ namespace Allors.Database.Adapters.Sql
 
         public virtual bool ExistAssociation(IAssociationType associationType) => associationType.IsMany ? this.ExistCompositesAssociation(associationType) : this.ExistCompositeAssociation(associationType);
 
-        public virtual object GetAssociation(IAssociationType associationType) => associationType.IsMany ? (object)this.GetCompositesAssociation<IObject>(associationType) : this.GetCompositeAssociation(associationType);
+        public virtual object GetAssociation(IAssociationType associationType) => associationType.IsMany ? this.GetCompositesAssociation<IObject>(associationType) : this.GetCompositeAssociation(associationType);
 
         public virtual bool ExistCompositeAssociation(IAssociationType associationType) => this.GetCompositeAssociation(associationType) != null;
 

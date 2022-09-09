@@ -18,15 +18,5 @@ namespace Allors.Database.Meta
         bool IsInterface { get; }
 
         bool IsClass { get; }
-
-        string SingularName { get; }
-
-        string PluralName { get; }
-
-        string Name { get; }
-
-        IEnumerable<string> WorkspaceNames { get; }
-
-        Type ClrType { get; }
     }
 }

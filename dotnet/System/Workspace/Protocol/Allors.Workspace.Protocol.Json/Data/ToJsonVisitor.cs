@@ -5,20 +5,20 @@
 
 namespace Allors.Workspace.Protocol.Json
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Allors.Protocol.Json;
     using Allors.Protocol.Json.Data;
-    using Request;
     using Meta;
-    using Extent = Allors.Protocol.Json.Data.Extent;
+    using Request;
+    using IVisitor = Request.Visitor.IVisitor;
     using Node = Allors.Protocol.Json.Data.Node;
-    using Pull = Allors.Protocol.Json.Data.Pull;
     using Result = Allors.Protocol.Json.Data.Result;
     using Select = Allors.Protocol.Json.Data.Select;
     using Sort = Allors.Protocol.Json.Data.Sort;
 
-    public class ToJsonVisitor : Workspace.Request.Visitor.IVisitor
+    public class ToJsonVisitor : IVisitor
     {
         private readonly IUnitConvert unitConvert;
 
@@ -201,7 +201,7 @@ namespace Allors.Workspace.Protocol.Json
             }
         }
 
-        public void VisitSelect(Workspace.Request.Select visited)
+        public void VisitSelect(Request.Select visited)
         {
             var select = new Select
             {
@@ -320,9 +320,9 @@ namespace Allors.Workspace.Protocol.Json
             this.predicates.Push(predicate);
         }
 
-        public void VisitMethodCall(MethodRequest methodRequest) => throw new System.NotImplementedException();
+        public void VisitMethodCall(MethodRequest methodRequest) => throw new NotImplementedException();
 
-        public void VisitNode(Workspace.Request.Node visited)
+        public void VisitNode(Request.Node visited)
         {
             var node = new Node
             {
@@ -382,7 +382,7 @@ namespace Allors.Workspace.Protocol.Json
             }
         }
 
-        public void VisitPull(Workspace.Request.PullRequest visited)
+        public void VisitPull(PullRequest visited)
         {
             var pull = new Pull
             {
@@ -413,7 +413,7 @@ namespace Allors.Workspace.Protocol.Json
             this.Pull = pull;
         }
 
-        public void VisitResult(Workspace.Request.Result visited)
+        public void VisitResult(Request.Result visited)
         {
             var result = new Result
             {
@@ -445,7 +445,7 @@ namespace Allors.Workspace.Protocol.Json
             }
         }
 
-        public void VisitSort(Workspace.Request.Sort visited)
+        public void VisitSort(Request.Sort visited)
         {
             var sort = new Sort
             {

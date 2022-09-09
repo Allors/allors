@@ -15,6 +15,9 @@ namespace Allors.Database.Meta
 
         private string name;
 
+        private IRecordType input;
+        private IRecordType output;
+
         public MethodType(Composite objectType, Guid id, string tag = null)
         {
             this.MetaPopulation = objectType.MetaPopulation;
@@ -71,9 +74,29 @@ namespace Allors.Database.Meta
 
         public string FullName => $"{this.ObjectType.Name}{this.Name}";
 
-        public IRecordType Input { get; }
+        public IRecordType Input
+        {
+            get => this.input;
 
-        public IRecordType Output { get; }
+            set
+            {
+                this.MetaPopulation.AssertUnlocked();
+                this.input = value;
+                this.MetaPopulation.Stale();
+            }
+        }
+
+        public IRecordType Output
+        {
+            get => this.output;
+
+            set
+            {
+                this.MetaPopulation.AssertUnlocked();
+                this.output = value;
+                this.MetaPopulation.Stale();
+            }
+        }
 
         public string DisplayName => this.Name;
 

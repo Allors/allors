@@ -40,14 +40,14 @@ namespace Allors.Database.Domain
 {
 	public partial interface $interface.name$ : $if(interface.ExistDirectSupertypes)$ $interface.directSupertypes:{directSupertype|$directSupertype.SingularName$,}$ $endif$Allors.Database.IObject
 	{
-$interface.ExclusiveDatabaseRoleTypes:{roleType|$interfaceExclusiveRoleType_Interface()$}$
-$interface.ExclusiveDatabaseAssociationTypes:{associationType|$interfaceExclusiveAssociationType_Interface()$}$
+$interface.ExclusiveRoleTypes:{roleType|$interfaceExclusiveRoleType_Interface()$}$
+$interface.ExclusiveAssociationTypes:{associationType|$interfaceExclusiveAssociationType_Interface()$}$
 $interface.ExclusiveMethodTypes:{methodType|$interfaceExclusiveMethodType_Interface()$}$
 	}
 
 	public partial interface $interface.name$Builder : $interface.DirectSupertypes:{directSupertype|$directSupertype.Name$Builder ,}$ global::System.IDisposable
 	{
-$interface.exclusiveDatabaseRoleTypes:{roleType|$interfaceExclusiveRoleTypes_Builder()$}$
+$interface.exclusiveRoleTypes:{roleType|$interfaceExclusiveRoleTypes_Builder()$}$
 	}
 }
 >>

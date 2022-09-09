@@ -11,6 +11,33 @@ namespace Allors.Workspace.Protocol.Direct
     using Database;
     using Database.Data;
     using Database.Meta;
+    using Meta;
+    using Request;
+    using And = Request.And;
+    using Between = Request.Between;
+    using ContainedIn = Request.ContainedIn;
+    using Contains = Request.Contains;
+    using Equals = Request.Equals;
+    using Except = Request.Except;
+    using Exists = Request.Exists;
+    using Extent = Database.Data.Extent;
+    using GreaterThan = Request.GreaterThan;
+    using IComposite = Database.Meta.IComposite;
+    using IExtent = Database.Data.IExtent;
+    using Instanceof = Request.Instanceof;
+    using Intersect = Request.Intersect;
+    using IObjectType = Database.Meta.IObjectType;
+    using IPredicate = Database.Data.IPredicate;
+    using IPropertyType = Database.Meta.IPropertyType;
+    using LessThan = Request.LessThan;
+    using Like = Request.Like;
+    using Node = Database.Data.Node;
+    using Not = Request.Not;
+    using Or = Request.Or;
+    using Result = Database.Data.Result;
+    using Select = Database.Data.Select;
+    using Sort = Database.Data.Sort;
+    using Union = Request.Union;
 
     public class ToDatabaseVisitor
     {
@@ -23,7 +50,7 @@ namespace Allors.Workspace.Protocol.Direct
             this.metaPopulation = transaction.Database.MetaPopulation;
         }
 
-        public Pull Visit(Request.PullRequest ws) =>
+        public Pull Visit(PullRequest ws) =>
             new Pull
             {
                 ExtentRef = ws.ExtentRef,
@@ -37,15 +64,15 @@ namespace Allors.Workspace.Protocol.Direct
         private IExtent Visit(Request.IExtent ws) =>
             ws switch
             {
-                Request.Filter filter => this.Visit(filter),
-                Request.Except except => this.Visit(except),
-                Request.Intersect intersect => this.Visit(intersect),
-                Request.Union union => this.Visit(union),
+                Filter filter => this.Visit(filter),
+                Except except => this.Visit(except),
+                Intersect intersect => this.Visit(intersect),
+                Union union => this.Visit(union),
                 null => null,
                 _ => throw new Exception($"Unknown implementation of IExtent: {ws.GetType()}")
             };
 
-        private Database.Data.Extent Visit(Request.Filter ws) => new Database.Data.Extent(this.Visit(ws.ObjectType))
+        private Extent Visit(Filter ws) => new Extent(this.Visit(ws.ObjectType))
         {
             Predicate = this.Visit(ws.Predicate),
             Sorting = this.Visit(ws.Sorting)
@@ -54,45 +81,45 @@ namespace Allors.Workspace.Protocol.Direct
         private IPredicate Visit(Request.IPredicate ws) =>
             ws switch
             {
-                Request.And and => this.Visit(and),
-                Request.Between between => this.Visit(between),
-                Request.ContainedIn containedIn => this.Visit(containedIn),
-                Request.Contains contains => this.Visit(contains),
-                Request.Equals equals => this.Visit(equals),
-                Request.Exists exists => this.Visit(exists),
-                Request.GreaterThan greaterThan => this.Visit(greaterThan),
-                Request.Instanceof instanceOf => this.Visit(instanceOf),
-                Request.LessThan lessThan => this.Visit(lessThan),
-                Request.Like like => this.Visit(like),
-                Request.Not not => this.Visit(not),
-                Request.Or or => this.Visit(or),
+                And and => this.Visit(and),
+                Between between => this.Visit(between),
+                ContainedIn containedIn => this.Visit(containedIn),
+                Contains contains => this.Visit(contains),
+                Equals equals => this.Visit(equals),
+                Exists exists => this.Visit(exists),
+                GreaterThan greaterThan => this.Visit(greaterThan),
+                Instanceof instanceOf => this.Visit(instanceOf),
+                LessThan lessThan => this.Visit(lessThan),
+                Like like => this.Visit(like),
+                Not not => this.Visit(not),
+                Or or => this.Visit(or),
                 null => null,
                 _ => throw new Exception($"Unknown implementation of IExtent: {ws.GetType()}")
             };
 
-        private IPredicate Visit(Request.And ws) => new And(ws.Operands?.Select(this.Visit).ToArray());
+        private IPredicate Visit(And ws) => new Database.Data.And(ws.Operands?.Select(this.Visit).ToArray());
 
-        private IPredicate Visit(Request.Between ws) => new Between(this.Visit(ws.RoleType))
+        private IPredicate Visit(Between ws) => new Database.Data.Between(this.Visit(ws.RoleType))
         {
             Parameter = ws.Parameter,
             Values = ws.Values,
             Paths = this.Visit(ws.Paths)
         };
 
-        private IPredicate Visit(Request.ContainedIn ws) => new ContainedIn(this.Visit(ws.PropertyType))
+        private IPredicate Visit(ContainedIn ws) => new Database.Data.ContainedIn(this.Visit(ws.PropertyType))
         {
             Parameter = ws.Parameter,
             Objects = this.Visit(ws.Objects),
             Extent = this.Visit(ws.Extent),
         };
 
-        private IPredicate Visit(Request.Contains ws) => new Contains(this.Visit(ws.PropertyType))
+        private IPredicate Visit(Contains ws) => new Database.Data.Contains(this.Visit(ws.PropertyType))
         {
             Parameter = ws.Parameter,
             Object = this.Visit(ws.Object)
         };
 
-        private IPredicate Visit(Request.Equals ws) => new Equals(this.Visit(ws.PropertyType))
+        private IPredicate Visit(Equals ws) => new Database.Data.Equals(this.Visit(ws.PropertyType))
         {
             Parameter = ws.Parameter,
             Object = this.Visit(ws.Object),
@@ -100,46 +127,46 @@ namespace Allors.Workspace.Protocol.Direct
             Path = this.Visit(ws.Path),
         };
 
-        private IPredicate Visit(Request.Exists ws) => new Exists(this.Visit(ws.PropertyType))
+        private IPredicate Visit(Exists ws) => new Database.Data.Exists(this.Visit(ws.PropertyType))
         {
             Parameter = ws.Parameter,
         };
 
-        private IPredicate Visit(Request.GreaterThan ws) => new GreaterThan(this.Visit(ws.RoleType))
+        private IPredicate Visit(GreaterThan ws) => new Database.Data.GreaterThan(this.Visit(ws.RoleType))
         {
             Parameter = ws.Parameter,
             Value = ws.Value,
             Path = this.Visit(ws.Path)
         };
 
-        private IPredicate Visit(Request.Instanceof ws) => new Instanceof(this.Visit(ws.PropertyType))
+        private IPredicate Visit(Instanceof ws) => new Database.Data.Instanceof(this.Visit(ws.PropertyType))
         {
             Parameter = ws.Parameter,
             ObjectType = this.Visit(ws.ObjectType)
         };
 
-        private IPredicate Visit(Request.LessThan ws) => new LessThan(this.Visit(ws.RoleType))
+        private IPredicate Visit(LessThan ws) => new Database.Data.LessThan(this.Visit(ws.RoleType))
         {
             Parameter = ws.Parameter,
             Value = ws.Value,
             Path = this.Visit(ws.Path)
         };
 
-        private IPredicate Visit(Request.Like ws) => new Like(this.Visit(ws.RoleType))
+        private IPredicate Visit(Like ws) => new Database.Data.Like(this.Visit(ws.RoleType))
         {
             Parameter = ws.Parameter,
             Value = ws.Value,
         };
 
-        private IPredicate Visit(Request.Not ws) => new Not(this.Visit(ws.Operand));
+        private IPredicate Visit(Not ws) => new Database.Data.Not(this.Visit(ws.Operand));
 
-        private IPredicate Visit(Request.Or ws) => new Or(ws.Operands?.Select(this.Visit).ToArray());
+        private IPredicate Visit(Or ws) => new Database.Data.Or(ws.Operands?.Select(this.Visit).ToArray());
 
-        private Except Visit(Request.Except ws) => new Except(ws.Operands?.Select(this.Visit).ToArray()) { Sorting = this.Visit(ws.Sorting) };
+        private Database.Data.Except Visit(Except ws) => new Database.Data.Except(ws.Operands?.Select(this.Visit).ToArray()) { Sorting = this.Visit(ws.Sorting) };
 
-        private Intersect Visit(Request.Intersect ws) => new Intersect(ws.Operands?.Select(this.Visit).ToArray()) { Sorting = this.Visit(ws.Sorting) };
+        private Database.Data.Intersect Visit(Intersect ws) => new Database.Data.Intersect(ws.Operands?.Select(this.Visit).ToArray()) { Sorting = this.Visit(ws.Sorting) };
 
-        private Union Visit(Request.Union ws) => new Union(ws.Operands?.Select(this.Visit).ToArray()) { Sorting = this.Visit(ws.Sorting) };
+        private Database.Data.Union Visit(Union ws) => new Database.Data.Union(ws.Operands?.Select(this.Visit).ToArray()) { Sorting = this.Visit(ws.Sorting) };
 
         private IObject Visit(Response.IObject ws) => ws != null ? this.transaction.Instantiate(ws.Id) : null;
 
@@ -162,9 +189,9 @@ namespace Allors.Workspace.Protocol.Direct
 
         private Node Visit(Request.Node ws) => ws != null ? new Node(this.Visit(ws.PropertyType), ws.Nodes?.Select(this.Visit).ToArray()) : null;
 
-        private Database.Data.Sort[] Visit(Request.Sort[] ws) => ws?.Select(v =>
+        private Sort[] Visit(Request.Sort[] ws) => ws?.Select(v =>
         {
-            return new Database.Data.Sort
+            return new Sort
             {
                 RoleType = this.Visit(v.RoleType),
                 SortDirection = v.SortDirection ?? SortDirection.Ascending
@@ -178,17 +205,17 @@ namespace Allors.Workspace.Protocol.Direct
         private IPropertyType Visit(Meta.IPropertyType ws) =>
             ws switch
             {
-                Meta.AssociationType associationType => this.Visit(associationType),
-                Meta.RoleType roleType => this.Visit(roleType),
+                AssociationType associationType => this.Visit(associationType),
+                RoleType roleType => this.Visit(roleType),
                 null => null,
                 _ => throw new ArgumentException("Invalid property type")
             };
 
-        private IAssociationType Visit(Meta.AssociationType ws) => ws != null ? ((IRelationType)this.metaPopulation.FindByTag(ws.OperandTag)).AssociationType : null;
+        private IAssociationType Visit(AssociationType ws) => ws != null ? ((IRelationType)this.metaPopulation.FindByTag(ws.OperandTag)).AssociationType : null;
 
-        private IRoleType Visit(Meta.RoleType ws) => ws != null ? ((IRelationType)this.metaPopulation.FindByTag(ws.OperandTag)).RoleType : null;
+        private IRoleType Visit(RoleType ws) => ws != null ? ((IRelationType)this.metaPopulation.FindByTag(ws.OperandTag)).RoleType : null;
 
-        private IRoleType[] Visit(IEnumerable<Meta.RoleType> ws) => ws?.Select(v => ((IRelationType)this.metaPopulation.FindByTag(v.OperandTag)).RoleType).ToArray();
+        private IRoleType[] Visit(IEnumerable<RoleType> ws) => ws?.Select(v => ((IRelationType)this.metaPopulation.FindByTag(v.OperandTag)).RoleType).ToArray();
 
         private IObject[] Visit(IEnumerable<Response.IObject> ws) => ws != null ? this.transaction.Instantiate(ws.Select(v => v.Id)) : null;
 

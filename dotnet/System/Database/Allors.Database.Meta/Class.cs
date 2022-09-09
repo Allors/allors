@@ -106,13 +106,13 @@ namespace Allors.Database.Meta
             return actions;
         }
 
-        public void DeriveWorkspaceNames(HashSet<string> workspaceNames)
+        internal void DeriveWorkspaceNames(HashSet<string> workspaceNames)
         {
             this.derivedWorkspaceNames = this.assignedWorkspaceNames ?? Array.Empty<string>();
             workspaceNames.UnionWith(this.derivedWorkspaceNames);
         }
 
-        public void DeriveRequiredRoleTypes() =>
+        internal void DeriveRequiredRoleTypes() =>
             this.derivedRequiredRoleTypes = this.RoleTypes
                 .Where(v => v.IsRequired)
                 .Union(this.OverriddenRequiredRoleTypes).ToArray();

@@ -41,7 +41,7 @@ namespace Tests.Workspace.Json
 
         public async Task InitializeAsync()
         {
-            var request = new RestRequest($"{Url}{SetupUrl}", RestSharp.Method.GET, DataFormat.Json);
+            var request = new RestRequest($"{Url}{SetupUrl}", Method.GET, DataFormat.Json);
             var restClient = this.CreateRestClient();
             var response = await this.Policy.ExecuteAsync(async () => await restClient.ExecuteAsync(request));
             Assert.True(response.IsSuccessful);

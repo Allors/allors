@@ -11,9 +11,9 @@ namespace Tests.Workspace
     using System;
     using System.Linq;
     using Allors;
+    using Allors.Workspace.Meta;
     using Allors.Workspace.Request;
     using Allors.Workspace.Request.Extensions;
-    using Allors.Workspace.Meta;
     using Xunit;
     using static Names;
 
