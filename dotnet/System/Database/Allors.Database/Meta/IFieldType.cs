@@ -1,6 +1,6 @@
 namespace Allors.Database.Meta
 {
-    public interface IFieldType
+    public interface IFieldType : IMetaIdentifiableObject
     {
         IFieldObjectType FieldObjectType { get; }
 
