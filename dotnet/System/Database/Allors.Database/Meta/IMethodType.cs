@@ -14,8 +14,8 @@ namespace Allors.Database.Meta
 
         string FullName { get; }
 
-        IRecordType Input { get; }
+        IRecord Input { get; }
 
-        IRecordType Output { get; }
+        IRecord Output { get; }
     }
 }

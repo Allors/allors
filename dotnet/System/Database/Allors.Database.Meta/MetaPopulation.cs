@@ -26,7 +26,7 @@ namespace Allors.Database.Meta
         private IList<Inheritance> inheritances;
         private IList<RelationType> relationTypes;
         private IList<MethodType> methodTypes;
-        private IList<RecordType> recordTypes;
+        private IList<Record> records;
         private IList<FieldType> fieldTypes;
 
         private bool isStale;
@@ -47,7 +47,7 @@ namespace Allors.Database.Meta
             this.inheritances = new List<Inheritance>();
             this.relationTypes = new List<RelationType>();
             this.methodTypes = new List<MethodType>();
-            this.recordTypes = new List<RecordType>();
+            this.records = new List<Record>();
             this.fieldTypes = new List<FieldType>();
 
             this.metaObjectById = new Dictionary<Guid, IMetaIdentifiableObject>();
@@ -227,9 +227,9 @@ namespace Allors.Database.Meta
                     @class.Bind(typeByName);
                 }
 
-                foreach (var recordType in this.recordTypes)
+                foreach (var record in this.records)
                 {
-                    recordType.Bind(typeByName);
+                    record.Bind(typeByName);
                 }
 
                 this.MethodCompiler = new MethodCompiler(this, extensionMethodsByInterface);
@@ -257,7 +257,7 @@ namespace Allors.Database.Meta
                 this.inheritances = this.inheritances.ToArray();
                 this.relationTypes = this.relationTypes.ToArray();
                 this.methodTypes = this.methodTypes.ToArray();
-                this.recordTypes = this.recordTypes.ToArray();
+                this.records = this.records.ToArray();
                 this.fieldTypes = this.fieldTypes.ToArray();
 
                 var sharedDomains = new HashSet<Domain>();
@@ -391,9 +391,9 @@ namespace Allors.Database.Meta
                         @class.DeriveWorkspaceNames(workspaceNames);
                     }
 
-                    foreach (var recordType in this.recordTypes)
+                    foreach (var record in this.records)
                     {
-                        recordType.DeriveWorkspaceNames(workspaceNames);
+                        record.DeriveWorkspaceNames(workspaceNames);
                     }
 
                     foreach (var fieldType in this.fieldTypes)
@@ -492,11 +492,11 @@ namespace Allors.Database.Meta
 
         internal void OnAssociationTypeCreated(AssociationType associationType) => this.Stale();
 
-        internal void OnRecordCreated(RecordType recordType)
+        internal void OnRecordCreated(Record record)
         {
-            this.recordTypes.Add(recordType);
-            this.metaObjectById.Add(recordType.Id, recordType);
-            this.metaObjectByTag.Add(recordType.Tag, recordType);
+            this.records.Add(record);
+            this.metaObjectById.Add(record.Id, record);
+            this.metaObjectByTag.Add(record.Tag, record);
 
             this.Stale();
         }

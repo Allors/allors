@@ -15,8 +15,8 @@ namespace Allors.Database.Meta
 
         private string name;
 
-        private IRecordType input;
-        private IRecordType output;
+        private IRecord input;
+        private IRecord output;
 
         public MethodType(Composite objectType, Guid id, string tag = null)
         {
@@ -74,7 +74,7 @@ namespace Allors.Database.Meta
 
         public string FullName => $"{this.ObjectType.Name}{this.Name}";
 
-        public IRecordType Input
+        public IRecord Input
         {
             get => this.input;
 
@@ -86,7 +86,7 @@ namespace Allors.Database.Meta
             }
         }
 
-        public IRecordType Output
+        public IRecord Output
         {
             get => this.output;
 

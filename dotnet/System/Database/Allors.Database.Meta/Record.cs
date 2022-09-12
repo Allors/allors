@@ -3,14 +3,14 @@ namespace Allors.Database.Meta
     using System;
     using System.Collections.Generic;
 
-    public class RecordType : FieldObjectType, IRecordType
+    public class Record : FieldObjectType, IRecord
     {
         private Type clrType;
 
         private string[] assignedWorkspaceNames;
         private string[] derivedWorkspaceNames;
 
-        protected RecordType(MetaPopulation metaPopulation, Guid id, string tag = null) : base(metaPopulation, id, tag)
+        protected Record(MetaPopulation metaPopulation, Guid id, string tag = null) : base(metaPopulation, id, tag)
         {
         }
 
