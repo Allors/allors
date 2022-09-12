@@ -7,6 +7,7 @@
 namespace Allors.Database.Meta
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -54,7 +55,7 @@ namespace Allors.Database.Meta
             }
         }
 
-        public string[] WorkspaceNames
+        public IEnumerable<string> WorkspaceNames
         {
             get
             {
@@ -176,18 +177,16 @@ namespace Allors.Database.Meta
 
         internal void DeriveWorkspaceNames() =>
             this.derivedWorkspaceNames = this.assignedWorkspaceNames != null ?
-                this.assignedWorkspaceNames.Intersect(this.AssociationType.ObjectType switch
-                {
-                    Interface @interface => @interface.Classes.SelectMany(v => v.WorkspaceNames),
-                    Class @class => @class.WorkspaceNames,
-                    _ => Array.Empty<string>()
-                }).Intersect(this.RoleType.ObjectType switch
-                {
-                    Unit unit => unit.WorkspaceNames,
-                    Interface @interface => @interface.Classes.SelectMany(v => v.WorkspaceNames),
-                    Class @class => @class.WorkspaceNames,
-                    _ => Array.Empty<string>()
-                }).ToArray() :
+                this.assignedWorkspaceNames
+                    .Intersect(this.AssociationType.ObjectType.Classes.SelectMany(v => v.WorkspaceNames))
+                    .Intersect(this.RoleType.ObjectType switch
+                    {
+                        Unit unit => unit.WorkspaceNames,
+                        Interface @interface => @interface.Classes.SelectMany(v => v.WorkspaceNames),
+                        Class @class => @class.WorkspaceNames,
+                        _ => Array.Empty<string>()
+                    })
+                    .ToArray() :
                 Array.Empty<string>();
 
         internal void Validate(ValidationLog validationLog)

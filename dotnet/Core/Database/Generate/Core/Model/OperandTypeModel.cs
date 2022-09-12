@@ -10,7 +10,5 @@ namespace Allors.Meta.Generation.Model
         protected abstract IOperandType OperandType { get; }
 
         public IEnumerable<string> WorkspaceNames => this.OperandType.WorkspaceNames;
-
-        public IEnumerable<string> AssignedWorkspaceNames => this.OperandType.AssignedWorkspaceNames;
     }
 }

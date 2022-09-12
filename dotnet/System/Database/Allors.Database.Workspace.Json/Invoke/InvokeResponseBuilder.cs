@@ -123,7 +123,7 @@ namespace Allors.Database.Protocol.Json
             var composite = (IComposite)obj.Strategy.Class;
 
             // TODO: Cache and filter for workspace
-            var methodTypes = composite.MethodTypes.Where(v => v.WorkspaceNames.Length > 0);
+            var methodTypes = composite.MethodTypes.Where(v => v.WorkspaceNames.Any());
             var methodType = methodTypes.FirstOrDefault(v => v.Tag.Equals(invocation.m));
 
             if (methodType == null)

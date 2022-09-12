@@ -37,8 +37,6 @@ namespace Allors.Meta.Generation.Model
 
         public IEnumerable<string> WorkspaceNames => this.RelationType.WorkspaceNames;
 
-        public IEnumerable<string> AssignedWorkspaceNames => this.RelationType.AssignedWorkspaceNames;
-
         public string Name => ((RelationType)this.RelationType).Name;
     }
 }

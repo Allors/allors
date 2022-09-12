@@ -6,6 +6,7 @@
 namespace Allors.Database.Meta
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
 
     public sealed class MethodType : IMethodType, IComparable
@@ -15,8 +16,8 @@ namespace Allors.Database.Meta
 
         private string name;
 
-        private IRecord input;
-        private IRecord output;
+        private Record input;
+        private Record output;
 
         public MethodType(Composite objectType, Guid id, string tag = null)
         {
@@ -51,7 +52,7 @@ namespace Allors.Database.Meta
             }
         }
 
-        public string[] WorkspaceNames
+        public IEnumerable<string> WorkspaceNames
         {
             get
             {
@@ -74,7 +75,9 @@ namespace Allors.Database.Meta
 
         public string FullName => $"{this.ObjectType.Name}{this.Name}";
 
-        public IRecord Input
+        IRecord IMethodType.Input => this.Input;
+
+        public Record Input
         {
             get => this.input;
 
@@ -86,7 +89,8 @@ namespace Allors.Database.Meta
             }
         }
 
-        public IRecord Output
+        IRecord IMethodType.Output => this.Output;
+        public Record Output
         {
             get => this.output;
 
@@ -131,8 +135,21 @@ namespace Allors.Database.Meta
         }
 
         internal void DeriveWorkspaceNames() =>
-             this.derivedWorkspaceNames = this.assignedWorkspaceNames != null
-                 ? this.assignedWorkspaceNames.Intersect(this.ObjectType.Classes.SelectMany(v => v.WorkspaceNames)).ToArray()
-                 : Array.Empty<string>();
+            this.derivedWorkspaceNames = this.assignedWorkspaceNames != null
+                ? this.assignedWorkspaceNames
+                    .Intersect(this.ObjectType.Classes.SelectMany(v => v.WorkspaceNames))
+                    .ToArray()
+                : Array.Empty<string>();
+
+        internal void PrepareWorkspaceNames(IDictionary<Record, ISet<string>> workspaceNamesByRecord)
+        {
+            var visited = new HashSet<Record>();
+
+            if (this.derivedWorkspaceNames.Length > 0)
+            {
+                this.Input?.PrepareWorkspaceNames(workspaceNamesByRecord, visited, this.derivedWorkspaceNames);
+                this.Output?.PrepareWorkspaceNames(workspaceNamesByRecord, visited, this.derivedWorkspaceNames);
+            }
+        }
     }
 }

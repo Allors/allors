@@ -31,18 +31,18 @@
   <Interface Name="Allors.Database.Meta.IMetaObject">
     <Position X="3.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
       <FileName>Meta\IMetaObject.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Allors.Database.Meta.IMethodType">
-    <Position X="7.75" Y="6.5" Width="1.5" />
+    <Position X="7.75" Y="7.5" Width="1.5" />
     <InheritanceLine Type="Allors.Database.Meta.IMetaIdentifiableObject" FixedToPoint="true">
       <Path>
         <Point X="4.5" Y="3.425" />
         <Point X="4.5" Y="3.725" />
         <Point X="8.312" Y="3.725" />
-        <Point X="8.312" Y="6.5" />
+        <Point X="8.312" Y="7.5" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
@@ -71,15 +71,15 @@
   <Interface Name="Allors.Database.Meta.IFieldObjectType">
     <Position X="3.25" Y="4" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAIAAAAAAAAIIAAAAAAQAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAIAAAAAAAAIAAAAAAAQAAAAAAAACAAAAAAAAAAA=</HashCode>
       <FileName>Meta\IFieldObjectType.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="Allors.Database.Meta.IRecordType">
+  <Interface Name="Allors.Database.Meta.IRecord">
     <Position X="4" Y="6.5" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACA=</HashCode>
-      <FileName>Meta\IRecordType.cs</FileName>
+      <FileName>Meta\IRecord.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
       <Property Name="FieldTypes" />
@@ -88,11 +88,12 @@
   <Interface Name="Allors.Database.Meta.IFieldType">
     <Position X="6" Y="4" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAiAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAiAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAABAA=</HashCode>
       <FileName>Meta\IFieldType.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="FieldObjectType" />
+      <Property Name="Record" />
     </ShowAsAssociation>
   </Interface>
   <Font Name="Segoe UI" Size="9" />

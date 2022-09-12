@@ -26,8 +26,6 @@ namespace Allors.Database.Meta
 
         IEnumerable<IMethodType> MethodTypes { get; }
 
-        IEnumerable<string> WorkspaceNames { get; }
-
         bool IsValid { get; }
 
         IMetaIdentifiableObject FindById(Guid metaObjectId);

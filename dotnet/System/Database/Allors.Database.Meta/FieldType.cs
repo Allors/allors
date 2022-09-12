@@ -2,37 +2,25 @@ namespace Allors.Database.Meta
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     public class FieldType : IFieldType
     {
-        private string[] assignedWorkspaceNames;
+        private FieldObjectType fieldObjectType;
+        private bool isOne;
+
         private string[] derivedWorkspaceNames;
 
-        private bool isOne;
-        private FieldObjectType fieldObjectType;
-
-        public FieldType(MetaPopulation metaPopulation, Guid id, string tag = null)
+        public FieldType(Record record, Guid id, string tag = null)
         {
-            this.MetaPopulation = metaPopulation;
+            this.Record = record;
             this.Id = id;
             this.Tag = tag ?? id.Tag();
 
             this.MetaPopulation.OnFieldTypeCreated(this);
         }
 
-        public string[] AssignedWorkspaceNames
-        {
-            get => this.assignedWorkspaceNames ?? Array.Empty<string>();
-
-            set
-            {
-                this.MetaPopulation.AssertUnlocked();
-                this.assignedWorkspaceNames = value;
-                this.MetaPopulation.Stale();
-            }
-        }
-
-        public string[] WorkspaceNames
+        public IEnumerable<string> WorkspaceNames
         {
             get
             {
@@ -64,6 +52,12 @@ namespace Allors.Database.Meta
             set => this.IsOne = !value;
         }
 
+        IRecord IFieldType.Record => this.Record;
+        public Record Record
+        {
+            get;
+        }
+
         IFieldObjectType IFieldType.FieldObjectType => this.FieldObjectType;
         public FieldObjectType FieldObjectType
         {
@@ -77,13 +71,11 @@ namespace Allors.Database.Meta
             }
         }
 
-        public MetaPopulation MetaPopulation { get; }
         IMetaPopulation IMetaObject.MetaPopulation => this.MetaPopulation;
+        public MetaPopulation MetaPopulation => this.Record.MetaPopulation;
 
-        public void DeriveWorkspaceNames(HashSet<string> workspaceNames)
-        {
-            this.derivedWorkspaceNames = this.assignedWorkspaceNames ?? Array.Empty<string>();
-            workspaceNames.UnionWith(this.derivedWorkspaceNames);
-        }
+        internal void DeriveWorkspaceNames() => this.derivedWorkspaceNames = this.FieldObjectType != null ?
+            this.Record.WorkspaceNames.Intersect(this.FieldObjectType.WorkspaceNames).ToArray() :
+            Array.Empty<string>();
     }
 }

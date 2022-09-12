@@ -34,7 +34,7 @@ namespace Allors.Database.Meta
         IMetaPopulation IMetaObject.MetaPopulation => this.MetaPopulation;
         public MetaPopulation MetaPopulation { get; }
 
-        public string[] WorkspaceNames => this.RelationType.WorkspaceNames;
+        public IEnumerable<string> WorkspaceNames => this.RelationType.WorkspaceNames;
 
         public string[] AssignedWorkspaceNames => this.RelationType.AssignedWorkspaceNames;
 

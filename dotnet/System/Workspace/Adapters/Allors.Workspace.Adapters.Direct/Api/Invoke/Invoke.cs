@@ -113,7 +113,7 @@ namespace Allors.Workspace.Adapters.Direct
             var composite = (IComposite)obj.Strategy.Class;
 
             // TODO: Cache and filter for workspace
-            var methodTypes = composite.MethodTypes.Where(v => v.WorkspaceNames.Length > 0);
+            var methodTypes = composite.MethodTypes.Where(v => v.WorkspaceNames.Any());
             var methodType = methodTypes.FirstOrDefault(x => x.Tag.Equals(invocation.MethodType.Tag));
 
             if (methodType == null)

@@ -17,6 +17,8 @@ namespace Allors.Database.Meta
 
         private string name;
 
+        private string[] derivedWorkspaceNames;
+
         public Domain(MetaPopulation metaPopulation, Guid id)
         {
             this.MetaPopulation = metaPopulation;
@@ -51,6 +53,16 @@ namespace Allors.Database.Meta
         public IEnumerable<Domain> Superdomains => this.structuralDerivedSuperdomains;
 
         public MetaPopulation MetaPopulation { get; }
+
+        public IEnumerable<string> WorkspaceNames
+        {
+            get
+            {
+                this.MetaPopulation.Derive();
+                return this.derivedWorkspaceNames;
+            }
+        }
+
         IMetaPopulation IMetaObject.MetaPopulation => this.MetaPopulation;
 
         public string ValidationName
@@ -128,6 +140,11 @@ namespace Allors.Database.Meta
         }
 
         internal void Bind() => this.directSuperdomains = this.directSuperdomains.ToArray();
+
+        internal void DeriveWorkspaceNames()
+        {
+            // TODO:
+        }
 
         internal void StructuralDeriveSuperdomains(HashSet<Domain> sharedDomains)
         {

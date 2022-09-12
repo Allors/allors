@@ -391,16 +391,6 @@ namespace Allors.Database.Meta
                         @class.DeriveWorkspaceNames(workspaceNames);
                     }
 
-                    foreach (var record in this.records)
-                    {
-                        record.DeriveWorkspaceNames(workspaceNames);
-                    }
-
-                    foreach (var fieldType in this.fieldTypes)
-                    {
-                        fieldType.DeriveWorkspaceNames(workspaceNames);
-                    }
-
                     this.derivedWorkspaceNames = workspaceNames.ToArray();
 
                     foreach (var relationType in this.relationTypes)
@@ -416,6 +406,28 @@ namespace Allors.Database.Meta
                     foreach (var @interface in this.interfaces)
                     {
                         @interface.DeriveWorkspaceNames();
+                    }
+
+                    IDictionary<Record, ISet<string>> workspaceNamesByRecord = new Dictionary<Record, ISet<string>>();
+
+                    foreach (var methodType in this.methodTypes)
+                    {
+                        methodType.PrepareWorkspaceNames(workspaceNamesByRecord);
+                    }
+
+                    foreach (var record in this.records)
+                    {
+                        record.DeriveWorkspaceNames(workspaceNamesByRecord);
+                    }
+
+                    foreach (var fieldType in this.fieldTypes)
+                    {
+                        fieldType.DeriveWorkspaceNames();
+                    }
+
+                    foreach (var domain in this.domains)
+                    {
+                        domain.DeriveWorkspaceNames();
                     }
 
                     // MetaPopulation

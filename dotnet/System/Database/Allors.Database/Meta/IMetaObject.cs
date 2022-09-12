@@ -5,11 +5,15 @@
 
 namespace Allors.Database.Meta
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// Base interface for Meta objects.
     /// </summary>
     public interface IMetaObject
     {
         IMetaPopulation MetaPopulation { get; }
+
+        IEnumerable<string> WorkspaceNames { get; }
     }
 }

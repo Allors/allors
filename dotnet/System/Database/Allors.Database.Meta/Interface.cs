@@ -23,8 +23,6 @@ namespace Allors.Database.Meta
 
         protected Interface(MetaPopulation metaPopulation, Guid id, string tag) : base(metaPopulation, id, tag) => metaPopulation.OnInterfaceCreated(this);
 
-        public MetaPopulation MetaPopulation => ((ObjectType)this).MetaPopulation;
-
         public override IEnumerable<string> WorkspaceNames
         {
             get

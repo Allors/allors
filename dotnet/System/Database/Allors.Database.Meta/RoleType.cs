@@ -57,7 +57,7 @@ namespace Allors.Database.Meta
             }
         }
 
-        public string[] WorkspaceNames => this.RelationType.WorkspaceNames;
+        public IEnumerable<string> WorkspaceNames => this.RelationType.WorkspaceNames;
 
         public string[] AssignedWorkspaceNames => this.RelationType.AssignedWorkspaceNames;
 
