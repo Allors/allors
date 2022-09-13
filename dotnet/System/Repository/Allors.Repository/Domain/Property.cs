@@ -17,7 +17,7 @@ namespace Allors.Repository.Domain
     {
         private readonly Inflector inflector;
 
-        public Property(Inflector inflector, SemanticModel semanticModel, PartialType partialType, Composite composite, PropertyDeclarationSyntax propertyDeclaration)
+        public Property(Inflector inflector, SemanticModel semanticModel, Composite composite, PropertyDeclarationSyntax propertyDeclaration)
         {
             this.inflector = inflector;
 
@@ -32,7 +32,6 @@ namespace Allors.Repository.Domain
             var xmlDocString = propertySymbol.GetDocumentationCommentXml(null, true);
             this.XmlDoc = !string.IsNullOrWhiteSpace(xmlDocString) ? new XmlDoc(xmlDocString) : null;
 
-            partialType.PropertyByName.Add(this.RoleName, this);
             composite.PropertyByRoleName.Add(this.RoleName, this);
         }
 

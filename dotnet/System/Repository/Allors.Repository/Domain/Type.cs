@@ -10,15 +10,20 @@ namespace Allors.Repository.Domain
 
     public abstract class Type
     {
-        protected Type(Guid id, string name)
+        protected Type(Guid id, string name, Domain domain)
         {
             this.Id = id;
             this.SingularName = name;
+            this.Domain = domain;
+
+            domain.Types.Add(this);
         }
 
         public Guid Id { get; }
 
         public string SingularName { get; }
+
+        public Domain Domain { get; }
 
         public bool IsInterface => this is Interface;
 

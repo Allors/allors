@@ -16,8 +16,8 @@ namespace Allors.Repository.Domain
     {
         private readonly Inflector inflector;
 
-        protected Composite(Inflector inflector, Guid id, string name)
-            : base(id, name)
+        protected Composite(Inflector inflector, Guid id, string name, Domain domain)
+            : base(id, name, domain)
         {
             this.inflector = inflector;
             this.AttributeByName = new Dictionary<string, Attribute>();

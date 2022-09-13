@@ -14,7 +14,7 @@ namespace Allors.Repository.Domain
 
     public class Method
     {
-        public Method(Inflector inflector, SemanticModel semanticModel, PartialType partialType, Composite composite, MethodDeclarationSyntax methodDeclaration)
+        public Method(Inflector inflector, SemanticModel semanticModel, Composite composite, MethodDeclarationSyntax methodDeclaration)
         {
             this.AttributeByName = new Dictionary<string, Attribute>();
             this.AttributesByName = new Dictionary<string, Attribute[]>();
@@ -27,7 +27,6 @@ namespace Allors.Repository.Domain
             var xmlDocString = methodSymbol.GetDocumentationCommentXml(null, true);
             this.XmlDoc = !string.IsNullOrWhiteSpace(xmlDocString) ? new XmlDoc(xmlDocString) : null;
 
-            partialType.MethodByName.Add(this.Name, this);
             composite.MethodByName.Add(this.Name, this);
 
             //var input = methodDeclaration.ParameterList;

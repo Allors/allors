@@ -7,15 +7,18 @@ namespace Allors.Tools.Cmd
 {
     using System;
     using System.IO;
+    using System.Threading.Tasks;
     using NLog;
     using Repository;
-    using Repository.Roslyn;
+    using Repository.Code;
+    using Repository.Domain;
+    using Repository.Generation;
 
     public class Program
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-        public static int Main(string[] args)
+        public static async Task<int> Main(string[] args)
         {
             try
             {
@@ -24,7 +27,7 @@ namespace Allors.Tools.Cmd
                     Logger.Error("missing required arguments");
                 }
 
-                RepositoryGenerate(args);
+                await RepositoryGenerate(args);
             }
             catch (RepositoryException e)
             {
@@ -42,7 +45,7 @@ namespace Allors.Tools.Cmd
             return 0;
         }
 
-        private static void RepositoryGenerate(string[] args)
+        private static async Task RepositoryGenerate(string[] args)
         {
             var projectPath = args[0];
             var template = args[1];
@@ -51,7 +54,20 @@ namespace Allors.Tools.Cmd
             var fileInfo = new FileInfo(projectPath);
 
             Logger.Info("Generate " + fileInfo.FullName);
-            Generate.Execute(fileInfo.FullName, template, output);
+            var project = new Project(fileInfo.FullName);
+            await project.InitializeAsync();
+
+            if (project.HasErrors)
+            {
+                throw new RepositoryException("Repository project has errors.");
+            }
+
+            var templateFileInfo = new FileInfo(template);
+            var stringTemplate = new StringTemplate(templateFileInfo);
+            var outputDirectoryInfo = new DirectoryInfo(output);
+
+            var repository = project.Repository;
+            stringTemplate.Generate(repository, outputDirectoryInfo);
         }
     }
 }

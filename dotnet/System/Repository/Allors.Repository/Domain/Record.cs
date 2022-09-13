@@ -4,17 +4,16 @@ using System.Collections.Generic;
 
 public class Record
 {
-    public Record(string name)
+    public Record(Domain domain, string name)
     {
         this.Name = name;
-        this.PartialByDomainName = new Dictionary<string, PartialRecord>();
+
+        domain.Records.Add(this);
     }
 
     public string Name { get; }
 
     public XmlDoc XmlDoc { get; set; }
-
-    public Dictionary<string, PartialRecord> PartialByDomainName { get; }
 
     public Dictionary<string, Field> DefinedFieldByName { get; }
 }

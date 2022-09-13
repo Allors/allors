@@ -10,8 +10,8 @@ namespace Allors.Repository.Domain
 
     public class Unit : Type
     {
-        public Unit(Guid id, string name)
-            : base(id, name)
+        public Unit(Guid id, string name, Domain domain)
+            : base(id, name, domain)
         {
         }
     }

@@ -18,10 +18,8 @@ namespace Allors.Repository.Domain
             this.Name = name;
             this.DirectoryInfo = directoryInfo;
 
-            this.PartialInterfaceByName = new Dictionary<string, PartialInterface>();
-            this.PartialClassBySingularName = new Dictionary<string, PartialClass>();
-            this.PartialTypeBySingularName = new Dictionary<string, PartialType>();
-            this.PartialRecordByName = new Dictionary<string, PartialRecord>();
+            this.Types = new HashSet<Type>();
+            this.Records = new HashSet<Record>();
         }
 
         public Guid Id { get; }
@@ -32,13 +30,9 @@ namespace Allors.Repository.Domain
 
         public Domain Base { get; set; }
 
-        public Dictionary<string, PartialInterface> PartialInterfaceByName { get; }
+        public ISet<Type> Types { get; }
 
-        public Dictionary<string, PartialClass> PartialClassBySingularName { get; }
-
-        public Dictionary<string, PartialType> PartialTypeBySingularName { get; }
-
-        public Dictionary<string, PartialRecord> PartialRecordByName { get; }
+        public ISet<Record> Records { get; }
 
         public override string ToString() => this.Name;
     }

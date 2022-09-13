@@ -11,4 +11,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Shared\Allors.Shared.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Meta\" />
+  </ItemGroup>
 </Project>

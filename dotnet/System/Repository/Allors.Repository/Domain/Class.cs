@@ -13,9 +13,10 @@ namespace Allors.Repository.Domain
 
     public class Class : Composite
     {
-        public Class(Inflector inflector, Guid id, string name)
-            : base(inflector, id, name) =>
-            this.PartialByDomainName = new Dictionary<string, PartialClass>();
+        public Class(Inflector inflector, Guid id, string name, Domain domain)
+            : base(inflector, id, name, domain)
+        {
+        }
 
         public string[] WorkspaceNames
         {
@@ -25,8 +26,6 @@ namespace Allors.Repository.Domain
                 return attribute?.Names ?? Array.Empty<string>();
             }
         }
-
-        public Dictionary<string, PartialClass> PartialByDomainName { get; }
 
         public override Interface[] Interfaces
         {

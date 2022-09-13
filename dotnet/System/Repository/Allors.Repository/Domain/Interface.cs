@@ -13,12 +13,10 @@ namespace Allors.Repository.Domain
 
     public class Interface : Composite
     {
-        public Interface(Inflector inflector, Guid id, string name)
-            : base(inflector, id, name)
-        {
-            this.PartialByDomainName = new Dictionary<string, PartialInterface>();
+        public Interface(Inflector inflector, Guid id, string name, Domain domain)
+            : base(inflector, id, name, domain) =>
             this.InheritedPropertyByRoleName = new Dictionary<string, Property>();
-        }
+
 
         public override Interface[] Interfaces
         {
@@ -33,8 +31,6 @@ namespace Allors.Repository.Domain
                 return interfaces.ToArray();
             }
         }
-
-        public Dictionary<string, PartialInterface> PartialByDomainName { get; }
 
         public Dictionary<string, Property> InheritedPropertyByRoleName { get; }
 
