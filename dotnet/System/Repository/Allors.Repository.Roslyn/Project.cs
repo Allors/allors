@@ -237,7 +237,7 @@ namespace Allors.Repository.Code
                     var typeModel = (ITypeSymbol)semanticModel.GetDeclaredSymbol(interfaceDeclaration);
                     var idAttribute = typeModel.GetAttributes().FirstOrDefault(v => v.AttributeClass.Name.Equals("IdAttribute"));
 
-                    if (idAttribute != null)
+                    if (idAttribute != null && idAttribute.ApplicationSyntaxReference?.SyntaxTree == syntaxTree)
                     {
                         var id = Guid.Parse((string)idAttribute.ConstructorArguments.First().Value);
                         var domain = this.Repository.Domains.First(v => v.DirectoryInfo.Contains(fileInfo));
@@ -259,12 +259,17 @@ namespace Allors.Repository.Code
                     var typeModel = (ITypeSymbol)semanticModel.GetDeclaredSymbol(classDeclaration);
                     var idAttribute = typeModel.GetAttributes().FirstOrDefault(v => v.AttributeClass.Name.Equals("IdAttribute"));
 
-                    if (idAttribute != null)
+                    if (idAttribute != null && idAttribute.ApplicationSyntaxReference?.SyntaxTree == syntaxTree)
                     {
                         var id = Guid.Parse((string)idAttribute.ConstructorArguments.First().Value);
                         var domain = this.Repository.Domains.FirstOrDefault(v => v.DirectoryInfo.Contains(fileInfo));
                         var symbol = semanticModel.GetDeclaredSymbol(classDeclaration);
                         var classSingularName = symbol.Name;
+
+                        if (classSingularName == "Person")
+                        {
+                            Console.Write(0);
+                        }
 
                         var @class = new Class(this.inflector, id, classSingularName, domain);
                         var xmlDoc = symbol.GetDocumentationCommentXml(null, true);

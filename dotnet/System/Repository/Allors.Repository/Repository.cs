@@ -4,7 +4,6 @@
 // </copyright>
 // <summary>Defines the IObjectType type.</summary>
 
-using Allors.Repository.Code;
 
 namespace Allors.Repository.Domain
 {

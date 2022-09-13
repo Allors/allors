@@ -4,7 +4,8 @@
     <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Allors.Repository\Allors.Repository.csproj" />
+    <ProjectReference Include="..\Allors.Repository.Generation\Allors.Repository.Generation.csproj" />
+    <ProjectReference Include="..\Allors.Repository.Roslyn\Allors.Repository.Roslyn.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="NLog.config">

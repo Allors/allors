@@ -12,7 +12,7 @@ namespace Allors.Repository.Domain
 
     public class Domain
     {
-        internal Domain(Guid id, string name, DirectoryInfo directoryInfo)
+        public Domain(Guid id, string name, DirectoryInfo directoryInfo)
         {
             this.Id = id;
             this.Name = name;
