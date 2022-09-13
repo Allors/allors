@@ -12,10 +12,6 @@ namespace Allors.Repository.Domain
 
     public class Repository
     {
-        public const string RepositoryNamespaceName = "Allors.Repository";
-
-        public const string AttributeNamespace = RepositoryNamespaceName + ".Attributes";
-
         public Repository()
         {
             this.DomainByName = new Dictionary<string, Domain>();
@@ -26,19 +22,6 @@ namespace Allors.Repository.Domain
             this.TypeBySingularName = new Dictionary<string, Type>();
             this.RecordByName = new Dictionary<string, Record>();
         }
-
-        public Domain[] Domains => this.DomainByName.Values.ToArray();
-
-        public Unit[] Units => this.UnitBySingularName.Values.ToArray();
-
-        public Interface[] Interfaces => this.InterfaceBySingularName.Values.ToArray();
-
-        public Class[] Classes => this.ClassBySingularName.Values.ToArray();
-
-        public Type[] Types => this.Composites.Cast<Type>().Union(this.Units).ToArray();
-
-        public Composite[] Composites => this.ClassBySingularName.Values.Cast<Composite>().Union(this.InterfaceBySingularName.Values).ToArray();
-
         public Dictionary<string, Domain> DomainByName { get; }
 
         public Dictionary<string, Unit> UnitBySingularName { get; }
@@ -52,6 +35,18 @@ namespace Allors.Repository.Domain
         public Dictionary<string, Composite> CompositeByName { get; }
 
         public Dictionary<string, Record> RecordByName { get; }
+
+        public Domain[] Domains => this.DomainByName.Values.ToArray();
+
+        public Unit[] Units => this.UnitBySingularName.Values.ToArray();
+
+        public Interface[] Interfaces => this.InterfaceBySingularName.Values.ToArray();
+
+        public Class[] Classes => this.ClassBySingularName.Values.ToArray();
+
+        public Type[] Types => this.Composites.Cast<Type>().Union(this.Units).ToArray();
+
+        public Composite[] Composites => this.ClassBySingularName.Values.Cast<Composite>().Union(this.InterfaceBySingularName.Values).ToArray();
 
         public Domain[] SortedDomains
         {

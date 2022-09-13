@@ -13,6 +13,7 @@ namespace Allors.Repository.Code
     using System.IO;
     using System.Linq;
     using System.Reflection;
+    using System.Threading.Tasks;
     using Buildalyzer;
     using Buildalyzer.Workspaces;
     using Domain;
@@ -20,9 +21,14 @@ namespace Allors.Repository.Code
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
     using NLog;
+    using Type = System.Type;
 
     public class Project
     {
+        public const string RepositoryNamespaceName = "Allors.Repository";
+
+        public const string AttributeNamespace = RepositoryNamespaceName + ".Attributes";
+
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         private readonly Inflector inflector;
@@ -35,7 +41,7 @@ namespace Allors.Repository.Code
             this.inflector = new Inflector(new CultureInfo("en"));
         }
 
-        public async System.Threading.Tasks.Task InitializeAsync()
+        public async Task InitializeAsync()
         {
             var analyzerManager = new AnalyzerManager();
 
@@ -55,8 +61,8 @@ namespace Allors.Repository.Code
             this.SemanticModelBySyntaxTree = this.Compilation.SyntaxTrees.ToDictionary(v => v, v => this.Compilation.GetSemanticModel(v));
             this.DocumentBySyntaxTree = this.Compilation.SyntaxTrees.ToDictionary(v => v, v => this.Solution.GetDocument(v));
 
-            this.DomainAttributeType = this.Compilation.GetTypeByMetadataName(Repository.AttributeNamespace + ".DomainAttribute");
-            this.ExtendAttributeType = this.Compilation.GetTypeByMetadataName(Repository.AttributeNamespace + ".ExtendsAttribute");
+            this.DomainAttributeType = this.Compilation.GetTypeByMetadataName(AttributeNamespace + ".DomainAttribute");
+            this.ExtendAttributeType = this.Compilation.GetTypeByMetadataName(AttributeNamespace + ".ExtendsAttribute");
 
             using var ms = new MemoryStream();
             var result = this.Compilation.Emit(ms);
@@ -105,10 +111,10 @@ namespace Allors.Repository.Code
 
                 foreach (var method in composite.DefinedMethods)
                 {
-                    if (!method.AttributeByName.ContainsKey(AttributeNames.Id))
+                    if (!method.AttributeByName.ContainsKey("Id"))
                     {
                         this.HasErrors = true;
-                        Logger.Error($"{method} has no {AttributeNames.Id} attribute.");
+                        Logger.Error($"{method} has no Id attribute.");
                     }
                 }
             }
@@ -297,7 +303,7 @@ namespace Allors.Repository.Code
                     var domain = this.Repository.Domains.First(v => v.DirectoryInfo.Contains(fileInfo));
 
                     var symbol = semanticModel.GetDeclaredSymbol(recordDeclaration);
-                    if (Repository.RepositoryNamespaceName.Equals(symbol.ContainingNamespace.ToDisplayString()))
+                    if (RepositoryNamespaceName.Equals(symbol.ContainingNamespace.ToDisplayString()))
                     {
                         var recordName = symbol.Name;
 
@@ -318,7 +324,7 @@ namespace Allors.Repository.Code
 
         private void CreateHierarchy()
         {
-            var definedTypeBySingularName = this.Assembly.DefinedTypes.Where(v => Repository.RepositoryNamespaceName.Equals(v.Namespace)).ToDictionary(v => v.Name);
+            var definedTypeBySingularName = this.Assembly.DefinedTypes.Where(v => RepositoryNamespaceName.Equals(v.Namespace)).ToDictionary(v => v.Name);
 
             var composites = this.Repository.CompositeByName.Values.ToArray();
 
@@ -381,7 +387,7 @@ namespace Allors.Repository.Code
 
         private void FromReflection()
         {
-            var declaredTypeBySingularName = this.Assembly.DefinedTypes.Where(v => Repository.RepositoryNamespaceName.Equals(v.Namespace)).ToDictionary(v => v.Name);
+            var declaredTypeBySingularName = this.Assembly.DefinedTypes.Where(v => RepositoryNamespaceName.Equals(v.Namespace)).ToDictionary(v => v.Name);
 
             foreach (var composite in this.Repository.CompositeByName.Values)
             {
@@ -510,7 +516,7 @@ namespace Allors.Repository.Code
             }
         }
 
-        private string GetTypeName(System.Type type)
+        private string GetTypeName(Type type)
         {
             var typeName = type.Name;
             if (typeName.EndsWith("[]"))

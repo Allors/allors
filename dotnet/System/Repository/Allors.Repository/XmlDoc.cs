@@ -23,7 +23,7 @@ namespace Allors.Repository.Domain
             }
             catch
             {
-                throw new Exception("Could not parse XmlDoc: \n" + this.FullValue);
+                throw new ArgumentException("Could not parse XmlDoc: \n" + this.FullValue, nameof(value));
             }
         }
 

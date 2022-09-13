@@ -35,7 +35,7 @@ namespace Allors.Repository.Domain
             composite.PropertyByRoleName.Add(this.RoleName, this);
         }
 
-        public string Id => ((dynamic)this.AttributeByName.Get(AttributeNames.Id))?.Value;
+        public string Id => ((dynamic)this.AttributeByName.Get("Id"))?.Value;
 
         public string[] WorkspaceNames
         {
@@ -46,9 +46,9 @@ namespace Allors.Repository.Domain
             }
         }
 
-        public bool Required => (bool)(((dynamic)this.AttributeByName.Get(AttributeNames.Required))?.Value ?? false);
+        public bool Required => (bool)(((dynamic)this.AttributeByName.Get("Required"))?.Value ?? false);
 
-        public bool Unique => (bool)(((dynamic)this.AttributeByName.Get(AttributeNames.Unique))?.Value ?? false);
+        public bool Unique => (bool)(((dynamic)this.AttributeByName.Get("Unique"))?.Value ?? false);
 
         public XmlDoc XmlDoc { get; set; }
 

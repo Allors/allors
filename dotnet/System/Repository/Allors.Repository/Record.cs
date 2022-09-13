@@ -15,5 +15,5 @@ public class Record
 
     public XmlDoc XmlDoc { get; set; }
 
-    public Dictionary<string, Field> DefinedFieldByName { get; }
+    public Dictionary<string, Field> FieldByName { get; }
 }
