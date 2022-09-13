@@ -12,6 +12,7 @@ namespace Allors.Repository.Domain
     using System.IO;
     using System.Linq;
     using System.Reflection;
+    using System.Runtime.InteropServices.ComTypes;
     using Inflector;
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -36,6 +37,7 @@ namespace Allors.Repository.Domain
             this.ClassBySingularName = new Dictionary<string, Class>();
             this.CompositeByName = new Dictionary<string, Composite>();
             this.TypeBySingularName = new Dictionary<string, Type>();
+            this.RecordByName = new Dictionary<string, Record>();
 
             this.inflector = new Inflector(new CultureInfo("en"));
 
@@ -46,6 +48,7 @@ namespace Allors.Repository.Domain
             this.CreateUnits();
             this.CreateTypes(projectInfo);
             this.CreateHierarchy(projectInfo);
+            this.CreateRecords(projectInfo);
             this.CreateMembers(projectInfo);
 
             this.FromReflection(projectInfo);
@@ -101,6 +104,8 @@ namespace Allors.Repository.Domain
         public Dictionary<string, Type> TypeBySingularName { get; }
 
         public Dictionary<string, Composite> CompositeByName { get; }
+
+        public Dictionary<string, Record> RecordByName { get; }
 
         public Domain[] SortedDomains
         {
@@ -285,6 +290,43 @@ namespace Allors.Repository.Domain
             }
         }
 
+        private void CreateRecords(RepositoryProject repositoryProject)
+        {
+            foreach (var syntaxTree in repositoryProject.DocumentBySyntaxTree.Keys)
+            {
+                var root = syntaxTree.GetRoot();
+                var semanticModel = repositoryProject.SemanticModelBySyntaxTree[syntaxTree];
+                var document = repositoryProject.DocumentBySyntaxTree[syntaxTree];
+                var fileInfo = new FileInfo(document.FilePath);
+
+                foreach (var recordDeclaration in root.DescendantNodes().OfType<RecordDeclarationSyntax>())
+                {
+                    var domain = this.Domains.First(v => v.DirectoryInfo.Contains(fileInfo));
+
+                    var symbol = semanticModel.GetDeclaredSymbol(recordDeclaration);
+                    if (RepositoryNamespaceName.Equals(symbol.ContainingNamespace.ToDisplayString()))
+                    {
+                        var recordName = symbol.Name;
+
+                        if (!this.RecordByName.TryGetValue(recordName, out var record))
+                        {
+                            record = new Record(recordName);
+                            this.RecordByName.Add(recordName, record);
+                        }
+
+                        var typeModel = (ITypeSymbol)semanticModel.GetDeclaredSymbol(recordDeclaration);
+
+                        var partialRecord = new PartialRecord(recordName);
+                        domain.PartialRecordByName.Add(recordName, partialRecord);
+
+                        record.PartialByDomainName.Add(domain.Name, partialRecord);
+                        var xmlDoc = symbol.GetDocumentationCommentXml(null, true);
+                        record.XmlDoc = !string.IsNullOrWhiteSpace(xmlDoc) ? new XmlDoc(xmlDoc) : null;
+                    }
+                }
+            }
+        }
+
         private void CreateHierarchy(RepositoryProject repositoryProject)
         {
             var definedTypeBySingularName = repositoryProject.Assembly.DefinedTypes.Where(v => RepositoryNamespaceName.Equals(v.Namespace)).ToDictionary(v => v.Name);
@@ -307,7 +349,7 @@ namespace Allors.Repository.Domain
                     }
                 }
             }
-            
+
             foreach (var composite in composites)
             {
                 composite.Subtypes = composites.Where(v => v.Interfaces.Contains(composite)).ToArray();
@@ -326,7 +368,7 @@ namespace Allors.Repository.Domain
 
                 if (domain != null)
                 {
-                    var typeDeclaration = root.DescendantNodes().SingleOrDefault(v => v is InterfaceDeclarationSyntax || v is ClassDeclarationSyntax);
+                    var typeDeclaration = root.DescendantNodes().SingleOrDefault(v => v is InterfaceDeclarationSyntax or ClassDeclarationSyntax);
                     if (typeDeclaration != null)
                     {
                         var typeSymbol = semanticModel.GetDeclaredSymbol(typeDeclaration);
@@ -337,36 +379,12 @@ namespace Allors.Repository.Domain
                             var composite = this.CompositeByName[typeName];
                             foreach (var propertyDeclaration in typeDeclaration.DescendantNodes().OfType<PropertyDeclarationSyntax>())
                             {
-                                var propertySymbol = semanticModel.GetDeclaredSymbol(propertyDeclaration);
-                                var propertyRoleName = propertySymbol.Name;
-
-                                var xmlDocString = propertySymbol.GetDocumentationCommentXml(null, true);
-                                var xmlDoc = !string.IsNullOrWhiteSpace(xmlDocString) ? new XmlDoc(xmlDocString) : null;
-
-                                var property = new Property(this.inflector, composite, propertyRoleName)
-                                {
-                                    XmlDoc = xmlDoc,
-                                };
-
-                                partialType.PropertyByName.Add(propertyRoleName, property);
-                                composite.PropertyByRoleName.Add(propertyRoleName, property);
+                                _ = new Property(this.inflector, semanticModel, partialType, composite, propertyDeclaration);
                             }
 
                             foreach (var methodDeclaration in typeDeclaration.DescendantNodes().OfType<MethodDeclarationSyntax>())
                             {
-                                var methodSymbol = semanticModel.GetDeclaredSymbol(methodDeclaration);
-                                var methodName = methodSymbol.Name;
-
-                                var xmlDocString = methodSymbol.GetDocumentationCommentXml(null, true);
-                                var xmlDoc = !string.IsNullOrWhiteSpace(xmlDocString) ? new XmlDoc(xmlDocString) : null;
-
-                                var method = new Method(composite, methodName)
-                                {
-                                    XmlDoc = xmlDoc,
-                                };
-
-                                partialType.MethodByName.Add(methodName, method);
-                                composite.MethodByName.Add(methodName, method);
+                                _ = new Method(this.inflector, semanticModel, partialType, composite, methodDeclaration);
                             }
                         }
                     }

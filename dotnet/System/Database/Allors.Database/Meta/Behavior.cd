@@ -31,7 +31,7 @@
   <Interface Name="Allors.Database.Meta.IMetaObject">
     <Position X="3.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
       <FileName>Meta\IMetaObject.cs</FileName>
     </TypeIdentifier>
   </Interface>
@@ -49,10 +49,6 @@
       <HashCode>AAAAAAAAAAAAAIAAAAAIAAQAEAAAAAAAAIAAAAAAAAA=</HashCode>
       <FileName>Meta\IMethodType.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="Input" />
-      <Property Name="Output" />
-    </ShowAsAssociation>
   </Interface>
   <Interface Name="Allors.Database.Meta.IClass" Collapsed="true">
     <Position X="3.25" Y="9.25" Width="1.5" />
@@ -71,7 +67,7 @@
   <Interface Name="Allors.Database.Meta.IFieldObjectType">
     <Position X="3.25" Y="4" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAIAAAAAAAAIAAAAAAAQAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAIAAAAAAAAIIAAAAAAQAAAAAAAACAAAAAAAAAAA=</HashCode>
       <FileName>Meta\IFieldObjectType.cs</FileName>
     </TypeIdentifier>
   </Interface>

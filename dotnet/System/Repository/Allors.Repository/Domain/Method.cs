@@ -8,16 +8,37 @@ namespace Allors.Repository.Domain
 {
     using System;
     using System.Collections.Generic;
+    using Inflector;
+    using Microsoft.CodeAnalysis;
+    using Microsoft.CodeAnalysis.CSharp.Syntax;
 
     public class Method
     {
-        public Method(Type definingType, string name)
+        public Method(Inflector inflector, SemanticModel semanticModel, PartialType partialType, Composite composite, MethodDeclarationSyntax methodDeclaration)
         {
             this.AttributeByName = new Dictionary<string, Attribute>();
             this.AttributesByName = new Dictionary<string, Attribute[]>();
 
-            this.DefiningType = definingType;
-            this.Name = name;
+            this.DefiningType = composite;
+
+            var methodSymbol = semanticModel.GetDeclaredSymbol(methodDeclaration);
+            this.Name = methodSymbol.Name;
+
+            var xmlDocString = methodSymbol.GetDocumentationCommentXml(null, true);
+            this.XmlDoc = !string.IsNullOrWhiteSpace(xmlDocString) ? new XmlDoc(xmlDocString) : null;
+
+            partialType.MethodByName.Add(this.Name, this);
+            composite.MethodByName.Add(this.Name, this);
+
+            //var input = methodDeclaration.ParameterList;
+            //var input2 = methodDeclaration.TypeParameterList;
+
+            //var outputType = methodDeclaration.ReturnType;
+            //if (outputType is not PredefinedTypeSyntax)
+            //{
+            //    var outputSymbol = semanticModel.GetDeclaredSymbol(outputType);
+                
+            //}
         }
 
         public string Name { get; }
@@ -40,6 +61,10 @@ namespace Allors.Repository.Domain
         public Dictionary<string, Attribute> AttributeByName { get; }
 
         public Dictionary<string, Attribute[]> AttributesByName { get; }
+
+        public Record Input { get; set; }
+
+        public Record Output { get; set; }
 
         public override string ToString() => $"{this.DefiningType.SingularName}.{this.Name}()";
     }

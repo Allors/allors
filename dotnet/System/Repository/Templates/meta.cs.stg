@@ -2,7 +2,7 @@ group AllorsCSharpRepository;
 
 TemplateId() ::= <<14F49218-A676-43ba-9CBD-B8FFA059D1BF>>
 TemplateName() ::= <<Allors C# Meta>>
-TemplateVersion() ::= <<1.0.11>>
+TemplateVersion() ::= <<3.0.12>>
 TemplateAllors() ::= <<1.0>>
 TemplateConfiguration(repository) ::= <<
 $!
@@ -400,7 +400,6 @@ build_interface(interface) ::= <<
 build_class(class) ::= <<
 	        meta.$class.SingularName$ = new Meta$class.SingularName$(meta, Ids.$class.SingularName$)
             {
-$if(!class.HasDatabaseOrigin)$                AssignedOrigin = Allors.Origin.$class.Origin$,$endif$
                 SingularName = "$class.SingularName$",
                 $if(class.AssignedPluralName)$PluralName = "$class.AssignedPluralName$",$endif$
                 $if(class.AttributeByName.Relationship)$AssignedIsRelationship = true,$endif$
@@ -424,7 +423,6 @@ relation(property) ::= <<
         {
             relationTypes.$property.DefiningType.SingularName$$property.RoleName$ = new RelationType(meta.$property.DefiningType.SingularName$, Ids.$property.DefiningType.SingularName$$property.RoleName$, v => new Meta$property.AssociationName$(v), v => new Meta$property.DefiningType.SingularName$$property.RoleName$(v))
             {
-$if(!property.HasDatabaseOrigin)$                AssignedOrigin = Origin.$property.Origin$,$endif$
 $if(property.WorkspaceNames)$		        AssignedWorkspaceNames = new[] {$property.WorkspaceNames:{name|"$name$"}; separator=", "$},$endif$
 $if(property.AttributeByName.Multiplicity)$		        AssignedMultiplicity = Allors.Multiplicity.$property.AttributeByName.Multiplicity.Value$,$endif$
 $if(property.AttributeByName.Derived)$		        IsDerived = $property.AttributeByName.Derived.Value$,$endif$

@@ -21,6 +21,7 @@ namespace Allors.Repository.Domain
             this.PartialInterfaceByName = new Dictionary<string, PartialInterface>();
             this.PartialClassBySingularName = new Dictionary<string, PartialClass>();
             this.PartialTypeBySingularName = new Dictionary<string, PartialType>();
+            this.PartialRecordByName = new Dictionary<string, PartialRecord>();
         }
 
         public Guid Id { get; }
@@ -36,6 +37,8 @@ namespace Allors.Repository.Domain
         public Dictionary<string, PartialClass> PartialClassBySingularName { get; }
 
         public Dictionary<string, PartialType> PartialTypeBySingularName { get; }
+
+        public Dictionary<string, PartialRecord> PartialRecordByName { get; }
 
         public override string ToString() => this.Name;
     }

@@ -17,8 +17,6 @@ namespace Allors.Repository.Domain
             : base(inflector, id, name) =>
             this.PartialByDomainName = new Dictionary<string, PartialClass>();
 
-        public bool HasDatabaseOrigin => true;
-
         public string[] WorkspaceNames
         {
             get

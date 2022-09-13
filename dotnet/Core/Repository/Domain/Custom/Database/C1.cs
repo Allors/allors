@@ -517,15 +517,30 @@ namespace Allors.Repository
         #endregion
     }
 
+    #region Allors
+    [Id("7EF57548-55F2-4A12-815F-0B39C3342320")]
+    #endregion
     public record SumInput
     {
+        #region Allors
+        [Id("323A1F18-F535-46DD-94EA-68E858FD3B01")]
+        #endregion
         public int ValueA { get; set; }
 
+        #region Allors
+        [Id("388A6284-7A08-4DB7-BA7A-5BC6B065D639")]
+        #endregion
         public int ValueB { get; set; }
     }
 
-    public struct SumOutput
+    #region Allors
+    [Id("3426402F-C565-4C06-9F86-28C19E8F9AA5")]
+    #endregion
+    public record SumOutput
     {
+        #region Allors
+        [Id("E35CB4C3-E04F-4204-ADBD-2D97C6221B9B")]
+        #endregion
         public int Result { get; set; }
     }
 }

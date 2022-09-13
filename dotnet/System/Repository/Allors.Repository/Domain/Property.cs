@@ -9,20 +9,31 @@ namespace Allors.Repository.Domain
     using System;
     using System.Collections.Generic;
     using Inflector;
+    using Microsoft.CodeAnalysis;
+    using Microsoft.CodeAnalysis.CSharp.Syntax;
     using Text;
 
     public class Property
     {
         private readonly Inflector inflector;
 
-        public Property(Inflector inflector, Composite definingType, string name)
+        public Property(Inflector inflector, SemanticModel semanticModel, PartialType partialType, Composite composite, PropertyDeclarationSyntax propertyDeclaration)
         {
+            this.inflector = inflector;
+
             this.AttributeByName = new Dictionary<string, Attribute>();
             this.AttributesByName = new Dictionary<string, Attribute[]>();
 
-            this.DefiningType = definingType;
-            this.inflector = inflector;
-            this.RoleName = name;
+            this.DefiningType = composite;
+
+            var propertySymbol = semanticModel.GetDeclaredSymbol(propertyDeclaration);
+            this.RoleName = propertySymbol.Name;
+
+            var xmlDocString = propertySymbol.GetDocumentationCommentXml(null, true);
+            this.XmlDoc = !string.IsNullOrWhiteSpace(xmlDocString) ? new XmlDoc(xmlDocString) : null;
+
+            partialType.PropertyByName.Add(this.RoleName, this);
+            composite.PropertyByRoleName.Add(this.RoleName, this);
         }
 
         public string Id => ((dynamic)this.AttributeByName.Get(AttributeNames.Id))?.Value;
@@ -39,8 +50,6 @@ namespace Allors.Repository.Domain
         public bool Required => (bool)(((dynamic)this.AttributeByName.Get(AttributeNames.Required))?.Value ?? false);
 
         public bool Unique => (bool)(((dynamic)this.AttributeByName.Get(AttributeNames.Unique))?.Value ?? false);
-
-        public bool HasDatabaseOrigin => true;
 
         public XmlDoc XmlDoc { get; set; }
 
