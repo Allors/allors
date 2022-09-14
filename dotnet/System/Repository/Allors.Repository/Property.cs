@@ -17,13 +17,14 @@ namespace Allors.Repository.Domain
     {
         private readonly Inflector inflector;
 
-        public Property(Inflector inflector, SemanticModel semanticModel, Composite composite, PropertyDeclarationSyntax propertyDeclaration)
+        public Property(Inflector inflector, Domain domain, SemanticModel semanticModel, Composite composite, PropertyDeclarationSyntax propertyDeclaration)
         {
             this.inflector = inflector;
 
             this.AttributeByName = new Dictionary<string, Attribute>();
             this.AttributesByName = new Dictionary<string, Attribute[]>();
 
+            this.Domain = domain;
             this.DefiningType = composite;
 
             var propertySymbol = semanticModel.GetDeclaredSymbol(propertyDeclaration);
@@ -33,9 +34,10 @@ namespace Allors.Repository.Domain
             this.XmlDoc = !string.IsNullOrWhiteSpace(xmlDocString) ? new XmlDoc(xmlDocString) : null;
 
             composite.PropertyByRoleName.Add(this.RoleName, this);
+            domain.Properties.Add(this);
         }
 
-        public string Id => ((dynamic)this.AttributeByName.Get("Id"))?.Value;
+        public Domain Domain { get; }
 
         public string[] WorkspaceNames
         {
@@ -45,6 +47,8 @@ namespace Allors.Repository.Domain
                 return attribute?.Names ?? Array.Empty<string>();
             }
         }
+
+        public string Id => ((dynamic)this.AttributeByName.Get("Id"))?.Value;
 
         public bool Required => (bool)(((dynamic)this.AttributeByName.Get("Required"))?.Value ?? false);
 

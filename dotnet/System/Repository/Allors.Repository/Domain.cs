@@ -19,7 +19,8 @@ namespace Allors.Repository.Domain
             this.DirectoryInfo = directoryInfo;
 
             this.Types = new HashSet<StructuralType>();
-            this.Records = new HashSet<Record>();
+            this.Properties = new HashSet<Property>();
+            this.Methods = new HashSet<Method>();
         }
 
         public Guid Id { get; }
@@ -32,7 +33,9 @@ namespace Allors.Repository.Domain
 
         public ISet<StructuralType> Types { get; }
 
-        public ISet<Record> Records { get; }
+        public ISet<Property> Properties { get; }
+
+        public ISet<Method> Methods { get; }
 
         public override string ToString() => this.Name;
     }

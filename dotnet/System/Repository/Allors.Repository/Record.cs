@@ -1,19 +1,31 @@
-namespace Allors.Repository.Domain;
-
-using System.Collections.Generic;
-
-public class Record
+namespace Allors.Repository.Domain
 {
-    public Record(Domain domain, string name)
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
+    public class Record : BehavioralType
     {
-        this.Name = name;
+        public Record(string name)
+        {
+            this.Name = name;
 
-        domain.Records.Add(this);
+            this.AttributeByName = new Dictionary<string, Attribute>();
+            this.AttributesByName = new Dictionary<string, Attribute[]>();
+
+            this.FieldByName = new Dictionary<string, Field>();
+        }
+
+        public string Name { get; }
+
+        public XmlDoc XmlDoc { get; set; }
+
+        public Dictionary<string, Field> FieldByName { get; }
+
+        public Dictionary<string, Attribute> AttributeByName { get; }
+
+        public Dictionary<string, Attribute[]> AttributesByName { get; }
+
+        public Field[] Fields => this.FieldByName.Values.ToArray();
     }
-
-    public string Name { get; }
-
-    public XmlDoc XmlDoc { get; set; }
-
-    public Dictionary<string, Field> FieldByName { get; }
 }

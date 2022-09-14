@@ -22,6 +22,7 @@ namespace Allors.Repository.Code
     using Microsoft.CodeAnalysis.CSharp.Syntax;
     using NLog;
     using Type = System.Type;
+    using TypeInfo = System.Reflection.TypeInfo;
 
     public class Project
     {
@@ -34,6 +35,8 @@ namespace Allors.Repository.Code
         private readonly Inflector inflector;
 
         private readonly string projectPath;
+
+        private Dictionary<string, TypeInfo> typeInfoByName;
 
         public Project(string projectPath)
         {
@@ -80,6 +83,8 @@ namespace Allors.Repository.Code
             ms.Seek(0, SeekOrigin.Begin);
             this.Assembly = Assembly.Load(ms.ToArray());
 
+            this.typeInfoByName = this.Assembly.DefinedTypes.Where(v => RepositoryNamespaceName.Equals(v.Namespace)).ToDictionary(v => v.Name);
+
             this.Repository = new Repository();
 
             this.CreateDomains();
@@ -89,6 +94,7 @@ namespace Allors.Repository.Code
             this.CreateHierarchy();
             this.CreateRecords();
             this.CreateMembers();
+            this.CreateFields();
 
             this.FromReflection();
 
@@ -261,49 +267,11 @@ namespace Allors.Repository.Code
                         var symbol = semanticModel.GetDeclaredSymbol(classDeclaration);
                         var classSingularName = symbol.Name;
 
-                        if (classSingularName == "Person")
-                        {
-                            Console.Write(0);
-                        }
-
                         var @class = new Class(this.inflector, id, classSingularName, domain);
                         var xmlDoc = symbol.GetDocumentationCommentXml(null, true);
                         @class.XmlDoc = !string.IsNullOrWhiteSpace(xmlDoc) ? new XmlDoc(xmlDoc) : null;
 
                         this.Repository.StructuralTypeBySingularName.Add(classSingularName, @class);
-                    }
-                }
-            }
-        }
-
-        private void CreateRecords()
-        {
-            foreach (var syntaxTree in this.DocumentBySyntaxTree.Keys)
-            {
-                var root = syntaxTree.GetRoot();
-                var semanticModel = this.SemanticModelBySyntaxTree[syntaxTree];
-                var document = this.DocumentBySyntaxTree[syntaxTree];
-                var fileInfo = new FileInfo(document.FilePath);
-
-                foreach (var recordDeclaration in root.DescendantNodes().OfType<RecordDeclarationSyntax>())
-                {
-                    var domain = this.Repository.Domains.First(v => v.DirectoryInfo.Contains(fileInfo));
-
-                    var symbol = semanticModel.GetDeclaredSymbol(recordDeclaration);
-                    if (RepositoryNamespaceName.Equals(symbol.ContainingNamespace.ToDisplayString()))
-                    {
-                        var recordName = symbol.Name;
-
-                        if (!this.Repository.RecordByName.TryGetValue(recordName, out var record))
-                        {
-                            record = new Record(domain, recordName);
-                            this.Repository.RecordByName.Add(recordName, record);
-                        }
-
-                        var typeModel = (ITypeSymbol)semanticModel.GetDeclaredSymbol(recordDeclaration);
-
-                        var xmlDoc = symbol.GetDocumentationCommentXml(null, true);
-                        record.XmlDoc = !string.IsNullOrWhiteSpace(xmlDoc) ? new XmlDoc(xmlDoc) : null;
                     }
                 }
             }
@@ -338,8 +306,39 @@ namespace Allors.Repository.Code
             }
         }
 
+        private void CreateRecords()
+        {
+            foreach (var syntaxTree in this.DocumentBySyntaxTree.Keys)
+            {
+                var root = syntaxTree.GetRoot();
+                var semanticModel = this.SemanticModelBySyntaxTree[syntaxTree];
+
+                foreach (var recordDeclaration in root.DescendantNodes().OfType<RecordDeclarationSyntax>())
+                {
+                    var symbol = semanticModel.GetDeclaredSymbol(recordDeclaration);
+                    if (RepositoryNamespaceName.Equals(symbol.ContainingNamespace.ToDisplayString()))
+                    {
+                        var recordName = symbol.Name;
+
+                        if (!this.Repository.RecordByName.TryGetValue(recordName, out var record))
+                        {
+                            record = new Record(recordName);
+                            this.Repository.RecordByName.Add(recordName, record);
+                        }
+
+                        var typeModel = (ITypeSymbol)semanticModel.GetDeclaredSymbol(recordDeclaration);
+
+                        var xmlDoc = symbol.GetDocumentationCommentXml(null, true);
+                        record.XmlDoc = !string.IsNullOrWhiteSpace(xmlDoc) ? new XmlDoc(xmlDoc) : null;
+                    }
+                }
+            }
+        }
+
         private void CreateMembers()
         {
+            var recordByName = this.Repository.RecordByName;
+            
             foreach (var syntaxTree in this.DocumentBySyntaxTree.Keys)
             {
                 var root = syntaxTree.GetRoot();
@@ -360,13 +359,40 @@ namespace Allors.Repository.Code
                             var composite = (Composite)type;
                             foreach (var propertyDeclaration in typeDeclaration.DescendantNodes().OfType<PropertyDeclarationSyntax>())
                             {
-                                _ = new Property(this.inflector, semanticModel, composite, propertyDeclaration);
+                                _ = new Property(this.inflector, domain, semanticModel, composite, propertyDeclaration);
                             }
 
                             foreach (var methodDeclaration in typeDeclaration.DescendantNodes().OfType<MethodDeclarationSyntax>())
                             {
-                                _ = new Method(this.inflector, semanticModel, composite, methodDeclaration);
+                                _ = new Method(this.inflector, domain, recordByName, semanticModel, composite, methodDeclaration);
                             }
+                        }
+                    }
+                }
+            }
+        }
+
+        private void CreateFields()
+        {
+            var recordByName = this.Repository.RecordByName;
+
+            foreach (var syntaxTree in this.DocumentBySyntaxTree.Keys)
+            {
+                var root = syntaxTree.GetRoot();
+                var semanticModel = this.SemanticModelBySyntaxTree[syntaxTree];
+
+                foreach (var recordDeclaration in root.DescendantNodes().OfType<RecordDeclarationSyntax>())
+                {
+                    var symbol = semanticModel.GetDeclaredSymbol(recordDeclaration);
+                    var recordName = symbol.Name;
+
+                    if (recordByName.TryGetValue(recordName, out var record))
+                    {
+                        var typeModel = (ITypeSymbol)semanticModel.GetDeclaredSymbol(recordDeclaration);
+
+                        foreach (var propertyDeclaration in recordDeclaration.DescendantNodes().OfType<PropertyDeclarationSyntax>())
+                        {
+                            _ = new Field(this.inflector, semanticModel, record, propertyDeclaration);
                         }
                     }
                 }
@@ -375,11 +401,9 @@ namespace Allors.Repository.Code
 
         private void FromReflection()
         {
-            var declaredTypeBySingularName = this.Assembly.DefinedTypes.Where(v => RepositoryNamespaceName.Equals(v.Namespace)).ToDictionary(v => v.Name);
-
             foreach (var composite in this.Repository.Composites)
             {
-                var reflectedType = declaredTypeBySingularName[composite.SingularName];
+                var reflectedType = this.typeInfoByName[composite.SingularName];
 
                 // Type attributes
                 {

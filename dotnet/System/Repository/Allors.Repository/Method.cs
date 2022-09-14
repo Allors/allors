@@ -14,11 +14,12 @@ namespace Allors.Repository.Domain
 
     public class Method
     {
-        public Method(Inflector inflector, SemanticModel semanticModel, Composite composite, MethodDeclarationSyntax methodDeclaration)
+        public Method(Inflector inflector, Domain domain, Dictionary<string, Record> recordByName, SemanticModel semanticModel, Composite composite, MethodDeclarationSyntax methodDeclaration)
         {
             this.AttributeByName = new Dictionary<string, Attribute>();
             this.AttributesByName = new Dictionary<string, Attribute[]>();
 
+            this.Domain = domain;
             this.DefiningType = composite;
 
             var methodSymbol = semanticModel.GetDeclaredSymbol(methodDeclaration);
@@ -29,18 +30,25 @@ namespace Allors.Repository.Domain
 
             composite.MethodByName.Add(this.Name, this);
 
-            //var input = methodDeclaration.ParameterList;
-            //var input2 = methodDeclaration.TypeParameterList;
+            var parameters = methodDeclaration.ParameterList.Parameters;
+            if (parameters.Any())
+            {
+                var parameter = parameters.First();
+                var inputSymbol = (IParameterSymbol)semanticModel.GetDeclaredSymbol(parameter);
+                this.Input = recordByName[inputSymbol.Type.Name];
+            }
 
-            //var outputType = methodDeclaration.ReturnType;
-            //if (outputType is not PredefinedTypeSyntax)
-            //{
-            //    var outputSymbol = semanticModel.GetDeclaredSymbol(outputType);
-                
-            //}
+            var outputType = methodDeclaration.ReturnType;
+            if (outputType is not PredefinedTypeSyntax)
+            {
+                var outputTypeInfo = semanticModel.GetTypeInfo(outputType);
+                this.Output = recordByName[outputTypeInfo.Type.Name];
+            }
+
+            domain.Methods.Add(this);
         }
 
-        public string Name { get; }
+        public Domain Domain { get; }
 
         public string[] WorkspaceNames
         {
@@ -50,6 +58,8 @@ namespace Allors.Repository.Domain
                 return attribute?.Names ?? Array.Empty<string>();
             }
         }
+
+        public string Name { get; }
 
         public XmlDoc XmlDoc { get; set; }
 
