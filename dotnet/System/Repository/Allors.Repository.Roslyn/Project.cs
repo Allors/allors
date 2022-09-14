@@ -105,7 +105,7 @@ namespace Allors.Repository.Code
 
             var ids = new HashSet<Guid>();
 
-            foreach (var composite in this.Repository.Composites)
+            foreach (var composite in (IEnumerable<Composite>)this.Repository.Objects.OfType<Composite>())
             {
                 this.CheckId(ids, composite.Id, $"{composite.SingularName}", "id");
 
@@ -146,32 +146,17 @@ namespace Allors.Repository.Code
 
         protected void CreateUnits()
         {
-            var domain = this.Repository.Domains.First();
+            var domain = this.Repository.Objects.OfType<Domain>().First();
             var objects = this.Repository.Objects;
 
-            var binary = new Unit(UnitIds.Binary, UnitNames.Binary, domain);
-            objects.Add(binary);
-
-            var boolean = new Unit(UnitIds.Boolean, UnitNames.Boolean, domain);
-            objects.Add(boolean);
-
-            var datetime = new Unit(UnitIds.DateTime, UnitNames.DateTime, domain);
-            objects.Add(datetime);
-
-            var @decimal = new Unit(UnitIds.Decimal, UnitNames.Decimal, domain);
-            objects.Add(@decimal);
-
-            var @float = new Unit(UnitIds.Float, UnitNames.Float, domain);
-            objects.Add(@float);
-
-            var integer = new Unit(UnitIds.Integer, UnitNames.Integer, domain);
-            objects.Add(integer);
-
-            var @string = new Unit(UnitIds.String, UnitNames.String, domain);
-            objects.Add(@string);
-
-            var unique = new Unit(UnitIds.Unique, UnitNames.Unique, domain);
-            objects.Add(unique);
+            _ = new Unit(objects, UnitIds.Binary, UnitNames.Binary, domain);
+            _ = new Unit(objects, UnitIds.Boolean, UnitNames.Boolean, domain);
+            _ = new Unit(objects, UnitIds.DateTime, UnitNames.DateTime, domain);
+            _ = new Unit(objects, UnitIds.Decimal, UnitNames.Decimal, domain);
+            _ = new Unit(objects, UnitIds.Float, UnitNames.Float, domain);
+            _ = new Unit(objects, UnitIds.Integer, UnitNames.Integer, domain);
+            _ = new Unit(objects, UnitIds.String, UnitNames.String, domain);
+            _ = new Unit(objects, UnitIds.Unique, UnitNames.Unique, domain);
         }
 
         private void CreateDomains()
@@ -198,8 +183,7 @@ namespace Allors.Repository.Code
                             var fileInfo = new FileInfo(document.FilePath);
                             var directoryInfo = new DirectoryInfo(fileInfo.DirectoryName);
 
-                            var domain = new Domain(id, structureModel.Name, directoryInfo);
-                            this.Repository.Objects.Add(domain);
+                            var domain = new Domain(this.Repository.Objects, id, structureModel.Name, directoryInfo);
 
                             var extendsAttribute = structureModel.GetAttributes()
                                 .FirstOrDefault(v => v.AttributeClass.Name.Equals("ExtendsAttribute"));
@@ -216,8 +200,8 @@ namespace Allors.Repository.Code
                 foreach (var childName in parentNameByChildName.Keys)
                 {
                     var parentName = parentNameByChildName[childName];
-                    var child = this.Repository.Domains.First(v => v.Name == childName);
-                    var parent = this.Repository.Domains.First(v => v.Name == parentName);
+                    var child = this.Repository.Objects.OfType<Domain>().First(v => v.Name == childName);
+                    var parent = this.Repository.Objects.OfType<Domain>().First(v => v.Name == parentName);
                     child.Base = parent;
                 }
             }
@@ -245,15 +229,13 @@ namespace Allors.Repository.Code
                     if (idAttribute != null && idAttribute.ApplicationSyntaxReference?.SyntaxTree == syntaxTree)
                     {
                         var id = Guid.Parse((string)idAttribute.ConstructorArguments.First().Value);
-                        var domain = this.Repository.Domains.First(v => v.DirectoryInfo.Contains(fileInfo));
+                        var domain = this.Repository.Objects.OfType<Domain>().First(v => v.DirectoryInfo.Contains(fileInfo));
                         var symbol = semanticModel.GetDeclaredSymbol(interfaceDeclaration);
                         var interfaceSingularName = symbol.Name;
 
-                        var @interface = new Interface(this.inflector, id, interfaceSingularName, domain);
+                        var @interface = new Interface(this.inflector, this.Repository.Objects, id, interfaceSingularName, domain);
                         var xmlDoc = symbol.GetDocumentationCommentXml(null, true);
                         @interface.XmlDoc = !string.IsNullOrWhiteSpace(xmlDoc) ? new XmlDoc(xmlDoc) : null;
-
-                        this.Repository.Objects.Add(@interface);
                     }
                 }
 
@@ -265,15 +247,13 @@ namespace Allors.Repository.Code
                     if (idAttribute != null && idAttribute.ApplicationSyntaxReference?.SyntaxTree == syntaxTree)
                     {
                         var id = Guid.Parse((string)idAttribute.ConstructorArguments.First().Value);
-                        var domain = this.Repository.Domains.FirstOrDefault(v => v.DirectoryInfo.Contains(fileInfo));
+                        var domain = this.Repository.Objects.OfType<Domain>().FirstOrDefault(v => v.DirectoryInfo.Contains(fileInfo));
                         var symbol = semanticModel.GetDeclaredSymbol(classDeclaration);
                         var classSingularName = symbol.Name;
 
-                        var @class = new Class(this.inflector, id, classSingularName, domain);
+                        var @class = new Class(this.inflector, this.Repository.Objects, id, classSingularName, domain);
                         var xmlDoc = symbol.GetDocumentationCommentXml(null, true);
                         @class.XmlDoc = !string.IsNullOrWhiteSpace(xmlDoc) ? new XmlDoc(xmlDoc) : null;
-
-                        this.Repository.Objects.Add(@class);
                     }
                 }
             }
@@ -283,7 +263,7 @@ namespace Allors.Repository.Code
         {
             var definedTypeBySingularName = this.Assembly.DefinedTypes.Where(v => RepositoryNamespaceName.Equals(v.Namespace)).ToDictionary(v => v.Name);
 
-            var composites = this.Repository.Composites;
+            var composites = (IEnumerable<Composite>)this.Repository.Objects.OfType<Composite>();
 
             foreach (var composite in composites)
             {
@@ -291,7 +271,7 @@ namespace Allors.Repository.Code
                 var allInterfaces = definedType.GetInterfaces();
                 foreach (var definedImplementedInterface in allInterfaces.Except(allInterfaces.SelectMany(t => t.GetInterfaces())))
                 {
-                    var implementedInterface = this.Repository.Interfaces.FirstOrDefault(v => v.SingularName == definedImplementedInterface.Name);
+                    var implementedInterface = this.Repository.Objects.OfType<Interface>().FirstOrDefault(v => v.SingularName == definedImplementedInterface.Name);
 
                     if (implementedInterface == null)
                     {
@@ -321,17 +301,7 @@ namespace Allors.Repository.Code
                     if (RepositoryNamespaceName.Equals(symbol.ContainingNamespace.ToDisplayString()))
                     {
                         var recordName = symbol.Name;
-
-                        var record = this.Repository.Objects.OfType<Record>().FirstOrDefault(v => v.Name == recordName);
-
-                        if (record == null)
-                        {
-                            record = new Record(recordName);
-                            this.Repository.Objects.Add(record);
-                        }
-
-                        var typeModel = (ITypeSymbol)semanticModel.GetDeclaredSymbol(recordDeclaration);
-
+                        var record = this.Repository.Objects.OfType<Record>().FirstOrDefault(v => v.Name == recordName) ?? new Record(this.Repository.Objects, recordName);
                         var xmlDoc = symbol.GetDocumentationCommentXml(null, true);
                         record.XmlDoc = !string.IsNullOrWhiteSpace(xmlDoc) ? new XmlDoc(xmlDoc) : null;
                     }
@@ -347,7 +317,7 @@ namespace Allors.Repository.Code
                 var semanticModel = this.SemanticModelBySyntaxTree[syntaxTree];
                 var document = this.DocumentBySyntaxTree[syntaxTree];
                 var fileInfo = new FileInfo(document.FilePath);
-                var domain = this.Repository.Domains.FirstOrDefault(v => v.DirectoryInfo.Contains(fileInfo));
+                var domain = this.Repository.Objects.OfType<Domain>().FirstOrDefault(v => v.DirectoryInfo.Contains(fileInfo));
 
                 if (domain != null)
                 {
@@ -363,7 +333,7 @@ namespace Allors.Repository.Code
                             var composite = (Composite)type;
                             foreach (var propertyDeclaration in typeDeclaration.DescendantNodes().OfType<PropertyDeclarationSyntax>())
                             {
-                                _ = new Property(this.inflector, domain, semanticModel, composite, propertyDeclaration);
+                                _ = new Property(this.inflector, this.Repository.Objects, domain, semanticModel, composite, propertyDeclaration);
                             }
 
                             foreach (var methodDeclaration in typeDeclaration.DescendantNodes().OfType<MethodDeclarationSyntax>())
@@ -394,7 +364,7 @@ namespace Allors.Repository.Code
                     {
                         foreach (var propertyDeclaration in recordDeclaration.DescendantNodes().OfType<PropertyDeclarationSyntax>())
                         {
-                            _ = new Field(this.inflector, semanticModel, record, propertyDeclaration);
+                            _ = new Field(this.Repository.Objects, semanticModel, record, propertyDeclaration);
                         }
                     }
                 }
@@ -403,7 +373,7 @@ namespace Allors.Repository.Code
 
         private void FromReflection()
         {
-            foreach (var composite in this.Repository.Composites)
+            foreach (var composite in (IEnumerable<Composite>)this.Repository.Objects.OfType<Composite>())
             {
                 var typeInfo = this.typeInfoByName[composite.SingularName];
 
@@ -587,7 +557,7 @@ namespace Allors.Repository.Code
 
         private void LinkImplementations()
         {
-            foreach (var @class in this.Repository.Classes)
+            foreach (var @class in (IEnumerable<Class>)this.Repository.Objects.OfType<Class>())
             {
                 foreach (var property in @class.Properties)
                 {
@@ -631,7 +601,7 @@ namespace Allors.Repository.Code
 
         private void CreateInheritedProperties()
         {
-            foreach (var @interface in this.Repository.Interfaces)
+            foreach (var @interface in (IEnumerable<Interface>)this.Repository.Objects.OfType<Interface>())
             {
                 foreach (var supertype in @interface.Interfaces)
                 {
@@ -645,7 +615,7 @@ namespace Allors.Repository.Code
 
         private void CreateReverseProperties()
         {
-            foreach (var composite in this.Repository.Composites)
+            foreach (var composite in (IEnumerable<Composite>)this.Repository.Objects.OfType<Composite>())
             {
                 foreach (var property in composite.DefinedProperties)
                 {
@@ -655,7 +625,7 @@ namespace Allors.Repository.Code
                 }
             }
 
-            foreach (var composite in this.Repository.Composites)
+            foreach (var composite in (IEnumerable<Composite>)this.Repository.Objects.OfType<Composite>())
             {
                 foreach (var supertype in composite.Interfaces)
                 {

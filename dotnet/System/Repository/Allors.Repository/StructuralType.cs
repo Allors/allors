@@ -7,16 +7,18 @@
 namespace Allors.Repository.Domain
 {
     using System;
+    using System.Collections.Generic;
 
     public abstract class StructuralType : BehavioralType
     {
-        protected StructuralType(Guid id, string name, Domain domain)
+        protected StructuralType(ISet<RepositoryObject> objects, Guid id, string name, Domain domain)
         {
             this.Id = id;
             this.SingularName = name;
             this.Domain = domain;
 
-            domain.Types.Add(this);
+            domain.StructuralTypes.Add(this);
+            objects.Add(this);
         }
 
         public Guid Id { get; }
@@ -29,7 +31,7 @@ namespace Allors.Repository.Domain
 
         public bool IsClass => this is Class;
 
-        public bool IsComposite => !this.IsUnit;
+        public bool IsComposite => this is Composite;
 
         public bool IsUnit => this is Unit;
 

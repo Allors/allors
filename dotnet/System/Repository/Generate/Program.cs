@@ -11,6 +11,7 @@ namespace Generate
     using Allors.Repository;
     using Allors.Repository.Code;
     using Allors.Repository.Generation;
+    using Model;
     using NLog;
 
     public class Program
@@ -66,7 +67,8 @@ namespace Generate
             var outputDirectoryInfo = new DirectoryInfo(output);
 
             var repository = project.Repository;
-            stringTemplate.Generate(repository, outputDirectoryInfo);
+            var repositoryModel = new RepositoryModel(repository);
+            stringTemplate.Generate(repositoryModel, outputDirectoryInfo);
         }
     }
 }

@@ -2,18 +2,13 @@ namespace Allors.Repository.Domain
 {
     using System.Collections.Generic;
     using System;
-    using Inflector;
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
 
     public class Field : RepositoryObject
     {
-        private readonly Inflector inflector;
-
-        public Field(Inflector inflector, SemanticModel semanticModel, Record record, PropertyDeclarationSyntax propertyDeclaration)
+        public Field(ISet<RepositoryObject> objects, SemanticModel semanticModel, Record record, PropertyDeclarationSyntax propertyDeclaration)
         {
-            this.inflector = inflector;
-
             this.AttributeByName = new Dictionary<string, Attribute>();
             this.AttributesByName = new Dictionary<string, Attribute[]>();
 
@@ -26,6 +21,8 @@ namespace Allors.Repository.Domain
             this.XmlDoc = !string.IsNullOrWhiteSpace(xmlDocString) ? new XmlDoc(xmlDocString) : null;
 
             record.FieldByName.Add(this.Name, this);
+
+            objects.Add(this);
         }
 
         public string Name { get; }

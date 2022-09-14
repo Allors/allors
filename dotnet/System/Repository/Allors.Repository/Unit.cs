@@ -7,11 +7,12 @@
 namespace Allors.Repository.Domain
 {
     using System;
+    using System.Collections.Generic;
 
     public class Unit : StructuralType
     {
-        public Unit(Guid id, string name, Domain domain)
-            : base(id, name, domain)
+        public Unit(ISet<RepositoryObject> objects, Guid id, string name, Domain domain)
+            : base(objects, id, name, domain)
         {
         }
     }

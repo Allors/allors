@@ -13,8 +13,8 @@ namespace Allors.Repository.Domain
 
     public class Interface : Composite
     {
-        public Interface(Inflector inflector, Guid id, string name, Domain domain)
-            : base(inflector, id, name, domain) =>
+        public Interface(Inflector inflector, ISet<RepositoryObject> objects, Guid id, string name, Domain domain)
+            : base(inflector, objects, id, name, domain) =>
             this.InheritedPropertyByRoleName = new Dictionary<string, Property>();
 
 

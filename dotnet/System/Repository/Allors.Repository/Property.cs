@@ -17,7 +17,7 @@ namespace Allors.Repository.Domain
     {
         private readonly Inflector inflector;
 
-        public Property(Inflector inflector, Domain domain, SemanticModel semanticModel, Composite composite, PropertyDeclarationSyntax propertyDeclaration)
+        public Property(Inflector inflector, ISet<RepositoryObject> objects, Domain domain, SemanticModel semanticModel, Composite composite, PropertyDeclarationSyntax propertyDeclaration)
         {
             this.inflector = inflector;
 
@@ -35,7 +35,13 @@ namespace Allors.Repository.Domain
 
             composite.PropertyByRoleName.Add(this.RoleName, this);
             domain.Properties.Add(this);
+
+            objects.Add(this);
         }
+
+        public Dictionary<string, Attribute> AttributeByName { get; }
+
+        public Dictionary<string, Attribute[]> AttributesByName { get; }
 
         public Domain Domain { get; }
 
@@ -61,10 +67,6 @@ namespace Allors.Repository.Domain
         public StructuralType Type { get; set; }
 
         public Property DefiningProperty { get; set; }
-
-        public Dictionary<string, Attribute> AttributeByName { get; }
-
-        public Dictionary<string, Attribute[]> AttributesByName { get; }
 
         public Multiplicity Multiplicity
         {

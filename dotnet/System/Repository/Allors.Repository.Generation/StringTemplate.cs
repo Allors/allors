@@ -14,6 +14,7 @@ namespace Allors.Repository.Generation
     using Antlr4.StringTemplate;
     using Antlr4.StringTemplate.Misc;
     using Domain;
+    using Generate.Model;
     using NLog;
 
     public class StringTemplate
@@ -63,7 +64,7 @@ namespace Allors.Repository.Generation
 
         public override string ToString() => this.Name;
 
-        public void Generate(Repository repository, DirectoryInfo outputDirectory)
+        public void Generate(RepositoryModel repository, DirectoryInfo outputDirectory)
         {
             TemplateGroup templateGroup = new TemplateGroupFile(this.fileInfo.FullName, '$', '$');
 

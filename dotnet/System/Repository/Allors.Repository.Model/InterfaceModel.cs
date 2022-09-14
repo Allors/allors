@@ -1,5 +1,7 @@
 namespace Generate.Model
 {
+    using System.Collections.Generic;
+    using System.Linq;
     using Allors.Repository;
     using Allors.Repository.Domain;
 
@@ -16,5 +18,12 @@ namespace Generate.Model
         public override StructuralType StructuralType => this.Interface;
 
         public override Composite Composite => this.Interface;
+
+        public override InterfaceModel[] Interfaces => this.Interface.Interfaces.Select(this.RepositoryModel.Map).ToArray();
+
+        public Dictionary<string, PropertyModel> InheritedPropertyByRoleName => this.Interface.InheritedPropertyByRoleName.ToDictionary(v => v.Key, v => this.RepositoryModel.Map(v.Value));
+
+        public PropertyModel[] InheritedProperties => this.InheritedPropertyByRoleName.Values.ToArray();
+
     }
 }

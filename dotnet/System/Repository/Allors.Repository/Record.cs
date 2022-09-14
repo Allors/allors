@@ -6,7 +6,7 @@ namespace Allors.Repository.Domain
 
     public class Record : BehavioralType
     {
-        public Record(string name)
+        public Record(ISet<RepositoryObject> objects, string name)
         {
             this.Name = name;
 
@@ -14,17 +14,19 @@ namespace Allors.Repository.Domain
             this.AttributesByName = new Dictionary<string, Attribute[]>();
 
             this.FieldByName = new Dictionary<string, Field>();
+
+            objects.Add(this);
         }
+
+        public Dictionary<string, Attribute> AttributeByName { get; }
+
+        public Dictionary<string, Attribute[]> AttributesByName { get; }
 
         public string Name { get; }
 
         public XmlDoc XmlDoc { get; set; }
 
         public Dictionary<string, Field> FieldByName { get; }
-
-        public Dictionary<string, Attribute> AttributeByName { get; }
-
-        public Dictionary<string, Attribute[]> AttributesByName { get; }
 
         public Field[] Fields => this.FieldByName.Values.ToArray();
     }

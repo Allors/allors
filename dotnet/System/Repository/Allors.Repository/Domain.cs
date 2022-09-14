@@ -12,15 +12,17 @@ namespace Allors.Repository.Domain
 
     public class Domain : RepositoryObject
     {
-        public Domain(Guid id, string name, DirectoryInfo directoryInfo)
+        public Domain(ISet<RepositoryObject> objects, Guid id, string name, DirectoryInfo directoryInfo)
         {
             this.Id = id;
             this.Name = name;
             this.DirectoryInfo = directoryInfo;
 
-            this.Types = new HashSet<StructuralType>();
+            this.StructuralTypes = new HashSet<StructuralType>();
             this.Properties = new HashSet<Property>();
             this.Methods = new HashSet<Method>();
+
+            objects.Add(this);
         }
 
         public Guid Id { get; }
@@ -31,7 +33,7 @@ namespace Allors.Repository.Domain
 
         public Domain Base { get; set; }
 
-        public ISet<StructuralType> Types { get; }
+        public ISet<StructuralType> StructuralTypes { get; }
 
         public ISet<Property> Properties { get; }
 

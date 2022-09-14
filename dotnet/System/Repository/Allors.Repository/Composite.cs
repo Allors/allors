@@ -16,8 +16,8 @@ namespace Allors.Repository.Domain
     {
         private readonly Inflector inflector;
 
-        protected Composite(Inflector inflector, Guid id, string name, Domain domain)
-            : base(id, name, domain)
+        protected Composite(Inflector inflector, ISet<RepositoryObject> objects, Guid id, string name, Domain domain)
+            : base(objects, id, name, domain)
         {
             this.inflector = inflector;
             this.AttributeByName = new Dictionary<string, Attribute>();
@@ -28,6 +28,10 @@ namespace Allors.Repository.Domain
             this.InheritedReversePropertyByAssociationName = new Dictionary<string, Property>();
             this.MethodByName = new Dictionary<string, Method>();
         }
+
+        public Dictionary<string, Attribute> AttributeByName { get; }
+
+        public Dictionary<string, Attribute[]> AttributesByName { get; }
 
         public XmlDoc XmlDoc { get; set; }
 
@@ -43,10 +47,6 @@ namespace Allors.Repository.Domain
         public string AssignedPluralName => !Pluralizer.Pluralize(this.SingularName).Equals(this.PluralName) ? this.PluralName : null;
 
         public abstract Interface[] Interfaces { get; }
-
-        public Dictionary<string, Attribute> AttributeByName { get; }
-
-        public Dictionary<string, Attribute[]> AttributesByName { get; }
 
         public IList<Interface> ImplementedInterfaces { get; }
 

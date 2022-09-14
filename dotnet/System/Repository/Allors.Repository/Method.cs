@@ -47,7 +47,12 @@ namespace Allors.Repository.Domain
             }
 
             domain.Methods.Add(this);
+            objects.Add(this);
         }
+
+        public Dictionary<string, Attribute> AttributeByName { get; }
+
+        public Dictionary<string, Attribute[]> AttributesByName { get; }
 
         public Domain Domain { get; }
 
@@ -67,10 +72,6 @@ namespace Allors.Repository.Domain
         public Method DefiningMethod { get; set; }
 
         public StructuralType DefiningType { get; set; }
-
-        public Dictionary<string, Attribute> AttributeByName { get; }
-
-        public Dictionary<string, Attribute[]> AttributesByName { get; }
 
         public Record Input { get; set; }
 

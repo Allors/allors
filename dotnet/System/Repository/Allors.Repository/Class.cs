@@ -13,8 +13,8 @@ namespace Allors.Repository.Domain
 
     public class Class : Composite
     {
-        public Class(Inflector inflector, Guid id, string name, Domain domain)
-            : base(inflector, id, name, domain)
+        public Class(Inflector inflector, ISet<RepositoryObject> objects, Guid id, string name, Domain domain)
+            : base(inflector, objects, id, name, domain)
         {
         }
 
@@ -68,9 +68,5 @@ namespace Allors.Repository.Domain
 
             return null;
         }
-
-        public Property[] InheritedRequiredProperties => this.InheritedProperties.Where(v => v.Required).ToArray();
-
-        public Property[] InheritedUniqueProperties => this.InheritedProperties.Where(v => v.Unique).ToArray();
     }
 }

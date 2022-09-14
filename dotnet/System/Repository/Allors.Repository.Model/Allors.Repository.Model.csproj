@@ -3,6 +3,6 @@
     <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Allors.Repository.Model\Allors.Repository.Model.csproj" />
+    <ProjectReference Include="..\Allors.Repository\Allors.Repository.csproj" />
   </ItemGroup>
 </Project>
