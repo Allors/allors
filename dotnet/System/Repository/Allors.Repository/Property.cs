@@ -13,7 +13,7 @@ namespace Allors.Repository.Domain
     using Microsoft.CodeAnalysis.CSharp.Syntax;
     using Text;
 
-    public class Property
+    public class Property : RepositoryObject
     {
         private readonly Inflector inflector;
 

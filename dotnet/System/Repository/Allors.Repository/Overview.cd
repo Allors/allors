@@ -1,29 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="Allors.Repository.Domain.Repository">
-    <Position X="3.5" Y="2.25" Width="1.5" />
+    <Position X="3.5" Y="4.25" Width="1.5" />
     <Members>
       <Method Name="Repository" Hidden="true" />
     </Members>
-    <AssociationLine Name="TypeBySingularName" Type="Allors.Repository.Domain.Type" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="4.812" Y="2.25" />
-        <Point X="4.812" Y="1.375" />
-        <Point X="6.75" Y="1.375" />
-      </Path>
-    </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AgAAAAAAAAECAAAAAAAAAAgAQAAAAAAAkAACQAAAAIA=</HashCode>
+      <HashCode>AAAAAAAAAAECAAAAAAAAgAgAAAAAAAEAEAAAQAAAAIA=</HashCode>
       <FileName>Repository.cs</FileName>
     </TypeIdentifier>
-    <ShowAsCollectionAssociation>
-      <Property Name="DomainByName" />
-      <Property Name="TypeBySingularName" />
-      <Property Name="RecordByName" />
-    </ShowAsCollectionAssociation>
   </Class>
   <Class Name="Allors.Repository.Domain.Class">
-    <Position X="9.75" Y="9" Width="2.25" />
+    <Position X="9.75" Y="11.5" Width="2.25" />
     <Members>
       <Method Name="Class" Hidden="true" />
       <Method Name="GetImplementedMethod" Hidden="true" />
@@ -35,7 +23,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Allors.Repository.Domain.Composite">
-    <Position X="7.75" Y="3.25" Width="3.25" />
+    <Position X="7.75" Y="5.75" Width="3.25" />
     <Members>
       <Method Name="Composite" Hidden="true" />
       <Field Name="inflector" Hidden="true" />
@@ -47,13 +35,13 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Allors.Repository.Domain.Domain">
-    <Position X="0.5" Y="1.75" Width="1.5" />
+    <Position X="0.5" Y="3.75" Width="1.5" />
     <Members>
       <Method Name="Domain" Hidden="true" />
       <Method Name="ToString" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>IgASAAAAAAAAAAAEAAAAAAQAAAAAAAAAAAAAAAAAQAA=</HashCode>
+      <HashCode>AgASAAAAAAAAAAAEAAAAAAQAAAAAAAAAAAAAAAACQEA=</HashCode>
       <FileName>Domain.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -61,7 +49,7 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="Allors.Repository.Domain.Interface">
-    <Position X="7" Y="9" Width="2.25" />
+    <Position X="7" Y="11.5" Width="2.25" />
     <Members>
       <Method Name="AddInterfaces" Hidden="true" />
       <Method Name="GetImplementedMethod" Hidden="true" />
@@ -77,22 +65,21 @@
       <Property Name="Interfaces" />
     </ShowAsCollectionAssociation>
   </Class>
-  <Class Name="Allors.Repository.Domain.Type">
-    <Position X="6.75" Y="0.5" Width="1.5" />
+  <Class Name="Allors.Repository.Domain.StructuralType">
+    <Position X="6.75" Y="2.5" Width="1.5" />
     <Members>
       <Method Name="ToString" Hidden="true" />
-      <Method Name="Type" Hidden="true" />
     </Members>
     <Compartments>
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAAIEAAAAAAAAAiCAAAAAAAAAAUAAAAA=</HashCode>
-      <FileName>Type.cs</FileName>
+      <FileName>StructuralType.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Allors.Repository.Domain.Unit">
-    <Position X="6" Y="3.25" Width="1.5" />
+    <Position X="6" Y="5.75" Width="1.5" />
     <Members>
       <Method Name="Unit" Hidden="true" />
     </Members>
@@ -105,13 +92,13 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Allors.Repository.Domain.Method">
-    <Position X="11.5" Y="1.5" Width="1.75" />
+    <Position X="11.5" Y="3.5" Width="1.75" />
     <Members>
       <Method Name="Method" Hidden="true" />
       <Method Name="ToString" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAAAABAAAAAAAAAMAAAIAAQAEAAAAAAQAAMAAAAAAAQ=</HashCode>
+      <HashCode>AAAAABAAAAAAAAAMAAAIAAQAEgAAAAAQAAMAAAAAAAQ=</HashCode>
       <FileName>Method.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -120,14 +107,14 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="Allors.Repository.Domain.Property">
-    <Position X="13.25" Y="4.25" Width="2.25" />
+    <Position X="13.25" Y="6.25" Width="2.25" />
     <Members>
       <Field Name="inflector" Hidden="true" />
       <Method Name="Property" Hidden="true" />
       <Method Name="ToString" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAgCABiAMAEAAAEMAAAAQAAAiAIAAAAQAQMgEAAABAQ=</HashCode>
+      <HashCode>AAgCABiAMAEAAAEMAAAAQAAAigIAAAAQAQMgEAAABAQ=</HashCode>
       <FileName>Property.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -135,12 +122,12 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="Allors.Repository.Domain.Record">
-    <Position X="14.5" Y="0.5" Width="1.5" />
+    <Position X="14.5" Y="2.5" Width="1.5" />
     <Members>
       <Method Name="Record" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAQAAQAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAQAAUAAAAAgAQ=</HashCode>
       <FileName>Record.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
@@ -148,10 +135,22 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="Allors.Repository.Domain.Field">
-    <Position X="18.25" Y="0.5" Width="1.5" />
+    <Position X="18.25" Y="2.5" Width="1.5" />
+    <Members>
+      <Method Name="Field" Hidden="true" />
+      <Field Name="inflector" Hidden="true" />
+      <Method Name="ToString" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAAiAAAAAAAAAAEAAAAAAQAAAIAAAAQAQEAAAAABAQ=</HashCode>
+      <FileName>Field.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Allors.Repository.BehavioralType">
+    <Position X="10.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Field.cs</FileName>
+      <FileName>BehavioralType.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

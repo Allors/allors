@@ -8,13 +8,14 @@ namespace Allors.Repository.Domain
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Inflector;
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-    public class Method
+    public class Method : RepositoryObject
     {
-        public Method(Inflector inflector, Domain domain, Dictionary<string, Record> recordByName, SemanticModel semanticModel, Composite composite, MethodDeclarationSyntax methodDeclaration)
+        public Method(Inflector inflector, ISet<RepositoryObject> objects, Domain domain, SemanticModel semanticModel, Composite composite, MethodDeclarationSyntax methodDeclaration)
         {
             this.AttributeByName = new Dictionary<string, Attribute>();
             this.AttributesByName = new Dictionary<string, Attribute[]>();
@@ -35,14 +36,14 @@ namespace Allors.Repository.Domain
             {
                 var parameter = parameters.First();
                 var inputSymbol = (IParameterSymbol)semanticModel.GetDeclaredSymbol(parameter);
-                this.Input = recordByName[inputSymbol.Type.Name];
+                this.Input = objects.OfType<Record>().First(v => v.Name == inputSymbol.Type.Name);
             }
 
             var outputType = methodDeclaration.ReturnType;
             if (outputType is not PredefinedTypeSyntax)
             {
                 var outputTypeInfo = semanticModel.GetTypeInfo(outputType);
-                this.Output = recordByName[outputTypeInfo.Type.Name];
+                this.Output = objects.OfType<Record>().First(v => v.Name == outputTypeInfo.Type.Name);
             }
 
             domain.Methods.Add(this);

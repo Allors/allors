@@ -1,6 +1,6 @@
 namespace Allors.Repository
 {
-    public abstract class BehavioralType
+    public abstract class BehavioralType : RepositoryObject
     {
 
     }

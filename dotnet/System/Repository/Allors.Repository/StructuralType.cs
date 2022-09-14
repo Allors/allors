@@ -8,7 +8,7 @@ namespace Allors.Repository.Domain
 {
     using System;
 
-    public abstract class StructuralType
+    public abstract class StructuralType : BehavioralType
     {
         protected StructuralType(Guid id, string name, Domain domain)
         {

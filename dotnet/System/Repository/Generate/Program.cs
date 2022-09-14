@@ -3,16 +3,15 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Tools.Cmd
+namespace Generate
 {
     using System;
     using System.IO;
     using System.Threading.Tasks;
+    using Allors.Repository;
+    using Allors.Repository.Code;
+    using Allors.Repository.Generation;
     using NLog;
-    using Repository;
-    using Repository.Code;
-    using Repository.Domain;
-    using Repository.Generation;
 
     public class Program
     {

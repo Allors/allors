@@ -147,38 +147,38 @@ namespace Allors.Repository.Code
         protected void CreateUnits()
         {
             var domain = this.Repository.Domains.First();
-            var typeBySingularName = this.Repository.StructuralTypeBySingularName;
+            var objects = this.Repository.Objects;
 
             var binary = new Unit(UnitIds.Binary, UnitNames.Binary, domain);
-            typeBySingularName.Add(binary.SingularName, binary);
+            objects.Add(binary);
 
             var boolean = new Unit(UnitIds.Boolean, UnitNames.Boolean, domain);
-            typeBySingularName.Add(boolean.SingularName, boolean);
+            objects.Add(boolean);
 
             var datetime = new Unit(UnitIds.DateTime, UnitNames.DateTime, domain);
-            typeBySingularName.Add(datetime.SingularName, datetime);
+            objects.Add(datetime);
 
             var @decimal = new Unit(UnitIds.Decimal, UnitNames.Decimal, domain);
-            typeBySingularName.Add(@decimal.SingularName, @decimal);
+            objects.Add(@decimal);
 
             var @float = new Unit(UnitIds.Float, UnitNames.Float, domain);
-            typeBySingularName.Add(@float.SingularName, @float);
+            objects.Add(@float);
 
             var integer = new Unit(UnitIds.Integer, UnitNames.Integer, domain);
-            typeBySingularName.Add(integer.SingularName, integer);
+            objects.Add(integer);
 
             var @string = new Unit(UnitIds.String, UnitNames.String, domain);
-            typeBySingularName.Add(@string.SingularName, @string);
+            objects.Add(@string);
 
             var unique = new Unit(UnitIds.Unique, UnitNames.Unique, domain);
-            typeBySingularName.Add(unique.SingularName, unique);
+            objects.Add(unique);
         }
 
         private void CreateDomains()
         {
             try
             {
-                var parentByChild = new Dictionary<string, string>();
+                var parentNameByChildName = new Dictionary<string, string>();
 
                 foreach (var syntaxTree in this.DocumentBySyntaxTree.Keys)
                 {
@@ -199,7 +199,7 @@ namespace Allors.Repository.Code
                             var directoryInfo = new DirectoryInfo(fileInfo.DirectoryName);
 
                             var domain = new Domain(id, structureModel.Name, directoryInfo);
-                            this.Repository.DomainByName.Add(domain.Name, domain);
+                            this.Repository.Objects.Add(domain);
 
                             var extendsAttribute = structureModel.GetAttributes()
                                 .FirstOrDefault(v => v.AttributeClass.Name.Equals("ExtendsAttribute"));
@@ -207,16 +207,18 @@ namespace Allors.Repository.Code
 
                             if (!string.IsNullOrEmpty(parent))
                             {
-                                parentByChild.Add(domain.Name, parent);
+                                parentNameByChildName.Add(domain.Name, parent);
                             }
                         }
                     }
                 }
 
-                foreach (var child in parentByChild.Keys)
+                foreach (var childName in parentNameByChildName.Keys)
                 {
-                    var parent = parentByChild[child];
-                    this.Repository.DomainByName[child].Base = this.Repository.DomainByName[parent];
+                    var parentName = parentNameByChildName[childName];
+                    var child = this.Repository.Domains.First(v => v.Name == childName);
+                    var parent = this.Repository.Domains.First(v => v.Name == parentName);
+                    child.Base = parent;
                 }
             }
             catch (Exception e)
@@ -251,7 +253,7 @@ namespace Allors.Repository.Code
                         var xmlDoc = symbol.GetDocumentationCommentXml(null, true);
                         @interface.XmlDoc = !string.IsNullOrWhiteSpace(xmlDoc) ? new XmlDoc(xmlDoc) : null;
 
-                        this.Repository.StructuralTypeBySingularName.Add(interfaceSingularName, @interface);
+                        this.Repository.Objects.Add(@interface);
                     }
                 }
 
@@ -271,7 +273,7 @@ namespace Allors.Repository.Code
                         var xmlDoc = symbol.GetDocumentationCommentXml(null, true);
                         @class.XmlDoc = !string.IsNullOrWhiteSpace(xmlDoc) ? new XmlDoc(xmlDoc) : null;
 
-                        this.Repository.StructuralTypeBySingularName.Add(classSingularName, @class);
+                        this.Repository.Objects.Add(@class);
                     }
                 }
             }
@@ -289,14 +291,14 @@ namespace Allors.Repository.Code
                 var allInterfaces = definedType.GetInterfaces();
                 foreach (var definedImplementedInterface in allInterfaces.Except(allInterfaces.SelectMany(t => t.GetInterfaces())))
                 {
-                    if (this.Repository.StructuralTypeBySingularName.TryGetValue(definedImplementedInterface.Name, out var implementedInterface))
-                    {
-                        composite.ImplementedInterfaces.Add((Interface)implementedInterface);
-                    }
-                    else
+                    var implementedInterface = this.Repository.Interfaces.FirstOrDefault(v => v.SingularName == definedImplementedInterface.Name);
+
+                    if (implementedInterface == null)
                     {
                         throw new Exception("Can not find implemented interface " + definedImplementedInterface.Name + " on " + composite.SingularName);
                     }
+
+                    composite.ImplementedInterfaces.Add(implementedInterface);
                 }
             }
 
@@ -320,10 +322,12 @@ namespace Allors.Repository.Code
                     {
                         var recordName = symbol.Name;
 
-                        if (!this.Repository.RecordByName.TryGetValue(recordName, out var record))
+                        var record = this.Repository.Objects.OfType<Record>().FirstOrDefault(v => v.Name == recordName);
+
+                        if (record == null)
                         {
                             record = new Record(recordName);
-                            this.Repository.RecordByName.Add(recordName, record);
+                            this.Repository.Objects.Add(record);
                         }
 
                         var typeModel = (ITypeSymbol)semanticModel.GetDeclaredSymbol(recordDeclaration);
@@ -337,8 +341,6 @@ namespace Allors.Repository.Code
 
         private void CreateMembers()
         {
-            var recordByName = this.Repository.RecordByName;
-            
             foreach (var syntaxTree in this.DocumentBySyntaxTree.Keys)
             {
                 var root = syntaxTree.GetRoot();
@@ -354,7 +356,9 @@ namespace Allors.Repository.Code
                         var typeSymbol = semanticModel.GetDeclaredSymbol(typeDeclaration);
                         var typeName = typeSymbol.Name;
 
-                        if (this.Repository.StructuralTypeBySingularName.TryGetValue(typeName, out var type))
+                        var type = this.Repository.Objects.OfType<StructuralType>().FirstOrDefault(v => v.SingularName == typeName);
+
+                        if (type != null)
                         {
                             var composite = (Composite)type;
                             foreach (var propertyDeclaration in typeDeclaration.DescendantNodes().OfType<PropertyDeclarationSyntax>())
@@ -364,7 +368,7 @@ namespace Allors.Repository.Code
 
                             foreach (var methodDeclaration in typeDeclaration.DescendantNodes().OfType<MethodDeclarationSyntax>())
                             {
-                                _ = new Method(this.inflector, domain, recordByName, semanticModel, composite, methodDeclaration);
+                                _ = new Method(this.inflector, this.Repository.Objects, domain, semanticModel, composite, methodDeclaration);
                             }
                         }
                     }
@@ -374,8 +378,6 @@ namespace Allors.Repository.Code
 
         private void CreateFields()
         {
-            var recordByName = this.Repository.RecordByName;
-
             foreach (var syntaxTree in this.DocumentBySyntaxTree.Keys)
             {
                 var root = syntaxTree.GetRoot();
@@ -386,10 +388,10 @@ namespace Allors.Repository.Code
                     var symbol = semanticModel.GetDeclaredSymbol(recordDeclaration);
                     var recordName = symbol.Name;
 
-                    if (recordByName.TryGetValue(recordName, out var record))
-                    {
-                        var typeModel = (ITypeSymbol)semanticModel.GetDeclaredSymbol(recordDeclaration);
+                    var record = this.Repository.Objects.OfType<Record>().FirstOrDefault(v => v.Name == recordName);
 
+                    if (record != null)
+                    {
                         foreach (var propertyDeclaration in recordDeclaration.DescendantNodes().OfType<PropertyDeclarationSyntax>())
                         {
                             _ = new Field(this.inflector, semanticModel, record, propertyDeclaration);
@@ -403,11 +405,11 @@ namespace Allors.Repository.Code
         {
             foreach (var composite in this.Repository.Composites)
             {
-                var reflectedType = this.typeInfoByName[composite.SingularName];
+                var typeInfo = this.typeInfoByName[composite.SingularName];
 
                 // Type attributes
                 {
-                    foreach (var group in reflectedType.GetCustomAttributes(false).Cast<Attribute>().GroupBy(v => v.GetType()))
+                    foreach (var group in typeInfo.GetCustomAttributes(false).Cast<Attribute>().GroupBy(v => v.GetType()))
                     {
                         var type = group.Key;
                         var typeName = type.Name;
@@ -431,11 +433,11 @@ namespace Allors.Repository.Code
                 // Property attributes
                 foreach (var property in composite.Properties)
                 {
-                    var reflectedProperty = reflectedType.GetProperty(property.RoleName);
+                    var reflectedProperty = typeInfo.GetProperty(property.RoleName);
                     if (reflectedProperty == null)
                     {
                         this.HasErrors = true;
-                        Logger.Error($"{reflectedType.Name}.{property.RoleName} should be public");
+                        Logger.Error($"{typeInfo.Name}.{property.RoleName} should be public");
                         continue;
                     }
 
@@ -443,7 +445,7 @@ namespace Allors.Repository.Code
 
                     var reflectedPropertyType = reflectedProperty.PropertyType;
                     var typeName = this.GetTypeName(reflectedPropertyType);
-                    property.Type = this.Repository.StructuralTypeBySingularName[typeName];
+                    property.Type = this.Repository.Objects.OfType<StructuralType>().First(v => v.SingularName == typeName);
 
                     foreach (var group in propertyAttributesByTypeName)
                     {
@@ -475,20 +477,20 @@ namespace Allors.Repository.Code
                             if (property.IsRoleOne)
                             {
                                 this.HasErrors = true;
-                                Logger.Error($"{reflectedType.Name}.{property.RoleName} should be many");
+                                Logger.Error($"{typeInfo.Name}.{property.RoleName} should be many");
                             }
                         }
                         else if (property.IsRoleMany)
                         {
                             this.HasErrors = true;
-                            Logger.Error($"{reflectedType.Name}.{property.RoleName} should be one");
+                            Logger.Error($"{typeInfo.Name}.{property.RoleName} should be one");
                         }
                     }
                 }
 
                 foreach (var method in composite.Methods)
                 {
-                    var reflectedMethod = reflectedType.GetMethod(method.Name);
+                    var reflectedMethod = typeInfo.GetMethod(method.Name);
                     foreach (var group in reflectedMethod.GetCustomAttributes(false).Cast<Attribute>().GroupBy(v => v.GetType()))
                     {
                         var attributeType = group.Key;
@@ -506,6 +508,77 @@ namespace Allors.Repository.Code
                         else
                         {
                             method.AttributeByName.Add(attributeTypeName, group.First());
+                        }
+                    }
+                }
+            }
+
+            foreach (var record in this.Repository.Objects.OfType<Record>())
+            {
+                var typeInfo = this.typeInfoByName[record.Name];
+
+                // Type attributes
+                {
+                    foreach (var group in typeInfo.GetCustomAttributes(false).Cast<Attribute>().GroupBy(v => v.GetType()))
+                    {
+                        var type = group.Key;
+                        var typeName = type.Name;
+                        if (typeName.ToLowerInvariant().EndsWith("attribute"))
+                        {
+                            typeName = typeName.Substring(0, typeName.Length - "attribute".Length);
+                        }
+
+                        var attributeUsage = type.GetCustomAttributes<AttributeUsageAttribute>().FirstOrDefault();
+                        if (attributeUsage != null && attributeUsage.AllowMultiple)
+                        {
+                            record.AttributesByName[typeName] = group.ToArray();
+                        }
+                        else
+                        {
+                            record.AttributeByName[typeName] = group.First();
+                        }
+                    }
+                }
+
+                // Field attributes
+                foreach (var property in record.Fields)
+                {
+                    var reflectedProperty = typeInfo.GetProperty(property.Name);
+                    if (reflectedProperty == null)
+                    {
+                        this.HasErrors = true;
+                        Logger.Error($"{typeInfo.Name}.{property.Name} should be public");
+                        continue;
+                    }
+
+                    var propertyAttributesByTypeName = reflectedProperty.GetCustomAttributes(false).Cast<Attribute>().GroupBy(v => v.GetType());
+
+                    var reflectedPropertyType = reflectedProperty.PropertyType;
+                    var typeName = this.GetTypeName(reflectedPropertyType);
+
+                    property.Type = (BehavioralType)this.Repository.Objects.OfType<Record>().FirstOrDefault(v => v.Name == typeName) ?? this.Repository.Objects.OfType<StructuralType>().First(v => v.SingularName == typeName);
+                    property.IsMany = typeName.EndsWith("[]");
+
+                    foreach (var group in propertyAttributesByTypeName)
+                    {
+                        var attributeType = group.Key;
+                        var attributeTypeName = attributeType.Name;
+                        if (attributeTypeName.ToLowerInvariant().EndsWith("attribute"))
+                        {
+                            attributeTypeName = attributeTypeName.Substring(
+                                0,
+                                attributeTypeName.Length - "attribute".Length);
+                        }
+
+                        var attributeUsage =
+                            attributeType.GetCustomAttributes<AttributeUsageAttribute>().FirstOrDefault();
+                        if (attributeUsage != null && attributeUsage.AllowMultiple)
+                        {
+                            property.AttributesByName.Add(attributeTypeName, group.ToArray());
+                        }
+                        else
+                        {
+                            property.AttributeByName.Add(attributeTypeName, group.First());
                         }
                     }
                 }

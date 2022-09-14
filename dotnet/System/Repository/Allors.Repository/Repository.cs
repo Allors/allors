@@ -10,32 +10,23 @@ namespace Allors.Repository.Domain
     using System.Collections.Generic;
     using System.Linq;
 
-    public class Repository
+    public class Repository : RepositoryObject
     {
-        public Repository()
-        {
-            this.DomainByName = new Dictionary<string, Domain>();
-            this.RecordByName = new Dictionary<string, Record>();
-            this.StructuralTypeBySingularName = new Dictionary<string, StructuralType>();
-        }
+        public Repository() => this.Objects = new HashSet<RepositoryObject>();
 
-        public Dictionary<string, Domain> DomainByName { get; }
+        public ISet<RepositoryObject> Objects { get; }
 
-        public Dictionary<string, Record> RecordByName { get; }
+        public Domain[] Domains => this.Objects.OfType<Domain>().ToArray();
 
-        public Dictionary<string, StructuralType> StructuralTypeBySingularName { get; }
+        public StructuralType[] StructuralTypes => this.Objects.OfType<StructuralType>().ToArray();
 
-        public Domain[] Domains => this.DomainByName.Values.ToArray();
+        public Unit[] Units => this.Objects.OfType<Unit>().ToArray();
 
-        public StructuralType[] StructuralTypes => this.StructuralTypeBySingularName.Values.ToArray();
+        public Interface[] Interfaces => this.Objects.OfType<Interface>().ToArray();
 
-        public Unit[] Units => this.StructuralTypes.OfType<Unit>().ToArray();
+        public Class[] Classes => this.Objects.OfType<Class>().ToArray();
 
-        public Interface[] Interfaces => this.StructuralTypes.OfType<Interface>().ToArray();
-
-        public Class[] Classes => this.StructuralTypes.OfType<Class>().ToArray();
-
-        public Composite[] Composites => this.StructuralTypes.OfType<Composite>().ToArray();
+        public Composite[] Composites => this.Objects.OfType<Composite>().ToArray();
 
         public Domain[] SortedDomains
         {

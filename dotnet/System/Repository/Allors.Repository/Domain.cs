@@ -10,7 +10,7 @@ namespace Allors.Repository.Domain
     using System.Collections.Generic;
     using System.IO;
 
-    public class Domain
+    public class Domain : RepositoryObject
     {
         public Domain(Guid id, string name, DirectoryInfo directoryInfo)
         {

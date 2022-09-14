@@ -1,15 +1,13 @@
 namespace Allors.Repository.Domain
 {
-    using Allors.Text;
     using System.Collections.Generic;
     using System;
     using Inflector;
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-    public class Field
+    public class Field : RepositoryObject
     {
-
         private readonly Inflector inflector;
 
         public Field(Inflector inflector, SemanticModel semanticModel, Record record, PropertyDeclarationSyntax propertyDeclaration)
