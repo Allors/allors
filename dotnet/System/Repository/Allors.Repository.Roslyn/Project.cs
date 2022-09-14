@@ -141,39 +141,30 @@ namespace Allors.Repository.Code
         protected void CreateUnits()
         {
             var domain = this.Repository.Domains.First();
-            var unitBySingularName = this.Repository.UnitBySingularName;
             var typeBySingularName = this.Repository.TypeBySingularName;
 
             var binary = new Unit(UnitIds.Binary, UnitNames.Binary, domain);
-            unitBySingularName.Add(binary.SingularName, binary);
             typeBySingularName.Add(binary.SingularName, binary);
 
             var boolean = new Unit(UnitIds.Boolean, UnitNames.Boolean, domain);
-            unitBySingularName.Add(boolean.SingularName, boolean);
             typeBySingularName.Add(boolean.SingularName, boolean);
 
             var datetime = new Unit(UnitIds.DateTime, UnitNames.DateTime, domain);
-            unitBySingularName.Add(datetime.SingularName, datetime);
             typeBySingularName.Add(datetime.SingularName, datetime);
 
             var @decimal = new Unit(UnitIds.Decimal, UnitNames.Decimal, domain);
-            unitBySingularName.Add(@decimal.SingularName, @decimal);
             typeBySingularName.Add(@decimal.SingularName, @decimal);
 
             var @float = new Unit(UnitIds.Float, UnitNames.Float, domain);
-            unitBySingularName.Add(@float.SingularName, @float);
             typeBySingularName.Add(@float.SingularName, @float);
 
             var integer = new Unit(UnitIds.Integer, UnitNames.Integer, domain);
-            unitBySingularName.Add(integer.SingularName, integer);
             typeBySingularName.Add(integer.SingularName, integer);
 
             var @string = new Unit(UnitIds.String, UnitNames.String, domain);
-            unitBySingularName.Add(@string.SingularName, @string);
             typeBySingularName.Add(@string.SingularName, @string);
 
             var unique = new Unit(UnitIds.Unique, UnitNames.Unique, domain);
-            unitBySingularName.Add(unique.SingularName, unique);
             typeBySingularName.Add(unique.SingularName, unique);
         }
 
@@ -254,8 +245,6 @@ namespace Allors.Repository.Code
                         var xmlDoc = symbol.GetDocumentationCommentXml(null, true);
                         @interface.XmlDoc = !string.IsNullOrWhiteSpace(xmlDoc) ? new XmlDoc(xmlDoc) : null;
 
-                        this.Repository.InterfaceBySingularName.Add(interfaceSingularName, @interface);
-                        this.Repository.CompositeByName.Add(interfaceSingularName, @interface);
                         this.Repository.TypeBySingularName.Add(interfaceSingularName, @interface);
                     }
                 }
@@ -281,8 +270,6 @@ namespace Allors.Repository.Code
                         var xmlDoc = symbol.GetDocumentationCommentXml(null, true);
                         @class.XmlDoc = !string.IsNullOrWhiteSpace(xmlDoc) ? new XmlDoc(xmlDoc) : null;
 
-                        this.Repository.ClassBySingularName.Add(classSingularName, @class);
-                        this.Repository.CompositeByName.Add(classSingularName, @class);
                         this.Repository.TypeBySingularName.Add(classSingularName, @class);
                     }
                 }
@@ -326,7 +313,7 @@ namespace Allors.Repository.Code
         {
             var definedTypeBySingularName = this.Assembly.DefinedTypes.Where(v => RepositoryNamespaceName.Equals(v.Namespace)).ToDictionary(v => v.Name);
 
-            var composites = this.Repository.CompositeByName.Values.ToArray();
+            var composites = this.Repository.Composites;
 
             foreach (var composite in composites)
             {
@@ -334,9 +321,9 @@ namespace Allors.Repository.Code
                 var allInterfaces = definedType.GetInterfaces();
                 foreach (var definedImplementedInterface in allInterfaces.Except(allInterfaces.SelectMany(t => t.GetInterfaces())))
                 {
-                    if (this.Repository.InterfaceBySingularName.TryGetValue(definedImplementedInterface.Name, out var implementedInterface))
+                    if (this.Repository.TypeBySingularName.TryGetValue(definedImplementedInterface.Name, out var implementedInterface))
                     {
-                        composite.ImplementedInterfaces.Add(implementedInterface);
+                        composite.ImplementedInterfaces.Add((Interface)implementedInterface);
                     }
                     else
                     {
@@ -368,8 +355,9 @@ namespace Allors.Repository.Code
                         var typeSymbol = semanticModel.GetDeclaredSymbol(typeDeclaration);
                         var typeName = typeSymbol.Name;
 
-                        if (this.Repository.CompositeByName.TryGetValue(typeName, out var composite))
+                        if (this.Repository.TypeBySingularName.TryGetValue(typeName, out var type))
                         {
+                            var composite = (Composite)type;
                             foreach (var propertyDeclaration in typeDeclaration.DescendantNodes().OfType<PropertyDeclarationSyntax>())
                             {
                                 _ = new Property(this.inflector, semanticModel, composite, propertyDeclaration);
@@ -389,7 +377,7 @@ namespace Allors.Repository.Code
         {
             var declaredTypeBySingularName = this.Assembly.DefinedTypes.Where(v => RepositoryNamespaceName.Equals(v.Namespace)).ToDictionary(v => v.Name);
 
-            foreach (var composite in this.Repository.CompositeByName.Values)
+            foreach (var composite in this.Repository.Composites)
             {
                 var reflectedType = declaredTypeBySingularName[composite.SingularName];
 

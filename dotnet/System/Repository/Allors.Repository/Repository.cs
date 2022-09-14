@@ -15,38 +15,27 @@ namespace Allors.Repository.Domain
         public Repository()
         {
             this.DomainByName = new Dictionary<string, Domain>();
-            this.UnitBySingularName = new Dictionary<string, Unit>();
-            this.InterfaceBySingularName = new Dictionary<string, Interface>();
-            this.ClassBySingularName = new Dictionary<string, Class>();
-            this.CompositeByName = new Dictionary<string, Composite>();
-            this.TypeBySingularName = new Dictionary<string, Type>();
             this.RecordByName = new Dictionary<string, Record>();
+            this.TypeBySingularName = new Dictionary<string, Type>();
         }
+
         public Dictionary<string, Domain> DomainByName { get; }
-
-        public Dictionary<string, Unit> UnitBySingularName { get; }
-
-        public Dictionary<string, Interface> InterfaceBySingularName { get; }
-
-        public Dictionary<string, Class> ClassBySingularName { get; }
-
-        public Dictionary<string, Type> TypeBySingularName { get; }
-
-        public Dictionary<string, Composite> CompositeByName { get; }
 
         public Dictionary<string, Record> RecordByName { get; }
 
+        public Dictionary<string, Type> TypeBySingularName { get; }
+
         public Domain[] Domains => this.DomainByName.Values.ToArray();
 
-        public Unit[] Units => this.UnitBySingularName.Values.ToArray();
+        public Type[] Types => this.TypeBySingularName.Values.ToArray();
 
-        public Interface[] Interfaces => this.InterfaceBySingularName.Values.ToArray();
+        public Unit[] Units => this.Types.OfType<Unit>().ToArray();
 
-        public Class[] Classes => this.ClassBySingularName.Values.ToArray();
+        public Interface[] Interfaces => this.Types.OfType<Interface>().ToArray();
 
-        public Type[] Types => this.Composites.Cast<Type>().Union(this.Units).ToArray();
+        public Class[] Classes => this.Types.OfType<Class>().ToArray();
 
-        public Composite[] Composites => this.ClassBySingularName.Values.Cast<Composite>().Union(this.InterfaceBySingularName.Values).ToArray();
+        public Composite[] Composites => this.Types.OfType<Composite>().ToArray();
 
         public Domain[] SortedDomains
         {
