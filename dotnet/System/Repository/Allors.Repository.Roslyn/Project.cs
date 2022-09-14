@@ -141,7 +141,7 @@ namespace Allors.Repository.Code
         protected void CreateUnits()
         {
             var domain = this.Repository.Domains.First();
-            var typeBySingularName = this.Repository.TypeBySingularName;
+            var typeBySingularName = this.Repository.StructuralTypeBySingularName;
 
             var binary = new Unit(UnitIds.Binary, UnitNames.Binary, domain);
             typeBySingularName.Add(binary.SingularName, binary);
@@ -245,7 +245,7 @@ namespace Allors.Repository.Code
                         var xmlDoc = symbol.GetDocumentationCommentXml(null, true);
                         @interface.XmlDoc = !string.IsNullOrWhiteSpace(xmlDoc) ? new XmlDoc(xmlDoc) : null;
 
-                        this.Repository.TypeBySingularName.Add(interfaceSingularName, @interface);
+                        this.Repository.StructuralTypeBySingularName.Add(interfaceSingularName, @interface);
                     }
                 }
 
@@ -270,7 +270,7 @@ namespace Allors.Repository.Code
                         var xmlDoc = symbol.GetDocumentationCommentXml(null, true);
                         @class.XmlDoc = !string.IsNullOrWhiteSpace(xmlDoc) ? new XmlDoc(xmlDoc) : null;
 
-                        this.Repository.TypeBySingularName.Add(classSingularName, @class);
+                        this.Repository.StructuralTypeBySingularName.Add(classSingularName, @class);
                     }
                 }
             }
@@ -321,7 +321,7 @@ namespace Allors.Repository.Code
                 var allInterfaces = definedType.GetInterfaces();
                 foreach (var definedImplementedInterface in allInterfaces.Except(allInterfaces.SelectMany(t => t.GetInterfaces())))
                 {
-                    if (this.Repository.TypeBySingularName.TryGetValue(definedImplementedInterface.Name, out var implementedInterface))
+                    if (this.Repository.StructuralTypeBySingularName.TryGetValue(definedImplementedInterface.Name, out var implementedInterface))
                     {
                         composite.ImplementedInterfaces.Add((Interface)implementedInterface);
                     }
@@ -355,7 +355,7 @@ namespace Allors.Repository.Code
                         var typeSymbol = semanticModel.GetDeclaredSymbol(typeDeclaration);
                         var typeName = typeSymbol.Name;
 
-                        if (this.Repository.TypeBySingularName.TryGetValue(typeName, out var type))
+                        if (this.Repository.StructuralTypeBySingularName.TryGetValue(typeName, out var type))
                         {
                             var composite = (Composite)type;
                             foreach (var propertyDeclaration in typeDeclaration.DescendantNodes().OfType<PropertyDeclarationSyntax>())
@@ -419,7 +419,7 @@ namespace Allors.Repository.Code
 
                     var reflectedPropertyType = reflectedProperty.PropertyType;
                     var typeName = this.GetTypeName(reflectedPropertyType);
-                    property.Type = this.Repository.TypeBySingularName[typeName];
+                    property.Type = this.Repository.StructuralTypeBySingularName[typeName];
 
                     foreach (var group in propertyAttributesByTypeName)
                     {

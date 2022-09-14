@@ -8,7 +8,7 @@ namespace Allors.Repository.Domain
 {
     using System;
 
-    public class Unit : Type
+    public class Unit : StructuralType
     {
         public Unit(Guid id, string name, Domain domain)
             : base(id, name, domain)

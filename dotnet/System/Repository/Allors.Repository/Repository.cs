@@ -16,26 +16,26 @@ namespace Allors.Repository.Domain
         {
             this.DomainByName = new Dictionary<string, Domain>();
             this.RecordByName = new Dictionary<string, Record>();
-            this.TypeBySingularName = new Dictionary<string, Type>();
+            this.StructuralTypeBySingularName = new Dictionary<string, StructuralType>();
         }
 
         public Dictionary<string, Domain> DomainByName { get; }
 
         public Dictionary<string, Record> RecordByName { get; }
 
-        public Dictionary<string, Type> TypeBySingularName { get; }
+        public Dictionary<string, StructuralType> StructuralTypeBySingularName { get; }
 
         public Domain[] Domains => this.DomainByName.Values.ToArray();
 
-        public Type[] Types => this.TypeBySingularName.Values.ToArray();
+        public StructuralType[] StructuralTypes => this.StructuralTypeBySingularName.Values.ToArray();
 
-        public Unit[] Units => this.Types.OfType<Unit>().ToArray();
+        public Unit[] Units => this.StructuralTypes.OfType<Unit>().ToArray();
 
-        public Interface[] Interfaces => this.Types.OfType<Interface>().ToArray();
+        public Interface[] Interfaces => this.StructuralTypes.OfType<Interface>().ToArray();
 
-        public Class[] Classes => this.Types.OfType<Class>().ToArray();
+        public Class[] Classes => this.StructuralTypes.OfType<Class>().ToArray();
 
-        public Composite[] Composites => this.Types.OfType<Composite>().ToArray();
+        public Composite[] Composites => this.StructuralTypes.OfType<Composite>().ToArray();
 
         public Domain[] SortedDomains
         {

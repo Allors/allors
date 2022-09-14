@@ -55,7 +55,7 @@ namespace Allors.Repository.Domain
 
         public Method DefiningMethod { get; set; }
 
-        public Type DefiningType { get; set; }
+        public StructuralType DefiningType { get; set; }
 
         public Dictionary<string, Attribute> AttributeByName { get; }
 

@@ -8,9 +8,9 @@ namespace Allors.Repository.Domain
 {
     using System;
 
-    public abstract class Type
+    public abstract class StructuralType
     {
-        protected Type(Guid id, string name, Domain domain)
+        protected StructuralType(Guid id, string name, Domain domain)
         {
             this.Id = id;
             this.SingularName = name;
