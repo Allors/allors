@@ -1,8 +1,6 @@
 namespace Generate.Model
 {
-    using Allors.Repository;
     using Allors.Repository.Domain;
-    using Allors.Text;
     using System.Collections.Generic;
     using System;
     using System.Linq;
@@ -27,29 +25,21 @@ namespace Generate.Model
 
         public IList<InterfaceModel> ImplementedInterfaces => this.Composite.ImplementedInterfaces.Select(this.RepositoryModel.Map).ToArray();
 
-        public Dictionary<string, PropertyModel> PropertyByRoleName => this.Composite.PropertyByRoleName.ToDictionary(v => v.Key, v => this.RepositoryModel.Map(v.Value));
+        public PropertyModel[] Properties => this.Composite.Properties.Select(this.RepositoryModel.Map).ToArray();
 
-        public Dictionary<string, PropertyModel> DefinedReversePropertyByAssociationName => this.Composite.DefinedReversePropertyByAssociationName.ToDictionary(v => v.Key, v => this.RepositoryModel.Map(v.Value));
+        public PropertyModel[] DefinedProperties => this.Properties.Where(v => v.DefiningProperty == null).ToArray();
 
-        public Dictionary<string, PropertyModel> InheritedReversePropertyByAssociationName => this.Composite.InheritedReversePropertyByAssociationName.ToDictionary(v => v.Key, v => this.RepositoryModel.Map(v.Value));
+        public PropertyModel[] InheritedProperties => this.Properties.Where(v => v.DefiningProperty != null).ToArray();
 
-        public Dictionary<string, MethodModel> MethodByName => this.Composite.MethodByName.ToDictionary(v => v.Key, v => this.RepositoryModel.Map(v.Value));
+        public PropertyModel[] DefinedReverseProperties => this.Composite.DefinedReverseProperties.Select(this.RepositoryModel.Map).ToArray();
 
-        public PropertyModel[] Properties => this.PropertyByRoleName.Values.ToArray();
+        public PropertyModel[] InheritedReverseProperties => this.Composite.InheritedReverseProperties.Select(this.RepositoryModel.Map).ToArray();
 
-        public PropertyModel[] DefinedProperties => this.PropertyByRoleName.Values.Where(v => v.DefiningProperty == null).ToArray();
+        public MethodModel[] Methods => this.Composite.Methods.Select(this.RepositoryModel.Map).ToArray();
 
-        public PropertyModel[] InheritedProperties => this.PropertyByRoleName.Values.Where(v => v.DefiningProperty != null).ToArray();
+        public MethodModel[] DefinedMethods => this.Methods.Where(v => v.DefiningMethod == null).ToArray();
 
-        public PropertyModel[] DefinedReverseProperties => this.DefinedReversePropertyByAssociationName.Values.ToArray();
-
-        public PropertyModel[] InheritedReverseProperties => this.InheritedReversePropertyByAssociationName.Values.ToArray();
-
-        public MethodModel[] Methods => this.MethodByName.Values.ToArray();
-
-        public MethodModel[] DefinedMethods => this.MethodByName.Values.Where(v => v.DefiningMethod == null).ToArray();
-
-        public MethodModel[] InheritedMethods => this.MethodByName.Values.Where(v => v.DefiningMethod != null).ToArray();
+        public MethodModel[] InheritedMethods => this.Methods.Where(v => v.DefiningMethod != null).ToArray();
 
         public CompositeModel[] Subtypes => this.Composite.Subtypes.Select(this.RepositoryModel.Map).ToArray();
 

@@ -23,10 +23,10 @@ namespace Allors.Repository.Domain
             this.AttributeByName = new Dictionary<string, Attribute>();
             this.AttributesByName = new Dictionary<string, Attribute[]>();
             this.ImplementedInterfaces = new List<Interface>();
-            this.PropertyByRoleName = new Dictionary<string, Property>();
-            this.DefinedReversePropertyByAssociationName = new Dictionary<string, Property>();
-            this.InheritedReversePropertyByAssociationName = new Dictionary<string, Property>();
-            this.MethodByName = new Dictionary<string, Method>();
+            this.Properties = new HashSet<Property>();
+            this.DefinedReverseProperties = new HashSet<Property>();
+            this.InheritedReverseProperties = new HashSet<Property>();
+            this.Methods = new HashSet<Method>();
         }
 
         public Dictionary<string, Attribute> AttributeByName { get; }
@@ -50,29 +50,21 @@ namespace Allors.Repository.Domain
 
         public IList<Interface> ImplementedInterfaces { get; }
 
-        public Dictionary<string, Property> PropertyByRoleName { get; }
+        public ISet<Property> Properties { get; }
 
-        public Dictionary<string, Property> DefinedReversePropertyByAssociationName { get; }
+        public Property[] DefinedProperties => this.Properties.Where(v => v.DefiningProperty == null).ToArray();
 
-        public Dictionary<string, Property> InheritedReversePropertyByAssociationName { get; }
+        public Property[] InheritedProperties => this.Properties.Where(v => v.DefiningProperty != null).ToArray();
 
-        public Dictionary<string, Method> MethodByName { get; }
+        public ISet<Property> DefinedReverseProperties { get; }
 
-        public Property[] Properties => this.PropertyByRoleName.Values.ToArray();
+        public ISet<Property> InheritedReverseProperties { get; }
 
-        public Property[] DefinedProperties => this.PropertyByRoleName.Values.Where(v => v.DefiningProperty == null).ToArray();
+        public ISet<Method> Methods { get; }
 
-        public Property[] InheritedProperties => this.PropertyByRoleName.Values.Where(v => v.DefiningProperty != null).ToArray();
+        public Method[] DefinedMethods => this.Methods.Where(v => v.DefiningMethod == null).ToArray();
 
-        public Property[] DefinedReverseProperties => this.DefinedReversePropertyByAssociationName.Values.ToArray();
-
-        public Property[] InheritedReverseProperties => this.InheritedReversePropertyByAssociationName.Values.ToArray();
-
-        public Method[] Methods => this.MethodByName.Values.ToArray();
-
-        public Method[] DefinedMethods => this.MethodByName.Values.Where(v => v.DefiningMethod == null).ToArray();
-
-        public Method[] InheritedMethods => this.MethodByName.Values.Where(v => v.DefiningMethod != null).ToArray();
+        public Method[] InheritedMethods => this.Methods.Where(v => v.DefiningMethod != null).ToArray();
 
         public Composite[] Subtypes { get; set; }
 

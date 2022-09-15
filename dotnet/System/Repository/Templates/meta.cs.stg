@@ -2,7 +2,7 @@ group AllorsCSharpRepository;
 
 TemplateId() ::= <<14F49218-A676-43ba-9CBD-B8FFA059D1BF>>
 TemplateName() ::= <<Allors C# Meta>>
-TemplateVersion() ::= <<3.0.12>>
+TemplateVersion() ::= <<3.0.13>>
 TemplateAllors() ::= <<1.0>>
 TemplateConfiguration(repository) ::= <<
 $!
@@ -201,8 +201,8 @@ define_roleType(property) ::= <<
         public Meta$property.DefiningType.SingularName$$property.RoleName$(RelationType relationType) : base(relationType)
         {
         }
-$if(property.Type.IsComposite)$
-        public Meta$property.Type.SingularName$ $property.Type.SingularName$ => this.M.$property.Type.SingularName$;
+$if(property.ObjectType.IsComposite)$
+        public Meta$property.ObjectType.SingularName$ $property.ObjectType.SingularName$ => this.M.$property.ObjectType.SingularName$;
 $endif$
     }
 >>
@@ -429,7 +429,7 @@ $if(property.AttributeByName.Derived)$		        IsDerived = $property.AttributeB
 $if(property.AttributeByName.Indexed)$		        IsIndexed = $property.AttributeByName.Indexed.Value$,$endif$
                 RoleType =
                 {
-                    ObjectType = meta.$property.Type.SingularName$,
+                    ObjectType = meta.$property.ObjectType.SingularName$,
 $if(property.AssignedRoleSingularName)$		            SingularName = "$property.RoleSingularName$",$endif$
 $if(property.AssignedRolePluralName)$		            PluralName = "$property.RolePluralName$",$endif$
 $if(property.AttributeByName.Required)$		            IsRequired = $property.AttributeByName.Required.Value$,$endif$

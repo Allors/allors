@@ -21,7 +21,6 @@ namespace Allors.Repository.Code
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
     using NLog;
-    using Type = System.Type;
     using TypeInfo = System.Reflection.TypeInfo;
 
     public class Project
@@ -102,28 +101,6 @@ namespace Allors.Repository.Code
 
             this.CreateInheritedProperties();
             this.CreateReverseProperties();
-
-            var ids = new HashSet<Guid>();
-
-            foreach (var composite in (IEnumerable<Composite>)this.Repository.Objects.OfType<Composite>())
-            {
-                this.CheckId(ids, composite.Id, $"{composite.SingularName}", "id");
-
-                // TODO: Add id checks for properties
-                foreach (var property in composite.DefinedProperties)
-                {
-                    this.CheckId(ids, property.Id, $"{composite.SingularName}.{property.RoleName}", "id");
-                }
-
-                foreach (var method in composite.DefinedMethods)
-                {
-                    if (!method.AttributeByName.ContainsKey("Id"))
-                    {
-                        this.HasErrors = true;
-                        Logger.Error($"{method} has no Id attribute.");
-                    }
-                }
-            }
         }
 
         public Repository Repository { get; private set; }
@@ -158,7 +135,6 @@ namespace Allors.Repository.Code
             _ = new Unit(objects, UnitIds.String, UnitNames.String, domain);
             _ = new Unit(objects, UnitIds.Unique, UnitNames.Unique, domain);
         }
-
         private void CreateDomains()
         {
             try
@@ -263,7 +239,7 @@ namespace Allors.Repository.Code
         {
             var definedTypeBySingularName = this.Assembly.DefinedTypes.Where(v => RepositoryNamespaceName.Equals(v.Namespace)).ToDictionary(v => v.Name);
 
-            var composites = (IEnumerable<Composite>)this.Repository.Objects.OfType<Composite>();
+            var composites = this.Repository.Objects.OfType<Composite>();
 
             foreach (var composite in composites)
             {
@@ -373,7 +349,7 @@ namespace Allors.Repository.Code
 
         private void FromReflection()
         {
-            foreach (var composite in (IEnumerable<Composite>)this.Repository.Objects.OfType<Composite>())
+            foreach (var composite in this.Repository.Objects.OfType<Composite>())
             {
                 var typeInfo = this.typeInfoByName[composite.SingularName];
 
@@ -415,7 +391,7 @@ namespace Allors.Repository.Code
 
                     var reflectedPropertyType = reflectedProperty.PropertyType;
                     var typeName = this.GetTypeName(reflectedPropertyType);
-                    property.Type = this.Repository.Objects.OfType<ObjectType>().First(v => v.SingularName == typeName);
+                    property.ObjectType = this.Repository.Objects.OfType<ObjectType>().First(v => v.SingularName == typeName);
 
                     foreach (var group in propertyAttributesByTypeName)
                     {
@@ -444,13 +420,13 @@ namespace Allors.Repository.Code
                     {
                         if (reflectedPropertyType.Name.EndsWith("[]"))
                         {
-                            if (property.IsRoleOne)
+                            if (!(property.Multiplicity is Multiplicity.OneToMany or Multiplicity.ManyToMany))
                             {
                                 this.HasErrors = true;
                                 Logger.Error($"{typeInfo.Name}.{property.RoleName} should be many");
                             }
                         }
-                        else if (property.IsRoleMany)
+                        else if (property.Multiplicity is Multiplicity.OneToMany or Multiplicity.ManyToMany)
                         {
                             this.HasErrors = true;
                             Logger.Error($"{typeInfo.Name}.{property.RoleName} should be one");
@@ -557,7 +533,7 @@ namespace Allors.Repository.Code
 
         private void LinkImplementations()
         {
-            foreach (var @class in (IEnumerable<Class>)this.Repository.Objects.OfType<Class>())
+            foreach (var @class in this.Repository.Objects.OfType<Class>())
             {
                 foreach (var property in @class.Properties)
                 {
@@ -601,7 +577,7 @@ namespace Allors.Repository.Code
 
         private void CreateInheritedProperties()
         {
-            foreach (var @interface in (IEnumerable<Interface>)this.Repository.Objects.OfType<Interface>())
+            foreach (var @interface in this.Repository.Objects.OfType<Interface>())
             {
                 foreach (var supertype in @interface.Interfaces)
                 {
@@ -615,48 +591,26 @@ namespace Allors.Repository.Code
 
         private void CreateReverseProperties()
         {
-            foreach (var composite in (IEnumerable<Composite>)this.Repository.Objects.OfType<Composite>())
+            foreach (var composite in this.Repository.Objects.OfType<Composite>())
             {
                 foreach (var property in composite.DefinedProperties)
                 {
-                    var reverseType = property.Type;
+                    var reverseType = property.ObjectType;
                     var reverseComposite = reverseType as Composite;
-                    reverseComposite?.DefinedReversePropertyByAssociationName.Add(property.AssociationName, property);
+                    reverseComposite?.DefinedReverseProperties.Add(property);
                 }
             }
 
-            foreach (var composite in (IEnumerable<Composite>)this.Repository.Objects.OfType<Composite>())
+            foreach (var composite in this.Repository.Objects.OfType<Composite>())
             {
                 foreach (var supertype in composite.Interfaces)
                 {
                     foreach (var property in supertype.DefinedReverseProperties)
                     {
-                        composite.InheritedReversePropertyByAssociationName.Add(property.AssociationName, property);
+                        composite.InheritedReverseProperties.Add(property);
                     }
                 }
             }
-        }
-
-        private void CheckId(ISet<Guid> ids, string id, string name, string key)
-        {
-            if (!Guid.TryParse(id, out var idGuid))
-            {
-                this.HasErrors = true;
-                Logger.Error($"{name} has a non GUID {key}: {id}");
-            }
-
-            this.CheckId(ids, idGuid, name, key);
-        }
-
-        private void CheckId(ISet<Guid> ids, Guid id, string name, string key)
-        {
-            if (ids.Contains(id))
-            {
-                this.HasErrors = true;
-                Logger.Error($"{name} has a duplicate {key}: {id}");
-            }
-
-            ids.Add(id);
         }
     }
 }

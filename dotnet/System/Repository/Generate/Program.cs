@@ -68,6 +68,12 @@ namespace Generate
 
             var repository = project.Repository;
             var repositoryModel = new RepositoryModel(repository);
+
+            if (repositoryModel.HasErrors)
+            {
+                throw new RepositoryException("Repository model has errors.");
+            }
+
             stringTemplate.Generate(repositoryModel, outputDirectoryInfo);
         }
     }

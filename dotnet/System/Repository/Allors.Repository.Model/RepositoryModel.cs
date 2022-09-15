@@ -5,9 +5,12 @@ namespace Generate.Model
     using System.Linq;
     using Allors.Repository;
     using Allors.Repository.Domain;
+    using NLog;
 
     public class RepositoryModel
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
         private readonly Dictionary<RepositoryObject, RepositoryObjectModel> mapping;
 
         public RepositoryModel(Repository repository)
@@ -55,7 +58,28 @@ namespace Generate.Model
                     throw new Exception($"Missing mapping for {@object}");
                 }
             }
+
+
+            // Validations
+            var ids = new HashSet<Guid>();
+
+            foreach (var composite in this.Repository.Objects.OfType<Composite>())
+            {
+                this.CheckId(ids, composite.Id, $"{composite.SingularName}", "id");
+            }
+
+            foreach (var property in this.Repository.Objects.OfType<Property>().Where(v => v.DefiningProperty == null))
+            {
+                this.CheckId(ids, property.Id, $"{property.ObjectType.SingularName}.{property.RoleName}", "id");
+            }
+
+            foreach (var method in this.Repository.Objects.OfType<Method>().Where(v => v.DefiningMethod == null))
+            {
+                this.CheckId(ids, method.Id, $"{method.DefiningType.SingularName}.{method.Name}", "id");
+            }
         }
+
+        public bool HasErrors { get; set; }
 
         public Repository Repository { get; }
 
@@ -106,5 +130,27 @@ namespace Generate.Model
 
         public FieldModel Map(Field v) => v != null ? (FieldModel)this.mapping[v] : null;
         #endregion
+
+        private void CheckId(ISet<Guid> ids, string id, string name, string key)
+        {
+            if (!Guid.TryParse(id, out var idGuid))
+            {
+                this.HasErrors = true;
+                Logger.Error($"{name} has a non GUID {key}: {id}");
+            }
+
+            this.CheckId(ids, idGuid, name, key);
+        }
+
+        private void CheckId(ISet<Guid> ids, Guid id, string name, string key)
+        {
+            if (ids.Contains(id))
+            {
+                this.HasErrors = true;
+                Logger.Error($"{name} has a duplicate {key}: {id}");
+            }
+
+            ids.Add(id);
+        }
     }
 }

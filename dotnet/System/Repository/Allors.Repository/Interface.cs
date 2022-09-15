@@ -40,7 +40,8 @@ namespace Allors.Repository.Domain
 
         public Property GetImplementedProperty(Property property)
         {
-            if (this.PropertyByRoleName.TryGetValue(property.RoleName, out var implementedProperty))
+            var implementedProperty = this.Properties.FirstOrDefault(v => v.RoleName == property.RoleName);
+            if (implementedProperty != null)
             {
                 return implementedProperty;
             }
@@ -59,7 +60,8 @@ namespace Allors.Repository.Domain
 
         public Method GetImplementedMethod(Method method)
         {
-            if (this.MethodByName.TryGetValue(method.Name, out var implementedMethod))
+            var implementedMethod = this.Methods.FirstOrDefault(v => v.Name == method.Name);
+            if (implementedMethod != null)
             {
                 return implementedMethod;
             }

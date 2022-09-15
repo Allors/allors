@@ -33,7 +33,7 @@ namespace Allors.Repository.Domain
             var xmlDocString = propertySymbol.GetDocumentationCommentXml(null, true);
             this.XmlDoc = !string.IsNullOrWhiteSpace(xmlDocString) ? new XmlDoc(xmlDocString) : null;
 
-            composite.PropertyByRoleName.Add(this.RoleName, this);
+            composite.Properties.Add(this);
             domain.Properties.Add(this);
 
             objects.Add(this);
@@ -64,7 +64,7 @@ namespace Allors.Repository.Domain
 
         public Composite DefiningType { get; }
 
-        public ObjectType Type { get; set; }
+        public ObjectType ObjectType { get; set; }
 
         public Property DefiningProperty { get; set; }
 
@@ -72,7 +72,7 @@ namespace Allors.Repository.Domain
         {
             get
             {
-                if (this.Type is Unit)
+                if (this.ObjectType is Unit)
                 {
                     return Multiplicity.OneToOne;
                 }
@@ -87,33 +87,13 @@ namespace Allors.Repository.Domain
             }
         }
 
-        public bool IsRoleOne => !this.IsRoleMany;
-
-        public bool IsRoleMany =>
-            this.Multiplicity switch
-            {
-                Multiplicity.OneToMany => true,
-                Multiplicity.ManyToMany => true,
-                _ => false
-            };
-
-        public bool IsAssociationOne => !this.IsAssociationMany;
-
-        public bool IsAssociationMany =>
-            this.Multiplicity switch
-            {
-                Multiplicity.ManyToOne => true,
-                Multiplicity.ManyToMany => true,
-                _ => false
-            };
-
         public string RoleName { get; }
 
         public string RoleSingularName
         {
             get
             {
-                if (this.IsRoleOne)
+                if (this.Multiplicity is Multiplicity.OneToOne or Multiplicity.ManyToOne)
                 {
                     return this.RoleName;
                 }
@@ -123,13 +103,13 @@ namespace Allors.Repository.Domain
             }
         }
 
-        public string AssignedRoleSingularName => !this.RoleSingularName.Equals(this.Type.SingularName) ? this.RoleSingularName : null;
+        public string AssignedRoleSingularName => !this.RoleSingularName.Equals(this.ObjectType.SingularName) ? this.RoleSingularName : null;
 
         public string RolePluralName
         {
             get
             {
-                if (this.IsRoleMany)
+                if (this.Multiplicity is Multiplicity.OneToMany or Multiplicity.ManyToMany)
                 {
                     return this.RoleName;
                 }
@@ -145,7 +125,7 @@ namespace Allors.Repository.Domain
         {
             get
             {
-                if (this.IsAssociationMany)
+                if (this.Multiplicity is Multiplicity.ManyToOne or Multiplicity.ManyToMany)
                 {
                     return this.DefiningType.PluralName + "Where" + this.RoleSingularName;
                 }

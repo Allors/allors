@@ -27,7 +27,7 @@ namespace Generate.Model
 
         public MethodModel DefiningMethod => this.RepositoryModel.Map(this.Method.DefiningMethod);
 
-        public ObjectTypeModel DefiningType => this.RepositoryModel.Map(this.Method.DefiningType);
+        public CompositeModel DefiningType => this.RepositoryModel.Map(this.Method.DefiningType);
 
         public RecordModel Input => this.RepositoryModel.Map(this.Method.Input);
 

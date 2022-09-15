@@ -3,7 +3,6 @@ namespace Generate.Model
     using Allors;
     using Allors.Repository;
     using Allors.Repository.Domain;
-    using Allors.Text;
     using System.Collections.Generic;
     using System;
 
@@ -33,19 +32,19 @@ namespace Generate.Model
 
         public Composite DefiningType => this.Property.DefiningType;
 
-        public ObjectType Type => this.Property.Type;
+        public ObjectType ObjectType => this.Property.ObjectType;
 
         public Property DefiningProperty => this.Property.DefiningProperty;
 
         public Multiplicity Multiplicity => this.Property.Multiplicity;
 
-        public bool IsRoleOne => this.Property.IsRoleOne;
+        public bool IsRoleOne => !(this.Property.Multiplicity is Multiplicity.OneToMany or Multiplicity.ManyToMany);
 
-        public bool IsRoleMany => this.Property.IsRoleMany;
+        public bool IsRoleMany => this.Property.Multiplicity is Multiplicity.OneToMany or Multiplicity.ManyToMany;
 
-        public bool IsAssociationOne => this.Property.IsAssociationOne;
+        public bool IsAssociationOne => !(this.Property.Multiplicity is Multiplicity.ManyToOne or Multiplicity.ManyToMany);
 
-        public bool IsAssociationMany => this.Property.IsAssociationMany;
+        public bool IsAssociationMany => this.Property.Multiplicity is Multiplicity.ManyToOne or Multiplicity.ManyToMany;
 
         public string RoleName => this.Property.RoleName;
 

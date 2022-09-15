@@ -2,7 +2,6 @@ namespace Generate.Model
 {
     using Allors.Repository;
     using Allors.Repository.Domain;
-    using System;
     using System.Linq;
 
     public class ClassModel : CompositeModel

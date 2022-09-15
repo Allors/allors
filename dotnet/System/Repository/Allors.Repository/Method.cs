@@ -29,7 +29,7 @@ namespace Allors.Repository.Domain
             var xmlDocString = methodSymbol.GetDocumentationCommentXml(null, true);
             this.XmlDoc = !string.IsNullOrWhiteSpace(xmlDocString) ? new XmlDoc(xmlDocString) : null;
 
-            composite.MethodByName.Add(this.Name, this);
+            composite.Methods.Add(this);
 
             var parameters = methodDeclaration.ParameterList.Parameters;
             if (parameters.Any())
@@ -65,13 +65,15 @@ namespace Allors.Repository.Domain
             }
         }
 
+        public string Id => ((dynamic)this.AttributeByName.Get("Id"))?.Value;
+
         public string Name { get; }
 
         public XmlDoc XmlDoc { get; set; }
 
         public Method DefiningMethod { get; set; }
 
-        public ObjectType DefiningType { get; set; }
+        public Composite DefiningType { get; set; }
 
         public Record Input { get; set; }
 
