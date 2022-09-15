@@ -6,22 +6,18 @@
 
 namespace Allors.Repository.Domain
 {
-    using System;
     using System.Collections.Generic;
 
     public abstract class ObjectType : FieldObjectType
     {
-        protected ObjectType(ISet<RepositoryObject> objects, Guid id, string name, Domain domain)
+        protected ObjectType(ISet<RepositoryObject> objects, string name, Domain domain)
         {
-            this.Id = id;
             this.SingularName = name;
             this.Domain = domain;
 
             domain.ObjectTypes.Add(this);
             objects.Add(this);
         }
-
-        public Guid Id { get; }
 
         public string SingularName { get; }
 

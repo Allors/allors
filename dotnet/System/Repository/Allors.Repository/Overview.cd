@@ -14,7 +14,7 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="Allors.Repository.Domain.Class">
-    <Position X="6" Y="11" Width="1.75" />
+    <Position X="6" Y="10.25" Width="1.75" />
     <Members>
       <Method Name="Class" Hidden="true" />
       <Method Name="GetImplementedMethod" Hidden="true" />
@@ -37,23 +37,23 @@
     </Members>
     <AssociationLine Name="Interfaces" Type="Allors.Repository.Domain.Interface" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="4" Y="9.524" />
-        <Point X="3.031" Y="9.524" />
-        <Point X="3.031" Y="11" />
+        <Point X="4" Y="9.196" />
+        <Point X="3.031" Y="9.196" />
+        <Point X="3.031" Y="10.25" />
       </Path>
     </AssociationLine>
     <AssociationLine Name="ImplementedInterfaces" Type="Allors.Repository.Domain.Interface" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="4" Y="9.812" />
-        <Point X="3.328" Y="9.812" />
-        <Point X="3.328" Y="11" />
+        <Point X="4" Y="9.447" />
+        <Point X="3.328" Y="9.447" />
+        <Point X="3.328" Y="10.25" />
       </Path>
       <MemberNameLabel ManuallyPlaced="true">
         <Position X="0.068" Y="0.327" />
       </MemberNameLabel>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAgAIAAAAAEAAACAAgAIAIAAIASEAIAAAACAEA=</HashCode>
+      <HashCode>AAAAAAAgAAAAAAAEAAACAAgAIAIAAIASAAIAAAACAEA=</HashCode>
       <FileName>Composite.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
@@ -76,7 +76,7 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="Allors.Repository.Domain.Interface">
-    <Position X="2.5" Y="11" Width="2.25" />
+    <Position X="2.5" Y="10.25" Width="2.25" />
     <Members>
       <Method Name="AddInterfaces" Hidden="true" />
       <Method Name="GetImplementedMethod" Hidden="true" />
@@ -127,9 +127,23 @@
     </Members>
     <AssociationLine Name="DefiningType" Type="Allors.Repository.Domain.Composite" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="10.625" Y="4.752" />
-        <Point X="10.625" Y="7.352" />
-        <Point X="6.25" Y="7.352" />
+        <Point X="11.625" Y="4.752" />
+        <Point X="11.625" Y="7.306" />
+        <Point X="6.25" Y="7.306" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="Input" Type="Allors.Repository.Domain.Record" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="10.938" Y="4.752" />
+        <Point X="10.938" Y="5.812" />
+        <Point X="6.75" Y="5.812" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="Output" Type="Allors.Repository.Domain.Record" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="10.562" Y="4.752" />
+        <Point X="10.562" Y="5.312" />
+        <Point X="6.75" Y="5.312" />
       </Path>
     </AssociationLine>
     <TypeIdentifier>
@@ -180,7 +194,7 @@
       <Method Name="ToString" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAAAiAAAAAAAAAAEAAAAAAQAAAAAAAAQAQAAAAAABAA=</HashCode>
+      <HashCode>AAAACAAAAAAAAAAEAAAAAAQAAAAAAAAQAQAAAAAABAA=</HashCode>
       <FileName>Field.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>

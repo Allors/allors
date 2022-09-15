@@ -19,7 +19,7 @@ namespace Generate.Model
 
         public FieldObjectTypeModel Type => this.RepositoryModel.Map(this.Field.Type);
 
-        public bool IsOne => this.Field.IsOne;
+        public bool IsOne => !this.Field.IsMany;
 
         public bool IsMany => this.Field.IsMany;
     }

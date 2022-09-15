@@ -1,7 +1,6 @@
 namespace Allors.Repository.Domain
 {
     using System.Collections.Generic;
-    using System;
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
 
@@ -29,8 +28,6 @@ namespace Allors.Repository.Domain
         public XmlDoc XmlDoc { get; set; }
 
         public FieldObjectType Type { get; set; }
-
-        public bool IsOne => !this.IsMany;
 
         public bool IsMany { get; set; }
 

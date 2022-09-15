@@ -4,10 +4,14 @@
 // </copyright>
 // <summary>Defines the Extent type.</summary>
 
-using Allors.Repository.Attributes;
-
-[Domain("ACAD1D11-277B-4CAB-8C5E-4AC915985C45")]
-[Extends(nameof(Core))]
-public struct Base
+namespace Allors.Repository
 {
+    using Attributes;
+
+    [Domain]
+    [Extends(nameof(Core))]
+    [Id("ACAD1D11-277B-4CAB-8C5E-4AC915985C45")]
+    public struct Base
+    {
+    }
 }

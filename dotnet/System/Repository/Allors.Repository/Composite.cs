@@ -6,9 +6,7 @@
 
 namespace Allors.Repository.Domain
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
     using Inflector;
     using Text;
 
@@ -16,8 +14,8 @@ namespace Allors.Repository.Domain
     {
         private readonly Inflector inflector;
 
-        protected Composite(Inflector inflector, ISet<RepositoryObject> objects, Guid id, string name, Domain domain)
-            : base(objects, id, name, domain)
+        protected Composite(Inflector inflector, ISet<RepositoryObject> objects, string name, Domain domain)
+            : base(objects, name, domain)
         {
             this.inflector = inflector;
 
@@ -46,10 +44,6 @@ namespace Allors.Repository.Domain
         public IList<Interface> ImplementedInterfaces { get; }
 
         public ISet<Property> Properties { get; }
-
-        public Property[] DefinedProperties => this.Properties.Where(v => v.DefiningProperty == null).ToArray();
-
-        public Property[] InheritedProperties => this.Properties.Where(v => v.DefiningProperty != null).ToArray();
 
         public ISet<Property> DefinedReverseProperties { get; }
 

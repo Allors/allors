@@ -1,6 +1,5 @@
 namespace Generate.Model
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Allors.Repository;
@@ -14,7 +13,7 @@ namespace Generate.Model
 
         protected override RepositoryObject RepositoryObject => this.Domain;
 
-        public Guid Id => this.Domain.Id;
+        public string Id => (string)((dynamic)this.Domain.AttributeByName.Get("Id"))?.Value;
 
         public string Name => this.Domain.Name;
 

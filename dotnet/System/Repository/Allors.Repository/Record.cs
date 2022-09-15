@@ -1,6 +1,5 @@
 namespace Allors.Repository.Domain
 {
-    using System;
     using System.Collections.Generic;
 
     public class Record : FieldObjectType

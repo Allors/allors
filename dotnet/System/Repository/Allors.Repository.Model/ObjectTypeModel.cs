@@ -1,7 +1,7 @@
 namespace Generate.Model
 {
+    using Allors.Repository;
     using Allors.Repository.Domain;
-    using System;
 
     public abstract class ObjectTypeModel : FieldObjectTypeModel
     {
@@ -11,7 +11,7 @@ namespace Generate.Model
 
         public abstract ObjectType ObjectType { get; }
 
-        public Guid Id => this.ObjectType.Id;
+        public virtual string Id => (string) ((dynamic)this.ObjectType.AttributeByName.Get("Id"))?.Value;
 
         public string SingularName => this.ObjectType.SingularName;
 

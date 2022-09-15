@@ -17,7 +17,7 @@ namespace Generate.Model
 
         public string Name => this.Method.Name;
 
-        public string Id => this.Method.Id;
+        public string Id => (string) ((dynamic)this.Method.AttributeByName.Get("Id"))?.Value;
 
         public XmlDoc XmlDoc => this.Method.XmlDoc;
 

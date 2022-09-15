@@ -6,15 +6,13 @@
 
 namespace Allors.Repository.Domain
 {
-    using System;
     using System.Collections.Generic;
     using System.IO;
 
     public class Domain : RepositoryObject
     {
-        public Domain(ISet<RepositoryObject> objects, Guid id, string name, DirectoryInfo directoryInfo)
+        public Domain(ISet<RepositoryObject> objects, string name, DirectoryInfo directoryInfo)
         {
-            this.Id = id;
             this.Name = name;
             this.DirectoryInfo = directoryInfo;
 
@@ -24,8 +22,6 @@ namespace Allors.Repository.Domain
 
             objects.Add(this);
         }
-
-        public Guid Id { get; }
 
         public DirectoryInfo DirectoryInfo { get; }
 

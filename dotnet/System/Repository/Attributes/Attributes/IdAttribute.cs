@@ -8,7 +8,7 @@ namespace Allors.Repository.Attributes
 {
     using System;
 
-    [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Class | AttributeTargets.Interface | AttributeTargets.Property | AttributeTargets.Method)]
+    [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Struct | AttributeTargets.Class | AttributeTargets.Interface | AttributeTargets.Property | AttributeTargets.Method)]
     public class IdAttribute : RepositoryAttribute
     {
         public IdAttribute(string value) => this.Value = value;

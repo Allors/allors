@@ -126,66 +126,56 @@ namespace Allors.Repository.Code
             var domain = this.Repository.Objects.OfType<Domain>().First();
             var objects = this.Repository.Objects;
 
-            _ = new Unit(objects, UnitIds.Binary, UnitNames.Binary, domain);
-            _ = new Unit(objects, UnitIds.Boolean, UnitNames.Boolean, domain);
-            _ = new Unit(objects, UnitIds.DateTime, UnitNames.DateTime, domain);
-            _ = new Unit(objects, UnitIds.Decimal, UnitNames.Decimal, domain);
-            _ = new Unit(objects, UnitIds.Float, UnitNames.Float, domain);
-            _ = new Unit(objects, UnitIds.Integer, UnitNames.Integer, domain);
-            _ = new Unit(objects, UnitIds.String, UnitNames.String, domain);
-            _ = new Unit(objects, UnitIds.Unique, UnitNames.Unique, domain);
+            _ = new Unit(objects, UnitNames.Binary, domain);
+            _ = new Unit(objects, UnitNames.Boolean, domain);
+            _ = new Unit(objects, UnitNames.DateTime, domain);
+            _ = new Unit(objects, UnitNames.Decimal, domain);
+            _ = new Unit(objects, UnitNames.Float, domain);
+            _ = new Unit(objects, UnitNames.Integer, domain);
+            _ = new Unit(objects, UnitNames.String, domain);
+            _ = new Unit(objects, UnitNames.Unique, domain);
         }
         private void CreateDomains()
         {
-            try
+            var parentNameByChildName = new Dictionary<string, string>();
+
+            foreach (var syntaxTree in this.DocumentBySyntaxTree.Keys)
             {
-                var parentNameByChildName = new Dictionary<string, string>();
-
-                foreach (var syntaxTree in this.DocumentBySyntaxTree.Keys)
+                var root = syntaxTree.GetRoot();
+                foreach (var structDeclaration in root.DescendantNodes().OfType<StructDeclarationSyntax>())
                 {
-                    var root = syntaxTree.GetRoot();
-                    foreach (var structDeclaration in root.DescendantNodes().OfType<StructDeclarationSyntax>())
+                    var semanticModel = this.Compilation.GetSemanticModel(syntaxTree);
+                    var structureModel = (ITypeSymbol)semanticModel.GetDeclaredSymbol(structDeclaration);
+                    var domainAttribute = structureModel.GetAttributes()
+                        .FirstOrDefault(v => v.AttributeClass.Name.Equals("DomainAttribute"));
+
+                    if (domainAttribute != null)
                     {
-                        var semanticModel = this.Compilation.GetSemanticModel(syntaxTree);
-                        var structureModel = (ITypeSymbol)semanticModel.GetDeclaredSymbol(structDeclaration);
-                        var domainAttribute = structureModel.GetAttributes()
-                            .FirstOrDefault(v => v.AttributeClass.Name.Equals("DomainAttribute"));
+                        var document = this.DocumentBySyntaxTree[syntaxTree];
+                        var fileInfo = new FileInfo(document.FilePath);
+                        var directoryInfo = new DirectoryInfo(fileInfo.DirectoryName);
 
-                        if (domainAttribute != null)
+                        var domain = new Domain(this.Repository.Objects, structureModel.Name, directoryInfo);
+
+                        var extendsAttribute = structureModel.GetAttributes()
+                            .FirstOrDefault(v => v.AttributeClass.Name.Equals("ExtendsAttribute"));
+                        var parent = (string)extendsAttribute?.ConstructorArguments.First().Value;
+
+                        if (!string.IsNullOrEmpty(parent))
                         {
-                            var id = Guid.Parse((string)domainAttribute.ConstructorArguments.First().Value);
-
-                            var document = this.DocumentBySyntaxTree[syntaxTree];
-                            var fileInfo = new FileInfo(document.FilePath);
-                            var directoryInfo = new DirectoryInfo(fileInfo.DirectoryName);
-
-                            var domain = new Domain(this.Repository.Objects, id, structureModel.Name, directoryInfo);
-
-                            var extendsAttribute = structureModel.GetAttributes()
-                                .FirstOrDefault(v => v.AttributeClass.Name.Equals("ExtendsAttribute"));
-                            var parent = (string)extendsAttribute?.ConstructorArguments.First().Value;
-
-                            if (!string.IsNullOrEmpty(parent))
-                            {
-                                parentNameByChildName.Add(domain.Name, parent);
-                            }
+                            parentNameByChildName.Add(domain.Name, parent);
                         }
                     }
                 }
-
-                foreach (var childName in parentNameByChildName.Keys)
-                {
-                    var parentName = parentNameByChildName[childName];
-                    var child = this.Repository.Objects.OfType<Domain>().First(v => v.Name == childName);
-                    var parent = this.Repository.Objects.OfType<Domain>().First(v => v.Name == parentName);
-                    child.Base = parent;
-                }
             }
-            catch (Exception e)
+
+            foreach (var childName in parentNameByChildName.Keys)
             {
-                Console.WriteLine(e);
+                var parentName = parentNameByChildName[childName];
+                var child = this.Repository.Objects.OfType<Domain>().First(v => v.Name == childName);
+                var parent = this.Repository.Objects.OfType<Domain>().First(v => v.Name == parentName);
+                child.Base = parent;
             }
-
         }
 
         private void CreateTypes()
@@ -204,12 +194,11 @@ namespace Allors.Repository.Code
 
                     if (idAttribute != null && idAttribute.ApplicationSyntaxReference?.SyntaxTree == syntaxTree)
                     {
-                        var id = Guid.Parse((string)idAttribute.ConstructorArguments.First().Value);
                         var domain = this.Repository.Objects.OfType<Domain>().First(v => v.DirectoryInfo.Contains(fileInfo));
                         var symbol = semanticModel.GetDeclaredSymbol(interfaceDeclaration);
                         var interfaceSingularName = symbol.Name;
 
-                        var @interface = new Interface(this.inflector, this.Repository.Objects, id, interfaceSingularName, domain);
+                        var @interface = new Interface(this.inflector, this.Repository.Objects, interfaceSingularName, domain);
                         var xmlDoc = symbol.GetDocumentationCommentXml(null, true);
                         @interface.XmlDoc = !string.IsNullOrWhiteSpace(xmlDoc) ? new XmlDoc(xmlDoc) : null;
                     }
@@ -222,12 +211,11 @@ namespace Allors.Repository.Code
 
                     if (idAttribute != null && idAttribute.ApplicationSyntaxReference?.SyntaxTree == syntaxTree)
                     {
-                        var id = Guid.Parse((string)idAttribute.ConstructorArguments.First().Value);
                         var domain = this.Repository.Objects.OfType<Domain>().FirstOrDefault(v => v.DirectoryInfo.Contains(fileInfo));
                         var symbol = semanticModel.GetDeclaredSymbol(classDeclaration);
                         var classSingularName = symbol.Name;
 
-                        var @class = new Class(this.inflector, this.Repository.Objects, id, classSingularName, domain);
+                        var @class = new Class(this.inflector, this.Repository.Objects, classSingularName, domain);
                         var xmlDoc = symbol.GetDocumentationCommentXml(null, true);
                         @class.XmlDoc = !string.IsNullOrWhiteSpace(xmlDoc) ? new XmlDoc(xmlDoc) : null;
                     }
@@ -349,6 +337,31 @@ namespace Allors.Repository.Code
 
         private void FromReflection()
         {
+            foreach (var domain in this.Repository.Objects.OfType<Domain>())
+            {
+                var typeInfo = this.typeInfoByName[domain.Name];
+
+                foreach (var group in typeInfo.GetCustomAttributes(false).Cast<Attribute>().GroupBy(v => v.GetType()))
+                {
+                    var type = group.Key;
+                    var typeName = type.Name;
+                    if (typeName.ToLowerInvariant().EndsWith("attribute"))
+                    {
+                        typeName = typeName.Substring(0, typeName.Length - "attribute".Length);
+                    }
+
+                    var attributeUsage = type.GetCustomAttributes<AttributeUsageAttribute>().FirstOrDefault();
+                    if (attributeUsage != null && attributeUsage.AllowMultiple)
+                    {
+                        domain.AttributesByName[typeName] = group.ToArray();
+                    }
+                    else
+                    {
+                        domain.AttributeByName[typeName] = group.First();
+                    }
+                }
+            }
+
             foreach (var composite in this.Repository.Objects.OfType<Composite>())
             {
                 var typeInfo = this.typeInfoByName[composite.SingularName];
@@ -581,7 +594,7 @@ namespace Allors.Repository.Code
             {
                 foreach (var supertype in @interface.Interfaces)
                 {
-                    foreach (var property in supertype.DefinedProperties)
+                    foreach (var property in (IEnumerable<Property>)supertype.Properties.Where(v => v.DefiningProperty == null))
                     {
                         @interface.InheritedPropertyByRoleName.Add(property.RoleName, property);
                     }
@@ -593,7 +606,7 @@ namespace Allors.Repository.Code
         {
             foreach (var composite in this.Repository.Objects.OfType<Composite>())
             {
-                foreach (var property in composite.DefinedProperties)
+                foreach (var property in (IEnumerable<Property>)composite.Properties.Where(v => v.DefiningProperty == null))
                 {
                     var reverseType = property.ObjectType;
                     var reverseComposite = reverseType as Composite;

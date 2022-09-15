@@ -6,13 +6,12 @@
 
 namespace Allors.Repository.Domain
 {
-    using System;
     using System.Collections.Generic;
 
     public class Unit : ObjectType
     {
-        public Unit(ISet<RepositoryObject> objects, Guid id, string name, Domain domain)
-            : base(objects, id, name, domain)
+        public Unit(ISet<RepositoryObject> objects, string name, Domain domain)
+            : base(objects, name, domain)
         {
         }
     }

@@ -63,17 +63,17 @@ namespace Generate.Model
             // Validations
             var ids = new HashSet<Guid>();
 
-            foreach (var composite in this.Repository.Objects.OfType<Composite>())
+            foreach (var composite in this.Objects.OfType<CompositeModel>())
             {
                 this.CheckId(ids, composite.Id, $"{composite.SingularName}", "id");
             }
 
-            foreach (var property in this.Repository.Objects.OfType<Property>().Where(v => v.DefiningProperty == null))
+            foreach (var property in this.Objects.OfType<PropertyModel>().Where(v => v.DefiningProperty == null))
             {
                 this.CheckId(ids, property.Id, $"{property.ObjectType.SingularName}.{property.RoleName}", "id");
             }
 
-            foreach (var method in this.Repository.Objects.OfType<Method>().Where(v => v.DefiningMethod == null))
+            foreach (var method in this.Objects.OfType<MethodModel>().Where(v => v.DefiningMethod == null))
             {
                 this.CheckId(ids, method.Id, $"{method.DefiningType.SingularName}.{method.Name}", "id");
             }

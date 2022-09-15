@@ -22,13 +22,8 @@ namespace Generate.Model
 
         public string[] WorkspaceNames => this.Class.WorkspaceNames;
 
-        public PropertyModel[] InheritedRequiredProperties => this.Class.InheritedProperties.Where(v => v.Required)
-            .Select(this.RepositoryModel.Map)
-            .ToArray();
+        public PropertyModel[] InheritedRequiredProperties => this.InheritedProperties.Where(v => v.Required).ToArray();
 
-        public PropertyModel[] InheritedUniqueProperties => this.Class.InheritedProperties.Where(v => v.Unique)
-            .Select(this.RepositoryModel.Map)
-            .ToArray();
-
+        public PropertyModel[] InheritedUniqueProperties => this.InheritedProperties.Where(v => v.Unique).ToArray();
     }
 }

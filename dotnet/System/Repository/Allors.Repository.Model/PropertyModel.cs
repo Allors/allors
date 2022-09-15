@@ -16,11 +16,11 @@ namespace Generate.Model
 
         public string[] WorkspaceNames => this.Property.WorkspaceNames;
 
-        public string Id => this.Property.Id;
+        public string Id => (string) ((dynamic)this.Property.AttributeByName.Get("Id"))?.Value;
 
-        public bool Required => this.Property.Required;
+        public bool Required => (bool)(((dynamic)this.Property.AttributeByName.Get("Required"))?.Value ?? false);
 
-        public bool Unique => this.Property.Unique;
+        public bool Unique => (bool)(((dynamic)this.Property.AttributeByName.Get("Unique"))?.Value ?? false);
 
         public XmlDoc XmlDoc => this.Property.XmlDoc;
 

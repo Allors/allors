@@ -13,8 +13,8 @@ namespace Allors.Repository.Domain
 
     public class Class : Composite
     {
-        public Class(Inflector inflector, ISet<RepositoryObject> objects, Guid id, string name, Domain domain)
-            : base(inflector, objects, id, name, domain)
+        public Class(Inflector inflector, ISet<RepositoryObject> objects, string name, Domain domain)
+            : base(inflector, objects, name, domain)
         {
         }
 

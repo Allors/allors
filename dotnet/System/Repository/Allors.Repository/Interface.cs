@@ -6,15 +6,14 @@
 
 namespace Allors.Repository.Domain
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Inflector;
 
     public class Interface : Composite
     {
-        public Interface(Inflector inflector, ISet<RepositoryObject> objects, Guid id, string name, Domain domain)
-            : base(inflector, objects, id, name, domain) =>
+        public Interface(Inflector inflector, ISet<RepositoryObject> objects, string name, Domain domain)
+            : base(inflector, objects, name, domain) =>
             this.InheritedPropertyByRoleName = new Dictionary<string, Property>();
 
 

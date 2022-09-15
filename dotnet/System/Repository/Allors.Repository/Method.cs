@@ -58,8 +58,6 @@ namespace Allors.Repository.Domain
             }
         }
 
-        public string Id => ((dynamic)this.AttributeByName.Get("Id"))?.Value;
-
         public string Name { get; }
 
         public XmlDoc XmlDoc { get; set; }

@@ -47,12 +47,6 @@ namespace Allors.Repository.Domain
             }
         }
 
-        public string Id => ((dynamic)this.AttributeByName.Get("Id"))?.Value;
-
-        public bool Required => (bool)(((dynamic)this.AttributeByName.Get("Required"))?.Value ?? false);
-
-        public bool Unique => (bool)(((dynamic)this.AttributeByName.Get("Unique"))?.Value ?? false);
-
         public XmlDoc XmlDoc { get; set; }
 
         public Composite DefiningType { get; }
