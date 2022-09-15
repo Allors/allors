@@ -3,9 +3,10 @@
     <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\..\..\..\Repository\Attributes\Attributes*\**\*.cs" />
+    <Compile Include="..\..\System\Repository\Attributes\Attributes*\**\*.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Shared\Allors.Shared.csproj" />
+    <ProjectReference Include="..\..\System\Shared\Allors.Shared.csproj" />
   </ItemGroup>
+
 </Project>

@@ -33,7 +33,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Server", "Core\Database\Ser
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repository", "Repository", "{794822B4-6156-4038-AAEE-D20C67D58A7A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository", "Core\Repository\Domain\Repository.csproj", "{583634CE-2977-4238-AA90-164E9BDD4198}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository", "Core\Repository\Repository.csproj", "{583634CE-2977-4238-AA90-164E9BDD4198}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Workspace", "Workspace", "{38DA0455-9724-498A-83EF-B4285EB00AD1}"
 EndProject
@@ -59,7 +59,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Static", "System\Data
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Database.Adapters", "System\Database\Adapters\Allors.Database.Adapters\Allors.Database.Adapters.csproj", "{9E50BB4A-A211-4300-8EC6-B7921F5B3C3C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository", "System\Database\Adapters\Repository\Domain\Repository.csproj", "{0498A7AD-313C-45DC-A425-DAF74B5F5294}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository", "System\Database\Adapters\Repository\Repository.csproj", "{0498A7AD-313C-45DC-A425-DAF74B5F5294}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Workspace.Tests", "Core\Workspace\Tests\Workspace.Tests.csproj", "{3ECAFBC7-7F14-46ED-A7B7-203E03F8FC0D}"
 EndProject
@@ -83,7 +83,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Resources", "Base\Database\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Server", "Base\Database\Server\Server.csproj", "{809B9741-5D22-4D7E-98DA-FF82A430DBE5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository", "Base\Repository\Domain\Repository.csproj", "{31D8A69E-FAA8-4AD5-8A1B-9F453E4F153B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository", "Base\Repository\Repository.csproj", "{31D8A69E-FAA8-4AD5-8A1B-9F453E4F153B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Workspace", "Workspace", "{F3F8D54B-E896-4081-8F6B-EDD896CB51D0}"
 EndProject

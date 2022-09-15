@@ -27,7 +27,7 @@ partial class Build
             DotNetRun(s => s
                 .SetProjectFile(Paths.DotnetSystemRepositoryGenerate)
                 .SetApplicationArguments(
-                    $"{Paths.DotnetCoreRepositoryDomainRepository} {Paths.DotnetSystemRepositoryTemplatesMetaCs} {Paths.DotnetCoreDatabaseMetaGenerated}"));
+                    $"{Paths.DotnetCoreRepository} {Paths.DotnetSystemRepositoryTemplatesMetaCs} {Paths.DotnetCoreDatabaseMetaGenerated}"));
             DotNetRun(s => s
                 .SetProcessWorkingDirectory(Paths.DotnetCore)
                 .SetProjectFile(Paths.DotnetCoreDatabaseGenerate));

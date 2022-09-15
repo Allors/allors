@@ -3,7 +3,7 @@ using Nuke.Common.IO;
 public partial class Paths
 {
     public AbsolutePath DotnetCore => Dotnet / "Core";
-    public AbsolutePath DotnetCoreRepositoryDomainRepository => DotnetCore / "Repository/Domain/Repository.csproj";
+    public AbsolutePath DotnetCoreRepository => DotnetCore / "Repository/Repository.csproj";
 
     public AbsolutePath DotnetCoreDatabase => DotnetCore / "Database";
     public AbsolutePath DotnetCoreDatabaseMetaGenerated => DotnetCoreDatabase / "Meta/Generated";
