@@ -11,7 +11,7 @@ namespace Generate.Model
 
         public abstract ObjectType ObjectType { get; }
 
-        public virtual string Id => (string) ((dynamic)this.ObjectType.AttributeByName.Get("Id"))?.Value;
+        public string Id => (string) ((dynamic)this.ObjectType.AttributeByName.Get("Id"))?.Value;
 
         public string SingularName => this.ObjectType.SingularName;
 

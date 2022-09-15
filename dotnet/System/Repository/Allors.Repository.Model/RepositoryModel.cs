@@ -59,7 +59,6 @@ namespace Generate.Model
                 }
             }
 
-
             // Validations
             var ids = new HashSet<Guid>();
 

@@ -126,14 +126,22 @@ namespace Allors.Repository.Code
             var domain = this.Repository.Objects.OfType<Domain>().First();
             var objects = this.Repository.Objects;
 
-            _ = new Unit(objects, UnitNames.Binary, domain);
-            _ = new Unit(objects, UnitNames.Boolean, domain);
-            _ = new Unit(objects, UnitNames.DateTime, domain);
-            _ = new Unit(objects, UnitNames.Decimal, domain);
-            _ = new Unit(objects, UnitNames.Float, domain);
-            _ = new Unit(objects, UnitNames.Integer, domain);
-            _ = new Unit(objects, UnitNames.String, domain);
-            _ = new Unit(objects, UnitNames.Unique, domain);
+            void CreateUnit(Guid id, string name)
+            {
+                var unit = new Unit(objects, name, domain);
+                var idAttributeType = this.Assembly.GetType("Allors.Repository.Attributes.IdAttribute");
+                var idAttribute = Activator.CreateInstance(idAttributeType, id.ToString());
+                unit.AttributeByName["Id"] = (Attribute)idAttribute;
+            }
+
+            CreateUnit(UnitIds.Binary, UnitNames.Binary);
+            CreateUnit(UnitIds.Boolean, UnitNames.Boolean);
+            CreateUnit(UnitIds.DateTime, UnitNames.DateTime);
+            CreateUnit(UnitIds.Decimal, UnitNames.Decimal);
+            CreateUnit(UnitIds.Float, UnitNames.Float);
+            CreateUnit(UnitIds.Integer, UnitNames.Integer);
+            CreateUnit(UnitIds.String, UnitNames.String);
+            CreateUnit(UnitIds.Unique, UnitNames.Unique);
         }
         private void CreateDomains()
         {
