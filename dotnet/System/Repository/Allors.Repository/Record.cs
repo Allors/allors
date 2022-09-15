@@ -2,7 +2,6 @@ namespace Allors.Repository.Domain
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
 
     public class Record : FieldObjectType
     {
@@ -10,24 +9,15 @@ namespace Allors.Repository.Domain
         {
             this.Name = name;
 
-            this.AttributeByName = new Dictionary<string, Attribute>();
-            this.AttributesByName = new Dictionary<string, Attribute[]>();
-
-            this.FieldByName = new Dictionary<string, Field>();
+            this.Fields = new HashSet<Field>();
 
             objects.Add(this);
         }
-
-        public Dictionary<string, Attribute> AttributeByName { get; }
-
-        public Dictionary<string, Attribute[]> AttributesByName { get; }
 
         public string Name { get; }
 
         public XmlDoc XmlDoc { get; set; }
 
-        public Dictionary<string, Field> FieldByName { get; }
-
-        public Field[] Fields => this.FieldByName.Values.ToArray();
+        public ISet<Field> Fields { get; }
     }
 }

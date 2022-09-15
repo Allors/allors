@@ -20,18 +20,13 @@ namespace Allors.Repository.Domain
             : base(objects, id, name, domain)
         {
             this.inflector = inflector;
-            this.AttributeByName = new Dictionary<string, Attribute>();
-            this.AttributesByName = new Dictionary<string, Attribute[]>();
+
             this.ImplementedInterfaces = new List<Interface>();
             this.Properties = new HashSet<Property>();
             this.DefinedReverseProperties = new HashSet<Property>();
             this.InheritedReverseProperties = new HashSet<Property>();
             this.Methods = new HashSet<Method>();
         }
-
-        public Dictionary<string, Attribute> AttributeByName { get; }
-
-        public Dictionary<string, Attribute[]> AttributesByName { get; }
 
         public XmlDoc XmlDoc { get; set; }
 
@@ -61,10 +56,6 @@ namespace Allors.Repository.Domain
         public ISet<Property> InheritedReverseProperties { get; }
 
         public ISet<Method> Methods { get; }
-
-        public Method[] DefinedMethods => this.Methods.Where(v => v.DefiningMethod == null).ToArray();
-
-        public Method[] InheritedMethods => this.Methods.Where(v => v.DefiningMethod != null).ToArray();
 
         public Composite[] Subtypes { get; set; }
 

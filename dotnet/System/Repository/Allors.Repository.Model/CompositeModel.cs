@@ -2,7 +2,6 @@ namespace Generate.Model
 {
     using Allors.Repository.Domain;
     using System.Collections.Generic;
-    using System;
     using System.Linq;
 
     public abstract class CompositeModel : ObjectTypeModel
@@ -10,10 +9,6 @@ namespace Generate.Model
         protected CompositeModel(RepositoryModel repositoryModel) : base(repositoryModel) { }
 
         public abstract Composite Composite { get; }
-
-        public Dictionary<string, Attribute> AttributeByName => this.Composite.AttributeByName;
-
-        public Dictionary<string, Attribute[]> AttributesByName => this.Composite.AttributesByName;
 
         public XmlDoc XmlDoc => this.Composite.XmlDoc;
 

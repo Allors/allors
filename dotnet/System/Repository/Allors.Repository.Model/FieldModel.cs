@@ -2,8 +2,6 @@ namespace Generate.Model
 {
     using Allors.Repository;
     using Allors.Repository.Domain;
-    using System.Collections.Generic;
-    using System;
 
     public class FieldModel : RepositoryObjectModel
     {
@@ -12,10 +10,6 @@ namespace Generate.Model
         public Field Field { get; }
 
         protected override RepositoryObject RepositoryObject => this.Field;
-
-        public Dictionary<string, Attribute> AttributeByName { get; }
-
-        public Dictionary<string, Attribute[]> AttributesByName { get; }
 
         public string Name => this.Field.Name;
 

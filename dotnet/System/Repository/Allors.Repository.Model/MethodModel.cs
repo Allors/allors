@@ -2,8 +2,6 @@ namespace Generate.Model
 {
     using Allors.Repository;
     using Allors.Repository.Domain;
-    using System.Collections.Generic;
-    using System;
 
     public class MethodModel : RepositoryObjectModel
     {
@@ -13,15 +11,13 @@ namespace Generate.Model
 
         protected override RepositoryObject RepositoryObject => this.Method;
 
-        public Dictionary<string, Attribute> AttributeByName => this.Method.AttributeByName;
-
-        public Dictionary<string, Attribute[]> AttributesByName => this.Method.AttributesByName;
-
         public DomainModel Domain => this.RepositoryModel.Map(this.Method.Domain);
 
         public string[] WorkspaceNames => this.Method.WorkspaceNames;
 
         public string Name => this.Method.Name;
+
+        public string Id => this.Method.Id;
 
         public XmlDoc XmlDoc => this.Method.XmlDoc;
 

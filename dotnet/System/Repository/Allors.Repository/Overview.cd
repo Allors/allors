@@ -14,7 +14,7 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="Allors.Repository.Domain.Class">
-    <Position X="6" Y="13.5" Width="2.25" />
+    <Position X="6" Y="11" Width="1.75" />
     <Members>
       <Method Name="Class" Hidden="true" />
       <Method Name="GetImplementedMethod" Hidden="true" />
@@ -24,21 +24,45 @@
       <HashCode>AAAAAAAAAAAAAAAIAAAAAAgAAAIAAAAAAAAAEAAAAAA=</HashCode>
       <FileName>Class.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Interfaces" />
+    </ShowAsAssociation>
   </Class>
   <Class Name="Allors.Repository.Domain.Composite">
-    <Position X="4" Y="8.5" Width="3.25" />
+    <Position X="4" Y="7" Width="2.25" />
     <Members>
       <Method Name="Composite" Hidden="true" />
       <Field Name="inflector" Hidden="true" />
       <Method Name="ToString" Hidden="true" />
     </Members>
+    <AssociationLine Name="Interfaces" Type="Allors.Repository.Domain.Interface" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="4" Y="9.524" />
+        <Point X="3.031" Y="9.524" />
+        <Point X="3.031" Y="11" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="ImplementedInterfaces" Type="Allors.Repository.Domain.Interface" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="4" Y="9.812" />
+        <Point X="3.328" Y="9.812" />
+        <Point X="3.328" Y="11" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.068" Y="0.327" />
+      </MemberNameLabel>
+    </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAgAIAAEAAEAAACAAgAIAIAAIASkAMAAAACAEQ=</HashCode>
+      <HashCode>AAAAAAAgAIAAAAAEAAACAAgAIAIAAIASEAIAAAACAEA=</HashCode>
       <FileName>Composite.cs</FileName>
     </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Interfaces" />
+      <Property Name="ImplementedInterfaces" />
+    </ShowAsCollectionAssociation>
   </Class>
   <Class Name="Allors.Repository.Domain.Domain">
-    <Position X="1.75" Y="2.25" Width="1.5" />
+    <Position X="1.25" Y="2.75" Width="1.5" />
     <Members>
       <Method Name="Domain" Hidden="true" />
       <Method Name="ToString" Hidden="true" />
@@ -52,7 +76,7 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="Allors.Repository.Domain.Interface">
-    <Position X="3.25" Y="13.5" Width="2.25" />
+    <Position X="2.5" Y="11" Width="2.25" />
     <Members>
       <Method Name="AddInterfaces" Hidden="true" />
       <Method Name="GetImplementedMethod" Hidden="true" />
@@ -69,20 +93,21 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="Allors.Repository.Domain.ObjectType">
-    <Position X="3.5" Y="5" Width="1.5" />
+    <Position X="3.25" Y="4.5" Width="1.5" />
     <Members>
+      <Method Name="ObjectType" Hidden="true" />
       <Method Name="ToString" Hidden="true" />
     </Members>
     <Compartments>
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAIEAAAAAAAAAiCAAAAAAAAAAUAAAAA=</HashCode>
+      <HashCode>AAACAAAAAAAAAAIEAAAAAAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>StructuralType.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Allors.Repository.Domain.Unit">
-    <Position X="2" Y="8.5" Width="1.5" />
+    <Position X="2" Y="7" Width="1.5" />
     <Members>
       <Method Name="Unit" Hidden="true" />
     </Members>
@@ -95,27 +120,20 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Allors.Repository.Domain.Method">
-    <Position X="10.5" Y="2.25" Width="1.75" />
+    <Position X="10.25" Y="2.75" Width="1.75" />
     <Members>
       <Method Name="Method" Hidden="true" />
       <Method Name="ToString" Hidden="true" />
     </Members>
-    <AssociationLine Name="Input" Type="Allors.Repository.Domain.Record" FixedFromPoint="true" FixedToPoint="true">
+    <AssociationLine Name="DefiningType" Type="Allors.Repository.Domain.Composite" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="11.125" Y="4.636" />
-        <Point X="11.125" Y="6.303" />
-        <Point X="7.25" Y="6.303" />
-      </Path>
-    </AssociationLine>
-    <AssociationLine Name="Output" Type="Allors.Repository.Domain.Record" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="10.75" Y="4.636" />
-        <Point X="10.75" Y="5.62" />
-        <Point X="7.25" Y="5.62" />
+        <Point X="10.625" Y="4.752" />
+        <Point X="10.625" Y="7.352" />
+        <Point X="6.25" Y="7.352" />
       </Path>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAACABAAAAAAAAAMAAAIAAQAEgAAAAAQAAMAAAAAAAQ=</HashCode>
+      <HashCode>AAACABAAAAAAAAAMAAAIAAQAEgAAAAAQAAIAAAAAAAA=</HashCode>
       <FileName>Method.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -126,84 +144,64 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="Allors.Repository.Domain.Property">
-    <Position X="12.75" Y="2.25" Width="2.25" />
+    <Position X="12.75" Y="2.75" Width="2.25" />
     <Members>
       <Field Name="inflector" Hidden="true" />
       <Method Name="Property" Hidden="true" />
       <Method Name="ToString" Hidden="true" />
     </Members>
-    <AssociationLine Name="ObjectType" Type="Allors.Repository.Domain.ObjectType" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="13.281" Y="6.175" />
-        <Point X="13.281" Y="7.562" />
-        <Point X="11.771" Y="7.562" Type="JumpStart" />
-        <Point X="11.604" Y="7.562" Type="JumpEnd" />
-        <Point X="5" Y="7.562" />
-      </Path>
-    </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAACABCAMAEAAAAMAAAAAAAAigIAAAAQAIMgEAAABAQ=</HashCode>
+      <HashCode>AAACABCAMAEAAAAMAAAAAAAAigIAAAAQAIIgEAAABAA=</HashCode>
       <FileName>Property.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="DefiningProperty" />
       <Property Name="DefiningType" />
       <Property Name="ObjectType" />
+      <Property Name="DefiningProperty" />
     </ShowAsAssociation>
   </Class>
   <Class Name="Allors.Repository.Domain.Record">
-    <Position X="5.5" Y="5" Width="1.75" />
+    <Position X="5.25" Y="4.5" Width="1.5" />
     <Members>
       <Method Name="Record" Hidden="true" />
     </Members>
-    <AssociationLine Name="FieldByName" Type="Allors.Repository.Domain.Field" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="6.75" Y="5" />
-        <Point X="6.75" Y="3.829" />
-        <Point X="7.5" Y="3.829" />
-      </Path>
-    </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAQAAUAAAAAgAQ=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAQAAAAAAAAgAA=</HashCode>
       <FileName>Record.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
-      <Property Name="FieldByName" />
+      <Property Name="Fields" />
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="Allors.Repository.Domain.Field">
-    <Position X="7.5" Y="2.25" Width="1.75" />
+    <Position X="7.5" Y="2.75" Width="1.5" />
     <Members>
       <Method Name="Field" Hidden="true" />
       <Method Name="ToString" Hidden="true" />
     </Members>
-    <AssociationLine Name="Record" Type="Allors.Repository.Domain.Record" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="7.5" Y="4.125" />
-        <Point X="6.875" Y="4.125" />
-        <Point X="6.875" Y="5" />
-      </Path>
-    </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAAAiAAAAAAAAAAEAAAAAAQAAAAAAAAQAQEAAAAABAQ=</HashCode>
+      <HashCode>AAAAiAAAAAAAAAAEAAAAAAQAAAAAAAAQAQAAAAAABAA=</HashCode>
       <FileName>Field.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="Type" />
       <Property Name="Record" />
+      <Property Name="Type" />
     </ShowAsAssociation>
   </Class>
   <Class Name="Allors.Repository.FieldObjectType">
-    <Position X="4.5" Y="2.25" Width="1.5" />
+    <Position X="4.25" Y="2.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>BehavioralType.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Allors.Repository.RepositoryObject">
-    <Position X="4.5" Y="0.5" Width="1.5" />
+    <Position X="4.25" Y="0.5" Width="1.75" />
+    <Members>
+      <Method Name="RepositoryObject" Hidden="true" />
+    </Members>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAQ=</HashCode>
       <FileName>RepositoryObject.cs</FileName>
     </TypeIdentifier>
   </Class>

@@ -21,9 +21,6 @@ namespace Allors.Repository.Domain
         {
             this.inflector = inflector;
 
-            this.AttributeByName = new Dictionary<string, Attribute>();
-            this.AttributesByName = new Dictionary<string, Attribute[]>();
-
             this.Domain = domain;
             this.DefiningType = composite;
 
@@ -38,10 +35,6 @@ namespace Allors.Repository.Domain
 
             objects.Add(this);
         }
-
-        public Dictionary<string, Attribute> AttributeByName { get; }
-
-        public Dictionary<string, Attribute[]> AttributesByName { get; }
 
         public Domain Domain { get; }
 

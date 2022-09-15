@@ -17,9 +17,6 @@ namespace Allors.Repository.Domain
     {
         public Method(Inflector inflector, ISet<RepositoryObject> objects, Domain domain, SemanticModel semanticModel, Composite composite, MethodDeclarationSyntax methodDeclaration)
         {
-            this.AttributeByName = new Dictionary<string, Attribute>();
-            this.AttributesByName = new Dictionary<string, Attribute[]>();
-
             this.Domain = domain;
             this.DefiningType = composite;
 
@@ -49,10 +46,6 @@ namespace Allors.Repository.Domain
             domain.Methods.Add(this);
             objects.Add(this);
         }
-
-        public Dictionary<string, Attribute> AttributeByName { get; }
-
-        public Dictionary<string, Attribute[]> AttributesByName { get; }
 
         public Domain Domain { get; }
 

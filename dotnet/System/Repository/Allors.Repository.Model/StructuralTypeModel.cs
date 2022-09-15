@@ -16,13 +16,5 @@ namespace Generate.Model
         public string SingularName => this.ObjectType.SingularName;
 
         public DomainModel Domain => this.RepositoryModel.Map(this.ObjectType.Domain);
-
-        public bool IsInterface => this.ObjectType.IsInterface;
-
-        public bool IsClass => this.ObjectType.IsClass;
-
-        public bool IsComposite => this.ObjectType.IsComposite;
-
-        public bool IsUnit => this.ObjectType.IsUnit;
     }
 }

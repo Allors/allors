@@ -3,8 +3,6 @@ namespace Generate.Model
     using Allors;
     using Allors.Repository;
     using Allors.Repository.Domain;
-    using System.Collections.Generic;
-    using System;
 
     public class PropertyModel : RepositoryObjectModel
     {
@@ -13,10 +11,6 @@ namespace Generate.Model
         public Property Property { get; }
 
         protected override RepositoryObject RepositoryObject => this.Property;
-
-        public Dictionary<string, Attribute> AttributeByName => this.Property.AttributeByName;
-
-        public Dictionary<string, Attribute[]> AttributesByName => this.Property.AttributesByName;
 
         public Domain Domain => this.Property.Domain;
 
@@ -30,19 +24,19 @@ namespace Generate.Model
 
         public XmlDoc XmlDoc => this.Property.XmlDoc;
 
-        public Composite DefiningType => this.Property.DefiningType;
+        public CompositeModel DefiningType => this.RepositoryModel.Map(this.Property.DefiningType);
 
-        public ObjectType ObjectType => this.Property.ObjectType;
+        public ObjectTypeModel ObjectType => this.RepositoryModel.Map(this.Property.ObjectType);
 
-        public Property DefiningProperty => this.Property.DefiningProperty;
+        public PropertyModel DefiningProperty => this.RepositoryModel.Map(this.Property.DefiningProperty);
 
         public Multiplicity Multiplicity => this.Property.Multiplicity;
 
-        public bool IsRoleOne => !(this.Property.Multiplicity is Multiplicity.OneToMany or Multiplicity.ManyToMany);
+        public bool IsRoleOne => this.Property.Multiplicity is Multiplicity.OneToOne or Multiplicity.ManyToOne;
 
         public bool IsRoleMany => this.Property.Multiplicity is Multiplicity.OneToMany or Multiplicity.ManyToMany;
 
-        public bool IsAssociationOne => !(this.Property.Multiplicity is Multiplicity.ManyToOne or Multiplicity.ManyToMany);
+        public bool IsAssociationOne => this.Property.Multiplicity is Multiplicity.OneToOne or Multiplicity.OneToMany;
 
         public bool IsAssociationMany => this.Property.Multiplicity is Multiplicity.ManyToOne or Multiplicity.ManyToMany;
 

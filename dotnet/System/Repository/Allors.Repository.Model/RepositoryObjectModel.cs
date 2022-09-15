@@ -1,5 +1,7 @@
 namespace Generate.Model
 {
+    using System.Collections.Generic;
+    using System;
     using Allors.Repository;
 
     public abstract class RepositoryObjectModel
@@ -9,6 +11,10 @@ namespace Generate.Model
         public RepositoryModel RepositoryModel { get; }
 
         protected abstract RepositoryObject RepositoryObject { get; }
+
+        public Dictionary<string, Attribute> AttributeByName => this.RepositoryObject.AttributeByName;
+
+        public Dictionary<string, Attribute[]> AttributesByName => this.RepositoryObject.AttributesByName;
 
         public override string ToString() => this.RepositoryObject.ToString();
     }

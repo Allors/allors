@@ -9,9 +9,6 @@ namespace Allors.Repository.Domain
     {
         public Field(ISet<RepositoryObject> objects, SemanticModel semanticModel, Record record, PropertyDeclarationSyntax propertyDeclaration)
         {
-            this.AttributeByName = new Dictionary<string, Attribute>();
-            this.AttributesByName = new Dictionary<string, Attribute[]>();
-
             this.Record = record;
 
             var propertySymbol = (IPropertySymbol)semanticModel.GetDeclaredSymbol(propertyDeclaration);
@@ -20,7 +17,7 @@ namespace Allors.Repository.Domain
             var xmlDocString = propertySymbol.GetDocumentationCommentXml(null, true);
             this.XmlDoc = !string.IsNullOrWhiteSpace(xmlDocString) ? new XmlDoc(xmlDocString) : null;
 
-            record.FieldByName.Add(this.Name, this);
+            record.Fields.Add(this);
 
             objects.Add(this);
         }
@@ -32,10 +29,6 @@ namespace Allors.Repository.Domain
         public XmlDoc XmlDoc { get; set; }
 
         public FieldObjectType Type { get; set; }
-
-        public Dictionary<string, Attribute> AttributeByName { get; }
-
-        public Dictionary<string, Attribute[]> AttributesByName { get; }
 
         public bool IsOne => !this.IsMany;
 

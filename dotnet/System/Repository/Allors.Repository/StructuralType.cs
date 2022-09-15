@@ -27,14 +27,6 @@ namespace Allors.Repository.Domain
 
         public Domain Domain { get; }
 
-        public bool IsInterface => this is Interface;
-
-        public bool IsClass => this is Class;
-
-        public bool IsComposite => this is Composite;
-
-        public bool IsUnit => this is Unit;
-
         public override string ToString() => this.SingularName;
     }
 }

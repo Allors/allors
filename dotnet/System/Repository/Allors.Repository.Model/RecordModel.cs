@@ -2,10 +2,9 @@ namespace Generate.Model
 {
     using Allors.Repository;
     using Allors.Repository.Domain;
-    using System.Collections.Generic;
     using System.Linq;
 
-    public class RecordModel : RepositoryObjectModel
+    public class RecordModel : FieldObjectTypeModel
     {
         public RecordModel(RepositoryModel repositoryModel, Record record) : base(repositoryModel) => this.Record = record;
 
@@ -13,12 +12,12 @@ namespace Generate.Model
 
         protected override RepositoryObject RepositoryObject => this.Record;
 
+        public override FieldObjectType FieldObjectType => this.Record;
+
         public string Name => this.Record.Name;
 
         public XmlDoc XmlDoc => this.Record.XmlDoc;
 
-        public Dictionary<string, FieldModel> FieldByName => this.Record.FieldByName.ToDictionary(v => v.Key, v => this.RepositoryModel.Map(v.Value));
-
-        public FieldModel[] Fields => this.FieldByName.Values.ToArray();
+        public FieldModel[] Fields => this.Record.Fields.Select(this.RepositoryModel.Map).ToArray();
     }
 }
