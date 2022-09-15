@@ -4,7 +4,7 @@ namespace Allors.Repository.Domain
     using System.Collections.Generic;
     using System.Linq;
 
-    public class Record : BehavioralType
+    public class Record : FieldObjectType
     {
         public Record(ISet<RepositoryObject> objects, string name)
         {

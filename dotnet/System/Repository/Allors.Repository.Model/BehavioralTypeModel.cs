@@ -2,12 +2,12 @@ namespace Generate.Model
 {
     using Allors.Repository;
 
-    public abstract class BehavioralTypeModel : RepositoryObjectModel
+    public abstract class FieldObjectTypeModel : RepositoryObjectModel
     {
-        protected BehavioralTypeModel(RepositoryModel repositoryModel) : base(repositoryModel)
+        protected FieldObjectTypeModel(RepositoryModel repositoryModel) : base(repositoryModel)
         {
         }
 
-        public abstract BehavioralType BehavioralType { get; }
+        public abstract FieldObjectType FieldObjectType { get; }
     }
 }

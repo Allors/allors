@@ -18,7 +18,7 @@ namespace Allors.Repository.Domain
             this.Name = name;
             this.DirectoryInfo = directoryInfo;
 
-            this.StructuralTypes = new HashSet<StructuralType>();
+            this.ObjectTypes = new HashSet<ObjectType>();
             this.Properties = new HashSet<Property>();
             this.Methods = new HashSet<Method>();
 
@@ -33,7 +33,7 @@ namespace Allors.Repository.Domain
 
         public Domain Base { get; set; }
 
-        public ISet<StructuralType> StructuralTypes { get; }
+        public ISet<ObjectType> ObjectTypes { get; }
 
         public ISet<Property> Properties { get; }
 

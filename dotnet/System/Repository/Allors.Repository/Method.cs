@@ -71,7 +71,7 @@ namespace Allors.Repository.Domain
 
         public Method DefiningMethod { get; set; }
 
-        public StructuralType DefiningType { get; set; }
+        public ObjectType DefiningType { get; set; }
 
         public Record Input { get; set; }
 

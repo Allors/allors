@@ -31,7 +31,7 @@ namespace Allors.Repository.Domain
 
         public XmlDoc XmlDoc { get; set; }
 
-        public BehavioralType Type { get; set; }
+        public FieldObjectType Type { get; set; }
 
         public Dictionary<string, Attribute> AttributeByName { get; }
 

@@ -64,7 +64,7 @@ namespace Allors.Repository.Domain
 
         public Composite DefiningType { get; }
 
-        public StructuralType Type { get; set; }
+        public ObjectType Type { get; set; }
 
         public Property DefiningProperty { get; set; }
 

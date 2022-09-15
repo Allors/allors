@@ -23,7 +23,7 @@ namespace Generate.Model
 
         public XmlDoc XmlDoc => this.Field.XmlDoc;
 
-        public BehavioralTypeModel Type => this.RepositoryModel.Map(this.Field.Type);
+        public FieldObjectTypeModel Type => this.RepositoryModel.Map(this.Field.Type);
 
         public bool IsOne => this.Field.IsOne;
 

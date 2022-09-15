@@ -20,7 +20,7 @@ namespace Generate.Model
 
         public DomainModel Base => this.RepositoryModel.Map(this.Domain.Base);
 
-        public ISet<StructuralTypeModel> StructuralTypes => new HashSet<StructuralTypeModel>(this.Domain.StructuralTypes.Select(this.RepositoryModel.Map));
+        public ISet<ObjectTypeModel> ObjectTypes => new HashSet<ObjectTypeModel>(this.Domain.ObjectTypes.Select(this.RepositoryModel.Map));
 
         public ISet<PropertyModel> Properties => new HashSet<PropertyModel>(this.Domain.Properties.Select(this.RepositoryModel.Map));
 

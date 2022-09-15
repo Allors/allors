@@ -3,7 +3,7 @@ namespace Generate.Model
     using Allors.Repository;
     using Allors.Repository.Domain;
 
-    public class UnitModel : StructuralTypeModel
+    public class UnitModel : ObjectTypeModel
     {
         public UnitModel(RepositoryModel repositoryModel, Unit unit) : base(repositoryModel) => this.Unit = unit;
 
@@ -11,8 +11,8 @@ namespace Generate.Model
 
         protected override RepositoryObject RepositoryObject => this.Unit;
 
-        public override BehavioralType BehavioralType => this.Unit;
+        public override FieldObjectType FieldObjectType => this.Unit;
 
-        public override StructuralType StructuralType => this.Unit;
+        public override ObjectType ObjectType => this.Unit;
     }
 }

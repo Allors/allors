@@ -13,9 +13,9 @@ namespace Generate.Model
 
         protected override RepositoryObject RepositoryObject => this.Interface;
 
-        public override BehavioralType BehavioralType => this.Interface;
+        public override FieldObjectType FieldObjectType => this.Interface;
 
-        public override StructuralType StructuralType => this.Interface;
+        public override ObjectType ObjectType => this.Interface;
 
         public override Composite Composite => this.Interface;
 

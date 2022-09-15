@@ -84,9 +84,9 @@ namespace Generate.Model
         #region Mappers
         public RepositoryObjectModel Map(RepositoryObject v) => v != null ? this.mapping[v] : null;
 
-        public BehavioralTypeModel Map(BehavioralType v) => v != null ? (BehavioralTypeModel)this.mapping[v] : null;
+        public FieldObjectTypeModel Map(FieldObjectType v) => v != null ? (FieldObjectTypeModel)this.mapping[v] : null;
 
-        public StructuralTypeModel Map(StructuralType v) => v != null ? (StructuralTypeModel)this.mapping[v] : null;
+        public ObjectTypeModel Map(ObjectType v) => v != null ? (ObjectTypeModel)this.mapping[v] : null;
 
         public CompositeModel Map(Composite v) => v != null ? (CompositeModel)this.mapping[v] : null;
 

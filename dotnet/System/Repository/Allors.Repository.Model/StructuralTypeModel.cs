@@ -3,26 +3,26 @@ namespace Generate.Model
     using Allors.Repository.Domain;
     using System;
 
-    public abstract class StructuralTypeModel : BehavioralTypeModel
+    public abstract class ObjectTypeModel : FieldObjectTypeModel
     {
-        protected StructuralTypeModel(RepositoryModel repositoryModel) : base(repositoryModel)
+        protected ObjectTypeModel(RepositoryModel repositoryModel) : base(repositoryModel)
         {
         }
 
-        public abstract StructuralType StructuralType { get; }
+        public abstract ObjectType ObjectType { get; }
 
-        public Guid Id => this.StructuralType.Id;
+        public Guid Id => this.ObjectType.Id;
 
-        public string SingularName => this.StructuralType.SingularName;
+        public string SingularName => this.ObjectType.SingularName;
 
-        public DomainModel Domain => this.RepositoryModel.Map(this.StructuralType.Domain);
+        public DomainModel Domain => this.RepositoryModel.Map(this.ObjectType.Domain);
 
-        public bool IsInterface => this.StructuralType.IsInterface;
+        public bool IsInterface => this.ObjectType.IsInterface;
 
-        public bool IsClass => this.StructuralType.IsClass;
+        public bool IsClass => this.ObjectType.IsClass;
 
-        public bool IsComposite => this.StructuralType.IsComposite;
+        public bool IsComposite => this.ObjectType.IsComposite;
 
-        public bool IsUnit => this.StructuralType.IsUnit;
+        public bool IsUnit => this.ObjectType.IsUnit;
     }
 }

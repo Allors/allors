@@ -33,7 +33,7 @@ namespace Generate.Model
 
         public Composite DefiningType => this.Property.DefiningType;
 
-        public StructuralType Type => this.Property.Type;
+        public ObjectType Type => this.Property.Type;
 
         public Property DefiningProperty => this.Property.DefiningProperty;
 

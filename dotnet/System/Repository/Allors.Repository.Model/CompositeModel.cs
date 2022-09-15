@@ -7,7 +7,7 @@ namespace Generate.Model
     using System;
     using System.Linq;
 
-    public abstract class CompositeModel : StructuralTypeModel
+    public abstract class CompositeModel : ObjectTypeModel
     {
         protected CompositeModel(RepositoryModel repositoryModel) : base(repositoryModel) { }
 

@@ -326,7 +326,7 @@ namespace Allors.Repository.Code
                         var typeSymbol = semanticModel.GetDeclaredSymbol(typeDeclaration);
                         var typeName = typeSymbol.Name;
 
-                        var type = this.Repository.Objects.OfType<StructuralType>().FirstOrDefault(v => v.SingularName == typeName);
+                        var type = this.Repository.Objects.OfType<ObjectType>().FirstOrDefault(v => v.SingularName == typeName);
 
                         if (type != null)
                         {
@@ -415,7 +415,7 @@ namespace Allors.Repository.Code
 
                     var reflectedPropertyType = reflectedProperty.PropertyType;
                     var typeName = this.GetTypeName(reflectedPropertyType);
-                    property.Type = this.Repository.Objects.OfType<StructuralType>().First(v => v.SingularName == typeName);
+                    property.Type = this.Repository.Objects.OfType<ObjectType>().First(v => v.SingularName == typeName);
 
                     foreach (var group in propertyAttributesByTypeName)
                     {
@@ -526,7 +526,7 @@ namespace Allors.Repository.Code
                     var reflectedPropertyType = reflectedProperty.PropertyType;
                     var typeName = this.GetTypeName(reflectedPropertyType);
 
-                    property.Type = (BehavioralType)this.Repository.Objects.OfType<Record>().FirstOrDefault(v => v.Name == typeName) ?? this.Repository.Objects.OfType<StructuralType>().First(v => v.SingularName == typeName);
+                    property.Type = (FieldObjectType)this.Repository.Objects.OfType<Record>().FirstOrDefault(v => v.Name == typeName) ?? this.Repository.Objects.OfType<ObjectType>().First(v => v.SingularName == typeName);
                     property.IsMany = typeName.EndsWith("[]");
 
                     foreach (var group in propertyAttributesByTypeName)

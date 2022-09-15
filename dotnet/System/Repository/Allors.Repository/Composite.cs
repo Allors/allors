@@ -12,7 +12,7 @@ namespace Allors.Repository.Domain
     using Inflector;
     using Text;
 
-    public abstract class Composite : StructuralType
+    public abstract class Composite : ObjectType
     {
         private readonly Inflector inflector;
 
