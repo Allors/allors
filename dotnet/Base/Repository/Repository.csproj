@@ -5,6 +5,7 @@
 
   <ItemGroup>
     <Compile Include="..\..\System\Repository\Attributes\Attributes*\**\*.cs" />
+    <Compile Include="..\..\System\Repository\Stylecop\*.cs" />
     <Compile Include="..\..\Core\Repository\Core*\**\*.cs" />
   </ItemGroup>
 

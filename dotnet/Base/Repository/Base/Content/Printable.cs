@@ -3,28 +3,27 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Repository
+namespace Allors.Repository;
+
+using Attributes;
+using static Workspaces;
+
+#region Allors
+[Id("61207a42-3199-4249-baa4-9dd11dc0f5b1")]
+#endregion
+public interface Printable : Object
 {
-    using Attributes;
-    using static Workspaces;
+    #region Allors
+    [Id("079C31BA-0D20-4CD7-921C-A1829E226970")]
+    [Indexed]
+    #endregion
+    [SingleAssociation]
+    [Workspace(Default)]
+    PrintDocument PrintDocument { get; set; }
 
     #region Allors
-    [Id("61207a42-3199-4249-baa4-9dd11dc0f5b1")]
+    [Id("55903F87-8D6B-4D99-9E0D-C3B74064C81F")]
     #endregion
-    public interface Printable : Object
-    {
-        #region Allors
-        [Id("079C31BA-0D20-4CD7-921C-A1829E226970")]
-        [Indexed]
-        #endregion
-        [SingleAssociation]
-        [Workspace(Default)]
-        PrintDocument PrintDocument { get; set; }
-
-        #region Allors
-        [Id("55903F87-8D6B-4D99-9E0D-C3B74064C81F")]
-        #endregion
-        [Workspace(Default)]
-        void Print();
-    }
+    [Workspace(Default)]
+    void Print();
 }

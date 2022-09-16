@@ -4,17 +4,16 @@
 // </copyright>
 // <summary>Defines the Extent type.</summary>
 
-namespace Allors.Repository.Attributes
+namespace Allors.Repository.Attributes;
+
+using System;
+
+[AttributeUsage(AttributeTargets.Class | AttributeTargets.Property | AttributeTargets.Method)]
+public class WorkspaceAttribute : RepositoryAttribute
 {
-    using System;
+    private static readonly string[] DefaultNames = {"Default"};
 
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Property | AttributeTargets.Method)]
-    public class WorkspaceAttribute : RepositoryAttribute
-    {
-        private static readonly string[] DefaultNames = { "Default" };
+    public WorkspaceAttribute(params string[] names) => this.Names = names.Length > 0 ? names : DefaultNames;
 
-        public WorkspaceAttribute(params string[] names) => this.Names = names.Length > 0 ? names : DefaultNames;
-
-        public string[] Names { get; }
-    }
+    public string[] Names { get; }
 }

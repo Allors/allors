@@ -4,6 +4,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="..\..\..\Repository\Attributes\Attributes*\**\*.cs" />
+    <Compile Include="..\..\..\Repository\Stylecop\*.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Shared\Allors.Shared.csproj" />

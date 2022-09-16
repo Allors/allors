@@ -4,13 +4,12 @@
 // </copyright>
 // <summary>Defines the Extent type.</summary>
 
-namespace Allors.Repository
-{
-    using Attributes;
+namespace Allors.Repository;
 
-    [Domain]
-    [Id("770538dd-7b19-4694-bdce-cf04dcf9cf62")]
-    public struct Core
-    {
-    }
+using Attributes;
+
+[Domain]
+[Id("770538dd-7b19-4694-bdce-cf04dcf9cf62")]
+public struct Core
+{
 }

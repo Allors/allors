@@ -3,14 +3,13 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Repository
-{
-    using Attributes;
+namespace Allors.Repository;
 
-    #region Allors
-    [Id("7a49be0e-cb91-4e1e-b113-ac67ec969935")]
-    #endregion
-    public interface I4 : Object, S4, S1234
-    {
-    }
+using Attributes;
+
+#region Allors
+[Id("7a49be0e-cb91-4e1e-b113-ac67ec969935")]
+#endregion
+public interface I4 : Object, S4, S1234
+{
 }

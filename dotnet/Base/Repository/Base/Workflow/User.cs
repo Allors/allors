@@ -4,19 +4,18 @@
 // </copyright>
 // <summary>Defines the Extent type.</summary>
 
-namespace Allors.Repository
+namespace Allors.Repository;
+
+using Attributes;
+using static Workspaces;
+
+public partial interface User
 {
-    using Attributes;
-    using static Workspaces;
-   
-    public partial interface User 
-    {
-        #region Allors
-        [Id("bed34563-4ed8-4c6b-88d2-b4199e521d74")]
-        [Indexed]
-        #endregion
-        [SingleAssociation]
-        [Workspace(Default)]
-        NotificationList NotificationList { get; set; }
-    }
+    #region Allors
+    [Id("bed34563-4ed8-4c6b-88d2-b4199e521d74")]
+    [Indexed]
+    #endregion
+    [SingleAssociation]
+    [Workspace(Default)]
+    NotificationList NotificationList { get; set; }
 }

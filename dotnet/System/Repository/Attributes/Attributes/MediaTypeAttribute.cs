@@ -3,15 +3,14 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Repository.Attributes
+namespace Allors.Repository.Attributes;
+
+using System;
+
+[AttributeUsage(AttributeTargets.Property)]
+public class MediaTypeAttribute : RepositoryAttribute
 {
-    using System;
+    public MediaTypeAttribute(string value) => this.Value = value;
 
-    [AttributeUsage(AttributeTargets.Property)]
-    public class MediaTypeAttribute : RepositoryAttribute
-    {
-        public MediaTypeAttribute(string value) => this.Value = value;
-
-        public string Value { get; set; }
-    }
+    public string Value { get; set; }
 }

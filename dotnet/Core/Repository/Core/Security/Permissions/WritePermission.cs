@@ -4,42 +4,38 @@
 // </copyright>
 // <summary>Defines the Extent type.</summary>
 
-namespace Allors.Repository
+namespace Allors.Repository;
+
+using System;
+using Attributes;
+
+#region Allors
+[Id("4F00E50D-4324-4005-A405-6DFD1232982A")]
+#endregion
+public class WritePermission : Permission
 {
-    using System;
-    using Attributes;
-
     #region Allors
-    [Id("4F00E50D-4324-4005-A405-6DFD1232982A")]
+    [Id("86675DEA-D9F0-4930-99EC-13F2137CFB45")]
+    [Indexed]
     #endregion
-    public class WritePermission : Permission
-    {
-        #region Allors
-        [Id("86675DEA-D9F0-4930-99EC-13F2137CFB45")]
-        [Indexed]
-        #endregion
-        [Required]
-        public Guid RelationTypePointer { get; set; }
+    [Required]
+    public Guid RelationTypePointer { get; set; }
 
-        #region inherited
-
-        public DelegatedAccess AccessDelegation { get; set; }
-        public Revocation[] Revocations { get; set; }
-        
-
-        public SecurityToken[] SecurityTokens { get; set; }
-
-        public Guid ClassPointer { get; set; }
-
-        public void OnPostBuild() { }
-
-        public void OnInit() { }
-
-        public void OnPostDerive() { }
-
-        public void Delete() { }
+    #region inherited
+    public DelegatedAccess AccessDelegation { get; set; }
+    public Revocation[] Revocations { get; set; }
 
 
-        #endregion
-    }
+    public SecurityToken[] SecurityTokens { get; set; }
+
+    public Guid ClassPointer { get; set; }
+
+    public void OnPostBuild() { }
+
+    public void OnInit() { }
+
+    public void OnPostDerive() { }
+
+    public void Delete() { }
+    #endregion
 }

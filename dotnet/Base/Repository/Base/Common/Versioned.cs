@@ -4,14 +4,13 @@
 // </copyright>
 // <summary>Defines the Extent type.</summary>
 
-namespace Allors.Repository
-{
-    using Attributes;
+namespace Allors.Repository;
 
-    #region Allors
-    [Id("39F9CB84-B321-424A-864C-0B128ACAA965")]
-    #endregion
-    public interface Versioned : Object
-    {
-    }
+using Attributes;
+
+#region Allors
+[Id("39F9CB84-B321-424A-864C-0B128ACAA965")]
+#endregion
+public interface Versioned : Object
+{
 }

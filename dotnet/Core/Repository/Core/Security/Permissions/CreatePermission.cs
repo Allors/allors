@@ -4,35 +4,31 @@
 // </copyright>
 // <summary>Defines the Extent type.</summary>
 
-namespace Allors.Repository
+namespace Allors.Repository;
+
+using System;
+using Attributes;
+
+#region Allors
+[Id("412994F9-4D0E-4D75-AE27-3063046869F0")]
+#endregion
+public class CreatePermission : Permission
 {
-    using System;
-    using Attributes;
+    #region inherited
+    public DelegatedAccess AccessDelegation { get; set; }
+    public Revocation[] Revocations { get; set; }
 
-    #region Allors
-    [Id("412994F9-4D0E-4D75-AE27-3063046869F0")]
+
+    public SecurityToken[] SecurityTokens { get; set; }
+
+    public Guid ClassPointer { get; set; }
+
+    public void OnPostBuild() { }
+
+    public void OnInit() { }
+
+    public void OnPostDerive() { }
+
+    public void Delete() { }
     #endregion
-    public class CreatePermission : Permission
-    {
-
-        #region inherited
-
-        public DelegatedAccess AccessDelegation { get; set; }
-        public Revocation[] Revocations { get; set; }
-        
-
-        public SecurityToken[] SecurityTokens { get; set; }
-
-        public Guid ClassPointer { get; set; }
-
-        public void OnPostBuild() { }
-
-        public void OnInit() { }
-
-        public void OnPostDerive() { }
-
-        public void Delete() { }
-
-        #endregion
-    }
 }

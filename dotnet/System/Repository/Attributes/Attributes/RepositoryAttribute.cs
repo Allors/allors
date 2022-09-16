@@ -4,11 +4,10 @@
 // </copyright>
 // <summary>Defines the Extent type.</summary>
 
-namespace Allors.Repository.Attributes
-{
-    using System;
+namespace Allors.Repository.Attributes;
 
-    public class RepositoryAttribute : Attribute
-    {
-    }
+using System;
+
+public class RepositoryAttribute : Attribute
+{
 }

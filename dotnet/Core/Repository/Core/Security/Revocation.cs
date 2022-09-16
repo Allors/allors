@@ -4,39 +4,37 @@
 // </copyright>
 // <summary>Defines the Extent type.</summary>
 
-namespace Allors.Repository
+namespace Allors.Repository;
+
+using System;
+using Attributes;
+
+#region Allors
+[Id("753A230E-6C29-4C3C-9592-323BE0778ED6")]
+#endregion
+public class Revocation : UniquelyIdentifiable, Deletable
 {
-    using System;
-    using Attributes;
-
     #region Allors
-    [Id("753A230E-6C29-4C3C-9592-323BE0778ED6")]
+    [Id("F7F98147-FD94-4BB1-A974-6405A3AB369E")]
     #endregion
-    public class Revocation : UniquelyIdentifiable, Deletable
-    {
-        #region Allors
-        [Id("F7F98147-FD94-4BB1-A974-6405A3AB369E")]
-        #endregion
-        
-        [Indexed]
-        public Permission[] DeniedPermissions { get; set; }
+    [Indexed]
+    public Permission[] DeniedPermissions { get; set; }
 
-        #region inherited
-        public Guid UniqueId { get; set; }
+    #region inherited
+    public Guid UniqueId { get; set; }
 
-        public DelegatedAccess AccessDelegation { get; set; }
-        public Revocation[] Revocations { get; set; }
-        
+    public DelegatedAccess AccessDelegation { get; set; }
+    public Revocation[] Revocations { get; set; }
 
-        public SecurityToken[] SecurityTokens { get; set; }
 
-        public void OnPostBuild() { }
+    public SecurityToken[] SecurityTokens { get; set; }
 
-        public void OnInit() { }
+    public void OnPostBuild() { }
 
-        public void OnPostDerive() { }
+    public void OnInit() { }
 
-        public void Delete() { }
-        #endregion
-    }
+    public void OnPostDerive() { }
+
+    public void Delete() { }
+    #endregion
 }

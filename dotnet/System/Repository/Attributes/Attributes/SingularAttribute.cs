@@ -4,15 +4,14 @@
 // </copyright>
 // <summary>Defines the Extent type.</summary>
 
-namespace Allors.Repository.Attributes
+namespace Allors.Repository.Attributes;
+
+using System;
+
+[AttributeUsage(AttributeTargets.Property)]
+public class SingularAttribute : RepositoryAttribute
 {
-    using System;
+    public SingularAttribute(string value) => this.Value = value;
 
-    [AttributeUsage(AttributeTargets.Property)]
-    public class SingularAttribute : RepositoryAttribute
-    {
-        public SingularAttribute(string value) => this.Value = value;
-
-        public string Value { get; set; }
-    }
+    public string Value { get; set; }
 }

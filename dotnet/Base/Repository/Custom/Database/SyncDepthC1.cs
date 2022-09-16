@@ -3,39 +3,35 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Repository
+namespace Allors.Repository;
+
+using Attributes;
+
+#region Allors
+[Id("4EA6AD12-C1FB-4661-B4F7-72B81435DD70")]
+#endregion
+public class SyncDepthC1 : SyncDepthI1
 {
-    using Attributes;
+    #region inherited
+    public DelegatedAccess AccessDelegation { get; set; }
+    public Revocation[] Revocations { get; set; }
 
-    #region Allors
-    [Id("4EA6AD12-C1FB-4661-B4F7-72B81435DD70")]
-    #endregion
-    public class SyncDepthC1 : SyncDepthI1
+
+    public SecurityToken[] SecurityTokens { get; set; }
+
+    public int DerivationCount { get; set; }
+
+    public SyncDepth2 SyncDepth2 { get; set; }
+
+    public int Value { get; set; }
+
+
+    public void OnPostBuild() { }
+
+    public void OnInit()
     {
-        #region inherited
-
-        
-        public DelegatedAccess AccessDelegation { get; set; }
-        public Revocation[] Revocations { get; set; }
-        
-
-        public SecurityToken[] SecurityTokens { get; set; }
-
-        public int DerivationCount { get; set; }
-
-        public SyncDepth2 SyncDepth2 { get; set; }
-
-        public int Value { get; set; }
-
-
-        public void OnPostBuild() { }
-
-        public void OnInit()
-        {
-        }
-
-        public void OnPostDerive() { }
-
-        #endregion
     }
+
+    public void OnPostDerive() { }
+    #endregion
 }

@@ -4,45 +4,41 @@
 // </copyright>
 // <summary>Defines the Extent type.</summary>
 
-namespace Allors.Repository
+namespace Allors.Repository;
+
+using System;
+using Attributes;
+
+#region Allors
+[Id("0568354f-e3d9-439e-baac-b7dce31b956a")]
+#endregion
+public class Counter : UniquelyIdentifiable
 {
-    using System;
-    using Attributes;
-
     #region Allors
-    [Id("0568354f-e3d9-439e-baac-b7dce31b956a")]
+    [Id("309d07d9-8dea-4e99-a3b8-53c0d360bc54")]
     #endregion
-    public class Counter : UniquelyIdentifiable
+    [Required]
+    public int Value { get; set; }
+
+    #region inherited
+    public DelegatedAccess AccessDelegation { get; set; }
+    public Revocation[] Revocations { get; set; }
+
+
+    public SecurityToken[] SecurityTokens { get; set; }
+
+    public Guid UniqueId { get; set; }
+
+    public void OnPostBuild()
     {
-        #region Allors
-        [Id("309d07d9-8dea-4e99-a3b8-53c0d360bc54")]
-        #endregion
-        [Required]
-        public int Value { get; set; }
-
-        #region inherited
-
-        
-        public DelegatedAccess AccessDelegation { get; set; }
-        public Revocation[] Revocations { get; set; }
-        
-
-        public SecurityToken[] SecurityTokens { get; set; }
-
-        public Guid UniqueId { get; set; }
-
-        public void OnPostBuild()
-        {
-        }
-
-        public void OnInit()
-        {
-        }
-
-        public void OnPostDerive()
-        {
-        }
-
-        #endregion
     }
+
+    public void OnInit()
+    {
+    }
+
+    public void OnPostDerive()
+    {
+    }
+    #endregion
 }

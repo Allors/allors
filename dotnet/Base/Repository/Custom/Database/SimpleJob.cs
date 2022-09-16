@@ -3,39 +3,34 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Repository
+namespace Allors.Repository;
+
+using Attributes;
+
+#region Allors
+[Id("320985b6-d571-4b6c-b940-e02c04ad37d3")]
+#endregion
+public class SimpleJob : Object
 {
-    using Attributes;
-
     #region Allors
-    [Id("320985b6-d571-4b6c-b940-e02c04ad37d3")]
+    [Id("7cd27660-13c6-4a15-8fd8-5775920cfd28")]
     #endregion
-    public class SimpleJob : Object
+    public int Index { get; set; }
+
+    #region inherited
+    public DelegatedAccess AccessDelegation { get; set; }
+    public Revocation[] Revocations { get; set; }
+
+
+    public SecurityToken[] SecurityTokens { get; set; }
+
+
+    public void OnPostBuild() { }
+
+    public void OnInit()
     {
-        #region Allors
-        [Id("7cd27660-13c6-4a15-8fd8-5775920cfd28")]
-        #endregion
-        public int Index { get; set; }
-
-        #region inherited
-
-        
-        public DelegatedAccess AccessDelegation { get; set; }
-        public Revocation[] Revocations { get; set; }
-        
-
-        public SecurityToken[] SecurityTokens { get; set; }
-
-        
-
-        public void OnPostBuild() { }
-
-        public void OnInit()
-        {
-        }
-
-        public void OnPostDerive() { }
-
-        #endregion
     }
+
+    public void OnPostDerive() { }
+    #endregion
 }

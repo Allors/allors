@@ -4,38 +4,37 @@
 // </copyright>
 // <summary>Defines the Extent type.</summary>
 
-namespace Allors.Repository
+namespace Allors.Repository;
+
+using Attributes;
+using static Workspaces;
+
+#region Allors
+[Id("b7bcc22f-03f0-46fd-b738-4e035921d445")]
+#endregion
+public interface Enumeration : UniquelyIdentifiable, Object
 {
-    using Attributes;
-    using static Workspaces;
+    #region Allors
+    [Id("3d3ae4d0-bac6-4645-8a53-3e9f7f9af086")]
+    #endregion
+    [Indexed]
+    [Required]
+    [Size(256)]
+    [Workspace(Default)]
+    string Name { get; set; }
 
     #region Allors
-    [Id("b7bcc22f-03f0-46fd-b738-4e035921d445")]
+    [Id("07e034f1-246a-4115-9662-4c798f31343f")]
     #endregion
-    public interface Enumeration : UniquelyIdentifiable, Object
-    {
-        #region Allors
-        [Id("3d3ae4d0-bac6-4645-8a53-3e9f7f9af086")]
-        #endregion
-        [Indexed]
-        [Required]
-        [Size(256)]
-        [Workspace(Default)]
-        string Name { get; set; }
+    [SingleAssociation]
+    [Indexed]
+    [Workspace(Default)]
+    LocalizedText[] LocalizedNames { get; set; }
 
-        #region Allors
-        [Id("07e034f1-246a-4115-9662-4c798f31343f")]
-        #endregion
-        [SingleAssociation]
-        [Indexed]
-        [Workspace(Default)]
-        LocalizedText[] LocalizedNames { get; set; }
-
-        #region Allors
-        [Id("f57bb62e-77a8-4519-81e6-539d54b71cb7")]
-        #endregion
-        [Indexed]
-        [Workspace(Default)]
-        bool IsActive { get; set; }
-    }
+    #region Allors
+    [Id("f57bb62e-77a8-4519-81e6-539d54b71cb7")]
+    #endregion
+    [Indexed]
+    [Workspace(Default)]
+    bool IsActive { get; set; }
 }

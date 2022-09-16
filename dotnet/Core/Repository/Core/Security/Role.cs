@@ -4,48 +4,45 @@
 // </copyright>
 // <summary>Defines the Extent type.</summary>
 
-namespace Allors.Repository
+namespace Allors.Repository;
+
+using System;
+using Attributes;
+
+#region Allors
+[Id("af6fe5f4-e5bc-4099-bcd1-97528af6505d")]
+#endregion
+public class Role : UniquelyIdentifiable
 {
-    using System;
-    using Attributes;
+    #region Allors
+    [Id("51e56ae1-72dc-443f-a2a3-f5aa3650f8d2")]
+    [Indexed]
+    #endregion
+
+    public Permission[] Permissions { get; set; }
 
     #region Allors
-    [Id("af6fe5f4-e5bc-4099-bcd1-97528af6505d")]
+    [Id("934bcbbe-5286-445c-a1bd-e2fcc786c448")]
     #endregion
-    public class Role : UniquelyIdentifiable
+    [Required]
+    [Size(256)]
+    public string Name { get; set; }
+
+    #region inherited
+    public DelegatedAccess AccessDelegation { get; set; }
+    public Revocation[] Revocations { get; set; }
+
+
+    public SecurityToken[] SecurityTokens { get; set; }
+
+    public Guid UniqueId { get; set; }
+
+    public void OnPostBuild() { }
+
+    public void OnInit()
     {
-        #region Allors
-        [Id("51e56ae1-72dc-443f-a2a3-f5aa3650f8d2")]
-        [Indexed]
-        #endregion
-        
-        public Permission[] Permissions { get; set; }
-
-        #region Allors
-        [Id("934bcbbe-5286-445c-a1bd-e2fcc786c448")]
-        #endregion
-        [Required]
-        [Size(256)]
-        public string Name { get; set; }
-
-        #region inherited
-
-        public DelegatedAccess AccessDelegation { get; set; }
-        public Revocation[] Revocations { get; set; }
-        
-
-        public SecurityToken[] SecurityTokens { get; set; }
-
-        public Guid UniqueId { get; set; }
-
-        public void OnPostBuild() { }
-
-        public void OnInit()
-        {
-        }
-
-        public void OnPostDerive() { }
-
-        #endregion
     }
+
+    public void OnPostDerive() { }
+    #endregion
 }

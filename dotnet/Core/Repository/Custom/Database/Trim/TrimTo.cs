@@ -3,38 +3,35 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Repository
+namespace Allors.Repository;
+
+using Attributes;
+using static Workspaces;
+
+#region Allors
+[Id("C04D372D-6D58-4EA7-AFF8-33208D4A9519")]
+#endregion
+[Workspace(Default)]
+public class TrimTo : Object
 {
-    using Attributes;
-    using static Workspaces;
-
     #region Allors
-    [Id("C04D372D-6D58-4EA7-AFF8-33208D4A9519")]
+    [Id("09E9D2E5-E406-4D3B-9E3D-5AA3D69408CF")]
     #endregion
+    [Size(256)]
     [Workspace(Default)]
-    public class TrimTo : Object
-    {
-        #region Allors
-        [Id("09E9D2E5-E406-4D3B-9E3D-5AA3D69408CF")]
-        #endregion
-        [Size(256)]
-        [Workspace(Default)]
-        public string Name { get; set; }
+    public string Name { get; set; }
 
-        #region inherited
+    #region inherited
+    public DelegatedAccess AccessDelegation { get; set; }
+    public Revocation[] Revocations { get; set; }
 
-        public DelegatedAccess AccessDelegation { get; set; }
-        public Revocation[] Revocations { get; set; }
-        
 
-        public SecurityToken[] SecurityTokens { get; set; }
+    public SecurityToken[] SecurityTokens { get; set; }
 
-        public void OnPostBuild() { }
+    public void OnPostBuild() { }
 
-        public void OnInit() { }
+    public void OnInit() { }
 
-        public void OnPostDerive() { }
-
-        #endregion
-    }
+    public void OnPostDerive() { }
+    #endregion
 }

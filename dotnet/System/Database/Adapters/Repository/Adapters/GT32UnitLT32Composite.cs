@@ -3,20 +3,18 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Repository
+namespace Allors.Repository;
+
+using Attributes;
+
+#region Allors
+[Id("7683eb7f-cbac-4947-ac29-4ef15ae47597")]
+#endregion
+public class GT32UnitLT32Composite : object
 {
-    using Attributes;
-
-    #region Allors
-    [Id("7683eb7f-cbac-4947-ac29-4ef15ae47597")]
+    #region inherited properties
     #endregion
-    public class GT32UnitLT32Composite : System.Object
-    {
-        #region inherited properties
-        #endregion
 
-        #region inherited methods
-        #endregion
-
-    }
+    #region inherited methods
+    #endregion
 }

@@ -3,40 +3,38 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Repository
+namespace Allors.Repository;
+
+using System;
+using Attributes;
+
+#region Allors
+[Id("270f0dc8-1bc2-4a42-9617-45e93d5403c8")]
+#endregion
+public class Gender : Enumeration
 {
-    using System;
-    using Attributes;
+    #region inherited
+    public LocalizedText[] LocalizedNames { get; set; }
 
-    #region Allors
-    [Id("270f0dc8-1bc2-4a42-9617-45e93d5403c8")]
-    #endregion
-    public class Gender : Enumeration
+    public string Name { get; set; }
+
+    public bool IsActive { get; set; }
+
+
+    public DelegatedAccess AccessDelegation { get; set; }
+    public Revocation[] Revocations { get; set; }
+
+
+    public SecurityToken[] SecurityTokens { get; set; }
+
+    public Guid UniqueId { get; set; }
+
+    public void OnPostBuild() { }
+
+    public void OnInit()
     {
-        #region inherited
-        public LocalizedText[] LocalizedNames { get; set; }
-
-        public string Name { get; set; }
-
-        public bool IsActive { get; set; }
-
-        
-        public DelegatedAccess AccessDelegation { get; set; }
-        public Revocation[] Revocations { get; set; }
-        
-
-        public SecurityToken[] SecurityTokens { get; set; }
-
-        public Guid UniqueId { get; set; }
-
-        public void OnPostBuild() { }
-
-        public void OnInit()
-        {
-        }
-
-        public void OnPostDerive() { }
-
-        #endregion
     }
+
+    public void OnPostDerive() { }
+    #endregion
 }

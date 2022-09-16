@@ -3,39 +3,35 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Repository
+namespace Allors.Repository;
+
+using System;
+using Attributes;
+
+#region Allors
+[Id("849393ed-cff6-40da-9b4d-483f045f2e99")]
+#endregion
+public class OrderState : ObjectState
 {
-    using System;
-    using Attributes;
+    #region inherited properties
+    public DelegatedAccess AccessDelegation { get; set; }
+    public Revocation[] Revocations { get; set; }
 
-    #region Allors
-    [Id("849393ed-cff6-40da-9b4d-483f045f2e99")]
-    #endregion
-    public class OrderState : ObjectState
+
+    public SecurityToken[] SecurityTokens { get; set; }
+
+    public Revocation ObjectRevocation { get; set; }
+
+    public string Name { get; set; }
+
+    public Guid UniqueId { get; set; }
+
+    public void OnPostBuild() { }
+
+    public void OnInit()
     {
-        #region inherited properties
-
-        
-        public DelegatedAccess AccessDelegation { get; set; }
-        public Revocation[] Revocations { get; set; }
-        
-
-        public SecurityToken[] SecurityTokens { get; set; }
-
-        public Revocation ObjectRevocation { get; set; }
-
-        public string Name { get; set; }
-
-        public Guid UniqueId { get; set; }
-
-        public void OnPostBuild() { }
-
-        public void OnInit()
-        {
-        }
-
-        public void OnPostDerive() { }
-
-        #endregion
     }
+
+    public void OnPostDerive() { }
+    #endregion
 }

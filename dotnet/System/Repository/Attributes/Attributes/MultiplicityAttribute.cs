@@ -4,12 +4,11 @@
 // </copyright>
 // <summary>Defines the Extent type.</summary>
 
-namespace Allors.Repository.Attributes
-{
-    using System;
+namespace Allors.Repository.Attributes;
 
-    [AttributeUsage(AttributeTargets.Property)]
-    public class SingleAssociationAttribute : RepositoryAttribute
-    {
-    }
+using System;
+
+[AttributeUsage(AttributeTargets.Property)]
+public class SingleAssociationAttribute : RepositoryAttribute
+{
 }

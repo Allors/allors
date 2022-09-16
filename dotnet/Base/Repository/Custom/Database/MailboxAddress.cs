@@ -3,42 +3,37 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Repository
+namespace Allors.Repository;
+
+using Attributes;
+
+#region Allors
+[Id("7ee3b00b-4e63-4774-b744-3add2c6035ab")]
+#endregion
+[Plural("MailboxAddresses")]
+public class MailboxAddress : Object, Address
 {
-    using Attributes;
-
     #region Allors
-    [Id("7ee3b00b-4e63-4774-b744-3add2c6035ab")]
+    [Id("03c9970e-d9d6-427d-83d0-00e0888f5588")]
+    [Size(256)]
     #endregion
-    [Plural("MailboxAddresses")]
-    public class MailboxAddress : Object, Address
+    public string PoBox { get; set; }
+
+    #region inherited
+    public DelegatedAccess AccessDelegation { get; set; }
+    public Revocation[] Revocations { get; set; }
+
+
+    public SecurityToken[] SecurityTokens { get; set; }
+
+    public Place Place { get; set; }
+
+    public void OnPostBuild() { }
+
+    public void OnInit()
     {
-        #region Allors
-        [Id("03c9970e-d9d6-427d-83d0-00e0888f5588")]
-        [Size(256)]
-        #endregion
-        public string PoBox { get; set; }
-
-        #region inherited
-
-        
-        public DelegatedAccess AccessDelegation { get; set; }
-        public Revocation[] Revocations { get; set; }
-        
-
-        public SecurityToken[] SecurityTokens { get; set; }
-
-        public Place Place { get; set; }
-
-        public void OnPostBuild() { }
-
-        public void OnInit()
-        {
-        }
-
-        public void OnPostDerive() { }
-
-        #endregion
-
     }
+
+    public void OnPostDerive() { }
+    #endregion
 }

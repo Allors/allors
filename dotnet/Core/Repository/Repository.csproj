@@ -6,6 +6,9 @@
     <Compile Include="..\..\System\Repository\Attributes\Attributes*\**\*.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\System\Repository\Stylecop\*.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\..\System\Shared\Allors.Shared.csproj" />
   </ItemGroup>
 

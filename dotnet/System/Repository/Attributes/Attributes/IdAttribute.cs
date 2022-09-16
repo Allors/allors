@@ -4,15 +4,15 @@
 // </copyright>
 // <summary>Defines the Extent type.</summary>
 
-namespace Allors.Repository.Attributes
+namespace Allors.Repository.Attributes;
+
+using System;
+
+[AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Struct | AttributeTargets.Class |
+                AttributeTargets.Interface | AttributeTargets.Property | AttributeTargets.Method)]
+public class IdAttribute : RepositoryAttribute
 {
-    using System;
+    public IdAttribute(string value) => this.Value = value;
 
-    [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Struct | AttributeTargets.Class | AttributeTargets.Interface | AttributeTargets.Property | AttributeTargets.Method)]
-    public class IdAttribute : RepositoryAttribute
-    {
-        public IdAttribute(string value) => this.Value = value;
-
-        public string Value { get; set; }
-    }
+    public string Value { get; set; }
 }

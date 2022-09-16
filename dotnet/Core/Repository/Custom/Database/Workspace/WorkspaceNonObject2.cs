@@ -3,32 +3,28 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Repository
+namespace Allors.Repository;
+
+using Attributes;
+
+#region Allors
+[Id("6CF7B2FD-7A8F-422A-8D9C-E1B6A27EBAAB")]
+#endregion
+public class WorkspaceNonObject2 : Object
 {
-    using Attributes;
+    #region inherited
+    public DelegatedAccess AccessDelegation { get; set; }
+    public Revocation[] Revocations { get; set; }
 
-    #region Allors
-    [Id("6CF7B2FD-7A8F-422A-8D9C-E1B6A27EBAAB")]
-    #endregion
-    public class WorkspaceNonObject2 : Object
+
+    public SecurityToken[] SecurityTokens { get; set; }
+
+    public void OnPostBuild() { }
+
+    public void OnInit()
     {
-
-        #region inherited
-
-        public DelegatedAccess AccessDelegation { get; set; }
-        public Revocation[] Revocations { get; set; }
-        
-
-        public SecurityToken[] SecurityTokens { get; set; }
-
-        public void OnPostBuild() { }
-
-        public void OnInit()
-        {
-        }
-
-        public void OnPostDerive() { }
-
-        #endregion
     }
+
+    public void OnPostDerive() { }
+    #endregion
 }

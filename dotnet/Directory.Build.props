@@ -4,4 +4,8 @@
     <!-- <Nullable>enable</Nullable> -->
     <!-- <WarningsAsErrors>nullable</WarningsAsErrors> -->
   </PropertyGroup>
+
+   <ItemGroup>
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118"/>
+  </ItemGroup>
 </Project>

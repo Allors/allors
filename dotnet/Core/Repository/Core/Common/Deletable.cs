@@ -4,21 +4,19 @@
 // </copyright>
 // <summary>Defines the Extent type.</summary>
 
-namespace Allors.Repository
+namespace Allors.Repository;
+
+using Attributes;
+using static Workspaces;
+
+#region Allors
+[Id("9279e337-c658-4086-946d-03c75cdb1ad3")]
+#endregion
+public interface Deletable : Object
 {
-    using Attributes;
-    using static Workspaces;
-
-
     #region Allors
-    [Id("9279e337-c658-4086-946d-03c75cdb1ad3")]
+    [Id("430702D2-E02B-45AD-9B22-B8331DC75A3F")]
     #endregion
-    public interface Deletable : Object
-    {
-        #region Allors
-        [Id("430702D2-E02B-45AD-9B22-B8331DC75A3F")]
-        #endregion
-        [Workspace(Default)]
-        void Delete();
-    }
+    [Workspace(Default)]
+    void Delete();
 }

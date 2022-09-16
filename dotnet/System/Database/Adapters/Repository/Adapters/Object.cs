@@ -4,12 +4,11 @@
 // </copyright>
 // <summary>Defines the Extent type.</summary>
 
-namespace Allors.Repository
-{
-    using Attributes;
+namespace Allors.Repository;
 
-    [Id("12504f04-02c6-4778-98fe-04eba12ef8b2")]
-    public interface Object
-    {
-    }
+using Attributes;
+
+[Id("12504f04-02c6-4778-98fe-04eba12ef8b2")]
+public interface Object
+{
 }
