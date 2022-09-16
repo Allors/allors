@@ -3,128 +3,127 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Adapters.Memory
+namespace Allors.Database.Adapters.Memory;
+
+using System.Collections.Generic;
+using System.Linq;
+using Meta;
+
+internal sealed class Original
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using Meta;
+    internal Original(Strategy strategy) => this.Strategy = strategy;
 
-    internal sealed class Original
+    internal Strategy Strategy { get; }
+
+    internal Dictionary<IRoleType, object> OriginalUnitRoleByRoleType { get; private set; }
+
+    internal Dictionary<IRoleType, Strategy> OriginalCompositeRoleByRoleType { get; private set; }
+
+    internal Dictionary<IRoleType, Strategy[]> OriginalCompositesRoleByRoleType { get; private set; }
+
+    internal Dictionary<IAssociationType, Strategy> OriginalCompositeAssociationByRoleType { get; private set; }
+
+    internal Dictionary<IAssociationType, Strategy[]> OriginalCompositesAssociationByRoleType { get; private set; }
+
+    internal void OnChangingUnitRole(IRoleType roleType, object previousRole)
     {
-        internal Original(Strategy strategy) => this.Strategy = strategy;
+        this.OriginalUnitRoleByRoleType ??= new Dictionary<IRoleType, object>();
 
-        internal Strategy Strategy { get; }
-
-        internal Dictionary<IRoleType, object> OriginalUnitRoleByRoleType { get; private set; }
-
-        internal Dictionary<IRoleType, Strategy> OriginalCompositeRoleByRoleType { get; private set; }
-
-        internal Dictionary<IRoleType, Strategy[]> OriginalCompositesRoleByRoleType { get; private set; }
-
-        internal Dictionary<IAssociationType, Strategy> OriginalCompositeAssociationByRoleType { get; private set; }
-
-        internal Dictionary<IAssociationType, Strategy[]> OriginalCompositesAssociationByRoleType { get; private set; }
-
-        internal void OnChangingUnitRole(IRoleType roleType, object previousRole)
+        if (!this.OriginalUnitRoleByRoleType.ContainsKey(roleType))
         {
-            this.OriginalUnitRoleByRoleType ??= new Dictionary<IRoleType, object>();
-
-            if (!this.OriginalUnitRoleByRoleType.ContainsKey(roleType))
-            {
-                this.OriginalUnitRoleByRoleType.Add(roleType, previousRole);
-            }
+            this.OriginalUnitRoleByRoleType.Add(roleType, previousRole);
         }
+    }
 
-        internal void OnChangingCompositeRole(IRoleType roleType, Strategy previousRole)
+    internal void OnChangingCompositeRole(IRoleType roleType, Strategy previousRole)
+    {
+        this.OriginalCompositeRoleByRoleType ??= new Dictionary<IRoleType, Strategy>();
+
+        if (!this.OriginalCompositeRoleByRoleType.ContainsKey(roleType))
         {
-            this.OriginalCompositeRoleByRoleType ??= new Dictionary<IRoleType, Strategy>();
-
-            if (!this.OriginalCompositeRoleByRoleType.ContainsKey(roleType))
-            {
-                this.OriginalCompositeRoleByRoleType.Add(roleType, previousRole);
-            }
+            this.OriginalCompositeRoleByRoleType.Add(roleType, previousRole);
         }
+    }
 
-        internal void OnChangingCompositesRole(IRoleType roleType, IEnumerable<Strategy> previousRoles)
+    internal void OnChangingCompositesRole(IRoleType roleType, IEnumerable<Strategy> previousRoles)
+    {
+        this.OriginalCompositesRoleByRoleType ??= new Dictionary<IRoleType, Strategy[]>();
+
+        if (!this.OriginalCompositesRoleByRoleType.ContainsKey(roleType))
         {
-            this.OriginalCompositesRoleByRoleType ??= new Dictionary<IRoleType, Strategy[]>();
-
-            if (!this.OriginalCompositesRoleByRoleType.ContainsKey(roleType))
-            {
-                this.OriginalCompositesRoleByRoleType.Add(roleType, previousRoles?.ToArray());
-            }
+            this.OriginalCompositesRoleByRoleType.Add(roleType, previousRoles?.ToArray());
         }
+    }
 
-        internal void OnChangingCompositeAssociation(IAssociationType associationType, Strategy previousAssociation)
+    internal void OnChangingCompositeAssociation(IAssociationType associationType, Strategy previousAssociation)
+    {
+        this.OriginalCompositeAssociationByRoleType ??= new Dictionary<IAssociationType, Strategy>();
+
+        if (!this.OriginalCompositeAssociationByRoleType.ContainsKey(associationType))
         {
-            this.OriginalCompositeAssociationByRoleType ??= new Dictionary<IAssociationType, Strategy>();
-
-            if (!this.OriginalCompositeAssociationByRoleType.ContainsKey(associationType))
-            {
-                this.OriginalCompositeAssociationByRoleType.Add(associationType, previousAssociation);
-            }
+            this.OriginalCompositeAssociationByRoleType.Add(associationType, previousAssociation);
         }
+    }
 
-        internal void OnChangingCompositesAssociation(IAssociationType associationType, IEnumerable<Strategy> previousAssociations)
+    internal void OnChangingCompositesAssociation(IAssociationType associationType, IEnumerable<Strategy> previousAssociations)
+    {
+        this.OriginalCompositesAssociationByRoleType ??= new Dictionary<IAssociationType, Strategy[]>();
+
+        if (!this.OriginalCompositesAssociationByRoleType.ContainsKey(associationType))
         {
-            this.OriginalCompositesAssociationByRoleType ??= new Dictionary<IAssociationType, Strategy[]>();
-
-            if (!this.OriginalCompositesAssociationByRoleType.ContainsKey(associationType))
-            {
-                this.OriginalCompositesAssociationByRoleType.Add(associationType, previousAssociations?.ToArray());
-            }
+            this.OriginalCompositesAssociationByRoleType.Add(associationType, previousAssociations?.ToArray());
         }
+    }
 
-        public void Trim(ISet<IRoleType> roleTypes)
+    public void Trim(ISet<IRoleType> roleTypes)
+    {
+        foreach (var roleType in roleTypes.ToArray())
         {
-            foreach (var roleType in roleTypes.ToArray())
+            if (roleType.ObjectType.IsUnit)
             {
-                if (roleType.ObjectType.IsUnit)
+                var originalRole = this.OriginalUnitRoleByRoleType[roleType];
+                if (this.Strategy.ShouldTrim(roleType, originalRole))
                 {
-                    var originalRole = this.OriginalUnitRoleByRoleType[roleType];
-                    if (this.Strategy.ShouldTrim(roleType, originalRole))
-                    {
-                        roleTypes.Remove(roleType);
-                    }
+                    roleTypes.Remove(roleType);
                 }
-                else if (roleType.IsOne)
+            }
+            else if (roleType.IsOne)
+            {
+                var originalRole = this.OriginalCompositeRoleByRoleType[roleType];
+                if (this.Strategy.ShouldTrim(roleType, originalRole))
                 {
-                    var originalRole = this.OriginalCompositeRoleByRoleType[roleType];
-                    if (this.Strategy.ShouldTrim(roleType, originalRole))
-                    {
-                        roleTypes.Remove(roleType);
-                    }
+                    roleTypes.Remove(roleType);
                 }
-                else
+            }
+            else
+            {
+                var originalRole = this.OriginalCompositesRoleByRoleType[roleType];
+                if (this.Strategy.ShouldTrim(roleType, originalRole))
                 {
-                    var originalRole = this.OriginalCompositesRoleByRoleType[roleType];
-                    if (this.Strategy.ShouldTrim(roleType, originalRole))
-                    {
-                        roleTypes.Remove(roleType);
-                    }
+                    roleTypes.Remove(roleType);
                 }
             }
         }
+    }
 
-        public void Trim(ISet<IAssociationType> associationTypes)
+    public void Trim(ISet<IAssociationType> associationTypes)
+    {
+        foreach (var associationType in associationTypes.ToArray())
         {
-            foreach (var associationType in associationTypes.ToArray())
+            if (associationType.IsOne)
             {
-                if (associationType.IsOne)
+                var originalAssociation = this.OriginalCompositeAssociationByRoleType[associationType];
+                if (this.Strategy.ShouldTrim(associationType, originalAssociation))
                 {
-                    var originalAssociation = this.OriginalCompositeAssociationByRoleType[associationType];
-                    if (this.Strategy.ShouldTrim(associationType, originalAssociation))
-                    {
-                        associationTypes.Remove(associationType);
-                    }
+                    associationTypes.Remove(associationType);
                 }
-                else
+            }
+            else
+            {
+                var originalAssociation = this.OriginalCompositesAssociationByRoleType[associationType];
+                if (this.Strategy.ShouldTrim(associationType, originalAssociation))
                 {
-                    var originalAssociation = this.OriginalCompositesAssociationByRoleType[associationType];
-                    if (this.Strategy.ShouldTrim(associationType, originalAssociation))
-                    {
-                        associationTypes.Remove(associationType);
-                    }
+                    associationTypes.Remove(associationType);
                 }
             }
         }

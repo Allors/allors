@@ -3,18 +3,17 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Services
+namespace Allors.Database.Services;
+
+using System;
+using System.Collections.Generic;
+using Meta;
+
+public interface IMetaCache
 {
-    using System;
-    using System.Collections.Generic;
-    using Meta;
+    Type GetBuilderType(IClass @class);
 
-    public interface IMetaCache
-    {
-        Type GetBuilderType(IClass @class);
+    ISet<IClass> GetWorkspaceClasses(string workspaceName);
 
-        ISet<IClass> GetWorkspaceClasses(string workspaceName);
-
-        IDictionary<IClass, ISet<IRoleType>> GetWorkspaceRoleTypesByClass(string workspaceName);
-    }
+    IDictionary<IClass, ISet<IRoleType>> GetWorkspaceRoleTypesByClass(string workspaceName);
 }

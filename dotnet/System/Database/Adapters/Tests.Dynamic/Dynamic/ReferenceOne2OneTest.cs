@@ -14,3069 +14,345 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Allors.Database.Adapters
+namespace Allors.Database.Adapters;
+
+using System;
+using System.Linq;
+using Meta;
+using Xunit;
+
+public abstract class ReferenceOne2OneTest : Test
 {
-    using System;
-    using System.Linq;
-    using Meta;
-    using Xunit;
-
-    public abstract class ReferenceOne2OneTest : Test
+    [Fact]
+    [Trait("Category", "Dynamic")]
+    public void DifferentAssociationDifferentRole()
     {
-        [Fact]
-        [Trait("Category", "Dynamic")]
-        public void DifferentAssociationDifferentRole()
+        for (var iRepeat = 0; iRepeat < this.GetRepeats().Length; iRepeat++)
         {
-            for (var iRepeat = 0; iRepeat < this.GetRepeats().Length; iRepeat++)
+            var repeat = this.GetRepeats()[iRepeat];
+            for (var iTestRepeat = 0; iTestRepeat < this.GetTestRepeats().Length; iTestRepeat++)
             {
-                var repeat = this.GetRepeats()[iRepeat];
-                for (var iTestRepeat = 0; iTestRepeat < this.GetTestRepeats().Length; iTestRepeat++)
+                var testRepeat = this.GetTestRepeats()[iTestRepeat];
+                for (var iAssertRepeat = 0; iAssertRepeat < this.GetAssertRepeats().Length; iAssertRepeat++)
                 {
-                    var testRepeat = this.GetTestRepeats()[iTestRepeat];
-                    for (int iAssertRepeat = 0; iAssertRepeat < this.GetAssertRepeats().Length; iAssertRepeat++)
+                    for (var iTransactionFlag = 0; iTransactionFlag < this.GetBooleanFlags().Length; iTransactionFlag++)
                     {
-                        for (int iTransactionFlag = 0; iTransactionFlag < this.GetBooleanFlags().Length; iTransactionFlag++)
+                        var transactionFlag = this.GetBooleanFlags()[iTransactionFlag];
+
+                        for (var iRelation = 0; iRelation < this.GetRelations().Length; iRelation++)
                         {
-                            var transactionFlag = this.GetBooleanFlags()[iTransactionFlag];
-
-                            for (int iRelation = 0; iRelation < this.GetRelations().Length; iRelation++)
+                            var relationType = this.GetRelations()[iRelation];
+                            var associationTypes = relationType.AssociationType.ObjectType.Classes.ToArray();
+                            for (var iAssociationType = 0; iAssociationType < associationTypes.Count(); iAssociationType++)
                             {
-                                var relationType = this.GetRelations()[iRelation];
-                                var associationTypes = relationType.AssociationType.ObjectType.Classes.ToArray();
-                                for (int iAssociationType = 0; iAssociationType < associationTypes.Count(); iAssociationType++)
+                                var associationType = associationTypes[iAssociationType];
+                                var roleTypes = this.GetClasses(relationType);
+                                for (var iRoleType = 0; iRoleType < roleTypes.Count(); iRoleType++)
                                 {
-                                    var associationType = associationTypes[iAssociationType];
-                                    var roleTypes = this.GetClasses(relationType);
-                                    for (int iRoleType = 0; iRoleType < roleTypes.Count(); iRoleType++)
+                                    var roleType = roleTypes[iRoleType];
+                                    var association1 = this.GetTransaction().Build(associationType);
+                                    var association2 = this.GetTransaction().Build(associationType);
+                                    var role1 = this.GetTransaction().Build(roleType);
+                                    var role2 = this.GetTransaction().Build(roleType);
+
+                                    for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
                                     {
-                                        var roleType = roleTypes[iRoleType];
-                                        IObject association1 = this.GetTransaction().Build(associationType);
-                                        IObject association2 = this.GetTransaction().Build(associationType);
-                                        IObject role1 = this.GetTransaction().Build(roleType);
-                                        IObject role2 = this.GetTransaction().Build(roleType);
-
-                                        for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        Assert.Null(association1.Strategy.GetRole(relationType.RoleType));
+                                        Assert.Null(association2.Strategy.GetRole(relationType.RoleType));
+                                        Assert.Null(role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                        Assert.Null(role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                        if (transactionFlag)
                                         {
-                                            Assert.Null(association1.Strategy.GetRole(relationType.RoleType));
-                                            Assert.Null(association2.Strategy.GetRole(relationType.RoleType));
-                                            Assert.Null(role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                            Assert.Null(role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association1.Strategy.SetCompositeRole(relationType.RoleType, role1);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.Equal(role1, association1.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Null(association2.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Equal(association1, role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                Assert.Null(role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association2.Strategy.SetCompositeRole(relationType.RoleType, role2);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.Equal(role1, association1.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Equal(role2, association2.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Equal(association1, role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                Assert.Equal(association2, role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association1.Strategy.SetCompositeRole(relationType.RoleType, role1);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.Equal(role1, association1.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Equal(role2, association2.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Equal(association1, role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                Assert.Equal(association2, role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association1.Strategy.RemoveRole(relationType.RoleType);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.Null(association1.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Equal(role2, association2.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Null(role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                Assert.Equal(association2, role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association2.Strategy.RemoveRole(relationType.RoleType);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.Null(association1.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Null(association2.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Null(role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                Assert.Null(role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association2.Strategy.SetCompositeRole(relationType.RoleType, role2);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.Null(association1.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Equal(role2, association2.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Null(role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                Assert.Equal(association2, role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association1.Strategy.SetCompositeRole(relationType.RoleType, role1);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.Equal(role1, association1.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Equal(role2, association2.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Equal(association1, role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                Assert.Equal(association2, role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association2.Strategy.SetCompositeRole(relationType.RoleType, role2);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.Equal(role1, association1.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Equal(role2, association2.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Equal(association1, role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                Assert.Equal(association2, role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association2.Strategy.SetCompositeRole(relationType.RoleType, null);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.Equal(role1, association1.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Null(association2.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Equal(association1, role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                Assert.Null(role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association1.Strategy.SetCompositeRole(relationType.RoleType, null);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.Null(association1.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Null(association2.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Null(role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                Assert.Null(role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association1.Strategy.SetCompositeRole(relationType.RoleType, role1);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.Equal(role1, association1.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Null(association2.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Equal(association1, role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                Assert.Null(role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association2.Strategy.SetCompositeRole(relationType.RoleType, role2);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.Equal(role1, association1.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Equal(role2, association2.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Equal(association1, role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                Assert.Equal(association2, role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association1.Strategy.SetCompositeRole(relationType.RoleType, role1);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.Equal(role1, association1.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Equal(role2, association2.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Equal(association1, role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                Assert.Equal(association2, role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
+                                            this.GetTransaction().Commit();
                                         }
                                     }
-                                }
-                            }
 
-                            // Set1 Set2 Set1 Remove1 Remove2 Set2 Set1 Set2 SetNull2 SetNull1 Set1 Set2 Set1(Exist)
-                            for (int iRelation = 0; iRelation < this.GetRelations().Length; iRelation++)
-                            {
-                                var relationType = this.GetRelations()[iRelation];
-                                var associationTypes = relationType.AssociationType.ObjectType.Classes.ToArray();
-                                for (int iAssociationType = 0; iAssociationType < associationTypes.Count(); iAssociationType++)
-                                {
-                                    var associationType = associationTypes[iAssociationType];
-                                    var roleTypes = this.GetClasses(relationType);
-                                    for (int iRoleType = 0; iRoleType < roleTypes.Count(); iRoleType++)
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
                                     {
-                                        var roleType = roleTypes[iRoleType];
-                                        IObject association1 = this.GetTransaction().Build(associationType);
-                                        IObject association2 = this.GetTransaction().Build(associationType);
-                                        IObject role1 = this.GetTransaction().Build(roleType);
-                                        IObject role2 = this.GetTransaction().Build(roleType);
-
-                                        for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                        {
-                                            Assert.False(association1.Strategy.ExistRole(relationType.RoleType));
-                                            Assert.False(association2.Strategy.ExistRole(relationType.RoleType));
-                                            Assert.False(role1.Strategy.ExistAssociation(relationType.AssociationType));
-                                            Assert.False(role2.Strategy.ExistAssociation(relationType.AssociationType));
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association1.Strategy.SetCompositeRole(relationType.RoleType, role1);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.True(association1.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.False(association2.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.True(role1.Strategy.ExistAssociation(relationType.AssociationType));
-                                                Assert.False(role2.Strategy.ExistAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association2.Strategy.SetCompositeRole(relationType.RoleType, role2);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.True(association1.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.True(association2.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.True(role1.Strategy.ExistAssociation(relationType.AssociationType));
-                                                Assert.True(role2.Strategy.ExistAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association1.Strategy.SetCompositeRole(relationType.RoleType, role1);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.True(association1.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.True(association2.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.True(role1.Strategy.ExistAssociation(relationType.AssociationType));
-                                                Assert.True(role2.Strategy.ExistAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association1.Strategy.RemoveRole(relationType.RoleType);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.False(association1.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.True(association2.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.False(role1.Strategy.ExistAssociation(relationType.AssociationType));
-                                                Assert.True(role2.Strategy.ExistAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association2.Strategy.RemoveRole(relationType.RoleType);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.False(association1.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.False(association2.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.False(role1.Strategy.ExistAssociation(relationType.AssociationType));
-                                                Assert.False(role2.Strategy.ExistAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association2.Strategy.SetCompositeRole(relationType.RoleType, role2);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.False(association1.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.True(association2.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.False(role1.Strategy.ExistAssociation(relationType.AssociationType));
-                                                Assert.True(role2.Strategy.ExistAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association1.Strategy.SetCompositeRole(relationType.RoleType, role1);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.True(association1.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.True(association2.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.True(role1.Strategy.ExistAssociation(relationType.AssociationType));
-                                                Assert.True(role2.Strategy.ExistAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association2.Strategy.SetCompositeRole(relationType.RoleType, role2);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.True(association1.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.True(association2.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.True(role1.Strategy.ExistAssociation(relationType.AssociationType));
-                                                Assert.True(role2.Strategy.ExistAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association2.Strategy.SetCompositeRole(relationType.RoleType, null);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.True(association1.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.False(association2.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.True(role1.Strategy.ExistAssociation(relationType.AssociationType));
-                                                Assert.False(role2.Strategy.ExistAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association1.Strategy.SetCompositeRole(relationType.RoleType, null);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.False(association1.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.False(association2.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.False(role1.Strategy.ExistAssociation(relationType.AssociationType));
-                                                Assert.False(role2.Strategy.ExistAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association1.Strategy.SetCompositeRole(relationType.RoleType, role1);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.True(association1.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.False(association2.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.True(role1.Strategy.ExistAssociation(relationType.AssociationType));
-                                                Assert.False(role2.Strategy.ExistAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association2.Strategy.SetCompositeRole(relationType.RoleType, role2);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.True(association1.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.True(association2.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.True(role1.Strategy.ExistAssociation(relationType.AssociationType));
-                                                Assert.True(role2.Strategy.ExistAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association1.Strategy.SetCompositeRole(relationType.RoleType, role1);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.True(association1.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.True(association2.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.True(role1.Strategy.ExistAssociation(relationType.AssociationType));
-                                                Assert.True(role2.Strategy.ExistAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-
-                        if (this.IsRollbackSupported())
-                        {
-                            for (int iRelation = 0; iRelation < this.GetRelations().Length; iRelation++)
-                            {
-                                var relationType = this.GetRelations()[iRelation];
-                                var associationTypes = relationType.AssociationType.ObjectType.Classes.ToArray();
-                                for (int iAssociationType = 0; iAssociationType < associationTypes.Count(); iAssociationType++)
-                                {
-                                    var associationType = associationTypes[iAssociationType];
-                                    var roleTypes = this.GetClasses(relationType);
-                                    for (int iRoleType = 0; iRoleType < roleTypes.Count(); iRoleType++)
-                                    {
-                                        var roleType = roleTypes[iRoleType];
-                                        IObject association1 = this.GetTransaction().Build(associationType);
-                                        IObject association2 = this.GetTransaction().Build(associationType);
-                                        IObject role1 = this.GetTransaction().Build(roleType);
-                                        IObject role2 = this.GetTransaction().Build(roleType);
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Commit();
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association1.Strategy.SetCompositeRole(relationType.RoleType, role1);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association2.Strategy.SetCompositeRole(relationType.RoleType, role2);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Rollback();
-                                        }
-
-                                        for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                        {
-                                            Assert.Null(association1.Strategy.GetRole(relationType.RoleType));
-                                            Assert.Null(association2.Strategy.GetRole(relationType.RoleType));
-                                            Assert.Null(role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                            Assert.Null(role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association1.Strategy.SetCompositeRole(relationType.RoleType, role1);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association2.Strategy.SetCompositeRole(relationType.RoleType, role2);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association1.Strategy.SetCompositeRole(relationType.RoleType, role1);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Rollback();
-                                        }
-
-                                        for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                        {
-                                            Assert.Null(association1.Strategy.GetRole(relationType.RoleType));
-                                            Assert.Null(association2.Strategy.GetRole(relationType.RoleType));
-                                            Assert.Null(role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                            Assert.Null(role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association1.Strategy.SetCompositeRole(relationType.RoleType, role1);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Commit();
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association2.Strategy.SetCompositeRole(relationType.RoleType, role2);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Rollback();
-                                        }
-
-                                        for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                        {
-                                            Assert.Equal(role1, association1.Strategy.GetRole(relationType.RoleType));
-                                            Assert.Null(association2.Strategy.GetRole(relationType.RoleType));
-                                            Assert.Equal(association1, role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                            Assert.Null(role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association2.Strategy.SetCompositeRole(relationType.RoleType, role2);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Commit();
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association1.Strategy.SetCompositeRole(relationType.RoleType, role1);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Rollback();
-                                        }
-
-                                        for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                        {
-                                            Assert.Equal(role1, association1.Strategy.GetRole(relationType.RoleType));
-                                            Assert.Equal(role2, association2.Strategy.GetRole(relationType.RoleType));
-                                            Assert.Equal(association1, role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                            Assert.Equal(association2, role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association1.Strategy.RemoveRole(relationType.RoleType);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Rollback();
-                                        }
-
-                                        for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                        {
-                                            Assert.Equal(role1, association1.Strategy.GetRole(relationType.RoleType));
-                                            Assert.Equal(role2, association2.Strategy.GetRole(relationType.RoleType));
-                                            Assert.Equal(association1, role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                            Assert.Equal(association2, role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association1.Strategy.SetCompositeRole(relationType.RoleType, null);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Rollback();
-                                        }
-
-                                        for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                        {
-                                            Assert.Equal(role1, association1.Strategy.GetRole(relationType.RoleType));
-                                            Assert.Equal(role2, association2.Strategy.GetRole(relationType.RoleType));
-                                            Assert.Equal(association1, role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                            Assert.Equal(association2, role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association2.Strategy.RemoveRole(relationType.RoleType);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Rollback();
-                                        }
-
-                                        for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                        {
-                                            Assert.Equal(role1, association1.Strategy.GetRole(relationType.RoleType));
-                                            Assert.Equal(role2, association2.Strategy.GetRole(relationType.RoleType));
-                                            Assert.Equal(association1, role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                            Assert.Equal(association2, role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association2.Strategy.SetCompositeRole(relationType.RoleType, null);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Rollback();
-                                        }
-
-                                        for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                        {
-                                            Assert.Equal(role1, association1.Strategy.GetRole(relationType.RoleType));
-                                            Assert.Equal(role2, association2.Strategy.GetRole(relationType.RoleType));
-                                            Assert.Equal(association1, role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                            Assert.Equal(association2, role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association1.Strategy.RemoveRole(relationType.RoleType);
-                                            association2.Strategy.RemoveRole(relationType.RoleType);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Rollback();
-                                        }
-
-                                        for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                        {
-                                            Assert.Equal(role1, association1.Strategy.GetRole(relationType.RoleType));
-                                            Assert.Equal(role2, association2.Strategy.GetRole(relationType.RoleType));
-                                            Assert.Equal(association1, role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                            Assert.Equal(association2, role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association1.Strategy.SetCompositeRole(relationType.RoleType, null);
-                                            association2.Strategy.SetCompositeRole(relationType.RoleType, null);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Rollback();
-                                        }
-
-                                        for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                        {
-                                            Assert.Equal(role1, association1.Strategy.GetRole(relationType.RoleType));
-                                            Assert.Equal(role2, association2.Strategy.GetRole(relationType.RoleType));
-                                            Assert.Equal(association1, role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                            Assert.Equal(association2, role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                        }
-                                    }
-                                }
-                            }
-
-                            // Set1 Set2 Rollback Set1 Set2 Set1 Rollback Set1 Commit Set2 Rollback Set2 Commit Set1 Rollback Remove1 Rollback SetNull1 Rollback Remove2 Rollback SetNull2 Rollback SetNull1 SetNull2 Rollback Remove1 Remove2 Rollback(Exist)
-                            for (int iRelation = 0; iRelation < this.GetRelations().Length; iRelation++)
-                            {
-                                var relationType = this.GetRelations()[iRelation];
-                                var associationTypes = relationType.AssociationType.ObjectType.Classes.ToArray();
-                                for (int iAssociationType = 0; iAssociationType < associationTypes.Count(); iAssociationType++)
-                                {
-                                    var associationType = associationTypes[iAssociationType];
-                                    var roleTypes = this.GetClasses(relationType);
-                                    for (int iRoleType = 0; iRoleType < roleTypes.Count(); iRoleType++)
-                                    {
-                                        var roleType = roleTypes[iRoleType];
-                                        IObject association1 = this.GetTransaction().Build(associationType);
-                                        IObject association2 = this.GetTransaction().Build(associationType);
-                                        IObject role1 = this.GetTransaction().Build(roleType);
-                                        IObject role2 = this.GetTransaction().Build(roleType);
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Commit();
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association1.Strategy.SetCompositeRole(relationType.RoleType, role1);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association2.Strategy.SetCompositeRole(relationType.RoleType, role2);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Rollback();
-                                        }
-
-                                        for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                        {
-                                            Assert.False(association1.Strategy.ExistRole(relationType.RoleType));
-                                            Assert.False(association2.Strategy.ExistRole(relationType.RoleType));
-                                            Assert.False(role1.Strategy.ExistAssociation(relationType.AssociationType));
-                                            Assert.False(role2.Strategy.ExistAssociation(relationType.AssociationType));
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association1.Strategy.SetCompositeRole(relationType.RoleType, role1);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association2.Strategy.SetCompositeRole(relationType.RoleType, role2);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association1.Strategy.SetCompositeRole(relationType.RoleType, role1);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Rollback();
-                                        }
-
-                                        for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                        {
-                                            Assert.False(association1.Strategy.ExistRole(relationType.RoleType));
-                                            Assert.False(association2.Strategy.ExistRole(relationType.RoleType));
-                                            Assert.False(role1.Strategy.ExistAssociation(relationType.AssociationType));
-                                            Assert.False(role2.Strategy.ExistAssociation(relationType.AssociationType));
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association1.Strategy.SetCompositeRole(relationType.RoleType, role1);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Commit();
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association2.Strategy.SetCompositeRole(relationType.RoleType, role2);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Rollback();
-                                        }
-
-                                        for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                        {
-                                            Assert.True(association1.Strategy.ExistRole(relationType.RoleType));
-                                            Assert.False(association2.Strategy.ExistRole(relationType.RoleType));
-                                            Assert.True(role1.Strategy.ExistAssociation(relationType.AssociationType));
-                                            Assert.False(role2.Strategy.ExistAssociation(relationType.AssociationType));
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association2.Strategy.SetCompositeRole(relationType.RoleType, role2);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Commit();
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association1.Strategy.SetCompositeRole(relationType.RoleType, role1);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Rollback();
-                                        }
-
-                                        for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                        {
-                                            Assert.True(association1.Strategy.ExistRole(relationType.RoleType));
-                                            Assert.True(association2.Strategy.ExistRole(relationType.RoleType));
-                                            Assert.True(role1.Strategy.ExistAssociation(relationType.AssociationType));
-                                            Assert.True(role2.Strategy.ExistAssociation(relationType.AssociationType));
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association1.Strategy.RemoveRole(relationType.RoleType);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Rollback();
-                                        }
-
-                                        for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                        {
-                                            Assert.True(association1.Strategy.ExistRole(relationType.RoleType));
-                                            Assert.True(association2.Strategy.ExistRole(relationType.RoleType));
-                                            Assert.True(role1.Strategy.ExistAssociation(relationType.AssociationType));
-                                            Assert.True(role2.Strategy.ExistAssociation(relationType.AssociationType));
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association1.Strategy.SetCompositeRole(relationType.RoleType, null);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Rollback();
-                                        }
-
-                                        for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                        {
-                                            Assert.True(association1.Strategy.ExistRole(relationType.RoleType));
-                                            Assert.True(association2.Strategy.ExistRole(relationType.RoleType));
-                                            Assert.True(role1.Strategy.ExistAssociation(relationType.AssociationType));
-                                            Assert.True(role2.Strategy.ExistAssociation(relationType.AssociationType));
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association2.Strategy.RemoveRole(relationType.RoleType);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Rollback();
-                                        }
-
-                                        for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                        {
-                                            Assert.True(association1.Strategy.ExistRole(relationType.RoleType));
-                                            Assert.True(association2.Strategy.ExistRole(relationType.RoleType));
-                                            Assert.True(role1.Strategy.ExistAssociation(relationType.AssociationType));
-                                            Assert.True(role2.Strategy.ExistAssociation(relationType.AssociationType));
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association2.Strategy.SetCompositeRole(relationType.RoleType, null);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Rollback();
-                                        }
-
-                                        for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                        {
-                                            Assert.True(association1.Strategy.ExistRole(relationType.RoleType));
-                                            Assert.True(association2.Strategy.ExistRole(relationType.RoleType));
-                                            Assert.True(role1.Strategy.ExistAssociation(relationType.AssociationType));
-                                            Assert.True(role2.Strategy.ExistAssociation(relationType.AssociationType));
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association1.Strategy.RemoveRole(relationType.RoleType);
-                                            association2.Strategy.RemoveRole(relationType.RoleType);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Rollback();
-                                        }
-
-                                        for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                        {
-                                            Assert.True(association1.Strategy.ExistRole(relationType.RoleType));
-                                            Assert.True(association2.Strategy.ExistRole(relationType.RoleType));
-                                            Assert.True(role1.Strategy.ExistAssociation(relationType.AssociationType));
-                                            Assert.True(role2.Strategy.ExistAssociation(relationType.AssociationType));
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association1.Strategy.SetCompositeRole(relationType.RoleType, null);
-                                            association2.Strategy.SetCompositeRole(relationType.RoleType, null);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Rollback();
-                                        }
-
-                                        for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                        {
-                                            Assert.True(association1.Strategy.ExistRole(relationType.RoleType));
-                                            Assert.True(association2.Strategy.ExistRole(relationType.RoleType));
-                                            Assert.True(role1.Strategy.ExistAssociation(relationType.AssociationType));
-                                            Assert.True(role2.Strategy.ExistAssociation(relationType.AssociationType));
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        [Fact]
-        [Trait("Category", "Dynamic")]
-        public void DifferentAssociationSameRole()
-        {
-            for (var iRepeat = 0; iRepeat < this.GetRepeats().Length; iRepeat++)
-            {
-                var repeat = this.GetRepeats()[iRepeat];
-                for (var iTestRepeat = 0; iTestRepeat < this.GetTestRepeats().Length; iTestRepeat++)
-                {
-                    var testRepeat = this.GetTestRepeats()[iTestRepeat];
-                    for (int iAssertRepeat = 0; iAssertRepeat < this.GetAssertRepeats().Length; iAssertRepeat++)
-                    {
-                        for (int iTransactionFlag = 0; iTransactionFlag < this.GetBooleanFlags().Length; iTransactionFlag++)
-                        {
-                            var transactionFlag = this.GetBooleanFlags()[iTransactionFlag];
-
-                            for (int iRelation = 0; iRelation < this.GetRelations().Length; iRelation++)
-                            {
-                                var relationType = this.GetRelations()[iRelation];
-                                var associationTypes = relationType.AssociationType.ObjectType.Classes.ToArray();
-                                for (int iAssociationType = 0; iAssociationType < associationTypes.Count(); iAssociationType++)
-                                {
-                                    var associationType = associationTypes[iAssociationType];
-                                    var roleTypes = this.GetClasses(relationType);
-                                    for (int iRoleType = 0; iRoleType < roleTypes.Count(); iRoleType++)
-                                    {
-                                        var roleType = roleTypes[iRoleType];
-                                        IObject association1 = this.GetTransaction().Build(associationType);
-                                        IObject association2 = this.GetTransaction().Build(associationType);
-                                        var role = this.GetTransaction().Build(roleType);
-
-                                        for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                        {
-                                            Assert.Null(association1.Strategy.GetRole(relationType.RoleType));
-                                            Assert.Null(association2.Strategy.GetRole(relationType.RoleType));
-                                            Assert.Null(role.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association1.Strategy.SetCompositeRole(relationType.RoleType, role);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.Equal(role, association1.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Null(association2.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Equal(association1, role.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association2.Strategy.SetCompositeRole(relationType.RoleType, role);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.Null(association1.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Equal(role, association2.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Equal(association2, role.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association1.Strategy.SetCompositeRole(relationType.RoleType, role);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.Equal(role, association1.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Null(association2.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Equal(association1, role.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association1.Strategy.RemoveRole(relationType.RoleType);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.Null(association1.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Null(association2.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Null(role.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association2.Strategy.SetCompositeRole(relationType.RoleType, role);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.Null(association1.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Equal(role, association2.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Equal(association2, role.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association1.Strategy.SetCompositeRole(relationType.RoleType, role);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.Equal(role, association1.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Null(association2.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Equal(association1, role.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association2.Strategy.SetCompositeRole(relationType.RoleType, role);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.Null(association1.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Equal(role, association2.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Equal(association2, role.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association2.Strategy.SetCompositeRole(relationType.RoleType, null);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.Null(association1.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Null(association2.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Null(role.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association1.Strategy.SetCompositeRole(relationType.RoleType, role);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.Equal(role, association1.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Null(association2.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Equal(association1, role.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association2.Strategy.SetCompositeRole(relationType.RoleType, role);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.Null(association1.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Equal(role, association2.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Equal(association2, role.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association1.Strategy.SetCompositeRole(relationType.RoleType, role);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.Equal(role, association1.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Null(association2.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Equal(association1, role.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-
-                            // Set1 Set2 Set1 Remove Set2 Set1 Set2 SetNull Set1 Set2 Set1 (Exist)
-                            for (int iRelation = 0; iRelation < this.GetRelations().Length; iRelation++)
-                            {
-                                var relationType = this.GetRelations()[iRelation];
-                                var associationTypes = relationType.AssociationType.ObjectType.Classes.ToArray();
-                                for (int iAssociationType = 0; iAssociationType < associationTypes.Count(); iAssociationType++)
-                                {
-                                    var associationType = associationTypes[iAssociationType];
-                                    var roleTypes = this.GetClasses(relationType);
-                                    for (int iRoleType = 0; iRoleType < roleTypes.Count(); iRoleType++)
-                                    {
-                                        var roleType = roleTypes[iRoleType];
-                                        IObject association1 = this.GetTransaction().Build(associationType);
-                                        IObject association2 = this.GetTransaction().Build(associationType);
-                                        var role = this.GetTransaction().Build(roleType);
-
-                                        for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                        {
-                                            Assert.False(association1.Strategy.ExistRole(relationType.RoleType));
-                                            Assert.False(association2.Strategy.ExistRole(relationType.RoleType));
-                                            Assert.False(role.Strategy.ExistAssociation(relationType.AssociationType));
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association1.Strategy.SetCompositeRole(relationType.RoleType, role);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.True(association1.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.False(association2.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.True(role.Strategy.ExistAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association2.Strategy.SetCompositeRole(relationType.RoleType, role);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.False(association1.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.True(association2.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.True(role.Strategy.ExistAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association1.Strategy.SetCompositeRole(relationType.RoleType, role);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.True(association1.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.False(association2.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.True(role.Strategy.ExistAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association1.Strategy.RemoveRole(relationType.RoleType);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.False(association1.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.False(association2.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.False(role.Strategy.ExistAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association2.Strategy.SetCompositeRole(relationType.RoleType, role);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.False(association1.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.True(association2.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.True(role.Strategy.ExistAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association1.Strategy.SetCompositeRole(relationType.RoleType, role);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.True(association1.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.False(association2.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.True(role.Strategy.ExistAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association2.Strategy.SetCompositeRole(relationType.RoleType, role);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.False(association1.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.True(association2.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.True(role.Strategy.ExistAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association2.Strategy.SetCompositeRole(relationType.RoleType, null);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.False(association1.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.False(association2.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.False(role.Strategy.ExistAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association1.Strategy.SetCompositeRole(relationType.RoleType, role);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.True(association1.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.False(association2.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.True(role.Strategy.ExistAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association2.Strategy.SetCompositeRole(relationType.RoleType, role);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.False(association1.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.True(association2.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.True(role.Strategy.ExistAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association1.Strategy.SetCompositeRole(relationType.RoleType, role);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.True(association1.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.False(association2.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.True(role.Strategy.ExistAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-
-                        if (this.IsRollbackSupported())
-                        {
-                            for (int iRelation = 0; iRelation < this.GetRelations().Length; iRelation++)
-                            {
-                                var relationType = this.GetRelations()[iRelation];
-                                var associationTypes = relationType.AssociationType.ObjectType.Classes.ToArray();
-                                for (int iAssociationType = 0; iAssociationType < associationTypes.Count(); iAssociationType++)
-                                {
-                                    var associationType = associationTypes[iAssociationType];
-                                    var roleTypes = this.GetClasses(relationType);
-                                    for (int iRoleType = 0; iRoleType < roleTypes.Count(); iRoleType++)
-                                    {
-                                        var roleType = roleTypes[iRoleType];
-                                        IObject association1 = this.GetTransaction().Build(associationType);
-                                        IObject association2 = this.GetTransaction().Build(associationType);
-                                        var role = this.GetTransaction().Build(roleType);
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Commit();
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association1.Strategy.SetCompositeRole(relationType.RoleType, role);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association2.Strategy.SetCompositeRole(relationType.RoleType, role);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Rollback();
-                                        }
-
-                                        for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                        {
-                                            Assert.Null(association1.Strategy.GetRole(relationType.RoleType));
-                                            Assert.Null(association2.Strategy.GetRole(relationType.RoleType));
-                                            Assert.Null(role.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association1.Strategy.SetCompositeRole(relationType.RoleType, role);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association2.Strategy.SetCompositeRole(relationType.RoleType, role);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association1.Strategy.SetCompositeRole(relationType.RoleType, role);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Rollback();
-                                        }
-
-                                        for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                        {
-                                            Assert.Null(association1.Strategy.GetRole(relationType.RoleType));
-                                            Assert.Null(association2.Strategy.GetRole(relationType.RoleType));
-                                            Assert.Null(role.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association1.Strategy.SetCompositeRole(relationType.RoleType, role);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Commit();
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association2.Strategy.SetCompositeRole(relationType.RoleType, role);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Rollback();
-                                        }
-
-                                        for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                        {
-                                            Assert.Equal(role, association1.Strategy.GetRole(relationType.RoleType));
-                                            Assert.Null(association2.Strategy.GetRole(relationType.RoleType));
-                                            Assert.Equal(association1, role.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association2.Strategy.SetCompositeRole(relationType.RoleType, role);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Commit();
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association1.Strategy.SetCompositeRole(relationType.RoleType, role);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Rollback();
-                                        }
-
-                                        for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                        {
-                                            Assert.Null(association1.Strategy.GetRole(relationType.RoleType));
-                                            Assert.Equal(role, association2.Strategy.GetRole(relationType.RoleType));
-                                            Assert.Equal(association2, role.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association2.Strategy.RemoveRole(relationType.RoleType);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Rollback();
-                                        }
-
-                                        for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                        {
-                                            Assert.Null(association1.Strategy.GetRole(relationType.RoleType));
-                                            Assert.Equal(role, association2.Strategy.GetRole(relationType.RoleType));
-                                            Assert.Equal(association2, role.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association2.Strategy.SetCompositeRole(relationType.RoleType, null);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Rollback();
-                                        }
-
-                                        for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                        {
-                                            Assert.Null(association1.Strategy.GetRole(relationType.RoleType));
-                                            Assert.Equal(role, association2.Strategy.GetRole(relationType.RoleType));
-                                            Assert.Equal(association2, role.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                        }
-                                    }
-                                }
-                            }
-
-                            // Set1 Set2 Rollback Set1 Set2 Set1 Rollback Set1 Commit Set2 Rollback Set2 Commit Set1 Rollback Remove Rollback SetNull Rollback(Exist)
-                            for (int iRelation = 0; iRelation < this.GetRelations().Length; iRelation++)
-                            {
-                                var relationType = this.GetRelations()[iRelation];
-                                var associationTypes = relationType.AssociationType.ObjectType.Classes.ToArray();
-                                for (int iAssociationType = 0; iAssociationType < associationTypes.Count(); iAssociationType++)
-                                {
-                                    var associationType = associationTypes[iAssociationType];
-                                    var roleTypes = this.GetClasses(relationType);
-                                    for (int iRoleType = 0; iRoleType < roleTypes.Count(); iRoleType++)
-                                    {
-                                        var roleType = roleTypes[iRoleType];
-                                        IObject association1 = this.GetTransaction().Build(associationType);
-                                        IObject association2 = this.GetTransaction().Build(associationType);
-                                        var role = this.GetTransaction().Build(roleType);
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Commit();
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association1.Strategy.SetCompositeRole(relationType.RoleType, role);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association2.Strategy.SetCompositeRole(relationType.RoleType, role);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Rollback();
-                                        }
-
-                                        for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                        {
-                                            Assert.False(association1.Strategy.ExistRole(relationType.RoleType));
-                                            Assert.False(association2.Strategy.ExistRole(relationType.RoleType));
-                                            Assert.False(role.Strategy.ExistAssociation(relationType.AssociationType));
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association1.Strategy.SetCompositeRole(relationType.RoleType, role);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association2.Strategy.SetCompositeRole(relationType.RoleType, role);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association1.Strategy.SetCompositeRole(relationType.RoleType, role);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Rollback();
-                                        }
-
-                                        for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                        {
-                                            Assert.False(association1.Strategy.ExistRole(relationType.RoleType));
-                                            Assert.False(association2.Strategy.ExistRole(relationType.RoleType));
-                                            Assert.False(role.Strategy.ExistAssociation(relationType.AssociationType));
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association1.Strategy.SetCompositeRole(relationType.RoleType, role);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Commit();
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association2.Strategy.SetCompositeRole(relationType.RoleType, role);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Rollback();
-                                        }
-
-                                        for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                        {
-                                            Assert.True(association1.Strategy.ExistRole(relationType.RoleType));
-                                            Assert.False(association2.Strategy.ExistRole(relationType.RoleType));
-                                            Assert.True(role.Strategy.ExistAssociation(relationType.AssociationType));
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association2.Strategy.SetCompositeRole(relationType.RoleType, role);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Commit();
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association1.Strategy.SetCompositeRole(relationType.RoleType, role);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Rollback();
-                                        }
-
-                                        for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                        {
-                                            Assert.False(association1.Strategy.ExistRole(relationType.RoleType));
-                                            Assert.True(association2.Strategy.ExistRole(relationType.RoleType));
-                                            Assert.True(role.Strategy.ExistAssociation(relationType.AssociationType));
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association2.Strategy.RemoveRole(relationType.RoleType);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Rollback();
-                                        }
-
-                                        for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                        {
-                                            Assert.False(association1.Strategy.ExistRole(relationType.RoleType));
-                                            Assert.True(association2.Strategy.ExistRole(relationType.RoleType));
-                                            Assert.True(role.Strategy.ExistAssociation(relationType.AssociationType));
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association2.Strategy.SetCompositeRole(relationType.RoleType, null);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Rollback();
-                                        }
-
-                                        for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                        {
-                                            Assert.False(association1.Strategy.ExistRole(relationType.RoleType));
-                                            Assert.True(association2.Strategy.ExistRole(relationType.RoleType));
-                                            Assert.True(role.Strategy.ExistAssociation(relationType.AssociationType));
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        [Fact]
-        [Trait("Category", "Dynamic")]
-        public void SameAssociationDifferentRole()
-        {
-            for (var iRepeat = 0; iRepeat < this.GetRepeats().Length; iRepeat++)
-            {
-                var repeat = this.GetRepeats()[iRepeat];
-                for (var iTestRepeat = 0; iTestRepeat < this.GetTestRepeats().Length; iTestRepeat++)
-                {
-                    var testRepeat = this.GetTestRepeats()[iTestRepeat];
-                    for (int iAssertRepeat = 0; iAssertRepeat < this.GetAssertRepeats().Length; iAssertRepeat++)
-                    {
-                        for (int iTransactionFlag = 0; iTransactionFlag < this.GetBooleanFlags().Length; iTransactionFlag++)
-                        {
-                            var transactionFlag = this.GetBooleanFlags()[iTransactionFlag];
-                            for (int iRelation = 0; iRelation < this.GetRelations().Length; iRelation++)
-                            {
-                                var relationType = this.GetRelations()[iRelation];
-                                var associationTypes = relationType.AssociationType.ObjectType.Classes.ToArray();
-                                for (int iAssociationType = 0; iAssociationType < associationTypes.Count(); iAssociationType++)
-                                {
-                                    var associationType = associationTypes[iAssociationType];
-                                    var roleTypes = this.GetClasses(relationType);
-                                    for (int iRoleType = 0; iRoleType < roleTypes.Count(); iRoleType++)
-                                    {
-                                        var roleType = roleTypes[iRoleType];
-                                        var association = this.GetTransaction().Build(associationType);
-                                        IObject role1 = this.GetTransaction().Build(roleType);
-                                        IObject role2 = this.GetTransaction().Build(roleType);
-
-                                        for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                        {
-                                            Assert.Null(association.Strategy.GetRole(relationType.RoleType));
-                                            Assert.Null(role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                            Assert.Null(role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association.Strategy.SetCompositeRole(relationType.RoleType, role1);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.Equal(role1, association.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Equal(association, role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                Assert.Null(role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association.Strategy.SetCompositeRole(relationType.RoleType, role2);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.Equal(role2, association.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Null(role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                Assert.Equal(association, role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association.Strategy.SetCompositeRole(relationType.RoleType, role1);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.Equal(role1, association.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Equal(association, role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                Assert.Null(role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association.Strategy.RemoveRole(relationType.RoleType);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.Null(association.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Null(role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                Assert.Null(role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association.Strategy.SetCompositeRole(relationType.RoleType, role2);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.Equal(role2, association.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Null(role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                Assert.Equal(association, role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association.Strategy.SetCompositeRole(relationType.RoleType, role1);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.Equal(role1, association.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Equal(association, role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                Assert.Null(role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association.Strategy.SetCompositeRole(relationType.RoleType, role2);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.Equal(role2, association.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Null(role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                Assert.Equal(association, role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association.Strategy.SetCompositeRole(relationType.RoleType, null);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.Null(association.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Null(role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                Assert.Null(role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association.Strategy.SetCompositeRole(relationType.RoleType, role1);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.Equal(role1, association.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Equal(association, role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                Assert.Null(role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association.Strategy.SetCompositeRole(relationType.RoleType, role2);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.Equal(role2, association.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Null(role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                Assert.Equal(association, role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association.Strategy.SetCompositeRole(relationType.RoleType, role1);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.Equal(role1, association.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Equal(association, role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                Assert.Null(role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-
-                            // Set1 Set2 Set1 Remove Set2 Set1 Set2 SetNull Set1 Set2 Set1 (Exist)
-                            for (int iRelation = 0; iRelation < this.GetRelations().Length; iRelation++)
-                            {
-                                var relationType = this.GetRelations()[iRelation];
-                                var associationTypes = relationType.AssociationType.ObjectType.Classes.ToArray();
-                                for (int iAssociationType = 0; iAssociationType < associationTypes.Count(); iAssociationType++)
-                                {
-                                    var associationType = associationTypes[iAssociationType];
-                                    var roleTypes = this.GetClasses(relationType);
-                                    for (int iRoleType = 0; iRoleType < roleTypes.Count(); iRoleType++)
-                                    {
-                                        var roleType = roleTypes[iRoleType];
-                                        var association = this.GetTransaction().Build(associationType);
-                                        IObject role1 = this.GetTransaction().Build(roleType);
-                                        IObject role2 = this.GetTransaction().Build(roleType);
-
-                                        for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                        {
-                                            Assert.False(association.Strategy.ExistRole(relationType.RoleType));
-                                            Assert.False(role1.Strategy.ExistAssociation(relationType.AssociationType));
-                                            Assert.False(role2.Strategy.ExistAssociation(relationType.AssociationType));
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association.Strategy.SetCompositeRole(relationType.RoleType, role1);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.True(association.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.True(role1.Strategy.ExistAssociation(relationType.AssociationType));
-                                                Assert.False(role2.Strategy.ExistAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association.Strategy.SetCompositeRole(relationType.RoleType, role2);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.True(association.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.False(role1.Strategy.ExistAssociation(relationType.AssociationType));
-                                                Assert.True(role2.Strategy.ExistAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association.Strategy.SetCompositeRole(relationType.RoleType, role1);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.True(association.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.True(role1.Strategy.ExistAssociation(relationType.AssociationType));
-                                                Assert.False(role2.Strategy.ExistAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association.Strategy.RemoveRole(relationType.RoleType);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.False(association.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.False(role1.Strategy.ExistAssociation(relationType.AssociationType));
-                                                Assert.False(role2.Strategy.ExistAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association.Strategy.SetCompositeRole(relationType.RoleType, role2);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.True(association.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.False(role1.Strategy.ExistAssociation(relationType.AssociationType));
-                                                Assert.True(role2.Strategy.ExistAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association.Strategy.SetCompositeRole(relationType.RoleType, role1);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.True(association.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.True(role1.Strategy.ExistAssociation(relationType.AssociationType));
-                                                Assert.False(role2.Strategy.ExistAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association.Strategy.SetCompositeRole(relationType.RoleType, role2);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.True(association.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.False(role1.Strategy.ExistAssociation(relationType.AssociationType));
-                                                Assert.True(role2.Strategy.ExistAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association.Strategy.SetCompositeRole(relationType.RoleType, null);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.False(association.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.False(role1.Strategy.ExistAssociation(relationType.AssociationType));
-                                                Assert.False(role2.Strategy.ExistAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association.Strategy.SetCompositeRole(relationType.RoleType, role1);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.True(association.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.True(role1.Strategy.ExistAssociation(relationType.AssociationType));
-                                                Assert.False(role2.Strategy.ExistAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association.Strategy.SetCompositeRole(relationType.RoleType, role2);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.True(association.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.False(role1.Strategy.ExistAssociation(relationType.AssociationType));
-                                                Assert.True(role2.Strategy.ExistAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association.Strategy.SetCompositeRole(relationType.RoleType, role1);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.True(association.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.True(role1.Strategy.ExistAssociation(relationType.AssociationType));
-                                                Assert.False(role2.Strategy.ExistAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-
-                        if (this.IsRollbackSupported())
-                        {
-                            for (int iRelation = 0; iRelation < this.GetRelations().Length; iRelation++)
-                            {
-                                var relationType = this.GetRelations()[iRelation];
-                                var associationTypes = relationType.AssociationType.ObjectType.Classes.ToArray();
-                                for (int iAssociationType = 0; iAssociationType < associationTypes.Count(); iAssociationType++)
-                                {
-                                    var associationType = associationTypes[iAssociationType];
-                                    var roleTypes = this.GetClasses(relationType);
-                                    for (int iRoleType = 0; iRoleType < roleTypes.Count(); iRoleType++)
-                                    {
-                                        var roleType = roleTypes[iRoleType];
-                                        var association = this.GetTransaction().Build(associationType);
-                                        IObject role1 = this.GetTransaction().Build(roleType);
-                                        IObject role2 = this.GetTransaction().Build(roleType);
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Commit();
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association.Strategy.SetCompositeRole(relationType.RoleType, role1);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association.Strategy.SetCompositeRole(relationType.RoleType, role2);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Rollback();
-                                        }
-
-                                        for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                        {
-                                            Assert.Null(association.Strategy.GetRole(relationType.RoleType));
-                                            Assert.Null(role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                            Assert.Null(role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association.Strategy.SetCompositeRole(relationType.RoleType, role1);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association.Strategy.SetCompositeRole(relationType.RoleType, role2);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association.Strategy.SetCompositeRole(relationType.RoleType, role1);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Rollback();
-                                        }
-
-                                        for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                        {
-                                            Assert.Null(association.Strategy.GetRole(relationType.RoleType));
-                                            Assert.Null(role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                            Assert.Null(role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association.Strategy.SetCompositeRole(relationType.RoleType, role1);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Commit();
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association.Strategy.SetCompositeRole(relationType.RoleType, role2);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Rollback();
-                                        }
-
-                                        for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                        {
-                                            Assert.Equal(role1, association.Strategy.GetRole(relationType.RoleType));
-                                            Assert.Equal(association, role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                            Assert.Null(role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association.Strategy.SetCompositeRole(relationType.RoleType, role2);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Commit();
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association.Strategy.SetCompositeRole(relationType.RoleType, role1);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Rollback();
-                                        }
-
-                                        for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                        {
-                                            Assert.Equal(role2, association.Strategy.GetRole(relationType.RoleType));
-                                            Assert.Null(role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                            Assert.Equal(association, role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association.Strategy.RemoveRole(relationType.RoleType);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Rollback();
-                                        }
-
-                                        for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                        {
-                                            Assert.Equal(role2, association.Strategy.GetRole(relationType.RoleType));
-                                            Assert.Null(role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                            Assert.Equal(association, role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association.Strategy.SetCompositeRole(relationType.RoleType, null);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Rollback();
-                                        }
-
-                                        for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                        {
-                                            Assert.Equal(role2, association.Strategy.GetRole(relationType.RoleType));
-                                            Assert.Null(role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                            Assert.Equal(association, role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                        }
-                                    }
-                                }
-                            }
-
-                            // Set1 Set2 Rollback Set1 Set2 Set1 Rollback Set1 Commit Set2 Rollback Set2 Commit Set1 Rollback Remove Rollback SetNull Rollback(Exist)
-                            for (int iRelation = 0; iRelation < this.GetRelations().Length; iRelation++)
-                            {
-                                var relationType = this.GetRelations()[iRelation];
-                                var associationTypes = relationType.AssociationType.ObjectType.Classes.ToArray();
-                                for (int iAssociationType = 0; iAssociationType < associationTypes.Count(); iAssociationType++)
-                                {
-                                    var associationType = associationTypes[iAssociationType];
-                                    var roleTypes = this.GetClasses(relationType);
-                                    for (int iRoleType = 0; iRoleType < roleTypes.Count(); iRoleType++)
-                                    {
-                                        var roleType = roleTypes[iRoleType];
-                                        var association = this.GetTransaction().Build(associationType);
-                                        IObject role1 = this.GetTransaction().Build(roleType);
-                                        IObject role2 = this.GetTransaction().Build(roleType);
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Commit();
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association.Strategy.SetCompositeRole(relationType.RoleType, role1);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association.Strategy.SetCompositeRole(relationType.RoleType, role2);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Rollback();
-                                        }
-
-                                        for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                        {
-                                            Assert.False(association.Strategy.ExistRole(relationType.RoleType));
-                                            Assert.False(role1.Strategy.ExistAssociation(relationType.AssociationType));
-                                            Assert.False(role2.Strategy.ExistAssociation(relationType.AssociationType));
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association.Strategy.SetCompositeRole(relationType.RoleType, role1);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association.Strategy.SetCompositeRole(relationType.RoleType, role2);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association.Strategy.SetCompositeRole(relationType.RoleType, role1);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Rollback();
-                                        }
-
-                                        for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                        {
-                                            Assert.False(association.Strategy.ExistRole(relationType.RoleType));
-                                            Assert.False(role1.Strategy.ExistAssociation(relationType.AssociationType));
-                                            Assert.False(role2.Strategy.ExistAssociation(relationType.AssociationType));
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association.Strategy.SetCompositeRole(relationType.RoleType, role1);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Commit();
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association.Strategy.SetCompositeRole(relationType.RoleType, role2);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Rollback();
-                                        }
-
-                                        for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                        {
-                                            Assert.True(association.Strategy.ExistRole(relationType.RoleType));
-                                            Assert.True(role1.Strategy.ExistAssociation(relationType.AssociationType));
-                                            Assert.False(role2.Strategy.ExistAssociation(relationType.AssociationType));
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association.Strategy.SetCompositeRole(relationType.RoleType, role2);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Commit();
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association.Strategy.SetCompositeRole(relationType.RoleType, role1);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Rollback();
-                                        }
-
-                                        for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                        {
-                                            Assert.True(association.Strategy.ExistRole(relationType.RoleType));
-                                            Assert.False(role1.Strategy.ExistAssociation(relationType.AssociationType));
-                                            Assert.True(role2.Strategy.ExistAssociation(relationType.AssociationType));
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association.Strategy.RemoveRole(relationType.RoleType);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Rollback();
-                                        }
-
-                                        for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                        {
-                                            Assert.True(association.Strategy.ExistRole(relationType.RoleType));
-                                            Assert.False(role1.Strategy.ExistAssociation(relationType.AssociationType));
-                                            Assert.True(role2.Strategy.ExistAssociation(relationType.AssociationType));
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association.Strategy.SetCompositeRole(relationType.RoleType, null);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Rollback();
-                                        }
-
-                                        for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                        {
-                                            Assert.True(association.Strategy.ExistRole(relationType.RoleType));
-                                            Assert.False(role1.Strategy.ExistAssociation(relationType.AssociationType));
-                                            Assert.True(role2.Strategy.ExistAssociation(relationType.AssociationType));
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        [Fact]
-        [Trait("Category", "Dynamic")]
-        public void SameAssociationSameRole()
-        {
-            for (var iRepeat = 0; iRepeat < this.GetRepeats().Length; iRepeat++)
-            {
-                var repeat = this.GetRepeats()[iRepeat];
-                for (var iTestRepeat = 0; iTestRepeat < this.GetTestRepeats().Length; iTestRepeat++)
-                {
-                    var testRepeat = this.GetTestRepeats()[iTestRepeat];
-                    for (int iAssertRepeat = 0; iAssertRepeat < this.GetAssertRepeats().Length; iAssertRepeat++)
-                    {
-                        for (int iTransactionFlag = 0; iTransactionFlag < this.GetBooleanFlags().Length; iTransactionFlag++)
-                        {
-                            var transactionFlag = this.GetBooleanFlags()[iTransactionFlag];
-
-                            for (int iRelation = 0; iRelation < this.GetRelations().Length; iRelation++)
-                            {
-                                var relationType = this.GetRelations()[iRelation];
-                                var associationTypes = relationType.AssociationType.ObjectType.Classes.ToArray();
-                                for (int iAssociationType = 0; iAssociationType < associationTypes.Count(); iAssociationType++)
-                                {
-                                    var associationType = associationTypes[iAssociationType];
-                                    var roleTypes = this.GetClasses(relationType);
-                                    for (int iRoleType = 0; iRoleType < roleTypes.Count(); iRoleType++)
-                                    {
-                                        var roleType = roleTypes[iRoleType];
-                                        var association = this.GetTransaction().Build(associationType);
-                                        var role = this.GetTransaction().Build(roleType);
-                                        IObject roleOtherDatabase = this.GetTransaction2().Build(roleType);
-
-                                        for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                        {
-                                            Assert.Null(association.Strategy.GetRole(relationType.RoleType));
-                                            Assert.Null(role.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association.Strategy.SetCompositeRole(relationType.RoleType, role);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.Equal(role, association.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Equal(association, role.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association.Strategy.RemoveRole(relationType.RoleType);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.Null(association.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Null(role.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association.Strategy.SetCompositeRole(relationType.RoleType, role);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.Equal(role, association.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Equal(association, role.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association.Strategy.SetCompositeRole(relationType.RoleType, null);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.Null(association.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Null(role.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-
-                                        // Set different Population
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            try
-                                            {
-                                                association.Strategy.SetCompositeRole(relationType.RoleType, roleOtherDatabase);
-                                                Assert.True(false); // Fail
-                                            }
-                                            catch (ArgumentException exception)
-                                            {
-                                                Assert.NotNull(exception);
-                                            }
-
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.Null(association.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Null(role.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-
-                            // Set Remove Set SetNull (Exist)
-                            for (int iRelation = 0; iRelation < this.GetRelations().Length; iRelation++)
-                            {
-                                var relationType = this.GetRelations()[iRelation];
-                                var associationTypes = relationType.AssociationType.ObjectType.Classes.ToArray();
-                                for (int iAssociationType = 0; iAssociationType < associationTypes.Count(); iAssociationType++)
-                                {
-                                    var associationType = associationTypes[iAssociationType];
-                                    var roleTypes = this.GetClasses(relationType);
-                                    for (int iRoleType = 0; iRoleType < roleTypes.Count(); iRoleType++)
-                                    {
-                                        var roleType = roleTypes[iRoleType];
-                                        var association = this.GetTransaction().Build(associationType);
-                                        var role = this.GetTransaction().Build(roleType);
+                                        association1.Strategy.SetCompositeRole(relationType.RoleType, role1);
                                         if (transactionFlag)
                                         {
                                             this.GetTransaction().Commit();
                                         }
 
-                                        for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
                                         {
-                                            Assert.False(association.Strategy.ExistRole(relationType.RoleType));
-                                            Assert.False(role.Strategy.ExistAssociation(relationType.AssociationType));
+                                            Assert.Equal(role1, association1.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Null(association2.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Equal(association1,
+                                                role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            Assert.Null(role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
                                             if (transactionFlag)
                                             {
                                                 this.GetTransaction().Commit();
                                             }
                                         }
+                                    }
 
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association2.Strategy.SetCompositeRole(relationType.RoleType, role2);
+                                        if (transactionFlag)
                                         {
-                                            association.Strategy.SetCompositeRole(relationType.RoleType, role);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.True(association.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.True(role.Strategy.ExistAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
+                                            this.GetTransaction().Commit();
                                         }
 
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
                                         {
-                                            association.Strategy.RemoveRole(relationType.RoleType);
+                                            Assert.Equal(role1, association1.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Equal(role2, association2.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Equal(association1,
+                                                role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            Assert.Equal(association2,
+                                                role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
                                             if (transactionFlag)
                                             {
                                                 this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.False(association.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.False(role.Strategy.ExistAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
                                             }
                                         }
+                                    }
 
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association1.Strategy.SetCompositeRole(relationType.RoleType, role1);
+                                        if (transactionFlag)
                                         {
-                                            association.Strategy.SetCompositeRole(relationType.RoleType, role);
-                                            if (transactionFlag)
-                                            {
-                                                this.GetTransaction().Commit();
-                                            }
-
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                            {
-                                                Assert.True(association.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.True(role.Strategy.ExistAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
-                                            }
+                                            this.GetTransaction().Commit();
                                         }
 
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
                                         {
-                                            association.Strategy.SetCompositeRole(relationType.RoleType, null);
+                                            Assert.Equal(role1, association1.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Equal(role2, association2.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Equal(association1,
+                                                role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            Assert.Equal(association2,
+                                                role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
                                             if (transactionFlag)
                                             {
                                                 this.GetTransaction().Commit();
                                             }
+                                        }
+                                    }
 
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association1.Strategy.RemoveRole(relationType.RoleType);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.Null(association1.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Equal(role2, association2.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Null(role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            Assert.Equal(association2,
+                                                role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
                                             {
-                                                Assert.False(association.Strategy.ExistRole(relationType.RoleType));
-                                                Assert.False(role.Strategy.ExistAssociation(relationType.AssociationType));
-                                                if (transactionFlag)
-                                                {
-                                                    this.GetTransaction().Commit();
-                                                }
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association2.Strategy.RemoveRole(relationType.RoleType);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.Null(association1.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Null(association2.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Null(role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            Assert.Null(role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association2.Strategy.SetCompositeRole(relationType.RoleType, role2);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.Null(association1.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Equal(role2, association2.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Null(role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            Assert.Equal(association2,
+                                                role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association1.Strategy.SetCompositeRole(relationType.RoleType, role1);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.Equal(role1, association1.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Equal(role2, association2.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Equal(association1,
+                                                role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            Assert.Equal(association2,
+                                                role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association2.Strategy.SetCompositeRole(relationType.RoleType, role2);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.Equal(role1, association1.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Equal(role2, association2.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Equal(association1,
+                                                role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            Assert.Equal(association2,
+                                                role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association2.Strategy.SetCompositeRole(relationType.RoleType, null);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.Equal(role1, association1.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Null(association2.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Equal(association1,
+                                                role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            Assert.Null(role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association1.Strategy.SetCompositeRole(relationType.RoleType, null);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.Null(association1.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Null(association2.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Null(role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            Assert.Null(role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association1.Strategy.SetCompositeRole(relationType.RoleType, role1);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.Equal(role1, association1.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Null(association2.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Equal(association1,
+                                                role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            Assert.Null(role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association2.Strategy.SetCompositeRole(relationType.RoleType, role2);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.Equal(role1, association1.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Equal(role2, association2.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Equal(association1,
+                                                role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            Assert.Equal(association2,
+                                                role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association1.Strategy.SetCompositeRole(relationType.RoleType, role1);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.Equal(role1, association1.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Equal(role2, association2.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Equal(association1,
+                                                role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            Assert.Equal(association2,
+                                                role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
                                             }
                                         }
                                     }
@@ -3084,168 +360,792 @@ namespace Allors.Database.Adapters
                             }
                         }
 
-                        if (this.IsRollbackSupported())
+                        // Set1 Set2 Set1 Remove1 Remove2 Set2 Set1 Set2 SetNull2 SetNull1 Set1 Set2 Set1(Exist)
+                        for (var iRelation = 0; iRelation < this.GetRelations().Length; iRelation++)
                         {
-                            for (int iRelation = 0; iRelation < this.GetRelations().Length; iRelation++)
+                            var relationType = this.GetRelations()[iRelation];
+                            var associationTypes = relationType.AssociationType.ObjectType.Classes.ToArray();
+                            for (var iAssociationType = 0; iAssociationType < associationTypes.Count(); iAssociationType++)
                             {
-                                var relationType = this.GetRelations()[iRelation];
-                                var associationTypes = relationType.AssociationType.ObjectType.Classes.ToArray();
-                                for (int iAssociationType = 0; iAssociationType < associationTypes.Count(); iAssociationType++)
+                                var associationType = associationTypes[iAssociationType];
+                                var roleTypes = this.GetClasses(relationType);
+                                for (var iRoleType = 0; iRoleType < roleTypes.Count(); iRoleType++)
                                 {
-                                    var associationType = associationTypes[iAssociationType];
-                                    var roleTypes = this.GetClasses(relationType);
-                                    for (int iRoleType = 0; iRoleType < roleTypes.Count(); iRoleType++)
+                                    var roleType = roleTypes[iRoleType];
+                                    var association1 = this.GetTransaction().Build(associationType);
+                                    var association2 = this.GetTransaction().Build(associationType);
+                                    var role1 = this.GetTransaction().Build(roleType);
+                                    var role2 = this.GetTransaction().Build(roleType);
+
+                                    for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
                                     {
-                                        var roleType = roleTypes[iRoleType];
-                                        var association = this.GetTransaction().Build(associationType);
-                                        var role = this.GetTransaction().Build(roleType);
+                                        Assert.False(association1.Strategy.ExistRole(relationType.RoleType));
+                                        Assert.False(association2.Strategy.ExistRole(relationType.RoleType));
+                                        Assert.False(role1.Strategy.ExistAssociation(relationType.AssociationType));
+                                        Assert.False(role2.Strategy.ExistAssociation(relationType.AssociationType));
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+                                    }
 
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association1.Strategy.SetCompositeRole(relationType.RoleType, role1);
+                                        if (transactionFlag)
                                         {
                                             this.GetTransaction().Commit();
                                         }
 
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
                                         {
-                                            association.Strategy.SetCompositeRole(relationType.RoleType, role);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Rollback();
-                                        }
-
-                                        for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                        {
-                                            Assert.Null(association.Strategy.GetRole(relationType.RoleType));
-                                            Assert.Null(role.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association.Strategy.SetCompositeRole(relationType.RoleType, role);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Commit();
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association.Strategy.RemoveRole(relationType.RoleType);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Rollback();
-                                        }
-
-                                        for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                        {
-                                            Assert.Equal(role, association.Strategy.GetRole(relationType.RoleType));
-                                            Assert.Equal(association, role.Strategy.GetCompositeAssociation(relationType.AssociationType));
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association.Strategy.SetCompositeRole(relationType.RoleType, null);
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Rollback();
-                                        }
-
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                            Assert.True(association1.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.False(association2.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.True(role1.Strategy.ExistAssociation(relationType.AssociationType));
+                                            Assert.False(role2.Strategy.ExistAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
                                             {
-                                                Assert.Equal(role, association.Strategy.GetRole(relationType.RoleType));
-                                                Assert.Equal(association, role.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association2.Strategy.SetCompositeRole(relationType.RoleType, role2);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.True(association1.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.True(association2.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.True(role1.Strategy.ExistAssociation(relationType.AssociationType));
+                                            Assert.True(role2.Strategy.ExistAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association1.Strategy.SetCompositeRole(relationType.RoleType, role1);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.True(association1.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.True(association2.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.True(role1.Strategy.ExistAssociation(relationType.AssociationType));
+                                            Assert.True(role2.Strategy.ExistAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association1.Strategy.RemoveRole(relationType.RoleType);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.False(association1.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.True(association2.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.False(role1.Strategy.ExistAssociation(relationType.AssociationType));
+                                            Assert.True(role2.Strategy.ExistAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association2.Strategy.RemoveRole(relationType.RoleType);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.False(association1.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.False(association2.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.False(role1.Strategy.ExistAssociation(relationType.AssociationType));
+                                            Assert.False(role2.Strategy.ExistAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association2.Strategy.SetCompositeRole(relationType.RoleType, role2);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.False(association1.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.True(association2.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.False(role1.Strategy.ExistAssociation(relationType.AssociationType));
+                                            Assert.True(role2.Strategy.ExistAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association1.Strategy.SetCompositeRole(relationType.RoleType, role1);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.True(association1.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.True(association2.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.True(role1.Strategy.ExistAssociation(relationType.AssociationType));
+                                            Assert.True(role2.Strategy.ExistAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association2.Strategy.SetCompositeRole(relationType.RoleType, role2);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.True(association1.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.True(association2.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.True(role1.Strategy.ExistAssociation(relationType.AssociationType));
+                                            Assert.True(role2.Strategy.ExistAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association2.Strategy.SetCompositeRole(relationType.RoleType, null);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.True(association1.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.False(association2.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.True(role1.Strategy.ExistAssociation(relationType.AssociationType));
+                                            Assert.False(role2.Strategy.ExistAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association1.Strategy.SetCompositeRole(relationType.RoleType, null);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.False(association1.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.False(association2.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.False(role1.Strategy.ExistAssociation(relationType.AssociationType));
+                                            Assert.False(role2.Strategy.ExistAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association1.Strategy.SetCompositeRole(relationType.RoleType, role1);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.True(association1.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.False(association2.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.True(role1.Strategy.ExistAssociation(relationType.AssociationType));
+                                            Assert.False(role2.Strategy.ExistAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association2.Strategy.SetCompositeRole(relationType.RoleType, role2);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.True(association1.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.True(association2.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.True(role1.Strategy.ExistAssociation(relationType.AssociationType));
+                                            Assert.True(role2.Strategy.ExistAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association1.Strategy.SetCompositeRole(relationType.RoleType, role1);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.True(association1.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.True(association2.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.True(role1.Strategy.ExistAssociation(relationType.AssociationType));
+                                            Assert.True(role2.Strategy.ExistAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
                                             }
                                         }
                                     }
                                 }
                             }
+                        }
+                    }
 
-                            // Set Rollback Set Commit Remove Rollback SetNull Rollback(Exist)
-                            for (int iRelation = 0; iRelation < this.GetRelations().Length; iRelation++)
+                    if (this.IsRollbackSupported())
+                    {
+                        for (var iRelation = 0; iRelation < this.GetRelations().Length; iRelation++)
+                        {
+                            var relationType = this.GetRelations()[iRelation];
+                            var associationTypes = relationType.AssociationType.ObjectType.Classes.ToArray();
+                            for (var iAssociationType = 0; iAssociationType < associationTypes.Count(); iAssociationType++)
                             {
-                                var relationType = this.GetRelations()[iRelation];
-                                var associationTypes = relationType.AssociationType.ObjectType.Classes.ToArray();
-                                for (int iAssociationType = 0; iAssociationType < associationTypes.Count(); iAssociationType++)
+                                var associationType = associationTypes[iAssociationType];
+                                var roleTypes = this.GetClasses(relationType);
+                                for (var iRoleType = 0; iRoleType < roleTypes.Count(); iRoleType++)
                                 {
-                                    var associationType = associationTypes[iAssociationType];
-                                    var roleTypes = this.GetClasses(relationType);
-                                    for (int iRoleType = 0; iRoleType < roleTypes.Count(); iRoleType++)
+                                    var roleType = roleTypes[iRoleType];
+                                    var association1 = this.GetTransaction().Build(associationType);
+                                    var association2 = this.GetTransaction().Build(associationType);
+                                    var role1 = this.GetTransaction().Build(roleType);
+                                    var role2 = this.GetTransaction().Build(roleType);
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
                                     {
-                                        var roleType = roleTypes[iRoleType];
-                                        var association = this.GetTransaction().Build(associationType);
-                                        var role = this.GetTransaction().Build(roleType);
+                                        this.GetTransaction().Commit();
+                                    }
 
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Commit();
-                                        }
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association1.Strategy.SetCompositeRole(relationType.RoleType, role1);
+                                    }
 
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association.Strategy.SetCompositeRole(relationType.RoleType, role);
-                                        }
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association2.Strategy.SetCompositeRole(relationType.RoleType, role2);
+                                    }
 
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Rollback();
-                                        }
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Rollback();
+                                    }
 
-                                        for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                        {
-                                            Assert.False(association.Strategy.ExistRole(relationType.RoleType));
-                                            Assert.False(role.Strategy.ExistAssociation(relationType.AssociationType));
-                                        }
+                                    for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                    {
+                                        Assert.Null(association1.Strategy.GetRole(relationType.RoleType));
+                                        Assert.Null(association2.Strategy.GetRole(relationType.RoleType));
+                                        Assert.Null(role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                        Assert.Null(role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                    }
 
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association.Strategy.SetCompositeRole(relationType.RoleType, role);
-                                        }
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association1.Strategy.SetCompositeRole(relationType.RoleType, role1);
+                                    }
 
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Commit();
-                                        }
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association2.Strategy.SetCompositeRole(relationType.RoleType, role2);
+                                    }
 
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association.Strategy.RemoveRole(relationType.RoleType);
-                                        }
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association1.Strategy.SetCompositeRole(relationType.RoleType, role1);
+                                    }
 
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Rollback();
-                                        }
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Rollback();
+                                    }
 
-                                        for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                        {
-                                            Assert.True(association.Strategy.ExistRole(relationType.RoleType));
-                                            Assert.True(role.Strategy.ExistAssociation(relationType.AssociationType));
-                                        }
+                                    for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                    {
+                                        Assert.Null(association1.Strategy.GetRole(relationType.RoleType));
+                                        Assert.Null(association2.Strategy.GetRole(relationType.RoleType));
+                                        Assert.Null(role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                        Assert.Null(role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                    }
 
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            association.Strategy.SetCompositeRole(relationType.RoleType, null);
-                                        }
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association1.Strategy.SetCompositeRole(relationType.RoleType, role1);
+                                    }
 
-                                        for (int repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
-                                        {
-                                            this.GetTransaction().Rollback();
-                                        }
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Commit();
+                                    }
 
-                                        for (int testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
-                                        {
-                                            Assert.True(association.Strategy.ExistRole(relationType.RoleType));
-                                            Assert.True(role.Strategy.ExistAssociation(relationType.AssociationType));
-                                        }
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association2.Strategy.SetCompositeRole(relationType.RoleType, role2);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Rollback();
+                                    }
+
+                                    for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                    {
+                                        Assert.Equal(role1, association1.Strategy.GetRole(relationType.RoleType));
+                                        Assert.Null(association2.Strategy.GetRole(relationType.RoleType));
+                                        Assert.Equal(association1, role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                        Assert.Null(role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association2.Strategy.SetCompositeRole(relationType.RoleType, role2);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Commit();
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association1.Strategy.SetCompositeRole(relationType.RoleType, role1);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Rollback();
+                                    }
+
+                                    for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                    {
+                                        Assert.Equal(role1, association1.Strategy.GetRole(relationType.RoleType));
+                                        Assert.Equal(role2, association2.Strategy.GetRole(relationType.RoleType));
+                                        Assert.Equal(association1, role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                        Assert.Equal(association2, role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association1.Strategy.RemoveRole(relationType.RoleType);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Rollback();
+                                    }
+
+                                    for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                    {
+                                        Assert.Equal(role1, association1.Strategy.GetRole(relationType.RoleType));
+                                        Assert.Equal(role2, association2.Strategy.GetRole(relationType.RoleType));
+                                        Assert.Equal(association1, role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                        Assert.Equal(association2, role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association1.Strategy.SetCompositeRole(relationType.RoleType, null);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Rollback();
+                                    }
+
+                                    for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                    {
+                                        Assert.Equal(role1, association1.Strategy.GetRole(relationType.RoleType));
+                                        Assert.Equal(role2, association2.Strategy.GetRole(relationType.RoleType));
+                                        Assert.Equal(association1, role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                        Assert.Equal(association2, role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association2.Strategy.RemoveRole(relationType.RoleType);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Rollback();
+                                    }
+
+                                    for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                    {
+                                        Assert.Equal(role1, association1.Strategy.GetRole(relationType.RoleType));
+                                        Assert.Equal(role2, association2.Strategy.GetRole(relationType.RoleType));
+                                        Assert.Equal(association1, role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                        Assert.Equal(association2, role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association2.Strategy.SetCompositeRole(relationType.RoleType, null);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Rollback();
+                                    }
+
+                                    for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                    {
+                                        Assert.Equal(role1, association1.Strategy.GetRole(relationType.RoleType));
+                                        Assert.Equal(role2, association2.Strategy.GetRole(relationType.RoleType));
+                                        Assert.Equal(association1, role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                        Assert.Equal(association2, role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association1.Strategy.RemoveRole(relationType.RoleType);
+                                        association2.Strategy.RemoveRole(relationType.RoleType);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Rollback();
+                                    }
+
+                                    for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                    {
+                                        Assert.Equal(role1, association1.Strategy.GetRole(relationType.RoleType));
+                                        Assert.Equal(role2, association2.Strategy.GetRole(relationType.RoleType));
+                                        Assert.Equal(association1, role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                        Assert.Equal(association2, role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association1.Strategy.SetCompositeRole(relationType.RoleType, null);
+                                        association2.Strategy.SetCompositeRole(relationType.RoleType, null);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Rollback();
+                                    }
+
+                                    for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                    {
+                                        Assert.Equal(role1, association1.Strategy.GetRole(relationType.RoleType));
+                                        Assert.Equal(role2, association2.Strategy.GetRole(relationType.RoleType));
+                                        Assert.Equal(association1, role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                        Assert.Equal(association2, role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                    }
+                                }
+                            }
+                        }
+
+                        // Set1 Set2 Rollback Set1 Set2 Set1 Rollback Set1 Commit Set2 Rollback Set2 Commit Set1 Rollback Remove1 Rollback SetNull1 Rollback Remove2 Rollback SetNull2 Rollback SetNull1 SetNull2 Rollback Remove1 Remove2 Rollback(Exist)
+                        for (var iRelation = 0; iRelation < this.GetRelations().Length; iRelation++)
+                        {
+                            var relationType = this.GetRelations()[iRelation];
+                            var associationTypes = relationType.AssociationType.ObjectType.Classes.ToArray();
+                            for (var iAssociationType = 0; iAssociationType < associationTypes.Count(); iAssociationType++)
+                            {
+                                var associationType = associationTypes[iAssociationType];
+                                var roleTypes = this.GetClasses(relationType);
+                                for (var iRoleType = 0; iRoleType < roleTypes.Count(); iRoleType++)
+                                {
+                                    var roleType = roleTypes[iRoleType];
+                                    var association1 = this.GetTransaction().Build(associationType);
+                                    var association2 = this.GetTransaction().Build(associationType);
+                                    var role1 = this.GetTransaction().Build(roleType);
+                                    var role2 = this.GetTransaction().Build(roleType);
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Commit();
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association1.Strategy.SetCompositeRole(relationType.RoleType, role1);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association2.Strategy.SetCompositeRole(relationType.RoleType, role2);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Rollback();
+                                    }
+
+                                    for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                    {
+                                        Assert.False(association1.Strategy.ExistRole(relationType.RoleType));
+                                        Assert.False(association2.Strategy.ExistRole(relationType.RoleType));
+                                        Assert.False(role1.Strategy.ExistAssociation(relationType.AssociationType));
+                                        Assert.False(role2.Strategy.ExistAssociation(relationType.AssociationType));
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association1.Strategy.SetCompositeRole(relationType.RoleType, role1);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association2.Strategy.SetCompositeRole(relationType.RoleType, role2);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association1.Strategy.SetCompositeRole(relationType.RoleType, role1);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Rollback();
+                                    }
+
+                                    for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                    {
+                                        Assert.False(association1.Strategy.ExistRole(relationType.RoleType));
+                                        Assert.False(association2.Strategy.ExistRole(relationType.RoleType));
+                                        Assert.False(role1.Strategy.ExistAssociation(relationType.AssociationType));
+                                        Assert.False(role2.Strategy.ExistAssociation(relationType.AssociationType));
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association1.Strategy.SetCompositeRole(relationType.RoleType, role1);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Commit();
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association2.Strategy.SetCompositeRole(relationType.RoleType, role2);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Rollback();
+                                    }
+
+                                    for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                    {
+                                        Assert.True(association1.Strategy.ExistRole(relationType.RoleType));
+                                        Assert.False(association2.Strategy.ExistRole(relationType.RoleType));
+                                        Assert.True(role1.Strategy.ExistAssociation(relationType.AssociationType));
+                                        Assert.False(role2.Strategy.ExistAssociation(relationType.AssociationType));
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association2.Strategy.SetCompositeRole(relationType.RoleType, role2);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Commit();
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association1.Strategy.SetCompositeRole(relationType.RoleType, role1);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Rollback();
+                                    }
+
+                                    for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                    {
+                                        Assert.True(association1.Strategy.ExistRole(relationType.RoleType));
+                                        Assert.True(association2.Strategy.ExistRole(relationType.RoleType));
+                                        Assert.True(role1.Strategy.ExistAssociation(relationType.AssociationType));
+                                        Assert.True(role2.Strategy.ExistAssociation(relationType.AssociationType));
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association1.Strategy.RemoveRole(relationType.RoleType);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Rollback();
+                                    }
+
+                                    for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                    {
+                                        Assert.True(association1.Strategy.ExistRole(relationType.RoleType));
+                                        Assert.True(association2.Strategy.ExistRole(relationType.RoleType));
+                                        Assert.True(role1.Strategy.ExistAssociation(relationType.AssociationType));
+                                        Assert.True(role2.Strategy.ExistAssociation(relationType.AssociationType));
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association1.Strategy.SetCompositeRole(relationType.RoleType, null);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Rollback();
+                                    }
+
+                                    for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                    {
+                                        Assert.True(association1.Strategy.ExistRole(relationType.RoleType));
+                                        Assert.True(association2.Strategy.ExistRole(relationType.RoleType));
+                                        Assert.True(role1.Strategy.ExistAssociation(relationType.AssociationType));
+                                        Assert.True(role2.Strategy.ExistAssociation(relationType.AssociationType));
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association2.Strategy.RemoveRole(relationType.RoleType);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Rollback();
+                                    }
+
+                                    for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                    {
+                                        Assert.True(association1.Strategy.ExistRole(relationType.RoleType));
+                                        Assert.True(association2.Strategy.ExistRole(relationType.RoleType));
+                                        Assert.True(role1.Strategy.ExistAssociation(relationType.AssociationType));
+                                        Assert.True(role2.Strategy.ExistAssociation(relationType.AssociationType));
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association2.Strategy.SetCompositeRole(relationType.RoleType, null);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Rollback();
+                                    }
+
+                                    for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                    {
+                                        Assert.True(association1.Strategy.ExistRole(relationType.RoleType));
+                                        Assert.True(association2.Strategy.ExistRole(relationType.RoleType));
+                                        Assert.True(role1.Strategy.ExistAssociation(relationType.AssociationType));
+                                        Assert.True(role2.Strategy.ExistAssociation(relationType.AssociationType));
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association1.Strategy.RemoveRole(relationType.RoleType);
+                                        association2.Strategy.RemoveRole(relationType.RoleType);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Rollback();
+                                    }
+
+                                    for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                    {
+                                        Assert.True(association1.Strategy.ExistRole(relationType.RoleType));
+                                        Assert.True(association2.Strategy.ExistRole(relationType.RoleType));
+                                        Assert.True(role1.Strategy.ExistAssociation(relationType.AssociationType));
+                                        Assert.True(role2.Strategy.ExistAssociation(relationType.AssociationType));
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association1.Strategy.SetCompositeRole(relationType.RoleType, null);
+                                        association2.Strategy.SetCompositeRole(relationType.RoleType, null);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Rollback();
+                                    }
+
+                                    for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                    {
+                                        Assert.True(association1.Strategy.ExistRole(relationType.RoleType));
+                                        Assert.True(association2.Strategy.ExistRole(relationType.RoleType));
+                                        Assert.True(role1.Strategy.ExistAssociation(relationType.AssociationType));
+                                        Assert.True(role2.Strategy.ExistAssociation(relationType.AssociationType));
                                     }
                                 }
                             }
@@ -3254,7 +1154,2123 @@ namespace Allors.Database.Adapters
                 }
             }
         }
-
-        private IRelationType[] GetRelations() => this.GetOne2OneRelations(this.GetMetaPopulation());
     }
+
+    [Fact]
+    [Trait("Category", "Dynamic")]
+    public void DifferentAssociationSameRole()
+    {
+        for (var iRepeat = 0; iRepeat < this.GetRepeats().Length; iRepeat++)
+        {
+            var repeat = this.GetRepeats()[iRepeat];
+            for (var iTestRepeat = 0; iTestRepeat < this.GetTestRepeats().Length; iTestRepeat++)
+            {
+                var testRepeat = this.GetTestRepeats()[iTestRepeat];
+                for (var iAssertRepeat = 0; iAssertRepeat < this.GetAssertRepeats().Length; iAssertRepeat++)
+                {
+                    for (var iTransactionFlag = 0; iTransactionFlag < this.GetBooleanFlags().Length; iTransactionFlag++)
+                    {
+                        var transactionFlag = this.GetBooleanFlags()[iTransactionFlag];
+
+                        for (var iRelation = 0; iRelation < this.GetRelations().Length; iRelation++)
+                        {
+                            var relationType = this.GetRelations()[iRelation];
+                            var associationTypes = relationType.AssociationType.ObjectType.Classes.ToArray();
+                            for (var iAssociationType = 0; iAssociationType < associationTypes.Count(); iAssociationType++)
+                            {
+                                var associationType = associationTypes[iAssociationType];
+                                var roleTypes = this.GetClasses(relationType);
+                                for (var iRoleType = 0; iRoleType < roleTypes.Count(); iRoleType++)
+                                {
+                                    var roleType = roleTypes[iRoleType];
+                                    var association1 = this.GetTransaction().Build(associationType);
+                                    var association2 = this.GetTransaction().Build(associationType);
+                                    var role = this.GetTransaction().Build(roleType);
+
+                                    for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                    {
+                                        Assert.Null(association1.Strategy.GetRole(relationType.RoleType));
+                                        Assert.Null(association2.Strategy.GetRole(relationType.RoleType));
+                                        Assert.Null(role.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association1.Strategy.SetCompositeRole(relationType.RoleType, role);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.Equal(role, association1.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Null(association2.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Equal(association1, role.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association2.Strategy.SetCompositeRole(relationType.RoleType, role);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.Null(association1.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Equal(role, association2.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Equal(association2, role.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association1.Strategy.SetCompositeRole(relationType.RoleType, role);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.Equal(role, association1.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Null(association2.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Equal(association1, role.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association1.Strategy.RemoveRole(relationType.RoleType);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.Null(association1.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Null(association2.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Null(role.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association2.Strategy.SetCompositeRole(relationType.RoleType, role);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.Null(association1.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Equal(role, association2.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Equal(association2, role.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association1.Strategy.SetCompositeRole(relationType.RoleType, role);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.Equal(role, association1.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Null(association2.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Equal(association1, role.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association2.Strategy.SetCompositeRole(relationType.RoleType, role);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.Null(association1.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Equal(role, association2.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Equal(association2, role.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association2.Strategy.SetCompositeRole(relationType.RoleType, null);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.Null(association1.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Null(association2.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Null(role.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association1.Strategy.SetCompositeRole(relationType.RoleType, role);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.Equal(role, association1.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Null(association2.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Equal(association1, role.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association2.Strategy.SetCompositeRole(relationType.RoleType, role);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.Null(association1.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Equal(role, association2.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Equal(association2, role.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association1.Strategy.SetCompositeRole(relationType.RoleType, role);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.Equal(role, association1.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Null(association2.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Equal(association1, role.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        // Set1 Set2 Set1 Remove Set2 Set1 Set2 SetNull Set1 Set2 Set1 (Exist)
+                        for (var iRelation = 0; iRelation < this.GetRelations().Length; iRelation++)
+                        {
+                            var relationType = this.GetRelations()[iRelation];
+                            var associationTypes = relationType.AssociationType.ObjectType.Classes.ToArray();
+                            for (var iAssociationType = 0; iAssociationType < associationTypes.Count(); iAssociationType++)
+                            {
+                                var associationType = associationTypes[iAssociationType];
+                                var roleTypes = this.GetClasses(relationType);
+                                for (var iRoleType = 0; iRoleType < roleTypes.Count(); iRoleType++)
+                                {
+                                    var roleType = roleTypes[iRoleType];
+                                    var association1 = this.GetTransaction().Build(associationType);
+                                    var association2 = this.GetTransaction().Build(associationType);
+                                    var role = this.GetTransaction().Build(roleType);
+
+                                    for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                    {
+                                        Assert.False(association1.Strategy.ExistRole(relationType.RoleType));
+                                        Assert.False(association2.Strategy.ExistRole(relationType.RoleType));
+                                        Assert.False(role.Strategy.ExistAssociation(relationType.AssociationType));
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association1.Strategy.SetCompositeRole(relationType.RoleType, role);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.True(association1.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.False(association2.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.True(role.Strategy.ExistAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association2.Strategy.SetCompositeRole(relationType.RoleType, role);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.False(association1.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.True(association2.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.True(role.Strategy.ExistAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association1.Strategy.SetCompositeRole(relationType.RoleType, role);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.True(association1.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.False(association2.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.True(role.Strategy.ExistAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association1.Strategy.RemoveRole(relationType.RoleType);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.False(association1.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.False(association2.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.False(role.Strategy.ExistAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association2.Strategy.SetCompositeRole(relationType.RoleType, role);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.False(association1.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.True(association2.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.True(role.Strategy.ExistAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association1.Strategy.SetCompositeRole(relationType.RoleType, role);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.True(association1.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.False(association2.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.True(role.Strategy.ExistAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association2.Strategy.SetCompositeRole(relationType.RoleType, role);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.False(association1.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.True(association2.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.True(role.Strategy.ExistAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association2.Strategy.SetCompositeRole(relationType.RoleType, null);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.False(association1.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.False(association2.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.False(role.Strategy.ExistAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association1.Strategy.SetCompositeRole(relationType.RoleType, role);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.True(association1.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.False(association2.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.True(role.Strategy.ExistAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association2.Strategy.SetCompositeRole(relationType.RoleType, role);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.False(association1.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.True(association2.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.True(role.Strategy.ExistAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association1.Strategy.SetCompositeRole(relationType.RoleType, role);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.True(association1.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.False(association2.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.True(role.Strategy.ExistAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    if (this.IsRollbackSupported())
+                    {
+                        for (var iRelation = 0; iRelation < this.GetRelations().Length; iRelation++)
+                        {
+                            var relationType = this.GetRelations()[iRelation];
+                            var associationTypes = relationType.AssociationType.ObjectType.Classes.ToArray();
+                            for (var iAssociationType = 0; iAssociationType < associationTypes.Count(); iAssociationType++)
+                            {
+                                var associationType = associationTypes[iAssociationType];
+                                var roleTypes = this.GetClasses(relationType);
+                                for (var iRoleType = 0; iRoleType < roleTypes.Count(); iRoleType++)
+                                {
+                                    var roleType = roleTypes[iRoleType];
+                                    var association1 = this.GetTransaction().Build(associationType);
+                                    var association2 = this.GetTransaction().Build(associationType);
+                                    var role = this.GetTransaction().Build(roleType);
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Commit();
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association1.Strategy.SetCompositeRole(relationType.RoleType, role);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association2.Strategy.SetCompositeRole(relationType.RoleType, role);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Rollback();
+                                    }
+
+                                    for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                    {
+                                        Assert.Null(association1.Strategy.GetRole(relationType.RoleType));
+                                        Assert.Null(association2.Strategy.GetRole(relationType.RoleType));
+                                        Assert.Null(role.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association1.Strategy.SetCompositeRole(relationType.RoleType, role);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association2.Strategy.SetCompositeRole(relationType.RoleType, role);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association1.Strategy.SetCompositeRole(relationType.RoleType, role);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Rollback();
+                                    }
+
+                                    for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                    {
+                                        Assert.Null(association1.Strategy.GetRole(relationType.RoleType));
+                                        Assert.Null(association2.Strategy.GetRole(relationType.RoleType));
+                                        Assert.Null(role.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association1.Strategy.SetCompositeRole(relationType.RoleType, role);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Commit();
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association2.Strategy.SetCompositeRole(relationType.RoleType, role);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Rollback();
+                                    }
+
+                                    for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                    {
+                                        Assert.Equal(role, association1.Strategy.GetRole(relationType.RoleType));
+                                        Assert.Null(association2.Strategy.GetRole(relationType.RoleType));
+                                        Assert.Equal(association1, role.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association2.Strategy.SetCompositeRole(relationType.RoleType, role);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Commit();
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association1.Strategy.SetCompositeRole(relationType.RoleType, role);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Rollback();
+                                    }
+
+                                    for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                    {
+                                        Assert.Null(association1.Strategy.GetRole(relationType.RoleType));
+                                        Assert.Equal(role, association2.Strategy.GetRole(relationType.RoleType));
+                                        Assert.Equal(association2, role.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association2.Strategy.RemoveRole(relationType.RoleType);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Rollback();
+                                    }
+
+                                    for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                    {
+                                        Assert.Null(association1.Strategy.GetRole(relationType.RoleType));
+                                        Assert.Equal(role, association2.Strategy.GetRole(relationType.RoleType));
+                                        Assert.Equal(association2, role.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association2.Strategy.SetCompositeRole(relationType.RoleType, null);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Rollback();
+                                    }
+
+                                    for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                    {
+                                        Assert.Null(association1.Strategy.GetRole(relationType.RoleType));
+                                        Assert.Equal(role, association2.Strategy.GetRole(relationType.RoleType));
+                                        Assert.Equal(association2, role.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                    }
+                                }
+                            }
+                        }
+
+                        // Set1 Set2 Rollback Set1 Set2 Set1 Rollback Set1 Commit Set2 Rollback Set2 Commit Set1 Rollback Remove Rollback SetNull Rollback(Exist)
+                        for (var iRelation = 0; iRelation < this.GetRelations().Length; iRelation++)
+                        {
+                            var relationType = this.GetRelations()[iRelation];
+                            var associationTypes = relationType.AssociationType.ObjectType.Classes.ToArray();
+                            for (var iAssociationType = 0; iAssociationType < associationTypes.Count(); iAssociationType++)
+                            {
+                                var associationType = associationTypes[iAssociationType];
+                                var roleTypes = this.GetClasses(relationType);
+                                for (var iRoleType = 0; iRoleType < roleTypes.Count(); iRoleType++)
+                                {
+                                    var roleType = roleTypes[iRoleType];
+                                    var association1 = this.GetTransaction().Build(associationType);
+                                    var association2 = this.GetTransaction().Build(associationType);
+                                    var role = this.GetTransaction().Build(roleType);
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Commit();
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association1.Strategy.SetCompositeRole(relationType.RoleType, role);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association2.Strategy.SetCompositeRole(relationType.RoleType, role);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Rollback();
+                                    }
+
+                                    for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                    {
+                                        Assert.False(association1.Strategy.ExistRole(relationType.RoleType));
+                                        Assert.False(association2.Strategy.ExistRole(relationType.RoleType));
+                                        Assert.False(role.Strategy.ExistAssociation(relationType.AssociationType));
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association1.Strategy.SetCompositeRole(relationType.RoleType, role);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association2.Strategy.SetCompositeRole(relationType.RoleType, role);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association1.Strategy.SetCompositeRole(relationType.RoleType, role);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Rollback();
+                                    }
+
+                                    for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                    {
+                                        Assert.False(association1.Strategy.ExistRole(relationType.RoleType));
+                                        Assert.False(association2.Strategy.ExistRole(relationType.RoleType));
+                                        Assert.False(role.Strategy.ExistAssociation(relationType.AssociationType));
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association1.Strategy.SetCompositeRole(relationType.RoleType, role);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Commit();
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association2.Strategy.SetCompositeRole(relationType.RoleType, role);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Rollback();
+                                    }
+
+                                    for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                    {
+                                        Assert.True(association1.Strategy.ExistRole(relationType.RoleType));
+                                        Assert.False(association2.Strategy.ExistRole(relationType.RoleType));
+                                        Assert.True(role.Strategy.ExistAssociation(relationType.AssociationType));
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association2.Strategy.SetCompositeRole(relationType.RoleType, role);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Commit();
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association1.Strategy.SetCompositeRole(relationType.RoleType, role);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Rollback();
+                                    }
+
+                                    for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                    {
+                                        Assert.False(association1.Strategy.ExistRole(relationType.RoleType));
+                                        Assert.True(association2.Strategy.ExistRole(relationType.RoleType));
+                                        Assert.True(role.Strategy.ExistAssociation(relationType.AssociationType));
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association2.Strategy.RemoveRole(relationType.RoleType);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Rollback();
+                                    }
+
+                                    for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                    {
+                                        Assert.False(association1.Strategy.ExistRole(relationType.RoleType));
+                                        Assert.True(association2.Strategy.ExistRole(relationType.RoleType));
+                                        Assert.True(role.Strategy.ExistAssociation(relationType.AssociationType));
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association2.Strategy.SetCompositeRole(relationType.RoleType, null);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Rollback();
+                                    }
+
+                                    for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                    {
+                                        Assert.False(association1.Strategy.ExistRole(relationType.RoleType));
+                                        Assert.True(association2.Strategy.ExistRole(relationType.RoleType));
+                                        Assert.True(role.Strategy.ExistAssociation(relationType.AssociationType));
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    [Fact]
+    [Trait("Category", "Dynamic")]
+    public void SameAssociationDifferentRole()
+    {
+        for (var iRepeat = 0; iRepeat < this.GetRepeats().Length; iRepeat++)
+        {
+            var repeat = this.GetRepeats()[iRepeat];
+            for (var iTestRepeat = 0; iTestRepeat < this.GetTestRepeats().Length; iTestRepeat++)
+            {
+                var testRepeat = this.GetTestRepeats()[iTestRepeat];
+                for (var iAssertRepeat = 0; iAssertRepeat < this.GetAssertRepeats().Length; iAssertRepeat++)
+                {
+                    for (var iTransactionFlag = 0; iTransactionFlag < this.GetBooleanFlags().Length; iTransactionFlag++)
+                    {
+                        var transactionFlag = this.GetBooleanFlags()[iTransactionFlag];
+                        for (var iRelation = 0; iRelation < this.GetRelations().Length; iRelation++)
+                        {
+                            var relationType = this.GetRelations()[iRelation];
+                            var associationTypes = relationType.AssociationType.ObjectType.Classes.ToArray();
+                            for (var iAssociationType = 0; iAssociationType < associationTypes.Count(); iAssociationType++)
+                            {
+                                var associationType = associationTypes[iAssociationType];
+                                var roleTypes = this.GetClasses(relationType);
+                                for (var iRoleType = 0; iRoleType < roleTypes.Count(); iRoleType++)
+                                {
+                                    var roleType = roleTypes[iRoleType];
+                                    var association = this.GetTransaction().Build(associationType);
+                                    var role1 = this.GetTransaction().Build(roleType);
+                                    var role2 = this.GetTransaction().Build(roleType);
+
+                                    for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                    {
+                                        Assert.Null(association.Strategy.GetRole(relationType.RoleType));
+                                        Assert.Null(role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                        Assert.Null(role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.SetCompositeRole(relationType.RoleType, role1);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.Equal(role1, association.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Equal(association, role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            Assert.Null(role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.SetCompositeRole(relationType.RoleType, role2);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.Equal(role2, association.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Null(role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            Assert.Equal(association, role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.SetCompositeRole(relationType.RoleType, role1);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.Equal(role1, association.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Equal(association, role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            Assert.Null(role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.RemoveRole(relationType.RoleType);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.Null(association.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Null(role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            Assert.Null(role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.SetCompositeRole(relationType.RoleType, role2);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.Equal(role2, association.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Null(role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            Assert.Equal(association, role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.SetCompositeRole(relationType.RoleType, role1);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.Equal(role1, association.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Equal(association, role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            Assert.Null(role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.SetCompositeRole(relationType.RoleType, role2);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.Equal(role2, association.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Null(role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            Assert.Equal(association, role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.SetCompositeRole(relationType.RoleType, null);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.Null(association.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Null(role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            Assert.Null(role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.SetCompositeRole(relationType.RoleType, role1);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.Equal(role1, association.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Equal(association, role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            Assert.Null(role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.SetCompositeRole(relationType.RoleType, role2);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.Equal(role2, association.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Null(role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            Assert.Equal(association, role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.SetCompositeRole(relationType.RoleType, role1);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.Equal(role1, association.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Equal(association, role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            Assert.Null(role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        // Set1 Set2 Set1 Remove Set2 Set1 Set2 SetNull Set1 Set2 Set1 (Exist)
+                        for (var iRelation = 0; iRelation < this.GetRelations().Length; iRelation++)
+                        {
+                            var relationType = this.GetRelations()[iRelation];
+                            var associationTypes = relationType.AssociationType.ObjectType.Classes.ToArray();
+                            for (var iAssociationType = 0; iAssociationType < associationTypes.Count(); iAssociationType++)
+                            {
+                                var associationType = associationTypes[iAssociationType];
+                                var roleTypes = this.GetClasses(relationType);
+                                for (var iRoleType = 0; iRoleType < roleTypes.Count(); iRoleType++)
+                                {
+                                    var roleType = roleTypes[iRoleType];
+                                    var association = this.GetTransaction().Build(associationType);
+                                    var role1 = this.GetTransaction().Build(roleType);
+                                    var role2 = this.GetTransaction().Build(roleType);
+
+                                    for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                    {
+                                        Assert.False(association.Strategy.ExistRole(relationType.RoleType));
+                                        Assert.False(role1.Strategy.ExistAssociation(relationType.AssociationType));
+                                        Assert.False(role2.Strategy.ExistAssociation(relationType.AssociationType));
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.SetCompositeRole(relationType.RoleType, role1);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.True(association.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.True(role1.Strategy.ExistAssociation(relationType.AssociationType));
+                                            Assert.False(role2.Strategy.ExistAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.SetCompositeRole(relationType.RoleType, role2);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.True(association.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.False(role1.Strategy.ExistAssociation(relationType.AssociationType));
+                                            Assert.True(role2.Strategy.ExistAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.SetCompositeRole(relationType.RoleType, role1);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.True(association.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.True(role1.Strategy.ExistAssociation(relationType.AssociationType));
+                                            Assert.False(role2.Strategy.ExistAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.RemoveRole(relationType.RoleType);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.False(association.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.False(role1.Strategy.ExistAssociation(relationType.AssociationType));
+                                            Assert.False(role2.Strategy.ExistAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.SetCompositeRole(relationType.RoleType, role2);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.True(association.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.False(role1.Strategy.ExistAssociation(relationType.AssociationType));
+                                            Assert.True(role2.Strategy.ExistAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.SetCompositeRole(relationType.RoleType, role1);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.True(association.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.True(role1.Strategy.ExistAssociation(relationType.AssociationType));
+                                            Assert.False(role2.Strategy.ExistAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.SetCompositeRole(relationType.RoleType, role2);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.True(association.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.False(role1.Strategy.ExistAssociation(relationType.AssociationType));
+                                            Assert.True(role2.Strategy.ExistAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.SetCompositeRole(relationType.RoleType, null);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.False(association.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.False(role1.Strategy.ExistAssociation(relationType.AssociationType));
+                                            Assert.False(role2.Strategy.ExistAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.SetCompositeRole(relationType.RoleType, role1);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.True(association.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.True(role1.Strategy.ExistAssociation(relationType.AssociationType));
+                                            Assert.False(role2.Strategy.ExistAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.SetCompositeRole(relationType.RoleType, role2);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.True(association.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.False(role1.Strategy.ExistAssociation(relationType.AssociationType));
+                                            Assert.True(role2.Strategy.ExistAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.SetCompositeRole(relationType.RoleType, role1);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.True(association.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.True(role1.Strategy.ExistAssociation(relationType.AssociationType));
+                                            Assert.False(role2.Strategy.ExistAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    if (this.IsRollbackSupported())
+                    {
+                        for (var iRelation = 0; iRelation < this.GetRelations().Length; iRelation++)
+                        {
+                            var relationType = this.GetRelations()[iRelation];
+                            var associationTypes = relationType.AssociationType.ObjectType.Classes.ToArray();
+                            for (var iAssociationType = 0; iAssociationType < associationTypes.Count(); iAssociationType++)
+                            {
+                                var associationType = associationTypes[iAssociationType];
+                                var roleTypes = this.GetClasses(relationType);
+                                for (var iRoleType = 0; iRoleType < roleTypes.Count(); iRoleType++)
+                                {
+                                    var roleType = roleTypes[iRoleType];
+                                    var association = this.GetTransaction().Build(associationType);
+                                    var role1 = this.GetTransaction().Build(roleType);
+                                    var role2 = this.GetTransaction().Build(roleType);
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Commit();
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.SetCompositeRole(relationType.RoleType, role1);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.SetCompositeRole(relationType.RoleType, role2);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Rollback();
+                                    }
+
+                                    for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                    {
+                                        Assert.Null(association.Strategy.GetRole(relationType.RoleType));
+                                        Assert.Null(role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                        Assert.Null(role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.SetCompositeRole(relationType.RoleType, role1);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.SetCompositeRole(relationType.RoleType, role2);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.SetCompositeRole(relationType.RoleType, role1);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Rollback();
+                                    }
+
+                                    for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                    {
+                                        Assert.Null(association.Strategy.GetRole(relationType.RoleType));
+                                        Assert.Null(role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                        Assert.Null(role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.SetCompositeRole(relationType.RoleType, role1);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Commit();
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.SetCompositeRole(relationType.RoleType, role2);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Rollback();
+                                    }
+
+                                    for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                    {
+                                        Assert.Equal(role1, association.Strategy.GetRole(relationType.RoleType));
+                                        Assert.Equal(association, role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                        Assert.Null(role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.SetCompositeRole(relationType.RoleType, role2);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Commit();
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.SetCompositeRole(relationType.RoleType, role1);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Rollback();
+                                    }
+
+                                    for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                    {
+                                        Assert.Equal(role2, association.Strategy.GetRole(relationType.RoleType));
+                                        Assert.Null(role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                        Assert.Equal(association, role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.RemoveRole(relationType.RoleType);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Rollback();
+                                    }
+
+                                    for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                    {
+                                        Assert.Equal(role2, association.Strategy.GetRole(relationType.RoleType));
+                                        Assert.Null(role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                        Assert.Equal(association, role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.SetCompositeRole(relationType.RoleType, null);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Rollback();
+                                    }
+
+                                    for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                    {
+                                        Assert.Equal(role2, association.Strategy.GetRole(relationType.RoleType));
+                                        Assert.Null(role1.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                        Assert.Equal(association, role2.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                    }
+                                }
+                            }
+                        }
+
+                        // Set1 Set2 Rollback Set1 Set2 Set1 Rollback Set1 Commit Set2 Rollback Set2 Commit Set1 Rollback Remove Rollback SetNull Rollback(Exist)
+                        for (var iRelation = 0; iRelation < this.GetRelations().Length; iRelation++)
+                        {
+                            var relationType = this.GetRelations()[iRelation];
+                            var associationTypes = relationType.AssociationType.ObjectType.Classes.ToArray();
+                            for (var iAssociationType = 0; iAssociationType < associationTypes.Count(); iAssociationType++)
+                            {
+                                var associationType = associationTypes[iAssociationType];
+                                var roleTypes = this.GetClasses(relationType);
+                                for (var iRoleType = 0; iRoleType < roleTypes.Count(); iRoleType++)
+                                {
+                                    var roleType = roleTypes[iRoleType];
+                                    var association = this.GetTransaction().Build(associationType);
+                                    var role1 = this.GetTransaction().Build(roleType);
+                                    var role2 = this.GetTransaction().Build(roleType);
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Commit();
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.SetCompositeRole(relationType.RoleType, role1);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.SetCompositeRole(relationType.RoleType, role2);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Rollback();
+                                    }
+
+                                    for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                    {
+                                        Assert.False(association.Strategy.ExistRole(relationType.RoleType));
+                                        Assert.False(role1.Strategy.ExistAssociation(relationType.AssociationType));
+                                        Assert.False(role2.Strategy.ExistAssociation(relationType.AssociationType));
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.SetCompositeRole(relationType.RoleType, role1);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.SetCompositeRole(relationType.RoleType, role2);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.SetCompositeRole(relationType.RoleType, role1);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Rollback();
+                                    }
+
+                                    for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                    {
+                                        Assert.False(association.Strategy.ExistRole(relationType.RoleType));
+                                        Assert.False(role1.Strategy.ExistAssociation(relationType.AssociationType));
+                                        Assert.False(role2.Strategy.ExistAssociation(relationType.AssociationType));
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.SetCompositeRole(relationType.RoleType, role1);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Commit();
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.SetCompositeRole(relationType.RoleType, role2);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Rollback();
+                                    }
+
+                                    for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                    {
+                                        Assert.True(association.Strategy.ExistRole(relationType.RoleType));
+                                        Assert.True(role1.Strategy.ExistAssociation(relationType.AssociationType));
+                                        Assert.False(role2.Strategy.ExistAssociation(relationType.AssociationType));
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.SetCompositeRole(relationType.RoleType, role2);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Commit();
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.SetCompositeRole(relationType.RoleType, role1);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Rollback();
+                                    }
+
+                                    for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                    {
+                                        Assert.True(association.Strategy.ExistRole(relationType.RoleType));
+                                        Assert.False(role1.Strategy.ExistAssociation(relationType.AssociationType));
+                                        Assert.True(role2.Strategy.ExistAssociation(relationType.AssociationType));
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.RemoveRole(relationType.RoleType);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Rollback();
+                                    }
+
+                                    for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                    {
+                                        Assert.True(association.Strategy.ExistRole(relationType.RoleType));
+                                        Assert.False(role1.Strategy.ExistAssociation(relationType.AssociationType));
+                                        Assert.True(role2.Strategy.ExistAssociation(relationType.AssociationType));
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.SetCompositeRole(relationType.RoleType, null);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Rollback();
+                                    }
+
+                                    for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                    {
+                                        Assert.True(association.Strategy.ExistRole(relationType.RoleType));
+                                        Assert.False(role1.Strategy.ExistAssociation(relationType.AssociationType));
+                                        Assert.True(role2.Strategy.ExistAssociation(relationType.AssociationType));
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    [Fact]
+    [Trait("Category", "Dynamic")]
+    public void SameAssociationSameRole()
+    {
+        for (var iRepeat = 0; iRepeat < this.GetRepeats().Length; iRepeat++)
+        {
+            var repeat = this.GetRepeats()[iRepeat];
+            for (var iTestRepeat = 0; iTestRepeat < this.GetTestRepeats().Length; iTestRepeat++)
+            {
+                var testRepeat = this.GetTestRepeats()[iTestRepeat];
+                for (var iAssertRepeat = 0; iAssertRepeat < this.GetAssertRepeats().Length; iAssertRepeat++)
+                {
+                    for (var iTransactionFlag = 0; iTransactionFlag < this.GetBooleanFlags().Length; iTransactionFlag++)
+                    {
+                        var transactionFlag = this.GetBooleanFlags()[iTransactionFlag];
+
+                        for (var iRelation = 0; iRelation < this.GetRelations().Length; iRelation++)
+                        {
+                            var relationType = this.GetRelations()[iRelation];
+                            var associationTypes = relationType.AssociationType.ObjectType.Classes.ToArray();
+                            for (var iAssociationType = 0; iAssociationType < associationTypes.Count(); iAssociationType++)
+                            {
+                                var associationType = associationTypes[iAssociationType];
+                                var roleTypes = this.GetClasses(relationType);
+                                for (var iRoleType = 0; iRoleType < roleTypes.Count(); iRoleType++)
+                                {
+                                    var roleType = roleTypes[iRoleType];
+                                    var association = this.GetTransaction().Build(associationType);
+                                    var role = this.GetTransaction().Build(roleType);
+                                    var roleOtherDatabase = this.GetTransaction2().Build(roleType);
+
+                                    for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                    {
+                                        Assert.Null(association.Strategy.GetRole(relationType.RoleType));
+                                        Assert.Null(role.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.SetCompositeRole(relationType.RoleType, role);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.Equal(role, association.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Equal(association, role.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.RemoveRole(relationType.RoleType);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.Null(association.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Null(role.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.SetCompositeRole(relationType.RoleType, role);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.Equal(role, association.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Equal(association, role.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.SetCompositeRole(relationType.RoleType, null);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.Null(association.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Null(role.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    // Set different Population
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        try
+                                        {
+                                            association.Strategy.SetCompositeRole(relationType.RoleType, roleOtherDatabase);
+                                            Assert.True(false); // Fail
+                                        }
+                                        catch (ArgumentException exception)
+                                        {
+                                            Assert.NotNull(exception);
+                                        }
+
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.Null(association.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Null(role.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        // Set Remove Set SetNull (Exist)
+                        for (var iRelation = 0; iRelation < this.GetRelations().Length; iRelation++)
+                        {
+                            var relationType = this.GetRelations()[iRelation];
+                            var associationTypes = relationType.AssociationType.ObjectType.Classes.ToArray();
+                            for (var iAssociationType = 0; iAssociationType < associationTypes.Count(); iAssociationType++)
+                            {
+                                var associationType = associationTypes[iAssociationType];
+                                var roleTypes = this.GetClasses(relationType);
+                                for (var iRoleType = 0; iRoleType < roleTypes.Count(); iRoleType++)
+                                {
+                                    var roleType = roleTypes[iRoleType];
+                                    var association = this.GetTransaction().Build(associationType);
+                                    var role = this.GetTransaction().Build(roleType);
+                                    if (transactionFlag)
+                                    {
+                                        this.GetTransaction().Commit();
+                                    }
+
+                                    for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                    {
+                                        Assert.False(association.Strategy.ExistRole(relationType.RoleType));
+                                        Assert.False(role.Strategy.ExistAssociation(relationType.AssociationType));
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.SetCompositeRole(relationType.RoleType, role);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.True(association.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.True(role.Strategy.ExistAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.RemoveRole(relationType.RoleType);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.False(association.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.False(role.Strategy.ExistAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.SetCompositeRole(relationType.RoleType, role);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.True(association.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.True(role.Strategy.ExistAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.SetCompositeRole(relationType.RoleType, null);
+                                        if (transactionFlag)
+                                        {
+                                            this.GetTransaction().Commit();
+                                        }
+
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.False(association.Strategy.ExistRole(relationType.RoleType));
+                                            Assert.False(role.Strategy.ExistAssociation(relationType.AssociationType));
+                                            if (transactionFlag)
+                                            {
+                                                this.GetTransaction().Commit();
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    if (this.IsRollbackSupported())
+                    {
+                        for (var iRelation = 0; iRelation < this.GetRelations().Length; iRelation++)
+                        {
+                            var relationType = this.GetRelations()[iRelation];
+                            var associationTypes = relationType.AssociationType.ObjectType.Classes.ToArray();
+                            for (var iAssociationType = 0; iAssociationType < associationTypes.Count(); iAssociationType++)
+                            {
+                                var associationType = associationTypes[iAssociationType];
+                                var roleTypes = this.GetClasses(relationType);
+                                for (var iRoleType = 0; iRoleType < roleTypes.Count(); iRoleType++)
+                                {
+                                    var roleType = roleTypes[iRoleType];
+                                    var association = this.GetTransaction().Build(associationType);
+                                    var role = this.GetTransaction().Build(roleType);
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Commit();
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.SetCompositeRole(relationType.RoleType, role);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Rollback();
+                                    }
+
+                                    for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                    {
+                                        Assert.Null(association.Strategy.GetRole(relationType.RoleType));
+                                        Assert.Null(role.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.SetCompositeRole(relationType.RoleType, role);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Commit();
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.RemoveRole(relationType.RoleType);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Rollback();
+                                    }
+
+                                    for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                    {
+                                        Assert.Equal(role, association.Strategy.GetRole(relationType.RoleType));
+                                        Assert.Equal(association, role.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.SetCompositeRole(relationType.RoleType, null);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Rollback();
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                        {
+                                            Assert.Equal(role, association.Strategy.GetRole(relationType.RoleType));
+                                            Assert.Equal(association, role.Strategy.GetCompositeAssociation(relationType.AssociationType));
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        // Set Rollback Set Commit Remove Rollback SetNull Rollback(Exist)
+                        for (var iRelation = 0; iRelation < this.GetRelations().Length; iRelation++)
+                        {
+                            var relationType = this.GetRelations()[iRelation];
+                            var associationTypes = relationType.AssociationType.ObjectType.Classes.ToArray();
+                            for (var iAssociationType = 0; iAssociationType < associationTypes.Count(); iAssociationType++)
+                            {
+                                var associationType = associationTypes[iAssociationType];
+                                var roleTypes = this.GetClasses(relationType);
+                                for (var iRoleType = 0; iRoleType < roleTypes.Count(); iRoleType++)
+                                {
+                                    var roleType = roleTypes[iRoleType];
+                                    var association = this.GetTransaction().Build(associationType);
+                                    var role = this.GetTransaction().Build(roleType);
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Commit();
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.SetCompositeRole(relationType.RoleType, role);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Rollback();
+                                    }
+
+                                    for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                    {
+                                        Assert.False(association.Strategy.ExistRole(relationType.RoleType));
+                                        Assert.False(role.Strategy.ExistAssociation(relationType.AssociationType));
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.SetCompositeRole(relationType.RoleType, role);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Commit();
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.RemoveRole(relationType.RoleType);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Rollback();
+                                    }
+
+                                    for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                    {
+                                        Assert.True(association.Strategy.ExistRole(relationType.RoleType));
+                                        Assert.True(role.Strategy.ExistAssociation(relationType.AssociationType));
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        association.Strategy.SetCompositeRole(relationType.RoleType, null);
+                                    }
+
+                                    for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
+                                    {
+                                        this.GetTransaction().Rollback();
+                                    }
+
+                                    for (var testRepeatIndex = 0; testRepeatIndex < testRepeat; testRepeatIndex++)
+                                    {
+                                        Assert.True(association.Strategy.ExistRole(relationType.RoleType));
+                                        Assert.True(role.Strategy.ExistAssociation(relationType.AssociationType));
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private IRelationType[] GetRelations() => this.GetOne2OneRelations(this.GetMetaPopulation());
 }

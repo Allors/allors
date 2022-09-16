@@ -8,12 +8,12 @@ namespace Allors.Protocol.Json.Api
     public class DerivationRelation
     {
         /// <summary>
-        /// Id
+        ///     Id
         /// </summary>
         public long i { get; set; }
 
         /// <summary>
-        /// Relation Type Tag
+        ///     Relation Type Tag
         /// </summary>
         public string r { get; set; }
     }

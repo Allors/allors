@@ -8,12 +8,12 @@ namespace Allors.Protocol.Json.Data
     public class Sort : IVisitable
     {
         /// <summary>
-        /// Role Type Tag
+        ///     Role Type Tag
         /// </summary>
         public string r { get; set; }
 
         /// <summary>
-        /// Sort Direction
+        ///     Sort Direction
         /// </summary>
         public SortDirection? d { get; set; }
 

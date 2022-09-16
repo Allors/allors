@@ -3,12 +3,11 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Adapters.Memory
-{
-    internal abstract class Predicate
-    {
-        internal virtual bool Include => true;
+namespace Allors.Database.Adapters.Memory;
 
-        internal abstract ThreeValuedLogic Evaluate(Strategy strategy);
-    }
+internal abstract class Predicate
+{
+    internal virtual bool Include => true;
+
+    internal abstract ThreeValuedLogic Evaluate(Strategy strategy);
 }

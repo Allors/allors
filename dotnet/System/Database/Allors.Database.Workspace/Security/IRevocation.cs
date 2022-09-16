@@ -3,13 +3,12 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Security
+namespace Allors.Database.Security;
+
+/// <summary>
+///     List of permissions for an object/user combination.
+/// </summary>
+public interface IRevocation : IObject
 {
-    /// <summary>
-    /// List of permissions for an object/user combination.
-    /// </summary>
-    public interface IRevocation : IObject
-    {
-        IPermission[] Permissions { get; }
-    }
+    IPermission[] Permissions { get; }
 }

@@ -4,17 +4,16 @@
 // </copyright>
 // <summary>Defines the IDomainDerivation type.</summary>
 
-namespace Allors.Database.Derivations
+namespace Allors.Database.Derivations;
+
+using System;
+using System.Collections.Generic;
+
+public interface IRule
 {
-    using System;
-    using System.Collections.Generic;
+    Guid Id { get; }
 
-    public interface IRule
-    {
-        Guid Id { get; }
+    IEnumerable<IPattern> Patterns { get; }
 
-        IEnumerable<IPattern> Patterns { get; }
-
-        void Derive(ICycle cycle, IEnumerable<IObject> matches);
-    }
+    void Derive(ICycle cycle, IEnumerable<IObject> matches);
 }

@@ -4,24 +4,23 @@
 // </copyright>
 // <summary>Defines the IObjectType type.</summary>
 
-namespace Allors.Database.Meta
+namespace Allors.Database.Meta;
+
+public interface IUnit : IObjectType
 {
-    public interface IUnit : IObjectType
-    {
-        bool IsBinary { get; }
+    bool IsBinary { get; }
 
-        bool IsBoolean { get; }
+    bool IsBoolean { get; }
 
-        bool IsDateTime { get; }
+    bool IsDateTime { get; }
 
-        bool IsDecimal { get; }
+    bool IsDecimal { get; }
 
-        bool IsFloat { get; }
+    bool IsFloat { get; }
 
-        bool IsInteger { get; }
+    bool IsInteger { get; }
 
-        bool IsString { get; }
+    bool IsString { get; }
 
-        bool IsUnique { get; }
-    }
+    bool IsUnique { get; }
 }

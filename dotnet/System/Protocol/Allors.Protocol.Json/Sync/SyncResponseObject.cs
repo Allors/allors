@@ -8,32 +8,32 @@ namespace Allors.Protocol.Json.Api.Sync
     public class SyncResponseObject
     {
         /// <summary>
-        /// Id
+        ///     Id
         /// </summary>
         public long i { get; set; }
 
         /// <summary>
-        /// Version
+        ///     Version
         /// </summary>
         public long v { get; set; }
 
         /// <summary>
-        /// Class Tag
+        ///     Class Tag
         /// </summary>
         public string c { get; set; }
 
         /// <summary>
-        /// Sorted Grants
+        ///     Sorted Grants
         /// </summary>
         public long[] g { get; set; }
 
         /// <summary>
-        /// Sorted Revocations
+        ///     Sorted Revocations
         /// </summary>
         public long[] r { get; set; }
 
         /// <summary>
-        /// Roles
+        ///     Roles
         /// </summary>
         public SyncResponseRole[] ro { get; set; }
 

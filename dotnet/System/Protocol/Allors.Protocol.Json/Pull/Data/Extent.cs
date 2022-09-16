@@ -8,27 +8,27 @@ namespace Allors.Protocol.Json.Data
     public class Extent : IVisitable
     {
         /// <summary>
-        /// Kind
+        ///     Kind
         /// </summary>
         public ExtentKind k { get; set; }
 
         /// <summary>
-        /// Operands
+        ///     Operands
         /// </summary>
         public Extent[] o { get; set; }
 
         /// <summary>
-        /// Object Type Tag
+        ///     Object Type Tag
         /// </summary>
         public string t { get; set; }
 
         /// <summary>
-        /// Predicate
+        ///     Predicate
         /// </summary>
         public Predicate p { get; set; }
 
         /// <summary>
-        /// Sorting
+        ///     Sorting
         /// </summary>
         public Sort[] s { get; set; }
 

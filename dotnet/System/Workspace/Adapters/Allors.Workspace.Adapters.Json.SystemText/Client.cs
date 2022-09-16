@@ -18,21 +18,20 @@ namespace Allors.Workspace.Adapters.Json.SystemText
     [SuppressMessage("Design", "RCS1090:Add call to 'ConfigureAwait' (or vice versa).", Justification = "<Pending>")]
     public class Client
     {
-        public int[] SecondsBeforeRetry { get; set; } = { 1, 2, 4, 8, 16 };
-
         public Client(Func<HttpClient> httpClientFactory) => this.HttpClient = httpClientFactory();
+        public int[] SecondsBeforeRetry { get; set; } = {1, 2, 4, 8, 16};
 
         public HttpClient HttpClient { get; private set; }
 
         public IAsyncPolicy Policy { get; set; } = Polly.Policy
-          .Handle<HttpRequestException>()
-          .WaitAndRetryAsync(5, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
+            .Handle<HttpRequestException>()
+            .WaitAndRetryAsync(5, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
 
         public string UserId { get; private set; }
 
         public async Task<bool> Login(Uri url, string username, string password)
         {
-            var request = new AuthenticationTokenRequest { l = username, p = password };
+            var request = new AuthenticationTokenRequest {l = username, p = password};
             using var response = await this.PostAsJsonAsync(url, request);
             response.EnsureSuccessStatusCode();
             var authResult = await this.ReadAsAsync<AuthenticationTokenResponse>(response);
@@ -54,15 +53,15 @@ namespace Allors.Workspace.Adapters.Json.SystemText
         }
 
         public async Task<HttpResponseMessage> PostAsJsonAsync(Uri uri, object args) =>
-                await this.Policy.ExecuteAsync(
-                    async () =>
-                    {
-                        // TODO: use SerializeToUtf8Bytes()
-                        var json = JsonSerializer.Serialize(args);
-                        return await this.HttpClient.PostAsync(
-                            uri,
-                            new StringContent(json, Encoding.UTF8, "application/json"));
-                    });
+            await this.Policy.ExecuteAsync(
+                async () =>
+                {
+                    // TODO: use SerializeToUtf8Bytes()
+                    var json = JsonSerializer.Serialize(args);
+                    return await this.HttpClient.PostAsync(
+                        uri,
+                        new StringContent(json, Encoding.UTF8, "application/json"));
+                });
 
         public async Task<T> ReadAsAsync<T>(HttpResponseMessage response)
         {

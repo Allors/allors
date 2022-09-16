@@ -4,24 +4,24 @@
 // </copyright>
 
 // ReSharper disable StyleCop.SA1121
-namespace Allors.Database.Derivations
+
+namespace Allors.Database.Derivations;
+
+using System;
+
+public interface IDerivation
 {
-    using System;
+    Guid Id { get; }
 
-    public interface IDerivation
-    {
-        Guid Id { get; }
+    DateTime TimeStamp { get; }
 
-        DateTime TimeStamp { get; }
+    ITransaction Transaction { get; }
 
-        ITransaction Transaction { get; }
+    IValidation Validation { get; }
 
-        IValidation Validation { get; }
+    IAccumulatedChangeSet ChangeSet { get; }
 
-        IAccumulatedChangeSet ChangeSet { get; }
+    object this[string key] { get; set; }
 
-        IValidation Derive();
-
-        object this[string key] { get; set; }
-    }
+    IValidation Derive();
 }

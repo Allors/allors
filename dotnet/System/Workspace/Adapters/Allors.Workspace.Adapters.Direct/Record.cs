@@ -3,52 +3,52 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Workspace.Adapters.Direct
+namespace Allors.Workspace.Adapters.Direct;
+
+using System.Collections.Generic;
+using System.Linq;
+using Meta;
+using Shared.Ranges;
+
+public class Record : Adapters.Record
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using Meta;
-    using Shared.Ranges;
+    private readonly Grant[] accessControls;
+    private readonly ValueRange<long> deniedPermissionIds;
 
-    public class Record : Adapters.Record
+    private readonly Dictionary<RoleType, object> roleByRoleType;
+
+    internal Record(Class @class, long id)
+        : base(@class, id, 0)
     {
-        private readonly Grant[] accessControls;
-        private readonly ValueRange<long> deniedPermissionIds;
+    }
 
-        private readonly Dictionary<RoleType, object> roleByRoleType;
+    internal Record(Class @class, long id, long version, Dictionary<RoleType, object> roleByRoleType, ValueRange<long> deniedPermissionIds,
+        Grant[] accessControls)
+        : base(@class, id, version)
+    {
+        this.roleByRoleType = roleByRoleType;
+        this.deniedPermissionIds = deniedPermissionIds;
+        this.accessControls = accessControls;
+    }
 
-        internal Record(Class @class, long id)
-            : base(@class, id, 0)
+    public override object GetRole(RoleType roleType)
+    {
+        if (this.roleByRoleType == null)
         {
+            return null;
         }
 
-        internal Record(Class @class, long id, long version, Dictionary<RoleType, object> roleByRoleType, ValueRange<long> deniedPermissionIds, Grant[] accessControls)
-            : base(@class, id, version)
+        this.roleByRoleType.TryGetValue(roleType, out var role);
+        return role;
+    }
+
+    public override bool IsPermitted(long permission)
+    {
+        if (this.accessControls == null)
         {
-            this.roleByRoleType = roleByRoleType;
-            this.deniedPermissionIds = deniedPermissionIds;
-            this.accessControls = accessControls;
+            return false;
         }
 
-        public override object GetRole(RoleType roleType)
-        {
-            if (this.roleByRoleType == null)
-            {
-                return null;
-            }
-
-            this.roleByRoleType.TryGetValue(roleType, out var role);
-            return role;
-        }
-
-        public override bool IsPermitted(long permission)
-        {
-            if (this.accessControls == null)
-            {
-                return false;
-            }
-
-            return !this.deniedPermissionIds.Contains(permission) && this.accessControls.Any(v => v.PermissionIds.Contains(permission));
-        }
+        return !this.deniedPermissionIds.Contains(permission) && this.accessControls.Any(v => v.PermissionIds.Contains(permission));
     }
 }

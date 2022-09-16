@@ -6,56 +6,56 @@
 //   Defines the AllorsStrategySql type.
 // </summary>
 
-namespace Allors.Database.Adapters
+namespace Allors.Database.Adapters;
+
+using System;
+using System.Data;
+using Microsoft.Extensions.Configuration;
+using Sql.Npgsql;
+
+public class DatabaseBuilder
 {
-    using System;
-    using System.Data;
-    using Microsoft.Extensions.Configuration;
-    using Sql.Npgsql;
+    private readonly int? commandTimeout;
+    private readonly IConfiguration configuration;
+    private readonly IsolationLevel? isolationLevel;
+    private readonly ObjectFactory objectFactory;
+    private readonly IDatabaseServices scope;
 
-    public class DatabaseBuilder
+    public DatabaseBuilder(IDatabaseServices scope, IConfiguration configuration, ObjectFactory objectFactory,
+        IsolationLevel? isolationLevel = null, int? commandTimeout = null)
     {
-        private readonly IDatabaseServices scope;
-        private readonly IConfiguration configuration;
-        private readonly ObjectFactory objectFactory;
-        private readonly IsolationLevel? isolationLevel;
-        private readonly int? commandTimeout;
+        this.scope = scope;
+        this.configuration = configuration;
+        this.objectFactory = objectFactory;
+        this.isolationLevel = isolationLevel;
+        this.commandTimeout = commandTimeout;
+    }
 
-        public DatabaseBuilder(IDatabaseServices scope, IConfiguration configuration, ObjectFactory objectFactory, IsolationLevel? isolationLevel = null, int? commandTimeout = null)
+    public IDatabase Build()
+    {
+        var adapter = this.configuration["adapter"]?.Trim().ToUpperInvariant();
+        var connectionString = this.configuration["ConnectionStrings:DefaultConnection"];
+
+        return adapter switch
         {
-            this.scope = scope;
-            this.configuration = configuration;
-            this.objectFactory = objectFactory;
-            this.isolationLevel = isolationLevel;
-            this.commandTimeout = commandTimeout;
-        }
-
-        public IDatabase Build()
-        {
-            var adapter = this.configuration["adapter"]?.Trim().ToUpperInvariant();
-            var connectionString = this.configuration["ConnectionStrings:DefaultConnection"];
-
-            return adapter switch
-            {
-                "MEMORY" => throw new NotImplementedException(),
-                "NPGSQL" => new Database(this.scope,
-                    new Sql.Configuration
-                    {
-                        ObjectFactory = this.objectFactory,
-                        ConnectionString = connectionString,
-                        IsolationLevel = this.isolationLevel,
-                        CommandTimeout = this.commandTimeout,
-                    }),
-                "SQLCLIENT" => new Sql.SqlClient.Database(this.scope,
-                    new Sql.Configuration
-                    {
-                        ObjectFactory = this.objectFactory,
-                        ConnectionString = connectionString,
-                        IsolationLevel = this.isolationLevel,
-                        CommandTimeout = this.commandTimeout,
-                    }),
-                _ => throw new ArgumentOutOfRangeException(adapter)
-            };
-        }
+            "MEMORY" => throw new NotImplementedException(),
+            "NPGSQL" => new Database(this.scope,
+                new Sql.Configuration
+                {
+                    ObjectFactory = this.objectFactory,
+                    ConnectionString = connectionString,
+                    IsolationLevel = this.isolationLevel,
+                    CommandTimeout = this.commandTimeout
+                }),
+            "SQLCLIENT" => new Sql.SqlClient.Database(this.scope,
+                new Sql.Configuration
+                {
+                    ObjectFactory = this.objectFactory,
+                    ConnectionString = connectionString,
+                    IsolationLevel = this.isolationLevel,
+                    CommandTimeout = this.commandTimeout
+                }),
+            _ => throw new ArgumentOutOfRangeException(adapter)
+        };
     }
 }

@@ -1,22 +1,21 @@
-namespace Allors.Repository.Domain
+namespace Allors.Repository.Domain;
+
+using System.Collections.Generic;
+
+public class Record : FieldObjectType
 {
-    using System.Collections.Generic;
-
-    public class Record : FieldObjectType
+    public Record(ISet<RepositoryObject> objects, string name)
     {
-        public Record(ISet<RepositoryObject> objects, string name)
-        {
-            this.Name = name;
+        this.Name = name;
 
-            this.Fields = new HashSet<Field>();
+        this.Fields = new HashSet<Field>();
 
-            objects.Add(this);
-        }
-
-        public string Name { get; }
-
-        public XmlDoc XmlDoc { get; set; }
-
-        public ISet<Field> Fields { get; }
+        objects.Add(this);
     }
+
+    public string Name { get; }
+
+    public XmlDoc XmlDoc { get; set; }
+
+    public ISet<Field> Fields { get; }
 }

@@ -3,22 +3,21 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Domain
+namespace Allors.Database.Domain;
+
+using System.Collections.Generic;
+using Data;
+using Meta;
+
+public interface IPrefetchPolicyCache
 {
-    using System.Collections.Generic;
-    using Data;
-    using Meta;
+    PrefetchPolicy PermissionsWithClass { get; }
 
-    public interface IPrefetchPolicyCache
-    {
-        PrefetchPolicy PermissionsWithClass { get; }
+    PrefetchPolicy Security { get; }
 
-        PrefetchPolicy Security { get; }
+    PrefetchPolicy ForDependency(IComposite composite, ISet<IPropertyType> propertyTypes);
 
-        PrefetchPolicy ForDependency(IComposite composite, ISet<IPropertyType> propertyTypes);
+    IDictionary<IClass, PrefetchPolicy> WorkspacePrefetchPolicyByClass(string workspaceName);
 
-        IDictionary<IClass, PrefetchPolicy> WorkspacePrefetchPolicyByClass(string workspaceName);
-
-        PrefetchPolicy ForNodes(Node[] nodes);
-    }
+    PrefetchPolicy ForNodes(Node[] nodes);
 }

@@ -4,28 +4,27 @@
 // </copyright>
 // <summary>Defines the IObjectType type.</summary>
 
-namespace Allors.Database.Meta
-{
-    using System;
+namespace Allors.Database.Meta;
 
-    public static class MetaIdentityExtensions
+using System;
+
+public static class MetaIdentityExtensions
+{
+    internal static void ValidateIdentity(this IMetaIdentifiableObject @this, ValidationLog validationLog)
     {
-        internal static void ValidateIdentity(this IMetaIdentifiableObject @this, ValidationLog validationLog)
+        if (@this.Id == Guid.Empty)
         {
-            if (@this.Id == Guid.Empty)
-            {
-                var message = "id on " + @this + " is required";
-                validationLog.AddError(message, @this, ValidationKind.Unique, "IMetaObject.Id");
-            }
-            else if (validationLog.ExistId(@this.Id))
-            {
-                var message = "id " + @this + " is already in use";
-                validationLog.AddError(message, @this, ValidationKind.Unique, "IMetaObject.Id");
-            }
-            else
-            {
-                validationLog.AddId(@this.Id);
-            }
+            var message = "id on " + @this + " is required";
+            validationLog.AddError(message, @this, ValidationKind.Unique, "IMetaObject.Id");
+        }
+        else if (validationLog.ExistId(@this.Id))
+        {
+            var message = "id " + @this + " is already in use";
+            validationLog.AddError(message, @this, ValidationKind.Unique, "IMetaObject.Id");
+        }
+        else
+        {
+            validationLog.AddId(@this.Id);
         }
     }
 }

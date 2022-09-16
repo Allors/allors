@@ -3,83 +3,79 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Adapters
+namespace Allors.Database.Adapters;
+
+using System;
+using System.Collections.Generic;
+using Domain;
+using Memory;
+using Meta;
+
+public abstract class Profile : IProfile
 {
-    using System;
-    using System.Collections.Generic;
-    using Domain;
-    using Memory;
-    using Meta;
+    public ITransaction Transaction { get; private set; }
 
-    public abstract class Profile : IProfile
+    public IDatabase Database { get; private set; }
+
+    public abstract Action[] Markers { get; }
+
+    public virtual Action[] Inits
     {
-        public ITransaction Transaction { get; private set; }
-
-        public IDatabase Database { get; private set; }
-
-        public abstract Action[] Markers { get; }
-
-        public virtual Action[] Inits
+        get
         {
-            get
+            var inits = new List<Action> {this.Init};
+
+            if (Settings.ExtraInits)
             {
-                var inits = new List<Action> { this.Init };
-
-                if (Settings.ExtraInits)
-                {
-                    inits.Add(this.Init);
-                }
-
-                return inits.ToArray();
+                inits.Add(this.Init);
             }
-        }
 
-        public void SwitchDatabase()
-        {
-            this.Transaction.Rollback();
-            this.Database = this.CreateDatabase();
-            this.Transaction = this.Database.CreateTransaction();
-            this.Transaction.Commit();
+            return inits.ToArray();
         }
+    }
 
-        public virtual void Dispose()
+    public virtual void Dispose()
+    {
+        this.Transaction?.Rollback();
+
+        this.Transaction = null;
+        this.Database = null;
+    }
+
+    public abstract IDatabase CreateDatabase();
+
+    public void SwitchDatabase()
+    {
+        this.Transaction.Rollback();
+        this.Database = this.CreateDatabase();
+        this.Transaction = this.Database.CreateTransaction();
+        this.Transaction.Commit();
+    }
+
+    public IDatabase CreateMemoryDatabase()
+    {
+        var metaPopulation = new MetaBuilder().Build();
+        var scope = new DefaultDomainDatabaseServices();
+        return new Database(scope, new Memory.Configuration {ObjectFactory = new ObjectFactory(metaPopulation, typeof(C1))});
+    }
+
+    internal ITransaction CreateTransaction() => this.Database.CreateTransaction();
+
+    protected internal void Init()
+    {
+        try
         {
             this.Transaction?.Rollback();
 
-            this.Transaction = null;
-            this.Database = null;
+            this.Database = this.CreateDatabase();
+            this.Database.Init();
+            this.Transaction = this.Database.CreateTransaction();
+            this.Transaction.Commit();
         }
-
-        public IDatabase CreateMemoryDatabase()
+        catch (Exception e)
         {
-            var metaPopulation = new MetaBuilder().Build();
-            var scope = new DefaultDomainDatabaseServices();
-            return new Database(scope, new Memory.Configuration
-            {
-                ObjectFactory = new ObjectFactory(metaPopulation, typeof(C1)),
-            });
-        }
-
-        public abstract IDatabase CreateDatabase();
-
-        internal ITransaction CreateTransaction() => this.Database.CreateTransaction();
-
-        protected internal void Init()
-        {
-            try
-            {
-                this.Transaction?.Rollback();
-
-                this.Database = this.CreateDatabase();
-                this.Database.Init();
-                this.Transaction = this.Database.CreateTransaction();
-                this.Transaction.Commit();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-                throw;
-            }
+            Console.WriteLine(e.ToString());
+            throw;
         }
     }
 }

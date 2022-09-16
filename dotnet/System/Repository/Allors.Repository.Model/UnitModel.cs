@@ -1,18 +1,17 @@
-namespace Generate.Model
+namespace Generate.Model;
+
+using Allors.Repository;
+using Allors.Repository.Domain;
+
+public class UnitModel : ObjectTypeModel
 {
-    using Allors.Repository;
-    using Allors.Repository.Domain;
+    public UnitModel(RepositoryModel repositoryModel, Unit unit) : base(repositoryModel) => this.Unit = unit;
 
-    public class UnitModel : ObjectTypeModel
-    {
-        public UnitModel(RepositoryModel repositoryModel, Unit unit) : base(repositoryModel) => this.Unit = unit;
+    public Unit Unit { get; }
 
-        public Unit Unit { get; }
+    protected override RepositoryObject RepositoryObject => this.Unit;
 
-        protected override RepositoryObject RepositoryObject => this.Unit;
+    public override FieldObjectType FieldObjectType => this.Unit;
 
-        public override FieldObjectType FieldObjectType => this.Unit;
-
-        public override ObjectType ObjectType => this.Unit;
-    }
+    public override ObjectType ObjectType => this.Unit;
 }

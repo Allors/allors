@@ -3,19 +3,15 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Adapters.Schema
+namespace Allors.Database.Adapters.Schema;
+
+using System.Xml.Serialization;
+
+public class Population
 {
-    using System.Xml.Serialization;
+    [XmlAttribute("version")] public int Version { get; set; }
 
-    public class Population
-    {
-        [XmlAttribute("version")]
-        public int Version { get; set; }
+    [XmlElement("objects")] public Objects Objects { get; set; }
 
-        [XmlElement("objects")]
-        public Objects Objects { get; set; }
-
-        [XmlElement("relations")]
-        public Relations Relations { get; set; }
-    }
+    [XmlElement("relations")] public Relations Relations { get; set; }
 }

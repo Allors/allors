@@ -3,12 +3,11 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Services
-{
-    public interface IPermissions
-    {
-        void Sync(ITransaction transaction);
+namespace Allors.Database.Services;
 
-        void Load(ITransaction transaction);
-    }
+public interface IPermissions
+{
+    void Sync(ITransaction transaction);
+
+    void Load(ITransaction transaction);
 }

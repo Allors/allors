@@ -5,12 +5,11 @@
 // <summary>Defines the Default type.</summary>
 //------------------------------------------------------------------------------------------------
 
-namespace Allors.Database
-{
-    using Meta;
+namespace Allors.Database;
 
-    public interface IDomainDatabaseServices : IDatabaseServices
-    {
-        M M { get; }
-    }
+using Meta;
+
+public interface IDomainDatabaseServices : IDatabaseServices
+{
+    M M { get; }
 }

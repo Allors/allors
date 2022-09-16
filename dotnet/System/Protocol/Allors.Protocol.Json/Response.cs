@@ -7,30 +7,31 @@ namespace Allors.Protocol.Json.Api
 {
     public abstract class Response
     {
-        public bool HasErrors => this._v?.Length > 0 || this._a?.Length > 0 || this._m?.Length > 0 || this._d?.Length > 0 || !string.IsNullOrWhiteSpace(this._e);
+        public bool HasErrors => this._v?.Length > 0 || this._a?.Length > 0 || this._m?.Length > 0 || this._d?.Length > 0 ||
+                                 !string.IsNullOrWhiteSpace(this._e);
 
         /// <summary>
-        /// ErrorMessage
+        ///     ErrorMessage
         /// </summary>
         public string _e { get; set; }
 
         /// <summary>
-        /// VersionErrors
+        ///     VersionErrors
         /// </summary>
         public long[] _v { get; set; }
 
         /// <summary>
-        /// AccessErrors
+        ///     AccessErrors
         /// </summary>
         public long[] _a { get; set; }
 
         /// <summary>
-        /// MissingErrors
+        ///     MissingErrors
         /// </summary>
         public long[] _m { get; set; }
 
         /// <summary>
-        /// DerivationErrors
+        ///     DerivationErrors
         /// </summary>
         public ResponseDerivationError[] _d { get; set; }
     }

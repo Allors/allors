@@ -4,12 +4,11 @@
 // </copyright>
 // <summary>Defines the IDomainDerivation type.</summary>
 
-namespace Allors.Database.Derivations
-{
-    using Meta;
+namespace Allors.Database.Derivations;
 
-    public interface IRolePattern : IPattern
-    {
-        IRoleType RoleType { get; }
-    }
+using Meta;
+
+public interface IRolePattern : IPattern
+{
+    IRoleType RoleType { get; }
 }

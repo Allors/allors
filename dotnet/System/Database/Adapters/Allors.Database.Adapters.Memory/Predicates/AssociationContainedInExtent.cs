@@ -3,48 +3,47 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Adapters.Memory
+namespace Allors.Database.Adapters.Memory;
+
+using Meta;
+
+internal sealed class AssociationContainedInExtent : Predicate
 {
-    using Meta;
+    private readonly IAssociationType associationType;
+    private readonly Allors.Database.Extent containingExtent;
 
-    internal sealed class AssociationContainedInExtent : Predicate
+    internal AssociationContainedInExtent(ExtentFiltered extent, IAssociationType associationType, Allors.Database.Extent containingExtent)
     {
-        private readonly IAssociationType associationType;
-        private readonly Allors.Database.Extent containingExtent;
+        extent.CheckForAssociationType(associationType);
+        PredicateAssertions.AssertAssociationContainedIn(associationType, containingExtent);
 
-        internal AssociationContainedInExtent(ExtentFiltered extent, IAssociationType associationType, Allors.Database.Extent containingExtent)
+        this.associationType = associationType;
+        this.containingExtent = containingExtent;
+    }
+
+    internal override ThreeValuedLogic Evaluate(Strategy strategy)
+    {
+        if (this.associationType.IsMany)
         {
-            extent.CheckForAssociationType(associationType);
-            PredicateAssertions.AssertAssociationContainedIn(associationType, containingExtent);
-
-            this.associationType = associationType;
-            this.containingExtent = containingExtent;
-        }
-
-        internal override ThreeValuedLogic Evaluate(Strategy strategy)
-        {
-            if (this.associationType.IsMany)
+            foreach (var assoc in strategy.GetCompositesAssociation<IObject>(this.associationType))
             {
-                foreach (var assoc in strategy.GetCompositesAssociation<IObject>(this.associationType))
+                if (this.containingExtent.Contains(assoc))
                 {
-                    if (this.containingExtent.Contains(assoc))
-                    {
-                        return ThreeValuedLogic.True;
-                    }
+                    return ThreeValuedLogic.True;
                 }
-
-                return ThreeValuedLogic.False;
-            }
-
-            var association = strategy.GetCompositeAssociation(this.associationType);
-            if (association != null)
-            {
-                return this.containingExtent.Contains(association)
-                           ? ThreeValuedLogic.True
-                           : ThreeValuedLogic.False;
             }
 
             return ThreeValuedLogic.False;
         }
+
+        var association = strategy.GetCompositeAssociation(this.associationType);
+        if (association != null)
+        {
+            return this.containingExtent.Contains(association)
+                ? ThreeValuedLogic.True
+                : ThreeValuedLogic.False;
+        }
+
+        return ThreeValuedLogic.False;
     }
 }

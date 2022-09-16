@@ -3,103 +3,102 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Adapters.Sql
+namespace Allors.Database.Adapters.Sql;
+
+using System;
+using Domain;
+using Meta;
+using Tracing;
+using Xunit;
+
+public abstract class TracingTest : IDisposable
 {
-    using System;
-    using Domain;
-    using Meta;
-    using Tracing;
-    using Xunit;
+    private TestPopulation population;
 
-    public abstract class TracingTest : IDisposable
+    public M M { get; private set; }
+
+    public abstract void Dispose();
+
+    private void Init()
     {
-        private TestPopulation population;
+        var database = (Database)this.CreateDatabase();
+        database.Init();
+        using var transaction = database.CreateTransaction();
+        this.population = new TestPopulation(transaction);
+        transaction.Commit();
 
-        private void Init()
-        {
-            var database = (Database)this.CreateDatabase();
-            database.Init();
-            using var transaction = database.CreateTransaction();
-            this.population = new TestPopulation(transaction);
-            transaction.Commit();
-
-            this.M = (M)database.MetaPopulation;
-        }
-
-        public M M { get; private set; }
-
-        public abstract void Dispose();
-
-        [Fact]
-        public void Initial()
-        {
-            this.Init();
-            var database = (Database)this.CreateDatabase();
-
-            var sink = new Sink();
-            database.Sink = sink;
-
-            using var transaction = (Transaction)database.CreateTransaction();
-
-            Assert.Empty(sink.TreeByTransaction);
-        }
-
-        [Fact]
-        public void Instantiate()
-        {
-            this.Init();
-            var database = (Database)this.CreateDatabase();
-
-            var sink = new Sink();
-            database.Sink = sink;
-
-            using var transaction = (Transaction)database.CreateTransaction();
-
-            var c1 = (C1)transaction.Instantiate(this.population.C1A);
-
-            var transactionSink = sink.TreeByTransaction[transaction];
-
-            Assert.Equal(1, transactionSink.Nodes.Count);
-            Assert.Equal(typeof(SqlInstantiateObjectEvent), transactionSink.Nodes[0].Event.GetType());
-            Assert.Empty(transactionSink.Nodes[0].Nodes);
-        }
-
-        [Fact]
-        public void Prefetch()
-        {
-            this.Init();
-            var database = (Database)this.CreateDatabase();
-
-            var sink = new Sink();
-            database.Sink = sink;
-
-            using var transaction = (Transaction)database.CreateTransaction();
-
-            var c1b = (C1)transaction.Instantiate(this.population.C1B);
-
-            var transactionSink = sink.TreeByTransaction[transaction];
-            transactionSink.Clear();
-
-            var prefetchPolicy = new PrefetchPolicyBuilder()
-                .WithRule(this.M.C1.C1C2one2one)
-                .Build();
-
-            transaction.Prefetch(prefetchPolicy, c1b);
-
-            var events = transactionSink.Nodes;
-            Assert.Equal(2, events.Count);
-            Assert.Equal(typeof(SqlPrefetchCompositeRoleObjectTableEvent), events[0].Event.GetType());
-            Assert.Empty(events[0].Nodes);
-            Assert.Equal(typeof(SqlInstantiateReferencesEvent), events[1].Event.GetType());
-            Assert.Empty(events[1].Nodes);
-
-            transactionSink.Clear();
-
-            var c2b = c1b.C1C2one2one;
-
-            Assert.Empty(transactionSink.Nodes);
-        }
-
-        protected abstract IDatabase CreateDatabase();
+        this.M = (M)database.MetaPopulation;
     }
+
+    [Fact]
+    public void Initial()
+    {
+        this.Init();
+        var database = (Database)this.CreateDatabase();
+
+        var sink = new Sink();
+        database.Sink = sink;
+
+        using var transaction = (Transaction)database.CreateTransaction();
+
+        Assert.Empty(sink.TreeByTransaction);
+    }
+
+    [Fact]
+    public void Instantiate()
+    {
+        this.Init();
+        var database = (Database)this.CreateDatabase();
+
+        var sink = new Sink();
+        database.Sink = sink;
+
+        using var transaction = (Transaction)database.CreateTransaction();
+
+        var c1 = (C1)transaction.Instantiate(this.population.C1A);
+
+        var transactionSink = sink.TreeByTransaction[transaction];
+
+        Assert.Equal(1, transactionSink.Nodes.Count);
+        Assert.Equal(typeof(SqlInstantiateObjectEvent), transactionSink.Nodes[0].Event.GetType());
+        Assert.Empty(transactionSink.Nodes[0].Nodes);
+    }
+
+    [Fact]
+    public void Prefetch()
+    {
+        this.Init();
+        var database = (Database)this.CreateDatabase();
+
+        var sink = new Sink();
+        database.Sink = sink;
+
+        using var transaction = (Transaction)database.CreateTransaction();
+
+        var c1b = (C1)transaction.Instantiate(this.population.C1B);
+
+        var transactionSink = sink.TreeByTransaction[transaction];
+        transactionSink.Clear();
+
+        var prefetchPolicy = new PrefetchPolicyBuilder()
+            .WithRule(this.M.C1.C1C2one2one)
+            .Build();
+
+        transaction.Prefetch(prefetchPolicy, c1b);
+
+        var events = transactionSink.Nodes;
+        Assert.Equal(2, events.Count);
+        Assert.Equal(typeof(SqlPrefetchCompositeRoleObjectTableEvent), events[0].Event.GetType());
+        Assert.Empty(events[0].Nodes);
+        Assert.Equal(typeof(SqlInstantiateReferencesEvent), events[1].Event.GetType());
+        Assert.Empty(events[1].Nodes);
+
+        transactionSink.Clear();
+
+        var c2b = c1b.C1C2one2one;
+
+        Assert.Empty(transactionSink.Nodes);
+    }
+
+    protected abstract IDatabase CreateDatabase();
 }

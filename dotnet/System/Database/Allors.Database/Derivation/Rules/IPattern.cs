@@ -4,18 +4,17 @@
 // </copyright>
 // <summary>Defines the IDomainDerivation type.</summary>
 
-namespace Allors.Database.Derivations
+namespace Allors.Database.Derivations;
+
+using System.Collections.Generic;
+using Data;
+using Meta;
+
+public interface IPattern
 {
-    using System.Collections.Generic;
-    using Data;
-    using Meta;
+    IEnumerable<Node> Tree { get; }
 
-    public interface IPattern
-    {
-        IEnumerable<Node> Tree { get; }
+    IComposite OfType { get; }
 
-        IComposite OfType { get; }
-
-        IComposite ObjectType { get; }
-    }
+    IComposite ObjectType { get; }
 }

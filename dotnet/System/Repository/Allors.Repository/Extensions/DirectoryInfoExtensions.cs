@@ -4,17 +4,16 @@
 // </copyright>
 // <summary>Defines the IObjectType type.</summary>
 
-namespace Allors.Repository
-{
-    using System.IO;
-    using System.Linq;
+namespace Allors.Repository;
 
-    public static class DirectoryInfoExtensions
+using System.IO;
+using System.Linq;
+
+public static class DirectoryInfoExtensions
+{
+    public static bool Contains(this DirectoryInfo @this, FileInfo fileInfo)
     {
-        public static bool Contains(this DirectoryInfo @this, FileInfo fileInfo)
-        {
-            var allFiles = @this.GetFiles("*", SearchOption.AllDirectories);
-            return allFiles.Any(v => v.FullName.Equals(fileInfo.FullName));
-        }
+        var allFiles = @this.GetFiles("*", SearchOption.AllDirectories);
+        return allFiles.Any(v => v.FullName.Equals(fileInfo.FullName));
     }
 }

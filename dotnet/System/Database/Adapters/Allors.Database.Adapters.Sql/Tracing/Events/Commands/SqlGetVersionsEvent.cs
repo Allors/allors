@@ -3,24 +3,23 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Adapters.Sql.Tracing
+namespace Allors.Database.Adapters.Sql.Tracing;
+
+using System.Collections.Generic;
+using System.Text;
+using Adapters.Tracing;
+
+public sealed class SqlGetVersionsEvent : Event
 {
-    using System.Collections.Generic;
-    using System.Text;
-    using Adapters.Tracing;
-
-    public sealed class SqlGetVersionsEvent : Event
+    public SqlGetVersionsEvent(ITransaction transaction) : base(transaction)
     {
-        public SqlGetVersionsEvent(ITransaction transaction) : base(transaction)
-        {
-        }
-
-        public ISet<Reference> References { get; set; }
-
-        protected override void ToString(StringBuilder builder) => _ = builder
-            .Append('[')
-            .Append("#")
-            .Append(this.References.Count)
-            .Append("] ");
     }
+
+    public ISet<Reference> References { get; set; }
+
+    protected override void ToString(StringBuilder builder) => _ = builder
+        .Append('[')
+        .Append("#")
+        .Append(this.References.Count)
+        .Append("] ");
 }

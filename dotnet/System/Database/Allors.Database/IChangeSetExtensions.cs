@@ -4,20 +4,21 @@
 // </copyright>
 // <summary>Defines the IChangeSetExtensions type.</summary>
 
-namespace Allors.Database
+namespace Allors.Database;
+
+using System.Collections.Generic;
+using Collections;
+using Meta;
+
+public static class IChangeSetExtensions
 {
-    using System.Collections.Generic;
-    using Collections;
-    using Meta;
+    private static readonly ISet<IRoleType> EmptyRoleTypeSet = new EmptySet<IRoleType>();
 
-    public static class IChangeSetExtensions
-    {
-        private static readonly ISet<IRoleType> EmptyRoleTypeSet = new EmptySet<IRoleType>();
+    private static readonly ISet<IAssociationType> EmptyAssociationTypeSet = new EmptySet<IAssociationType>();
 
-        private static readonly ISet<IAssociationType> EmptyAssociationTypeSet = new EmptySet<IAssociationType>();
+    public static ISet<IRoleType> GetRoleTypes(this IChangeSet @this, IObject association) =>
+        @this.RoleTypesByAssociation.TryGetValue(association, out var roleTypes) ? roleTypes : EmptyRoleTypeSet;
 
-        public static ISet<IRoleType> GetRoleTypes(this IChangeSet @this, IObject association) => @this.RoleTypesByAssociation.TryGetValue(association, out var roleTypes) ? roleTypes : EmptyRoleTypeSet;
-
-        public static ISet<IAssociationType> GetAssociationTypes(this IChangeSet @this, IObject role) => @this.AssociationTypesByRole.TryGetValue(role, out var associationTypes) ? associationTypes : EmptyAssociationTypeSet;
-    }
+    public static ISet<IAssociationType> GetAssociationTypes(this IChangeSet @this, IObject role) =>
+        @this.AssociationTypesByRole.TryGetValue(role, out var associationTypes) ? associationTypes : EmptyAssociationTypeSet;
 }

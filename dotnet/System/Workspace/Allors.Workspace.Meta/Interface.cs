@@ -13,16 +13,26 @@ namespace Allors.Workspace.Meta
 
     public abstract class Interface : IComposite
     {
+        private HashSet<AssociationType> lazyAssociationTypes;
+        private HashSet<MethodType> lazyMethodTypes;
+        private HashSet<RoleType> lazyRoleTypes;
+
+        private HashSet<AssociationType> LazyAssociationTypes => this.lazyAssociationTypes ??=
+            new HashSet<AssociationType>(
+                this.ExclusiveAssociationTypes.Union(this.Supertypes.SelectMany(v => v.ExclusiveAssociationTypes)));
+
+        private HashSet<RoleType> LazyRoleTypes => this.lazyRoleTypes ??=
+            new HashSet<RoleType>(this.ExclusiveRoleTypes.Union(this.Supertypes.SelectMany(v => v.ExclusiveRoleTypes)));
+
+        private HashSet<MethodType> LazyMethodTypes => this.lazyMethodTypes ??=
+            new HashSet<MethodType>(this.ExclusiveMethodTypes.Union(this.Supertypes.SelectMany(v => v.ExclusiveMethodTypes)));
+
+        public ISet<IComposite> DirectSubtypes { get; set; }
+
+        public ISet<IComposite> Subtypes { get; set; }
+
         // Class
         public MetaPopulation MetaPopulation { get; set; }
-
-        private HashSet<AssociationType> lazyAssociationTypes;
-        private HashSet<RoleType> lazyRoleTypes;
-        private HashSet<MethodType> lazyMethodTypes;
-
-        private HashSet<AssociationType> LazyAssociationTypes => this.lazyAssociationTypes ??= new HashSet<AssociationType>(this.ExclusiveAssociationTypes.Union(this.Supertypes.SelectMany(v => v.ExclusiveAssociationTypes)));
-        private HashSet<RoleType> LazyRoleTypes => this.lazyRoleTypes ??= new HashSet<RoleType>(this.ExclusiveRoleTypes.Union(this.Supertypes.SelectMany(v => v.ExclusiveRoleTypes)));
-        private HashSet<MethodType> LazyMethodTypes => this.lazyMethodTypes ??= new HashSet<MethodType>(this.ExclusiveMethodTypes.Union(this.Supertypes.SelectMany(v => v.ExclusiveMethodTypes)));
 
         public string Tag { get; set; }
         public string SingularName { get; set; }
@@ -31,14 +41,13 @@ namespace Allors.Workspace.Meta
 
         public ISet<Interface> DirectSupertypes { get; set; }
         public ISet<Interface> Supertypes { get; set; }
-        public ISet<IComposite> DirectSubtypes { get; set; }
-        public ISet<IComposite> Subtypes { get; set; }
         public ISet<Class> Classes { get; set; }
         public RoleType[] ExclusiveRoleTypes { get; set; }
         public AssociationType[] ExclusiveAssociationTypes { get; set; }
         public MethodType[] ExclusiveMethodTypes { get; set; }
 
-        int IComparable<IObjectType>.CompareTo(IObjectType other) => string.Compare(this.SingularName, other.SingularName, StringComparison.InvariantCulture);
+        int IComparable<IObjectType>.CompareTo(IObjectType other) =>
+            string.Compare(this.SingularName, other.SingularName, StringComparison.InvariantCulture);
 
         public bool IsUnit => false;
 
@@ -50,7 +59,9 @@ namespace Allors.Workspace.Meta
 
         public ISet<AssociationType> AssociationTypes => this.LazyAssociationTypes;
 
-        public ISet<RoleType> RoleTypes => this.LazyRoleTypes ?? new HashSet<RoleType>(this.ExclusiveRoleTypes.Union(this.Supertypes.SelectMany(v => v.ExclusiveRoleTypes)));
+        public ISet<RoleType> RoleTypes => this.LazyRoleTypes ??
+                                           new HashSet<RoleType>(
+                                               this.ExclusiveRoleTypes.Union(this.Supertypes.SelectMany(v => v.ExclusiveRoleTypes)));
 
         public ISet<RoleType> DatabaseOriginRoleTypes => this.LazyRoleTypes;
 

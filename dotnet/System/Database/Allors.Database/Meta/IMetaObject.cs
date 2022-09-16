@@ -3,17 +3,16 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Meta
+namespace Allors.Database.Meta;
+
+using System.Collections.Generic;
+
+/// <summary>
+///     Base interface for Meta objects.
+/// </summary>
+public interface IMetaObject
 {
-    using System.Collections.Generic;
+    IMetaPopulation MetaPopulation { get; }
 
-    /// <summary>
-    /// Base interface for Meta objects.
-    /// </summary>
-    public interface IMetaObject
-    {
-        IMetaPopulation MetaPopulation { get; }
-
-        IEnumerable<string> WorkspaceNames { get; }
-    }
+    IEnumerable<string> WorkspaceNames { get; }
 }

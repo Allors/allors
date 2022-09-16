@@ -8,12 +8,12 @@ namespace Allors.Protocol.Json.Api.Push
     public class PushResponseNewObject
     {
         /// <summary>
-        /// WorkspaceId
+        ///     WorkspaceId
         /// </summary>
         public long w { get; set; }
 
         /// <summary>
-        /// DatabaseId
+        ///     DatabaseId
         /// </summary>
         public long d { get; set; }
     }

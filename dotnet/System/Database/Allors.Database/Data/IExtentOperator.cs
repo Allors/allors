@@ -3,10 +3,9 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Data
+namespace Allors.Database.Data;
+
+public interface IExtentOperator : IExtent
 {
-    public interface IExtentOperator : IExtent
-    {
-        IExtent[] Operands { get; set; }
-    }
+    IExtent[] Operands { get; set; }
 }

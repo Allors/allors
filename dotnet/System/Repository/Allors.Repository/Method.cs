@@ -4,72 +4,72 @@
 // </copyright>
 // <summary>Defines the IObjectType type.</summary>
 
-namespace Allors.Repository.Domain
+namespace Allors.Repository.Domain;
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Inflector;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+
+public class Method : RepositoryObject
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using Inflector;
-    using Microsoft.CodeAnalysis;
-    using Microsoft.CodeAnalysis.CSharp.Syntax;
-
-    public class Method : RepositoryObject
+    public Method(Inflector inflector, ISet<RepositoryObject> objects, Domain domain, SemanticModel semanticModel, Composite composite,
+        MethodDeclarationSyntax methodDeclaration)
     {
-        public Method(Inflector inflector, ISet<RepositoryObject> objects, Domain domain, SemanticModel semanticModel, Composite composite, MethodDeclarationSyntax methodDeclaration)
+        this.Domain = domain;
+        this.DefiningType = composite;
+
+        var methodSymbol = semanticModel.GetDeclaredSymbol(methodDeclaration);
+        this.Name = methodSymbol.Name;
+
+        var xmlDocString = methodSymbol.GetDocumentationCommentXml(null, true);
+        this.XmlDoc = !string.IsNullOrWhiteSpace(xmlDocString) ? new XmlDoc(xmlDocString) : null;
+
+        composite.Methods.Add(this);
+
+        var parameters = methodDeclaration.ParameterList.Parameters;
+        if (parameters.Any())
         {
-            this.Domain = domain;
-            this.DefiningType = composite;
-
-            var methodSymbol = semanticModel.GetDeclaredSymbol(methodDeclaration);
-            this.Name = methodSymbol.Name;
-
-            var xmlDocString = methodSymbol.GetDocumentationCommentXml(null, true);
-            this.XmlDoc = !string.IsNullOrWhiteSpace(xmlDocString) ? new XmlDoc(xmlDocString) : null;
-
-            composite.Methods.Add(this);
-
-            var parameters = methodDeclaration.ParameterList.Parameters;
-            if (parameters.Any())
-            {
-                var parameter = parameters.First();
-                var inputSymbol = (IParameterSymbol)semanticModel.GetDeclaredSymbol(parameter);
-                this.Input = objects.OfType<Record>().First(v => v.Name == inputSymbol.Type.Name);
-            }
-
-            var outputType = methodDeclaration.ReturnType;
-            if (outputType is not PredefinedTypeSyntax)
-            {
-                var outputTypeInfo = semanticModel.GetTypeInfo(outputType);
-                this.Output = objects.OfType<Record>().First(v => v.Name == outputTypeInfo.Type.Name);
-            }
-
-            domain.Methods.Add(this);
-            objects.Add(this);
+            var parameter = parameters.First();
+            var inputSymbol = (IParameterSymbol)semanticModel.GetDeclaredSymbol(parameter);
+            this.Input = objects.OfType<Record>().First(v => v.Name == inputSymbol.Type.Name);
         }
 
-        public Domain Domain { get; }
-
-        public string[] WorkspaceNames
+        var outputType = methodDeclaration.ReturnType;
+        if (outputType is not PredefinedTypeSyntax)
         {
-            get
-            {
-                dynamic attribute = this.AttributeByName.Get("Workspace");
-                return attribute?.Names ?? Array.Empty<string>();
-            }
+            var outputTypeInfo = semanticModel.GetTypeInfo(outputType);
+            this.Output = objects.OfType<Record>().First(v => v.Name == outputTypeInfo.Type.Name);
         }
 
-        public string Name { get; }
-
-        public XmlDoc XmlDoc { get; set; }
-
-        public Method DefiningMethod { get; set; }
-
-        public Composite DefiningType { get; set; }
-
-        public Record Input { get; set; }
-
-        public Record Output { get; set; }
-
-        public override string ToString() => $"{this.DefiningType.SingularName}.{this.Name}()";
+        domain.Methods.Add(this);
+        objects.Add(this);
     }
+
+    public Domain Domain { get; }
+
+    public string[] WorkspaceNames
+    {
+        get
+        {
+            dynamic attribute = this.AttributeByName.Get("Workspace");
+            return attribute?.Names ?? Array.Empty<string>();
+        }
+    }
+
+    public string Name { get; }
+
+    public XmlDoc XmlDoc { get; set; }
+
+    public Method DefiningMethod { get; set; }
+
+    public Composite DefiningType { get; set; }
+
+    public Record Input { get; set; }
+
+    public Record Output { get; set; }
+
+    public override string ToString() => $"{this.DefiningType.SingularName}.{this.Name}()";
 }

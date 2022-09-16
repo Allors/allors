@@ -1,9 +1,8 @@
-namespace Allors.Database.Meta
-{
-    using System.Collections.Generic;
+namespace Allors.Database.Meta;
 
-    public interface IRecord : IFieldObjectType
-    {
-        IEnumerable<IFieldType> FieldTypes { get; }
-    }
+using System.Collections.Generic;
+
+public interface IRecord : IFieldObjectType
+{
+    IEnumerable<IFieldType> FieldTypes { get; }
 }

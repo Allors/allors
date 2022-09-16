@@ -3,17 +3,16 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Adapters.Sql
-{
-    public class CompositeRelation
-    {
-        public readonly long Association;
-        public readonly long Role;
+namespace Allors.Database.Adapters.Sql;
 
-        public CompositeRelation(long association, long role)
-        {
-            this.Association = association;
-            this.Role = role;
-        }
+public class CompositeRelation
+{
+    public readonly long Association;
+    public readonly long Role;
+
+    public CompositeRelation(long association, long role)
+    {
+        this.Association = association;
+        this.Role = role;
     }
 }

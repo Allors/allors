@@ -12,14 +12,14 @@ namespace Allors.Workspace.Request
     {
         public Filter(IComposite objectType) => this.ObjectType = objectType;
 
-        public IComposite ObjectType { get; set; }
-
         public IPredicate Predicate { get; set; }
+
+        public IComposite ObjectType { get; set; }
 
         public Sort[] Sorting { get; set; }
 
-        void IPredicateContainer.AddPredicate(IPredicate predicate) => this.Predicate = predicate;
-
         public void Accept(IVisitor visitor) => visitor.VisitFilter(this);
+
+        void IPredicateContainer.AddPredicate(IPredicate predicate) => this.Predicate = predicate;
     }
 }

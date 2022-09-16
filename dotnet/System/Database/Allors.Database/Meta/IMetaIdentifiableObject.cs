@@ -3,17 +3,16 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Meta
+namespace Allors.Database.Meta;
+
+using System;
+
+/// <summary>
+///     Base interface for Meta objects.
+/// </summary>
+public interface IMetaIdentifiableObject : IMetaObject
 {
-    using System;
+    Guid Id { get; }
 
-    /// <summary>
-    /// Base interface for Meta objects.
-    /// </summary>
-    public interface IMetaIdentifiableObject : IMetaObject
-    {
-        Guid Id { get; }
-
-        string Tag { get; }
-    }
+    string Tag { get; }
 }

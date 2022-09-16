@@ -4,567 +4,570 @@
 // </copyright>
 // <summary>Defines the Domain type.</summary>
 
-namespace Allors.Database.Meta
+namespace Allors.Database.Meta;
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+
+public abstract class MetaPopulation : IMetaPopulation
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Reflection;
+    private readonly Dictionary<Guid, IMetaIdentifiableObject> metaObjectById;
+    private readonly Dictionary<string, IMetaIdentifiableObject> metaObjectByTag;
+    private IList<Class> classes;
+    private Dictionary<string, Composite> derivedCompositeByLowercaseName;
 
-    public abstract class MetaPopulation : IMetaPopulation
+    private string[] derivedWorkspaceNames;
+
+    private IList<Domain> domains;
+    private IList<FieldType> fieldTypes;
+    private IList<Inheritance> inheritances;
+    private IList<Interface> interfaces;
+    private bool isDeriving;
+
+    private bool isStale;
+    private bool isStructuralDeriving;
+    private IList<MethodType> methodTypes;
+    private IList<Record> records;
+    private IList<RelationType> relationTypes;
+
+    private Composite[] structuralDerivedComposites;
+    private IList<Unit> units;
+
+    protected MetaPopulation()
     {
-        private readonly Dictionary<Guid, IMetaIdentifiableObject> metaObjectById;
-        private readonly Dictionary<string, IMetaIdentifiableObject> metaObjectByTag;
+        this.isStale = true;
+        this.isDeriving = false;
 
-        private string[] derivedWorkspaceNames;
-        private Dictionary<string, Composite> derivedCompositeByLowercaseName;
+        this.domains = new List<Domain>();
+        this.units = new List<Unit>();
+        this.interfaces = new List<Interface>();
+        this.classes = new List<Class>();
+        this.inheritances = new List<Inheritance>();
+        this.relationTypes = new List<RelationType>();
+        this.methodTypes = new List<MethodType>();
+        this.records = new List<Record>();
+        this.fieldTypes = new List<FieldType>();
 
-        private IList<Domain> domains;
-        private IList<Unit> units;
-        private IList<Interface> interfaces;
-        private IList<Class> classes;
-        private IList<Inheritance> inheritances;
-        private IList<RelationType> relationTypes;
-        private IList<MethodType> methodTypes;
-        private IList<Record> records;
-        private IList<FieldType> fieldTypes;
+        this.metaObjectById = new Dictionary<Guid, IMetaIdentifiableObject>();
+        this.metaObjectByTag = new Dictionary<string, IMetaIdentifiableObject>();
+    }
 
-        private bool isStale;
-        private bool isDeriving;
-        private bool isStructuralDeriving;
+    public MethodCompiler MethodCompiler { get; private set; }
 
-        private Composite[] structuralDerivedComposites;
-
-        protected MetaPopulation()
+    public IEnumerable<string> WorkspaceNames
+    {
+        get
         {
-            this.isStale = true;
-            this.isDeriving = false;
-
-            this.domains = new List<Domain>();
-            this.units = new List<Unit>();
-            this.interfaces = new List<Interface>();
-            this.classes = new List<Class>();
-            this.inheritances = new List<Inheritance>();
-            this.relationTypes = new List<RelationType>();
-            this.methodTypes = new List<MethodType>();
-            this.records = new List<Record>();
-            this.fieldTypes = new List<FieldType>();
-
-            this.metaObjectById = new Dictionary<Guid, IMetaIdentifiableObject>();
-            this.metaObjectByTag = new Dictionary<string, IMetaIdentifiableObject>();
+            this.Derive();
+            return this.derivedWorkspaceNames;
         }
+    }
 
-        public MethodCompiler MethodCompiler { get; private set; }
+    private bool IsBound { get; set; }
+    public IEnumerable<Domain> Domains => this.domains;
+    public IEnumerable<Class> Classes => this.classes;
 
-        public IEnumerable<string> WorkspaceNames
+    public IEnumerable<Inheritance> Inheritances => this.inheritances;
+    public IEnumerable<RelationType> RelationTypes => this.relationTypes;
+    public IEnumerable<Interface> Interfaces => this.interfaces;
+    public IEnumerable<Composite> Composites => this.structuralDerivedComposites;
+    public IEnumerable<Unit> Units => this.units;
+    public IEnumerable<MethodType> MethodTypes => this.methodTypes;
+
+    IEnumerable<IDomain> IMetaPopulation.Domains => this.Domains;
+
+    IEnumerable<IClass> IMetaPopulation.Classes => this.classes;
+
+    IEnumerable<IRelationType> IMetaPopulation.RelationTypes => this.relationTypes;
+
+    IEnumerable<IInterface> IMetaPopulation.Interfaces => this.interfaces;
+
+    IEnumerable<IComposite> IMetaPopulation.Composites => this.Composites;
+
+    public bool IsValid
+    {
+        get
         {
-            get
-            {
-                this.Derive();
-                return this.derivedWorkspaceNames;
-            }
+            var validation = this.Validate();
+            return !validation.ContainsErrors;
         }
+    }
 
-        private bool IsBound { get; set; }
+    IEnumerable<IUnit> IMetaPopulation.Units => this.Units;
 
-        IEnumerable<IDomain> IMetaPopulation.Domains => this.Domains;
-        public IEnumerable<Domain> Domains => this.domains;
+    IEnumerable<IMethodType> IMetaPopulation.MethodTypes => this.MethodTypes;
 
-        IEnumerable<IClass> IMetaPopulation.Classes => this.classes;
-        public IEnumerable<Class> Classes => this.classes;
+    IMetaIdentifiableObject IMetaPopulation.FindById(Guid id) => this.FindById(id);
 
-        public IEnumerable<Inheritance> Inheritances => this.inheritances;
+    IMetaIdentifiableObject IMetaPopulation.FindByTag(string tag) => this.FindByTag(tag);
 
-        IEnumerable<IRelationType> IMetaPopulation.RelationTypes => this.relationTypes;
-        public IEnumerable<RelationType> RelationTypes => this.relationTypes;
+    IComposite IMetaPopulation.FindDatabaseCompositeByName(string name) => this.FindDatabaseCompositeByName(name);
 
-        IEnumerable<IInterface> IMetaPopulation.Interfaces => this.interfaces;
-        public IEnumerable<Interface> Interfaces => this.interfaces;
+    IValidationLog IMetaPopulation.Validate() => this.Validate();
 
-        IEnumerable<IComposite> IMetaPopulation.Composites => this.Composites;
-        public IEnumerable<Composite> Composites => this.structuralDerivedComposites;
-
-        public bool IsValid
-        {
-            get
-            {
-                var validation = this.Validate();
-                return !validation.ContainsErrors;
-            }
-        }
-
-        IEnumerable<IUnit> IMetaPopulation.Units => this.Units;
-        public IEnumerable<Unit> Units => this.units;
-
-        IEnumerable<IMethodType> IMetaPopulation.MethodTypes => this.MethodTypes;
-        public IEnumerable<MethodType> MethodTypes => this.methodTypes;
-
-        IMetaIdentifiableObject IMetaPopulation.FindById(Guid id) => this.FindById(id);
-        public IMetaIdentifiableObject FindById(Guid id)
-        {
-            this.metaObjectById.TryGetValue(id, out var metaObject);
-
-            return metaObject;
-        }
-
-        IMetaIdentifiableObject IMetaPopulation.FindByTag(string tag) => this.FindByTag(tag);
-        public IMetaIdentifiableObject FindByTag(string tag)
-        {
-            this.metaObjectByTag.TryGetValue(tag, out var metaObject);
-
-            return metaObject;
-        }
-
-        IComposite IMetaPopulation.FindDatabaseCompositeByName(string name) => this.FindDatabaseCompositeByName(name);
-        public Composite FindDatabaseCompositeByName(string name)
+    public void Bind(Type[] types, Dictionary<Type, MethodInfo[]> extensionMethodsByInterface)
+    {
+        if (!this.IsBound)
         {
             this.Derive();
 
-            this.derivedCompositeByLowercaseName.TryGetValue(name.ToLowerInvariant(), out var composite);
-
-            return composite;
-        }
-
-        IValidationLog IMetaPopulation.Validate() => this.Validate();
-
-        public ValidationLog Validate()
-        {
-            var log = new ValidationLog();
+            this.IsBound = true;
 
             foreach (var domain in this.domains)
             {
-                domain.Validate(log);
+                domain.Bind();
             }
 
-            foreach (var unitType in this.units)
+            var typeByName = types.ToDictionary(type => type.Name, type => type);
+
+            foreach (var unit in this.units)
             {
-                unitType.Validate(log);
+                unit.Bind();
             }
 
-            foreach (var @interface in this.interfaces)
+            this.Derive();
+            foreach (var @interface in this.Interfaces)
             {
-                @interface.Validate(log);
+                @interface.Bind(typeByName);
             }
 
             foreach (var @class in this.Classes)
             {
-                @class.Validate(log);
+                @class.Bind(typeByName);
             }
 
-            foreach (var inheritance in this.Inheritances)
+            foreach (var record in this.records)
             {
-                inheritance.Validate(log);
+                record.Bind(typeByName);
             }
 
-            foreach (var relationType in this.RelationTypes)
-            {
-                relationType.Validate(log);
-            }
+            this.MethodCompiler = new MethodCompiler(this, extensionMethodsByInterface);
+        }
+    }
 
-            foreach (var methodType in this.MethodTypes)
-            {
-                methodType.Validate(log);
-            }
+    public IMetaIdentifiableObject FindById(Guid id)
+    {
+        this.metaObjectById.TryGetValue(id, out var metaObject);
 
-            var inheritancesBySubtype = new Dictionary<Composite, List<Inheritance>>();
-            foreach (var inheritance in this.Inheritances)
-            {
-                var subtype = inheritance.Subtype;
-                if (subtype != null)
-                {
-                    if (!inheritancesBySubtype.TryGetValue(subtype, out var inheritanceList))
-                    {
-                        inheritanceList = new List<Inheritance>();
-                        inheritancesBySubtype[subtype] = inheritanceList;
-                    }
+        return metaObject;
+    }
 
-                    inheritanceList.Add(inheritance);
-                }
-            }
+    public IMetaIdentifiableObject FindByTag(string tag)
+    {
+        this.metaObjectByTag.TryGetValue(tag, out var metaObject);
 
-            var supertypes = new HashSet<Interface>();
-            foreach (var subtype in inheritancesBySubtype.Keys)
-            {
-                supertypes.Clear();
-                if (this.HasCycle(subtype, supertypes, inheritancesBySubtype))
-                {
-                    var message = subtype.ValidationName + " has a cycle in its inheritance hierarchy";
-                    log.AddError(message, subtype, ValidationKind.Cyclic, "IComposite.Supertypes");
-                }
-            }
+        return metaObject;
+    }
 
-            return log;
+    public Composite FindDatabaseCompositeByName(string name)
+    {
+        this.Derive();
+
+        this.derivedCompositeByLowercaseName.TryGetValue(name.ToLowerInvariant(), out var composite);
+
+        return composite;
+    }
+
+    public ValidationLog Validate()
+    {
+        var log = new ValidationLog();
+
+        foreach (var domain in this.domains)
+        {
+            domain.Validate(log);
         }
 
-        public void Bind(Type[] types, Dictionary<Type, MethodInfo[]> extensionMethodsByInterface)
+        foreach (var unitType in this.units)
         {
-            if (!this.IsBound)
+            unitType.Validate(log);
+        }
+
+        foreach (var @interface in this.interfaces)
+        {
+            @interface.Validate(log);
+        }
+
+        foreach (var @class in this.Classes)
+        {
+            @class.Validate(log);
+        }
+
+        foreach (var inheritance in this.Inheritances)
+        {
+            inheritance.Validate(log);
+        }
+
+        foreach (var relationType in this.RelationTypes)
+        {
+            relationType.Validate(log);
+        }
+
+        foreach (var methodType in this.MethodTypes)
+        {
+            methodType.Validate(log);
+        }
+
+        var inheritancesBySubtype = new Dictionary<Composite, List<Inheritance>>();
+        foreach (var inheritance in this.Inheritances)
+        {
+            var subtype = inheritance.Subtype;
+            if (subtype != null)
             {
-                this.Derive();
-
-                this.IsBound = true;
-
-                foreach (var domain in this.domains)
+                if (!inheritancesBySubtype.TryGetValue(subtype, out var inheritanceList))
                 {
-                    domain.Bind();
+                    inheritanceList = new List<Inheritance>();
+                    inheritancesBySubtype[subtype] = inheritanceList;
                 }
 
-                var typeByName = types.ToDictionary(type => type.Name, type => type);
+                inheritanceList.Add(inheritance);
+            }
+        }
 
-                foreach (var unit in this.units)
+        var supertypes = new HashSet<Interface>();
+        foreach (var subtype in inheritancesBySubtype.Keys)
+        {
+            supertypes.Clear();
+            if (this.HasCycle(subtype, supertypes, inheritancesBySubtype))
+            {
+                var message = subtype.ValidationName + " has a cycle in its inheritance hierarchy";
+                log.AddError(message, subtype, ValidationKind.Cyclic, "IComposite.Supertypes");
+            }
+        }
+
+        return log;
+    }
+
+    public void AssertUnlocked()
+    {
+        if (this.IsBound)
+        {
+            throw new Exception("Environment is locked");
+        }
+    }
+
+    public void StructuralDerive()
+    {
+        this.isStructuralDeriving = true;
+
+        try
+        {
+            this.domains = this.domains.ToArray();
+            this.units = this.units.ToArray();
+            this.interfaces = this.interfaces.ToArray();
+            this.classes = this.classes.ToArray();
+            this.inheritances = this.inheritances.ToArray();
+            this.relationTypes = this.relationTypes.ToArray();
+            this.methodTypes = this.methodTypes.ToArray();
+            this.records = this.records.ToArray();
+            this.fieldTypes = this.fieldTypes.ToArray();
+
+            var sharedDomains = new HashSet<Domain>();
+            var sharedComposites = new HashSet<Composite>();
+            var sharedInterfaces = new HashSet<Interface>();
+            var sharedClasses = new HashSet<Class>();
+            var sharedAssociationTypes = new HashSet<AssociationType>();
+            var sharedRoleTypes = new HashSet<RoleType>();
+            var sharedMethodTypeList = new HashSet<MethodType>();
+
+            // Domains
+            foreach (var domain in this.domains)
+            {
+                domain.StructuralDeriveSuperdomains(sharedDomains);
+            }
+
+            // Unit & IComposite ObjectTypes
+            var compositeTypes = new List<Composite>(this.interfaces);
+            compositeTypes.AddRange(this.Classes);
+            this.structuralDerivedComposites = compositeTypes.ToArray();
+
+            // DirectSupertypes
+            foreach (var type in this.Composites)
+            {
+                type.StructuralDeriveDirectSupertypes(sharedInterfaces);
+            }
+
+            // DirectSubtypes
+            foreach (var type in this.interfaces)
+            {
+                type.StructuralDeriveDirectSubtypes(sharedComposites);
+            }
+
+            // Supertypes
+            foreach (var type in this.Composites)
+            {
+                type.StructuralDeriveSupertypes(sharedInterfaces);
+            }
+
+            // Subtypes
+            foreach (var type in this.interfaces)
+            {
+                type.StructuralDeriveSubtypes(sharedComposites);
+            }
+
+            // Subclasses
+            foreach (var type in this.interfaces)
+            {
+                type.StructuralDeriveSubclasses(sharedClasses);
+            }
+
+            // Exclusive Subclass
+            foreach (var type in this.interfaces)
+            {
+                type.StructuralDeriveExclusiveSubclass();
+            }
+
+            // RoleTypes & AssociationTypes
+            var roleTypesByAssociationTypeObjectType = this.RelationTypes
+                .GroupBy(v => v.AssociationType.ObjectType)
+                .ToDictionary(g => g.Key, g => new HashSet<RoleType>(g.Select(v => v.RoleType)));
+
+
+            var associationTypesByRoleTypeObjectType = this.RelationTypes
+                .GroupBy(v => v.RoleType.ObjectType)
+                .ToDictionary(g => g.Key, g => new HashSet<AssociationType>(g.Select(v => v.AssociationType)));
+
+            // RoleTypes
+            foreach (var composite in this.Composites)
+            {
+                composite.StructuralDeriveRoleTypes(sharedRoleTypes, roleTypesByAssociationTypeObjectType);
+            }
+
+            // AssociationTypes
+            foreach (var composite in this.Composites)
+            {
+                composite.StructuralDeriveAssociationTypes(sharedAssociationTypes, associationTypesByRoleTypeObjectType);
+            }
+
+            // MethodTypes
+            var methodTypeByClass = this.MethodTypes
+                .GroupBy(v => v.ObjectType)
+                .ToDictionary(g => g.Key, g => new HashSet<MethodType>(g));
+
+            foreach (var composite in this.Composites)
+            {
+                composite.StructuralDeriveMethodTypes(sharedMethodTypeList, methodTypeByClass);
+            }
+        }
+        finally
+        {
+            this.isStructuralDeriving = false;
+        }
+    }
+
+    public void Derive()
+    {
+        if (this.isStructuralDeriving)
+        {
+            throw new Exception("Structural Derive is ongoing");
+        }
+
+        if (this.isStale && !this.isDeriving)
+        {
+            try
+            {
+                this.isDeriving = true;
+
+                // RoleType
+                foreach (var relationType in this.RelationTypes)
                 {
-                    unit.Bind();
+                    relationType.RoleType.DeriveScaleAndSize();
                 }
 
-                this.Derive();
-                foreach (var @interface in this.Interfaces)
+                // RelationType Multiplicity
+                foreach (var relationType in this.RelationTypes)
                 {
-                    @interface.Bind(typeByName);
+                    relationType.DeriveMultiplicity();
                 }
 
-                foreach (var @class in this.Classes)
+                // Required RoleTypes
+                foreach (var @class in this.classes)
                 {
-                    @class.Bind(typeByName);
+                    @class.DeriveRequiredRoleTypes();
+                }
+
+                // WorkspaceNames
+                var workspaceNames = new HashSet<string>();
+                foreach (var @class in this.classes)
+                {
+                    @class.DeriveWorkspaceNames(workspaceNames);
+                }
+
+                this.derivedWorkspaceNames = workspaceNames.ToArray();
+
+                foreach (var relationType in this.relationTypes)
+                {
+                    relationType.DeriveWorkspaceNames();
+                }
+
+                foreach (var methodType in this.methodTypes)
+                {
+                    methodType.DeriveWorkspaceNames();
+                }
+
+                foreach (var @interface in this.interfaces)
+                {
+                    @interface.DeriveWorkspaceNames();
+                }
+
+                IDictionary<Record, ISet<string>> workspaceNamesByRecord = new Dictionary<Record, ISet<string>>();
+
+                foreach (var methodType in this.methodTypes)
+                {
+                    methodType.PrepareWorkspaceNames(workspaceNamesByRecord);
                 }
 
                 foreach (var record in this.records)
                 {
-                    record.Bind(typeByName);
+                    record.DeriveWorkspaceNames(workspaceNamesByRecord);
                 }
 
-                this.MethodCompiler = new MethodCompiler(this, extensionMethodsByInterface);
-            }
-        }
+                foreach (var fieldType in this.fieldTypes)
+                {
+                    fieldType.DeriveWorkspaceNames();
+                }
 
-        public void AssertUnlocked()
-        {
-            if (this.IsBound)
-            {
-                throw new Exception("Environment is locked");
-            }
-        }
-
-        public void StructuralDerive()
-        {
-            this.isStructuralDeriving = true;
-
-            try
-            {
-                this.domains = this.domains.ToArray();
-                this.units = this.units.ToArray();
-                this.interfaces = this.interfaces.ToArray();
-                this.classes = this.classes.ToArray();
-                this.inheritances = this.inheritances.ToArray();
-                this.relationTypes = this.relationTypes.ToArray();
-                this.methodTypes = this.methodTypes.ToArray();
-                this.records = this.records.ToArray();
-                this.fieldTypes = this.fieldTypes.ToArray();
-
-                var sharedDomains = new HashSet<Domain>();
-                var sharedComposites = new HashSet<Composite>();
-                var sharedInterfaces = new HashSet<Interface>();
-                var sharedClasses = new HashSet<Class>();
-                var sharedAssociationTypes = new HashSet<AssociationType>();
-                var sharedRoleTypes = new HashSet<RoleType>();
-                var sharedMethodTypeList = new HashSet<MethodType>();
-
-                // Domains
                 foreach (var domain in this.domains)
                 {
-                    domain.StructuralDeriveSuperdomains(sharedDomains);
+                    domain.DeriveWorkspaceNames();
                 }
 
-                // Unit & IComposite ObjectTypes
-                var compositeTypes = new List<Composite>(this.interfaces);
-                compositeTypes.AddRange(this.Classes);
-                this.structuralDerivedComposites = compositeTypes.ToArray();
-
-                // DirectSupertypes
-                foreach (var type in this.Composites)
-                {
-                    type.StructuralDeriveDirectSupertypes(sharedInterfaces);
-                }
-
-                // DirectSubtypes
-                foreach (var type in this.interfaces)
-                {
-                    type.StructuralDeriveDirectSubtypes(sharedComposites);
-                }
-
-                // Supertypes
-                foreach (var type in this.Composites)
-                {
-                    type.StructuralDeriveSupertypes(sharedInterfaces);
-                }
-
-                // Subtypes
-                foreach (var type in this.interfaces)
-                {
-                    type.StructuralDeriveSubtypes(sharedComposites);
-                }
-
-                // Subclasses
-                foreach (var type in this.interfaces)
-                {
-                    type.StructuralDeriveSubclasses(sharedClasses);
-                }
-
-                // Exclusive Subclass
-                foreach (var type in this.interfaces)
-                {
-                    type.StructuralDeriveExclusiveSubclass();
-                }
-
-                // RoleTypes & AssociationTypes
-                var roleTypesByAssociationTypeObjectType = this.RelationTypes
-                    .GroupBy(v => v.AssociationType.ObjectType)
-                    .ToDictionary(g => g.Key, g => new HashSet<RoleType>(g.Select(v => v.RoleType)));
-
-
-                var associationTypesByRoleTypeObjectType = this.RelationTypes
-                    .GroupBy(v => v.RoleType.ObjectType)
-                    .ToDictionary(g => g.Key, g => new HashSet<AssociationType>(g.Select(v => v.AssociationType)));
-
-                // RoleTypes
-                foreach (var composite in this.Composites)
-                {
-                    composite.StructuralDeriveRoleTypes(sharedRoleTypes, roleTypesByAssociationTypeObjectType);
-                }
-
-                // AssociationTypes
-                foreach (var composite in this.Composites)
-                {
-                    composite.StructuralDeriveAssociationTypes(sharedAssociationTypes, associationTypesByRoleTypeObjectType);
-                }
-
-                // MethodTypes
-                var methodTypeByClass = this.MethodTypes
-                    .GroupBy(v => v.ObjectType)
-                    .ToDictionary(g => g.Key, g => new HashSet<MethodType>(g));
-
-                foreach (var composite in this.Composites)
-                {
-                    composite.StructuralDeriveMethodTypes(sharedMethodTypeList, methodTypeByClass);
-                }
+                // MetaPopulation
+                this.derivedCompositeByLowercaseName = this.Composites.ToDictionary(v => v.Name.ToLowerInvariant());
             }
             finally
             {
-                this.isStructuralDeriving = false;
+                // Ignore stale requests during a derivation
+                this.isStale = false;
+                this.isDeriving = false;
             }
         }
+    }
 
-        public void Derive()
+    internal void OnDomainCreated(Domain domain)
+    {
+        this.domains.Add(domain);
+        this.metaObjectById.Add(domain.Id, domain);
+        this.metaObjectByTag.Add(domain.Tag, domain);
+
+        this.Stale();
+    }
+
+    public void OnFieldTypeCreated(FieldType fieldType)
+    {
+        this.fieldTypes.Add(fieldType);
+        this.metaObjectById.Add(fieldType.Id, fieldType);
+        this.metaObjectByTag.Add(fieldType.Tag, fieldType);
+
+        this.Stale();
+    }
+
+    internal void OnUnitCreated(Unit unit)
+    {
+        this.units.Add(unit);
+        this.metaObjectById.Add(unit.Id, unit);
+        this.metaObjectByTag.Add(unit.Tag, unit);
+
+        this.Stale();
+    }
+
+    internal void OnInterfaceCreated(Interface @interface)
+    {
+        this.interfaces.Add(@interface);
+        this.metaObjectById.Add(@interface.Id, @interface);
+        this.metaObjectByTag.Add(@interface.Tag, @interface);
+
+        this.Stale();
+    }
+
+    internal void OnClassCreated(Class @class)
+    {
+        this.classes.Add(@class);
+        this.metaObjectById.Add(@class.Id, @class);
+        this.metaObjectByTag.Add(@class.Tag, @class);
+
+        this.Stale();
+    }
+
+    internal void OnInheritanceCreated(Inheritance inheritance)
+    {
+        this.inheritances.Add(inheritance);
+        this.Stale();
+    }
+
+    internal void OnRelationTypeCreated(RelationType relationType)
+    {
+        this.relationTypes.Add(relationType);
+        this.metaObjectById.Add(relationType.Id, relationType);
+        this.metaObjectByTag.Add(relationType.Tag, relationType);
+
+        this.Stale();
+    }
+
+    internal void OnAssociationTypeCreated(AssociationType associationType) => this.Stale();
+
+    internal void OnRecordCreated(Record record)
+    {
+        this.records.Add(record);
+        this.metaObjectById.Add(record.Id, record);
+        this.metaObjectByTag.Add(record.Tag, record);
+
+        this.Stale();
+    }
+
+    internal void OnRoleTypeCreated(RoleType roleType) => this.Stale();
+
+    internal void OnMethodTypeCreated(MethodType methodType)
+    {
+        this.methodTypes.Add(methodType);
+        this.metaObjectById.Add(methodType.Id, methodType);
+        this.metaObjectByTag.Add(methodType.Tag, methodType);
+
+        this.Stale();
+    }
+
+    internal void Stale() => this.isStale = true;
+
+    private bool HasCycle(Composite subtype, HashSet<Interface> supertypes, Dictionary<Composite, List<Inheritance>> inheritancesBySubtype)
+    {
+        foreach (var inheritance in inheritancesBySubtype[subtype])
         {
-            if (this.isStructuralDeriving)
-            {
-                throw new Exception("Structural Derive is ongoing");
-            }
-
-            if (this.isStale && !this.isDeriving)
-            {
-                try
-                {
-                    this.isDeriving = true;
-
-                    // RoleType
-                    foreach (var relationType in this.RelationTypes)
-                    {
-                        relationType.RoleType.DeriveScaleAndSize();
-                    }
-
-                    // RelationType Multiplicity
-                    foreach (var relationType in this.RelationTypes)
-                    {
-                        relationType.DeriveMultiplicity();
-                    }
-
-                    // Required RoleTypes
-                    foreach (var @class in this.classes)
-                    {
-                        @class.DeriveRequiredRoleTypes();
-                    }
-
-                    // WorkspaceNames
-                    var workspaceNames = new HashSet<string>();
-                    foreach (var @class in this.classes)
-                    {
-                        @class.DeriveWorkspaceNames(workspaceNames);
-                    }
-
-                    this.derivedWorkspaceNames = workspaceNames.ToArray();
-
-                    foreach (var relationType in this.relationTypes)
-                    {
-                        relationType.DeriveWorkspaceNames();
-                    }
-
-                    foreach (var methodType in this.methodTypes)
-                    {
-                        methodType.DeriveWorkspaceNames();
-                    }
-
-                    foreach (var @interface in this.interfaces)
-                    {
-                        @interface.DeriveWorkspaceNames();
-                    }
-
-                    IDictionary<Record, ISet<string>> workspaceNamesByRecord = new Dictionary<Record, ISet<string>>();
-
-                    foreach (var methodType in this.methodTypes)
-                    {
-                        methodType.PrepareWorkspaceNames(workspaceNamesByRecord);
-                    }
-
-                    foreach (var record in this.records)
-                    {
-                        record.DeriveWorkspaceNames(workspaceNamesByRecord);
-                    }
-
-                    foreach (var fieldType in this.fieldTypes)
-                    {
-                        fieldType.DeriveWorkspaceNames();
-                    }
-
-                    foreach (var domain in this.domains)
-                    {
-                        domain.DeriveWorkspaceNames();
-                    }
-
-                    // MetaPopulation
-                    this.derivedCompositeByLowercaseName = this.Composites.ToDictionary(v => v.Name.ToLowerInvariant());
-                }
-                finally
-                {
-                    // Ignore stale requests during a derivation
-                    this.isStale = false;
-                    this.isDeriving = false;
-                }
-            }
-        }
-
-        internal void OnDomainCreated(Domain domain)
-        {
-            this.domains.Add(domain);
-            this.metaObjectById.Add(domain.Id, domain);
-            this.metaObjectByTag.Add(domain.Tag, domain);
-
-            this.Stale();
-        }
-
-        public void OnFieldTypeCreated(FieldType fieldType)
-        {
-            this.fieldTypes.Add(fieldType);
-            this.metaObjectById.Add(fieldType.Id, fieldType);
-            this.metaObjectByTag.Add(fieldType.Tag, fieldType);
-
-            this.Stale();
-        }
-
-        internal void OnUnitCreated(Unit unit)
-        {
-            this.units.Add(unit);
-            this.metaObjectById.Add(unit.Id, unit);
-            this.metaObjectByTag.Add(unit.Tag, unit);
-
-            this.Stale();
-        }
-
-        internal void OnInterfaceCreated(Interface @interface)
-        {
-            this.interfaces.Add(@interface);
-            this.metaObjectById.Add(@interface.Id, @interface);
-            this.metaObjectByTag.Add(@interface.Tag, @interface);
-
-            this.Stale();
-        }
-
-        internal void OnClassCreated(Class @class)
-        {
-            this.classes.Add(@class);
-            this.metaObjectById.Add(@class.Id, @class);
-            this.metaObjectByTag.Add(@class.Tag, @class);
-
-            this.Stale();
-        }
-
-        internal void OnInheritanceCreated(Inheritance inheritance)
-        {
-            this.inheritances.Add(inheritance);
-            this.Stale();
-        }
-
-        internal void OnRelationTypeCreated(RelationType relationType)
-        {
-            this.relationTypes.Add(relationType);
-            this.metaObjectById.Add(relationType.Id, relationType);
-            this.metaObjectByTag.Add(relationType.Tag, relationType);
-
-            this.Stale();
-        }
-
-        internal void OnAssociationTypeCreated(AssociationType associationType) => this.Stale();
-
-        internal void OnRecordCreated(Record record)
-        {
-            this.records.Add(record);
-            this.metaObjectById.Add(record.Id, record);
-            this.metaObjectByTag.Add(record.Tag, record);
-
-            this.Stale();
-        }
-
-        internal void OnRoleTypeCreated(RoleType roleType) => this.Stale();
-
-        internal void OnMethodTypeCreated(MethodType methodType)
-        {
-            this.methodTypes.Add(methodType);
-            this.metaObjectById.Add(methodType.Id, methodType);
-            this.metaObjectByTag.Add(methodType.Tag, methodType);
-
-            this.Stale();
-        }
-
-        internal void Stale() => this.isStale = true;
-
-        private bool HasCycle(Composite subtype, HashSet<Interface> supertypes, Dictionary<Composite, List<Inheritance>> inheritancesBySubtype)
-        {
-            foreach (var inheritance in inheritancesBySubtype[subtype])
-            {
-                var supertype = inheritance.Supertype;
-                if (supertype != null && this.HasCycle(subtype, supertype, supertypes, inheritancesBySubtype))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        private bool HasCycle(Composite originalSubtype, Interface currentSupertype, HashSet<Interface> supertypes, Dictionary<Composite, List<Inheritance>> inheritancesBySubtype)
-        {
-            if (originalSubtype is Interface @interface && supertypes.Contains(@interface))
+            var supertype = inheritance.Supertype;
+            if (supertype != null && this.HasCycle(subtype, supertype, supertypes, inheritancesBySubtype))
             {
                 return true;
             }
+        }
 
-            if (!supertypes.Contains(currentSupertype))
+        return false;
+    }
+
+    private bool HasCycle(Composite originalSubtype, Interface currentSupertype, HashSet<Interface> supertypes,
+        Dictionary<Composite, List<Inheritance>> inheritancesBySubtype)
+    {
+        if (originalSubtype is Interface @interface && supertypes.Contains(@interface))
+        {
+            return true;
+        }
+
+        if (!supertypes.Contains(currentSupertype))
+        {
+            supertypes.Add(currentSupertype);
+
+            if (inheritancesBySubtype.TryGetValue(currentSupertype, out var currentSuperInheritances))
             {
-                supertypes.Add(currentSupertype);
-
-                if (inheritancesBySubtype.TryGetValue(currentSupertype, out var currentSuperInheritances))
+                foreach (var inheritance in currentSuperInheritances)
                 {
-                    foreach (var inheritance in currentSuperInheritances)
+                    var newSupertype = inheritance.Supertype;
+                    if (newSupertype != null && this.HasCycle(originalSubtype, newSupertype, supertypes, inheritancesBySubtype))
                     {
-                        var newSupertype = inheritance.Supertype;
-                        if (newSupertype != null && this.HasCycle(originalSubtype, newSupertype, supertypes, inheritancesBySubtype))
-                        {
-                            return true;
-                        }
+                        return true;
                     }
                 }
             }
-
-            return false;
         }
+
+        return false;
     }
 }

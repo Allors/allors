@@ -1,11 +1,10 @@
-namespace Allors.Database.Adapters.Sql
+namespace Allors.Database.Adapters.Sql;
+
+public interface IConnection
 {
-    public interface IConnection
-    {
-        ICommand CreateCommand();
+    ICommand CreateCommand();
 
-        void Commit();
+    void Commit();
 
-        void Rollback();
-    }
+    void Rollback();
 }

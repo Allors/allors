@@ -8,17 +8,17 @@ namespace Allors.Protocol.Json.Auth
     public class AuthenticationTokenResponse
     {
         /// <summary>
-        /// Authenticated
+        ///     Authenticated
         /// </summary>
         public bool a { get; set; }
 
         /// <summary>
-        /// UserId
+        ///     UserId
         /// </summary>
         public string u { get; set; }
 
         /// <summary>
-        /// Token
+        ///     Token
         /// </summary>
         public string t { get; set; }
     }

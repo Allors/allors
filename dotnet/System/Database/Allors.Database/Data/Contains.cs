@@ -3,39 +3,38 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Data
+namespace Allors.Database.Data;
+
+using Meta;
+
+public class Contains : IPropertyPredicate
 {
-    using Meta;
+    public Contains(IPropertyType propertyType = null) => this.PropertyType = propertyType;
 
-    public class Contains : IPropertyPredicate
+    public IObject Object { get; set; }
+
+    public string Parameter { get; set; }
+
+    public IPropertyType PropertyType { get; set; }
+
+    bool IPredicate.ShouldTreeShake(IArguments arguments) => ((IPredicate)this).HasMissingArguments(arguments);
+
+    bool IPredicate.HasMissingArguments(IArguments arguments) => this.Parameter != null && arguments?.HasArgument(this.Parameter) != true;
+
+    void IPredicate.Build(ITransaction transaction, IArguments arguments, Database.ICompositePredicate compositePredicate)
     {
-        public Contains(IPropertyType propertyType = null) => this.PropertyType = propertyType;
+        var containedObject = this.Parameter != null ? transaction.GetObject(arguments.ResolveObject(this.Parameter)) : this.Object;
 
-        public IPropertyType PropertyType { get; set; }
-
-        public IObject Object { get; set; }
-
-        public string Parameter { get; set; }
-
-        bool IPredicate.ShouldTreeShake(IArguments arguments) => ((IPredicate)this).HasMissingArguments(arguments);
-
-        bool IPredicate.HasMissingArguments(IArguments arguments) => this.Parameter != null && (arguments?.HasArgument(this.Parameter) != true);
-
-        void IPredicate.Build(ITransaction transaction, IArguments arguments, Database.ICompositePredicate compositePredicate)
+        if (this.PropertyType is IRoleType roleType)
         {
-            var containedObject = this.Parameter != null ? transaction.GetObject(arguments.ResolveObject(this.Parameter)) : this.Object;
-
-            if (this.PropertyType is IRoleType roleType)
-            {
-                compositePredicate.AddContains(roleType, containedObject);
-            }
-            else
-            {
-                var associationType = (IAssociationType)this.PropertyType;
-                compositePredicate.AddContains(associationType, containedObject);
-            }
+            compositePredicate.AddContains(roleType, containedObject);
         }
-
-        public void Accept(IVisitor visitor) => visitor.VisitContains(this);
+        else
+        {
+            var associationType = (IAssociationType)this.PropertyType;
+            compositePredicate.AddContains(associationType, containedObject);
+        }
     }
+
+    public void Accept(IVisitor visitor) => visitor.VisitContains(this);
 }

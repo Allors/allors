@@ -4,35 +4,34 @@
 // </copyright>
 // <summary>Defines the IObjectType type.</summary>
 
-namespace Allors.Repository.Domain
+namespace Allors.Repository.Domain;
+
+using System;
+using System.Linq;
+using System.Xml.Linq;
+
+public class XmlDoc
 {
-    using System;
-    using System.Linq;
-    using System.Xml.Linq;
-
-    public class XmlDoc
+    public XmlDoc(string value)
     {
-        public XmlDoc(string value)
+        this.FullValue = value;
+
+        try
         {
-            this.FullValue = value;
-
-            try
-            {
-                var element = XElement.Parse(value);
-                this.Value = element.Elements().First().ToString();
-            }
-            catch
-            {
-                throw new ArgumentException("Could not parse XmlDoc: \n" + this.FullValue, nameof(value));
-            }
+            var element = XElement.Parse(value);
+            this.Value = element.Elements().First().ToString();
         }
-
-        public string FullValue { get; }
-
-        public string VerbatimFullValue => this.FullValue?.Replace("\"", "\"\"");
-
-        public string Value { get; }
-
-        public string VerbatimValue => this.Value?.Replace("\"", "\"\"");
+        catch
+        {
+            throw new ArgumentException("Could not parse XmlDoc: \n" + this.FullValue, nameof(value));
+        }
     }
+
+    public string FullValue { get; }
+
+    public string VerbatimFullValue => this.FullValue?.Replace("\"", "\"\"");
+
+    public string Value { get; }
+
+    public string VerbatimValue => this.Value?.Replace("\"", "\"\"");
 }

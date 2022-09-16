@@ -3,22 +3,22 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Adapters.Memory
+namespace Allors.Database.Adapters.Memory;
+
+using Meta;
+
+internal sealed class RoleExists : Predicate
 {
-    using Meta;
+    private readonly IRoleType roleType;
 
-    internal sealed class RoleExists : Predicate
+    internal RoleExists(ExtentFiltered extent, IRoleType roleType)
     {
-        private readonly IRoleType roleType;
+        extent.CheckForRoleType(roleType);
+        PredicateAssertions.ValidateRoleExists(roleType);
 
-        internal RoleExists(ExtentFiltered extent, IRoleType roleType)
-        {
-            extent.CheckForRoleType(roleType);
-            PredicateAssertions.ValidateRoleExists(roleType);
-
-            this.roleType = roleType;
-        }
-
-        internal override ThreeValuedLogic Evaluate(Strategy strategy) => strategy.ExistRole(this.roleType) ? ThreeValuedLogic.True : ThreeValuedLogic.False;
+        this.roleType = roleType;
     }
+
+    internal override ThreeValuedLogic Evaluate(Strategy strategy) =>
+        strategy.ExistRole(this.roleType) ? ThreeValuedLogic.True : ThreeValuedLogic.False;
 }

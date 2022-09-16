@@ -4,14 +4,13 @@
 // </copyright>
 // <summary>Defines the IDomainDerivation type.</summary>
 
-namespace Allors.Database.Derivations
+namespace Allors.Database.Derivations;
+
+public interface ICycle
 {
-    public interface ICycle
-    {
-        ITransaction Transaction { get; }
+    ITransaction Transaction { get; }
 
-        IChangeSet ChangeSet { get; }
+    IChangeSet ChangeSet { get; }
 
-        IValidation Validation { get; }
-    }
+    IValidation Validation { get; }
 }

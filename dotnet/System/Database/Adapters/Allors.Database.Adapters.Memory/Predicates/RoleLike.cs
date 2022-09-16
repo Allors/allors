@@ -3,44 +3,43 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Adapters.Memory
+namespace Allors.Database.Adapters.Memory;
+
+using System.Text.RegularExpressions;
+using Meta;
+
+internal sealed class RoleLike : Predicate
 {
-    using System.Text.RegularExpressions;
-    using Meta;
+    private readonly bool isEmpty;
+    private readonly Regex regex;
+    private readonly IRoleType roleType;
 
-    internal sealed class RoleLike : Predicate
+    internal RoleLike(ExtentFiltered extent, IRoleType roleType, string like)
     {
-        private readonly IRoleType roleType;
-        private readonly bool isEmpty;
-        private readonly Regex regex;
+        extent.CheckForRoleType(roleType);
+        PredicateAssertions.ValidateRoleLikeFilter(roleType, like);
 
-        internal RoleLike(ExtentFiltered extent, IRoleType roleType, string like)
+        this.roleType = roleType;
+        this.isEmpty = like.Length == 0;
+        this.regex = new Regex("^" + like.Replace("%", ".*") + "$");
+    }
+
+    internal override ThreeValuedLogic Evaluate(Strategy strategy)
+    {
+        var value = (string)strategy.GetInternalizedUnitRole(this.roleType);
+
+        if (value == null)
         {
-            extent.CheckForRoleType(roleType);
-            PredicateAssertions.ValidateRoleLikeFilter(roleType, like);
-
-            this.roleType = roleType;
-            this.isEmpty = like.Length == 0;
-            this.regex = new Regex("^" + like.Replace("%", ".*") + "$");
+            return ThreeValuedLogic.Unknown;
         }
 
-        internal override ThreeValuedLogic Evaluate(Strategy strategy)
+        if (this.isEmpty)
         {
-            var value = (string)strategy.GetInternalizedUnitRole(this.roleType);
-
-            if (value == null)
-            {
-                return ThreeValuedLogic.Unknown;
-            }
-
-            if (this.isEmpty)
-            {
-                return ThreeValuedLogic.False;
-            }
-
-            return this.regex.Match(value).Success
-                       ? ThreeValuedLogic.True
-                       : ThreeValuedLogic.False;
+            return ThreeValuedLogic.False;
         }
+
+        return this.regex.Match(value).Success
+            ? ThreeValuedLogic.True
+            : ThreeValuedLogic.False;
     }
 }

@@ -3,12 +3,11 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Adapters.Sql
-{
-    public abstract class Validation
-    {
-        public abstract string Message { get; }
+namespace Allors.Database.Adapters.Sql;
 
-        public abstract bool IsValid { get; }
-    }
+public abstract class Validation
+{
+    public abstract string Message { get; }
+
+    public abstract bool IsValid { get; }
 }

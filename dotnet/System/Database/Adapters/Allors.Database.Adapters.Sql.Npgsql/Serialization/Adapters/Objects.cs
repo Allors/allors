@@ -3,92 +3,91 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Adapters.Sql.Npgsql
+namespace Allors.Database.Adapters.Sql.Npgsql;
+
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Xml;
+using Meta;
+using Version = Allors.Version;
+
+public class Objects : IEnumerable<object[]>
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Xml;
-    using Meta;
-    using Version = Allors.Version;
+    private readonly Dictionary<long, IClass> classByObjectId;
+    private readonly Database database;
+    private readonly Action<Guid, long> onObjectNotLoaded;
+    private readonly XmlReader reader;
 
-    public class Objects : IEnumerable<object[]>
+    public Objects(
+        Database database,
+        Action<Guid, long> onObjectNotLoaded,
+        Dictionary<long, IClass> classByObjectId,
+        XmlReader reader)
     {
-        private readonly Database database;
-        private readonly Action<Guid, long> onObjectNotLoaded;
-        private readonly Dictionary<long, IClass> classByObjectId;
-        private readonly XmlReader reader;
+        this.database = database;
+        this.onObjectNotLoaded = onObjectNotLoaded;
+        this.classByObjectId = classByObjectId;
+        this.reader = reader;
+    }
 
-        public Objects(
-            Database database,
-            Action<Guid, long> onObjectNotLoaded,
-            Dictionary<long, IClass> classByObjectId,
-            XmlReader reader)
+    public IEnumerator<object[]> GetEnumerator()
+    {
+        var skip = false;
+        while (skip || this.reader.Read())
         {
-            this.database = database;
-            this.onObjectNotLoaded = onObjectNotLoaded;
-            this.classByObjectId = classByObjectId;
-            this.reader = reader;
-        }
+            skip = false;
 
-        public IEnumerator<object[]> GetEnumerator()
-        {
-            var skip = false;
-            while (skip || this.reader.Read())
+            switch (this.reader.NodeType)
             {
-                skip = false;
-
-                switch (this.reader.NodeType)
-                {
-                    // eat everything but elements
-                    case XmlNodeType.Element:
-                        if (this.reader.Name.Equals(Serialization.ObjectType))
+                // eat everything but elements
+                case XmlNodeType.Element:
+                    if (this.reader.Name.Equals(Serialization.ObjectType))
+                    {
+                        if (!this.reader.IsEmptyElement)
                         {
-                            if (!this.reader.IsEmptyElement)
+                            var objectTypeIdString = this.reader.GetAttribute(Serialization.Id);
+                            if (string.IsNullOrEmpty(objectTypeIdString))
                             {
-                                var objectTypeIdString = this.reader.GetAttribute(Serialization.Id);
-                                if (string.IsNullOrEmpty(objectTypeIdString))
-                                {
-                                    throw new Exception("object type has no id");
-                                }
-
-                                var objectTypeId = new Guid(objectTypeIdString);
-                                var objectType = this.database.ObjectFactory.GetObjectType(objectTypeId);
-
-                                var objectIdsString = this.reader.ReadElementContentAsString();
-                                foreach (var objectIdString in objectIdsString.Split(Serialization.ObjectsSplitterCharArray))
-                                {
-                                    var objectArray = objectIdString.Split(Serialization.ObjectSplitterCharArray);
-
-                                    var objectId = long.Parse(objectArray[0]);
-                                    var objectVersion = objectArray.Length > 1
-                                        ? long.Parse(objectArray[1])
-                                        : (long) Version.DatabaseInitial;
-
-                                    if (objectType is IClass @class)
-                                    {
-                                        this.classByObjectId[objectId] = @class;
-                                        yield return new object[] { objectId, @class.Id, objectVersion };
-                                    }
-                                    else
-                                    {
-                                        this.onObjectNotLoaded(objectTypeId, objectId);
-                                    }
-                                }
-
-                                skip = this.reader.IsStartElement();
+                                throw new Exception("object type has no id");
                             }
-                            else
+
+                            var objectTypeId = new Guid(objectTypeIdString);
+                            var objectType = this.database.ObjectFactory.GetObjectType(objectTypeId);
+
+                            var objectIdsString = this.reader.ReadElementContentAsString();
+                            foreach (var objectIdString in objectIdsString.Split(Serialization.ObjectsSplitterCharArray))
                             {
-                                this.reader.Skip();
+                                var objectArray = objectIdString.Split(Serialization.ObjectSplitterCharArray);
+
+                                var objectId = long.Parse(objectArray[0]);
+                                var objectVersion = objectArray.Length > 1
+                                    ? long.Parse(objectArray[1])
+                                    : (long)Version.DatabaseInitial;
+
+                                if (objectType is IClass @class)
+                                {
+                                    this.classByObjectId[objectId] = @class;
+                                    yield return new object[] {objectId, @class.Id, objectVersion};
+                                }
+                                else
+                                {
+                                    this.onObjectNotLoaded(objectTypeId, objectId);
+                                }
                             }
+
+                            skip = this.reader.IsStartElement();
                         }
+                        else
+                        {
+                            this.reader.Skip();
+                        }
+                    }
 
-                        break;
-                }
+                    break;
             }
         }
-
-        IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
     }
+
+    IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 }

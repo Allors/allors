@@ -5,10 +5,9 @@
 // <summary>Defines the Default type.</summary>
 //------------------------------------------------------------------------------------------------
 
-namespace Allors.Database.Domain
+namespace Allors.Database.Domain;
+
+public class Subscriber
 {
-    public class Subscriber
-    {
-        public string Message { get; set; }
-    }
+    public string Message { get; set; }
 }

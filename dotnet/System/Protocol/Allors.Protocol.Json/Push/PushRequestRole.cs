@@ -8,27 +8,27 @@ namespace Allors.Protocol.Json.Api.Push
     public class PushRequestRole
     {
         /// <summary>
-        /// Relation Type Tag
+        ///     Relation Type Tag
         /// </summary>
         public string t { get; set; }
 
         /// <summary>
-        /// Set Unit Role
+        ///     Set Unit Role
         /// </summary>
         public object u { get; set; }
 
         /// <summary>
-        /// Set Composite Role
+        ///     Set Composite Role
         /// </summary>
         public long? c { get; set; }
 
         /// <summary>
-        /// Add Composites Role
+        ///     Add Composites Role
         /// </summary>
         public long[] a { get; set; }
 
         /// <summary>
-        /// Remove Composites Role
+        ///     Remove Composites Role
         /// </summary>
         public long[] r { get; set; }
     }

@@ -18,26 +18,25 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Allors.Database.Adapters
+namespace Allors.Database.Adapters;
+
+public abstract class ReferenceSubjectTest : ReferenceTest
 {
-    public abstract class ReferenceSubjectTest : ReferenceTest
-    {
-        // Thorough
-        //int associationCount = 4;
-        //int roleCount = 15;
-        //int roleGroupCount = 5;
+    // Thorough
+    //int associationCount = 4;
+    //int roleCount = 15;
+    //int roleGroupCount = 5;
 
-        // Quick
-        private const int AssociationCount = 3;
-        private const int RoleCount = 8;
-        private const int RoleGroupCount = 4;
+    // Quick
+    private const int AssociationCount = 3;
+    private const int RoleCount = 8;
+    private const int RoleGroupCount = 4;
 
-        public override int GetAssociationCount() => AssociationCount;
+    public override int GetAssociationCount() => AssociationCount;
 
-        public override int GetRoleCount() => RoleCount;
+    public override int GetRoleCount() => RoleCount;
 
-        public override int GetRoleGroupCount() => RoleGroupCount;
+    public override int GetRoleGroupCount() => RoleGroupCount;
 
-        public override int GetRolesPerGroup() => this.GetRoleCount() / this.GetRoleGroupCount();
-    }
+    public override int GetRolesPerGroup() => this.GetRoleCount() / this.GetRoleGroupCount();
 }

@@ -3,47 +3,46 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Adapters.Sql
+namespace Allors.Database.Adapters.Sql;
+
+using Meta;
+
+internal sealed class InstanceOf : Predicate
 {
-    using Meta;
+    private readonly IObjectType[] instanceClasses;
 
-    internal sealed class InstanceOf : Predicate
+    internal InstanceOf(IObjectType instanceType, IObjectType[] instanceClasses)
     {
-        private readonly IObjectType[] instanceClasses;
+        PredicateAssertions.ValidateInstanceof(instanceType);
+        this.instanceClasses = instanceClasses;
+    }
 
-        internal InstanceOf(IObjectType instanceType, IObjectType[] instanceClasses)
+    internal override bool BuildWhere(ExtentStatement statement, string alias)
+    {
+        var schema = statement.Mapping;
+        if (this.instanceClasses.Length == 1)
         {
-            PredicateAssertions.ValidateInstanceof(instanceType);
-            this.instanceClasses = instanceClasses;
+            statement.Append(alias + "." + Mapping.ColumnNameForClass + "=" + statement.AddParameter(this.instanceClasses[0].Id) + " ");
         }
-
-        internal override bool BuildWhere(ExtentStatement statement, string alias)
+        else if (this.instanceClasses.Length > 1)
         {
-            var schema = statement.Mapping;
-            if (this.instanceClasses.Length == 1)
+            statement.Append(" ( ");
+            for (var i = 0; i < this.instanceClasses.Length; i++)
             {
-                statement.Append(alias + "." + Mapping.ColumnNameForClass + "=" + statement.AddParameter(this.instanceClasses[0].Id) + " ");
-            }
-            else if (this.instanceClasses.Length > 1)
-            {
-                statement.Append(" ( ");
-                for (var i = 0; i < this.instanceClasses.Length; i++)
+                statement.Append(alias + "." + Mapping.ColumnNameForClass + "=" + statement.AddParameter(this.instanceClasses[i].Id));
+                if (i < this.instanceClasses.Length - 1)
                 {
-                    statement.Append(alias + "." + Mapping.ColumnNameForClass + "=" + statement.AddParameter(this.instanceClasses[i].Id));
-                    if (i < this.instanceClasses.Length - 1)
-                    {
-                        statement.Append(" OR ");
-                    }
+                    statement.Append(" OR ");
                 }
-
-                statement.Append(" ) ");
             }
 
-            return this.Include;
+            statement.Append(" ) ");
         }
 
-        internal override void Setup(ExtentStatement statement)
-        {
-        }
+        return this.Include;
+    }
+
+    internal override void Setup(ExtentStatement statement)
+    {
     }
 }

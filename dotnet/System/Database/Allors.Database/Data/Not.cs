@@ -3,30 +3,29 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Data
+namespace Allors.Database.Data;
+
+public class Not : ICompositePredicate
 {
-    public class Not : ICompositePredicate
+    public Not(IPredicate operand = null) => this.Operand = operand;
+
+    public IPredicate Operand { get; set; }
+
+    bool IPredicate.ShouldTreeShake(IArguments arguments) => this.Operand == null || this.Operand.ShouldTreeShake(arguments);
+
+    bool IPredicate.HasMissingArguments(IArguments arguments) => this.Operand?.HasMissingArguments(arguments) == true;
+
+    void IPredicateContainer.AddPredicate(IPredicate predicate) => this.Operand = predicate;
+
+    void IPredicate.Build(ITransaction transaction, IArguments arguments, Database.ICompositePredicate compositePredicate)
     {
-        public Not(IPredicate operand = null) => this.Operand = operand;
+        var not = compositePredicate.AddNot();
 
-        public IPredicate Operand { get; set; }
-
-        bool IPredicate.ShouldTreeShake(IArguments arguments) => this.Operand == null || this.Operand.ShouldTreeShake(arguments);
-
-        bool IPredicate.HasMissingArguments(IArguments arguments) => this.Operand?.HasMissingArguments(arguments) == true;
-
-        void IPredicateContainer.AddPredicate(IPredicate predicate) => this.Operand = predicate;
-
-        void IPredicate.Build(ITransaction transaction, IArguments arguments, Database.ICompositePredicate compositePredicate)
+        if (this.Operand != null && !this.Operand.ShouldTreeShake(arguments))
         {
-            var not = compositePredicate.AddNot();
-
-            if (this.Operand != null && !this.Operand.ShouldTreeShake(arguments))
-            {
-                this.Operand?.Build(transaction, arguments, not);
-            }
+            this.Operand?.Build(transaction, arguments, not);
         }
-
-        public void Accept(IVisitor visitor) => visitor.VisitNot(this);
     }
+
+    public void Accept(IVisitor visitor) => visitor.VisitNot(this);
 }

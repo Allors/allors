@@ -3,64 +3,66 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Adapters.Sql
+namespace Allors.Database.Adapters.Sql;
+
+using System;
+using Meta;
+
+internal sealed class RoleEqualsValue : Predicate
 {
-    using System;
-    using Meta;
+    private readonly object obj;
+    private readonly IRoleType roleType;
 
-    internal sealed class RoleEqualsValue : Predicate
+    internal RoleEqualsValue(ExtentFiltered extent, IRoleType roleType, object obj)
     {
-        private readonly object obj;
-        private readonly IRoleType roleType;
-
-        internal RoleEqualsValue(ExtentFiltered extent, IRoleType roleType, object obj)
+        extent.CheckRole(roleType);
+        PredicateAssertions.ValidateRoleEquals(roleType, obj);
+        this.roleType = roleType;
+        if (obj is Enum enumeration)
         {
-            extent.CheckRole(roleType);
-            PredicateAssertions.ValidateRoleEquals(roleType, obj);
-            this.roleType = roleType;
-            if (obj is Enum enumeration)
+            if (((IUnit)roleType.ObjectType).IsInteger)
             {
-                if (((IUnit)roleType.ObjectType).IsInteger)
-                {
-                    this.obj = Convert.ToInt32(enumeration);
-                }
-                else
-                {
-                    throw new Exception("Role Object Type " + roleType.ObjectType.Name + " doesn't support non int enumerations.");
-                }
+                this.obj = Convert.ToInt32(enumeration);
             }
             else
             {
-                this.obj = roleType.ObjectType.IsUnit ? roleType.Normalize(obj) : obj;
+                throw new Exception("Role Object Type " + roleType.ObjectType.Name + " doesn't support non int enumerations.");
             }
         }
-
-        internal override bool BuildWhere(ExtentStatement statement, string alias)
+        else
         {
-            var schema = statement.Mapping;
-            if (this.roleType.ObjectType.IsUnit)
-            {
-                statement.Append(" " + alias + "." + schema.ColumnNameByRelationType[this.roleType.RelationType] + "=" + statement.AddParameter(this.obj));
-            }
-            else
-            {
-                var allorsObject = (IObject)this.obj;
-
-                if (this.roleType.RelationType.ExistExclusiveClasses)
-                {
-                    statement.Append(" (" + alias + "." + schema.ColumnNameByRelationType[this.roleType.RelationType] + " IS NOT NULL AND ");
-                    statement.Append(" " + alias + "." + schema.ColumnNameByRelationType[this.roleType.RelationType] + "=" + allorsObject.Strategy.ObjectId + ")");
-                }
-                else
-                {
-                    statement.Append(" (" + this.roleType.SingularFullName + "_R." + Mapping.ColumnNameForRole + " IS NOT NULL AND ");
-                    statement.Append(" " + this.roleType.SingularFullName + "_R." + Mapping.ColumnNameForRole + "=" + allorsObject.Strategy.ObjectId + ")");
-                }
-            }
-
-            return this.Include;
+            this.obj = roleType.ObjectType.IsUnit ? roleType.Normalize(obj) : obj;
         }
-
-        internal override void Setup(ExtentStatement statement) => statement.UseRole(this.roleType);
     }
+
+    internal override bool BuildWhere(ExtentStatement statement, string alias)
+    {
+        var schema = statement.Mapping;
+        if (this.roleType.ObjectType.IsUnit)
+        {
+            statement.Append(" " + alias + "." + schema.ColumnNameByRelationType[this.roleType.RelationType] + "=" +
+                             statement.AddParameter(this.obj));
+        }
+        else
+        {
+            var allorsObject = (IObject)this.obj;
+
+            if (this.roleType.RelationType.ExistExclusiveClasses)
+            {
+                statement.Append(" (" + alias + "." + schema.ColumnNameByRelationType[this.roleType.RelationType] + " IS NOT NULL AND ");
+                statement.Append(" " + alias + "." + schema.ColumnNameByRelationType[this.roleType.RelationType] + "=" +
+                                 allorsObject.Strategy.ObjectId + ")");
+            }
+            else
+            {
+                statement.Append(" (" + this.roleType.SingularFullName + "_R." + Mapping.ColumnNameForRole + " IS NOT NULL AND ");
+                statement.Append(" " + this.roleType.SingularFullName + "_R." + Mapping.ColumnNameForRole + "=" +
+                                 allorsObject.Strategy.ObjectId + ")");
+            }
+        }
+
+        return this.Include;
+    }
+
+    internal override void Setup(ExtentStatement statement) => statement.UseRole(this.roleType);
 }

@@ -10,32 +10,32 @@ namespace Allors.Protocol.Json.Api.Pull
     public class PullResponse : Response
     {
         /// <summary>
-        /// Collections
+        ///     Collections
         /// </summary>
         public IDictionary<string, long[]> c { get; set; }
 
         /// <summary>
-        /// Objects
+        ///     Objects
         /// </summary>
         public IDictionary<string, long> o { get; set; }
 
         /// <summary>
-        /// Values
+        ///     Values
         /// </summary>
         public IDictionary<string, object> v { get; set; }
 
         /// <summary>
-        /// Pool
+        ///     Pool
         /// </summary>
         public PullResponseObject[] p { get; set; }
 
         /// <summary>
-        /// Grants [id, version]
+        ///     Grants [id, version]
         /// </summary>
         public long[][] g { get; set; }
 
         /// <summary>
-        /// Revocations [id, version]
+        ///     Revocations [id, version]
         /// </summary>
         public long[][] r { get; set; }
     }

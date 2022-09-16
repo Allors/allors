@@ -8,12 +8,12 @@ namespace Allors.Protocol.Json.Auth
     public class AuthenticationTokenRequest
     {
         /// <summary>
-        /// Login
+        ///     Login
         /// </summary>
         public string l { get; set; }
 
         /// <summary>
-        /// Password
+        ///     Password
         /// </summary>
         public string p { get; set; }
     }

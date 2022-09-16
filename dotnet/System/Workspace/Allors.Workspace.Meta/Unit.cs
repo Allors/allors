@@ -11,26 +11,6 @@ namespace Allors.Workspace.Meta
 
     public abstract class Unit : IObjectType
     {
-        public MetaPopulation MetaPopulation { get; set; }
-
-        public string Tag { get; set; }
-
-        public string SingularName { get; set; }
-
-        public string PluralName { get; set; }
-
-        public Type ClrType { get; set; }
-
-        int IComparable<IObjectType>.CompareTo(IObjectType other) => string.Compare(this.SingularName, other.SingularName, StringComparison.InvariantCulture);
-
-        public bool IsUnit => true;
-
-        public bool IsComposite => false;
-
-        public bool IsInterface => false;
-
-        public bool IsClass => false;
-
         public bool IsBinary => this.Tag == UnitTags.Binary;
 
         public bool IsBoolean => this.Tag == UnitTags.Boolean;
@@ -46,6 +26,26 @@ namespace Allors.Workspace.Meta
         public bool IsString => this.Tag == UnitTags.String;
 
         public bool IsUnique => this.Tag == UnitTags.Unique;
+        public MetaPopulation MetaPopulation { get; set; }
+
+        public string Tag { get; set; }
+
+        public string SingularName { get; set; }
+
+        public string PluralName { get; set; }
+
+        public Type ClrType { get; set; }
+
+        int IComparable<IObjectType>.CompareTo(IObjectType other) =>
+            string.Compare(this.SingularName, other.SingularName, StringComparison.InvariantCulture);
+
+        public bool IsUnit => true;
+
+        public bool IsComposite => false;
+
+        public bool IsInterface => false;
+
+        public bool IsClass => false;
 
         public Unit Init(string tag, string singularName)
         {

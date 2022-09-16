@@ -4,12 +4,11 @@
 // </copyright>
 // <summary>Defines the IObjectType type.</summary>
 
-namespace Allors.Database.Meta
-{
-    public interface IInheritance 
-    {
-        IInterface Supertype { get; }
+namespace Allors.Database.Meta;
 
-        IComposite Subtype { get; }
-    }
+public interface IInheritance
+{
+    IInterface Supertype { get; }
+
+    IComposite Subtype { get; }
 }

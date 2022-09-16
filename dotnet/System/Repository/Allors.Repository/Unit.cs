@@ -4,15 +4,14 @@
 // </copyright>
 // <summary>Defines the IObjectType type.</summary>
 
-namespace Allors.Repository.Domain
-{
-    using System.Collections.Generic;
+namespace Allors.Repository.Domain;
 
-    public class Unit : ObjectType
+using System.Collections.Generic;
+
+public class Unit : ObjectType
+{
+    public Unit(ISet<RepositoryObject> objects, string name, Domain domain)
+        : base(objects, name, domain)
     {
-        public Unit(ISet<RepositoryObject> objects, string name, Domain domain)
-            : base(objects, name, domain)
-        {
-        }
     }
 }

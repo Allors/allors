@@ -7,13 +7,14 @@
 namespace Allors.Workspace.Meta
 {
     /// <summary>
-    /// A relation type defines the state and behavior for
-    /// a set of association types and role types.
+    ///     A relation type defines the state and behavior for
+    ///     a set of association types and role types.
     /// </summary>
     public sealed class RelationType : IMetaObject
     {
         // Class
-        public RelationType(string tag, AssociationType associationType, IComposite associationObjectType, RoleType roleType, IObjectType roleObjectType, Multiplicity multiplicity = Multiplicity.ManyToOne)
+        public RelationType(string tag, AssociationType associationType, IComposite associationObjectType, RoleType roleType,
+            IObjectType roleObjectType, Multiplicity multiplicity = Multiplicity.ManyToOne)
         {
             this.Tag = tag;
             this.AssociationType = associationType;
@@ -27,10 +28,10 @@ namespace Allors.Workspace.Meta
 
         public AssociationType AssociationType { get; }
         public RoleType RoleType { get; }
-
-        public string Tag { get; }
         public Multiplicity Multiplicity { get; }
         public bool IsDerived { get; set; }
+
+        public string Tag { get; }
 
         public MetaPopulation MetaPopulation { get; }
 

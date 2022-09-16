@@ -1,26 +1,25 @@
-namespace Allors.Meta.Generation.Model
+namespace Allors.Meta.Generation.Model;
+
+using System;
+using Database.Meta;
+
+public class MethodTypeModel : OperandTypeModel, IMetaIdentifiableObjectModel
 {
-    using System;
-    using Database.Meta;
+    public MethodTypeModel(MetaModel metaModel, IMethodType methodType) : base(metaModel) => this.MethodType = methodType;
 
-    public class MethodTypeModel : OperandTypeModel, IMetaIdentifiableObjectModel
-    {
-        public MethodTypeModel(MetaModel metaModel, IMethodType methodType) : base(metaModel) => this.MethodType = methodType;
+    public IMethodType MethodType { get; }
+    protected override IMetaObject MetaObject => this.MethodType;
+    protected override IOperandType OperandType => this.MethodType;
 
-        public IMethodType MethodType { get; }
-        protected override IMetaObject MetaObject => this.MethodType;
-        protected override IOperandType OperandType => this.MethodType;
+    // IMethodType
+    public CompositeModel ObjectType => this.MetaModel.Map(this.MethodType.ObjectType);
 
-        // IMetaIdentifiableObject
-        public Guid Id => this.MethodType.Id;
+    public string Name => this.MethodType.Name;
 
-        public string Tag => this.MethodType.Tag;
+    public string FullName => this.MethodType.FullName;
 
-        // IMethodType
-        public CompositeModel ObjectType => this.MetaModel.Map(this.MethodType.ObjectType);
+    // IMetaIdentifiableObject
+    public Guid Id => this.MethodType.Id;
 
-        public string Name => this.MethodType.Name;
-
-        public string FullName => this.MethodType.FullName;
-    }
+    public string Tag => this.MethodType.Tag;
 }

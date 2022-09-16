@@ -4,14 +4,13 @@
 // </copyright>
 // <summary>Defines the IObjectType type.</summary>
 
-namespace Allors.Database.Meta
+namespace Allors.Database.Meta;
+
+using System.Collections.Generic;
+
+public interface IValidationLog
 {
-    using System.Collections.Generic;
+    bool ContainsErrors { get; }
 
-    public interface IValidationLog
-    {
-        bool ContainsErrors { get; }
-
-        IEnumerable<IValidationError> Errors { get; }
-    }
+    IEnumerable<IValidationError> Errors { get; }
 }

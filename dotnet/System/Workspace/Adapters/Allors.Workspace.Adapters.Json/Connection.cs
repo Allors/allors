@@ -24,11 +24,11 @@ namespace Allors.Workspace.Adapters.Json
 
     public abstract class Connection : Adapters.Connection
     {
-        private readonly Dictionary<long, Record> recordsById;
+        private readonly Dictionary<Class, Dictionary<IOperandType, long>> executePermissionByOperandTypeByClass;
 
         private readonly Dictionary<Class, Dictionary<IOperandType, long>> readPermissionByOperandTypeByClass;
+        private readonly Dictionary<long, Record> recordsById;
         private readonly Dictionary<Class, Dictionary<IOperandType, long>> writePermissionByOperandTypeByClass;
-        private readonly Dictionary<Class, Dictionary<IOperandType, long>> executePermissionByOperandTypeByClass;
 
 
         protected Connection(string name, MetaPopulation metaPopulation) : base(name, metaPopulation)
@@ -99,8 +99,7 @@ namespace Allors.Workspace.Adapters.Json
             {
                 return new AccessRequest
                 {
-                    g = ctx.MissingGrantIds.Select(v => v).ToArray(),
-                    r = ctx.MissingRevocationIds.Select(v => v).ToArray(),
+                    g = ctx.MissingGrantIds.Select(v => v).ToArray(), r = ctx.MissingRevocationIds.Select(v => v).ToArray()
                 };
             }
 
@@ -119,7 +118,7 @@ namespace Allors.Workspace.Adapters.Json
                     var id = syncResponseAccessControl.i;
                     var version = syncResponseAccessControl.v;
                     var permissionIds = ValueRange<long>.Load(syncResponseAccessControl.p);
-                    this.GrantById[id] = new Grant { Version = version, PermissionIds = ValueRange<long>.Load(permissionIds) };
+                    this.GrantById[id] = new Grant {Version = version, PermissionIds = ValueRange<long>.Load(permissionIds)};
 
                     foreach (var permissionId in permissionIds)
                     {
@@ -141,7 +140,7 @@ namespace Allors.Workspace.Adapters.Json
                     var id = syncResponseRevocation.i;
                     var version = syncResponseRevocation.v;
                     var permissionIds = ValueRange<long>.Load(syncResponseRevocation.p);
-                    this.RevocationById[id] = new Revocation { Version = version, PermissionIds = ValueRange<long>.Load(permissionIds) };
+                    this.RevocationById[id] = new Revocation {Version = version, PermissionIds = ValueRange<long>.Load(permissionIds)};
 
                     foreach (var permissionId in permissionIds)
                     {
@@ -156,7 +155,7 @@ namespace Allors.Workspace.Adapters.Json
                 }
             }
 
-            return missingPermissionIds != null ? new PermissionRequest { p = missingPermissionIds.ToArray() } : null;
+            return missingPermissionIds != null ? new PermissionRequest {p = missingPermissionIds.ToArray()} : null;
         }
 
         internal void PermissionResponse(PermissionResponse permissionResponse)
@@ -216,24 +215,16 @@ namespace Allors.Workspace.Adapters.Json
             }
         }
 
-        public override async Task<IInvokeResult> InvokeAsync(MethodRequest method, BatchOptions options = null) => await this.InvokeAsync(new[] { method }, options);
+        public override async Task<IInvokeResult> InvokeAsync(MethodRequest method, BatchOptions options = null) =>
+            await this.InvokeAsync(new[] {method}, options);
 
         public override async Task<IInvokeResult> InvokeAsync(MethodRequest[] methods, BatchOptions options = null)
         {
             var invokeRequest = new InvokeRequest
             {
-                l = methods.Select(v => new Invocation
-                {
-                    i = v.Object.Id,
-                    v = ((Object)v.Object).Version,
-                    m = v.MethodType.Tag
-                }).ToArray(),
+                l = methods.Select(v => new Invocation {i = v.Object.Id, v = ((Object)v.Object).Version, m = v.MethodType.Tag}).ToArray(),
                 o = options != null
-                    ? new InvokeOptions
-                    {
-                        c = options.ContinueOnError,
-                        i = options.Isolated
-                    }
+                    ? new InvokeOptions {c = options.ContinueOnError, i = options.Isolated}
                     : null
             };
 
@@ -253,7 +244,7 @@ namespace Allors.Workspace.Adapters.Json
                 }
             }
 
-            var pullRequest = new Allors.Protocol.Json.Api.Pull.PullRequest { l = pulls.Select(v => v.ToJson(this.UnitConvert)).ToArray() };
+            var pullRequest = new Allors.Protocol.Json.Api.Pull.PullRequest {l = pulls.Select(v => v.ToJson(this.UnitConvert)).ToArray()};
             var pullResponse = await this.Pull(pullRequest);
 
             var workspace = new Workspace(this);
@@ -266,7 +257,8 @@ namespace Allors.Workspace.Adapters.Json
             {
                 case Operations.Read:
                     if (this.readPermissionByOperandTypeByClass.TryGetValue(@class,
-                        out var readPermissionByOperandType) && readPermissionByOperandType.TryGetValue(operandType, out var readPermission))
+                            out var readPermissionByOperandType) &&
+                        readPermissionByOperandType.TryGetValue(operandType, out var readPermission))
                     {
                         return readPermission;
                     }
@@ -275,7 +267,8 @@ namespace Allors.Workspace.Adapters.Json
 
                 case Operations.Write:
                     if (this.writePermissionByOperandTypeByClass.TryGetValue(@class,
-                        out var writePermissionByOperandType) && writePermissionByOperandType.TryGetValue(operandType, out var writePermission))
+                            out var writePermissionByOperandType) &&
+                        writePermissionByOperandType.TryGetValue(operandType, out var writePermission))
                     {
                         return writePermission;
                     }
@@ -284,7 +277,8 @@ namespace Allors.Workspace.Adapters.Json
 
                 case Operations.Execute:
                     if (this.executePermissionByOperandTypeByClass.TryGetValue(@class,
-                        out var executePermissionByOperandType) && executePermissionByOperandType.TryGetValue(operandType, out var executePermission))
+                            out var executePermissionByOperandType) &&
+                        executePermissionByOperandType.TryGetValue(operandType, out var executePermission))
                     {
                         return executePermission;
                     }

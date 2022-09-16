@@ -3,14 +3,13 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Security
+namespace Allors.Database.Security;
+
+using Meta;
+
+public interface IPermission : IObject
 {
-    using Meta;
+    IClass Class { get; }
 
-    public interface IPermission : IObject
-    {
-        IClass Class { get; }
-
-        bool InWorkspace(string workspaceName);
-    }
+    bool InWorkspace(string workspaceName);
 }

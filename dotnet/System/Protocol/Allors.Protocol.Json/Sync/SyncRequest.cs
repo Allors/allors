@@ -8,7 +8,7 @@ namespace Allors.Protocol.Json.Api.Sync
     public class SyncRequest : Request
     {
         /// <summary>
-        /// Objects
+        ///     Objects
         /// </summary>
         public long[] o { get; set; }
     }

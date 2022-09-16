@@ -4,49 +4,47 @@
 // </copyright>
 // <summary>Defines the ObjectIdInteger type.</summary>
 
-namespace Allors.Database
+namespace Allors.Database;
+
+using System.Collections.Generic;
+using Meta;
+
+public sealed class PrefetchPolicyBuilder
 {
-    using System.Collections.Generic;
-    using Meta;
+    private bool allowCompilation = true;
+    private List<PrefetchRule> rules;
 
-    public sealed class PrefetchPolicyBuilder
+    public PrefetchPolicyBuilder() => this.rules = new List<PrefetchRule>();
+
+    public PrefetchPolicyBuilder WithRule(IPropertyType propertyType)
     {
-        private List<PrefetchRule> rules;
+        var rule = new PrefetchRule(propertyType, null);
+        this.rules.Add(rule);
+        return this;
+    }
 
-        private bool allowCompilation = true;
+    public PrefetchPolicyBuilder WithRule(IPropertyType propertyType, PrefetchPolicy prefetch)
+    {
+        var rule = new PrefetchRule(propertyType, prefetch);
+        this.rules.Add(rule);
+        return this;
+    }
 
-        public PrefetchPolicyBuilder() => this.rules = new List<PrefetchRule>();
+    public PrefetchPolicyBuilder WithAllowCompilation(bool allowCompilation)
+    {
+        this.allowCompilation = allowCompilation;
+        return this;
+    }
 
-        public PrefetchPolicyBuilder WithRule(IPropertyType propertyType)
+    public PrefetchPolicy Build()
+    {
+        try
         {
-            var rule = new PrefetchRule(propertyType, null);
-            this.rules.Add(rule);
-            return this;
+            return new PrefetchPolicy(this.rules.ToArray()) {AllowCompilation = this.allowCompilation};
         }
-
-        public PrefetchPolicyBuilder WithRule(IPropertyType propertyType, PrefetchPolicy prefetch)
+        finally
         {
-            var rule = new PrefetchRule(propertyType, prefetch);
-            this.rules.Add(rule);
-            return this;
-        }
-
-        public PrefetchPolicyBuilder WithAllowCompilation(bool allowCompilation)
-        {
-            this.allowCompilation = allowCompilation;
-            return this;
-        }
-
-        public PrefetchPolicy Build()
-        {
-            try
-            {
-                return new PrefetchPolicy(this.rules.ToArray()) { AllowCompilation = this.allowCompilation };
-            }
-            finally
-            {
-                this.rules = null;
-            }
+            this.rules = null;
         }
     }
 }

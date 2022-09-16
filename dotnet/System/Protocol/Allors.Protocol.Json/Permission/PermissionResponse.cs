@@ -8,7 +8,7 @@ namespace Allors.Protocol.Json.Api.Security
     public class PermissionResponse
     {
         /// <summary>
-        /// Permissions
+        ///     Permissions
         /// </summary>
         public PermissionResponsePermission[] p { get; set; }
     }

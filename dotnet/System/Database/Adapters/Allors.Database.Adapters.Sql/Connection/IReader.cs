@@ -3,34 +3,32 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Adapters.Sql
+namespace Allors.Database.Adapters.Sql;
+
+using System;
+
+public interface IReader : IDisposable
 {
-    using System;
+    object this[int i] { get; }
+    bool Read();
 
-    public interface IReader : IDisposable
-    {
-        bool Read();
+    object GetValue(int i);
 
-        object this[int i] { get; }
+    bool GetBoolean(int i);
 
-        object GetValue(int i);
+    DateTime GetDateTime(int i);
 
-        bool GetBoolean(int i);
+    decimal GetDecimal(int i);
 
-        DateTime GetDateTime(int i);
+    double GetDouble(int i);
 
-        decimal GetDecimal(int i);
+    int GetInt32(int i);
 
-        double GetDouble(int i);
+    long GetInt64(int i);
 
-        int GetInt32(int i);
+    string GetString(int i);
 
-        long GetInt64(int i);
+    Guid GetGuid(int i);
 
-        string GetString(int i);
-
-        Guid GetGuid(int i);
-
-        bool IsDBNull(int i);
-    }
+    bool IsDBNull(int i);
 }

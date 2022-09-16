@@ -3,67 +3,67 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Adapters.Sql.Npgsql
-{
-    // public class SchemaTest : Adapters.SchemaTest, IClassFixture<Fixture<SchemaTest>>
-    // {
-    // private readonly Profile profile;
+namespace Allors.Database.Adapters.Sql.Npgsql;
 
-    // public SchemaTest()
-    // {
-    //    this.profile =new Profile(this.GetType().Name);
-    // }
 
-    // protected override IProfile Profile => this.profile;
+// public class SchemaTest : Adapters.SchemaTest, IClassFixture<Fixture<SchemaTest>>
+// {
+// private readonly Profile profile;
 
-    // protected override IDatabase CreateDatabase(IMetaPopulation metaPopulation, bool init)
-    //    {
-    //        return this.profile.CreateDatabase(metaPopulation, init);
-    //    }
+// public SchemaTest()
+// {
+//    this.profile =new Profile(this.GetType().Name);
+// }
 
-    // public void Dispose()
-    //    {
-    //        this.profile.Dispose();
-    //    }
+// protected override IProfile Profile => this.profile;
 
-    // protected override void DropTable(string schema, string tableName)
-    //    {
-    //        this.profile.DropTable(schema, tableName);
-    //    }
+// protected override IDatabase CreateDatabase(IMetaPopulation metaPopulation, bool init)
+//    {
+//        return this.profile.CreateDatabase(metaPopulation, init);
+//    }
 
-    // protected override bool ExistTable(string schema, string table)
-    //    {
-    //        return this.profile.ExistTable(schema, table);
-    //    }
+// public void Dispose()
+//    {
+//        this.profile.Dispose();
+//    }
 
-    // protected override int ColumnCount(string schema, string table)
-    //    {
-    //        return this.profile.ColumnCount(schema, table);
-    //    }
+// protected override void DropTable(string schema, string tableName)
+//    {
+//        this.profile.DropTable(schema, tableName);
+//    }
 
-    // protected override bool ExistColumn(string schema, string table, string column, ColumnTypes columnType)
-    //    {
-    //        return this.profile.ExistColumn(schema, table, column, columnType);
-    //    }
+// protected override bool ExistTable(string schema, string table)
+//    {
+//        return this.profile.ExistTable(schema, table);
+//    }
 
-    // protected override bool ExistPrimaryKey(string schema, string table, string column)
-    //    {
-    //        return this.profile.ExistPrimaryKey(schema, table, column);
-    //    }
+// protected override int ColumnCount(string schema, string table)
+//    {
+//        return this.profile.ColumnCount(schema, table);
+//    }
 
-    // protected override bool ExistProcedure(string schema, string procedure)
-    //    {
-    //        return this.profile.ExistProcedure(schema, procedure);
-    //    }
+// protected override bool ExistColumn(string schema, string table, string column, ColumnTypes columnType)
+//    {
+//        return this.profile.ExistColumn(schema, table, column, columnType);
+//    }
 
-    // protected override bool ExistIndex(string schema, string table, string column)
-    //    {
-    //        return this.profile.ExistIndex(schema, table, column);
-    //    }
+// protected override bool ExistPrimaryKey(string schema, string table, string column)
+//    {
+//        return this.profile.ExistPrimaryKey(schema, table, column);
+//    }
 
-    // protected override void DropProcedure(string schema, string procedure)
-    //    {
-    //        this.profile.DropProcedure(procedure);
-    //    }
-    // }
-}
+// protected override bool ExistProcedure(string schema, string procedure)
+//    {
+//        return this.profile.ExistProcedure(schema, procedure);
+//    }
+
+// protected override bool ExistIndex(string schema, string table, string column)
+//    {
+//        return this.profile.ExistIndex(schema, table, column);
+//    }
+
+// protected override void DropProcedure(string schema, string procedure)
+//    {
+//        this.profile.DropProcedure(procedure);
+//    }
+// }

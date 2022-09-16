@@ -4,19 +4,18 @@
 // </copyright>
 // <summary>Defines the AssociationType type.</summary>
 
-namespace Allors.Database.Meta
+namespace Allors.Database.Meta;
+
+/// <summary>
+///     An association type defines the association side of a relation.
+///     This is also called the 'active', 'controlling' or 'owning' side.
+///     AssociationTypes can only have composite <see cref="ObjectType" />s.
+/// </summary>
+public interface IAssociationType : IPropertyType
 {
-    /// <summary>
-    /// An association type defines the association side of a relation.
-    /// This is also called the 'active', 'controlling' or 'owning' side.
-    /// AssociationTypes can only have composite <see cref="ObjectType"/>s.
-    /// </summary>
-    public interface IAssociationType : IPropertyType
-    {
-        IRelationType RelationType { get; }
+    IRelationType RelationType { get; }
 
-        IRoleType RoleType { get; }
+    IRoleType RoleType { get; }
 
-        new IComposite ObjectType { get; }
-    }
+    new IComposite ObjectType { get; }
 }

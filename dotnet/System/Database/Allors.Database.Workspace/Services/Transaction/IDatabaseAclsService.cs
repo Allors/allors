@@ -3,12 +3,11 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Services
-{
-    using Security;
+namespace Allors.Database.Services;
 
-    public interface IDatabaseAclsService
-    {
-        IAccessControl Create();
-    }
+using Security;
+
+public interface IDatabaseAclsService
+{
+    IAccessControl Create();
 }

@@ -4,12 +4,11 @@
 // </copyright>
 // <summary>Defines the RoleType type.</summary>
 
-namespace Allors.Database.Meta
+namespace Allors.Database.Meta;
+
+/// <summary>
+///     A <see cref="IOperandType" /> can be a <see cref="IAssociationType" /> or a <see cref="IRoleType" />.
+/// </summary>
+public interface IOperandType : IMetaObject
 {
-    /// <summary>
-    /// A <see cref="IOperandType"/> can be a <see cref="IAssociationType"/> or a <see cref="IRoleType"/>.
-    /// </summary>
-    public interface IOperandType : IMetaObject
-    {
-    }
 }

@@ -4,25 +4,23 @@
 // </copyright>
 // <summary>Defines the IObjectType type.</summary>
 
-namespace Allors.Database.Meta
+namespace Allors.Database.Meta;
+
+using System;
+using System.Collections.Generic;
+
+public interface IClass : IComposite
 {
-    using System;
-    using System.Collections.Generic;
+    IRoleType[] OverriddenRequiredRoleTypes { get; set; }
 
-    public interface IClass : IComposite
-    {
-        Action<object, object>[] Actions(IMethodType methodType);
+    IRoleType[] RequiredRoleTypes { get; }
 
-        IRoleType[] OverriddenRequiredRoleTypes { get; set; }
+    long CreatePermissionId { get; set; }
 
-        IRoleType[] RequiredRoleTypes { get; }
+    IReadOnlyDictionary<Guid, long> ReadPermissionIdByRelationTypeId { get; set; }
 
-        long CreatePermissionId { get; set; }
+    IReadOnlyDictionary<Guid, long> WritePermissionIdByRelationTypeId { get; set; }
 
-        IReadOnlyDictionary<Guid, long> ReadPermissionIdByRelationTypeId { get; set; }
-
-        IReadOnlyDictionary<Guid, long> WritePermissionIdByRelationTypeId { get; set; }
-
-        IReadOnlyDictionary<Guid, long> ExecutePermissionIdByMethodTypeId { get; set; }
-    }
+    IReadOnlyDictionary<Guid, long> ExecutePermissionIdByMethodTypeId { get; set; }
+    Action<object, object>[] Actions(IMethodType methodType);
 }

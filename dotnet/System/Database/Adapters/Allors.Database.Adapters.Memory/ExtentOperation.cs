@@ -3,92 +3,91 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Adapters.Memory
+namespace Allors.Database.Adapters.Memory;
+
+using System;
+using System.Collections.Generic;
+using Meta;
+
+internal sealed class ExtentOperation : Extent
 {
-    using System;
-    using System.Collections.Generic;
-    using Meta;
+    private readonly Extent firstOperand;
+    private readonly ExtentOperationType operationType;
+    private readonly Extent secondOperand;
 
-    internal sealed class ExtentOperation : Extent
+    public ExtentOperation(Transaction transaction, Extent firstOperand, Extent secondOperand, ExtentOperationType operationType)
+        : base(transaction)
     {
-        private readonly Extent firstOperand;
-        private readonly ExtentOperationType operationType;
-        private readonly Extent secondOperand;
-
-        public ExtentOperation(Transaction transaction, Extent firstOperand, Extent secondOperand, ExtentOperationType operationType)
-            : base(transaction)
+        if (!firstOperand.ObjectType.Equals(secondOperand.ObjectType))
         {
-            if (!firstOperand.ObjectType.Equals(secondOperand.ObjectType))
-            {
-                throw new ArgumentException("Both extents in a Union, Intersect or Except must be from the same type");
-            }
-
-            this.operationType = operationType;
-
-            this.firstOperand = firstOperand;
-            this.secondOperand = secondOperand;
-
-            firstOperand.Parent = this;
-            secondOperand.Parent = this;
+            throw new ArgumentException("Both extents in a Union, Intersect or Except must be from the same type");
         }
 
-        public override ICompositePredicate Filter => null;
+        this.operationType = operationType;
 
-        public override IComposite ObjectType => this.firstOperand.ObjectType;
+        this.firstOperand = firstOperand;
+        this.secondOperand = secondOperand;
 
-        protected override void Evaluate()
+        firstOperand.Parent = this;
+        secondOperand.Parent = this;
+    }
+
+    public override ICompositePredicate Filter => null;
+
+    public override IComposite ObjectType => this.firstOperand.ObjectType;
+
+    protected override void Evaluate()
+    {
+        if (this.Strategies == null)
         {
-            if (this.Strategies == null)
+            var firstOperandStrategies = new List<Strategy>(this.firstOperand.GetEvaluatedStrategies());
+            var secondOperandStrategies = new List<Strategy>(this.secondOperand.GetEvaluatedStrategies());
+
+            switch (this.operationType)
             {
-                var firstOperandStrategies = new List<Strategy>(this.firstOperand.GetEvaluatedStrategies());
-                var secondOperandStrategies = new List<Strategy>(this.secondOperand.GetEvaluatedStrategies());
-
-                switch (this.operationType)
-                {
-                    case ExtentOperationType.Union:
-                        this.Strategies = firstOperandStrategies;
-                        foreach (var strategy in secondOperandStrategies)
+                case ExtentOperationType.Union:
+                    this.Strategies = firstOperandStrategies;
+                    foreach (var strategy in secondOperandStrategies)
+                    {
+                        if (!this.Strategies.Contains(strategy))
                         {
-                            if (!this.Strategies.Contains(strategy))
-                            {
-                                this.Strategies.Add(strategy);
-                            }
+                            this.Strategies.Add(strategy);
                         }
+                    }
 
-                        break;
+                    break;
 
-                    case ExtentOperationType.Intersect:
-                        this.Strategies = new List<Strategy>();
-                        foreach (var strategy in firstOperandStrategies)
+                case ExtentOperationType.Intersect:
+                    this.Strategies = new List<Strategy>();
+                    foreach (var strategy in firstOperandStrategies)
+                    {
+                        if (secondOperandStrategies.Contains(strategy))
                         {
-                            if (secondOperandStrategies.Contains(strategy))
-                            {
-                                this.Strategies.Add(strategy);
-                            }
+                            this.Strategies.Add(strategy);
                         }
+                    }
 
-                        break;
+                    break;
 
-                    case ExtentOperationType.Except:
-                        this.Strategies = firstOperandStrategies;
-                        foreach (var strategy in secondOperandStrategies)
+                case ExtentOperationType.Except:
+                    this.Strategies = firstOperandStrategies;
+                    foreach (var strategy in secondOperandStrategies)
+                    {
+                        if (this.Strategies.Contains(strategy))
                         {
-                            if (this.Strategies.Contains(strategy))
-                            {
-                                this.Strategies.Remove(strategy);
-                            }
+                            this.Strategies.Remove(strategy);
                         }
+                    }
 
-                        break;
+                    break;
 
-                    default:
-                        throw new Exception("Unknown extent operation");
-                }
+                default:
+                    throw new Exception("Unknown extent operation");
+            }
 
-                if (this.Sorter != null)
-                {
-                    this.Strategies.Sort(this.Sorter);
-                }
+            if (this.Sorter != null)
+            {
+                this.Strategies.Sort(this.Sorter);
             }
         }
     }

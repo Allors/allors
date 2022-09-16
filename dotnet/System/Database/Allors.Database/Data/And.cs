@@ -3,34 +3,33 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Data
+namespace Allors.Database.Data;
+
+using System.Linq;
+
+public class And : ICompositePredicate
 {
-    using System.Linq;
+    public And(params IPredicate[] operands) => this.Operands = operands;
 
-    public class And : ICompositePredicate
+    public IPredicate[] Operands { get; set; }
+
+    bool IPredicate.ShouldTreeShake(IArguments arguments) => this.Operands.All(v => v.ShouldTreeShake(arguments));
+
+    bool IPredicate.HasMissingArguments(IArguments arguments) => this.Operands.All(v => v.HasMissingArguments(arguments));
+
+    void IPredicate.Build(ITransaction transaction, IArguments arguments, Database.ICompositePredicate compositePredicate)
     {
-        public And(params IPredicate[] operands) => this.Operands = operands;
-
-        public IPredicate[] Operands { get; set; }
-
-        bool IPredicate.ShouldTreeShake(IArguments arguments) => this.Operands.All(v => v.ShouldTreeShake(arguments));
-
-        bool IPredicate.HasMissingArguments(IArguments arguments) => this.Operands.All(v => v.HasMissingArguments(arguments));
-
-        void IPredicate.Build(ITransaction transaction, IArguments arguments, Database.ICompositePredicate compositePredicate)
+        var and = compositePredicate.AddAnd();
+        foreach (var predicate in this.Operands)
         {
-            var and = compositePredicate.AddAnd();
-            foreach (var predicate in this.Operands)
+            if (!predicate.ShouldTreeShake(arguments))
             {
-                if (!predicate.ShouldTreeShake(arguments))
-                {
-                    predicate.Build(transaction, arguments, and);
-                }
+                predicate.Build(transaction, arguments, and);
             }
         }
-
-        public void AddPredicate(IPredicate predicate) => this.Operands = this.Operands.Append(predicate).ToArray();
-
-        public void Accept(IVisitor visitor) => visitor.VisitAnd(this);
     }
+
+    public void AddPredicate(IPredicate predicate) => this.Operands = this.Operands.Append(predicate).ToArray();
+
+    public void Accept(IVisitor visitor) => visitor.VisitAnd(this);
 }

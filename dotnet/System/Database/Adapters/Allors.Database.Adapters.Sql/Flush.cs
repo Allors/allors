@@ -3,238 +3,237 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Adapters.Sql
+namespace Allors.Database.Adapters.Sql;
+
+using System.Collections.Generic;
+using Meta;
+
+internal class Flush
 {
-    using System.Collections.Generic;
-    using Meta;
+    private const int BatchSize = 1000;
+    private readonly Transaction transaction;
+    private Dictionary<IRoleType, List<CompositeRelation>> addCompositeRoleRelationsByRoleType;
+    private Dictionary<IRoleType, IList<long>> clearCompositeAndCompositesRoleRelationsByRoleType;
+    private Dictionary<IRoleType, List<CompositeRelation>> removeCompositeRoleRelationsByRoleType;
+    private Dictionary<IRoleType, List<CompositeRelation>> setCompositeRoleRelationsByRoleType;
 
-    internal class Flush
+    private Dictionary<IClass, Dictionary<IRoleType, List<UnitRelation>>> setUnitRoleRelationsByRoleTypeByExclusiveClass;
+
+    internal Flush(Transaction transaction, Dictionary<Reference, Strategy> unsyncedRolesByReference)
     {
-        private const int BatchSize = 1000;
-        private readonly Transaction transaction;
+        this.transaction = transaction;
 
-        private Dictionary<IClass, Dictionary<IRoleType, List<UnitRelation>>> setUnitRoleRelationsByRoleTypeByExclusiveClass;
-        private Dictionary<IRoleType, List<CompositeRelation>> setCompositeRoleRelationsByRoleType;
-        private Dictionary<IRoleType, List<CompositeRelation>> addCompositeRoleRelationsByRoleType;
-        private Dictionary<IRoleType, List<CompositeRelation>> removeCompositeRoleRelationsByRoleType;
-        private Dictionary<IRoleType, IList<long>> clearCompositeAndCompositesRoleRelationsByRoleType;
-
-        internal Flush(Transaction transaction, Dictionary<Reference, Strategy> unsyncedRolesByReference)
+        foreach (var dictionaryEntry in unsyncedRolesByReference)
         {
-            this.transaction = transaction;
-
-            foreach (var dictionaryEntry in unsyncedRolesByReference)
-            {
-                var roles = dictionaryEntry.Value;
-                roles.Flush(this);
-            }
+            var roles = dictionaryEntry.Value;
+            roles.Flush(this);
         }
+    }
 
-        internal void Execute()
+    internal void Execute()
+    {
+        if (this.setUnitRoleRelationsByRoleTypeByExclusiveClass != null)
         {
-            if (this.setUnitRoleRelationsByRoleTypeByExclusiveClass != null)
+            foreach (var firstDictionaryEntry in this.setUnitRoleRelationsByRoleTypeByExclusiveClass)
             {
-                foreach (var firstDictionaryEntry in this.setUnitRoleRelationsByRoleTypeByExclusiveClass)
+                var exclusiveRootClass = firstDictionaryEntry.Key;
+                foreach (var secondDictionaryEntry in firstDictionaryEntry.Value)
                 {
-                    var exclusiveRootClass = firstDictionaryEntry.Key;
-                    foreach (var secondDictionaryEntry in firstDictionaryEntry.Value)
-                    {
-                        var roleType = secondDictionaryEntry.Key;
-                        var relations = secondDictionaryEntry.Value;
-                        if (relations.Count > 0)
-                        {
-                            this.transaction.Commands.SetUnitRole(relations, exclusiveRootClass, roleType);
-                        }
-                    }
-                }
-            }
-
-            this.setUnitRoleRelationsByRoleTypeByExclusiveClass = null;
-
-            if (this.setCompositeRoleRelationsByRoleType != null)
-            {
-                foreach (var dictionaryEntry in this.setCompositeRoleRelationsByRoleType)
-                {
-                    var roleType = dictionaryEntry.Key;
-                    var relations = dictionaryEntry.Value;
+                    var roleType = secondDictionaryEntry.Key;
+                    var relations = secondDictionaryEntry.Value;
                     if (relations.Count > 0)
                     {
-                        this.transaction.Commands.SetCompositeRole(relations, roleType);
+                        this.transaction.Commands.SetUnitRole(relations, exclusiveRootClass, roleType);
                     }
                 }
             }
+        }
 
-            this.setCompositeRoleRelationsByRoleType = null;
+        this.setUnitRoleRelationsByRoleTypeByExclusiveClass = null;
 
-            if (this.addCompositeRoleRelationsByRoleType != null)
+        if (this.setCompositeRoleRelationsByRoleType != null)
+        {
+            foreach (var dictionaryEntry in this.setCompositeRoleRelationsByRoleType)
             {
-                foreach (var dictionaryEntry in this.addCompositeRoleRelationsByRoleType)
+                var roleType = dictionaryEntry.Key;
+                var relations = dictionaryEntry.Value;
+                if (relations.Count > 0)
                 {
-                    var roleType = dictionaryEntry.Key;
-                    var relations = dictionaryEntry.Value;
-                    if (relations.Count > 0)
-                    {
-                        this.transaction.Commands.AddCompositeRole(relations, roleType);
-                    }
+                    this.transaction.Commands.SetCompositeRole(relations, roleType);
                 }
             }
+        }
 
-            this.addCompositeRoleRelationsByRoleType = null;
+        this.setCompositeRoleRelationsByRoleType = null;
 
-            if (this.removeCompositeRoleRelationsByRoleType != null)
+        if (this.addCompositeRoleRelationsByRoleType != null)
+        {
+            foreach (var dictionaryEntry in this.addCompositeRoleRelationsByRoleType)
             {
-                foreach (var dictionaryEntry in this.removeCompositeRoleRelationsByRoleType)
+                var roleType = dictionaryEntry.Key;
+                var relations = dictionaryEntry.Value;
+                if (relations.Count > 0)
                 {
-                    var roleType = dictionaryEntry.Key;
-                    var relations = dictionaryEntry.Value;
-                    if (relations.Count > 0)
-                    {
-                        this.transaction.Commands.RemoveCompositeRole(relations, roleType);
-                    }
+                    this.transaction.Commands.AddCompositeRole(relations, roleType);
                 }
             }
+        }
 
-            this.removeCompositeRoleRelationsByRoleType = null;
+        this.addCompositeRoleRelationsByRoleType = null;
 
-            if (this.clearCompositeAndCompositesRoleRelationsByRoleType != null)
+        if (this.removeCompositeRoleRelationsByRoleType != null)
+        {
+            foreach (var dictionaryEntry in this.removeCompositeRoleRelationsByRoleType)
             {
-                foreach (var dictionaryEntry in this.clearCompositeAndCompositesRoleRelationsByRoleType)
+                var roleType = dictionaryEntry.Key;
+                var relations = dictionaryEntry.Value;
+                if (relations.Count > 0)
                 {
-                    var roleType = dictionaryEntry.Key;
-                    var relations = dictionaryEntry.Value;
-                    if (relations.Count > 0)
-                    {
-                        this.transaction.Commands.ClearCompositeAndCompositesRole(relations, roleType);
-                    }
+                    this.transaction.Commands.RemoveCompositeRole(relations, roleType);
                 }
             }
-
-            this.clearCompositeAndCompositesRoleRelationsByRoleType = null;
         }
 
-        internal void SetUnitRole(Reference association, IRoleType roleType, object role)
+        this.removeCompositeRoleRelationsByRoleType = null;
+
+        if (this.clearCompositeAndCompositesRoleRelationsByRoleType != null)
         {
-            if (this.setUnitRoleRelationsByRoleTypeByExclusiveClass == null)
+            foreach (var dictionaryEntry in this.clearCompositeAndCompositesRoleRelationsByRoleType)
             {
-                this.setUnitRoleRelationsByRoleTypeByExclusiveClass = new Dictionary<IClass, Dictionary<IRoleType, List<UnitRelation>>>();
-            }
-
-            var exclusiveClass = association.Class.ExclusiveClass;
-
-            if (!this.setUnitRoleRelationsByRoleTypeByExclusiveClass.TryGetValue(exclusiveClass, out var setUnitRoleRelationsByRoleType))
-            {
-                setUnitRoleRelationsByRoleType = new Dictionary<IRoleType, List<UnitRelation>>();
-                this.setUnitRoleRelationsByRoleTypeByExclusiveClass[exclusiveClass] = setUnitRoleRelationsByRoleType;
-            }
-
-            if (!setUnitRoleRelationsByRoleType.TryGetValue(roleType, out var relations))
-            {
-                relations = new List<UnitRelation>();
-                setUnitRoleRelationsByRoleType[roleType] = relations;
-            }
-
-            var unitRelation = new UnitRelation(association.ObjectId, role);
-            relations.Add(unitRelation);
-
-            if (relations.Count > BatchSize)
-            {
-                this.transaction.Commands.SetUnitRole(relations, exclusiveClass, roleType);
-                relations.Clear();
+                var roleType = dictionaryEntry.Key;
+                var relations = dictionaryEntry.Value;
+                if (relations.Count > 0)
+                {
+                    this.transaction.Commands.ClearCompositeAndCompositesRole(relations, roleType);
+                }
             }
         }
 
-        internal void SetCompositeRole(Reference association, IRoleType roleType, long role)
+        this.clearCompositeAndCompositesRoleRelationsByRoleType = null;
+    }
+
+    internal void SetUnitRole(Reference association, IRoleType roleType, object role)
+    {
+        if (this.setUnitRoleRelationsByRoleTypeByExclusiveClass == null)
         {
-            if (this.setCompositeRoleRelationsByRoleType == null)
-            {
-                this.setCompositeRoleRelationsByRoleType = new Dictionary<IRoleType, List<CompositeRelation>>();
-            }
-
-            if (!this.setCompositeRoleRelationsByRoleType.TryGetValue(roleType, out var relations))
-            {
-                relations = new List<CompositeRelation>();
-                this.setCompositeRoleRelationsByRoleType[roleType] = relations;
-            }
-
-            relations.Add(new CompositeRelation(association.ObjectId, role));
-
-            if (relations.Count > BatchSize)
-            {
-                this.transaction.Commands.SetCompositeRole(relations, roleType);
-                relations.Clear();
-            }
+            this.setUnitRoleRelationsByRoleTypeByExclusiveClass = new Dictionary<IClass, Dictionary<IRoleType, List<UnitRelation>>>();
         }
 
-        internal void AddCompositeRole(Reference association, IRoleType roleType, HashSet<long> added)
+        var exclusiveClass = association.Class.ExclusiveClass;
+
+        if (!this.setUnitRoleRelationsByRoleTypeByExclusiveClass.TryGetValue(exclusiveClass, out var setUnitRoleRelationsByRoleType))
         {
-            if (this.addCompositeRoleRelationsByRoleType == null)
-            {
-                this.addCompositeRoleRelationsByRoleType = new Dictionary<IRoleType, List<CompositeRelation>>();
-            }
-
-            if (!this.addCompositeRoleRelationsByRoleType.TryGetValue(roleType, out var relations))
-            {
-                relations = new List<CompositeRelation>();
-                this.addCompositeRoleRelationsByRoleType[roleType] = relations;
-            }
-
-            foreach (var roleObjectId in added)
-            {
-                relations.Add(new CompositeRelation(association.ObjectId, roleObjectId));
-            }
-
-            if (relations.Count > BatchSize)
-            {
-                this.transaction.Commands.AddCompositeRole(relations, roleType);
-                relations.Clear();
-            }
+            setUnitRoleRelationsByRoleType = new Dictionary<IRoleType, List<UnitRelation>>();
+            this.setUnitRoleRelationsByRoleTypeByExclusiveClass[exclusiveClass] = setUnitRoleRelationsByRoleType;
         }
 
-        internal void RemoveCompositeRole(Reference association, IRoleType roleType, HashSet<long> removed)
+        if (!setUnitRoleRelationsByRoleType.TryGetValue(roleType, out var relations))
         {
-            if (this.removeCompositeRoleRelationsByRoleType == null)
-            {
-                this.removeCompositeRoleRelationsByRoleType = new Dictionary<IRoleType, List<CompositeRelation>>();
-            }
-
-            if (!this.removeCompositeRoleRelationsByRoleType.TryGetValue(roleType, out var relations))
-            {
-                relations = new List<CompositeRelation>();
-                this.removeCompositeRoleRelationsByRoleType[roleType] = relations;
-            }
-
-            foreach (var roleObjectId in removed)
-            {
-                relations.Add(new CompositeRelation(association.ObjectId, roleObjectId));
-            }
-
-            if (relations.Count > BatchSize)
-            {
-                this.transaction.Commands.RemoveCompositeRole(relations, roleType);
-                relations.Clear();
-            }
+            relations = new List<UnitRelation>();
+            setUnitRoleRelationsByRoleType[roleType] = relations;
         }
 
-        internal void ClearCompositeAndCompositesRole(Reference association, IRoleType roleType)
+        var unitRelation = new UnitRelation(association.ObjectId, role);
+        relations.Add(unitRelation);
+
+        if (relations.Count > BatchSize)
         {
-            if (this.clearCompositeAndCompositesRoleRelationsByRoleType == null)
-            {
-                this.clearCompositeAndCompositesRoleRelationsByRoleType = new Dictionary<IRoleType, IList<long>>();
-            }
+            this.transaction.Commands.SetUnitRole(relations, exclusiveClass, roleType);
+            relations.Clear();
+        }
+    }
 
-            if (!this.clearCompositeAndCompositesRoleRelationsByRoleType.TryGetValue(roleType, out var relations))
-            {
-                relations = new List<long>();
-                this.clearCompositeAndCompositesRoleRelationsByRoleType[roleType] = relations;
-            }
+    internal void SetCompositeRole(Reference association, IRoleType roleType, long role)
+    {
+        if (this.setCompositeRoleRelationsByRoleType == null)
+        {
+            this.setCompositeRoleRelationsByRoleType = new Dictionary<IRoleType, List<CompositeRelation>>();
+        }
 
-            relations.Add(association.ObjectId);
+        if (!this.setCompositeRoleRelationsByRoleType.TryGetValue(roleType, out var relations))
+        {
+            relations = new List<CompositeRelation>();
+            this.setCompositeRoleRelationsByRoleType[roleType] = relations;
+        }
 
-            if (relations.Count > BatchSize)
-            {
-                this.transaction.Commands.ClearCompositeAndCompositesRole(relations, roleType);
-                relations.Clear();
-            }
+        relations.Add(new CompositeRelation(association.ObjectId, role));
+
+        if (relations.Count > BatchSize)
+        {
+            this.transaction.Commands.SetCompositeRole(relations, roleType);
+            relations.Clear();
+        }
+    }
+
+    internal void AddCompositeRole(Reference association, IRoleType roleType, HashSet<long> added)
+    {
+        if (this.addCompositeRoleRelationsByRoleType == null)
+        {
+            this.addCompositeRoleRelationsByRoleType = new Dictionary<IRoleType, List<CompositeRelation>>();
+        }
+
+        if (!this.addCompositeRoleRelationsByRoleType.TryGetValue(roleType, out var relations))
+        {
+            relations = new List<CompositeRelation>();
+            this.addCompositeRoleRelationsByRoleType[roleType] = relations;
+        }
+
+        foreach (var roleObjectId in added)
+        {
+            relations.Add(new CompositeRelation(association.ObjectId, roleObjectId));
+        }
+
+        if (relations.Count > BatchSize)
+        {
+            this.transaction.Commands.AddCompositeRole(relations, roleType);
+            relations.Clear();
+        }
+    }
+
+    internal void RemoveCompositeRole(Reference association, IRoleType roleType, HashSet<long> removed)
+    {
+        if (this.removeCompositeRoleRelationsByRoleType == null)
+        {
+            this.removeCompositeRoleRelationsByRoleType = new Dictionary<IRoleType, List<CompositeRelation>>();
+        }
+
+        if (!this.removeCompositeRoleRelationsByRoleType.TryGetValue(roleType, out var relations))
+        {
+            relations = new List<CompositeRelation>();
+            this.removeCompositeRoleRelationsByRoleType[roleType] = relations;
+        }
+
+        foreach (var roleObjectId in removed)
+        {
+            relations.Add(new CompositeRelation(association.ObjectId, roleObjectId));
+        }
+
+        if (relations.Count > BatchSize)
+        {
+            this.transaction.Commands.RemoveCompositeRole(relations, roleType);
+            relations.Clear();
+        }
+    }
+
+    internal void ClearCompositeAndCompositesRole(Reference association, IRoleType roleType)
+    {
+        if (this.clearCompositeAndCompositesRoleRelationsByRoleType == null)
+        {
+            this.clearCompositeAndCompositesRoleRelationsByRoleType = new Dictionary<IRoleType, IList<long>>();
+        }
+
+        if (!this.clearCompositeAndCompositesRoleRelationsByRoleType.TryGetValue(roleType, out var relations))
+        {
+            relations = new List<long>();
+            this.clearCompositeAndCompositesRoleRelationsByRoleType[roleType] = relations;
+        }
+
+        relations.Add(association.ObjectId);
+
+        if (relations.Count > BatchSize)
+        {
+            this.transaction.Commands.ClearCompositeAndCompositesRole(relations, roleType);
+            relations.Clear();
         }
     }
 }

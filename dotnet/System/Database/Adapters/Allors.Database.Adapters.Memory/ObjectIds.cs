@@ -3,16 +3,15 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Adapters.Memory
+namespace Allors.Database.Adapters.Memory;
+
+internal abstract class ObjectIds
 {
-    internal abstract class ObjectIds
-    {
-        internal abstract void AdjustCurrentId(long id);
+    internal abstract void AdjustCurrentId(long id);
 
-        internal abstract long Next();
+    internal abstract long Next();
 
-        internal abstract long Parse(string idString);
+    internal abstract long Parse(string idString);
 
-        internal abstract void Reset();
-    }
+    internal abstract void Reset();
 }

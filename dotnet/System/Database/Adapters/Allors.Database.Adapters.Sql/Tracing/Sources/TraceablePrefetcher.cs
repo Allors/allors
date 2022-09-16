@@ -3,109 +3,167 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Adapters.Sql
+namespace Allors.Database.Adapters.Sql;
+
+using System.Collections.Generic;
+using System.Linq;
+using Allors.Database.Tracing;
+using Meta;
+using Tracing;
+
+internal sealed class TraceablePrefetcher : Prefetcher
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using Allors.Database.Tracing;
-    using Meta;
-    using Tracing;
+    private readonly ISink sink;
 
-    internal sealed class TraceablePrefetcher : Prefetcher
+    public TraceablePrefetcher(Transaction transaction) : base(transaction) => this.sink = transaction.Database.Sink;
+
+    internal override void PrefetchUnitRoles(IClass @class, HashSet<Reference> associations, IRoleType anyRoleType)
     {
-        private readonly ISink sink;
-
-        public TraceablePrefetcher(Transaction transaction) : base(transaction) => this.sink = transaction.Database.Sink;
-
-        internal override void PrefetchUnitRoles(IClass @class, HashSet<Reference> associations, IRoleType anyRoleType)
+        var @event = new SqlPrefetchUnitRolesEvent(this.Transaction)
         {
-            var @event = new SqlPrefetchUnitRolesEvent(this.Transaction) { Class = @class, Associations = associations?.ToArray(), RoleType = anyRoleType };
-            this.sink.OnBefore(@event);
+            Class = @class, Associations = associations?.ToArray(), RoleType = anyRoleType
+        };
+        this.sink.OnBefore(@event);
 
-            base.PrefetchUnitRoles(@class, associations, anyRoleType);
+        base.PrefetchUnitRoles(@class, associations, anyRoleType);
 
-            this.sink.OnAfter(@event);
-        }
+        this.sink.OnAfter(@event);
+    }
 
-        internal override void PrefetchCompositeRoleObjectTable(HashSet<Reference> associations, IRoleType roleType, HashSet<long> nestedObjectIds, HashSet<long> leafs)
+    internal override void PrefetchCompositeRoleObjectTable(HashSet<Reference> associations, IRoleType roleType,
+        HashSet<long> nestedObjectIds, HashSet<long> leafs)
+    {
+        var @event = new SqlPrefetchCompositeRoleObjectTableEvent(this.Transaction)
         {
-            var @event = new SqlPrefetchCompositeRoleObjectTableEvent(this.Transaction) { Associations = associations?.ToArray(), RoleType = roleType, NestedObjectIds = nestedObjectIds?.ToArray(), Leafs = leafs?.ToArray() };
-            this.sink.OnBefore(@event);
+            Associations = associations?.ToArray(),
+            RoleType = roleType,
+            NestedObjectIds = nestedObjectIds?.ToArray(),
+            Leafs = leafs?.ToArray()
+        };
+        this.sink.OnBefore(@event);
 
-            base.PrefetchCompositeRoleObjectTable(associations, roleType, nestedObjectIds, leafs);
+        base.PrefetchCompositeRoleObjectTable(associations, roleType, nestedObjectIds, leafs);
 
-            this.sink.OnAfter(@event);
-        }
+        this.sink.OnAfter(@event);
+    }
 
-        internal override void PrefetchCompositeRoleRelationTable(HashSet<Reference> associations, IRoleType roleType, HashSet<long> nestedObjectIds, HashSet<long> leafs)
+    internal override void PrefetchCompositeRoleRelationTable(HashSet<Reference> associations, IRoleType roleType,
+        HashSet<long> nestedObjectIds, HashSet<long> leafs)
+    {
+        var @event = new SqlPrefetchCompositeRoleRelationTableEvent(this.Transaction)
         {
-            var @event = new SqlPrefetchCompositeRoleRelationTableEvent(this.Transaction) { Associations = associations?.ToArray(), RoleType = roleType, NestedObjectIds = nestedObjectIds?.ToArray(), Leafs = leafs?.ToArray() };
-            this.sink.OnBefore(@event);
+            Associations = associations?.ToArray(),
+            RoleType = roleType,
+            NestedObjectIds = nestedObjectIds?.ToArray(),
+            Leafs = leafs?.ToArray()
+        };
+        this.sink.OnBefore(@event);
 
-            base.PrefetchCompositeRoleRelationTable(associations, roleType, nestedObjectIds, leafs);
+        base.PrefetchCompositeRoleRelationTable(associations, roleType, nestedObjectIds, leafs);
 
-            this.sink.OnAfter(@event);
-        }
+        this.sink.OnAfter(@event);
+    }
 
-        internal override void PrefetchCompositesRoleObjectTable(HashSet<Reference> associations, IRoleType roleType, HashSet<long> nestedObjectIds, HashSet<long> leafs)
+    internal override void PrefetchCompositesRoleObjectTable(HashSet<Reference> associations, IRoleType roleType,
+        HashSet<long> nestedObjectIds, HashSet<long> leafs)
+    {
+        var @event = new SqlPrefetchCompositesRoleObjectTableEvent(this.Transaction)
         {
-            var @event = new SqlPrefetchCompositesRoleObjectTableEvent(this.Transaction) { Associations = associations?.ToArray(), RoleType = roleType, NestedObjectIds = nestedObjectIds?.ToArray(), Leafs = leafs?.ToArray() };
-            this.sink.OnBefore(@event);
+            Associations = associations?.ToArray(),
+            RoleType = roleType,
+            NestedObjectIds = nestedObjectIds?.ToArray(),
+            Leafs = leafs?.ToArray()
+        };
+        this.sink.OnBefore(@event);
 
-            base.PrefetchCompositesRoleObjectTable(associations, roleType, nestedObjectIds, leafs);
+        base.PrefetchCompositesRoleObjectTable(associations, roleType, nestedObjectIds, leafs);
 
-            this.sink.OnAfter(@event);
-        }
+        this.sink.OnAfter(@event);
+    }
 
-        internal override void PrefetchCompositesRoleRelationTable(HashSet<Reference> associations, IRoleType roleType, HashSet<long> nestedObjectIds, HashSet<long> leafs)
+    internal override void PrefetchCompositesRoleRelationTable(HashSet<Reference> associations, IRoleType roleType,
+        HashSet<long> nestedObjectIds, HashSet<long> leafs)
+    {
+        var @event = new SqlPrefetchCompositesRoleRelationTableEvent(this.Transaction)
         {
-            var @event = new SqlPrefetchCompositesRoleRelationTableEvent(this.Transaction) { Associations = associations?.ToArray(), RoleType = roleType, NestedObjectIds = nestedObjectIds?.ToArray(), Leafs = leafs?.ToArray() };
-            this.sink.OnBefore(@event);
+            Associations = associations?.ToArray(),
+            RoleType = roleType,
+            NestedObjectIds = nestedObjectIds?.ToArray(),
+            Leafs = leafs?.ToArray()
+        };
+        this.sink.OnBefore(@event);
 
-            base.PrefetchCompositesRoleRelationTable(associations, roleType, nestedObjectIds, leafs);
+        base.PrefetchCompositesRoleRelationTable(associations, roleType, nestedObjectIds, leafs);
 
-            this.sink.OnAfter(@event);
-        }
+        this.sink.OnAfter(@event);
+    }
 
 
-        internal override void PrefetchCompositeAssociationObjectTable(HashSet<Reference> roles, IAssociationType associationType, HashSet<long> nestedObjectIds, HashSet<long> leafs)
+    internal override void PrefetchCompositeAssociationObjectTable(HashSet<Reference> roles, IAssociationType associationType,
+        HashSet<long> nestedObjectIds, HashSet<long> leafs)
+    {
+        var @event = new SqlPrefetchCompositeAssociationObjectTableEvent(this.Transaction)
         {
-            var @event = new SqlPrefetchCompositeAssociationObjectTableEvent(this.Transaction) { Roles = roles?.ToArray(), AssociationType = associationType, NestedObjectIds = nestedObjectIds?.ToArray(), Leafs = leafs?.ToArray() };
-            this.sink.OnBefore(@event);
+            Roles = roles?.ToArray(),
+            AssociationType = associationType,
+            NestedObjectIds = nestedObjectIds?.ToArray(),
+            Leafs = leafs?.ToArray()
+        };
+        this.sink.OnBefore(@event);
 
-            base.PrefetchCompositeAssociationObjectTable(roles, associationType, nestedObjectIds, leafs);
+        base.PrefetchCompositeAssociationObjectTable(roles, associationType, nestedObjectIds, leafs);
 
-            this.sink.OnAfter(@event);
-        }
+        this.sink.OnAfter(@event);
+    }
 
-        internal override void PrefetchCompositeAssociationRelationTable(HashSet<Reference> roles, IAssociationType associationType, HashSet<long> nestedObjectIds, HashSet<long> leafs)
+    internal override void PrefetchCompositeAssociationRelationTable(HashSet<Reference> roles, IAssociationType associationType,
+        HashSet<long> nestedObjectIds, HashSet<long> leafs)
+    {
+        var @event = new SqlPrefetchCompositeAssociationRelationTableEvent(this.Transaction)
         {
-            var @event = new SqlPrefetchCompositeAssociationRelationTableEvent(this.Transaction) { Roles = roles?.ToArray(), AssociationType = associationType, NestedObjectIds = nestedObjectIds?.ToArray(), Leafs = leafs?.ToArray() };
-            this.sink.OnBefore(@event);
+            Roles = roles?.ToArray(),
+            AssociationType = associationType,
+            NestedObjectIds = nestedObjectIds?.ToArray(),
+            Leafs = leafs?.ToArray()
+        };
+        this.sink.OnBefore(@event);
 
-            base.PrefetchCompositeAssociationRelationTable(roles, associationType, nestedObjectIds, leafs);
+        base.PrefetchCompositeAssociationRelationTable(roles, associationType, nestedObjectIds, leafs);
 
-            this.sink.OnAfter(@event);
-        }
+        this.sink.OnAfter(@event);
+    }
 
-        internal override void PrefetchCompositesAssociationObjectTable(HashSet<Reference> roles, IAssociationType associationType, HashSet<long> nestedObjectIds, HashSet<long> leafs)
+    internal override void PrefetchCompositesAssociationObjectTable(HashSet<Reference> roles, IAssociationType associationType,
+        HashSet<long> nestedObjectIds, HashSet<long> leafs)
+    {
+        var @event = new SqlPrefetchCompositesAssociationObjectTableEvent(this.Transaction)
         {
-            var @event = new SqlPrefetchCompositesAssociationObjectTableEvent(this.Transaction) { Roles = roles?.ToArray(), AssociationType = associationType, NestedObjectIds = nestedObjectIds?.ToArray(), Leafs = leafs?.ToArray() };
-            this.sink.OnBefore(@event);
+            Roles = roles?.ToArray(),
+            AssociationType = associationType,
+            NestedObjectIds = nestedObjectIds?.ToArray(),
+            Leafs = leafs?.ToArray()
+        };
+        this.sink.OnBefore(@event);
 
-            base.PrefetchCompositesAssociationObjectTable(roles, associationType, nestedObjectIds, leafs);
+        base.PrefetchCompositesAssociationObjectTable(roles, associationType, nestedObjectIds, leafs);
 
-            this.sink.OnAfter(@event);
-        }
+        this.sink.OnAfter(@event);
+    }
 
-        internal override void PrefetchCompositesAssociationRelationTable(HashSet<Reference> roles, IAssociationType associationType, HashSet<long> nestedObjectIds, HashSet<long> leafs)
+    internal override void PrefetchCompositesAssociationRelationTable(HashSet<Reference> roles, IAssociationType associationType,
+        HashSet<long> nestedObjectIds, HashSet<long> leafs)
+    {
+        var @event = new SqlPrefetchCompositesAssociationRelationTableEvent(this.Transaction)
         {
-            var @event = new SqlPrefetchCompositesAssociationRelationTableEvent(this.Transaction) { Roles = roles?.ToArray(), AssociationType = associationType, NestedObjectIds = nestedObjectIds?.ToArray(), Leafs = leafs?.ToArray() };
-            this.sink.OnBefore(@event);
+            Roles = roles?.ToArray(),
+            AssociationType = associationType,
+            NestedObjectIds = nestedObjectIds?.ToArray(),
+            Leafs = leafs?.ToArray()
+        };
+        this.sink.OnBefore(@event);
 
-            base.PrefetchCompositesAssociationRelationTable(roles, associationType, nestedObjectIds, leafs);
+        base.PrefetchCompositesAssociationRelationTable(roles, associationType, nestedObjectIds, leafs);
 
-            this.sink.OnAfter(@event);
-        }
+        this.sink.OnAfter(@event);
     }
 }

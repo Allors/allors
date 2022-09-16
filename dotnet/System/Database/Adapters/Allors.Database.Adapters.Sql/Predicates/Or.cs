@@ -3,38 +3,37 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Adapters.Sql
+namespace Allors.Database.Adapters.Sql;
+
+internal sealed class Or : CompositePredicate
 {
-    internal sealed class Or : CompositePredicate
+    internal Or(ExtentFiltered extent) : base(extent)
     {
-        internal Or(ExtentFiltered extent) : base(extent)
-        {
-        }
+    }
 
-        internal override bool BuildWhere(ExtentStatement statement, string alias)
+    internal override bool BuildWhere(ExtentStatement statement, string alias)
+    {
+        if (this.Include)
         {
-            if (this.Include)
+            var atLeastOneChildIncluded = false;
+            statement.Append("(");
+            foreach (var filter in this.Filters)
             {
-                var atLeastOneChildIncluded = false;
-                statement.Append("(");
-                foreach (var filter in this.Filters)
+                if (atLeastOneChildIncluded)
                 {
-                    if (atLeastOneChildIncluded)
-                    {
-                        statement.Append(" OR ");
-                    }
-
-                    if (filter.BuildWhere(statement, alias))
-                    {
-                        atLeastOneChildIncluded = true;
-                    }
+                    statement.Append(" OR ");
                 }
 
-                statement.Append(")");
-                return atLeastOneChildIncluded;
+                if (filter.BuildWhere(statement, alias))
+                {
+                    atLeastOneChildIncluded = true;
+                }
             }
 
-            return false;
+            statement.Append(")");
+            return atLeastOneChildIncluded;
         }
+
+        return false;
     }
 }

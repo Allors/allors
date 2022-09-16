@@ -3,12 +3,11 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Data
-{
-    using Meta;
+namespace Allors.Database.Data;
 
-    public interface IRolePredicate : IPredicate
-    {
-        IRoleType RoleType { get; set; }
-    }
+using Meta;
+
+public interface IRolePredicate : IPredicate
+{
+    IRoleType RoleType { get; set; }
 }

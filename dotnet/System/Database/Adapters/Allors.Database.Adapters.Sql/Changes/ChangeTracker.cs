@@ -6,14 +6,13 @@
 //   Defines the AllorsChangeSetMemory type.
 // </summary>
 
-namespace Allors.Database.Adapters.Sql
+namespace Allors.Database.Adapters.Sql;
+
+using Shared.Ranges;
+
+internal struct ChangeTracker
 {
-    using Shared.Ranges;
+    internal ValueRange<long> Add { get; set; }
 
-    internal struct ChangeTracker
-    {
-        internal ValueRange<long> Add { get; set; }
-
-        internal ValueRange<long> Remove { get; set; }
-    }
+    internal ValueRange<long> Remove { get; set; }
 }

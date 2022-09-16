@@ -5,21 +5,20 @@
 
 namespace Allors.Protocol.Json.Api.Invoke
 {
-
     public class Invocation
     {
         /// <summary>
-        /// Id
+        ///     Id
         /// </summary>
         public long i { get; set; }
 
         /// <summary>
-        /// Version
+        ///     Version
         /// </summary>
         public long v { get; set; }
 
         /// <summary>
-        /// Method Type Tag
+        ///     Method Type Tag
         /// </summary>
         public string m { get; set; }
     }

@@ -8,7 +8,7 @@ namespace Allors.Protocol.Json.Api.Sync
     public class SyncResponse
     {
         /// <summary>
-        /// Objects
+        ///     Objects
         /// </summary>
         public SyncResponseObject[] o { get; set; }
     }

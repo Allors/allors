@@ -3,18 +3,17 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Meta.Generation
+namespace Allors.Meta.Generation;
+
+using System;
+
+internal class GenerateLog : Log
 {
-    using System;
+    public GenerateLog() => this.ErrorOccured = false;
 
-    internal class GenerateLog : Log
+    public override void Error(object sender, string message)
     {
-        public GenerateLog() => this.ErrorOccured = false;
-
-        public override void Error(object sender, string message)
-        {
-            this.ErrorOccured = true;
-            Console.WriteLine(message);
-        }
+        this.ErrorOccured = true;
+        Console.WriteLine(message);
     }
 }

@@ -8,11 +8,11 @@ namespace Allors.Workspace.Meta
 {
     public sealed class MethodType : IMetaObject, IOperandType
     {
+        public IComposite ObjectType { get; set; }
+        private string Name { get; set; }
         public MetaPopulation MetaPopulation { get; set; }
 
         public string Tag { get; set; }
-        public IComposite ObjectType { get; set; }
-        private string Name { get; set; }
 
         public string OperandTag => this.Tag;
 

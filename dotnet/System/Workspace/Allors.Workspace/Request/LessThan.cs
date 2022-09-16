@@ -12,13 +12,13 @@ namespace Allors.Workspace.Request
     {
         public LessThan(RoleType roleType = null) => this.RoleType = roleType;
 
-        public RoleType RoleType { get; set; }
-
         public object Value { get; set; }
 
         public RoleType Path { get; set; }
 
         public string Parameter { get; set; }
+
+        public RoleType RoleType { get; set; }
 
         public void Accept(IVisitor visitor) => visitor.VisitLessThan(this);
     }

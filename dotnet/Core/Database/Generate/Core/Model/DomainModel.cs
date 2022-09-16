@@ -1,21 +1,20 @@
-namespace Allors.Meta.Generation.Model
+namespace Allors.Meta.Generation.Model;
+
+using System;
+using Database.Meta;
+
+public class DomainModel : MetaObjectModel, IMetaIdentifiableObjectModel
 {
-    using System;
-    using Database.Meta;
+    public DomainModel(MetaModel metaModel, IDomain domain) : base(metaModel) => this.Domain = domain;
 
-    public class DomainModel : MetaObjectModel, IMetaIdentifiableObjectModel
-    {
-        public DomainModel(MetaModel metaModel, IDomain domain) : base(metaModel) => this.Domain = domain;
+    public IDomain Domain { get; }
+    protected override IMetaObject MetaObject => this.Domain;
 
-        public IDomain Domain { get; }
-        protected override IMetaObject MetaObject => this.Domain;
+    // IDomain
+    public string Name => this.Domain.Name;
 
-        // IMetaIdentifiableObject
-        public Guid Id => this.Domain.Id;
+    // IMetaIdentifiableObject
+    public Guid Id => this.Domain.Id;
 
-        public string Tag => this.Domain.Tag;
-
-        // IDomain
-        public string Name => this.Domain.Name;
-    }
+    public string Tag => this.Domain.Tag;
 }

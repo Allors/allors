@@ -5,21 +5,20 @@
 
 namespace Allors.Protocol.Json.Data
 {
-
     public class Node : IVisitable
     {
         /// <summary>
-        /// Association Type Tag
+        ///     Association Type Tag
         /// </summary>
         public string a { get; set; }
 
         /// <summary>
-        /// Role Type Tag
+        ///     Role Type Tag
         /// </summary>
         public string r { get; set; }
 
         /// <summary>
-        /// Nodes
+        ///     Nodes
         /// </summary>
         public Node[] n { get; set; }
 

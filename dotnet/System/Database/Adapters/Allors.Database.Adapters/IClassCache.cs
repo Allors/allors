@@ -3,18 +3,17 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Adapters
+namespace Allors.Database.Adapters;
+
+using Meta;
+
+public interface IClassCache
 {
-    using Meta;
+    bool TryGet(long objectId, out IClass @class);
 
-    public interface IClassCache
-    {
-        bool TryGet(long objectId, out IClass @class);
+    void Set(long objectId, IClass @class);
 
-        void Set(long objectId, IClass @class);
+    void Invalidate();
 
-        void Invalidate();
-
-        void Invalidate(long[] objectsToInvalidate);
-    }
+    void Invalidate(long[] objectsToInvalidate);
 }

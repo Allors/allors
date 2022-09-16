@@ -14,120 +14,118 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Allors.Database.Adapters
+namespace Allors.Database.Adapters;
+
+using System.Linq;
+using Xunit;
+
+public class TestValueGeneratorTest
 {
-    using System;
-    using System.Linq;
-    using Xunit;
+    private readonly TestValueGenerator testValueGenerator = new();
 
-    public class TestValueGeneratorTest
+    [Fact]
+    [Trait("Category", "Dynamic")]
+    public void GenerateBoolean()
     {
-        private readonly TestValueGenerator testValueGenerator = new TestValueGenerator();
+        var value = this.testValueGenerator.GenerateBoolean();
+        var differentValueFound = false;
 
-        [Fact]
-        [Trait("Category", "Dynamic")]
-        public void GenerateBoolean()
+        for (var i = 0; i < 100; i++)
         {
-            bool value = this.testValueGenerator.GenerateBoolean();
-            bool differentValueFound = false;
-
-            for (int i = 0; i < 100; i++)
+            var newValue = this.testValueGenerator.GenerateBoolean();
+            if (newValue != value)
             {
-                bool newValue = this.testValueGenerator.GenerateBoolean();
-                if (newValue != value)
-                {
-                    differentValueFound = true;
-                    break;
-                }
+                differentValueFound = true;
+                break;
             }
-
-            Assert.True(differentValueFound);
         }
 
-        [Fact]
-        [Trait("Category", "Dynamic")]
-        public void GenerateDateTime()
-        {
-            DateTime value1 = this.testValueGenerator.GenerateDateTime();
-            DateTime value2 = this.testValueGenerator.GenerateDateTime();
+        Assert.True(differentValueFound);
+    }
 
-            Assert.NotEqual(value1, value2);
-        }
+    [Fact]
+    [Trait("Category", "Dynamic")]
+    public void GenerateDateTime()
+    {
+        var value1 = this.testValueGenerator.GenerateDateTime();
+        var value2 = this.testValueGenerator.GenerateDateTime();
 
-        [Fact]
-        [Trait("Category", "Dynamic")]
-        public void GenerateDecimal()
-        {
-            decimal value1 = this.testValueGenerator.GenerateDecimal();
-            decimal value2 = this.testValueGenerator.GenerateDecimal();
+        Assert.NotEqual(value1, value2);
+    }
 
-            Assert.NotEqual(value1, value2);
-        }
+    [Fact]
+    [Trait("Category", "Dynamic")]
+    public void GenerateDecimal()
+    {
+        var value1 = this.testValueGenerator.GenerateDecimal();
+        var value2 = this.testValueGenerator.GenerateDecimal();
 
-        [Fact]
-        [Trait("Category", "Dynamic")]
-        public void GenerateFloat()
-        {
-            double value1 = this.testValueGenerator.GenerateFloat();
-            double value2 = this.testValueGenerator.GenerateFloat();
+        Assert.NotEqual(value1, value2);
+    }
 
-            Assert.NotEqual(value1, value2);
-        }
+    [Fact]
+    [Trait("Category", "Dynamic")]
+    public void GenerateFloat()
+    {
+        var value1 = this.testValueGenerator.GenerateFloat();
+        var value2 = this.testValueGenerator.GenerateFloat();
 
-        [Fact]
-        [Trait("Category", "Dynamic")]
-        public void GenerateInteger()
-        {
-            int value1 = this.testValueGenerator.GenerateInteger();
-            int value2 = this.testValueGenerator.GenerateInteger();
+        Assert.NotEqual(value1, value2);
+    }
 
-            Assert.NotEqual(value1, value2);
-        }
+    [Fact]
+    [Trait("Category", "Dynamic")]
+    public void GenerateInteger()
+    {
+        var value1 = this.testValueGenerator.GenerateInteger();
+        var value2 = this.testValueGenerator.GenerateInteger();
 
-        [Fact]
-        [Trait("Category", "Dynamic")]
-        public void GeneratePercentage()
-        {
-            double value1 = this.testValueGenerator.GeneratePercentage();
-            double value2 = this.testValueGenerator.GeneratePercentage();
+        Assert.NotEqual(value1, value2);
+    }
 
-            Assert.NotEqual(value1, value2);
-        }
+    [Fact]
+    [Trait("Category", "Dynamic")]
+    public void GeneratePercentage()
+    {
+        var value1 = this.testValueGenerator.GeneratePercentage();
+        var value2 = this.testValueGenerator.GeneratePercentage();
 
-        [Fact]
-        [Trait("Category", "Dynamic")]
-        public void GenerateString()
-        {
-            string value1 = this.testValueGenerator.GenerateString(0);
-            string value2 = this.testValueGenerator.GenerateString(0);
+        Assert.NotEqual(value1, value2);
+    }
 
-            Assert.Empty(value1);
-            Assert.Empty(value2);
-            Assert.Equal(value1, value2);
+    [Fact]
+    [Trait("Category", "Dynamic")]
+    public void GenerateString()
+    {
+        var value1 = this.testValueGenerator.GenerateString(0);
+        var value2 = this.testValueGenerator.GenerateString(0);
 
-            value1 = this.testValueGenerator.GenerateString(1);
-            value2 = this.testValueGenerator.GenerateString(1);
+        Assert.Empty(value1);
+        Assert.Empty(value2);
+        Assert.Equal(value1, value2);
 
-            Assert.Single(value1);
-            Assert.Single(value2);
-            Assert.NotEqual(value1, value2);
+        value1 = this.testValueGenerator.GenerateString(1);
+        value2 = this.testValueGenerator.GenerateString(1);
 
-            value1 = this.testValueGenerator.GenerateString(100);
-            value2 = this.testValueGenerator.GenerateString(100);
+        Assert.Single(value1);
+        Assert.Single(value2);
+        Assert.NotEqual(value1, value2);
 
-            Assert.Equal(100, value1.Count());
-            Assert.Equal(100, value2.Count());
-            Assert.NotEqual(value1, value2);
-        }
+        value1 = this.testValueGenerator.GenerateString(100);
+        value2 = this.testValueGenerator.GenerateString(100);
 
-        [Fact]
-        [Trait("Category", "Dynamic")]
-        public void GenerateUnique()
-        {
-            Guid value1 = this.testValueGenerator.GenerateUnique();
-            Guid value2 = this.testValueGenerator.GenerateUnique();
+        Assert.Equal(100, value1.Count());
+        Assert.Equal(100, value2.Count());
+        Assert.NotEqual(value1, value2);
+    }
 
-            Assert.NotEqual(value1, value2);
-        }
+    [Fact]
+    [Trait("Category", "Dynamic")]
+    public void GenerateUnique()
+    {
+        var value1 = this.testValueGenerator.GenerateUnique();
+        var value2 = this.testValueGenerator.GenerateUnique();
+
+        Assert.NotEqual(value1, value2);
     }
 }

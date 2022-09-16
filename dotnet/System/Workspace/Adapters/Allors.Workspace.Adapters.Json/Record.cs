@@ -18,15 +18,8 @@ namespace Allors.Workspace.Adapters.Json
         private Dictionary<RelationType, object> roleByRelationType;
         private SyncResponseRole[] syncResponseRoles;
 
-        internal Record(Connection connection, Class @class, long id, long version) : base(@class, id, version) => this.connection = connection;
-
-        internal static Record FromResponse(Connection database, ResponseContext ctx, SyncResponseObject syncResponseObject) =>
-            new Record(database, (Class)database.MetaPopulation.FindByTag(syncResponseObject.c), syncResponseObject.i, syncResponseObject.v)
-            {
-                syncResponseRoles = syncResponseObject.ro,
-                GrantIds = ValueRange<long>.Load(ctx.CheckForMissingGrants(syncResponseObject.g)),
-                RevocationIds = ValueRange<long>.Load(ctx.CheckForMissingRevocations(syncResponseObject.r))
-            };
+        internal Record(Connection connection, Class @class, long id, long version) : base(@class, id, version) =>
+            this.connection = connection;
 
         internal ValueRange<long> GrantIds { get; private set; }
 
@@ -65,6 +58,14 @@ namespace Allors.Workspace.Adapters.Json
                 return this.roleByRelationType;
             }
         }
+
+        internal static Record FromResponse(Connection database, ResponseContext ctx, SyncResponseObject syncResponseObject) =>
+            new Record(database, (Class)database.MetaPopulation.FindByTag(syncResponseObject.c), syncResponseObject.i, syncResponseObject.v)
+            {
+                syncResponseRoles = syncResponseObject.ro,
+                GrantIds = ValueRange<long>.Load(ctx.CheckForMissingGrants(syncResponseObject.g)),
+                RevocationIds = ValueRange<long>.Load(ctx.CheckForMissingRevocations(syncResponseObject.r))
+            };
 
         public override object GetRole(RoleType roleType)
         {

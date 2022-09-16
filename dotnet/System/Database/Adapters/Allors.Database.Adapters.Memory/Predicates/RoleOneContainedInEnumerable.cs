@@ -3,38 +3,37 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Adapters.Memory
+namespace Allors.Database.Adapters.Memory;
+
+using System.Collections.Generic;
+using Meta;
+
+internal sealed class RoleOneContainedInEnumerable : Predicate
 {
-    using System.Collections.Generic;
-    using Meta;
+    private readonly IEnumerable<IObject> containingEnumerable;
+    private readonly IRoleType roleType;
 
-    internal sealed class RoleOneContainedInEnumerable : Predicate
+    internal RoleOneContainedInEnumerable(ExtentFiltered extent, IRoleType roleType, IEnumerable<IObject> containingEnumerable)
     {
-        private readonly IRoleType roleType;
-        private readonly IEnumerable<IObject> containingEnumerable;
+        extent.CheckForRoleType(roleType);
+        PredicateAssertions.ValidateRoleContainedIn(roleType, containingEnumerable);
 
-        internal RoleOneContainedInEnumerable(ExtentFiltered extent, IRoleType roleType, IEnumerable<IObject> containingEnumerable)
+        this.roleType = roleType;
+        this.containingEnumerable = containingEnumerable;
+    }
+
+    internal override ThreeValuedLogic Evaluate(Strategy strategy)
+    {
+        var containing = new HashSet<IObject>(this.containingEnumerable);
+        var roleStrategy = strategy.GetCompositeRole(this.roleType);
+
+        if (roleStrategy == null)
         {
-            extent.CheckForRoleType(roleType);
-            PredicateAssertions.ValidateRoleContainedIn(roleType, containingEnumerable);
-
-            this.roleType = roleType;
-            this.containingEnumerable = containingEnumerable;
+            return ThreeValuedLogic.False;
         }
 
-        internal override ThreeValuedLogic Evaluate(Strategy strategy)
-        {
-            var containing = new HashSet<IObject>(this.containingEnumerable);
-            var roleStrategy = strategy.GetCompositeRole(this.roleType);
-
-            if (roleStrategy == null)
-            {
-                return ThreeValuedLogic.False;
-            }
-
-            return containing.Contains(roleStrategy)
-                       ? ThreeValuedLogic.True
-                       : ThreeValuedLogic.False;
-        }
+        return containing.Contains(roleStrategy)
+            ? ThreeValuedLogic.True
+            : ThreeValuedLogic.False;
     }
 }

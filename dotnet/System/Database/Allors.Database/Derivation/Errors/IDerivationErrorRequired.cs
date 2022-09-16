@@ -6,9 +6,8 @@
 //
 // </summary>
 
-namespace Allors.Database.Derivations
+namespace Allors.Database.Derivations;
+
+public interface IDerivationErrorRequired : IDerivationError
 {
-    public interface IDerivationErrorRequired : IDerivationError
-    {
-    }
 }

@@ -6,18 +6,17 @@
 //   Defines the Default type.
 // </summary>
 
-namespace Allors.Database.Adapters.Sql.SqlClient
+namespace Allors.Database.Adapters.Sql.SqlClient;
+
+using Xunit;
+
+public class Many2ManyTest : Adapters.Many2ManyTest, IClassFixture<Fixture<Many2ManyTest>>
 {
-    using Xunit;
+    private readonly Profile profile;
 
-    public class Many2ManyTest : Adapters.Many2ManyTest, IClassFixture<Fixture<Many2ManyTest>>
-    {
-        private readonly Profile profile;
+    public Many2ManyTest() => this.profile = new Profile(this.GetType().Name);
 
-        public Many2ManyTest() => this.profile = new Profile(this.GetType().Name);
+    protected override IProfile Profile => this.profile;
 
-        protected override IProfile Profile => this.profile;
-
-        public override void Dispose() => this.profile.Dispose();
-    }
+    public override void Dispose() => this.profile.Dispose();
 }

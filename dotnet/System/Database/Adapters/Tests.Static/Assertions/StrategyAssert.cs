@@ -3,167 +3,166 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Adapters
+namespace Allors.Database.Adapters;
+
+using System;
+using System.Linq;
+using Meta;
+using Xunit;
+
+public class StrategyAssert
 {
-    using System;
-    using System.Linq;
-    using Meta;
-    using Xunit;
-
-    public class StrategyAssert
+    public static void AssociationExistHasException(IObject allorsObject, IAssociationType associationType)
     {
-        public static void AssociationExistHasException(IObject allorsObject, IAssociationType associationType)
+        var exceptionOccured = false;
+        try
         {
-            var exceptionOccured = false;
-            try
+            if (associationType.IsOne)
             {
-                if (associationType.IsOne)
-                {
-                    allorsObject.Strategy.GetCompositeAssociation(associationType);
-                }
-                else
-                {
-                    allorsObject.Strategy.GetCompositesAssociation<IObject>(associationType).ToArray();
-                }
+                allorsObject.Strategy.GetCompositeAssociation(associationType);
             }
-            catch
+            else
             {
-                exceptionOccured = true;
-            }
-
-            if (!exceptionOccured)
-            {
-                Assert.True(false, "Exist didn't threw an Exception for association " + associationType);
+                allorsObject.Strategy.GetCompositesAssociation<IObject>(associationType).ToArray();
             }
         }
-
-        public static void AssociationGetHasException(IObject allorsObject, IAssociationType associationType)
+        catch
         {
-            var exceptionOccured = false;
-            try
-            {
-                if (associationType.IsOne)
-                {
-                    allorsObject.Strategy.GetCompositeAssociation(associationType);
-                }
-                else
-                {
-                    allorsObject.Strategy.GetCompositesAssociation<IObject>(associationType).ToArray();
-                }
-            }
-            catch
-            {
-                exceptionOccured = true;
-            }
+            exceptionOccured = true;
+        }
 
-            if (!exceptionOccured)
+        if (!exceptionOccured)
+        {
+            Assert.True(false, "Exist didn't threw an Exception for association " + associationType);
+        }
+    }
+
+    public static void AssociationGetHasException(IObject allorsObject, IAssociationType associationType)
+    {
+        var exceptionOccured = false;
+        try
+        {
+            if (associationType.IsOne)
+            {
+                allorsObject.Strategy.GetCompositeAssociation(associationType);
+            }
+            else
+            {
+                allorsObject.Strategy.GetCompositesAssociation<IObject>(associationType).ToArray();
+            }
+        }
+        catch
+        {
+            exceptionOccured = true;
+        }
+
+        if (!exceptionOccured)
+        {
+            Assert.True(false); // Fail
+        }
+    }
+
+    public static void AssociationsExistExclusive(IObject allorsObject, params IAssociationType[] associationTypes)
+    {
+        foreach (var associationType in associationTypes)
+        {
+            if (!allorsObject.Strategy.Class.ExistAssociationType(associationType))
             {
                 Assert.True(false); // Fail
             }
         }
 
-        public static void AssociationsExistExclusive(IObject allorsObject, params IAssociationType[] associationTypes)
+        foreach (var associationType in allorsObject.Strategy.Class.AssociationTypes)
         {
-            foreach (var associationType in associationTypes)
+            if (Array.IndexOf(associationTypes, associationType) >= 0)
             {
-                if (!allorsObject.Strategy.Class.ExistAssociationType(associationType))
+                if (!allorsObject.Strategy.ExistAssociation(associationType))
                 {
                     Assert.True(false); // Fail
                 }
             }
-
-            foreach (var associationType in allorsObject.Strategy.Class.AssociationTypes)
+            else if (allorsObject.Strategy.ExistAssociation(associationType))
             {
-                if (Array.IndexOf(associationTypes, associationType) >= 0)
+                if (allorsObject.Strategy.ExistAssociation(associationType))
                 {
-                    if (!allorsObject.Strategy.ExistAssociation(associationType))
-                    {
-                        Assert.True(false); // Fail
-                    }
-                }
-                else if (allorsObject.Strategy.ExistAssociation(associationType))
-                {
-                    if (allorsObject.Strategy.ExistAssociation(associationType))
-                    {
-                        Assert.True(false); // Fail
-                    }
+                    Assert.True(false); // Fail
                 }
             }
         }
+    }
 
-        public static void RoleExistHasException(IObject allorsObject, IRoleType roleType)
+    public static void RoleExistHasException(IObject allorsObject, IRoleType roleType)
+    {
+        var exceptionOccured = false;
+        try
         {
-            var exceptionOccured = false;
-            try
+            if (roleType.IsOne)
             {
-                if (roleType.IsOne)
-                {
-                    allorsObject.Strategy.GetRole(roleType);
-                }
-                else
-                {
-                    allorsObject.Strategy.GetCompositesRole<IObject>(roleType).ToArray();
-                }
+                allorsObject.Strategy.GetRole(roleType);
             }
-            catch
+            else
             {
-                exceptionOccured = true;
-            }
-
-            if (!exceptionOccured)
-            {
-                Assert.True(false, "Exist didn't threw an Exception for role " + roleType);
+                allorsObject.Strategy.GetCompositesRole<IObject>(roleType).ToArray();
             }
         }
-
-        public static void RoleGetHasException(IObject allorsObject, IRoleType roleType)
+        catch
         {
-            var exceptionOccured = false;
-            try
-            {
-                if (roleType.IsOne)
-                {
-                    allorsObject.Strategy.GetRole(roleType);
-                }
-                else
-                {
-                    allorsObject.Strategy.GetCompositesRole<IObject>(roleType).ToArray();
-                }
-            }
-            catch
-            {
-                exceptionOccured = true;
-            }
+            exceptionOccured = true;
+        }
 
-            if (!exceptionOccured)
+        if (!exceptionOccured)
+        {
+            Assert.True(false, "Exist didn't threw an Exception for role " + roleType);
+        }
+    }
+
+    public static void RoleGetHasException(IObject allorsObject, IRoleType roleType)
+    {
+        var exceptionOccured = false;
+        try
+        {
+            if (roleType.IsOne)
+            {
+                allorsObject.Strategy.GetRole(roleType);
+            }
+            else
+            {
+                allorsObject.Strategy.GetCompositesRole<IObject>(roleType).ToArray();
+            }
+        }
+        catch
+        {
+            exceptionOccured = true;
+        }
+
+        if (!exceptionOccured)
+        {
+            Assert.True(false); // Fail
+        }
+    }
+
+    public static void RolesExistExclusive(IObject allorsObject, params IRoleType[] roleTypes)
+    {
+        foreach (var roleType in roleTypes)
+        {
+            if (!allorsObject.Strategy.Class.ExistRoleType(roleType))
             {
                 Assert.True(false); // Fail
             }
         }
 
-        public static void RolesExistExclusive(IObject allorsObject, params IRoleType[] roleTypes)
+        foreach (var roleType in allorsObject.Strategy.Class.RoleTypes)
         {
-            foreach (var roleType in roleTypes)
+            if (Array.IndexOf(roleTypes, roleType) >= 0)
             {
-                if (!allorsObject.Strategy.Class.ExistRoleType(roleType))
+                if (!allorsObject.Strategy.ExistRole(roleType))
                 {
                     Assert.True(false); // Fail
                 }
             }
-
-            foreach (var roleType in allorsObject.Strategy.Class.RoleTypes)
+            else if (allorsObject.Strategy.ExistRole(roleType))
             {
-                if (Array.IndexOf(roleTypes, roleType) >= 0)
-                {
-                    if (!allorsObject.Strategy.ExistRole(roleType))
-                    {
-                        Assert.True(false); // Fail
-                    }
-                }
-                else if (allorsObject.Strategy.ExistRole(roleType))
-                {
-                    Assert.True(false); // Fail
-                }
+                Assert.True(false); // Fail
             }
         }
     }

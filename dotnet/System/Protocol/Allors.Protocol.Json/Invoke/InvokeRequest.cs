@@ -8,12 +8,12 @@ namespace Allors.Protocol.Json.Api.Invoke
     public class InvokeRequest : Request
     {
         /// <summary>
-        ///  List of Invocations
+        ///     List of Invocations
         /// </summary>
         public Invocation[] l { get; set; }
 
         /// <summary>
-        /// Options
+        ///     Options
         /// </summary>
         public InvokeOptions o { get; set; }
     }

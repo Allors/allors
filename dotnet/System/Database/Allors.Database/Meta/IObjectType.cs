@@ -4,19 +4,17 @@
 // </copyright>
 // <summary>Defines the IObjectType type.</summary>
 
-namespace Allors.Database.Meta
+namespace Allors.Database.Meta;
+
+using System;
+
+public interface IObjectType : IFieldObjectType, IComparable
 {
-    using System;
-    using System.Collections.Generic;
+    bool IsUnit { get; }
 
-    public interface IObjectType : IFieldObjectType, IComparable
-    {
-        bool IsUnit { get; }
+    bool IsComposite { get; }
 
-        bool IsComposite { get; }
+    bool IsInterface { get; }
 
-        bool IsInterface { get; }
-
-        bool IsClass { get; }
-    }
+    bool IsClass { get; }
 }

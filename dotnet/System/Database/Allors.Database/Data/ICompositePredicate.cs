@@ -3,9 +3,8 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Data
+namespace Allors.Database.Data;
+
+public interface ICompositePredicate : IPredicate, IPredicateContainer
 {
-    public interface ICompositePredicate : IPredicate, IPredicateContainer
-    {
-    }
 }

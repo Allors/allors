@@ -6,55 +6,57 @@
 //   Defines the AllorsPredicateRoleEqualsRoleSql type.
 // </summary>
 
-namespace Allors.Database.Adapters.Sql
+namespace Allors.Database.Adapters.Sql;
+
+using System;
+using Meta;
+
+internal sealed class RoleEqualsRole : Predicate
 {
-    using System;
-    using Meta;
+    private readonly IRoleType equalsRole;
+    private readonly IRoleType role;
 
-    internal sealed class RoleEqualsRole : Predicate
+    internal RoleEqualsRole(ExtentFiltered extent, IRoleType role, IRoleType equalsRole)
     {
-        private readonly IRoleType equalsRole;
-        private readonly IRoleType role;
+        extent.CheckRole(role);
+        PredicateAssertions.ValidateRoleEquals(role, equalsRole);
+        this.role = role;
+        this.equalsRole = equalsRole;
+    }
 
-        internal RoleEqualsRole(ExtentFiltered extent, IRoleType role, IRoleType equalsRole)
+    internal override bool BuildWhere(ExtentStatement statement, string alias)
+    {
+        var schema = statement.Mapping;
+        if (this.role.ObjectType.IsUnit && this.equalsRole.ObjectType.IsUnit)
         {
-            extent.CheckRole(role);
-            PredicateAssertions.ValidateRoleEquals(role, equalsRole);
-            this.role = role;
-            this.equalsRole = equalsRole;
-        }
-
-        internal override bool BuildWhere(ExtentStatement statement, string alias)
-        {
-            var schema = statement.Mapping;
-            if (this.role.ObjectType.IsUnit && this.equalsRole.ObjectType.IsUnit)
+            if (this.role.ObjectType.Tag == UnitTags.String)
             {
-
-                if (this.role.ObjectType.Tag == UnitTags.String)
-                {
-                    statement.Append(" " + alias + "." + schema.ColumnNameByRelationType[this.role.RelationType] + $" {schema.StringCollation} =" + alias + "." + schema.ColumnNameByRelationType[this.equalsRole.RelationType] + $" {schema.StringCollation}");
-                }
-                else
-                {
-                    statement.Append(" " + alias + "." + schema.ColumnNameByRelationType[this.role.RelationType] + "=" + alias + "." + schema.ColumnNameByRelationType[this.equalsRole.RelationType]);
-                }
-            }
-            else if (((IComposite)this.role.ObjectType).ExistExclusiveClass && ((IComposite)this.equalsRole.ObjectType).ExistExclusiveClass)
-            {
-                statement.Append(" " + alias + "." + schema.ColumnNameByRelationType[this.role.RelationType] + "=" + alias + "." + schema.ColumnNameByRelationType[this.equalsRole.RelationType]);
+                statement.Append(" " + alias + "." + schema.ColumnNameByRelationType[this.role.RelationType] +
+                                 $" {schema.StringCollation} =" + alias + "." +
+                                 schema.ColumnNameByRelationType[this.equalsRole.RelationType] + $" {schema.StringCollation}");
             }
             else
             {
-                throw new NotImplementedException();
+                statement.Append(" " + alias + "." + schema.ColumnNameByRelationType[this.role.RelationType] + "=" + alias + "." +
+                                 schema.ColumnNameByRelationType[this.equalsRole.RelationType]);
             }
-
-            return this.Include;
         }
-
-        internal override void Setup(ExtentStatement statement)
+        else if (((IComposite)this.role.ObjectType).ExistExclusiveClass && ((IComposite)this.equalsRole.ObjectType).ExistExclusiveClass)
         {
-            statement.UseRole(this.role);
-            statement.UseRole(this.equalsRole);
+            statement.Append(" " + alias + "." + schema.ColumnNameByRelationType[this.role.RelationType] + "=" + alias + "." +
+                             schema.ColumnNameByRelationType[this.equalsRole.RelationType]);
         }
+        else
+        {
+            throw new NotImplementedException();
+        }
+
+        return this.Include;
+    }
+
+    internal override void Setup(ExtentStatement statement)
+    {
+        statement.UseRole(this.role);
+        statement.UseRole(this.equalsRole);
     }
 }

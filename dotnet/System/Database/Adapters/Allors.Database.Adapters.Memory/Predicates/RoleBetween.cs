@@ -3,61 +3,60 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Adapters.Memory
+namespace Allors.Database.Adapters.Memory;
+
+using System;
+using Meta;
+
+internal sealed class RoleBetween : Predicate
 {
-    using System;
-    using Meta;
+    private readonly ExtentFiltered extent;
+    private readonly object first;
+    private readonly IRoleType roleType;
+    private readonly object second;
 
-    internal sealed class RoleBetween : Predicate
+    internal RoleBetween(ExtentFiltered extent, IRoleType roleType, object first, object second)
     {
-        private readonly ExtentFiltered extent;
-        private readonly IRoleType roleType;
-        private readonly object first;
-        private readonly object second;
+        extent.CheckForRoleType(roleType);
+        PredicateAssertions.ValidateRoleBetween(roleType, first, second);
 
-        internal RoleBetween(ExtentFiltered extent, IRoleType roleType, object first, object second)
+        this.extent = extent;
+        this.roleType = roleType;
+
+        this.first = first;
+        this.second = second;
+    }
+
+    internal override ThreeValuedLogic Evaluate(Strategy strategy)
+    {
+        var firstValue = this.first;
+        var secondValue = this.second;
+
+        if (this.first is IRoleType firstRole)
         {
-            extent.CheckForRoleType(roleType);
-            PredicateAssertions.ValidateRoleBetween(roleType, first, second);
-
-            this.extent = extent;
-            this.roleType = roleType;
-
-            this.first = first;
-            this.second = second;
+            firstValue = strategy.GetInternalizedUnitRole(firstRole);
+        }
+        else if (this.roleType.ObjectType is IUnit)
+        {
+            firstValue = this.roleType.Normalize(this.first);
         }
 
-        internal override ThreeValuedLogic Evaluate(Strategy strategy)
+        if (this.second is IRoleType secondRole)
         {
-            var firstValue = this.first;
-            var secondValue = this.second;
-
-            if (this.first is IRoleType firstRole)
-            {
-                firstValue = strategy.GetInternalizedUnitRole(firstRole);
-            }
-            else if (this.roleType.ObjectType is IUnit)
-            {
-                firstValue = this.roleType.Normalize(this.first);
-            }
-
-            if (this.second is IRoleType secondRole)
-            {
-                secondValue = strategy.GetInternalizedUnitRole(secondRole);
-            }
-            else if (this.roleType.ObjectType is IUnit)
-            {
-                secondValue = this.roleType.Normalize(this.second);
-            }
-
-            if (!(strategy.GetInternalizedUnitRole(this.roleType) is IComparable comparable))
-            {
-                return ThreeValuedLogic.Unknown;
-            }
-
-            return comparable.CompareTo(firstValue) >= 0 && comparable.CompareTo(secondValue) <= 0
-                       ? ThreeValuedLogic.True
-                       : ThreeValuedLogic.False;
+            secondValue = strategy.GetInternalizedUnitRole(secondRole);
         }
+        else if (this.roleType.ObjectType is IUnit)
+        {
+            secondValue = this.roleType.Normalize(this.second);
+        }
+
+        if (!(strategy.GetInternalizedUnitRole(this.roleType) is IComparable comparable))
+        {
+            return ThreeValuedLogic.Unknown;
+        }
+
+        return comparable.CompareTo(firstValue) >= 0 && comparable.CompareTo(secondValue) <= 0
+            ? ThreeValuedLogic.True
+            : ThreeValuedLogic.False;
     }
 }

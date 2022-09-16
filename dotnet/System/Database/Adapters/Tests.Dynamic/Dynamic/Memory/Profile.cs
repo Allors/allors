@@ -19,32 +19,31 @@
 // <summary>Defines the Default type.</summary>
 //------------------------------------------------------------------------------------------------
 
-namespace Allors.Database.Adapters.Memory
+namespace Allors.Database.Adapters.Memory;
+
+public class Profile : Adapters.Profile
 {
-    public class Profile : Adapters.Profile
+    private IDatabase database;
+    private IDatabase database2;
+
+    public override void Dispose()
     {
-        private IDatabase database;
-        private IDatabase database2;
-
-        public override void Dispose()
-        {
-            base.Dispose();
-            this.database = null;
-            this.database2 = null;
-        }
-
-        public override IDatabase GetDatabase() => this.database;
-
-        public override IDatabase GetDatabase2() => this.database2;
-
-        public override void Init()
-        {
-            this.database = this.CreateDatabase();
-            this.database2 = this.CreateDatabase();
-        }
-
-        public override bool IsRollbackSupported() => true;
-
-        public IDatabase CreateDatabase() => this.CreateMemoryDatabase();
+        base.Dispose();
+        this.database = null;
+        this.database2 = null;
     }
+
+    public override IDatabase GetDatabase() => this.database;
+
+    public override IDatabase GetDatabase2() => this.database2;
+
+    public override void Init()
+    {
+        this.database = this.CreateDatabase();
+        this.database2 = this.CreateDatabase();
+    }
+
+    public override bool IsRollbackSupported() => true;
+
+    public IDatabase CreateDatabase() => this.CreateMemoryDatabase();
 }

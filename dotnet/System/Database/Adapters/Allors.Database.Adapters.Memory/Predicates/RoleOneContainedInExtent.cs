@@ -3,36 +3,35 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Adapters.Memory
+namespace Allors.Database.Adapters.Memory;
+
+using Meta;
+
+internal sealed class RoleOneContainedInExtent : Predicate
 {
-    using Meta;
+    private readonly Allors.Database.Extent containingExtent;
+    private readonly IRoleType roleType;
 
-    internal sealed class RoleOneContainedInExtent : Predicate
+    internal RoleOneContainedInExtent(ExtentFiltered extent, IRoleType roleType, Allors.Database.Extent containingExtent)
     {
-        private readonly IRoleType roleType;
-        private readonly Allors.Database.Extent containingExtent;
+        extent.CheckForRoleType(roleType);
+        PredicateAssertions.ValidateRoleContainedIn(roleType, containingExtent);
 
-        internal RoleOneContainedInExtent(ExtentFiltered extent, IRoleType roleType, Allors.Database.Extent containingExtent)
+        this.roleType = roleType;
+        this.containingExtent = containingExtent;
+    }
+
+    internal override ThreeValuedLogic Evaluate(Strategy strategy)
+    {
+        var roleStrategy = strategy.GetCompositeRole(this.roleType);
+
+        if (roleStrategy == null)
         {
-            extent.CheckForRoleType(roleType);
-            PredicateAssertions.ValidateRoleContainedIn(roleType, containingExtent);
-
-            this.roleType = roleType;
-            this.containingExtent = containingExtent;
+            return ThreeValuedLogic.False;
         }
 
-        internal override ThreeValuedLogic Evaluate(Strategy strategy)
-        {
-            var roleStrategy = strategy.GetCompositeRole(this.roleType);
-
-            if (roleStrategy == null)
-            {
-                return ThreeValuedLogic.False;
-            }
-
-            return this.containingExtent.Contains(roleStrategy)
-                       ? ThreeValuedLogic.True
-                       : ThreeValuedLogic.False;
-        }
+        return this.containingExtent.Contains(roleStrategy)
+            ? ThreeValuedLogic.True
+            : ThreeValuedLogic.False;
     }
 }

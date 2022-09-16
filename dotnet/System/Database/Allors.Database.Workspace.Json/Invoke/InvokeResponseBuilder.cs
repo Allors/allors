@@ -3,173 +3,173 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Protocol.Json
+namespace Allors.Database.Protocol.Json;
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Allors.Protocol.Json.Api.Invoke;
+using Derivations;
+using Meta;
+using Security;
+
+public class InvokeResponseBuilder
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using Allors.Protocol.Json.Api.Invoke;
-    using Derivations;
-    using Meta;
-    using Security;
+    private readonly IAccessControl accessControl;
+    private readonly ISet<IClass> allowedClasses;
+    private readonly Func<IValidation> derive;
+    private readonly ITransaction transaction;
 
-    public class InvokeResponseBuilder
+    public InvokeResponseBuilder(ITransaction transaction, Func<IValidation> derive, IAccessControl accessControl,
+        ISet<IClass> allowedClasses)
     {
-        private readonly ITransaction transaction;
-        private readonly Func<IValidation> derive;
-        private readonly IAccessControl accessControl;
-        private readonly ISet<IClass> allowedClasses;
+        this.transaction = transaction;
+        this.derive = derive;
+        this.accessControl = accessControl;
+        this.allowedClasses = allowedClasses;
+    }
 
-        public InvokeResponseBuilder(ITransaction transaction, Func<IValidation> derive, IAccessControl accessControl, ISet<IClass> allowedClasses)
+    public InvokeResponse Build(InvokeRequest invokeRequest)
+    {
+        var invocations = invokeRequest.l;
+        var isolated = invokeRequest.o?.i ?? false;
+        var continueOnError = invokeRequest.o?.c ?? false;
+
+        var invokeResponse = new InvokeResponse();
+        if (isolated)
         {
-            this.transaction = transaction;
-            this.derive = derive;
-            this.accessControl = accessControl;
-            this.allowedClasses = allowedClasses;
-        }
-
-        public InvokeResponse Build(InvokeRequest invokeRequest)
-        {
-            var invocations = invokeRequest.l;
-            var isolated = invokeRequest.o?.i ?? false;
-            var continueOnError = invokeRequest.o?.c ?? false;
-
-            var invokeResponse = new InvokeResponse();
-            if (isolated)
+            foreach (var invocation in invocations)
             {
-                foreach (var invocation in invocations)
+                var error = this.Invoke(invocation, invokeResponse);
+                if (!error)
                 {
-                    var error = this.Invoke(invocation, invokeResponse);
-                    if (!error)
+                    var validation = this.derive();
+                    if (validation.HasErrors)
                     {
-                        var validation = this.derive();
-                        if (validation.HasErrors)
-                        {
-                            error = true;
-                            invokeResponse.AddDerivationErrors(validation);
-                        }
-                    }
-
-                    if (error)
-                    {
-                        this.transaction.Rollback();
-                        if (!continueOnError)
-                        {
-                            break;
-                        }
-                    }
-                    else
-                    {
-                        this.transaction.Commit();
-                    }
-                }
-            }
-            else
-            {
-                var error = false;
-                foreach (var invocation in invocations)
-                {
-                    error = this.Invoke(invocation, invokeResponse);
-
-                    if (!error)
-                    {
-                        var validation = this.derive();
-                        if (validation.HasErrors)
-                        {
-                            error = true;
-                            invokeResponse.AddDerivationErrors(validation);
-                        }
-                    }
-
-                    if (error)
-                    {
-                        break;
+                        error = true;
+                        invokeResponse.AddDerivationErrors(validation);
                     }
                 }
 
                 if (error)
                 {
                     this.transaction.Rollback();
+                    if (!continueOnError)
+                    {
+                        break;
+                    }
                 }
                 else
                 {
                     this.transaction.Commit();
                 }
             }
-
-            return invokeResponse;
         }
-
-        private bool Invoke(Invocation invocation, InvokeResponse invokeResponse)
+        else
         {
-            if (string.IsNullOrWhiteSpace(invocation.m) || invocation.i == 0 || invocation.v == 0)
+            var error = false;
+            foreach (var invocation in invocations)
             {
-                throw new ArgumentException();
-            }
+                error = this.Invoke(invocation, invokeResponse);
 
-            var obj = this.transaction.Instantiate(invocation.i);
-            if (obj == null)
-            {
-                invokeResponse.AddMissingError(invocation.i);
-                return true;
-            }
-
-            if (this.allowedClasses?.Contains(obj.Strategy.Class) != true)
-            {
-                invokeResponse.AddAccessError(obj.Id);
-                return true;
-            }
-
-            var composite = (IComposite)obj.Strategy.Class;
-
-            // TODO: Cache and filter for workspace
-            var methodTypes = composite.MethodTypes.Where(v => v.WorkspaceNames.Any());
-            var methodType = methodTypes.FirstOrDefault(v => v.Tag.Equals(invocation.m));
-
-            if (methodType == null)
-            {
-                throw new Exception("Method " + invocation.m + " not found.");
-            }
-
-            if (!invocation.v.Equals(obj.Strategy.ObjectVersion))
-            {
-                invokeResponse.AddVersionError(obj);
-                return true;
-            }
-
-            var acl = this.accessControl[obj];
-            if (!acl.CanExecute(methodType))
-            {
-                invokeResponse.AddAccessError(obj.Id);
-                return true;
-            }
-
-            var method = obj.GetType().GetMethod(methodType.Name, new Type[] { });
-
-            try
-            {
-                method.Invoke(obj, null);
-            }
-            catch (Exception e)
-            {
-                var innerException = e;
-                while (innerException.InnerException != null)
+                if (!error)
                 {
-                    innerException = innerException.InnerException;
+                    var validation = this.derive();
+                    if (validation.HasErrors)
+                    {
+                        error = true;
+                        invokeResponse.AddDerivationErrors(validation);
+                    }
                 }
 
-                invokeResponse._e = innerException.Message;
-                return true;
+                if (error)
+                {
+                    break;
+                }
             }
 
-            var validation = this.derive();
-            if (validation.HasErrors)
+            if (error)
             {
-                invokeResponse.AddDerivationErrors(validation);
-                return true;
+                this.transaction.Rollback();
+            }
+            else
+            {
+                this.transaction.Commit();
+            }
+        }
+
+        return invokeResponse;
+    }
+
+    private bool Invoke(Invocation invocation, InvokeResponse invokeResponse)
+    {
+        if (string.IsNullOrWhiteSpace(invocation.m) || invocation.i == 0 || invocation.v == 0)
+        {
+            throw new ArgumentException();
+        }
+
+        var obj = this.transaction.Instantiate(invocation.i);
+        if (obj == null)
+        {
+            invokeResponse.AddMissingError(invocation.i);
+            return true;
+        }
+
+        if (this.allowedClasses?.Contains(obj.Strategy.Class) != true)
+        {
+            invokeResponse.AddAccessError(obj.Id);
+            return true;
+        }
+
+        var composite = (IComposite)obj.Strategy.Class;
+
+        // TODO: Cache and filter for workspace
+        var methodTypes = composite.MethodTypes.Where(v => v.WorkspaceNames.Any());
+        var methodType = methodTypes.FirstOrDefault(v => v.Tag.Equals(invocation.m));
+
+        if (methodType == null)
+        {
+            throw new Exception("Method " + invocation.m + " not found.");
+        }
+
+        if (!invocation.v.Equals(obj.Strategy.ObjectVersion))
+        {
+            invokeResponse.AddVersionError(obj);
+            return true;
+        }
+
+        var acl = this.accessControl[obj];
+        if (!acl.CanExecute(methodType))
+        {
+            invokeResponse.AddAccessError(obj.Id);
+            return true;
+        }
+
+        var method = obj.GetType().GetMethod(methodType.Name, new Type[] { });
+
+        try
+        {
+            method.Invoke(obj, null);
+        }
+        catch (Exception e)
+        {
+            var innerException = e;
+            while (innerException.InnerException != null)
+            {
+                innerException = innerException.InnerException;
             }
 
-            return false;
+            invokeResponse._e = innerException.Message;
+            return true;
         }
+
+        var validation = this.derive();
+        if (validation.HasErrors)
+        {
+            invokeResponse.AddDerivationErrors(validation);
+            return true;
+        }
+
+        return false;
     }
 }

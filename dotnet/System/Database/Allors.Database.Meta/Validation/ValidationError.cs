@@ -4,58 +4,57 @@
 // </copyright>
 // <summary>Defines the ValidationError type.</summary>
 
-namespace Allors.Database.Meta
+namespace Allors.Database.Meta;
+
+/// <summary>
+///     An error that occurred during validation.
+/// </summary>
+public class ValidationError : IValidationError
 {
     /// <summary>
-    /// An error that occurred during validation.
+    ///     Initializes a new state of the <see cref="ValidationError" /> class.
     /// </summary>
-    public class ValidationError : IValidationError
+    /// <param name="message">The message.</param>
+    /// <param name="source">The source.</param>
+    /// <param name="kind">The kind .</param>
+    /// <param name="members">The members.</param>
+    public ValidationError(string message, object source, ValidationKind kind, string[] members)
     {
-        /// <summary>
-        /// Initializes a new state of the <see cref="ValidationError"/> class.
-        /// </summary>
-        /// <param name="message">The message.</param>
-        /// <param name="source">The source.</param>
-        /// <param name="kind">The kind .</param>
-        /// <param name="members">The members.</param>
-        public ValidationError(string message, object source, ValidationKind kind, string[] members)
-        {
-            this.Source = source;
-            this.Members = members;
-            this.Kind = kind;
-            this.Message = message;
-        }
-
-        /// <summary>
-        /// Gets the kind of validation.
-        /// </summary>
-        /// <value>The kind of validation.</value>
-        public ValidationKind Kind { get; private set; }
-
-        /// <summary>
-        /// Gets the validated members.
-        /// </summary>
-        /// <value>The validated members.</value>
-        public string[] Members { get; private set; }
-
-        /// <summary>
-        /// Gets the error message.
-        /// </summary>
-        /// <value>The error message.</value>
-        public string Message { get; private set; }
-
-        /// <summary>
-        /// Gets the object that contains the member.
-        /// </summary>
-        /// <value>The source.</value>
-        public object Source { get; private set; }
-
-        /// <summary>
-        /// Returns a <see cref="T:System.String"/> that represents the current <see cref="T:System.Object"/>.
-        /// </summary>
-        /// <returns>
-        /// A <see cref="T:System.String"/> that represents the current <see cref="T:System.Object"/>.
-        /// </returns>
-        public override string ToString() => this.Message;
+        this.Source = source;
+        this.Members = members;
+        this.Kind = kind;
+        this.Message = message;
     }
+
+    /// <summary>
+    ///     Gets the kind of validation.
+    /// </summary>
+    /// <value>The kind of validation.</value>
+    public ValidationKind Kind { get; }
+
+    /// <summary>
+    ///     Gets the validated members.
+    /// </summary>
+    /// <value>The validated members.</value>
+    public string[] Members { get; }
+
+    /// <summary>
+    ///     Gets the error message.
+    /// </summary>
+    /// <value>The error message.</value>
+    public string Message { get; }
+
+    /// <summary>
+    ///     Gets the object that contains the member.
+    /// </summary>
+    /// <value>The source.</value>
+    public object Source { get; }
+
+    /// <summary>
+    ///     Returns a <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" />.
+    /// </summary>
+    /// <returns>
+    ///     A <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" />.
+    /// </returns>
+    public override string ToString() => this.Message;
 }

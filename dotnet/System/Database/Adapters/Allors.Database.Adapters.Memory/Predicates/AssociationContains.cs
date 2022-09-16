@@ -3,25 +3,27 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Adapters.Memory
+namespace Allors.Database.Adapters.Memory;
+
+using System.Linq;
+using Meta;
+
+internal sealed class AssociationContains : Predicate
 {
-    using System.Linq;
-    using Meta;
+    private readonly IAssociationType associationType;
+    private readonly IObject containedObject;
 
-    internal sealed class AssociationContains : Predicate
+    internal AssociationContains(ExtentFiltered extent, IAssociationType associationType, IObject containedObject)
     {
-        private readonly IAssociationType associationType;
-        private readonly IObject containedObject;
+        extent.CheckForAssociationType(associationType);
+        PredicateAssertions.AssertAssociationContains(associationType, containedObject);
 
-        internal AssociationContains(ExtentFiltered extent, IAssociationType associationType, IObject containedObject)
-        {
-            extent.CheckForAssociationType(associationType);
-            PredicateAssertions.AssertAssociationContains(associationType, containedObject);
-
-            this.associationType = associationType;
-            this.containedObject = containedObject;
-        }
-
-        internal override ThreeValuedLogic Evaluate(Strategy strategy) => strategy.GetCompositesAssociation<IObject>(this.associationType).Contains(this.containedObject) ? ThreeValuedLogic.True : ThreeValuedLogic.False;
+        this.associationType = associationType;
+        this.containedObject = containedObject;
     }
+
+    internal override ThreeValuedLogic Evaluate(Strategy strategy) =>
+        strategy.GetCompositesAssociation<IObject>(this.associationType).Contains(this.containedObject)
+            ? ThreeValuedLogic.True
+            : ThreeValuedLogic.False;
 }

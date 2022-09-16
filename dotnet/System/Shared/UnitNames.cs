@@ -7,47 +7,47 @@
 namespace Allors
 {
     /// <summary>
-    /// The names for unit ObjectTypes.
+    ///     The names for unit ObjectTypes.
     /// </summary>
     public static class UnitNames
     {
         /// <summary>
-        /// The name of the binary type.
+        ///     The name of the binary type.
         /// </summary>
         public const string Binary = "Binary";
 
         /// <summary>
-        /// The name of the boolean type.
+        ///     The name of the boolean type.
         /// </summary>
         public const string Boolean = "Boolean";
 
         /// <summary>
-        /// The name of the date time type.
+        ///     The name of the date time type.
         /// </summary>
         public const string DateTime = "DateTime";
 
         /// <summary>
-        /// The name of the decimal type.
+        ///     The name of the decimal type.
         /// </summary>
         public const string Decimal = "Decimal";
 
         /// <summary>
-        /// The name of the float type.
+        ///     The name of the float type.
         /// </summary>
         public const string Float = "Float";
 
         /// <summary>
-        /// The name of the integer type.
+        ///     The name of the integer type.
         /// </summary>
         public const string Integer = "Integer";
 
         /// <summary>
-        /// The name of the string type.
+        ///     The name of the string type.
         /// </summary>
         public const string String = "String";
 
         /// <summary>
-        /// The name of the unique type.
+        ///     The name of the unique type.
         /// </summary>
         public const string Unique = "Unique";
     }

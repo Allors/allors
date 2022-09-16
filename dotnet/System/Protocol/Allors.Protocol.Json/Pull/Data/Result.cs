@@ -10,32 +10,32 @@ namespace Allors.Protocol.Json.Data
     public class Result : IVisitable
     {
         /// <summary>
-        /// Select Ref
+        ///     Select Ref
         /// </summary>
         public Guid? r { get; set; }
 
         /// <summary>
-        /// Select
+        ///     Select
         /// </summary>
         public Select s { get; set; }
 
         /// <summary>
-        /// Include
+        ///     Include
         /// </summary>
         public Node[] i { get; set; }
 
         /// <summary>
-        /// Name
+        ///     Name
         /// </summary>
         public string n { get; set; }
 
         /// <summary>
-        /// Skip
+        ///     Skip
         /// </summary>
         public int? k { get; set; }
 
         /// <summary>
-        /// Take
+        ///     Take
         /// </summary>
         public int? t { get; set; }
 

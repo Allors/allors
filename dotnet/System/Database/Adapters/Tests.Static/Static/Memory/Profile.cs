@@ -3,36 +3,31 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Adapters.Memory
+namespace Allors.Database.Adapters.Memory;
+
+using System;
+using System.Collections.Generic;
+
+public class Profile : Adapters.Profile
 {
-    using System;
-    using System.Collections.Generic;
-
-    public class Profile : Adapters.Profile
+    public override Action[] Markers
     {
-        public override Action[] Markers
+        get
         {
-            get
+            var markers = new List<Action> {() => { }, () => this.Transaction.Commit()};
+
+            if (Settings.ExtraMarkers)
             {
-                var markers = new List<Action>
-                {
-                    () => { },
-                    () => this.Transaction.Commit(),
-                };
-
-                if (Settings.ExtraMarkers)
-                {
-                    markers.Add(
-                        () =>
-                        {
-                            this.Transaction.Checkpoint();
-                        });
-                }
-
-                return markers.ToArray();
+                markers.Add(
+                    () =>
+                    {
+                        this.Transaction.Checkpoint();
+                    });
             }
-        }
 
-        public override IDatabase CreateDatabase() => this.CreateMemoryDatabase();
+            return markers.ToArray();
+        }
     }
+
+    public override IDatabase CreateDatabase() => this.CreateMemoryDatabase();
 }

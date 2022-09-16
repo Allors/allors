@@ -3,31 +3,32 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Adapters.Memory
+namespace Allors.Database.Adapters.Memory;
+
+using System.Collections.Generic;
+using System.Linq;
+using Meta;
+
+internal sealed class RoleManyContainedInEnumerable : Predicate
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using Meta;
+    private readonly IEnumerable<IObject> containingEnumerable;
+    private readonly IRoleType roleType;
 
-    internal sealed class RoleManyContainedInEnumerable : Predicate
+    internal RoleManyContainedInEnumerable(ExtentFiltered extent, IRoleType roleType, IEnumerable<IObject> containingEnumerable)
     {
-        private readonly IRoleType roleType;
-        private readonly IEnumerable<IObject> containingEnumerable;
+        extent.CheckForRoleType(roleType);
+        PredicateAssertions.ValidateRoleContainedIn(roleType, containingEnumerable);
 
-        internal RoleManyContainedInEnumerable(ExtentFiltered extent, IRoleType roleType, IEnumerable<IObject> containingEnumerable)
-        {
-            extent.CheckForRoleType(roleType);
-            PredicateAssertions.ValidateRoleContainedIn(roleType, containingEnumerable);
+        this.roleType = roleType;
+        this.containingEnumerable = containingEnumerable;
+    }
 
-            this.roleType = roleType;
-            this.containingEnumerable = containingEnumerable;
-        }
+    internal override ThreeValuedLogic Evaluate(Strategy strategy)
+    {
+        var containing = new HashSet<IObject>(this.containingEnumerable);
 
-        internal override ThreeValuedLogic Evaluate(Strategy strategy)
-        {
-            var containing = new HashSet<IObject>(this.containingEnumerable);
-
-            return strategy.GetCompositesRole<IObject>(this.roleType).Any(role => containing.Contains(role)) ? ThreeValuedLogic.True : ThreeValuedLogic.False;
-        }
+        return strategy.GetCompositesRole<IObject>(this.roleType).Any(role => containing.Contains(role))
+            ? ThreeValuedLogic.True
+            : ThreeValuedLogic.False;
     }
 }

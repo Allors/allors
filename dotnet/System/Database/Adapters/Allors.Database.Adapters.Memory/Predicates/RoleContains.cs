@@ -3,25 +3,25 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Adapters.Memory
+namespace Allors.Database.Adapters.Memory;
+
+using System.Linq;
+using Meta;
+
+internal sealed class RoleContains : Predicate
 {
-    using System.Linq;
-    using Meta;
+    private readonly IObject containedObject;
+    private readonly IRoleType roleType;
 
-    internal sealed class RoleContains : Predicate
+    internal RoleContains(ExtentFiltered extent, IRoleType roleType, IObject containedObject)
     {
-        private readonly IRoleType roleType;
-        private readonly IObject containedObject;
+        extent.CheckForRoleType(roleType);
+        PredicateAssertions.ValidateRoleContains(roleType, containedObject);
 
-        internal RoleContains(ExtentFiltered extent, IRoleType roleType, IObject containedObject)
-        {
-            extent.CheckForRoleType(roleType);
-            PredicateAssertions.ValidateRoleContains(roleType, containedObject);
-
-            this.roleType = roleType;
-            this.containedObject = containedObject;
-        }
-
-        internal override ThreeValuedLogic Evaluate(Strategy strategy) => strategy.GetCompositesRole<IObject>(this.roleType).Contains(this.containedObject) ? ThreeValuedLogic.True : ThreeValuedLogic.False;
+        this.roleType = roleType;
+        this.containedObject = containedObject;
     }
+
+    internal override ThreeValuedLogic Evaluate(Strategy strategy) =>
+        strategy.GetCompositesRole<IObject>(this.roleType).Contains(this.containedObject) ? ThreeValuedLogic.True : ThreeValuedLogic.False;
 }

@@ -8,17 +8,17 @@ namespace Allors.Protocol.Json.Api.Security
     public class AccessResponseRevocation
     {
         /// <summary>
-        /// Id
+        ///     Id
         /// </summary>
         public long i { get; set; }
 
         /// <summary>
-        /// Version
+        ///     Version
         /// </summary>
         public long v { get; set; }
 
         /// <summary>
-        /// Sorted Permission Ids
+        ///     Sorted Permission Ids
         /// </summary>
         public long[] p { get; set; }
     }

@@ -55,7 +55,8 @@ namespace Allors.Workspace.Meta
             }
         }
 
-        public void Init(Unit[] units, Interface[] interfaces, Class[] classes, Inheritance[] inheritances, RelationType[] relationTypes, MethodType[] methodTypes)
+        public void Init(Unit[] units, Interface[] interfaces, Class[] classes, Inheritance[] inheritances, RelationType[] relationTypes,
+            MethodType[] methodTypes)
         {
             this.Units = units;
             this.Interfaces = interfaces;
@@ -65,11 +66,11 @@ namespace Allors.Workspace.Meta
 
             this.MetaObjectByTag =
                 this.Units.Cast<IMetaObject>()
-                .Union(this.Classes)
-                .Union(this.Interfaces)
-                .Union(this.RelationTypes)
-                .Union(this.MethodTypes)
-                .ToDictionary(v => v.Tag, v => v);
+                    .Union(this.Classes)
+                    .Union(this.Interfaces)
+                    .Union(this.RelationTypes)
+                    .Union(this.MethodTypes)
+                    .ToDictionary(v => v.Tag, v => v);
 
             this.Composites = this.Interfaces.Cast<IComposite>().Union(this.Classes).ToArray();
             this.CompositeByLowercaseName = this.Composites.ToDictionary(v => v.SingularName.ToLowerInvariant());
@@ -167,8 +168,8 @@ namespace Allors.Workspace.Meta
             // AssociationTypes
             {
                 var exclusiveAssociationTypesByObjectType = this.RelationTypes
-                   .GroupBy(v => v.RoleType.ObjectType)
-                   .ToDictionary(g => g.Key, g => g.Select(v => v.AssociationType).ToArray());
+                    .GroupBy(v => v.RoleType.ObjectType)
+                    .ToDictionary(g => g.Key, g => g.Select(v => v.AssociationType).ToArray());
 
                 foreach (var objectType in this.Composites)
                 {

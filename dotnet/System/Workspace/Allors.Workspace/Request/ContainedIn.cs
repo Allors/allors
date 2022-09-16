@@ -14,13 +14,13 @@ namespace Allors.Workspace.Request
     {
         public ContainedIn(IPropertyType propertyType = null) => this.PropertyType = propertyType;
 
-        public IPropertyType PropertyType { get; set; }
-
         public IExtent Extent { get; set; }
 
         public IEnumerable<IObject> Objects { get; set; }
 
         public string Parameter { get; set; }
+
+        public IPropertyType PropertyType { get; set; }
 
         public void Accept(IVisitor visitor) => visitor.VisitContainedIn(this);
     }

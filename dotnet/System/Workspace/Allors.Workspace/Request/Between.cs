@@ -13,13 +13,13 @@ namespace Allors.Workspace.Request
     {
         public Between(RoleType roleType = null) => this.RoleType = roleType;
 
-        public RoleType RoleType { get; set; }
-
         public IEnumerable<object> Values { get; set; }
 
         public IEnumerable<RoleType> Paths { get; set; }
 
         public string Parameter { get; set; }
+
+        public RoleType RoleType { get; set; }
 
         public void Accept(IVisitor visitor) => visitor.VisitBetween(this);
     }

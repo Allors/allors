@@ -19,34 +19,33 @@
 // <summary>Defines the Default type.</summary>
 //------------------------------------------------------------------------------------------------
 
-namespace Allors.Database.Adapters.Memory
+namespace Allors.Database.Adapters.Memory;
+
+using Meta;
+
+public class ReferenceOne2ManyTest : Adapters.ReferenceOne2ManyTest
 {
-    using Meta;
+    private readonly Profile profile = new();
 
-    public class ReferenceOne2ManyTest : Adapters.ReferenceOne2ManyTest
-    {
-        private readonly Profile profile = new Profile();
+    public ReferenceOne2ManyTest() => this.profile.Init();
 
-        public ReferenceOne2ManyTest() => this.profile.Init();
+    public override void Dispose() => this.profile.Dispose();
 
-        public override void Dispose() => this.profile.Dispose();
+    public override IObject[] CreateArray(IObjectType objectType, int count) => this.profile.CreateArray(objectType, count);
 
-        public override IObject[] CreateArray(IObjectType objectType, int count) => this.profile.CreateArray(objectType, count);
+    public override IDatabase CreateMemoryPopulation() => this.profile.CreateMemoryDatabase();
 
-        public override IDatabase CreateMemoryPopulation() => this.profile.CreateMemoryDatabase();
+    public override MetaPopulation GetMetaPopulation() => (MetaPopulation)this.profile.GetDatabase().MetaPopulation;
 
-        public override MetaPopulation GetMetaPopulation() => (MetaPopulation)this.profile.GetDatabase().MetaPopulation;
+    public override MetaPopulation GetMetaPopulation2() => (MetaPopulation)this.profile.GetDatabase2().MetaPopulation;
 
-        public override MetaPopulation GetMetaPopulation2() => (MetaPopulation)this.profile.GetDatabase2().MetaPopulation;
+    public override IDatabase GetPopulation() => this.profile.GetDatabase();
 
-        public override IDatabase GetPopulation() => this.profile.GetDatabase();
+    public override IDatabase GetPopulation2() => this.profile.GetDatabase2();
 
-        public override IDatabase GetPopulation2() => this.profile.GetDatabase2();
+    public override ITransaction GetTransaction() => this.profile.GetTransaction();
 
-        public override ITransaction GetTransaction() => this.profile.GetTransaction();
+    public override ITransaction GetTransaction2() => this.profile.GetTransaction2();
 
-        public override ITransaction GetTransaction2() => this.profile.GetTransaction2();
-
-        public override bool IsRollbackSupported() => this.profile.IsRollbackSupported();
-    }
+    public override bool IsRollbackSupported() => this.profile.IsRollbackSupported();
 }

@@ -29,11 +29,17 @@ namespace Allors.Workspace.Adapters.Json
 
         public string ErrorMessage => this.response._e;
 
-        public IEnumerable<IObject> VersionErrors => this.response._v != null ? this.response._v.Select(this.Workspace.GetObject).Cast<IObject>() : Array.Empty<IObject>();
+        public IEnumerable<IObject> VersionErrors => this.response._v != null
+            ? this.response._v.Select(this.Workspace.GetObject).Cast<IObject>()
+            : Array.Empty<IObject>();
 
-        public IEnumerable<IObject> AccessErrors => this.response._a != null ? this.response._a.Select(this.Workspace.GetObject).Cast<IObject>() : Array.Empty<IObject>();
+        public IEnumerable<IObject> AccessErrors => this.response._a != null
+            ? this.response._a.Select(this.Workspace.GetObject).Cast<IObject>()
+            : Array.Empty<IObject>();
 
-        public IEnumerable<IObject> MissingErrors => this.response._m != null ? this.response._m.Select(this.Workspace.GetObject).Cast<IObject>() : Array.Empty<IObject>();
+        public IEnumerable<IObject> MissingErrors => this.response._m != null
+            ? this.response._m.Select(this.Workspace.GetObject).Cast<IObject>()
+            : Array.Empty<IObject>();
 
         public IEnumerable<IDerivationError> DerivationErrors
         {

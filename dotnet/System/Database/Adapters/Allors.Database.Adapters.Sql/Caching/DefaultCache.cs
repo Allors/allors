@@ -3,99 +3,97 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Adapters.Sql.Caching
+namespace Allors.Database.Adapters.Sql.Caching;
+
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using Meta;
+
+/// <summary>
+///     The Cache holds a CachedObject and/or IObjectType by ObjectId.
+/// </summary>
+public sealed class DefaultCache : ICache
 {
-    using System.Collections.Concurrent;
-    using System.Collections.Generic;
-    using Meta;
+    private readonly ConcurrentDictionary<long, DefaultCachedObject> cachedObjectByObjectId;
+    private readonly HashSet<IClass> excludedClasses;
+    private readonly ConcurrentDictionary<long, IClass> objectTypeByObjectId;
+
+    internal DefaultCache(IClass[] excludedClasses)
+    {
+        this.cachedObjectByObjectId = new ConcurrentDictionary<long, DefaultCachedObject>();
+        this.objectTypeByObjectId = new ConcurrentDictionary<long, IClass>();
+
+        if (excludedClasses != null)
+        {
+            this.excludedClasses = new HashSet<IClass>();
+            foreach (var transientObjectType in excludedClasses)
+            {
+                foreach (var transientClass in transientObjectType.Classes)
+                {
+                    this.excludedClasses.Add(transientClass);
+                }
+            }
+
+            if (this.excludedClasses.Count == 0)
+            {
+                this.excludedClasses = null;
+            }
+        }
+    }
 
     /// <summary>
-    /// The Cache holds a CachedObject and/or IObjectType by ObjectId.
+    ///     Invalidates the Cache.
     /// </summary>
-    public sealed class DefaultCache : ICache
+    public void Invalidate()
     {
-        private readonly HashSet<IClass> excludedClasses;
+        this.cachedObjectByObjectId.Clear();
+        this.objectTypeByObjectId.Clear();
+    }
 
-        private readonly ConcurrentDictionary<long, DefaultCachedObject> cachedObjectByObjectId;
-        private readonly ConcurrentDictionary<long, IClass> objectTypeByObjectId;
-
-        internal DefaultCache(IClass[] excludedClasses)
+    public ICachedObject GetOrCreateCachedObject(IClass concreteClass, long objectId, long version)
+    {
+        if (this.excludedClasses != null && this.excludedClasses.Contains(concreteClass))
         {
-            this.cachedObjectByObjectId = new ConcurrentDictionary<long, DefaultCachedObject>();
-            this.objectTypeByObjectId = new ConcurrentDictionary<long, IClass>();
-
-            if (excludedClasses != null)
-            {
-                this.excludedClasses = new HashSet<IClass>();
-                foreach (var transientObjectType in excludedClasses)
-                {
-                    foreach (var transientClass in transientObjectType.Classes)
-                    {
-                        this.excludedClasses.Add(transientClass);
-                    }
-                }
-
-                if (this.excludedClasses.Count == 0)
-                {
-                    this.excludedClasses = null;
-                }
-            }
+            return new DefaultCachedObject(version);
         }
 
-        /// <summary>
-        /// Invalidates the Cache.
-        /// </summary>
-        public void Invalidate()
+        if (this.cachedObjectByObjectId.TryGetValue(objectId, out var cachedObject))
         {
-            this.cachedObjectByObjectId.Clear();
-            this.objectTypeByObjectId.Clear();
-        }
-
-        public ICachedObject GetOrCreateCachedObject(IClass concreteClass, long objectId, long version)
-        {
-            if (this.excludedClasses != null && this.excludedClasses.Contains(concreteClass))
-            {
-                return new DefaultCachedObject(version);
-            }
-
-            if (this.cachedObjectByObjectId.TryGetValue(objectId, out var cachedObject))
-            {
-                if (!cachedObject.Version.Equals(version))
-                {
-                    cachedObject = new DefaultCachedObject(version);
-                    this.cachedObjectByObjectId[objectId] = cachedObject;
-                }
-            }
-            else
+            if (!cachedObject.Version.Equals(version))
             {
                 cachedObject = new DefaultCachedObject(version);
                 this.cachedObjectByObjectId[objectId] = cachedObject;
             }
-
-            return cachedObject;
+        }
+        else
+        {
+            cachedObject = new DefaultCachedObject(version);
+            this.cachedObjectByObjectId[objectId] = cachedObject;
         }
 
-        public IClass GetObjectType(long objectId)
-        {
-            this.objectTypeByObjectId.TryGetValue(objectId, out var objectType);
-            return objectType;
-        }
+        return cachedObject;
+    }
 
-        public void SetObjectType(long objectId, IClass objectType) => this.objectTypeByObjectId[objectId] = objectType;
+    public IClass GetObjectType(long objectId)
+    {
+        this.objectTypeByObjectId.TryGetValue(objectId, out var objectType);
+        return objectType;
+    }
 
-        public void OnCommit(IList<long> accessedObjectIds, IList<long> changedObjectIds)
+    public void SetObjectType(long objectId, IClass objectType) => this.objectTypeByObjectId[objectId] = objectType;
+
+    public void OnCommit(IList<long> accessedObjectIds, IList<long> changedObjectIds)
+    {
+        if (changedObjectIds.Count > 0)
         {
-            if (changedObjectIds.Count > 0)
+            foreach (var changedObjectId in changedObjectIds)
             {
-                foreach (var changedObjectId in changedObjectIds)
-                {
-                    this.cachedObjectByObjectId.TryRemove(changedObjectId, out var removedObject);
-                }
+                this.cachedObjectByObjectId.TryRemove(changedObjectId, out var removedObject);
             }
         }
+    }
 
-        public void OnRollback(List<long> accessedObjectIds)
-        {
-        }
+    public void OnRollback(List<long> accessedObjectIds)
+    {
     }
 }

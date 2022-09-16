@@ -3,43 +3,42 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Adapters.Memory
+namespace Allors.Database.Adapters.Memory;
+
+using Meta;
+
+internal sealed class RoleInstanceof : Predicate
 {
-    using Meta;
+    private readonly IComposite objectType;
+    private readonly IRoleType roleType;
 
-    internal sealed class RoleInstanceof : Predicate
+    internal RoleInstanceof(ExtentFiltered extent, IRoleType roleType, IComposite objectType)
     {
-        private readonly IRoleType roleType;
-        private readonly IComposite objectType;
+        extent.CheckForRoleType(roleType);
+        PredicateAssertions.ValidateRoleInstanceOf(roleType, objectType);
 
-        internal RoleInstanceof(ExtentFiltered extent, IRoleType roleType, IComposite objectType)
+        this.roleType = roleType;
+        this.objectType = objectType;
+    }
+
+    internal override ThreeValuedLogic Evaluate(Strategy strategy)
+    {
+        var role = strategy.GetCompositeRole(this.roleType);
+
+        if (role == null)
         {
-            extent.CheckForRoleType(roleType);
-            PredicateAssertions.ValidateRoleInstanceOf(roleType, objectType);
-
-            this.roleType = roleType;
-            this.objectType = objectType;
+            return ThreeValuedLogic.False;
         }
 
-        internal override ThreeValuedLogic Evaluate(Strategy strategy)
+        // TODO: Optimize
+        var roleObjectType = role.Strategy.Class;
+        if (roleObjectType.Equals(this.objectType))
         {
-            var role = strategy.GetCompositeRole(this.roleType);
-
-            if (role == null)
-            {
-                return ThreeValuedLogic.False;
-            }
-
-            // TODO: Optimize
-            var roleObjectType = role.Strategy.Class;
-            if (roleObjectType.Equals(this.objectType))
-            {
-                return ThreeValuedLogic.True;
-            }
-
-            return this.objectType is IInterface @interface && roleObjectType.ExistSupertype(@interface)
-                       ? ThreeValuedLogic.True
-                       : ThreeValuedLogic.False;
+            return ThreeValuedLogic.True;
         }
+
+        return this.objectType is IInterface @interface && roleObjectType.ExistSupertype(@interface)
+            ? ThreeValuedLogic.True
+            : ThreeValuedLogic.False;
     }
 }

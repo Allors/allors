@@ -6,18 +6,18 @@
 namespace Allors
 {
     /// <summary>
-    /// The sort direction.
+    ///     The sort direction.
     /// </summary>
     public enum SortDirection
     {
         /// <summary>
-        /// Sort in ascending order (small to great)
+        ///     Sort in ascending order (small to great)
         /// </summary>
         Ascending = 1,
 
         /// <summary>
-        /// Sort in descending order (large to small)
+        ///     Sort in descending order (large to small)
         /// </summary>
-        Descending = 2,
+        Descending = 2
     }
 }

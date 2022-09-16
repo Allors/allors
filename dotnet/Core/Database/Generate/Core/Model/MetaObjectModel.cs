@@ -1,15 +1,14 @@
-namespace Allors.Meta.Generation.Model
+namespace Allors.Meta.Generation.Model;
+
+using Database.Meta;
+
+public abstract class MetaObjectModel
 {
-    using Database.Meta;
+    protected MetaObjectModel(MetaModel metaModel) => this.MetaModel = metaModel;
 
-    public abstract class MetaObjectModel
-    {
-        protected MetaObjectModel(MetaModel metaModel) => this.MetaModel = metaModel;
+    public MetaModel MetaModel { get; }
 
-        public MetaModel MetaModel { get; }
+    protected abstract IMetaObject MetaObject { get; }
 
-        protected abstract IMetaObject MetaObject { get; }
-
-        public override string ToString() => this.MetaObject.ToString();
-    }
+    public override string ToString() => this.MetaObject.ToString();
 }

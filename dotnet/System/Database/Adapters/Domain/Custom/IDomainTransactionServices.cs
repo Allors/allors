@@ -4,9 +4,8 @@
 // </copyright>
 //------------------------------------------------------------------------------------------------
 
-namespace Allors.Database
+namespace Allors.Database;
+
+public interface IDomainTransactionServices : ITransactionServices
 {
-    public interface IDomainTransactionServices : ITransactionServices
-    {
-    }
 }

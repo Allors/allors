@@ -3,10 +3,9 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Data
+namespace Allors.Database.Data;
+
+public interface IVisitable
 {
-    public interface IVisitable
-    {
-        void Accept(IVisitor visitor);
-    }
+    void Accept(IVisitor visitor);
 }

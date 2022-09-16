@@ -3,88 +3,87 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Adapters.Memory
+namespace Allors.Database.Adapters.Memory;
+
+using System;
+using System.Collections.Generic;
+using Meta;
+
+public sealed class ExtentSort : IComparer<Strategy>
 {
-    using System;
-    using System.Collections.Generic;
-    using Meta;
+    private readonly SortDirection direction;
+    private readonly IRoleType roleType;
+    private ExtentSort subSorter;
 
-    public sealed class ExtentSort : IComparer<Strategy>
+    internal ExtentSort(IRoleType roleType, SortDirection direction)
     {
-        private readonly SortDirection direction;
-        private readonly IRoleType roleType;
-        private ExtentSort subSorter;
+        this.roleType = roleType;
+        this.direction = direction;
+    }
 
-        internal ExtentSort(IRoleType roleType, SortDirection direction)
+    public int Compare(Strategy thisStrategy, Strategy thatStrategy)
+    {
+        var thisValue = thisStrategy.GetInternalizedUnitRole(this.roleType) as IComparable;
+
+        if (thisValue == null || !(thatStrategy.GetInternalizedUnitRole(this.roleType) is IComparable thatValue))
         {
-            this.roleType = roleType;
-            this.direction = direction;
-        }
-
-        public int Compare(Strategy thisStrategy, Strategy thatStrategy)
-        {
-            var thisValue = thisStrategy.GetInternalizedUnitRole(this.roleType) as IComparable;
-
-            if (thisValue == null || !(thatStrategy.GetInternalizedUnitRole(this.roleType) is IComparable thatValue))
-            {
-                // Ascending
-                if (this.direction == SortDirection.Ascending)
-                {
-                    if (thisValue == null)
-                    {
-                        return 1;
-                    }
-
-                    return -1;
-                }
-
-                // Descending
-                if (thisValue == null)
-                {
-                    return -1;
-                }
-
-                return 1;
-            }
-
             // Ascending
             if (this.direction == SortDirection.Ascending)
             {
-                var thisResult = thisValue.CompareTo(thatValue);
-                if (thisResult == 0 && this.subSorter != null)
+                if (thisValue == null)
                 {
-                    return this.subSorter.Compare(thisStrategy, thatStrategy);
+                    return 1;
                 }
 
-                return thisResult;
+                return -1;
             }
 
             // Descending
-            var thatResult = thatValue.CompareTo(thisValue);
-            if (thatResult == 0 && this.subSorter != null)
+            if (thisValue == null)
+            {
+                return -1;
+            }
+
+            return 1;
+        }
+
+        // Ascending
+        if (this.direction == SortDirection.Ascending)
+        {
+            var thisResult = thisValue.CompareTo(thatValue);
+            if (thisResult == 0 && this.subSorter != null)
             {
                 return this.subSorter.Compare(thisStrategy, thatStrategy);
             }
 
-            return thatResult;
+            return thisResult;
         }
 
-        internal void AddSort(IRoleType subSortRoleType, SortDirection subSortDirection)
+        // Descending
+        var thatResult = thatValue.CompareTo(thisValue);
+        if (thatResult == 0 && this.subSorter != null)
         {
-            if (this.subSorter == null)
-            {
-                this.subSorter = new ExtentSort(subSortRoleType, subSortDirection);
-            }
-            else
-            {
-                this.subSorter.AddSort(subSortRoleType, subSortDirection);
-            }
+            return this.subSorter.Compare(thisStrategy, thatStrategy);
         }
 
-        internal void CopyToConnected(Allors.Database.Extent connectedExtent)
+        return thatResult;
+    }
+
+    internal void AddSort(IRoleType subSortRoleType, SortDirection subSortDirection)
+    {
+        if (this.subSorter == null)
         {
-            connectedExtent.AddSort(this.roleType, this.direction);
-            this.subSorter?.CopyToConnected(connectedExtent);
+            this.subSorter = new ExtentSort(subSortRoleType, subSortDirection);
         }
+        else
+        {
+            this.subSorter.AddSort(subSortRoleType, subSortDirection);
+        }
+    }
+
+    internal void CopyToConnected(Allors.Database.Extent connectedExtent)
+    {
+        connectedExtent.AddSort(this.roleType, this.direction);
+        this.subSorter?.CopyToConnected(connectedExtent);
     }
 }

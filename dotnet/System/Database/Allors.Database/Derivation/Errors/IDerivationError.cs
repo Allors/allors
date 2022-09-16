@@ -3,16 +3,15 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Derivations
+namespace Allors.Database.Derivations;
+
+using Meta;
+
+public interface IDerivationError
 {
-    using Meta;
+    IDerivationRelation[] Relations { get; }
 
-    public interface IDerivationError
-    {
-        IDerivationRelation[] Relations { get; }
+    IRoleType[] RoleTypes { get; }
 
-        IRoleType[] RoleTypes { get; }
-
-        string Message { get; }
-    }
+    string Message { get; }
 }

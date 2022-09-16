@@ -5,14 +5,13 @@
 // <summary>Defines the Default type.</summary>
 //------------------------------------------------------------------------------------------------
 
-namespace Allors.Database
+namespace Allors.Database;
+
+public class DefaultDomainTransactionServices : IDomainTransactionServices
 {
-    public class DefaultDomainTransactionServices : IDomainTransactionServices
-    {
-        public void OnInit(ITransaction transaction) { }
+    public void OnInit(ITransaction transaction) { }
 
-        public void Dispose() { }
+    public void Dispose() { }
 
-        public T Get<T>() => default;
-    }
+    public T Get<T>() => default;
 }

@@ -3,40 +3,41 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Data
+namespace Allors.Database.Data;
+
+using Meta;
+
+public class Exists : IPropertyPredicate
 {
-    using Meta;
+    public Exists(IPropertyType propertyType = null) => this.PropertyType = propertyType;
 
-    public class Exists : IPropertyPredicate
+    public string Parameter { get; set; }
+
+    public IPropertyType PropertyType { get; set; }
+
+    bool IPredicate.ShouldTreeShake(IArguments arguments) => ((IPredicate)this).HasMissingArguments(arguments);
+
+    bool IPredicate.HasMissingArguments(IArguments arguments) => this.Parameter != null && arguments?.HasArgument(this.Parameter) != true;
+
+    void IPredicate.Build(ITransaction transaction, IArguments arguments, Database.ICompositePredicate compositePredicate)
     {
-        public Exists(IPropertyType propertyType = null) => this.PropertyType = propertyType;
+        var propertyType = this.Parameter != null
+            ? (IPropertyType)transaction.GetMetaObject(arguments.ResolveMetaObject(this.Parameter))
+            : this.PropertyType;
 
-        public string Parameter { get; set; }
-
-        public IPropertyType PropertyType { get; set; }
-
-        bool IPredicate.ShouldTreeShake(IArguments arguments) => ((IPredicate)this).HasMissingArguments(arguments);
-
-        bool IPredicate.HasMissingArguments(IArguments arguments) => this.Parameter != null && (arguments?.HasArgument(this.Parameter) != true);
-
-        void IPredicate.Build(ITransaction transaction, IArguments arguments, Database.ICompositePredicate compositePredicate)
+        if (propertyType != null)
         {
-            var propertyType = this.Parameter != null ? (IPropertyType)transaction.GetMetaObject(arguments.ResolveMetaObject(this.Parameter)) : this.PropertyType;
-
-            if (propertyType != null)
+            if (propertyType is IRoleType roleType)
             {
-                if (propertyType is IRoleType roleType)
-                {
-                    compositePredicate.AddExists(roleType);
-                }
-                else
-                {
-                    var associationType = (IAssociationType)propertyType;
-                    compositePredicate.AddExists(associationType);
-                }
+                compositePredicate.AddExists(roleType);
+            }
+            else
+            {
+                var associationType = (IAssociationType)propertyType;
+                compositePredicate.AddExists(associationType);
             }
         }
-
-        public void Accept(IVisitor visitor) => visitor.VisitExists(this);
     }
+
+    public void Accept(IVisitor visitor) => visitor.VisitExists(this);
 }

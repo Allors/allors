@@ -3,49 +3,49 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Repository.Generation
+namespace Allors.Repository.Generation;
+
+using System;
+using System.IO;
+using System.Threading;
+
+public class Location
 {
-    using System;
-    using System.IO;
-    using System.Threading;
+    private const int RetryCount = 10;
 
-    public class Location
+    public Location(DirectoryInfo directoryInfo) => this.DirectoryInfo = directoryInfo;
+
+    public DirectoryInfo DirectoryInfo { get; }
+
+    public void Save(string fileName, string fileContents)
     {
-        private const int RetryCount = 10;
-
-        public Location(DirectoryInfo directoryInfo) => this.DirectoryInfo = directoryInfo;
-
-        public DirectoryInfo DirectoryInfo { get; }
-
-        public void Save(string fileName, string fileContents)
+        if (!this.DirectoryInfo.Exists)
         {
-            if (!this.DirectoryInfo.Exists)
-            {
-                this.DirectoryInfo.Create();
-            }
-
-            var fileInfo = new FileInfo(this.DirectoryInfo.FullName + Path.DirectorySeparatorChar + fileName.Replace('\\', Path.DirectorySeparatorChar));
-            Save(fileInfo, fileContents);
+            this.DirectoryInfo.Create();
         }
 
-        private static void Save(FileInfo fileInfo, string fileContents)
-        {
-            for (var i = 0; i < RetryCount; i++)
-            {
-                try
-                {
-                    File.WriteAllText(fileInfo.FullName, fileContents);
-                    fileInfo.CreationTime = DateTime.UtcNow;
-                    return;
-                }
-                catch
-                {
-                    Thread.Sleep(100 * i);
-                    fileInfo.Refresh();
-                }
-            }
+        var fileInfo = new FileInfo(this.DirectoryInfo.FullName + Path.DirectorySeparatorChar +
+                                    fileName.Replace('\\', Path.DirectorySeparatorChar));
+        Save(fileInfo, fileContents);
+    }
 
-            throw new Exception("Could not save " + fileInfo.FullName);
+    private static void Save(FileInfo fileInfo, string fileContents)
+    {
+        for (var i = 0; i < RetryCount; i++)
+        {
+            try
+            {
+                File.WriteAllText(fileInfo.FullName, fileContents);
+                fileInfo.CreationTime = DateTime.UtcNow;
+                return;
+            }
+            catch
+            {
+                Thread.Sleep(100 * i);
+                fileInfo.Refresh();
+            }
         }
+
+        throw new Exception("Could not save " + fileInfo.FullName);
     }
 }

@@ -3,9 +3,8 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Security
+namespace Allors.Database.Security;
+
+public interface ICreatePermission : IPermission
 {
-    public interface ICreatePermission : IPermission
-    {
-    }
 }

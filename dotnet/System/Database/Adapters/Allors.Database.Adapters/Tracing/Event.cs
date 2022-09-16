@@ -3,46 +3,45 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Adapters.Tracing
+namespace Allors.Database.Adapters.Tracing;
+
+using System;
+using System.Text;
+using Database.Tracing;
+
+public abstract class Event : IEvent
 {
-    using System;
-    using System.Text;
-    using Database.Tracing;
+    protected Event(ITransaction transaction) => this.Transaction = transaction;
 
-    public abstract class Event : IEvent
+    public ITransaction Transaction { get; }
+
+    public DateTime Started { get; private set; }
+
+    public DateTime Stopped { get; private set; }
+
+    public TimeSpan Duration => this.Stopped - this.Started;
+
+    public void Start() => this.Started = DateTime.Now;
+
+    public void Stop() => this.Stopped = DateTime.Now;
+
+    public override string ToString()
     {
-        protected Event(ITransaction transaction) => this.Transaction = transaction;
+        var builder = new StringBuilder();
 
-        public ITransaction Transaction { get; }
+        builder.Append(this.GetType().Name);
 
-        public DateTime Started { get; private set; }
+        this.ToString(builder);
 
-        public DateTime Stopped { get; private set; }
-
-        public TimeSpan Duration => this.Stopped - this.Started;
-
-        public void Start() => this.Started = DateTime.Now;
-
-        public void Stop() => this.Stopped = DateTime.Now;
-
-        public override string ToString()
+        if (this.Duration > new TimeSpan(0, 0, 0, 0, 1))
         {
-            var builder = new StringBuilder();
-
-            builder.Append(this.GetType().Name);
-
-            this.ToString(builder);
-
-            if (this.Duration > new TimeSpan(0, 0, 0, 0, 1))
-            {
-                builder.Append(" (")
-                    .Append(this.Duration.ToString("s\\.fff"))
-                    .Append("s)");
-            }
-
-            return builder.ToString();
+            builder.Append(" (")
+                .Append(this.Duration.ToString("s\\.fff"))
+                .Append("s)");
         }
 
-        protected abstract void ToString(StringBuilder builder);
+        return builder.ToString();
     }
+
+    protected abstract void ToString(StringBuilder builder);
 }

@@ -13,7 +13,7 @@ namespace Allors.Workspace.Meta
     {
         ISet<Interface> DirectSupertypes { get; set; } // TODO: move set;
 
-        ISet<Interface> Supertypes { get; set; }// TODO: move set;
+        ISet<Interface> Supertypes { get; set; } // TODO: move set;
 
         ISet<Class> Classes { get; }
 
@@ -25,8 +25,6 @@ namespace Allors.Workspace.Meta
 
         ISet<MethodType> MethodTypes { get; }
 
-        bool IsAssignableFrom(IComposite objectType);
-
         new MetaPopulation MetaPopulation { get; set; }
 
         RoleType[] ExclusiveRoleTypes { get; set; }
@@ -34,6 +32,8 @@ namespace Allors.Workspace.Meta
         AssociationType[] ExclusiveAssociationTypes { get; set; }
 
         MethodType[] ExclusiveMethodTypes { get; set; }
+
+        bool IsAssignableFrom(IComposite objectType);
 
         void Bind(Dictionary<string, Type> typeByName);
     }

@@ -3,140 +3,139 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Protocol.Json
+namespace Allors.Database.Protocol.Json;
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Data;
+using Meta;
+using Security;
+
+public class PullInstantiate
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using Data;
-    using Meta;
-    using Security;
+    private readonly IAccessControl acls;
+    private readonly IPreparedSelects preparedSelects;
+    private readonly Pull pull;
+    private readonly ITransaction transaction;
 
-    public class PullInstantiate
+    public PullInstantiate(ITransaction transaction, Pull pull, IAccessControl acls, IPreparedSelects preparedSelects)
     {
-        private readonly ITransaction transaction;
-        private readonly Pull pull;
-        private readonly IAccessControl acls;
-        private readonly IPreparedSelects preparedSelects;
+        this.transaction = transaction;
+        this.pull = pull;
+        this.acls = acls;
+        this.preparedSelects = preparedSelects;
+    }
 
-        public PullInstantiate(ITransaction transaction, Pull pull, IAccessControl acls, IPreparedSelects preparedSelects)
+    public void Execute(PullResponseBuilder response)
+    {
+        var @object = this.transaction.Instantiate(this.pull.Object);
+
+        var @class = @object.Strategy?.Class;
+
+        if (@class != null && this.pull.ObjectType is IComposite objectType && !objectType.IsAssignableFrom(@class))
         {
-            this.transaction = transaction;
-            this.pull = pull;
-            this.acls = acls;
-            this.preparedSelects = preparedSelects;
+            return;
         }
 
-        public void Execute(PullResponseBuilder response)
+        if (this.pull.Results != null)
         {
-            var @object = this.transaction.Instantiate(this.pull.Object);
-
-            var @class = @object.Strategy?.Class;
-
-            if (@class != null && this.pull.ObjectType is IComposite objectType && !objectType.IsAssignableFrom(@class))
+            foreach (var result in this.pull.Results)
             {
-                return;
-            }
-
-            if (this.pull.Results != null)
-            {
-                foreach (var result in this.pull.Results)
+                try
                 {
-                    try
+                    var name = result.Name;
+
+                    var select = result.Select;
+                    if (select == null && result.SelectRef.HasValue)
                     {
-                        var name = result.Name;
+                        select = this.preparedSelects.Get(result.SelectRef.Value);
+                    }
 
-                        var select = result.Select;
-                        if (select == null && result.SelectRef.HasValue)
+                    if (select != null)
+                    {
+                        var include = select.End.Include;
+
+                        if (select.PropertyType != null)
                         {
-                            select = this.preparedSelects.Get(result.SelectRef.Value);
-                        }
+                            var propertyType = select.End.PropertyType;
 
-                        if (select != null)
-                        {
-                            var include = select.End.Include;
-
-                            if (select.PropertyType != null)
+                            if (select.IsOne)
                             {
-                                var propertyType = select.End.PropertyType;
+                                name ??= propertyType.SingularName;
 
-                                if (select.IsOne)
-                                {
-                                    name ??= propertyType.SingularName;
-
-                                    @object = (IObject)select.Get(@object, this.acls);
-                                    response.AddObject(name, @object, include);
-                                }
-                                else
-                                {
-                                    name ??= propertyType.PluralName;
-
-                                    var stepResult = select.Get(@object, this.acls);
-
-                                    IObject[] objects;
-                                    if (stepResult is IObject obj)
-                                    {
-                                        objects = new[] { obj };
-                                    }
-                                    else if (stepResult is IEnumerable<IObject> objs)
-                                    {
-                                        objects = objs.ToArray();
-                                    }
-                                    else if (stepResult is IEnumerable<object> outer)
-                                    {
-                                        var set = new HashSet<IObject>();
-                                        foreach (var inner in outer)
-                                        {
-                                            switch (inner)
-                                            {
-                                                case null:
-                                                    continue;
-                                                case IObject innerObject:
-                                                    set.Add(innerObject);
-                                                    break;
-                                                default:
-                                                {
-                                                    var innerEnumerable = (IEnumerable<IObject>)inner;
-                                                    set.UnionWith(innerEnumerable);
-                                                    break;
-                                                }
-                                            }
-                                        }
-
-                                        objects = set.ToArray();
-                                    }
-                                    else
-                                    {
-                                        objects = Array.Empty<IObject>();
-                                    }
-
-                                    response.AddCollection(name, (IComposite)select.GetObjectType() ?? @class, objects, include);
-                                }
+                                @object = (IObject)select.Get(@object, this.acls);
+                                response.AddObject(name, @object, include);
                             }
                             else
                             {
-                                name ??= this.pull.ObjectType?.Name ?? @object.Strategy.Class.SingularName;
-                                response.AddObject(name, @object, include);
+                                name ??= propertyType.PluralName;
+
+                                var stepResult = select.Get(@object, this.acls);
+
+                                IObject[] objects;
+                                if (stepResult is IObject obj)
+                                {
+                                    objects = new[] {obj};
+                                }
+                                else if (stepResult is IEnumerable<IObject> objs)
+                                {
+                                    objects = objs.ToArray();
+                                }
+                                else if (stepResult is IEnumerable<object> outer)
+                                {
+                                    var set = new HashSet<IObject>();
+                                    foreach (var inner in outer)
+                                    {
+                                        switch (inner)
+                                        {
+                                            case null:
+                                                continue;
+                                            case IObject innerObject:
+                                                set.Add(innerObject);
+                                                break;
+                                            default:
+                                            {
+                                                var innerEnumerable = (IEnumerable<IObject>)inner;
+                                                set.UnionWith(innerEnumerable);
+                                                break;
+                                            }
+                                        }
+                                    }
+
+                                    objects = set.ToArray();
+                                }
+                                else
+                                {
+                                    objects = Array.Empty<IObject>();
+                                }
+
+                                response.AddCollection(name, (IComposite)select.GetObjectType() ?? @class, objects, include);
                             }
                         }
                         else
                         {
                             name ??= this.pull.ObjectType?.Name ?? @object.Strategy.Class.SingularName;
-                            var include = result.Include;
                             response.AddObject(name, @object, include);
                         }
                     }
-                    catch (Exception e)
+                    else
                     {
-                        throw new Exception($"Instantiate: {@object?.Strategy.Class}[{@object?.Strategy.ObjectId}], {result}", e);
+                        name ??= this.pull.ObjectType?.Name ?? @object.Strategy.Class.SingularName;
+                        var include = result.Include;
+                        response.AddObject(name, @object, include);
                     }
                 }
+                catch (Exception e)
+                {
+                    throw new Exception($"Instantiate: {@object?.Strategy.Class}[{@object?.Strategy.ObjectId}], {result}", e);
+                }
             }
-            else
-            {
-                var name = this.pull.ObjectType?.Name ?? @object.Strategy.Class.SingularName;
-                response.AddObject(name, @object);
-            }
+        }
+        else
+        {
+            var name = this.pull.ObjectType?.Name ?? @object.Strategy.Class.SingularName;
+            response.AddObject(name, @object);
         }
     }
 }

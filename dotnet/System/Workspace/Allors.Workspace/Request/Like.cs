@@ -12,11 +12,11 @@ namespace Allors.Workspace.Request
     {
         public Like(RoleType roleType = null) => this.RoleType = roleType;
 
-        public RoleType RoleType { get; set; }
-
         public string Value { get; set; }
 
         public string Parameter { get; set; }
+
+        public RoleType RoleType { get; set; }
 
         public void Accept(IVisitor visitor) => visitor.VisitLike(this);
     }

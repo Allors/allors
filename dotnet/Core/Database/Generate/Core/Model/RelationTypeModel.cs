@@ -1,42 +1,41 @@
-namespace Allors.Meta.Generation.Model
+namespace Allors.Meta.Generation.Model;
+
+using System;
+using System.Collections.Generic;
+using Database.Meta;
+
+public class RelationTypeModel : MetaObjectModel, IMetaIdentifiableObjectModel
 {
-    using System;
-    using System.Collections.Generic;
-    using Database.Meta;
+    public RelationTypeModel(MetaModel metaModel, IRelationType relationType) : base(metaModel) => this.RelationType = relationType;
 
-    public class RelationTypeModel : MetaObjectModel, IMetaIdentifiableObjectModel
-    {
-        public RelationTypeModel(MetaModel metaModel, IRelationType relationType) : base(metaModel) => this.RelationType = relationType;
+    public IRelationType RelationType { get; }
+    protected override IMetaObject MetaObject => this.RelationType;
 
-        public IRelationType RelationType { get; }
-        protected override IMetaObject MetaObject => this.RelationType;
+    // IRelationType
+    public AssociationTypeModel AssociationType => this.MetaModel.Map(this.RelationType.AssociationType);
 
-        // IMetaIdentifiableObject
-        public Guid Id => this.RelationType.Id;
+    public RoleTypeModel RoleType => this.MetaModel.Map(this.RelationType.RoleType);
 
-        public string Tag => this.RelationType.Tag;
+    public Multiplicity Multiplicity => this.RelationType.Multiplicity;
 
-        // IRelationType
-        public AssociationTypeModel AssociationType => this.MetaModel.Map(this.RelationType.AssociationType);
+    public bool IsOneToOne => this.RelationType.IsOneToOne;
 
-        public RoleTypeModel RoleType => this.MetaModel.Map(this.RelationType.RoleType);
+    public bool IsOneToMany => this.RelationType.IsOneToMany;
 
-        public Multiplicity Multiplicity => this.RelationType.Multiplicity;
+    public bool IsManyToOne => this.RelationType.IsManyToOne;
 
-        public bool IsOneToOne => this.RelationType.IsOneToOne;
+    public bool IsManyToMany => this.RelationType.IsManyToMany;
 
-        public bool IsOneToMany => this.RelationType.IsOneToMany;
+    public bool IsIndexed => this.RelationType.IsIndexed;
 
-        public bool IsManyToOne => this.RelationType.IsManyToOne;
+    public bool IsDerived => this.RelationType.IsDerived;
 
-        public bool IsManyToMany => this.RelationType.IsManyToMany;
+    public IEnumerable<string> WorkspaceNames => this.RelationType.WorkspaceNames;
 
-        public bool IsIndexed => this.RelationType.IsIndexed;
+    public string Name => ((RelationType)this.RelationType).Name;
 
-        public bool IsDerived => this.RelationType.IsDerived;
+    // IMetaIdentifiableObject
+    public Guid Id => this.RelationType.Id;
 
-        public IEnumerable<string> WorkspaceNames => this.RelationType.WorkspaceNames;
-
-        public string Name => ((RelationType)this.RelationType).Name;
-    }
+    public string Tag => this.RelationType.Tag;
 }

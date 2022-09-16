@@ -4,122 +4,124 @@
 // </copyright>
 // <summary>Defines the AssociationType type.</summary>
 
-namespace Allors.Database.Meta
+namespace Allors.Database.Meta;
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+/// <summary>
+///     An <see cref="AssociationType" /> defines the association side of a relation.
+///     This is also called the 'active', 'controlling' or 'owning' side.
+///     AssociationTypes can only have composite <see cref="ObjectType" />s.
+/// </summary>
+public abstract class AssociationType : IAssociationType, IComparable
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-
     /// <summary>
-    /// An <see cref="AssociationType"/> defines the association side of a relation.
-    /// This is also called the 'active', 'controlling' or 'owning' side.
-    /// AssociationTypes can only have composite <see cref="ObjectType"/>s.
+    ///     Used to create property names.
     /// </summary>
-    public abstract class AssociationType : IAssociationType, IComparable
+    private const string Where = "Where";
+
+    private Composite objectType;
+
+    protected AssociationType(RelationType relationType)
     {
-        /// <summary>
-        /// Used to create property names.
-        /// </summary>
-        private const string Where = "Where";
+        this.RelationType = relationType;
+        this.MetaPopulation = this.RelationType.MetaPopulation;
+        this.RelationType.MetaPopulation.OnAssociationTypeCreated(this);
+    }
 
-        private Composite objectType;
+    public MetaPopulation MetaPopulation { get; }
 
-        protected AssociationType(RelationType relationType)
+    public string[] AssignedWorkspaceNames => this.RelationType.AssignedWorkspaceNames;
+
+    public Composite ObjectType
+    {
+        get => this.objectType;
+
+        set
         {
-            this.RelationType = relationType;
-            this.MetaPopulation = this.RelationType.MetaPopulation;
-            this.RelationType.MetaPopulation.OnAssociationTypeCreated(this);
+            this.MetaPopulation.AssertUnlocked();
+            this.objectType = value;
+            this.MetaPopulation.Stale();
+        }
+    }
+
+    public RoleType RoleType => this.RelationType.RoleType;
+    public RelationType RelationType { get; }
+
+    internal string ValidationName => "association type " + this.Name;
+
+    IMetaPopulation IMetaObject.MetaPopulation => this.MetaPopulation;
+
+    public IEnumerable<string> WorkspaceNames => this.RelationType.WorkspaceNames;
+
+    public string Name => this.IsMany ? this.PluralName : this.SingularName;
+
+    public string SingularName => this.objectType.SingularName + Where + this.RoleType.SingularName;
+
+    public string SingularFullName => this.SingularName;
+
+    public string PluralName => this.objectType.PluralName + Where + this.RoleType.SingularName;
+
+    public string PluralFullName => this.PluralName;
+
+    IObjectType IPropertyType.ObjectType => this.ObjectType;
+    IComposite IAssociationType.ObjectType => this.ObjectType;
+
+    public bool IsOne => !this.IsMany;
+
+    public bool IsMany =>
+        this.RelationType.Multiplicity switch
+        {
+            Multiplicity.ManyToOne => true,
+            Multiplicity.ManyToMany => true,
+            _ => false
+        };
+
+    IRoleType IAssociationType.RoleType => this.RoleType;
+
+    IRelationType IAssociationType.RelationType => this.RelationType;
+
+    // TODO: move to extension method
+    public object Get(IStrategy strategy, IComposite ofType)
+    {
+        var association = strategy.GetAssociation(this);
+
+        if (ofType == null || association == null)
+        {
+            return association;
         }
 
-        IMetaPopulation IMetaObject.MetaPopulation => this.MetaPopulation;
-        public MetaPopulation MetaPopulation { get; }
-
-        public IEnumerable<string> WorkspaceNames => this.RelationType.WorkspaceNames;
-
-        public string[] AssignedWorkspaceNames => this.RelationType.AssignedWorkspaceNames;
-
-        public string Name => this.IsMany ? this.PluralName : this.SingularName;
-
-        public string SingularName => this.objectType.SingularName + Where + this.RoleType.SingularName;
-
-        public string SingularFullName => this.SingularName;
-
-        public string PluralName => this.objectType.PluralName + Where + this.RoleType.SingularName;
-
-        public string PluralFullName => this.PluralName;
-
-        IObjectType IPropertyType.ObjectType => this.ObjectType;
-        IComposite IAssociationType.ObjectType => this.ObjectType;
-        public Composite ObjectType
+        if (this.IsMany)
         {
-            get => this.objectType;
-
-            set
-            {
-                this.MetaPopulation.AssertUnlocked();
-                this.objectType = value;
-                this.MetaPopulation.Stale();
-            }
+            var extent = (IEnumerable<IObject>)association;
+            return extent.Where(v => ofType.IsAssignableFrom(v.Strategy.Class));
         }
 
-        public bool IsOne => !this.IsMany;
+        return !ofType.IsAssignableFrom(((IObject)association).Strategy.Class) ? null : association;
+    }
 
-        public bool IsMany =>
-            this.RelationType.Multiplicity switch
-            {
-                Multiplicity.ManyToOne => true,
-                Multiplicity.ManyToMany => true,
-                _ => false
-            };
+    public int CompareTo(object other) => this.RelationType.Id.CompareTo((other as AssociationType)?.RelationType.Id);
 
-        IRoleType IAssociationType.RoleType => this.RoleType;
-        public RoleType RoleType => this.RelationType.RoleType;
+    public override bool Equals(object other) => this.RelationType.Id.Equals((other as AssociationType)?.RelationType.Id);
 
-        IRelationType IAssociationType.RelationType => this.RelationType;
-        public RelationType RelationType { get; }
+    public override int GetHashCode() => this.RelationType.Id.GetHashCode();
 
-        internal string ValidationName => "association type " + this.Name;
+    public override string ToString() => $"{this.RoleType.ObjectType.Name}.{this.Name}";
 
-        public override bool Equals(object other) => this.RelationType.Id.Equals((other as AssociationType)?.RelationType.Id);
-
-        public override int GetHashCode() => this.RelationType.Id.GetHashCode();
-
-        public int CompareTo(object other) => this.RelationType.Id.CompareTo((other as AssociationType)?.RelationType.Id);
-
-        public override string ToString() => $"{this.RoleType.ObjectType.Name}.{this.Name}";
-
-        // TODO: move to extension method
-        public object Get(IStrategy strategy, IComposite ofType)
+    internal void Validate(ValidationLog validationLog)
+    {
+        if (this.objectType == null)
         {
-            var association = strategy.GetAssociation(this);
-
-            if (ofType == null || association == null)
-            {
-                return association;
-            }
-
-            if (this.IsMany)
-            {
-                var extent = (IEnumerable<IObject>)association;
-                return extent.Where(v => ofType.IsAssignableFrom(v.Strategy.Class));
-            }
-
-            return !ofType.IsAssignableFrom(((IObject)association).Strategy.Class) ? null : association;
+            var message = this.ValidationName + " has no object type";
+            validationLog.AddError(message, this, ValidationKind.Required, "AssociationType.IObjectType");
         }
 
-        internal void Validate(ValidationLog validationLog)
+        if (this.RelationType == null)
         {
-            if (this.objectType == null)
-            {
-                var message = this.ValidationName + " has no object type";
-                validationLog.AddError(message, this, ValidationKind.Required, "AssociationType.IObjectType");
-            }
-
-            if (this.RelationType == null)
-            {
-                var message = this.ValidationName + " has no relation type";
-                validationLog.AddError(message, this, ValidationKind.Required, "AssociationType.RelationType");
-            }
+            var message = this.ValidationName + " has no relation type";
+            validationLog.AddError(message, this, ValidationKind.Required, "AssociationType.RelationType");
         }
     }
 }

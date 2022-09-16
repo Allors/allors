@@ -4,30 +4,29 @@
 // </copyright>
 // <summary>Defines the RoleType type.</summary>
 
-namespace Allors.Database.Meta
+namespace Allors.Database.Meta;
+
+/// <summary>
+///     A <see cref="IPropertyType" /> can be a <see cref="IAssociationType" /> or a <see cref="IRoleType" />.
+/// </summary>
+public interface IPropertyType : IOperandType
 {
-    /// <summary>
-    /// A <see cref="IPropertyType"/> can be a <see cref="IAssociationType"/> or a <see cref="IRoleType"/>.
-    /// </summary>
-    public interface IPropertyType : IOperandType
-    {
-        IObjectType ObjectType { get; }
+    IObjectType ObjectType { get; }
 
-        string Name { get; }
+    string Name { get; }
 
-        string SingularName { get; }
+    string SingularName { get; }
 
-        string SingularFullName { get; }
+    string SingularFullName { get; }
 
-        string PluralName { get; }
+    string PluralName { get; }
 
-        string PluralFullName { get; }
+    string PluralFullName { get; }
 
-        bool IsOne { get; }
+    bool IsOne { get; }
 
-        bool IsMany { get; }
+    bool IsMany { get; }
 
-        // TODO: Move to extension method
-        object Get(IStrategy strategy, IComposite ofType = null);
-    }
+    // TODO: Move to extension method
+    object Get(IStrategy strategy, IComposite ofType = null);
 }

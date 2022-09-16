@@ -3,39 +3,38 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Meta
-{
-    using System;
+namespace Allors.Database.Meta;
 
-    public class MethodInvocation
+using System;
+
+public class MethodInvocation
+{
+    public MethodInvocation(IClass @class, IMethodType methodType)
     {
-        public MethodInvocation(IClass @class, IMethodType methodType)
+        this.Class = @class;
+        this.MethodType = methodType;
+    }
+
+    public IClass Class { get; }
+
+    public IMethodType MethodType { get; }
+
+    //[DebuggerStepThrough]
+    public void Execute(Method method)
+    {
+        if (method.Executed)
         {
-            this.Class = @class;
-            this.MethodType = methodType;
+            throw new Exception("Method already executed.");
         }
 
-        public IClass Class { get; }
+        method.Executed = true;
 
-        public IMethodType MethodType { get; }
-
-        //[DebuggerStepThrough]
-        public void Execute(Method method)
+        foreach (var action in this.Class.Actions(this.MethodType))
         {
-            if (method.Executed)
+            // TODO: Add test for deletion
+            if (!method.Object.Strategy.IsDeleted && !method.StopPropagation)
             {
-                throw new Exception("Method already executed.");
-            }
-
-            method.Executed = true;
-
-            foreach (var action in this.Class.Actions(this.MethodType))
-            {
-                // TODO: Add test for deletion
-                if (!method.Object.Strategy.IsDeleted && !method.StopPropagation)
-                {
-                    action(method.Object, method);
-                }
+                action(method.Object, method);
             }
         }
     }

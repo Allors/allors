@@ -3,12 +3,11 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Data
-{
-    using System;
+namespace Allors.Database.Data;
 
-    public interface IPreparedSelects
-    {
-        Select Get(Guid id);
-    }
+using System;
+
+public interface IPreparedSelects
+{
+    Select Get(Guid id);
 }

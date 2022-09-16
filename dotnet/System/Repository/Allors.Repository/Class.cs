@@ -4,69 +4,68 @@
 // </copyright>
 // <summary>Defines the IObjectType type.</summary>
 
-namespace Allors.Repository.Domain
+namespace Allors.Repository.Domain;
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Inflector;
+
+public class Class : Composite
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using Inflector;
-
-    public class Class : Composite
+    public Class(Inflector inflector, ISet<RepositoryObject> objects, string name, Domain domain)
+        : base(inflector, objects, name, domain)
     {
-        public Class(Inflector inflector, ISet<RepositoryObject> objects, string name, Domain domain)
-            : base(inflector, objects, name, domain)
-        {
-        }
+    }
 
-        public string[] WorkspaceNames
+    public string[] WorkspaceNames
+    {
+        get
         {
-            get
+            dynamic attribute = this.AttributeByName.Get("Workspace");
+            return attribute?.Names ?? Array.Empty<string>();
+        }
+    }
+
+    public override Interface[] Interfaces
+    {
+        get
+        {
+            var interfaces = new HashSet<Interface>(this.ImplementedInterfaces);
+            foreach (var implementedInterface in this.ImplementedInterfaces)
             {
-                dynamic attribute = this.AttributeByName.Get("Workspace");
-                return attribute?.Names ?? Array.Empty<string>();
+                interfaces.UnionWith(implementedInterface.Interfaces);
+            }
+
+            return interfaces.ToArray();
+        }
+    }
+
+    public Property GetImplementedProperty(Property property)
+    {
+        foreach (var @interface in this.ImplementedInterfaces)
+        {
+            var implementedProperty = @interface.GetImplementedProperty(property);
+            if (implementedProperty != null)
+            {
+                return implementedProperty;
             }
         }
 
-        public override Interface[] Interfaces
-        {
-            get
-            {
-                var interfaces = new HashSet<Interface>(this.ImplementedInterfaces);
-                foreach (var implementedInterface in this.ImplementedInterfaces)
-                {
-                    interfaces.UnionWith(implementedInterface.Interfaces);
-                }
+        return null;
+    }
 
-                return interfaces.ToArray();
+    public Method GetImplementedMethod(Method method)
+    {
+        foreach (var @interface in this.ImplementedInterfaces)
+        {
+            var implementedProperty = @interface.GetImplementedMethod(method);
+            if (implementedProperty != null)
+            {
+                return implementedProperty;
             }
         }
 
-        public Property GetImplementedProperty(Property property)
-        {
-            foreach (var @interface in this.ImplementedInterfaces)
-            {
-                var implementedProperty = @interface.GetImplementedProperty(property);
-                if (implementedProperty != null)
-                {
-                    return implementedProperty;
-                }
-            }
-
-            return null;
-        }
-
-        public Method GetImplementedMethod(Method method)
-        {
-            foreach (var @interface in this.ImplementedInterfaces)
-            {
-                var implementedProperty = @interface.GetImplementedMethod(method);
-                if (implementedProperty != null)
-                {
-                    return implementedProperty;
-                }
-            }
-
-            return null;
-        }
+        return null;
     }
 }

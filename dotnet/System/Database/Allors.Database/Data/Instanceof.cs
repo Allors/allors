@@ -3,46 +3,47 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Data
+namespace Allors.Database.Data;
+
+using Meta;
+
+public class Instanceof : IPropertyPredicate
 {
-    using Meta;
+    public Instanceof(IPropertyType propertyType = null) => this.PropertyType = propertyType;
 
-    public class Instanceof : IPropertyPredicate
+    public string Parameter { get; set; }
+
+    public IComposite ObjectType { get; set; }
+
+    public IPropertyType PropertyType { get; set; }
+
+    bool IPredicate.ShouldTreeShake(IArguments arguments) => ((IPredicate)this).HasMissingArguments(arguments);
+
+    bool IPredicate.HasMissingArguments(IArguments arguments) => this.Parameter != null && arguments?.HasArgument(this.Parameter) != true;
+
+    void IPredicate.Build(ITransaction transaction, IArguments arguments, Database.ICompositePredicate compositePredicate)
     {
-        public Instanceof(IPropertyType propertyType = null) => this.PropertyType = propertyType;
+        var composite = this.Parameter != null
+            ? (IComposite)transaction.GetMetaObject(arguments.ResolveMetaObject(this.Parameter))
+            : this.ObjectType;
 
-        public string Parameter { get; set; }
-
-        public IComposite ObjectType { get; set; }
-
-        public IPropertyType PropertyType { get; set; }
-
-        bool IPredicate.ShouldTreeShake(IArguments arguments) => ((IPredicate)this).HasMissingArguments(arguments);
-
-        bool IPredicate.HasMissingArguments(IArguments arguments) => this.Parameter != null && (arguments?.HasArgument(this.Parameter) != true);
-
-        void IPredicate.Build(ITransaction transaction, IArguments arguments, Database.ICompositePredicate compositePredicate)
+        if (this.PropertyType != null)
         {
-            var composite = this.Parameter != null ? (IComposite)transaction.GetMetaObject(arguments.ResolveMetaObject(this.Parameter)) : this.ObjectType;
-
-            if (this.PropertyType != null)
+            if (this.PropertyType is IRoleType roleType)
             {
-                if (this.PropertyType is IRoleType roleType)
-                {
-                    compositePredicate.AddInstanceof(roleType, composite);
-                }
-                else
-                {
-                    var associationType = (IAssociationType)this.PropertyType;
-                    compositePredicate.AddInstanceof(associationType, composite);
-                }
+                compositePredicate.AddInstanceof(roleType, composite);
             }
             else
             {
-                compositePredicate.AddInstanceof(composite);
+                var associationType = (IAssociationType)this.PropertyType;
+                compositePredicate.AddInstanceof(associationType, composite);
             }
         }
-
-        public void Accept(IVisitor visitor) => visitor.VisitInstanceOf(this);
+        else
+        {
+            compositePredicate.AddInstanceof(composite);
+        }
     }
+
+    public void Accept(IVisitor visitor) => visitor.VisitInstanceOf(this);
 }

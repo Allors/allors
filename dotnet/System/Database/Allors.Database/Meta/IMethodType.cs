@@ -4,18 +4,17 @@
 // </copyright>
 // <summary>Defines the RoleType type.</summary>
 
-namespace Allors.Database.Meta
+namespace Allors.Database.Meta;
+
+public interface IMethodType : IMetaIdentifiableObject, IOperandType
 {
-    public interface IMethodType : IMetaIdentifiableObject, IOperandType
-    {
-        IComposite ObjectType { get; }
+    IComposite ObjectType { get; }
 
-        string Name { get; }
+    string Name { get; }
 
-        string FullName { get; }
+    string FullName { get; }
 
-        IRecord Input { get; }
+    IRecord Input { get; }
 
-        IRecord Output { get; }
-    }
+    IRecord Output { get; }
 }

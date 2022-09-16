@@ -3,28 +3,27 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Adapters.Sql.SqlClient
+namespace Allors.Database.Adapters.Sql.SqlClient;
+
+using System.Collections.Generic;
+
+public class SchemaTableType
 {
-    using System.Collections.Generic;
-
-    public class SchemaTableType
+    public SchemaTableType(Schema schema, string name)
     {
-        public SchemaTableType(Schema schema, string name)
-        {
-            this.Name = name;
-            this.ColumnByLowercaseColumnName = new Dictionary<string, SchemaTableTypeColumn>();
-        }
+        this.Name = name;
+        this.ColumnByLowercaseColumnName = new Dictionary<string, SchemaTableTypeColumn>();
+    }
 
-        public string Name { get; }
+    public string Name { get; }
 
-        public Dictionary<string, SchemaTableTypeColumn> ColumnByLowercaseColumnName { get; }
+    public Dictionary<string, SchemaTableTypeColumn> ColumnByLowercaseColumnName { get; }
 
-        public override string ToString() => this.Name;
+    public override string ToString() => this.Name;
 
-        public SchemaTableTypeColumn GetColumn(string columnName)
-        {
-            this.ColumnByLowercaseColumnName.TryGetValue(columnName.ToLowerInvariant(), out var tableColumn);
-            return tableColumn;
-        }
+    public SchemaTableTypeColumn GetColumn(string columnName)
+    {
+        this.ColumnByLowercaseColumnName.TryGetValue(columnName.ToLowerInvariant(), out var tableColumn);
+        return tableColumn;
     }
 }

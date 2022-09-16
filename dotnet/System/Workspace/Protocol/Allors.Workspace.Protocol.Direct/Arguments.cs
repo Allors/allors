@@ -3,27 +3,26 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Workspace.Protocol.Direct
+namespace Allors.Workspace.Protocol.Direct;
+
+using System.Collections.Generic;
+using Database.Data;
+
+public class Arguments : IArguments
 {
-    using System.Collections.Generic;
-    using Database.Data;
+    private readonly IDictionary<string, object> arguments;
 
-    public class Arguments : IArguments
-    {
-        private readonly IDictionary<string, object> arguments;
+    public Arguments(IDictionary<string, object> arguments) => this.arguments = arguments;
 
-        public Arguments(IDictionary<string, object> arguments) => this.arguments = arguments;
+    public bool HasArgument(string name) => this.arguments.ContainsKey(name);
 
-        public bool HasArgument(string name) => this.arguments.ContainsKey(name);
+    public object ResolveUnit(string tag, string name) => this.arguments[name];
 
-        public object ResolveUnit(string tag, string name) => this.arguments[name];
+    public object[] ResolveUnits(string tag, string name) => (object[])this.arguments[name];
 
-        public object[] ResolveUnits(string tag, string name) => (object[])this.arguments[name];
+    public long? ResolveObject(string name) => (long?)this.arguments[name];
 
-        public long? ResolveObject(string name) => (long?)this.arguments[name];
+    public long[] ResolveObjects(string name) => (long[])this.arguments[name];
 
-        public long[] ResolveObjects(string name) => (long[])this.arguments[name];
-
-        public string ResolveMetaObject(string name) => (string)this.arguments[name];
-    }
+    public string ResolveMetaObject(string name) => (string)this.arguments[name];
 }

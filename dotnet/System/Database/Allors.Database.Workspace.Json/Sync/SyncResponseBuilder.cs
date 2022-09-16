@@ -3,123 +3,122 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Protocol.Json
+namespace Allors.Database.Protocol.Json;
+
+using System.Collections.Generic;
+using System.Linq;
+using Allors.Protocol.Json;
+using Allors.Protocol.Json.Api.Sync;
+using Meta;
+using Security;
+using Shared.Ranges;
+
+public class SyncResponseBuilder
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using Allors.Protocol.Json;
-    using Allors.Protocol.Json.Api.Sync;
-    using Meta;
-    using Security;
-    using Shared.Ranges;
+    private readonly ISet<IClass> allowedClasses;
 
-    public class SyncResponseBuilder
+    private readonly HashSet<IObject> maskedObjects;
+    private readonly IDictionary<IClass, PrefetchPolicy> prefetchPolicyByClass;
+    private readonly IDictionary<IClass, ISet<IRoleType>> roleTypesByClass;
+
+    private readonly ITransaction transaction;
+    private readonly IUnitConvert unitConvert;
+
+    public SyncResponseBuilder(ITransaction transaction,
+        IAccessControl accessControl,
+        ISet<IClass> allowedClasses,
+        IDictionary<IClass, ISet<IRoleType>> roleTypesByClass,
+        IDictionary<IClass, PrefetchPolicy> prefetchPolicyByClass,
+        IUnitConvert unitConvert)
     {
-        private readonly IUnitConvert unitConvert;
+        this.transaction = transaction;
+        this.allowedClasses = allowedClasses;
+        this.roleTypesByClass = roleTypesByClass;
+        this.prefetchPolicyByClass = prefetchPolicyByClass;
+        this.unitConvert = unitConvert;
+        this.maskedObjects = new HashSet<IObject>();
 
-        private readonly ITransaction transaction;
-        private readonly ISet<IClass> allowedClasses;
-        private readonly IDictionary<IClass, ISet<IRoleType>> roleTypesByClass;
-        private readonly IDictionary<IClass, PrefetchPolicy> prefetchPolicyByClass;
+        this.AccessControl = accessControl;
+    }
 
-        private readonly HashSet<IObject> maskedObjects;
+    public IAccessControl AccessControl { get; }
 
-        public SyncResponseBuilder(ITransaction transaction,
-            IAccessControl accessControl,
-            ISet<IClass> allowedClasses,
-            IDictionary<IClass, ISet<IRoleType>> roleTypesByClass,
-            IDictionary<IClass, PrefetchPolicy> prefetchPolicyByClass,
-            IUnitConvert unitConvert)
+    public SyncResponse Build(SyncRequest syncRequest)
+    {
+        var requestObjects = this.transaction.Instantiate(syncRequest.o);
+
+        foreach (var groupBy in requestObjects.GroupBy(v => v.Strategy.Class, v => v))
         {
-            this.transaction = transaction;
-            this.allowedClasses = allowedClasses;
-            this.roleTypesByClass = roleTypesByClass;
-            this.prefetchPolicyByClass = prefetchPolicyByClass;
-            this.unitConvert = unitConvert;
-            this.maskedObjects = new HashSet<IObject>();
-
-            this.AccessControl = accessControl;
+            var prefetchClass = groupBy.Key;
+            var prefetchObjects = groupBy;
+            if (this.prefetchPolicyByClass.TryGetValue(prefetchClass, out var prefetchPolicy))
+            {
+                this.transaction.Prefetch(prefetchPolicy, prefetchObjects);
+            }
         }
 
-        public IAccessControl AccessControl { get; }
-
-        public SyncResponse Build(SyncRequest syncRequest)
+        return new SyncResponse
         {
-            var requestObjects = this.transaction.Instantiate(syncRequest.o);
-
-            foreach (var groupBy in requestObjects.GroupBy(v => v.Strategy.Class, v => v))
+            o = requestObjects.Where(this.Include).Select(v =>
             {
-                var prefetchClass = groupBy.Key;
-                var prefetchObjects = groupBy;
-                if (this.prefetchPolicyByClass.TryGetValue(prefetchClass, out var prefetchPolicy))
+                var @class = v.Strategy.Class;
+                var acl = this.AccessControl[v];
+                var roleTypes = this.roleTypesByClass[@class];
+
+                return new SyncResponseObject
                 {
-                    this.transaction.Prefetch(prefetchPolicy, prefetchObjects);
-                }
-            }
+                    i = v.Id,
+                    v = v.Strategy.ObjectVersion,
+                    c = v.Strategy.Class.Tag,
+                    ro = roleTypes
+                        .Where(w => acl.CanRead(w) && v.Strategy.ExistRole(w))
+                        .Select(w => this.CreateSyncResponseRole(v, w, this.unitConvert))
+                        .ToArray(),
+                    g = ValueRange<long>.Import(acl.Grants.Select(w => w.Id)).Save(),
+                    r = ValueRange<long>.Import(acl.Revocations.Select(w => w.Id)).Save()
+                };
+            }).ToArray()
+        };
+    }
 
-            return new SyncResponse
-            {
-                o = requestObjects.Where(this.Include).Select(v =>
-                {
-                    var @class = v.Strategy.Class;
-                    var acl = this.AccessControl[v];
-                    var roleTypes = this.roleTypesByClass[@class];
+    private SyncResponseRole CreateSyncResponseRole(IObject @object, IRoleType roleType, IUnitConvert unitConvert)
+    {
+        var syncResponseRole = new SyncResponseRole {t = roleType.RelationType.Tag};
 
-                    return new SyncResponseObject
-                    {
-                        i = v.Id,
-                        v = v.Strategy.ObjectVersion,
-                        c = v.Strategy.Class.Tag,
-                        ro = roleTypes
-                            .Where(w => acl.CanRead(w) && v.Strategy.ExistRole(w))
-                            .Select(w => this.CreateSyncResponseRole(v, w, this.unitConvert))
-                            .ToArray(),
-                        g = ValueRange<long>.Import(acl.Grants.Select(w => w.Id)).Save(),
-                        r = ValueRange<long>.Import(acl.Revocations.Select(w => w.Id)).Save(),
-                    };
-                }).ToArray(),
-            };
-        }
-
-        private SyncResponseRole CreateSyncResponseRole(IObject @object, IRoleType roleType, IUnitConvert unitConvert)
+        if (roleType.ObjectType.IsUnit)
         {
-            var syncResponseRole = new SyncResponseRole { t = roleType.RelationType.Tag };
-
-            if (roleType.ObjectType.IsUnit)
-            {
-                syncResponseRole.v = unitConvert.ToJson(@object.Strategy.GetUnitRole(roleType));
-            }
-            else if (roleType.IsOne)
-            {
-                var role = @object.Strategy.GetCompositeRole(roleType);
-                if (this.Include(role))
-                {
-                    syncResponseRole.o = role.Id;
-                }
-            }
-            else
-            {
-                var roles = @object.Strategy.GetCompositesRole<IObject>(roleType).Where(this.Include);
-                syncResponseRole.c = ValueRange<long>.Import(roles.Select(roleObject => roleObject.Id)).ToArray();
-            }
-
-            return syncResponseRole;
+            syncResponseRole.v = unitConvert.ToJson(@object.Strategy.GetUnitRole(roleType));
         }
-
-        public bool Include(IObject @object)
+        else if (roleType.IsOne)
         {
-            if (@object == null || this.allowedClasses?.Contains(@object.Strategy.Class) != true || this.maskedObjects.Contains(@object))
+            var role = @object.Strategy.GetCompositeRole(roleType);
+            if (this.Include(role))
             {
-                return false;
+                syncResponseRole.o = role.Id;
             }
-
-            if (this.AccessControl[@object].IsMasked())
-            {
-                this.maskedObjects.Add(@object);
-                return false;
-            }
-
-            return true;
         }
+        else
+        {
+            var roles = @object.Strategy.GetCompositesRole<IObject>(roleType).Where(this.Include);
+            syncResponseRole.c = ValueRange<long>.Import(roles.Select(roleObject => roleObject.Id)).ToArray();
+        }
+
+        return syncResponseRole;
+    }
+
+    public bool Include(IObject @object)
+    {
+        if (@object == null || this.allowedClasses?.Contains(@object.Strategy.Class) != true || this.maskedObjects.Contains(@object))
+        {
+            return false;
+        }
+
+        if (this.AccessControl[@object].IsMasked())
+        {
+            this.maskedObjects.Add(@object);
+            return false;
+        }
+
+        return true;
     }
 }

@@ -11,32 +11,32 @@ namespace Allors.Protocol.Json.Data
     public class Pull : IVisitable
     {
         /// <summary>
-        /// ExtentRef
+        ///     ExtentRef
         /// </summary>
         public Guid? er { get; set; }
 
         /// <summary>
-        /// Extent
+        ///     Extent
         /// </summary>
         public Extent e { get; set; }
 
         /// <summary>
-        /// Object Type Tag
+        ///     Object Type Tag
         /// </summary>
         public string t { get; set; }
 
         /// <summary>
-        /// Object
+        ///     Object
         /// </summary>
         public long? o { get; set; }
 
         /// <summary>
-        /// Results
+        ///     Results
         /// </summary>
         public Result[] r { get; set; }
 
         /// <summary>
-        /// Arguments
+        ///     Arguments
         /// </summary>
         public IDictionary<string, object> a { get; set; }
 

@@ -4,24 +4,21 @@
 // </copyright>
 // <summary>Defines the IObjectType type.</summary>
 
-namespace Allors.Database.Meta
+namespace Allors.Database.Meta;
+
+using System;
+
+public abstract class ObjectType : FieldObjectType, IObjectType
 {
-    using System;
-    using System.Collections.Generic;
-    using Text;
-
-    public abstract class ObjectType : FieldObjectType, IObjectType
+    protected ObjectType(MetaPopulation metaPopulation, Guid id, string tag = null) : base(metaPopulation, id, tag)
     {
-        protected ObjectType(MetaPopulation metaPopulation, Guid id, string tag = null) : base(metaPopulation, id, tag)
-        {
-        }
-
-        public bool IsUnit => this is IUnit;
-
-        public bool IsComposite => this is IComposite;
-
-        public bool IsInterface => this is IInterface;
-
-        public bool IsClass => this is IClass;
     }
+
+    public bool IsUnit => this is IUnit;
+
+    public bool IsComposite => this is IComposite;
+
+    public bool IsInterface => this is IInterface;
+
+    public bool IsClass => this is IClass;
 }

@@ -3,16 +3,13 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Adapters.Schema
+namespace Allors.Database.Adapters.Schema;
+
+using System.Xml.Serialization;
+
+public class Relation
 {
-    using System.Xml.Serialization;
+    [XmlAttribute("a")] public long Association { get; set; }
 
-    public class Relation
-    {
-        [XmlAttribute("a")]
-        public long Association { get; set; }
-
-        [XmlText]
-        public string Role { get; set; }
-    }
+    [XmlText] public string Role { get; set; }
 }

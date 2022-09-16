@@ -56,6 +56,8 @@ namespace Allors.Workspace.Request
 
         public Select End => this.ExistNext ? this.Next.End : this;
 
+        public void Accept(IVisitor visitor) => visitor.VisitSelect(this);
+
         public IObjectType GetObjectType()
         {
             if (this.ExistNext)
@@ -87,7 +89,5 @@ namespace Allors.Workspace.Request
                 this.Next.ToStringAppendToName(name);
             }
         }
-
-        public void Accept(IVisitor visitor) => visitor.VisitSelect(this);
     }
 }

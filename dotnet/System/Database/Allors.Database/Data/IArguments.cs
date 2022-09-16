@@ -3,20 +3,19 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Data
+namespace Allors.Database.Data;
+
+public interface IArguments
 {
-    public interface IArguments
-    {
-        bool HasArgument(string name);
+    bool HasArgument(string name);
 
-        object ResolveUnit(string tag, string name);
+    object ResolveUnit(string tag, string name);
 
-        object[] ResolveUnits(string tag, string name);
+    object[] ResolveUnits(string tag, string name);
 
-        long? ResolveObject(string name);
+    long? ResolveObject(string name);
 
-        long[] ResolveObjects(string name);
+    long[] ResolveObjects(string name);
 
-        string ResolveMetaObject(string name);
-    }
+    string ResolveMetaObject(string name);
 }

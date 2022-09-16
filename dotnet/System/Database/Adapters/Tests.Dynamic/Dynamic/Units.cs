@@ -14,41 +14,40 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Allors.Database.Adapters
+namespace Allors.Database.Adapters;
+
+using System;
+
+public class Units
 {
-    using System;
+    public static Units Dummy = new(false);
 
-    public class Units
+    private static readonly TestValueGenerator Generator = new();
+
+    public byte[] Binary;
+    public bool Boolean;
+    public DateTime DateTime;
+    public decimal Decimal;
+    public double Float;
+    public int Integer;
+    public long Long;
+    public string String;
+    public Guid Unique;
+
+    public Units(Units different) => this.Boolean = !different.Boolean;
+
+    public Units(bool generate)
     {
-        public static Units Dummy = new Units(false);
-
-        public byte[] Binary;
-        public bool Boolean;
-        public DateTime DateTime;
-        public decimal Decimal;
-        public double Float;
-        public int Integer;
-        public long Long;
-        public string String;
-        public Guid Unique;
-
-        private static readonly TestValueGenerator Generator = new TestValueGenerator();
-
-        public Units(Units different) => this.Boolean = !different.Boolean;
-
-        public Units(bool generate)
+        if (generate)
         {
-            if (generate)
-            {
-                this.String = Generator.GenerateString(10);
-                this.Decimal = Generator.GenerateDecimal();
-                this.Integer = Generator.GenerateInteger();
-                this.Float = Generator.GenerateFloat();
-                this.Boolean = Generator.GenerateBoolean();
-                this.DateTime = Generator.GenerateDateTime();
-                this.Unique = Generator.GenerateUnique();
-                this.Binary = Generator.GenerateBinary(10);
-            }
+            this.String = Generator.GenerateString(10);
+            this.Decimal = Generator.GenerateDecimal();
+            this.Integer = Generator.GenerateInteger();
+            this.Float = Generator.GenerateFloat();
+            this.Boolean = Generator.GenerateBoolean();
+            this.DateTime = Generator.GenerateDateTime();
+            this.Unique = Generator.GenerateUnique();
+            this.Binary = Generator.GenerateBinary(10);
         }
     }
 }

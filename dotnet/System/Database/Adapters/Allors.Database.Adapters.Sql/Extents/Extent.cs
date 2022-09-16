@@ -3,10 +3,9 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Adapters.Sql
+namespace Allors.Database.Adapters.Sql;
+
+internal abstract class Extent : Allors.Database.Extent
 {
-    internal abstract class Extent : Allors.Database.Extent
-    {
-        internal abstract SqlExtent ContainedInExtent { get; }
-    }
+    internal abstract SqlExtent ContainedInExtent { get; }
 }

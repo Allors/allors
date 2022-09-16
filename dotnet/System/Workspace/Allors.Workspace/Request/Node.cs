@@ -29,6 +29,8 @@ namespace Allors.Workspace.Request
 
         public Node[] Nodes { get; private set; }
 
+        public void Accept(IVisitor visitor) => visitor.VisitNode(this);
+
         public Node Add(Node node)
         {
             this.Nodes = this.Nodes.Append(node).ToArray();
@@ -100,7 +102,6 @@ namespace Allors.Workspace.Request
         }
 
 
-
         public override string ToString()
         {
             var toString = new StringBuilder();
@@ -118,7 +119,5 @@ namespace Allors.Workspace.Request
                 this.ToString(toString, node.Nodes, level + 1);
             }
         }
-
-        public void Accept(IVisitor visitor) => visitor.VisitNode(this);
     }
 }

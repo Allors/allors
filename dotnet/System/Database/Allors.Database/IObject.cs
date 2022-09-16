@@ -4,36 +4,35 @@
 // </copyright>
 // <summary>Defines the IObject type.</summary>
 
-namespace Allors.Database
+namespace Allors.Database;
+
+/// <summary>
+///     <para>
+///         A strategy based object delegates its framework related
+///         behavior to its own strategy object.
+///     </para>
+///     <para>
+///         Examples of framework related behavior are: persistence, relation management,
+///         life cycle management, transaction management, etc.
+///     </para>
+/// </summary>
+public interface IObject
 {
     /// <summary>
-    /// <para>
-    /// A strategy based object delegates its framework related
-    /// behavior to its own strategy object.
-    /// </para>
-    /// <para>
-    /// Examples of framework related behavior are: persistence, relation management,
-    /// life cycle management, transaction management, etc.
-    /// </para>
+    ///     Gets the Strategy.
     /// </summary>
-    public interface IObject
-    {
-        /// <summary>
-        /// Gets the Strategy.
-        /// </summary>
-        /// <value>The strategy.</value>
-        IStrategy Strategy { get; }
+    /// <value>The strategy.</value>
+    IStrategy Strategy { get; }
 
-        /// <summary>
-        /// Gets the Object Id.
-        /// </summary>
-        /// <value>The object id.</value>
-        long Id { get; }
+    /// <summary>
+    ///     Gets the Object Id.
+    /// </summary>
+    /// <value>The object id.</value>
+    long Id { get; }
 
-        /// <summary>
-        /// OnPostBuild
-        /// </summary>
-        /// <value>The object id.</value>
-        void OnPostBuild();
-    }
+    /// <summary>
+    ///     OnPostBuild
+    /// </summary>
+    /// <value>The object id.</value>
+    void OnPostBuild();
 }

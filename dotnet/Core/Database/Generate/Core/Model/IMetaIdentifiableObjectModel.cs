@@ -1,11 +1,10 @@
-namespace Allors.Meta.Generation.Model
+namespace Allors.Meta.Generation.Model;
+
+using System;
+
+public interface IMetaIdentifiableObjectModel
 {
-    using System;
+    Guid Id { get; }
 
-    public interface IMetaIdentifiableObjectModel
-    {
-        Guid Id { get; }
-
-        string Tag { get; }
-    }
+    string Tag { get; }
 }

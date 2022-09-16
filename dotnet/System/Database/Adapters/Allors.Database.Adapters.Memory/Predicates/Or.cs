@@ -3,40 +3,39 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Adapters.Memory
+namespace Allors.Database.Adapters.Memory;
+
+internal sealed class Or : CompositePredicate
 {
-    internal sealed class Or : CompositePredicate
+    public Or(ExtentFiltered extent)
+        : base(extent)
     {
-        public Or(ExtentFiltered extent)
-            : base(extent)
-        {
-        }
+    }
 
-        internal override ThreeValuedLogic Evaluate(Strategy strategy)
+    internal override ThreeValuedLogic Evaluate(Strategy strategy)
+    {
+        var unknown = false;
+        foreach (var filter in this.Filters)
         {
-            var unknown = false;
-            foreach (var filter in this.Filters)
+            if (filter.Include)
             {
-                if (filter.Include)
+                switch (filter.Evaluate(strategy))
                 {
-                    switch (filter.Evaluate(strategy))
-                    {
-                        case ThreeValuedLogic.True:
-                            return ThreeValuedLogic.True;
+                    case ThreeValuedLogic.True:
+                        return ThreeValuedLogic.True;
 
-                        case ThreeValuedLogic.Unknown:
-                            unknown = true;
-                            break;
-                    }
+                    case ThreeValuedLogic.Unknown:
+                        unknown = true;
+                        break;
                 }
             }
-
-            if (unknown)
-            {
-                return ThreeValuedLogic.Unknown;
-            }
-
-            return ThreeValuedLogic.False;
         }
+
+        if (unknown)
+        {
+            return ThreeValuedLogic.Unknown;
+        }
+
+        return ThreeValuedLogic.False;
     }
 }

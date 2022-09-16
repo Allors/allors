@@ -5,14 +5,13 @@
 // <summary>Defines the IObjectType type.</summary>
 
 
-namespace Allors.Repository.Domain
+namespace Allors.Repository.Domain;
+
+using System.Collections.Generic;
+
+public class Repository
 {
-    using System.Collections.Generic;
+    public Repository() => this.Objects = new HashSet<RepositoryObject>();
 
-    public class Repository
-    {
-        public Repository() => this.Objects = new HashSet<RepositoryObject>();
-
-        public ISet<RepositoryObject> Objects { get; }
-    }
+    public ISet<RepositoryObject> Objects { get; }
 }

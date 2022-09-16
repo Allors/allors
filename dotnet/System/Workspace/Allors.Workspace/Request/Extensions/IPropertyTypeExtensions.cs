@@ -16,11 +16,13 @@ namespace Allors.Workspace.Request.Extensions
     {
         public static Node Node<T>(this T @this) where T : IPropertyType => new Node(@this);
 
-        public static Node Node<T>(this T @this, Func<T, Node> child) where T : IPropertyType => new Node(@this, new[] { child(@this) });
+        public static Node Node<T>(this T @this, Func<T, Node> child) where T : IPropertyType => new Node(@this, new[] {child(@this)});
 
-        public static Node Node<T>(this T @this, params Func<T, Node>[] children) where T : IPropertyType => new Node(@this, children.Select(v => v(@this)));
+        public static Node Node<T>(this T @this, params Func<T, Node>[] children) where T : IPropertyType =>
+            new Node(@this, children.Select(v => v(@this)));
 
-        public static Node Node<T>(this T @this, Func<T, IEnumerable<Node>> children) where T : IPropertyType => new Node(@this, children(@this));
+        public static Node Node<T>(this T @this, Func<T, IEnumerable<Node>> children) where T : IPropertyType =>
+            new Node(@this, children(@this));
 
         public static object Get<T>(this T @this, IObject strategy, IComposite ofType = null) where T : IPropertyType
         {

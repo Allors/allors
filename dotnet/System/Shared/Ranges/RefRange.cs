@@ -17,7 +17,7 @@ namespace Allors.Shared.Ranges
 
         private readonly T[]? items;
 
-        private RefRange(T item) : this(new[] { item }) { }
+        private RefRange(T item) : this(new[] {item}) { }
 
         private RefRange(T[]? items) => this.items = items;
 
@@ -44,7 +44,7 @@ namespace Allors.Shared.Ranges
             switch (sortedItems)
             {
                 case null:
-                case T[] { Length: 0 }:
+                case T[] {Length: 0}:
                     return Empty;
                 case T[] array:
                     return new RefRange<T>(array);
@@ -63,13 +63,13 @@ namespace Allors.Shared.Ranges
             }
         }
 
-        public static RefRange<T> Load(T item) => new RefRange<T>(new[] { item });
+        public static RefRange<T> Load(T item) => new RefRange<T>(new[] {item});
 
         public static RefRange<T> Load(params T[] sortedItems) =>
             sortedItems switch
             {
                 null => Empty,
-                { Length: 0 } => Empty,
+                {Length: 0} => Empty,
                 _ => new RefRange<T>(sortedItems)
             };
 
@@ -78,7 +78,7 @@ namespace Allors.Shared.Ranges
             switch (unsortedItems)
             {
                 case null:
-                case T[] { Length: 0 }:
+                case T[] {Length: 0}:
                     return Empty;
                 case T[] array:
                     var sortedArray = (T[])array.Clone();
@@ -112,7 +112,7 @@ namespace Allors.Shared.Ranges
                 case var v when v.Length == 1 && v[0].CompareTo(item) == 0:
                     return this;
                 case var v when v.Length == 1:
-                    return v[0].CompareTo(item) < 0 ? new RefRange<T>(new[] { v[0], item }) : new RefRange<T>(new[] { item, v[0] });
+                    return v[0].CompareTo(item) < 0 ? new RefRange<T>(new[] {v[0], item}) : new RefRange<T>(new[] {item, v[0]});
                 default:
                     var index = Array.BinarySearch(this.items, item);
 
@@ -199,7 +199,9 @@ namespace Allors.Shared.Ranges
                 return other.items switch
                 {
                     var otherItems when otherItems.Length == 1 && this.items[0].CompareTo(otherItems[0]) == 0 => this,
-                    var otherItems when otherItems.Length == 1 => this.items[0].CompareTo(otherItems[0]) < 0 ? new RefRange<T>(new[] { this.items[0], otherItems[0] }) : new RefRange<T>(new[] { otherItems[0], this.items[0] }),
+                    var otherItems when otherItems.Length == 1 => this.items[0].CompareTo(otherItems[0]) < 0
+                        ? new RefRange<T>(new[] {this.items[0], otherItems[0]})
+                        : new RefRange<T>(new[] {otherItems[0], this.items[0]}),
                     _ => other.Add(this.items[0])
                 };
             }
@@ -291,7 +293,7 @@ namespace Allors.Shared.Ranges
                     {
                         var otherItems when otherItems.Length == 1 && v[0].CompareTo(otherItems[0]) == 0 => Empty,
                         var otherItems when otherItems.Length == 1 => this,
-                        _ => other.Contains(v[0]) ? Empty : this,
+                        _ => other.Contains(v[0]) ? Empty : this
                     };
 
                 default:

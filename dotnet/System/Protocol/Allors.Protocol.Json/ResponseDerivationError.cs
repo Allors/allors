@@ -8,12 +8,12 @@ namespace Allors.Protocol.Json.Api
     public class ResponseDerivationError
     {
         /// <summary>
-        /// Message
+        ///     Message
         /// </summary>
         public string m { get; set; }
 
         /// <summary>
-        /// Relations
+        ///     Relations
         /// </summary>
         public DerivationRelation[] r { get; set; }
     }

@@ -3,14 +3,13 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Data
+namespace Allors.Database.Data;
+
+public interface IPredicate : IVisitable
 {
-    public interface IPredicate : IVisitable
-    {
-        void Build(ITransaction transaction, IArguments arguments, Database.ICompositePredicate compositePredicate);
+    void Build(ITransaction transaction, IArguments arguments, Database.ICompositePredicate compositePredicate);
 
-        bool ShouldTreeShake(IArguments arguments);
+    bool ShouldTreeShake(IArguments arguments);
 
-        bool HasMissingArguments(IArguments arguments);
-    }
+    bool HasMissingArguments(IArguments arguments);
 }

@@ -4,37 +4,36 @@
 // </copyright>
 // <summary>Defines the IObjectType type.</summary>
 
-namespace Allors.Repository.Domain
+namespace Allors.Repository.Domain;
+
+using System.Collections.Generic;
+using System.IO;
+
+public class Domain : RepositoryObject
 {
-    using System.Collections.Generic;
-    using System.IO;
-
-    public class Domain : RepositoryObject
+    public Domain(ISet<RepositoryObject> objects, string name, DirectoryInfo directoryInfo)
     {
-        public Domain(ISet<RepositoryObject> objects, string name, DirectoryInfo directoryInfo)
-        {
-            this.Name = name;
-            this.DirectoryInfo = directoryInfo;
+        this.Name = name;
+        this.DirectoryInfo = directoryInfo;
 
-            this.ObjectTypes = new HashSet<ObjectType>();
-            this.Properties = new HashSet<Property>();
-            this.Methods = new HashSet<Method>();
+        this.ObjectTypes = new HashSet<ObjectType>();
+        this.Properties = new HashSet<Property>();
+        this.Methods = new HashSet<Method>();
 
-            objects.Add(this);
-        }
-
-        public DirectoryInfo DirectoryInfo { get; }
-
-        public string Name { get; }
-
-        public Domain Base { get; set; }
-
-        public ISet<ObjectType> ObjectTypes { get; }
-
-        public ISet<Property> Properties { get; }
-
-        public ISet<Method> Methods { get; }
-
-        public override string ToString() => this.Name;
+        objects.Add(this);
     }
+
+    public DirectoryInfo DirectoryInfo { get; }
+
+    public string Name { get; }
+
+    public Domain Base { get; set; }
+
+    public ISet<ObjectType> ObjectTypes { get; }
+
+    public ISet<Property> Properties { get; }
+
+    public ISet<Method> Methods { get; }
+
+    public override string ToString() => this.Name;
 }

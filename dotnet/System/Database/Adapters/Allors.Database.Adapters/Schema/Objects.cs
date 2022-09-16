@@ -3,14 +3,13 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Adapters.Schema
-{
-    using System.Xml.Serialization;
+namespace Allors.Database.Adapters.Schema;
 
-    public class Objects
-    {
-        [XmlArray("database")]
-        [XmlArrayItem("ot")]
-        public ObjectType[] ObjectTypes { get; set; }
-    }
+using System.Xml.Serialization;
+
+public class Objects
+{
+    [XmlArray("database")]
+    [XmlArrayItem("ot")]
+    public ObjectType[] ObjectTypes { get; set; }
 }

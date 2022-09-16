@@ -4,38 +4,37 @@
 // </copyright>
 // <summary>Defines the Domain type.</summary>
 
-namespace Allors.Database.Meta
+namespace Allors.Database.Meta;
+
+using System;
+using System.Collections.Generic;
+using System.Reflection;
+
+public interface IMetaPopulation
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Reflection;
+    IEnumerable<IDomain> Domains { get; }
 
-    public interface IMetaPopulation
-    {
-        IEnumerable<IDomain> Domains { get; }
+    IEnumerable<IUnit> Units { get; }
 
-        IEnumerable<IUnit> Units { get; }
+    IEnumerable<IComposite> Composites { get; }
 
-        IEnumerable<IComposite> Composites { get; }
+    IEnumerable<IInterface> Interfaces { get; }
 
-        IEnumerable<IInterface> Interfaces { get; }
+    IEnumerable<IClass> Classes { get; }
 
-        IEnumerable<IClass> Classes { get; }
+    IEnumerable<IRelationType> RelationTypes { get; }
 
-        IEnumerable<IRelationType> RelationTypes { get; }
+    IEnumerable<IMethodType> MethodTypes { get; }
 
-        IEnumerable<IMethodType> MethodTypes { get; }
+    bool IsValid { get; }
 
-        bool IsValid { get; }
+    IMetaIdentifiableObject FindById(Guid metaObjectId);
 
-        IMetaIdentifiableObject FindById(Guid metaObjectId);
+    IMetaIdentifiableObject FindByTag(string tag);
 
-        IMetaIdentifiableObject FindByTag(string tag);
+    IComposite FindDatabaseCompositeByName(string name);
 
-        IComposite FindDatabaseCompositeByName(string name);
+    IValidationLog Validate();
 
-        IValidationLog Validate();
-
-        void Bind(Type[] types, Dictionary<Type, MethodInfo[]> extensionMethodsByInterface);
-    }
+    void Bind(Type[] types, Dictionary<Type, MethodInfo[]> extensionMethodsByInterface);
 }

@@ -3,23 +3,22 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Adapters.Memory
+namespace Allors.Database.Adapters.Memory;
+
+public enum ExtentOperationType
 {
-    public enum ExtentOperationType
-    {
-        /// <summary>
-        /// The union operation.
-        /// </summary>
-        Union,
+    /// <summary>
+    ///     The union operation.
+    /// </summary>
+    Union,
 
-        /// <summary>
-        /// The intersect operation.
-        /// </summary>
-        Intersect,
+    /// <summary>
+    ///     The intersect operation.
+    /// </summary>
+    Intersect,
 
-        /// <summary>
-        /// The except operation.
-        /// </summary>
-        Except,
-    }
+    /// <summary>
+    ///     The except operation.
+    /// </summary>
+    Except
 }

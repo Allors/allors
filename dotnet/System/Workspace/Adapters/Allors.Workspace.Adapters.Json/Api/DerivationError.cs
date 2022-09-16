@@ -13,8 +13,8 @@ namespace Allors.Workspace.Adapters.Json
 
     public class DerivationError : IDerivationError
     {
-        private readonly Workspace workspace;
         private readonly ResponseDerivationError responseDerivationError;
+        private readonly Workspace workspace;
 
         public DerivationError(Workspace workspace, ResponseDerivationError responseDerivationError)
         {

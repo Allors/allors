@@ -3,526 +3,486 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Adapters.Sql
+namespace Allors.Database.Adapters.Sql;
+
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using Meta;
+
+internal abstract class Prefetcher
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Data;
-    using System.Linq;
-    using Meta;
+    private Dictionary<IAssociationType, ICommand> prefetchCompositeAssociationByAssociationType;
+    private Dictionary<IRoleType, ICommand> prefetchCompositeRoleByRoleType;
+    private Dictionary<IRoleType, ICommand> prefetchCompositesRoleByRoleType;
+    private Dictionary<IClass, ICommand> prefetchUnitRolesByClass;
 
-    internal abstract class Prefetcher
+    protected Prefetcher(Transaction transaction) => this.Transaction = transaction;
+
+    public Transaction Transaction { get; }
+
+    public Database Database => this.Transaction.Database;
+
+    private Dictionary<IClass, ICommand> PrefetchUnitRolesByClass => this.prefetchUnitRolesByClass ??= new Dictionary<IClass, ICommand>();
+
+    private Dictionary<IRoleType, ICommand> PrefetchCompositeRoleByRoleType =>
+        this.prefetchCompositeRoleByRoleType ??= new Dictionary<IRoleType, ICommand>();
+
+    private Dictionary<IRoleType, ICommand> PrefetchCompositesRoleByRoleType =>
+        this.prefetchCompositesRoleByRoleType ??= new Dictionary<IRoleType, ICommand>();
+
+    private Dictionary<IAssociationType, ICommand> PrefetchCompositeAssociationByAssociationType =>
+        this.prefetchCompositeAssociationByAssociationType ??= new Dictionary<IAssociationType, ICommand>();
+
+    internal HashSet<Reference> GetReferencesForPrefetching(IEnumerable<long> objectIds)
     {
-        private Dictionary<IClass, ICommand> prefetchUnitRolesByClass;
-        private Dictionary<IRoleType, ICommand> prefetchCompositeRoleByRoleType;
-        private Dictionary<IRoleType, ICommand> prefetchCompositesRoleByRoleType;
-        private Dictionary<IAssociationType, ICommand> prefetchCompositeAssociationByAssociationType;
+        var references = new HashSet<Reference>();
 
-        protected Prefetcher(Transaction transaction) => this.Transaction = transaction;
-
-        public Transaction Transaction { get; }
-
-        public Database Database => this.Transaction.Database;
-
-        private Dictionary<IClass, ICommand> PrefetchUnitRolesByClass => this.prefetchUnitRolesByClass ??= new Dictionary<IClass, ICommand>();
-
-        private Dictionary<IRoleType, ICommand> PrefetchCompositeRoleByRoleType => this.prefetchCompositeRoleByRoleType ??= new Dictionary<IRoleType, ICommand>();
-
-        private Dictionary<IRoleType, ICommand> PrefetchCompositesRoleByRoleType => this.prefetchCompositesRoleByRoleType ??= new Dictionary<IRoleType, ICommand>();
-
-        private Dictionary<IAssociationType, ICommand> PrefetchCompositeAssociationByAssociationType => this.prefetchCompositeAssociationByAssociationType ??= new Dictionary<IAssociationType, ICommand>();
-
-        internal HashSet<Reference> GetReferencesForPrefetching(IEnumerable<long> objectIds)
+        HashSet<long> referencesToInstantiate = null;
+        foreach (var objectId in objectIds)
         {
-            var references = new HashSet<Reference>();
-
-            HashSet<long> referencesToInstantiate = null;
-            foreach (var objectId in objectIds)
+            this.Transaction.State.ReferenceByObjectId.TryGetValue(objectId, out var reference);
+            if (reference != null && reference.ExistsKnown && !reference.IsUnknownVersion)
             {
-                this.Transaction.State.ReferenceByObjectId.TryGetValue(objectId, out var reference);
-                if (reference != null && reference.ExistsKnown && !reference.IsUnknownVersion)
+                if (reference.Exists && !reference.IsNew)
                 {
-                    if (reference.Exists && !reference.IsNew)
-                    {
-                        references.Add(reference);
-                    }
-                }
-                else
-                {
-                    if (referencesToInstantiate == null)
-                    {
-                        referencesToInstantiate = new HashSet<long>();
-                    }
-
-                    referencesToInstantiate.Add(objectId);
+                    references.Add(reference);
                 }
             }
-
-            if (referencesToInstantiate != null)
+            else
             {
-                // TODO: Remove dependency from Prefetcher to Commands
-                var newReferences = this.Transaction.Commands.InstantiateReferences(referencesToInstantiate);
-                references.UnionWith(newReferences);
-            }
-
-            return references;
-        }
-
-        internal void ResetCommands()
-        {
-            this.prefetchUnitRolesByClass = null;
-            this.prefetchCompositeRoleByRoleType = null;
-            this.prefetchCompositesRoleByRoleType = null;
-            this.prefetchCompositeAssociationByAssociationType = null;
-        }
-
-        internal virtual void PrefetchUnitRoles(IClass @class, HashSet<Reference> associations, IRoleType anyRoleType)
-        {
-            var references = this.FilterForPrefetchRoles(associations, anyRoleType);
-            if (references.Count == 0)
-            {
-                return;
-            }
-
-            if (!this.PrefetchUnitRolesByClass.TryGetValue(@class, out var command))
-            {
-                var sql = this.Database.Mapping.ProcedureNameForPrefetchUnitRolesByClass[@class];
-                command = this.Transaction.Connection.CreateCommand();
-                command.CommandText = sql;
-                command.CommandType = CommandType.StoredProcedure;
-                this.prefetchUnitRolesByClass[@class] = command;
-            }
-
-            command.AddCompositesRoleTableParameter(references.Select(v => v.ObjectId));
-
-            using (var reader = command.ExecuteReader())
-            {
-                var sortedUnitRoles = this.Database.GetSortedUnitRolesByObjectType(@class);
-                var cache = this.Database.Cache;
-
-                while (reader.Read())
+                if (referencesToInstantiate == null)
                 {
-                    var associatoinId = reader.GetInt64(0);
-                    var associationReference = this.Transaction.State.ReferenceByObjectId[associatoinId];
-
-                    Strategy modifiedRoles = null;
-                    this.Transaction.State.ModifiedRolesByReference?.TryGetValue(associationReference, out modifiedRoles);
-
-                    var cachedObject = cache.GetOrCreateCachedObject(@class, associatoinId, associationReference.Version);
-
-                    for (var i = 0; i < sortedUnitRoles.Length; i++)
-                    {
-                        var roleType = sortedUnitRoles[i];
-
-                        var index = i + 1;
-                        object unit = null;
-                        if (!reader.IsDBNull(index))
-                        {
-                            switch (((IUnit)roleType.ObjectType).Tag)
-                            {
-                                case UnitTags.String:
-                                    unit = reader.GetString(index);
-                                    break;
-
-                                case UnitTags.Integer:
-                                    unit = reader.GetInt32(index);
-                                    break;
-
-                                case UnitTags.Float:
-                                    unit = reader.GetDouble(index);
-                                    break;
-
-                                case UnitTags.Decimal:
-                                    unit = reader.GetDecimal(index);
-                                    break;
-
-                                case UnitTags.DateTime:
-                                    var dateTime = reader.GetDateTime(index);
-                                    if (dateTime == DateTime.MaxValue || dateTime == DateTime.MinValue)
-                                    {
-                                        unit = dateTime;
-                                    }
-                                    else
-                                    {
-                                        unit = new DateTime(dateTime.Year, dateTime.Month, dateTime.Day, dateTime.Hour, dateTime.Minute, dateTime.Second, dateTime.Millisecond, DateTimeKind.Utc);
-                                    }
-
-                                    break;
-
-                                case UnitTags.Boolean:
-                                    unit = reader.GetBoolean(index);
-                                    break;
-
-                                case UnitTags.Unique:
-                                    unit = reader.GetGuid(index);
-                                    break;
-
-                                case UnitTags.Binary:
-                                    unit = (byte[])reader.GetValue(index);
-                                    break;
-
-                                default:
-                                    throw new ArgumentException("Unknown Unit ObjectType: " + roleType.ObjectType.Name);
-                            }
-                        }
-
-                        if (modifiedRoles?.EnsureModifiedRoleByRoleType.ContainsKey(roleType) != true)
-                        {
-                            cachedObject.SetValue(roleType, unit);
-                        }
-                    }
+                    referencesToInstantiate = new HashSet<long>();
                 }
+
+                referencesToInstantiate.Add(objectId);
             }
         }
 
-        internal virtual void PrefetchCompositeRoleObjectTable(HashSet<Reference> associations, IRoleType roleType, HashSet<long> nestedObjectIds, HashSet<long> leafs)
+        if (referencesToInstantiate != null)
         {
-            var references = nestedObjectIds == null ? this.FilterForPrefetchRoles(associations, roleType) : this.FilterForPrefetchCompositeRoles(associations, roleType, nestedObjectIds);
-            if (references.Count == 0)
-            {
-                return;
-            }
+            // TODO: Remove dependency from Prefetcher to Commands
+            var newReferences = this.Transaction.Commands.InstantiateReferences(referencesToInstantiate);
+            references.UnionWith(newReferences);
+        }
 
-            if (!this.PrefetchCompositeRoleByRoleType.TryGetValue(roleType, out var command))
-            {
-                command = this.Transaction.Connection.CreateCommand();
-                command.CommandText = this.Database.Mapping.ProcedureNameForPrefetchRoleByRelationType[roleType.RelationType];
-                command.CommandType = CommandType.StoredProcedure;
-                this.prefetchCompositeRoleByRoleType[roleType] = command;
-            }
+        return references;
+    }
 
-            command.AddCompositesRoleTableParameter(references.Select(v => v.ObjectId));
+    internal void ResetCommands()
+    {
+        this.prefetchUnitRolesByClass = null;
+        this.prefetchCompositeRoleByRoleType = null;
+        this.prefetchCompositesRoleByRoleType = null;
+        this.prefetchCompositeAssociationByAssociationType = null;
+    }
 
+    internal virtual void PrefetchUnitRoles(IClass @class, HashSet<Reference> associations, IRoleType anyRoleType)
+    {
+        var references = this.FilterForPrefetchRoles(associations, anyRoleType);
+        if (references.Count == 0)
+        {
+            return;
+        }
 
-            // TODO: Koen
-            var roleValueByAssociationId = new Dictionary<long, object>();
+        if (!this.PrefetchUnitRolesByClass.TryGetValue(@class, out var command))
+        {
+            var sql = this.Database.Mapping.ProcedureNameForPrefetchUnitRolesByClass[@class];
+            command = this.Transaction.Connection.CreateCommand();
+            command.CommandText = sql;
+            command.CommandType = CommandType.StoredProcedure;
+            this.prefetchUnitRolesByClass[@class] = command;
+        }
 
-            using (var reader = command.ExecuteReader())
-            {
-                while (reader.Read())
-                {
-                    var associationId = reader.GetInt64(0);
-                    var roleValue = reader[1];
+        command.AddCompositesRoleTableParameter(references.Select(v => v.ObjectId));
 
-                    roleValueByAssociationId.Add(associationId, roleValue);
-                }
-            }
-
-            this.Transaction.Instantiate(roleValueByAssociationId.Keys);
-
+        using (var reader = command.ExecuteReader())
+        {
+            var sortedUnitRoles = this.Database.GetSortedUnitRolesByObjectType(@class);
             var cache = this.Database.Cache;
 
-            foreach (var kvp in roleValueByAssociationId)
+            while (reader.Read())
             {
-                var associationId = kvp.Key;
+                var associatoinId = reader.GetInt64(0);
+                var associationReference = this.Transaction.State.ReferenceByObjectId[associatoinId];
+
+                Strategy modifiedRoles = null;
+                this.Transaction.State.ModifiedRolesByReference?.TryGetValue(associationReference, out modifiedRoles);
+
+                var cachedObject = cache.GetOrCreateCachedObject(@class, associatoinId, associationReference.Version);
+
+                for (var i = 0; i < sortedUnitRoles.Length; i++)
+                {
+                    var roleType = sortedUnitRoles[i];
+
+                    var index = i + 1;
+                    object unit = null;
+                    if (!reader.IsDBNull(index))
+                    {
+                        switch (((IUnit)roleType.ObjectType).Tag)
+                        {
+                            case UnitTags.String:
+                                unit = reader.GetString(index);
+                                break;
+
+                            case UnitTags.Integer:
+                                unit = reader.GetInt32(index);
+                                break;
+
+                            case UnitTags.Float:
+                                unit = reader.GetDouble(index);
+                                break;
+
+                            case UnitTags.Decimal:
+                                unit = reader.GetDecimal(index);
+                                break;
+
+                            case UnitTags.DateTime:
+                                var dateTime = reader.GetDateTime(index);
+                                if (dateTime == DateTime.MaxValue || dateTime == DateTime.MinValue)
+                                {
+                                    unit = dateTime;
+                                }
+                                else
+                                {
+                                    unit = new DateTime(dateTime.Year, dateTime.Month, dateTime.Day, dateTime.Hour, dateTime.Minute,
+                                        dateTime.Second, dateTime.Millisecond, DateTimeKind.Utc);
+                                }
+
+                                break;
+
+                            case UnitTags.Boolean:
+                                unit = reader.GetBoolean(index);
+                                break;
+
+                            case UnitTags.Unique:
+                                unit = reader.GetGuid(index);
+                                break;
+
+                            case UnitTags.Binary:
+                                unit = (byte[])reader.GetValue(index);
+                                break;
+
+                            default:
+                                throw new ArgumentException("Unknown Unit ObjectType: " + roleType.ObjectType.Name);
+                        }
+                    }
+
+                    if (modifiedRoles?.EnsureModifiedRoleByRoleType.ContainsKey(roleType) != true)
+                    {
+                        cachedObject.SetValue(roleType, unit);
+                    }
+                }
+            }
+        }
+    }
+
+    internal virtual void PrefetchCompositeRoleObjectTable(HashSet<Reference> associations, IRoleType roleType,
+        HashSet<long> nestedObjectIds, HashSet<long> leafs)
+    {
+        var references = nestedObjectIds == null
+            ? this.FilterForPrefetchRoles(associations, roleType)
+            : this.FilterForPrefetchCompositeRoles(associations, roleType, nestedObjectIds);
+        if (references.Count == 0)
+        {
+            return;
+        }
+
+        if (!this.PrefetchCompositeRoleByRoleType.TryGetValue(roleType, out var command))
+        {
+            command = this.Transaction.Connection.CreateCommand();
+            command.CommandText = this.Database.Mapping.ProcedureNameForPrefetchRoleByRelationType[roleType.RelationType];
+            command.CommandType = CommandType.StoredProcedure;
+            this.prefetchCompositeRoleByRoleType[roleType] = command;
+        }
+
+        command.AddCompositesRoleTableParameter(references.Select(v => v.ObjectId));
+
+
+        // TODO: Koen
+        var roleValueByAssociationId = new Dictionary<long, object>();
+
+        using (var reader = command.ExecuteReader())
+        {
+            while (reader.Read())
+            {
+                var associationId = reader.GetInt64(0);
+                var roleValue = reader[1];
+
+                roleValueByAssociationId.Add(associationId, roleValue);
+            }
+        }
+
+        this.Transaction.Instantiate(roleValueByAssociationId.Keys);
+
+        var cache = this.Database.Cache;
+
+        foreach (var kvp in roleValueByAssociationId)
+        {
+            var associationId = kvp.Key;
+            var associationReference = this.Transaction.State.ReferenceByObjectId[associationId];
+
+            var cachedObject = cache.GetOrCreateCachedObject(associationReference.Class, associationId, associationReference.Version);
+
+            var roleIdValue = kvp.Value;
+
+            if (roleIdValue == null || roleIdValue == DBNull.Value)
+            {
+                cachedObject.SetValue(roleType, null);
+            }
+            else
+            {
+                var roleId = (long)roleIdValue;
+                cachedObject.SetValue(roleType, roleId);
+
+                nestedObjectIds?.Add(roleId);
+                if (nestedObjectIds == null)
+                {
+                    leafs.Add(roleId);
+                }
+            }
+        }
+    }
+
+    internal virtual void PrefetchCompositeRoleRelationTable(HashSet<Reference> associations, IRoleType roleType,
+        HashSet<long> nestedObjectIds, HashSet<long> leafs)
+    {
+        var references = nestedObjectIds == null
+            ? this.FilterForPrefetchRoles(associations, roleType)
+            : this.FilterForPrefetchCompositeRoles(associations, roleType, nestedObjectIds);
+        if (references.Count == 0)
+        {
+            return;
+        }
+
+        if (!this.PrefetchCompositeRoleByRoleType.TryGetValue(roleType, out var command))
+        {
+            var sql = this.Database.Mapping.ProcedureNameForPrefetchRoleByRelationType[roleType.RelationType];
+            command = this.Transaction.Connection.CreateCommand();
+            command.CommandText = sql;
+            command.CommandType = CommandType.StoredProcedure;
+            this.prefetchCompositeRoleByRoleType[roleType] = command;
+        }
+
+        command.AddCompositesRoleTableParameter(references.Select(v => v.ObjectId));
+
+        var roleByAssociation = new Dictionary<Reference, long>();
+        using (var reader = command.ExecuteReader())
+        {
+            while (reader.Read())
+            {
+                var associationId = reader.GetInt64(0);
+                var associationReference = this.Transaction.State.ReferenceByObjectId[associationId];
+                var roleId = reader.GetInt64(1);
+                roleByAssociation.Add(associationReference, roleId);
+            }
+        }
+
+        var cache = this.Database.Cache;
+        foreach (var reference in references)
+        {
+            var cachedObject = cache.GetOrCreateCachedObject(reference.Class, reference.ObjectId, reference.Version);
+
+            if (roleByAssociation.TryGetValue(reference, out var roleId))
+            {
+                cachedObject.SetValue(roleType, roleId);
+                nestedObjectIds?.Add(roleId);
+                if (nestedObjectIds == null)
+                {
+                    leafs.Add(roleId);
+                }
+            }
+            else
+            {
+                cachedObject.SetValue(roleType, null);
+            }
+        }
+    }
+
+    internal virtual void PrefetchCompositesRoleObjectTable(HashSet<Reference> associations, IRoleType roleType,
+        HashSet<long> nestedObjectIds, HashSet<long> leafs)
+    {
+        var references = nestedObjectIds == null
+            ? this.FilterForPrefetchRoles(associations, roleType)
+            : this.FilterForPrefetchCompositesRoles(associations, roleType, nestedObjectIds);
+        if (references.Count == 0)
+        {
+            return;
+        }
+
+        if (!this.PrefetchCompositesRoleByRoleType.TryGetValue(roleType, out var command))
+        {
+            var sql = this.Database.Mapping.ProcedureNameForPrefetchRoleByRelationType[roleType.RelationType];
+            command = this.Transaction.Connection.CreateCommand();
+            command.CommandText = sql;
+            command.CommandType = CommandType.StoredProcedure;
+            this.prefetchCompositesRoleByRoleType[roleType] = command;
+        }
+
+        command.AddCompositesRoleTableParameter(references.Select(v => v.ObjectId));
+
+        var rolesByAssociation = new Dictionary<Reference, List<long>>();
+        using (var reader = command.ExecuteReader())
+        {
+            while (reader.Read())
+            {
+                var associationId = reader.GetInt64(0);
                 var associationReference = this.Transaction.State.ReferenceByObjectId[associationId];
 
-                var cachedObject = cache.GetOrCreateCachedObject(associationReference.Class, associationId, associationReference.Version);
-
-                var roleIdValue = kvp.Value;
-
+                var roleIdValue = reader[1];
                 if (roleIdValue == null || roleIdValue == DBNull.Value)
                 {
-                    cachedObject.SetValue(roleType, null);
+                    rolesByAssociation[associationReference] = null;
                 }
                 else
                 {
-                    var roleId = (long)roleIdValue;
-                    cachedObject.SetValue(roleType, roleId);
-
-                    nestedObjectIds?.Add(roleId);
-                    if (nestedObjectIds == null)
-                    {
-                        leafs.Add(roleId);
-                    }
-                }
-            }
-        }
-
-        internal virtual void PrefetchCompositeRoleRelationTable(HashSet<Reference> associations, IRoleType roleType, HashSet<long> nestedObjectIds, HashSet<long> leafs)
-        {
-            var references = nestedObjectIds == null ? this.FilterForPrefetchRoles(associations, roleType) : this.FilterForPrefetchCompositeRoles(associations, roleType, nestedObjectIds);
-            if (references.Count == 0)
-            {
-                return;
-            }
-
-            if (!this.PrefetchCompositeRoleByRoleType.TryGetValue(roleType, out var command))
-            {
-                var sql = this.Database.Mapping.ProcedureNameForPrefetchRoleByRelationType[roleType.RelationType];
-                command = this.Transaction.Connection.CreateCommand();
-                command.CommandText = sql;
-                command.CommandType = CommandType.StoredProcedure;
-                this.prefetchCompositeRoleByRoleType[roleType] = command;
-            }
-
-            command.AddCompositesRoleTableParameter(references.Select(v => v.ObjectId));
-
-            var roleByAssociation = new Dictionary<Reference, long>();
-            using (var reader = command.ExecuteReader())
-            {
-                while (reader.Read())
-                {
-                    var associationId = reader.GetInt64(0);
-                    var associationReference = this.Transaction.State.ReferenceByObjectId[associationId];
-                    var roleId = reader.GetInt64(1);
-                    roleByAssociation.Add(associationReference, roleId);
-                }
-            }
-
-            var cache = this.Database.Cache;
-            foreach (var reference in references)
-            {
-                var cachedObject = cache.GetOrCreateCachedObject(reference.Class, reference.ObjectId, reference.Version);
-
-                if (roleByAssociation.TryGetValue(reference, out var roleId))
-                {
-                    cachedObject.SetValue(roleType, roleId);
-                    nestedObjectIds?.Add(roleId);
-                    if (nestedObjectIds == null)
-                    {
-                        leafs.Add(roleId);
-                    }
-                }
-                else
-                {
-                    cachedObject.SetValue(roleType, null);
-                }
-            }
-        }
-
-        internal virtual void PrefetchCompositesRoleObjectTable(HashSet<Reference> associations, IRoleType roleType, HashSet<long> nestedObjectIds, HashSet<long> leafs)
-        {
-            var references = nestedObjectIds == null ? this.FilterForPrefetchRoles(associations, roleType) : this.FilterForPrefetchCompositesRoles(associations, roleType, nestedObjectIds);
-            if (references.Count == 0)
-            {
-                return;
-            }
-
-            if (!this.PrefetchCompositesRoleByRoleType.TryGetValue(roleType, out var command))
-            {
-                var sql = this.Database.Mapping.ProcedureNameForPrefetchRoleByRelationType[roleType.RelationType];
-                command = this.Transaction.Connection.CreateCommand();
-                command.CommandText = sql;
-                command.CommandType = CommandType.StoredProcedure;
-                this.prefetchCompositesRoleByRoleType[roleType] = command;
-            }
-
-            command.AddCompositesRoleTableParameter(references.Select(v => v.ObjectId));
-
-            var rolesByAssociation = new Dictionary<Reference, List<long>>();
-            using (var reader = command.ExecuteReader())
-            {
-                while (reader.Read())
-                {
-                    var associationId = reader.GetInt64(0);
-                    var associationReference = this.Transaction.State.ReferenceByObjectId[associationId];
-
-                    var roleIdValue = reader[1];
-                    if (roleIdValue == null || roleIdValue == DBNull.Value)
-                    {
-                        rolesByAssociation[associationReference] = null;
-                    }
-                    else
-                    {
-                        var objectId = (long)roleIdValue;
-                        if (!rolesByAssociation.TryGetValue(associationReference, out var roleIds))
-                        {
-                            roleIds = new List<long>();
-                            rolesByAssociation[associationReference] = roleIds;
-                        }
-
-                        roleIds.Add(objectId);
-                    }
-                }
-            }
-
-            var cache = this.Database.Cache;
-            foreach (var dictionaryEntry in rolesByAssociation)
-            {
-                var association = dictionaryEntry.Key;
-                var roleIds = dictionaryEntry.Value;
-
-                var cachedObject = cache.GetOrCreateCachedObject(association.Class, association.ObjectId, association.Version);
-                cachedObject.SetValue(roleType, roleIds?.ToArray() ?? Array.Empty<long>());
-
-                if (roleIds != null)
-                {
-                    nestedObjectIds?.UnionWith(roleIds);
-                    if (nestedObjectIds == null)
-                    {
-                        leafs.UnionWith(roleIds);
-                    }
-                }
-            }
-        }
-
-        internal virtual void PrefetchCompositesRoleRelationTable(HashSet<Reference> associations, IRoleType roleType, HashSet<long> nestedObjectIds, HashSet<long> leafs)
-        {
-            var references = nestedObjectIds == null ? this.FilterForPrefetchRoles(associations, roleType) : this.FilterForPrefetchCompositesRoles(associations, roleType, nestedObjectIds);
-            if (references.Count == 0)
-            {
-                return;
-            }
-
-            if (!this.PrefetchCompositesRoleByRoleType.TryGetValue(roleType, out var command))
-            {
-                var sql = this.Database.Mapping.ProcedureNameForPrefetchRoleByRelationType[roleType.RelationType];
-                command = this.Transaction.Connection.CreateCommand();
-                command.CommandText = sql;
-                command.CommandType = CommandType.StoredProcedure;
-                this.prefetchCompositesRoleByRoleType[roleType] = command;
-            }
-
-            command.AddCompositesRoleTableParameter(references.Select(v => v.ObjectId));
-
-            var rolesByAssociation = new Dictionary<Reference, List<long>>();
-            using (var reader = command.ExecuteReader())
-            {
-                while (reader.Read())
-                {
-                    var associationId = reader.GetInt64(0);
-                    var associationReference = this.Transaction.State.ReferenceByObjectId[associationId];
-
-                    var roleId = reader.GetInt64(1);
+                    var objectId = (long)roleIdValue;
                     if (!rolesByAssociation.TryGetValue(associationReference, out var roleIds))
                     {
                         roleIds = new List<long>();
                         rolesByAssociation[associationReference] = roleIds;
                     }
 
-                    roleIds.Add(roleId);
-                }
-            }
-
-            var cache = this.Database.Cache;
-            foreach (var reference in references)
-            {
-                Strategy modifiedRoles = null;
-                this.Transaction.State.ModifiedRolesByReference?.TryGetValue(reference, out modifiedRoles);
-
-                if (modifiedRoles == null || !modifiedRoles.EnsureModifiedRoleByRoleType.ContainsKey(roleType))
-                {
-                    var cachedObject = cache.GetOrCreateCachedObject(reference.Class, reference.ObjectId, reference.Version);
-
-                    if (rolesByAssociation.TryGetValue(reference, out var roleIds))
-                    {
-                        cachedObject.SetValue(roleType, roleIds.ToArray());
-
-                        nestedObjectIds?.UnionWith(roleIds);
-                        if (nestedObjectIds == null)
-                        {
-                            leafs.UnionWith(roleIds);
-                        }
-                    }
-                    else
-                    {
-                        cachedObject.SetValue(roleType, Array.Empty<long>());
-                    }
+                    roleIds.Add(objectId);
                 }
             }
         }
 
-        internal virtual void PrefetchCompositeAssociationObjectTable(HashSet<Reference> roles, IAssociationType associationType, HashSet<long> nestedObjectIds, HashSet<long> leafs)
+        var cache = this.Database.Cache;
+        foreach (var dictionaryEntry in rolesByAssociation)
         {
-            var references = nestedObjectIds == null ? this.FilterForPrefetchAssociations(roles, associationType) : this.FilterForPrefetchCompositeAssociations(roles, associationType, nestedObjectIds);
-            if (references.Count == 0)
-            {
-                return;
-            }
+            var association = dictionaryEntry.Key;
+            var roleIds = dictionaryEntry.Value;
 
-            if (!this.PrefetchCompositeAssociationByAssociationType.TryGetValue(associationType, out var command))
-            {
-                var roleType = associationType.RoleType;
-                var sql = this.Database.Mapping.ProcedureNameForPrefetchAssociationByRelationType[roleType.RelationType];
-                command = this.Transaction.Connection.CreateCommand();
-                command.CommandText = sql;
-                command.CommandType = CommandType.StoredProcedure;
-                this.prefetchCompositeAssociationByAssociationType[associationType] = command;
-            }
+            var cachedObject = cache.GetOrCreateCachedObject(association.Class, association.ObjectId, association.Version);
+            cachedObject.SetValue(roleType, roleIds?.ToArray() ?? Array.Empty<long>());
 
-            command.AddCompositesRoleTableParameter(references.Select(v => v.ObjectId));
-
-            using (var reader = command.ExecuteReader())
+            if (roleIds != null)
             {
-                while (reader.Read())
+                nestedObjectIds?.UnionWith(roleIds);
+                if (nestedObjectIds == null)
                 {
-                    var roleId = reader.GetInt64(1);
-                    var role = this.Transaction.State.ReferenceByObjectId[roleId];
-
-                    var associationByRole = this.Transaction.State.GetAssociationByRole(associationType);
-                    if (!associationByRole.ContainsKey(role))
-                    {
-                        var associationIdValue = reader[0];
-                        Reference association = null;
-                        if (associationIdValue != null && associationIdValue != DBNull.Value)
-                        {
-                            var associationId = (long)associationIdValue;
-                            association = associationType.ObjectType.ExistExclusiveClass ?
-                                              this.Transaction.State.GetOrCreateReferenceForExistingObject(associationType.ObjectType.ExclusiveClass, associationId, this.Transaction) :
-                                              this.Transaction.State.GetOrCreateReferenceForExistingObject(associationId, this.Transaction);
-
-                            nestedObjectIds?.Add(association.ObjectId);
-                            if (nestedObjectIds == null)
-                            {
-                                leafs.Add(associationId);
-                            }
-                        }
-
-                        associationByRole[role] = association;
-
-                        this.Transaction.State.FlushConditionally(roleId, associationType);
-                    }
+                    leafs.UnionWith(roleIds);
                 }
             }
         }
+    }
 
-        internal virtual void PrefetchCompositeAssociationRelationTable(HashSet<Reference> roles, IAssociationType associationType, HashSet<long> nestedObjectIds, HashSet<long> leafs)
+    internal virtual void PrefetchCompositesRoleRelationTable(HashSet<Reference> associations, IRoleType roleType,
+        HashSet<long> nestedObjectIds, HashSet<long> leafs)
+    {
+        var references = nestedObjectIds == null
+            ? this.FilterForPrefetchRoles(associations, roleType)
+            : this.FilterForPrefetchCompositesRoles(associations, roleType, nestedObjectIds);
+        if (references.Count == 0)
         {
-            var references = nestedObjectIds == null ? this.FilterForPrefetchAssociations(roles, associationType) : this.FilterForPrefetchCompositesAssociations(roles, associationType, nestedObjectIds);
-            if (references.Count == 0)
-            {
-                return;
-            }
+            return;
+        }
 
-            if (!this.PrefetchCompositeAssociationByAssociationType.TryGetValue(associationType, out var command))
-            {
-                var roleType = associationType.RoleType;
-                var sql = this.Database.Mapping.ProcedureNameForPrefetchAssociationByRelationType[roleType.RelationType];
-                command = this.Transaction.Connection.CreateCommand();
-                command.CommandText = sql;
-                command.CommandType = CommandType.StoredProcedure;
-                this.prefetchCompositeAssociationByAssociationType[associationType] = command;
-            }
+        if (!this.PrefetchCompositesRoleByRoleType.TryGetValue(roleType, out var command))
+        {
+            var sql = this.Database.Mapping.ProcedureNameForPrefetchRoleByRelationType[roleType.RelationType];
+            command = this.Transaction.Connection.CreateCommand();
+            command.CommandText = sql;
+            command.CommandType = CommandType.StoredProcedure;
+            this.prefetchCompositesRoleByRoleType[roleType] = command;
+        }
 
-            command.ObjectTableParameter(roles.Select(v => v.ObjectId));
+        command.AddCompositesRoleTableParameter(references.Select(v => v.ObjectId));
 
-            var prefetchedAssociationByRole = new Dictionary<Reference, long>();
-            using (var reader = command.ExecuteReader())
+        var rolesByAssociation = new Dictionary<Reference, List<long>>();
+        using (var reader = command.ExecuteReader())
+        {
+            while (reader.Read())
             {
-                while (reader.Read())
+                var associationId = reader.GetInt64(0);
+                var associationReference = this.Transaction.State.ReferenceByObjectId[associationId];
+
+                var roleId = reader.GetInt64(1);
+                if (!rolesByAssociation.TryGetValue(associationReference, out var roleIds))
                 {
-                    var roleId = reader.GetInt64(1);
-                    var roleReference = this.Transaction.State.ReferenceByObjectId[roleId];
-                    var associationId = reader.GetInt64(0);
-                    prefetchedAssociationByRole.Add(roleReference, associationId);
+                    roleIds = new List<long>();
+                    rolesByAssociation[associationReference] = roleIds;
+                }
+
+                roleIds.Add(roleId);
+            }
+        }
+
+        var cache = this.Database.Cache;
+        foreach (var reference in references)
+        {
+            Strategy modifiedRoles = null;
+            this.Transaction.State.ModifiedRolesByReference?.TryGetValue(reference, out modifiedRoles);
+
+            if (modifiedRoles == null || !modifiedRoles.EnsureModifiedRoleByRoleType.ContainsKey(roleType))
+            {
+                var cachedObject = cache.GetOrCreateCachedObject(reference.Class, reference.ObjectId, reference.Version);
+
+                if (rolesByAssociation.TryGetValue(reference, out var roleIds))
+                {
+                    cachedObject.SetValue(roleType, roleIds.ToArray());
+
+                    nestedObjectIds?.UnionWith(roleIds);
+                    if (nestedObjectIds == null)
+                    {
+                        leafs.UnionWith(roleIds);
+                    }
+                }
+                else
+                {
+                    cachedObject.SetValue(roleType, Array.Empty<long>());
                 }
             }
+        }
+    }
 
-            var associationByRole = this.Transaction.State.GetAssociationByRole(associationType);
-            foreach (var role in roles)
+    internal virtual void PrefetchCompositeAssociationObjectTable(HashSet<Reference> roles, IAssociationType associationType,
+        HashSet<long> nestedObjectIds, HashSet<long> leafs)
+    {
+        var references = nestedObjectIds == null
+            ? this.FilterForPrefetchAssociations(roles, associationType)
+            : this.FilterForPrefetchCompositeAssociations(roles, associationType, nestedObjectIds);
+        if (references.Count == 0)
+        {
+            return;
+        }
+
+        if (!this.PrefetchCompositeAssociationByAssociationType.TryGetValue(associationType, out var command))
+        {
+            var roleType = associationType.RoleType;
+            var sql = this.Database.Mapping.ProcedureNameForPrefetchAssociationByRelationType[roleType.RelationType];
+            command = this.Transaction.Connection.CreateCommand();
+            command.CommandText = sql;
+            command.CommandType = CommandType.StoredProcedure;
+            this.prefetchCompositeAssociationByAssociationType[associationType] = command;
+        }
+
+        command.AddCompositesRoleTableParameter(references.Select(v => v.ObjectId));
+
+        using (var reader = command.ExecuteReader())
+        {
+            while (reader.Read())
             {
+                var roleId = reader.GetInt64(1);
+                var role = this.Transaction.State.ReferenceByObjectId[roleId];
+
+                var associationByRole = this.Transaction.State.GetAssociationByRole(associationType);
                 if (!associationByRole.ContainsKey(role))
                 {
+                    var associationIdValue = reader[0];
                     Reference association = null;
-
-                    if (prefetchedAssociationByRole.TryGetValue(role, out var associationId))
+                    if (associationIdValue != null && associationIdValue != DBNull.Value)
                     {
-                        association = associationType.ObjectType.ExistExclusiveClass ?
-                                          this.Transaction.State.GetOrCreateReferenceForExistingObject(associationType.ObjectType.ExclusiveClass, associationId, this.Transaction) :
-                                          this.Transaction.State.GetOrCreateReferenceForExistingObject(associationId, this.Transaction);
+                        var associationId = (long)associationIdValue;
+                        association = associationType.ObjectType.ExistExclusiveClass
+                            ? this.Transaction.State.GetOrCreateReferenceForExistingObject(associationType.ObjectType.ExclusiveClass,
+                                associationId, this.Transaction)
+                            : this.Transaction.State.GetOrCreateReferenceForExistingObject(associationId, this.Transaction);
 
-                        nestedObjectIds?.Add(associationId);
+                        nestedObjectIds?.Add(association.ObjectId);
                         if (nestedObjectIds == null)
                         {
                             leafs.Add(associationId);
@@ -531,322 +491,397 @@ namespace Allors.Database.Adapters.Sql
 
                     associationByRole[role] = association;
 
-                    this.Transaction.State.FlushConditionally(role.ObjectId, associationType);
+                    this.Transaction.State.FlushConditionally(roleId, associationType);
                 }
             }
         }
+    }
 
-        internal virtual void PrefetchCompositesAssociationObjectTable(HashSet<Reference> roles, IAssociationType associationType, HashSet<long> nestedObjectIds, HashSet<long> leafs)
+    internal virtual void PrefetchCompositeAssociationRelationTable(HashSet<Reference> roles, IAssociationType associationType,
+        HashSet<long> nestedObjectIds, HashSet<long> leafs)
+    {
+        var references = nestedObjectIds == null
+            ? this.FilterForPrefetchAssociations(roles, associationType)
+            : this.FilterForPrefetchCompositesAssociations(roles, associationType, nestedObjectIds);
+        if (references.Count == 0)
         {
-            var references = nestedObjectIds == null ? this.FilterForPrefetchAssociations(roles, associationType) : this.FilterForPrefetchCompositeAssociations(roles, associationType, nestedObjectIds);
-            if (references.Count == 0)
+            return;
+        }
+
+        if (!this.PrefetchCompositeAssociationByAssociationType.TryGetValue(associationType, out var command))
+        {
+            var roleType = associationType.RoleType;
+            var sql = this.Database.Mapping.ProcedureNameForPrefetchAssociationByRelationType[roleType.RelationType];
+            command = this.Transaction.Connection.CreateCommand();
+            command.CommandText = sql;
+            command.CommandType = CommandType.StoredProcedure;
+            this.prefetchCompositeAssociationByAssociationType[associationType] = command;
+        }
+
+        command.ObjectTableParameter(roles.Select(v => v.ObjectId));
+
+        var prefetchedAssociationByRole = new Dictionary<Reference, long>();
+        using (var reader = command.ExecuteReader())
+        {
+            while (reader.Read())
             {
-                return;
-            }
-
-            if (!this.PrefetchCompositeAssociationByAssociationType.TryGetValue(associationType, out var command))
-            {
-                var roleType = associationType.RoleType;
-                var sql = this.Database.Mapping.ProcedureNameForPrefetchAssociationByRelationType[roleType.RelationType];
-                command = this.Transaction.Connection.CreateCommand();
-                command.CommandText = sql;
-                command.CommandType = CommandType.StoredProcedure;
-                this.prefetchCompositeAssociationByAssociationType[associationType] = command;
-            }
-
-            command.ObjectTableParameter(roles.Select(v => v.ObjectId));
-
-            var prefetchedAssociationByRole = new Dictionary<Reference, List<long>>();
-            using (var reader = command.ExecuteReader())
-            {
-                while (reader.Read())
-                {
-                    var roleId = reader.GetInt64(1);
-                    var roleReference = this.Transaction.State.ReferenceByObjectId[roleId];
-
-                    var associationIdValue = reader[0];
-                    if (associationIdValue != null && associationIdValue != DBNull.Value)
-                    {
-                        if (!prefetchedAssociationByRole.TryGetValue(roleReference, out var associations))
-                        {
-                            associations = new List<long>();
-                            prefetchedAssociationByRole.Add(roleReference, associations);
-                        }
-
-                        var associationId = (long)associationIdValue;
-                        associations.Add(associationId);
-
-                        if (associationType.ObjectType.ExistExclusiveClass)
-                        {
-                            this.Transaction.State.GetOrCreateReferenceForExistingObject(associationType.ObjectType.ExclusiveClass, associationId, this.Transaction);
-                        }
-                        else
-                        {
-                            this.Transaction.State.GetOrCreateReferenceForExistingObject(associationId, this.Transaction);
-                        }
-                    }
-                }
-            }
-
-            var associationsByRole = this.Transaction.State.GetAssociationsByRole(associationType);
-            foreach (var role in roles)
-            {
-                if (!associationsByRole.ContainsKey(role))
-                {
-                    if (!prefetchedAssociationByRole.TryGetValue(role, out var associationIds))
-                    {
-                        associationsByRole[role] = Array.Empty<long>();
-                    }
-                    else
-                    {
-                        associationsByRole[role] = associationIds.ToArray();
-
-                        nestedObjectIds?.UnionWith(associationIds);
-                        if (nestedObjectIds == null)
-                        {
-                            leafs.UnionWith(associationIds);
-                        }
-                    }
-
-                    this.Transaction.State.FlushConditionally(role.ObjectId, associationType);
-                }
+                var roleId = reader.GetInt64(1);
+                var roleReference = this.Transaction.State.ReferenceByObjectId[roleId];
+                var associationId = reader.GetInt64(0);
+                prefetchedAssociationByRole.Add(roleReference, associationId);
             }
         }
 
-        internal virtual void PrefetchCompositesAssociationRelationTable(HashSet<Reference> roles, IAssociationType associationType, HashSet<long> nestedObjectIds, HashSet<long> leafs)
+        var associationByRole = this.Transaction.State.GetAssociationByRole(associationType);
+        foreach (var role in roles)
         {
-            var references = nestedObjectIds == null ? this.FilterForPrefetchAssociations(roles, associationType) : this.FilterForPrefetchCompositeAssociations(roles, associationType, nestedObjectIds);
-            if (references.Count == 0)
+            if (!associationByRole.ContainsKey(role))
             {
-                return;
-            }
+                Reference association = null;
 
-            if (!this.PrefetchCompositeAssociationByAssociationType.TryGetValue(associationType, out var command))
-            {
-                var roleType = associationType.RoleType;
-                var sql = this.Database.Mapping.ProcedureNameForPrefetchAssociationByRelationType[roleType.RelationType];
-                command = this.Transaction.Connection.CreateCommand();
-                command.CommandText = sql;
-                command.CommandType = CommandType.StoredProcedure;
-                this.prefetchCompositeAssociationByAssociationType[associationType] = command;
-            }
-
-            command.ObjectTableParameter(roles.Select(v => v.ObjectId));
-
-            var prefetchedAssociations = new HashSet<long>();
-
-            var prefetchedAssociationByRole = new Dictionary<Reference, List<long>>();
-            using (var reader = command.ExecuteReader())
-            {
-                while (reader.Read())
+                if (prefetchedAssociationByRole.TryGetValue(role, out var associationId))
                 {
-                    var roleId = reader.GetInt64(1);
-                    var roleReference = this.Transaction.State.ReferenceByObjectId[roleId];
+                    association = associationType.ObjectType.ExistExclusiveClass
+                        ? this.Transaction.State.GetOrCreateReferenceForExistingObject(associationType.ObjectType.ExclusiveClass,
+                            associationId, this.Transaction)
+                        : this.Transaction.State.GetOrCreateReferenceForExistingObject(associationId, this.Transaction);
 
+                    nestedObjectIds?.Add(associationId);
+                    if (nestedObjectIds == null)
+                    {
+                        leafs.Add(associationId);
+                    }
+                }
+
+                associationByRole[role] = association;
+
+                this.Transaction.State.FlushConditionally(role.ObjectId, associationType);
+            }
+        }
+    }
+
+    internal virtual void PrefetchCompositesAssociationObjectTable(HashSet<Reference> roles, IAssociationType associationType,
+        HashSet<long> nestedObjectIds, HashSet<long> leafs)
+    {
+        var references = nestedObjectIds == null
+            ? this.FilterForPrefetchAssociations(roles, associationType)
+            : this.FilterForPrefetchCompositeAssociations(roles, associationType, nestedObjectIds);
+        if (references.Count == 0)
+        {
+            return;
+        }
+
+        if (!this.PrefetchCompositeAssociationByAssociationType.TryGetValue(associationType, out var command))
+        {
+            var roleType = associationType.RoleType;
+            var sql = this.Database.Mapping.ProcedureNameForPrefetchAssociationByRelationType[roleType.RelationType];
+            command = this.Transaction.Connection.CreateCommand();
+            command.CommandText = sql;
+            command.CommandType = CommandType.StoredProcedure;
+            this.prefetchCompositeAssociationByAssociationType[associationType] = command;
+        }
+
+        command.ObjectTableParameter(roles.Select(v => v.ObjectId));
+
+        var prefetchedAssociationByRole = new Dictionary<Reference, List<long>>();
+        using (var reader = command.ExecuteReader())
+        {
+            while (reader.Read())
+            {
+                var roleId = reader.GetInt64(1);
+                var roleReference = this.Transaction.State.ReferenceByObjectId[roleId];
+
+                var associationIdValue = reader[0];
+                if (associationIdValue != null && associationIdValue != DBNull.Value)
+                {
                     if (!prefetchedAssociationByRole.TryGetValue(roleReference, out var associations))
                     {
                         associations = new List<long>();
                         prefetchedAssociationByRole.Add(roleReference, associations);
                     }
 
-                    var associationId = reader.GetInt64(0);
+                    var associationId = (long)associationIdValue;
                     associations.Add(associationId);
-                    prefetchedAssociations.Add(associationId);
-                }
-            }
 
-            foreach (var associationId in prefetchedAssociations)
-            {
-                if (associationType.ObjectType.ExistExclusiveClass)
-                {
-                    this.Transaction.State.GetOrCreateReferenceForExistingObject(associationType.ObjectType.ExclusiveClass, associationId, this.Transaction);
-                }
-                else
-                {
-                    this.Transaction.State.GetOrCreateReferenceForExistingObject(associationId, this.Transaction);
-                }
-            }
-
-            var associationsByRole = this.Transaction.State.GetAssociationsByRole(associationType);
-            foreach (var role in roles)
-            {
-                if (!associationsByRole.ContainsKey(role))
-                {
-                    if (!prefetchedAssociationByRole.TryGetValue(role, out var associationIds))
+                    if (associationType.ObjectType.ExistExclusiveClass)
                     {
-                        associationsByRole[role] = Array.Empty<long>();
+                        this.Transaction.State.GetOrCreateReferenceForExistingObject(associationType.ObjectType.ExclusiveClass,
+                            associationId, this.Transaction);
                     }
                     else
                     {
-                        associationsByRole[role] = associationIds.ToArray();
-
-                        nestedObjectIds?.UnionWith(associationIds);
-                        if (nestedObjectIds == null)
-                        {
-                            leafs.UnionWith(associationIds);
-                        }
+                        this.Transaction.State.GetOrCreateReferenceForExistingObject(associationId, this.Transaction);
                     }
-
-                    this.Transaction.State.FlushConditionally(role.ObjectId, associationType);
                 }
             }
         }
 
-        private List<Reference> FilterForPrefetchRoles(HashSet<Reference> associations, IRoleType roleType)
+        var associationsByRole = this.Transaction.State.GetAssociationsByRole(associationType);
+        foreach (var role in roles)
         {
-            var references = new List<Reference>();
-
-            var cache = this.Database.Cache;
-
-            foreach (var association in associations)
+            if (!associationsByRole.ContainsKey(role))
             {
-                if (this.Transaction.State.ModifiedRolesByReference != null &&
-                    this.Transaction.State.ModifiedRolesByReference.TryGetValue(association, out var roles) &&
-                    roles.PrefetchTryGetUnitRole(roleType))
+                if (!prefetchedAssociationByRole.TryGetValue(role, out var associationIds))
                 {
-                    continue;
+                    associationsByRole[role] = Array.Empty<long>();
                 }
-
-                if (!association.IsUnknownVersion)
+                else
                 {
-                    var cacheObject = cache.GetOrCreateCachedObject(association.Class, association.ObjectId, association.Version);
-                    if (cacheObject.TryGetValue(roleType, out var role))
+                    associationsByRole[role] = associationIds.ToArray();
+
+                    nestedObjectIds?.UnionWith(associationIds);
+                    if (nestedObjectIds == null)
                     {
-                        continue;
+                        leafs.UnionWith(associationIds);
                     }
                 }
 
-                references.Add(association);
+                this.Transaction.State.FlushConditionally(role.ObjectId, associationType);
             }
+        }
+    }
 
-            return references;
+    internal virtual void PrefetchCompositesAssociationRelationTable(HashSet<Reference> roles, IAssociationType associationType,
+        HashSet<long> nestedObjectIds, HashSet<long> leafs)
+    {
+        var references = nestedObjectIds == null
+            ? this.FilterForPrefetchAssociations(roles, associationType)
+            : this.FilterForPrefetchCompositeAssociations(roles, associationType, nestedObjectIds);
+        if (references.Count == 0)
+        {
+            return;
         }
 
-        private List<Reference> FilterForPrefetchCompositeRoles(HashSet<Reference> associations, IRoleType roleType, HashSet<long> nestedObjects)
+        if (!this.PrefetchCompositeAssociationByAssociationType.TryGetValue(associationType, out var command))
         {
-            var references = new List<Reference>();
+            var roleType = associationType.RoleType;
+            var sql = this.Database.Mapping.ProcedureNameForPrefetchAssociationByRelationType[roleType.RelationType];
+            command = this.Transaction.Connection.CreateCommand();
+            command.CommandText = sql;
+            command.CommandType = CommandType.StoredProcedure;
+            this.prefetchCompositeAssociationByAssociationType[associationType] = command;
+        }
 
-            var cache = this.Database.Cache;
+        command.ObjectTableParameter(roles.Select(v => v.ObjectId));
 
-            foreach (var association in associations)
+        var prefetchedAssociations = new HashSet<long>();
+
+        var prefetchedAssociationByRole = new Dictionary<Reference, List<long>>();
+        using (var reader = command.ExecuteReader())
+        {
+            while (reader.Read())
             {
-                if (this.Transaction.State.ModifiedRolesByReference != null &&
-                    this.Transaction.State.ModifiedRolesByReference.TryGetValue(association, out var roles) &&
-                    roles.PrefetchTryGetCompositeRole(roleType, out var modifiedRole))
+                var roleId = reader.GetInt64(1);
+                var roleReference = this.Transaction.State.ReferenceByObjectId[roleId];
+
+                if (!prefetchedAssociationByRole.TryGetValue(roleReference, out var associations))
                 {
-                    if (modifiedRole != null)
+                    associations = new List<long>();
+                    prefetchedAssociationByRole.Add(roleReference, associations);
+                }
+
+                var associationId = reader.GetInt64(0);
+                associations.Add(associationId);
+                prefetchedAssociations.Add(associationId);
+            }
+        }
+
+        foreach (var associationId in prefetchedAssociations)
+        {
+            if (associationType.ObjectType.ExistExclusiveClass)
+            {
+                this.Transaction.State.GetOrCreateReferenceForExistingObject(associationType.ObjectType.ExclusiveClass, associationId,
+                    this.Transaction);
+            }
+            else
+            {
+                this.Transaction.State.GetOrCreateReferenceForExistingObject(associationId, this.Transaction);
+            }
+        }
+
+        var associationsByRole = this.Transaction.State.GetAssociationsByRole(associationType);
+        foreach (var role in roles)
+        {
+            if (!associationsByRole.ContainsKey(role))
+            {
+                if (!prefetchedAssociationByRole.TryGetValue(role, out var associationIds))
+                {
+                    associationsByRole[role] = Array.Empty<long>();
+                }
+                else
+                {
+                    associationsByRole[role] = associationIds.ToArray();
+
+                    nestedObjectIds?.UnionWith(associationIds);
+                    if (nestedObjectIds == null)
                     {
-                        nestedObjects.Add(modifiedRole.Value);
+                        leafs.UnionWith(associationIds);
                     }
-
-                    continue;
                 }
 
-                if (!association.IsUnknownVersion)
-                {
-                    var cacheObject = cache.GetOrCreateCachedObject(association.Class, association.ObjectId, association.Version);
+                this.Transaction.State.FlushConditionally(role.ObjectId, associationType);
+            }
+        }
+    }
 
-                    if (cacheObject.TryGetValue(roleType, out var role))
+    private List<Reference> FilterForPrefetchRoles(HashSet<Reference> associations, IRoleType roleType)
+    {
+        var references = new List<Reference>();
+
+        var cache = this.Database.Cache;
+
+        foreach (var association in associations)
+        {
+            if (this.Transaction.State.ModifiedRolesByReference != null &&
+                this.Transaction.State.ModifiedRolesByReference.TryGetValue(association, out var roles) &&
+                roles.PrefetchTryGetUnitRole(roleType))
+            {
+                continue;
+            }
+
+            if (!association.IsUnknownVersion)
+            {
+                var cacheObject = cache.GetOrCreateCachedObject(association.Class, association.ObjectId, association.Version);
+                if (cacheObject.TryGetValue(roleType, out var role))
+                {
+                    continue;
+                }
+            }
+
+            references.Add(association);
+        }
+
+        return references;
+    }
+
+    private List<Reference> FilterForPrefetchCompositeRoles(HashSet<Reference> associations, IRoleType roleType,
+        HashSet<long> nestedObjects)
+    {
+        var references = new List<Reference>();
+
+        var cache = this.Database.Cache;
+
+        foreach (var association in associations)
+        {
+            if (this.Transaction.State.ModifiedRolesByReference != null &&
+                this.Transaction.State.ModifiedRolesByReference.TryGetValue(association, out var roles) &&
+                roles.PrefetchTryGetCompositeRole(roleType, out var modifiedRole))
+            {
+                if (modifiedRole != null)
+                {
+                    nestedObjects.Add(modifiedRole.Value);
+                }
+
+                continue;
+            }
+
+            if (!association.IsUnknownVersion)
+            {
+                var cacheObject = cache.GetOrCreateCachedObject(association.Class, association.ObjectId, association.Version);
+
+                if (cacheObject.TryGetValue(roleType, out var role))
+                {
+                    if (role != null)
                     {
-                        if (role != null)
-                        {
-                            nestedObjects.Add((long)role);
-                        }
-
-                        continue;
+                        nestedObjects.Add((long)role);
                     }
-                }
 
-                references.Add(association);
-            }
-
-            return references;
-        }
-
-        private List<Reference> FilterForPrefetchCompositesRoles(HashSet<Reference> associations, IRoleType roleType, HashSet<long> nestedObjects)
-        {
-            var references = new List<Reference>();
-
-            var cache = this.Database.Cache;
-
-            foreach (var association in associations)
-            {
-                if (this.Transaction.State.ModifiedRolesByReference != null &&
-                    this.Transaction.State.ModifiedRolesByReference.TryGetValue(association, out var roles) &&
-                    roles.PrefetchTryGetCompositesRole(roleType, out var modifiedRole))
-                {
-                    nestedObjects.UnionWith(modifiedRole);
                     continue;
                 }
-
-                if (!association.IsUnknownVersion)
-                {
-                    var cacheObject = cache.GetOrCreateCachedObject(association.Class, association.ObjectId, association.Version);
-                    if (cacheObject.TryGetValue(roleType, out var cachedRole))
-                    {
-                        nestedObjects.UnionWith((long[])cachedRole);
-                        continue;
-                    }
-                }
-
-                references.Add(association);
             }
 
-            return references;
+            references.Add(association);
         }
 
-        private HashSet<Reference> FilterForPrefetchAssociations(HashSet<Reference> roles, IAssociationType associationType)
+        return references;
+    }
+
+    private List<Reference> FilterForPrefetchCompositesRoles(HashSet<Reference> associations, IRoleType roleType,
+        HashSet<long> nestedObjects)
+    {
+        var references = new List<Reference>();
+
+        var cache = this.Database.Cache;
+
+        foreach (var association in associations)
         {
-            if (!this.Transaction.State.AssociationByRoleByAssociationType.TryGetValue(associationType, out var associationByRole))
+            if (this.Transaction.State.ModifiedRolesByReference != null &&
+                this.Transaction.State.ModifiedRolesByReference.TryGetValue(association, out var roles) &&
+                roles.PrefetchTryGetCompositesRole(roleType, out var modifiedRole))
             {
-                return roles;
+                nestedObjects.UnionWith(modifiedRole);
+                continue;
             }
 
-            return new HashSet<Reference>(roles.Where(role => !associationByRole.ContainsKey(role)));
-        }
-
-        private HashSet<Reference> FilterForPrefetchCompositeAssociations(HashSet<Reference> roles, IAssociationType associationType, HashSet<long> nestedObjectIds)
-        {
-            if (!this.Transaction.State.AssociationByRoleByAssociationType.TryGetValue(associationType, out var associationByRole))
+            if (!association.IsUnknownVersion)
             {
-                return roles;
-            }
-
-            var references = new HashSet<Reference>();
-            foreach (var role in roles)
-            {
-                if (associationByRole.TryGetValue(role, out var association))
+                var cacheObject = cache.GetOrCreateCachedObject(association.Class, association.ObjectId, association.Version);
+                if (cacheObject.TryGetValue(roleType, out var cachedRole))
                 {
-                    nestedObjectIds.Add(association.ObjectId);
+                    nestedObjects.UnionWith((long[])cachedRole);
                     continue;
                 }
-
-                references.Add(role);
             }
 
-            return references;
+            references.Add(association);
         }
 
-        private HashSet<Reference> FilterForPrefetchCompositesAssociations(HashSet<Reference> roles, IAssociationType associationType, HashSet<long> nestedObjectIds)
+        return references;
+    }
+
+    private HashSet<Reference> FilterForPrefetchAssociations(HashSet<Reference> roles, IAssociationType associationType)
+    {
+        if (!this.Transaction.State.AssociationByRoleByAssociationType.TryGetValue(associationType, out var associationByRole))
         {
-            if (!this.Transaction.State.AssociationsByRoleByAssociationType.TryGetValue(associationType, out var associationByRole))
-            {
-                return roles;
-            }
-
-            var references = new HashSet<Reference>();
-            foreach (var role in roles)
-            {
-                if (associationByRole.TryGetValue(role, out var association))
-                {
-                    nestedObjectIds.UnionWith(association);
-                    continue;
-                }
-
-                references.Add(role);
-            }
-
-            return references;
+            return roles;
         }
+
+        return new HashSet<Reference>(roles.Where(role => !associationByRole.ContainsKey(role)));
+    }
+
+    private HashSet<Reference> FilterForPrefetchCompositeAssociations(HashSet<Reference> roles, IAssociationType associationType,
+        HashSet<long> nestedObjectIds)
+    {
+        if (!this.Transaction.State.AssociationByRoleByAssociationType.TryGetValue(associationType, out var associationByRole))
+        {
+            return roles;
+        }
+
+        var references = new HashSet<Reference>();
+        foreach (var role in roles)
+        {
+            if (associationByRole.TryGetValue(role, out var association))
+            {
+                nestedObjectIds.Add(association.ObjectId);
+                continue;
+            }
+
+            references.Add(role);
+        }
+
+        return references;
+    }
+
+    private HashSet<Reference> FilterForPrefetchCompositesAssociations(HashSet<Reference> roles, IAssociationType associationType,
+        HashSet<long> nestedObjectIds)
+    {
+        if (!this.Transaction.State.AssociationsByRoleByAssociationType.TryGetValue(associationType, out var associationByRole))
+        {
+            return roles;
+        }
+
+        var references = new HashSet<Reference>();
+        foreach (var role in roles)
+        {
+            if (associationByRole.TryGetValue(role, out var association))
+            {
+                nestedObjectIds.UnionWith(association);
+                continue;
+            }
+
+            references.Add(role);
+        }
+
+        return references;
     }
 }

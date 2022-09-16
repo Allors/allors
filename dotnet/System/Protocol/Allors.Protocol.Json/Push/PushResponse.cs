@@ -8,7 +8,7 @@ namespace Allors.Protocol.Json.Api.Push
     public class PushResponse : Response
     {
         /// <summary>
-        /// New Objects
+        ///     New Objects
         /// </summary>
         public PushResponseNewObject[] n { get; set; }
     }

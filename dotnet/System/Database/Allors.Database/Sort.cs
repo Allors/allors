@@ -3,14 +3,13 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database
+namespace Allors.Database;
+
+using Meta;
+
+public class Sort
 {
-    using Meta;
+    public IRoleType RoleType { get; set; }
 
-    public class Sort
-    {
-        public IRoleType RoleType { get; set; }
-
-        public SortDirection Direction { get; set; }
-    }
+    public SortDirection Direction { get; set; }
 }

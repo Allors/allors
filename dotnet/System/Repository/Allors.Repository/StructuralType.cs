@@ -4,25 +4,24 @@
 // </copyright>
 // <summary>Defines the IObjectType type.</summary>
 
-namespace Allors.Repository.Domain
+namespace Allors.Repository.Domain;
+
+using System.Collections.Generic;
+
+public abstract class ObjectType : FieldObjectType
 {
-    using System.Collections.Generic;
-
-    public abstract class ObjectType : FieldObjectType
+    protected ObjectType(ISet<RepositoryObject> objects, string name, Domain domain)
     {
-        protected ObjectType(ISet<RepositoryObject> objects, string name, Domain domain)
-        {
-            this.SingularName = name;
-            this.Domain = domain;
+        this.SingularName = name;
+        this.Domain = domain;
 
-            domain.ObjectTypes.Add(this);
-            objects.Add(this);
-        }
-
-        public string SingularName { get; }
-
-        public Domain Domain { get; }
-
-        public override string ToString() => this.SingularName;
+        domain.ObjectTypes.Add(this);
+        objects.Add(this);
     }
+
+    public string SingularName { get; }
+
+    public Domain Domain { get; }
+
+    public override string ToString() => this.SingularName;
 }

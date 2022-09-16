@@ -3,63 +3,60 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Adapters.Memory
+namespace Allors.Database.Adapters.Memory;
+
+using System;
+using System.Collections.Generic;
+using Meta;
+
+internal sealed class ExtentFiltered : Extent
 {
-    using System;
-    using System.Collections.Generic;
-    using Meta;
+    private And filter;
 
-    internal sealed class ExtentFiltered : Extent
+    internal ExtentFiltered(Transaction transaction, IComposite objectType)
+        : base(transaction) =>
+        this.ObjectType = objectType;
+
+    public override ICompositePredicate Filter => this.filter ??= new And(this);
+
+    public override IComposite ObjectType { get; }
+
+    internal void CheckForAssociationType(IAssociationType association)
     {
-        private readonly IComposite objectType;
-
-        private And filter;
-
-        internal ExtentFiltered(Transaction transaction, IComposite objectType)
-            : base(transaction) =>
-            this.objectType = objectType;
-
-        public override ICompositePredicate Filter => this.filter ??= new And(this);
-
-        public override IComposite ObjectType => this.objectType;
-
-        internal void CheckForAssociationType(IAssociationType association)
+        if (!this.ObjectType.ExistAssociationType(association))
         {
-            if (!this.objectType.ExistAssociationType(association))
-            {
-                throw new ArgumentException("Extent does not have association " + association);
-            }
+            throw new ArgumentException("Extent does not have association " + association);
         }
+    }
 
-        internal void CheckForRoleType(IRoleType roleType)
+    internal void CheckForRoleType(IRoleType roleType)
+    {
+        if (!this.ObjectType.ExistRoleType(roleType))
         {
-            if (!this.objectType.ExistRoleType(roleType))
-            {
-                throw new ArgumentException("Extent does not have role " + roleType.SingularName);
-            }
+            throw new ArgumentException("Extent does not have role " + roleType.SingularName);
         }
+    }
 
-        protected override void Evaluate()
+    protected override void Evaluate()
+    {
+        if (this.Strategies == null)
         {
-            if (this.Strategies == null)
-            {
-                this.Strategies = new List<Strategy>();
+            this.Strategies = new List<Strategy>();
 
-                foreach (var strategy in this.Transaction.GetStrategiesForExtentIncludingDeleted(this.objectType))
+            foreach (var strategy in this.Transaction.GetStrategiesForExtentIncludingDeleted(this.ObjectType))
+            {
+                if (!strategy.IsDeleted)
                 {
-                    if (!strategy.IsDeleted)
+                    if (this.filter?.Include != true || this.filter.Evaluate(strategy) == ThreeValuedLogic.True)
                     {
-                        if (this.filter?.Include != true || this.filter.Evaluate(strategy) == ThreeValuedLogic.True)
-                        {
-                            this.Strategies.Add(strategy);
-                        }
+                        this.Strategies.Add(strategy);
                     }
                 }
+            }
 
-                if (this.Sorter != null)
-                {
-                    this.Strategies.Sort(this.Sorter);
-                }
+            if (this.Sorter != null)
+            {
+                this.Strategies.Sort(this.Sorter);
             }
         }
     }

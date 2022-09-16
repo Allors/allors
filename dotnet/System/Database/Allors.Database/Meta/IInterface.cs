@@ -4,9 +4,8 @@
 // </copyright>
 // <summary>Defines the IObjectType type.</summary>
 
-namespace Allors.Database.Meta
+namespace Allors.Database.Meta;
+
+public interface IInterface : IComposite
 {
-    public interface IInterface : IComposite
-    {
-    }
 }

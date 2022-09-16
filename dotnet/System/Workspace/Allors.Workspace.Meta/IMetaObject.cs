@@ -6,7 +6,7 @@
 namespace Allors.Workspace.Meta
 {
     /// <summary>
-    /// Base interface for Meta objects.
+    ///     Base interface for Meta objects.
     /// </summary>
     public interface IMetaObject
     {

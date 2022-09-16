@@ -3,34 +3,34 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Adapters.Sql
+namespace Allors.Database.Adapters.Sql;
+
+using Meta;
+
+internal sealed class RoleLessThanRole : Predicate
 {
-    using Meta;
+    private readonly IRoleType lessThanRole;
+    private readonly IRoleType role;
 
-    internal sealed class RoleLessThanRole : Predicate
+    internal RoleLessThanRole(ExtentFiltered extent, IRoleType role, IRoleType lessThanRole)
     {
-        private readonly IRoleType lessThanRole;
-        private readonly IRoleType role;
+        extent.CheckRole(role);
+        PredicateAssertions.ValidateRoleLessThan(role, lessThanRole);
+        this.role = role;
+        this.lessThanRole = lessThanRole;
+    }
 
-        internal RoleLessThanRole(ExtentFiltered extent, IRoleType role, IRoleType lessThanRole)
-        {
-            extent.CheckRole(role);
-            PredicateAssertions.ValidateRoleLessThan(role, lessThanRole);
-            this.role = role;
-            this.lessThanRole = lessThanRole;
-        }
+    internal override bool BuildWhere(ExtentStatement statement, string alias)
+    {
+        var schema = statement.Mapping;
+        statement.Append(" " + alias + "." + schema.ColumnNameByRelationType[this.role.RelationType] + " < " + alias + "." +
+                         schema.ColumnNameByRelationType[this.lessThanRole.RelationType]);
+        return this.Include;
+    }
 
-        internal override bool BuildWhere(ExtentStatement statement, string alias)
-        {
-            var schema = statement.Mapping;
-            statement.Append(" " + alias + "." + schema.ColumnNameByRelationType[this.role.RelationType] + " < " + alias + "." + schema.ColumnNameByRelationType[this.lessThanRole.RelationType]);
-            return this.Include;
-        }
-
-        internal override void Setup(ExtentStatement statement)
-        {
-            statement.UseRole(this.role);
-            statement.UseRole(this.lessThanRole);
-        }
+    internal override void Setup(ExtentStatement statement)
+    {
+        statement.UseRole(this.role);
+        statement.UseRole(this.lessThanRole);
     }
 }

@@ -5,9 +5,8 @@
 // <summary>Defines the Default type.</summary>
 //------------------------------------------------------------------------------------------------
 
-namespace Allors.Database.Domain
+namespace Allors.Database.Domain;
+
+public partial interface S1
 {
-    public partial interface S1
-    {
-    }
 }

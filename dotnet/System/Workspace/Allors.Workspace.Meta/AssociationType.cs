@@ -9,20 +9,20 @@ namespace Allors.Workspace.Meta
     using System;
 
     /// <summary>
-    /// An association type defines the association side of a relation.
-    /// This is also called the 'active', 'controlling' or 'owning' side.
-    /// AssociationTypes can only have composite <see cref="ObjectType"/>s.
+    ///     An association type defines the association side of a relation.
+    ///     This is also called the 'active', 'controlling' or 'owning' side.
+    ///     AssociationTypes can only have composite <see cref="ObjectType" />s.
     /// </summary>
     public abstract class AssociationType : IPropertyType
     {
         public MetaPopulation MetaPopulation { get; set; }
-
-        IObjectType IPropertyType.ObjectType => this.ObjectType;
         public IComposite ObjectType { get; set; }
-        
+
         public RelationType RelationType { get; set; }
 
         public RoleType RoleType => this.RelationType.RoleType;
+
+        IObjectType IPropertyType.ObjectType => this.ObjectType;
 
         public string SingularName { get; set; }
         public string PluralName { get; set; }
@@ -32,7 +32,8 @@ namespace Allors.Workspace.Meta
 
         public string OperandTag => this.RelationType.Tag;
 
-        int IComparable<IPropertyType>.CompareTo(IPropertyType other) => string.Compare(this.Name, other.Name, StringComparison.InvariantCulture);
+        int IComparable<IPropertyType>.CompareTo(IPropertyType other) =>
+            string.Compare(this.Name, other.Name, StringComparison.InvariantCulture);
 
         public override string ToString() => $"{this.RoleType.ObjectType.SingularName}.{this.Name}";
 

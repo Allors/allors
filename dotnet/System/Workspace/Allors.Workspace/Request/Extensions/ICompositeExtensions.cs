@@ -13,7 +13,8 @@ namespace Allors.Workspace.Request.Extensions
 
     public static class ICompositeExtensions
     {
-        public static IEnumerable<Node> Nodes<T>(this T @this, params Func<T, Node>[] children) where T : IComposite => children.Select(v => v(@this));
+        public static IEnumerable<Node> Nodes<T>(this T @this, params Func<T, Node>[] children) where T : IComposite =>
+            children.Select(v => v(@this));
 
         public static IEnumerable<Node> Nodes<T>(this T @this, Func<T, IEnumerable<Node>> children) where T : IComposite => children(@this);
 

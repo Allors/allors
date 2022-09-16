@@ -11,22 +11,22 @@ namespace Allors.Protocol.Json.Api.Sync
     public class SyncResponseRole
     {
         /// <summary>
-        /// Role Type Tag
+        ///     Role Type Tag
         /// </summary>
         public string t { get; set; }
 
         /// <summary>
-        /// Sorted Collection
+        ///     Sorted Collection
         /// </summary>
         public long[] c { get; set; }
 
         /// <summary>
-        /// Object
+        ///     Object
         /// </summary>
         public long? o { get; set; }
 
         /// <summary>
-        /// Value
+        ///     Value
         /// </summary>
         public object v { get; set; }
     }

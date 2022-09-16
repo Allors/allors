@@ -3,14 +3,13 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Domain
-{
-    public partial class C2
-    {
-        public void AnS1234Method()
-        {
-        }
+namespace Allors.Database.Domain;
 
-        public override string ToString() => this.Name;
+public partial class C2
+{
+    public void AnS1234Method()
+    {
     }
+
+    public override string ToString() => this.Name;
 }

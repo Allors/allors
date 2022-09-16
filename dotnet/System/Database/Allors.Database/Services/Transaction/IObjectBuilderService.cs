@@ -3,12 +3,11 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Services
-{
-    using Meta;
+namespace Allors.Database.Services;
 
-    public interface IObjectBuilderService
-    {
-        IObject Build(IClass @class);
-    }
+using Meta;
+
+public interface IObjectBuilderService
+{
+    IObject Build(IClass @class);
 }

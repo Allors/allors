@@ -14,22 +14,21 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Allors.Database.Adapters
+namespace Allors.Database.Adapters;
+
+using System;
+
+public interface IProfile : IDisposable
 {
-    using System;
+    IDatabase Database { get; }
 
-    public interface IProfile : IDisposable
-    {
-        IDatabase Database { get; }
+    ITransaction Transaction { get; }
 
-        ITransaction Transaction { get; }
+    Action[] Markers { get; }
 
-        Action[] Markers { get; }
+    Action[] Inits { get; }
 
-        Action[] Inits { get; }
+    IObjectFactory ObjectFactory { get; }
 
-        IObjectFactory ObjectFactory { get; }
-
-        IDatabase CreateDatabase();
-    }
+    IDatabase CreateDatabase();
 }

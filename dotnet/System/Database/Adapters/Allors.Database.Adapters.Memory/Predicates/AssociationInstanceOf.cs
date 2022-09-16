@@ -3,43 +3,42 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Adapters.Memory
+namespace Allors.Database.Adapters.Memory;
+
+using Meta;
+
+internal sealed class AssociationInstanceOf : Predicate
 {
-    using Meta;
+    private readonly IAssociationType associationType;
+    private readonly IObjectType objectType;
 
-    internal sealed class AssociationInstanceOf : Predicate
+    internal AssociationInstanceOf(ExtentFiltered extent, IAssociationType associationType, IObjectType instanceObjectType)
     {
-        private readonly IAssociationType associationType;
-        private readonly IObjectType objectType;
+        extent.CheckForAssociationType(associationType);
+        PredicateAssertions.ValidateAssociationInstanceof(associationType, instanceObjectType);
 
-        internal AssociationInstanceOf(ExtentFiltered extent, IAssociationType associationType, IObjectType instanceObjectType)
+        this.associationType = associationType;
+        this.objectType = instanceObjectType;
+    }
+
+    internal override ThreeValuedLogic Evaluate(Strategy strategy)
+    {
+        var association = strategy.GetCompositeAssociation(this.associationType);
+
+        if (association == null)
         {
-            extent.CheckForAssociationType(associationType);
-            PredicateAssertions.ValidateAssociationInstanceof(associationType, instanceObjectType);
-
-            this.associationType = associationType;
-            this.objectType = instanceObjectType;
+            return ThreeValuedLogic.False;
         }
 
-        internal override ThreeValuedLogic Evaluate(Strategy strategy)
+        // TODO: Optimize
+        var associationObjectType = association.Strategy.Class;
+        if (associationObjectType.Equals(this.objectType))
         {
-            var association = strategy.GetCompositeAssociation(this.associationType);
-
-            if (association == null)
-            {
-                return ThreeValuedLogic.False;
-            }
-
-            // TODO: Optimize
-            var associationObjectType = association.Strategy.Class;
-            if (associationObjectType.Equals(this.objectType))
-            {
-                return ThreeValuedLogic.True;
-            }
-
-            return this.objectType is IInterface @interface && associationObjectType.ExistSupertype(@interface)
-                       ? ThreeValuedLogic.True
-                       : ThreeValuedLogic.False;
+            return ThreeValuedLogic.True;
         }
+
+        return this.objectType is IInterface @interface && associationObjectType.ExistSupertype(@interface)
+            ? ThreeValuedLogic.True
+            : ThreeValuedLogic.False;
     }
 }

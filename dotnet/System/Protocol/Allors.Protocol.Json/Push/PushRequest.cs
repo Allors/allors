@@ -8,12 +8,12 @@ namespace Allors.Protocol.Json.Api.Push
     public class PushRequest : Request
     {
         /// <summary>
-        /// New Objects
+        ///     New Objects
         /// </summary>
         public PushRequestNewObject[] n { get; set; }
 
         /// <summary>
-        /// Objects
+        ///     Objects
         /// </summary>
         public PushRequestObject[] o { get; set; }
     }

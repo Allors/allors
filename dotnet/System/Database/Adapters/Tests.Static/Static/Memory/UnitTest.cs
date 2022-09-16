@@ -6,14 +6,13 @@
 //   Defines the Default type.
 // </summary>
 
-namespace Allors.Database.Adapters.Memory
+namespace Allors.Database.Adapters.Memory;
+
+public class UnitTest : Adapters.UnitTest
 {
-    public class UnitTest : Adapters.UnitTest
-    {
-        private readonly Profile profile = new Profile();
+    private readonly Profile profile = new();
 
-        protected override IProfile Profile => this.profile;
+    protected override IProfile Profile => this.profile;
 
-        public override void Dispose() => this.profile.Dispose();
-    }
+    public override void Dispose() => this.profile.Dispose();
 }

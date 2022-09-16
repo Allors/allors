@@ -13,21 +13,24 @@ namespace Allors.Workspace.Adapters.Json
 
     public class PullResult : Result, IPullResult
     {
-        private IDictionary<string, IObject> objects;
+        private readonly PullResponse pullResponse;
 
         private IDictionary<string, IObject[]> collections;
+        private IDictionary<string, IObject> objects;
 
         private IDictionary<string, object> values;
 
-        private readonly PullResponse pullResponse;
-
         public PullResult(Workspace workspace, PullResponse response) : base(workspace, response) => this.pullResponse = response;
 
-        public IDictionary<string, IObject> Objects => this.objects ??= this.pullResponse.o.ToDictionary(pair => pair.Key.ToUpperInvariant(), pair => (IObject)this.Workspace.GetObject(pair.Value));
+        public IDictionary<string, IObject> Objects => this.objects ??=
+            this.pullResponse.o.ToDictionary(pair => pair.Key.ToUpperInvariant(), pair => (IObject)this.Workspace.GetObject(pair.Value));
 
-        public IDictionary<string, IObject[]> Collections => this.collections ??= this.pullResponse.c.ToDictionary(pair => pair.Key.ToUpperInvariant(), pair => pair.Value.Select(this.Workspace.GetObject).Cast<IObject>().ToArray());
+        public IDictionary<string, IObject[]> Collections => this.collections ??=
+            this.pullResponse.c.ToDictionary(pair => pair.Key.ToUpperInvariant(),
+                pair => pair.Value.Select(this.Workspace.GetObject).Cast<IObject>().ToArray());
 
-        public IDictionary<string, object> Values => this.values ??= this.pullResponse.v.ToDictionary(pair => pair.Key.ToUpperInvariant(), pair => pair.Value);
+        public IDictionary<string, object> Values =>
+            this.values ??= this.pullResponse.v.ToDictionary(pair => pair.Key.ToUpperInvariant(), pair => pair.Value);
 
         public IObject[] GetCollection(IComposite objectType)
         {
@@ -35,7 +38,8 @@ namespace Allors.Workspace.Adapters.Json
             return this.GetCollection(key);
         }
 
-        public IObject[] GetCollection(string key) => this.Collections.TryGetValue(key.ToUpperInvariant(), out var collection) ? collection?.ToArray() : null;
+        public IObject[] GetCollection(string key) =>
+            this.Collections.TryGetValue(key.ToUpperInvariant(), out var collection) ? collection?.ToArray() : null;
 
         public IObject GetObject(IComposite objectType)
         {

@@ -4,40 +4,39 @@
 // </copyright>
 // <summary>Defines the IDomainDerivation type.</summary>
 
-namespace Allors.Database.Derivations
+namespace Allors.Database.Derivations;
+
+using Meta;
+
+public interface IValidation
 {
-    using Meta;
+    bool HasErrors { get; }
 
-    public interface IValidation
-    {
-        bool HasErrors { get; }
+    IDerivationError[] Errors { get; }
 
-        IDerivationError[] Errors { get; }
+    void AddError(IDerivationError derivationError);
 
-        void AddError(IDerivationError derivationError);
+    void AddError(IObject association, IRoleType roleType, string errorMessage, params object[] messageParam);
 
-        void AddError(IObject association, IRoleType roleType, string errorMessage, params object[] messageParam);
+    void AddError(IObject role, IAssociationType associationType, string errorMessage, params object[] messageParam);
 
-        void AddError(IObject role, IAssociationType associationType, string errorMessage, params object[] messageParam);
+    void AddError(string error);
 
-        void AddError(string error);
+    void AssertExists(IObject association, IRoleType roleType);
 
-        void AssertExists(IObject association, IRoleType roleType);
+    void AssertNotExists(IObject association, IRoleType roleType);
 
-        void AssertNotExists(IObject association, IRoleType roleType);
+    void AssertNonEmptyString(IObject association, IRoleType roleType);
 
-        void AssertNonEmptyString(IObject association, IRoleType roleType);
+    void AssertExistsNonEmptyString(IObject association, IRoleType roleType);
 
-        void AssertExistsNonEmptyString(IObject association, IRoleType roleType);
+    void AssertIsUnique(IChangeSet changeSet, IObject association, IRoleType roleType);
 
-        void AssertIsUnique(IChangeSet changeSet, IObject association, IRoleType roleType);
+    void AssertAtLeastOne(IObject association, params IRoleType[] roleTypes);
 
-        void AssertAtLeastOne(IObject association, params IRoleType[] roleTypes);
+    void AssertExistsAtMostOne(IObject association, params IRoleType[] roleTypes);
 
-        void AssertExistsAtMostOne(IObject association, params IRoleType[] roleTypes);
+    void AssertAreEqual(IObject association, IRoleType roleType, IRoleType otherRoleType);
 
-        void AssertAreEqual(IObject association, IRoleType roleType, IRoleType otherRoleType);
-
-        void AssertExists(IObject role, IAssociationType associationType);
-    }
+    void AssertExists(IObject role, IAssociationType associationType);
 }

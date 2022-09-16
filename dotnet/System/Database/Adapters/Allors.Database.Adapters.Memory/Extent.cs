@@ -6,171 +6,170 @@
 //   Defines the AllorsExtentMemory type.
 // </summary>
 
-namespace Allors.Database.Adapters.Memory
+namespace Allors.Database.Adapters.Memory;
+
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using Meta;
+
+public abstract class Extent : Allors.Database.Extent
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using Meta;
+    private IObject[] defaultObjectArray;
+    private Extent parent;
 
-    public abstract class Extent : Allors.Database.Extent
+    protected Extent(Transaction transaction) => this.Transaction = transaction;
+
+    public override int Count
     {
-        private IObject[] defaultObjectArray;
-        private Extent parent;
-
-        protected Extent(Transaction transaction) => this.Transaction = transaction;
-
-        public override int Count
-        {
-            get
-            {
-                this.Evaluate();
-                return this.Strategies.Count;
-            }
-        }
-
-        public Extent Parent
-        {
-            get => this.parent;
-
-            set
-            {
-                if (this.parent != null)
-                {
-                    throw new ArgumentException("Extent has already a parent");
-                }
-
-                this.parent = value;
-            }
-        }
-
-        internal Transaction Transaction { get; }
-
-        internal ExtentSort Sorter { get; private set; }
-
-        protected List<Strategy> Strategies { get; set; }
-
-        public override Allors.Database.Extent AddSort(IRoleType roleType) => this.AddSort(roleType, SortDirection.Ascending);
-
-        public override Allors.Database.Extent AddSort(IRoleType roleType, SortDirection direction)
-        {
-            if (this.Sorter == null)
-            {
-                this.Sorter = new ExtentSort(roleType, direction);
-            }
-            else
-            {
-                this.Sorter.AddSort(roleType, direction);
-            }
-
-            this.Invalidate();
-            return this;
-        }
-
-        public override bool Contains(object value) => this.IndexOf(value) >= 0;
-
-        public override void CopyTo(Array array, int index)
+        get
         {
             this.Evaluate();
+            return this.Strategies.Count;
+        }
+    }
 
-            var i = index;
-            foreach (var strategy in this.Strategies)
+    public Extent Parent
+    {
+        get => this.parent;
+
+        set
+        {
+            if (this.parent != null)
             {
-                array.SetValue(strategy.GetObject(), i);
-                ++i;
+                throw new ArgumentException("Extent has already a parent");
             }
+
+            this.parent = value;
+        }
+    }
+
+    internal Transaction Transaction { get; }
+
+    internal ExtentSort Sorter { get; private set; }
+
+    protected List<Strategy> Strategies { get; set; }
+
+    public override Allors.Database.Extent AddSort(IRoleType roleType) => this.AddSort(roleType, SortDirection.Ascending);
+
+    public override Allors.Database.Extent AddSort(IRoleType roleType, SortDirection direction)
+    {
+        if (this.Sorter == null)
+        {
+            this.Sorter = new ExtentSort(roleType, direction);
+        }
+        else
+        {
+            this.Sorter.AddSort(roleType, direction);
         }
 
-        public override IEnumerator GetEnumerator()
+        this.Invalidate();
+        return this;
+    }
+
+    public override bool Contains(object value) => this.IndexOf(value) >= 0;
+
+    public override void CopyTo(Array array, int index)
+    {
+        this.Evaluate();
+
+        var i = index;
+        foreach (var strategy in this.Strategies)
         {
-            this.Evaluate();
-            return new ExtentEnumerator(this.Strategies.GetEnumerator());
+            array.SetValue(strategy.GetObject(), i);
+            ++i;
+        }
+    }
+
+    public override IEnumerator GetEnumerator()
+    {
+        this.Evaluate();
+        return new ExtentEnumerator(this.Strategies.GetEnumerator());
+    }
+
+    public override int IndexOf(object value)
+    {
+        this.Evaluate();
+        var containedObject = (IObject)value;
+
+        var i = 0;
+        foreach (var strategy in this.Strategies)
+        {
+            if (strategy.ObjectId.Equals(containedObject.Strategy.ObjectId))
+            {
+                return i;
+            }
+
+            ++i;
         }
 
-        public override int IndexOf(object value)
+        return -1;
+    }
+
+    public override IObject[] ToArray()
+    {
+        this.Evaluate();
+        var clrType = this.Transaction.GetTypeForObjectType(this.ObjectType);
+
+        if (this.Strategies.Count > 0)
         {
-            this.Evaluate();
-            var containedObject = (IObject)value;
+            var objects = (IObject[])Array.CreateInstance(clrType, this.Strategies.Count);
 
             var i = 0;
             foreach (var strategy in this.Strategies)
             {
-                if (strategy.ObjectId.Equals(containedObject.Strategy.ObjectId))
-                {
-                    return i;
-                }
-
+                objects[i] = strategy.GetObject();
                 ++i;
             }
 
-            return -1;
+            return objects;
         }
 
-        public override IObject[] ToArray()
+        return this.defaultObjectArray ??= (IObject[])Array.CreateInstance(clrType, 0);
+    }
+
+    public override IObject[] ToArray(Type type)
+    {
+        this.Evaluate();
+        if (this.Strategies.Count > 0)
         {
-            this.Evaluate();
-            var clrType = this.Transaction.GetTypeForObjectType(this.ObjectType);
-
-            if (this.Strategies.Count > 0)
+            var objects = (IObject[])Array.CreateInstance(type, this.Strategies.Count);
+            var i = 0;
+            foreach (var strategy in this.Strategies)
             {
-                var objects = (IObject[])Array.CreateInstance(clrType, this.Strategies.Count);
-
-                var i = 0;
-                foreach (var strategy in this.Strategies)
-                {
-                    objects[i] = strategy.GetObject();
-                    ++i;
-                }
-
-                return objects;
+                objects[i] = strategy.GetObject();
+                ++i;
             }
 
-            return this.defaultObjectArray ??= (IObject[])Array.CreateInstance(clrType, 0);
+            return objects;
         }
 
-        public override IObject[] ToArray(Type type)
-        {
-            this.Evaluate();
-            if (this.Strategies.Count > 0)
-            {
-                var objects = (IObject[])Array.CreateInstance(type, this.Strategies.Count);
-                var i = 0;
-                foreach (var strategy in this.Strategies)
-                {
-                    objects[i] = strategy.GetObject();
-                    ++i;
-                }
+        return (IObject[])Array.CreateInstance(type, 0);
+    }
 
-                return objects;
-            }
+    internal bool ContainsStrategy(Strategy strategy)
+    {
+        this.Evaluate();
+        return this.Strategies.Contains(strategy);
+    }
 
-            return (IObject[])Array.CreateInstance(type, 0);
-        }
+    internal List<Strategy> GetEvaluatedStrategies()
+    {
+        this.Evaluate();
+        return this.Strategies;
+    }
 
-        internal bool ContainsStrategy(Strategy strategy)
-        {
-            this.Evaluate();
-            return this.Strategies.Contains(strategy);
-        }
+    internal void Invalidate()
+    {
+        this.Strategies = null;
+        this.parent?.Invalidate();
+    }
 
-        internal List<Strategy> GetEvaluatedStrategies()
-        {
-            this.Evaluate();
-            return this.Strategies;
-        }
+    protected abstract void Evaluate();
 
-        internal void Invalidate()
-        {
-            this.Strategies = null;
-            this.parent?.Invalidate();
-        }
-
-        protected abstract void Evaluate();
-
-        protected override IObject GetItem(int index)
-        {
-            this.Evaluate();
-            return this.Strategies[index].GetObject();
-        }
+    protected override IObject GetItem(int index)
+    {
+        this.Evaluate();
+        return this.Strategies[index].GetObject();
     }
 }

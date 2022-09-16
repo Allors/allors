@@ -4,108 +4,107 @@
 // </copyright>
 // <summary>Defines the ISessionExtension type.</summary>
 
-namespace Allors.Workspace.Adapters.Direct
+namespace Allors.Workspace.Adapters.Direct;
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Database;
+using Database.Data;
+using Database.Meta;
+using Database.Security;
+using Extent = Database.Extent;
+
+public class PullInstantiate
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using Database;
-    using Database.Data;
-    using Database.Meta;
-    using Database.Security;
-    using Extent = Database.Extent;
+    private readonly IAccessControl acls;
+    private readonly IPreparedSelects preparedSelects;
+    private readonly Database.Data.Pull pull;
+    private readonly ITransaction transaction;
 
-    public class PullInstantiate
+    public PullInstantiate(ITransaction transaction, Database.Data.Pull pull, IAccessControl acls, IPreparedSelects preparedSelects)
     {
-        private readonly IAccessControl acls;
-        private readonly IPreparedSelects preparedSelects;
-        private readonly Database.Data.Pull pull;
-        private readonly ITransaction transaction;
+        this.transaction = transaction;
+        this.pull = pull;
+        this.acls = acls;
+        this.preparedSelects = preparedSelects;
+    }
 
-        public PullInstantiate(ITransaction transaction, Database.Data.Pull pull, IAccessControl acls, IPreparedSelects preparedSelects)
+    public void Execute(Pull response)
+    {
+        var @object = this.transaction.Instantiate(this.pull.Object);
+
+        var @class = @object.Strategy?.Class;
+
+        if (@class != null && this.pull.ObjectType is IComposite objectType && !objectType.IsAssignableFrom(@class))
         {
-            this.transaction = transaction;
-            this.pull = pull;
-            this.acls = acls;
-            this.preparedSelects = preparedSelects;
+            return;
         }
 
-        public void Execute(Pull response)
+        if (this.pull.Results != null)
         {
-            var @object = this.transaction.Instantiate(this.pull.Object);
-
-            var @class = @object.Strategy?.Class;
-
-            if (@class != null && this.pull.ObjectType is IComposite objectType && !objectType.IsAssignableFrom(@class))
+            foreach (var result in this.pull.Results)
             {
-                return;
-            }
-
-            if (this.pull.Results != null)
-            {
-                foreach (var result in this.pull.Results)
+                try
                 {
-                    try
+                    var name = result.Name;
+
+                    var select = result.Select;
+                    if (select == null && result.SelectRef.HasValue)
                     {
-                        var name = result.Name;
+                        select = this.preparedSelects.Get(result.SelectRef.Value);
+                    }
 
-                        var select = result.Select;
-                        if (select == null && result.SelectRef.HasValue)
+                    if (select != null)
+                    {
+                        var include = select.Include ?? select.End.Include;
+
+                        if (select.PropertyType != null)
                         {
-                            select = this.preparedSelects.Get(result.SelectRef.Value);
-                        }
+                            var propertyType = select.End.PropertyType;
 
-                        if (select != null)
-                        {
-                            var include = select.Include ?? select.End.Include;
-
-                            if (select.PropertyType != null)
+                            if (select.IsOne)
                             {
-                                var propertyType = select.End.PropertyType;
+                                name ??= propertyType.SingularFullName;
 
-                                if (select.IsOne)
-                                {
-                                    name ??= propertyType.SingularFullName;
-
-                                    @object = (IObject)select.Get(@object, this.acls);
-                                    response.AddObject(name, @object, include);
-                                }
-                                else
-                                {
-                                    name ??= propertyType.PluralFullName;
-
-                                    var stepResult = select.Get(@object, this.acls);
-                                    var objects = stepResult is HashSet<object> set
-                                        ? set.Cast<IObject>().ToArray()
-                                        : ((Extent)stepResult)?.ToArray() ?? Array.Empty<IObject>();
-
-                                    response.AddCollection(name, (IComposite)select.GetObjectType() ?? @class, objects, include);
-                                }
+                                @object = (IObject)select.Get(@object, this.acls);
+                                response.AddObject(name, @object, include);
                             }
                             else
                             {
-                                name ??= this.pull.ObjectType?.Name ?? @object.Strategy.Class.SingularName;
-                                response.AddObject(name, @object, include);
+                                name ??= propertyType.PluralFullName;
+
+                                var stepResult = select.Get(@object, this.acls);
+                                var objects = stepResult is HashSet<object> set
+                                    ? set.Cast<IObject>().ToArray()
+                                    : ((Extent)stepResult)?.ToArray() ?? Array.Empty<IObject>();
+
+                                response.AddCollection(name, (IComposite)select.GetObjectType() ?? @class, objects, include);
                             }
                         }
                         else
                         {
                             name ??= this.pull.ObjectType?.Name ?? @object.Strategy.Class.SingularName;
-                            var include = result.Include;
                             response.AddObject(name, @object, include);
                         }
                     }
-                    catch (Exception e)
+                    else
                     {
-                        throw new Exception($"Instantiate: {@object?.Strategy.Class}[{@object?.Strategy.ObjectId}], {result}", e);
+                        name ??= this.pull.ObjectType?.Name ?? @object.Strategy.Class.SingularName;
+                        var include = result.Include;
+                        response.AddObject(name, @object, include);
                     }
                 }
+                catch (Exception e)
+                {
+                    throw new Exception($"Instantiate: {@object?.Strategy.Class}[{@object?.Strategy.ObjectId}], {result}", e);
+                }
             }
-            else
-            {
-                var name = this.pull.ObjectType?.Name ?? @object.Strategy.Class.SingularName;
-                response.AddObject(name, @object);
-            }
+        }
+        else
+        {
+            var name = this.pull.ObjectType?.Name ?? @object.Strategy.Class.SingularName;
+            response.AddObject(name, @object);
         }
     }
 }

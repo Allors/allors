@@ -4,21 +4,21 @@
 // </copyright>
 // <summary>Defines the IDomainDerivation type.</summary>
 
-namespace Allors.Database.Data
+namespace Allors.Database.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Meta;
+
+public static class IPropertyTypeExtensions
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using Meta;
+    public static Node Node<T>(this T @this) where T : IPropertyType => new(@this);
 
-    public static class IPropertyTypeExtensions
-    {
-        public static Node Node<T>(this T @this) where T : IPropertyType => new Node(@this);
+    public static Node Node<T>(this T @this, Func<T, Node> child) where T : IPropertyType => new(@this, new[] {child(@this)});
 
-        public static Node Node<T>(this T @this, Func<T, Node> child) where T : IPropertyType => new Node(@this, new[] { child(@this) });
+    public static Node Node<T>(this T @this, params Func<T, Node>[] children) where T : IPropertyType =>
+        new(@this, children.Select(v => v(@this)));
 
-        public static Node Node<T>(this T @this, params Func<T, Node>[] children) where T : IPropertyType => new Node(@this, children.Select(v => v(@this)));
-
-        public static Node Node<T>(this T @this, Func<T, IEnumerable<Node>> children) where T : IPropertyType => new Node(@this, children(@this));
-    }
+    public static Node Node<T>(this T @this, Func<T, IEnumerable<Node>> children) where T : IPropertyType => new(@this, children(@this));
 }

@@ -3,153 +3,153 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Meta
+namespace Allors.Database.Meta;
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+public sealed class MethodType : IMethodType, IComparable
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
+    private string[] assignedWorkspaceNames;
+    private string[] derivedWorkspaceNames;
 
-    public sealed class MethodType : IMethodType, IComparable
+    private Record input;
+
+    private string name;
+    private Record output;
+
+    public MethodType(Composite objectType, Guid id, string tag = null)
     {
-        private string[] assignedWorkspaceNames;
-        private string[] derivedWorkspaceNames;
+        this.MetaPopulation = objectType.MetaPopulation;
+        this.ObjectType = objectType;
+        this.Id = id;
+        this.Tag = tag ?? id.Tag();
 
-        private string name;
+        this.MetaPopulation.OnMethodTypeCreated(this);
+    }
 
-        private Record input;
-        private Record output;
+    public MetaPopulation MetaPopulation { get; }
 
-        public MethodType(Composite objectType, Guid id, string tag = null)
+    public Composite ObjectType { get; }
+
+    public string[] AssignedWorkspaceNames
+    {
+        get => this.assignedWorkspaceNames ?? Array.Empty<string>();
+
+        set
         {
-            this.MetaPopulation = objectType.MetaPopulation;
-            this.ObjectType = objectType;
-            this.Id = id;
-            this.Tag = tag ?? id.Tag();
-
-            this.MetaPopulation.OnMethodTypeCreated(this);
+            this.MetaPopulation.AssertUnlocked();
+            this.assignedWorkspaceNames = value;
+            this.MetaPopulation.Stale();
         }
+    }
 
-        public MetaPopulation MetaPopulation { get; }
-        IMetaPopulation IMetaObject.MetaPopulation => this.MetaPopulation;
+    public Record Input
+    {
+        get => this.input;
 
-        IComposite IMethodType.ObjectType => this.ObjectType;
-
-        public Guid Id { get; }
-
-        public string Tag { get; }
-
-        public Composite ObjectType { get; }
-
-        public string[] AssignedWorkspaceNames
+        set
         {
-            get => this.assignedWorkspaceNames ?? Array.Empty<string>();
-
-            set
-            {
-                this.MetaPopulation.AssertUnlocked();
-                this.assignedWorkspaceNames = value;
-                this.MetaPopulation.Stale();
-            }
+            this.MetaPopulation.AssertUnlocked();
+            this.input = value;
+            this.MetaPopulation.Stale();
         }
+    }
 
-        public IEnumerable<string> WorkspaceNames
+    public Record Output
+    {
+        get => this.output;
+
+        set
         {
-            get
-            {
-                this.MetaPopulation.Derive();
-                return this.derivedWorkspaceNames;
-            }
+            this.MetaPopulation.AssertUnlocked();
+            this.output = value;
+            this.MetaPopulation.Stale();
         }
+    }
 
-        public string Name
+    public string DisplayName => this.Name;
+
+    private string ValidationName
+    {
+        get
         {
-            get => this.name;
-
-            set
+            if (!string.IsNullOrEmpty(this.Name))
             {
-                this.MetaPopulation.AssertUnlocked();
-                this.name = value;
-                this.MetaPopulation.Stale();
+                return "method type " + this.Name;
             }
+
+            return "unknown method type";
         }
+    }
 
-        public string FullName => $"{this.ObjectType.Name}{this.Name}";
+    public int CompareTo(object other) => this.Id.CompareTo((other as MethodType)?.Id);
+    IMetaPopulation IMetaObject.MetaPopulation => this.MetaPopulation;
 
-        IRecord IMethodType.Input => this.Input;
+    IComposite IMethodType.ObjectType => this.ObjectType;
 
-        public Record Input
+    public Guid Id { get; }
+
+    public string Tag { get; }
+
+    public IEnumerable<string> WorkspaceNames
+    {
+        get
         {
-            get => this.input;
-
-            set
-            {
-                this.MetaPopulation.AssertUnlocked();
-                this.input = value;
-                this.MetaPopulation.Stale();
-            }
+            this.MetaPopulation.Derive();
+            return this.derivedWorkspaceNames;
         }
+    }
 
-        IRecord IMethodType.Output => this.Output;
-        public Record Output
+    public string Name
+    {
+        get => this.name;
+
+        set
         {
-            get => this.output;
-
-            set
-            {
-                this.MetaPopulation.AssertUnlocked();
-                this.output = value;
-                this.MetaPopulation.Stale();
-            }
+            this.MetaPopulation.AssertUnlocked();
+            this.name = value;
+            this.MetaPopulation.Stale();
         }
+    }
 
-        public string DisplayName => this.Name;
+    public string FullName => $"{this.ObjectType.Name}{this.Name}";
 
-        private string ValidationName
+    IRecord IMethodType.Input => this.Input;
+
+    IRecord IMethodType.Output => this.Output;
+
+    public override bool Equals(object other) => this.Id.Equals((other as MethodType)?.Id);
+
+    public override int GetHashCode() => this.Id.GetHashCode();
+
+    public override string ToString() => this.Name;
+
+    public void Validate(ValidationLog validationLog)
+    {
+        if (string.IsNullOrEmpty(this.Name))
         {
-            get
-            {
-                if (!string.IsNullOrEmpty(this.Name))
-                {
-                    return "method type " + this.Name;
-                }
-
-                return "unknown method type";
-            }
+            var message = this.ValidationName + " has no name";
+            validationLog.AddError(message, this, ValidationKind.Required, "MethodType.Name");
         }
+    }
 
-        public override bool Equals(object other) => this.Id.Equals((other as MethodType)?.Id);
+    internal void DeriveWorkspaceNames() =>
+        this.derivedWorkspaceNames = this.assignedWorkspaceNames != null
+            ? this.assignedWorkspaceNames
+                .Intersect(this.ObjectType.Classes.SelectMany(v => v.WorkspaceNames))
+                .ToArray()
+            : Array.Empty<string>();
 
-        public override int GetHashCode() => this.Id.GetHashCode();
+    internal void PrepareWorkspaceNames(IDictionary<Record, ISet<string>> workspaceNamesByRecord)
+    {
+        var visited = new HashSet<Record>();
 
-        public int CompareTo(object other) => this.Id.CompareTo((other as MethodType)?.Id);
-
-        public override string ToString() => this.Name;
-
-        public void Validate(ValidationLog validationLog)
+        if (this.derivedWorkspaceNames.Length > 0)
         {
-            if (string.IsNullOrEmpty(this.Name))
-            {
-                var message = this.ValidationName + " has no name";
-                validationLog.AddError(message, this, ValidationKind.Required, "MethodType.Name");
-            }
-        }
-
-        internal void DeriveWorkspaceNames() =>
-            this.derivedWorkspaceNames = this.assignedWorkspaceNames != null
-                ? this.assignedWorkspaceNames
-                    .Intersect(this.ObjectType.Classes.SelectMany(v => v.WorkspaceNames))
-                    .ToArray()
-                : Array.Empty<string>();
-
-        internal void PrepareWorkspaceNames(IDictionary<Record, ISet<string>> workspaceNamesByRecord)
-        {
-            var visited = new HashSet<Record>();
-
-            if (this.derivedWorkspaceNames.Length > 0)
-            {
-                this.Input?.PrepareWorkspaceNames(workspaceNamesByRecord, visited, this.derivedWorkspaceNames);
-                this.Output?.PrepareWorkspaceNames(workspaceNamesByRecord, visited, this.derivedWorkspaceNames);
-            }
+            this.Input?.PrepareWorkspaceNames(workspaceNamesByRecord, visited, this.derivedWorkspaceNames);
+            this.Output?.PrepareWorkspaceNames(workspaceNamesByRecord, visited, this.derivedWorkspaceNames);
         }
     }
 }

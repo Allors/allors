@@ -4,16 +4,15 @@
 // </copyright>
 // <summary>Defines the IObjectType type.</summary>
 
-namespace Allors.Repository
-{
-    using System.Collections.Generic;
+namespace Allors.Repository;
 
-    public static class DictionaryExtensions
+using System.Collections.Generic;
+
+public static class DictionaryExtensions
+{
+    public static TValue Get<TKey, TValue>(this Dictionary<TKey, TValue> dict, TKey key)
     {
-        public static TValue Get<TKey, TValue>(this Dictionary<TKey, TValue> dict, TKey key)
-        {
-            dict.TryGetValue(key, out var val);
-            return val;
-        }
+        dict.TryGetValue(key, out var val);
+        return val;
     }
 }

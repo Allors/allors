@@ -14,63 +14,59 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Allors.Database.Adapters
+namespace Allors.Database.Adapters;
+
+using System;
+using Domain;
+using Memory;
+using Meta;
+
+public abstract class Profile : IDisposable
 {
-    using System;
-    using Domain;
-    using Memory;
-    using Meta;
+    private ITransaction transaction;
+    private ITransaction transaction2;
 
-    public abstract class Profile : IDisposable
+    protected Profile() => this.M = new MetaBuilder().Build();
+
+    public MetaPopulation M { get; }
+
+    public virtual void Dispose()
     {
-        private ITransaction transaction;
-        private ITransaction transaction2;
-
-        protected Profile() => this.M = new MetaBuilder().Build();
-
-        public MetaPopulation M { get; }
-
-        public IObject[] CreateArray(IObjectType objectType, int count)
+        if (this.transaction != null)
         {
-            var type = objectType.ClrType;
-            return (IObject[])Array.CreateInstance(type, count);
+            this.transaction.Rollback();
+            this.transaction = null;
         }
 
-        public IDatabase CreateMemoryDatabase() =>
-            new Database(new DefaultDomainDatabaseServices(), new Memory.Configuration
-            {
-                ObjectFactory = new ObjectFactory(this.M, typeof(C1)),
-            });
-
-        public ITransaction CreateTransaction() => this.GetDatabase().CreateTransaction();
-
-        public ITransaction CreateTransaction2() => this.GetDatabase2().CreateTransaction();
-
-        public virtual void Dispose()
+        if (this.transaction2 != null)
         {
-            if (this.transaction != null)
-            {
-                this.transaction.Rollback();
-                this.transaction = null;
-            }
-
-            if (this.transaction2 != null)
-            {
-                this.transaction2.Rollback();
-                this.transaction2 = null;
-            }
+            this.transaction2.Rollback();
+            this.transaction2 = null;
         }
-
-        public abstract IDatabase GetDatabase();
-
-        public abstract IDatabase GetDatabase2();
-
-        public ITransaction GetTransaction() => this.transaction ??= this.GetDatabase().CreateTransaction();
-
-        public ITransaction GetTransaction2() => this.transaction2 ??= this.GetDatabase2().CreateTransaction();
-
-        public abstract void Init();
-
-        public abstract bool IsRollbackSupported();
     }
+
+    public IObject[] CreateArray(IObjectType objectType, int count)
+    {
+        var type = objectType.ClrType;
+        return (IObject[])Array.CreateInstance(type, count);
+    }
+
+    public IDatabase CreateMemoryDatabase() =>
+        new Database(new DefaultDomainDatabaseServices(), new Memory.Configuration {ObjectFactory = new ObjectFactory(this.M, typeof(C1))});
+
+    public ITransaction CreateTransaction() => this.GetDatabase().CreateTransaction();
+
+    public ITransaction CreateTransaction2() => this.GetDatabase2().CreateTransaction();
+
+    public abstract IDatabase GetDatabase();
+
+    public abstract IDatabase GetDatabase2();
+
+    public ITransaction GetTransaction() => this.transaction ??= this.GetDatabase().CreateTransaction();
+
+    public ITransaction GetTransaction2() => this.transaction2 ??= this.GetDatabase2().CreateTransaction();
+
+    public abstract void Init();
+
+    public abstract bool IsRollbackSupported();
 }

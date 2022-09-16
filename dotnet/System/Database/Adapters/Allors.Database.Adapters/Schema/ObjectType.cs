@@ -3,17 +3,14 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Adapters.Schema
+namespace Allors.Database.Adapters.Schema;
+
+using System;
+using System.Xml.Serialization;
+
+public class ObjectType
 {
-    using System;
-    using System.Xml.Serialization;
+    [XmlAttribute("i")] public Guid Id { get; set; }
 
-    public class ObjectType
-    {
-        [XmlAttribute("i")]
-        public Guid Id { get; set; }
-
-        [XmlText]
-        public string Objects { get; set; }
-    }
+    [XmlText] public string Objects { get; set; }
 }

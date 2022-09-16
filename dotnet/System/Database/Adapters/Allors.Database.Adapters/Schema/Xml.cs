@@ -3,14 +3,12 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Adapters.Schema
-{
-    using System.Xml.Serialization;
+namespace Allors.Database.Adapters.Schema;
 
-    [XmlRoot("allors")]
-    public class Xml
-    {
-        [XmlElement("population")]
-        public Population Population { get; set; }
-    }
+using System.Xml.Serialization;
+
+[XmlRoot("allors")]
+public class Xml
+{
+    [XmlElement("population")] public Population Population { get; set; }
 }

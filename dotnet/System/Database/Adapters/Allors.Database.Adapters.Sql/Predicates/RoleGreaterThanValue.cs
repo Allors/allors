@@ -3,30 +3,30 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Adapters.Sql
+namespace Allors.Database.Adapters.Sql;
+
+using Meta;
+
+internal sealed class RoleGreaterThanValue : Predicate
 {
-    using Meta;
+    private readonly object obj;
+    private readonly IRoleType roleType;
 
-    internal sealed class RoleGreaterThanValue : Predicate
+    internal RoleGreaterThanValue(ExtentFiltered extent, IRoleType roleType, object obj)
     {
-        private readonly object obj;
-        private readonly IRoleType roleType;
-
-        internal RoleGreaterThanValue(ExtentFiltered extent, IRoleType roleType, object obj)
-        {
-            extent.CheckRole(roleType);
-            PredicateAssertions.ValidateRoleGreaterThan(roleType, obj);
-            this.roleType = roleType;
-            this.obj = roleType.Normalize(obj);
-        }
-
-        internal override bool BuildWhere(ExtentStatement statement, string alias)
-        {
-            var schema = statement.Mapping;
-            statement.Append(" " + alias + "." + schema.ColumnNameByRelationType[this.roleType.RelationType] + ">" + statement.AddParameter(this.obj));
-            return this.Include;
-        }
-
-        internal override void Setup(ExtentStatement statement) => statement.UseRole(this.roleType);
+        extent.CheckRole(roleType);
+        PredicateAssertions.ValidateRoleGreaterThan(roleType, obj);
+        this.roleType = roleType;
+        this.obj = roleType.Normalize(obj);
     }
+
+    internal override bool BuildWhere(ExtentStatement statement, string alias)
+    {
+        var schema = statement.Mapping;
+        statement.Append(" " + alias + "." + schema.ColumnNameByRelationType[this.roleType.RelationType] + ">" +
+                         statement.AddParameter(this.obj));
+        return this.Include;
+    }
+
+    internal override void Setup(ExtentStatement statement) => statement.UseRole(this.roleType);
 }

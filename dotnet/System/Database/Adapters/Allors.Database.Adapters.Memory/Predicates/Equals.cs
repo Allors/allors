@@ -3,28 +3,27 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Adapters.Memory
+namespace Allors.Database.Adapters.Memory;
+
+internal sealed class Equals : Predicate
 {
-    internal sealed class Equals : Predicate
+    private readonly IObject equals;
+
+    internal Equals(IObject equals)
     {
-        private readonly IObject equals;
+        PredicateAssertions.ValidateEquals(equals);
+        this.equals = equals;
+    }
 
-        internal Equals(IObject equals)
+    internal override ThreeValuedLogic Evaluate(Strategy strategy)
+    {
+        if (this.equals == null)
         {
-            PredicateAssertions.ValidateEquals(equals);
-            this.equals = equals;
+            return ThreeValuedLogic.False;
         }
 
-        internal override ThreeValuedLogic Evaluate(Strategy strategy)
-        {
-            if (this.equals == null)
-            {
-                return ThreeValuedLogic.False;
-            }
-
-            return this.equals.Equals(strategy.GetObject())
-                       ? ThreeValuedLogic.True
-                       : ThreeValuedLogic.False;
-        }
+        return this.equals.Equals(strategy.GetObject())
+            ? ThreeValuedLogic.True
+            : ThreeValuedLogic.False;
     }
 }

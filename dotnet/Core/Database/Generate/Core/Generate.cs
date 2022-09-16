@@ -1,21 +1,20 @@
-namespace Allors.Meta.Generation
+namespace Allors.Meta.Generation;
+
+using System.IO;
+using Model;
+
+public static class Generate
 {
-    using System.IO;
-    using Model;
-
-    public static class Generate
+    public static Log Execute(MetaModel meta, string template, string output, string workspaceName = null)
     {
-        public static Log Execute(MetaModel meta, string template, string output, string workspaceName = null)
-        {
-            var log = new GenerateLog();
+        var log = new GenerateLog();
 
-            var templateFileInfo = new FileInfo(template);
-            var stringTemplate = new StringTemplate(templateFileInfo);
-            var outputDirectoryInfo = new DirectoryInfo(output);
+        var templateFileInfo = new FileInfo(template);
+        var stringTemplate = new StringTemplate(templateFileInfo);
+        var outputDirectoryInfo = new DirectoryInfo(output);
 
-            stringTemplate.Generate(meta, workspaceName, outputDirectoryInfo, log);
+        stringTemplate.Generate(meta, workspaceName, outputDirectoryInfo, log);
 
-            return log;
-        }
+        return log;
     }
 }

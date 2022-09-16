@@ -3,10 +3,8 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Derivations
-{
+namespace Allors.Database.Derivations;
 
-    public interface IDerivationErrorEquals : IDerivationError
-    {
-    }
+public interface IDerivationErrorEquals : IDerivationError
+{
 }

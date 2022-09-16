@@ -4,12 +4,11 @@
 // </copyright>
 // <summary>Defines the IDomainDerivation type.</summary>
 
-namespace Allors.Database.Derivations
-{
-    using Meta;
+namespace Allors.Database.Derivations;
 
-    public interface IAssociationPattern : IPattern
-    {
-        IAssociationType AssociationType { get; }
-    }
+using Meta;
+
+public interface IAssociationPattern : IPattern
+{
+    IAssociationType AssociationType { get; }
 }

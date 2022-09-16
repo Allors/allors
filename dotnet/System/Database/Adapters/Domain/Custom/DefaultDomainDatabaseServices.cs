@@ -5,20 +5,19 @@
 // <summary>Defines the Default type.</summary>
 //------------------------------------------------------------------------------------------------
 
-namespace Allors.Database
+namespace Allors.Database;
+
+using Meta;
+
+public class DefaultDomainDatabaseServices : IDomainDatabaseServices
 {
-    using Meta;
+    public void OnInit(IDatabase database) => this.M = (M)database.ObjectFactory.MetaPopulation;
 
-    public class DefaultDomainDatabaseServices : IDomainDatabaseServices
-    {
-        public void OnInit(IDatabase database) => this.M = (M)database.ObjectFactory.MetaPopulation;
+    public ITransactionServices CreateTransactionServices() => new DefaultDomainTransactionServices();
 
-        public ITransactionServices CreateTransactionServices() => new DefaultDomainTransactionServices();
+    public M M { get; private set; }
 
-        public M M { get; private set; }
+    public T Get<T>() => default;
 
-        public T Get<T>() => default;
-
-        public void Dispose() { }
-    }
+    public void Dispose() { }
 }

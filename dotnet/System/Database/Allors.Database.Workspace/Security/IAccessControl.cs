@@ -3,13 +3,12 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Security
+namespace Allors.Database.Security;
+
+public interface IAccessControl
 {
-    public interface IAccessControl
+    IAccessControlList this[IObject @object]
     {
-        IAccessControlList this[IObject @object]
-        {
-            get;
-        }
+        get;
     }
 }

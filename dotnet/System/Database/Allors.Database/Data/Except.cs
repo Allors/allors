@@ -3,40 +3,39 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Data
+namespace Allors.Database.Data;
+
+using System.Linq;
+using Meta;
+
+public class Except : IExtentOperator
 {
-    using System.Linq;
-    using Meta;
+    public Except(params IExtent[] operands) => this.Operands = operands;
 
-    public class Except : IExtentOperator
+    public IComposite ObjectType => this.Operands?[0].ObjectType;
+
+    public IExtent[] Operands { get; set; }
+
+    public Sort[] Sorting { get; set; }
+
+    bool IExtent.HasMissingArguments(IArguments arguments) => this.Operands.Any(v => v.HasMissingArguments(arguments));
+
+    Database.Extent IExtent.Build(ITransaction transaction, IArguments arguments)
     {
-        public Except(params IExtent[] operands) => this.Operands = operands;
+        var extent = transaction.Except(this.Operands[0].Build(transaction, arguments), this.Operands[1].Build(transaction, arguments));
 
-        public IComposite ObjectType => this.Operands?[0].ObjectType;
-
-        public IExtent[] Operands { get; set; }
-
-        public Sort[] Sorting { get; set; }
-        
-        bool IExtent.HasMissingArguments(IArguments arguments) => this.Operands.Any(v => v.HasMissingArguments(arguments));
-
-        Database.Extent IExtent.Build(ITransaction transaction, IArguments arguments)
+        if (this.Sorting == null)
         {
-            var extent = transaction.Except(this.Operands[0].Build(transaction, arguments), this.Operands[1].Build(transaction, arguments));
-
-            if (this.Sorting == null)
-            {
-                return extent;
-            }
-
-            foreach (var sort in this.Sorting)
-            {
-                sort.Build(extent);
-            }
-
             return extent;
         }
 
-        public void Accept(IVisitor visitor) => visitor.VisitExcept(this);
+        foreach (var sort in this.Sorting)
+        {
+            sort.Build(extent);
+        }
+
+        return extent;
     }
+
+    public void Accept(IVisitor visitor) => visitor.VisitExcept(this);
 }

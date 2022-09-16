@@ -3,12 +3,11 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Data
-{
-    using Meta;
+namespace Allors.Database.Data;
 
-    public interface IPropertyPredicate : IPredicate
-    {
-        IPropertyType PropertyType { get; set; }
-    }
+using Meta;
+
+public interface IPropertyPredicate : IPredicate
+{
+    IPropertyType PropertyType { get; set; }
 }

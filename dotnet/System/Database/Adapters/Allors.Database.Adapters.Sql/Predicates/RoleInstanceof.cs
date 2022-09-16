@@ -3,54 +3,55 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Adapters.Sql
+namespace Allors.Database.Adapters.Sql;
+
+using Meta;
+
+internal sealed class RoleInstanceof : Predicate
 {
-    using Meta;
+    private readonly IObjectType[] instanceClasses;
+    private readonly IRoleType role;
 
-    internal sealed class RoleInstanceof : Predicate
+    internal RoleInstanceof(ExtentFiltered extent, IRoleType role, IObjectType instanceType, IObjectType[] instanceClasses)
     {
-        private readonly IObjectType[] instanceClasses;
-        private readonly IRoleType role;
+        extent.CheckRole(role);
+        PredicateAssertions.ValidateRoleInstanceOf(role, instanceType);
+        this.role = role;
+        this.instanceClasses = instanceClasses;
+    }
 
-        internal RoleInstanceof(ExtentFiltered extent, IRoleType role, IObjectType instanceType, IObjectType[] instanceClasses)
+    internal override bool BuildWhere(ExtentStatement statement, string alias)
+    {
+        var schema = statement.Mapping;
+        if (this.instanceClasses.Length == 1)
         {
-            extent.CheckRole(role);
-            PredicateAssertions.ValidateRoleInstanceOf(role, instanceType);
-            this.role = role;
-            this.instanceClasses = instanceClasses;
+            statement.Append(" (" + statement.GetJoinName(this.role) + "." + Mapping.ColumnNameForClass + " IS NOT NULL AND ");
+            statement.Append(" " + statement.GetJoinName(this.role) + "." + Mapping.ColumnNameForClass + "=" +
+                             statement.AddParameter(this.instanceClasses[0].Id) + ")");
         }
-
-        internal override bool BuildWhere(ExtentStatement statement, string alias)
+        else if (this.instanceClasses.Length > 1)
         {
-            var schema = statement.Mapping;
-            if (this.instanceClasses.Length == 1)
+            statement.Append(" ( ");
+            for (var i = 0; i < this.instanceClasses.Length; i++)
             {
                 statement.Append(" (" + statement.GetJoinName(this.role) + "." + Mapping.ColumnNameForClass + " IS NOT NULL AND ");
-                statement.Append(" " + statement.GetJoinName(this.role) + "." + Mapping.ColumnNameForClass + "=" + statement.AddParameter(this.instanceClasses[0].Id) + ")");
-            }
-            else if (this.instanceClasses.Length > 1)
-            {
-                statement.Append(" ( ");
-                for (var i = 0; i < this.instanceClasses.Length; i++)
+                statement.Append(" " + statement.GetJoinName(this.role) + "." + Mapping.ColumnNameForClass + "=" +
+                                 statement.AddParameter(this.instanceClasses[i].Id) + ")");
+                if (i < this.instanceClasses.Length - 1)
                 {
-                    statement.Append(" (" + statement.GetJoinName(this.role) + "." + Mapping.ColumnNameForClass + " IS NOT NULL AND ");
-                    statement.Append(" " + statement.GetJoinName(this.role) + "." + Mapping.ColumnNameForClass + "=" + statement.AddParameter(this.instanceClasses[i].Id) + ")");
-                    if (i < this.instanceClasses.Length - 1)
-                    {
-                        statement.Append(" OR ");
-                    }
+                    statement.Append(" OR ");
                 }
-
-                statement.Append(" ) ");
             }
 
-            return this.Include;
+            statement.Append(" ) ");
         }
 
-        internal override void Setup(ExtentStatement statement)
-        {
-            statement.UseRole(this.role);
-            statement.UseRoleInstance(this.role);
-        }
+        return this.Include;
+    }
+
+    internal override void Setup(ExtentStatement statement)
+    {
+        statement.UseRole(this.role);
+        statement.UseRoleInstance(this.role);
     }
 }

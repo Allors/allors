@@ -14,96 +14,96 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Allors.Database.Adapters
+namespace Allors.Database.Adapters;
+
+using System;
+using System.Globalization;
+using System.Text;
+
+public class TestValueGenerator
 {
-    using System;
-    using System.Globalization;
-    using System.Text;
+    private readonly Random random = new(DateTime.Now.Millisecond);
 
-    public class TestValueGenerator
+    public byte[] GenerateBinary(int size)
     {
-        private readonly Random random = new Random(DateTime.Now.Millisecond);
-
-        public byte[] GenerateBinary(int size)
+        var binary = new byte[size];
+        for (var i = 0; i < binary.Length; i++)
         {
-            var binary = new byte[size];
-            for (var i = 0; i < binary.Length; i++)
-            {
-                binary[i] = (byte)this.random.Next(byte.MinValue, byte.MaxValue);
-            }
-
-            return binary;
+            binary[i] = (byte)this.random.Next(byte.MinValue, byte.MaxValue);
         }
 
-        public bool GenerateBoolean()
-        {
-            if (this.random.Next(int.MinValue, int.MaxValue) > 0)
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        public DateTime GenerateDateTime()
-        {
-            var ticks = (long)(DateTime.MaxValue.Ticks * this.GeneratePercentage());
-            var dateTime = new DateTime(ticks);
-            dateTime = new DateTime(dateTime.Year, dateTime.Month, dateTime.Day, dateTime.Hour, dateTime.Minute, dateTime.Second, dateTime.Millisecond, DateTimeKind.Utc); // not interested in nanoseconds
-
-            // SQL hack
-            if (dateTime.Year < 1800)
-            {
-                var adjustment = 1800 - dateTime.Year;
-                dateTime = dateTime.AddYears(adjustment);
-            }
-
-            if (dateTime.Year > 3000)
-            {
-                var adjustment = dateTime.Year - 3000;
-                dateTime = dateTime.AddYears(-adjustment);
-            }
-
-            return dateTime;
-        }
-
-        public decimal GenerateDecimal()
-        {
-            var unitBuffer = new StringBuilder();
-
-            unitBuffer.Append(this.GenerateBoolean() ? "+" : "-");
-            for (var i = 0; i < 8; i++)
-            {
-                unitBuffer.Append(this.random.Next(9));
-            }
-
-            unitBuffer.Append(NumberFormatInfo.CurrentInfo.CurrencyDecimalSeparator);
-            for (var i = 0; i < 2; i++)
-            {
-                unitBuffer.Append(this.random.Next(9));
-            }
-
-            return decimal.Parse(unitBuffer.ToString());
-        }
-
-        public double GenerateFloat() => (double)this.random.Next(int.MinValue, int.MaxValue) / this.random.Next(int.MinValue, int.MaxValue);
-
-        public int GenerateInteger() => this.random.Next(int.MinValue, int.MaxValue);
-
-        public double GeneratePercentage() => (double)this.random.Next(0, int.MaxValue) / int.MaxValue;
-
-        public string GenerateString(int size)
-        {
-            var stringBuilder = new StringBuilder(size);
-            for (var i = 0; i < size; i++)
-            {
-                var ch = (char)(this.random.Next(0x01F) + 0x020);
-                stringBuilder.Append(ch);
-            }
-
-            return stringBuilder.ToString();
-        }
-
-        public Guid GenerateUnique() => Guid.NewGuid();
+        return binary;
     }
+
+    public bool GenerateBoolean()
+    {
+        if (this.random.Next(int.MinValue, int.MaxValue) > 0)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    public DateTime GenerateDateTime()
+    {
+        var ticks = (long)(DateTime.MaxValue.Ticks * this.GeneratePercentage());
+        var dateTime = new DateTime(ticks);
+        dateTime = new DateTime(dateTime.Year, dateTime.Month, dateTime.Day, dateTime.Hour, dateTime.Minute, dateTime.Second,
+            dateTime.Millisecond, DateTimeKind.Utc); // not interested in nanoseconds
+
+        // SQL hack
+        if (dateTime.Year < 1800)
+        {
+            var adjustment = 1800 - dateTime.Year;
+            dateTime = dateTime.AddYears(adjustment);
+        }
+
+        if (dateTime.Year > 3000)
+        {
+            var adjustment = dateTime.Year - 3000;
+            dateTime = dateTime.AddYears(-adjustment);
+        }
+
+        return dateTime;
+    }
+
+    public decimal GenerateDecimal()
+    {
+        var unitBuffer = new StringBuilder();
+
+        unitBuffer.Append(this.GenerateBoolean() ? "+" : "-");
+        for (var i = 0; i < 8; i++)
+        {
+            unitBuffer.Append(this.random.Next(9));
+        }
+
+        unitBuffer.Append(NumberFormatInfo.CurrentInfo.CurrencyDecimalSeparator);
+        for (var i = 0; i < 2; i++)
+        {
+            unitBuffer.Append(this.random.Next(9));
+        }
+
+        return decimal.Parse(unitBuffer.ToString());
+    }
+
+    public double GenerateFloat() => (double)this.random.Next(int.MinValue, int.MaxValue) / this.random.Next(int.MinValue, int.MaxValue);
+
+    public int GenerateInteger() => this.random.Next(int.MinValue, int.MaxValue);
+
+    public double GeneratePercentage() => (double)this.random.Next(0, int.MaxValue) / int.MaxValue;
+
+    public string GenerateString(int size)
+    {
+        var stringBuilder = new StringBuilder(size);
+        for (var i = 0; i < size; i++)
+        {
+            var ch = (char)(this.random.Next(0x01F) + 0x020);
+            stringBuilder.Append(ch);
+        }
+
+        return stringBuilder.ToString();
+    }
+
+    public Guid GenerateUnique() => Guid.NewGuid();
 }

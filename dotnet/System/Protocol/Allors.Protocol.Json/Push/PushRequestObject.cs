@@ -6,23 +6,23 @@
 namespace Allors.Protocol.Json.Api.Push
 {
     /// <summary>
-    ///  New objects require NI and T.
-    ///  Existing objects require I and V.
+    ///     New objects require NI and T.
+    ///     Existing objects require I and V.
     /// </summary>
     public class PushRequestObject
     {
         /// <summary>
-        /// Database Id
+        ///     Database Id
         /// </summary>
         public long d { get; set; }
 
         /// <summary>
-        /// Version
+        ///     Version
         /// </summary>
         public long v { get; set; }
 
         /// <summary>
-        /// Roles
+        ///     Roles
         /// </summary>
         public PushRequestRole[] r { get; set; }
     }

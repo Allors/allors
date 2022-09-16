@@ -3,10 +3,9 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Derivations
+namespace Allors.Database.Derivations;
+
+public interface IDerivationService
 {
-    public interface IDerivationService
-    {
-        IDerivation CreateDerivation(ITransaction transaction, bool continueOnError = false);
-    }
+    IDerivation CreateDerivation(ITransaction transaction, bool continueOnError = false);
 }

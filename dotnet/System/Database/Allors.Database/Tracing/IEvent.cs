@@ -3,22 +3,21 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Tracing
+namespace Allors.Database.Tracing;
+
+using System;
+
+public interface IEvent
 {
-    using System;
+    public ITransaction Transaction { get; }
 
-    public interface IEvent
-    {
-        public ITransaction Transaction { get; }
+    public DateTime Started { get; }
 
-        public DateTime Started { get; }
+    public DateTime Stopped { get; }
 
-        public DateTime Stopped { get; }
+    public TimeSpan Duration { get; }
 
-        public TimeSpan Duration { get; }
+    void Start();
 
-        void Start();
-
-        void Stop();
-    }
+    void Stop();
 }

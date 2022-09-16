@@ -3,31 +3,30 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Adapters.Memory
+namespace Allors.Database.Adapters.Memory;
+
+using Meta;
+
+internal sealed class Instanceof : Predicate
 {
-    using Meta;
+    private readonly IObjectType objectType;
 
-    internal sealed class Instanceof : Predicate
+    internal Instanceof(IObjectType objectType)
     {
-        private readonly IObjectType objectType;
+        PredicateAssertions.ValidateInstanceof(objectType);
 
-        internal Instanceof(IObjectType objectType)
+        this.objectType = objectType;
+    }
+
+    internal override ThreeValuedLogic Evaluate(Strategy strategy)
+    {
+        if (strategy.UncheckedObjectType.Equals(this.objectType))
         {
-            PredicateAssertions.ValidateInstanceof(objectType);
-
-            this.objectType = objectType;
+            return ThreeValuedLogic.True;
         }
 
-        internal override ThreeValuedLogic Evaluate(Strategy strategy)
-        {
-            if (strategy.UncheckedObjectType.Equals(this.objectType))
-            {
-                return ThreeValuedLogic.True;
-            }
-
-            return this.objectType is IInterface @interface && strategy.UncheckedObjectType.ExistSupertype(@interface)
-                       ? ThreeValuedLogic.True
-                       : ThreeValuedLogic.False;
-        }
+        return this.objectType is IInterface @interface && strategy.UncheckedObjectType.ExistSupertype(@interface)
+            ? ThreeValuedLogic.True
+            : ThreeValuedLogic.False;
     }
 }

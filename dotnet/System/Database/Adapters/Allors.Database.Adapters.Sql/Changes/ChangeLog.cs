@@ -6,93 +6,92 @@
 //   Defines the AllorsChangeSetMemory type.
 // </summary>
 
-namespace Allors.Database.Adapters.Sql
+namespace Allors.Database.Adapters.Sql;
+
+using System.Collections.Generic;
+using System.Linq;
+using Meta;
+
+internal sealed class ChangeLog
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using Meta;
+    private HashSet<Strategy> changedAssociationTypes;
 
-    internal sealed class ChangeLog
+    private HashSet<Strategy> changedRoleTypes;
+    private HashSet<Strategy> created;
+    private HashSet<IStrategy> deleted;
+
+    internal ChangeLog()
     {
-        private HashSet<Strategy> created;
-        private HashSet<IStrategy> deleted;
+        this.created = new HashSet<Strategy>();
+        this.deleted = new HashSet<IStrategy>();
+        this.changedRoleTypes = new HashSet<Strategy>();
+        this.changedAssociationTypes = new HashSet<Strategy>();
+    }
 
-        private HashSet<Strategy> changedRoleTypes;
-        private HashSet<Strategy> changedAssociationTypes;
+    internal void OnCreated(Strategy strategy) => this.created.Add(strategy);
 
-        internal ChangeLog()
+    internal void OnDeleted(Strategy strategy) => this.deleted.Add(strategy);
+
+    internal void OnChangedRoles(Strategy strategy) => this.changedRoleTypes.Add(strategy);
+
+    internal void OnChangedAssociations(Strategy strategy) => this.changedAssociationTypes.Add(strategy);
+
+    internal void Reset()
+    {
+        foreach (var changedRoleType in this.changedRoleTypes)
         {
-            this.created = new HashSet<Strategy>();
-            this.deleted = new HashSet<IStrategy>();
-            this.changedRoleTypes = new HashSet<Strategy>();
-            this.changedAssociationTypes = new HashSet<Strategy>();
+            changedRoleType.OnChangeLogReset();
         }
 
-        internal void OnCreated(Strategy strategy) => this.created.Add(strategy);
-
-        internal void OnDeleted(Strategy strategy) => this.deleted.Add(strategy);
-
-        internal void OnChangedRoles(Strategy strategy) => this.changedRoleTypes.Add(strategy);
-
-        internal void OnChangedAssociations(Strategy strategy) => this.changedAssociationTypes.Add(strategy);
-
-        internal void Reset()
+        foreach (var changedAssociationType in this.changedAssociationTypes)
         {
-            foreach (var changedRoleType in this.changedRoleTypes)
-            {
-                changedRoleType.OnChangeLogReset();
-            }
-
-            foreach (var changedAssociationType in this.changedAssociationTypes)
-            {
-                changedAssociationType.OnChangeLogReset();
-            }
-
-            this.created = new HashSet<Strategy>();
-            this.deleted = new HashSet<IStrategy>();
-            this.changedRoleTypes = new HashSet<Strategy>();
-            this.changedAssociationTypes = new HashSet<Strategy>();
+            changedAssociationType.OnChangeLogReset();
         }
 
-        internal ChangeSet Checkpoint() =>
-            new ChangeSet(
-                this.created != null ? new HashSet<IObject>(this.created.Select(v => v.GetObject())) : null,
-                this.deleted,
-                this.RoleTypesByAssociation().ToDictionary(kvp => kvp.Key, kvp => kvp.Value),
-                this.AssociationTypesByRole().ToDictionary(kvp => kvp.Key, kvp => kvp.Value)
-            );
+        this.created = new HashSet<Strategy>();
+        this.deleted = new HashSet<IStrategy>();
+        this.changedRoleTypes = new HashSet<Strategy>();
+        this.changedAssociationTypes = new HashSet<Strategy>();
+    }
 
-        private IEnumerable<KeyValuePair<IObject, ISet<IRoleType>>> RoleTypesByAssociation()
+    internal ChangeSet Checkpoint() =>
+        new(
+            this.created != null ? new HashSet<IObject>(this.created.Select(v => v.GetObject())) : null,
+            this.deleted,
+            this.RoleTypesByAssociation().ToDictionary(kvp => kvp.Key, kvp => kvp.Value),
+            this.AssociationTypesByRole().ToDictionary(kvp => kvp.Key, kvp => kvp.Value)
+        );
+
+    private IEnumerable<KeyValuePair<IObject, ISet<IRoleType>>> RoleTypesByAssociation()
+    {
+        foreach (var strategy in this.changedRoleTypes)
         {
-            foreach (var strategy in this.changedRoleTypes)
+            if (strategy.IsDeleted)
             {
-                if (strategy.IsDeleted)
-                {
-                    continue;
-                }
+                continue;
+            }
 
-                var changedRoleTypes = strategy.CheckpointRoleTypes;
-                if (changedRoleTypes != null)
-                {
-                    yield return new KeyValuePair<IObject, ISet<IRoleType>>(strategy.GetObject(), changedRoleTypes);
-                }
+            var changedRoleTypes = strategy.CheckpointRoleTypes;
+            if (changedRoleTypes != null)
+            {
+                yield return new KeyValuePair<IObject, ISet<IRoleType>>(strategy.GetObject(), changedRoleTypes);
             }
         }
+    }
 
-        private IEnumerable<KeyValuePair<IObject, ISet<IAssociationType>>> AssociationTypesByRole()
+    private IEnumerable<KeyValuePair<IObject, ISet<IAssociationType>>> AssociationTypesByRole()
+    {
+        foreach (var strategy in this.changedAssociationTypes)
         {
-            foreach (var strategy in this.changedAssociationTypes)
+            if (strategy.IsDeleted)
             {
-                if (strategy.IsDeleted)
-                {
-                    continue;
-                }
+                continue;
+            }
 
-                var changedAssociationTypes = strategy.CheckpointAssociationTypes;
-                if (changedAssociationTypes != null)
-                {
-                    yield return new KeyValuePair<IObject, ISet<IAssociationType>>(strategy.GetObject(), changedAssociationTypes);
-                }
+            var changedAssociationTypes = strategy.CheckpointAssociationTypes;
+            if (changedAssociationTypes != null)
+            {
+                yield return new KeyValuePair<IObject, ISet<IAssociationType>>(strategy.GetObject(), changedAssociationTypes);
             }
         }
     }

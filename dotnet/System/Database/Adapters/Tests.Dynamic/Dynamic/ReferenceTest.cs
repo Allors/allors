@@ -18,16 +18,15 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Allors.Database.Adapters
+namespace Allors.Database.Adapters;
+
+public abstract class ReferenceTest : Test
 {
-    public abstract class ReferenceTest : Test
-    {
-        public abstract int GetAssociationCount();
+    public abstract int GetAssociationCount();
 
-        public abstract int GetRoleCount();
+    public abstract int GetRoleCount();
 
-        public abstract int GetRoleGroupCount();
+    public abstract int GetRoleGroupCount();
 
-        public abstract int GetRolesPerGroup();
-    }
+    public abstract int GetRolesPerGroup();
 }

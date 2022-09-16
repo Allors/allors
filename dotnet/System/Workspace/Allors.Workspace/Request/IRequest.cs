@@ -4,6 +4,5 @@ namespace Allors.Workspace.Request
 
     public interface IRequest : IVisitable
     {
-
     }
 }

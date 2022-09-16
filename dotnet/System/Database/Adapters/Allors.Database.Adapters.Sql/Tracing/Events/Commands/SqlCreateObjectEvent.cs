@@ -3,23 +3,22 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Adapters.Sql.Tracing
+namespace Allors.Database.Adapters.Sql.Tracing;
+
+using System.Text;
+using Adapters.Tracing;
+using Meta;
+
+public sealed class SqlCreateObjectEvent : Event
 {
-    using System.Text;
-    using Adapters.Tracing;
-    using Meta;
-
-    public sealed class SqlCreateObjectEvent : Event
+    public SqlCreateObjectEvent(ITransaction transaction) : base(transaction)
     {
-        public SqlCreateObjectEvent(ITransaction transaction) : base(transaction)
-        {
-        }
-
-        public IClass Class { get; set; }
-
-        protected override void ToString(StringBuilder builder) => _ = builder
-            .Append('[')
-            .Append(this.Class.Name)
-            .Append("] ");
     }
+
+    public IClass Class { get; set; }
+
+    protected override void ToString(StringBuilder builder) => _ = builder
+        .Append('[')
+        .Append(this.Class.Name)
+        .Append("] ");
 }

@@ -4,14 +4,13 @@
 // </copyright>
 // <summary>Defines the IObjectType type.</summary>
 
-namespace Allors.Repository
-{
-    using System;
+namespace Allors.Repository;
 
-    public class RepositoryException : Exception
+using System;
+
+public class RepositoryException : Exception
+{
+    public RepositoryException(string message) : base(message)
     {
-        public RepositoryException(string message) : base(message)
-        {
-        }
     }
 }

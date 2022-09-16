@@ -3,13 +3,12 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Adapters.Sql.Caching
+namespace Allors.Database.Adapters.Sql.Caching;
+
+/// <summary>
+///     The cache factory creates a new Cache.
+/// </summary>
+public interface ICacheFactory
 {
-    /// <summary>
-    /// The cache factory creates a new Cache.
-    /// </summary>
-    public interface ICacheFactory
-    {
-        ICache CreateCache();
-    }
+    ICache CreateCache();
 }

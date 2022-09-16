@@ -20,13 +20,13 @@ namespace Allors.Workspace.Adapters
             this.objectsByClass = new Dictionary<Class, ISet<Object>>();
         }
 
-        IConnection IWorkspace.Connection => this.Connection;
-
-        public IEnumerable<IObject> Objects => this.ObjectByWorkspaceId.Values;
-
         public Connection Connection { get; }
 
         protected Dictionary<long, Object> ObjectByWorkspaceId { get; }
+
+        IConnection IWorkspace.Connection => this.Connection;
+
+        public IEnumerable<IObject> Objects => this.ObjectByWorkspaceId.Values;
 
         public override string ToString() => $"workspace: {base.ToString()}";
 
@@ -47,14 +47,12 @@ namespace Allors.Workspace.Adapters
             var @class = @object.Class;
             if (!this.objectsByClass.TryGetValue(@class, out var strategies))
             {
-                this.objectsByClass[@class] = new HashSet<Object> { @object };
+                this.objectsByClass[@class] = new HashSet<Object> {@object};
             }
             else
             {
                 strategies.Add(@object);
             }
         }
-
-
     }
 }

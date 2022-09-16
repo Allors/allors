@@ -8,22 +8,22 @@ namespace Allors.Protocol.Json.Api.Security
     public class PermissionResponsePermission
     {
         /// <summary>
-        /// Id
+        ///     Id
         /// </summary>
         public long i { get; set; }
 
         /// <summary>
-        /// Class Tag
+        ///     Class Tag
         /// </summary>
         public string c { get; set; }
 
         /// <summary>
-        /// Operand Type Tag
+        ///     Operand Type Tag
         /// </summary>
         public string t { get; set; }
 
         /// <summary>
-        /// Operation
+        ///     Operation
         /// </summary>
         public long o { get; set; }
     }

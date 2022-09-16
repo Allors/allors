@@ -3,455 +3,444 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Protocol.Json
+namespace Allors.Database.Protocol.Json;
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Xml;
+using Allors.Protocol.Json.Data;
+using Data;
+using Meta;
+using Extent = Allors.Protocol.Json.Data.Extent;
+using IVisitor = Allors.Protocol.Json.Data.IVisitor;
+using Node = Data.Node;
+using Pull = Data.Pull;
+using Result = Data.Result;
+using Select = Data.Select;
+using Sort = Data.Sort;
+
+public class FromJsonVisitor : IVisitor
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Xml;
-    using Allors.Protocol.Json.Data;
-    using Data;
-    using Meta;
-    using Extent = Allors.Protocol.Json.Data.Extent;
-    using IVisitor = Allors.Protocol.Json.Data.IVisitor;
-    using Node = Data.Node;
-    using Pull = Data.Pull;
-    using Result = Data.Result;
-    using Select = Data.Select;
-    using Sort = Data.Sort;
+    private readonly Stack<IExtent> extents;
+    private readonly FromJson fromJson;
+    private readonly Stack<Node> nodes;
+    private readonly Stack<IPredicate> predicates;
+    private readonly Stack<Result> results;
+    private readonly Stack<Select> selects;
+    private readonly Stack<Sort> sorts;
 
-    public class FromJsonVisitor : IVisitor
+    public FromJsonVisitor(FromJson fromJson)
     {
-        private readonly FromJson fromJson;
+        this.fromJson = fromJson;
 
-        private readonly Stack<IExtent> extents;
-        private readonly Stack<IPredicate> predicates;
-        private readonly Stack<Result> results;
-        private readonly Stack<Select> selects;
-        private readonly Stack<Node> nodes;
-        private readonly Stack<Sort> sorts;
+        this.extents = new Stack<IExtent>();
+        this.predicates = new Stack<IPredicate>();
+        this.results = new Stack<Result>();
+        this.selects = new Stack<Select>();
+        this.nodes = new Stack<Node>();
+        this.sorts = new Stack<Sort>();
+    }
 
-        public FromJsonVisitor(FromJson fromJson)
+    public Pull Pull { get; private set; }
+
+    public IExtent Extent => this.extents?.Peek();
+
+    public Select Select => this.selects?.Peek();
+
+    public void VisitExtent(Extent visited)
+    {
+        IExtentOperator extentOperator = null;
+        IExtent sortable = null;
+
+        switch (visited.k)
         {
-            this.fromJson = fromJson;
+            case ExtentKind.Filter:
+                if (string.IsNullOrWhiteSpace(visited.t))
+                {
+                    throw new Exception("Unknown object type for " + visited.k);
+                }
 
-            this.extents = new Stack<IExtent>();
-            this.predicates = new Stack<IPredicate>();
-            this.results = new Stack<Result>();
-            this.selects = new Stack<Select>();
-            this.nodes = new Stack<Node>();
-            this.sorts = new Stack<Sort>();
+                var objectType = (IComposite)this.fromJson.MetaPopulation.FindByTag(visited.t);
+                var extent = new Data.Extent(objectType);
+                sortable = extent;
+
+                this.extents.Push(extent);
+
+                if (visited.p != null)
+                {
+                    visited.p.Accept(this);
+                    extent.Predicate = this.predicates.Pop();
+                }
+
+                break;
+
+            case ExtentKind.Union:
+                extentOperator = new Union();
+                break;
+
+            case ExtentKind.Except:
+                extentOperator = new Except();
+                break;
+
+            case ExtentKind.Intersect:
+                extentOperator = new Intersect();
+                break;
+
+            default:
+                throw new Exception("Unknown extent kind " + visited.k);
         }
 
-        public Pull Pull { get; private set; }
+        sortable ??= extentOperator;
 
-        public IExtent Extent => this.extents?.Peek();
-
-        public Select Select => this.selects?.Peek();
-
-        public void VisitExtent(Extent visited)
+        if (visited.s?.Length > 0)
         {
-            IExtentOperator extentOperator = null;
-            IExtent sortable = null;
+            var length = visited.s.Length;
 
-            switch (visited.k)
+            sortable.Sorting = new Sort[length];
+            for (var i = 0; i < length; i++)
             {
-                case ExtentKind.Filter:
-                    if (string.IsNullOrWhiteSpace(visited.t))
-                    {
-                        throw new Exception("Unknown object type for " + visited.k);
-                    }
-
-                    var objectType = (IComposite)this.fromJson.MetaPopulation.FindByTag(visited.t);
-                    var extent = new Data.Extent(objectType);
-                    sortable = extent;
-
-                    this.extents.Push(extent);
-
-                    if (visited.p != null)
-                    {
-                        visited.p.Accept(this);
-                        extent.Predicate = this.predicates.Pop();
-                    }
-
-                    break;
-
-                case ExtentKind.Union:
-                    extentOperator = new Union();
-                    break;
-
-                case ExtentKind.Except:
-                    extentOperator = new Except();
-                    break;
-
-                case ExtentKind.Intersect:
-                    extentOperator = new Intersect();
-                    break;
-
-                default:
-                    throw new Exception("Unknown extent kind " + visited.k);
+                var sorting = visited.s[i];
+                sorting.Accept(this);
+                sortable.Sorting[i] = this.sorts.Pop();
             }
+        }
 
-            sortable ??= extentOperator;
+        if (extentOperator != null)
+        {
+            this.extents.Push(extentOperator);
 
-            if (visited.s?.Length > 0)
+            if (visited.o?.Length > 0)
             {
-                var length = visited.s.Length;
+                var length = visited.o.Length;
 
-                sortable.Sorting = new Sort[length];
+                extentOperator.Operands = new IExtent[length];
                 for (var i = 0; i < length; i++)
                 {
-                    var sorting = visited.s[i];
-                    sorting.Accept(this);
-                    sortable.Sorting[i] = this.sorts.Pop();
+                    var operand = visited.o[i];
+                    operand.Accept(this);
+                    extentOperator.Operands[i] = this.extents.Pop();
                 }
             }
+        }
+    }
 
-            if (extentOperator != null)
+    public void VisitSelect(Allors.Protocol.Json.Data.Select visited)
+    {
+        var select = new Select
+        {
+            PropertyType =
+                (IPropertyType)this.fromJson.MetaPopulation.FindAssociationType(visited.a) ??
+                this.fromJson.MetaPopulation.FindRoleType(visited.r),
+            OfType = this.fromJson.MetaPopulation.FindComposite(visited.o)
+        };
+
+        this.selects.Push(select);
+
+        if (visited.n != null)
+        {
+            visited.n.Accept(this);
+            select.Next = this.selects.Pop();
+        }
+
+        if (visited.i?.Length > 0)
+        {
+            select.Include = new Node[visited.i.Length];
+            for (var i = 0; i < visited.i.Length; i++)
             {
-                this.extents.Push(extentOperator);
+                visited.i[i].Accept(this);
+                select.Include[i] = this.nodes.Pop();
+            }
+        }
+    }
 
-                if (visited.o?.Length > 0)
+    public void VisitNode(Allors.Protocol.Json.Data.Node visited)
+    {
+        var propertyType = (IPropertyType)this.fromJson.MetaPopulation.FindAssociationType(visited.a) ??
+                           this.fromJson.MetaPopulation.FindRoleType(visited.r);
+        var node = new Node(propertyType);
+
+        this.nodes.Push(node);
+
+        if (visited.n?.Length > 0)
+        {
+            foreach (var childNode in visited.n)
+            {
+                childNode.Accept(this);
+                node.Add(this.nodes.Pop());
+            }
+        }
+    }
+
+    public void VisitPredicate(Predicate visited)
+    {
+        switch (visited.k)
+        {
+            case PredicateKind.And:
+                var and = new And();
+
+                this.predicates.Push(and);
+
+                if (visited.ops?.Length > 0)
                 {
-                    var length = visited.o.Length;
+                    var length = visited.ops.Length;
 
-                    extentOperator.Operands = new IExtent[length];
+                    and.Operands = new IPredicate[length];
                     for (var i = 0; i < length; i++)
                     {
-                        var operand = visited.o[i];
+                        var operand = visited.ops[i];
                         operand.Accept(this);
-                        extentOperator.Operands[i] = this.extents.Pop();
+                        and.Operands[i] = this.predicates.Pop();
                     }
                 }
-            }
-        }
 
-        public void VisitSelect(Allors.Protocol.Json.Data.Select visited)
-        {
-            var select = new Select
-            {
-                PropertyType = (IPropertyType)this.fromJson.MetaPopulation.FindAssociationType(visited.a) ?? this.fromJson.MetaPopulation.FindRoleType(visited.r),
-                OfType = this.fromJson.MetaPopulation.FindComposite(visited.o)
-            };
+                break;
 
-            this.selects.Push(select);
+            case PredicateKind.Or:
+                var or = new Or();
 
-            if (visited.n != null)
-            {
-                visited.n.Accept(this);
-                select.Next = this.selects.Pop();
-            }
+                this.predicates.Push(or);
 
-            if (visited.i?.Length > 0)
-            {
-                select.Include = new Node[visited.i.Length];
-                for (var i = 0; i < visited.i.Length; i++)
+                if (visited.ops?.Length > 0)
                 {
-                    visited.i[i].Accept(this);
-                    select.Include[i] = this.nodes.Pop();
-                }
-            }
-        }
+                    var length = visited.ops.Length;
 
-        public void VisitNode(Allors.Protocol.Json.Data.Node visited)
-        {
-            var propertyType = (IPropertyType)this.fromJson.MetaPopulation.FindAssociationType(visited.a) ?? this.fromJson.MetaPopulation.FindRoleType(visited.r);
-            var node = new Node(propertyType);
-
-            this.nodes.Push(node);
-
-            if (visited.n?.Length > 0)
-            {
-                foreach (var childNode in visited.n)
-                {
-                    childNode.Accept(this);
-                    node.Add(this.nodes.Pop());
-                }
-            }
-        }
-
-        public void VisitPredicate(Predicate visited)
-        {
-            switch (visited.k)
-            {
-                case PredicateKind.And:
-                    var and = new And();
-
-                    this.predicates.Push(and);
-
-                    if (visited.ops?.Length > 0)
+                    or.Operands = new IPredicate[length];
+                    for (var i = 0; i < length; i++)
                     {
-                        var length = visited.ops.Length;
+                        var operand = visited.ops[i];
+                        operand.Accept(this);
+                        or.Operands[i] = this.predicates.Pop();
+                    }
+                }
 
-                        and.Operands = new IPredicate[length];
-                        for (var i = 0; i < length; i++)
+                break;
+
+            case PredicateKind.Not:
+                var not = new Not();
+
+                this.predicates.Push(not);
+
+                if (visited.op != null)
+                {
+                    visited.op.Accept(this);
+                    not.Operand = this.predicates.Pop();
+                }
+
+                break;
+
+            default:
+                var associationType = this.fromJson.MetaPopulation.FindAssociationType(visited.a);
+                var roleType = this.fromJson.MetaPopulation.FindRoleType(visited.r);
+                var propertyType = (IPropertyType)associationType ?? roleType;
+
+                switch (visited.k)
+                {
+                    case PredicateKind.InstanceOf:
+
+                        var instanceOf = new Instanceof(propertyType)
                         {
-                            var operand = visited.ops[i];
-                            operand.Accept(this);
-                            and.Operands[i] = this.predicates.Pop();
-                        }
-                    }
+                            ObjectType = visited.o != null ? (IComposite)this.fromJson.MetaPopulation.FindByTag(visited.o) : null,
+                            Parameter = visited.p
+                        };
 
-                    break;
+                        this.predicates.Push(instanceOf);
+                        break;
 
-                case PredicateKind.Or:
-                    var or = new Or();
+                    case PredicateKind.Exists:
 
-                    this.predicates.Push(or);
+                        var exists = new Exists(propertyType) {Parameter = visited.p};
 
-                    if (visited.ops?.Length > 0)
-                    {
-                        var length = visited.ops.Length;
+                        this.predicates.Push(exists);
+                        break;
 
-                        or.Operands = new IPredicate[length];
-                        for (var i = 0; i < length; i++)
+                    case PredicateKind.Contains:
+
+                        var contains = new Contains(propertyType) {Parameter = visited.p};
+
+                        if (visited.ob.HasValue)
                         {
-                            var operand = visited.ops[i];
-                            operand.Accept(this);
-                            or.Operands[i] = this.predicates.Pop();
+                            this.fromJson.Resolve(contains, visited.ob.Value);
                         }
-                    }
 
-                    break;
+                        this.predicates.Push(contains);
+                        break;
 
-                case PredicateKind.Not:
-                    var not = new Not();
+                    case PredicateKind.ContainedIn:
 
-                    this.predicates.Push(not);
+                        var containedIn = new ContainedIn(propertyType) {Parameter = visited.p};
 
-                    if (visited.op != null)
-                    {
-                        visited.op.Accept(this);
-                        not.Operand = this.predicates.Pop();
-                    }
+                        this.predicates.Push(containedIn);
 
-                    break;
+                        if (visited.obs != null)
+                        {
+                            this.fromJson.Resolve(containedIn, visited.obs);
+                        }
+                        else if (visited.e != null)
+                        {
+                            visited.e.Accept(this);
+                            containedIn.Extent = this.extents.Pop();
+                        }
 
-                default:
-                    var associationType = this.fromJson.MetaPopulation.FindAssociationType(visited.a);
-                    var roleType = this.fromJson.MetaPopulation.FindRoleType(visited.r);
-                    var propertyType = (IPropertyType)associationType ?? roleType;
+                        break;
 
-                    switch (visited.k)
-                    {
-                        case PredicateKind.InstanceOf:
+                    case PredicateKind.Equals:
 
-                            var instanceOf = new Instanceof(propertyType)
+                        var equals = new Equals(propertyType)
+                        {
+                            Parameter = visited.p, Path = this.fromJson.MetaPopulation.FindRoleType(visited.pa)
+                        };
+
+                        this.predicates.Push(equals);
+
+                        if (visited.ob != null)
+                        {
+                            this.fromJson.Resolve(equals, visited.ob.Value);
+                        }
+                        else if (visited.v != null)
+                        {
+                            if (roleType?.ObjectType.IsUnit == true)
                             {
-                                ObjectType = visited.o != null ? (IComposite)this.fromJson.MetaPopulation.FindByTag(visited.o) : null,
-                                Parameter = visited.p,
-                            };
-
-                            this.predicates.Push(instanceOf);
-                            break;
-
-                        case PredicateKind.Exists:
-
-                            var exists = new Exists(propertyType)
-                            {
-                                Parameter = visited.p,
-                            };
-
-                            this.predicates.Push(exists);
-                            break;
-
-                        case PredicateKind.Contains:
-
-                            var contains = new Contains(propertyType)
-                            {
-                                Parameter = visited.p,
-                            };
-
-                            if (visited.ob.HasValue)
-                            {
-                                this.fromJson.Resolve(contains, visited.ob.Value);
+                                equals.Value = this.fromJson.UnitConvert.UnitFromJson(((IRoleType)propertyType).ObjectType.Tag, visited.v);
                             }
-
-                            this.predicates.Push(contains);
-                            break;
-
-                        case PredicateKind.ContainedIn:
-
-                            var containedIn = new ContainedIn(propertyType)
+                            else
                             {
-                                Parameter = visited.p
-                            };
-
-                            this.predicates.Push(containedIn);
-
-                            if (visited.obs != null)
-                            {
-                                this.fromJson.Resolve(containedIn, visited.obs);
+                                var id = XmlConvert.ToInt64(visited.v.ToString());
+                                this.fromJson.Resolve(equals, id);
                             }
-                            else if (visited.e != null)
-                            {
-                                visited.e.Accept(this);
-                                containedIn.Extent = this.extents.Pop();
-                            }
+                        }
 
-                            break;
+                        break;
 
-                        case PredicateKind.Equals:
+                    case PredicateKind.Between:
 
-                            var equals = new Equals(propertyType)
-                            {
-                                Parameter = visited.p,
-                                Path = this.fromJson.MetaPopulation.FindRoleType(visited.pa)
-                            };
+                        var between = new Between(roleType)
+                        {
+                            Parameter = visited.p,
+                            Values = visited.vs?.Select(v => this.fromJson.UnitConvert.UnitFromJson(roleType.ObjectType.Tag, v))
+                                .ToArray(),
+                            Paths = visited.pas?.Select(v => this.fromJson.MetaPopulation.FindRoleType(v)).ToArray()
+                        };
 
-                            this.predicates.Push(equals);
+                        this.predicates.Push(between);
 
-                            if (visited.ob != null)
-                            {
-                                this.fromJson.Resolve(equals, visited.ob.Value);
-                            }
-                            else if (visited.v != null)
-                            {
-                                if (roleType?.ObjectType.IsUnit == true)
-                                {
-                                    equals.Value = this.fromJson.UnitConvert.UnitFromJson(((IRoleType)propertyType).ObjectType.Tag, visited.v);
-                                }
-                                else
-                                {
-                                    var id = XmlConvert.ToInt64(visited.v.ToString());
-                                    this.fromJson.Resolve(equals, id);
-                                }
-                            }
+                        break;
 
-                            break;
+                    case PredicateKind.GreaterThan:
 
-                        case PredicateKind.Between:
+                        var greaterThan = new GreaterThan(roleType)
+                        {
+                            Parameter = visited.p,
+                            Value = this.fromJson.UnitConvert.UnitFromJson(roleType.ObjectType.Tag, visited.v),
+                            Path = this.fromJson.MetaPopulation.FindRoleType(visited.pa)
+                        };
 
-                            var between = new Between(roleType)
-                            {
-                                Parameter = visited.p,
-                                Values = visited.vs?.Select(v => this.fromJson.UnitConvert.UnitFromJson(roleType.ObjectType.Tag, v)).ToArray(),
-                                Paths = visited.pas?.Select(v => this.fromJson.MetaPopulation.FindRoleType(v)).ToArray()
-                            };
+                        this.predicates.Push(greaterThan);
 
-                            this.predicates.Push(between);
+                        break;
 
-                            break;
+                    case PredicateKind.LessThan:
 
-                        case PredicateKind.GreaterThan:
+                        var lessThan = new LessThan(roleType)
+                        {
+                            Parameter = visited.p,
+                            Value = this.fromJson.UnitConvert.UnitFromJson(roleType.ObjectType.Tag, visited.v),
+                            Path = this.fromJson.MetaPopulation.FindRoleType(visited.pa)
+                        };
 
-                            var greaterThan = new GreaterThan(roleType)
-                            {
-                                Parameter = visited.p,
-                                Value = this.fromJson.UnitConvert.UnitFromJson(roleType.ObjectType.Tag, visited.v),
-                                Path = this.fromJson.MetaPopulation.FindRoleType(visited.pa)
-                            };
+                        this.predicates.Push(lessThan);
 
-                            this.predicates.Push(greaterThan);
+                        break;
 
-                            break;
+                    case PredicateKind.Like:
 
-                        case PredicateKind.LessThan:
+                        var like = new Like(roleType)
+                        {
+                            Parameter = visited.p,
+                            Value = this.fromJson.UnitConvert.UnitFromJson(roleType.ObjectType.Tag, visited.v)?.ToString()
+                        };
 
-                            var lessThan = new LessThan(roleType)
-                            {
-                                Parameter = visited.p,
-                                Value = this.fromJson.UnitConvert.UnitFromJson(roleType.ObjectType.Tag, visited.v),
-                                Path = this.fromJson.MetaPopulation.FindRoleType(visited.pa)
-                            };
+                        this.predicates.Push(like);
 
-                            this.predicates.Push(lessThan);
+                        break;
 
-                            break;
-
-                        case PredicateKind.Like:
-
-                            var like = new Like(roleType)
-                            {
-                                Parameter = visited.p,
-                                Value = this.fromJson.UnitConvert.UnitFromJson(roleType.ObjectType.Tag, visited.v)?.ToString(),
-                            };
-
-                            this.predicates.Push(like);
-
-                            break;
-
-                        default:
-                            throw new Exception("Unknown predicate kind " + visited.k);
-                    }
-
-                    break;
-            }
-        }
-
-        public void VisitPull(Allors.Protocol.Json.Data.Pull visited)
-        {
-            var pull = new Pull
-            {
-                ExtentRef = visited.er,
-                ObjectType = !string.IsNullOrWhiteSpace(visited.t) ? (IObjectType)this.fromJson.MetaPopulation.FindByTag(visited.t) : null,
-                Arguments = visited.a != null ? new Arguments(visited.a, this.fromJson.UnitConvert) : null,
-            };
-
-            if (visited.o != null)
-            {
-                this.fromJson.Resolve(pull, visited.o.Value);
-            }
-
-            if (visited.e != null)
-            {
-                visited.e.Accept(this);
-                pull.Extent = this.extents.Pop();
-            }
-
-            if (visited.r?.Length > 0)
-            {
-                var length = visited.r.Length;
-
-                pull.Results = new Result[length];
-                for (var i = 0; i < length; i++)
-                {
-                    var result = visited.r[i];
-                    result.Accept(this);
-                    pull.Results[i] = this.results.Pop();
+                    default:
+                        throw new Exception("Unknown predicate kind " + visited.k);
                 }
-            }
 
-            this.Pull = pull;
+                break;
         }
+    }
 
-        public void VisitResult(Allors.Protocol.Json.Data.Result visited)
+    public void VisitPull(Allors.Protocol.Json.Data.Pull visited)
+    {
+        var pull = new Pull
         {
-            var result = new Result
-            {
-                SelectRef = visited.r,
-                Name = visited.n,
-                Skip = visited.k,
-                Take = visited.t,
-            };
+            ExtentRef = visited.er,
+            ObjectType = !string.IsNullOrWhiteSpace(visited.t) ? (IObjectType)this.fromJson.MetaPopulation.FindByTag(visited.t) : null,
+            Arguments = visited.a != null ? new Arguments(visited.a, this.fromJson.UnitConvert) : null
+        };
 
-            if (visited.s != null)
-            {
-                visited.s.Accept(this);
-                result.Select = this.selects.Pop();
-            }
-
-            if (visited.i?.Length > 0)
-            {
-                result.Include = new Node[visited.i.Length];
-                for (var i = 0; i < visited.i.Length; i++)
-                {
-                    visited.i[i].Accept(this);
-                    result.Include[i] = this.nodes.Pop();
-                }
-            }
-            this.results.Push(result);
-        }
-
-        public void VisitSort(Allors.Protocol.Json.Data.Sort visited)
+        if (visited.o != null)
         {
-            var sort = new Sort
-            {
-                SortDirection = visited.d ?? SortDirection.Ascending,
-                RoleType = !string.IsNullOrWhiteSpace(visited.r) ? ((IRelationType)this.fromJson.MetaPopulation.FindByTag(visited.r)).RoleType : null,
-            };
-
-            this.sorts.Push(sort);
+            this.fromJson.Resolve(pull, visited.o.Value);
         }
+
+        if (visited.e != null)
+        {
+            visited.e.Accept(this);
+            pull.Extent = this.extents.Pop();
+        }
+
+        if (visited.r?.Length > 0)
+        {
+            var length = visited.r.Length;
+
+            pull.Results = new Result[length];
+            for (var i = 0; i < length; i++)
+            {
+                var result = visited.r[i];
+                result.Accept(this);
+                pull.Results[i] = this.results.Pop();
+            }
+        }
+
+        this.Pull = pull;
+    }
+
+    public void VisitResult(Allors.Protocol.Json.Data.Result visited)
+    {
+        var result = new Result {SelectRef = visited.r, Name = visited.n, Skip = visited.k, Take = visited.t};
+
+        if (visited.s != null)
+        {
+            visited.s.Accept(this);
+            result.Select = this.selects.Pop();
+        }
+
+        if (visited.i?.Length > 0)
+        {
+            result.Include = new Node[visited.i.Length];
+            for (var i = 0; i < visited.i.Length; i++)
+            {
+                visited.i[i].Accept(this);
+                result.Include[i] = this.nodes.Pop();
+            }
+        }
+
+        this.results.Push(result);
+    }
+
+    public void VisitSort(Allors.Protocol.Json.Data.Sort visited)
+    {
+        var sort = new Sort
+        {
+            SortDirection = visited.d ?? SortDirection.Ascending,
+            RoleType = !string.IsNullOrWhiteSpace(visited.r)
+                ? ((IRelationType)this.fromJson.MetaPopulation.FindByTag(visited.r)).RoleType
+                : null
+        };
+
+        this.sorts.Push(sort);
     }
 }

@@ -13,17 +13,24 @@ namespace Allors.Workspace.Meta
 
     public abstract class Class : IComposite
     {
-        public MetaPopulation MetaPopulation { get; set; }
-
         private HashSet<AssociationType> lazyAssociationTypes;
-        private HashSet<RoleType> lazyRoleTypes;
         private HashSet<RoleType> lazyDatabaseRoleTypes;
         private HashSet<MethodType> lazyMethodTypes;
+        private HashSet<RoleType> lazyRoleTypes;
 
-        private HashSet<AssociationType> LazyAssociationTypes => this.lazyAssociationTypes ??= new HashSet<AssociationType>(this.ExclusiveAssociationTypes.Union(this.Supertypes.SelectMany(v => v.ExclusiveAssociationTypes)));
-        private HashSet<RoleType> LazyRoleTypes => this.lazyRoleTypes ??= new HashSet<RoleType>(this.ExclusiveRoleTypes.Union(this.Supertypes.SelectMany(v => v.ExclusiveRoleTypes)));
+        private HashSet<AssociationType> LazyAssociationTypes => this.lazyAssociationTypes ??=
+            new HashSet<AssociationType>(
+                this.ExclusiveAssociationTypes.Union(this.Supertypes.SelectMany(v => v.ExclusiveAssociationTypes)));
+
+        private HashSet<RoleType> LazyRoleTypes => this.lazyRoleTypes ??=
+            new HashSet<RoleType>(this.ExclusiveRoleTypes.Union(this.Supertypes.SelectMany(v => v.ExclusiveRoleTypes)));
+
         private HashSet<RoleType> LazyDatabaseRoleTypes => this.lazyDatabaseRoleTypes ??= new HashSet<RoleType>(this.LazyRoleTypes);
-        private HashSet<MethodType> LazyMethodTypes => this.lazyMethodTypes ??= new HashSet<MethodType>(this.ExclusiveMethodTypes.Union(this.Supertypes.SelectMany(v => v.ExclusiveMethodTypes)));
+
+        private HashSet<MethodType> LazyMethodTypes => this.lazyMethodTypes ??=
+            new HashSet<MethodType>(this.ExclusiveMethodTypes.Union(this.Supertypes.SelectMany(v => v.ExclusiveMethodTypes)));
+
+        public MetaPopulation MetaPopulation { get; set; }
 
         public string Tag { get; set; }
         public string SingularName { get; set; }
@@ -37,7 +44,8 @@ namespace Allors.Workspace.Meta
         public AssociationType[] ExclusiveAssociationTypes { get; set; }
         public MethodType[] ExclusiveMethodTypes { get; set; }
 
-        int IComparable<IObjectType>.CompareTo(IObjectType other) => string.Compare(this.SingularName, other.SingularName, StringComparison.InvariantCulture);
+        int IComparable<IObjectType>.CompareTo(IObjectType other) =>
+            string.Compare(this.SingularName, other.SingularName, StringComparison.InvariantCulture);
 
         public bool IsUnit => false;
 
@@ -49,7 +57,9 @@ namespace Allors.Workspace.Meta
 
         public ISet<AssociationType> AssociationTypes => this.LazyAssociationTypes;
 
-        public ISet<RoleType> RoleTypes => this.LazyRoleTypes ?? new HashSet<RoleType>(this.ExclusiveRoleTypes.Union(this.Supertypes.SelectMany(v => v.ExclusiveRoleTypes)));
+        public ISet<RoleType> RoleTypes => this.LazyRoleTypes ??
+                                           new HashSet<RoleType>(
+                                               this.ExclusiveRoleTypes.Union(this.Supertypes.SelectMany(v => v.ExclusiveRoleTypes)));
 
         public ISet<RoleType> DatabaseOriginRoleTypes => this.LazyDatabaseRoleTypes;
 
@@ -57,14 +67,14 @@ namespace Allors.Workspace.Meta
 
         public bool IsAssignableFrom(IComposite objectType) => this.Equals(objectType);
 
+        public void Bind(Dictionary<string, Type> typeByTypeName) => this.ClrType = typeByTypeName[this.SingularName];
+
         public void Init(string tag, string singularName, string pluralName = null)
         {
             this.Tag = tag;
             this.SingularName = singularName;
             this.PluralName = pluralName ?? Pluralizer.Pluralize(singularName);
-            this.Classes = new HashSet<Class> { this };
+            this.Classes = new HashSet<Class> {this};
         }
-
-        public void Bind(Dictionary<string, Type> typeByTypeName) => this.ClrType = typeByTypeName[this.SingularName];
     }
 }

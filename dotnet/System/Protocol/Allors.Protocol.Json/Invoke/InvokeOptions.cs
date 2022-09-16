@@ -8,12 +8,12 @@ namespace Allors.Protocol.Json.Api.Invoke
     public class InvokeOptions
     {
         /// <summary>
-        ///  Isolated
+        ///     Isolated
         /// </summary>
         public bool i { get; set; }
 
         /// <summary>
-        ///  Continue On Error
+        ///     Continue On Error
         /// </summary>
         public bool c { get; set; }
     }

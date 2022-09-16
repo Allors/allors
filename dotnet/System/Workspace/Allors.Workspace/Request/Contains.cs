@@ -13,11 +13,11 @@ namespace Allors.Workspace.Request
     {
         public Contains(IPropertyType propertyType = null) => this.PropertyType = propertyType;
 
-        public IPropertyType PropertyType { get; set; }
-
         public IObject Object { get; set; }
 
         public string Parameter { get; set; }
+
+        public IPropertyType PropertyType { get; set; }
 
         public void Accept(IVisitor visitor) => visitor.VisitContains(this);
     }

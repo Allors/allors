@@ -18,45 +18,50 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Allors.Database.Adapters
+namespace Allors.Database.Adapters;
+
+using System;
+
+public static class Settings
 {
-    using System;
+    // Smoke
+    private const int DefaultNumberOfRuns = 2;
+    private const int DefaultLargeArraySize = 10;
+    private const bool DefaultExtraMarkers = true;
+    private const bool DefaultExtraInits = true;
 
-    public static class Settings
+    // Full
+    //private const int DefaultNumberOfRuns = 2;
+    //private const int DefaultLargeArraySize = 1000;
+    //private const bool DefaultExtraMarkers = true;
+    //private const bool DefaultExtraInits = true;
+
+    static Settings()
     {
-        // Smoke
-        private const int DefaultNumberOfRuns = 2;
-        private const int DefaultLargeArraySize = 10;
-        private const bool DefaultExtraMarkers = true;
-        private const bool DefaultExtraInits = true;
+        int numberOfRuns;
+        NumberOfRuns = int.TryParse(Environment.GetEnvironmentVariable("NumberOfRuns"), out numberOfRuns)
+            ? numberOfRuns
+            : DefaultNumberOfRuns;
 
-        // Full
-        //private const int DefaultNumberOfRuns = 2;
-        //private const int DefaultLargeArraySize = 1000;
-        //private const bool DefaultExtraMarkers = true;
-        //private const bool DefaultExtraInits = true;
+        int largeArraySize;
+        LargeArraySize = int.TryParse(Environment.GetEnvironmentVariable("LargeArraySize"), out largeArraySize)
+            ? largeArraySize
+            : DefaultLargeArraySize;
 
-        static Settings()
-        {
-            int numberOfRuns;
-            NumberOfRuns = int.TryParse(Environment.GetEnvironmentVariable("NumberOfRuns"), out numberOfRuns) ? numberOfRuns : DefaultNumberOfRuns;
+        bool extraMarkers;
+        ExtraMarkers = bool.TryParse(Environment.GetEnvironmentVariable("ExtraMarkers"), out extraMarkers)
+            ? extraMarkers
+            : DefaultExtraMarkers;
 
-            int largeArraySize;
-            LargeArraySize = int.TryParse(Environment.GetEnvironmentVariable("LargeArraySize"), out largeArraySize) ? largeArraySize : DefaultLargeArraySize;
-
-            bool extraMarkers;
-            ExtraMarkers = bool.TryParse(Environment.GetEnvironmentVariable("ExtraMarkers"), out extraMarkers) ? extraMarkers : DefaultExtraMarkers;
-
-            bool extraInits;
-            ExtraInits = bool.TryParse(Environment.GetEnvironmentVariable("ExtraCaches"), out extraInits) ? extraInits : DefaultExtraInits;
-        }
-
-        public static int NumberOfRuns { get; set; }
-
-        public static int LargeArraySize { get; set; }
-
-        public static bool ExtraMarkers { get; set; }
-
-        public static bool ExtraInits { get; set; }
+        bool extraInits;
+        ExtraInits = bool.TryParse(Environment.GetEnvironmentVariable("ExtraCaches"), out extraInits) ? extraInits : DefaultExtraInits;
     }
+
+    public static int NumberOfRuns { get; set; }
+
+    public static int LargeArraySize { get; set; }
+
+    public static bool ExtraMarkers { get; set; }
+
+    public static bool ExtraInits { get; set; }
 }

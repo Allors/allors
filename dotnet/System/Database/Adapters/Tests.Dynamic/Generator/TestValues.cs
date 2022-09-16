@@ -13,70 +13,44 @@
 // For more information visit http://www.allors.com/legal
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
-namespace Allors.Database.Adapters
+
+namespace Allors.Database.Adapters;
+
+using System;
+
+public class TestValues
 {
-    using System;
+    private static readonly TestValueGenerator Generator = new();
+    public bool Boolean = true;
 
-    public class TestValues
+    public bool[] Booleans = {true, false};
+
+    public DateTime dateTime = Generator.GenerateDateTime();
+
+    public DateTime[] DateTimes =
     {
-        public bool Boolean = true;
+        Generator.GenerateDateTime(), DateTime.UtcNow, DateTime.MinValue.ToUniversalTime().AddMilliseconds(1),
+        DateTime.MaxValue.ToUniversalTime().AddMilliseconds(-1)
+    };
 
-        public bool[] Booleans = { true, false };
+    public decimal Decimal = Generator.GenerateDecimal();
 
-        public DateTime dateTime = Generator.GenerateDateTime();
+    public decimal[] Decimals = {0, -1, 1, Generator.GenerateDecimal(), +99999999.99m, -99999999.99m};
 
-        public DateTime[] DateTimes = {
-                                          Generator.GenerateDateTime(),
-                                          DateTime.UtcNow,
-                                          DateTime.MinValue.ToUniversalTime().AddMilliseconds(1),
-                                          DateTime.MaxValue.ToUniversalTime().AddMilliseconds(-1)
-                                      };
+    public double Float = Generator.GenerateFloat();
 
-        public decimal Decimal = Generator.GenerateDecimal();
+    public double[] Floats =
+    {
+        0, -1, 1, Generator.GenerateFloat(), double.MinValue, double.MinValue + 1, double.MaxValue, double.MaxValue - 1
+    };
 
-        public decimal[] Decimals = {
-                                        0,
-                                        -1,
-                                        1,
-                                        Generator.GenerateDecimal(),
-                                        +99999999.99m,
-                                        -99999999.99m
-                                    };
+    public int Integer = Generator.GenerateInteger();
 
-        public double[] Floats = {
-                                      0,
-                                      -1,
-                                      1,
-                                      Generator.GenerateFloat(),
-                                      Double.MinValue,
-                                      Double.MinValue + 1,
-                                      Double.MaxValue,
-                                      Double.MaxValue - 1
-                                  };
-        public double Float = Generator.GenerateFloat();
+    public int[] Integers = {0, -1, 1, Generator.GenerateInteger(), int.MinValue, int.MinValue + 1, int.MaxValue, int.MaxValue - 1};
 
-        public int Integer = Generator.GenerateInteger();
+    public string String = Generator.GenerateString(100);
 
-        public int[] Integers = {
-                                    0,
-                                    -1,
-                                    1,
-                                    Generator.GenerateInteger(),
-                                    Int32.MinValue,
-                                    Int32.MinValue + 1,
-                                    int.MaxValue,
-                                    int.MaxValue - 1
-                                };
+    public Guid Unique = Generator.GenerateUnique();
 
-        public string String = Generator.GenerateString(100);
-
-        public Guid Unique = Generator.GenerateUnique();
-
-        public Guid[] Uniques = {
-                                    Guid.Empty,
-                                    Generator.GenerateUnique()
-                                };
-
-        private static readonly TestValueGenerator Generator = new TestValueGenerator();
-    }
+    public Guid[] Uniques = {Guid.Empty, Generator.GenerateUnique()};
 }

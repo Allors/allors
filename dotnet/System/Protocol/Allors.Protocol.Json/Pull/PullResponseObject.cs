@@ -8,22 +8,22 @@ namespace Allors.Protocol.Json.Api.Pull
     public class PullResponseObject
     {
         /// <summary>
-        /// Id
+        ///     Id
         /// </summary>
         public long i { get; set; }
 
         /// <summary>
-        /// Version
+        ///     Version
         /// </summary>
         public long v { get; set; }
 
         /// <summary>
-        /// Sorted Grants
+        ///     Sorted Grants
         /// </summary>
         public long[] g { get; set; }
 
         /// <summary>
-        /// Sorted Revocations
+        ///     Sorted Revocations
         /// </summary>
         public long[] r { get; set; }
     }

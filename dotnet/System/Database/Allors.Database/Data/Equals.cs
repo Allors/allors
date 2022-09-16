@@ -3,80 +3,80 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Data
+namespace Allors.Database.Data;
+
+using Meta;
+
+public class Equals : IPropertyPredicate
 {
-    using Meta;
+    public Equals(IPropertyType propertyType = null) => this.PropertyType = propertyType;
 
-    public class Equals : IPropertyPredicate
+    public IObject Object { get; set; }
+
+    public object Value { get; set; }
+
+    public IRoleType Path { get; set; }
+
+    public string Parameter { get; set; }
+
+    /// <inheritdoc />
+    public IPropertyType PropertyType { get; set; }
+
+    bool IPredicate.ShouldTreeShake(IArguments arguments) => ((IPredicate)this).HasMissingArguments(arguments);
+
+    bool IPredicate.HasMissingArguments(IArguments arguments) => this.Parameter != null && arguments?.HasArgument(this.Parameter) != true;
+
+    /// <inheritdoc />
+    void IPredicate.Build(ITransaction transaction, IArguments arguments, Database.ICompositePredicate compositePredicate)
     {
-        public Equals(IPropertyType propertyType = null) => this.PropertyType = propertyType;
-
-        /// <inheritdoc/>
-        public IPropertyType PropertyType { get; set; }
-
-        public IObject Object { get; set; }
-
-        public object Value { get; set; }
-
-        public IRoleType Path { get; set; }
-
-        public string Parameter { get; set; }
-
-        bool IPredicate.ShouldTreeShake(IArguments arguments) => ((IPredicate)this).HasMissingArguments(arguments);
-
-        bool IPredicate.HasMissingArguments(IArguments arguments) => this.Parameter != null && (arguments?.HasArgument(this.Parameter) != true);
-
-        /// <inheritdoc/>
-        void IPredicate.Build(ITransaction transaction, IArguments arguments, Database.ICompositePredicate compositePredicate)
+        switch (this.PropertyType)
         {
-            switch (this.PropertyType)
+            case null:
             {
-                case null:
+                var equals = this.Parameter != null ? transaction.GetObject(arguments.ResolveObject(this.Parameter)) : this.Object;
+                if (equals != null)
                 {
-                    var equals = this.Parameter != null ? transaction.GetObject(arguments.ResolveObject(this.Parameter)) : this.Object;
-                    if (equals != null)
-                    {
-                        compositePredicate.AddEquals(this.Object);
-                    }
-
-                    break;
+                    compositePredicate.AddEquals(this.Object);
                 }
 
-                case IRoleType roleType when roleType.ObjectType.IsUnit:
-                {
-                    var equals = this.Path ?? (this.Parameter != null ? arguments.ResolveUnit(roleType.ObjectType.Tag, this.Parameter) : this.Value);
-                    if (equals != null)
-                    {
-                        compositePredicate.AddEquals(roleType, equals);
-                    }
+                break;
+            }
 
-                    break;
+            case IRoleType roleType when roleType.ObjectType.IsUnit:
+            {
+                var equals = this.Path ??
+                             (this.Parameter != null ? arguments.ResolveUnit(roleType.ObjectType.Tag, this.Parameter) : this.Value);
+                if (equals != null)
+                {
+                    compositePredicate.AddEquals(roleType, equals);
                 }
 
-                case IRoleType roleType:
-                {
-                    var equals = this.Parameter != null ? transaction.GetObject(arguments.ResolveObject(this.Parameter)) : this.Object;
-                    if (equals != null)
-                    {
-                        compositePredicate.AddEquals(roleType, equals);
-                    }
+                break;
+            }
 
-                    break;
-                }
-                default:
+            case IRoleType roleType:
+            {
+                var equals = this.Parameter != null ? transaction.GetObject(arguments.ResolveObject(this.Parameter)) : this.Object;
+                if (equals != null)
                 {
-                    var associationType = (IAssociationType)this.PropertyType;
-                    var equals = this.Parameter != null ? transaction.GetObject(arguments.ResolveObject(this.Parameter)) : this.Object;
-                    if (equals != null)
-                    {
-                        compositePredicate.AddEquals(associationType, equals);
-                    }
-
-                    break;
+                    compositePredicate.AddEquals(roleType, equals);
                 }
+
+                break;
+            }
+            default:
+            {
+                var associationType = (IAssociationType)this.PropertyType;
+                var equals = this.Parameter != null ? transaction.GetObject(arguments.ResolveObject(this.Parameter)) : this.Object;
+                if (equals != null)
+                {
+                    compositePredicate.AddEquals(associationType, equals);
+                }
+
+                break;
             }
         }
-
-        public void Accept(IVisitor visitor) => visitor.VisitEquals(this);
     }
+
+    public void Accept(IVisitor visitor) => visitor.VisitEquals(this);
 }

@@ -8,12 +8,12 @@ namespace Allors.Protocol.Json.Api.Security
     public class AccessRequest
     {
         /// <summary>
-        /// Grants
+        ///     Grants
         /// </summary>
         public long[] g { get; set; }
 
         /// <summary>
-        /// Revocations
+        ///     Revocations
         /// </summary>
         public long[] r { get; set; }
     }

@@ -13,9 +13,6 @@ namespace Allors.Workspace.Request
     {
         public Equals(IPropertyType propertyType = null) => this.PropertyType = propertyType;
 
-        /// <inheritdoc/>
-        public IPropertyType PropertyType { get; set; }
-
         public IObject Object { get; set; }
 
         public object Value { get; set; }
@@ -23,6 +20,9 @@ namespace Allors.Workspace.Request
         public RoleType Path { get; set; }
 
         public string Parameter { get; set; }
+
+        /// <inheritdoc />
+        public IPropertyType PropertyType { get; set; }
 
         public void Accept(IVisitor visitor) => visitor.VisitEquals(this);
     }

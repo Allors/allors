@@ -5,10 +5,9 @@
 // <summary>Defines the Default type.</summary>
 //------------------------------------------------------------------------------------------------
 
-namespace Allors.Database.Domain
+namespace Allors.Database.Domain;
+
+public partial interface S1234
 {
-    public partial interface S1234
-    {
-        void AnS1234Method();
-    }
+    void AnS1234Method();
 }

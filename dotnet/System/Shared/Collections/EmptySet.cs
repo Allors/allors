@@ -54,6 +54,5 @@ namespace Allors.Collections
         public IEnumerator<T> GetEnumerator() => EmptyEnumerator<T>.Instance;
 
         IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
-      
     }
 }

@@ -29,11 +29,23 @@ namespace Allors.Workspace.Adapters
 
         public Record Record { get; private set; }
 
+        protected IEnumerable<RoleType> RoleTypes => this.Class.DatabaseOriginRoleTypes;
+
+        int IComparable<Object>.CompareTo(Object other)
+        {
+            if (ReferenceEquals(this, other))
+            {
+                return 0;
+            }
+
+            return other is null ? 1 : this.rangeId.CompareTo(other.rangeId);
+        }
+
         IWorkspace IObject.Workspace => this.Workspace;
 
         public Class Class { get; }
 
-        public long Id { get; private set; }
+        public long Id { get; }
 
         public bool ExistRole(RoleType roleType)
         {
@@ -70,20 +82,33 @@ namespace Allors.Workspace.Adapters
             return this.GetCompositesRole(roleType);
         }
 
-        int IComparable<Object>.CompareTo(Object other)
-        {
-            if (ReferenceEquals(this, other))
-            {
-                return 0;
-            }
-
-            return other is null ? 1 : this.rangeId.CompareTo(other.rangeId);
-        }
-
 
         public object GetUnitRole(RoleType roleType) => this.Record?.GetRole(roleType);
 
         IObject IObject.GetCompositeRole(RoleType roleType) => this.GetCompositeRole(roleType);
+
+        IEnumerable<IObject> IObject.GetCompositesRole(RoleType roleType) => this.GetCompositesRole(roleType);
+
+        public long Version => this.Record?.Version ?? Allors.Version.WorkspaceInitial;
+
+        public bool CanRead(RoleType roleType)
+        {
+            var permission = this.Workspace.Connection.GetPermission(this.Class, roleType, Operations.Read);
+            return this.Record.IsPermitted(permission);
+        }
+
+        public bool CanWrite(RoleType roleType)
+        {
+            var permission = this.Workspace.Connection.GetPermission(this.Class, roleType, Operations.Write);
+            return this.Record.IsPermitted(permission);
+        }
+
+        public bool CanExecute(MethodType methodType)
+        {
+            var permission = this.Workspace.Connection.GetPermission(this.Class, methodType, Operations.Execute);
+            return this.Record.IsPermitted(permission);
+        }
+
         public Object GetCompositeRole(RoleType roleType)
         {
             var role = this.Record?.GetRole(roleType);
@@ -98,7 +123,6 @@ namespace Allors.Workspace.Adapters
             return @object;
         }
 
-        IEnumerable<IObject> IObject.GetCompositesRole(RoleType roleType) => this.GetCompositesRole(roleType);
         public RefRange<Object> GetCompositesRole(RoleType roleType)
         {
             var role = (ValueRange<long>)(this.Record?.GetRole(roleType) ?? ValueRange<long>.Empty);
@@ -122,28 +146,6 @@ namespace Allors.Workspace.Adapters
             {
                 throw new Exception("Object is not in Workspace.");
             }
-        }
-
-        public long Version => this.Record?.Version ?? Allors.Version.WorkspaceInitial;
-
-        protected IEnumerable<RoleType> RoleTypes => this.Class.DatabaseOriginRoleTypes;
-
-        public bool CanRead(RoleType roleType)
-        {
-            var permission = this.Workspace.Connection.GetPermission(this.Class, roleType, Operations.Read);
-            return this.Record.IsPermitted(permission);
-        }
-
-        public bool CanWrite(RoleType roleType)
-        {
-            var permission = this.Workspace.Connection.GetPermission(this.Class, roleType, Operations.Write);
-            return this.Record.IsPermitted(permission);
-        }
-
-        public bool CanExecute(MethodType methodType)
-        {
-            var permission = this.Workspace.Connection.GetPermission(this.Class, methodType, Operations.Execute);
-            return this.Record.IsPermitted(permission);
         }
 
         public void OnPulled(IPullResult pull)

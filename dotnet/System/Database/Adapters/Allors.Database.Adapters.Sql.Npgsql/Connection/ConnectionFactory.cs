@@ -3,14 +3,13 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Adapters.Sql.Npgsql
+namespace Allors.Database.Adapters.Sql.Npgsql;
+
+public sealed class ConnectionFactory : IConnectionFactory
 {
-    public sealed class ConnectionFactory : IConnectionFactory
-    {
-        private readonly Database database;
+    private readonly Database database;
 
-        public ConnectionFactory(Database database) => this.database = database;
+    public ConnectionFactory(Database database) => this.database = database;
 
-        public IConnection Create() => new Connection(this.database);
-    }
+    public IConnection Create() => new Connection(this.database);
 }
