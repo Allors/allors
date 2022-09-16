@@ -6,7 +6,13 @@
     <Compile Include="..\..\System\Repository\Attributes\Attributes*\**\*.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\System\Repository\Stylecop\*.cs" />
+    <Compile Include="..\..\Analyzers\Repository\*.*" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="..\..\Analyzers\Repository\stylecop.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <AdditionalFiles Include="..\..\Analyzers\Repository\stylecop.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\System\Shared\Allors.Shared.csproj" />

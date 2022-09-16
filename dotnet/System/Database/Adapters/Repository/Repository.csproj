@@ -4,7 +4,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="..\..\..\Repository\Attributes\Attributes*\**\*.cs" />
-    <Compile Include="..\..\..\Repository\Stylecop\*.cs" />
+    <Compile Include="..\..\..\..\Analyzers\Repository\*.*" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="..\..\..\..\Analyzers\Repository\stylecop.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <AdditionalFiles Include="..\..\..\..\Analyzers\Repository\stylecop.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Shared\Allors.Shared.csproj" />

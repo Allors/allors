@@ -1,8 +1,7 @@
-// <copyright file="SecurityTokenSet.cs" company="Allors bvba">
-// Copyright (c) Allors bvba. All rights reserved.
-// Licensed under the LGPL license. See LICENSE file in the project root for full license information.
+﻿// <copyright file="DelegatedAccess.cs" company="Allors bv">
+// Copyright (c) Allors bv. All rights reserved.
 // </copyright>
-// <summary>Defines the Extent type.</summary>
+
 
 namespace Allors.Repository;
 
