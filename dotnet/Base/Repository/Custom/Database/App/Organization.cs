@@ -24,7 +24,7 @@ namespace Allors.Repository
         #region Allors
         [Id("49b96f79-c33d-4847-8c64-d50a6adb4985")]
         #endregion
-        [Multiplicity(Multiplicity.OneToMany)]
+        [SingleAssociation]
         [Workspace(Default)]
         public Person[] Employees { get; set; }
 
@@ -33,14 +33,14 @@ namespace Allors.Repository
         [Indexed]
         [Workspace(Default)]
         #endregion
-        [Multiplicity(Multiplicity.OneToOne)]
+        [SingleAssociation]
         public Person Manager { get; set; }
 
         #region Allors
         [Id("845ff004-516f-4ad5-9870-3d0e966a9f7d")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         [Workspace(Default)]
         public Person Owner { get; set; }
 
@@ -48,7 +48,7 @@ namespace Allors.Repository
         [Id("15f33fa4-c878-45a0-b40c-c5214bce350b")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.ManyToMany)]
+        
         [Workspace(Default)]
         public Person[] Shareholders { get; set; }
 
@@ -56,7 +56,7 @@ namespace Allors.Repository
         [Id("0C4DED17-5619-4841-BDB6-4990E8242695")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.ManyToMany)]
+        
         [Derived]
         [Workspace(Default)]
         public Employment[] ActiveEmployments { get; set; }
@@ -65,7 +65,7 @@ namespace Allors.Repository
         [Id("1103194D-431E-4D3C-8634-574FF2FC5E8C")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.ManyToMany)]
+        
         [Derived]
         [Workspace(Default)]
         public Employment[] InactiveEmployments { get; set; }
@@ -73,7 +73,7 @@ namespace Allors.Repository
         #region Allors
         [Id("1850E413-1413-4992-9415-E45F5FCDA76F")]
         #endregion
-        [Multiplicity(Multiplicity.ManyToMany)]
+        
         [Workspace(Default)]
         [Derived]
         [Indexed]
@@ -81,7 +81,7 @@ namespace Allors.Repository
 
         #region Allors
         [Id("17e55fcd-2c82-462b-8e31-b4a515acdaa9")]
-        [Multiplicity(Multiplicity.OneToMany)]
+        [SingleAssociation]
         [Indexed]
         #endregion
         public Media[] Images { get; set; }
@@ -111,14 +111,14 @@ namespace Allors.Repository
 
         #region Allors
         [Id("b201d2a0-2335-47a1-aa8d-8416e89a9fec")]
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         [Indexed]
         #endregion
         public Media Logo { get; set; }
 
         #region Allors
         [Id("ddcea177-0ed9-4247-93d3-2090496c130c")]
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         [Indexed]
         #endregion
         public Address MainAddress { get; set; }
@@ -141,7 +141,7 @@ namespace Allors.Repository
         [Id("D3DB6E8C-9C10-47BA-92B1-45F5DDFFA5CC")]
         #endregion
         [Workspace(Default)]
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         [Indexed]
         public Person CycleOne { get; set; }
 
@@ -149,7 +149,7 @@ namespace Allors.Repository
         [Id("C6CCA1C5-5799-4517-87F5-095DA0EEEC64")]
         #endregion
         [Workspace(Default)]
-        [Multiplicity(Multiplicity.ManyToMany)]
+        
         [Indexed]
         public Person[] CycleMany { get; set; }
 
@@ -157,7 +157,7 @@ namespace Allors.Repository
         [Id("607C1D85-E722-40BC-A4D6-0C6A7244AF6A")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         [Workspace(Default)]
         public Data OneData { get; set; }
 
@@ -165,7 +165,7 @@ namespace Allors.Repository
         [Id("897DA15E-C250-441F-8F5C-6F9F3E7870EB")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.ManyToMany)]
+        
         [Workspace(Default)]
         public Data[] ManyDatas { get; set; }
 
@@ -180,7 +180,7 @@ namespace Allors.Repository
         [Id("0E1BA7CE-1712-4664-8CE0-9180E49734DE")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         [Workspace(Default)]
         public Country Country { get; set; }
 

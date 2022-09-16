@@ -24,7 +24,7 @@ namespace Allors.Repository
         [Id("55F3D531-C58D-4FA7-B745-9E38D8CEC4C6")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.OneToOne)]
+        [SingleAssociation]
         [Workspace(Default)]
         public OrderLineVersion CurrentVersion { get; set; }
 
@@ -32,7 +32,7 @@ namespace Allors.Repository
         [Id("CFC88B59-87A1-4F9E-ABBE-168694AB6CB5")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.OneToMany)]
+        [SingleAssociation]
         [Workspace(Default)]
         public OrderLineVersion[] AllVersions { get; set; }
         #endregion

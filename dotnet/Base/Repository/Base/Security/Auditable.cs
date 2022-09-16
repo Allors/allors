@@ -17,7 +17,7 @@ namespace Allors.Repository
         #region Allors
         [Id("4BD26F4D-E85B-415A-B956-3FCBE15D4F58")]
         #endregion
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         [Indexed]
         [Workspace(Default)]
         User CreatedBy { get; set; }
@@ -25,7 +25,7 @@ namespace Allors.Repository
         #region Allors
         [Id("471CCC05-A48D-47A0-934B-0DD4F8E40C65")]
         #endregion
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         [Indexed]
         [Workspace(Default)]
         User LastModifiedBy { get; set; }

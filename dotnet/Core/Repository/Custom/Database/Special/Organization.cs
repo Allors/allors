@@ -24,7 +24,7 @@ namespace Allors.Repository
         #region Allors
         [Id("49b96f79-c33d-4847-8c64-d50a6adb4985")]
         #endregion
-        [Multiplicity(Multiplicity.OneToMany)]
+        [SingleAssociation]
         [Workspace(Default)]
         public Person[] Employees { get; set; }
 
@@ -33,14 +33,14 @@ namespace Allors.Repository
         [Indexed]
         [Workspace(Default)]
         #endregion
-        [Multiplicity(Multiplicity.OneToOne)]
+        [SingleAssociation]
         public Person Manager { get; set; }
 
         #region Allors
         [Id("845ff004-516f-4ad5-9870-3d0e966a9f7d")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.ManyToOne)]
+
         [Workspace(Default)]
         public Person Owner { get; set; }
 
@@ -49,7 +49,7 @@ namespace Allors.Repository
         [Indexed]
         [Workspace(Default)]
         #endregion
-        [Multiplicity(Multiplicity.ManyToMany)]
+
         public Person[] Shareholders { get; set; }
 
         #region Allors
@@ -92,7 +92,7 @@ namespace Allors.Repository
         [Id("D3DB6E8C-9C10-47BA-92B1-45F5DDFFA5CC")]
         #endregion
         [Workspace(Default)]
-        [Multiplicity(Multiplicity.ManyToOne)]
+
         [Indexed]
         public Person CycleOne { get; set; }
 
@@ -100,7 +100,7 @@ namespace Allors.Repository
         [Id("C6CCA1C5-5799-4517-87F5-095DA0EEEC64")]
         #endregion
         [Workspace(Default)]
-        [Multiplicity(Multiplicity.ManyToMany)]
+
         [Indexed]
         public Person[] CycleMany { get; set; }
 
@@ -108,7 +108,7 @@ namespace Allors.Repository
         [Id("607C1D85-E722-40BC-A4D6-0C6A7244AF6A")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.ManyToOne)]
+
         [Workspace(Default)]
         public Data OneData { get; set; }
 
@@ -116,7 +116,7 @@ namespace Allors.Repository
         [Id("897DA15E-C250-441F-8F5C-6F9F3E7870EB")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.ManyToMany)]
+
         [Workspace(Default)]
         public Data[] ManyDatas { get; set; }
 
@@ -160,7 +160,7 @@ namespace Allors.Repository
 
         public DelegatedAccess AccessDelegation { get; set; }
         public Revocation[] Revocations { get; set; }
-        
+
 
         public SecurityToken[] SecurityTokens { get; set; }
 

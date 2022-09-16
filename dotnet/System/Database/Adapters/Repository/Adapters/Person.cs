@@ -21,13 +21,13 @@ namespace Allors.Repository
 
         #region Allors
         [Id("25ff791d-9547-41ba-ac34-f2fe501ef217")]
-        [Multiplicity(Multiplicity.OneToOne)]
+        [SingleAssociation]
         #endregion
         public Person NextPerson { get; set; }
 
         #region Allors
         [Id("6cc83cb8-cb94-4716-bb7d-e25201f06b20")]
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         [Indexed]
         #endregion
         public Company Company { get; set; }

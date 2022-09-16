@@ -20,7 +20,7 @@ namespace Allors.Repository
         #region Allors
         [Id("62009cef-7424-4ec0-8953-e92b3cd6639d")]
         #endregion
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         [Indexed]
         [Workspace(Default)]
         public Currency Currency { get; set; }
@@ -45,7 +45,7 @@ namespace Allors.Repository
         #region Allors
         [Id("8236a702-a76d-4bb5-9afd-acacb1508261")]
         #endregion
-        [Multiplicity(Multiplicity.OneToMany)]
+        [SingleAssociation]
         [Indexed]
         [Workspace(Default)]
         public LocalizedText[] LocalizedNames { get; set; }

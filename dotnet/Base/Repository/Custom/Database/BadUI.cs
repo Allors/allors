@@ -14,28 +14,28 @@ namespace Allors.Repository
     {
         #region Allors
         [Id("8a999086-ca90-40a1-90ae-475d231bb1eb")]
-        [Multiplicity(Multiplicity.OneToMany)]
+        [SingleAssociation]
         [Indexed]
         #endregion
         public Person[] PersonsMany { get; set; }
 
         #region Allors
         [Id("9ebbb9d1-2ca7-4a7f-9f18-f25c05fd28c1")]
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         [Indexed]
         #endregion
         public Organization CompanyOne { get; set; }
 
         #region Allors
         [Id("a4db0d75-3dff-45ac-9c1d-623bca046b4a")]
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         [Indexed]
         #endregion
         public Person PersonOne { get; set; }
 
         #region Allors
         [Id("a8621048-48b5-43c4-b10b-17225958d177")]
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         [Indexed]
         #endregion
         public Organization CompanyMany { get; set; }

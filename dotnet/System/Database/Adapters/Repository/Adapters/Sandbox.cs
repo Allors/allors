@@ -17,13 +17,13 @@ namespace Allors.Repository
 
         #region Allors
         [Id("0e0ee030-8fb5-42fb-82b5-5daade2aca9d")]
-        [Multiplicity(Multiplicity.ManyToMany)]
+        
         #endregion
         public Sandbox[] InvisibleManies { get; set; }
 
         #region Allors
         [Id("122b0376-8d1a-4d46-b8a0-9f4ea94c9e96")]
-        [Multiplicity(Multiplicity.OneToOne)]
+        [SingleAssociation]
         #endregion
         public Sandbox InvisibleOne { get; set; }
 

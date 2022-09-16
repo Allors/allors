@@ -9,10 +9,7 @@ namespace Allors.Repository.Attributes
     using System;
 
     [AttributeUsage(AttributeTargets.Property)]
-    public class MultiplicityAttribute : RepositoryAttribute
+    public class SingleAssociationAttribute : RepositoryAttribute
     {
-        public MultiplicityAttribute(Multiplicity value) => this.Value = value;
-
-        public Multiplicity Value { get; set; }
     }
 }

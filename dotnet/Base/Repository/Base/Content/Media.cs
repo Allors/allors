@@ -28,7 +28,7 @@ namespace Allors.Repository
         #region Allors
         [Id("67082a51-1502-490b-b8db-537799e550bd")]
         #endregion
-        [Multiplicity(Multiplicity.OneToOne)]
+        [SingleAssociation]
         [Indexed]
         [Required]
         [Workspace(Default)]

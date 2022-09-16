@@ -18,7 +18,7 @@ namespace Allors.Repository
         [Id("27D0ABFD-EBA0-46FE-812C-C67D8E3D12D0")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.OneToOne)]
+        [SingleAssociation]
         public Right Right { get; set; }
 
         #region Allors

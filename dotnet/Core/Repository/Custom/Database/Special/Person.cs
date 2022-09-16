@@ -111,7 +111,7 @@ namespace Allors.Repository
         [Id("5661A98D-A935-4325-9B28-9D86175B1BD6")]
         #endregion
         [Workspace(Default)]
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         [Indexed]
         public Organization CycleOne { get; set; }
 
@@ -119,7 +119,7 @@ namespace Allors.Repository
         [Id("2EB2AF4F-2BF4-475F-BB41-D740197F168E")]
         #endregion
         [Workspace(Default)]
-        [Multiplicity(Multiplicity.ManyToMany)]
+        
         [Indexed]
         public Organization[] CycleMany { get; set; }
 

@@ -17,7 +17,7 @@ namespace Allors.Repository
         #region Allors
         [Id("6503574b-8bab-4da8-a19d-23a9bcffe01e")]
         #endregion
-        [Multiplicity(Multiplicity.ManyToMany)]
+        
         [Indexed]
         public Grant[] Grants { get; set; }
 

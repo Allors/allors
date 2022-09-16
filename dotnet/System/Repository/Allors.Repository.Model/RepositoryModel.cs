@@ -94,16 +94,6 @@ namespace Generate.Model
 
         public IEnumerable<ClassModel> Classes => this.Repository.Objects.OfType<Class>().Select(this.Map);
 
-        public DomainModel[] SortedDomains
-        {
-            get
-            {
-                var domains = this.Domains.ToList();
-                domains.Sort((x, y) => x.Base == y ? 1 : -1);
-                return domains.ToArray();
-            }
-        }
-
         #region Mappers
         public RepositoryObjectModel Map(RepositoryObject v) => v != null ? this.mapping[v] : null;
 

@@ -18,7 +18,7 @@ namespace Allors.Repository
         [Id("4C5C2727-908C-4FB2-9EB5-DA31837422FC")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.OneToOne)]
+        [SingleAssociation]
         [Workspace(Default)]
         public Media Media { get; set; }
 

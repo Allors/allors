@@ -20,13 +20,13 @@ namespace Allors.Repository
 
         #region Allors
         [Id("796ab057-88a0-4d71-bc4a-2673a209161b")]
-        [Multiplicity(Multiplicity.ManyToMany)]
+        
         #endregion
         ISandbox[] InvisibleManies { get; set; }
 
         #region Allors
         [Id("dba5deb2-880d-47f4-adae-0b3125ff1379")]
-        [Multiplicity(Multiplicity.OneToOne)]
+        [SingleAssociation]
         #endregion
         ISandbox InvisibleOne { get; set; }
     }

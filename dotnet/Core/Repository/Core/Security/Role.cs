@@ -18,7 +18,7 @@ namespace Allors.Repository
         [Id("51e56ae1-72dc-443f-a2a3-f5aa3650f8d2")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.ManyToMany)]
+        
         public Permission[] Permissions { get; set; }
 
         #region Allors

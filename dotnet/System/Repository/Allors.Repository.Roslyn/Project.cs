@@ -412,7 +412,9 @@ namespace Allors.Repository.Code
 
                     var reflectedPropertyType = reflectedProperty.PropertyType;
                     var typeName = this.GetTypeName(reflectedPropertyType);
-                    property.ObjectType = this.Repository.Objects.OfType<ObjectType>().First(v => v.SingularName == typeName);
+                    var objectType = this.Repository.Objects.OfType<ObjectType>().First(v => v.SingularName == typeName);
+                    property.ObjectType = objectType;
+                    property.SingleRole = objectType is Unit || !this.IsArray(reflectedPropertyType);
 
                     foreach (var group in propertyAttributesByTypeName)
                     {
@@ -434,23 +436,6 @@ namespace Allors.Repository.Code
                         else
                         {
                             property.AttributeByName.Add(attributeTypeName, group.First());
-                        }
-                    }
-
-                    if (property.AttributeByName.Keys.Contains("Multiplicity"))
-                    {
-                        if (reflectedPropertyType.Name.EndsWith("[]"))
-                        {
-                            if (!(property.Multiplicity is Multiplicity.OneToMany or Multiplicity.ManyToMany))
-                            {
-                                this.HasErrors = true;
-                                Logger.Error($"{typeInfo.Name}.{property.RoleName} should be many");
-                            }
-                        }
-                        else if (property.Multiplicity is Multiplicity.OneToMany or Multiplicity.ManyToMany)
-                        {
-                            this.HasErrors = true;
-                            Logger.Error($"{typeInfo.Name}.{property.RoleName} should be one");
                         }
                     }
                 }
@@ -568,13 +553,11 @@ namespace Allors.Repository.Code
             }
         }
 
+        private bool IsArray(Type type) => type.Name.EndsWith("[]");
+
         private string GetTypeName(Type type)
         {
-            var typeName = type.Name;
-            if (typeName.EndsWith("[]"))
-            {
-                typeName = typeName.Substring(0, typeName.Length - "[]".Length);
-            }
+            var typeName = this.IsArray(type) ? type.Name.Substring(0, type.Name.Length - "[]".Length) : type.Name;
 
             return typeName switch
             {

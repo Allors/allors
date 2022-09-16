@@ -36,7 +36,7 @@ namespace Allors.Repository
         #region Allors
         [Id("f091b264-e6b1-4a57-bbfb-8225cbe8190c")]
         #endregion
-        [Multiplicity(Multiplicity.OneToMany)]
+        [SingleAssociation]
         [Indexed]
         [Workspace(Default)]
         public LocalizedText[] LocalizedNames { get; set; }

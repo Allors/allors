@@ -26,25 +26,25 @@ namespace Allors.Repository
 
         #region Allors
         [Id("39f50108-df59-455d-8371-fc07f3dbb7ef")]
-        [Multiplicity(Multiplicity.ManyToMany)]
+        
         #endregion
         C2[] S12C2many2manies { get; set; }
 
         #region Allors
         [Id("61e8c425-407e-408b-9f2e-c95548833004")]
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         #endregion
         C2 S12C2many2one { get; set; }
 
         #region Allors
         [Id("830117d4-fbe1-4944-bacf-54331e8451d7")]
-        [Multiplicity(Multiplicity.OneToOne)]
+        [SingleAssociation]
         #endregion
         C2 S12C2one2one { get; set; }
 
         #region Allors
         [Id("a3aac482-aad0-4b59-9361-51b23867e5a2")]
-        [Multiplicity(Multiplicity.OneToMany)]
+        [SingleAssociation]
         #endregion
         C2[] S12C2one2manies { get; set; }
 

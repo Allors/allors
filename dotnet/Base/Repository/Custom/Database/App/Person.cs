@@ -49,7 +49,7 @@ namespace Allors.Repository
 
         #region Allors
         [Id("654f6c84-62f2-4c0a-9d68-532ed3f39447")]
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         [Indexed]
         #endregion
         [Workspace(Default)]
@@ -68,21 +68,21 @@ namespace Allors.Repository
 
         #region Allors
         [Id("6340de2a-c3b1-4893-a7f3-cb924b82fa0e")]
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         [Indexed]
         #endregion
         public MailboxAddress MailboxAddress { get; set; }
 
         #region Allors
         [Id("0375a3d3-1a1b-4cbb-b735-1fe508bcc672")]
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         [Indexed]
         #endregion
         public Address MainAddress { get; set; }
 
         #region Allors
         [Id("b3ddd2df-8a5a-4747-bd4f-1f1eb37386b3")]
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         [Indexed]
         [Workspace(Default)]
         #endregion
@@ -90,7 +90,7 @@ namespace Allors.Repository
 
         #region Allors
         [Id("2E878C18-9DF7-4DEF-8145-983F4A5CCB2D")]
-        [Multiplicity(Multiplicity.ManyToMany)]
+        
         [Indexed]
         [Workspace(Default)]
         #endregion
@@ -125,7 +125,7 @@ namespace Allors.Repository
         [Id("5661A98D-A935-4325-9B28-9D86175B1BD6")]
         #endregion
         [Workspace(Default)]
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         [Indexed]
         public Organization CycleOne { get; set; }
 
@@ -133,7 +133,7 @@ namespace Allors.Repository
         [Id("2EB2AF4F-2BF4-475F-BB41-D740197F168E")]
         #endregion
         [Workspace(Default)]
-        [Multiplicity(Multiplicity.ManyToMany)]
+        
         [Indexed]
         public Organization[] CycleMany { get; set; }
 

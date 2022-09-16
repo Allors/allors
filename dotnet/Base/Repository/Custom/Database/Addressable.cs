@@ -18,7 +18,7 @@ namespace Allors.Repository
         [Id("5E8CA38B-F4FB-4BBF-8A60-4DDA8EA6EF0E")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         [Derived]
         [Workspace(Default)]
         Address Address { get; set; }

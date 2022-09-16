@@ -14,7 +14,7 @@ namespace Allors.Repository
     {
         #region Allors
         [Id("4f0eba0d-09b4-4bbc-8e42-15de94921ab5")]
-        [Multiplicity(Multiplicity.OneToOne)]
+        [SingleAssociation]
         [Indexed]
         #endregion
         public Third Third { get; set; }

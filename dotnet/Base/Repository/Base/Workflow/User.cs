@@ -15,7 +15,7 @@ namespace Allors.Repository
         [Id("bed34563-4ed8-4c6b-88d2-b4199e521d74")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.OneToOne)]
+        [SingleAssociation]
         [Workspace(Default)]
         NotificationList NotificationList { get; set; }
     }

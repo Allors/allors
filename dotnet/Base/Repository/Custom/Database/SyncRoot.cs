@@ -15,7 +15,7 @@ namespace Allors.Repository
 
         #region Allors
         [Id("615C6C58-513A-456F-A0CE-E472D173DCB0")]
-        [Multiplicity(Multiplicity.OneToOne)]
+        [SingleAssociation]
         [Indexed]
         #endregion
         [Derived]

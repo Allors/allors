@@ -25,7 +25,7 @@ namespace Allors.Repository
         [Id("11DD2A3B-5C61-4E95-93DD-F1B8BDB14EB1")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.ManyToMany)]
+        
         [Workspace(Default)]
         public TrimTo[] Many2Manies { get; set; }
 
@@ -33,7 +33,7 @@ namespace Allors.Repository
         [Id("0F01CBAE-6991-4F5E-B788-C8F4AB799D91")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         [Workspace(Default)]
         public TrimTo Many2One { get; set; }
 

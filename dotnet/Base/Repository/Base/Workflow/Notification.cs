@@ -18,7 +18,7 @@ namespace Allors.Repository
     {
         #region Allors
         [Id("9a226bec-31b9-413e-bec1-8dcdf36fa6fb")]
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         [Indexed]
         #endregion
         public UniquelyIdentifiable Target { get; set; }

@@ -17,14 +17,14 @@ namespace Allors.Repository
         #region Allors
         [Id("E40496A8-21E5-48C9-9F9E-AF1985387698")]
         #endregion
-        [Multiplicity(Multiplicity.ManyToMany)]
+        
         [Indexed]
         public SecurityToken[] DelegatedSecurityTokens { get; set; }
 
         #region Allors
         [Id("50A5189E-2E1E-44A5-A629-B5DB2E8FDBB5")]
         #endregion
-        [Multiplicity(Multiplicity.ManyToMany)]
+        
         [Indexed]
         [Derived]
         public Revocation[] DelegatedRevocations { get; set; }

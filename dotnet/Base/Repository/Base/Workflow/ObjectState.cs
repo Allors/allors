@@ -17,7 +17,7 @@ namespace Allors.Repository
         #region Allors
         [Id("913C994F-15B0-40D2-AC4F-81E362B9142C")]
         #endregion
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         [Indexed]
         Revocation ObjectRevocation { get; set; }
 

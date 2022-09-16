@@ -19,7 +19,7 @@ namespace Allors.Repository
         [Id("36FA4EB8-5EA9-4F56-B5AA-9908EF2B417F")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         [Workspace(Default)]
         public Person AutocompleteFilter { get; set; }
 
@@ -27,7 +27,7 @@ namespace Allors.Repository
         [Id("C1C4D5D9-EEC0-44B5-9317-713E9AB2277E")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         [Workspace(Default)]
         public Person AutocompleteOptions { get; set; }
 
@@ -41,7 +41,7 @@ namespace Allors.Repository
         [Id("7E098B17-2ECB-4D1C-AA73-80684394BD9B")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.OneToMany)]
+        [SingleAssociation]
         [Workspace(Default)]
         public Person[] Chips { get; set; }
 

@@ -19,7 +19,7 @@ namespace Allors.Repository
         [Id("93B8F2E1-9902-4C0B-BFAC-74629C494346")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         [Required]
         [Workspace(Default)]
         public Person Employee { get; set; }
@@ -28,7 +28,7 @@ namespace Allors.Repository
         [Id("75FCF8E7-1DB4-466B-9428-5A9E45467D15")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         [Required]
         [Workspace(Default)]
         public Organization Employer { get; set; }

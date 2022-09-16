@@ -45,7 +45,7 @@ namespace Allors.Repository
         [Id("3CEC2045-58CE-47DD-A9FF-F5A00C8F465D")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.ManyToMany)]
+        
         [Workspace(X)]
         public WorkspaceXObject2[] WorkspaceXToWorkspaceXObject2 { get; set; }
 
@@ -53,7 +53,7 @@ namespace Allors.Repository
         [Id("50397978-E647-48EB-880C-ED2E0F1510A9")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.ManyToMany)]
+        
         [Workspace(X)]
         public WorkspaceYObject2[] WorkspaceXToWorkspaceYObject2 { get; set; }
 
@@ -61,7 +61,7 @@ namespace Allors.Repository
         [Id("B09F6E18-71E0-4424-8490-7B222656D64C")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.ManyToMany)]
+        
         [Workspace(X)]
         public WorkspaceXYObject2[] WorkspaceXToWorkspaceXYObject2 { get; set; }
 
@@ -69,7 +69,7 @@ namespace Allors.Repository
         [Id("74599039-37F5-41AD-83BB-A7DBBC2ABF0A")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.ManyToMany)]
+        
         [Workspace(X)]
         public WorkspaceNonObject2[] WorkspaceXToWorkspaceNonObject2 { get; set; }
 
@@ -77,7 +77,7 @@ namespace Allors.Repository
         [Id("AE79CB92-F841-4751-B11C-8A4C8FA394FF")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.ManyToMany)]
+        
         [Workspace(Y)]
         public WorkspaceXObject2[] WorkspaceYToWorkspaceXObject2 { get; set; }
 
@@ -85,7 +85,7 @@ namespace Allors.Repository
         [Id("0E5EA187-E62A-40EE-BA54-84267ADC3EB7")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.ManyToMany)]
+        
         [Workspace(Y)]
         public WorkspaceYObject2[] WorkspaceYToWorkspaceYObject2 { get; set; }
 
@@ -93,7 +93,7 @@ namespace Allors.Repository
         [Id("C66E4C45-CDA9-4CB0-824C-EF06EDC63DA0")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.ManyToMany)]
+        
         [Workspace(Y)]
         public WorkspaceXYObject2[] WorkspaceYToWorkspacXYObject2 { get; set; }
 
@@ -101,7 +101,7 @@ namespace Allors.Repository
         [Id("D5789302-42D3-4285-97E7-8B714FC1F10D")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.ManyToMany)]
+        
         [Workspace(Y)]
         public WorkspaceNonObject2[] WorkspaceYToWorkspaceNonObject2 { get; set; }
 
@@ -109,28 +109,28 @@ namespace Allors.Repository
         [Id("99B964AC-7D7D-41B6-8BAA-0FF7D1655A3B")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.ManyToMany)]
+        
         public WorkspaceXObject2[] WorkspaceNoneToWorkspaceXObject2 { get; set; }
 
         #region Allors
         [Id("F4A423F5-7714-4A75-9F8E-58237C31EC2D")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.ManyToMany)]
+        
         public WorkspaceYObject2[] WorkspaceNoneToWorkspaceYObject2 { get; set; }
 
         #region Allors
         [Id("2B621192-635A-42B8-A76C-0DA00212668D")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.ManyToMany)]
+        
         public WorkspaceXYObject2[] WorkspaceNoneToWorkspaceXYObject2 { get; set; }
 
         #region Allors
         [Id("0A9B85FC-C33F-445B-8312-6DD29344EE42")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.ManyToMany)]
+        
         public WorkspaceNonObject2[] WorkspaceNoneToWorkspaceNonObject2 { get; set; }
 
         #region Allors

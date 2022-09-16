@@ -18,7 +18,7 @@ namespace Allors.Repository
         [Id("C90E7744-9AFD-46A2-9F6F-3D76D681106A")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         [Workspace(Default)]
         [Required]
         public Person RequiredPerson { get; set; }

@@ -16,7 +16,7 @@ namespace Allors.Database.Meta
     /// </summary>
     public sealed class RelationType : IRelationType
     {
-        private Multiplicity assignedMultiplicity;
+        private Multiplicity? assignedMultiplicity;
         private Multiplicity multiplicity;
 
         private bool isDerived;
@@ -79,7 +79,7 @@ namespace Allors.Database.Meta
             }
         }
 
-        public Multiplicity AssignedMultiplicity
+        public Multiplicity? AssignedMultiplicity
         {
             get => this.assignedMultiplicity;
 
@@ -171,7 +171,7 @@ namespace Allors.Database.Meta
             }
             else
             {
-                this.multiplicity = this.AssignedMultiplicity;
+                this.multiplicity = this.AssignedMultiplicity ?? Multiplicity.ManyToOne;
             }
         }
 

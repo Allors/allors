@@ -26,7 +26,7 @@ namespace Allors.Repository
         #region Allors
         [Id("d8cac34a-9bb2-4190-bd2a-ec0b87e04cf5")]
         #endregion
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         [Indexed]
         [Required]
         [Workspace(Default)]
@@ -35,7 +35,7 @@ namespace Allors.Repository
         #region Allors
         [Id("ea778b77-2929-4ab4-ad99-bf2f970401a9")]
         #endregion
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         [Indexed]
         [Required]
         [Workspace(Default)]

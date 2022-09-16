@@ -1,5 +1,6 @@
 namespace Generate.Model
 {
+    using System;
     using Allors;
     using Allors.Repository;
     using Allors.Repository.Domain;
@@ -16,7 +17,7 @@ namespace Generate.Model
 
         public string[] WorkspaceNames => this.Property.WorkspaceNames;
 
-        public string Id => (string) ((dynamic)this.Property.AttributeByName.Get("Id"))?.Value;
+        public string Id => (string)((dynamic)this.Property.AttributeByName.Get("Id"))?.Value;
 
         public bool Required => (bool)(((dynamic)this.Property.AttributeByName.Get("Required"))?.Value ?? false);
 
@@ -32,13 +33,7 @@ namespace Generate.Model
 
         public Multiplicity Multiplicity => this.Property.Multiplicity;
 
-        public bool IsRoleOne => this.Property.Multiplicity is Multiplicity.OneToOne or Multiplicity.ManyToOne;
-
-        public bool IsRoleMany => this.Property.Multiplicity is Multiplicity.OneToMany or Multiplicity.ManyToMany;
-
-        public bool IsAssociationOne => this.Property.Multiplicity is Multiplicity.OneToOne or Multiplicity.OneToMany;
-
-        public bool IsAssociationMany => this.Property.Multiplicity is Multiplicity.ManyToOne or Multiplicity.ManyToMany;
+        public Multiplicity? AssignedMultiplicity => this.ObjectType.IsComposite && this.Multiplicity != Multiplicity.ManyToOne ? this.Multiplicity : null;
 
         public string RoleName => this.Property.RoleName;
 

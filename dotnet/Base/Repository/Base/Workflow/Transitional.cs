@@ -17,7 +17,7 @@ namespace Allors.Repository
         [Id("D9D86241-5FC7-4EDB-9FAA-FF5CA291F16C")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.ManyToMany)]
+        
         [Derived]
         ObjectState[] PreviousObjectStates { get; set; }
 
@@ -25,7 +25,7 @@ namespace Allors.Repository
         [Id("2BC8AFDF-92BE-4088-9E35-C1C942CFE74B")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.ManyToMany)]
+        
         [Derived]
         ObjectState[] LastObjectStates { get; set; }
 
@@ -33,14 +33,14 @@ namespace Allors.Repository
         [Id("52962C45-8A3E-4136-A968-C333CBE12685")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.ManyToMany)]
+        
         [Derived]
         ObjectState[] ObjectStates { get; set; }
 
         #region Allors
         [Id("02cd3896-ea9a-498c-8633-42a5df9c0b17")]
         #endregion
-        [Multiplicity(Multiplicity.ManyToMany)]
+        
         [Derived]
         [Indexed]
         Revocation[] TransitionalRevocations { get; set; }

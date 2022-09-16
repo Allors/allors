@@ -17,7 +17,7 @@ namespace Allors.Repository
         [Id("079C31BA-0D20-4CD7-921C-A1829E226970")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.OneToOne)]
+        [SingleAssociation]
         [Workspace(Default)]
         PrintDocument PrintDocument { get; set; }
 

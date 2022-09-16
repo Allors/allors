@@ -15,7 +15,7 @@ namespace Allors.Repository
     {
         #region Allors
         [Id("6c848eeb-7b42-45ea-81ac-fa983e1e0fa9")]
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         [Indexed]
         #endregion
         [Plural("Employees")]
@@ -29,7 +29,7 @@ namespace Allors.Repository
 
         #region Allors
         [Id("9940e8ed-189e-42c6-b0d1-7c01920b9fac")]
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         [Indexed]
         #endregion
         public Person Manager { get; set; }

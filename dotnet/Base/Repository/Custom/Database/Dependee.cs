@@ -14,7 +14,7 @@ namespace Allors.Repository
     {
         #region Allors
         [Id("1b8e0350-c446-48dc-85c0-71130cc1490e")]
-        [Multiplicity(Multiplicity.OneToOne)]
+        [SingleAssociation]
         [Indexed]
         #endregion
         public Subdependee Subdependee { get; set; }

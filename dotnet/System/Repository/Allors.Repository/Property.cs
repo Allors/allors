@@ -55,22 +55,41 @@ namespace Allors.Repository.Domain
 
         public Property DefiningProperty { get; set; }
 
-        public Multiplicity Multiplicity
+        public bool SingleAssociation
         {
             get
             {
                 if (this.ObjectType is Unit)
                 {
-                    return Multiplicity.OneToOne;
+                    return true;
                 }
 
-                dynamic attribute = this.AttributeByName.Get("Multiplicity");
-                if (attribute == null)
+                var singleAssociation = this.AttributeByName.ContainsKey("SingleAssociation");
+                if (singleAssociation)
                 {
-                    return Multiplicity.ManyToOne;
+                    return singleAssociation;
                 }
 
-                return (Multiplicity)(int)attribute.Value;
+                return singleAssociation;
+            }
+        }
+
+        public bool MultipleAssociation => !this.SingleAssociation;
+
+        public bool SingleRole { get; set; }
+
+        public bool MultipleRole => !this.SingleRole;
+
+        public Multiplicity Multiplicity
+        {
+            get
+            {
+                if (this.SingleAssociation)
+                {
+                    return this.SingleRole ? Multiplicity.OneToOne : Multiplicity.OneToMany;
+                }
+
+                return this.SingleRole ? Multiplicity.ManyToOne : Multiplicity.ManyToMany;
             }
         }
 

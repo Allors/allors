@@ -18,7 +18,7 @@ namespace Allors.Repository
         [Id("64DD490F-2B13-4D63-94A4-6BCE96FA14C2")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         [Required]
         public TemplateType TemplateType { get; set; }
 
@@ -26,7 +26,7 @@ namespace Allors.Repository
         [Id("93C9C5F2-7D0B-475D-80B8-7CAC7B11CCDA")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.OneToOne)]
+        [SingleAssociation]
         [Required]
         public Media Media { get; set; }
 

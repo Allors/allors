@@ -40,7 +40,7 @@ namespace Allors.Repository
         [Id("e16da480-35ab-4383-940a-5298d0b33b9c")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         [Workspace]
         public User Sender { get; set; }
 
@@ -48,7 +48,7 @@ namespace Allors.Repository
         [Id("d115bcfb-55e5-4ed8-8a21-f8e4dd5f903d")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.ManyToMany)]
+        
         [Workspace]
         public User[] Recipients { get; set; }
 

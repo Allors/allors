@@ -31,7 +31,7 @@ namespace Allors.Repository
         /// </summary>
         #region Allors
         [Id("a7c646a2-7aaa-44ae-9240-77b3b6f2e8fa")]
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         [Indexed]
         #endregion
         [Derived]
@@ -42,7 +42,7 @@ namespace Allors.Repository
         /// </summary>
         #region Allors
         [Id("4AF7D84E-393F-402F-8E76-044A75F77543")]
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         [Indexed]
         #endregion
         [Derived]

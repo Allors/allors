@@ -16,21 +16,21 @@ namespace Allors.Repository
         #region Allors
         [Id("DF19FC44-C0F8-4A0B-9DAD-3FE1C85D6AAF")]
         #endregion
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         [Indexed]
         DelegatedAccess AccessDelegation { get; set; }
 
         #region Allors
         [Id("b816fccd-08e0-46e0-a49c-7213c3604416")]
         #endregion
-        [Multiplicity(Multiplicity.ManyToMany)]
+        
         [Indexed]
         SecurityToken[] SecurityTokens { get; set; }
 
         #region Allors
         [Id("E989F7D2-A4AC-43D8-AC7C-CBCDA2CFB6D3")]
         #endregion
-        [Multiplicity(Multiplicity.ManyToMany)]
+        
         [Indexed]
         [Derived]
         Revocation[] Revocations { get; set; }

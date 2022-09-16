@@ -20,7 +20,7 @@ namespace Allors.Repository
         [Id("7CFAFE73-FEBD-4BFF-B42F-BE9ECF9E74DD")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         [Derived]
         public OrderState PreviousOrderState { get; set; }
 
@@ -28,7 +28,7 @@ namespace Allors.Repository
         [Id("427C6D78-2272-4069-A326-2F551812D6BD")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         [Derived]
         public OrderState LastOrderState { get; set; }
 
@@ -36,7 +36,7 @@ namespace Allors.Repository
         [Id("B11EBAC9-5867-4A96-A59B-8A160614FFD6")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         public OrderState OrderState { get; set; }
         #endregion
 
@@ -45,7 +45,7 @@ namespace Allors.Repository
         [Id("412BACF5-F927-42D0-BE29-F2870768FA76")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         [Derived]
         public ShipmentState PreviousShipmentState { get; set; }
 
@@ -53,7 +53,7 @@ namespace Allors.Repository
         [Id("6C724955-90CA-4069-ACF0-E2A228A928AD")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         [Derived]
         public ShipmentState LastShipmentState { get; set; }
 
@@ -61,7 +61,7 @@ namespace Allors.Repository
         [Id("5FEE0701-6C67-478D-9763-25E1E1C70BA1")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         public ShipmentState ShipmentState { get; set; }
         #endregion
 
@@ -70,7 +70,7 @@ namespace Allors.Repository
         [Id("45981825-4E17-440A-9F60-9DE93DBCA7D3")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         [Derived]
         public PaymentState PreviousPaymentState { get; set; }
 
@@ -78,7 +78,7 @@ namespace Allors.Repository
         [Id("4E56EDF6-F45F-4CEC-8BDA-28536490503A")]
         #endregion
         [Indexed]
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         [Derived]
         public PaymentState LastPaymentState { get; set; }
 
@@ -86,7 +86,7 @@ namespace Allors.Repository
         [Id("BB076A8A-D2E6-47FA-A334-08B0E7E89F05")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         public PaymentState PaymentState { get; set; }
         #endregion
         #endregion
@@ -95,7 +95,7 @@ namespace Allors.Repository
         [Id("4819AB04-B36F-42F8-B6DE-1F15FFC65233")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.OneToMany)]
+        [SingleAssociation]
         public OrderLine[] OrderLines { get; set; }
 
         #region Allors
@@ -105,7 +105,7 @@ namespace Allors.Repository
 
         #region Allors
         [Id("B8F02B30-51A3-44CD-85A3-1E1E13DBC0A4")]
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         [Indexed]
         #endregion
         public OrderState NonVersionedCurrentObjectState { get; set; }
@@ -114,7 +114,7 @@ namespace Allors.Repository
         [Id("1879ABB2-78D9-40AF-B404-6CEEF76C7EEC")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.OneToMany)]
+        [SingleAssociation]
         public OrderLine[] NonVersionedOrderLines { get; set; }
 
         #region Allors
@@ -127,7 +127,7 @@ namespace Allors.Repository
         [Id("4058FCBA-9323-47C5-B165-A3EED8DE70B6")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.OneToOne)]
+        [SingleAssociation]
         [Workspace(Default)]
         public OrderVersion CurrentVersion { get; set; }
 
@@ -135,7 +135,7 @@ namespace Allors.Repository
         [Id("DF0E52D4-07B3-45AC-9F36-2C0DE9802C2F")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.OneToMany)]
+        [SingleAssociation]
         [Workspace(Default)]
         public OrderVersion[] AllVersions { get; set; }
         #endregion

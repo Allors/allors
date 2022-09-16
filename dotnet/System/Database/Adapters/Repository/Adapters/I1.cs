@@ -15,31 +15,31 @@ namespace Allors.Repository
     {
         #region Allors
         [Id("00a70a04-4fc8-4585-83ce-0f7f0e0db7ab")]
-        [Multiplicity(Multiplicity.OneToMany)]
+        [SingleAssociation]
         #endregion
         I34[] I1I34one2manies { get; set; }
 
         #region Allors
         [Id("036e3008-07f8-4a15-bca2-eb21837778a0")]
-        [Multiplicity(Multiplicity.OneToMany)]
+        [SingleAssociation]
         #endregion
         I2[] I1I2one2manies { get; set; }
 
         #region Allors
         [Id("0b0f8c40-266c-424a-8276-0e8e2673d1a7")]
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         #endregion
         I2 I1I2many2one { get; set; }
 
         #region Allors
         [Id("0d63e4c7-28de-4d47-8f23-7ee1d3606751")]
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         #endregion
         C2 I1C2many2one { get; set; }
 
         #region Allors
         [Id("14a93943-13f6-481d-98c7-19fb55625af9")]
-        [Multiplicity(Multiplicity.OneToOne)]
+        [SingleAssociation]
         #endregion
         C2 I1C2one2one { get; set; }
 
@@ -52,13 +52,13 @@ namespace Allors.Repository
 
         #region Allors
         [Id("1d41941b-3b1d-48d7-bc6f-e8811cbd96e4")]
-        [Multiplicity(Multiplicity.OneToOne)]
+        [SingleAssociation]
         #endregion
         S1 I1S1one2one { get; set; }
 
         #region Allors
         [Id("28b92468-27e5-4471-b3a5-37b8ec4f794e")]
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         #endregion
         I12 I1I12many2one { get; set; }
 
@@ -75,7 +75,7 @@ namespace Allors.Repository
 
         #region Allors
         [Id("2cd562b6-7f54-49af-b853-2244f10ec60e")]
-        [Multiplicity(Multiplicity.OneToMany)]
+        [SingleAssociation]
         #endregion
         C2[] I1C2one2manies { get; set; }
 
@@ -97,13 +97,13 @@ namespace Allors.Repository
 
         #region Allors
         [Id("33f13167-3a14-4b06-a1d8-87076918b285")]
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         #endregion
         C1 I1C1many2one { get; set; }
 
         #region Allors
         [Id("381c61c1-312d-47ea-8314-8ac051378a81")]
-        [Multiplicity(Multiplicity.OneToOne)]
+        [SingleAssociation]
         #endregion
         [Indexed]
         I12 I1I12one2one { get; set; }
@@ -117,13 +117,13 @@ namespace Allors.Repository
 
         #region Allors
         [Id("4401d0b8-2450-45a8-92d2-ff3961e129b2")]
-        [Multiplicity(Multiplicity.OneToOne)]
+        [SingleAssociation]
         #endregion
         C1 I1C1one2one { get; set; }
 
         #region Allors
         [Id("4a30d40e-ade3-4304-b17b-185abc8b7fde")]
-        [Multiplicity(Multiplicity.ManyToMany)]
+        
         #endregion
         I2[] I1I2many2manies { get; set; }
 
@@ -134,7 +134,7 @@ namespace Allors.Repository
 
         #region Allors
         [Id("528ece9c-81f2-4ea4-8d42-50d9a3fe1eea")]
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         #endregion
         I34 I1I34many2one { get; set; }
 
@@ -155,7 +155,7 @@ namespace Allors.Repository
 
         #region Allors
         [Id("68549750-b8f9-4a29-a078-803e7348e142")]
-        [Multiplicity(Multiplicity.OneToOne)]
+        [SingleAssociation]
         #endregion
         S2 I1S2one2one { get; set; }
 
@@ -166,19 +166,19 @@ namespace Allors.Repository
 
         #region Allors
         [Id("6e7c286c-42e0-45d7-8ad8-ac0ed91dbbb5")]
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         #endregion
         I1 I1I1many2one { get; set; }
 
         #region Allors
         [Id("7014e84c-62c4-48ba-b4ec-ab52a897f443")]
-        [Multiplicity(Multiplicity.ManyToMany)]
+        
         #endregion
         C1[] I1C1many2manies { get; set; }
 
         #region Allors
         [Id("70312f37-52e9-4cf6-9dd6-b357628ea3ed")]
-        [Multiplicity(Multiplicity.OneToOne)]
+        [SingleAssociation]
         #endregion
         I2 I1I2one2one { get; set; }
 
@@ -191,7 +191,7 @@ namespace Allors.Repository
 
         #region Allors
         [Id("82a81e9e-7a13-43d3-bb8f-227edfe26a1f")]
-        [Multiplicity(Multiplicity.ManyToMany)]
+        
         #endregion
         S1[] I1S1many2manies { get; set; }
 
@@ -202,37 +202,37 @@ namespace Allors.Repository
 
         #region Allors
         [Id("912eeb1b-c5d6-4ea3-9e66-6d92cc455ef6")]
-        [Multiplicity(Multiplicity.ManyToMany)]
+        
         #endregion
         I34[] I1I34many2manies { get; set; }
 
         #region Allors
         [Id("9291fb85-9d1f-4c5d-96ec-797be51557ce")]
-        [Multiplicity(Multiplicity.OneToOne)]
+        [SingleAssociation]
         #endregion
         I34 I1I34one2one { get; set; }
 
         #region Allors
         [Id("95fff847-922f-4d6f-9e98-37013bdf6b06")]
-        [Multiplicity(Multiplicity.OneToMany)]
+        [SingleAssociation]
         #endregion
         I1[] I1I1one2manies { get; set; }
 
         #region Allors
         [Id("9735d027-4249-4540-9658-f3ec06d3b868")]
-        [Multiplicity(Multiplicity.ManyToMany)]
+        
         #endregion
         I1[] I1I1many2manies { get; set; }
 
         #region Allors
         [Id("973d6e4f-57ff-454a-9621-bd5dccb65525")]
-        [Multiplicity(Multiplicity.ManyToMany)]
+        
         #endregion
         S2[] I1S2many2manies { get; set; }
 
         #region Allors
         [Id("9b05ecb0-c3d5-4b11-98dc-653aef9f65cc")]
-        [Multiplicity(Multiplicity.ManyToMany)]
+        
         #endregion
         I12[] I1I12many2manies { get; set; }
 
@@ -244,19 +244,19 @@ namespace Allors.Repository
 
         #region Allors
         [Id("a458ad6e-0f4a-473b-a233-04b8e7fadf62")]
-        [Multiplicity(Multiplicity.OneToMany)]
+        [SingleAssociation]
         #endregion
         I12[] I1I12one2manies { get; set; }
 
         #region Allors
         [Id("a77bcd80-82df-4b76-a1bc-8e78106d7d53")]
-        [Multiplicity(Multiplicity.OneToMany)]
+        [SingleAssociation]
         #endregion
         S2[] I1S2one2manies { get; set; }
 
         #region Allors
         [Id("b4f171d3-1463-41bc-8230-e53e5a717b89")]
-        [Multiplicity(Multiplicity.ManyToMany)]
+        
         #endregion
         C2[] I1C2many2manies { get; set; }
 
@@ -295,13 +295,13 @@ namespace Allors.Repository
 
         #region Allors
         [Id("d24b5b74-6ea2-4788-857c-90e0ba1433a5")]
-        [Multiplicity(Multiplicity.OneToMany)]
+        [SingleAssociation]
         #endregion
         S1[] I1S1one2manies { get; set; }
 
         #region Allors
         [Id("ddbfe021-3310-4d8e-a4ef-438306aaf191")]
-        [Multiplicity(Multiplicity.OneToOne)]
+        [SingleAssociation]
         #endregion
         I1 I1I1one2one { get; set; }
 
@@ -312,7 +312,7 @@ namespace Allors.Repository
 
         #region Allors
         [Id("ee44a1bb-a5c7-4b05-a06b-8ff9ca9d4f98")]
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         #endregion
         S1 I1S1many2one { get; set; }
 
@@ -340,13 +340,13 @@ namespace Allors.Repository
 
         #region Allors
         [Id("fbc1fd9f-853a-4b7d-b618-447b765b3bcb")]
-        [Multiplicity(Multiplicity.OneToMany)]
+        [SingleAssociation]
         #endregion
         C1[] I1C1one2manies { get; set; }
 
         #region Allors
         [Id("fe51c02e-ed28-4628-9da1-7bc2131c8992")]
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         #endregion
         S2 I1S2many2one { get; set; }
     }

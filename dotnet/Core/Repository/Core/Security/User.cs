@@ -100,7 +100,7 @@ namespace Allors.Repository
         #region Allors
         [Id("4C9FDD8A-D7D4-4F6C-9584-77C6E1FC90FD")]
         #endregion
-        [Multiplicity(Multiplicity.OneToMany)]
+        [SingleAssociation]
         [Indexed]
         Login[] Logins { get; set; }
     }

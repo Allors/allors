@@ -19,7 +19,7 @@ namespace Allors.Repository
         [Id("f247de73-70fe-47e4-a763-22ee9c68a476")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         [Derived]
         [Workspace(Default)]
         WorkItem WorkItem { get; set; }
@@ -58,7 +58,7 @@ namespace Allors.Repository
 
         #region Allors
         [Id("55375d57-34b0-43d0-9fac-e9788e1b6cd2")]
-        [Multiplicity(Multiplicity.ManyToMany)]
+        
         [Indexed]
         #endregion
         [Derived]
@@ -67,7 +67,7 @@ namespace Allors.Repository
 
         #region Allors
         [Id("ea8abc59-b625-4d25-85bd-dd04bfe55086")]
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         [Indexed]
         #endregion
         [Derived]

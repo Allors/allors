@@ -19,7 +19,7 @@ namespace Allors.Repository
         #region Allors
         [Id("585bb5cf-9ba4-4865-9027-3667185abc4f")]
         #endregion
-        [Multiplicity(Multiplicity.ManyToMany)]
+        
         [Indexed]
         [Workspace(Default)]
         public User[] Members { get; set; }

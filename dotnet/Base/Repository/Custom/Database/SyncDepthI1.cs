@@ -16,7 +16,7 @@ namespace Allors.Repository
         [Id("BC3991AE-475D-4CA2-A8E1-6DF5CCC65CE0")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.OneToOne)]
+        [SingleAssociation]
         [Derived]
         SyncDepth2 SyncDepth2 { get; set; }
 

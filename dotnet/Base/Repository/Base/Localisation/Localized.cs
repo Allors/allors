@@ -18,7 +18,7 @@ namespace Allors.Repository
         #region Allors
         [Id("8c005a4e-5ffe-45fd-b279-778e274f4d83")]
         #endregion
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         [Indexed]
         [Workspace(Default)]
         Locale Locale { get; set; }

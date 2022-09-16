@@ -75,7 +75,7 @@ namespace Allors.Repository
         [Id("497B30F1-CE00-4D63-AF20-49DE6AF9D1BA")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.ManyToMany)]
+        
         [Workspace(Default)]
         public TraceY[] Many2Manies { get; set; }
 
@@ -83,7 +83,7 @@ namespace Allors.Repository
         [Id("EBEF52B2-2AF8-452B-80D4-92B60A99684E")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         [Workspace(Default)]
         public TraceY Many2One { get; set; }
 
@@ -91,7 +91,7 @@ namespace Allors.Repository
         [Id("2920C99F-2D02-4641-BB6F-07CA88B467C8")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.OneToMany)]
+        [SingleAssociation]
         [Workspace(Default)]
         public TraceY[] One2Manies { get; set; }
 
@@ -99,7 +99,7 @@ namespace Allors.Repository
         [Id("833CCA45-4AFA-4307-81A9-046C8D7AD31C")]
         [Indexed]
         #endregion
-        [Multiplicity(Multiplicity.OneToOne)]
+        [SingleAssociation]
         [Workspace(Default)]
         public TraceY One2One { get; set; }
         #endregion

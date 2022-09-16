@@ -16,7 +16,7 @@ namespace Allors.Repository
         #region Allors
         [Id("5fb15e8b-011c-46f7-83dd-485d4cc4f9f2")]
         #endregion
-        [Multiplicity(Multiplicity.OneToOne)]
+        [SingleAssociation]
         [Indexed]
         [Required]
         [Derived]
@@ -25,7 +25,7 @@ namespace Allors.Repository
         #region Allors
         [Id("056914ed-a658-4ae5-b859-97300e1b8911")]
         #endregion
-        [Multiplicity(Multiplicity.OneToOne)]
+        [SingleAssociation]
         [Indexed]
         [Derived]
         Grant OwnerGrant { get; set; }

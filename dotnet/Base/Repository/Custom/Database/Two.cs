@@ -14,7 +14,7 @@ namespace Allors.Repository
     {
         #region Allors
         [Id("8930c13c-ad5a-4b0e-b3bf-d7cdf6f5b867")]
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         [Indexed]
         #endregion
         public Shared Shared { get; set; }

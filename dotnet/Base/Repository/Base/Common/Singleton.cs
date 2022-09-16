@@ -16,7 +16,7 @@ namespace Allors.Repository
         #region Allors
         [Id("9c1634ab-be99-4504-8690-ed4b39fec5bc")]
         #endregion
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         [Workspace(Default)]
         [Indexed]
         public Locale DefaultLocale { get; set; }
@@ -24,7 +24,7 @@ namespace Allors.Repository
         #region Allors
         [Id("9e5a3413-ed33-474f-adf2-149ad5a80719")]
         #endregion
-        [Multiplicity(Multiplicity.OneToMany)]
+        [SingleAssociation]
         [Indexed]
         [Workspace(Default)]
         public Locale[] AdditionalLocales { get; set; }
@@ -32,7 +32,7 @@ namespace Allors.Repository
         #region Allors
         [Id("615AC72B-B3DF-4057-9B7C-C8528341F5FE")]
         #endregion
-        [Multiplicity(Multiplicity.OneToMany)]
+        [SingleAssociation]
         [Indexed]
         [Derived]
         [Workspace(Default)]
@@ -41,7 +41,7 @@ namespace Allors.Repository
         #region Allors
         [Id("B2166062-84DA-449D-B34F-983A0C81BC31")]
         #endregion
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         [Indexed]
         [Workspace(Default)]
         public Media LogoImage { get; set; }

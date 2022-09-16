@@ -15,7 +15,7 @@ namespace Allors.Repository
     {
         #region Allors
         [Id("36e7d935-a9c7-484d-8551-9bdc5bdeab68")]
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         [Indexed]
         #endregion
         Place Place { get; set; }

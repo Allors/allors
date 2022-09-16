@@ -17,7 +17,7 @@ namespace Allors.Repository
     {
         #region Allors
         [Id("c32c19f1-3f41-4d11-b19d-b8b2aa360166")]
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         [Indexed]
         #endregion
         [Workspace(Default)]
@@ -26,14 +26,14 @@ namespace Allors.Repository
 
         #region Allors
         [Id("f4e05932-89c0-4f40-b4b2-f241ac42d8a0")]
-        [Multiplicity(Multiplicity.OneToOne)]
+        [SingleAssociation]
         [Indexed]
         #endregion
         public Notification Notification { get; set; }
 
         #region Allors
         [Id("8a01f221-480f-4d61-9a12-72e3689a8224")]
-        [Multiplicity(Multiplicity.ManyToOne)]
+        
         [Indexed]
         #endregion
         [Workspace(Default)]
