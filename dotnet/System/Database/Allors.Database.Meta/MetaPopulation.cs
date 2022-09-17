@@ -1,4 +1,4 @@
-// <copyright file="MetaPopulation.cs" company="Allors bvba">
+﻿// <copyright file="MetaPopulation.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -510,9 +510,6 @@ public abstract class MetaPopulation : IMetaPopulation
     internal void OnRecordCreated(Record record)
     {
         this.records.Add(record);
-        this.metaObjectById.Add(record.Id, record);
-        this.metaObjectByTag.Add(record.Tag, record);
-
         this.Stale();
     }
 
@@ -543,8 +540,7 @@ public abstract class MetaPopulation : IMetaPopulation
         return false;
     }
 
-    private bool HasCycle(Composite originalSubtype, Interface currentSupertype, HashSet<Interface> supertypes,
-        Dictionary<Composite, List<Inheritance>> inheritancesBySubtype)
+    private bool HasCycle(Composite originalSubtype, Interface currentSupertype, HashSet<Interface> supertypes, Dictionary<Composite, List<Inheritance>> inheritancesBySubtype)
     {
         if (originalSubtype is Interface @interface && supertypes.Contains(@interface))
         {

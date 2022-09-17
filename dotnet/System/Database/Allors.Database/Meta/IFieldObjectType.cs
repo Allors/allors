@@ -1,14 +1,10 @@
-namespace Allors.Database.Meta;
+﻿namespace Allors.Database.Meta;
 
 using System;
 
-public interface IFieldObjectType : IMetaIdentifiableObject
+public interface IFieldObjectType : IMetaObject
 {
     string Name { get; }
-
-    string SingularName { get; }
-
-    string PluralName { get; }
-
+    
     Type ClrType { get; }
 }
