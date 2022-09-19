@@ -1,4 +1,4 @@
-// <copyright file="ObjectFactory.cs" company="Allors bvba">
+﻿// <copyright file="ObjectFactory.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -57,7 +57,7 @@ public class ObjectFactory : IObjectFactory
         var types = this.Assembly.GetTypes()
             .Where(type => type.Namespace != null &&
                            type.Namespace.Equals(instance.Namespace) &&
-                           type.GetTypeInfo().ImplementedInterfaces.Contains(typeof(IObject)))
+                           type.GetTypeInfo().ImplementedInterfaces.Contains(typeof(IFieldObject)))
             .ToArray();
 
         this.MetaPopulation = metaPopulation;
@@ -70,13 +70,13 @@ public class ObjectFactory : IObjectFactory
         }
 
         var extensionMethodsByInterface = (from type in this.Assembly.ExportedTypes
-                where type.GetTypeInfo().IsSealed && !type.GetTypeInfo().IsGenericType && !type.IsNested
-                from method in type.GetTypeInfo().DeclaredMethods
-                let parameterType = method.GetParameters().FirstOrDefault()?.ParameterType
-                where method.IsStatic &&
-                      method.IsDefined(typeof(ExtensionAttribute), false) &&
-                      parameterType?.IsInterface == true
-                select new KeyValuePair<Type, MethodInfo>(parameterType, method))
+                                           where type.GetTypeInfo().IsSealed && !type.GetTypeInfo().IsGenericType && !type.IsNested
+                                           from method in type.GetTypeInfo().DeclaredMethods
+                                           let parameterType = method.GetParameters().FirstOrDefault()?.ParameterType
+                                           where method.IsStatic &&
+                                                 method.IsDefined(typeof(ExtensionAttribute), false) &&
+                                                 parameterType?.IsInterface == true
+                                           select new KeyValuePair<Type, MethodInfo>(parameterType, method))
             .GroupBy(kvp => kvp.Key, kvp => kvp.Value)
             .ToDictionary(v => v.Key, v => v.ToArray());
 
@@ -99,7 +99,7 @@ public class ObjectFactory : IObjectFactory
 
             if (objectType is IClass)
             {
-                var parameterTypes = new[] {typeof(IStrategy)};
+                var parameterTypes = new[] { typeof(IStrategy) };
                 var constructor = type.GetTypeInfo().GetConstructor(parameterTypes);
                 this.contructorInfoByObjectType[objectType] =
                     constructor ?? throw new ArgumentException(objectType.Name + " has no Allors constructor.");
@@ -131,7 +131,7 @@ public class ObjectFactory : IObjectFactory
     {
         var objectType = strategy.Class;
         var constructor = this.contructorInfoByObjectType[objectType];
-        object[] parameters = {strategy};
+        object[] parameters = { strategy };
 
         return (IObject)constructor.Invoke(parameters);
     }

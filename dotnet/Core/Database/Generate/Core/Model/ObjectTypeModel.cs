@@ -1,15 +1,18 @@
-namespace Allors.Meta.Generation.Model;
+﻿namespace Allors.Meta.Generation.Model;
 
 using System;
 using Database.Meta;
 
-public abstract class ObjectTypeModel : MetaObjectModel, IMetaIdentifiableObjectModel
+public abstract class ObjectTypeModel : FieldObjectTypeModel
 {
-    protected ObjectTypeModel(MetaModel metaModel) : base(metaModel)
+    protected ObjectTypeModel(MetaModel metaModel)
+        : base(metaModel)
     {
     }
 
     protected abstract IObjectType ObjectType { get; }
+
+    protected override IFieldObjectType FieldObjectType => this.ObjectType;
 
     // IObjectType
     public bool IsUnit => this.ObjectType.IsUnit;
@@ -24,14 +27,5 @@ public abstract class ObjectTypeModel : MetaObjectModel, IMetaIdentifiableObject
 
     public string PluralName => this.ObjectType.PluralName;
 
-    public string Name => this.ObjectType.Name;
-
-    public Type ClrType => this.ObjectType.ClrType;
-
     public bool ExistAssignedPluralName => ((ObjectType)this.ObjectType).ExistAssignedPluralName;
-
-    // IMetaIdentifiableObject
-    public Guid Id => this.ObjectType.Id;
-
-    public string Tag => this.ObjectType.Tag;
 }

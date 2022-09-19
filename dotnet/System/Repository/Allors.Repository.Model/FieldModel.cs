@@ -1,4 +1,4 @@
-namespace Generate.Model;
+﻿namespace Generate.Model;
 
 using Allors.Repository;
 using Allors.Repository.Domain;
@@ -14,8 +14,6 @@ public class FieldModel : RepositoryObjectModel
     public string Name => this.Field.Name;
 
     public RecordModel Record => this.RepositoryModel.Map(this.Field.Record);
-
-    public XmlDoc XmlDoc => this.Field.XmlDoc;
 
     public FieldObjectTypeModel Type => this.RepositoryModel.Map(this.Field.Type);
 

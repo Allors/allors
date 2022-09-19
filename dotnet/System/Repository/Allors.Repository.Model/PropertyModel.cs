@@ -1,4 +1,4 @@
-namespace Generate.Model;
+﻿namespace Generate.Model;
 
 using Allors;
 using Allors.Repository;
@@ -16,13 +16,9 @@ public class PropertyModel : RepositoryObjectModel
 
     public string[] WorkspaceNames => this.Property.WorkspaceNames;
 
-    public string Id => (string)((dynamic)this.Property.AttributeByName.Get("Id"))?.Value;
-
     public bool Required => (bool)(((dynamic)this.Property.AttributeByName.Get("Required"))?.Value ?? false);
 
     public bool Unique => (bool)(((dynamic)this.Property.AttributeByName.Get("Unique"))?.Value ?? false);
-
-    public XmlDoc XmlDoc => this.Property.XmlDoc;
 
     public CompositeModel DefiningType => this.RepositoryModel.Map(this.Property.DefiningType);
 

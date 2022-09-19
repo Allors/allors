@@ -4,7 +4,8 @@ using Database.Meta;
 
 public class AssociationTypeModel : PropertyTypeModel
 {
-    public AssociationTypeModel(MetaModel metaModel, IAssociationType associationType) : base(metaModel) =>
+    public AssociationTypeModel(MetaModel metaModel, IAssociationType associationType)
+        : base(metaModel) =>
         this.AssociationType = associationType;
 
     public IAssociationType AssociationType { get; }

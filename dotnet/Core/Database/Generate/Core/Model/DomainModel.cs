@@ -5,7 +5,8 @@ using Database.Meta;
 
 public class DomainModel : MetaObjectModel, IMetaIdentifiableObjectModel
 {
-    public DomainModel(MetaModel metaModel, IDomain domain) : base(metaModel) => this.Domain = domain;
+    public DomainModel(MetaModel metaModel, IDomain domain)
+        : base(metaModel) => this.Domain = domain;
 
     public IDomain Domain { get; }
     protected override IMetaObject MetaObject => this.Domain;

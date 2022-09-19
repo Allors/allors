@@ -1,4 +1,4 @@
-namespace Allors.Meta.Generation.Model;
+﻿namespace Allors.Meta.Generation.Model;
 
 using System.Collections.Generic;
 using System.Linq;
@@ -37,9 +37,13 @@ public class MetaModel
         foreach (var relationType in this.MetaPopulation.RelationTypes)
         {
             this.mapping.Add(relationType, new RelationTypeModel(this, relationType));
-            this.mapping.Add(relationType.AssociationType,
-                new AssociationTypeModel(this, relationType.AssociationType));
+            this.mapping.Add(relationType.AssociationType, new AssociationTypeModel(this, relationType.AssociationType));
             this.mapping.Add(relationType.RoleType, new RoleTypeModel(this, relationType.RoleType));
+        }
+
+        foreach (var record in this.MetaPopulation.Records)
+        {
+            this.mapping.Add(record, new RecordModel(this, record));
         }
 
         foreach (var methodType in this.MetaPopulation.MethodTypes)
@@ -61,6 +65,8 @@ public class MetaModel
     public IEnumerable<ClassModel> Classes => this.MetaPopulation.Classes.Select(this.Map);
 
     public IEnumerable<RelationTypeModel> RelationTypes => this.MetaPopulation.RelationTypes.Select(this.Map);
+
+    public IEnumerable<RecordModel> Records => this.MetaPopulation.Records.Select(this.Map);
 
     public IEnumerable<MethodTypeModel> MethodTypes => this.MetaPopulation.MethodTypes.Select(this.Map);
 
@@ -151,6 +157,8 @@ public class MetaModel
     public AssociationTypeModel Map(IAssociationType v) => (AssociationTypeModel)this.mapping[v];
 
     public RoleTypeModel Map(IRoleType v) => (RoleTypeModel)this.mapping[v];
+
+    public RecordModel Map(IRecord v) => (RecordModel)this.mapping[v];
 
     public MethodTypeModel Map(IMethodType v) => (MethodTypeModel)this.mapping[v];
     #endregion

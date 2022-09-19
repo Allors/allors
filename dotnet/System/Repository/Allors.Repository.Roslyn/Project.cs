@@ -1,4 +1,4 @@
-// -------------------------------------------------------------------------------------------------
+﻿// -------------------------------------------------------------------------------------------------
 // <copyright file="RepositoryProject.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
@@ -207,9 +207,7 @@ public class Project
                     var symbol = semanticModel.GetDeclaredSymbol(interfaceDeclaration);
                     var interfaceSingularName = symbol.Name;
 
-                    var @interface = new Interface(this.inflector, this.Repository.Objects, interfaceSingularName, domain);
-                    var xmlDoc = symbol.GetDocumentationCommentXml(null, true);
-                    @interface.XmlDoc = !string.IsNullOrWhiteSpace(xmlDoc) ? new XmlDoc(xmlDoc) : null;
+                    _ = new Interface(this.inflector, this.Repository.Objects, interfaceSingularName, domain);
                 }
             }
 
@@ -224,9 +222,7 @@ public class Project
                     var symbol = semanticModel.GetDeclaredSymbol(classDeclaration);
                     var classSingularName = symbol.Name;
 
-                    var @class = new Class(this.inflector, this.Repository.Objects, classSingularName, domain);
-                    var xmlDoc = symbol.GetDocumentationCommentXml(null, true);
-                    @class.XmlDoc = !string.IsNullOrWhiteSpace(xmlDoc) ? new XmlDoc(xmlDoc) : null;
+                    _ = new Class(this.inflector, this.Repository.Objects, classSingularName, domain);
                 }
             }
         }
@@ -277,10 +273,7 @@ public class Project
                 if (RepositoryNamespaceName.Equals(symbol.ContainingNamespace.ToDisplayString()))
                 {
                     var recordName = symbol.Name;
-                    var record = this.Repository.Objects.OfType<Record>().FirstOrDefault(v => v.Name == recordName) ??
-                                 new Record(this.Repository.Objects, recordName);
-                    var xmlDoc = symbol.GetDocumentationCommentXml(null, true);
-                    record.XmlDoc = !string.IsNullOrWhiteSpace(xmlDoc) ? new XmlDoc(xmlDoc) : null;
+                    _ = this.Repository.Objects.OfType<Record>().FirstOrDefault(v => v.Name == recordName) ?? new Record(this.Repository.Objects, recordName);
                 }
             }
         }

@@ -4,7 +4,8 @@ using Database.Meta;
 
 public abstract class PropertyTypeModel : OperandTypeModel
 {
-    protected PropertyTypeModel(MetaModel metaModel) : base(metaModel)
+    protected PropertyTypeModel(MetaModel metaModel)
+        : base(metaModel)
     {
     }
 

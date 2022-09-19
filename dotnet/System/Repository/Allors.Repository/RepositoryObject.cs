@@ -1,4 +1,4 @@
-namespace Allors.Repository;
+﻿namespace Allors.Repository;
 
 using System;
 using System.Collections.Generic;

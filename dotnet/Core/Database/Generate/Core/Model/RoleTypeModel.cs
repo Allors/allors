@@ -4,7 +4,8 @@ using Database.Meta;
 
 public class RoleTypeModel : PropertyTypeModel
 {
-    public RoleTypeModel(MetaModel metaModel, IRoleType roleType) : base(metaModel) => this.RoleType = roleType;
+    public RoleTypeModel(MetaModel metaModel, IRoleType roleType)
+        : base(metaModel) => this.RoleType = roleType;
 
     public IRoleType RoleType { get; }
     protected override IMetaObject MetaObject => this.RoleType;

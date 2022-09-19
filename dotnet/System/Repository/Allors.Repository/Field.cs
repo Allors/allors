@@ -1,4 +1,4 @@
-namespace Allors.Repository.Domain;
+﻿namespace Allors.Repository.Domain;
 
 using System.Collections.Generic;
 using Microsoft.CodeAnalysis;
@@ -13,9 +13,6 @@ public class Field : RepositoryObject
         var propertySymbol = (IPropertySymbol)semanticModel.GetDeclaredSymbol(propertyDeclaration);
         this.Name = propertySymbol.Name;
 
-        var xmlDocString = propertySymbol.GetDocumentationCommentXml(null, true);
-        this.XmlDoc = !string.IsNullOrWhiteSpace(xmlDocString) ? new XmlDoc(xmlDocString) : null;
-
         record.Fields.Add(this);
 
         objects.Add(this);
@@ -24,8 +21,6 @@ public class Field : RepositoryObject
     public string Name { get; }
 
     public Record Record { get; }
-
-    public XmlDoc XmlDoc { get; set; }
 
     public FieldObjectType Type { get; set; }
 

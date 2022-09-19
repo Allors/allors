@@ -1,4 +1,4 @@
-// <copyright file="Composite.cs" company="Allors bvba">
+﻿// <copyright file="Composite.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -25,8 +25,6 @@ public abstract class Composite : ObjectType
         this.InheritedReverseProperties = new HashSet<Property>();
         this.Methods = new HashSet<Method>();
     }
-
-    public XmlDoc XmlDoc { get; set; }
 
     public string PluralName
     {

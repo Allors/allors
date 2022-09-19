@@ -1,4 +1,4 @@
-namespace Allors.Meta.Generation.Model;
+﻿namespace Allors.Meta.Generation.Model;
 
 using System;
 

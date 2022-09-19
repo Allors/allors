@@ -1,4 +1,4 @@
-namespace Generate.Model;
+﻿namespace Generate.Model;
 
 using System;
 using System.Collections.Generic;
@@ -93,6 +93,8 @@ public class RepositoryModel
     public IEnumerable<InterfaceModel> Interfaces => this.Repository.Objects.OfType<Interface>().Select(this.Map);
 
     public IEnumerable<ClassModel> Classes => this.Repository.Objects.OfType<Class>().Select(this.Map);
+
+    public IEnumerable<RecordModel> Records => this.Repository.Objects.OfType<Record>().Select(this.Map);
 
     private void CheckId(ISet<Guid> ids, string id, string name, string key)
     {

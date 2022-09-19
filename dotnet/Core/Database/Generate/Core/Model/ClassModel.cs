@@ -1,4 +1,4 @@
-namespace Allors.Meta.Generation.Model;
+﻿namespace Allors.Meta.Generation.Model;
 
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +6,8 @@ using Database.Meta;
 
 public sealed class ClassModel : CompositeModel
 {
-    public ClassModel(MetaModel metaModel, Class @class) : base(metaModel) => this.Class = @class;
+    public ClassModel(MetaModel metaModel, Class @class)
+        : base(metaModel) => this.Class = @class;
 
     public Class Class { get; }
 

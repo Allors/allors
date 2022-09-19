@@ -6,7 +6,8 @@ using Database.Meta;
 
 public class RelationTypeModel : MetaObjectModel, IMetaIdentifiableObjectModel
 {
-    public RelationTypeModel(MetaModel metaModel, IRelationType relationType) : base(metaModel) => this.RelationType = relationType;
+    public RelationTypeModel(MetaModel metaModel, IRelationType relationType)
+        : base(metaModel) => this.RelationType = relationType;
 
     public IRelationType RelationType { get; }
     protected override IMetaObject MetaObject => this.RelationType;

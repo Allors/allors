@@ -1,4 +1,4 @@
-namespace Generate.Model;
+﻿namespace Generate.Model;
 
 using System.Linq;
 using Allors.Repository;
@@ -15,8 +15,6 @@ public class RecordModel : FieldObjectTypeModel
     public override FieldObjectType FieldObjectType => this.Record;
 
     public string Name => this.Record.Name;
-
-    public XmlDoc XmlDoc => this.Record.XmlDoc;
 
     public FieldModel[] Fields => this.Record.Fields.Select(this.RepositoryModel.Map).ToArray();
 }

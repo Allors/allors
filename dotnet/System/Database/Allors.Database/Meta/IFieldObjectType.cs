@@ -2,9 +2,9 @@
 
 using System;
 
-public interface IFieldObjectType : IMetaObject
+public interface IFieldObjectType : IMetaIdentifiableObject
 {
     string Name { get; }
-    
+
     Type ClrType { get; }
 }

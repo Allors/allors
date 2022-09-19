@@ -5,7 +5,8 @@ using Database.Meta;
 
 public class MethodTypeModel : OperandTypeModel, IMetaIdentifiableObjectModel
 {
-    public MethodTypeModel(MetaModel metaModel, IMethodType methodType) : base(metaModel) => this.MethodType = methodType;
+    public MethodTypeModel(MetaModel metaModel, IMethodType methodType)
+        : base(metaModel) => this.MethodType = methodType;
 
     public IMethodType MethodType { get; }
     protected override IMetaObject MetaObject => this.MethodType;

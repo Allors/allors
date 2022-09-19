@@ -1,4 +1,4 @@
-namespace Generate.Model;
+﻿namespace Generate.Model;
 
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +12,6 @@ public class DomainModel : RepositoryObjectModel
     public Domain Domain { get; }
 
     protected override RepositoryObject RepositoryObject => this.Domain;
-
-    public string Id => (string)((dynamic)this.Domain.AttributeByName.Get("Id"))?.Value;
 
     public string Name => this.Domain.Name;
 

@@ -1,4 +1,4 @@
-// <copyright file="StringTemplate.cs" company="Allors bvba">
+﻿// <copyright file="StringTemplate.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -30,6 +30,7 @@ public class StringTemplate
     private const string GenerationKey = "generation";
     private const string DomainKey = "domain";
     private const string ObjectTypeKey = "objectType";
+    private const string RecordKey = "record";
     private const string RelationTypeKey = "relationType";
     private const string MethodTypeKey = "methodType";
     private const string WorkspaceNameKey = "workspaceName";
@@ -124,6 +125,9 @@ public class StringTemplate
                             break;
                         case ObjectTypeModel objectType:
                             template.Add(ObjectTypeKey, objectType);
+                            break;
+                        case RecordModel record:
+                            template.Add(RecordKey, record);
                             break;
                         case RelationTypeModel relationType:
                             template.Add(RelationTypeKey, relationType);

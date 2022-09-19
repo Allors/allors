@@ -8,7 +8,7 @@ namespace Allors.Database.Meta;
 
 using System;
 
-public interface IObjectType : IFieldObjectType, IMetaIdentifiableObject, IComparable
+public interface IObjectType : IFieldObjectType, IComparable
 {
     string SingularName { get; }
 

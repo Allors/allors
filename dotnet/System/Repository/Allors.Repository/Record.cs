@@ -1,4 +1,4 @@
-namespace Allors.Repository.Domain;
+﻿namespace Allors.Repository.Domain;
 
 using System.Collections.Generic;
 
@@ -14,8 +14,6 @@ public class Record : FieldObjectType
     }
 
     public string Name { get; }
-
-    public XmlDoc XmlDoc { get; set; }
 
     public ISet<Field> Fields { get; }
 }

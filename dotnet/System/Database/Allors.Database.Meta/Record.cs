@@ -1,4 +1,4 @@
-namespace Allors.Database.Meta;
+﻿namespace Allors.Database.Meta;
 
 using System;
 using System.Collections.Generic;
@@ -6,25 +6,17 @@ using System.Linq;
 
 public class Record : FieldObjectType, IRecord
 {
-    private string[] assignedWorkspaceNames;
     private Type clrType;
     private string[] derivedWorkspaceNames;
     private FieldType[] fieldTypes;
 
-
-    protected Record(MetaPopulation metaPopulation, Guid id, string tag = null) : base(metaPopulation, id, tag) =>
-        metaPopulation.OnRecordCreated(this);
-
-    public string[] AssignedWorkspaceNames
+    public Record(MetaPopulation metaPopulation, string name, Guid id, string tag = null)
+        : base(metaPopulation, id, tag)
     {
-        get => this.assignedWorkspaceNames;
+        this.Name = name;
+        this.fieldTypes = Array.Empty<FieldType>();
 
-        set
-        {
-            this.MetaPopulation.AssertUnlocked();
-            this.assignedWorkspaceNames = value;
-            this.MetaPopulation.Stale();
-        }
+        metaPopulation.OnRecordCreated(this);
     }
 
     public FieldType[] FieldTypes
@@ -37,6 +29,8 @@ public class Record : FieldObjectType, IRecord
             this.MetaPopulation.Stale();
         }
     }
+
+    public override string Name { get; }
 
     public override Type ClrType => this.clrType;
 
@@ -59,8 +53,7 @@ public class Record : FieldObjectType, IRecord
         this.derivedWorkspaceNames = workspaceNames?.ToArray() ?? Array.Empty<string>();
     }
 
-    internal void PrepareWorkspaceNames(IDictionary<Record, ISet<string>> workspaceNamesByRecord, ISet<Record> visited,
-        string[] methodWorkspaceNames)
+    internal void PrepareWorkspaceNames(IDictionary<Record, ISet<string>> workspaceNamesByRecord, ISet<Record> visited, string[] methodWorkspaceNames)
     {
         if (visited.Contains(this))
         {

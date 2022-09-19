@@ -4,7 +4,8 @@ using Database.Meta;
 
 public class InterfaceModel : CompositeModel
 {
-    public InterfaceModel(MetaModel metaModel, Interface @interface) : base(metaModel) => this.Interface = @interface;
+    public InterfaceModel(MetaModel metaModel, Interface @interface)
+        : base(metaModel) => this.Interface = @interface;
 
     public Interface Interface { get; }
     protected override IMetaObject MetaObject => this.Interface;

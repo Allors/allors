@@ -1,4 +1,4 @@
-namespace Allors.Database.Meta;
+﻿namespace Allors.Database.Meta;
 
 public interface IFieldType : IMetaIdentifiableObject
 {

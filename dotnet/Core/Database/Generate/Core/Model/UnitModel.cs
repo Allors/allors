@@ -1,10 +1,11 @@
-namespace Allors.Meta.Generation.Model;
+﻿namespace Allors.Meta.Generation.Model;
 
 using Database.Meta;
 
 public class UnitModel : ObjectTypeModel
 {
-    public UnitModel(MetaModel metaModel, IUnit unit) : base(metaModel) => this.Unit = unit;
+    public UnitModel(MetaModel metaModel, IUnit unit)
+        : base(metaModel) => this.Unit = unit;
 
     public IUnit Unit { get; }
     protected override IMetaObject MetaObject => this.Unit;

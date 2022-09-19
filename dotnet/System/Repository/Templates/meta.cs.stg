@@ -2,7 +2,7 @@ group AllorsCSharpRepository;
 
 TemplateId() ::= <<14F49218-A676-43ba-9CBD-B8FFA059D1BF>>
 TemplateName() ::= <<Allors C# Meta>>
-TemplateVersion() ::= <<3.0.14>>
+TemplateVersion() ::= <<3.0.15>>
 TemplateAllors() ::= <<1.0>>
 TemplateConfiguration(repository) ::= <<
 $!
@@ -40,11 +40,17 @@ namespace Allors.Database.Meta
     using System;
 
     public partial class Ids {
+        // Domains
 $repository.Domains:{assembly|$ids_domain(assembly)$}; separator="\n"$
 
+        // Units
 $repository.Units:{unit|$ids_unit(unit)$}; separator="\n"$
 
+        // Composites
 $repository.composites:{composite|$ids_composite(composite)$}; separator="\n"$
+
+        // Records
+$repository.records:{record|$ids_record(record)$}; separator="\n"$
     }
 }
 >>
@@ -64,6 +70,12 @@ $composite.DefinedMethods:{method|$ids_composite_methodType(method)$}; separator
 
 >>
 
+ids_record(record) ::= <<
+        public static readonly Guid $record.Name$ = new Guid("$record.Id$");
+$record.Fields:{field|$ids_record_field(field)$}; separator="\n"$
+
+>>
+
 ids_composite_property(property) ::= <<
         public static readonly Guid $composite.SingularName$$property.RoleName$ = new Guid("$property.Id$");
 >>
@@ -71,6 +83,11 @@ ids_composite_property(property) ::= <<
 ids_composite_methodType(method) ::= <<
         public static readonly Guid $composite.SingularName$$method.Name$ = new Guid("$method.Id$");
 >>
+
+ids_record_field(field) ::= <<
+        public static readonly Guid $record.Name$$field.Name$ = new Guid("$field.Id$");
+>>
+
 
 m(repository) ::= <<
 namespace Allors.Database.Meta
@@ -244,6 +261,13 @@ $repository.Domains:{assembly|              public Domain $assembly.Name$;}; sep
         }
         #endregion
 
+	    #region Records
+        internal class Records
+        {
+$repository.Records:{record|$define_records(record)$}; separator="\n"$
+        }
+        #endregion
+
 	    #region RelationTypes
         internal class RelationTypes
         {
@@ -261,6 +285,7 @@ $repository.Composites:{composite|$define_methods(composite)$}; separator="\n"$
         public M Build() {
             var meta =  new M();
             var domains = new Domains();
+            var records = new Records();
             var relationTypes = new RelationTypes();
             var methodTypes = new MethodTypes();
 
@@ -270,8 +295,9 @@ $repository.Composites:{composite|$define_methods(composite)$}; separator="\n"$
             this.BuildInterfaces(meta, domains);
             this.BuildClasses(meta, domains);
             this.BuildInheritances(meta, domains);
+            this.BuildRecords(meta, domains, records);
             this.BuildRelationTypes(meta, domains, relationTypes);
-            this.BuildMethodTypes(meta, domains, methodTypes);
+            this.BuildMethodTypes(meta, domains, methodTypes, records);
 
             meta.StructuralDerive();
 
@@ -316,6 +342,11 @@ $repository.Classes:{class|$build_class(class)$}; separator="\n"$
 $repository.Composites:{composite|$inheritance(composite)$}; separator="\n"$
 		}
 
+		private void BuildRecords(M meta, Domains domains, Records records)
+		{
+$repository.Records:{record|$build_record(record)$}; separator="\n"$
+		}
+
 		private void BuildRelationTypes(M meta, Domains domains, RelationTypes relationTypes)
 		{
 $repository.Composites:{composite|$build_relations(composite)$}; separator="\n"$
@@ -323,7 +354,7 @@ $repository.Composites:{composite|$build_relations(composite)$}; separator="\n"$
 
 $repository.Composites:{composite|$relations(composite)$}; separator="\n"$
 
-		private void BuildMethodTypes(M meta, Domains domains, MethodTypes methodTypes)
+		private void BuildMethodTypes(M meta, Domains domains, MethodTypes methodTypes, Records records)
 		{
 $repository.Composites:{composite|$build_methods(composite)$}; separator="\n"$
 		}
@@ -351,6 +382,10 @@ $repository.Composites:{composite|$assign_methods(composite)$}; separator="\n"$
 $repository.Composites:{composite|$methods(composite)$}; separator="\n"$
 	}
 }
+>>
+
+define_records(record) ::= <<
+            public Record $record.Name$;
 >>
 
 define_relationTypes(composite) ::= <<
@@ -408,6 +443,8 @@ build_class(class) ::= <<
 
 inheritance(composite) ::= <<$composite.ImplementedInterfaces:{implementedInterface|$build_inheritance(composite, implementedInterface)$}; separator="\n"$>>
 build_inheritance(composite, implementedInterface) ::= <<            new Inheritance(meta){ Subtype = meta.$composite.SingularName$, Supertype = meta.$implementedInterface.SingularName$};>>
+
+build_record(record) ::= <<            records.$record.Name$ = new Record(meta, "$record.Name$", Ids.$record.Name$);>>
 
 build_relations(composite) ::= <<
 $composite.DefinedProperties:{property|                 this.Build$property.DefiningType.SingularName$$property.RoleName$(meta, domains, relationTypes);}; separator="\n"$
@@ -492,16 +529,18 @@ assign_inheritedmethodType(method) ::= <<
 
 
 build_methods(composite) ::= <<
-$composite.DefinedMethods:{method|     this.Build$method.DefiningType.SingularName$$method.Name$(meta, domains, methodTypes);}; separator="\n"$
+$composite.DefinedMethods:{method|              this.Build$method.DefiningType.SingularName$$method.Name$(meta, domains, methodTypes, records);}; separator="\n"$
 >>
 
 methods(composite) ::= <<$composite.DefinedMethods:{method|$method(method)$}; separator="\n"$>>
 method(method) ::= <<
-        private void Build$method.DefiningType.SingularName$$method.Name$(M meta, Domains domains, MethodTypes methodTypes)
+        private void Build$method.DefiningType.SingularName$$method.Name$(M meta, Domains domains, MethodTypes methodTypes, Records records)
         {
             methodTypes.$method.DefiningType.SingularName$$method.Name$ = new MethodType(meta.$method.DefiningType.SingularName$, Ids.$method.DefiningType.SingularName$$method.Name$)
             {
                 Name = "$method.Name$",
+$if(method.Input)$		        Input = records.$method.Input.Name$,$endif$
+$if(method.Output)$		        Output = records.$method.Output.Name$,$endif$
 $if(method.WorkspaceNames)$		        AssignedWorkspaceNames = new[] {$method.WorkspaceNames:{name|"$name$"}; separator=", "$},$endif$
             };
         }

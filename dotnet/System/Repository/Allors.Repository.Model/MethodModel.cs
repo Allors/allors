@@ -1,4 +1,4 @@
-namespace Generate.Model;
+﻿namespace Generate.Model;
 
 using Allors.Repository;
 using Allors.Repository.Domain;
@@ -16,10 +16,6 @@ public class MethodModel : RepositoryObjectModel
     public string[] WorkspaceNames => this.Method.WorkspaceNames;
 
     public string Name => this.Method.Name;
-
-    public string Id => (string)((dynamic)this.Method.AttributeByName.Get("Id"))?.Value;
-
-    public XmlDoc XmlDoc => this.Method.XmlDoc;
 
     public MethodModel DefiningMethod => this.RepositoryModel.Map(this.Method.DefiningMethod);
 

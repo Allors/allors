@@ -1,4 +1,4 @@
-// <copyright file="Method.cs" company="Allors bvba">
+﻿// <copyright file="Method.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -23,9 +23,6 @@ public class Method : RepositoryObject
 
         var methodSymbol = semanticModel.GetDeclaredSymbol(methodDeclaration);
         this.Name = methodSymbol.Name;
-
-        var xmlDocString = methodSymbol.GetDocumentationCommentXml(null, true);
-        this.XmlDoc = !string.IsNullOrWhiteSpace(xmlDocString) ? new XmlDoc(xmlDocString) : null;
 
         composite.Methods.Add(this);
 
@@ -60,8 +57,6 @@ public class Method : RepositoryObject
     }
 
     public string Name { get; }
-
-    public XmlDoc XmlDoc { get; set; }
 
     public Method DefiningMethod { get; set; }
 

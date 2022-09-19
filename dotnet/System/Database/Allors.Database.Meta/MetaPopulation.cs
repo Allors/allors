@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Microsoft.VisualBasic.FileIO;
 
 public abstract class MetaPopulation : IMetaPopulation
 {
@@ -68,12 +69,12 @@ public abstract class MetaPopulation : IMetaPopulation
     private bool IsBound { get; set; }
     public IEnumerable<Domain> Domains => this.domains;
     public IEnumerable<Class> Classes => this.classes;
-
     public IEnumerable<Inheritance> Inheritances => this.inheritances;
     public IEnumerable<RelationType> RelationTypes => this.relationTypes;
     public IEnumerable<Interface> Interfaces => this.interfaces;
     public IEnumerable<Composite> Composites => this.structuralDerivedComposites;
     public IEnumerable<Unit> Units => this.units;
+    public IEnumerable<Record> Records => this.records;
     public IEnumerable<MethodType> MethodTypes => this.methodTypes;
 
     IEnumerable<IDomain> IMetaPopulation.Domains => this.Domains;
@@ -510,6 +511,9 @@ public abstract class MetaPopulation : IMetaPopulation
     internal void OnRecordCreated(Record record)
     {
         this.records.Add(record);
+        this.metaObjectById.Add(record.Id, record);
+        this.metaObjectByTag.Add(record.Tag, record);
+
         this.Stale();
     }
 

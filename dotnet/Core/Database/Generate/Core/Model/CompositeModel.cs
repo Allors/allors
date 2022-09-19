@@ -6,7 +6,8 @@ using Database.Meta;
 
 public abstract class CompositeModel : ObjectTypeModel
 {
-    protected CompositeModel(MetaModel metaModel) : base(metaModel)
+    protected CompositeModel(MetaModel metaModel)
+        : base(metaModel)
     {
     }
 

@@ -1,4 +1,4 @@
-// <copyright file="Property.cs" company="Allors bvba">
+﻿// <copyright file="Property.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -17,8 +17,7 @@ public class Property : RepositoryObject
 {
     private readonly Inflector inflector;
 
-    public Property(Inflector inflector, ISet<RepositoryObject> objects, Domain domain, SemanticModel semanticModel, Composite composite,
-        PropertyDeclarationSyntax propertyDeclaration)
+    public Property(Inflector inflector, ISet<RepositoryObject> objects, Domain domain, SemanticModel semanticModel, Composite composite, PropertyDeclarationSyntax propertyDeclaration)
     {
         this.inflector = inflector;
 
@@ -27,9 +26,6 @@ public class Property : RepositoryObject
 
         var propertySymbol = semanticModel.GetDeclaredSymbol(propertyDeclaration);
         this.RoleName = propertySymbol.Name;
-
-        var xmlDocString = propertySymbol.GetDocumentationCommentXml(null, true);
-        this.XmlDoc = !string.IsNullOrWhiteSpace(xmlDocString) ? new XmlDoc(xmlDocString) : null;
 
         composite.Properties.Add(this);
         domain.Properties.Add(this);
@@ -47,8 +43,6 @@ public class Property : RepositoryObject
             return attribute?.Names ?? Array.Empty<string>();
         }
     }
-
-    public XmlDoc XmlDoc { get; set; }
 
     public Composite DefiningType { get; }
 

@@ -5,7 +5,8 @@ using Database.Meta;
 
 public abstract class OperandTypeModel : MetaObjectModel
 {
-    protected OperandTypeModel(MetaModel metaModel) : base(metaModel) { }
+    protected OperandTypeModel(MetaModel metaModel)
+        : base(metaModel) { }
 
     protected abstract IOperandType OperandType { get; }
 

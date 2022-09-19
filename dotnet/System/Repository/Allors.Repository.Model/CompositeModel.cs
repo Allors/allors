@@ -1,4 +1,4 @@
-namespace Generate.Model;
+﻿namespace Generate.Model;
 
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +9,6 @@ public abstract class CompositeModel : ObjectTypeModel
     protected CompositeModel(RepositoryModel repositoryModel) : base(repositoryModel) { }
 
     public abstract Composite Composite { get; }
-
-    public XmlDoc XmlDoc => this.Composite.XmlDoc;
 
     public string PluralName => this.Composite.PluralName;
 
