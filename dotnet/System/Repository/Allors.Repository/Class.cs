@@ -1,4 +1,4 @@
-// <copyright file="Class.cs" company="Allors bvba">
+﻿// <copyright file="Class.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -6,7 +6,6 @@
 
 namespace Allors.Repository.Domain;
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Inflector;
@@ -16,15 +15,6 @@ public class Class : Composite
     public Class(Inflector inflector, ISet<RepositoryObject> objects, string name, Domain domain)
         : base(inflector, objects, name, domain)
     {
-    }
-
-    public string[] WorkspaceNames
-    {
-        get
-        {
-            dynamic attribute = this.AttributeByName.Get("Workspace");
-            return attribute?.Names ?? Array.Empty<string>();
-        }
     }
 
     public override Interface[] Interfaces

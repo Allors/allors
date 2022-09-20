@@ -5,7 +5,7 @@
 namespace Allors.Repository;
 
 using Attributes;
-using static Workspaces;
+
 
 #region Allors
 [Id("355AEFD2-F5B2-499A-81D2-DD9C9F62832C")]
@@ -17,7 +17,6 @@ public class MediaTyped : Object
     #endregion
     [Size(-1)]
     [MediaType("text/markdown")]
-    [Workspace(Default)]
     public string Markdown { get; set; }
 
     #region inherited

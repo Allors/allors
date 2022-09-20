@@ -6,7 +6,7 @@
 namespace Allors.Repository;
 
 using Attributes;
-using static Workspaces;
+
 
 #region Allors
 [Id("2288E1F3-5DC5-458B-9F5E-076F133890C0")]
@@ -18,7 +18,7 @@ public class LocalizedMedia : Localized, Deletable
     [Indexed]
     #endregion
     [SingleAssociation]
-    [Workspace(Default)]
+    
     public Media Media { get; set; }
 
     #region inherited

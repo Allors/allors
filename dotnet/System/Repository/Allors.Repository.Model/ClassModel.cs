@@ -20,8 +20,6 @@ public class ClassModel : CompositeModel
 
     public override InterfaceModel[] Interfaces => this.Class.Interfaces.Select(this.RepositoryModel.Map).ToArray();
 
-    public string[] WorkspaceNames => this.Class.WorkspaceNames;
-
     public PropertyModel[] InheritedRequiredProperties => this.InheritedProperties.Where(v => v.Required).ToArray();
 
     public PropertyModel[] InheritedUniqueProperties => this.InheritedProperties.Where(v => v.Unique).ToArray();

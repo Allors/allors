@@ -14,8 +14,6 @@ public class PropertyModel : RepositoryObjectModel
 
     public Domain Domain => this.Property.Domain;
 
-    public string[] WorkspaceNames => this.Property.WorkspaceNames;
-
     public bool Required => (bool)(((dynamic)this.Property.AttributeByName.Get("Required"))?.Value ?? false);
 
     public bool Unique => (bool)(((dynamic)this.Property.AttributeByName.Get("Unique"))?.Value ?? false);

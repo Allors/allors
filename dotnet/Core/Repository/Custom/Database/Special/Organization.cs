@@ -6,12 +6,12 @@ namespace Allors.Repository;
 
 using System;
 using Attributes;
-using static Workspaces;
+
 
 #region Allors
 [Id("3a5dcec7-308f-48c7-afee-35d38415aa0b")]
 #endregion
-[Workspace(Default)]
+
 public class Organization : Deletable, UniquelyIdentifiable
 {
     #region Allors
@@ -25,13 +25,13 @@ public class Organization : Deletable, UniquelyIdentifiable
     [Id("49b96f79-c33d-4847-8c64-d50a6adb4985")]
     #endregion
     [SingleAssociation]
-    [Workspace(Default)]
+    
     public Person[] Employees { get; set; }
 
     #region Allors
     [Id("dbef262d-7184-4b98-8f1f-cf04e884bb92")]
     [Indexed]
-    [Workspace(Default)]
+    
     #endregion
     [SingleAssociation]
     public Person Manager { get; set; }
@@ -40,13 +40,13 @@ public class Organization : Deletable, UniquelyIdentifiable
     [Id("845ff004-516f-4ad5-9870-3d0e966a9f7d")]
     [Indexed]
     #endregion
-    [Workspace(Default)]
+    
     public Person Owner { get; set; }
 
     #region Allors
     [Id("15f33fa4-c878-45a0-b40c-c5214bce350b")]
     [Indexed]
-    [Workspace(Default)]
+    
     #endregion
 
     public Person[] Shareholders { get; set; }
@@ -82,7 +82,7 @@ public class Organization : Deletable, UniquelyIdentifiable
     [Indexed]
     #endregion
     [Size(256)]
-    [Workspace(Default)]
+    
     public string Name { get; set; }
 
     #region Allors
@@ -95,14 +95,14 @@ public class Organization : Deletable, UniquelyIdentifiable
     #region Allors
     [Id("D3DB6E8C-9C10-47BA-92B1-45F5DDFFA5CC")]
     #endregion
-    [Workspace(Default)]
+    
     [Indexed]
     public Person CycleOne { get; set; }
 
     #region Allors
     [Id("C6CCA1C5-5799-4517-87F5-095DA0EEEC64")]
     #endregion
-    [Workspace(Default)]
+    
     [Indexed]
     public Person[] CycleMany { get; set; }
 
@@ -110,28 +110,28 @@ public class Organization : Deletable, UniquelyIdentifiable
     [Id("607C1D85-E722-40BC-A4D6-0C6A7244AF6A")]
     [Indexed]
     #endregion
-    [Workspace(Default)]
+    
     public Data OneData { get; set; }
 
     #region Allors
     [Id("897DA15E-C250-441F-8F5C-6F9F3E7870EB")]
     [Indexed]
     #endregion
-    [Workspace(Default)]
+    
     public Data[] ManyDatas { get; set; }
 
     #region Allors
     [Id("BC94072C-8F69-45AE-AED0-C056758F78F3")]
     #endregion
     [Required]
-    [Workspace(Default)]
+    
     public bool JustDidIt { get; set; }
 
     #region Allors
     [Id("BABDCD10-5A5C-417A-9D34-2EA47F207A91")]
     #endregion
     [Derived]
-    [Workspace(Default)]
+    
     public bool JustDidItDerived { get; set; }
 
     #region Allors
@@ -147,11 +147,11 @@ public class Organization : Deletable, UniquelyIdentifiable
     public bool PostDeriveTriggered { get; set; }
 
     [Id("1869873F-F2F0-4D03-A0F9-7DC73491C117")]
-    [Workspace(Default)]
+    
     public void JustDoIt() { }
 
     [Id("2CD2FF48-93FC-4C7D-BF2F-3F411D0DF7C3")]
-    [Workspace(Default)]
+    
     public void ToggleCanWrite() { }
 
     #region inherited

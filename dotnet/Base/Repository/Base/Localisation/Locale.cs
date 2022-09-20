@@ -6,19 +6,19 @@
 namespace Allors.Repository;
 
 using Attributes;
-using static Workspaces;
+
 
 #region Allors
 [Id("45033ae6-85b5-4ced-87ce-02518e6c27fd")]
 #endregion
-[Workspace(Default)]
+
 public class Locale : Object
 {
     #region Allors
     [Id("2a2c6f77-e6a2-4eab-bfe3-5d35a8abd7f7")]
     [Size(256)]
     #endregion
-    [Workspace(Default)]
+    
     public string Name { get; set; }
 
     #region Allors
@@ -26,7 +26,7 @@ public class Locale : Object
     #endregion
     [Indexed]
     [Required]
-    [Workspace(Default)]
+    
     public Language Language { get; set; }
 
     #region Allors
@@ -34,7 +34,7 @@ public class Locale : Object
     #endregion
     [Indexed]
     [Required]
-    [Workspace(Default)]
+    
     public Country Country { get; set; }
 
     #region inherited

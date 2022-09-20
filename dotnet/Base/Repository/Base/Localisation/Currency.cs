@@ -7,7 +7,7 @@ namespace Allors.Repository;
 
 using System;
 using Attributes;
-using static Workspaces;
+
 
 #region Allors
 [Id("fd397adf-40b4-4ef8-b449-dd5a24273df3")]
@@ -20,7 +20,7 @@ public class Currency : Enumeration, Object
     #endregion
     [Required]
     [Size(256)]
-    [Workspace(Default)]
+    
     public string IsoCode { get; set; }
 
     #region inherited

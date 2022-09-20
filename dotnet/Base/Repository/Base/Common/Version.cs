@@ -6,7 +6,7 @@ namespace Allors.Repository;
 
 using System;
 using Attributes;
-using static Workspaces;
+
 
 #region Allors
 [Id("A6A3C79E-150B-4586-96EA-5AC0E2E638C6")]
@@ -22,6 +22,6 @@ public interface Version : Object
     #region Allors
     [Id("ADF611C3-047A-4BAE-95E3-776022D5CE7B")]
     #endregion
-    [Workspace(Default)]
+    
     DateTime DerivationTimeStamp { get; set; }
 }

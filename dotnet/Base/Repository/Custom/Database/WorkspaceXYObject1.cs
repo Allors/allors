@@ -1,37 +1,37 @@
-// <copyright file="WorkspaceXYObject1.cs" company="Allors bv">
+﻿// <copyright file="WorkspaceXYObject1.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // </copyright>
 
 namespace Allors.Repository;
 
 using Attributes;
-using static Workspaces;
+
 
 #region Allors
 [Id("98C0FF20-FE92-49EB-B99D-D0008F17AE98")]
 #endregion
-[Workspace(X, Y)]
+
 public class WorkspaceXYObject1 : Object
 {
     #region Allors
     [Id("C5213C10-7594-4738-810A-9E20231E12BC")]
     [Indexed]
     #endregion
-    [Workspace(X)]
+    
     public string WorkspaceXString { get; set; }
 
     #region Allors
     [Id("DFB48A4A-9A3D-4D68-B619-25E65FBE2678")]
     [Indexed]
     #endregion
-    [Workspace(Y)]
+    
     public string WorkspaceYString { get; set; }
 
     #region Allors
     [Id("D73B0673-9C3C-4607-BDD0-62EED374D648")]
     [Indexed]
     #endregion
-    [Workspace(X, Y)]
+    
     public string WorkspaceXYString { get; set; }
 
     #region Allors
@@ -44,56 +44,56 @@ public class WorkspaceXYObject1 : Object
     [Id("3CEC2045-58CE-47DD-A9FF-F5A00C8F465D")]
     [Indexed]
     #endregion
-    [Workspace(X)]
+    
     public WorkspaceXObject2[] WorkspaceXToWorkspaceXObject2 { get; set; }
 
     #region Allors
     [Id("50397978-E647-48EB-880C-ED2E0F1510A9")]
     [Indexed]
     #endregion
-    [Workspace(X)]
+    
     public WorkspaceYObject2[] WorkspaceXToWorkspaceYObject2 { get; set; }
 
     #region Allors
     [Id("B09F6E18-71E0-4424-8490-7B222656D64C")]
     [Indexed]
     #endregion
-    [Workspace(X)]
+    
     public WorkspaceXYObject2[] WorkspaceXToWorkspaceXYObject2 { get; set; }
 
     #region Allors
     [Id("74599039-37F5-41AD-83BB-A7DBBC2ABF0A")]
     [Indexed]
     #endregion
-    [Workspace(X)]
+    
     public WorkspaceNonObject2[] WorkspaceXToWorkspaceNonObject2 { get; set; }
 
     #region Allors
     [Id("AE79CB92-F841-4751-B11C-8A4C8FA394FF")]
     [Indexed]
     #endregion
-    [Workspace(Y)]
+    
     public WorkspaceXObject2[] WorkspaceYToWorkspaceXObject2 { get; set; }
 
     #region Allors
     [Id("0E5EA187-E62A-40EE-BA54-84267ADC3EB7")]
     [Indexed]
     #endregion
-    [Workspace(Y)]
+    
     public WorkspaceYObject2[] WorkspaceYToWorkspaceYObject2 { get; set; }
 
     #region Allors
     [Id("C66E4C45-CDA9-4CB0-824C-EF06EDC63DA0")]
     [Indexed]
     #endregion
-    [Workspace(Y)]
+    
     public WorkspaceXYObject2[] WorkspaceYToWorkspacXYObject2 { get; set; }
 
     #region Allors
     [Id("D5789302-42D3-4285-97E7-8B714FC1F10D")]
     [Indexed]
     #endregion
-    [Workspace(Y)]
+    
     public WorkspaceNonObject2[] WorkspaceYToWorkspaceNonObject2 { get; set; }
 
     #region Allors
@@ -127,25 +127,25 @@ public class WorkspaceXYObject1 : Object
     #region Allors
     [Id("29D0B05E-41B1-49AA-B959-CC6BD9A02750")]
     #endregion
-    [Workspace(X)]
+    
     public void DoX() { }
 
     #region Allors
     [Id("A875001A-627E-4501-9DCF-45873EEC6D0E")]
     #endregion
-    [Workspace(Y)]
+    
     public void DoY() { }
 
     #region Allors
     [Id("8AA43004-96C7-4A35-865B-59183F078B73")]
     #endregion
-    [Workspace(Y)]
+    
     public void DoXY() { }
 
     #region Allors
     [Id("0790BB5C-F373-40BC-8D26-A1234FA3578C")]
     #endregion
-    [Workspace(Y)]
+    
     public void DoNone() { }
 
     #region inherited

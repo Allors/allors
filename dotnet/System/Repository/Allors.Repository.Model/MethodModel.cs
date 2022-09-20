@@ -13,8 +13,6 @@ public class MethodModel : RepositoryObjectModel
 
     public DomainModel Domain => this.RepositoryModel.Map(this.Method.Domain);
 
-    public string[] WorkspaceNames => this.Method.WorkspaceNames;
-
     public string Name => this.Method.Name;
 
     public MethodModel DefiningMethod => this.RepositoryModel.Map(this.Method.DefiningMethod);

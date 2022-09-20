@@ -7,7 +7,7 @@ namespace Allors.Repository;
 
 using System;
 using Attributes;
-using static Workspaces;
+
 
 #region Allors
 [Id("a0309c3b-6f80-4777-983e-6e69800df5be")]
@@ -18,7 +18,7 @@ public partial interface User : UniquelyIdentifiable, SecurityTokenOwner, UserPa
     [Id("5e8ab257-1a1c-4448-aacc-71dbaaba525b")]
     #endregion
     [Size(256)]
-    [Workspace(Default)]
+    
     string UserName { get; set; }
 
     #region Allors
@@ -38,7 +38,7 @@ public partial interface User : UniquelyIdentifiable, SecurityTokenOwner, UserPa
     [Id("c1ae3652-5854-4b68-9890-a954067767fc")]
     #endregion
     [Size(256)]
-    [Workspace(Default)]
+    
     string UserEmail { get; set; }
 
     #region Allors

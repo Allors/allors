@@ -35,15 +35,6 @@ public class Property : RepositoryObject
 
     public Domain Domain { get; }
 
-    public string[] WorkspaceNames
-    {
-        get
-        {
-            dynamic attribute = this.AttributeByName.Get("Workspace");
-            return attribute?.Names ?? Array.Empty<string>();
-        }
-    }
-
     public Composite DefiningType { get; }
 
     public ObjectType ObjectType { get; set; }

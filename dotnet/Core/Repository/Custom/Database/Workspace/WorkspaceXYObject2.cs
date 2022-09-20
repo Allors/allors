@@ -5,12 +5,12 @@
 namespace Allors.Repository;
 
 using Attributes;
-using static Workspaces;
+
 
 #region Allors
 [Id("04B46AEE-10E9-493B-9F12-809460E341C7")]
 #endregion
-[Workspace(X, Y)]
+
 public class WorkspaceXYObject2 : Object
 {
     #region inherited

@@ -207,7 +207,7 @@ $record.Fields:{field|$define_field(field)$}; separator="\n"$
 >>
 
 declare_field(field) ::= <<
-        public IFieldType $field.Name$;
+        public FieldType $field.Name$;
 >>
 
 define_field(field) ::= <<
@@ -288,7 +288,7 @@ define_inheritedreversepropertyType(property) ::= <<
 >>
 
 define_methodType(method) ::= <<
-        public IMethodType $method.Name$;
+        public MethodType $method.Name$;
 >>
 
 builder(repository) ::= <<
@@ -468,7 +468,6 @@ build_class(class) ::= <<
             {
                 SingularName = "$class.SingularName$",
                 $if(class.AssignedPluralName)$PluralName = "$class.AssignedPluralName$",$endif$
-                $if(class.WorkspaceNames)$AssignedWorkspaceNames = new[] {$class.WorkspaceNames:{name|"$name$"}; separator=", "$},$endif$
             };
 >>
 
@@ -492,7 +491,6 @@ relation(property) ::= <<
         {
             relationTypes.$property.DefiningType.SingularName$$property.RoleName$ = new RelationType(meta.$property.DefiningType.SingularName$, Ids.$property.DefiningType.SingularName$$property.RoleName$, v => new Meta$property.AssociationName$(v), v => new Meta$property.DefiningType.SingularName$$property.RoleName$(v))
             {
-$if(property.WorkspaceNames)$		        AssignedWorkspaceNames = new[] {$property.WorkspaceNames:{name|"$name$"}; separator=", "$},$endif$
 $if(property.AssignedMultiplicity)$		        AssignedMultiplicity = Allors.Multiplicity.$property.AssignedMultiplicity$,$endif$
 $if(property.AttributeByName.Derived)$		        IsDerived = $property.AttributeByName.Derived.Value$,$endif$
 $if(property.AttributeByName.Indexed)$		        IsIndexed = $property.AttributeByName.Indexed.Value$,$endif$
@@ -574,7 +572,6 @@ method(method) ::= <<
                 Name = "$method.Name$",
 $if(method.Input)$		        Input = meta.$method.Input.Name$,$endif$
 $if(method.Output)$		        Output = meta.$method.Output.Name$,$endif$
-$if(method.WorkspaceNames)$		        AssignedWorkspaceNames = new[] {$method.WorkspaceNames:{name|"$name$"}; separator=", "$},$endif$
             };
         }
 >>

@@ -7,12 +7,12 @@ namespace Allors.Repository;
 
 using System;
 using Attributes;
-using static Workspaces;
+
 
 #region Allors
 [Id("da5b86a3-4f33-4c0d-965d-f4fbc1179374")]
 #endregion
-[Workspace(Default)]
+
 public class Media : UniquelyIdentifiable, Deletable, Object
 {
     #region Allors
@@ -20,7 +20,7 @@ public class Media : UniquelyIdentifiable, Deletable, Object
     #endregion
     [Indexed]
     [Derived]
-    [Workspace(Default)]
+    
     public Guid Revision { get; set; }
 
     #region Allors
@@ -29,7 +29,7 @@ public class Media : UniquelyIdentifiable, Deletable, Object
     [SingleAssociation]
     [Indexed]
     [Required]
-    [Workspace(Default)]
+    
     public MediaContent MediaContent { get; set; }
 
     #region Allors
@@ -37,28 +37,28 @@ public class Media : UniquelyIdentifiable, Deletable, Object
     #endregion
     [Indexed]
     [Size(1024)]
-    [Workspace(Default)]
+    
     public string InType { get; set; }
 
     #region Allors
     [Id("18236718-1835-430C-A936-7EC461EEE2CF")]
     #endregion
     [Size(-1)]
-    [Workspace(Default)]
+    
     public byte[] InData { get; set; }
 
     #region Allors
     [Id("79B04065-F13B-43B3-B86E-F3ADBBAAF0C4")]
     #endregion
     [Size(-1)]
-    [Workspace(Default)]
+    
     public string InDataUri { get; set; }
 
     #region Allors
     [Id("E03239E9-2039-49DC-9615-36CEA3C971D3")]
     #endregion
     [Size(256)]
-    [Workspace(Default)]
+    
     public string InFileName { get; set; }
 
     #region Allors
@@ -66,7 +66,7 @@ public class Media : UniquelyIdentifiable, Deletable, Object
     #endregion
     [Indexed]
     [Size(256)]
-    [Workspace(Default)]
+    
     public string Name { get; set; }
 
     #region Allors
@@ -74,7 +74,7 @@ public class Media : UniquelyIdentifiable, Deletable, Object
     #endregion
     [Indexed]
     [Size(1024)]
-    [Workspace(Default)]
+    
     [Derived]
     public string Type { get; set; }
 
@@ -84,7 +84,7 @@ public class Media : UniquelyIdentifiable, Deletable, Object
     [Indexed]
     [Size(256)]
     [Derived]
-    [Workspace(Default)]
+    
     public string FileName { get; set; }
 
     #region inherited

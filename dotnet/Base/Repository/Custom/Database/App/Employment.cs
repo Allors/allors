@@ -6,12 +6,12 @@ namespace Allors.Repository;
 
 using System;
 using Attributes;
-using static Workspaces;
+
 
 #region Allors
 [Id("CE633852-D115-468E-A52F-22A777E27198")]
 #endregion
-[Workspace(Default)]
+
 public class Employment : Period, Deletable
 {
     #region Allors
@@ -19,7 +19,7 @@ public class Employment : Period, Deletable
     [Indexed]
     #endregion
     [Required]
-    [Workspace(Default)]
+    
     public Person Employee { get; set; }
 
     #region Allors
@@ -27,7 +27,7 @@ public class Employment : Period, Deletable
     [Indexed]
     #endregion
     [Required]
-    [Workspace(Default)]
+    
     public Organization Employer { get; set; }
 
     #region inherited

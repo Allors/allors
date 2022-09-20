@@ -6,7 +6,7 @@
 namespace Allors.Repository;
 
 using Attributes;
-using static Workspaces;
+
 
 #region Allors
 [Id("7979a17c-0829-46df-a0d4-1b01775cfaac")]
@@ -17,6 +17,6 @@ public interface Localized : Object
     [Id("8c005a4e-5ffe-45fd-b279-778e274f4d83")]
     #endregion
     [Indexed]
-    [Workspace(Default)]
+    
     Locale Locale { get; set; }
 }

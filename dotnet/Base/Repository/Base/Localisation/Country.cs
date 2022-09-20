@@ -6,20 +6,20 @@
 namespace Allors.Repository;
 
 using Attributes;
-using static Workspaces;
+
 
 #region Allors
 [Id("c22bf60e-6428-4d10-8194-94f7be396f28")]
 #endregion
 [Plural("Countries")]
-[Workspace(Default)]
+
 public class Country : Object
 {
     #region Allors
     [Id("62009cef-7424-4ec0-8953-e92b3cd6639d")]
     #endregion
     [Indexed]
-    [Workspace(Default)]
+    
     public Currency Currency { get; set; }
 
     #region Allors
@@ -27,7 +27,7 @@ public class Country : Object
     #endregion
     [Required]
     [Size(2)]
-    [Workspace(Default)]
+    
     public string IsoCode { get; set; }
 
     #region Allors
@@ -36,7 +36,7 @@ public class Country : Object
     [Indexed]
     [Size(256)]
     [Required]
-    [Workspace(Default)]
+    
     public string Name { get; set; }
 
     #region Allors
@@ -44,7 +44,7 @@ public class Country : Object
     #endregion
     [SingleAssociation]
     [Indexed]
-    [Workspace(Default)]
+    
     public LocalizedText[] LocalizedNames { get; set; }
 
     #region inherited

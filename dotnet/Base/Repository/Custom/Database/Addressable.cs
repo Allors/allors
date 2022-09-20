@@ -5,7 +5,7 @@
 namespace Allors.Repository;
 
 using Attributes;
-using static Workspaces;
+
 
 #region Allors
 [Id("FA760DB7-59FE-49C7-8198-6A08A2DFDEF9")]
@@ -17,6 +17,6 @@ public interface Addressable : Object
     [Indexed]
     #endregion
     [Derived]
-    [Workspace(Default)]
+    
     Address Address { get; set; }
 }

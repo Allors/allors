@@ -6,19 +6,19 @@
 namespace Allors.Repository;
 
 using Attributes;
-using static Workspaces;
+
 
 #region Allors
 [Id("4092d0b4-c6f4-4b81-b023-66be3f4c90bd")]
 #endregion
-[Workspace(Default)]
+
 public class TaskAssignment : Deletable, Object
 {
     #region Allors
     [Id("c32c19f1-3f41-4d11-b19d-b8b2aa360166")]
     [Indexed]
     #endregion
-    [Workspace(Default)]
+    
     [Required]
     public User User { get; set; }
 
@@ -33,7 +33,7 @@ public class TaskAssignment : Deletable, Object
     [Id("8a01f221-480f-4d61-9a12-72e3689a8224")]
     [Indexed]
     #endregion
-    [Workspace(Default)]
+    
     [Required]
     public Task Task { get; set; }
 

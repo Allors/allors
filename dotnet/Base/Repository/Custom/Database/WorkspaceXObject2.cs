@@ -1,4 +1,4 @@
-// <copyright file="WorkspaceXObject2.cs" company="Allors bv">
+﻿// <copyright file="WorkspaceXObject2.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // </copyright>
 
@@ -9,7 +9,7 @@ using Attributes;
 #region Allors
 [Id("48E065DD-B7C0-4B94-AC7A-656BCBE1B04A")]
 #endregion
-[Workspace(Workspaces.X)]
+
 public class WorkspaceXObject2 : Object
 {
     #region inherited

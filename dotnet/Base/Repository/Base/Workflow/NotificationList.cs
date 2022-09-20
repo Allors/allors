@@ -6,7 +6,7 @@
 namespace Allors.Repository;
 
 using Attributes;
-using static Workspaces;
+
 
 #region Allors
 [Id("b6579993-4ff1-4853-b048-1f8e67419c00")]
@@ -18,7 +18,7 @@ public class NotificationList : Deletable, Object
     [SingleAssociation]
     [Indexed]
     #endregion
-    [Workspace(Default)]
+    
     public Notification[] Notifications { get; set; }
 
     #region Allors
@@ -27,7 +27,7 @@ public class NotificationList : Deletable, Object
     [Indexed]
     #endregion
     [Derived]
-    [Workspace(Default)]
+    
     public Notification[] UnconfirmedNotifications { get; set; }
 
     #region Allors
@@ -36,7 +36,7 @@ public class NotificationList : Deletable, Object
     [Indexed]
     #endregion
     [Derived]
-    [Workspace(Default)]
+    
     public Notification[] ConfirmedNotifications { get; set; }
 
     #region inherited

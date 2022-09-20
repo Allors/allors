@@ -1,4 +1,4 @@
-// <copyright file="Enumeration.cs" company="Allors bv">
+﻿// <copyright file="Enumeration.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // </copyright>
 
@@ -6,7 +6,7 @@
 namespace Allors.Repository;
 
 using Attributes;
-using static Workspaces;
+
 
 #region Allors
 [Id("b7bcc22f-03f0-46fd-b738-4e035921d445")]
@@ -19,7 +19,7 @@ public interface Enumeration : UniquelyIdentifiable, Object
     [Indexed]
     [Required]
     [Size(256)]
-    [Workspace(Default)]
+    
     string Name { get; set; }
 
     #region Allors
@@ -27,13 +27,13 @@ public interface Enumeration : UniquelyIdentifiable, Object
     #endregion
     [SingleAssociation]
     [Indexed]
-    [Workspace(Default)]
+    
     LocalizedText[] LocalizedNames { get; set; }
 
     #region Allors
     [Id("f57bb62e-77a8-4519-81e6-539d54b71cb7")]
     #endregion
     [Indexed]
-    [Workspace(Default)]
+    
     bool IsActive { get; set; }
 }

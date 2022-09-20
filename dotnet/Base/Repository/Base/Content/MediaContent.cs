@@ -6,12 +6,12 @@
 namespace Allors.Repository;
 
 using Attributes;
-using static Workspaces;
+
 
 #region Allors
 [Id("6c20422e-cb3e-4402-bb40-dacaf584405e")]
 #endregion
-[Workspace(Default)]
+
 public class MediaContent : Deletable, Object
 {
     #region Allors
@@ -20,7 +20,7 @@ public class MediaContent : Deletable, Object
     [Required]
     [Indexed]
     [Size(1024)]
-    [Workspace(Default)]
+    
     public string Type { get; set; }
 
     #region Allors
@@ -28,7 +28,7 @@ public class MediaContent : Deletable, Object
     #endregion
     [Required]
     [Size(-1)]
-    [Workspace(Default)]
+    
     public byte[] Data { get; set; }
 
     #region inherited

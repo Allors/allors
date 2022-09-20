@@ -5,7 +5,7 @@
 namespace Allors.Repository;
 
 using Attributes;
-using static Workspaces;
+
 
 /// <summary>
 ///     A <see cref="Task" /> that can be approved or rejected.
@@ -22,7 +22,7 @@ public interface ApproveTask : Task
     [Id("a280bf60-2eb7-488a-abf7-f03c9d9197b5")]
     [Size(-1)]
     #endregion
-    [Workspace(Default)]
+    
     string Comment { get; set; }
 
     /// <summary>
@@ -51,7 +51,7 @@ public interface ApproveTask : Task
     #region Allors
     [Id("0158D8F3-3E9F-48B3-AD25-51BD7EABC27C")]
     #endregion
-    [Workspace(Default)]
+    
     void Approve();
 
     /// <summary>
@@ -60,6 +60,6 @@ public interface ApproveTask : Task
     #region Allors
     [Id("F68B3D21-0108-40EC-9455-98764EB74874")]
     #endregion
-    [Workspace(Default)]
+    
     void Reject();
 }

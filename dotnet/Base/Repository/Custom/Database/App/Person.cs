@@ -6,9 +6,9 @@ namespace Allors.Repository;
 
 using System;
 using Attributes;
-using static Workspaces;
 
-[Workspace(Default)]
+
+
 public partial class Person : Addressable, Localized
 {
     #region Allors
@@ -19,14 +19,14 @@ public partial class Person : Addressable, Localized
     #region Allors
     [Id("adf83a86-878d-4148-a9fc-152f56697136")]
     #endregion
-    [Workspace(Default)]
+    
     public DateTime BirthDate { get; set; }
 
     #region Allors
     [Id("688ebeb9-8a53-4e8d-b284-3faa0a01ef7c")]
     [Size(256)]
     #endregion
-    [Workspace(Default)]
+    
     [Derived]
     public string FullName { get; set; }
 
@@ -34,7 +34,7 @@ public partial class Person : Addressable, Localized
     [Id("105CF367-F076-45F8-8E2A-2431BB2D65C7")]
     [Size(256)]
     #endregion
-    [Workspace(Default)]
+    
     [Derived]
     public string DomainFullName { get; set; }
 
@@ -42,7 +42,7 @@ public partial class Person : Addressable, Localized
     [Id("0DDC847A-713D-4A19-9C6F-E8FE9175301D")]
     [Size(256)]
     #endregion
-    [Workspace(Default)]
+    
     [Derived]
     public string DomainGreeting { get; set; }
 
@@ -50,7 +50,7 @@ public partial class Person : Addressable, Localized
     [Id("654f6c84-62f2-4c0a-9d68-532ed3f39447")]
     [Indexed]
     #endregion
-    [Workspace(Default)]
+    
     public Gender Gender { get; set; }
 
     #region Allors
@@ -61,7 +61,7 @@ public partial class Person : Addressable, Localized
     #region Allors
     [Id("54f11f06-8d3f-4d58-bcdc-d40e6820fdad")]
     #endregion
-    [Workspace(Default)]
+    
     public bool IsStudent { get; set; }
 
     #region Allors
@@ -79,14 +79,14 @@ public partial class Person : Addressable, Localized
     #region Allors
     [Id("b3ddd2df-8a5a-4747-bd4f-1f1eb37386b3")]
     [Indexed]
-    [Workspace(Default)]
+    
     #endregion
     public Media Photo { get; set; }
 
     #region Allors
     [Id("2E878C18-9DF7-4DEF-8145-983F4A5CCB2D")]
     [Indexed]
-    [Workspace(Default)]
+    
     #endregion
     public Media[] Pictures { get; set; }
 
@@ -111,21 +111,21 @@ public partial class Person : Addressable, Localized
     [Id("afc32e62-c310-421b-8c1d-6f2b0bb88b54")]
     [Precision(19)]
     [Scale(2)]
-    [Workspace(Default)]
+    
     #endregion
     public decimal Weight { get; set; }
 
     #region Allors
     [Id("5661A98D-A935-4325-9B28-9D86175B1BD6")]
     #endregion
-    [Workspace(Default)]
+    
     [Indexed]
     public Organization CycleOne { get; set; }
 
     #region Allors
     [Id("2EB2AF4F-2BF4-475F-BB41-D740197F168E")]
     #endregion
-    [Workspace(Default)]
+    
     [Indexed]
     public Organization[] CycleMany { get; set; }
 

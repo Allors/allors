@@ -5,12 +5,12 @@
 namespace Allors.Repository;
 
 using Attributes;
-using static Workspaces;
+
 
 #region Allors
 [Id("437A152B-09EF-4DAD-BD35-E629F46A9249")]
 #endregion
-[Workspace(Default)]
+
 public class Denied : Object
 {
     #region Allors
@@ -22,13 +22,13 @@ public class Denied : Object
     #region Allors
     [Id("58A94BD3-8784-4A51-8CC0-219889B4561E")]
     #endregion
-    [Workspace(Default)]
+    
     public string DefaultWorkspaceProperty { get; set; }
 
     #region Allors
     [Id("E48302E5-184C-40A8-AEDB-C7B38A515906")]
     #endregion
-    [Workspace(X)]
+    
     public string WorkspaceXProperty { get; set; }
 
     #region inherited

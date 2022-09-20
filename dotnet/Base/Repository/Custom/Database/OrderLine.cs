@@ -5,7 +5,7 @@
 namespace Allors.Repository;
 
 using Attributes;
-using static Workspaces;
+
 
 #region
 [Id("721008C3-C87C-40AB-966B-094E1271ED5F")]
@@ -23,7 +23,7 @@ public class OrderLine : Versioned, Object
     [Indexed]
     #endregion
     [SingleAssociation]
-    [Workspace(Default)]
+    
     public OrderLineVersion CurrentVersion { get; set; }
 
     #region Allors
@@ -31,7 +31,7 @@ public class OrderLine : Versioned, Object
     [Indexed]
     #endregion
     [SingleAssociation]
-    [Workspace(Default)]
+    
     public OrderLineVersion[] AllVersions { get; set; }
     #endregion
 

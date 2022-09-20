@@ -47,15 +47,6 @@ public class Method : RepositoryObject
 
     public Domain Domain { get; }
 
-    public string[] WorkspaceNames
-    {
-        get
-        {
-            dynamic attribute = this.AttributeByName.Get("Workspace");
-            return attribute?.Names ?? Array.Empty<string>();
-        }
-    }
-
     public string Name { get; }
 
     public Method DefiningMethod { get; set; }

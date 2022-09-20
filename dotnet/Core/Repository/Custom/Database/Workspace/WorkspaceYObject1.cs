@@ -5,33 +5,33 @@
 namespace Allors.Repository;
 
 using Attributes;
-using static Workspaces;
+
 
 #region Allors
 [Id("A2B4CABF-66F4-4A65-8C36-D50E6DA30435")]
 #endregion
-[Workspace(Y)]
+
 public class WorkspaceYObject1 : Object
 {
     #region Allors
     [Id("CF3CFC90-0D3E-4E1E-B4CB-C2E66C970394")]
     [Indexed]
     #endregion
-    [Workspace(X)]
+    
     public string WorkspaceXString { get; set; }
 
     #region Allors
     [Id("F3C15357-8200-432C-9747-D94CAC6C38A1")]
     [Indexed]
     #endregion
-    [Workspace(Y)]
+    
     public string WorkspaceYString { get; set; }
 
     #region Allors
     [Id("3B7EABBE-182B-4A92-8E47-8EA70224DA25")]
     [Indexed]
     #endregion
-    [Workspace(X, Y)]
+    
     public string WorkspaceXYString { get; set; }
 
     #region Allors
@@ -45,56 +45,56 @@ public class WorkspaceYObject1 : Object
     [Id("2E7B02F2-A8AA-49BA-8E1C-3E96CD407E78")]
     [Indexed]
     #endregion
-    [Workspace(X)]
+    
     public WorkspaceXObject2[] WorkspaceXToWorkspaceXObject2 { get; set; }
 
     #region Allors
     [Id("39431908-072C-46AF-9C47-DC0337F998A8")]
     [Indexed]
     #endregion
-    [Workspace(X)]
+    
     public WorkspaceYObject2[] WorkspaceXToWorkspaceYObject2 { get; set; }
 
     #region Allors
     [Id("67FFE32A-DF51-4CB3-8E47-989CB7301861")]
     [Indexed]
     #endregion
-    [Workspace(X)]
+    
     public WorkspaceXYObject2[] WorkspaceXToWorkspaceXYObject2 { get; set; }
 
     #region Allors
     [Id("C3EA4F80-67B7-489B-8863-84AA8F15203C")]
     [Indexed]
     #endregion
-    [Workspace(X)]
+    
     public WorkspaceNonObject2[] WorkspaceXToWorkspaceNonObject2 { get; set; }
 
     #region Allors
     [Id("413D3449-2A29-4765-9765-3C7C13BE667F")]
     [Indexed]
     #endregion
-    [Workspace(Y)]
+    
     public WorkspaceXObject2[] WorkspaceYToWorkspaceXObject2 { get; set; }
 
     #region Allors
     [Id("1BBFF37E-183C-4015-AE72-A3E4E44089D6")]
     [Indexed]
     #endregion
-    [Workspace(Y)]
+    
     public WorkspaceYObject2[] WorkspaceYToWorkspaceYObject2 { get; set; }
 
     #region Allors
     [Id("A7D2BC21-003A-4DB4-A84E-048B2B3E4DA4")]
     [Indexed]
     #endregion
-    [Workspace(Y)]
+    
     public WorkspaceXYObject2[] WorkspaceYToWorkspacXYObject2 { get; set; }
 
     #region Allors
     [Id("9822B65C-1FC3-4DE3-9D1F-F937530DCA3D")]
     [Indexed]
     #endregion
-    [Workspace(Y)]
+    
     public WorkspaceNonObject2[] WorkspaceYToWorkspaceNonObject2 { get; set; }
 
     #region Allors
@@ -128,25 +128,25 @@ public class WorkspaceYObject1 : Object
     #region Allors
     [Id("83CD6D91-3173-4C38-88B6-60B8487F206D")]
     #endregion
-    [Workspace(X)]
+    
     public void DoX() { }
 
     #region Allors
     [Id("538B9ECB-442F-413F-94ED-18E3914C2FB5")]
     #endregion
-    [Workspace(Y)]
+    
     public void DoY() { }
 
     #region Allors
     [Id("4395C8C6-8244-4491-9F6D-073BE4CFB22E")]
     #endregion
-    [Workspace(Y)]
+    
     public void DoXY() { }
 
     #region Allors
     [Id("5B192A0A-673C-4E3D-ABFC-A4ED6A88B504")]
     #endregion
-    [Workspace(Y)]
+    
     public void DoNone() { }
 
     #region inherited

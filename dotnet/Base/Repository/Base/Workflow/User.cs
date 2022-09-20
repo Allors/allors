@@ -1,4 +1,4 @@
-// <copyright file="User.cs" company="Allors bv">
+﻿// <copyright file="User.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // </copyright>
 
@@ -6,7 +6,7 @@
 namespace Allors.Repository;
 
 using Attributes;
-using static Workspaces;
+
 
 public partial interface User
 {
@@ -15,6 +15,6 @@ public partial interface User
     [Indexed]
     #endregion
     [SingleAssociation]
-    [Workspace(Default)]
+    
     NotificationList NotificationList { get; set; }
 }

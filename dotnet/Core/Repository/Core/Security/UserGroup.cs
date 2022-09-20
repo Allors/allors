@@ -7,7 +7,7 @@ namespace Allors.Repository;
 
 using System;
 using Attributes;
-using static Workspaces;
+
 
 #region Allors
 [Id("60065f5d-a3c2-4418-880d-1026ab607319")]
@@ -18,7 +18,7 @@ public class UserGroup : UniquelyIdentifiable
     [Id("585bb5cf-9ba4-4865-9027-3667185abc4f")]
     #endregion
     [Indexed]
-    [Workspace(Default)]
+    
     public User[] Members { get; set; }
 
     #region Allors
@@ -27,7 +27,7 @@ public class UserGroup : UniquelyIdentifiable
     [Indexed]
     [Required]
     [Size(256)]
-    [Workspace(Default)]
+    
     public string Name { get; set; }
 
     #region inherited

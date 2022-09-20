@@ -6,12 +6,12 @@
 namespace Allors.Repository;
 
 using Attributes;
-using static Workspaces;
+
 
 #region Allors
 [Id("4a0eca4b-281f-488d-9c7e-497de882c044")]
 #endregion
-[Workspace(Default)]
+
 public class Language : Object
 {
     #region Allors
@@ -19,7 +19,7 @@ public class Language : Object
     #endregion
     [Required]
     [Size(256)]
-    [Workspace(Default)]
+    
     public string IsoCode { get; set; }
 
     #region Allors
@@ -28,7 +28,7 @@ public class Language : Object
     [Indexed]
     [Required]
     [Size(256)]
-    [Workspace(Default)]
+    
     public string Name { get; set; }
 
     #region Allors
@@ -36,7 +36,7 @@ public class Language : Object
     #endregion
     [SingleAssociation]
     [Indexed]
-    [Workspace(Default)]
+    
     public LocalizedText[] LocalizedNames { get; set; }
 
     #region Allors
@@ -46,7 +46,7 @@ public class Language : Object
     [Required]
     // [Unique] If Unique is enabled then make sure your database supports the range of unicode characters (e.g. use collation 'Latin1_General_100_CI_AS_SC' in sql server)
     [Size(256)]
-    [Workspace(Default)]
+    
     public string NativeName { get; set; }
 
     #region inherited

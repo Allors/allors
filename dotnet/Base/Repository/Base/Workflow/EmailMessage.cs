@@ -1,4 +1,4 @@
-// <copyright file="EmailMessage.cs" company="Allors bv">
+﻿// <copyright file="EmailMessage.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // </copyright>
 
@@ -19,7 +19,7 @@ public class EmailMessage : Object
     #endregion
     [Derived]
     [Required]
-    [Workspace]
+    
     public DateTime DateCreated { get; set; }
 
     #region Allors
@@ -32,21 +32,21 @@ public class EmailMessage : Object
     [Id("cc36e90a-dcda-4289-b84f-c947c97847b0")]
     [Indexed]
     #endregion
-    [Workspace]
+    
     public DateTime DateSent { get; set; }
 
     #region Allors
     [Id("e16da480-35ab-4383-940a-5298d0b33b9c")]
     [Indexed]
     #endregion
-    [Workspace]
+    
     public User Sender { get; set; }
 
     #region Allors
     [Id("d115bcfb-55e5-4ed8-8a21-f8e4dd5f903d")]
     [Indexed]
     #endregion
-    [Workspace]
+    
     public User[] Recipients { get; set; }
 
     #region Allors
@@ -54,7 +54,7 @@ public class EmailMessage : Object
     #endregion
     [Indexed]
     [Size(256)]
-    [Workspace]
+    
     public string RecipientEmailAddress { get; set; }
 
     #region Allors
@@ -62,7 +62,7 @@ public class EmailMessage : Object
     #endregion
     [Size(1024)]
     [Required]
-    [Workspace]
+    
     public string Subject { get; set; }
 
     #region Allors
@@ -70,7 +70,7 @@ public class EmailMessage : Object
     #endregion
     [Size(-1)]
     [Required]
-    [Workspace]
+    
     public string Body { get; set; }
 
     #region inherited

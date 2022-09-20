@@ -1,11 +1,11 @@
-// <copyright file="PrintDocument.cs" company="Allors bv">
+﻿// <copyright file="PrintDocument.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // </copyright>
 
 namespace Allors.Repository;
 
 using Attributes;
-using static Workspaces;
+
 
 #region Allors
 [Id("6161594B-8ACF-4DFA-AE6D-A9BC96040714")]
@@ -17,7 +17,7 @@ public class PrintDocument : Deletable, Object
     [Indexed]
     #endregion
     [SingleAssociation]
-    [Workspace(Default)]
+    
     public Media Media { get; set; }
 
     #region inherited
