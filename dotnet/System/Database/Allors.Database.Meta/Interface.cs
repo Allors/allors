@@ -49,7 +49,7 @@ public abstract class Interface : Composite, IInterface
     public override bool IsAssignableFrom(IComposite objectType) =>
         this.Equals(objectType) || this.structuralDerivedSubtypes.Contains(objectType);
 
-    public override void Bind(Dictionary<string, Type> typeByTypeName) => this.ClrType = typeByTypeName[this.Name];
+   
 
     internal void DeriveWorkspaceNames() =>
         this.derivedWorkspaceNames = this

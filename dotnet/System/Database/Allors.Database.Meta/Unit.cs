@@ -32,18 +32,4 @@ public abstract class Unit : ObjectType, IUnit
     public bool IsUnique => this.Tag == UnitTags.Unique;
 
     public override IEnumerable<string> WorkspaceNames => this.MetaPopulation.WorkspaceNames;
-
-    public void Bind() =>
-        this.ClrType = this.Tag switch
-        {
-            UnitTags.Binary => typeof(byte[]),
-            UnitTags.Boolean => typeof(bool),
-            UnitTags.DateTime => typeof(DateTime),
-            UnitTags.Decimal => typeof(decimal),
-            UnitTags.Float => typeof(double),
-            UnitTags.Integer => typeof(int),
-            UnitTags.String => typeof(string),
-            UnitTags.Unique => typeof(Guid),
-            _ => throw new ArgumentOutOfRangeException(),
-        };
 }

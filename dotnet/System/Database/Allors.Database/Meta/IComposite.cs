@@ -1,4 +1,4 @@
-// <copyright file="IComposite.cs" company="Allors bvba">
+﻿// <copyright file="IComposite.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -48,6 +48,4 @@ public interface IComposite : IObjectType
     bool ExistRoleType(IRoleType roleType);
 
     bool IsAssignableFrom(IComposite objectType);
-
-    void Bind(Dictionary<string, Type> typeByName);
 }

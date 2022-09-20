@@ -9,8 +9,8 @@ public class Record : DataType, IRecord
     private string[] derivedWorkspaceNames;
     private FieldType[] fieldTypes;
 
-    public Record(MetaPopulation metaPopulation, string name, Guid id, string tag = null)
-        : base(metaPopulation, id, tag)
+    public Record(MetaPopulation metaPopulation, Guid id, string name)
+        : base(metaPopulation, id, null)
     {
         this.Name = name;
         this.fieldTypes = Array.Empty<FieldType>();

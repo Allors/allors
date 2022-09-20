@@ -88,9 +88,7 @@ public abstract class Class : Composite, IClass
     public override bool ExistClass => true;
 
     public override bool IsAssignableFrom(IComposite objectType) => this.Equals(objectType);
-
-    public override void Bind(Dictionary<string, Type> typeByTypeName) => this.ClrType = typeByTypeName[this.Name];
-
+    
     public Action<object, object>[] Actions(IMethodType methodType)
     {
         this.actionsByMethodType ??= new ConcurrentDictionary<IMethodType, Action<object, object>[]>();

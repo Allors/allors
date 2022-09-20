@@ -125,17 +125,28 @@ public abstract class MetaPopulation : IMetaPopulation
 
             foreach (var unit in this.units)
             {
-                unit.Bind();
+                unit.ClrType = unit.Tag switch
+                {
+                    UnitTags.Binary => typeof(byte[]),
+                    UnitTags.Boolean => typeof(bool),
+                    UnitTags.DateTime => typeof(DateTime),
+                    UnitTags.Decimal => typeof(decimal),
+                    UnitTags.Float => typeof(double),
+                    UnitTags.Integer => typeof(int),
+                    UnitTags.String => typeof(string),
+                    UnitTags.Unique => typeof(Guid),
+                    _ => throw new ArgumentOutOfRangeException(),
+                };
             }
 
             foreach (var @interface in this.Interfaces)
             {
-                @interface.Bind(typeByName);
+                @interface.ClrType = typeByName[@interface.Name];
             }
 
             foreach (var @class in this.Classes)
             {
-                @class.Bind(typeByName);
+                @class.ClrType = typeByName[@class.Name];
             }
 
             foreach (var record in this.records)

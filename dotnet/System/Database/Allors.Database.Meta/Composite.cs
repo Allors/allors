@@ -1,4 +1,4 @@
-// <copyright file="Composite.cs" company="Allors bvba">
+﻿// <copyright file="Composite.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -103,8 +103,6 @@ public abstract class Composite : ObjectType, IComposite
     public bool ExistRoleType(IRoleType roleType) => this.structuralDerivedRoleTypes.Contains(roleType);
 
     public abstract bool IsAssignableFrom(IComposite objectType);
-
-    public abstract void Bind(Dictionary<string, Type> typeByName);
 
     internal void StructuralDeriveDirectSupertypes(HashSet<Interface> directSupertypes)
     {

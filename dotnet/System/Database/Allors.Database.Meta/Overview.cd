@@ -12,14 +12,13 @@
     <Position X="4.5" Y="16.25" Width="1.5" />
     <Members>
       <Method Name="Actions" Hidden="true" />
-      <Method Name="Bind" Hidden="true" />
       <Method Name="Class" Hidden="true" />
       <Method Name="DeriveRequiredRoleTypes" Hidden="true" />
       <Method Name="DeriveWorkspaceNames" Hidden="true" />
       <Method Name="IsAssignableFrom" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAAAwMFAIAHAABEJIAAQAEAAAAAAIABAQSIAAAAAAAE=</HashCode>
+      <HashCode>AAAAQEFAIAFAABEJIAAQAEAAAAAAIABAQSIAAAAAAAE=</HashCode>
       <FileName>Class.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -27,7 +26,6 @@
   <Class Name="Allors.Database.Meta.Composite">
     <Position X="3.25" Y="7.25" Width="1.5" />
     <Members>
-      <Method Name="Bind" Hidden="true" />
       <Method Name="Composite" Hidden="true" />
       <Method Name="ExistAssociationType" Hidden="true" />
       <Method Name="ExistRoleType" Hidden="true" />
@@ -41,7 +39,7 @@
       <Method Name="StructuralDeriveSupertypesRecursively" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>BAZQgQACAAFISBARECA0AgEAAQAYEAJCQxJgAEgQBEA=</HashCode>
+      <HashCode>BAZQAQACAAFISBARECA0AgEAAQAYEAJCQxJgAEgQBEA=</HashCode>
       <FileName>Composite.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -84,7 +82,6 @@
   <Class Name="Allors.Database.Meta.Interface">
     <Position X="2.5" Y="16.25" Width="1.5" />
     <Members>
-      <Method Name="Bind" Hidden="true" />
       <Method Name="DeriveWorkspaceNames" Hidden="true" />
       <Method Name="Interface" Hidden="true" />
       <Method Name="IsAssignableFrom" Hidden="true" />
@@ -95,41 +92,13 @@
       <Method Name="StructuralDeriveSubtypesRecursively" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAAAgNIigAHAAAAIIAAQAAIAAAAAAEAAQCIIAIAACQA=</HashCode>
+      <HashCode>AAAAAFIigAFAAAAIIAAQAAIAAAAAAEAAQCIIAIAACQA=</HashCode>
       <FileName>Interface.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Database.Meta.MetaPopulation" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="0.5" Y="0.5" Width="1.5" />
-    <Members>
-      <Method Name="AssertUnlocked" Hidden="true" />
-      <Method Name="Bind" Hidden="true" />
-      <Method Name="Derive" Hidden="true" />
-      <Method Name="FindById" Hidden="true" />
-      <Method Name="FindByTag" Hidden="true" />
-      <Method Name="FindDatabaseCompositeByName" Hidden="true" />
-      <Method Name="HasCycle" Hidden="true" />
-      <Method Name="IMetaPopulation.FindById" Hidden="true" />
-      <Method Name="IMetaPopulation.FindByTag" Hidden="true" />
-      <Method Name="IMetaPopulation.FindDatabaseCompositeByName" Hidden="true" />
-      <Method Name="IMetaPopulation.Validate" Hidden="true" />
-      <Method Name="MetaPopulation" Hidden="true" />
-      <Method Name="OnAssociationTypeCreated" Hidden="true" />
-      <Method Name="OnClassCreated" Hidden="true" />
-      <Method Name="OnDomainCreated" Hidden="true" />
-      <Method Name="OnFieldTypeCreated" Hidden="true" />
-      <Method Name="OnInheritanceCreated" Hidden="true" />
-      <Method Name="OnInterfaceCreated" Hidden="true" />
-      <Method Name="OnMethodTypeCreated" Hidden="true" />
-      <Method Name="OnRecordCreated" Hidden="true" />
-      <Method Name="OnRelationTypeCreated" Hidden="true" />
-      <Method Name="OnRoleTypeCreated" Hidden="true" />
-      <Method Name="OnUnitCreated" Hidden="true" />
-      <Method Name="Stale" Hidden="true" />
-      <Method Name="StructuralDerive" Hidden="true" />
-      <Method Name="Validate" Hidden="true" />
-    </Members>
     <TypeIdentifier>
       <HashCode>MKFAoECAUAHCBIBJqAgIVDgAUSATCAAgHMQBYimAiEA=</HashCode>
       <FileName>MetaPopulation.cs</FileName>
@@ -169,7 +138,7 @@
       <Method Name="Record" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAAAoMAAAACAAAAIIQBAAAQAAAAAAAAAAAAAAAAAACA=</HashCode>
+      <HashCode>AAAAoEAAAAAAAAAIIQBAAAQAAAAAAAAAAAAAAAAAACA=</HashCode>
       <FileName>Record.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -193,7 +162,6 @@
   <Class Name="Allors.Database.Meta.Unit">
     <Position X="1.25" Y="7.25" Width="1.5" />
     <Members>
-      <Method Name="Bind" Hidden="true" />
       <Property Name="IsBinary" Hidden="true" />
       <Property Name="IsBoolean" Hidden="true" />
       <Property Name="IsDateTime" Hidden="true" />
@@ -205,7 +173,7 @@
       <Method Name="Unit" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAAIgIAAAACAAABIgAAAAAABAAAAAAIQAAAAAQAAAAA=</HashCode>
+      <HashCode>AAAIAAAAAAAAAABIgAAAAAABAAAAAAIQAAAAAQAAAAA=</HashCode>
       <FileName>Unit.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
