@@ -6,6 +6,8 @@ public interface IFieldType : IMetaIdentifiableObject
 
     IFieldObjectType FieldObjectType { get; }
 
+    string Name { get; }
+
     bool IsOne { get; }
 
     bool IsMany { get; }

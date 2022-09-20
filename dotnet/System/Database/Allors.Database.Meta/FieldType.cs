@@ -1,4 +1,4 @@
-namespace Allors.Database.Meta;
+﻿namespace Allors.Database.Meta;
 
 using System;
 using System.Collections.Generic;
@@ -7,6 +7,7 @@ using System.Linq;
 public class FieldType : IFieldType
 {
     private string[] derivedWorkspaceNames;
+    private string name;
     private FieldObjectType fieldObjectType;
     private bool isOne;
 
@@ -22,6 +23,18 @@ public class FieldType : IFieldType
     public Record Record
     {
         get;
+    }
+
+    public string Name
+    {
+        get => this.name;
+
+        set
+        {
+            this.MetaPopulation.AssertUnlocked();
+            this.name = value;
+            this.MetaPopulation.Stale();
+        }
     }
 
     public FieldObjectType FieldObjectType

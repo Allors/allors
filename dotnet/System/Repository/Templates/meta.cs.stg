@@ -296,6 +296,7 @@ $repository.Composites:{composite|$define_methods(composite)$}; separator="\n"$
             this.BuildClasses(meta, domains);
             this.BuildInheritances(meta, domains);
             this.BuildRecords(meta, domains, records);
+            this.BuildFields(meta, domains, records);
             this.BuildRelationTypes(meta, domains, relationTypes);
             this.BuildMethodTypes(meta, domains, methodTypes, records);
 
@@ -347,10 +348,17 @@ $repository.Composites:{composite|$inheritance(composite)$}; separator="\n"$
 $repository.Records:{record|$build_record(record)$}; separator="\n"$
 		}
 
+		private void BuildFields(M meta, Domains domains, Records records)
+		{
+$repository.Records:{record|$build_fields(record)$}; separator="\n"$
+		}
+
 		private void BuildRelationTypes(M meta, Domains domains, RelationTypes relationTypes)
 		{
 $repository.Composites:{composite|$build_relations(composite)$}; separator="\n"$
 		}
+
+$repository.Records:{record|$fields(record)$}; separator="\n"$
 
 $repository.Composites:{composite|$relations(composite)$}; separator="\n"$
 
@@ -446,9 +454,30 @@ build_inheritance(composite, implementedInterface) ::= <<            new Inherit
 
 build_record(record) ::= <<            records.$record.Name$ = new Record(meta, "$record.Name$", Ids.$record.Name$);>>
 
+build_fields(record) ::= <<
+$record.Fields:{field|                  this.Build$record.Name$$field.Name$(meta, domains, records);}; separator="\n"$
+>>
+
+
 build_relations(composite) ::= <<
 $composite.DefinedProperties:{property|                 this.Build$property.DefiningType.SingularName$$property.RoleName$(meta, domains, relationTypes);}; separator="\n"$
 >>
+
+fields(record) ::= <<
+$record.fields:{field|$field(field)$}; separator="\n"$
+>>
+
+field(field) ::= <<
+        private void Build$record.Name$$field.Name$(M meta, Domains domains, Records records)
+        {
+            _ = new FieldType(records.$record.Name$, Ids.$record.Name$$field.Name$)
+            {
+                Name = "$field.Name$",
+                FieldObjectType = meta.$field.Type.SingularName$,
+            };
+        }
+>>
+
 
 relations(composite) ::= <<
 $composite.DefinedProperties:{property|$relation(property)$}; separator="\n"$
