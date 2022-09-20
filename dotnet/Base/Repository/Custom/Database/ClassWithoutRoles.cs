@@ -4,15 +4,19 @@
 
 namespace Allors.Repository;
 
-using Attributes;
+using Allors.Repository.Attributes;
 
 #region Allors
+
 [Id("e1008840-6d7c-4d44-b2ad-1545d23f90d8")]
+
 #endregion
+
 [Plural("ClassWithourRoleses")]
 public class ClassWithoutRoles : Object
 {
     #region inherited
+
     public DelegatedAccess AccessDelegation { get; set; }
     public Revocation[] Revocations { get; set; }
 
@@ -26,5 +30,6 @@ public class ClassWithoutRoles : Object
     }
 
     public void OnPostDerive() { }
+
     #endregion
 }

@@ -4,26 +4,36 @@
 
 namespace Allors.Repository;
 
-using Attributes;
+using Allors.Repository.Attributes;
 
 #region Allors
+
 [Id("c1f169a1-553b-4a24-aba7-01e0b7102fe5")]
+
 #endregion
+
 public class Second : Object, DerivationCounted
 {
     #region Allors
+
     [Id("4f0eba0d-09b4-4bbc-8e42-15de94921ab5")]
     [SingleAssociation]
     [Indexed]
+
     #endregion
+
     public Third Third { get; set; }
 
     #region Allors
+
     [Id("8a7b7af9-f421-4e96-a1a7-04d4c4bdd1d7")]
+
     #endregion
+
     public bool IsDerived { get; set; }
 
     #region inherited
+
     public DelegatedAccess AccessDelegation { get; set; }
     public Revocation[] Revocations { get; set; }
 
@@ -39,5 +49,6 @@ public class Second : Object, DerivationCounted
     }
 
     public void OnPostDerive() { }
+
     #endregion
 }

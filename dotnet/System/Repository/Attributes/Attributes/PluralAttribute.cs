@@ -10,7 +10,10 @@ using System;
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface | AttributeTargets.Property)]
 public class PluralAttribute : RepositoryAttribute
 {
-    public PluralAttribute(string value) => this.Value = value;
+    public PluralAttribute(string value)
+    {
+        this.Value = value;
+    }
 
     public string Value { get; set; }
 }

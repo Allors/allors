@@ -4,20 +4,27 @@
 
 namespace Allors.Repository;
 
-using Attributes;
+using Allors.Repository.Attributes;
 
 #region
+
 [Id("E4BC4E69-831C-4D9B-93D9-531D226819E1")]
+
 #endregion
+
 public class Right : DerivationCounted
 {
     #region Allors
+
     [Id("658FE4F7-FC40-4B3A-ABB1-84723E66F20C")]
+
     #endregion
+
     [Required]
     public int Counter { get; set; }
 
     #region inherited
+
     public DelegatedAccess AccessDelegation { get; set; }
     public Revocation[] Revocations { get; set; }
 
@@ -37,5 +44,6 @@ public class Right : DerivationCounted
     public void OnPostDerive()
     {
     }
+
     #endregion
 }

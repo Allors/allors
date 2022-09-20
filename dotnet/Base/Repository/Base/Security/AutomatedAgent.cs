@@ -6,27 +6,37 @@
 namespace Allors.Repository;
 
 using System;
-using Attributes;
+using Allors.Repository.Attributes;
 
 #region Allors
+
 [Id("3587d2e1-c3f6-4c55-a96c-016e0501d99c")]
+
 #endregion
+
 public class AutomatedAgent : User
 {
     #region Allors
+
     [Id("4e158d75-d0b5-4cb7-ad41-e8ed3002d175")]
+
     #endregion
+
     [Indexed]
     [Size(256)]
     public string Name { get; set; }
 
     #region Allors
+
     [Id("58870c93-b066-47b7-95f7-5411a46dbc7e")]
+
     #endregion
+
     [Size(-1)]
     public string Description { get; set; }
 
     #region inherited
+
     public Guid UniqueId { get; set; }
 
     public SecurityToken OwnerSecurityToken { get; set; }
@@ -83,5 +93,6 @@ public class AutomatedAgent : User
     public void OnPostDerive() { }
 
     public void Delete() { }
+
     #endregion
 }

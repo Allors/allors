@@ -10,7 +10,10 @@ using System;
 [AttributeUsage(AttributeTargets.Property)]
 public class ScaleAttribute : RepositoryAttribute
 {
-    public ScaleAttribute(int value) => this.Value = value;
+    public ScaleAttribute(int value)
+    {
+        this.Value = value;
+    }
 
     public int Value { get; set; }
 }

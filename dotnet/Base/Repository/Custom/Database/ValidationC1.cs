@@ -5,14 +5,18 @@
 namespace Allors.Repository;
 
 using System;
-using Attributes;
+using Allors.Repository.Attributes;
 
 #region Allors
+
 [Id("2361c456-b624-493a-8377-2dd1e697e17a")]
+
 #endregion
+
 public class ValidationC1 : Object, ValidationI12
 {
     #region inherited
+
     public DelegatedAccess AccessDelegation { get; set; }
     public Revocation[] Revocations { get; set; }
 
@@ -28,5 +32,6 @@ public class ValidationC1 : Object, ValidationI12
     }
 
     public void OnPostDerive() { }
+
     #endregion
 }

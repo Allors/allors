@@ -6,14 +6,18 @@
 namespace Allors.Repository;
 
 using System;
-using Attributes;
+using Allors.Repository.Attributes;
 
 #region Allors
+
 [Id("412994F9-4D0E-4D75-AE27-3063046869F0")]
+
 #endregion
+
 public class CreatePermission : Permission
 {
     #region inherited
+
     public DelegatedAccess AccessDelegation { get; set; }
     public Revocation[] Revocations { get; set; }
 
@@ -29,5 +33,6 @@ public class CreatePermission : Permission
     public void OnPostDerive() { }
 
     public void Delete() { }
+
     #endregion
 }

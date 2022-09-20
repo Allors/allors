@@ -4,14 +4,18 @@
 
 namespace Allors.Repository;
 
-using Attributes;
+using Allors.Repository.Attributes;
 
 #region Allors
+
 [Id("1248e212-ca71-44aa-9e87-6e83dae9d4fd")]
+
 #endregion
+
 public class Four : Object, Shared
 {
     #region inherited
+
     public DelegatedAccess AccessDelegation { get; set; }
     public Revocation[] Revocations { get; set; }
 
@@ -26,5 +30,6 @@ public class Four : Object, Shared
     }
 
     public void OnPostDerive() { }
+
     #endregion
 }

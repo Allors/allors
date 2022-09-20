@@ -4,15 +4,18 @@
 
 namespace Allors.Repository;
 
-using Attributes;
+using Allors.Repository.Attributes;
 
 #region Allors
+
 [Id("48E065DD-B7C0-4B94-AC7A-656BCBE1B04A")]
+
 #endregion
 
 public class WorkspaceXObject2 : Object
 {
     #region inherited
+
     public DelegatedAccess AccessDelegation { get; set; }
     public Revocation[] Revocations { get; set; }
 
@@ -26,5 +29,6 @@ public class WorkspaceXObject2 : Object
     }
 
     public void OnPostDerive() { }
+
     #endregion
 }

@@ -10,7 +10,10 @@ using System;
 [AttributeUsage(AttributeTargets.Property)]
 public class SizeAttribute : RepositoryAttribute
 {
-    public SizeAttribute(int value) => this.Value = value;
+    public SizeAttribute(int value)
+    {
+        this.Value = value;
+    }
 
     public int Value { get; set; }
 }

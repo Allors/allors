@@ -6,21 +6,28 @@
 namespace Allors.Repository;
 
 using System;
-using Attributes;
+using Allors.Repository.Attributes;
 
 #region Allors
+
 [Id("2E839427-58D6-4567-B9AA-FBE6071590E3")]
+
 #endregion
+
 public class ExecutePermission : Permission
 {
     #region Allors
+
     [Id("CB76C8B7-681E-450B-A3EC-95C32E1ED5B6")]
     [Indexed]
+
     #endregion
+
     [Required]
     public Guid MethodTypePointer { get; set; }
 
     #region inherited
+
     public DelegatedAccess AccessDelegation { get; set; }
     public Revocation[] Revocations { get; set; }
 
@@ -37,5 +44,6 @@ public class ExecutePermission : Permission
     public void OnPostDerive() { }
 
     public void Delete() { }
+
     #endregion
 }

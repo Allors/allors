@@ -10,7 +10,10 @@ using System;
 [AttributeUsage(AttributeTargets.Property)]
 public class PrecisionAttribute : RepositoryAttribute
 {
-    public PrecisionAttribute(int value) => this.Value = value;
+    public PrecisionAttribute(int value)
+    {
+        this.Value = value;
+    }
 
     public int Value { get; set; }
 }

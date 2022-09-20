@@ -9,7 +9,10 @@ using System;
 [AttributeUsage(AttributeTargets.Property)]
 public class MediaTypeAttribute : RepositoryAttribute
 {
-    public MediaTypeAttribute(string value) => this.Value = value;
+    public MediaTypeAttribute(string value)
+    {
+        this.Value = value;
+    }
 
     public string Value { get; set; }
 }

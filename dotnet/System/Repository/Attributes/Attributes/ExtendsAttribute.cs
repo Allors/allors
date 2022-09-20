@@ -10,7 +10,10 @@ using System;
 [AttributeUsage(AttributeTargets.Struct)]
 public class ExtendsAttribute : RepositoryAttribute
 {
-    public ExtendsAttribute(string value) => this.Value = value;
+    public ExtendsAttribute(string value)
+    {
+        this.Value = value;
+    }
 
     public string Value { get; set; }
 }

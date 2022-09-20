@@ -5,14 +5,18 @@
 namespace Allors.Repository;
 
 using System;
-using Attributes;
+using Allors.Repository.Attributes;
 
 #region Allors
+
 [Id("CE56A6E9-8E4B-4F40-8676-180F4B0513E2")]
+
 #endregion
+
 public class ShipmentState : Object, ObjectState
 {
     #region inherited
+
     public DelegatedAccess AccessDelegation { get; set; }
     public Revocation[] Revocations { get; set; }
 
@@ -32,5 +36,6 @@ public class ShipmentState : Object, ObjectState
     }
 
     public void OnPostDerive() { }
+
     #endregion
 }

@@ -4,38 +4,50 @@
 
 namespace Allors.Repository;
 
-using Attributes;
-
+using Allors.Repository.Attributes;
 
 #region
+
 [Id("721008C3-C87C-40AB-966B-094E1271ED5F")]
+
 #endregion
+
 public class OrderLine : Versioned, Object
 {
     #region Allors
+
     [Id("7022167A-046E-45B3-A14E-AE0290C0F1D6")]
+
     #endregion
+
     public decimal Amount { get; set; }
 
     #region Versioning
+
     #region Allors
+
     [Id("55F3D531-C58D-4FA7-B745-9E38D8CEC4C6")]
     [Indexed]
+
     #endregion
+
     [SingleAssociation]
-    
     public OrderLineVersion CurrentVersion { get; set; }
 
     #region Allors
+
     [Id("CFC88B59-87A1-4F9E-ABBE-168694AB6CB5")]
     [Indexed]
+
     #endregion
+
     [SingleAssociation]
-    
     public OrderLineVersion[] AllVersions { get; set; }
+
     #endregion
 
     #region inherited
+
     public DelegatedAccess AccessDelegation { get; set; }
     public Revocation[] Revocations { get; set; }
 
@@ -53,5 +65,6 @@ public class OrderLine : Versioned, Object
     public void OnPostDerive()
     {
     }
+
     #endregion
 }

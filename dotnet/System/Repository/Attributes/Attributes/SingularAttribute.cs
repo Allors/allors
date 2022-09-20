@@ -10,7 +10,10 @@ using System;
 [AttributeUsage(AttributeTargets.Property)]
 public class SingularAttribute : RepositoryAttribute
 {
-    public SingularAttribute(string value) => this.Value = value;
+    public SingularAttribute(string value)
+    {
+        this.Value = value;
+    }
 
     public string Value { get; set; }
 }

@@ -4,14 +4,18 @@
 
 namespace Allors.Repository;
 
-using Attributes;
+using Allors.Repository.Attributes;
 
 #region Allors
+
 [Id("4EA6AD12-C1FB-4661-B4F7-72B81435DD70")]
+
 #endregion
+
 public class SyncDepthC1 : SyncDepthI1
 {
     #region inherited
+
     public DelegatedAccess AccessDelegation { get; set; }
     public Revocation[] Revocations { get; set; }
 
@@ -32,5 +36,6 @@ public class SyncDepthC1 : SyncDepthI1
     }
 
     public void OnPostDerive() { }
+
     #endregion
 }

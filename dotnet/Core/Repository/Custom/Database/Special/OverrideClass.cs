@@ -4,11 +4,12 @@
 
 namespace Allors.Repository;
 
-using Attributes;
-
+using Allors.Repository.Attributes;
 
 #region Allors
+
 [Id("EF49F009-8532-429D-988D-B2626BD4D56E")]
+
 #endregion
 
 public class OverrideClass : OverrideInterface
@@ -16,6 +17,7 @@ public class OverrideClass : OverrideInterface
     [Required] public string OverrideRequired { get; set; }
 
     #region inherited
+
     public DelegatedAccess AccessDelegation { get; set; }
     public Revocation[] Revocations { get; set; }
 
@@ -27,5 +29,6 @@ public class OverrideClass : OverrideInterface
     public void OnInit() { }
 
     public void OnPostDerive() { }
+
     #endregion
 }

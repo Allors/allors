@@ -5,14 +5,18 @@
 namespace Allors.Repository;
 
 using System;
-using Attributes;
+using Allors.Repository.Attributes;
 
 #region Allors
+
 [Id("270f0dc8-1bc2-4a42-9617-45e93d5403c8")]
+
 #endregion
+
 public class Gender : Enumeration
 {
     #region inherited
+
     public LocalizedText[] LocalizedNames { get; set; }
 
     public string Name { get; set; }
@@ -35,5 +39,6 @@ public class Gender : Enumeration
     }
 
     public void OnPostDerive() { }
+
     #endregion
 }

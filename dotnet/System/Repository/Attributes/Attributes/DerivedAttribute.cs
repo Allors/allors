@@ -10,7 +10,10 @@ using System;
 [AttributeUsage(AttributeTargets.Property)]
 public class DerivedAttribute : RepositoryAttribute
 {
-    public DerivedAttribute(bool value = true) => this.Value = value;
+    public DerivedAttribute(bool value = true)
+    {
+        this.Value = value;
+    }
 
     public bool Value { get; set; }
 }

@@ -11,7 +11,10 @@ using System;
                 AttributeTargets.Interface | AttributeTargets.Property | AttributeTargets.Method)]
 public class IdAttribute : RepositoryAttribute
 {
-    public IdAttribute(string value) => this.Value = value;
+    public IdAttribute(string value)
+    {
+        this.Value = value;
+    }
 
     public string Value { get; set; }
 }

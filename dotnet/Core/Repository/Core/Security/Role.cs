@@ -6,28 +6,37 @@
 namespace Allors.Repository;
 
 using System;
-using Attributes;
+using Allors.Repository.Attributes;
 
 #region Allors
+
 [Id("af6fe5f4-e5bc-4099-bcd1-97528af6505d")]
+
 #endregion
+
 public class Role : UniquelyIdentifiable
 {
     #region Allors
+
     [Id("51e56ae1-72dc-443f-a2a3-f5aa3650f8d2")]
     [Indexed]
+
     #endregion
 
     public Permission[] Permissions { get; set; }
 
     #region Allors
+
     [Id("934bcbbe-5286-445c-a1bd-e2fcc786c448")]
+
     #endregion
+
     [Required]
     [Size(256)]
     public string Name { get; set; }
 
     #region inherited
+
     public DelegatedAccess AccessDelegation { get; set; }
     public Revocation[] Revocations { get; set; }
 
@@ -43,5 +52,6 @@ public class Role : UniquelyIdentifiable
     }
 
     public void OnPostDerive() { }
+
     #endregion
 }

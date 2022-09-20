@@ -5,23 +5,31 @@
 namespace Allors.Repository;
 
 using System;
-using Attributes;
-
+using Allors.Repository.Attributes;
 
 #region Allors
+
 [Id("A6A3C79E-150B-4586-96EA-5AC0E2E638C6")]
+
 #endregion
+
 public interface Version : Object
 {
     // TODO: Is this still necessary?
+
     #region Allors
+
     [Id("9FAEB940-A3A0-4E7A-B889-BCFD92F6A882")]
+
     #endregion
+
     Guid DerivationId { get; set; }
 
     #region Allors
+
     [Id("ADF611C3-047A-4BAE-95E3-776022D5CE7B")]
+
     #endregion
-    
+
     DateTime DerivationTimeStamp { get; set; }
 }

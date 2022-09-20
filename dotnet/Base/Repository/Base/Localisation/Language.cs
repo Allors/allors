@@ -5,51 +5,61 @@
 
 namespace Allors.Repository;
 
-using Attributes;
-
+using Allors.Repository.Attributes;
 
 #region Allors
+
 [Id("4a0eca4b-281f-488d-9c7e-497de882c044")]
+
 #endregion
 
 public class Language : Object
 {
     #region Allors
+
     [Id("d2a32d9f-21cc-4f9d-b0d3-a9b75da66907")]
+
     #endregion
+
     [Required]
     [Size(256)]
-    
     public string IsoCode { get; set; }
 
     #region Allors
+
     [Id("be482902-beb5-4a76-8ad0-c1b1c1c0e5c4")]
+
     #endregion
+
     [Indexed]
     [Required]
     [Size(256)]
-    
     public string Name { get; set; }
 
     #region Allors
+
     [Id("f091b264-e6b1-4a57-bbfb-8225cbe8190c")]
+
     #endregion
+
     [SingleAssociation]
     [Indexed]
-    
     public LocalizedText[] LocalizedNames { get; set; }
 
     #region Allors
+
     [Id("842CC899-3F37-455A-AE91-51D29D615E69")]
+
     #endregion
+
     [Indexed]
     [Required]
     // [Unique] If Unique is enabled then make sure your database supports the range of unicode characters (e.g. use collation 'Latin1_General_100_CI_AS_SC' in sql server)
     [Size(256)]
-    
     public string NativeName { get; set; }
 
     #region inherited
+
     public DelegatedAccess AccessDelegation { get; set; }
     public Revocation[] Revocations { get; set; }
 
@@ -63,5 +73,6 @@ public class Language : Object
     }
 
     public void OnPostDerive() { }
+
     #endregion
 }

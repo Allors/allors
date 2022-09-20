@@ -4,7 +4,7 @@
 
 namespace Allors.Repository;
 
-using Attributes;
+using Allors.Repository.Attributes;
 
 [Domain]
 [Id("770538dd-7b19-4694-bdce-cf04dcf9cf62")]

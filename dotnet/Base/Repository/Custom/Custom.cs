@@ -5,7 +5,7 @@
 
 namespace Allors.Repository;
 
-using Attributes;
+using Allors.Repository.Attributes;
 
 [Domain]
 [Extends(nameof(Base))]
