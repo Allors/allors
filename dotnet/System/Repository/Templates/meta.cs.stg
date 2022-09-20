@@ -2,7 +2,7 @@ group AllorsCSharpRepository;
 
 TemplateId() ::= <<14F49218-A676-43ba-9CBD-B8FFA059D1BF>>
 TemplateName() ::= <<Allors C# Meta>>
-TemplateVersion() ::= <<3.0.15>>
+TemplateVersion() ::= <<3.0.16>>
 TemplateAllors() ::= <<1.0>>
 TemplateConfiguration(repository) ::= <<
 $!
@@ -473,7 +473,7 @@ field(field) ::= <<
             _ = new FieldType(records.$record.Name$, Ids.$record.Name$$field.Name$)
             {
                 Name = "$field.Name$",
-                FieldObjectType = meta.$field.Type.SingularName$,
+                DataType = meta.$field.Type.SingularName$,
             };
         }
 >>

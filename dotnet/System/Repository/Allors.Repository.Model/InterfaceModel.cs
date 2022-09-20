@@ -13,7 +13,7 @@ public class InterfaceModel : CompositeModel
 
     protected override RepositoryObject RepositoryObject => this.Interface;
 
-    public override FieldObjectType FieldObjectType => this.Interface;
+    public override DataType DataType => this.Interface;
 
     public override ObjectType ObjectType => this.Interface;
 

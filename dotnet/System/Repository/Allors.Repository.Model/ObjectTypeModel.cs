@@ -3,7 +3,7 @@
 using Allors.Repository;
 using Allors.Repository.Domain;
 
-public abstract class ObjectTypeModel : FieldObjectTypeModel
+public abstract class ObjectTypeModel : DataTypeModel
 {
     protected ObjectTypeModel(RepositoryModel repositoryModel) : base(repositoryModel)
     {

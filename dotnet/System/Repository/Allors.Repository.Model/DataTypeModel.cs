@@ -2,13 +2,13 @@ namespace Generate.Model;
 
 using Allors.Repository;
 
-public abstract class FieldObjectTypeModel : RepositoryObjectModel
+public abstract class DataTypeModel : RepositoryObjectModel
 {
-    protected FieldObjectTypeModel(RepositoryModel repositoryModel) : base(repositoryModel)
+    protected DataTypeModel(RepositoryModel repositoryModel) : base(repositoryModel)
     {
     }
 
-    public abstract FieldObjectType FieldObjectType { get; }
+    public abstract DataType DataType { get; }
 
     public bool IsInterface => this is InterfaceModel;
 

@@ -508,7 +508,7 @@ public class Project
                 var reflectedPropertyType = reflectedProperty.PropertyType;
                 var typeName = this.GetTypeName(reflectedPropertyType);
 
-                property.Type = (FieldObjectType)this.Repository.Objects.OfType<Record>().FirstOrDefault(v => v.Name == typeName) ??
+                property.Type = (DataType)this.Repository.Objects.OfType<Record>().FirstOrDefault(v => v.Name == typeName) ??
                                 this.Repository.Objects.OfType<ObjectType>().First(v => v.SingularName == typeName);
                 property.IsMany = typeName.EndsWith("[]");
 

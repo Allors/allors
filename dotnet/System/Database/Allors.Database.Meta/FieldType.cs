@@ -8,7 +8,7 @@ public class FieldType : IFieldType
 {
     private string[] derivedWorkspaceNames;
     private string name;
-    private FieldObjectType fieldObjectType;
+    private DataType dataType;
     private bool isOne;
 
     public FieldType(Record record, Guid id, string tag = null)
@@ -37,14 +37,14 @@ public class FieldType : IFieldType
         }
     }
 
-    public FieldObjectType FieldObjectType
+    public DataType DataType
     {
-        get => this.fieldObjectType;
+        get => this.dataType;
 
         set
         {
             this.MetaPopulation.AssertUnlocked();
-            this.fieldObjectType = value;
+            this.dataType = value;
             this.MetaPopulation.Stale();
         }
     }
@@ -85,11 +85,11 @@ public class FieldType : IFieldType
 
     IRecord IFieldType.Record => this.Record;
 
-    IFieldObjectType IFieldType.FieldObjectType => this.FieldObjectType;
+    IDataType IFieldType.DataType => this.DataType;
 
     IMetaPopulation IMetaObject.MetaPopulation => this.MetaPopulation;
 
-    internal void DeriveWorkspaceNames() => this.derivedWorkspaceNames = this.FieldObjectType != null
-        ? this.Record.WorkspaceNames.Intersect(this.FieldObjectType.WorkspaceNames).ToArray()
+    internal void DeriveWorkspaceNames() => this.derivedWorkspaceNames = this.DataType != null
+        ? this.Record.WorkspaceNames.Intersect(this.DataType.WorkspaceNames).ToArray()
         : Array.Empty<string>();
 }

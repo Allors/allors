@@ -121,7 +121,7 @@ public class RepositoryModel
     #region Mappers
     public RepositoryObjectModel Map(RepositoryObject v) => v != null ? this.mapping[v] : null;
 
-    public FieldObjectTypeModel Map(FieldObjectType v) => v != null ? (FieldObjectTypeModel)this.mapping[v] : null;
+    public DataTypeModel Map(DataType v) => v != null ? (DataTypeModel)this.mapping[v] : null;
 
     public ObjectTypeModel Map(ObjectType v) => v != null ? (ObjectTypeModel)this.mapping[v] : null;
 

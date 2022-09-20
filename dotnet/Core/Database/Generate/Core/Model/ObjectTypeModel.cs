@@ -3,7 +3,7 @@
 using System;
 using Database.Meta;
 
-public abstract class ObjectTypeModel : FieldObjectTypeModel
+public abstract class ObjectTypeModel : DataTypeModel
 {
     protected ObjectTypeModel(MetaModel metaModel)
         : base(metaModel)
@@ -12,7 +12,7 @@ public abstract class ObjectTypeModel : FieldObjectTypeModel
 
     protected abstract IObjectType ObjectType { get; }
 
-    protected override IFieldObjectType FieldObjectType => this.ObjectType;
+    protected override IDataType DataType => this.ObjectType;
 
     // IObjectType
     public bool IsUnit => this.ObjectType.IsUnit;

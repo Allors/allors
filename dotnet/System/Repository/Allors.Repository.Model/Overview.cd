@@ -54,14 +54,14 @@
       <Property Name="Type" />
     </ShowAsAssociation>
   </Class>
-  <Class Name="Generate.Model.FieldObjectTypeModel">
+  <Class Name="Generate.Model.DataTypeModel">
     <Position X="4.5" Y="3.5" Width="1.75" />
     <Members>
-      <Method Name="FieldObjectTypeModel" Hidden="true" />
+      <Method Name="DataTypeModel" Hidden="true" />
     </Members>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAABAAAIACCAAAAAAAAAAUAAAAA=</HashCode>
-      <FileName>FieldObjectTypeModel.cs</FileName>
+      <FileName>DataTypeModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Generate.Model.MethodModel">

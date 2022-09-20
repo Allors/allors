@@ -8,7 +8,7 @@ namespace Allors.Repository.Domain;
 
 using System.Collections.Generic;
 
-public abstract class ObjectType : FieldObjectType
+public abstract class ObjectType : DataType
 {
     protected ObjectType(ISet<RepositoryObject> objects, string name, Domain domain)
     {

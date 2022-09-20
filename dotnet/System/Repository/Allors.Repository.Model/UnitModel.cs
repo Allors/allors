@@ -11,7 +11,7 @@ public class UnitModel : ObjectTypeModel
 
     protected override RepositoryObject RepositoryObject => this.Unit;
 
-    public override FieldObjectType FieldObjectType => this.Unit;
+    public override DataType DataType => this.Unit;
 
     public override ObjectType ObjectType => this.Unit;
 }

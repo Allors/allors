@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-public class Record : FieldObjectType, IRecord
+public class Record : DataType, IRecord
 {
     private Type clrType;
     private string[] derivedWorkspaceNames;
@@ -70,9 +70,9 @@ public class Record : FieldObjectType, IRecord
 
         workspaceNames.UnionWith(methodWorkspaceNames);
 
-        foreach (var fieldType in this.FieldTypes.Where(v => v.FieldObjectType is Record))
+        foreach (var fieldType in this.FieldTypes.Where(v => v.DataType is Record))
         {
-            var record = (Record)fieldType.FieldObjectType;
+            var record = (Record)fieldType.DataType;
             record.PrepareWorkspaceNames(workspaceNamesByRecord, visited, this.derivedWorkspaceNames);
         }
     }

@@ -22,7 +22,7 @@ public class Field : RepositoryObject
 
     public Record Record { get; }
 
-    public FieldObjectType Type { get; set; }
+    public DataType Type { get; set; }
 
     public bool IsMany { get; set; }
 

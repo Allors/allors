@@ -1,4 +1,4 @@
-namespace Generate.Model;
+﻿namespace Generate.Model;
 
 using System.Linq;
 using Allors.Repository;
@@ -12,7 +12,7 @@ public class ClassModel : CompositeModel
 
     protected override RepositoryObject RepositoryObject => this.Class;
 
-    public override FieldObjectType FieldObjectType => this.Class;
+    public override DataType DataType => this.Class;
 
     public override ObjectType ObjectType => this.Class;
 

@@ -3,7 +3,7 @@
 using System;
 using Database.Meta;
 
-public class RecordModel : FieldObjectTypeModel
+public class RecordModel : DataTypeModel
 {
     public RecordModel(MetaModel metaModel, Record record)
         : base(metaModel) => this.Record = record;
@@ -12,5 +12,5 @@ public class RecordModel : FieldObjectTypeModel
 
     protected override IMetaObject MetaObject => this.Record;
 
-    protected override IFieldObjectType FieldObjectType => this.Record;
+    protected override IDataType DataType => this.Record;
 }

@@ -9,9 +9,9 @@ namespace Allors.Database.Meta;
 using System;
 using System.Collections.Generic;
 
-public abstract class FieldObjectType : IFieldObjectType
+public abstract class DataType : IDataType
 {
-    protected FieldObjectType(MetaPopulation metaPopulation, Guid id, string tag = null)
+    protected DataType(MetaPopulation metaPopulation, Guid id, string tag = null)
     {
         this.MetaPopulation = metaPopulation;
         this.Id = id;

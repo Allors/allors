@@ -2,7 +2,7 @@
 
 using System.Collections.Generic;
 
-public class Record : FieldObjectType
+public class Record : DataType
 {
     public Record(ISet<RepositoryObject> objects, string name)
     {

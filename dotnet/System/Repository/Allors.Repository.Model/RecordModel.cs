@@ -4,7 +4,7 @@ using System.Linq;
 using Allors.Repository;
 using Allors.Repository.Domain;
 
-public class RecordModel : FieldObjectTypeModel
+public class RecordModel : DataTypeModel
 {
     public RecordModel(RepositoryModel repositoryModel, Record record) : base(repositoryModel) => this.Record = record;
 
@@ -12,7 +12,7 @@ public class RecordModel : FieldObjectTypeModel
 
     protected override RepositoryObject RepositoryObject => this.Record;
 
-    public override FieldObjectType FieldObjectType => this.Record;
+    public override DataType DataType => this.Record;
 
     public string Name => this.Record.Name;
 

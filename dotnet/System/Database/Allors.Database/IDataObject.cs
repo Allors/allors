@@ -4,6 +4,6 @@
 
 namespace Allors.Database;
 
-public interface IFieldObject
+public interface IDataObject
 {
 }

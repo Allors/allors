@@ -9,7 +9,7 @@ namespace Allors.Database.Meta;
 using System;
 using Allors.Text;
 
-public abstract class ObjectType : FieldObjectType, IObjectType
+public abstract class ObjectType : DataType, IObjectType
 {
     private string pluralName;
     private string singularName;

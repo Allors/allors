@@ -57,7 +57,7 @@ public class ObjectFactory : IObjectFactory
         var types = this.Assembly.GetTypes()
             .Where(type => type.Namespace != null &&
                            type.Namespace.Equals(instance.Namespace) &&
-                           type.GetTypeInfo().ImplementedInterfaces.Contains(typeof(IFieldObject)))
+                           type.GetTypeInfo().ImplementedInterfaces.Contains(typeof(IDataObject)))
             .ToArray();
 
         this.MetaPopulation = metaPopulation;

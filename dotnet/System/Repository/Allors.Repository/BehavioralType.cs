@@ -1,5 +1,5 @@
 namespace Allors.Repository;
 
-public abstract class FieldObjectType : RepositoryObject
+public abstract class DataType : RepositoryObject
 {
 }

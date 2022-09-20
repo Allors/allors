@@ -2,7 +2,7 @@
 
 using System;
 
-public interface IFieldObjectType : IMetaIdentifiableObject
+public interface IDataType : IMetaIdentifiableObject
 {
     string Name { get; }
 

@@ -122,11 +122,11 @@
       <FileName>Meta\IMetaIdentifiableObject.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="Allors.Database.Meta.IFieldObjectType">
+  <Interface Name="Allors.Database.Meta.IDataType">
     <Position X="2.5" Y="4.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAIAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Meta\IFieldObjectType.cs</FileName>
+      <FileName>Meta\IDataType.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Font Name="Segoe UI" Size="9" />
