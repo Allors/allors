@@ -1,4 +1,4 @@
-// <copyright file="Interface.cs" company="Allors bvba">
+﻿// <copyright file="Interface.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -12,7 +12,6 @@ using System.Linq;
 
 public abstract class Interface : Composite, IInterface
 {
-    private Type clrType;
     private string[] derivedWorkspaceNames;
     private HashSet<Class> structuralDerivedClasses;
 
@@ -47,12 +46,10 @@ public abstract class Interface : Composite, IInterface
 
     IEnumerable<IComposite> IComposite.Subtypes => this.Subtypes;
 
-    public override Type ClrType => this.clrType;
-
     public override bool IsAssignableFrom(IComposite objectType) =>
         this.Equals(objectType) || this.structuralDerivedSubtypes.Contains(objectType);
 
-    public override void Bind(Dictionary<string, Type> typeByTypeName) => this.clrType = typeByTypeName[this.Name];
+    public override void Bind(Dictionary<string, Type> typeByTypeName) => this.ClrType = typeByTypeName[this.Name];
 
     internal void DeriveWorkspaceNames() =>
         this.derivedWorkspaceNames = this

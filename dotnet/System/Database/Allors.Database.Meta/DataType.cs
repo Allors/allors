@@ -18,6 +18,8 @@ public abstract class DataType : IDataType
         this.Tag = tag ?? id.Tag();
     }
 
+    IMetaPopulation IMetaObject.MetaPopulation => this.MetaPopulation;
+
     public MetaPopulation MetaPopulation { get; }
 
     public Guid Id { get; }
@@ -26,9 +28,7 @@ public abstract class DataType : IDataType
 
     public abstract string Name { get; }
 
-    public abstract Type ClrType { get; }
+    public Type ClrType { get; set; }
 
     public abstract IEnumerable<string> WorkspaceNames { get; }
-
-    IMetaPopulation IMetaObject.MetaPopulation => this.MetaPopulation;
 }

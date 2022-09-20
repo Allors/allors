@@ -1,0 +1,214 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Allors.Database.Meta.AssociationType" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="10.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIEiAGQAACAAAZMgECAAAQAAIEAAIACBZAIAABAAAA=</HashCode>
+      <FileName>AssociationType.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Allors.Database.Meta.Class">
+    <Position X="4.5" Y="16.25" Width="1.5" />
+    <Members>
+      <Method Name="Actions" Hidden="true" />
+      <Method Name="Bind" Hidden="true" />
+      <Method Name="Class" Hidden="true" />
+      <Method Name="DeriveRequiredRoleTypes" Hidden="true" />
+      <Method Name="DeriveWorkspaceNames" Hidden="true" />
+      <Method Name="IsAssignableFrom" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAAwMFAIAHAABEJIAAQAEAAAAAAIABAQSIAAAAAAAE=</HashCode>
+      <FileName>Class.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Allors.Database.Meta.Composite">
+    <Position X="3.25" Y="7.25" Width="1.5" />
+    <Members>
+      <Method Name="Bind" Hidden="true" />
+      <Method Name="Composite" Hidden="true" />
+      <Method Name="ExistAssociationType" Hidden="true" />
+      <Method Name="ExistRoleType" Hidden="true" />
+      <Method Name="ExistSupertype" Hidden="true" />
+      <Method Name="IsAssignableFrom" Hidden="true" />
+      <Method Name="StructuralDeriveAssociationTypes" Hidden="true" />
+      <Method Name="StructuralDeriveDirectSupertypes" Hidden="true" />
+      <Method Name="StructuralDeriveMethodTypes" Hidden="true" />
+      <Method Name="StructuralDeriveRoleTypes" Hidden="true" />
+      <Method Name="StructuralDeriveSupertypes" Hidden="true" />
+      <Method Name="StructuralDeriveSupertypesRecursively" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>BAZQgQACAAFISBARECA0AgEAAQAYEAJCQxJgAEgQBEA=</HashCode>
+      <FileName>Composite.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Allors.Database.Meta.DataType">
+    <Position X="3.75" Y="0.5" Width="1.5" />
+    <Members>
+      <Method Name="DataType" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAACAIAQAAAgAAAIAAAAAAQAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>DataType.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Allors.Database.Meta.Domain" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="11.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAihEAQAAKgAAQMoACAAAQIAAAUAIAAAQAAAABQAAA=</HashCode>
+      <FileName>Domain.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Allors.Database.Meta.FieldType" BaseTypeListCollapsed="true">
+    <Position X="15" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACikAUAgIgAAAIIAAAAAQAAAAEAAAAAAAAAABABIA=</HashCode>
+      <FileName>FieldType.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Allors.Database.Meta.Inheritance" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="9.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAIICAAAQEgACAAAAAAAAAAIAAEAAAABBQAAA=</HashCode>
+      <FileName>Inheritance.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Allors.Database.Meta.Interface">
+    <Position X="2.5" Y="16.25" Width="1.5" />
+    <Members>
+      <Method Name="Bind" Hidden="true" />
+      <Method Name="DeriveWorkspaceNames" Hidden="true" />
+      <Method Name="Interface" Hidden="true" />
+      <Method Name="IsAssignableFrom" Hidden="true" />
+      <Method Name="StructuralDeriveDirectSubtypes" Hidden="true" />
+      <Method Name="StructuralDeriveExclusiveSubclass" Hidden="true" />
+      <Method Name="StructuralDeriveSubclasses" Hidden="true" />
+      <Method Name="StructuralDeriveSubtypes" Hidden="true" />
+      <Method Name="StructuralDeriveSubtypesRecursively" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAAgNIigAHAAAAIIAAQAAIAAAAAAEAAQCIIAIAACQA=</HashCode>
+      <FileName>Interface.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Allors.Database.Meta.MetaPopulation" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <Members>
+      <Method Name="AssertUnlocked" Hidden="true" />
+      <Method Name="Bind" Hidden="true" />
+      <Method Name="Derive" Hidden="true" />
+      <Method Name="FindById" Hidden="true" />
+      <Method Name="FindByTag" Hidden="true" />
+      <Method Name="FindDatabaseCompositeByName" Hidden="true" />
+      <Method Name="HasCycle" Hidden="true" />
+      <Method Name="IMetaPopulation.FindById" Hidden="true" />
+      <Method Name="IMetaPopulation.FindByTag" Hidden="true" />
+      <Method Name="IMetaPopulation.FindDatabaseCompositeByName" Hidden="true" />
+      <Method Name="IMetaPopulation.Validate" Hidden="true" />
+      <Method Name="MetaPopulation" Hidden="true" />
+      <Method Name="OnAssociationTypeCreated" Hidden="true" />
+      <Method Name="OnClassCreated" Hidden="true" />
+      <Method Name="OnDomainCreated" Hidden="true" />
+      <Method Name="OnFieldTypeCreated" Hidden="true" />
+      <Method Name="OnInheritanceCreated" Hidden="true" />
+      <Method Name="OnInterfaceCreated" Hidden="true" />
+      <Method Name="OnMethodTypeCreated" Hidden="true" />
+      <Method Name="OnRecordCreated" Hidden="true" />
+      <Method Name="OnRelationTypeCreated" Hidden="true" />
+      <Method Name="OnRoleTypeCreated" Hidden="true" />
+      <Method Name="OnUnitCreated" Hidden="true" />
+      <Method Name="Stale" Hidden="true" />
+      <Method Name="StructuralDerive" Hidden="true" />
+      <Method Name="Validate" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>MKFAoECAUAHCBIBJqAgIVDgAUSATCAAgHMQBYimAiEA=</HashCode>
+      <FileName>MetaPopulation.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Allors.Database.Meta.MethodType" BaseTypeListCollapsed="true">
+    <Position X="13.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACEEEQAACgAYQMoADIABQAGAAEAJAAgYAAAABAAAA=</HashCode>
+      <FileName>MethodType.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Allors.Database.Meta.ObjectType">
+    <Position X="2.25" Y="3.25" Width="1.5" />
+    <Members>
+      <Method Name="CompareTo" Hidden="true" />
+      <Method Name="Equals" Hidden="true" />
+      <Method Name="GetHashCode" Hidden="true" />
+      <Method Name="ObjectType" Hidden="true" />
+      <Method Name="ToString" Hidden="true" />
+      <Method Name="Validate" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgCAAAYEgACAAAQBACKAAIACAAAAAUAAAAA=</HashCode>
+      <FileName>ObjectType.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Allors.Database.Meta.Record">
+    <Position X="5.25" Y="3.5" Width="1.5" />
+    <Members>
+      <Method Name="Bind" Hidden="true" />
+      <Method Name="DeriveWorkspaceNames" Hidden="true" />
+      <Method Name="PrepareWorkspaceNames" Hidden="true" />
+      <Method Name="Record" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAAoMAAAACAAAAIIQBAAAQAAAAAAAAAAAAAAAAAACA=</HashCode>
+      <FileName>Record.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Allors.Database.Meta.RelationType" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="9.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACICAEERAACgASQOoKCIBAQgiAAQAJBAEQIAAABAAAA=</HashCode>
+      <FileName>RelationType.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Allors.Database.Meta.RoleType" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="11.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEiBGQAgCAhI5MgMLABIQjgAIAIIACAZAQAADAUAA=</HashCode>
+      <FileName>RoleType.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Allors.Database.Meta.Unit">
+    <Position X="1.25" Y="7.25" Width="1.5" />
+    <Members>
+      <Method Name="Bind" Hidden="true" />
+      <Property Name="IsBinary" Hidden="true" />
+      <Property Name="IsBoolean" Hidden="true" />
+      <Property Name="IsDateTime" Hidden="true" />
+      <Property Name="IsDecimal" Hidden="true" />
+      <Property Name="IsFloat" Hidden="true" />
+      <Property Name="IsInteger" Hidden="true" />
+      <Property Name="IsString" Hidden="true" />
+      <Property Name="IsUnique" Hidden="true" />
+      <Method Name="Unit" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAIgIAAAACAAABIgAAAAAABAAAAAAIQAAAAAQAAAAA=</HashCode>
+      <FileName>Unit.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

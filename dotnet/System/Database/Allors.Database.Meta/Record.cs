@@ -6,7 +6,6 @@ using System.Linq;
 
 public class Record : DataType, IRecord
 {
-    private Type clrType;
     private string[] derivedWorkspaceNames;
     private FieldType[] fieldTypes;
 
@@ -32,8 +31,6 @@ public class Record : DataType, IRecord
 
     public override string Name { get; }
 
-    public override Type ClrType => this.clrType;
-
     public override IEnumerable<string> WorkspaceNames
     {
         get
@@ -45,7 +42,7 @@ public class Record : DataType, IRecord
 
     IEnumerable<IFieldType> IRecord.FieldTypes => this.FieldTypes;
 
-    internal void Bind(Dictionary<string, Type> typeByTypeName) => this.clrType = typeByTypeName[this.Name];
+    internal void Bind(Dictionary<string, Type> typeByTypeName) => this.ClrType = typeByTypeName[this.Name];
 
     internal void DeriveWorkspaceNames(IDictionary<Record, ISet<string>> workspaceNamesByRecord)
     {

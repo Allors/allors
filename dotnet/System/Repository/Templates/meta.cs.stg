@@ -46,10 +46,10 @@ $repository.Domains:{assembly|$ids_domain(assembly)$}; separator="\n"$
         // Units
 $repository.Units:{unit|$ids_unit(unit)$}; separator="\n"$
 
-        // Composites
+        // Composites & Relations
 $repository.composites:{composite|$ids_composite(composite)$}; separator="\n"$
 
-        // Records
+        // Records & Fields
 $repository.records:{record|$ids_record(record)$}; separator="\n"$
     }
 }
@@ -70,18 +70,18 @@ $composite.DefinedMethods:{method|$ids_composite_methodType(method)$}; separator
 
 >>
 
-ids_record(record) ::= <<
-        public static readonly Guid $record.Name$ = new Guid("$record.Id$");
-$record.Fields:{field|$ids_record_field(field)$}; separator="\n"$
-
->>
-
 ids_composite_property(property) ::= <<
         public static readonly Guid $composite.SingularName$$property.RoleName$ = new Guid("$property.Id$");
 >>
 
 ids_composite_methodType(method) ::= <<
         public static readonly Guid $composite.SingularName$$method.Name$ = new Guid("$method.Id$");
+>>
+
+ids_record(record) ::= <<
+        public static readonly Guid $record.Name$ = new Guid("$record.Id$");
+$record.Fields:{field|$ids_record_field(field)$}; separator="\n"$
+
 >>
 
 ids_record_field(field) ::= <<

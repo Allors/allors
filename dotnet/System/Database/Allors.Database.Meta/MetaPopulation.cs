@@ -128,7 +128,6 @@ public abstract class MetaPopulation : IMetaPopulation
                 unit.Bind();
             }
 
-            this.Derive();
             foreach (var @interface in this.Interfaces)
             {
                 @interface.Bind(typeByName);

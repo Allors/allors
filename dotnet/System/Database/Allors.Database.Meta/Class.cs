@@ -1,4 +1,4 @@
-// <copyright file="Class.cs" company="Allors bvba">
+﻿// <copyright file="Class.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -17,15 +17,15 @@ public abstract class Class : Composite, IClass
 
     private ConcurrentDictionary<IMethodType, Action<object, object>[]> actionsByMethodType;
     private string[] assignedWorkspaceNames;
-    private Type clrType;
     private IRoleType[] derivedRequiredRoleTypes;
     private string[] derivedWorkspaceNames;
 
     private IRoleType[] overriddenRequiredRoleTypes;
 
-    protected Class(MetaPopulation metaPopulation, Guid id, string tag) : base(metaPopulation, id, tag)
+    protected Class(MetaPopulation metaPopulation, Guid id, string tag)
+        : base(metaPopulation, id, tag)
     {
-        this.classes = new[] {this};
+        this.classes = new[] { this };
         metaPopulation.OnClassCreated(this);
     }
 
@@ -87,11 +87,9 @@ public abstract class Class : Composite, IClass
 
     public override bool ExistClass => true;
 
-    public override Type ClrType => this.clrType;
-
     public override bool IsAssignableFrom(IComposite objectType) => this.Equals(objectType);
 
-    public override void Bind(Dictionary<string, Type> typeByTypeName) => this.clrType = typeByTypeName[this.Name];
+    public override void Bind(Dictionary<string, Type> typeByTypeName) => this.ClrType = typeByTypeName[this.Name];
 
     public Action<object, object>[] Actions(IMethodType methodType)
     {

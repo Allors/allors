@@ -1,4 +1,4 @@
-// <copyright file="Unit.cs" company="Allors bvba">
+﻿// <copyright file="Unit.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -11,10 +11,9 @@ using System.Collections.Generic;
 
 public abstract class Unit : ObjectType, IUnit
 {
-    private Type clrType;
-
-    protected Unit(MetaPopulation metaPopulation, Guid id, string tag) : base(metaPopulation, id, tag) =>
-        metaPopulation.OnUnitCreated(this);
+    protected Unit(MetaPopulation metaPopulation, Guid id, string tag)
+        : base(metaPopulation, id, tag)
+        => metaPopulation.OnUnitCreated(this);
 
     public bool IsBinary => this.Tag == UnitTags.Binary;
 
@@ -30,14 +29,12 @@ public abstract class Unit : ObjectType, IUnit
 
     public bool IsString => this.Tag == UnitTags.String;
 
-    public bool IsUnique => this.Id.Equals(UnitIds.Unique);
-
-    public override Type ClrType => this.clrType;
+    public bool IsUnique => this.Tag == UnitTags.Unique;
 
     public override IEnumerable<string> WorkspaceNames => this.MetaPopulation.WorkspaceNames;
 
     public void Bind() =>
-        this.clrType = this.Tag switch
+        this.ClrType = this.Tag switch
         {
             UnitTags.Binary => typeof(byte[]),
             UnitTags.Boolean => typeof(bool),
@@ -47,6 +44,6 @@ public abstract class Unit : ObjectType, IUnit
             UnitTags.Integer => typeof(int),
             UnitTags.String => typeof(string),
             UnitTags.Unique => typeof(Guid),
-            _ => this.clrType
+            _ => throw new ArgumentOutOfRangeException(),
         };
 }
