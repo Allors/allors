@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="Allors.Database.Meta.AssociationType" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="10.25" Y="4.75" Width="1.5" />
+  <Class Name="Allors.Database.Meta.AssociationType" BaseTypeListCollapsed="true">
+    <Position X="10.75" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAIEiAGQAACAAAZMgECAAAQAAIEAAIACBZAIAABAAAA=</HashCode>
       <FileName>AssociationType.cs</FileName>
@@ -9,7 +9,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Database.Meta.Class">
-    <Position X="4.5" Y="16.25" Width="1.5" />
+    <Position X="4.5" Y="16.25" Width="2.75" />
     <Members>
       <Method Name="Actions" Hidden="true" />
       <Method Name="Class" Hidden="true" />
@@ -24,7 +24,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Database.Meta.Composite">
-    <Position X="3.25" Y="7.25" Width="1.5" />
+    <Position X="3.25" Y="7.25" Width="2.75" />
     <Members>
       <Method Name="Composite" Hidden="true" />
       <Method Name="ExistAssociationType" Hidden="true" />
@@ -45,7 +45,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Database.Meta.DataType">
-    <Position X="3.75" Y="0.5" Width="1.5" />
+    <Position X="3.75" Y="0.5" Width="2.25" />
     <Members>
       <Method Name="DataType" Hidden="true" />
     </Members>
@@ -55,8 +55,8 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="Allors.Database.Meta.Domain" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="11.5" Y="0.5" Width="1.5" />
+  <Class Name="Allors.Database.Meta.Domain" BaseTypeListCollapsed="true">
+    <Position X="24.25" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAihEAQAAKgAAQMoACAAAQIAAAUAIAAAQAAAABQAAA=</HashCode>
       <FileName>Domain.cs</FileName>
@@ -64,15 +64,15 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Database.Meta.FieldType" BaseTypeListCollapsed="true">
-    <Position X="15" Y="0.5" Width="1.5" />
+    <Position X="17.25" Y="0.5" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAACikAUAgIgAAAIIAAAAAQAAAAEAAAAAAAAAABABIA=</HashCode>
       <FileName>FieldType.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="Allors.Database.Meta.Inheritance" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="9.75" Y="1.5" Width="1.5" />
+  <Class Name="Allors.Database.Meta.Inheritance" BaseTypeListCollapsed="true">
+    <Position X="22" Y="1" Width="1.5" />
     <TypeIdentifier>
       <HashCode>ABAAAAAAIICAAAQEgACAAAAAAAAAAIAAEAAAABBQAAA=</HashCode>
       <FileName>Inheritance.cs</FileName>
@@ -80,7 +80,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Database.Meta.Interface">
-    <Position X="2.5" Y="16.25" Width="1.5" />
+    <Position X="2.5" Y="16.25" Width="2.5" />
     <Members>
       <Method Name="DeriveWorkspaceNames" Hidden="true" />
       <Method Name="Interface" Hidden="true" />
@@ -106,7 +106,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Database.Meta.MethodType" BaseTypeListCollapsed="true">
-    <Position X="13.25" Y="1.5" Width="1.5" />
+    <Position X="14.25" Y="1" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAACEEEQAACgAYQMoADIABQAGAAEAJAAgYAAAABAAAA=</HashCode>
       <FileName>MethodType.cs</FileName>
@@ -114,7 +114,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Database.Meta.ObjectType">
-    <Position X="2.25" Y="3.25" Width="1.5" />
+    <Position X="2.25" Y="3.25" Width="2" />
     <Members>
       <Method Name="CompareTo" Hidden="true" />
       <Method Name="Equals" Hidden="true" />
@@ -130,7 +130,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Database.Meta.Record">
-    <Position X="5.25" Y="3.5" Width="1.5" />
+    <Position X="5.25" Y="3.25" Width="2" />
     <Members>
       <Method Name="Bind" Hidden="true" />
       <Method Name="DeriveWorkspaceNames" Hidden="true" />
@@ -143,16 +143,16 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="Allors.Database.Meta.RelationType" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="9.75" Y="2.5" Width="1.5" />
+  <Class Name="Allors.Database.Meta.RelationType" BaseTypeListCollapsed="true">
+    <Position X="8.75" Y="1" Width="1.5" />
     <TypeIdentifier>
       <HashCode>ACICAEERAACgASQOoKCIBAQgiAAQAJBAEQIAAABAAAA=</HashCode>
       <FileName>RelationType.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="Allors.Database.Meta.RoleType" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="11.5" Y="2.5" Width="1.5" />
+  <Class Name="Allors.Database.Meta.RoleType" BaseTypeListCollapsed="true">
+    <Position X="12.5" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAEiBGQAgCAhI5MgMLABIQjgAIAIIACAZAQAADAUAA=</HashCode>
       <FileName>RoleType.cs</FileName>
@@ -160,7 +160,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Database.Meta.Unit">
-    <Position X="1.25" Y="7.25" Width="1.5" />
+    <Position X="1.25" Y="7.25" Width="1.75" />
     <Members>
       <Property Name="IsBinary" Hidden="true" />
       <Property Name="IsBoolean" Hidden="true" />

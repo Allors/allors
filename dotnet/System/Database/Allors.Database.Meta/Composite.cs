@@ -20,7 +20,8 @@ public abstract class Composite : ObjectType, IComposite
     private HashSet<RoleType> structuralDerivedRoleTypes;
     private HashSet<Interface> structuralDerivedSupertypes;
 
-    protected Composite(MetaPopulation metaPopulation, Guid id, string tag) : base(metaPopulation, id, tag) { }
+    protected Composite(MetaPopulation metaPopulation, Guid id)
+        : base(metaPopulation, id) { }
 
     public abstract IEnumerable<Class> Classes { get; }
     public abstract Class ExclusiveClass { get; }

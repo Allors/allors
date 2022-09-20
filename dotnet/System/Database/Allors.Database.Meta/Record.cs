@@ -10,7 +10,7 @@ public class Record : DataType, IRecord
     private FieldType[] fieldTypes;
 
     public Record(MetaPopulation metaPopulation, Guid id, string name)
-        : base(metaPopulation, id, null)
+        : base(metaPopulation, id)
     {
         this.Name = name;
         this.fieldTypes = Array.Empty<FieldType>();

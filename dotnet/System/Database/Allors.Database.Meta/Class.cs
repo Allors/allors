@@ -22,8 +22,8 @@ public abstract class Class : Composite, IClass
 
     private IRoleType[] overriddenRequiredRoleTypes;
 
-    protected Class(MetaPopulation metaPopulation, Guid id, string tag)
-        : base(metaPopulation, id, tag)
+    protected Class(MetaPopulation metaPopulation, Guid id)
+        : base(metaPopulation, id)
     {
         this.classes = new[] { this };
         metaPopulation.OnClassCreated(this);

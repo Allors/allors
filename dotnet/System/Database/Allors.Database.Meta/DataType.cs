@@ -11,11 +11,12 @@ using System.Collections.Generic;
 
 public abstract class DataType : IDataType
 {
-    protected DataType(MetaPopulation metaPopulation, Guid id, string tag)
+    protected DataType(MetaPopulation metaPopulation, Guid id)
     {
         this.MetaPopulation = metaPopulation;
         this.Id = id;
-        this.Tag = tag ?? id.Tag();
+        // TODO: 
+        this.Tag = id.Tag();
     }
 
     IMetaPopulation IMetaObject.MetaPopulation => this.MetaPopulation;
@@ -24,7 +25,7 @@ public abstract class DataType : IDataType
 
     public Guid Id { get; }
 
-    public string Tag { get; }
+    public string Tag { get; set; }
 
     public abstract string Name { get; }
 

@@ -11,8 +11,8 @@ using System.Collections.Generic;
 
 public abstract class Unit : ObjectType, IUnit
 {
-    protected Unit(MetaPopulation metaPopulation, Guid id, string tag)
-        : base(metaPopulation, id, tag)
+    protected Unit(MetaPopulation metaPopulation, Guid id)
+        : base(metaPopulation, id)
         => metaPopulation.OnUnitCreated(this);
 
     public bool IsBinary => this.Tag == UnitTags.Binary;

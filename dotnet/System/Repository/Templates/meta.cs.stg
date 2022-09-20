@@ -118,8 +118,9 @@ $repository.Units:{unit|$define_unit(unit)$}; separator="\n"$
 
 define_unit(unit) ::= <<
     public class Meta$unit.SingularName$ : Unit {
-        public Meta$unit.SingularName$(M metaPopulation, System.Guid id) : base(metaPopulation, id, UnitTags.$unit.SingularName$)
+        public Meta$unit.SingularName$(M metaPopulation, System.Guid id) : base(metaPopulation, id)
         {
+                this.Tag = UnitTags.$unit.SingularName$;
         }
     }
 >>
@@ -133,7 +134,7 @@ $repository.Interfaces:{interface|$define_interface(interface)$}; separator="\n"
 
 define_interface(interface) ::= <<
     public partial class Meta$interface.SingularName$ : Interface {
-        public Meta$interface.SingularName$(M metaPopulation, System.Guid id, string tag = null) : base(metaPopulation, id, tag)
+        public Meta$interface.SingularName$(M metaPopulation, System.Guid id) : base(metaPopulation, id)
         {
         }
 
@@ -164,7 +165,7 @@ $repository.Classes:{class|$define_class(class)$}; separator="\n"$
 
 define_class(class) ::= <<
     public partial class Meta$class.SingularName$ : Class {
-        public Meta$class.SingularName$(M metaPopulation, System.Guid id, string tag = null) : base(metaPopulation, id, tag)
+        public Meta$class.SingularName$(M metaPopulation, System.Guid id) : base(metaPopulation, id)
         {
         }
         

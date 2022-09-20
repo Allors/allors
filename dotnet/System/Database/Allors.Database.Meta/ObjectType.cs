@@ -14,8 +14,8 @@ public abstract class ObjectType : DataType, IObjectType
     private string pluralName;
     private string singularName;
 
-    protected ObjectType(MetaPopulation metaPopulation, Guid id, string tag)
-        : base(metaPopulation, id, tag)
+    protected ObjectType(MetaPopulation metaPopulation, Guid id)
+        : base(metaPopulation, id)
     {
     }
 

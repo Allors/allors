@@ -19,7 +19,8 @@ public abstract class Interface : Composite, IInterface
     private Class structuralDerivedExclusiveClass;
     private HashSet<Composite> structuralDerivedSubtypes;
 
-    protected Interface(MetaPopulation metaPopulation, Guid id, string tag) : base(metaPopulation, id, tag) =>
+    protected Interface(MetaPopulation metaPopulation, Guid id)
+        : base(metaPopulation, id) =>
         metaPopulation.OnInterfaceCreated(this);
 
     public bool ExistClasses => this.structuralDerivedClasses.Count > 0;
@@ -49,7 +50,7 @@ public abstract class Interface : Composite, IInterface
     public override bool IsAssignableFrom(IComposite objectType) =>
         this.Equals(objectType) || this.structuralDerivedSubtypes.Contains(objectType);
 
-   
+
 
     internal void DeriveWorkspaceNames() =>
         this.derivedWorkspaceNames = this
