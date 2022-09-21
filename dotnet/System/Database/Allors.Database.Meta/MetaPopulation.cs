@@ -516,8 +516,6 @@ public abstract class MetaPopulation : IMetaPopulation
         this.Stale();
     }
 
-    internal void OnAssociationTypeCreated(AssociationType associationType) => this.Stale();
-
     internal void OnRecordCreated(Record record)
     {
         this.records.Add(record);
@@ -526,8 +524,6 @@ public abstract class MetaPopulation : IMetaPopulation
 
         this.Stale();
     }
-
-    internal void OnRoleTypeCreated(RoleType roleType) => this.Stale();
 
     internal void OnMethodTypeCreated(MethodType methodType)
     {

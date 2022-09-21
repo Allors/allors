@@ -1,4 +1,4 @@
-// <copyright file="RelationType.cs" company="Allors bvba">
+﻿// <copyright file="RelationType.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -25,17 +25,18 @@ public sealed class RelationType : IRelationType
     private bool isIndexed;
     private Multiplicity multiplicity;
 
-    public RelationType(Composite associationTypeComposite, Guid id, Func<RelationType, AssociationType> associationTypeFactory,
-        Func<RelationType, RoleType> roleTypeFactory, string tag = null)
+    public RelationType(Composite associationTypeComposite, Guid id, AssociationType associationType, RoleType roleType, string tag = null)
     {
         this.MetaPopulation = associationTypeComposite.MetaPopulation;
         this.Id = id;
         this.Tag = tag ?? id.Tag();
 
-        this.AssociationType = associationTypeFactory(this);
+        this.AssociationType = associationType;
+        this.AssociationType.RelationType = this;
         this.AssociationType.ObjectType = associationTypeComposite;
 
-        this.RoleType = roleTypeFactory(this);
+        this.RoleType = roleType;
+        this.RoleType.RelationType = this;
 
         this.MetaPopulation.OnRelationTypeCreated(this);
     }

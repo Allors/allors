@@ -1,4 +1,4 @@
-// <copyright file="AssociationType.cs" company="Allors bvba">
+﻿// <copyright file="AssociationType.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -24,14 +24,11 @@ public abstract class AssociationType : IAssociationType, IComparable
 
     private Composite objectType;
 
-    protected AssociationType(RelationType relationType)
+    protected AssociationType()
     {
-        this.RelationType = relationType;
-        this.MetaPopulation = this.RelationType.MetaPopulation;
-        this.RelationType.MetaPopulation.OnAssociationTypeCreated(this);
     }
 
-    public MetaPopulation MetaPopulation { get; }
+    public MetaPopulation MetaPopulation => this.RelationType.MetaPopulation;
 
     public string[] AssignedWorkspaceNames => this.RelationType.AssignedWorkspaceNames;
 
@@ -48,7 +45,7 @@ public abstract class AssociationType : IAssociationType, IComparable
     }
 
     public RoleType RoleType => this.RelationType.RoleType;
-    public RelationType RelationType { get; }
+    public RelationType RelationType { get; internal set; }
 
     internal string ValidationName => "association type " + this.Name;
 

@@ -235,7 +235,7 @@ define_associationType(property) ::= <<
     {
         public M M => (M)this.MetaPopulation;
 
-        public Meta$property.AssociationName$(RelationType relationType) : base(relationType)
+        public Meta$property.AssociationName$() : base()
         {
         }
 
@@ -259,7 +259,7 @@ define_roleType(property) ::= <<
     {
         public M M => (M)this.MetaPopulation;
 
-        public Meta$property.DefiningType.SingularName$$property.RoleName$(RelationType relationType) : base(relationType)
+        public Meta$property.DefiningType.SingularName$$property.RoleName$() : base()
         {
         }
 $if(property.ObjectType.IsComposite)$
@@ -476,7 +476,7 @@ $composite.DefinedProperties:{property|$relation(property)$}; separator="\n"$
 relation(property) ::= <<
         private void Build$property.DefiningType.SingularName$$property.RoleName$(M meta, Domains domains, RelationTypes relationTypes)
         {
-            relationTypes.$property.DefiningType.SingularName$$property.RoleName$ = new RelationType(meta.$property.DefiningType.SingularName$, Ids.$property.DefiningType.SingularName$$property.RoleName$, v => new Meta$property.AssociationName$(v), v => new Meta$property.DefiningType.SingularName$$property.RoleName$(v))
+            relationTypes.$property.DefiningType.SingularName$$property.RoleName$ = new RelationType(meta.$property.DefiningType.SingularName$, Ids.$property.DefiningType.SingularName$$property.RoleName$, new Meta$property.AssociationName$(), new Meta$property.DefiningType.SingularName$$property.RoleName$())
             {
 $if(property.AssignedMultiplicity)$		        AssignedMultiplicity = Allors.Multiplicity.$property.AssignedMultiplicity$,$endif$
 $if(property.AttributeByName.Derived)$		        IsDerived = $property.AttributeByName.Derived.Value$,$endif$

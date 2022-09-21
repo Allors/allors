@@ -1,4 +1,4 @@
-// <copyright file="RoleType.cs" company="Allors bvba">
+﻿// <copyright file="RoleType.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -28,16 +28,13 @@ public abstract class RoleType : IRoleType, IComparable
     private string singularName;
     private int? size;
 
-    protected RoleType(RelationType relationType)
+    protected RoleType()
     {
-        this.MetaPopulation = relationType.MetaPopulation;
-        this.RelationType = relationType;
-
-        this.MetaPopulation.OnRoleTypeCreated(this);
     }
 
-    public MetaPopulation MetaPopulation { get; }
-    public RelationType RelationType { get; }
+    public MetaPopulation MetaPopulation => this.RelationType.MetaPopulation;
+
+    public RelationType RelationType { get; internal set; }
     public AssociationType AssociationType => this.RelationType.AssociationType;
 
     public ObjectType ObjectType
