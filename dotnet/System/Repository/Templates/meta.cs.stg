@@ -23,15 +23,15 @@ GNU General Public License for more details.
 For more information visit http://www.allors.com/legal
 !$
 <generations>
-        <generation template="ids" output="ids.g.cs"/>
-        <generation template="m" output="m.g.cs"/>
-        <generation template="units" output="units.g.cs"/>
-        <generation template="interfaces" output="interfaces.g.cs"/>
-        <generation template="classes" output="classes.g.cs"/>
-        <generation template="records" output="records.g.cs"/>
-        <generation template="associationTypes" output="associationTypes.g.cs"/>
-        <generation template="roleTypes" output="roleTypes.g.cs"/>
-        <generation template="builder" output="builder.g.cs"/>
+    <generation template="ids" output="ids.g.cs"/>
+    <generation template="m" output="m.g.cs"/>
+    <generation template="units" output="units.g.cs"/>
+    <generation template="interfaces" output="interfaces.g.cs"/>
+    <generation template="classes" output="classes.g.cs"/>
+    <generation template="records" output="records.g.cs"/>
+    <generation template="associationTypes" output="associationTypes.g.cs"/>
+    <generation template="roleTypes" output="roleTypes.g.cs"/>
+    <generation template="builder" output="builder.g.cs"/>
 </generations>
 >>
 
@@ -118,7 +118,7 @@ $repository.Units:{unit|$define_unit(unit)$}; separator="\n"$
 
 define_unit(unit) ::= <<
     public class Meta$unit.SingularName$ : Unit {
-        public Meta$unit.SingularName$(M metaPopulation, System.Guid id) : base(metaPopulation, id)
+        public Meta$unit.SingularName$(M metaPopulation) : base(metaPopulation, Ids.$unit.SingularName$, UnitNames.$unit.SingularName$, null)
         {
                 this.Tag = UnitTags.$unit.SingularName$;
         }
@@ -134,7 +134,7 @@ $repository.Interfaces:{interface|$define_interface(interface)$}; separator="\n"
 
 define_interface(interface) ::= <<
     public partial class Meta$interface.SingularName$ : Interface {
-        public Meta$interface.SingularName$(M metaPopulation, System.Guid id) : base(metaPopulation, id)
+        public Meta$interface.SingularName$(M metaPopulation) : base(metaPopulation, Ids.$interface.SingularName$, "$interface.SingularName$", $if(interface.AssignedPluralName)$"$interface.AssignedPluralName$"$else$null$endif$)
         {
         }
 
@@ -165,7 +165,7 @@ $repository.Classes:{class|$define_class(class)$}; separator="\n"$
 
 define_class(class) ::= <<
     public partial class Meta$class.SingularName$ : Class {
-        public Meta$class.SingularName$(M metaPopulation, System.Guid id) : base(metaPopulation, id)
+        public Meta$class.SingularName$(M metaPopulation) : base(metaPopulation, Ids.$class.SingularName$, "$class.SingularName$", $if(class.AssignedPluralName)$"$class.AssignedPluralName$"$else$null$endif$)
         {
         }
         
@@ -305,7 +305,7 @@ $repository.Domains:{assembly|              public Domain $assembly.Name$;}; sep
         }
         #endregion
 
-	#region RelationTypes
+	    #region RelationTypes
         internal class RelationTypes
         {
 $repository.Composites:{composite|$define_relationTypes(composite)$}; separator="\n"$
@@ -437,10 +437,7 @@ $composite.DefinedMethods:{method|          public MethodType $method.DefiningTy
 >>
 
 build_domain(assembly) ::= <<
-	        domains.$assembly.Name$ = new Domain(meta, Ids.$assembly.Name$)
-			{
-				Name = "$assembly.Name$"
-			};
+	        domains.$assembly.Name$ = new Domain(meta, Ids.$assembly.Name$, "$assembly.Name$");
 >>
 
 build_domain_inheritance(domain) ::= <<
@@ -450,26 +447,15 @@ $endif$
 >>
 
 build_unit(unit) ::= <<
-	        meta.$unit.SingularName$ = new Meta$unit.SingularName$(meta, Ids.$unit.SingularName$)
-            {
-                SingularName = UnitNames.$unit.SingularName$
-            };
+            meta.$unit.SingularName$ = new Meta$unit.SingularName$(meta);
 >>
 
 build_interface(interface) ::= <<
-	        meta.$interface.SingularName$ = new Meta$interface.SingularName$(meta, Ids.$interface.SingularName$)
-            {
-                SingularName = "$interface.SingularName$",
-                $if(interface.AssignedPluralName)$PluralName = "$interface.AssignedPluralName$",$endif$
-            };
+	        meta.$interface.SingularName$ = new Meta$interface.SingularName$(meta);
 >>
 
 build_class(class) ::= <<
-	        meta.$class.SingularName$ = new Meta$class.SingularName$(meta, Ids.$class.SingularName$)
-            {
-                SingularName = "$class.SingularName$",
-                $if(class.AssignedPluralName)$PluralName = "$class.AssignedPluralName$",$endif$
-            };
+	        meta.$class.SingularName$ = new Meta$class.SingularName$(meta);
 >>
 
 inheritance(composite) ::= <<$composite.ImplementedInterfaces:{implementedInterface|$build_inheritance(composite, implementedInterface)$}; separator="\n"$>>
@@ -479,7 +465,7 @@ build_record(record) ::= <<            meta.$record.Name$ = new Meta$record.Name
 
 
 build_relations(composite) ::= <<
-$composite.DefinedProperties:{property|                 this.Build$property.DefiningType.SingularName$$property.RoleName$(meta, domains, relationTypes);}; separator="\n"$
+$composite.DefinedProperties:{property|             this.Build$property.DefiningType.SingularName$$property.RoleName$(meta, domains, relationTypes);}; separator="\n"$
 >>
 
 

@@ -1,31 +1,10 @@
 ###############################
-# Core EditorConfig Options   #
-###############################
-root = true
-# All files
-[*]
-indent_style = space
-
-# XML project files
-[*.{csproj,vbproj,vcxproj,vcxproj.filters,proj,projitems,shproj}]
-indent_size = 2
-
-# XML config files
-[*.{props,targets,ruleset,config,nuspec,resx,vsixmanifest,vsct}]
-indent_size = 2
-
-# Code files
-[*.{cs,csx,vb,vbx}]
-indent_size = 4
-insert_final_newline = true
-charset = utf-8-bom
-max_line_length = 140
-###############################
 # File header                 #
 ###############################
 # IDE0073: File header
 dotnet_diagnostic.IDE0073.severity = warning
 file_header_template = <copyright file = "{fileName}" company = "Allors bv">\nCopyright (c) Allors.All rights reserved.\n</copyright>
+
 ###############################
 # .NET Coding Conventions     #
 ###############################

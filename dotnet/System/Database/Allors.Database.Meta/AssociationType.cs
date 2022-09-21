@@ -62,7 +62,7 @@ public abstract class AssociationType : IAssociationType, IComparable
 
     public string SingularFullName => this.SingularName;
 
-    public string PluralName => this.objectType.PluralName + Where + this.RoleType.SingularName;
+    public string PluralName => this.objectType.DerivedPluralName + Where + this.RoleType.SingularName;
 
     public string PluralFullName => this.PluralName;
 

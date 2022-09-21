@@ -1,4 +1,4 @@
-// <copyright file="Domain.cs" company="Allors bvba">
+﻿// <copyright file="Domain.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -14,19 +14,17 @@ public sealed class Domain : IDomain
 {
     private string[] derivedWorkspaceNames;
     private IList<Domain> directSuperdomains;
-
-    private string name;
     private Domain[] structuralDerivedSuperdomains;
 
-    public Domain(MetaPopulation metaPopulation, Guid id)
+    public Domain(MetaPopulation metaPopulation, Guid id, string name)
     {
         this.MetaPopulation = metaPopulation;
 
         this.Id = id;
+        this.Name = name;
         this.Tag = id.Tag();
 
         this.directSuperdomains = new List<Domain>();
-
         this.MetaPopulation.OnDomainCreated(this);
     }
 
@@ -53,17 +51,7 @@ public sealed class Domain : IDomain
 
     public string Tag { get; }
 
-    public string Name
-    {
-        get => this.name;
-
-        set
-        {
-            this.MetaPopulation.AssertUnlocked();
-            this.name = value;
-            this.MetaPopulation.Stale();
-        }
-    }
+    public string Name { get; }
 
     IEnumerable<IDomain> IDomain.DirectSuperdomains => this.directSuperdomains;
 

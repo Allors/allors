@@ -60,7 +60,7 @@ public class PullExtent
 
         var trimmed = objects.Where(response.Include).ToArray();
 
-        var name = extent.ObjectType.PluralName;
+        var name = extent.ObjectType.DerivedPluralName;
         response.AddCollection(name, extent.ObjectType, trimmed);
     }
 
@@ -127,12 +127,12 @@ public class PullExtent
                     name ??= propertyType.PluralName;
                 }
 
-                name ??= dataExtent.ObjectType.PluralName;
+                name ??= dataExtent.ObjectType.DerivedPluralName;
                 response.AddCollection(name, (IComposite)select.GetObjectType() ?? dataExtent.ObjectType, objects, include);
             }
             else
             {
-                name ??= dataExtent.ObjectType.PluralName;
+                name ??= dataExtent.ObjectType.DerivedPluralName;
                 var include = result.Include;
                 response.AddCollection(name, dataExtent.ObjectType, objects, include);
             }

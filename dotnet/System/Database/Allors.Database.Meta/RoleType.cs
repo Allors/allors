@@ -106,7 +106,7 @@ public abstract class RoleType : IRoleType, IComparable
                 return Pluralizer.Pluralize(this.singularName);
             }
 
-            return this.ObjectType.PluralName;
+            return this.ObjectType.DerivedPluralName;
         }
 
         set

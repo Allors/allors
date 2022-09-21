@@ -19,8 +19,8 @@ public abstract class Interface : Composite, IInterface
     private Class structuralDerivedExclusiveClass;
     private HashSet<Composite> structuralDerivedSubtypes;
 
-    protected Interface(MetaPopulation metaPopulation, Guid id)
-        : base(metaPopulation, id) =>
+    protected Interface(MetaPopulation metaPopulation, Guid id, string singularName, string assignedPluralName)
+        : base(metaPopulation, id, singularName, assignedPluralName) =>
         metaPopulation.OnInterfaceCreated(this);
 
     public bool ExistClasses => this.structuralDerivedClasses.Count > 0;

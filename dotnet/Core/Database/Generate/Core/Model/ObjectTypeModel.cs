@@ -25,7 +25,7 @@ public abstract class ObjectTypeModel : DataTypeModel
 
     public string SingularName => this.ObjectType.SingularName;
 
-    public string PluralName => this.ObjectType.PluralName;
+    public string PluralName => this.ObjectType.DerivedPluralName;
 
     public bool ExistAssignedPluralName => ((ObjectType)this.ObjectType).ExistAssignedPluralName;
 }
