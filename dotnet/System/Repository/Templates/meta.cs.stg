@@ -138,21 +138,21 @@ define_interface(interface) ::= <<
         {
         }
 
-        M M;
+        public M M => (M)this.MetaPopulation;
 
-$interface.Subtypes:{subtype|        public Meta$subtype.SingularName$ As$subtype.SingularName$ => this.M.$subtype.SingularName$;}; separator="\n"$
+$interface.Subtypes:{subtype|           public Meta$subtype.SingularName$ As$subtype.SingularName$ => this.M.$subtype.SingularName$;}; separator="\n"$
 
-        $interface.DefinedProperties:{property|$define_propertyType(property)$}; separator="\n"$
+$interface.DefinedProperties:{property|$define_propertyType(property)$}; separator="\n"$
 
-        $interface.InheritedProperties:{property|$define_inheritedpropertyType(property)$}; separator="\n"$
+$interface.InheritedProperties:{property|$define_inheritedpropertyType(property)$}; separator="\n"$
 
-        $interface.DefinedReverseProperties:{property|$define_reversepropertyType(property)$}; separator="\n"$
+$interface.DefinedReverseProperties:{property|$define_reversepropertyType(property)$}; separator="\n"$
 
-        $interface.InheritedReverseProperties:{property|$define_inheritedreversepropertyType(property)$}; separator="\n"$
+$interface.InheritedReverseProperties:{property|$define_inheritedreversepropertyType(property)$}; separator="\n"$
 
-        $interface.DefinedMethods:{method|$define_methodType(method)$}; separator="\n"$
+$interface.DefinedMethods:{method|$define_methodType(method)$}; separator="\n"$
 
-        $interface.InheritedMethods:{method|$define_methodType(method)$}; separator="\n"$
+$interface.InheritedMethods:{method|$define_methodType(method)$}; separator="\n"$
     }
 >>
 
@@ -233,14 +233,14 @@ $composite.DefinedProperties:{property|$define_associationType(property)$}; sepa
 define_associationType(property) ::= <<
     public class Meta$property.AssociationName$ : AssociationType
     {
-        public M M => (M)this.MetaPopulation;
-
-        public Meta$property.AssociationName$() : base()
+        public Meta$property.AssociationName$(M m) : base(m.$property.DefiningType.SingularName$)
         {
+            this.$property.DefiningType.SingularName$ = m.$property.DefiningType.SingularName$;
         }
 
-        public Meta$property.DefiningType.SingularName$ $property.DefiningType.SingularName$ => this.M.$property.DefiningType.SingularName$;
+        public Meta$property.DefiningType.SingularName$ $property.DefiningType.SingularName$ { get; }
     }
+
 >>
 
 roleTypes(repository) ::= <<
@@ -259,13 +259,21 @@ define_roleType(property) ::= <<
     {
         public M M => (M)this.MetaPopulation;
 
-        public Meta$property.DefiningType.SingularName$$property.RoleName$() : base()
+        public Meta$property.DefiningType.SingularName$$property.RoleName$(M meta) : base(meta.$property.ObjectType.SingularName$, $if(property.AssignedRoleSingularName)$"$property.RoleSingularName$"$else$null$endif$, $if(property.AssignedRolePluralName)$"$property.RolePluralName$"$else$null$endif$)
         {
+$if(property.AttributeByName.Required)$             IsRequired = $property.AttributeByName.Required.Value$;$endif$
+$if(property.AttributeByName.Unique)$               IsUnique = $property.AttributeByName.Unique.Value$;$endif$
+$if(property.AttributeByName.Size)$             Size = $property.AttributeByName.Size.Value$;$endif$
+$if(property.AttributeByName.Precision)$                Precision = $property.AttributeByName.Precision.Value$;$endif$
+$if(property.AttributeByName.Scale)$                Scale = $property.AttributeByName.Scale.Value$;$endif$
+$if(property.AttributeByName.MediaType)$                MediaType = "$property.AttributeByName.MediaType.Value$";$endif$
         }
 $if(property.ObjectType.IsComposite)$
+
         public Meta$property.ObjectType.SingularName$ $property.ObjectType.SingularName$ => this.M.$property.ObjectType.SingularName$;
 $endif$
     }
+
 >>
 
 define_propertyType(property) ::= <<
@@ -476,23 +484,13 @@ $composite.DefinedProperties:{property|$relation(property)$}; separator="\n"$
 relation(property) ::= <<
         private void Build$property.DefiningType.SingularName$$property.RoleName$(M meta, Domains domains, RelationTypes relationTypes)
         {
-            relationTypes.$property.DefiningType.SingularName$$property.RoleName$ = new RelationType(meta.$property.DefiningType.SingularName$, Ids.$property.DefiningType.SingularName$$property.RoleName$, new Meta$property.AssociationName$(), new Meta$property.DefiningType.SingularName$$property.RoleName$())
+            var associationType = new Meta$property.AssociationName$(meta);
+            var roleType = new Meta$property.DefiningType.SingularName$$property.RoleName$(meta);
+            relationTypes.$property.DefiningType.SingularName$$property.RoleName$ = new RelationType(meta, Ids.$property.DefiningType.SingularName$$property.RoleName$, associationType, roleType)
             {
 $if(property.AssignedMultiplicity)$		        AssignedMultiplicity = Allors.Multiplicity.$property.AssignedMultiplicity$,$endif$
 $if(property.AttributeByName.Derived)$		        IsDerived = $property.AttributeByName.Derived.Value$,$endif$
 $if(property.AttributeByName.Indexed)$		        IsIndexed = $property.AttributeByName.Indexed.Value$,$endif$
-                RoleType =
-                {
-                    ObjectType = meta.$property.ObjectType.SingularName$,
-$if(property.AssignedRoleSingularName)$		            SingularName = "$property.RoleSingularName$",$endif$
-$if(property.AssignedRolePluralName)$		            PluralName = "$property.RolePluralName$",$endif$
-$if(property.AttributeByName.Required)$		            IsRequired = $property.AttributeByName.Required.Value$,$endif$
-$if(property.AttributeByName.Unique)$		          IsUnique = $property.AttributeByName.Unique.Value$,$endif$
-$if(property.AttributeByName.Size)$		            Size = $property.AttributeByName.Size.Value$,$endif$
-$if(property.AttributeByName.Precision)$		        Precision = $property.AttributeByName.Precision.Value$,$endif$
-$if(property.AttributeByName.Scale)$		        Scale = $property.AttributeByName.Scale.Value$,$endif$
-$if(property.AttributeByName.MediaType)$		        MediaType = "$property.AttributeByName.MediaType.Value$",$endif$
-                },
             };
         }
 >>

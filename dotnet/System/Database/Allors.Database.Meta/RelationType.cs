@@ -9,12 +9,13 @@ namespace Allors.Database.Meta;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Allors.Text;
 
 /// <summary>
 ///     A <see cref="RelationType" /> defines the state and behavior for
 ///     a set of <see cref="AssociationType" />s and <see cref="RoleType" />s.
 /// </summary>
-public sealed class RelationType : IRelationType
+public sealed class RelationType : IMetaObject, IRelationType
 {
     private Multiplicity? assignedMultiplicity;
 
@@ -25,18 +26,20 @@ public sealed class RelationType : IRelationType
     private bool isIndexed;
     private Multiplicity multiplicity;
 
-    public RelationType(Composite associationTypeComposite, Guid id, AssociationType associationType, RoleType roleType, string tag = null)
+    public RelationType(MetaPopulation metaPopulation, Guid id, AssociationType associationType, RoleType roleType)
     {
-        this.MetaPopulation = associationTypeComposite.MetaPopulation;
+        this.MetaPopulation = metaPopulation;
         this.Id = id;
-        this.Tag = tag ?? id.Tag();
+        // TODO:
+        this.Tag = id.Tag();
 
         this.AssociationType = associationType;
         this.AssociationType.RelationType = this;
-        this.AssociationType.ObjectType = associationTypeComposite;
 
         this.RoleType = roleType;
         this.RoleType.RelationType = this;
+        this.RoleType.SingularName = this.RoleType.AssignedSingularName ?? this.RoleType.ObjectType.SingularName;
+        this.RoleType.PluralName = this.RoleType.AssignedPluralName ?? (this.RoleType.ExistAssignedSingularName ? Pluralizer.Pluralize(this.RoleType.AssignedSingularName) : this.RoleType.ObjectType.PluralName);
 
         this.MetaPopulation.OnRelationTypeCreated(this);
     }
@@ -52,9 +55,6 @@ public sealed class RelationType : IRelationType
             this.MetaPopulation.Stale();
         }
     }
-
-    public MetaPopulation MetaPopulation { get; }
-
     public Multiplicity? AssignedMultiplicity
     {
         get => this.assignedMultiplicity;
@@ -76,6 +76,10 @@ public sealed class RelationType : IRelationType
 
     internal string ValidationName => "relation type" + this.Name;
 
+    IMetaPopulation IMetaObject.MetaPopulation => this.MetaPopulation;
+
+    public MetaPopulation MetaPopulation { get; }
+
     public Guid Id { get; }
 
     public string Tag { get; }
@@ -88,8 +92,6 @@ public sealed class RelationType : IRelationType
             return this.derivedWorkspaceNames;
         }
     }
-
-    IMetaPopulation IMetaObject.MetaPopulation => this.MetaPopulation;
 
     public bool IsDerived
     {
@@ -141,14 +143,6 @@ public sealed class RelationType : IRelationType
     IAssociationType IRelationType.AssociationType => this.AssociationType;
 
     IRoleType IRelationType.RoleType => this.RoleType;
-
-    public bool IsManyToMany => this.AssociationType.IsMany && this.RoleType.IsMany;
-
-    public bool IsManyToOne => this.AssociationType.IsMany && !this.RoleType.IsMany;
-
-    public bool IsOneToMany => this.AssociationType.IsOne && this.RoleType.IsMany;
-
-    public bool IsOneToOne => this.AssociationType.IsOne && !this.RoleType.IsMany;
 
     public int CompareTo(object other) => this.Id.CompareTo((other as RelationType)?.Id);
 

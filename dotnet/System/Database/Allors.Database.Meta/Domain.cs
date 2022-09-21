@@ -10,7 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-public sealed class Domain : IDomain
+public sealed class Domain : IMetaObject, IDomain
 {
     private string[] derivedWorkspaceNames;
     private IList<Domain> directSuperdomains;
@@ -31,8 +31,6 @@ public sealed class Domain : IDomain
     public IEnumerable<Domain> DirectSuperdomains => this.directSuperdomains;
 
     public IEnumerable<Domain> Superdomains => this.structuralDerivedSuperdomains;
-
-    public MetaPopulation MetaPopulation { get; }
 
     public string ValidationName
     {
@@ -55,6 +53,10 @@ public sealed class Domain : IDomain
 
     IEnumerable<IDomain> IDomain.DirectSuperdomains => this.directSuperdomains;
 
+    IMetaPopulation IMetaObject.MetaPopulation => this.MetaPopulation;
+
+    public MetaPopulation MetaPopulation { get; }
+
     public IEnumerable<string> WorkspaceNames
     {
         get
@@ -63,8 +65,6 @@ public sealed class Domain : IDomain
             return this.derivedWorkspaceNames;
         }
     }
-
-    IMetaPopulation IMetaObject.MetaPopulation => this.MetaPopulation;
 
     public int CompareTo(object other) => this.Id.CompareTo((other as Domain)?.Id);
 

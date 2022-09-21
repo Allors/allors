@@ -16,7 +16,7 @@ public abstract class ObjectType : DataType, IObjectType
     {
         this.SingularName = singularName;
         this.AssignedPluralName = !string.IsNullOrEmpty(assignedPluralName) ? assignedPluralName : null;
-        this.DerivedPluralName = this.ExistAssignedPluralName ? this.AssignedPluralName : Pluralizer.Pluralize(this.SingularName);
+        this.PluralName = this.ExistAssignedPluralName ? this.AssignedPluralName : Pluralizer.Pluralize(this.SingularName);
     }
 
     public string SingularName { get; }
@@ -25,7 +25,7 @@ public abstract class ObjectType : DataType, IObjectType
 
     public string AssignedPluralName { get; }
 
-    public string DerivedPluralName { get; }
+    public string PluralName { get; }
 
     public override string Name => this.SingularName;
 
@@ -109,24 +109,24 @@ public abstract class ObjectType : DataType, IObjectType
             validationLog.AddError(this.ValidationName + " has no singular name", this, ValidationKind.Required, "IObjectType.SingularName");
         }
 
-        if (!string.IsNullOrEmpty(this.DerivedPluralName))
+        if (!string.IsNullOrEmpty(this.PluralName))
         {
-            if (this.DerivedPluralName.Length < 2)
+            if (this.PluralName.Length < 2)
             {
                 var message = this.ValidationName + " should have a plural name with at least 2 characters";
                 validationLog.AddError(message, this, ValidationKind.MinimumLength, "IObjectType.PluralName");
             }
             else
             {
-                if (!char.IsLetter(this.DerivedPluralName[0]))
+                if (!char.IsLetter(this.PluralName[0]))
                 {
                     var message = this.ValidationName + "'s plural name should start with an alfabetical character";
                     validationLog.AddError(message, this, ValidationKind.Format, "IObjectType.PluralName");
                 }
 
-                for (var i = 1; i < this.DerivedPluralName.Length; i++)
+                for (var i = 1; i < this.PluralName.Length; i++)
                 {
-                    if (!char.IsLetter(this.DerivedPluralName[i]) && !char.IsDigit(this.DerivedPluralName[i]))
+                    if (!char.IsLetter(this.PluralName[i]) && !char.IsDigit(this.PluralName[i]))
                     {
                         var message = this.ValidationName + "'s plural name should only contain alfanumerical characters";
                         validationLog.AddError(message, this, ValidationKind.Format, "IObjectType.PluralName");
@@ -135,14 +135,14 @@ public abstract class ObjectType : DataType, IObjectType
                 }
             }
 
-            if (validationLog.ExistObjectTypeName(this.DerivedPluralName))
+            if (validationLog.ExistObjectTypeName(this.PluralName))
             {
                 var message = "The plural name of " + this.ValidationName + " is already in use";
                 validationLog.AddError(message, this, ValidationKind.Unique, "IObjectType.PluralName");
             }
             else
             {
-                validationLog.AddObjectTypeName(this.DerivedPluralName);
+                validationLog.AddObjectTypeName(this.PluralName);
             }
         }
     }

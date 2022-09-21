@@ -1,4 +1,4 @@
-// <copyright file="MethodInterface.cs" company="Allors bvba">
+﻿// <copyright file="MethodInterface.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-public sealed class MethodType : IMethodType, IComparable
+public sealed class MethodType : IMetaObject, IMethodType, IComparable
 {
     private string[] assignedWorkspaceNames;
     private string[] derivedWorkspaceNames;
@@ -28,8 +28,6 @@ public sealed class MethodType : IMethodType, IComparable
 
         this.MetaPopulation.OnMethodTypeCreated(this);
     }
-
-    public MetaPopulation MetaPopulation { get; }
 
     public Composite ObjectType { get; }
 
@@ -85,13 +83,16 @@ public sealed class MethodType : IMethodType, IComparable
     }
 
     public int CompareTo(object other) => this.Id.CompareTo((other as MethodType)?.Id);
-    IMetaPopulation IMetaObject.MetaPopulation => this.MetaPopulation;
 
     IComposite IMethodType.ObjectType => this.ObjectType;
 
     public Guid Id { get; }
 
     public string Tag { get; }
+
+    IMetaPopulation IMetaObject.MetaPopulation => this.MetaPopulation;
+
+    public MetaPopulation MetaPopulation { get; }
 
     public IEnumerable<string> WorkspaceNames
     {

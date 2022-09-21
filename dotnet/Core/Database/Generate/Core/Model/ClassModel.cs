@@ -12,7 +12,7 @@ public sealed class ClassModel : CompositeModel
     public Class Class { get; }
 
     protected override IMetaObject MetaObject => this.Class;
-    protected override IObjectType ObjectType => this.Class;
+    protected override ObjectType ObjectType => this.Class;
     protected override Composite Composite => this.Class;
 
     // IClass

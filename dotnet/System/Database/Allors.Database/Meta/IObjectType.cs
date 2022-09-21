@@ -14,7 +14,7 @@ public interface IObjectType : IDataType, IComparable
 
     string AssignedPluralName { get; }
 
-    string DerivedPluralName { get; }
+    string PluralName { get; }
 
     bool IsUnit { get; }
 

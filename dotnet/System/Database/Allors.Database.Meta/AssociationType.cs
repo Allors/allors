@@ -15,34 +15,22 @@ using System.Linq;
 ///     This is also called the 'active', 'controlling' or 'owning' side.
 ///     AssociationTypes can only have composite <see cref="ObjectType" />s.
 /// </summary>
-public abstract class AssociationType : IAssociationType, IComparable
+public abstract class AssociationType : IMetaObject, IAssociationType, IComparable
 {
     /// <summary>
     ///     Used to create property names.
     /// </summary>
     private const string Where = "Where";
 
-    private Composite objectType;
-
-    protected AssociationType()
+    protected AssociationType(Composite objectType)
     {
+        this.MetaPopulation = objectType.MetaPopulation;
+        this.ObjectType = objectType;
     }
-
-    public MetaPopulation MetaPopulation => this.RelationType.MetaPopulation;
 
     public string[] AssignedWorkspaceNames => this.RelationType.AssignedWorkspaceNames;
 
-    public Composite ObjectType
-    {
-        get => this.objectType;
-
-        set
-        {
-            this.MetaPopulation.AssertUnlocked();
-            this.objectType = value;
-            this.MetaPopulation.Stale();
-        }
-    }
+    public Composite ObjectType { get; }
 
     public RoleType RoleType => this.RelationType.RoleType;
     public RelationType RelationType { get; internal set; }
@@ -51,15 +39,17 @@ public abstract class AssociationType : IAssociationType, IComparable
 
     IMetaPopulation IMetaObject.MetaPopulation => this.MetaPopulation;
 
+    public MetaPopulation MetaPopulation { get; }
+
     public IEnumerable<string> WorkspaceNames => this.RelationType.WorkspaceNames;
 
     public string Name => this.IsMany ? this.PluralName : this.SingularName;
 
-    public string SingularName => this.objectType.SingularName + Where + this.RoleType.SingularName;
+    public string SingularName => this.ObjectType.SingularName + Where + this.RoleType.SingularName;
 
     public string SingularFullName => this.SingularName;
 
-    public string PluralName => this.objectType.DerivedPluralName + Where + this.RoleType.SingularName;
+    public string PluralName => this.ObjectType.PluralName + Where + this.RoleType.SingularName;
 
     public string PluralFullName => this.PluralName;
 
@@ -109,7 +99,7 @@ public abstract class AssociationType : IAssociationType, IComparable
 
     internal void Validate(ValidationLog validationLog)
     {
-        if (this.objectType == null)
+        if (this.ObjectType == null)
         {
             var message = this.ValidationName + " has no object type";
             validationLog.AddError(message, this, ValidationKind.Required, "AssociationType.IObjectType");

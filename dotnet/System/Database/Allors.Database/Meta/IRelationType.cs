@@ -1,4 +1,4 @@
-// <copyright file="IRelationType.cs" company="Allors bvba">
+﻿// <copyright file="IRelationType.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -19,15 +19,7 @@ public interface IRelationType : IMetaIdentifiableObject, IComparable
     IRoleType RoleType { get; }
 
     Multiplicity Multiplicity { get; }
-
-    bool IsOneToOne { get; }
-
-    bool IsOneToMany { get; }
-
-    bool IsManyToOne { get; }
-
-    bool IsManyToMany { get; }
-
+    
     bool ExistExclusiveClasses { get; }
 
     bool IsIndexed { get; }

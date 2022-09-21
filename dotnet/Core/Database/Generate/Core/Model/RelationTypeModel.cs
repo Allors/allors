@@ -1,4 +1,4 @@
-namespace Allors.Meta.Generation.Model;
+﻿namespace Allors.Meta.Generation.Model;
 
 using System;
 using System.Collections.Generic;
@@ -19,13 +19,13 @@ public class RelationTypeModel : MetaObjectModel, IMetaIdentifiableObjectModel
 
     public Multiplicity Multiplicity => this.RelationType.Multiplicity;
 
-    public bool IsOneToOne => this.RelationType.IsOneToOne;
+    public bool IsOneToOne => this.RelationType.Multiplicity == Multiplicity.OneToOne;
 
-    public bool IsOneToMany => this.RelationType.IsOneToMany;
+    public bool IsOneToMany => this.RelationType.Multiplicity == Multiplicity.OneToMany;
 
-    public bool IsManyToOne => this.RelationType.IsManyToOne;
+    public bool IsManyToOne => this.RelationType.Multiplicity == Multiplicity.ManyToOne;
 
-    public bool IsManyToMany => this.RelationType.IsManyToMany;
+    public bool IsManyToMany => this.RelationType.Multiplicity == Multiplicity.ManyToMany;
 
     public bool IsIndexed => this.RelationType.IsIndexed;
 

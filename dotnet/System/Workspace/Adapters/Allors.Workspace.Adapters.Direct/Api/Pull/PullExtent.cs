@@ -87,7 +87,7 @@ public class PullExtent
                             name ??= propertyType.PluralFullName;
                         }
 
-                        name ??= extent.ObjectType.DerivedPluralName;
+                        name ??= extent.ObjectType.PluralName;
 
                         if (result.Skip.HasValue || result.Take.HasValue)
                         {
@@ -109,7 +109,7 @@ public class PullExtent
                     }
                     else
                     {
-                        name ??= extent.ObjectType.DerivedPluralName;
+                        name ??= extent.ObjectType.PluralName;
                         var include = result.Include;
 
                         if (result.Skip.HasValue || result.Take.HasValue)
@@ -138,7 +138,7 @@ public class PullExtent
         }
         else
         {
-            var name = extent.ObjectType.DerivedPluralName;
+            var name = extent.ObjectType.PluralName;
             response.AddCollection(name, objects);
         }
     }

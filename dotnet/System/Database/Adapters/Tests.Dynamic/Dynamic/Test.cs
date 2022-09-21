@@ -1,4 +1,4 @@
-// --------------------------------------------------------------------------------------------------------------------
+﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="Test.cs" company="Allors bvba">
 //   Copyright 2002-2012 Allors bvba.
 // Dual Licensed under
@@ -92,7 +92,7 @@ public abstract class Test : IDisposable
         var relations = new ArrayList();
         foreach (var metaRelation in metaPopulation.RelationTypes)
         {
-            if (metaRelation.RoleType.ObjectType.IsComposite && metaRelation.IsOneToOne)
+            if (metaRelation.RoleType.ObjectType.IsComposite && metaRelation.Multiplicity == Multiplicity.OneToOne)
             {
                 relations.Add(metaRelation);
             }
@@ -106,7 +106,7 @@ public abstract class Test : IDisposable
         var relations = new ArrayList();
         foreach (var metaRelation in metaPopulation.RelationTypes)
         {
-            if (metaRelation.RoleType.ObjectType.IsComposite && metaRelation.IsOneToMany)
+            if (metaRelation.RoleType.ObjectType.IsComposite && metaRelation.Multiplicity == Multiplicity.OneToMany)
             {
                 relations.Add(metaRelation);
             }
@@ -120,7 +120,7 @@ public abstract class Test : IDisposable
         var relations = new ArrayList();
         foreach (var metaRelation in metaPopulation.RelationTypes)
         {
-            if (metaRelation.RoleType.ObjectType.IsComposite && metaRelation.IsManyToOne)
+            if (metaRelation.RoleType.ObjectType.IsComposite && metaRelation.Multiplicity == Multiplicity.ManyToOne)
             {
                 relations.Add(metaRelation);
             }
@@ -134,7 +134,7 @@ public abstract class Test : IDisposable
         var relations = new ArrayList();
         foreach (var metaRelation in metaPopulation.RelationTypes)
         {
-            if (metaRelation.RoleType.ObjectType.IsComposite && metaRelation.IsManyToMany)
+            if (metaRelation.RoleType.ObjectType.IsComposite && metaRelation.Multiplicity == Multiplicity.ManyToMany)
             {
                 relations.Add(metaRelation);
             }

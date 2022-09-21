@@ -9,7 +9,7 @@ namespace Allors.Database.Meta;
 using System;
 using System.Collections.Generic;
 
-public abstract class DataType : IDataType
+public abstract class DataType : IMetaObject, IDataType
 {
     protected DataType(MetaPopulation metaPopulation, Guid id)
     {
@@ -23,6 +23,8 @@ public abstract class DataType : IDataType
 
     public MetaPopulation MetaPopulation { get; }
 
+    public abstract IEnumerable<string> WorkspaceNames { get; }
+
     public Guid Id { get; }
 
     public string Tag { get; set; }
@@ -30,6 +32,4 @@ public abstract class DataType : IDataType
     public abstract string Name { get; }
 
     public Type ClrType { get; set; }
-
-    public abstract IEnumerable<string> WorkspaceNames { get; }
 }

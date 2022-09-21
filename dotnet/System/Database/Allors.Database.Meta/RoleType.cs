@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Text;
 
-public abstract class RoleType : IRoleType, IComparable
+public abstract class RoleType : IMetaObject, IRoleType, IComparable
 {
     /// <summary>
     ///     The maximum size value.
@@ -20,44 +20,42 @@ public abstract class RoleType : IRoleType, IComparable
 
     private bool? isRequired;
     private bool? isUnique;
-    private ObjectType objectType;
-    private string pluralName;
     private int? precision;
     private int? scale;
 
-    private string singularName;
     private int? size;
 
-    protected RoleType()
+    protected RoleType(ObjectType objectType, string assignedSingularName, string assignedPluralName)
     {
+        this.MetaPopulation = objectType.MetaPopulation;
+        this.ObjectType = objectType;
+        this.AssignedSingularName = !string.IsNullOrEmpty(assignedSingularName) ? assignedSingularName : null;
+        this.AssignedPluralName = !string.IsNullOrEmpty(assignedPluralName) ? assignedPluralName : null;
     }
-
-    public MetaPopulation MetaPopulation => this.RelationType.MetaPopulation;
 
     public RelationType RelationType { get; internal set; }
     public AssociationType AssociationType => this.RelationType.AssociationType;
 
-    public ObjectType ObjectType
-    {
-        get => this.objectType;
-
-        set
-        {
-            this.MetaPopulation.AssertUnlocked();
-            this.objectType = value;
-            this.MetaPopulation.Stale();
-        }
-    }
+    public ObjectType ObjectType { get; }
 
     public string[] AssignedWorkspaceNames => this.RelationType.AssignedWorkspaceNames;
 
-    public bool ExistAssignedSingularName => !this.SingularName.Equals(this.ObjectType.SingularName, StringComparison.Ordinal);
+    public IEnumerable<string> WorkspaceNames => this.RelationType.WorkspaceNames;
 
-    public bool ExistAssignedPluralName => !this.PluralName.Equals(Pluralizer.Pluralize(this.SingularName), StringComparison.Ordinal);
+    public string AssignedSingularName { get; }
+
+    public string AssignedPluralName { get; }
+
+    public bool ExistAssignedSingularName => this.AssignedSingularName != null;
+
+    public bool ExistAssignedPluralName => this.PluralName != null;
 
     internal string ValidationName => "RoleType: " + this.RelationType.Name;
 
     IMetaPopulation IMetaObject.MetaPopulation => this.MetaPopulation;
+
+    public MetaPopulation MetaPopulation { get; }
+
 
     IRelationType IRoleType.RelationType => this.RelationType;
 
@@ -65,23 +63,7 @@ public abstract class RoleType : IRoleType, IComparable
 
     IObjectType IPropertyType.ObjectType => this.ObjectType;
 
-    public IEnumerable<string> WorkspaceNames => this.RelationType.WorkspaceNames;
-
-    public string Name => this.IsMany ? this.PluralName : this.SingularName;
-
-    public string FullName => this.IsMany ? this.PluralFullName : this.SingularFullName;
-
-    public string SingularName
-    {
-        get => !string.IsNullOrEmpty(this.singularName) ? this.singularName : this.ObjectType.SingularName;
-
-        set
-        {
-            this.MetaPopulation.AssertUnlocked();
-            this.singularName = value;
-            this.MetaPopulation.Stale();
-        }
-    }
+    public string SingularName { get; internal set; }
 
     /// <summary>
     ///     Gets the full singular name.
@@ -89,36 +71,17 @@ public abstract class RoleType : IRoleType, IComparable
     /// <value>The full singular name.</value>
     public string SingularFullName => this.RelationType.AssociationType.ObjectType + this.SingularName;
 
-    public string PluralName
-    {
-        get
-        {
-            if (!string.IsNullOrEmpty(this.pluralName))
-            {
-                return this.pluralName;
-            }
-
-            if (!string.IsNullOrEmpty(this.singularName))
-            {
-                return Pluralizer.Pluralize(this.singularName);
-            }
-
-            return this.ObjectType.DerivedPluralName;
-        }
-
-        set
-        {
-            this.MetaPopulation.AssertUnlocked();
-            this.pluralName = value;
-            this.MetaPopulation.Stale();
-        }
-    }
+    public string PluralName { get; internal set; }
 
     /// <summary>
     ///     Gets the full plural name.
     /// </summary>
     /// <value>The full plural name.</value>
     public string PluralFullName => this.RelationType.AssociationType.ObjectType + this.PluralName;
+
+    public string Name => this.IsMany ? this.PluralName : this.SingularName;
+
+    public string FullName => this.IsMany ? this.PluralFullName : this.SingularFullName;
 
     public bool IsMany =>
         this.RelationType.Multiplicity switch

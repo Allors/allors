@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-public class FieldType : IFieldType
+public class FieldType : IMetaObject, IFieldType
 {
     private string[] derivedWorkspaceNames;
     private string name;
@@ -13,6 +13,8 @@ public class FieldType : IFieldType
 
     public FieldType(Record record, Guid id, string tag = null)
     {
+        this.MetaPopulation = record.MetaPopulation;
+
         this.Record = record;
         this.Id = id;
         this.Tag = tag ?? id.Tag();
@@ -49,7 +51,10 @@ public class FieldType : IFieldType
         }
     }
 
-    public MetaPopulation MetaPopulation => this.Record.MetaPopulation;
+    IMetaPopulation IMetaObject.MetaPopulation => this.MetaPopulation;
+
+    public MetaPopulation MetaPopulation { get; }
+
 
     public IEnumerable<string> WorkspaceNames
     {
@@ -86,8 +91,6 @@ public class FieldType : IFieldType
     IRecord IFieldType.Record => this.Record;
 
     IDataType IFieldType.DataType => this.DataType;
-
-    IMetaPopulation IMetaObject.MetaPopulation => this.MetaPopulation;
 
     internal void DeriveWorkspaceNames() => this.derivedWorkspaceNames = this.DataType != null
         ? this.Record.WorkspaceNames.Intersect(this.DataType.WorkspaceNames).ToArray()
