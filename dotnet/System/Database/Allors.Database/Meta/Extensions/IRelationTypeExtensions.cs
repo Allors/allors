@@ -4,7 +4,7 @@ public static class IRelationTypeExtensions
 {
     public static bool Indexed(this IRelationType @this)
     {
-        return @this.Extensions.Indexed;
+        return @this.Extensions.Indexed ?? false;
     }
 
     public static void Indexed(this IRelationType @this, bool value)
