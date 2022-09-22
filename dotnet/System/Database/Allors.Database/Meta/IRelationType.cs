@@ -19,10 +19,8 @@ public interface IRelationType : IMetaIdentifiableObject, IComparable
     IRoleType RoleType { get; }
 
     Multiplicity Multiplicity { get; }
-    
-    bool ExistExclusiveClasses { get; }
 
-    bool IsIndexed { get; }
+    bool ExistExclusiveClasses { get; }
 
     bool IsDerived { get; }
 }

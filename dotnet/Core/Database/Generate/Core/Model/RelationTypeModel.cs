@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using Allors.Database.Meta.Extensions;
 using Database.Meta;
 
 public class RelationTypeModel : MetaIdentifiableObjectModel
@@ -33,16 +34,11 @@ public class RelationTypeModel : MetaIdentifiableObjectModel
 
     public bool IsManyToMany => this.RelationType.Multiplicity == Multiplicity.ManyToMany;
 
-    public bool IsIndexed => this.RelationType.IsIndexed;
-
     public bool IsDerived => this.RelationType.IsDerived;
 
     public IEnumerable<string> WorkspaceNames => this.RelationType.WorkspaceNames;
 
     public string Name => ((RelationType)this.RelationType).Name;
 
-    // IMetaIdentifiableObject
-    public Guid Id => this.RelationType.Id;
-
-    public string Tag => this.RelationType.Tag;
+    public string MediaType => this.RelationType.MediaType();
 }

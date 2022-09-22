@@ -98,8 +98,8 @@ public class MetaModel
     public IReadOnlyDictionary<string, Dictionary<string, IOrderedEnumerable<string>>> WorkspaceMediaTagsByMediaTypeNameByWorkspaceName =>
         this.WorkspaceNames
             .ToDictionary(v => v, v =>
-                this.RelationTypes.Where(w => !string.IsNullOrWhiteSpace(w.RoleType.MediaType) && w.WorkspaceNames.Contains(v))
-                    .GroupBy(w => w.RoleType.MediaType, w => w.Tag)
+                this.RelationTypes.Where(w => !string.IsNullOrWhiteSpace(w.MediaType) && w.WorkspaceNames.Contains(v))
+                    .GroupBy(w => w.MediaType, w => w.Tag)
                     .ToDictionary(w => w.Key, w => w.OrderBy(x => x)));
 
     public IReadOnlyDictionary<string, IOrderedEnumerable<CompositeModel>> WorkspaceCompositesByWorkspaceName =>

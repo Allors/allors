@@ -2,15 +2,19 @@
 
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 
 public abstract class MetaIdentifiableObject : IMetaIdentifiableObject
 {
     protected MetaIdentifiableObject(MetaPopulation metaPopulation, Guid id)
     {
+        this.Extensions = new MetaExtension();
         this.MetaPopulation = metaPopulation;
         this.Id = id;
         this.Tag = id.Tag();
     }
+
+    public dynamic Extensions { get; }
 
     IMetaPopulation IMetaIdentifiableObject.MetaPopulation => this.MetaPopulation;
 

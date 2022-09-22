@@ -1,4 +1,4 @@
-// <copyright file="Initialization.cs" company="Allors bvba">
+﻿// <copyright file="Initialization.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -6,6 +6,7 @@
 namespace Allors.Database.Adapters.Sql.Npgsql;
 
 using System.Text;
+using Allors.Database.Meta.Extensions;
 using global::Npgsql;
 using Meta;
 
@@ -299,7 +300,7 @@ CREATE SCHEMA " + this.database.SchemaName;
                     foreach (var associationType in @class.AssociationTypes)
                     {
                         var relationType = associationType.RelationType;
-                        if (relationType.IsIndexed)
+                        if (relationType.Indexed())
                         {
                             var roleType = relationType.RoleType;
 
@@ -315,7 +316,7 @@ CREATE SCHEMA " + this.database.SchemaName;
                     foreach (var roleType in @class.RoleTypes)
                     {
                         var relationType = roleType.RelationType;
-                        if (relationType.IsIndexed)
+                        if (relationType.Indexed())
                         {
                             if (roleType.ObjectType.IsUnit)
                             {
@@ -348,7 +349,7 @@ CREATE SCHEMA " + this.database.SchemaName;
 
                 foreach (var relationType in this.mapping.Database.MetaPopulation.RelationTypes)
                 {
-                    if (relationType.IsIndexed)
+                    if (relationType.Indexed())
                     {
                         var associationType = relationType.AssociationType;
                         var roleType = relationType.RoleType;

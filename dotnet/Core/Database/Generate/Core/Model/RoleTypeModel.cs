@@ -1,5 +1,6 @@
 ﻿namespace Allors.Meta.Generation.Model;
 
+using Allors.Database.Meta.Extensions;
 using Database.Meta;
 
 public class RoleTypeModel : PropertyTypeModel
@@ -31,6 +32,4 @@ public class RoleTypeModel : PropertyTypeModel
     public bool IsRequired => this.RoleType.IsRequired;
 
     public bool IsUnique => this.RoleType.IsUnique;
-
-    public string MediaType => this.RoleType.MediaType;
 }

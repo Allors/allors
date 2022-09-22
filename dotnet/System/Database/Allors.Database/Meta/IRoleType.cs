@@ -35,8 +35,6 @@ public interface IRoleType : IPropertyType, IComparable
 
     bool IsUnique { get; set; }
 
-    string MediaType { get; set; }
-
     // TODO: move to extension method
     void Set(IStrategy strategy, object value);
 }

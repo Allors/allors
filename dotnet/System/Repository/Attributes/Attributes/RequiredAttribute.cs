@@ -1,4 +1,4 @@
-// <copyright file="RequiredAttribute.cs" company="Allors bv">
+﻿// <copyright file="RequiredAttribute.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // </copyright>
 

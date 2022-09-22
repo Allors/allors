@@ -1,4 +1,4 @@
-group AllorsCSharpRepository;
+﻿group AllorsCSharpRepository;
 
 TemplateId() ::= <<7B7D955D-7C87-4198-A40D-4B70CABC7525>>
 TemplateName() ::= <<Allors C# Workspace Meta>>
@@ -297,7 +297,7 @@ precision(roleType) ::= <<$if(relationType.RoleType.Precision)$precision: $relat
 scale(roleType) ::= <<$if(relationType.RoleType.Scale)$scale: $relationType.RoleType.Scale$$endif$>>
 isRequired(roleType) ::= <<$if(relationType.RoleType.IsRequired)$isRequired: $relationType.RoleType.IsRequired$$endif$>>
 isUnique(roleType) ::= <<$if(relationType.RoleType.IsUnique)$isUnique: $relationType.RoleType.IsUnique$$endif$>>
-mediaType(roleType) ::= <<$if(relationType.RoleType.MediaType)$mediaType: "$relationType.RoleType.MediaType$"$endif$>>
+mediaType(roleType) ::= <<$if(relationType.MediaType)$mediaType: "$relationType.MediaType$"$endif$>>
 
 build_methodType(methodType) ::= <<
         private MethodType Build$methodType.FullName$(M m)

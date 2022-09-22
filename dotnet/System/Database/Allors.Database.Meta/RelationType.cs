@@ -88,18 +88,6 @@ public sealed class RelationType : MetaIdentifiableObject, IRelationType
         }
     }
 
-    public bool IsIndexed
-    {
-        get => this.isIndexed;
-
-        set
-        {
-            this.MetaPopulation.AssertUnlocked();
-            this.isIndexed = value;
-            this.MetaPopulation.Stale();
-        }
-    }
-
     IAssociationType IRelationType.AssociationType => this.AssociationType;
 
     IRoleType IRelationType.RoleType => this.RoleType;

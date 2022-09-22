@@ -133,6 +133,9 @@ define_interface(interface) ::= <<
     public partial class Meta$interface.SingularName$ : Interface {
         public Meta$interface.SingularName$(M metaPopulation) : base(metaPopulation, Ids.$interface.SingularName$, "$interface.SingularName$", $if(interface.AssignedPluralName)$"$interface.AssignedPluralName$"$else$null$endif$)
         {
+$if(interface.ExtensionAttributes)$
+                Extensions = { $interface.ExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ }
+$endif$
         }
 
         public M M => (M)this.MetaPopulation;
@@ -164,6 +167,9 @@ define_class(class) ::= <<
     public partial class Meta$class.SingularName$ : Class {
         public Meta$class.SingularName$(M metaPopulation) : base(metaPopulation, Ids.$class.SingularName$, "$class.SingularName$", $if(class.AssignedPluralName)$"$class.AssignedPluralName$"$else$null$endif$)
         {
+$if(class.ExtensionAttributes)$
+                Extensions = { $class.ExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ }
+$endif$
         }
         
         public M M => (M)this.MetaPopulation;
@@ -197,6 +203,10 @@ $record.Fields:{field|$declare_field(field)$}; separator="\n"$
         public Meta$record.Name$(M m) : base(m, Ids.$record.name$, "$record.Name$")
         {
 $record.Fields:{field|$define_field(field)$}; separator="\n"$
+
+$if(record.ExtensionAttributes)$
+                Extensions = { $record.ExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ }
+$endif$
         }
     }
 
@@ -258,7 +268,6 @@ $if(property.AttributeByName.Unique)$               IsUnique = $property.Attribu
 $if(property.AttributeByName.Size)$             Size = $property.AttributeByName.Size.Value$;$endif$
 $if(property.AttributeByName.Precision)$                Precision = $property.AttributeByName.Precision.Value$;$endif$
 $if(property.AttributeByName.Scale)$                Scale = $property.AttributeByName.Scale.Value$;$endif$
-$if(property.AttributeByName.MediaType)$                MediaType = "$property.AttributeByName.MediaType.Value$";$endif$
         }
 $if(property.ObjectType.IsComposite)$
 
@@ -433,7 +442,12 @@ $composite.DefinedMethods:{method|          public MethodType $method.DefiningTy
 >>
 
 build_domain(assembly) ::= <<
-	        domains.$assembly.Name$ = new Domain(meta, Ids.$assembly.Name$, "$assembly.Name$");
+	        domains.$assembly.Name$ = new Domain(meta, Ids.$assembly.Name$, "$assembly.Name$")
+	        {
+$if(assembly.ExtensionAttributes)$
+                Extensions = { $assembly.ExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ }
+$endif$
+	        };
 >>
 
 build_domain_inheritance(domain) ::= <<
@@ -460,15 +474,18 @@ build_inheritance(composite, implementedInterface) ::= <<            new Inherit
 build_record(record) ::= <<            meta.$record.Name$ = new Meta$record.Name$(meta);>>
 
 build_relations(composite) ::= <<
+            // $composite.SingularName$
 $composite.DefinedProperties:{property|$build_relation(property)$}; separator="\n"$
+
 >>
 
 build_relation(property) ::= <<
             relationTypes.$property.DefiningType.SingularName$$property.RoleName$ = new RelationType(meta, Ids.$property.DefiningType.SingularName$$property.RoleName$, $if(property.AssignedMultiplicity)$Allors.Multiplicity.$property.AssignedMultiplicity$$else$null$endif$, $if(property.AttributeByName.Derived)$$property.AttributeByName.Derived.Value$$else$false$endif$, new Meta$property.AssociationName$(meta), new Meta$property.DefiningType.SingularName$$property.RoleName$(meta))
             {
-$if(property.AttributeByName.Indexed)$		        IsIndexed = $property.AttributeByName.Indexed.Value$,$endif$
+$if(property.ExtensionAttributes)$
+                Extensions = { $property.ExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ }
+$endif$
             };
-
 >>
 
 override_required(class) ::= <<$if(class.InheritedRequiredProperties)$

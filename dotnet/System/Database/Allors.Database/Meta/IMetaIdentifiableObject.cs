@@ -11,7 +11,7 @@ using System.Collections.Generic;
 /// <summary>
 ///     Base interface for Meta objects.
 /// </summary>
-public interface IMetaIdentifiableObject
+public interface IMetaIdentifiableObject 
 {
     IMetaPopulation MetaPopulation { get; }
 
@@ -20,4 +20,6 @@ public interface IMetaIdentifiableObject
     Guid Id { get; }
 
     string Tag { get; }
+
+    dynamic Extensions { get; }
 }
