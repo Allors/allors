@@ -65,7 +65,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Database.Meta.Domain" BaseTypeListCollapsed="true">
-    <Position X="22.5" Y="3.5" Width="2.5" />
+    <Position X="22.75" Y="3.5" Width="2.5" />
     <Members>
       <Method Name="AddDirectSuperdomain" Hidden="true" />
       <Method Name="Bind" Hidden="true" />
@@ -91,7 +91,7 @@
       <Method Name="FieldType" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAAAikAEAgIAAAAIIAAAAAQAAAAEAAAAAAAAAAAABIA=</HashCode>
+      <HashCode>AAAAiEAEAgIAAAAIIAAAAAQAAAAAAAAAAAAAAAAABAA=</HashCode>
       <FileName>FieldType.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -243,7 +243,7 @@
       <Method Name="Validate" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAIEiBEQAACAhI5MgMLABIQjgAAAIIACAZAQAADAUAA=</HashCode>
+      <HashCode>AAIEiBEAAACAhI5MgMLABIQjgAAAIIACAZAQAACAUAA=</HashCode>
       <FileName>RoleType.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />

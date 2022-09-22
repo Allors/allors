@@ -386,12 +386,6 @@ public abstract class MetaPopulation : IMetaPopulation
                     relationType.RoleType.DeriveScaleAndSize();
                 }
 
-                // RelationType Multiplicity
-                foreach (var relationType in this.RelationTypes)
-                {
-                    relationType.DeriveMultiplicity();
-                }
-
                 // Required RoleTypes
                 foreach (var @class in this.classes)
                 {

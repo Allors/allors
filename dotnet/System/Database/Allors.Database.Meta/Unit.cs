@@ -11,9 +11,12 @@ using System.Collections.Generic;
 
 public abstract class Unit : ObjectType, IUnit
 {
-    protected Unit(MetaPopulation metaPopulation, Guid id, string singularName, string assignedPluralName)
+    protected Unit(MetaPopulation metaPopulation, Guid id, string tag, string singularName, string assignedPluralName)
         : base(metaPopulation, id, singularName, assignedPluralName)
-        => metaPopulation.OnUnitCreated(this);
+    {
+        metaPopulation.OnUnitCreated(this);
+        this.Tag = tag;
+    }
 
     public bool IsBinary => this.Tag == UnitTags.Binary;
 

@@ -17,7 +17,5 @@ public class FieldModel : RepositoryObjectModel
 
     public DataTypeModel Type => this.RepositoryModel.Map(this.Field.Type);
 
-    public bool IsOne => !this.Field.IsMany;
-
     public bool IsMany => this.Field.IsMany;
 }

@@ -17,18 +17,17 @@ using Allors.Text;
 /// </summary>
 public sealed class RelationType : MetaIdentifiableObject, IRelationType
 {
-    private Multiplicity? assignedMultiplicity;
-
     private string[] assignedWorkspaceNames;
     private string[] derivedWorkspaceNames;
 
-    private bool isDerived;
     private bool isIndexed;
-    private Multiplicity multiplicity;
 
-    public RelationType(MetaPopulation metaPopulation, Guid id, AssociationType associationType, RoleType roleType)
+    public RelationType(MetaPopulation metaPopulation, Guid id, Multiplicity? assignedMultiplicity, bool isDerived, AssociationType associationType, RoleType roleType)
         : base(metaPopulation, id)
     {
+        this.IsDerived = isDerived;
+        this.Multiplicity = roleType.ObjectType.IsUnit ? Multiplicity.OneToOne : assignedMultiplicity ?? Multiplicity.ManyToOne;
+
         this.AssociationType = associationType;
         this.AssociationType.RelationType = this;
 
@@ -52,17 +51,7 @@ public sealed class RelationType : MetaIdentifiableObject, IRelationType
         }
     }
 
-    public Multiplicity? AssignedMultiplicity
-    {
-        get => this.assignedMultiplicity;
-
-        set
-        {
-            this.MetaPopulation.AssertUnlocked();
-            this.assignedMultiplicity = value;
-            this.MetaPopulation.Stale();
-        }
-    }
+    public Multiplicity Multiplicity { get; }
 
     public AssociationType AssociationType { get; }
 
@@ -83,26 +72,7 @@ public sealed class RelationType : MetaIdentifiableObject, IRelationType
         }
     }
 
-    public bool IsDerived
-    {
-        get => this.isDerived;
-
-        set
-        {
-            this.MetaPopulation.AssertUnlocked();
-            this.isDerived = value;
-            this.MetaPopulation.Stale();
-        }
-    }
-
-    public Multiplicity Multiplicity
-    {
-        get
-        {
-            this.MetaPopulation.Derive();
-            return this.multiplicity;
-        }
-    }
+    public bool IsDerived { get; }
 
     public bool ExistExclusiveClasses
     {
@@ -149,18 +119,6 @@ public sealed class RelationType : MetaIdentifiableObject, IRelationType
         catch
         {
             return this.Tag;
-        }
-    }
-
-    internal void DeriveMultiplicity()
-    {
-        if (this.RoleType?.ObjectType != null && this.RoleType.ObjectType.IsUnit)
-        {
-            this.multiplicity = Multiplicity.OneToOne;
-        }
-        else
-        {
-            this.multiplicity = this.AssignedMultiplicity ?? Multiplicity.ManyToOne;
         }
     }
 

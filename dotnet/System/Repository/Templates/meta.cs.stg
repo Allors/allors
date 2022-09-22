@@ -118,10 +118,7 @@ $repository.Units:{unit|$define_unit(unit)$}; separator="\n"$
 
 define_unit(unit) ::= <<
     public class Meta$unit.SingularName$ : Unit {
-        public Meta$unit.SingularName$(M metaPopulation) : base(metaPopulation, Ids.$unit.SingularName$, UnitNames.$unit.SingularName$, null)
-        {
-                this.Tag = UnitTags.$unit.SingularName$;
-        }
+        public Meta$unit.SingularName$(M metaPopulation) : base(metaPopulation, Ids.$unit.SingularName$, UnitTags.$unit.SingularName$, UnitNames.$unit.SingularName$, null) {}
     }
 >>
 
@@ -201,8 +198,6 @@ $record.Fields:{field|$declare_field(field)$}; separator="\n"$
         {
 $record.Fields:{field|$define_field(field)$}; separator="\n"$
         }
-        
-        public M M => (M)this.MetaPopulation;
     }
 
 >>
@@ -212,11 +207,7 @@ declare_field(field) ::= <<
 >>
 
 define_field(field) ::= <<
-            this.$field.Name$ = new FieldType(this, Ids.$record.Name$$field.Name$)
-            {
-                Name = "$field.Name$",
-                DataType = m.$field.Type.SingularName$,
-            };
+            this.$field.Name$ = new FieldType(this, Ids.$record.Name$$field.Name$, "$field.Name$", m.$field.Type.SingularName$, $field.IsMany$);
 >>
 
 associationTypes(repository) ::= <<
@@ -397,8 +388,6 @@ $repository.Records:{record|$build_record(record)$}; separator="\n"$
 $repository.Composites:{composite|$build_relations(composite)$}; separator="\n"$
 		}
 
-$repository.Composites:{composite|$relations(composite)$}; separator="\n"$
-
 		private void BuildMethodTypes(M meta, Domains domains, MethodTypes methodTypes)
 		{
 $repository.Composites:{composite|$build_methods(composite)$}; separator="\n"$
@@ -423,8 +412,6 @@ $repository.Composites:{composite|$assign_properties(composite)$}; separator="\n
         {
 $repository.Composites:{composite|$assign_methods(composite)$}; separator="\n"$
         }
-
-$repository.Composites:{composite|$methods(composite)$}; separator="\n"$
 	}
 }
 >>
@@ -472,28 +459,16 @@ build_inheritance(composite, implementedInterface) ::= <<            new Inherit
 
 build_record(record) ::= <<            meta.$record.Name$ = new Meta$record.Name$(meta);>>
 
-
 build_relations(composite) ::= <<
-$composite.DefinedProperties:{property|             this.Build$property.DefiningType.SingularName$$property.RoleName$(meta, domains, relationTypes);}; separator="\n"$
+$composite.DefinedProperties:{property|$build_relation(property)$}; separator="\n"$
 >>
 
-
-relations(composite) ::= <<
-$composite.DefinedProperties:{property|$relation(property)$}; separator="\n"$
->>
-
-relation(property) ::= <<
-        private void Build$property.DefiningType.SingularName$$property.RoleName$(M meta, Domains domains, RelationTypes relationTypes)
-        {
-            var associationType = new Meta$property.AssociationName$(meta);
-            var roleType = new Meta$property.DefiningType.SingularName$$property.RoleName$(meta);
-            relationTypes.$property.DefiningType.SingularName$$property.RoleName$ = new RelationType(meta, Ids.$property.DefiningType.SingularName$$property.RoleName$, associationType, roleType)
+build_relation(property) ::= <<
+            relationTypes.$property.DefiningType.SingularName$$property.RoleName$ = new RelationType(meta, Ids.$property.DefiningType.SingularName$$property.RoleName$, $if(property.AssignedMultiplicity)$Allors.Multiplicity.$property.AssignedMultiplicity$$else$null$endif$, $if(property.AttributeByName.Derived)$$property.AttributeByName.Derived.Value$$else$false$endif$, new Meta$property.AssociationName$(meta), new Meta$property.DefiningType.SingularName$$property.RoleName$(meta))
             {
-$if(property.AssignedMultiplicity)$		        AssignedMultiplicity = Allors.Multiplicity.$property.AssignedMultiplicity$,$endif$
-$if(property.AttributeByName.Derived)$		        IsDerived = $property.AttributeByName.Derived.Value$,$endif$
 $if(property.AttributeByName.Indexed)$		        IsIndexed = $property.AttributeByName.Indexed.Value$,$endif$
             };
-        }
+
 >>
 
 override_required(class) ::= <<$if(class.InheritedRequiredProperties)$
@@ -544,22 +519,9 @@ assign_inheritedmethodType(method) ::= <<
                 meta.$composite.SingularName$.$method.Name$ = methodTypes.$method.DefiningMethod.DefiningType.SingularName$$method.Name$;
 >>
 
-
-build_methods(composite) ::= <<
-$composite.DefinedMethods:{method|              this.Build$method.DefiningType.SingularName$$method.Name$(meta, domains, methodTypes);}; separator="\n"$
->>
-
-methods(composite) ::= <<$composite.DefinedMethods:{method|$method(method)$}; separator="\n"$>>
-method(method) ::= <<
-        private void Build$method.DefiningType.SingularName$$method.Name$(M meta, Domains domains, MethodTypes methodTypes)
-        {
-            methodTypes.$method.DefiningType.SingularName$$method.Name$ = new MethodType(meta.$method.DefiningType.SingularName$, Ids.$method.DefiningType.SingularName$$method.Name$)
-            {
-                Name = "$method.Name$",
-$if(method.Input)$		        Input = meta.$method.Input.Name$,$endif$
-$if(method.Output)$		        Output = meta.$method.Output.Name$,$endif$
-            };
-        }
+build_methods(composite) ::= <<$composite.DefinedMethods:{method|$build_method(method)$}; separator="\n"$>>
+build_method(method) ::= <<
+            methodTypes.$method.DefiningType.SingularName$$method.Name$ = new MethodType(meta.$method.DefiningType.SingularName$, Ids.$method.DefiningType.SingularName$$method.Name$, "$method.Name$", $if(method.Input)$meta.$method.Input.Name$$else$null$endif$, $if(method.Output)$meta.$method.Output.Name$$else$null$endif$);
 >>
 
 boolean(value) ::= "$if(value)$true$else$false$endif$"

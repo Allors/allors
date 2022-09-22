@@ -19,10 +19,13 @@ public sealed class MethodType : MetaIdentifiableObject, IMethodType, IComparabl
     private string name;
     private Record output;
 
-    public MethodType(Composite objectType, Guid id)
+    public MethodType(Composite objectType, Guid id, string name, Record input, Record output)
     : base(objectType.MetaPopulation, id)
     {
         this.ObjectType = objectType;
+        this.Name = name;
+        this.Input = input;
+        this.Output = output;
 
         this.MetaPopulation.OnMethodTypeCreated(this);
     }
@@ -43,29 +46,18 @@ public sealed class MethodType : MetaIdentifiableObject, IMethodType, IComparabl
         }
     }
 
-    public Record Input
-    {
-        get => this.input;
+    public string Name { get; }
 
-        set
-        {
-            this.MetaPopulation.AssertUnlocked();
-            this.input = value;
-            this.MetaPopulation.Stale();
-        }
-    }
+    public string FullName => $"{this.ObjectType.Name}{this.Name}";
 
-    public Record Output
-    {
-        get => this.output;
 
-        set
-        {
-            this.MetaPopulation.AssertUnlocked();
-            this.output = value;
-            this.MetaPopulation.Stale();
-        }
-    }
+    IRecord IMethodType.Input => this.Input;
+
+    public Record Input { get; }
+
+    IRecord IMethodType.Output => this.Output;
+
+    public Record Output { get; }
 
     public string DisplayName => this.Name;
 
@@ -92,24 +84,6 @@ public sealed class MethodType : MetaIdentifiableObject, IMethodType, IComparabl
             return this.derivedWorkspaceNames;
         }
     }
-
-    public string Name
-    {
-        get => this.name;
-
-        set
-        {
-            this.MetaPopulation.AssertUnlocked();
-            this.name = value;
-            this.MetaPopulation.Stale();
-        }
-    }
-
-    public string FullName => $"{this.ObjectType.Name}{this.Name}";
-
-    IRecord IMethodType.Input => this.Input;
-
-    IRecord IMethodType.Output => this.Output;
 
     public override bool Equals(object other) => this.Id.Equals((other as MethodType)?.Id);
 
