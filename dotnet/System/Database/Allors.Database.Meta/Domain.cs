@@ -10,19 +10,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-public sealed class Domain : IMetaObject, IDomain
+public sealed class Domain : MetaIdentifiableObject, IDomain
 {
     private string[] derivedWorkspaceNames;
     private IList<Domain> directSuperdomains;
     private Domain[] structuralDerivedSuperdomains;
 
     public Domain(MetaPopulation metaPopulation, Guid id, string name)
+        : base(metaPopulation, id)
     {
-        this.MetaPopulation = metaPopulation;
-
-        this.Id = id;
         this.Name = name;
-        this.Tag = id.Tag();
 
         this.directSuperdomains = new List<Domain>();
         this.MetaPopulation.OnDomainCreated(this);
@@ -45,19 +42,11 @@ public sealed class Domain : IMetaObject, IDomain
         }
     }
 
-    public Guid Id { get; }
-
-    public string Tag { get; }
-
     public string Name { get; }
 
     IEnumerable<IDomain> IDomain.DirectSuperdomains => this.directSuperdomains;
 
-    IMetaPopulation IMetaObject.MetaPopulation => this.MetaPopulation;
-
-    public MetaPopulation MetaPopulation { get; }
-
-    public IEnumerable<string> WorkspaceNames
+    public override IEnumerable<string> WorkspaceNames
     {
         get
         {

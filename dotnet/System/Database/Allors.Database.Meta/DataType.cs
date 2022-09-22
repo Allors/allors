@@ -7,27 +7,13 @@
 namespace Allors.Database.Meta;
 
 using System;
-using System.Collections.Generic;
 
-public abstract class DataType : IMetaObject, IDataType
+public abstract class DataType : MetaIdentifiableObject, IDataType
 {
     protected DataType(MetaPopulation metaPopulation, Guid id)
+        : base(metaPopulation, id)
     {
-        this.MetaPopulation = metaPopulation;
-        this.Id = id;
-        // TODO: 
-        this.Tag = id.Tag();
     }
-
-    IMetaPopulation IMetaObject.MetaPopulation => this.MetaPopulation;
-
-    public MetaPopulation MetaPopulation { get; }
-
-    public abstract IEnumerable<string> WorkspaceNames { get; }
-
-    public Guid Id { get; }
-
-    public string Tag { get; set; }
 
     public abstract string Name { get; }
 

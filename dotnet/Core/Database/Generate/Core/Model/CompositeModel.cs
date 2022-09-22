@@ -1,4 +1,4 @@
-namespace Allors.Meta.Generation.Model;
+﻿namespace Allors.Meta.Generation.Model;
 
 using System.Collections.Generic;
 using System.Linq;
@@ -14,8 +14,6 @@ public abstract class CompositeModel : ObjectTypeModel
     protected abstract Composite Composite { get; }
 
     // IComposite
-    public IEnumerable<string> WorkspaceNames => this.Composite.WorkspaceNames;
-
     public IEnumerable<InterfaceModel> Supertypes => this.Composite.Supertypes.Select(this.MetaModel.Map);
 
     public IEnumerable<CompositeModel> Subtypes => this.Composite.Subtypes.Select(this.MetaModel.Map);

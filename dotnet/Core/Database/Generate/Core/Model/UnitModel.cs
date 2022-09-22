@@ -8,7 +8,9 @@ public class UnitModel : ObjectTypeModel
         : base(metaModel) => this.Unit = unit;
 
     public IUnit Unit { get; }
-    protected override IMetaObject MetaObject => this.Unit;
+
+    public override IMetaIdentifiableObject MetaObject => this.Unit;
+
     protected override IObjectType ObjectType => this.Unit;
 
     // IUnit

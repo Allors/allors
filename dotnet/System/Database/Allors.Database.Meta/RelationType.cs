@@ -15,7 +15,7 @@ using Allors.Text;
 ///     A <see cref="RelationType" /> defines the state and behavior for
 ///     a set of <see cref="AssociationType" />s and <see cref="RoleType" />s.
 /// </summary>
-public sealed class RelationType : IMetaObject, IRelationType
+public sealed class RelationType : MetaIdentifiableObject, IRelationType
 {
     private Multiplicity? assignedMultiplicity;
 
@@ -27,12 +27,8 @@ public sealed class RelationType : IMetaObject, IRelationType
     private Multiplicity multiplicity;
 
     public RelationType(MetaPopulation metaPopulation, Guid id, AssociationType associationType, RoleType roleType)
+        : base(metaPopulation, id)
     {
-        this.MetaPopulation = metaPopulation;
-        this.Id = id;
-        // TODO:
-        this.Tag = id.Tag();
-
         this.AssociationType = associationType;
         this.AssociationType.RelationType = this;
 
@@ -55,6 +51,7 @@ public sealed class RelationType : IMetaObject, IRelationType
             this.MetaPopulation.Stale();
         }
     }
+
     public Multiplicity? AssignedMultiplicity
     {
         get => this.assignedMultiplicity;
@@ -68,6 +65,7 @@ public sealed class RelationType : IMetaObject, IRelationType
     }
 
     public AssociationType AssociationType { get; }
+
     public RoleType RoleType { get; }
 
     public string Name => this.AssociationType.ObjectType + this.RoleType.SingularName;
@@ -76,15 +74,7 @@ public sealed class RelationType : IMetaObject, IRelationType
 
     internal string ValidationName => "relation type" + this.Name;
 
-    IMetaPopulation IMetaObject.MetaPopulation => this.MetaPopulation;
-
-    public MetaPopulation MetaPopulation { get; }
-
-    public Guid Id { get; }
-
-    public string Tag { get; }
-
-    public IEnumerable<string> WorkspaceNames
+    public override IEnumerable<string> WorkspaceNames
     {
         get
         {

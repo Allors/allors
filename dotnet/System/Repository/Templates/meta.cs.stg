@@ -257,10 +257,11 @@ $composite.DefinedProperties:{property|$define_roleType(property)$}; separator="
 define_roleType(property) ::= <<
     public class Meta$property.DefiningType.SingularName$$property.RoleName$ : RoleType
     {
-        public M M => (M)this.MetaPopulation;
-
         public Meta$property.DefiningType.SingularName$$property.RoleName$(M meta) : base(meta.$property.ObjectType.SingularName$, $if(property.AssignedRoleSingularName)$"$property.RoleSingularName$"$else$null$endif$, $if(property.AssignedRolePluralName)$"$property.RolePluralName$"$else$null$endif$)
         {
+$if(property.ObjectType.IsComposite)$
+            this.$property.ObjectType.SingularName$ = meta.$property.ObjectType.SingularName$;
+$endif$
 $if(property.AttributeByName.Required)$             IsRequired = $property.AttributeByName.Required.Value$;$endif$
 $if(property.AttributeByName.Unique)$               IsUnique = $property.AttributeByName.Unique.Value$;$endif$
 $if(property.AttributeByName.Size)$             Size = $property.AttributeByName.Size.Value$;$endif$
@@ -270,7 +271,7 @@ $if(property.AttributeByName.MediaType)$                MediaType = "$property.A
         }
 $if(property.ObjectType.IsComposite)$
 
-        public Meta$property.ObjectType.SingularName$ $property.ObjectType.SingularName$ => this.M.$property.ObjectType.SingularName$;
+        public Meta$property.ObjectType.SingularName$ $property.ObjectType.SingularName$ { get; }
 $endif$
     }
 

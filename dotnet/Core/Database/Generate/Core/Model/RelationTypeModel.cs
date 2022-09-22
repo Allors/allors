@@ -4,18 +4,24 @@ using System;
 using System.Collections.Generic;
 using Database.Meta;
 
-public class RelationTypeModel : MetaObjectModel, IMetaIdentifiableObjectModel
+public class RelationTypeModel : MetaIdentifiableObjectModel
 {
     public RelationTypeModel(MetaModel metaModel, IRelationType relationType)
-        : base(metaModel) => this.RelationType = relationType;
+        : base(metaModel)
+    {
+        this.RelationType = relationType;
+        this.AssociationType = new AssociationTypeModel(metaModel, relationType.AssociationType);
+        this.RoleType = new RoleTypeModel(metaModel, relationType.RoleType);
+    }
 
     public IRelationType RelationType { get; }
-    protected override IMetaObject MetaObject => this.RelationType;
+
+    public override IMetaIdentifiableObject MetaObject => this.RelationType;
 
     // IRelationType
-    public AssociationTypeModel AssociationType => this.MetaModel.Map(this.RelationType.AssociationType);
+    public AssociationTypeModel AssociationType { get; }
 
-    public RoleTypeModel RoleType => this.MetaModel.Map(this.RelationType.RoleType);
+    public RoleTypeModel RoleType { get; }
 
     public Multiplicity Multiplicity => this.RelationType.Multiplicity;
 

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Text;
 
-public abstract class RoleType : IMetaObject, IRoleType, IComparable
+public abstract class RoleType : IRoleType, IComparable
 {
     /// <summary>
     ///     The maximum size value.
@@ -27,13 +27,13 @@ public abstract class RoleType : IMetaObject, IRoleType, IComparable
 
     protected RoleType(ObjectType objectType, string assignedSingularName, string assignedPluralName)
     {
-        this.MetaPopulation = objectType.MetaPopulation;
         this.ObjectType = objectType;
         this.AssignedSingularName = !string.IsNullOrEmpty(assignedSingularName) ? assignedSingularName : null;
         this.AssignedPluralName = !string.IsNullOrEmpty(assignedPluralName) ? assignedPluralName : null;
     }
 
     public RelationType RelationType { get; internal set; }
+
     public AssociationType AssociationType => this.RelationType.AssociationType;
 
     public ObjectType ObjectType { get; }
@@ -51,11 +51,6 @@ public abstract class RoleType : IMetaObject, IRoleType, IComparable
     public bool ExistAssignedPluralName => this.PluralName != null;
 
     internal string ValidationName => "RoleType: " + this.RelationType.Name;
-
-    IMetaPopulation IMetaObject.MetaPopulation => this.MetaPopulation;
-
-    public MetaPopulation MetaPopulation { get; }
-
 
     IRelationType IRoleType.RelationType => this.RelationType;
 
@@ -101,15 +96,15 @@ public abstract class RoleType : IMetaObject, IRoleType, IComparable
     {
         get
         {
-            this.MetaPopulation.Derive();
+            this.ObjectType.MetaPopulation.Derive();
             return this.size;
         }
 
         set
         {
-            this.MetaPopulation.AssertUnlocked();
+            this.ObjectType.MetaPopulation.AssertUnlocked();
             this.size = value;
-            this.MetaPopulation.Stale();
+            this.ObjectType.MetaPopulation.Stale();
         }
     }
 
@@ -117,15 +112,15 @@ public abstract class RoleType : IMetaObject, IRoleType, IComparable
     {
         get
         {
-            this.MetaPopulation.Derive();
+            this.ObjectType.MetaPopulation.Derive();
             return this.precision;
         }
 
         set
         {
-            this.MetaPopulation.AssertUnlocked();
+            this.ObjectType.MetaPopulation.AssertUnlocked();
             this.precision = value;
-            this.MetaPopulation.Stale();
+            this.ObjectType.MetaPopulation.Stale();
         }
     }
 
@@ -133,15 +128,15 @@ public abstract class RoleType : IMetaObject, IRoleType, IComparable
     {
         get
         {
-            this.MetaPopulation.Derive();
+            this.ObjectType.MetaPopulation.Derive();
             return this.scale;
         }
 
         set
         {
-            this.MetaPopulation.AssertUnlocked();
+            this.ObjectType.MetaPopulation.AssertUnlocked();
             this.scale = value;
-            this.MetaPopulation.Stale();
+            this.ObjectType.MetaPopulation.Stale();
         }
     }
 

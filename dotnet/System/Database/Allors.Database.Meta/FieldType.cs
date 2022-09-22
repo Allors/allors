@@ -4,20 +4,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-public class FieldType : IMetaObject, IFieldType
+public class FieldType : MetaIdentifiableObject, IFieldType
 {
     private string[] derivedWorkspaceNames;
     private string name;
     private DataType dataType;
     private bool isOne;
 
-    public FieldType(Record record, Guid id, string tag = null)
+    public FieldType(Record record, Guid id)
+    : base(record.MetaPopulation, id)
     {
-        this.MetaPopulation = record.MetaPopulation;
-
         this.Record = record;
-        this.Id = id;
-        this.Tag = tag ?? id.Tag();
 
         this.MetaPopulation.OnFieldTypeCreated(this);
     }
@@ -51,12 +48,7 @@ public class FieldType : IMetaObject, IFieldType
         }
     }
 
-    IMetaPopulation IMetaObject.MetaPopulation => this.MetaPopulation;
-
-    public MetaPopulation MetaPopulation { get; }
-
-
-    public IEnumerable<string> WorkspaceNames
+    public override IEnumerable<string> WorkspaceNames
     {
         get
         {
@@ -64,10 +56,6 @@ public class FieldType : IMetaObject, IFieldType
             return this.derivedWorkspaceNames;
         }
     }
-
-    public Guid Id { get; }
-
-    public string Tag { get; }
 
     public bool IsOne
     {

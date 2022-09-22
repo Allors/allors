@@ -1,4 +1,4 @@
-// <copyright file="TransactionExtensions.cs" company="Allors bvba">
+﻿// <copyright file="TransactionExtensions.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -11,7 +11,7 @@ using Meta;
 
 internal static class TransactionExtensions
 {
-    internal static IMetaObject GetMetaObject(this ITransaction @this, object value) =>
+    internal static IMetaIdentifiableObject GetMetaObject(this ITransaction @this, object value) =>
         value switch
         {
             IComposite metaObject => metaObject,

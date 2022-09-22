@@ -3,7 +3,7 @@
 using System;
 using Database.Meta;
 
-public abstract class DataTypeModel : MetaObjectModel, IMetaIdentifiableObjectModel
+public abstract class DataTypeModel : MetaIdentifiableObjectModel
 {
     protected DataTypeModel(MetaModel metaModel)
         : base(metaModel)

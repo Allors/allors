@@ -1,4 +1,4 @@
-namespace Allors.Meta.Generation.Model;
+﻿namespace Allors.Meta.Generation.Model;
 
 using Database.Meta;
 
@@ -9,8 +9,7 @@ public class AssociationTypeModel : PropertyTypeModel
         this.AssociationType = associationType;
 
     public IAssociationType AssociationType { get; }
-    protected override IMetaObject MetaObject => this.AssociationType;
-    protected override IOperandType OperandType => this.AssociationType;
+
     protected override IPropertyType PropertyType => this.AssociationType;
 
     // IAssociationType

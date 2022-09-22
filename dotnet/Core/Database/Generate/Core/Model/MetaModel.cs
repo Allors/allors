@@ -6,13 +6,13 @@ using Database.Meta;
 
 public class MetaModel
 {
-    private readonly Dictionary<IMetaObject, MetaObjectModel> mapping;
+    private readonly Dictionary<IMetaIdentifiableObject, MetaIdentifiableObjectModel> mapping;
 
     public MetaModel(MetaPopulation metaPopulation)
     {
         this.MetaPopulation = metaPopulation;
 
-        this.mapping = new Dictionary<IMetaObject, MetaObjectModel>();
+        this.mapping = new Dictionary<IMetaIdentifiableObject, MetaIdentifiableObjectModel>();
 
         foreach (var domain in this.MetaPopulation.Domains)
         {
@@ -37,8 +37,6 @@ public class MetaModel
         foreach (var relationType in this.MetaPopulation.RelationTypes)
         {
             this.mapping.Add(relationType, new RelationTypeModel(this, relationType));
-            this.mapping.Add(relationType.AssociationType, new AssociationTypeModel(this, relationType.AssociationType));
-            this.mapping.Add(relationType.RoleType, new RoleTypeModel(this, relationType.RoleType));
         }
 
         foreach (var record in this.MetaPopulation.Records)
@@ -132,9 +130,7 @@ public class MetaModel
                     .Select(w => w.Tag).OrderBy(w => w));
 
     #region Mappers
-    public MetaObjectModel Map(IMetaObject v) => this.mapping[v];
-
-    public IMetaIdentifiableObjectModel Map(IMetaIdentifiableObject v) => (IMetaIdentifiableObjectModel)this.mapping[v];
+    public MetaIdentifiableObjectModel Map(IMetaIdentifiableObject v) => this.mapping[v];
 
     public DomainModel Map(IDomain v) => (DomainModel)this.mapping[v];
 
@@ -148,15 +144,11 @@ public class MetaModel
 
     public ClassModel Map(IClass v) => (ClassModel)this.mapping[v];
 
-    public OperandTypeModel Map(IOperandType v) => (OperandTypeModel)this.mapping[v];
-
     public RelationTypeModel Map(IRelationType v) => (RelationTypeModel)this.mapping[v];
 
-    public PropertyTypeModel Map(IPropertyType v) => (PropertyTypeModel)this.mapping[v];
+    public AssociationTypeModel Map(IAssociationType v) => ((RelationTypeModel)this.mapping[v.RelationType]).AssociationType;
 
-    public AssociationTypeModel Map(IAssociationType v) => (AssociationTypeModel)this.mapping[v];
-
-    public RoleTypeModel Map(IRoleType v) => (RoleTypeModel)this.mapping[v];
+    public RoleTypeModel Map(IRoleType v) => ((RelationTypeModel)this.mapping[v.RelationType]).RoleType;
 
     public RecordModel Map(IRecord v) => (RecordModel)this.mapping[v];
 

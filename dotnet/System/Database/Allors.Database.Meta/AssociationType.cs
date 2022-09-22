@@ -15,7 +15,7 @@ using System.Linq;
 ///     This is also called the 'active', 'controlling' or 'owning' side.
 ///     AssociationTypes can only have composite <see cref="ObjectType" />s.
 /// </summary>
-public abstract class AssociationType : IMetaObject, IAssociationType, IComparable
+public abstract class AssociationType : IAssociationType, IComparable
 {
     /// <summary>
     ///     Used to create property names.
@@ -24,7 +24,6 @@ public abstract class AssociationType : IMetaObject, IAssociationType, IComparab
 
     protected AssociationType(Composite objectType)
     {
-        this.MetaPopulation = objectType.MetaPopulation;
         this.ObjectType = objectType;
     }
 
@@ -33,15 +32,10 @@ public abstract class AssociationType : IMetaObject, IAssociationType, IComparab
     public Composite ObjectType { get; }
 
     public RoleType RoleType => this.RelationType.RoleType;
+
     public RelationType RelationType { get; internal set; }
 
     internal string ValidationName => "association type " + this.Name;
-
-    IMetaPopulation IMetaObject.MetaPopulation => this.MetaPopulation;
-
-    public MetaPopulation MetaPopulation { get; }
-
-    public IEnumerable<string> WorkspaceNames => this.RelationType.WorkspaceNames;
 
     public string Name => this.IsMany ? this.PluralName : this.SingularName;
 
@@ -54,6 +48,7 @@ public abstract class AssociationType : IMetaObject, IAssociationType, IComparab
     public string PluralFullName => this.PluralName;
 
     IObjectType IPropertyType.ObjectType => this.ObjectType;
+
     IComposite IAssociationType.ObjectType => this.ObjectType;
 
     public bool IsOne => !this.IsMany;

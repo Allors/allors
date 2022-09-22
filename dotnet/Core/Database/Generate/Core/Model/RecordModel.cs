@@ -10,7 +10,7 @@ public class RecordModel : DataTypeModel
 
     public Record Record { get; }
 
-    protected override IMetaObject MetaObject => this.Record;
+    public override IMetaIdentifiableObject MetaObject => this.Record;
 
     protected override IDataType DataType => this.Record;
 }

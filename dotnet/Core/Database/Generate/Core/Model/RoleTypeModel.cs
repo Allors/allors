@@ -1,4 +1,4 @@
-namespace Allors.Meta.Generation.Model;
+﻿namespace Allors.Meta.Generation.Model;
 
 using Database.Meta;
 
@@ -8,8 +8,7 @@ public class RoleTypeModel : PropertyTypeModel
         : base(metaModel) => this.RoleType = roleType;
 
     public IRoleType RoleType { get; }
-    protected override IMetaObject MetaObject => this.RoleType;
-    protected override IOperandType OperandType => this.RoleType;
+
     protected override IPropertyType PropertyType => this.RoleType;
 
     // IRoleType

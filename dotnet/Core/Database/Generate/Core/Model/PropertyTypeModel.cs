@@ -1,15 +1,15 @@
-namespace Allors.Meta.Generation.Model;
+﻿namespace Allors.Meta.Generation.Model;
 
 using Database.Meta;
 
-public abstract class PropertyTypeModel : OperandTypeModel
+public abstract class PropertyTypeModel
 {
     protected PropertyTypeModel(MetaModel metaModel)
-        : base(metaModel)
     {
+        this.MetaModel = metaModel;
     }
 
-    protected abstract IPropertyType PropertyType { get; }
+    public MetaModel MetaModel { get; }
 
     // IPropertyType
     public ObjectTypeModel ObjectType => this.MetaModel.Map(this.PropertyType.ObjectType);
@@ -27,4 +27,6 @@ public abstract class PropertyTypeModel : OperandTypeModel
     public bool IsOne => this.PropertyType.IsOne;
 
     public bool IsMany => this.PropertyType.IsMany;
+
+    protected abstract IPropertyType PropertyType { get; }
 }
