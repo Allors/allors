@@ -55,7 +55,7 @@ public class MethodCompiler
             foreach (var domain in this.sortedDomains)
             {
                 var methodName = domain.Name + methodType.Name;
-                var extensionMethodInfos = this.GetExtensionMethods(@interface.ClrType, methodName);
+                var extensionMethodInfos = this.GetExtensionMethods(@interface.BoundType, methodName);
                 if (extensionMethodInfos.Length > 1)
                 {
                     throw new Exception("Interface " + @interface + " has 2 extension methods for " + methodName);
@@ -65,10 +65,10 @@ public class MethodCompiler
                 {
                     var methodInfo = extensionMethodInfos[0];
 
-                    if (!this.actionByMethodInfoByType.TryGetValue(@class.ClrType, out var actionByMethodInfo))
+                    if (!this.actionByMethodInfoByType.TryGetValue(@class.BoundType, out var actionByMethodInfo))
                     {
                         actionByMethodInfo = new Dictionary<MethodInfo, Action<object, object>>();
-                        this.actionByMethodInfoByType[@class.ClrType] = actionByMethodInfo;
+                        this.actionByMethodInfoByType[@class.BoundType] = actionByMethodInfo;
                     }
 
                     if (!actionByMethodInfo.TryGetValue(methodInfo, out var action))
@@ -96,11 +96,11 @@ public class MethodCompiler
             {
                 var methodName = domain.Name + methodType.Name;
 
-                var methodInfo = @class.ClrType.GetTypeInfo().GetDeclaredMethod(methodName);
+                var methodInfo = @class.BoundType.GetTypeInfo().GetDeclaredMethod(methodName);
                 if (methodInfo != null)
                 {
                     var o = Expression.Parameter(typeof(object));
-                    var castO = Expression.Convert(o, @class.ClrType);
+                    var castO = Expression.Convert(o, @class.BoundType);
 
                     var p = Expression.Parameter(typeof(object));
                     var castP = Expression.Convert(p, methodInfo.GetParameters()[0].ParameterType);

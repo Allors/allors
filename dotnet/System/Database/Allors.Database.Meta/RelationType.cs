@@ -17,10 +17,7 @@ using Allors.Text;
 /// </summary>
 public sealed class RelationType : MetaIdentifiableObject, IRelationType
 {
-    private string[] assignedWorkspaceNames;
     private string[] derivedWorkspaceNames;
-
-    private bool isIndexed;
 
     public RelationType(MetaPopulation metaPopulation, Guid id, Multiplicity? assignedMultiplicity, bool isDerived, AssociationType associationType, RoleType roleType)
         : base(metaPopulation, id)
@@ -36,24 +33,18 @@ public sealed class RelationType : MetaIdentifiableObject, IRelationType
         this.RoleType.SingularName = this.RoleType.AssignedSingularName ?? this.RoleType.ObjectType.SingularName;
         this.RoleType.PluralName = this.RoleType.AssignedPluralName ?? (this.RoleType.ExistAssignedSingularName ? Pluralizer.Pluralize(this.RoleType.AssignedSingularName) : this.RoleType.ObjectType.PluralName);
 
-        this.MetaPopulation.OnRelationTypeCreated(this);
+        this.MetaPopulation.OnCreated(this);
     }
 
-    public string[] AssignedWorkspaceNames
-    {
-        get => this.assignedWorkspaceNames ?? Array.Empty<string>();
-
-        set
-        {
-            this.MetaPopulation.AssertUnlocked();
-            this.assignedWorkspaceNames = value;
-            this.MetaPopulation.Stale();
-        }
-    }
+    public string[] AssignedWorkspaceNames { get; set; }
 
     public Multiplicity Multiplicity { get; }
 
+    IAssociationType IRelationType.AssociationType => this.AssociationType;
+
     public AssociationType AssociationType { get; }
+
+    IRoleType IRelationType.RoleType => this.RoleType;
 
     public RoleType RoleType { get; }
 
@@ -61,36 +52,31 @@ public sealed class RelationType : MetaIdentifiableObject, IRelationType
 
     public string ReverseName => this.RoleType.SingularName + this.AssociationType.ObjectType;
 
-    internal string ValidationName => "relation type" + this.Name;
-
     public override IEnumerable<string> WorkspaceNames
     {
         get
         {
-            this.MetaPopulation.Derive();
             return this.derivedWorkspaceNames;
         }
     }
 
     public bool IsDerived { get; }
 
+    // TODO: Derive
     public bool ExistExclusiveClasses
     {
         get
         {
             if (this.AssociationType?.ObjectType != null && this.RoleType?.ObjectType != null)
             {
-                return this.AssociationType.ObjectType.ExistExclusiveClass && this.RoleType.ObjectType is Composite roleCompositeType &&
-                       roleCompositeType.ExistExclusiveClass;
+                return this.AssociationType.ObjectType.ExistExclusiveClass && this.RoleType.ObjectType is Composite roleCompositeType && roleCompositeType.ExistExclusiveClass;
             }
 
             return false;
         }
     }
 
-    IAssociationType IRelationType.AssociationType => this.AssociationType;
-
-    IRoleType IRelationType.RoleType => this.RoleType;
+    internal string ValidationName => "relation type" + this.Name;
 
     public int CompareTo(object other) => this.Id.CompareTo((other as RelationType)?.Id);
 
@@ -111,8 +97,8 @@ public sealed class RelationType : MetaIdentifiableObject, IRelationType
     }
 
     internal void DeriveWorkspaceNames() =>
-        this.derivedWorkspaceNames = this.assignedWorkspaceNames != null
-            ? this.assignedWorkspaceNames
+        this.derivedWorkspaceNames = this.AssignedWorkspaceNames != null
+            ? this.AssignedWorkspaceNames
                 .Intersect(this.AssociationType.ObjectType.Classes.SelectMany(v => v.WorkspaceNames))
                 .Intersect(this.RoleType.ObjectType switch
                 {

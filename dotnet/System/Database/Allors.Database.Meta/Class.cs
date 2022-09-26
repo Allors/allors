@@ -16,30 +16,17 @@ public abstract class Class : Composite, IClass
     private readonly Class[] classes;
 
     private ConcurrentDictionary<IMethodType, Action<object, object>[]> actionsByMethodType;
-    private string[] assignedWorkspaceNames;
     private IRoleType[] derivedRequiredRoleTypes;
     private string[] derivedWorkspaceNames;
-
-    private IRoleType[] overriddenRequiredRoleTypes;
 
     protected Class(MetaPopulation metaPopulation, Guid id, string singularName, string assignedPluralName)
         : base(metaPopulation, id, singularName, assignedPluralName)
     {
         this.classes = new[] { this };
-        metaPopulation.OnClassCreated(this);
+        metaPopulation.OnCreated(this);
     }
 
-    public string[] AssignedWorkspaceNames
-    {
-        get => this.assignedWorkspaceNames;
-
-        set
-        {
-            this.MetaPopulation.AssertUnlocked();
-            this.assignedWorkspaceNames = value;
-            this.MetaPopulation.Stale();
-        }
-    }
+    public string[] AssignedWorkspaceNames { get; set; }
 
     public override IEnumerable<Class> Classes => this.classes;
 
@@ -47,31 +34,12 @@ public abstract class Class : Composite, IClass
 
     public override IEnumerable<Composite> Subtypes => Array.Empty<Composite>();
 
-    public long CreatePermissionId { get; set; }
-
-    public IReadOnlyDictionary<Guid, long> ReadPermissionIdByRelationTypeId { get; set; }
-
-    public IReadOnlyDictionary<Guid, long> WritePermissionIdByRelationTypeId { get; set; }
-
-    public IReadOnlyDictionary<Guid, long> ExecutePermissionIdByMethodTypeId { get; set; }
-
-    public IRoleType[] OverriddenRequiredRoleTypes
-    {
-        get => this.overriddenRequiredRoleTypes ?? Array.Empty<IRoleType>();
-
-        set
-        {
-            this.MetaPopulation.AssertUnlocked();
-            this.overriddenRequiredRoleTypes = value;
-            this.MetaPopulation.Stale();
-        }
-    }
+    public IRoleType[] OverriddenRequiredRoleTypes { get; set; } = Array.Empty<IRoleType>();
 
     public IRoleType[] RequiredRoleTypes
     {
         get
         {
-            this.MetaPopulation.Derive();
             return this.derivedRequiredRoleTypes;
         }
     }
@@ -80,7 +48,6 @@ public abstract class Class : Composite, IClass
     {
         get
         {
-            this.MetaPopulation.Derive();
             return this.derivedWorkspaceNames;
         }
     }
@@ -88,7 +55,7 @@ public abstract class Class : Composite, IClass
     public override bool ExistClass => true;
 
     public override bool IsAssignableFrom(IComposite objectType) => this.Equals(objectType);
-    
+
     public Action<object, object>[] Actions(IMethodType methodType)
     {
         this.actionsByMethodType ??= new ConcurrentDictionary<IMethodType, Action<object, object>[]>();
@@ -103,7 +70,7 @@ public abstract class Class : Composite, IClass
 
     internal void DeriveWorkspaceNames(HashSet<string> workspaceNames)
     {
-        this.derivedWorkspaceNames = this.assignedWorkspaceNames ?? Array.Empty<string>();
+        this.derivedWorkspaceNames = this.AssignedWorkspaceNames ?? Array.Empty<string>();
         workspaceNames.UnionWith(this.derivedWorkspaceNames);
     }
 

@@ -11,13 +11,7 @@ using System.Linq;
 
 public sealed class MethodType : MetaIdentifiableObject, IMethodType, IComparable
 {
-    private string[] assignedWorkspaceNames;
     private string[] derivedWorkspaceNames;
-
-    private Record input;
-
-    private string name;
-    private Record output;
 
     public MethodType(Composite objectType, Guid id, string name, Record input, Record output)
     : base(objectType.MetaPopulation, id)
@@ -27,29 +21,16 @@ public sealed class MethodType : MetaIdentifiableObject, IMethodType, IComparabl
         this.Input = input;
         this.Output = output;
 
-        this.MetaPopulation.OnMethodTypeCreated(this);
+        this.MetaPopulation.OnCreated(this);
     }
 
     IComposite IMethodType.ObjectType => this.ObjectType;
 
     public Composite ObjectType { get; }
 
-    public string[] AssignedWorkspaceNames
-    {
-        get => this.assignedWorkspaceNames ?? Array.Empty<string>();
-
-        set
-        {
-            this.MetaPopulation.AssertUnlocked();
-            this.assignedWorkspaceNames = value;
-            this.MetaPopulation.Stale();
-        }
-    }
+    public string[] AssignedWorkspaceNames { get; set; }
 
     public string Name { get; }
-
-    public string FullName => $"{this.ObjectType.Name}{this.Name}";
-
 
     IRecord IMethodType.Input => this.Input;
 
@@ -60,6 +41,14 @@ public sealed class MethodType : MetaIdentifiableObject, IMethodType, IComparabl
     public Record Output { get; }
 
     public string DisplayName => this.Name;
+
+    public override IEnumerable<string> WorkspaceNames
+    {
+        get
+        {
+            return this.derivedWorkspaceNames;
+        }
+    }
 
     private string ValidationName
     {
@@ -75,15 +64,6 @@ public sealed class MethodType : MetaIdentifiableObject, IMethodType, IComparabl
     }
 
     public int CompareTo(object other) => this.Id.CompareTo((other as MethodType)?.Id);
-
-    public override IEnumerable<string> WorkspaceNames
-    {
-        get
-        {
-            this.MetaPopulation.Derive();
-            return this.derivedWorkspaceNames;
-        }
-    }
 
     public override bool Equals(object other) => this.Id.Equals((other as MethodType)?.Id);
 
@@ -101,8 +81,8 @@ public sealed class MethodType : MetaIdentifiableObject, IMethodType, IComparabl
     }
 
     internal void DeriveWorkspaceNames() =>
-        this.derivedWorkspaceNames = this.assignedWorkspaceNames != null
-            ? this.assignedWorkspaceNames
+        this.derivedWorkspaceNames = this.AssignedWorkspaceNames != null
+            ? this.AssignedWorkspaceNames
                 .Intersect(this.ObjectType.Classes.SelectMany(v => v.WorkspaceNames))
                 .ToArray()
             : Array.Empty<string>();

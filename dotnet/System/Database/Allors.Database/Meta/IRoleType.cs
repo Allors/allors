@@ -33,6 +33,7 @@ public interface IRoleType : IPropertyType, IComparable
 
     bool IsRequired { get; set; }
 
+    // TODO: Implement in Transaction.Commit() 
     bool IsUnique { get; set; }
 
     // TODO: move to extension method

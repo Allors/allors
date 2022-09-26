@@ -1,4 +1,4 @@
-// <copyright file="PermissionsCache.cs" company="Allors bvba">
+﻿// <copyright file="PermissionsCache.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -8,6 +8,7 @@ namespace Allors.Database.Configuration
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Allors.Database.Meta.Extensions;
     using Domain;
     using Services;
 
@@ -255,48 +256,48 @@ namespace Allors.Database.Configuration
                 if (createPermissionsByClassId.TryGetValue(@class.Id, out var classCreatePermissions) &&
                     classCreatePermissions.Length == 1)
                 {
-                    @class.CreatePermissionId = classCreatePermissions[0].Id;
+                    @class.CreatePermissionId(classCreatePermissions[0].Id);
                 }
                 else
                 {
-                    @class.CreatePermissionId = 0;
+                    @class.CreatePermissionId(0);
                 }
 
                 var relationTypeIds = new HashSet<Guid>(@class.RoleTypes.Select(v => v.RelationType.Id));
 
                 if (readPermissionsByClassId.TryGetValue(@class.Id, out var classReadPermissions))
                 {
-                    @class.ReadPermissionIdByRelationTypeId = classReadPermissions
+                    @class.ReadPermissionIdByRelationTypeId(classReadPermissions
                         .Where(v => relationTypeIds.Contains(v.RelationTypePointer))
-                        .ToDictionary(v => v.RelationTypePointer, v => v.Id);
+                        .ToDictionary(v => v.RelationTypePointer, v => v.Id));
                 }
                 else
                 {
-                    @class.ReadPermissionIdByRelationTypeId = new Dictionary<Guid, long>();
+                    @class.ReadPermissionIdByRelationTypeId(new Dictionary<Guid, long>());
                 }
 
                 if (writePermissionsByClassId.TryGetValue(@class.Id, out var classWritePermissions))
                 {
-                    @class.WritePermissionIdByRelationTypeId = classWritePermissions
+                    @class.WritePermissionIdByRelationTypeId(classWritePermissions
                         .Where(v => relationTypeIds.Contains(v.RelationTypePointer))
-                        .ToDictionary(v => v.RelationTypePointer, v => v.Id);
+                        .ToDictionary(v => v.RelationTypePointer, v => v.Id));
                 }
                 else
                 {
-                    @class.WritePermissionIdByRelationTypeId = new Dictionary<Guid, long>();
+                    @class.WritePermissionIdByRelationTypeId(new Dictionary<Guid, long>());
                 }
 
                 var methodTypeIds = new HashSet<Guid>(@class.MethodTypes.Select(v => v.Id));
 
                 if (executePermissionsByClassId.TryGetValue(@class.Id, out var classExecutePermissions))
                 {
-                    @class.ExecutePermissionIdByMethodTypeId = classExecutePermissions
+                    @class.ExecutePermissionIdByMethodTypeId(classExecutePermissions
                         .Where(v => methodTypeIds.Contains(v.MethodTypePointer))
-                        .ToDictionary(v => v.MethodTypePointer, v => v.Id);
+                        .ToDictionary(v => v.MethodTypePointer, v => v.Id));
                 }
                 else
                 {
-                    @class.ExecutePermissionIdByMethodTypeId = new Dictionary<Guid, long>();
+                    @class.ExecutePermissionIdByMethodTypeId(new Dictionary<Guid, long>());
                 }
             }
         }

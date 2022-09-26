@@ -1,4 +1,4 @@
-// <copyright file="IBarcodeGenerator.cs" company="Allors bvba">
+﻿// <copyright file="IBarcodeGenerator.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -8,6 +8,7 @@ namespace Allors.Database.Configuration
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Linq;
+    using Allors.Database.Meta.Extensions;
     using Database.Security;
     using Domain;
     using Meta;
@@ -57,17 +58,17 @@ namespace Allors.Database.Configuration
                 {
                     var @class = (Class)w;
                     var permissionIds = new HashSet<long>();
-                    permissionIds.Add(@class.CreatePermissionId);
+                    permissionIds.Add(@class.CreatePermissionId());
 
                     foreach (var relationType in @class.RoleTypes.Select(v => v.RelationType).Where(w => w.WorkspaceNames.Contains(v)))
                     {
-                        permissionIds.Add(@class.ReadPermissionIdByRelationTypeId[relationType.Id]);
-                        permissionIds.Add(@class.WritePermissionIdByRelationTypeId[relationType.Id]);
+                        permissionIds.Add(@class.ReadPermissionIdByRelationTypeId()[relationType.Id]);
+                        permissionIds.Add(@class.WritePermissionIdByRelationTypeId()[relationType.Id]);
                     }
 
                     foreach (var methodType in @class.MethodTypes.Where(w => w.WorkspaceNames.Contains(v)))
                     {
-                        permissionIds.Add(@class.ExecutePermissionIdByMethodTypeId[methodType.Id]);
+                        permissionIds.Add(@class.ExecutePermissionIdByMethodTypeId()[methodType.Id]);
                     }
 
                     return permissionIds;

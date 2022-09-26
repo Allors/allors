@@ -14,7 +14,7 @@ public abstract class Unit : ObjectType, IUnit
     protected Unit(MetaPopulation metaPopulation, Guid id, string tag, string singularName, string assignedPluralName)
         : base(metaPopulation, id, singularName, assignedPluralName)
     {
-        metaPopulation.OnUnitCreated(this);
+        metaPopulation.OnCreated(this);
         this.Tag = tag;
     }
 

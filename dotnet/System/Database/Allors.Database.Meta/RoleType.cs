@@ -8,9 +8,7 @@ namespace Allors.Database.Meta;
 
 using System;
 using System.Collections.Generic;
-using System.Dynamic;
 using System.Linq;
-using Text;
 
 public abstract class RoleType : IRoleType, IComparable
 {
@@ -18,13 +16,6 @@ public abstract class RoleType : IRoleType, IComparable
     ///     The maximum size value.
     /// </summary>
     public const int MaximumSize = -1;
-
-    private bool? isRequired;
-    private bool? isUnique;
-    private int? precision;
-    private int? scale;
-
-    private int? size;
 
     protected RoleType(ObjectType objectType, string assignedSingularName, string assignedPluralName)
     {
@@ -38,10 +29,6 @@ public abstract class RoleType : IRoleType, IComparable
     public AssociationType AssociationType => this.RelationType.AssociationType;
 
     public ObjectType ObjectType { get; }
-
-    public string[] AssignedWorkspaceNames => this.RelationType.AssignedWorkspaceNames;
-
-    public IEnumerable<string> WorkspaceNames => this.RelationType.WorkspaceNames;
 
     public string AssignedSingularName { get; }
 
@@ -93,65 +80,15 @@ public abstract class RoleType : IRoleType, IComparable
     /// <value><c>true</c> if this state is one; otherwise, <c>false</c>.</value>
     public bool IsOne => !this.IsMany;
 
-    public int? Size
-    {
-        get
-        {
-            this.ObjectType.MetaPopulation.Derive();
-            return this.size;
-        }
+    public int? Size { get; set; }
 
-        set
-        {
-            this.ObjectType.MetaPopulation.AssertUnlocked();
-            this.size = value;
-            this.ObjectType.MetaPopulation.Stale();
-        }
-    }
+    public int? Precision { get; set; }
 
-    public int? Precision
-    {
-        get
-        {
-            this.ObjectType.MetaPopulation.Derive();
-            return this.precision;
-        }
+    public int? Scale { get; set; }
 
-        set
-        {
-            this.ObjectType.MetaPopulation.AssertUnlocked();
-            this.precision = value;
-            this.ObjectType.MetaPopulation.Stale();
-        }
-    }
+    public bool IsRequired { get; set; }
 
-    public int? Scale
-    {
-        get
-        {
-            this.ObjectType.MetaPopulation.Derive();
-            return this.scale;
-        }
-
-        set
-        {
-            this.ObjectType.MetaPopulation.AssertUnlocked();
-            this.scale = value;
-            this.ObjectType.MetaPopulation.Stale();
-        }
-    }
-
-    public bool IsRequired
-    {
-        get => this.isRequired ?? false;
-        set => this.isRequired = value;
-    }
-
-    public bool IsUnique
-    {
-        get => this.isUnique ?? false;
-        set => this.isUnique = value;
-    }
+    public bool IsUnique { get; set; }
 
     public string MediaType { get; set; }
 
@@ -211,47 +148,27 @@ public abstract class RoleType : IRoleType, IComparable
             switch (unitType.Tag)
             {
                 case UnitTags.String:
-                    if (!this.Size.HasValue)
-                    {
-                        this.Size = 256;
-                    }
-
+                    this.Size ??= 256;
                     this.Scale = null;
                     this.Precision = null;
-
                     break;
 
                 case UnitTags.Binary:
-                    if (!this.Size.HasValue)
-                    {
-                        this.Size = MaximumSize;
-                    }
-
+                    this.Size ??= MaximumSize;
                     this.Scale = null;
                     this.Precision = null;
-
                     break;
 
                 case UnitTags.Decimal:
-                    if (!this.Precision.HasValue)
-                    {
-                        this.Precision = 19;
-                    }
-
-                    if (!this.Scale.HasValue)
-                    {
-                        this.Scale = 2;
-                    }
-
+                    this.Precision ??= 19;
+                    this.Scale ??= 2;
                     this.Size = null;
-
                     break;
 
                 default:
                     this.Size = null;
                     this.Scale = null;
                     this.Precision = null;
-
                     break;
             }
         }

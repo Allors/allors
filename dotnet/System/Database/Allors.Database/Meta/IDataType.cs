@@ -6,5 +6,5 @@ public interface IDataType : IMetaIdentifiableObject
 {
     string Name { get; }
 
-    Type ClrType { get; }
+    Type BoundType { get; }
 }

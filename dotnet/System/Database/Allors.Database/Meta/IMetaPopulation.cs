@@ -1,4 +1,4 @@
-// <copyright file="IMetaPopulation.cs" company="Allors bvba">
+﻿// <copyright file="IMetaPopulation.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -12,19 +12,23 @@ using System.Reflection;
 
 public interface IMetaPopulation
 {
-    IEnumerable<IDomain> Domains { get; }
+    IDomain[] Domains { get; }
 
-    IEnumerable<IUnit> Units { get; }
+    IUnit[] Units { get; }
 
-    IEnumerable<IComposite> Composites { get; }
+    IComposite[] Composites { get; }
 
-    IEnumerable<IInterface> Interfaces { get; }
+    IInterface[] Interfaces { get; }
 
-    IEnumerable<IClass> Classes { get; }
+    IClass[] Classes { get; }
 
-    IEnumerable<IRelationType> RelationTypes { get; }
+    IRelationType[] RelationTypes { get; }
 
-    IEnumerable<IMethodType> MethodTypes { get; }
+    IMethodType[] MethodTypes { get; }
+
+    IRecord[] Records { get; }
+
+    IFieldType[] FieldTypes { get; }
 
     bool IsValid { get; }
 

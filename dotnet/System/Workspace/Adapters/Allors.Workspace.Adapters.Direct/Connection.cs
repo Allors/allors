@@ -1,4 +1,4 @@
-// <copyright file="LocalWorkspace.cs" company="Allors bvba">
+﻿// <copyright file="LocalWorkspace.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -10,6 +10,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Allors.Database.Meta.Extensions;
 using Database;
 using Database.Meta;
 using Database.Security;
@@ -108,13 +109,13 @@ public class Connection : Adapters.Connection
         switch (operation)
         {
             case Operations.Read:
-                @class.ReadPermissionIdByRelationTypeId.TryGetValue(operandId, out permission);
+                @class.ReadPermissionIdByRelationTypeId().TryGetValue(operandId, out permission);
                 break;
             case Operations.Write:
-                @class.WritePermissionIdByRelationTypeId.TryGetValue(operandId, out permission);
+                @class.WritePermissionIdByRelationTypeId().TryGetValue(operandId, out permission);
                 break;
             case Operations.Execute:
-                @class.ExecutePermissionIdByMethodTypeId.TryGetValue(operandId, out permission);
+                @class.ExecutePermissionIdByMethodTypeId().TryGetValue(operandId, out permission);
                 break;
             case Operations.Create:
                 throw new NotSupportedException("Create is not supported");

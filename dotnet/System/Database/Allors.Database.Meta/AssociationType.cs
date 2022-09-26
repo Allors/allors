@@ -28,8 +28,6 @@ public abstract class AssociationType : IAssociationType, IComparable
         this.ObjectType = objectType;
     }
 
-    public string[] AssignedWorkspaceNames => this.RelationType.AssignedWorkspaceNames;
-
     public Composite ObjectType { get; }
 
     public RoleType RoleType => this.RelationType.RoleType;

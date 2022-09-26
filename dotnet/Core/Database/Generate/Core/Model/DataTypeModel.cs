@@ -20,5 +20,5 @@ public abstract class DataTypeModel : MetaIdentifiableObjectModel
     // IDataType
     public string Name => this.DataType.Name;
 
-    public Type ClrType => this.DataType.ClrType;
+    public Type ClrType => this.DataType.BoundType;
 }

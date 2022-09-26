@@ -2,7 +2,7 @@ group AllorsCSharpRepository;
 
 TemplateId() ::= <<14F49218-A676-43ba-9CBD-B8FFA059D1BF>>
 TemplateName() ::= <<Allors C# Meta>>
-TemplateVersion() ::= <<3.0.16>>
+TemplateVersion() ::= <<3.0.17>>
 TemplateAllors() ::= <<1.0>>
 TemplateConfiguration(repository) ::= <<
 $!
@@ -354,6 +354,8 @@ $repository.Composites:{composite|$define_methods(composite)$}; separator="\n"$
 
 $repository.Domains:{assembly|             this.Build$assembly.Name$(meta, domains, relationTypes, methodTypes);}; separator="\n"$
 
+            meta.Derive();
+
             return meta;
         }
 
@@ -469,7 +471,7 @@ build_class(class) ::= <<
 >>
 
 inheritance(composite) ::= <<$composite.ImplementedInterfaces:{implementedInterface|$build_inheritance(composite, implementedInterface)$}; separator="\n"$>>
-build_inheritance(composite, implementedInterface) ::= <<            new Inheritance(meta){ Subtype = meta.$composite.SingularName$, Supertype = meta.$implementedInterface.SingularName$};>>
+build_inheritance(composite, implementedInterface) ::= <<            new Inheritance(meta, meta.$composite.SingularName$, meta.$implementedInterface.SingularName$);>>
 
 build_record(record) ::= <<            meta.$record.Name$ = new Meta$record.Name$(meta);>>
 

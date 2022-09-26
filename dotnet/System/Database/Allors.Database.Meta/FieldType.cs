@@ -16,7 +16,7 @@ public class FieldType : MetaIdentifiableObject, IFieldType
         this.DataType = dataType;
         this.IsMany = isMany;
 
-        this.MetaPopulation.OnFieldTypeCreated(this);
+        this.MetaPopulation.OnCreated(this);
     }
 
     IRecord IFieldType.Record => this.Record;
@@ -29,14 +29,7 @@ public class FieldType : MetaIdentifiableObject, IFieldType
 
     public DataType DataType { get; }
 
-    public override IEnumerable<string> WorkspaceNames
-    {
-        get
-        {
-            this.MetaPopulation.Derive();
-            return this.derivedWorkspaceNames;
-        }
-    }
+    public override IEnumerable<string> WorkspaceNames => this.derivedWorkspaceNames;
 
     public bool IsOne
     {
@@ -48,4 +41,8 @@ public class FieldType : MetaIdentifiableObject, IFieldType
     internal void DeriveWorkspaceNames() => this.derivedWorkspaceNames = this.DataType != null
         ? this.Record.WorkspaceNames.Intersect(this.DataType.WorkspaceNames).ToArray()
         : Array.Empty<string>();
+
+    internal void Validate(ValidationLog log)
+    {
+    }
 }

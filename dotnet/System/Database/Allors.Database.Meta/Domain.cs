@@ -12,7 +12,6 @@ using System.Linq;
 
 public sealed class Domain : MetaIdentifiableObject, IDomain
 {
-    private string[] derivedWorkspaceNames;
     private IList<Domain> directSuperdomains;
     private Domain[] structuralDerivedSuperdomains;
 
@@ -22,7 +21,8 @@ public sealed class Domain : MetaIdentifiableObject, IDomain
         this.Name = name;
 
         this.directSuperdomains = new List<Domain>();
-        this.MetaPopulation.OnDomainCreated(this);
+
+        this.MetaPopulation.OnCreated(this);
     }
 
     public IEnumerable<Domain> DirectSuperdomains => this.directSuperdomains;
@@ -46,14 +46,7 @@ public sealed class Domain : MetaIdentifiableObject, IDomain
 
     IEnumerable<IDomain> IDomain.DirectSuperdomains => this.directSuperdomains;
 
-    public override IEnumerable<string> WorkspaceNames
-    {
-        get
-        {
-            this.MetaPopulation.Derive();
-            return this.derivedWorkspaceNames;
-        }
-    }
+    public override IEnumerable<string> WorkspaceNames => this.MetaPopulation.WorkspaceNames;
 
     public int CompareTo(object other) => this.Id.CompareTo((other as Domain)?.Id);
 
@@ -63,12 +56,7 @@ public sealed class Domain : MetaIdentifiableObject, IDomain
 
     public override string ToString()
     {
-        if (!string.IsNullOrEmpty(this.Name))
-        {
-            return this.Name;
-        }
-
-        return this.Tag;
+        return !string.IsNullOrEmpty(this.Name) ? this.Name : this.Tag;
     }
 
     public void AddDirectSuperdomain(Domain superdomain) =>

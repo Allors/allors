@@ -7,42 +7,28 @@ using System.Linq;
 public class Record : DataType, IRecord
 {
     private string[] derivedWorkspaceNames;
-    private FieldType[] fieldTypes;
+    private FieldType[] derivedFieldTypes;
 
     public Record(MetaPopulation metaPopulation, Guid id, string name)
         : base(metaPopulation, id)
     {
         this.Name = name;
-        this.fieldTypes = Array.Empty<FieldType>();
 
-        metaPopulation.OnRecordCreated(this);
+        metaPopulation.OnCreated(this);
     }
+
+    IFieldType[] IRecord.FieldTypes => this.FieldTypes;
 
     public FieldType[] FieldTypes
     {
-        get => this.fieldTypes;
-        set
-        {
-            this.MetaPopulation.AssertUnlocked();
-            this.fieldTypes = value;
-            this.MetaPopulation.Stale();
-        }
+        get => this.derivedFieldTypes;
     }
 
     public override string Name { get; }
 
-    public override IEnumerable<string> WorkspaceNames
-    {
-        get
-        {
-            this.MetaPopulation.Derive();
-            return this.derivedWorkspaceNames;
-        }
-    }
+    public override IEnumerable<string> WorkspaceNames => this.derivedWorkspaceNames;
 
-    IEnumerable<IFieldType> IRecord.FieldTypes => this.FieldTypes;
-
-    internal void Bind(Dictionary<string, Type> typeByTypeName) => this.ClrType = typeByTypeName[this.Name];
+    internal void Bind(Dictionary<string, Type> typeByTypeName) => this.BoundType = typeByTypeName[this.Name];
 
     internal void DeriveWorkspaceNames(IDictionary<Record, ISet<string>> workspaceNamesByRecord)
     {
@@ -72,5 +58,16 @@ public class Record : DataType, IRecord
             var record = (Record)fieldType.DataType;
             record.PrepareWorkspaceNames(workspaceNamesByRecord, visited, this.derivedWorkspaceNames);
         }
+    }
+
+    internal void StructuralDeriveFieldTypes(Dictionary<Record, FieldType[]> fieldTypesByRecord)
+    {
+        this.derivedFieldTypes = fieldTypesByRecord.TryGetValue(this, out var fieldTypes) ?
+            fieldTypes :
+            Array.Empty<FieldType>();
+    }
+
+    internal void Validate(ValidationLog log)
+    {
     }
 }

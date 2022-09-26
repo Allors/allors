@@ -17,5 +17,5 @@ public abstract class DataType : MetaIdentifiableObject, IDataType
 
     public abstract string Name { get; }
 
-    public Type ClrType { get; set; }
+    public Type BoundType { get; set; }
 }

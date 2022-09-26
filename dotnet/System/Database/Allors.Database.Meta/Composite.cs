@@ -26,52 +26,41 @@ public abstract class Composite : ObjectType, IComposite
     }
 
     public abstract IEnumerable<Class> Classes { get; }
+
     public abstract Class ExclusiveClass { get; }
 
     public IEnumerable<Interface> DirectSupertypes => this.structuralDerivedDirectSupertypes;
+
     public IEnumerable<Interface> Supertypes => this.structuralDerivedSupertypes;
+
     public IEnumerable<AssociationType> AssociationTypes => this.structuralDerivedAssociationTypes;
 
     public IEnumerable<AssociationType> ExclusiveAssociationTypes =>
         this.AssociationTypes.Where(associationType => this.Equals(associationType.RoleType.ObjectType)).ToArray();
 
     public IEnumerable<AssociationType> ExclusiveDatabaseAssociationTypes => this.ExclusiveAssociationTypes.ToArray();
+
     public IEnumerable<AssociationType> InheritedAssociationTypes => this.AssociationTypes.Except(this.ExclusiveAssociationTypes);
+
     public IEnumerable<RoleType> RoleTypes => this.structuralDerivedRoleTypes;
 
     public IEnumerable<RoleType> ExclusiveRoleTypes =>
         this.RoleTypes.Where(roleType => this.Equals(roleType.AssociationType.ObjectType)).ToArray();
 
-    public IEnumerable<RoleType> ExclusiveDatabaseRoleTypes => this.ExclusiveRoleTypes.ToArray();
     public IEnumerable<MethodType> MethodTypes => this.structuralDerivedMethodTypes;
 
     public IEnumerable<MethodType> ExclusiveMethodTypes =>
         this.MethodTypes.Where(methodType => this.Equals(methodType.ObjectType)).ToArray();
 
     public IEnumerable<MethodType> InheritedMethodTypes => this.MethodTypes.Except(this.ExclusiveMethodTypes);
-    public IEnumerable<RoleType> InheritedRoleTypes => this.RoleTypes.Except(this.ExclusiveRoleTypes);
 
-    public IEnumerable<RoleType> ExclusiveCompositeRoleTypes
-    {
-        get
-        {
-            this.MetaPopulation.Derive();
-            return this.ExclusiveRoleTypes.Where(roleType => roleType.ObjectType.IsComposite);
-        }
-    }
+    public IEnumerable<RoleType> InheritedRoleTypes => this.RoleTypes.Except(this.ExclusiveRoleTypes);
 
     public abstract IEnumerable<Composite> Subtypes { get; }
 
     public abstract bool ExistClass { get; }
 
-    public bool ExistExclusiveClass
-    {
-        get
-        {
-            this.MetaPopulation.Derive();
-            return this.ExclusiveClass != null;
-        }
-    }
+    public bool ExistExclusiveClass => this.ExclusiveClass != null;
 
     IClass IComposite.ExclusiveClass => this.ExclusiveClass;
 
@@ -85,7 +74,7 @@ public abstract class Composite : ObjectType, IComposite
 
     IEnumerable<IRoleType> IComposite.RoleTypes => this.RoleTypes;
 
-    IEnumerable<IRoleType> IComposite.ExclusiveRoleTypes => this.ExclusiveDatabaseRoleTypes;
+    IEnumerable<IRoleType> IComposite.ExclusiveRoleTypes => this.ExclusiveRoleTypes;
 
     IEnumerable<IMethodType> IComposite.MethodTypes => this.MethodTypes;
 

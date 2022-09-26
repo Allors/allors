@@ -1,4 +1,4 @@
-// <copyright file="Permissions.cs" company="Allors bvba">
+﻿// <copyright file="Permissions.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -6,6 +6,7 @@
 
 namespace Allors.Database.Domain
 {
+    using Allors.Database.Meta.Extensions;
     using Meta;
 
     public partial class Permissions
@@ -15,8 +16,8 @@ namespace Allors.Database.Domain
         {
             var id = operation switch
             {
-                Operations.Read => @class.ReadPermissionIdByRelationTypeId[roleType.RelationType.Id],
-                Operations.Write => @class.WritePermissionIdByRelationTypeId[roleType.RelationType.Id],
+                Operations.Read => @class.ReadPermissionIdByRelationTypeId()[roleType.RelationType.Id],
+                Operations.Write => @class.WritePermissionIdByRelationTypeId()[roleType.RelationType.Id],
                 Operations.Create => 0,
                 Operations.Execute => 0,
             };
@@ -27,7 +28,7 @@ namespace Allors.Database.Domain
         // TODO: Make extension method on Class
         public Permission Get(Class @class, IMethodType methodType)
         {
-            var id = @class.ExecutePermissionIdByMethodTypeId[methodType.Id];
+            var id = @class.ExecutePermissionIdByMethodTypeId()[methodType.Id];
             return (Permission)this.Transaction.Instantiate(id);
         }
     }

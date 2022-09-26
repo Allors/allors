@@ -537,7 +537,6 @@ namespace Allors.Database.Meta
             AddWorkspace(m.TrimFrom, new[] { "Default" });
             AddWorkspace(m.TrimTo, new[] { "Default" });
 
-
             AddWorkspace(m.WorkspaceXObject1, new[] { "X" });
             AddWorkspace(m.WorkspaceXObject2, new[] { "X" });
             AddWorkspace(m.WorkspaceXYObject1, new[] { "X", "Y" });
@@ -545,15 +544,7 @@ namespace Allors.Database.Meta
             AddWorkspace(m.WorkspaceYObject1, new[] { "Y" });
             AddWorkspace(m.WorkspaceYObject2, new[] { "Y" });
 
-
-
-
-
-
-
-
-
-
+            // Custom
 
             // Methods
             AddWorkspace(methodTypes.DeletableDelete, "Default");
@@ -569,9 +560,9 @@ namespace Allors.Database.Meta
 
             // Classes
             var classes = m.Classes.Where(@class =>
-                @class.RoleTypes.Any(v => v.AssignedWorkspaceNames.Contains("Default")) ||
-                @class.AssociationTypes.Any(v => v.AssignedWorkspaceNames.Contains("Default")) ||
-                @class.MethodTypes.Any(v => v.AssignedWorkspaceNames.Contains("Default")))
+                @class.RoleTypes.Any(v => v.RelationType.AssignedWorkspaceNames?.Contains("Default") == true) ||
+                @class.AssociationTypes.Any(v => v.RelationType.AssignedWorkspaceNames?.Contains("Default") == true) ||
+                @class.MethodTypes.Any(v => v.AssignedWorkspaceNames?.Contains("Default") == true))
                 .ToArray();
 
             foreach (Class @class in classes)

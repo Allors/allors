@@ -47,7 +47,7 @@ public abstract class Profile : IDisposable
 
     public IObject[] CreateArray(IObjectType objectType, int count)
     {
-        var type = objectType.ClrType;
+        var type = objectType.BoundType;
         return (IObject[])Array.CreateInstance(type, count);
     }
 

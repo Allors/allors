@@ -11,42 +11,25 @@ using System.Linq;
 
 public sealed class Inheritance : IInheritance, IComparable
 {
-    private Composite subtype;
-    private Interface supertype;
-
-    public Inheritance(MetaPopulation metaPopulation)
+    public Inheritance(MetaPopulation metaPopulation, Composite subtype, Interface supertype)
     {
         this.MetaPopulation = metaPopulation;
-        this.MetaPopulation.OnInheritanceCreated(this);
-    }
-
-    public Composite Subtype
-    {
-        get => this.subtype;
-
-        set
-        {
-            this.MetaPopulation.AssertUnlocked();
-            this.subtype = value;
-            this.MetaPopulation.Stale();
-        }
-    }
-
-    public Interface Supertype
-    {
-        get => this.supertype;
-
-        set
-        {
-            this.MetaPopulation.AssertUnlocked();
-            this.supertype = value;
-            this.MetaPopulation.Stale();
-        }
+        this.Subtype = subtype;
+        this.Supertype = supertype;
+        this.MetaPopulation.OnCreated(this);
     }
 
     public MetaPopulation MetaPopulation { get; }
 
-    public string ValidationName
+    IComposite IInheritance.Subtype => this.Subtype;
+
+    public Composite Subtype { get; }
+
+    IInterface IInheritance.Supertype => this.Supertype;
+
+    public Interface Supertype { get; }
+
+    internal string ValidationName
     {
         get
         {
@@ -64,10 +47,6 @@ public sealed class Inheritance : IInheritance, IComparable
         var other = otherObject as Inheritance;
         return string.CompareOrdinal($"{this.Subtype.Id}{this.Supertype.Id}", $"{other?.Subtype.Id}{other?.Supertype.Id}");
     }
-
-    IComposite IInheritance.Subtype => this.Subtype;
-
-    IInterface IInheritance.Supertype => this.Supertype;
 
     public override bool Equals(object other) => this.Subtype.Id.Equals((other as Inheritance)?.Subtype.Id) &&
                                                  this.Supertype.Id.Equals((other as Inheritance)?.Supertype.Id);
