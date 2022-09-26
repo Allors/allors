@@ -146,7 +146,7 @@ public class Project
 
     private void CreateDomains()
     {
-        var parentNameByChildName = new Dictionary<string, string>();
+        var parentNamesByChildName = new Dictionary<string, string[]>();
 
         foreach (var syntaxTree in this.DocumentBySyntaxTree.Keys)
         {
@@ -166,24 +166,22 @@ public class Project
 
                     var domain = new Domain(this.Repository.Objects, structureModel.Name, directoryInfo);
 
-                    var extendsAttribute = structureModel.GetAttributes()
-                        .FirstOrDefault(v => v.AttributeClass.Name.Equals("ExtendsAttribute"));
-                    var parent = (string)extendsAttribute?.ConstructorArguments.First().Value;
+                    var parentNames = structureModel.GetAttributes()
+                        .Where(v => v.AttributeClass.Name.Equals("ExtendsAttribute"))
+                        .Select(v => (string)v.ConstructorArguments.First().Value)
+                        .ToArray();
 
-                    if (!string.IsNullOrEmpty(parent))
-                    {
-                        parentNameByChildName.Add(domain.Name, parent);
-                    }
+                    parentNamesByChildName.Add(domain.Name, parentNames);
                 }
             }
         }
 
-        foreach (var childName in parentNameByChildName.Keys)
+        foreach (var childName in parentNamesByChildName.Keys)
         {
-            var parentName = parentNameByChildName[childName];
+            var parentNames = parentNamesByChildName[childName];
             var child = this.Repository.Objects.OfType<Domain>().First(v => v.Name == childName);
-            var parent = this.Repository.Objects.OfType<Domain>().First(v => v.Name == parentName);
-            child.Base = parent;
+            var parents = parentNames.Select(v => this.Repository.Objects.OfType<Domain>().First(w => w.Name == v)).ToArray();
+            child.DirectSuperdomains = parents;
         }
     }
 

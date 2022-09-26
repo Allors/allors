@@ -1,11 +1,13 @@
-namespace Generate.Model;
+﻿namespace Generate.Model;
 
+using System;
 using Allors.Repository;
 using Allors.Repository.Domain;
 
 public class UnitModel : ObjectTypeModel
 {
-    public UnitModel(RepositoryModel repositoryModel, Unit unit) : base(repositoryModel) => this.Unit = unit;
+    public UnitModel(RepositoryModel repositoryModel, Unit unit)
+        : base(repositoryModel) => this.Unit = unit;
 
     public Unit Unit { get; }
 

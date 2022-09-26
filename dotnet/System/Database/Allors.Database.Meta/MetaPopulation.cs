@@ -81,18 +81,14 @@ public abstract class MetaPopulation : IMetaPopulation
 
     IMetaIdentifiableObject IMetaPopulation.FindById(Guid id) => this.FindById(id);
 
-    IMetaIdentifiableObject IMetaPopulation.FindByTag(string tag) => this.FindByTag(tag);
-
-    IComposite IMetaPopulation.FindDatabaseCompositeByName(string name) => this.FindDatabaseCompositeByName(name);
-
-    IValidationLog IMetaPopulation.Validate() => this.Validate();
-
     public IMetaIdentifiableObject FindById(Guid id)
     {
         this.metaIdentifiableObjectById.TryGetValue(id, out var metaObject);
 
         return metaObject;
     }
+
+    IMetaIdentifiableObject IMetaPopulation.FindByTag(string tag) => this.FindByTag(tag);
 
     public IMetaIdentifiableObject FindByTag(string tag)
     {
@@ -101,10 +97,93 @@ public abstract class MetaPopulation : IMetaPopulation
         return metaObject;
     }
 
-    public Composite FindDatabaseCompositeByName(string name)
+    IComposite IMetaPopulation.FindCompositeByName(string name) => this.FindCompositeByName(name);
+
+    public Composite FindCompositeByName(string name)
     {
         this.compositeByLowercaseName.TryGetValue(name.ToLowerInvariant(), out var composite);
         return composite;
+    }
+
+    IValidationLog IMetaPopulation.Validate() => this.Validate();
+
+    public ValidationLog Validate()
+    {
+        var log = new ValidationLog();
+
+        foreach (var domain in this.Domains)
+        {
+            domain.Validate(log);
+        }
+
+        foreach (var unitType in this.Units)
+        {
+            unitType.Validate(log);
+        }
+
+        foreach (var @interface in this.Interfaces)
+        {
+            @interface.Validate(log);
+        }
+
+        foreach (var @class in this.Classes)
+        {
+            @class.Validate(log);
+        }
+
+        foreach (var inheritance in this.Inheritances)
+        {
+            inheritance.Validate(log);
+        }
+
+        foreach (var relationType in this.RelationTypes)
+        {
+            relationType.Validate(log);
+        }
+
+        foreach (var methodType in this.MethodTypes)
+        {
+            methodType.Validate(log);
+        }
+
+        foreach (var record in this.Records)
+        {
+            record.Validate(log);
+        }
+
+        foreach (var fieldType in this.FieldTypes)
+        {
+            fieldType.Validate(log);
+        }
+
+        var inheritancesBySubtype = new Dictionary<Composite, List<Inheritance>>();
+        foreach (var inheritance in this.Inheritances)
+        {
+            var subtype = inheritance.Subtype;
+            if (subtype != null)
+            {
+                if (!inheritancesBySubtype.TryGetValue(subtype, out var inheritanceList))
+                {
+                    inheritanceList = new List<Inheritance>();
+                    inheritancesBySubtype[subtype] = inheritanceList;
+                }
+
+                inheritanceList.Add(inheritance);
+            }
+        }
+
+        var supertypes = new HashSet<Interface>();
+        foreach (var subtype in inheritancesBySubtype.Keys)
+        {
+            supertypes.Clear();
+            if (this.HasCycle(subtype, supertypes, inheritancesBySubtype))
+            {
+                var message = subtype.ValidationName + " has a cycle in its inheritance hierarchy";
+                log.AddError(message, subtype, ValidationKind.Cyclic, "IComposite.Supertypes");
+            }
+        }
+
+        return log;
     }
 
     public void StructuralDerive()
@@ -282,95 +361,11 @@ public abstract class MetaPopulation : IMetaPopulation
         this.compositeByLowercaseName = this.Composites.ToDictionary(v => v.Name.ToLowerInvariant());
     }
 
-    public ValidationLog Validate()
-    {
-        var log = new ValidationLog();
-
-        foreach (var domain in this.Domains)
-        {
-            domain.Validate(log);
-        }
-
-        foreach (var unitType in this.Units)
-        {
-            unitType.Validate(log);
-        }
-
-        foreach (var @interface in this.Interfaces)
-        {
-            @interface.Validate(log);
-        }
-
-        foreach (var @class in this.Classes)
-        {
-            @class.Validate(log);
-        }
-
-        foreach (var inheritance in this.Inheritances)
-        {
-            inheritance.Validate(log);
-        }
-
-        foreach (var relationType in this.RelationTypes)
-        {
-            relationType.Validate(log);
-        }
-
-        foreach (var methodType in this.MethodTypes)
-        {
-            methodType.Validate(log);
-        }
-
-        foreach (var record in this.Records)
-        {
-            record.Validate(log);
-        }
-
-        foreach (var fieldType in this.FieldTypes)
-        {
-            fieldType.Validate(log);
-        }
-
-        var inheritancesBySubtype = new Dictionary<Composite, List<Inheritance>>();
-        foreach (var inheritance in this.Inheritances)
-        {
-            var subtype = inheritance.Subtype;
-            if (subtype != null)
-            {
-                if (!inheritancesBySubtype.TryGetValue(subtype, out var inheritanceList))
-                {
-                    inheritanceList = new List<Inheritance>();
-                    inheritancesBySubtype[subtype] = inheritanceList;
-                }
-
-                inheritanceList.Add(inheritance);
-            }
-        }
-
-        var supertypes = new HashSet<Interface>();
-        foreach (var subtype in inheritancesBySubtype.Keys)
-        {
-            supertypes.Clear();
-            if (this.HasCycle(subtype, supertypes, inheritancesBySubtype))
-            {
-                var message = subtype.ValidationName + " has a cycle in its inheritance hierarchy";
-                log.AddError(message, subtype, ValidationKind.Cyclic, "IComposite.Supertypes");
-            }
-        }
-
-        return log;
-    }
-
     public void Bind(Type[] types, Dictionary<Type, MethodInfo[]> extensionMethodsByInterface)
     {
         if (!this.IsBound)
         {
             this.IsBound = true;
-
-            foreach (var domain in this.Domains)
-            {
-                domain.Bind();
-            }
 
             var typeByName = types.ToDictionary(type => type.Name, type => type);
 

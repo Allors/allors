@@ -66,7 +66,7 @@ public static class ExpressionExtensions
         }
 
         var root = visitor.MemberExpressions[0].Member.DeclaringType;
-        var composite = metaPopulation.FindDatabaseCompositeByName(root.Name.Substring(4));
+        var composite = metaPopulation.FindCompositeByName(root.Name.Substring(4));
 
         foreach (var memberExpression in visitor.MemberExpressions)
         {
@@ -74,7 +74,7 @@ public static class ExpressionExtensions
             {
                 var propertyInfo = (PropertyInfo)memberExpression.Member;
                 var propertyType = propertyInfo.PropertyType;
-                composite = metaPopulation.FindDatabaseCompositeByName(propertyType.Name.Substring(4));
+                composite = metaPopulation.FindCompositeByName(propertyType.Name.Substring(4));
 
                 if (currentPath != null && !currentPath.PropertyType.ObjectType.Equals(composite))
                 {

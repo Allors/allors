@@ -1,12 +1,16 @@
 ﻿namespace Generate.Model;
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Allors.Repository.Domain;
 
-public abstract class CompositeModel : ObjectTypeModel
+public abstract class CompositeModel : ObjectTypeModel, IComparable<CompositeModel>
 {
-    protected CompositeModel(RepositoryModel repositoryModel) : base(repositoryModel) { }
+    private IEnumerable<InterfaceModel> supertypes;
+
+    protected CompositeModel(RepositoryModel repositoryModel)
+        : base(repositoryModel) { }
 
     public abstract Composite Composite { get; }
 
@@ -36,4 +40,17 @@ public abstract class CompositeModel : ObjectTypeModel
     public MethodModel[] InheritedMethods => this.Methods.Where(v => v.DefiningMethod != null).ToArray();
 
     public CompositeModel[] Subtypes => this.Composite.Subtypes.Select(this.RepositoryModel.Map).ToArray();
+
+    public IEnumerable<InterfaceModel> Supertypes
+    {
+        get
+        {
+            return this.supertypes ?? this.Interfaces.Union(this.Interfaces.SelectMany(v => v.Supertypes)).ToArray();
+        }
+    }
+
+    public int CompareTo(CompositeModel other)
+    {
+        return this != other ? this.Supertypes.Contains(other) ? 1 : -1 : 0;
+    }
 }

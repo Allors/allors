@@ -36,7 +36,7 @@ public interface IMetaPopulation
 
     IMetaIdentifiableObject FindByTag(string tag);
 
-    IComposite FindDatabaseCompositeByName(string name);
+    IComposite FindCompositeByName(string name);
 
     IValidationLog Validate();
 

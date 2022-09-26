@@ -1,13 +1,17 @@
 ﻿namespace Generate.Model;
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Allors.Repository;
 using Allors.Repository.Domain;
 
-public class DomainModel : RepositoryObjectModel
+public class DomainModel : RepositoryObjectModel, IComparable<DomainModel>
 {
-    public DomainModel(RepositoryModel repositoryModel, Domain domain) : base(repositoryModel) => this.Domain = domain;
+    private IEnumerable<DomainModel> superdomains;
+
+    public DomainModel(RepositoryModel repositoryModel, Domain domain)
+        : base(repositoryModel) => this.Domain = domain;
 
     public Domain Domain { get; }
 
@@ -15,11 +19,18 @@ public class DomainModel : RepositoryObjectModel
 
     public string Name => this.Domain.Name;
 
-    public DomainModel Base => this.RepositoryModel.Map(this.Domain.Base);
+    public IEnumerable<DomainModel> Superdomains => this.superdomains ?? this.DirectSuperdomains.Union(this.DirectSuperdomains.SelectMany(v => v.Superdomains)).ToArray();
+
+    public IEnumerable<DomainModel> DirectSuperdomains => this.Domain.DirectSuperdomains.Select(this.RepositoryModel.Map);
 
     public ISet<ObjectTypeModel> ObjectTypes => new HashSet<ObjectTypeModel>(this.Domain.ObjectTypes.Select(this.RepositoryModel.Map));
 
     public ISet<PropertyModel> Properties => new HashSet<PropertyModel>(this.Domain.Properties.Select(this.RepositoryModel.Map));
 
     public ISet<MethodModel> Methods => new HashSet<MethodModel>(this.Domain.Methods.Select(this.RepositoryModel.Map));
+
+    public int CompareTo(DomainModel other)
+    {
+        return this != other ? this.Superdomains.Contains(other) ? 1 : -1 : 0;
+    }
 }

@@ -59,6 +59,22 @@ public class RepositoryModel
             }
         }
 
+        this.Objects = this.Repository.Objects.Select(this.Map).ToArray();
+        this.Domains = this.Objects.OfType<DomainModel>().ToArray();
+        this.Units = this.Objects.OfType<UnitModel>().ToArray();
+        this.Composites = this.Objects.OfType<CompositeModel>().ToArray();
+        this.Interfaces = this.Composites.OfType<InterfaceModel>().ToArray();
+        this.Classes = this.Composites.OfType<ClassModel>().ToArray();
+        this.Records = this.Objects.OfType<RecordModel>().ToArray();
+
+        Array.Sort(this.Objects);
+        Array.Sort(this.Domains);
+        Array.Sort(this.Units);
+        Array.Sort(this.Composites);
+        Array.Sort(this.Interfaces);
+        Array.Sort(this.Classes);
+        Array.Sort(this.Records);
+
         // Validations
         var ids = new HashSet<Guid>();
 
@@ -82,19 +98,19 @@ public class RepositoryModel
 
     public Repository Repository { get; }
 
-    public IEnumerable<RepositoryObjectModel> Objects => this.Repository.Objects.Select(this.Map);
+    public RepositoryObjectModel[] Objects { get; }
 
-    public IEnumerable<DomainModel> Domains => this.Repository.Objects.OfType<Domain>().Select(this.Map);
+    public DomainModel[] Domains { get; }
 
-    public IEnumerable<UnitModel> Units => this.Repository.Objects.OfType<Unit>().Select(this.Map);
+    public UnitModel[] Units { get; }
 
-    public IEnumerable<CompositeModel> Composites => this.Repository.Objects.OfType<Composite>().Select(this.Map);
+    public CompositeModel[] Composites { get; }
 
-    public IEnumerable<InterfaceModel> Interfaces => this.Repository.Objects.OfType<Interface>().Select(this.Map);
+    public InterfaceModel[] Interfaces { get; }
 
-    public IEnumerable<ClassModel> Classes => this.Repository.Objects.OfType<Class>().Select(this.Map);
+    public ClassModel[] Classes { get; }
 
-    public IEnumerable<RecordModel> Records => this.Repository.Objects.OfType<Record>().Select(this.Map);
+    public RecordModel[] Records { get; }
 
     private void CheckId(ISet<Guid> ids, string id, string name, string key)
     {

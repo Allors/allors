@@ -12,24 +12,26 @@ using System.Linq;
 
 public sealed class Domain : MetaIdentifiableObject, IDomain
 {
-    private IList<Domain> directSuperdomains;
-    private Domain[] structuralDerivedSuperdomains;
-
-    public Domain(MetaPopulation metaPopulation, Guid id, string name)
+    public Domain(MetaPopulation metaPopulation, Guid id, string name, params Domain[] directSuperdomains)
         : base(metaPopulation, id)
     {
         this.Name = name;
-
-        this.directSuperdomains = new List<Domain>();
+        this.DirectSuperdomains = directSuperdomains ?? Array.Empty<Domain>();
 
         this.MetaPopulation.OnCreated(this);
     }
 
-    public IEnumerable<Domain> DirectSuperdomains => this.directSuperdomains;
+    public string Name { get; }
 
-    public IEnumerable<Domain> Superdomains => this.structuralDerivedSuperdomains;
+    IEnumerable<IDomain> IDomain.DirectSuperdomains => this.DirectSuperdomains;
 
-    public string ValidationName
+    public Domain[] DirectSuperdomains { get; }
+
+    public Domain[] Superdomains { get; private set; }
+
+    public override IEnumerable<string> WorkspaceNames => this.MetaPopulation.WorkspaceNames;
+
+    internal string ValidationName
     {
         get
         {
@@ -42,12 +44,6 @@ public sealed class Domain : MetaIdentifiableObject, IDomain
         }
     }
 
-    public string Name { get; }
-
-    IEnumerable<IDomain> IDomain.DirectSuperdomains => this.directSuperdomains;
-
-    public override IEnumerable<string> WorkspaceNames => this.MetaPopulation.WorkspaceNames;
-
     public int CompareTo(object other) => this.Id.CompareTo((other as Domain)?.Id);
 
     public override bool Equals(object other) => this.Id.Equals((other as Domain)?.Id);
@@ -58,14 +54,6 @@ public sealed class Domain : MetaIdentifiableObject, IDomain
     {
         return !string.IsNullOrEmpty(this.Name) ? this.Name : this.Tag;
     }
-
-    public void AddDirectSuperdomain(Domain superdomain) =>
-        // TODO: Cyclic check
-        //if (superdomain.Equals(this) || superdomain.Superdomains.Contains(this))
-        //{
-        //    throw new Exception("Cycle in domain inheritance");
-        //}
-        this.directSuperdomains.Add(superdomain);
 
     /// <summary>
     ///     Validates the domain.
@@ -104,8 +92,6 @@ public sealed class Domain : MetaIdentifiableObject, IDomain
         }
     }
 
-    internal void Bind() => this.directSuperdomains = this.directSuperdomains.ToArray();
-
     internal void DeriveWorkspaceNames()
     {
         // TODO:
@@ -119,7 +105,7 @@ public sealed class Domain : MetaIdentifiableObject, IDomain
             directSuperdomain.StructuralDeriveSuperdomains(this, sharedDomains);
         }
 
-        this.structuralDerivedSuperdomains = sharedDomains.ToArray();
+        this.Superdomains = sharedDomains.ToArray();
     }
 
     private void StructuralDeriveSuperdomains(Domain subdomain, HashSet<Domain> superdomains)

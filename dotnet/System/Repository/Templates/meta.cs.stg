@@ -335,7 +335,6 @@ $repository.Composites:{composite|$define_methods(composite)$}; separator="\n"$
             var methodTypes = new MethodTypes();
 
             this.BuildDomains(meta, domains);
-            this.BuildDomainInheritances(meta, domains);
             this.BuildUnits(meta, domains);
             this.BuildInterfaces(meta, domains);
             this.BuildClasses(meta, domains);
@@ -344,13 +343,13 @@ $repository.Composites:{composite|$define_methods(composite)$}; separator="\n"$
             this.BuildRelationTypes(meta, domains, relationTypes);
             this.BuildMethodTypes(meta, domains, methodTypes);
 
+            this.AssignPropertyTypes(meta, relationTypes);
+            this.AssignMethodTypes(meta, methodTypes);
+
             meta.StructuralDerive();
 
             this.OverrideRequired(meta, relationTypes);
             this.OverrideUnique(meta, relationTypes);
-
-            this.AssignPropertyTypes(meta, relationTypes);
-            this.AssignMethodTypes(meta, methodTypes);
 
 $repository.Domains:{assembly|             this.Build$assembly.Name$(meta, domains, relationTypes, methodTypes);}; separator="\n"$
 
@@ -362,11 +361,6 @@ $repository.Domains:{assembly|             this.Build$assembly.Name$(meta, domai
 		private void BuildDomains(M meta, Domains domains)
 		{
 $repository.Domains:{assembly|$build_domain(assembly)$}; separator="\n"$
-		}
-
-		private void BuildDomainInheritances(M meta, Domains domains)
-		{
-$repository.Domains:{domain|$build_domain_inheritance(domain)$}; separator="\n"$
 		}
 
 		private void BuildUnits(M meta, Domains domains)
@@ -444,18 +438,12 @@ $composite.DefinedMethods:{method|          public MethodType $method.DefiningTy
 >>
 
 build_domain(assembly) ::= <<
-	        domains.$assembly.Name$ = new Domain(meta, Ids.$assembly.Name$, "$assembly.Name$")
+	        domains.$assembly.Name$ = new Domain(meta, Ids.$assembly.Name$, "$assembly.Name$", new Domain[]{$assembly.DirectSuperdomains:{superdomain|domains.$superdomain.Name$}; separator=","$})
 	        {
 $if(assembly.ExtensionAttributes)$
                 Extensions = { $assembly.ExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ }
 $endif$
 	        };
->>
-
-build_domain_inheritance(domain) ::= <<
-$if(domain.Base)$
-			domains.$domain.Name$.AddDirectSuperdomain(domains.$domain.base.Name$);
-$endif$
 >>
 
 build_unit(unit) ::= <<

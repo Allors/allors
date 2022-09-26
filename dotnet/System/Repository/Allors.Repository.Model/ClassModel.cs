@@ -1,12 +1,14 @@
 ﻿namespace Generate.Model;
 
+using System;
 using System.Linq;
 using Allors.Repository;
 using Allors.Repository.Domain;
 
 public class ClassModel : CompositeModel
 {
-    public ClassModel(RepositoryModel repositoryModel, Class @class) : base(repositoryModel) => this.Class = @class;
+    public ClassModel(RepositoryModel repositoryModel, Class @class)
+        : base(repositoryModel) => this.Class = @class;
 
     public Class Class { get; }
 

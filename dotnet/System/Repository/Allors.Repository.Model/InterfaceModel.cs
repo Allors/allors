@@ -1,5 +1,6 @@
-namespace Generate.Model;
+﻿namespace Generate.Model;
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Allors.Repository;
@@ -25,4 +26,6 @@ public class InterfaceModel : CompositeModel
         this.Interface.InheritedPropertyByRoleName.ToDictionary(v => v.Key, v => this.RepositoryModel.Map(v.Value));
 
     public PropertyModel[] InheritedProperties => this.InheritedPropertyByRoleName.Values.ToArray();
+
+  
 }

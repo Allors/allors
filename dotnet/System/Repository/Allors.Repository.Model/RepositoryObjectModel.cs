@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Allors.Repository;
 
-public abstract class RepositoryObjectModel
+public abstract class RepositoryObjectModel : IComparable<RepositoryObjectModel>
 {
     protected RepositoryObjectModel(RepositoryModel repositoryModel) => this.RepositoryModel = repositoryModel;
 
@@ -18,6 +18,11 @@ public abstract class RepositoryObjectModel
     public Dictionary<string, Attribute[]> AttributesByName => this.RepositoryObject.AttributesByName;
 
     public string Id => (string)((dynamic)this.AttributeByName.Get("Id"))?.Value;
+
+    public int CompareTo(RepositoryObjectModel other)
+    {
+        return string.CompareOrdinal(this.Id, other.Id);
+    }
 
     public override string ToString() => this.RepositoryObject.ToString();
 

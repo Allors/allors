@@ -1,6 +1,5 @@
 ﻿namespace Generate.Model;
 
-using Allors.Repository;
 using Allors.Repository.Domain;
 
 public abstract class ObjectTypeModel : DataTypeModel
