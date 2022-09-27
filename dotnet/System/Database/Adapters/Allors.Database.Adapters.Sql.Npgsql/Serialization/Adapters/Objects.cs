@@ -68,7 +68,7 @@ public class Objects : IEnumerable<object[]>
                                 if (objectType is IClass @class)
                                 {
                                     this.classByObjectId[objectId] = @class;
-                                    yield return new object[] {objectId, @class.Id, objectVersion};
+                                    yield return new object[] { objectId, @class.Id, objectVersion };
                                 }
                                 else
                                 {

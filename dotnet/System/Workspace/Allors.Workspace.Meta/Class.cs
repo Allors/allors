@@ -74,7 +74,7 @@ namespace Allors.Workspace.Meta
             this.Tag = tag;
             this.SingularName = singularName;
             this.PluralName = pluralName ?? Pluralizer.Pluralize(singularName);
-            this.Classes = new HashSet<Class> {this};
+            this.Classes = new HashSet<Class> { this };
         }
     }
 }

@@ -52,8 +52,8 @@ namespace Tests
             {
                 l = Enumerable.Range(0, 100).Select(v => new Pull
                 {
-                    o = this.x[v].Id
-                }).ToArray()
+                    o = this.x[v].Id,
+                }).ToArray(),
             };
 
             var api = new Api(this.Transaction, "Default", CancellationToken.None);
@@ -101,8 +101,8 @@ namespace Tests
             {
                 l = Enumerable.Range(0, 100).Select(v => new Pull
                 {
-                    o = this.x[v].Id
-                }).ToArray()
+                    o = this.x[v].Id,
+                }).ToArray(),
             };
 
             var api = new Api(this.Transaction, "Default", CancellationToken.None);

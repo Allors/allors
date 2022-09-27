@@ -53,11 +53,11 @@ namespace Tests
                             new PushRequestRole
                             {
                                 t = this.M.WorkspaceXObject1.WorkspaceXString.RelationType.Tag,
-                                u = "x string"
+                                u = "x string",
                             },
-                        }
+                        },
                     },
-                }
+                },
             };
 
             var api = new Api(this.Transaction, "X", CancellationToken.None);
@@ -88,11 +88,11 @@ namespace Tests
                             new PushRequestRole
                             {
                                 t = this.M.WorkspaceXObject1.WorkspaceXString.RelationType.Tag,
-                                u = "x string"
+                                u = "x string",
                             },
-                        }
+                        },
                     },
-                }
+                },
             };
 
             var api = new Api(this.Transaction, "Y", CancellationToken.None);

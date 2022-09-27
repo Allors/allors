@@ -27,7 +27,7 @@ public abstract class RangeRemoveTests
         const int y = 2;
         var z = x.Remove(y);
 
-        Assert.Equal(new long[] {1}, z);
+        Assert.Equal(new long[] { 1 }, z);
     }
 
     [Fact]
@@ -37,7 +37,7 @@ public abstract class RangeRemoveTests
         const int y = 2;
         var z = x.Remove(y);
 
-        Assert.Equal(new long[] {3}, z);
+        Assert.Equal(new long[] { 3 }, z);
     }
 
     [Fact]
@@ -57,7 +57,7 @@ public abstract class RangeRemoveTests
         const int y = 2;
         var z = x.Remove(y);
 
-        Assert.Equal(new long[] {-2, 1}, z);
+        Assert.Equal(new long[] { -2, 1 }, z);
     }
 
     [Fact]
@@ -67,7 +67,7 @@ public abstract class RangeRemoveTests
         const int y = 2;
         var z = x.Remove(y);
 
-        Assert.Equal(new long[] {3, 4}, z);
+        Assert.Equal(new long[] { 3, 4 }, z);
     }
 
     [Fact]
@@ -77,7 +77,7 @@ public abstract class RangeRemoveTests
         const int y = 2;
         var z = x.Remove(y);
 
-        Assert.Equal(new long[] {1, 3}, z);
+        Assert.Equal(new long[] { 1, 3 }, z);
     }
 
     [Fact]
@@ -87,7 +87,7 @@ public abstract class RangeRemoveTests
         const int y = 1;
         var z = x.Remove(y);
 
-        Assert.Equal(new long[] {2}, z);
+        Assert.Equal(new long[] { 2 }, z);
     }
 
     [Fact]
@@ -97,7 +97,7 @@ public abstract class RangeRemoveTests
         const int y = 2;
         var z = x.Remove(y);
 
-        Assert.Equal(new long[] {1}, z);
+        Assert.Equal(new long[] { 1 }, z);
     }
 
     [Fact]
@@ -107,6 +107,6 @@ public abstract class RangeRemoveTests
         const int y = 2;
         var z = x.Remove(y);
 
-        Assert.Equal(new long[] {1, 3}, z);
+        Assert.Equal(new long[] { 1, 3 }, z);
     }
 }

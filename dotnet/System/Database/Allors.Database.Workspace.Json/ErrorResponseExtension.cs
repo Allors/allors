@@ -22,22 +22,22 @@ public static class ResponseExtensions
                 r = derivationError.Relations.Select(x =>
                 {
                     // TODO: Koen (Associations)
-                    return new DerivationRelation {i = x.Association.Id, r = x.RelationType.Tag};
-                }).ToArray()
+                    return new DerivationRelation { i = x.Association.Id, r = x.RelationType.Tag };
+                }).ToArray(),
             };
 
             @this._d = @this._d != null
-                ? new List<ResponseDerivationError>(@this._d) {derivationErrorResponse}.ToArray()
-                : new List<ResponseDerivationError> {derivationErrorResponse}.ToArray();
+                ? new List<ResponseDerivationError>(@this._d) { derivationErrorResponse }.ToArray()
+                : new List<ResponseDerivationError> { derivationErrorResponse }.ToArray();
         }
     }
 
     public static void AddVersionError(this Response @this, IObject obj) =>
-        @this._v = @this._v != null ? new List<long>(@this._v) {obj.Id}.ToArray() : new List<long> {obj.Id}.ToArray();
+        @this._v = @this._v != null ? new List<long>(@this._v) { obj.Id }.ToArray() : new List<long> { obj.Id }.ToArray();
 
     public static void AddAccessError(this Response @this, long id) =>
-        @this._a = @this._a != null ? new List<long>(@this._a) {id}.ToArray() : new List<long> {id}.ToArray();
+        @this._a = @this._a != null ? new List<long>(@this._a) { id }.ToArray() : new List<long> { id }.ToArray();
 
     public static void AddMissingError(this Response @this, long id) =>
-        @this._m = @this._m != null ? new List<long>(@this._m) {id}.ToArray() : new List<long> {id}.ToArray();
+        @this._m = @this._m != null ? new List<long>(@this._m) { id }.ToArray() : new List<long> { id }.ToArray();
 }

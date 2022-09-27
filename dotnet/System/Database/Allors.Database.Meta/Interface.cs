@@ -13,30 +13,30 @@ using System.Linq;
 public abstract class Interface : Composite, IInterface
 {
     private string[] derivedWorkspaceNames;
-    private HashSet<Class> structuralDerivedClasses;
+    private HashSet<Class> subclasses;
 
-    private HashSet<Composite> structuralDerivedDirectSubtypes;
-    private Class structuralDerivedExclusiveClass;
-    private HashSet<Composite> structuralDerivedSubtypes;
+    private HashSet<Composite> directSubtypes;
+    private Class exclusiveClass;
+    private HashSet<Composite> subtypes;
 
     protected Interface(MetaPopulation metaPopulation, Guid id, Interface[] directSupertypes, string singularName, string assignedPluralName)
         : base(metaPopulation, id, directSupertypes, singularName, assignedPluralName) =>
         metaPopulation.OnCreated(this);
 
-    public override IEnumerable<Class> Classes => this.structuralDerivedClasses;
+    public override IEnumerable<Class> Classes => this.subclasses;
 
-    public override IEnumerable<Composite> Subtypes => this.structuralDerivedSubtypes;
+    public override IEnumerable<Composite> Subtypes => this.subtypes;
 
-    public override Class ExclusiveClass => this.structuralDerivedExclusiveClass;
+    public override Class ExclusiveClass => this.exclusiveClass;
 
     public override IEnumerable<string> WorkspaceNames => this.derivedWorkspaceNames;
 
-    public override bool ExistClass => this.structuralDerivedClasses.Count > 0;
+    public override bool ExistClass => this.subclasses.Count > 0;
 
     IEnumerable<IComposite> IComposite.Subtypes => this.Subtypes;
 
     public override bool IsAssignableFrom(IComposite objectType) =>
-        this.Equals(objectType) || this.structuralDerivedSubtypes.Contains(objectType);
+        this.Equals(objectType) || this.subtypes.Contains(objectType);
 
     internal void DeriveWorkspaceNames() =>
         this.derivedWorkspaceNames = this
@@ -45,46 +45,41 @@ public abstract class Interface : Composite, IInterface
             .Union(this.MethodTypes.SelectMany(v => v.WorkspaceNames))
             .ToArray();
 
-    internal void StructuralDeriveDirectSubtypes()
+    internal void InitializeDirectSubtypes()
     {
-        this.structuralDerivedDirectSubtypes = new HashSet<Composite>(this.MetaPopulation.Composites.Where(v => v.DirectSupertypes.Contains(this)));
+        this.directSubtypes = new HashSet<Composite>(this.MetaPopulation.Composites.Where(v => v.DirectSupertypes.Contains(this)));
     }
 
-    internal void StructuralDeriveSubclasses(HashSet<Class> subClasses)
+    internal void InitializeSubclasses(HashSet<Class> subClasses)
     {
         subClasses.Clear();
-        foreach (var subType in this.structuralDerivedSubtypes)
+        foreach (var subType in this.subtypes.OfType<IClass>())
         {
-            if (subType is IClass)
-            {
-                subClasses.Add((Class)subType);
-            }
+            subClasses.Add((Class)subType);
         }
 
-        this.structuralDerivedClasses = new HashSet<Class>(subClasses);
+        this.subclasses = new HashSet<Class>(subClasses);
     }
 
-    internal void StructuralDeriveSubtypes(HashSet<Composite> subTypes)
+    internal void InitializeSubtypes(HashSet<Composite> subTypes)
     {
         subTypes.Clear();
-        this.StructuralDeriveSubtypesRecursively(this, subTypes);
-
-        this.structuralDerivedSubtypes = new HashSet<Composite>(subTypes);
+        this.InitializeSubtypesRecursively(this, subTypes);
+        this.subtypes = new HashSet<Composite>(subTypes);
     }
 
-    internal void StructuralDeriveExclusiveSubclass() => this.structuralDerivedExclusiveClass =
-        this.structuralDerivedClasses.Count == 1 ? this.structuralDerivedClasses.First() : null;
+    internal void InitializeExclusiveSubclass() => this.exclusiveClass = this.subclasses.Count == 1 ? this.subclasses.First() : null;
 
-    internal void StructuralDeriveSubtypesRecursively(ObjectType type, HashSet<Composite> subTypes)
+    private void InitializeSubtypesRecursively(ObjectType type, HashSet<Composite> subTypes)
     {
-        foreach (var directSubtype in this.structuralDerivedDirectSubtypes)
+        foreach (var directSubtype in this.directSubtypes)
         {
             if (!Equals(directSubtype, type))
             {
                 subTypes.Add(directSubtype);
                 if (directSubtype is IInterface)
                 {
-                    ((Interface)directSubtype).StructuralDeriveSubtypesRecursively(this, subTypes);
+                    ((Interface)directSubtype).InitializeSubtypesRecursively(this, subTypes);
                 }
             }
         }

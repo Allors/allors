@@ -58,7 +58,7 @@ public class ToDatabaseVisitor
             ObjectType = this.Visit(ws.ObjectType),
             Object = this.Visit(ws.Object) ?? this.Visit(ws.ObjectId),
             Results = this.Visit(ws.Results),
-            Arguments = this.Visit(ws.Arguments)
+            Arguments = this.Visit(ws.Arguments),
         };
 
     private IExtent Visit(Request.IExtent ws) =>
@@ -69,12 +69,12 @@ public class ToDatabaseVisitor
             Intersect intersect => this.Visit(intersect),
             Union union => this.Visit(union),
             null => null,
-            _ => throw new Exception($"Unknown implementation of IExtent: {ws.GetType()}")
+            _ => throw new Exception($"Unknown implementation of IExtent: {ws.GetType()}"),
         };
 
     private Extent Visit(Filter ws) => new(this.Visit(ws.ObjectType))
     {
-        Predicate = this.Visit(ws.Predicate), Sorting = this.Visit(ws.Sorting)
+        Predicate = this.Visit(ws.Predicate), Sorting = this.Visit(ws.Sorting),
     };
 
     private IPredicate Visit(Request.IPredicate ws) =>
@@ -93,60 +93,60 @@ public class ToDatabaseVisitor
             Not not => this.Visit(not),
             Or or => this.Visit(or),
             null => null,
-            _ => throw new Exception($"Unknown implementation of IExtent: {ws.GetType()}")
+            _ => throw new Exception($"Unknown implementation of IExtent: {ws.GetType()}"),
         };
 
     private IPredicate Visit(And ws) => new Database.Data.And(ws.Operands?.Select(this.Visit).ToArray());
 
     private IPredicate Visit(Between ws) => new Database.Data.Between(this.Visit(ws.RoleType))
     {
-        Parameter = ws.Parameter, Values = ws.Values, Paths = this.Visit(ws.Paths)
+        Parameter = ws.Parameter, Values = ws.Values, Paths = this.Visit(ws.Paths),
     };
 
     private IPredicate Visit(ContainedIn ws) => new Database.Data.ContainedIn(this.Visit(ws.PropertyType))
     {
-        Parameter = ws.Parameter, Objects = this.Visit(ws.Objects), Extent = this.Visit(ws.Extent)
+        Parameter = ws.Parameter, Objects = this.Visit(ws.Objects), Extent = this.Visit(ws.Extent),
     };
 
     private IPredicate Visit(Contains ws) => new Database.Data.Contains(this.Visit(ws.PropertyType))
     {
-        Parameter = ws.Parameter, Object = this.Visit(ws.Object)
+        Parameter = ws.Parameter, Object = this.Visit(ws.Object),
     };
 
     private IPredicate Visit(Equals ws) => new Database.Data.Equals(this.Visit(ws.PropertyType))
     {
-        Parameter = ws.Parameter, Object = this.Visit(ws.Object), Value = ws.Value, Path = this.Visit(ws.Path)
+        Parameter = ws.Parameter, Object = this.Visit(ws.Object), Value = ws.Value, Path = this.Visit(ws.Path),
     };
 
-    private IPredicate Visit(Exists ws) => new Database.Data.Exists(this.Visit(ws.PropertyType)) {Parameter = ws.Parameter};
+    private IPredicate Visit(Exists ws) => new Database.Data.Exists(this.Visit(ws.PropertyType)) { Parameter = ws.Parameter };
 
     private IPredicate Visit(GreaterThan ws) => new Database.Data.GreaterThan(this.Visit(ws.RoleType))
     {
-        Parameter = ws.Parameter, Value = ws.Value, Path = this.Visit(ws.Path)
+        Parameter = ws.Parameter, Value = ws.Value, Path = this.Visit(ws.Path),
     };
 
     private IPredicate Visit(Instanceof ws) => new Database.Data.Instanceof(this.Visit(ws.PropertyType))
     {
-        Parameter = ws.Parameter, ObjectType = this.Visit(ws.ObjectType)
+        Parameter = ws.Parameter, ObjectType = this.Visit(ws.ObjectType),
     };
 
     private IPredicate Visit(LessThan ws) => new Database.Data.LessThan(this.Visit(ws.RoleType))
     {
-        Parameter = ws.Parameter, Value = ws.Value, Path = this.Visit(ws.Path)
+        Parameter = ws.Parameter, Value = ws.Value, Path = this.Visit(ws.Path),
     };
 
-    private IPredicate Visit(Like ws) => new Database.Data.Like(this.Visit(ws.RoleType)) {Parameter = ws.Parameter, Value = ws.Value};
+    private IPredicate Visit(Like ws) => new Database.Data.Like(this.Visit(ws.RoleType)) { Parameter = ws.Parameter, Value = ws.Value };
 
     private IPredicate Visit(Not ws) => new Database.Data.Not(this.Visit(ws.Operand));
 
     private IPredicate Visit(Or ws) => new Database.Data.Or(ws.Operands?.Select(this.Visit).ToArray());
 
-    private Database.Data.Except Visit(Except ws) => new(ws.Operands?.Select(this.Visit).ToArray()) {Sorting = this.Visit(ws.Sorting)};
+    private Database.Data.Except Visit(Except ws) => new(ws.Operands?.Select(this.Visit).ToArray()) { Sorting = this.Visit(ws.Sorting) };
 
     private Database.Data.Intersect Visit(Intersect ws) =>
-        new(ws.Operands?.Select(this.Visit).ToArray()) {Sorting = this.Visit(ws.Sorting)};
+        new(ws.Operands?.Select(this.Visit).ToArray()) { Sorting = this.Visit(ws.Sorting) };
 
-    private Database.Data.Union Visit(Union ws) => new(ws.Operands?.Select(this.Visit).ToArray()) {Sorting = this.Visit(ws.Sorting)};
+    private Database.Data.Union Visit(Union ws) => new(ws.Operands?.Select(this.Visit).ToArray()) { Sorting = this.Visit(ws.Sorting) };
 
     private IObject Visit(Response.IObject ws) => ws != null ? this.transaction.Instantiate(ws.Id) : null;
 
@@ -160,11 +160,11 @@ public class ToDatabaseVisitor
             SelectRef = v.SelectRef,
             Skip = v.Skip,
             Take = v.Take,
-            Include = this.Visit(v.Include)
+            Include = this.Visit(v.Include),
         }).ToArray();
 
     private Select Visit(Request.Select ws) => ws != null
-        ? new Select {Include = this.Visit(ws.Include), PropertyType = this.Visit(ws.PropertyType), Next = this.Visit(ws.Next)}
+        ? new Select { Include = this.Visit(ws.Include), PropertyType = this.Visit(ws.PropertyType), Next = this.Visit(ws.Next) }
         : null;
 
     private Node[] Visit(IEnumerable<Request.Node> ws) => ws?.Select(this.Visit).ToArray();
@@ -174,7 +174,7 @@ public class ToDatabaseVisitor
 
     private Sort[] Visit(Request.Sort[] ws) => ws?.Select(v =>
     {
-        return new Sort {RoleType = this.Visit(v.RoleType), SortDirection = v.SortDirection ?? SortDirection.Ascending};
+        return new Sort { RoleType = this.Visit(v.RoleType), SortDirection = v.SortDirection ?? SortDirection.Ascending };
     }).ToArray();
 
     private IObjectType Visit(Meta.IObjectType ws) => ws != null ? (IObjectType)this.metaPopulation.FindByTag(ws.Tag) : null;
@@ -187,7 +187,7 @@ public class ToDatabaseVisitor
             AssociationType associationType => this.Visit(associationType),
             RoleType roleType => this.Visit(roleType),
             null => null,
-            _ => throw new ArgumentException("Invalid property type")
+            _ => throw new ArgumentException("Invalid property type"),
         };
 
     private IAssociationType Visit(AssociationType ws) =>

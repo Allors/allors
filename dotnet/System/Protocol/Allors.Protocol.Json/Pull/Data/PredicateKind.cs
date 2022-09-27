@@ -29,6 +29,6 @@ namespace Allors.Protocol.Json.Data
 
         LessThan = 11,
 
-        Like = 12
+        Like = 12,
     }
 }

@@ -29,6 +29,6 @@ namespace Allors
         /// <summary>
         ///     Execute a method.
         /// </summary>
-        Execute = 8
+        Execute = 8,
     }
 }

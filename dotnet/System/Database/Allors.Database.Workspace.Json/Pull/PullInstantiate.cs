@@ -76,7 +76,7 @@ public class PullInstantiate
                                 IObject[] objects;
                                 if (stepResult is IObject obj)
                                 {
-                                    objects = new[] {obj};
+                                    objects = new[] { obj };
                                 }
                                 else if (stepResult is IEnumerable<IObject> objs)
                                 {

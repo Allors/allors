@@ -82,8 +82,7 @@ internal sealed class ChangeLog
             this.created != null ? new HashSet<IObject>(this.created.Select(v => v.GetObject())) : null,
             this.deleted,
             this.RoleTypesByAssociation().ToDictionary(kvp => kvp.Key, kvp => kvp.Value),
-            this.AssociationTypesByRole().ToDictionary(kvp => kvp.Key, kvp => kvp.Value)
-        );
+            this.AssociationTypesByRole().ToDictionary(kvp => kvp.Key, kvp => kvp.Value));
 
     private ISet<IRoleType> RoleTypes(Strategy associationId)
     {

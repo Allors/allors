@@ -41,23 +41,23 @@ public class PermissionResponseBuilder
                     i = permission.Strategy.ObjectId,
                     c = permission.Class.Tag,
                     t = permission.RelationType.Tag,
-                    o = (long)Operations.Read
+                    o = (long)Operations.Read,
                 },
                 IWritePermission permission => new PermissionResponsePermission
                 {
                     i = permission.Strategy.ObjectId,
                     c = permission.Class.Tag,
                     t = permission.RelationType.Tag,
-                    o = (long)Operations.Write
+                    o = (long)Operations.Write,
                 },
                 IExecutePermission permission => new PermissionResponsePermission
                 {
                     i = permission.Strategy.ObjectId,
                     c = permission.Class.Tag,
                     t = permission.MethodType.Tag,
-                    o = (long)Operations.Execute
+                    o = (long)Operations.Execute,
                 },
-                _ => throw new Exception()
+                _ => throw new Exception(),
             }).ToArray();
         }
 

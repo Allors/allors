@@ -1315,9 +1315,9 @@ public abstract class UnitTest : IDisposable
 
             foreach (var mark in this.Markers)
             {
-                var binary1 = new byte[] {0};
-                var binary2 = new byte[] {1, 2};
-                var binary3 = new byte[] {3, 4, 5};
+                var binary1 = new byte[] { 0 };
+                var binary2 = new byte[] { 1, 2 };
+                var binary3 = new byte[] { 3, 4, 5 };
                 {
                     var values = C1.Create(this.Transaction);
                     values.C1AllorsBinary = binary1;
@@ -1428,9 +1428,9 @@ public abstract class UnitTest : IDisposable
 
                     this.Transaction.Commit();
 
-                    values.C1AllorsBinary = new byte[] {9};
-                    values.I1AllorsBinary = new byte[] {9};
-                    values.S1AllorsBinary = new byte[] {9};
+                    values.C1AllorsBinary = new byte[] { 9 };
+                    values.I1AllorsBinary = new byte[] { 9 };
+                    values.S1AllorsBinary = new byte[] { 9 };
 
                     this.Transaction.Rollback();
 
@@ -1483,7 +1483,7 @@ public abstract class UnitTest : IDisposable
 
             if (this.Transaction is ITransaction)
             {
-                var binary1 = new byte[] {0};
+                var binary1 = new byte[] { 0 };
 
                 var c1 = C1.Create(this.Transaction);
                 var c1Id = c1.Id.ToString();

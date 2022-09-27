@@ -23,34 +23,34 @@ public class TestValues
     private static readonly TestValueGenerator Generator = new();
     public bool Boolean = true;
 
-    public bool[] Booleans = {true, false};
+    public bool[] Booleans = { true, false };
 
     public DateTime dateTime = Generator.GenerateDateTime();
 
     public DateTime[] DateTimes =
     {
         Generator.GenerateDateTime(), DateTime.UtcNow, DateTime.MinValue.ToUniversalTime().AddMilliseconds(1),
-        DateTime.MaxValue.ToUniversalTime().AddMilliseconds(-1)
+        DateTime.MaxValue.ToUniversalTime().AddMilliseconds(-1),
     };
 
     public decimal Decimal = Generator.GenerateDecimal();
 
-    public decimal[] Decimals = {0, -1, 1, Generator.GenerateDecimal(), +99999999.99m, -99999999.99m};
+    public decimal[] Decimals = { 0, -1, 1, Generator.GenerateDecimal(), +99999999.99m, -99999999.99m };
 
     public double Float = Generator.GenerateFloat();
 
     public double[] Floats =
     {
-        0, -1, 1, Generator.GenerateFloat(), double.MinValue, double.MinValue + 1, double.MaxValue, double.MaxValue - 1
+        0, -1, 1, Generator.GenerateFloat(), double.MinValue, double.MinValue + 1, double.MaxValue, double.MaxValue - 1,
     };
 
     public int Integer = Generator.GenerateInteger();
 
-    public int[] Integers = {0, -1, 1, Generator.GenerateInteger(), int.MinValue, int.MinValue + 1, int.MaxValue, int.MaxValue - 1};
+    public int[] Integers = { 0, -1, 1, Generator.GenerateInteger(), int.MinValue, int.MinValue + 1, int.MaxValue, int.MaxValue - 1 };
 
     public string String = Generator.GenerateString(100);
 
     public Guid Unique = Generator.GenerateUnique();
 
-    public Guid[] Uniques = {Guid.Empty, Generator.GenerateUnique()};
+    public Guid[] Uniques = { Guid.Empty, Generator.GenerateUnique() };
 }

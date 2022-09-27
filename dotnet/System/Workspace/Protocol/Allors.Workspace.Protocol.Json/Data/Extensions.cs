@@ -29,7 +29,7 @@ namespace Allors.Workspace.Protocol.Json
 
                 if (collection == null || collection.Length == 0)
                 {
-                    return new[] {name};
+                    return new[] { name };
                 }
 
                 var jsonCollection = new string[collection.Length + 1];
@@ -49,10 +49,10 @@ namespace Allors.Workspace.Protocol.Json
                 var name = kvp.Key;
                 var @object = kvp.Value;
 
-                return @object == null ? new[] {name} : new[] {name, @object.Id.ToString()};
+                return @object == null ? new[] { name } : new[] { name, @object.Id.ToString() };
             }).ToArray();
 
         public static string[][] ToJsonForVersionByObject(this IDictionary<IObject, long> versionByObject) =>
-            versionByObject?.Select(kvp => new[] {kvp.Key.Id.ToString(), kvp.Value.ToString()}).ToArray();
+            versionByObject?.Select(kvp => new[] { kvp.Key.Id.ToString(), kvp.Value.ToString() }).ToArray();
     }
 }

@@ -30,7 +30,7 @@ public class Profile : Adapters.Profile
     {
         get
         {
-            var markers = new List<Action> {() => { }, () => this.Transaction.Commit()};
+            var markers = new List<Action> { () => { }, () => this.Transaction.Commit() };
 
             return markers.ToArray();
         }
@@ -49,7 +49,7 @@ public class Profile : Adapters.Profile
                 ObjectFactory = new ObjectFactory(metaPopulation, typeof(C1)),
                 ConnectionString = this.ConnectionString,
                 ConnectionFactory = this.connectionFactory,
-                CacheFactory = this.cacheFactory
+                CacheFactory = this.cacheFactory,
             });
     }
 

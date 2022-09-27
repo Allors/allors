@@ -20,5 +20,5 @@ internal enum ExtentOperations
     /// <summary>
     ///     The Difference of two Extents.
     /// </summary>
-    Except
+    Except,
 }

@@ -14,7 +14,7 @@ namespace Allors.Workspace.Request
 
         public IPredicate[] Operands { get; set; }
 
-        public void AddPredicate(IPredicate predicate) => this.Operands = new List<IPredicate>(this.Operands) {predicate}.ToArray();
+        public void AddPredicate(IPredicate predicate) => this.Operands = new List<IPredicate>(this.Operands) { predicate }.ToArray();
 
         public void Accept(IVisitor visitor) => visitor.VisitAnd(this);
     }

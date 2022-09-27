@@ -64,7 +64,7 @@ namespace Allors.Workspace.Adapters.Json
             {
                 syncResponseRoles = syncResponseObject.ro,
                 GrantIds = ValueRange<long>.Load(ctx.CheckForMissingGrants(syncResponseObject.g)),
-                RevocationIds = ValueRange<long>.Load(ctx.CheckForMissingRevocations(syncResponseObject.r))
+                RevocationIds = ValueRange<long>.Load(ctx.CheckForMissingRevocations(syncResponseObject.r)),
             };
 
         public override object GetRole(RoleType roleType)

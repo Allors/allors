@@ -126,7 +126,7 @@ namespace Allors.Database.Server.Controllers
                         Typeface = font,
                         TextSize = 64.0f,
                         IsAntialias = true,
-                        Color = new SKColor(255, 255, 255, 255)
+                        Color = new SKColor(255, 255, 255, 255),
                     };
                     canvas.DrawText(overlay, 0, scaledBitmap.Height, brush);
                     canvas.Flush();

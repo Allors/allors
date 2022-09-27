@@ -27,7 +27,7 @@ public class Initialization
     {
         get
         {
-            var builder = new SqlConnectionStringBuilder(this.database.ConnectionString) {Pooling = false};
+            var builder = new SqlConnectionStringBuilder(this.database.ConnectionString) { Pooling = false };
             return builder.ConnectionString;
         }
     }

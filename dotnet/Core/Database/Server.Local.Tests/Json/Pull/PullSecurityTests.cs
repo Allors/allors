@@ -172,7 +172,7 @@ namespace Tests
             {
                 l = new[]
                 {
-                    pull.ToJson(this.UnitConvert)
+                    pull.ToJson(this.UnitConvert),
                 },
             };
 
@@ -216,7 +216,7 @@ namespace Tests
             {
                 l = new[]
                 {
-                    pull.ToJson(this.UnitConvert)
+                    pull.ToJson(this.UnitConvert),
                 },
             };
 
@@ -255,7 +255,7 @@ namespace Tests
             {
                 l = new[]
                       {
-                          pull.ToJson(this.UnitConvert)
+                          pull.ToJson(this.UnitConvert),
                       },
             };
 

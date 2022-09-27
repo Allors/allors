@@ -160,7 +160,7 @@ public class PushResponseBuilder
 
         if (!pushResponse.HasErrors)
         {
-            pushResponse.n = objectByNewId?.Select(kvp => new PushResponseNewObject {d = kvp.Value?.Id ?? 0, w = kvp.Key}).ToArray();
+            pushResponse.n = objectByNewId?.Select(kvp => new PushResponseNewObject { d = kvp.Value?.Id ?? 0, w = kvp.Key }).ToArray();
 
             this.transaction.Commit();
         }

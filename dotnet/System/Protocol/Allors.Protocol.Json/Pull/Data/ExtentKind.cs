@@ -13,6 +13,6 @@ namespace Allors.Protocol.Json.Data
 
         Intersect = 3,
 
-        Except = 4
+        Except = 4,
     }
 }

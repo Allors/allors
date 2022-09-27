@@ -47,7 +47,7 @@ namespace Allors.Workspace.Adapters
             var @class = @object.Class;
             if (!this.objectsByClass.TryGetValue(@class, out var strategies))
             {
-                this.objectsByClass[@class] = new HashSet<Object> {@object};
+                this.objectsByClass[@class] = new HashSet<Object> { @object };
             }
             else
             {

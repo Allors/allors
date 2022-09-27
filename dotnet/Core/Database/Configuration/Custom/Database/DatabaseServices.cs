@@ -86,7 +86,7 @@ namespace Allors.Database.Configuration
                 { } type when type == typeof(ICaches) => (T)(this.caches ??= new Caches()),
                 { } type when type == typeof(IPasswordHasher) => (T)(this.passwordHasher ??= this.CreatePasswordHasher()),
                 { } type when type == typeof(IWorkspaceMask) => (T)(this.workspaceMask ??= new WorkspaceMask(this.M)),
-                _ => throw new NotSupportedException($"Service {typeof(T)} not supported")
+                _ => throw new NotSupportedException($"Service {typeof(T)} not supported"),
             };
 
         protected abstract IPasswordHasher CreatePasswordHasher();

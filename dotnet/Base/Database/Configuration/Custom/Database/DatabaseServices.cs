@@ -99,7 +99,7 @@ namespace Allors.Database.Configuration
                 { } type when type == typeof(IMailer) => (T)(this.mailer ??= new MailKitMailer()),
                 { } type when type == typeof(IBarcodeGenerator) => (T)(this.barcodeGenerator ??= new ZXingBarcodeGenerator()),
                 { } type when type == typeof(ITemplateObjectCache) => (T)(this.templateObjectCache ??= new TemplateObjectCache()),
-                _ => throw new NotSupportedException($"Service {typeof(T)} not supported")
+                _ => throw new NotSupportedException($"Service {typeof(T)} not supported"),
             };
 
         protected abstract IPasswordHasher CreatePasswordHasher();

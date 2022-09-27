@@ -20,5 +20,5 @@ public enum ExtentOperationType
     /// <summary>
     ///     The except operation.
     /// </summary>
-    Except
+    Except,
 }

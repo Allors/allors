@@ -19,7 +19,7 @@ internal class Program
         var metaPopulation = MetaBuilder.Build();
         var model = new MetaModel(metaPopulation);
 
-        string[,] config = {{"Templates/adapters.cs.stg", "Domain/Generated"}};
+        string[,] config = { { "Templates/adapters.cs.stg", "Domain/Generated" } };
 
         for (var i = 0; i < config.GetLength(0); i++)
         {

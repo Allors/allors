@@ -70,7 +70,7 @@ public static class SelectExtension
                 null => null,
                 IObject currentObject => @this.Match(currentObject) ? currentObject : null,
                 IEnumerable<IObject> enumerable => enumerable.Where(@this.Match).ToArray(),
-                var unit => unit
+                var unit => unit,
             };
         }
 

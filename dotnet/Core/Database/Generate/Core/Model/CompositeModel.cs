@@ -51,7 +51,7 @@ public abstract class CompositeModel : ObjectTypeModel
             .Supertypes
             .Union(this.RoleTypes.Where(m => m.ObjectType.IsComposite).Select(v => v.ObjectType))
             .Union(this.AssociationTypes.Select(v => v.ObjectType)).Distinct()
-            .Except(new[] {this})
+            .Except(new[] { this })
             .Cast<CompositeModel>();
 
     public IEnumerable<AssociationTypeModel> AssociationTypes => this.Composite.AssociationTypes.Select(this.MetaModel.Map);

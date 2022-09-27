@@ -79,7 +79,7 @@ public class MethodCompiler
                         var p = Expression.Parameter(typeof(object));
                         var castP = Expression.Convert(p, methodInfo.GetParameters()[1].ParameterType);
 
-                        Expression call = Expression.Call(methodInfo, new Expression[] {castO, castP});
+                        Expression call = Expression.Call(methodInfo, new Expression[] { castO, castP });
 
                         action = Expression.Lambda<Action<object, object>>(call, o, p).Compile();
                         actionByMethodInfo[methodInfo] = action;

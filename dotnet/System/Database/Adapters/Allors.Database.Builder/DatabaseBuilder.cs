@@ -45,7 +45,7 @@ public class DatabaseBuilder
                     ObjectFactory = this.objectFactory,
                     ConnectionString = connectionString,
                     IsolationLevel = this.isolationLevel,
-                    CommandTimeout = this.commandTimeout
+                    CommandTimeout = this.commandTimeout,
                 }),
             "SQLCLIENT" => new Sql.SqlClient.Database(this.scope,
                 new Sql.Configuration
@@ -53,9 +53,9 @@ public class DatabaseBuilder
                     ObjectFactory = this.objectFactory,
                     ConnectionString = connectionString,
                     IsolationLevel = this.isolationLevel,
-                    CommandTimeout = this.commandTimeout
+                    CommandTimeout = this.commandTimeout,
                 }),
-            _ => throw new ArgumentOutOfRangeException(adapter)
+            _ => throw new ArgumentOutOfRangeException(adapter),
         };
     }
 }

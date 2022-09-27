@@ -7,7 +7,7 @@ using System.Linq;
 public class Record : DataType, IRecord
 {
     private string[] derivedWorkspaceNames;
-    private FieldType[] derivedFieldTypes;
+    private FieldType[] fieldTypes;
 
     public Record(MetaPopulation metaPopulation, Guid id, string name)
         : base(metaPopulation, id)
@@ -21,7 +21,7 @@ public class Record : DataType, IRecord
 
     public FieldType[] FieldTypes
     {
-        get => this.derivedFieldTypes;
+        get => this.fieldTypes;
     }
 
     public override string Name { get; }
@@ -60,9 +60,9 @@ public class Record : DataType, IRecord
         }
     }
 
-    internal void StructuralDeriveFieldTypes(Dictionary<Record, FieldType[]> fieldTypesByRecord)
+    internal void InitializeFieldTypes(Dictionary<Record, FieldType[]> fieldTypesByRecord)
     {
-        this.derivedFieldTypes = fieldTypesByRecord.TryGetValue(this, out var fieldTypes) ?
+        this.fieldTypes = fieldTypesByRecord.TryGetValue(this, out var fieldTypes) ?
             fieldTypes :
             Array.Empty<FieldType>();
     }

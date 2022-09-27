@@ -28,7 +28,7 @@ public abstract class RangeUnionTests
         var y = Range.Load();
         var z = x.Union(y);
 
-        Assert.Equal(new long[] {1}, z);
+        Assert.Equal(new long[] { 1 }, z);
     }
 
     [Fact]
@@ -38,7 +38,7 @@ public abstract class RangeUnionTests
         var y = Range.Load();
         var z = x.Union(y);
 
-        Assert.Equal(new long[] {1, 2}, z);
+        Assert.Equal(new long[] { 1, 2 }, z);
     }
 
     [Fact]
@@ -48,7 +48,7 @@ public abstract class RangeUnionTests
         var y = Range.Load(1);
         var z = x.Union(y);
 
-        Assert.Equal(new long[] {1}, z);
+        Assert.Equal(new long[] { 1 }, z);
     }
 
     [Fact]
@@ -69,7 +69,7 @@ public abstract class RangeUnionTests
         var y = Range.Load(3, 4);
         var z = x.Union(y);
 
-        Assert.Equal(new long[] {1, 2, 3, 4}, z);
+        Assert.Equal(new long[] { 1, 2, 3, 4 }, z);
     }
 
     [Fact]
@@ -79,7 +79,7 @@ public abstract class RangeUnionTests
         var y = Range.Load(3, 4);
         var z = x.Union(y);
 
-        Assert.Equal(new long[] {3, 4, 5, 6}, z);
+        Assert.Equal(new long[] { 3, 4, 5, 6 }, z);
     }
 
 
@@ -90,7 +90,7 @@ public abstract class RangeUnionTests
         var y = Range.Load(3, 4);
         var z = x.Union(y);
 
-        Assert.Equal(new long[] {2, 3, 4, 5}, z);
+        Assert.Equal(new long[] { 2, 3, 4, 5 }, z);
     }
 
     [Fact]
@@ -100,7 +100,7 @@ public abstract class RangeUnionTests
         var y = Range.Load(3, 5);
         var z = x.Union(y);
 
-        Assert.Equal(new long[] {2, 3, 4, 5}, z);
+        Assert.Equal(new long[] { 2, 3, 4, 5 }, z);
     }
 
     [Fact]
@@ -110,6 +110,6 @@ public abstract class RangeUnionTests
         var y = Range.Load(2, 4);
         var z = x.Union(y);
 
-        Assert.Equal(new long[] {2, 3, 4, 5}, z);
+        Assert.Equal(new long[] { 2, 3, 4, 5 }, z);
     }
 }

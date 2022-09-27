@@ -71,7 +71,7 @@ public abstract class RoleType : IRoleType, IComparable
         {
             Multiplicity.OneToMany => true,
             Multiplicity.ManyToMany => true,
-            _ => false
+            _ => false,
         };
 
     /// <summary>

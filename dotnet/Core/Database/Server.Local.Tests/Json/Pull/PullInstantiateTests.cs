@@ -57,7 +57,7 @@ namespace Tests
             var pull = new Pull
             {
                 Object = c1b,
-                Results = new[] { new Result { Include = new[] { new Node(this.M.C1.C1C2One2One) } }, }
+                Results = new[] { new Result { Include = new[] { new Node(this.M.C1.C1C2One2One) } }, },
             };
 
             var pullRequest = new PullRequest { l = new[] { pull.ToJson(this.UnitConvert) }, };
@@ -86,7 +86,7 @@ namespace Tests
             var pull = new Pull
             {
                 Object = c2b,
-                Results = new[] { new Result { Include = new[] { new Node(this.M.C2.C1WhereC1C2One2One) } }, }
+                Results = new[] { new Result { Include = new[] { new Node(this.M.C2.C1WhereC1C2One2One) } }, },
             };
 
             var pullRequest = new PullRequest { l = new[] { pull.ToJson(this.UnitConvert) }, };
@@ -122,10 +122,10 @@ namespace Tests
                         Select = new Select
                         {
                             PropertyType = this.M.C1.C1C2One2One,
-                            Include = new[] { new Node(this.M.C2.C2C2One2One) }
-                        }
+                            Include = new[] { new Node(this.M.C2.C2C2One2One) },
+                        },
                     },
-                }
+                },
             };
 
             var pullRequest = new PullRequest { l = new[] { pull.ToJson(this.UnitConvert) }, };
@@ -161,10 +161,10 @@ namespace Tests
                         Select = new Select
                         {
                             PropertyType = this.M.C2.C1WhereC1C2One2One,
-                            Include = new[] { new Node(this.M.C1.C1WhereC1C1One2One) }
-                        }
+                            Include = new[] { new Node(this.M.C1.C1WhereC1C1One2One) },
+                        },
                     },
-                }
+                },
             };
 
             var pullRequest = new PullRequest { l = new[] { pull.ToJson(this.UnitConvert) }, };
@@ -201,10 +201,10 @@ namespace Tests
                         Select = new Select
                         {
                             PropertyType = this.M.C1.C1I12Many2Manies,
-                            OfType = this.M.C1
-                        }
-                    }
-                }
+                            OfType = this.M.C1,
+                        },
+                    },
+                },
             };
 
             var pullRequest = new PullRequest { l = new[] { pull.ToJson(this.UnitConvert) }, };

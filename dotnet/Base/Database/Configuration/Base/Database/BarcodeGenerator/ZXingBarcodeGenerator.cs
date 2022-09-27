@@ -39,7 +39,7 @@ namespace Allors.Database.Configuration
                 BarcodeType.MSI => BarcodeFormat.MSI,
                 BarcodeType.PLESSEY => BarcodeFormat.PLESSEY,
                 BarcodeType.IMB => BarcodeFormat.IMB,
-                _ => throw new ArgumentException()
+                _ => throw new ArgumentException(),
             };
 
             var barcodeWriter = new BarcodeWriter

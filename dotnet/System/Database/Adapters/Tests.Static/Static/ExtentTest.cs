@@ -18,12 +18,12 @@ public enum Zero2Four
     One = 1,
     Two = 2,
     Three = 3,
-    Four = 4
+    Four = 4,
 }
 
 public abstract class ExtentTest : IDisposable
 {
-    protected static readonly bool[] TrueFalse = {true, false};
+    protected static readonly bool[] TrueFalse = { true, false };
 
     protected abstract IProfile Profile { get; }
 
@@ -33,7 +33,7 @@ public abstract class ExtentTest : IDisposable
 
     protected Action[] Inits => this.Profile.Inits;
 
-    protected virtual bool[] UseOperator => new[] {false, true};
+    protected virtual bool[] UseOperator => new[] { false, true };
 
     public abstract void Dispose();
 

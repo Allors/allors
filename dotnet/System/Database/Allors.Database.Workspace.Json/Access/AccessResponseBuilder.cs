@@ -38,7 +38,7 @@ public class AccessResponseBuilder
             accessResponse.g = versionedGrants
                 .Select(v =>
                 {
-                    var response = new AccessResponseGrant {i = v.Id, v = v.Version, p = v.PermissionRange.Save()};
+                    var response = new AccessResponseGrant { i = v.Id, v = v.Version, p = v.PermissionRange.Save() };
 
                     return response;
                 }).ToArray();
@@ -53,7 +53,7 @@ public class AccessResponseBuilder
             accessResponse.r = versionedRevocations
                 .Select(v =>
                 {
-                    var response = new AccessResponseRevocation {i = v.Id, v = v.Version, p = v.PermissionRange.Save()};
+                    var response = new AccessResponseRevocation { i = v.Id, v = v.Version, p = v.PermissionRange.Save() };
 
                     return response;
                 }).ToArray();

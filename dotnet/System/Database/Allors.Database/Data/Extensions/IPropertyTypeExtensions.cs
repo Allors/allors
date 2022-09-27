@@ -15,7 +15,7 @@ public static class IPropertyTypeExtensions
 {
     public static Node Node<T>(this T @this) where T : IPropertyType => new(@this);
 
-    public static Node Node<T>(this T @this, Func<T, Node> child) where T : IPropertyType => new(@this, new[] {child(@this)});
+    public static Node Node<T>(this T @this, Func<T, Node> child) where T : IPropertyType => new(@this, new[] { child(@this) });
 
     public static Node Node<T>(this T @this, params Func<T, Node>[] children) where T : IPropertyType =>
         new(@this, children.Select(v => v(@this)));

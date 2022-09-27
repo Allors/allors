@@ -35,7 +35,7 @@ public class SchemaTableColumn
             "int4" => "integer",
             "numeric" => "numeric(" + this.NumericPrecision + "," + this.NumericScale + ")",
             "timestamp without time zone" => "timestamp",
-            _ => this.DataType
+            _ => this.DataType,
         };
 
     public int? CharacterMaximumLength { get; }

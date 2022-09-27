@@ -42,7 +42,7 @@ namespace Allors.Server.Controllers
                 var organization = new Organizations(this.Transaction).FindBy(m.Organization.Owner, this.Transaction.Services.Get<User>());
                 response.AddObject("root", organization,
                     new[] {
-                                new Node(m.Organization.Shareholders)
+                                new Node(m.Organization.Shareholders),
                                 });
                 return this.Ok(response.Build());
             }

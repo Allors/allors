@@ -18,7 +18,7 @@ internal static class TransactionExtensions
             string idAsString when Guid.TryParse(idAsString, out var idFromString) => @this.Database.MetaPopulation.FindById(idFromString),
             Guid idAsGuid => @this.Database.MetaPopulation.FindById(idAsGuid),
             string tag => @this.Database.MetaPopulation.FindByTag(tag),
-            _ => throw new ArgumentException()
+            _ => throw new ArgumentException(),
         };
 
     internal static IObject GetObject(this ITransaction @this, object value) =>
@@ -28,7 +28,7 @@ internal static class TransactionExtensions
             long idAsLong => @this.Instantiate(idAsLong),
             string idAsString => @this.Instantiate(idAsString),
             null => null,
-            _ => throw new ArgumentException()
+            _ => throw new ArgumentException(),
         };
 
     internal static IObject[] GetObjects(this ITransaction @this, object value)
@@ -52,11 +52,11 @@ internal static class TransactionExtensions
                         return idAsStrings.Select(@this.Instantiate).Where(v => v != null).ToArray();
 
                     case IObject @object:
-                        return new[] {@object};
+                        return new[] { @object };
 
                     case long idAsLong:
                         var objectFromLong = @this.Instantiate(idAsLong);
-                        return objectFromLong != null ? new[] {objectFromLong} : Array.Empty<IObject>();
+                        return objectFromLong != null ? new[] { objectFromLong } : Array.Empty<IObject>();
 
                     default:
                         throw new ArgumentException();

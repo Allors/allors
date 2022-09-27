@@ -12,13 +12,11 @@ using System.Linq;
 
 public abstract class Composite : ObjectType, IComposite
 {
-    private HashSet<AssociationType> structuralDerivedAssociationTypes;
+    private HashSet<AssociationType> associationTypes;
 
-    private HashSet<Interface> structuralDerivedDirectSupertypes;
-
-    private HashSet<MethodType> structuralDerivedMethodTypes;
-    private HashSet<RoleType> structuralDerivedRoleTypes;
-    private HashSet<Interface> structuralDerivedSupertypes;
+    private HashSet<MethodType> methodTypes;
+    private HashSet<RoleType> roleTypes;
+    private HashSet<Interface> supertypes;
 
     protected Composite(MetaPopulation metaPopulation, Guid id, Interface[] directSupertypes, string singularName, string assignedPluralName)
         : base(metaPopulation, id, singularName, assignedPluralName)
@@ -34,23 +32,22 @@ public abstract class Composite : ObjectType, IComposite
 
     public Interface[] DirectSupertypes { get; }
 
-    public IEnumerable<Interface> Supertypes => this.structuralDerivedSupertypes;
+    public IEnumerable<Interface> Supertypes => this.supertypes;
 
-    public IEnumerable<AssociationType> AssociationTypes => this.structuralDerivedAssociationTypes;
+    public IEnumerable<AssociationType> AssociationTypes => this.associationTypes;
 
-    public IEnumerable<AssociationType> ExclusiveAssociationTypes =>
-        this.AssociationTypes.Where(associationType => this.Equals(associationType.RoleType.ObjectType)).ToArray();
+    public IEnumerable<AssociationType> ExclusiveAssociationTypes => this.AssociationTypes.Where(associationType => this.Equals(associationType.RoleType.ObjectType)).ToArray();
 
     public IEnumerable<AssociationType> ExclusiveDatabaseAssociationTypes => this.ExclusiveAssociationTypes.ToArray();
 
     public IEnumerable<AssociationType> InheritedAssociationTypes => this.AssociationTypes.Except(this.ExclusiveAssociationTypes);
 
-    public IEnumerable<RoleType> RoleTypes => this.structuralDerivedRoleTypes;
+    public IEnumerable<RoleType> RoleTypes => this.roleTypes;
 
     public IEnumerable<RoleType> ExclusiveRoleTypes =>
         this.RoleTypes.Where(roleType => this.Equals(roleType.AssociationType.ObjectType)).ToArray();
 
-    public IEnumerable<MethodType> MethodTypes => this.structuralDerivedMethodTypes;
+    public IEnumerable<MethodType> MethodTypes => this.methodTypes;
 
     public IEnumerable<MethodType> ExclusiveMethodTypes =>
         this.MethodTypes.Where(methodType => this.Equals(methodType.ObjectType)).ToArray();
@@ -91,25 +88,22 @@ public abstract class Composite : ObjectType, IComposite
 
     IEnumerable<IClass> IComposite.Classes => this.Classes;
 
-    public bool ExistSupertype(IInterface @interface) => this.structuralDerivedSupertypes.Contains(@interface);
+    public bool ExistSupertype(IInterface @interface) => this.supertypes.Contains(@interface);
 
-    public bool ExistAssociationType(IAssociationType associationType) => this.structuralDerivedAssociationTypes.Contains(associationType);
+    public bool ExistAssociationType(IAssociationType associationType) => this.associationTypes.Contains(associationType);
 
-    public bool ExistRoleType(IRoleType roleType) => this.structuralDerivedRoleTypes.Contains(roleType);
+    public bool ExistRoleType(IRoleType roleType) => this.roleTypes.Contains(roleType);
 
     public abstract bool IsAssignableFrom(IComposite objectType);
 
-    internal void StructuralDeriveSupertypes(HashSet<Interface> superTypes)
+    internal void InitializeSupertypes(HashSet<Interface> superTypes)
     {
         superTypes.Clear();
-
-        this.StructuralDeriveSupertypesRecursively(this, superTypes);
-
-        this.structuralDerivedSupertypes = new HashSet<Interface>(superTypes);
+        this.InitializeSupertypesRecursively(this, superTypes);
+        this.supertypes = new HashSet<Interface>(superTypes);
     }
 
-    internal void StructuralDeriveRoleTypes(HashSet<RoleType> roleTypes,
-        Dictionary<Composite, HashSet<RoleType>> roleTypesByAssociationObjectType)
+    internal void InitializeRoleTypes(HashSet<RoleType> roleTypes, Dictionary<Composite, HashSet<RoleType>> roleTypesByAssociationObjectType)
     {
         roleTypes.Clear();
 
@@ -126,11 +120,10 @@ public abstract class Composite : ObjectType, IComposite
             }
         }
 
-        this.structuralDerivedRoleTypes = new HashSet<RoleType>(roleTypes);
+        this.roleTypes = new HashSet<RoleType>(roleTypes);
     }
 
-    internal void StructuralDeriveAssociationTypes(HashSet<AssociationType> associationTypes,
-        Dictionary<ObjectType, HashSet<AssociationType>> relationTypesByRoleObjectType)
+    internal void InitializeAssociationTypes(HashSet<AssociationType> associationTypes, Dictionary<ObjectType, HashSet<AssociationType>> relationTypesByRoleObjectType)
     {
         associationTypes.Clear();
 
@@ -147,10 +140,10 @@ public abstract class Composite : ObjectType, IComposite
             }
         }
 
-        this.structuralDerivedAssociationTypes = new HashSet<AssociationType>(associationTypes);
+        this.associationTypes = new HashSet<AssociationType>(associationTypes);
     }
 
-    internal void StructuralDeriveMethodTypes(HashSet<MethodType> methodTypes, Dictionary<Composite, HashSet<MethodType>> methodTypeByClass)
+    internal void InitializeMethodTypes(HashSet<MethodType> methodTypes, Dictionary<Composite, HashSet<MethodType>> methodTypeByClass)
     {
         methodTypes.Clear();
 
@@ -167,17 +160,17 @@ public abstract class Composite : ObjectType, IComposite
             }
         }
 
-        this.structuralDerivedMethodTypes = new HashSet<MethodType>(methodTypes);
+        this.methodTypes = new HashSet<MethodType>(methodTypes);
     }
 
-    internal void StructuralDeriveSupertypesRecursively(ObjectType type, HashSet<Interface> superTypes)
+    private void InitializeSupertypesRecursively(ObjectType type, HashSet<Interface> superTypes)
     {
         foreach (var directSupertype in this.DirectSupertypes)
         {
             if (!Equals(directSupertype, type))
             {
                 superTypes.Add(directSupertype);
-                directSupertype.StructuralDeriveSupertypesRecursively(type, superTypes);
+                directSupertype.InitializeSupertypesRecursively(type, superTypes);
             }
         }
     }

@@ -42,7 +42,7 @@ namespace Allors.Database.Configuration
                 { } type when type == typeof(IUserService) => (T)(IUserService)this.userService,
                 { } type when type == typeof(IDatabaseAclsService) => (T)(this.databaseAclsService ??= new DatabaseAclsService(this.userService.User, this.DatabaseServices.Get<ISecurity>())),
                 { } type when type == typeof(IWorkspaceAclsService) => (T)(this.workspaceAclsService ??= new WorkspaceAclsService(this.DatabaseServices.Get<ISecurity>(), this.DatabaseServices.Get<IWorkspaceMask>(), this.userService.User)),
-                _ => throw new NotSupportedException($"Service {typeof(T)} not supported")
+                _ => throw new NotSupportedException($"Service {typeof(T)} not supported"),
             };
 
         public void Dispose()

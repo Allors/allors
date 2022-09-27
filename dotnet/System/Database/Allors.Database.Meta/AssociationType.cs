@@ -56,7 +56,7 @@ public abstract class AssociationType : IAssociationType, IComparable
         {
             Multiplicity.ManyToOne => true,
             Multiplicity.ManyToMany => true,
-            _ => false
+            _ => false,
         };
 
     IRoleType IAssociationType.RoleType => this.RoleType;

@@ -43,7 +43,7 @@ namespace Allors.Database.Configuration.Derivations.Default
                         IAssociationPattern { ObjectType: null } associationPattern => associationPattern.AssociationType.RoleType.ObjectType.IsComposite ? ((Composite)associationPattern.AssociationType.RoleType.ObjectType).Classes.ToArray() : Array.Empty<IClass>(),
                         IAssociationPattern { ObjectType: { } } associationPattern => associationPattern.ObjectType.Classes.ToArray(),
 
-                        _ => Array.Empty<IClass>()
+                        _ => Array.Empty<IClass>(),
                     };
 
                     ruleClasses.UnionWith(patternClasses);

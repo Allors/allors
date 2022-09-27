@@ -92,23 +92,18 @@ public sealed class Domain : MetaIdentifiableObject, IDomain
         }
     }
 
-    internal void DeriveWorkspaceNames()
-    {
-        // TODO:
-    }
-
-    internal void StructuralDeriveSuperdomains(HashSet<Domain> sharedDomains)
+    internal void InitializeSuperdomains(HashSet<Domain> sharedDomains)
     {
         sharedDomains.Clear();
         foreach (var directSuperdomain in this.DirectSuperdomains)
         {
-            directSuperdomain.StructuralDeriveSuperdomains(this, sharedDomains);
+            directSuperdomain.InitializeSuperdomains(this, sharedDomains);
         }
 
         this.Superdomains = sharedDomains.ToArray();
     }
 
-    private void StructuralDeriveSuperdomains(Domain subdomain, HashSet<Domain> superdomains)
+    private void InitializeSuperdomains(Domain subdomain, HashSet<Domain> superdomains)
     {
         if (this.Equals(subdomain))
         {
@@ -122,7 +117,7 @@ public sealed class Domain : MetaIdentifiableObject, IDomain
         {
             if (!superdomains.Contains(directSuperdomain))
             {
-                directSuperdomain.StructuralDeriveSuperdomains(subdomain, superdomains);
+                directSuperdomain.InitializeSuperdomains(subdomain, superdomains);
             }
         }
     }

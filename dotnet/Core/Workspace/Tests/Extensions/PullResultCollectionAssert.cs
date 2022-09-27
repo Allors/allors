@@ -1,4 +1,4 @@
-namespace Tests.Workspace
+﻿namespace Tests.Workspace
 {
     using System.Linq;
     using Allors.Workspace.Meta;
@@ -20,7 +20,8 @@ namespace Tests.Workspace
                 var roleType = v.Class.RoleTypes.First(v => v.SingularName == "Name");
                 return v.GetUnitRole(roleType);
             });
-            Assert.Equal(expected, actual);
+
+            Assert.Equal(expected.OrderBy(v => v), actual.OrderBy(v => v));
         }
     }
 }

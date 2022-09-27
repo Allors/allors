@@ -88,7 +88,7 @@ namespace Allors.Database.Configuration.Derivations.Default
                 {
                     ChangeSet = changeSet,
                     Transaction = this.Transaction,
-                    Validation = this.Validation
+                    Validation = this.Validation,
                 };
 
 

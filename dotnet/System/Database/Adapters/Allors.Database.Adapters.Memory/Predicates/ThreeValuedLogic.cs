@@ -20,5 +20,5 @@ internal enum ThreeValuedLogic
     /// <summary>
     ///     unknown  boolean value
     /// </summary>
-    Unknown
+    Unknown,
 }

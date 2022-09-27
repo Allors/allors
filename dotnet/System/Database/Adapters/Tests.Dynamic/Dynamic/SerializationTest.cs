@@ -35,7 +35,7 @@ public abstract class SerializationTest : Test
     [Trait("Category", "Dynamic")]
     public void SaveAndLoad()
     {
-        int[] stringLengths = {0, 1, 10};
+        int[] stringLengths = { 0, 1, 10 };
 
         foreach (var stringLength in stringLengths)
         {

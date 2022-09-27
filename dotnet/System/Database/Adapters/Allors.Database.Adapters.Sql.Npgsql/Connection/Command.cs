@@ -133,7 +133,7 @@ public class Command : ICommand
             UnitTags.DateTime => reader.GetDateTime(i),
             UnitTags.Unique => reader.GetGuid(i),
             UnitTags.Binary => reader.GetValue(i),
-            _ => throw new ArgumentException("Unknown Unit Tag: " + tag)
+            _ => throw new ArgumentException("Unknown Unit Tag: " + tag),
         };
 
     public IReader ExecuteReader() => new Reader(this.command.ExecuteReader());

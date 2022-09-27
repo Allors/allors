@@ -17,7 +17,6 @@ public abstract class Class : Composite, IClass
 
     private ConcurrentDictionary<IMethodType, Action<object, object>[]> actionsByMethodType;
     private IRoleType[] derivedRequiredRoleTypes;
-    private string[] derivedWorkspaceNames;
 
     protected Class(MetaPopulation metaPopulation, Guid id, Interface[] directSupertypes, string singularName, string assignedPluralName)
         : base(metaPopulation, id, directSupertypes, singularName, assignedPluralName)
@@ -26,7 +25,7 @@ public abstract class Class : Composite, IClass
         metaPopulation.OnCreated(this);
     }
 
-    public string[] AssignedWorkspaceNames { get; set; }
+    public string[] AssignedWorkspaceNames { get; set; } = Array.Empty<string>();
 
     public override IEnumerable<Class> Classes => this.classes;
 
@@ -44,13 +43,7 @@ public abstract class Class : Composite, IClass
         }
     }
 
-    public override IEnumerable<string> WorkspaceNames
-    {
-        get
-        {
-            return this.derivedWorkspaceNames;
-        }
-    }
+    public override IEnumerable<string> WorkspaceNames => this.AssignedWorkspaceNames;
 
     public override bool ExistClass => true;
 
@@ -66,12 +59,6 @@ public abstract class Class : Composite, IClass
         }
 
         return actions;
-    }
-
-    internal void DeriveWorkspaceNames(HashSet<string> workspaceNames)
-    {
-        this.derivedWorkspaceNames = this.AssignedWorkspaceNames ?? Array.Empty<string>();
-        workspaceNames.UnionWith(this.derivedWorkspaceNames);
     }
 
     internal void DeriveRequiredRoleTypes() =>

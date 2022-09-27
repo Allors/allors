@@ -280,7 +280,7 @@ where c = '{@class.Id}'";
                                     {
                                         UnitTags.String => string.Empty,
                                         UnitTags.Binary => Array.Empty<byte>(),
-                                        _ => unit
+                                        _ => unit,
                                     };
                                 }
                                 else

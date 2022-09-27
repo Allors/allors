@@ -49,5 +49,5 @@ public enum ValidationKind
     /// <summary>
     ///     Should not have a cycle.
     /// </summary>
-    Cyclic
+    Cyclic,
 }

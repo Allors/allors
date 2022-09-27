@@ -25,7 +25,7 @@ public class RangeLoadTests
     {
         var x = Range.Load(1L);
 
-        Assert.Equal(new[] {1L}, x);
+        Assert.Equal(new[] { 1L }, x);
     }
 
     [Fact]
@@ -33,7 +33,7 @@ public class RangeLoadTests
     {
         var x = Range.Load(1L, 2L);
 
-        Assert.Equal(new[] {1L, 2L}, x);
+        Assert.Equal(new[] { 1L, 2L }, x);
     }
 
     [Fact]

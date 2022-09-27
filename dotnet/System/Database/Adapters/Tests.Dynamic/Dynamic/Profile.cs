@@ -52,7 +52,7 @@ public abstract class Profile : IDisposable
     }
 
     public IDatabase CreateMemoryDatabase() =>
-        new Database(new DefaultDomainDatabaseServices(), new Memory.Configuration {ObjectFactory = new ObjectFactory(this.M, typeof(C1))});
+        new Database(new DefaultDomainDatabaseServices(), new Memory.Configuration { ObjectFactory = new ObjectFactory(this.M, typeof(C1)) });
 
     public ITransaction CreateTransaction() => this.GetDatabase().CreateTransaction();
 

@@ -19,7 +19,7 @@ namespace Allors.Workspace.Adapters.Json.SystemText
     public class Client
     {
         public Client(Func<HttpClient> httpClientFactory) => this.HttpClient = httpClientFactory();
-        public int[] SecondsBeforeRetry { get; set; } = {1, 2, 4, 8, 16};
+        public int[] SecondsBeforeRetry { get; set; } = { 1, 2, 4, 8, 16 };
 
         public HttpClient HttpClient { get; private set; }
 
@@ -31,7 +31,7 @@ namespace Allors.Workspace.Adapters.Json.SystemText
 
         public async Task<bool> Login(Uri url, string username, string password)
         {
-            var request = new AuthenticationTokenRequest {l = username, p = password};
+            var request = new AuthenticationTokenRequest { l = username, p = password };
             using var response = await this.PostAsJsonAsync(url, request);
             response.EnsureSuccessStatusCode();
             var authResult = await this.ReadAsAsync<AuthenticationTokenResponse>(response);

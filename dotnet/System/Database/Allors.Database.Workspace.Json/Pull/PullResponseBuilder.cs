@@ -227,16 +227,16 @@ public class PullResponseBuilder
                     v = v.Strategy.ObjectVersion,
                     g = ValueRange<long>.Import(grants.Select(w => w.Id)).Save(),
                     r = ValueRange<long>.Import(revocations.Select(w => w.Id))
-                        .Save()
+                        .Save(),
                 };
             }).ToArray(),
             o = this.objectByName.ToDictionary(kvp => kvp.Key, kvp => kvp.Value.Id),
             c = this.collectionsByName.ToDictionary(kvp => kvp.Key, kvp => kvp.Value.Select(obj => obj.Id).ToArray()),
-            v = this.valueByName
+            v = this.valueByName,
         };
 
-        pullResponse.g = versionByGrant.Count > 0 ? versionByGrant.Select(v => new[] {v.Key, v.Value}).ToArray() : null;
-        pullResponse.r = versionByRevocation.Count > 0 ? versionByRevocation.Select(v => new[] {v.Key, v.Value}).ToArray() : null;
+        pullResponse.g = versionByGrant.Count > 0 ? versionByGrant.Select(v => new[] { v.Key, v.Value }).ToArray() : null;
+        pullResponse.r = versionByRevocation.Count > 0 ? versionByRevocation.Select(v => new[] { v.Key, v.Value }).ToArray() : null;
 
         return pullResponse;
     }

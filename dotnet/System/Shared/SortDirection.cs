@@ -18,6 +18,6 @@ namespace Allors
         /// <summary>
         ///     Sort in descending order (large to small)
         /// </summary>
-        Descending = 2
+        Descending = 2,
     }
 }

@@ -69,7 +69,7 @@ public static class RoleTypeExtensions
                             DateTimeKind.Local => dateTime.ToUniversalTime(),
                             DateTimeKind.Unspecified => throw new ArgumentException(
                                 "DateTime value is of DateTimeKind.Kind Unspecified. \nUnspecified is only allowed for DateTime.MaxValue and DateTime.MinValue, use DateTimeKind.Utc or DateTimeKind.Local instead."),
-                            _ => dateTime
+                            _ => dateTime,
                         };
 
                         normalizedUnit = new DateTime(dateTime.Year, dateTime.Month, dateTime.Day, dateTime.Hour, dateTime.Minute,

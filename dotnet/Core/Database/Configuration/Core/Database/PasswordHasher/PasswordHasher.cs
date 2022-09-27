@@ -24,7 +24,7 @@ namespace Allors.Database.Configuration
                     ".{8,}",                        // eight or more characters long
                     "\\d",                          // contains numbers
                     "[a-z].*?[A-Z]|[A-Z].*?[a-z]",  // mixed case
-                    "[!@#$%^&*?_~-£() ]"            // special characters
+                    "[!@#$%^&*?_~-£() ]",            // special characters
                 }
               .Select(rule => new Regex(rule));
         }

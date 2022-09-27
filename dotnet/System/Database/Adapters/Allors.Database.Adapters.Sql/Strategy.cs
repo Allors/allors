@@ -934,7 +934,7 @@ public class Strategy : IStrategy
                 }
                 else
                 {
-                    unitRoles ??= new List<IRoleType> {unitRole};
+                    unitRoles ??= new List<IRoleType> { unitRole };
                     unitRoles.Add(flushRole);
                 }
             }

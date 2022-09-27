@@ -17,7 +17,7 @@ namespace Allors.Workspace.Adapters.Json.Newtonsoft.WebClient
         private readonly Func<IRestClient> restClientFactory;
 
         public Client(Func<IRestClient> restClientFactory) => this.restClientFactory = restClientFactory;
-        public int[] SecondsBeforeRetry { get; set; } = {1, 2, 4, 8, 16};
+        public int[] SecondsBeforeRetry { get; set; } = { 1, 2, 4, 8, 16 };
 
         public IRestClient RestClient { get; private set; }
 
@@ -27,7 +27,7 @@ namespace Allors.Workspace.Adapters.Json.Newtonsoft.WebClient
         {
             this.RestClient = this.restClientFactory();
 
-            var data = new AuthenticationTokenRequest {l = username, p = password};
+            var data = new AuthenticationTokenRequest { l = username, p = password };
             var result = await this.Post<AuthenticationTokenResponse>(url, data);
 
             if (!result.a)

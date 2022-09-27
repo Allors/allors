@@ -182,6 +182,6 @@ public class Database : Sql.Database
             NpgsqlDbType.Timestamp => "TIMESTAMP",
             NpgsqlDbType.Uuid => "UUID",
             NpgsqlDbType.Bytea => "BYTEA",
-            _ => "!UNKNOWN VALUE TYPE!"
+            _ => "!UNKNOWN VALUE TYPE!",
         };
 }

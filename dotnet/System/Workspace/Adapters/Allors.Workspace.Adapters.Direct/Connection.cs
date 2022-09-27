@@ -65,7 +65,7 @@ public class Connection : Adapters.Connection
     }
 
     public override Task<IInvokeResult> InvokeAsync(MethodRequest method, BatchOptions options = null) =>
-        this.InvokeAsync(new[] {method}, options);
+        this.InvokeAsync(new[] { method }, options);
 
     public override Task<IInvokeResult> InvokeAsync(MethodRequest[] methods, BatchOptions options = null)
     {

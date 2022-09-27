@@ -21,7 +21,7 @@ internal sealed class TraceablePrefetcher : Prefetcher
     {
         var @event = new SqlPrefetchUnitRolesEvent(this.Transaction)
         {
-            Class = @class, Associations = associations?.ToArray(), RoleType = anyRoleType
+            Class = @class, Associations = associations?.ToArray(), RoleType = anyRoleType,
         };
         this.sink.OnBefore(@event);
 
@@ -38,7 +38,7 @@ internal sealed class TraceablePrefetcher : Prefetcher
             Associations = associations?.ToArray(),
             RoleType = roleType,
             NestedObjectIds = nestedObjectIds?.ToArray(),
-            Leafs = leafs?.ToArray()
+            Leafs = leafs?.ToArray(),
         };
         this.sink.OnBefore(@event);
 
@@ -55,7 +55,7 @@ internal sealed class TraceablePrefetcher : Prefetcher
             Associations = associations?.ToArray(),
             RoleType = roleType,
             NestedObjectIds = nestedObjectIds?.ToArray(),
-            Leafs = leafs?.ToArray()
+            Leafs = leafs?.ToArray(),
         };
         this.sink.OnBefore(@event);
 
@@ -72,7 +72,7 @@ internal sealed class TraceablePrefetcher : Prefetcher
             Associations = associations?.ToArray(),
             RoleType = roleType,
             NestedObjectIds = nestedObjectIds?.ToArray(),
-            Leafs = leafs?.ToArray()
+            Leafs = leafs?.ToArray(),
         };
         this.sink.OnBefore(@event);
 
@@ -89,7 +89,7 @@ internal sealed class TraceablePrefetcher : Prefetcher
             Associations = associations?.ToArray(),
             RoleType = roleType,
             NestedObjectIds = nestedObjectIds?.ToArray(),
-            Leafs = leafs?.ToArray()
+            Leafs = leafs?.ToArray(),
         };
         this.sink.OnBefore(@event);
 
@@ -107,7 +107,7 @@ internal sealed class TraceablePrefetcher : Prefetcher
             Roles = roles?.ToArray(),
             AssociationType = associationType,
             NestedObjectIds = nestedObjectIds?.ToArray(),
-            Leafs = leafs?.ToArray()
+            Leafs = leafs?.ToArray(),
         };
         this.sink.OnBefore(@event);
 
@@ -124,7 +124,7 @@ internal sealed class TraceablePrefetcher : Prefetcher
             Roles = roles?.ToArray(),
             AssociationType = associationType,
             NestedObjectIds = nestedObjectIds?.ToArray(),
-            Leafs = leafs?.ToArray()
+            Leafs = leafs?.ToArray(),
         };
         this.sink.OnBefore(@event);
 
@@ -141,7 +141,7 @@ internal sealed class TraceablePrefetcher : Prefetcher
             Roles = roles?.ToArray(),
             AssociationType = associationType,
             NestedObjectIds = nestedObjectIds?.ToArray(),
-            Leafs = leafs?.ToArray()
+            Leafs = leafs?.ToArray(),
         };
         this.sink.OnBefore(@event);
 
@@ -158,7 +158,7 @@ internal sealed class TraceablePrefetcher : Prefetcher
             Roles = roles?.ToArray(),
             AssociationType = associationType,
             NestedObjectIds = nestedObjectIds?.ToArray(),
-            Leafs = leafs?.ToArray()
+            Leafs = leafs?.ToArray(),
         };
         this.sink.OnBefore(@event);
 

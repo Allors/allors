@@ -25,6 +25,6 @@ namespace Allors
         /// <summary>
         ///     Many to Many.
         /// </summary>
-        ManyToMany = 3 //0b11
+        ManyToMany = 3, //0b11
     }
 }

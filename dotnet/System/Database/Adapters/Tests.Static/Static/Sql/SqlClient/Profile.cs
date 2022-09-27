@@ -33,7 +33,7 @@ public class Profile : Adapters.Profile
     {
         get
         {
-            var markers = new List<Action> {() => { }, () => this.Transaction.Commit()};
+            var markers = new List<Action> { () => { }, () => this.Transaction.Commit() };
 
             if (Settings.ExtraMarkers)
             {
@@ -64,7 +64,7 @@ public class Profile : Adapters.Profile
                 ObjectFactory = new ObjectFactory(metaPopulation, typeof(C1)),
                 ConnectionString = this.ConnectionString,
                 ConnectionFactory = this.connectionFactory,
-                CacheFactory = this.cacheFactory
+                CacheFactory = this.cacheFactory,
             });
     }
 
@@ -84,7 +84,7 @@ public class Profile : Adapters.Profile
             ColumnTypes.Integer => dataType.Equals("int"),
             ColumnTypes.String => dataType.Equals("nvarchar"),
             ColumnTypes.Unique => dataType.Equals("uniqueidentifier"),
-            _ => throw new Exception("Unsupported columntype " + columnType)
+            _ => throw new Exception("Unsupported columntype " + columnType),
         };
     }
 

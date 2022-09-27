@@ -40,7 +40,7 @@ namespace Allors.Server
 
             var workspaceConfig = new WorkspaceConfig(new Dictionary<HostString, string>
             {
-                {new HostString("localhost", 5000), "Default"}
+                { new HostString("localhost", 5000), "Default" },
             });
 
             // Allors

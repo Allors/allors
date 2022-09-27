@@ -17,7 +17,7 @@ namespace Allors.Database.Domain
         public S12ChangedRoleRule(M m) : base(m, new Guid("475E8B38-21BB-40F9-AD67-9A7432F73CDD")) =>
             this.Patterns = new Pattern[]
             {
-                new RolePattern(m.S12, m.S12.ChangedRolePingS12)
+                new RolePattern(m.S12, m.S12.ChangedRolePingS12),
             };
 
 

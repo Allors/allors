@@ -412,7 +412,7 @@ public class Mapping : Sql.Mapping
             UnitTags.DateTime => NpgsqlDbType.Timestamp,
             UnitTags.Unique => NpgsqlDbType.Uuid,
             UnitTags.Binary => NpgsqlDbType.Bytea,
-            _ => throw new Exception("Unknown Unit Type")
+            _ => throw new Exception("Unknown Unit Type"),
         };
     }
 
@@ -803,7 +803,7 @@ $$;";
             UnitTags.DateTime => this.DateTimeRoleArrayParam,
             UnitTags.Unique => this.UniqueRoleArrayParam,
             UnitTags.Binary => this.BinaryRoleArrayParam,
-            _ => throw new ArgumentException("Unknown Unit ObjectType: " + roleType.ObjectType.SingularName)
+            _ => throw new ArgumentException("Unknown Unit ObjectType: " + roleType.ObjectType.SingularName),
         };
 
         var rolesType = roles.TypeName;

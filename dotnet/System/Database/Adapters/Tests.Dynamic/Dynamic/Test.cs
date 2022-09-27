@@ -26,8 +26,8 @@ using Meta;
 
 public abstract class Test : IDisposable
 {
-    private readonly int[] assertRepeats = {1};
-    private readonly bool[] boolFlags = {false, true};
+    private readonly int[] assertRepeats = { 1 };
+    private readonly bool[] boolFlags = { false, true };
     protected readonly int ObjectsPerClass = 5;
 
     // Thorough
@@ -37,8 +37,8 @@ public abstract class Test : IDisposable
     // private int objectsPerClass = 100;
 
     // Quick
-    private readonly int[] repeats = {1};
-    private readonly int[] testRepeats = {1};
+    private readonly int[] repeats = { 1 };
+    private readonly int[] testRepeats = { 1 };
     protected readonly TestValueGenerator ValueGenerator = new();
 
     public abstract void Dispose();

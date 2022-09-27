@@ -82,7 +82,7 @@ namespace Allors.Workspace.Adapters.Json
 
                         return false;
                     })
-                    .Select(v => v.i).ToArray()
+                    .Select(v => v.i).ToArray(),
             };
 
         internal AccessRequest OnSyncResponse(SyncResponse syncResponse)
@@ -99,7 +99,7 @@ namespace Allors.Workspace.Adapters.Json
             {
                 return new AccessRequest
                 {
-                    g = ctx.MissingGrantIds.Select(v => v).ToArray(), r = ctx.MissingRevocationIds.Select(v => v).ToArray()
+                    g = ctx.MissingGrantIds.Select(v => v).ToArray(), r = ctx.MissingRevocationIds.Select(v => v).ToArray(),
                 };
             }
 
@@ -118,7 +118,7 @@ namespace Allors.Workspace.Adapters.Json
                     var id = syncResponseAccessControl.i;
                     var version = syncResponseAccessControl.v;
                     var permissionIds = ValueRange<long>.Load(syncResponseAccessControl.p);
-                    this.GrantById[id] = new Grant {Version = version, PermissionIds = ValueRange<long>.Load(permissionIds)};
+                    this.GrantById[id] = new Grant { Version = version, PermissionIds = ValueRange<long>.Load(permissionIds) };
 
                     foreach (var permissionId in permissionIds)
                     {
@@ -140,7 +140,7 @@ namespace Allors.Workspace.Adapters.Json
                     var id = syncResponseRevocation.i;
                     var version = syncResponseRevocation.v;
                     var permissionIds = ValueRange<long>.Load(syncResponseRevocation.p);
-                    this.RevocationById[id] = new Revocation {Version = version, PermissionIds = ValueRange<long>.Load(permissionIds)};
+                    this.RevocationById[id] = new Revocation { Version = version, PermissionIds = ValueRange<long>.Load(permissionIds) };
 
                     foreach (var permissionId in permissionIds)
                     {
@@ -155,7 +155,7 @@ namespace Allors.Workspace.Adapters.Json
                 }
             }
 
-            return missingPermissionIds != null ? new PermissionRequest {p = missingPermissionIds.ToArray()} : null;
+            return missingPermissionIds != null ? new PermissionRequest { p = missingPermissionIds.ToArray() } : null;
         }
 
         internal void PermissionResponse(PermissionResponse permissionResponse)
@@ -216,16 +216,16 @@ namespace Allors.Workspace.Adapters.Json
         }
 
         public override async Task<IInvokeResult> InvokeAsync(MethodRequest method, BatchOptions options = null) =>
-            await this.InvokeAsync(new[] {method}, options);
+            await this.InvokeAsync(new[] { method }, options);
 
         public override async Task<IInvokeResult> InvokeAsync(MethodRequest[] methods, BatchOptions options = null)
         {
             var invokeRequest = new InvokeRequest
             {
-                l = methods.Select(v => new Invocation {i = v.Object.Id, v = ((Object)v.Object).Version, m = v.MethodType.Tag}).ToArray(),
+                l = methods.Select(v => new Invocation { i = v.Object.Id, v = ((Object)v.Object).Version, m = v.MethodType.Tag }).ToArray(),
                 o = options != null
-                    ? new InvokeOptions {c = options.ContinueOnError, i = options.Isolated}
-                    : null
+                    ? new InvokeOptions { c = options.ContinueOnError, i = options.Isolated }
+                    : null,
             };
 
             var invokeResponse = await this.Invoke(invokeRequest);
@@ -244,7 +244,7 @@ namespace Allors.Workspace.Adapters.Json
                 }
             }
 
-            var pullRequest = new Allors.Protocol.Json.Api.Pull.PullRequest {l = pulls.Select(v => v.ToJson(this.UnitConvert)).ToArray()};
+            var pullRequest = new Allors.Protocol.Json.Api.Pull.PullRequest { l = pulls.Select(v => v.ToJson(this.UnitConvert)).ToArray() };
             var pullResponse = await this.Pull(pullRequest);
 
             var workspace = new Workspace(this);

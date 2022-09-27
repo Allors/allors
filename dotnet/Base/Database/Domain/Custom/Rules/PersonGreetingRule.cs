@@ -17,7 +17,7 @@ namespace Allors.Database.Domain
         public PersonGreetingRule(M m) : base(m, new Guid("5FFD5696-E735-4D05-8405-3A444B6F591E")) =>
             this.Patterns = new[]
             {
-                new RolePattern(m.Person, m.Person.DomainFullName)
+                new RolePattern(m.Person, m.Person.DomainFullName),
             };
 
         public override void Derive(ICycle cycle, IEnumerable<IObject> matches)

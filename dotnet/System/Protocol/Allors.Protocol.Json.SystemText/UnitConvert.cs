@@ -25,7 +25,7 @@ namespace Allors.Protocol.Json.SystemText
                 string @string => @string,
                 Guid guid => guid.ToString("D"),
                 null => null,
-                _ => throw new ArgumentException()
+                _ => throw new ArgumentException(),
             };
 
         public object UnitFromJson(string tag, object value)
@@ -45,7 +45,7 @@ namespace Allors.Protocol.Json.SystemText
                         UnitTags.Integer => XmlConvert.ToInt32(@string),
                         UnitTags.String => @string,
                         UnitTags.Unique => XmlConvert.ToGuid(@string),
-                        _ => throw new Exception($"{@string} not supported for tag {tag}")
+                        _ => throw new Exception($"{@string} not supported for tag {tag}"),
                     };
                 default:
                 {
@@ -67,8 +67,8 @@ namespace Allors.Protocol.Json.SystemText
                             UnitTags.Integer => element.GetInt32(),
                             UnitTags.String => element.GetString(),
                             UnitTags.Unique => element.GetGuid(),
-                            _ => throw new Exception($"{element.ValueKind} not supported for tag {tag}")
-                        }
+                            _ => throw new Exception($"{element.ValueKind} not supported for tag {tag}"),
+                        },
                     };
                 }
             }
@@ -80,29 +80,29 @@ namespace Allors.Protocol.Json.SystemText
             {
                 null => null,
                 JsonElement element => element.GetInt64(),
-                _ => (long?)value
+                _ => (long?)value,
             };
 
         public long[] LongArrayFromJson(object value) =>
             value switch
             {
                 null => null,
-                long longValue => new[] {longValue},
+                long longValue => new[] { longValue },
                 JsonElement element => element.ValueKind switch
                 {
                     JsonValueKind.Null => null,
                     JsonValueKind.Undefined => null,
                     JsonValueKind.Array => element.EnumerateArray().Select(v => v.GetInt64()).ToArray(),
-                    JsonValueKind.Number => new[] {element.GetInt64()}
+                    JsonValueKind.Number => new[] { element.GetInt64() },
                 },
-                _ => (long[])value
+                _ => (long[])value,
             };
 
         public string StringFromJson(object value) => value switch
         {
             null => null,
             JsonElement element => element.GetString(),
-            _ => (string)value
+            _ => (string)value,
         };
     }
 }

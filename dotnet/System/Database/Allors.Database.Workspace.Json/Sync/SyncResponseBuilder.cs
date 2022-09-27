@@ -75,15 +75,15 @@ public class SyncResponseBuilder
                         .Select(w => this.CreateSyncResponseRole(v, w, this.unitConvert))
                         .ToArray(),
                     g = ValueRange<long>.Import(acl.Grants.Select(w => w.Id)).Save(),
-                    r = ValueRange<long>.Import(acl.Revocations.Select(w => w.Id)).Save()
+                    r = ValueRange<long>.Import(acl.Revocations.Select(w => w.Id)).Save(),
                 };
-            }).ToArray()
+            }).ToArray(),
         };
     }
 
     private SyncResponseRole CreateSyncResponseRole(IObject @object, IRoleType roleType, IUnitConvert unitConvert)
     {
-        var syncResponseRole = new SyncResponseRole {t = roleType.RelationType.Tag};
+        var syncResponseRole = new SyncResponseRole { t = roleType.RelationType.Tag };
 
         if (roleType.ObjectType.IsUnit)
         {

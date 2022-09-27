@@ -17,7 +17,7 @@ using Xunit;
 
 public abstract class ObsoleteSerializationTest : IDisposable
 {
-    protected static readonly bool[] TrueFalse = {true, false};
+    protected static readonly bool[] TrueFalse = { true, false };
     private static readonly string GuidString = Guid.NewGuid().ToString();
 
     protected virtual bool EmptyStringIsNull => false;
@@ -162,7 +162,7 @@ public abstract class ObsoleteSerializationTest : IDisposable
                     otherTransaction.Commit();
 
                     var stringWriter = new StringWriter();
-                    var xmlWriterSettings = new XmlWriterSettings {Indent = indentation};
+                    var xmlWriterSettings = new XmlWriterSettings { Indent = indentation };
                     using (var writer = XmlWriter.Create(stringWriter, xmlWriterSettings))
                     {
                         otherPopulation.Save(writer);
@@ -658,7 +658,7 @@ public abstract class ObsoleteSerializationTest : IDisposable
                 this.c1C = C1.Create(otherTransaction);
 
                 this.c1A.C1AllorsBinary = Array.Empty<byte>();
-                this.c1B.C1AllorsBinary = new byte[] {1, 2, 3, 4};
+                this.c1B.C1AllorsBinary = new byte[] { 1, 2, 3, 4 };
                 this.c1C.C1AllorsBinary = null;
 
                 otherTransaction.Commit();
@@ -1094,14 +1094,14 @@ public abstract class ObsoleteSerializationTest : IDisposable
         var c4CCopy = C4.Instantiate(transaction, this.c4C.Strategy.ObjectId);
         var c4DCopy = C4.Instantiate(transaction, this.c4D.Strategy.ObjectId);
 
-        IObject[] everyC1 = {c1ACopy, c1BCopy, c1CCopy, c1DCopy};
-        IObject[] everyC2 = {c2ACopy, c2BCopy, c2CCopy, c2DCopy};
-        IObject[] everyC3 = {c3ACopy, c3BCopy, c3CCopy, c3DCopy};
-        IObject[] everyC4 = {c4ACopy, c4BCopy, c4CCopy, c4DCopy};
+        IObject[] everyC1 = { c1ACopy, c1BCopy, c1CCopy, c1DCopy };
+        IObject[] everyC2 = { c2ACopy, c2BCopy, c2CCopy, c2DCopy };
+        IObject[] everyC3 = { c3ACopy, c3BCopy, c3CCopy, c3DCopy };
+        IObject[] everyC4 = { c4ACopy, c4BCopy, c4CCopy, c4DCopy };
         IObject[] everyObject =
         {
             c1ACopy, c1BCopy, c1CCopy, c1DCopy, c2ACopy, c2BCopy, c2CCopy, c2DCopy, c3ACopy, c3BCopy, c3CCopy, c3DCopy, c4ACopy,
-            c4BCopy, c4CCopy, c4DCopy
+            c4BCopy, c4CCopy, c4DCopy,
         };
 
         foreach (var allorsObject in everyObject)
@@ -1126,7 +1126,7 @@ public abstract class ObsoleteSerializationTest : IDisposable
         Assert.Equal(new Guid(GuidString), c1ACopy.C1AllorsUnique);
 
         Assert.Equal(Array.Empty<byte>(), c1ACopy.C1AllorsBinary);
-        Assert.Equal(new byte[] {0, 1, 2, 3}, c1BCopy.C1AllorsBinary);
+        Assert.Equal(new byte[] { 0, 1, 2, 3 }, c1BCopy.C1AllorsBinary);
         Assert.Null(c1CCopy.C1AllorsBinary);
 
         Assert.Equal("c1b", c2ACopy.C1WhereC1C2one2one.C1AllorsString);
@@ -1174,7 +1174,7 @@ public abstract class ObsoleteSerializationTest : IDisposable
         IObject[] allObjects =
         {
             this.c1A, this.c1B, this.c1C, this.c1D, this.c2A, this.c2B, this.c2C, this.c2D, this.c3A, this.c3B, this.c3C, this.c3D,
-            this.c4A, this.c4B, this.c4C, this.c4D
+            this.c4A, this.c4B, this.c4C, this.c4D,
         };
 
         this.c1A.C1AllorsString = string.Empty; // emtpy string
@@ -1187,7 +1187,7 @@ public abstract class ObsoleteSerializationTest : IDisposable
         this.c1A.C1AllorsBinary = Array.Empty<byte>();
 
         this.c1B.C1AllorsString = "c1b";
-        this.c1B.C1AllorsBinary = new byte[] {0, 1, 2, 3};
+        this.c1B.C1AllorsBinary = new byte[] { 0, 1, 2, 3 };
         this.c1B.C1C2one2one = this.c2A;
         this.c1B.C1C2many2one = this.c2A;
         this.c1C.C1C2many2one = this.c2A;

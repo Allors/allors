@@ -18,7 +18,7 @@ namespace Allors.Database.Domain
             this.Patterns = new[]
             {
                 m.CC.RolePattern(v=>v.Assigned, v=>v.BBsWhereMany2Many.BB.AAsWhereMany2Many),
-                m.CC.RolePattern(v=>v.Assigned, v=>v.BBsWhereUnusedMany2Many.BB.AAsWhereUnusedMany2Many)
+                m.CC.RolePattern(v=>v.Assigned, v=>v.BBsWhereUnusedMany2Many.BB.AAsWhereUnusedMany2Many),
             };
 
 

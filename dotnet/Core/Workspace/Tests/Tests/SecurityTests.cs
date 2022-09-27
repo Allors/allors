@@ -31,7 +31,7 @@ namespace Tests.Workspace
             {
                 var pull = new PullRequest
                 {
-                    Extent = new Filter(this.M.C1)
+                    Extent = new Filter(this.M.C1),
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -57,7 +57,7 @@ namespace Tests.Workspace
             {
                 var pull = new PullRequest
                 {
-                    Extent = new Filter(this.M.C1)
+                    Extent = new Filter(this.M.C1),
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -83,7 +83,7 @@ namespace Tests.Workspace
             {
                 var pull = new PullRequest
                 {
-                    Extent = new Filter(this.M.C1)
+                    Extent = new Filter(this.M.C1),
                 };
 
                 var result = await connection.PullAsync(pull);

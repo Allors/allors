@@ -24,7 +24,7 @@ internal class VersionedObjectDataRecord : IEnumerable<SqlDataRecord>
     public IEnumerator<SqlDataRecord> GetEnumerator()
     {
         var objectArrayElement = this.mapping.TableTypeColumnNameForObject;
-        var metaData = new[] {new SqlMetaData(objectArrayElement, SqlDbType.BigInt), new SqlMetaData(objectArrayElement, SqlDbType.BigInt)};
+        var metaData = new[] { new SqlMetaData(objectArrayElement, SqlDbType.BigInt), new SqlMetaData(objectArrayElement, SqlDbType.BigInt) };
         var sqlDataRecord = new SqlDataRecord(metaData);
 
         foreach (var dictionaryEntry in this.versionedObjects)

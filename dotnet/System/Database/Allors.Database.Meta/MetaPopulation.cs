@@ -21,8 +21,12 @@ public abstract class MetaPopulation : IMetaPopulation
 
     private string[] derivedWorkspaceNames;
 
+    private bool initialized;
+
     protected MetaPopulation()
     {
+        this.initialized = false;
+
         this.metaObjects = new List<IMetaObject>();
     }
 
@@ -152,8 +156,15 @@ public abstract class MetaPopulation : IMetaPopulation
         return log;
     }
 
-    public void StructuralDerive()
+    public void Initialize()
     {
+        if (this.initialized)
+        {
+            throw new Exception("Meta is already initialized");
+        }
+
+        this.initialized = true;
+
         this.metaIdentifiableObjectById = this.metaObjects.OfType<IMetaIdentifiableObject>().ToDictionary(v => v.Id, v => v);
 
         this.Domains = this.metaObjects.OfType<Domain>().ToArray();
@@ -178,37 +189,37 @@ public abstract class MetaPopulation : IMetaPopulation
         // Domains
         foreach (var domain in this.Domains)
         {
-            domain.StructuralDeriveSuperdomains(sharedDomains);
+            domain.InitializeSuperdomains(sharedDomains);
         }
 
         // DirectSubtypes
         foreach (var type in this.Interfaces)
         {
-            type.StructuralDeriveDirectSubtypes();
+            type.InitializeDirectSubtypes();
         }
 
         // Supertypes
         foreach (var type in this.Composites)
         {
-            type.StructuralDeriveSupertypes(sharedInterfaces);
+            type.InitializeSupertypes(sharedInterfaces);
         }
 
         // Subtypes
         foreach (var type in this.Interfaces)
         {
-            type.StructuralDeriveSubtypes(sharedComposites);
+            type.InitializeSubtypes(sharedComposites);
         }
 
         // Subclasses
         foreach (var type in this.Interfaces)
         {
-            type.StructuralDeriveSubclasses(sharedClasses);
+            type.InitializeSubclasses(sharedClasses);
         }
 
         // Exclusive Subclass
         foreach (var type in this.Interfaces)
         {
-            type.StructuralDeriveExclusiveSubclass();
+            type.InitializeExclusiveSubclass();
         }
 
         // RoleTypes & AssociationTypes
@@ -223,13 +234,13 @@ public abstract class MetaPopulation : IMetaPopulation
         // RoleTypes
         foreach (var composite in this.Composites)
         {
-            composite.StructuralDeriveRoleTypes(sharedRoleTypes, roleTypesByAssociationTypeObjectType);
+            composite.InitializeRoleTypes(sharedRoleTypes, roleTypesByAssociationTypeObjectType);
         }
 
         // AssociationTypes
         foreach (var composite in this.Composites)
         {
-            composite.StructuralDeriveAssociationTypes(sharedAssociationTypes, associationTypesByRoleTypeObjectType);
+            composite.InitializeAssociationTypes(sharedAssociationTypes, associationTypesByRoleTypeObjectType);
         }
 
         // MethodTypes
@@ -239,7 +250,7 @@ public abstract class MetaPopulation : IMetaPopulation
 
         foreach (var composite in this.Composites)
         {
-            composite.StructuralDeriveMethodTypes(sharedMethodTypeList, methodTypeByClass);
+            composite.InitializeMethodTypes(sharedMethodTypeList, methodTypeByClass);
         }
 
         // Records
@@ -249,7 +260,7 @@ public abstract class MetaPopulation : IMetaPopulation
 
         foreach (var record in this.Records)
         {
-            record.StructuralDeriveFieldTypes(fieldTypesByRecord);
+            record.InitializeFieldTypes(fieldTypesByRecord);
         }
 
         this.metaObjects = null;
@@ -272,13 +283,7 @@ public abstract class MetaPopulation : IMetaPopulation
         }
 
         // WorkspaceNames
-        var workspaceNames = new HashSet<string>();
-        foreach (var @class in this.Classes)
-        {
-            @class.DeriveWorkspaceNames(workspaceNames);
-        }
-
-        this.derivedWorkspaceNames = workspaceNames.ToArray();
+        this.derivedWorkspaceNames = this.Classes.SelectMany(v => v.AssignedWorkspaceNames).Distinct().ToArray();
 
         foreach (var relationType in this.RelationTypes)
         {
@@ -310,11 +315,6 @@ public abstract class MetaPopulation : IMetaPopulation
         foreach (var fieldType in this.FieldTypes)
         {
             fieldType.DeriveWorkspaceNames();
-        }
-
-        foreach (var domain in this.Domains)
-        {
-            domain.DeriveWorkspaceNames();
         }
 
         this.compositeByLowercaseName = this.Composites.ToDictionary(v => v.Name.ToLowerInvariant());

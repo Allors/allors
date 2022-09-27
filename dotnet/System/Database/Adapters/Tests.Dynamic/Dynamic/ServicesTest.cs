@@ -25,7 +25,7 @@ using Xunit;
 
 public abstract class ServicesTest : Test
 {
-    private readonly bool[] manyFlags = {false, true};
+    private readonly bool[] manyFlags = { false, true };
 
     [Fact]
     [Trait("Category", "Dynamic")]
@@ -4067,7 +4067,7 @@ public abstract class ServicesTest : Test
                                 this.Commit(transactionFlag);
                             }
 
-                            ids = new[] {(int.MaxValue - 1).ToString()};
+                            ids = new[] { (int.MaxValue - 1).ToString() };
                             for (var repeatIndex = 0; repeatIndex < repeat; repeatIndex++)
                             {
                                 var allorsObjects = this.GetTransaction().Instantiate(ids);
@@ -4400,7 +4400,7 @@ public abstract class ServicesTest : Test
     {
         if (many)
         {
-            string[] ids = {id.ToString(CultureInfo.InvariantCulture)};
+            string[] ids = { id.ToString(CultureInfo.InvariantCulture) };
             var results = this.GetTransaction().Instantiate(ids);
             if (results.Count() > 0)
             {

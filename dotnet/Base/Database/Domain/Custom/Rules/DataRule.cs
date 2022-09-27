@@ -19,7 +19,7 @@ namespace Allors.Database.Domain
             {
                 m.Data.RolePattern(v=>v.AutocompleteAssignedFilter),
                 m.Data.RolePattern(v=>v.AutocompleteAssignedOptions),
-                m.Data.RolePattern(v=>v.SelectAssigned)
+                m.Data.RolePattern(v=>v.SelectAssigned),
             };
 
         public override void Derive(ICycle cycle, IEnumerable<IObject> matches)

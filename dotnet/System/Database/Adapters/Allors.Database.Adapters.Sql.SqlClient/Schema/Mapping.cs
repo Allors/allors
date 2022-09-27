@@ -225,7 +225,7 @@ public class Mapping : Sql.Mapping
             {
                 this.TableTypeNameForBinaryIn,
                 $"CREATE TYPE {this.TableTypeNameForBinaryIn} AS TABLE ({this.TableTypeColumnNameForRole} varbinary(max))"
-            }
+            },
         };
 
         foreach (var precisionEntry in this.TableTypeNameForDecimalRelationByScaleByPrecision)
@@ -559,7 +559,7 @@ public class Mapping : Sql.Mapping
             UnitTags.Unique => this.TableTypeNameForUniqueRelation,
             UnitTags.Binary => this.TableTypeNameForBinaryRelation,
             UnitTags.Decimal => this.TableTypeNameForDecimalRelationByScaleByPrecision[roleType.Precision.Value][roleType.Scale.Value],
-            _ => throw new ArgumentException($"Unknown Unit ObjectType: {unitTypeTag}")
+            _ => throw new ArgumentException($"Unknown Unit ObjectType: {unitTypeTag}"),
         };
     }
 
@@ -576,7 +576,7 @@ public class Mapping : Sql.Mapping
             UnitTags.Unique => this.TableTypeNameForUniqueIn,
             UnitTags.Binary => this.TableTypeNameForBinaryIn,
             UnitTags.Decimal => this.TableTypeNameForDecimalInByScaleByPrecision[roleType.Precision.Value][roleType.Scale.Value],
-            _ => throw new ArgumentException($"Unknown Unit ObjectType: {unitTypeTag}")
+            _ => throw new ArgumentException($"Unknown Unit ObjectType: {unitTypeTag}"),
         };
     }
 
@@ -648,7 +648,7 @@ public class Mapping : Sql.Mapping
             UnitTags.DateTime => SqlDbType.DateTime2,
             UnitTags.Unique => SqlDbType.UniqueIdentifier,
             UnitTags.Binary => SqlDbType.VarBinary,
-            _ => throw new Exception("Unknown Unit Type")
+            _ => throw new Exception("Unknown Unit Type"),
         };
     }
 
@@ -988,7 +988,7 @@ END";
             UnitTags.DateTime => this.TableTypeNameForDateTimeRelation,
             UnitTags.Unique => this.TableTypeNameForUniqueRelation,
             UnitTags.Binary => this.TableTypeNameForBinaryRelation,
-            _ => throw new ArgumentException($"Unknown Unit ObjectType: {roleType.ObjectType.SingularName}")
+            _ => throw new ArgumentException($"Unknown Unit ObjectType: {roleType.ObjectType.SingularName}"),
         };
 
         var definition = $@"

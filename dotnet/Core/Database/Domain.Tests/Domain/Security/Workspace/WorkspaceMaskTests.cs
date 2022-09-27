@@ -65,7 +65,7 @@ namespace Allors.Database.Domain.Tests
             public WorkspaceMask(M m) =>
                 this.masks = new Dictionary<IClass, IRoleType>
                 {
-                    {m.Organization, m.Organization.Name},
+                    { m.Organization, m.Organization.Name },
                 };
 
             public IDictionary<IClass, IRoleType> GetMasks(string workspaceName) => this.masks;

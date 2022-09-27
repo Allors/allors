@@ -31,7 +31,7 @@ public abstract class ValuesTest : Test
             0, 1, 2, 8000 - 1, 8000, // SqlClient
             8000 + 1, 2 ^ (16 - 1), 2 ^ 16, // MySqlClient
             2 ^ (16 + 1), 2 ^ (32 - 1), 2 ^ 32, // MySqlClient
-            2 ^ (32 + 1)
+            2 ^ (32 + 1),
         };
 
     protected virtual int[] StringSizes =>
@@ -41,14 +41,14 @@ public abstract class ValuesTest : Test
             4000 + 1, 8000 - 1, 8000, // SqlClient
             8000 + 1, 2 ^ (16 - 1), 2 ^ 16, // MySqlClient
             2 ^ (16 + 1), 2 ^ (32 - 1), 2 ^ 32, // MySqlClient
-            2 ^ (32 + 1)
+            2 ^ (32 + 1),
         };
 
     [Fact]
     [Trait("Category", "Dynamic")]
     public void AllorsBinary()
     {
-        bool[] transactionFlags = {false, true};
+        bool[] transactionFlags = { false, true };
 
         for (var transactionFlagIndex = 0; transactionFlagIndex < transactionFlags.Count(); transactionFlagIndex++)
         {
@@ -95,7 +95,7 @@ public abstract class ValuesTest : Test
     [Trait("Category", "Dynamic")]
     public void AllorsBoolean()
     {
-        bool[] transactionFlags = {false, true};
+        bool[] transactionFlags = { false, true };
         var values = this.testValues.Booleans;
 
         for (var transactionFlagIndex = 0; transactionFlagIndex < transactionFlags.Count(); transactionFlagIndex++)
@@ -294,7 +294,7 @@ public abstract class ValuesTest : Test
     [Trait("Category", "Dynamic")]
     public void AllorsDateTime()
     {
-        bool[] transactionFlags = {false, true};
+        bool[] transactionFlags = { false, true };
         var values = new DateTime[this.testValues.DateTimes.Count()];
         for (var i = 0; i < values.Count(); i++)
         {
@@ -509,7 +509,7 @@ public abstract class ValuesTest : Test
     [Trait("Category", "Dynamic")]
     public void AllorsDecimal()
     {
-        bool[] transactionFlags = {false, true};
+        bool[] transactionFlags = { false, true };
         var values = new object[this.testValues.Decimals.Count()];
         for (var i = 0; i < values.Count(); i++)
         {
@@ -712,7 +712,7 @@ public abstract class ValuesTest : Test
     [Trait("Category", "Dynamic")]
     public void AllorsDouble()
     {
-        bool[] transactionFlags = {false, true};
+        bool[] transactionFlags = { false, true };
         var values = this.testValues.Floats;
 
         for (var transactionFlagIndex = 0; transactionFlagIndex < transactionFlags.Count(); transactionFlagIndex++)
@@ -911,7 +911,7 @@ public abstract class ValuesTest : Test
     [Trait("Category", "Dynamic")]
     public void AllorsInteger()
     {
-        bool[] transactionFlags = {false, true};
+        bool[] transactionFlags = { false, true };
         var values = this.testValues.Integers;
 
         for (var transactionFlagIndex = 0; transactionFlagIndex < transactionFlags.Count(); transactionFlagIndex++)
@@ -1112,7 +1112,7 @@ public abstract class ValuesTest : Test
     [Trait("Category", "Dynamic")]
     public void AllorsString()
     {
-        bool[] transactionFlags = {false, true};
+        bool[] transactionFlags = { false, true };
 
         for (var transactionFlagIndex = 0; transactionFlagIndex < transactionFlags.Count(); transactionFlagIndex++)
         {
@@ -1159,7 +1159,7 @@ public abstract class ValuesTest : Test
     [Trait("Category", "Dynamic")]
     public void AllorsUnique()
     {
-        bool[] transactionFlags = {false, true};
+        bool[] transactionFlags = { false, true };
         var values = this.testValues.Uniques;
 
         for (var transactionFlagIndex = 0; transactionFlagIndex < transactionFlags.Count(); transactionFlagIndex++)

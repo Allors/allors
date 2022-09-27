@@ -183,56 +183,56 @@ public abstract class ChangesTest : IDisposable
             Action<C1> builderD = v => v.Name += "D";
 
             {
-                var builderEnumeration = new[] {builderA, builderB};
+                var builderEnumeration = new[] { builderA, builderB };
                 var newObject = this.Transaction.Build(builderEnumeration);
                 Assert.True(newObject.onPostBuild);
                 Assert.Equal("AB", newObject.Name);
             }
 
             {
-                var builderEnumeration = new[] {builderA, builderB};
+                var builderEnumeration = new[] { builderA, builderB };
                 var newObject = this.Transaction.Build(builderEnumeration, builderC);
                 Assert.True(newObject.onPostBuild);
                 Assert.Equal("ABC", newObject.Name);
             }
 
             {
-                var builderWithNullEnumeration = new[] {nullBuilder, builderB};
+                var builderWithNullEnumeration = new[] { nullBuilder, builderB };
                 var newObject = this.Transaction.Build(builderWithNullEnumeration);
                 Assert.True(newObject.onPostBuild);
                 Assert.Equal("B", newObject.Name);
             }
 
             {
-                var builderWithNullEnumeration = new[] {builderA, nullBuilder};
+                var builderWithNullEnumeration = new[] { builderA, nullBuilder };
                 var newObject = this.Transaction.Build(builderWithNullEnumeration);
                 Assert.True(newObject.onPostBuild);
                 Assert.Equal("A", newObject.Name);
             }
 
             {
-                var builderWithNullEnumeration = new[] {nullBuilder, builderB};
+                var builderWithNullEnumeration = new[] { nullBuilder, builderB };
                 var newObject = this.Transaction.Build(builderWithNullEnumeration, builderC);
                 Assert.True(newObject.onPostBuild);
                 Assert.Equal("BC", newObject.Name);
             }
 
             {
-                var builderWithNullEnumeration = new[] {builderA, nullBuilder};
+                var builderWithNullEnumeration = new[] { builderA, nullBuilder };
                 var newObject = this.Transaction.Build(builderWithNullEnumeration, builderC);
                 Assert.True(newObject.onPostBuild);
                 Assert.Equal("AC", newObject.Name);
             }
 
             {
-                var builderWithNullEnumeration = new[] {nullBuilder, builderB};
+                var builderWithNullEnumeration = new[] { nullBuilder, builderB };
                 var newObject = this.Transaction.Build(builderWithNullEnumeration, nullBuilder);
                 Assert.True(newObject.onPostBuild);
                 Assert.Equal("B", newObject.Name);
             }
 
             {
-                var builderEnumeration = new[] {builderA, builderB};
+                var builderEnumeration = new[] { builderA, builderB };
                 var newObject = this.Transaction.Build(builderEnumeration, nullBuilder);
                 Assert.True(newObject.onPostBuild);
                 Assert.Equal("AB", newObject.Name);
@@ -276,42 +276,42 @@ public abstract class ChangesTest : IDisposable
             Action<C1> builderD = v => v.Name += "D";
 
             {
-                var builderEnumeration = new[] {builderA, builderB};
+                var builderEnumeration = new[] { builderA, builderB };
                 var newObject = this.Transaction.Build(builderEnumeration, builderC, builderD);
                 Assert.True(newObject.onPostBuild);
                 Assert.Equal("ABCD", newObject.Name);
             }
 
             {
-                var builderWithNullEnumeration = new[] {nullBuilder, builderB};
+                var builderWithNullEnumeration = new[] { nullBuilder, builderB };
                 var newObject = this.Transaction.Build(builderWithNullEnumeration, builderC, builderD);
                 Assert.True(newObject.onPostBuild);
                 Assert.Equal("BCD", newObject.Name);
             }
 
             {
-                var builderWithNullEnumeration = new[] {builderA, nullBuilder};
+                var builderWithNullEnumeration = new[] { builderA, nullBuilder };
                 var newObject = this.Transaction.Build(builderWithNullEnumeration, builderC, builderD);
                 Assert.True(newObject.onPostBuild);
                 Assert.Equal("ACD", newObject.Name);
             }
 
             {
-                var builderWithNullEnumeration = new[] {nullBuilder, builderB};
+                var builderWithNullEnumeration = new[] { nullBuilder, builderB };
                 var newObject = this.Transaction.Build(builderWithNullEnumeration, builderC, nullBuilder);
                 Assert.True(newObject.onPostBuild);
                 Assert.Equal("BC", newObject.Name);
             }
 
             {
-                var builderWithNullEnumeration = new[] {builderA, nullBuilder};
+                var builderWithNullEnumeration = new[] { builderA, nullBuilder };
                 var newObject = this.Transaction.Build(builderWithNullEnumeration, nullBuilder, builderD);
                 Assert.True(newObject.onPostBuild);
                 Assert.Equal("AD", newObject.Name);
             }
 
             {
-                var builderWithNullEnumeration = new[] {builderA, nullBuilder};
+                var builderWithNullEnumeration = new[] { builderA, nullBuilder };
                 var newObject = this.Transaction.Build(builderWithNullEnumeration, nullBuilder, nullBuilder);
                 Assert.True(newObject.onPostBuild);
                 Assert.Equal("A", newObject.Name);
@@ -1152,7 +1152,7 @@ public abstract class ChangesTest : IDisposable
             Assert.Empty(changes.Roles);
 
             // Set same element
-            c1a.C1C2one2manies = new[] {c2b};
+            c1a.C1C2one2manies = new[] { c2b };
 
             changes = this.Transaction.Checkpoint();
 
@@ -1324,7 +1324,7 @@ public abstract class ChangesTest : IDisposable
             Assert.Empty(changes.Roles);
 
             // Set same element
-            c1a.C1C2many2manies = new[] {c2b};
+            c1a.C1C2many2manies = new[] { c2b };
 
             changes = this.Transaction.Checkpoint();
 

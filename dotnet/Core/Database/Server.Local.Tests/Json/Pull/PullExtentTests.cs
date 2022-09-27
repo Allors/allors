@@ -94,14 +94,14 @@ namespace Tests
                 Results = new[]
                 {
                     new  Result { Name = "Datas" },
-                }
+                },
             };
 
             var pullRequest = new PullRequest
             {
                 l = new[]
                 {
-                    pull.ToJson(this.UnitConvert)
+                    pull.ToJson(this.UnitConvert),
                 },
             };
 
@@ -144,7 +144,7 @@ namespace Tests
             {
                 Extent = new Extent(this.M.C1)
                 {
-                    Predicate = new Equals(this.M.C1.Name) { Value = "c1B" }
+                    Predicate = new Equals(this.M.C1.Name) { Value = "c1B" },
                 },
                 Results = new[]
                 {
@@ -152,17 +152,17 @@ namespace Tests
                     {
                         Include = new []
                         {
-                            new Node(this.M.C1.C1C2One2One)
-                        }
+                            new Node(this.M.C1.C1C2One2One),
+                        },
                     },
-                }
+                },
             };
 
             var pullRequest = new PullRequest
             {
                 l = new[]
                 {
-                    pull.ToJson(this.UnitConvert)
+                    pull.ToJson(this.UnitConvert),
                 },
             };
 
@@ -191,7 +191,7 @@ namespace Tests
             {
                 Extent = new Extent(this.M.C2)
                 {
-                    Predicate = new Equals(this.M.C2.Name) { Value = "c2B" }
+                    Predicate = new Equals(this.M.C2.Name) { Value = "c2B" },
                 },
                 Results = new[]
                 {
@@ -199,17 +199,17 @@ namespace Tests
                     {
                         Include = new []
                         {
-                            new Node(this.M.C2.C1WhereC1C2One2One)
-                        }
+                            new Node(this.M.C2.C1WhereC1C2One2One),
+                        },
                     },
-                }
+                },
             };
 
             var pullRequest = new PullRequest
             {
                 l = new[]
                 {
-                    pull.ToJson(this.UnitConvert)
+                    pull.ToJson(this.UnitConvert),
                 },
             };
 
@@ -238,7 +238,7 @@ namespace Tests
             {
                 Extent = new Extent(this.M.C1)
                 {
-                    Predicate = new Equals(this.M.C1.Name) { Value = "c1B" }
+                    Predicate = new Equals(this.M.C1.Name) { Value = "c1B" },
                 },
                 Results = new[]
                 {
@@ -249,18 +249,18 @@ namespace Tests
                             PropertyType = this.M.C1.C1C2One2One,
                             Include = new[]
                             {
-                                new Node(this.M.C2.C2C2One2One)
-                            }
-                        }
+                                new Node(this.M.C2.C2C2One2One),
+                            },
+                        },
                     },
-                }
+                },
             };
 
             var pullRequest = new PullRequest
             {
                 l = new[]
                 {
-                    pull.ToJson(this.UnitConvert)
+                    pull.ToJson(this.UnitConvert),
                 },
             };
 
@@ -289,7 +289,7 @@ namespace Tests
             {
                 Extent = new Extent(this.M.C2)
                 {
-                    Predicate = new Equals(this.M.C2.Name) { Value = "c2B" }
+                    Predicate = new Equals(this.M.C2.Name) { Value = "c2B" },
                 },
                 Results = new[]
                 {
@@ -300,18 +300,18 @@ namespace Tests
                             PropertyType = this.M.C2.C1WhereC1C2One2One,
                             Include = new[]
                             {
-                                new Node(this.M.C1.C1WhereC1C1One2One)
-                            }
-                        }
+                                new Node(this.M.C1.C1WhereC1C1One2One),
+                            },
+                        },
                     },
-                }
+                },
             };
 
             var pullRequest = new PullRequest
             {
                 l = new[]
                 {
-                    pull.ToJson(this.UnitConvert)
+                    pull.ToJson(this.UnitConvert),
                 },
             };
 

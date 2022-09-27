@@ -38,7 +38,7 @@ namespace Allors.Server.Controllers
             var m = this.Transaction.Database.Services.Get<M>();
             var organization = new Organizations(this.Transaction).FindBy(m.Organization.Owner, this.Transaction.Services.Get<IUserService>().User);
             response.AddObject("root", organization, new[] {
-                new Node(m.Organization.Shareholders)
+                new Node(m.Organization.Shareholders),
             });
             return this.Ok(response.Build());
         }

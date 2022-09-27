@@ -16,8 +16,8 @@ namespace Allors.Database.Configuration
         public WorkspaceMask(M m) =>
             this.masks = new Dictionary<IClass, IRoleType>
             {
-                {m.TrimFrom, m.TrimFrom.Name},
-                {m.TrimTo, m.TrimTo.Name},
+                { m.TrimFrom, m.TrimFrom.Name },
+                { m.TrimTo, m.TrimTo.Name },
             };
 
         public IDictionary<IClass, IRoleType> GetMasks(string workspaceName) => this.masks;

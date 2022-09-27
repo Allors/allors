@@ -105,7 +105,7 @@ public sealed class RelationType : MetaIdentifiableObject, IRelationType
                     Unit unit => unit.WorkspaceNames,
                     Interface @interface => @interface.Classes.SelectMany(v => v.WorkspaceNames),
                     Class @class => @class.WorkspaceNames,
-                    _ => Array.Empty<string>()
+                    _ => Array.Empty<string>(),
                 })
                 .ToArray()
             : Array.Empty<string>();

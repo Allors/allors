@@ -21,7 +21,7 @@ public enum ColumnTypes
     Float,
     Integer,
     String,
-    Unique
+    Unique,
 }
 
 public abstract class SchemaTest : IDisposable

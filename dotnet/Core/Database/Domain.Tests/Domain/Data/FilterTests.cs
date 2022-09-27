@@ -64,7 +64,7 @@ namespace Allors.Database.Domain.Tests
                         new Equals
                             {
                                 PropertyType = this.M.Person.LastName,
-                                Value = "Doe"
+                                Value = "Doe",
                             },
                     },
                 },

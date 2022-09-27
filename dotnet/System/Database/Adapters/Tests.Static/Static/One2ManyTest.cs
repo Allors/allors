@@ -46,9 +46,9 @@ public abstract class One2ManyTest : IDisposable
                     var to3 = C1.Create(this.Transaction);
                     var to4 = C1.Create(this.Transaction);
 
-                    C1[] to1Array = {to1};
-                    C1[] to2Array = {to2};
-                    C1[] to12Array = {to1, to2};
+                    C1[] to1Array = { to1 };
+                    C1[] to2Array = { to2 };
+                    C1[] to12Array = { to1, to2 };
 
                     // To 0-4-0
                     mark();
@@ -539,7 +539,7 @@ public abstract class One2ManyTest : IDisposable
                     Assert.Empty(from.C1C1one2manies);
 
                     // Set Empty Array
-                    from.C1C1one2manies = new C1[] {null};
+                    from.C1C1one2manies = new C1[] { null };
                     mark();
                     Assert.Empty(from.C1C1one2manies);
                     from.C1C1one2manies = Array.Empty<C1>();
@@ -555,36 +555,36 @@ public abstract class One2ManyTest : IDisposable
                     Assert.Empty(from.C1C1one2manies);
 
                     // Set Array with a null in the front
-                    from.C1C1one2manies = new[] {null, to1, to2};
+                    from.C1C1one2manies = new[] { null, to1, to2 };
                     mark();
                     Assert.Equal(2, from.C1C1one2manies.Count());
                     Assert.Contains(to1, from.C1C1one2manies);
                     Assert.Contains(to2, from.C1C1one2manies);
-                    from.C1C1one2manies = new[] {null, to1, to2};
+                    from.C1C1one2manies = new[] { null, to1, to2 };
                     mark();
                     Assert.Equal(2, from.C1C1one2manies.Count());
                     Assert.Contains(to1, from.C1C1one2manies);
                     Assert.Contains(to2, from.C1C1one2manies);
 
                     // Set Array with a null in the middle
-                    from.C1C1one2manies = new[] {to1, null, to2};
+                    from.C1C1one2manies = new[] { to1, null, to2 };
                     mark();
                     Assert.Equal(2, from.C1C1one2manies.Count());
                     Assert.Contains(to1, from.C1C1one2manies);
                     Assert.Contains(to2, from.C1C1one2manies);
-                    from.C1C1one2manies = new[] {to1, null, to2};
+                    from.C1C1one2manies = new[] { to1, null, to2 };
                     mark();
                     Assert.Equal(2, from.C1C1one2manies.Count());
                     Assert.Contains(to1, from.C1C1one2manies);
                     Assert.Contains(to2, from.C1C1one2manies);
 
                     // Set Array with a null in the back
-                    from.C1C1one2manies = new[] {to1, to2, null};
+                    from.C1C1one2manies = new[] { to1, to2, null };
                     mark();
                     Assert.Equal(2, from.C1C1one2manies.Count());
                     Assert.Contains(to1, from.C1C1one2manies);
                     Assert.Contains(to2, from.C1C1one2manies);
-                    from.C1C1one2manies = new[] {to1, to2, null};
+                    from.C1C1one2manies = new[] { to1, to2, null };
                     mark();
                     Assert.Equal(2, from.C1C1one2manies.Count());
                     Assert.Contains(to1, from.C1C1one2manies);
@@ -812,9 +812,9 @@ public abstract class One2ManyTest : IDisposable
                 Assert.Null(to4.C1WhereC1C2one2many);
 
                 // Multiplicity
-                C2[] to1Array = {to1};
-                C2[] to2Array = {to2};
-                C2[] to12Array = {to1, to2};
+                C2[] to1Array = { to1 };
+                C2[] to2Array = { to2 };
+                C2[] to12Array = { to1, to2 };
 
                 from.AddC1C2one2many(to1);
                 from.AddC1C2one2many(to1);
@@ -1145,9 +1145,9 @@ public abstract class One2ManyTest : IDisposable
                 Assert.Null(to4.C1WhereC1I1one2many);
 
                 // Multiplicity
-                C1[] to1Array = {to1};
-                C1[] to2Array = {to2};
-                C1[] to12Array = {to1, to2};
+                C1[] to1Array = { to1 };
+                C1[] to2Array = { to2 };
+                C1[] to12Array = { to1, to2 };
 
                 from.AddC1I1one2many(to1);
                 from.AddC1I1one2many(to1);
@@ -1470,9 +1470,9 @@ public abstract class One2ManyTest : IDisposable
                 Assert.Null(to4.C1WhereC1I2one2many);
 
                 // Multiplicity
-                C2[] to1Array = {to1};
-                C2[] to2Array = {to2};
-                C2[] to12Array = {to1, to2};
+                C2[] to1Array = { to1 };
+                C2[] to2Array = { to2 };
+                C2[] to12Array = { to1, to2 };
 
                 from.AddC1I2one2many(to1);
                 from.AddC1I2one2many(to1);
@@ -1786,9 +1786,9 @@ public abstract class One2ManyTest : IDisposable
                 Assert.Null(to4.C3WhereC3C4one2many);
 
                 // Multiplicity
-                C4[] to1Array = {to1};
-                C4[] to2Array = {to2};
-                C4[] to12Array = {to1, to2};
+                C4[] to1Array = { to1 };
+                C4[] to2Array = { to2 };
+                C4[] to12Array = { to1, to2 };
 
                 from.AddC3C4one2many(to1);
                 from.AddC3C4one2many(to1);
@@ -2320,9 +2320,9 @@ public abstract class One2ManyTest : IDisposable
                     Assert.False(to4.ExistI1WhereI1I12one2many);
 
                     // Multiplicity
-                    C1[] to1Array = {to1};
-                    C1[] to2Array = {to2};
-                    C1[] to12Array = {to1, to2};
+                    C1[] to1Array = { to1 };
+                    C1[] to2Array = { to2 };
+                    C1[] to12Array = { to1, to2 };
 
                     from.AddI1I12one2many(to1);
                     from.AddI1I12one2many(to1);
@@ -2678,9 +2678,9 @@ public abstract class One2ManyTest : IDisposable
                 Assert.Null(to4.I1WhereI1I1one2many);
 
                 // Multiplicity
-                C1[] to1Array = {to1};
-                C1[] to2Array = {to2};
-                C1[] to12Array = {to1, to2};
+                C1[] to1Array = { to1 };
+                C1[] to2Array = { to2 };
+                C1[] to12Array = { to1, to2 };
 
                 from.AddI1I1one2many(to1);
                 from.AddI1I1one2many(to1);
@@ -3005,9 +3005,9 @@ public abstract class One2ManyTest : IDisposable
                 Assert.Null(to4.I1WhereI1I2one2many);
 
                 // Multiplicity
-                C2[] to1Array = {to1};
-                C2[] to2Array = {to2};
-                C2[] to12Array = {to1, to2};
+                C2[] to1Array = { to1 };
+                C2[] to2Array = { to2 };
+                C2[] to12Array = { to1, to2 };
 
                 from.AddI1I2one2many(to1);
                 from.AddI1I2one2many(to1);
@@ -3540,9 +3540,9 @@ public abstract class One2ManyTest : IDisposable
                     Assert.False(to4.ExistI1WhereI1I34one2many);
 
                     // Multiplicity
-                    C3[] to1Array = {to1};
-                    C3[] to2Array = {to2};
-                    C3[] to12Array = {to1, to2};
+                    C3[] to1Array = { to1 };
+                    C3[] to2Array = { to2 };
+                    C3[] to12Array = { to1, to2 };
 
                     from.AddI1I34one2many(to1);
                     from.AddI1I34one2many(to1);
@@ -3766,10 +3766,10 @@ public abstract class One2ManyTest : IDisposable
             {
                 var c1A = C1.Create(this.Transaction);
                 var c1B = C1.Create(this.Transaction);
-                C1[] c1Bs = {c1B};
+                C1[] c1Bs = { c1B };
 
                 var c2A = C2.Create(this.Transaction);
-                C2[] c2As = {c2A};
+                C2[] c2As = { c2A };
 
                 // Illegal role
                 // Class

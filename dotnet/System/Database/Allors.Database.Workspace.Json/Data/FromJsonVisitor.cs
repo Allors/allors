@@ -132,7 +132,7 @@ public class FromJsonVisitor : IVisitor
             PropertyType =
                 (IPropertyType)this.fromJson.MetaPopulation.FindAssociationType(visited.a) ??
                 this.fromJson.MetaPopulation.FindRoleType(visited.r),
-            OfType = this.fromJson.MetaPopulation.FindComposite(visited.o)
+            OfType = this.fromJson.MetaPopulation.FindComposite(visited.o),
         };
 
         this.selects.Push(select);
@@ -241,7 +241,7 @@ public class FromJsonVisitor : IVisitor
                         var instanceOf = new Instanceof(propertyType)
                         {
                             ObjectType = visited.o != null ? (IComposite)this.fromJson.MetaPopulation.FindByTag(visited.o) : null,
-                            Parameter = visited.p
+                            Parameter = visited.p,
                         };
 
                         this.predicates.Push(instanceOf);
@@ -249,14 +249,14 @@ public class FromJsonVisitor : IVisitor
 
                     case PredicateKind.Exists:
 
-                        var exists = new Exists(propertyType) {Parameter = visited.p};
+                        var exists = new Exists(propertyType) { Parameter = visited.p };
 
                         this.predicates.Push(exists);
                         break;
 
                     case PredicateKind.Contains:
 
-                        var contains = new Contains(propertyType) {Parameter = visited.p};
+                        var contains = new Contains(propertyType) { Parameter = visited.p };
 
                         if (visited.ob.HasValue)
                         {
@@ -268,7 +268,7 @@ public class FromJsonVisitor : IVisitor
 
                     case PredicateKind.ContainedIn:
 
-                        var containedIn = new ContainedIn(propertyType) {Parameter = visited.p};
+                        var containedIn = new ContainedIn(propertyType) { Parameter = visited.p };
 
                         this.predicates.Push(containedIn);
 
@@ -288,7 +288,7 @@ public class FromJsonVisitor : IVisitor
 
                         var equals = new Equals(propertyType)
                         {
-                            Parameter = visited.p, Path = this.fromJson.MetaPopulation.FindRoleType(visited.pa)
+                            Parameter = visited.p, Path = this.fromJson.MetaPopulation.FindRoleType(visited.pa),
                         };
 
                         this.predicates.Push(equals);
@@ -319,7 +319,7 @@ public class FromJsonVisitor : IVisitor
                             Parameter = visited.p,
                             Values = visited.vs?.Select(v => this.fromJson.UnitConvert.UnitFromJson(roleType.ObjectType.Tag, v))
                                 .ToArray(),
-                            Paths = visited.pas?.Select(v => this.fromJson.MetaPopulation.FindRoleType(v)).ToArray()
+                            Paths = visited.pas?.Select(v => this.fromJson.MetaPopulation.FindRoleType(v)).ToArray(),
                         };
 
                         this.predicates.Push(between);
@@ -332,7 +332,7 @@ public class FromJsonVisitor : IVisitor
                         {
                             Parameter = visited.p,
                             Value = this.fromJson.UnitConvert.UnitFromJson(roleType.ObjectType.Tag, visited.v),
-                            Path = this.fromJson.MetaPopulation.FindRoleType(visited.pa)
+                            Path = this.fromJson.MetaPopulation.FindRoleType(visited.pa),
                         };
 
                         this.predicates.Push(greaterThan);
@@ -345,7 +345,7 @@ public class FromJsonVisitor : IVisitor
                         {
                             Parameter = visited.p,
                             Value = this.fromJson.UnitConvert.UnitFromJson(roleType.ObjectType.Tag, visited.v),
-                            Path = this.fromJson.MetaPopulation.FindRoleType(visited.pa)
+                            Path = this.fromJson.MetaPopulation.FindRoleType(visited.pa),
                         };
 
                         this.predicates.Push(lessThan);
@@ -357,7 +357,7 @@ public class FromJsonVisitor : IVisitor
                         var like = new Like(roleType)
                         {
                             Parameter = visited.p,
-                            Value = this.fromJson.UnitConvert.UnitFromJson(roleType.ObjectType.Tag, visited.v)?.ToString()
+                            Value = this.fromJson.UnitConvert.UnitFromJson(roleType.ObjectType.Tag, visited.v)?.ToString(),
                         };
 
                         this.predicates.Push(like);
@@ -378,7 +378,7 @@ public class FromJsonVisitor : IVisitor
         {
             ExtentRef = visited.er,
             ObjectType = !string.IsNullOrWhiteSpace(visited.t) ? (IObjectType)this.fromJson.MetaPopulation.FindByTag(visited.t) : null,
-            Arguments = visited.a != null ? new Arguments(visited.a, this.fromJson.UnitConvert) : null
+            Arguments = visited.a != null ? new Arguments(visited.a, this.fromJson.UnitConvert) : null,
         };
 
         if (visited.o != null)
@@ -410,7 +410,7 @@ public class FromJsonVisitor : IVisitor
 
     public void VisitResult(Allors.Protocol.Json.Data.Result visited)
     {
-        var result = new Result {SelectRef = visited.r, Name = visited.n, Skip = visited.k, Take = visited.t};
+        var result = new Result { SelectRef = visited.r, Name = visited.n, Skip = visited.k, Take = visited.t };
 
         if (visited.s != null)
         {
@@ -438,7 +438,7 @@ public class FromJsonVisitor : IVisitor
             SortDirection = visited.d ?? SortDirection.Ascending,
             RoleType = !string.IsNullOrWhiteSpace(visited.r)
                 ? ((IRelationType)this.fromJson.MetaPopulation.FindByTag(visited.r)).RoleType
-                : null
+                : null,
         };
 
         this.sorts.Push(sort);

@@ -87,7 +87,7 @@ public class StringTemplate
         {
             TemplateGroup templateGroup = new TemplateGroupFile(this.fileInfo.FullName, '$', '$')
             {
-                ErrorManager = new ErrorManager(new LogAdapter(log))
+                ErrorManager = new ErrorManager(new LogAdapter(log)),
             };
 
             var configurationTemplate = templateGroup.GetInstanceOf(TemplateConfiguration);

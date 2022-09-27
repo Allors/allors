@@ -23,7 +23,7 @@ public abstract class Profile : IProfile
     {
         get
         {
-            var inits = new List<Action> {this.Init};
+            var inits = new List<Action> { this.Init };
 
             if (Settings.ExtraInits)
             {
@@ -56,7 +56,7 @@ public abstract class Profile : IProfile
     {
         var metaPopulation = new MetaBuilder().Build();
         var scope = new DefaultDomainDatabaseServices();
-        return new Database(scope, new Memory.Configuration {ObjectFactory = new ObjectFactory(metaPopulation, typeof(C1))});
+        return new Database(scope, new Memory.Configuration { ObjectFactory = new ObjectFactory(metaPopulation, typeof(C1)) });
     }
 
     internal ITransaction CreateTransaction() => this.Database.CreateTransaction();

@@ -18,16 +18,15 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Database.Meta.Class">
-    <Position X="12.5" Y="18.75" Width="2.75" />
+    <Position X="12.5" Y="19.25" Width="2.75" />
     <Members>
       <Method Name="Actions" Hidden="true" />
       <Method Name="Class" Hidden="true" />
       <Method Name="DeriveRequiredRoleTypes" Hidden="true" />
-      <Method Name="DeriveWorkspaceNames" Hidden="true" />
       <Method Name="IsAssignableFrom" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAAAQEEAIAFAABEJIAAQAEAAAAAAAAAAQCIAAAAAAAA=</HashCode>
+      <HashCode>AAAAQAEAIAFAABEJAAAQAEAAAAAAAAAAQCIAAAAAAAA=</HashCode>
       <FileName>Class.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -40,15 +39,9 @@
       <Method Name="ExistRoleType" Hidden="true" />
       <Method Name="ExistSupertype" Hidden="true" />
       <Method Name="IsAssignableFrom" Hidden="true" />
-      <Method Name="StructuralDeriveAssociationTypes" Hidden="true" />
-      <Method Name="StructuralDeriveDirectSupertypes" Hidden="true" />
-      <Method Name="StructuralDeriveMethodTypes" Hidden="true" />
-      <Method Name="StructuralDeriveRoleTypes" Hidden="true" />
-      <Method Name="StructuralDeriveSupertypes" Hidden="true" />
-      <Method Name="StructuralDeriveSupertypesRecursively" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>BAZQAQACAAFISBARECA0AgEAAQAQEAJCQxJgAEgQBEA=</HashCode>
+      <HashCode>BAZQAQACQAFAKBQRECAwAgEQAQAQEEICQRJoAAgSBAA=</HashCode>
       <FileName>Composite.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -68,16 +61,14 @@
     <Position X="21.5" Y="3.75" Width="2.5" />
     <Members>
       <Method Name="CompareTo" Hidden="true" />
-      <Method Name="DeriveWorkspaceNames" Hidden="true" />
       <Method Name="Domain" Hidden="true" />
       <Method Name="Equals" Hidden="true" />
       <Method Name="GetHashCode" Hidden="true" />
-      <Method Name="StructuralDeriveSuperdomains" Hidden="true" />
       <Method Name="ToString" Hidden="true" />
       <Method Name="Validate" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAAABAAAAAKAAAQMoACAAAQIAAAQAIAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAABAAAAAKAAAQMgACAAAQIAAAAAIAAAAAAAAQAAAA=</HashCode>
       <FileName>Domain.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -96,19 +87,14 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Database.Meta.Interface">
-    <Position X="9.5" Y="18.75" Width="2.5" />
+    <Position X="9.5" Y="19.25" Width="2.5" />
     <Members>
       <Method Name="DeriveWorkspaceNames" Hidden="true" />
       <Method Name="Interface" Hidden="true" />
       <Method Name="IsAssignableFrom" Hidden="true" />
-      <Method Name="StructuralDeriveDirectSubtypes" Hidden="true" />
-      <Method Name="StructuralDeriveExclusiveSubclass" Hidden="true" />
-      <Method Name="StructuralDeriveSubclasses" Hidden="true" />
-      <Method Name="StructuralDeriveSubtypes" Hidden="true" />
-      <Method Name="StructuralDeriveSubtypesRecursively" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAAAAFIigAFAAAAIIAAQAAIAAAAAAEAAQAIAAIAAAQA=</HashCode>
+      <HashCode>AYAAAEACAAFAAEEIIAAQAAAAAAAEJgAAQAIAAAAAAAA=</HashCode>
       <FileName>Interface.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -124,11 +110,10 @@
       <Method Name="IMetaPopulation.FindByTag" Hidden="true" />
       <Method Name="IMetaPopulation.Validate" Hidden="true" />
       <Method Name="MetaPopulation" Hidden="true" />
-      <Method Name="StructuralDerive" Hidden="true" />
       <Method Name="Validate" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>MAFAgEGAIAGCBADICAgAADgAQCABCAAgGEQAYAAAmCA=</HashCode>
+      <HashCode>MAFAgEGAIBGCBQDICAgAADgAQCABCAAgGAQAYAAAmCA=</HashCode>
       <FileName>MetaPopulation.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -162,11 +147,10 @@
       <Method Name="DeriveWorkspaceNames" Hidden="true" />
       <Method Name="PrepareWorkspaceNames" Hidden="true" />
       <Method Name="Record" Hidden="true" />
-      <Method Name="StructuralDeriveFieldTypes" Hidden="true" />
       <Method Name="Validate" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAAAgEAAAASAAAAIIQBAAAQAAAAAAAAAAAAAAAAAACQ=</HashCode>
+      <HashCode>AAAAsEAAAACAAAAIIQBAAAQAAAAAAAAAAAAAAAAAACA=</HashCode>
       <FileName>Record.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>

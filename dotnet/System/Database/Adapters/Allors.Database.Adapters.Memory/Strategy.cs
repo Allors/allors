@@ -97,7 +97,7 @@ public sealed class Strategy : IStrategy
         {
             { } unitRole when unitRole.ObjectType.IsUnit => this.GetUnitRole(roleType),
             { } compositeRole when compositeRole.IsOne => this.GetCompositeRole(roleType),
-            _ => this.GetCompositesRole<IObject>(roleType)
+            _ => this.GetCompositesRole<IObject>(roleType),
         };
 
     public void SetRole(IRoleType roleType, object value)
@@ -137,7 +137,7 @@ public sealed class Strategy : IStrategy
         {
             { } unitRole when unitRole.ObjectType.IsUnit => this.ExistUnitRole(roleType),
             { } compositeRole when compositeRole.IsOne => this.ExistCompositeRole(roleType),
-            _ => this.ExistCompositesRole(roleType)
+            _ => this.ExistCompositesRole(roleType),
         };
 
     public object GetUnitRole(IRoleType roleType)

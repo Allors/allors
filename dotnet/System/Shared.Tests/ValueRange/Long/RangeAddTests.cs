@@ -17,7 +17,7 @@ public class RangeAddTests
         const int y = 2;
         var z = x.Add(y);
 
-        Assert.Equal(new long[] {2}, z);
+        Assert.Equal(new long[] { 2 }, z);
     }
 
     [Fact]
@@ -27,7 +27,7 @@ public class RangeAddTests
         const int y = 2;
         var z = x.Add(y);
 
-        Assert.Equal(new long[] {1, 2}, z);
+        Assert.Equal(new long[] { 1, 2 }, z);
     }
 
     [Fact]
@@ -37,7 +37,7 @@ public class RangeAddTests
         const int y = 2;
         var z = x.Add(y);
 
-        Assert.Equal(new long[] {2, 3}, z);
+        Assert.Equal(new long[] { 2, 3 }, z);
     }
 
     [Fact]
@@ -47,7 +47,7 @@ public class RangeAddTests
         const int y = 2;
         var z = x.Add(y);
 
-        Assert.Equal(new long[] {2}, z);
+        Assert.Equal(new long[] { 2 }, z);
     }
 
     [Fact]
@@ -57,7 +57,7 @@ public class RangeAddTests
         const int y = 2;
         var z = x.Add(y);
 
-        Assert.Equal(new long[] {-2, 1, 2}, z);
+        Assert.Equal(new long[] { -2, 1, 2 }, z);
     }
 
     [Fact]
@@ -67,7 +67,7 @@ public class RangeAddTests
         const int y = 2;
         var z = x.Add(y);
 
-        Assert.Equal(new long[] {2, 3, 4}, z);
+        Assert.Equal(new long[] { 2, 3, 4 }, z);
     }
 
     [Fact]
@@ -77,6 +77,6 @@ public class RangeAddTests
         const int y = 2;
         var z = x.Add(y);
 
-        Assert.Equal(new long[] {1, 2, 3}, z);
+        Assert.Equal(new long[] { 1, 2, 3 }, z);
     }
 }

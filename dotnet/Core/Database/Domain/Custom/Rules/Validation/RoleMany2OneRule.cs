@@ -18,7 +18,7 @@ namespace Allors.Database.Domain
             this.Patterns = new[]
             {
                 m.CC.RolePattern(v=>v.Assigned, v=>v.BBsWhereMany2One.BB.AAsWhereMany2One),
-                m.CC.RolePattern(v=>v.Assigned, v=>v.BBsWhereUnusedMany2One.BB.AAsWhereUnusedMany2One)
+                m.CC.RolePattern(v=>v.Assigned, v=>v.BBsWhereUnusedMany2One.BB.AAsWhereUnusedMany2One),
             };
 
         public override void Derive(ICycle cycle, IEnumerable<IObject> matches)

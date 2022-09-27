@@ -131,12 +131,12 @@ public static class Serialization
     /// <summary>
     ///     Char array for <see cref="Serialization#ObjectsSplitter" />.
     /// </summary>
-    public static readonly char[] ObjectsSplitterCharArray = {ObjectsSplitter[0]};
+    public static readonly char[] ObjectsSplitterCharArray = { ObjectsSplitter[0] };
 
     /// <summary>
     ///     Char array for <see cref="Serialization#ObjectSplitter" />.
     /// </summary>
-    public static readonly char[] ObjectSplitterCharArray = {ObjectSplitter[0]};
+    public static readonly char[] ObjectSplitterCharArray = { ObjectSplitter[0] };
 
     /// <summary>
     ///     Checks if the <see cref="IDatabase#Version" /> is correct.
@@ -167,7 +167,7 @@ public static class Serialization
             UnitTags.DateTime => XmlConvert.ToDateTime(value, XmlDateTimeSerializationMode.Utc),
             UnitTags.Unique => Guid.Parse(value),
             UnitTags.Binary => Convert.FromBase64String(value),
-            _ => throw new ArgumentException("Unknown Unit tag: " + tag)
+            _ => throw new ArgumentException("Unknown Unit tag: " + tag),
         };
 
     /// <summary>
@@ -187,7 +187,7 @@ public static class Serialization
             UnitTags.DateTime => XmlConvert.ToString((DateTime)unit, XmlDateTimeSerializationMode.Utc),
             UnitTags.Unique => XmlConvert.ToString((Guid)unit),
             UnitTags.Binary => Convert.ToBase64String((byte[])unit),
-            _ => throw new ArgumentException("Unknown Unit ObjectType: " + tag)
+            _ => throw new ArgumentException("Unknown Unit ObjectType: " + tag),
         };
 
     public static long EnsureVersion(long version)

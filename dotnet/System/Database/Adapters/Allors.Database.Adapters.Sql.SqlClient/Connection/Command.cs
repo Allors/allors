@@ -126,7 +126,7 @@ public class Command : ICommand
             UnitTags.Integer => reader.GetInt32(i),
             UnitTags.String => reader.GetString(i),
             UnitTags.Unique => reader.GetGuid(i),
-            _ => throw new ArgumentException($"Unknown Unit Tag: {tag}")
+            _ => throw new ArgumentException($"Unknown Unit Tag: {tag}"),
         };
 
     private SqlParameter GetOrCreateParameter(string parameterName, SqlDbType dbType)

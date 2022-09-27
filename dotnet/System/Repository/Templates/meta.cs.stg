@@ -345,7 +345,7 @@ $repository.Composites:{composite|$define_methods(composite)$}; separator="\n"$
             this.AssignPropertyTypes(meta, relationTypes);
             this.AssignMethodTypes(meta, methodTypes);
 
-            meta.StructuralDerive();
+            meta.Initialize();
 
             this.OverrideRequired(meta, relationTypes);
             this.OverrideUnique(meta, relationTypes);

@@ -67,7 +67,7 @@ namespace Allors.Workspace.Meta
                 UnitTags.Integer => typeof(int),
                 UnitTags.String => typeof(string),
                 UnitTags.Unique => typeof(Guid),
-                _ => this.ClrType
+                _ => this.ClrType,
             };
     }
 }

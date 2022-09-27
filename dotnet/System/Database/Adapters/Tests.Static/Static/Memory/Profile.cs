@@ -14,7 +14,7 @@ public class Profile : Adapters.Profile
     {
         get
         {
-            var markers = new List<Action> {() => { }, () => this.Transaction.Commit()};
+            var markers = new List<Action> { () => { }, () => this.Transaction.Commit() };
 
             if (Settings.ExtraMarkers)
             {

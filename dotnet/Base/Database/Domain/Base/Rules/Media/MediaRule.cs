@@ -33,7 +33,7 @@ namespace Allors.Database.Domain
                 var InvalidFileNameChars = Path.GetInvalidFileNameChars();
                 var InvalidFileNames = new[]
                 {
-                            "CON", "PRN", "AUX", "NUL", "COM", "LPT"
+                            "CON", "PRN", "AUX", "NUL", "COM", "LPT",
                         };
 
                 media.Revision = Guid.NewGuid();

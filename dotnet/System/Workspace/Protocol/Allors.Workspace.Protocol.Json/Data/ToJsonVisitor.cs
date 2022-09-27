@@ -47,7 +47,7 @@ namespace Allors.Workspace.Protocol.Json
 
         public void VisitAnd(And visited)
         {
-            var predicate = new Predicate {k = PredicateKind.And};
+            var predicate = new Predicate { k = PredicateKind.And };
 
             this.predicates.Push(predicate);
 
@@ -72,7 +72,7 @@ namespace Allors.Workspace.Protocol.Json
                 r = visited.RoleType?.RelationType.Tag,
                 vs = visited.Values?.Select(this.unitConvert.ToJson).ToArray(),
                 pas = visited.Paths?.Select(v => v.RelationType.Tag).ToArray(),
-                p = visited.Parameter
+                p = visited.Parameter,
             };
 
             this.predicates.Push(predicate);
@@ -86,7 +86,7 @@ namespace Allors.Workspace.Protocol.Json
                 a = (visited.PropertyType as AssociationType)?.RelationType.Tag,
                 r = (visited.PropertyType as RoleType)?.RelationType.Tag,
                 vs = visited.Objects?.Select(v => v.Id as object).ToArray(),
-                p = visited.Parameter
+                p = visited.Parameter,
             };
 
             this.predicates.Push(predicate);
@@ -106,7 +106,7 @@ namespace Allors.Workspace.Protocol.Json
                 a = (visited.PropertyType as AssociationType)?.RelationType.Tag,
                 r = (visited.PropertyType as RoleType)?.RelationType.Tag,
                 ob = visited.Object?.Id,
-                p = visited.Parameter
+                p = visited.Parameter,
             };
 
             this.predicates.Push(predicate);
@@ -122,7 +122,7 @@ namespace Allors.Workspace.Protocol.Json
                 ob = visited.Object?.Id,
                 v = this.unitConvert.ToJson(visited.Value),
                 pa = visited.Path?.RelationType.Tag,
-                p = visited.Parameter
+                p = visited.Parameter,
             };
 
             this.predicates.Push(predicate);
@@ -130,7 +130,7 @@ namespace Allors.Workspace.Protocol.Json
 
         public void VisitExcept(Except visited)
         {
-            var extent = new Extent {k = ExtentKind.Except};
+            var extent = new Extent { k = ExtentKind.Except };
 
             this.extents.Push(extent);
 
@@ -166,7 +166,7 @@ namespace Allors.Workspace.Protocol.Json
                 k = PredicateKind.Exists,
                 a = (visited.PropertyType as AssociationType)?.RelationType.Tag,
                 r = (visited.PropertyType as RoleType)?.RelationType.Tag,
-                p = visited.Parameter
+                p = visited.Parameter,
             };
 
             this.predicates.Push(predicate);
@@ -178,7 +178,7 @@ namespace Allors.Workspace.Protocol.Json
             {
                 k = ExtentKind.Filter,
                 t = visited.ObjectType?.Tag,
-                s = visited.Sorting?.Select(v => new Sort {d = v.SortDirection, r = v.RoleType?.RelationType.Tag}).ToArray()
+                s = visited.Sorting?.Select(v => new Sort { d = v.SortDirection, r = v.RoleType?.RelationType.Tag }).ToArray(),
             };
 
             this.extents.Push(extent);
@@ -196,7 +196,7 @@ namespace Allors.Workspace.Protocol.Json
             {
                 a = (visited.PropertyType as AssociationType)?.RelationType.Tag,
                 r = (visited.PropertyType as RoleType)?.RelationType.Tag,
-                o = visited.OfType?.Tag
+                o = visited.OfType?.Tag,
             };
 
             this.selects.Push(select);
@@ -229,7 +229,7 @@ namespace Allors.Workspace.Protocol.Json
                 r = visited.RoleType?.RelationType.Tag,
                 v = this.unitConvert.ToJson(visited.Value),
                 pa = visited.Path?.RelationType.Tag,
-                p = visited.Parameter
+                p = visited.Parameter,
             };
 
             this.predicates.Push(predicate);
@@ -242,7 +242,7 @@ namespace Allors.Workspace.Protocol.Json
                 k = PredicateKind.InstanceOf,
                 o = visited.ObjectType?.Tag,
                 a = (visited.PropertyType as AssociationType)?.RelationType.Tag,
-                r = (visited.PropertyType as RoleType)?.RelationType.Tag
+                r = (visited.PropertyType as RoleType)?.RelationType.Tag,
             };
 
             this.predicates.Push(predicate);
@@ -250,7 +250,7 @@ namespace Allors.Workspace.Protocol.Json
 
         public void VisitIntersect(Intersect visited)
         {
-            var extent = new Extent {k = ExtentKind.Intersect};
+            var extent = new Extent { k = ExtentKind.Intersect };
 
             this.extents.Push(extent);
 
@@ -287,7 +287,7 @@ namespace Allors.Workspace.Protocol.Json
                 r = visited.RoleType?.RelationType.Tag,
                 v = this.unitConvert.ToJson(visited.Value),
                 pa = visited.Path?.RelationType.Tag,
-                p = visited.Parameter
+                p = visited.Parameter,
             };
 
             this.predicates.Push(predicate);
@@ -300,7 +300,7 @@ namespace Allors.Workspace.Protocol.Json
                 k = PredicateKind.Like,
                 r = visited.RoleType?.RelationType.Tag,
                 v = this.unitConvert.ToJson(visited.Value),
-                p = visited.Parameter
+                p = visited.Parameter,
             };
 
             this.predicates.Push(predicate);
@@ -313,7 +313,7 @@ namespace Allors.Workspace.Protocol.Json
             var node = new Node
             {
                 a = (visited.PropertyType as AssociationType)?.RelationType.Tag,
-                r = (visited.PropertyType as RoleType)?.RelationType.Tag
+                r = (visited.PropertyType as RoleType)?.RelationType.Tag,
             };
 
             this.nodes.Push(node);
@@ -332,7 +332,7 @@ namespace Allors.Workspace.Protocol.Json
 
         public void VisitNot(Not visited)
         {
-            var predicate = new Predicate {k = PredicateKind.Not};
+            var predicate = new Predicate { k = PredicateKind.Not };
 
             this.predicates.Push(predicate);
 
@@ -345,7 +345,7 @@ namespace Allors.Workspace.Protocol.Json
 
         public void VisitOr(Or visited)
         {
-            var predicate = new Predicate {k = PredicateKind.Or};
+            var predicate = new Predicate { k = PredicateKind.Or };
 
             this.predicates.Push(predicate);
 
@@ -364,7 +364,7 @@ namespace Allors.Workspace.Protocol.Json
 
         public void VisitPull(PullRequest visited)
         {
-            var pull = new Pull {er = visited.ExtentRef, t = visited.ObjectType?.Tag, o = visited.ObjectId ?? visited.Object?.Id};
+            var pull = new Pull { er = visited.ExtentRef, t = visited.ObjectType?.Tag, o = visited.ObjectId ?? visited.Object?.Id };
 
             if (visited.Extent != null)
             {
@@ -390,7 +390,7 @@ namespace Allors.Workspace.Protocol.Json
 
         public void VisitResult(Request.Result visited)
         {
-            var result = new Result {r = visited.SelectRef, n = visited.Name, k = visited.Skip, t = visited.Take};
+            var result = new Result { r = visited.SelectRef, n = visited.Name, k = visited.Skip, t = visited.Take };
 
             this.results.Push(result);
 
@@ -416,14 +416,14 @@ namespace Allors.Workspace.Protocol.Json
 
         public void VisitSort(Request.Sort visited)
         {
-            var sort = new Sort {d = visited.SortDirection, r = visited.RoleType?.RelationType.Tag};
+            var sort = new Sort { d = visited.SortDirection, r = visited.RoleType?.RelationType.Tag };
 
             this.sorts.Push(sort);
         }
 
         public void VisitUnion(Union visited)
         {
-            var extent = new Extent {k = ExtentKind.Union};
+            var extent = new Extent { k = ExtentKind.Union };
 
             this.extents.Push(extent);
 

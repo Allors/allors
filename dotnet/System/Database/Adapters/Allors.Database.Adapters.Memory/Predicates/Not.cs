@@ -215,7 +215,7 @@ internal sealed class Not : Predicate, ICompositePredicate
         {
             ThreeValuedLogic.True => ThreeValuedLogic.False,
             ThreeValuedLogic.False => ThreeValuedLogic.True,
-            _ => ThreeValuedLogic.Unknown
+            _ => ThreeValuedLogic.Unknown,
         };
 
     private void CheckUnarity()

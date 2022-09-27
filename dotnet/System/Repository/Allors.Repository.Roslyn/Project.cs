@@ -574,7 +574,7 @@ public class Project
             "String" => "String",
             "string" => "String",
             "Guid" => "Unique",
-            _ => typeName
+            _ => typeName,
         };
     }
 

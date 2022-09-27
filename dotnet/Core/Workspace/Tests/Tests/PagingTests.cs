@@ -34,9 +34,9 @@ namespace Tests.Workspace
                     {
                         new Result
                         {
-                            Take = 1
-                        }
-                    }
+                            Take = 1,
+                        },
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);

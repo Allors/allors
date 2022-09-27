@@ -30,7 +30,7 @@ internal class UnitRoleDataRecords : IEnumerable<SqlDataRecord>
         var metaData = new[]
         {
             new SqlMetaData(this.mapping.TableTypeColumnNameForAssociation, SqlDbType.BigInt),
-            UnitSqlMetaData.Get(this.mapping.TableTypeColumnNameForRole, this.roleType)
+            UnitSqlMetaData.Get(this.mapping.TableTypeColumnNameForRole, this.roleType),
         };
         var sqlDataRecord = new SqlDataRecord(metaData);
 

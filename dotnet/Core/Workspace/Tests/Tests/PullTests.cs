@@ -1,4 +1,4 @@
-// <copyright file="PullTests.cs" company="Allors bvba">
+﻿// <copyright file="PullTests.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -38,11 +38,11 @@ namespace Tests.Workspace
                         {
                             Operands = new IPredicate[]
                             {
-                                new GreaterThan(m.C1.C1AllorsInteger){Value = 0},
-                                new LessThan(m.C1.C1AllorsInteger){Value = 2}
-                            }
-                        }
-                    }
+                                new GreaterThan(m.C1.C1AllorsInteger) { Value = 0 },
+                                new LessThan(m.C1.C1AllorsInteger) { Value = 2 },
+                            },
+                        },
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -62,11 +62,11 @@ namespace Tests.Workspace
                         {
                             Operands = new IPredicate[]
                             {
-                                new GreaterThan(m.I12.I12AllorsInteger){Value = 0},
-                                new LessThan(m.I12.I12AllorsInteger){Value = 2}
-                            }
-                        }
-                    }
+                                new GreaterThan(m.I12.I12AllorsInteger) { Value = 0 },
+                                new LessThan(m.I12.I12AllorsInteger) { Value = 2 },
+                            },
+                        },
+                    },
                 };
 
                 result = await connection.PullAsync(pull);
@@ -97,10 +97,10 @@ namespace Tests.Workspace
                         {
                             Extent = new Filter(this.M.C1)
                             {
-                                Predicate = new Equals(m.C1.C1AllorsString) { Value = "Nothing here!" }
-                            }
-                        }
-                    }
+                                Predicate = new Equals(m.C1.C1AllorsString) { Value = "Nothing here!" },
+                            },
+                        },
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -116,9 +116,9 @@ namespace Tests.Workspace
                     {
                         Predicate = new ContainedIn(m.C2.C1sWhereC1C2Many2Many)
                         {
-                            Extent = new Filter(this.M.C1)
-                        }
-                    }
+                            Extent = new Filter(this.M.C1),
+                        },
+                    },
                 };
 
                 result = await connection.PullAsync(pull);
@@ -138,10 +138,10 @@ namespace Tests.Workspace
                         {
                             Extent = new Filter(this.M.C1)
                             {
-                                Predicate = new Equals(m.C1.C1AllorsString) { Value = "ᴀbra" }
-                            }
-                        }
-                    }
+                                Predicate = new Equals(m.C1.C1AllorsString) { Value = "ᴀbra" },
+                            },
+                        },
+                    },
                 };
 
                 result = await connection.PullAsync(pull);
@@ -171,9 +171,9 @@ namespace Tests.Workspace
                     {
                         Predicate = new Contains(m.C2.C1sWhereC1C2Many2Many)
                         {
-                            Object = c1c
-                        }
-                    }
+                            Object = c1c,
+                        },
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -199,8 +199,8 @@ namespace Tests.Workspace
                 {
                     Extent = new Filter(this.M.C2)
                     {
-                        Predicate = new Exists(m.C2.C1sWhereC1C2Many2Many)
-                    }
+                        Predicate = new Exists(m.C2.C1sWhereC1C2Many2Many),
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -229,10 +229,10 @@ namespace Tests.Workspace
                         {
                             Extent = new Filter(this.M.C1)
                             {
-                                Predicate = new Equals(m.C1.C1AllorsString) { Value = "ᴀbra" }
-                            }
-                        }
-                    }
+                                Predicate = new Equals(m.C1.C1AllorsString) { Value = "ᴀbra" },
+                            },
+                        },
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -262,9 +262,9 @@ namespace Tests.Workspace
                     {
                         Predicate = new Contains(m.C2.C1sWhereC1C2Many2One)
                         {
-                            Object = c1c
-                        }
-                    }
+                            Object = c1c,
+                        },
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -293,10 +293,10 @@ namespace Tests.Workspace
                         {
                             Extent = new Filter(this.M.C1)
                             {
-                                Predicate = new Equals(m.C1.C1AllorsString) { Value = "ᴀbra" }
-                            }
-                        }
-                    }
+                                Predicate = new Equals(m.C1.C1AllorsString) { Value = "ᴀbra" },
+                            },
+                        },
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -326,9 +326,9 @@ namespace Tests.Workspace
                     {
                         Predicate = new Equals(m.C2.C1WhereC1C2One2Many)
                         {
-                            Object = c1b
-                        }
-                    }
+                            Object = c1b,
+                        },
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -345,9 +345,9 @@ namespace Tests.Workspace
                     {
                         Predicate = new Equals(m.C2.C1WhereC1C2One2Many)
                         {
-                            Object = c1c
-                        }
-                    }
+                            Object = c1c,
+                        },
+                    },
                 };
 
                 result = await connection.PullAsync(pull);
@@ -373,8 +373,8 @@ namespace Tests.Workspace
                 {
                     Extent = new Filter(this.M.C2)
                     {
-                        Predicate = new Exists(m.C2.C1WhereC1C2One2Many)
-                    }
+                        Predicate = new Exists(m.C2.C1WhereC1C2One2Many),
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -390,8 +390,8 @@ namespace Tests.Workspace
                 {
                     Extent = new Filter(this.M.I2)
                     {
-                        Predicate = new Exists(m.I2.I1WhereI1I2One2Many)
-                    }
+                        Predicate = new Exists(m.I2.I1WhereI1I2One2Many),
+                    },
                 };
 
                 result = await connection.PullAsync(pull);
@@ -416,8 +416,8 @@ namespace Tests.Workspace
                 {
                     Extent = new Filter(this.M.C2)
                     {
-                        Predicate = new Instanceof(m.C2.C1WhereC1C2One2Many) { ObjectType = m.C1 }
-                    }
+                        Predicate = new Instanceof(m.C2.C1WhereC1C2One2Many) { ObjectType = m.C1 },
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -446,10 +446,10 @@ namespace Tests.Workspace
                         {
                             Extent = new Filter(this.M.C1)
                             {
-                                Predicate = new Equals(m.C1.C1AllorsString) { Value = "ᴀbra" }
-                            }
-                        }
-                    }
+                                Predicate = new Equals(m.C1.C1AllorsString) { Value = "ᴀbra" },
+                            },
+                        },
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -479,9 +479,9 @@ namespace Tests.Workspace
                     {
                         Predicate = new Equals(m.C2.C1WhereC1C2One2One)
                         {
-                            Object = c1b
-                        }
-                    }
+                            Object = c1b,
+                        },
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -498,9 +498,9 @@ namespace Tests.Workspace
                     {
                         Predicate = new Equals(m.C2.C1WhereC1C2One2One)
                         {
-                            Object = c1c
-                        }
-                    }
+                            Object = c1c,
+                        },
+                    },
                 };
 
                 result = await connection.PullAsync(pull);
@@ -525,8 +525,8 @@ namespace Tests.Workspace
                 {
                     Extent = new Filter(this.M.C1)
                     {
-                        Predicate = new Exists(m.C1.C1WhereC1C1One2One)
-                    }
+                        Predicate = new Exists(m.C1.C1WhereC1C1One2One),
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -541,8 +541,8 @@ namespace Tests.Workspace
                 {
                     Extent = new Filter(m.C2)
                     {
-                        Predicate = new Exists(m.C2.C1WhereC1C2One2One)
-                    }
+                        Predicate = new Exists(m.C2.C1WhereC1C2One2One),
+                    },
                 };
 
                 result = await connection.PullAsync(pull);
@@ -567,8 +567,8 @@ namespace Tests.Workspace
                 {
                     Extent = new Filter(this.M.I12)
                     {
-                        Predicate = new Instanceof(m.I12.I12WhereI12I12One2One) { ObjectType = m.C1 }
-                    }
+                        Predicate = new Instanceof(m.I12.I12WhereI12I12One2One) { ObjectType = m.C1 },
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -583,8 +583,8 @@ namespace Tests.Workspace
                 {
                     Extent = new Filter(this.M.I12)
                     {
-                        Predicate = new Instanceof(m.I12.I12WhereI12I12One2One) { ObjectType = m.I2 }
-                    }
+                        Predicate = new Instanceof(m.I12.I12WhereI12I12One2One) { ObjectType = m.I2 },
+                    },
                 };
 
                 result = await connection.PullAsync(pull);
@@ -611,8 +611,8 @@ namespace Tests.Workspace
                 {
                     Extent = new Filter(m.C1)
                     {
-                        Predicate = new Equals { Object = c1c }
-                    }
+                        Predicate = new Equals { Object = c1c },
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -635,7 +635,7 @@ namespace Tests.Workspace
             {
                 var pull = new PullRequest
                 {
-                    Extent = new Filter(m.I12)
+                    Extent = new Filter(m.I12),
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -662,9 +662,9 @@ namespace Tests.Workspace
                     {
                         Predicate = new Instanceof
                         {
-                            ObjectType = m.C1
-                        }
-                    }
+                            ObjectType = m.C1,
+                        },
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -693,9 +693,9 @@ namespace Tests.Workspace
                     {
                         Predicate = new Not
                         {
-                            Operand = new Equals { Object = c1c }
-                        }
-                    }
+                            Operand = new Equals { Object = c1c },
+                        },
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -728,10 +728,10 @@ namespace Tests.Workspace
                             Operands = new[]
                             {
                                 new Equals { Object = c1b },
-                                new Equals { Object = c1c }
-                            }
-                        }
-                    }
+                                new Equals { Object = c1c },
+                            },
+                        },
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -761,10 +761,10 @@ namespace Tests.Workspace
                             new Filter(m.I12),
                             new Filter(m.I12)
                             {
-                                Predicate = new Instanceof{ObjectType = m.C2}
-                            }
-                        }
-                    }
+                                Predicate = new Instanceof { ObjectType = m.C2 },
+                            },
+                        },
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -794,10 +794,10 @@ namespace Tests.Workspace
                             new Filter(m.I12),
                             new Filter(m.I12)
                             {
-                                Predicate = new Instanceof{ObjectType = m.C2}
-                            }
-                        }
-                    }
+                                Predicate = new Instanceof { ObjectType = m.C2 },
+                            },
+                        },
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -824,10 +824,10 @@ namespace Tests.Workspace
                     {
                         Operands = new IExtent[]
                         {
-                            new Filter(m.C1){Predicate = new Equals(m.C1.Name) {Value = "c1A"}},
-                            new Filter(m.C1){Predicate = new Equals(m.C1.Name) {Value = "c1B"}}
-                        }
-                    }
+                            new Filter(m.C1) { Predicate = new Equals(m.C1.Name) { Value = "c1A" } },
+                            new Filter(m.C1) { Predicate = new Equals(m.C1.Name) { Value = "c1B" } },
+                        },
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -854,9 +854,9 @@ namespace Tests.Workspace
                     {
                         Predicate = new Between(m.C1.C1AllorsDateTime)
                         {
-                            Paths = new RoleType[] { m.C1.C1DateTimeBetweenA, m.C1.C1DateTimeBetweenB }
-                        }
-                    }
+                            Paths = new RoleType[] { m.C1.C1DateTimeBetweenA, m.C1.C1DateTimeBetweenB },
+                        },
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -886,10 +886,10 @@ namespace Tests.Workspace
                             Values = new object[]
                             {
                                 new DateTime(2000, 1, 1, 0, 0, 4, DateTimeKind.Utc),
-                                new DateTime(2000, 1, 1, 0, 0, 6, DateTimeKind.Utc)
-                            }
-                        }
-                    }
+                                new DateTime(2000, 1, 1, 0, 0, 6, DateTimeKind.Utc),
+                            },
+                        },
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -916,9 +916,9 @@ namespace Tests.Workspace
                     {
                         Predicate = new GreaterThan(m.C1.C1AllorsDateTime)
                         {
-                            Path = m.C1.C1DateTimeGreaterThan
-                        }
-                    }
+                            Path = m.C1.C1DateTimeGreaterThan,
+                        },
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -945,9 +945,9 @@ namespace Tests.Workspace
                     {
                         Predicate = new GreaterThan(m.C1.C1AllorsDateTime)
                         {
-                            Value = new DateTime(2000, 1, 1, 0, 0, 4, DateTimeKind.Utc)
-                        }
-                    }
+                            Value = new DateTime(2000, 1, 1, 0, 0, 4, DateTimeKind.Utc),
+                        },
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -974,9 +974,9 @@ namespace Tests.Workspace
                     {
                         Predicate = new LessThan(m.C1.C1AllorsDateTime)
                         {
-                            Path = m.C1.C1DateTimeLessThan
-                        }
-                    }
+                            Path = m.C1.C1DateTimeLessThan,
+                        },
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -1003,9 +1003,9 @@ namespace Tests.Workspace
                     {
                         Predicate = new LessThan(m.C1.C1AllorsDateTime)
                         {
-                            Value = new DateTime(2000, 1, 1, 0, 0, 5, DateTimeKind.Utc)
-                        }
-                    }
+                            Value = new DateTime(2000, 1, 1, 0, 0, 5, DateTimeKind.Utc),
+                        },
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -1032,9 +1032,9 @@ namespace Tests.Workspace
                     {
                         Predicate = new Equals(m.C1.C1AllorsDateTime)
                         {
-                            Value = new DateTime(2000, 1, 1, 0, 0, 4, DateTimeKind.Utc)
-                        }
-                    }
+                            Value = new DateTime(2000, 1, 1, 0, 0, 4, DateTimeKind.Utc),
+                        },
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -1061,9 +1061,9 @@ namespace Tests.Workspace
                     {
                         Predicate = new Between(m.C1.C1AllorsDecimal)
                         {
-                            Paths = new RoleType[] { m.C1.C1DecimalBetweenA, m.C1.C1DecimalBetweenB }
-                        }
-                    }
+                            Paths = new RoleType[] { m.C1.C1DecimalBetweenA, m.C1.C1DecimalBetweenB },
+                        },
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -1090,9 +1090,9 @@ namespace Tests.Workspace
                     {
                         Predicate = new Between(m.C1.C1AllorsDecimal)
                         {
-                            Values = new object[] { 2.1m, 2.3m }
-                        }
-                    }
+                            Values = new object[] { 2.1m, 2.3m },
+                        },
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -1119,9 +1119,9 @@ namespace Tests.Workspace
                     {
                         Predicate = new GreaterThan(m.C1.C1AllorsDecimal)
                         {
-                            Path = m.C1.C1DecimalGreaterThan
-                        }
-                    }
+                            Path = m.C1.C1DecimalGreaterThan,
+                        },
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -1148,9 +1148,9 @@ namespace Tests.Workspace
                     {
                         Predicate = new GreaterThan(m.C1.C1AllorsDecimal)
                         {
-                            Value = 1.5m
-                        }
-                    }
+                            Value = 1.5m,
+                        },
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -1177,9 +1177,9 @@ namespace Tests.Workspace
                     {
                         Predicate = new LessThan(m.C1.C1AllorsDecimal)
                         {
-                            Path = m.C1.C1DecimalLessThan
-                        }
-                    }
+                            Path = m.C1.C1DecimalLessThan,
+                        },
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -1206,9 +1206,9 @@ namespace Tests.Workspace
                     {
                         Predicate = new LessThan(m.C1.C1AllorsDecimal)
                         {
-                            Value = 1.9m
-                        }
-                    }
+                            Value = 1.9m,
+                        },
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -1235,9 +1235,9 @@ namespace Tests.Workspace
                     {
                         Predicate = new Equals(m.C1.C1AllorsDecimal)
                         {
-                            Value = 2.2m
-                        }
-                    }
+                            Value = 2.2m,
+                        },
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -1264,9 +1264,9 @@ namespace Tests.Workspace
                     {
                         Predicate = new Between(m.C1.C1AllorsDouble)
                         {
-                            Paths = new RoleType[] { m.C1.C1DoubleBetweenA, m.C1.C1DoubleBetweenB }
-                        }
-                    }
+                            Paths = new RoleType[] { m.C1.C1DoubleBetweenA, m.C1.C1DoubleBetweenB },
+                        },
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -1293,9 +1293,9 @@ namespace Tests.Workspace
                     {
                         Predicate = new Between(m.C1.C1AllorsDouble)
                         {
-                            Values = new object[] { 2.1d, 2.3d }
-                        }
-                    }
+                            Values = new object[] { 2.1d, 2.3d },
+                        },
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -1322,9 +1322,9 @@ namespace Tests.Workspace
                     {
                         Predicate = new GreaterThan(m.C1.C1AllorsDouble)
                         {
-                            Path = m.C1.C1DoubleGreaterThan
-                        }
-                    }
+                            Path = m.C1.C1DoubleGreaterThan,
+                        },
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -1351,9 +1351,9 @@ namespace Tests.Workspace
                     {
                         Predicate = new GreaterThan(m.C1.C1AllorsDouble)
                         {
-                            Value = 1.5d
-                        }
-                    }
+                            Value = 1.5d,
+                        },
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -1380,9 +1380,9 @@ namespace Tests.Workspace
                     {
                         Predicate = new LessThan(m.C1.C1AllorsDouble)
                         {
-                            Path = m.C1.C1DoubleLessThan
-                        }
-                    }
+                            Path = m.C1.C1DoubleLessThan,
+                        },
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -1409,9 +1409,9 @@ namespace Tests.Workspace
                     {
                         Predicate = new LessThan(m.C1.C1AllorsDouble)
                         {
-                            Value = 1.9d
-                        }
-                    }
+                            Value = 1.9d,
+                        },
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -1438,9 +1438,9 @@ namespace Tests.Workspace
                     {
                         Predicate = new Equals(m.C1.C1AllorsDouble)
                         {
-                            Value = 2.2d
-                        }
-                    }
+                            Value = 2.2d,
+                        },
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -1467,9 +1467,9 @@ namespace Tests.Workspace
                     {
                         Predicate = new Between(m.C1.C1AllorsInteger)
                         {
-                            Paths = new RoleType[] { m.C1.C1IntegerBetweenA, m.C1.C1IntegerBetweenB }
-                        }
-                    }
+                            Paths = new RoleType[] { m.C1.C1IntegerBetweenA, m.C1.C1IntegerBetweenB },
+                        },
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -1496,9 +1496,9 @@ namespace Tests.Workspace
                     {
                         Predicate = new Between(m.C1.C1AllorsInteger)
                         {
-                            Values = new object[] { 1, 2 }
-                        }
-                    }
+                            Values = new object[] { 1, 2 },
+                        },
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -1525,9 +1525,9 @@ namespace Tests.Workspace
                     {
                         Predicate = new GreaterThan(m.C1.C1AllorsInteger)
                         {
-                            Path = m.C1.C1IntegerGreaterThan
-                        }
-                    }
+                            Path = m.C1.C1IntegerGreaterThan,
+                        },
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -1554,9 +1554,9 @@ namespace Tests.Workspace
                     {
                         Predicate = new GreaterThan(m.C1.C1AllorsInteger)
                         {
-                            Value = 1
-                        }
-                    }
+                            Value = 1,
+                        },
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -1583,9 +1583,9 @@ namespace Tests.Workspace
                     {
                         Predicate = new LessThan(m.C1.C1AllorsInteger)
                         {
-                            Path = m.C1.C1IntegerLessThan
-                        }
-                    }
+                            Path = m.C1.C1IntegerLessThan,
+                        },
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -1612,9 +1612,9 @@ namespace Tests.Workspace
                     {
                         Predicate = new LessThan(m.C1.C1AllorsInteger)
                         {
-                            Value = 2
-                        }
-                    }
+                            Value = 2,
+                        },
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -1641,9 +1641,9 @@ namespace Tests.Workspace
                     {
                         Predicate = new Equals(m.C1.C1AllorsInteger)
                         {
-                            Value = 2
-                        }
-                    }
+                            Value = 2,
+                        },
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -1668,8 +1668,8 @@ namespace Tests.Workspace
                 {
                     Extent = new Filter(m.C1)
                     {
-                        Predicate = new Exists(m.C1.C1AllorsInteger)
-                    }
+                        Predicate = new Exists(m.C1.C1AllorsInteger),
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -1696,9 +1696,9 @@ namespace Tests.Workspace
                     {
                         Predicate = new Equals(m.C1.C1AllorsString)
                         {
-                            Path = m.C1.C1AllorsStringEquals
-                        }
-                    }
+                            Path = m.C1.C1AllorsStringEquals,
+                        },
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -1725,9 +1725,9 @@ namespace Tests.Workspace
                     {
                         Predicate = new Equals(m.C1.C1AllorsString)
                         {
-                            Value = "ᴀbra"
-                        }
-                    }
+                            Value = "ᴀbra",
+                        },
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -1754,9 +1754,9 @@ namespace Tests.Workspace
                     {
                         Predicate = new Like(m.C1.C1AllorsString)
                         {
-                            Value = "ᴀ%"
-                        }
-                    }
+                            Value = "ᴀ%",
+                        },
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -1783,9 +1783,9 @@ namespace Tests.Workspace
                     {
                         Predicate = new Equals(m.C1.C1AllorsUnique)
                         {
-                            Value = new Guid("8B3C4978-72D3-40BA-B302-114EB331FE04")
-                        }
-                    }
+                            Value = new Guid("8B3C4978-72D3-40BA-B302-114EB331FE04"),
+                        },
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -1815,10 +1815,10 @@ namespace Tests.Workspace
                         {
                             Extent = new Filter(this.M.I12)
                             {
-                                Predicate = new Equals(m.I12.I12AllorsString) { Value = "Nothing here!" }
-                            }
-                        }
-                    }
+                                Predicate = new Equals(m.I12.I12AllorsString) { Value = "Nothing here!" },
+                            },
+                        },
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -1834,9 +1834,9 @@ namespace Tests.Workspace
                     {
                         Predicate = new ContainedIn(m.C1.C1I12Many2Manies)
                         {
-                            Extent = new Filter(this.M.I12)
-                        }
-                    }
+                            Extent = new Filter(this.M.I12),
+                        },
+                    },
                 };
 
                 result = await connection.PullAsync(pull);
@@ -1856,10 +1856,10 @@ namespace Tests.Workspace
                         {
                             Extent = new Filter(this.M.I12)
                             {
-                                Predicate = new Equals(m.I12.I12AllorsString) { Value = "ᴀbra" }
-                            }
-                        }
-                    }
+                                Predicate = new Equals(m.I12.I12AllorsString) { Value = "ᴀbra" },
+                            },
+                        },
+                    },
                 };
 
                 result = await connection.PullAsync(pull);
@@ -1888,9 +1888,9 @@ namespace Tests.Workspace
                     {
                         Predicate = new Contains(m.C1.C1C2Many2Manies)
                         {
-                            Object = c2c
-                        }
-                    }
+                            Object = c2c,
+                        },
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -1919,10 +1919,10 @@ namespace Tests.Workspace
                         {
                             Extent = new Filter(this.M.I12)
                             {
-                                Predicate = new Equals(m.I12.I12AllorsString) { Value = "ᴀbra" }
-                            }
-                        }
-                    }
+                                Predicate = new Equals(m.I12.I12AllorsString) { Value = "ᴀbra" },
+                            },
+                        },
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -1951,9 +1951,9 @@ namespace Tests.Workspace
                     {
                         Predicate = new Contains(m.C1.C1C2One2Manies)
                         {
-                            Object = c2d
-                        }
-                    }
+                            Object = c2d,
+                        },
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -1982,10 +1982,10 @@ namespace Tests.Workspace
                         {
                             Extent = new Filter(this.M.I12)
                             {
-                                Predicate = new Equals(m.I12.I12AllorsString) { Value = "ᴀbra" }
-                            }
-                        }
-                    }
+                                Predicate = new Equals(m.I12.I12AllorsString) { Value = "ᴀbra" },
+                            },
+                        },
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -2014,10 +2014,10 @@ namespace Tests.Workspace
                         {
                             Extent = new Filter(this.M.I12)
                             {
-                                Predicate = new Equals(m.I12.I12AllorsString) { Value = "ᴀbra" }
-                            }
-                        }
-                    }
+                                Predicate = new Equals(m.I12.I12AllorsString) { Value = "ᴀbra" },
+                            },
+                        },
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -2044,15 +2044,15 @@ namespace Tests.Workspace
                     {
                         Predicate = new Equals(m.C1.C1AllorsInteger)
                         {
-                            Value = 2
-                        }
+                            Value = 2,
+                        },
                     },
-                    Results = new[]{
+                    Results = new[] {
                         new Result
                         {
                             Name = "IetsAnders",
-                        }
-                    }
+                        },
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);
@@ -2079,7 +2079,7 @@ namespace Tests.Workspace
 
                 var pull2 = new PullRequest
                 {
-                    ObjectId = c1a.Id
+                    ObjectId = c1a.Id,
                 };
 
                 result = await connection.PullAsync(pull2);
@@ -2107,10 +2107,10 @@ namespace Tests.Workspace
                         {
                             Select = new Select
                             {
-                                Include = this.M.C1.Nodes(v=>v.C1C2One2One.Node())
-                            }
-                        }
-                    }
+                                Include = this.M.C1.Nodes(v=>v.C1C2One2One.Node()),
+                            },
+                        },
+                    },
                 };
 
                 var result = await connection.PullAsync(pull);

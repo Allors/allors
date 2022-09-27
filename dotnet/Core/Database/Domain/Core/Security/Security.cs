@@ -84,7 +84,7 @@ namespace Allors.Database.Domain
                         Operations.Read => this.readPermissionsByObjectTypeId,
                         Operations.Write => this.writePermissionsByObjectTypeId,
                         Operations.Execute => this.executePermissionsByObjectTypeId,
-                        _ => throw new Exception("Unkown operation: " + permission.Operation)
+                        _ => throw new Exception("Unkown operation: " + permission.Operation),
                     };
 
                 if (!permissionByOperandTypeByObjectTypeId.TryGetValue(objectId, out var permissionByOperandType))
