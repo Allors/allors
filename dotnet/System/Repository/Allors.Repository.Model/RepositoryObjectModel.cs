@@ -1,4 +1,4 @@
-﻿namespace Generate.Model;
+﻿namespace Allors.Repository.Model;
 
 using System;
 using System.Collections.Generic;

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using Allors.Repository;
 using Allors.Repository.Code;
 using Allors.Repository.Generation;
-using Model;
+using Allors.Repository.Model;
 using NLog;
 
 public class Program

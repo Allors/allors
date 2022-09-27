@@ -18,7 +18,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Database.Meta.Class">
-    <Position X="13.75" Y="18.75" Width="2.75" />
+    <Position X="12.5" Y="18.75" Width="2.75" />
     <Members>
       <Method Name="Actions" Hidden="true" />
       <Method Name="Class" Hidden="true" />
@@ -33,7 +33,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Database.Meta.Composite">
-    <Position X="12" Y="9.5" Width="2.75" />
+    <Position X="10.75" Y="9.5" Width="2.75" />
     <Members>
       <Method Name="Composite" Hidden="true" />
       <Method Name="ExistAssociationType" Hidden="true" />
@@ -54,7 +54,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Database.Meta.DataType">
-    <Position X="12" Y="3.75" Width="1.5" />
+    <Position X="10.75" Y="3.75" Width="1.5" />
     <Members>
       <Method Name="DataType" Hidden="true" />
     </Members>
@@ -65,10 +65,8 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Database.Meta.Domain" BaseTypeListCollapsed="true">
-    <Position X="22.75" Y="3.75" Width="2.5" />
+    <Position X="21.5" Y="3.75" Width="2.5" />
     <Members>
-      <Method Name="AddDirectSuperdomain" Hidden="true" />
-      <Method Name="Bind" Hidden="true" />
       <Method Name="CompareTo" Hidden="true" />
       <Method Name="DeriveWorkspaceNames" Hidden="true" />
       <Method Name="Domain" Hidden="true" />
@@ -79,13 +77,13 @@
       <Method Name="Validate" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAAghAAAAAKAAAQMoACAAAQIAAAQAIAAAQAAAAAQAAA=</HashCode>
+      <HashCode>AAAABAAAAAKAAAQMoACAAAQIAAAQAIAAAAAAAAAAAAA=</HashCode>
       <FileName>Domain.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Database.Meta.FieldType" BaseTypeListCollapsed="true">
-    <Position X="17" Y="3.75" Width="2" />
+    <Position X="15.75" Y="3.75" Width="2" />
     <Members>
       <Method Name="DeriveWorkspaceNames" Hidden="true" />
       <Method Name="FieldType" Hidden="true" />
@@ -97,24 +95,8 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="Allors.Database.Meta.Inheritance" BaseTypeListCollapsed="true">
-    <Position X="9" Y="12.75" Width="2" />
-    <Members>
-      <Method Name="CompareTo" Hidden="true" />
-      <Method Name="Equals" Hidden="true" />
-      <Method Name="GetHashCode" Hidden="true" />
-      <Method Name="Inheritance" Hidden="true" />
-      <Method Name="ToString" Hidden="true" />
-      <Method Name="Validate" Hidden="true" />
-    </Members>
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAIICAAAQEgACAAAAAAAAAAIAAAAAAABBQAAA=</HashCode>
-      <FileName>Inheritance.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
   <Class Name="Allors.Database.Meta.Interface">
-    <Position X="10.5" Y="18.75" Width="2.5" />
+    <Position X="9.5" Y="18.75" Width="2.5" />
     <Members>
       <Method Name="DeriveWorkspaceNames" Hidden="true" />
       <Method Name="Interface" Hidden="true" />
@@ -138,24 +120,21 @@
       <Method Name="Derive" Hidden="true" />
       <Method Name="FindById" Hidden="true" />
       <Method Name="FindByTag" Hidden="true" />
-      <Method Name="FindDatabaseCompositeByName" Hidden="true" />
-      <Method Name="HasCycle" Hidden="true" />
       <Method Name="IMetaPopulation.FindById" Hidden="true" />
       <Method Name="IMetaPopulation.FindByTag" Hidden="true" />
-      <Method Name="IMetaPopulation.FindDatabaseCompositeByName" Hidden="true" />
       <Method Name="IMetaPopulation.Validate" Hidden="true" />
       <Method Name="MetaPopulation" Hidden="true" />
       <Method Name="StructuralDerive" Hidden="true" />
       <Method Name="Validate" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>MCFAgECAAAGCBADICAgABDgAQCADCAAgGEQAYACAmCA=</HashCode>
+      <HashCode>MAFAgEGAIAGCBADICAgAADgAQCABCAAgGEQAYAAAmCA=</HashCode>
       <FileName>MetaPopulation.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Database.Meta.MethodType" BaseTypeListCollapsed="true">
-    <Position X="20" Y="3.75" Width="2.25" />
+    <Position X="18.75" Y="3.75" Width="2.25" />
     <Members>
       <Method Name="CompareTo" Hidden="true" />
       <Method Name="DeriveWorkspaceNames" Hidden="true" />
@@ -177,7 +156,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Database.Meta.Record">
-    <Position X="13.25" Y="5.75" Width="2.25" />
+    <Position X="12" Y="5.75" Width="2.25" />
     <Members>
       <Method Name="Bind" Hidden="true" />
       <Method Name="DeriveWorkspaceNames" Hidden="true" />
@@ -236,7 +215,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Database.Meta.Unit">
-    <Position X="10" Y="9.5" Width="1.75" />
+    <Position X="8.75" Y="9.5" Width="1.75" />
     <Members>
       <Property Name="IsBinary" Hidden="true" />
       <Property Name="IsBoolean" Hidden="true" />
@@ -255,7 +234,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Database.Meta.ObjectType">
-    <Position X="10.75" Y="5.75" Width="2" />
+    <Position X="9.5" Y="5.75" Width="2" />
     <Members>
       <Method Name="CompareTo" Hidden="true" />
       <Method Name="Equals" Hidden="true" />
@@ -271,7 +250,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Database.Meta.MetaIdentifiableObject">
-    <Position X="14" Y="0.5" Width="3" />
+    <Position X="12.75" Y="0.5" Width="3" />
     <Members>
       <Method Name="MetaIdentifiableObject" Hidden="true" />
     </Members>

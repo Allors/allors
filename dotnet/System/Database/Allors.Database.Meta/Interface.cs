@@ -19,8 +19,8 @@ public abstract class Interface : Composite, IInterface
     private Class structuralDerivedExclusiveClass;
     private HashSet<Composite> structuralDerivedSubtypes;
 
-    protected Interface(MetaPopulation metaPopulation, Guid id, string singularName, string assignedPluralName)
-        : base(metaPopulation, id, singularName, assignedPluralName) =>
+    protected Interface(MetaPopulation metaPopulation, Guid id, Interface[] directSupertypes, string singularName, string assignedPluralName)
+        : base(metaPopulation, id, directSupertypes, singularName, assignedPluralName) =>
         metaPopulation.OnCreated(this);
 
     public override IEnumerable<Class> Classes => this.structuralDerivedClasses;
@@ -45,15 +45,9 @@ public abstract class Interface : Composite, IInterface
             .Union(this.MethodTypes.SelectMany(v => v.WorkspaceNames))
             .ToArray();
 
-    internal void StructuralDeriveDirectSubtypes(HashSet<Composite> directSubtypes)
+    internal void StructuralDeriveDirectSubtypes()
     {
-        directSubtypes.Clear();
-        foreach (var inheritance in this.MetaPopulation.Inheritances.Where(inheritance => this.Equals(inheritance.Supertype)))
-        {
-            directSubtypes.Add(inheritance.Subtype);
-        }
-
-        this.structuralDerivedDirectSubtypes = new HashSet<Composite>(directSubtypes);
+        this.structuralDerivedDirectSubtypes = new HashSet<Composite>(this.MetaPopulation.Composites.Where(v => v.DirectSupertypes.Contains(this)));
     }
 
     internal void StructuralDeriveSubclasses(HashSet<Class> subClasses)

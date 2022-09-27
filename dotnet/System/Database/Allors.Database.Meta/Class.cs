@@ -19,8 +19,8 @@ public abstract class Class : Composite, IClass
     private IRoleType[] derivedRequiredRoleTypes;
     private string[] derivedWorkspaceNames;
 
-    protected Class(MetaPopulation metaPopulation, Guid id, string singularName, string assignedPluralName)
-        : base(metaPopulation, id, singularName, assignedPluralName)
+    protected Class(MetaPopulation metaPopulation, Guid id, Interface[] directSupertypes, string singularName, string assignedPluralName)
+        : base(metaPopulation, id, directSupertypes, singularName, assignedPluralName)
     {
         this.classes = new[] { this };
         metaPopulation.OnCreated(this);

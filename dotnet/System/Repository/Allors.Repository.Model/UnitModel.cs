@@ -1,6 +1,5 @@
-﻿namespace Generate.Model;
+﻿namespace Allors.Repository.Model;
 
-using System;
 using Allors.Repository;
 using Allors.Repository.Domain;
 

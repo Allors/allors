@@ -1,6 +1,5 @@
 ﻿namespace Allors.Meta.Generation.Model;
 
-using System;
 using Database.Meta;
 
 public class RecordModel : DataTypeModel

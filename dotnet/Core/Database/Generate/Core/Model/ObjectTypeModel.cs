@@ -1,6 +1,5 @@
 ﻿namespace Allors.Meta.Generation.Model;
 
-using System;
 using Database.Meta;
 
 public abstract class ObjectTypeModel : DataTypeModel

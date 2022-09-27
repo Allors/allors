@@ -1,11 +1,11 @@
-﻿namespace Generate.Model;
+﻿namespace Allors.Repository.Model;
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Allors.Repository.Domain;
 
-public abstract class CompositeModel : ObjectTypeModel, IComparable<CompositeModel>
+public abstract class CompositeModel : ObjectTypeModel
 {
     private IEnumerable<InterfaceModel> supertypes;
 
@@ -47,10 +47,5 @@ public abstract class CompositeModel : ObjectTypeModel, IComparable<CompositeMod
         {
             return this.supertypes ?? this.Interfaces.Union(this.Interfaces.SelectMany(v => v.Supertypes)).ToArray();
         }
-    }
-
-    public int CompareTo(CompositeModel other)
-    {
-        return this != other ? this.Supertypes.Contains(other) ? 1 : -1 : 0;
     }
 }

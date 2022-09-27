@@ -20,16 +20,19 @@ public abstract class Composite : ObjectType, IComposite
     private HashSet<RoleType> structuralDerivedRoleTypes;
     private HashSet<Interface> structuralDerivedSupertypes;
 
-    protected Composite(MetaPopulation metaPopulation, Guid id, string singularName, string assignedPluralName)
+    protected Composite(MetaPopulation metaPopulation, Guid id, Interface[] directSupertypes, string singularName, string assignedPluralName)
         : base(metaPopulation, id, singularName, assignedPluralName)
     {
+        this.DirectSupertypes = directSupertypes;
     }
 
     public abstract IEnumerable<Class> Classes { get; }
 
     public abstract Class ExclusiveClass { get; }
 
-    public IEnumerable<Interface> DirectSupertypes => this.structuralDerivedDirectSupertypes;
+    IEnumerable<IInterface> IComposite.DirectSupertypes => this.DirectSupertypes;
+
+    public Interface[] DirectSupertypes { get; }
 
     public IEnumerable<Interface> Supertypes => this.structuralDerivedSupertypes;
 
@@ -95,17 +98,6 @@ public abstract class Composite : ObjectType, IComposite
     public bool ExistRoleType(IRoleType roleType) => this.structuralDerivedRoleTypes.Contains(roleType);
 
     public abstract bool IsAssignableFrom(IComposite objectType);
-
-    internal void StructuralDeriveDirectSupertypes(HashSet<Interface> directSupertypes)
-    {
-        directSupertypes.Clear();
-        foreach (var inheritance in this.MetaPopulation.Inheritances.Where(inheritance => this.Equals(inheritance.Subtype)))
-        {
-            directSupertypes.Add(inheritance.Supertype);
-        }
-
-        this.structuralDerivedDirectSupertypes = new HashSet<Interface>(directSupertypes);
-    }
 
     internal void StructuralDeriveSupertypes(HashSet<Interface> superTypes)
     {

@@ -6,11 +6,8 @@
 
 namespace Allors.Repository.Domain;
 
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
 
 public class Domain : RepositoryObject
 {
@@ -30,7 +27,7 @@ public class Domain : RepositoryObject
 
     public string Name { get; }
 
-    public Domain[] DirectSuperdomains { get; set; }
+    public Domain[] DirectSuperdomains { get; set; } = { };
 
     public ISet<ObjectType> ObjectTypes { get; }
 

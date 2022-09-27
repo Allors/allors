@@ -1,76 +1,71 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="Generate.Model.RepositoryModel">
+  <Class Name="Allors.Repository.Model.RepositoryModel">
     <Position X="0.5" Y="0.5" Width="1.5" />
     <Members>
-      <Method Name="CheckId" Hidden="true" />
       <Field Name="Logger" Hidden="true" />
-      <Method Name="Map" Hidden="true" />
       <Field Name="mapping" Hidden="true" />
       <Method Name="RepositoryModel" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>IAAAAAIAABMCAACAAQAAAAgAAAAAAAEIEAAAQAAAAAA=</HashCode>
+      <HashCode>IAAAAAIAAAMCAAAAAQAAAAgAAAAAAAEIEAAAQAAAAAA=</HashCode>
       <FileName>RepositoryModel.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
       <Property Name="Objects" />
     </ShowAsCollectionAssociation>
   </Class>
-  <Class Name="Generate.Model.RepositoryObjectModel">
+  <Class Name="Allors.Repository.Model.RepositoryObjectModel">
     <Position X="3.75" Y="0.5" Width="1.75" />
     <Members>
       <Method Name="RepositoryObjectModel" Hidden="true" />
       <Method Name="ToString" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAEAAAAAIAAAAAAACAAAAEAAAAAAAQ=</HashCode>
+      <HashCode>AAACAAAAAAAAAAQEAAAAAIAAAAAAACAAAAEAAAAAAEQ=</HashCode>
       <FileName>RepositoryObjectModel.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
-  <Class Name="Generate.Model.DomainModel">
-    <Position X="2.25" Y="3.5" Width="1.5" />
-    <Members>
-      <Method Name="DomainModel" Hidden="true" />
-    </Members>
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAIQAAhAAAAAAAAAAAAACQEA=</HashCode>
-      <FileName>DomainModel.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="Base" />
-    </ShowAsAssociation>
-  </Class>
-  <Class Name="Generate.Model.FieldModel">
-    <Position X="7.25" Y="3.5" Width="1.5" />
+  <Class Name="Allors.Repository.Model.FieldModel">
+    <Position X="7.25" Y="3.75" Width="1.5" />
     <Members>
       <Method Name="FieldModel" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAAAiAAAAAAAAAAAAAAAAIQAAAAAAAAAAQAAAAAAhAA=</HashCode>
+      <HashCode>AAAACAAAAAAAAAAAAAAAAIQAAAAAAAAAAQAAAAAAhAA=</HashCode>
       <FileName>FieldModel.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="Type" />
     </ShowAsAssociation>
   </Class>
-  <Class Name="Generate.Model.DataTypeModel">
-    <Position X="4.5" Y="3.5" Width="1.75" />
+  <Class Name="Allors.Repository.Model.DataTypeModel">
+    <Position X="4.5" Y="3.75" Width="1.5" />
     <Members>
       <Method Name="DataTypeModel" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAABAAAIACCAAAAAAAAAAUAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAIAAAAAAAABAAAAACCAAAAAAAAAAUAAAAA=</HashCode>
       <FileName>DataTypeModel.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Generate.Model.MethodModel">
-    <Position X="10" Y="3.5" Width="1.75" />
+  <Class Name="Allors.Repository.Model.MethodModel">
+    <Position X="10" Y="3.75" Width="1.5" />
     <Members>
       <Method Name="MethodModel" Hidden="true" />
     </Members>
+    <AssociationLine Name="Output" Type="Allors.Repository.Model.RecordModel" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="11.156" Y="5.56" />
+        <Point X="11.156" Y="8.688" />
+        <Point X="10.833" Y="8.688" Type="JumpStart" />
+        <Point X="10.667" Y="8.688" Type="JumpEnd" />
+        <Point X="7.25" Y="8.688" />
+      </Path>
+    </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAAAABAAAAAAAAAIAAAoAIQAEgAAAAAAAAIAAAAAAAA=</HashCode>
+      <HashCode>AAAAABAAAAAAAAAAAAAoAIQAEgAAAAAAAAIAAAAAAAA=</HashCode>
       <FileName>MethodModel.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -80,23 +75,23 @@
       <Property Name="Output" />
     </ShowAsAssociation>
   </Class>
-  <Class Name="Generate.Model.PropertyModel">
-    <Position X="12.75" Y="3.5" Width="2.25" />
+  <Class Name="Allors.Repository.Model.PropertyModel">
+    <Position X="12.75" Y="3.75" Width="2.25" />
     <Members>
       <Method Name="PropertyModel" Hidden="true" />
     </Members>
-    <AssociationLine Name="ObjectType" Type="Generate.Model.ObjectTypeModel" FixedFromPoint="true" FixedToPoint="true">
+    <AssociationLine Name="ObjectType" Type="Allors.Repository.Model.ObjectTypeModel" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="13.188" Y="7.233" />
-        <Point X="13.188" Y="8.992" />
-        <Point X="10.493" Y="8.992" Type="JumpStart" />
-        <Point X="10.326" Y="8.992" Type="JumpEnd" />
-        <Point X="4.688" Y="8.992" />
-        <Point X="4.688" Y="8.617" />
+        <Point X="13.188" Y="7.29" />
+        <Point X="13.188" Y="9.242" />
+        <Point X="10.833" Y="9.242" Type="JumpStart" />
+        <Point X="10.667" Y="9.242" Type="JumpEnd" />
+        <Point X="4.688" Y="9.242" />
+        <Point X="4.688" Y="8.867" />
       </Path>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAAAABCAMAEAAQAIAAAAAIAAigAAAAAAAIIgEQAABAA=</HashCode>
+      <HashCode>AAAAABCAMAEAAQAAAAAAAIAAigAAAAAAAIIgEQAABAA=</HashCode>
       <FileName>PropertyModel.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -105,8 +100,8 @@
       <Property Name="DefiningProperty" />
     </ShowAsAssociation>
   </Class>
-  <Class Name="Generate.Model.ObjectTypeModel">
-    <Position X="3.5" Y="7" Width="1.5" />
+  <Class Name="Allors.Repository.Model.ObjectTypeModel">
+    <Position X="3.5" Y="7.25" Width="1.5" />
     <Members>
       <Method Name="ObjectTypeModel" Hidden="true" />
     </Members>
@@ -115,60 +110,74 @@
       <FileName>ObjectTypeModel.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Generate.Model.RecordModel">
-    <Position X="5.75" Y="7" Width="1.5" />
+  <Class Name="Allors.Repository.Model.RecordModel">
+    <Position X="5.75" Y="7.25" Width="1.5" />
     <Members>
       <Method Name="RecordModel" Hidden="true" />
     </Members>
+    <AssociationLine Name="Fields" Type="Allors.Repository.Model.FieldModel" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="7.25" Y="7.5" />
+        <Point X="8.031" Y="7.5" />
+        <Point X="8.031" Y="5.752" />
+      </Path>
+    </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAIQIAAAAAAAAAAAAAAAAhAA=</HashCode>
+      <HashCode>AAAAAAAAAAIAAAAAAAAAAIQAAAAAAAAAAAAAAAAAhAA=</HashCode>
       <FileName>RecordModel.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="Fields" />
     </ShowAsAssociation>
   </Class>
-  <Class Name="Generate.Model.CompositeModel">
-    <Position X="4.5" Y="10.25" Width="2.25" />
+  <Class Name="Allors.Repository.Model.CompositeModel">
+    <Position X="4.5" Y="10.5" Width="2.25" />
     <Members>
       <Method Name="CompositeModel" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAAAAAAgAIAAEAAAABACAAgAIAAAAIACkAIAAAACAEA=</HashCode>
+      <HashCode>AAAAAAAgAIAAMAAAADACAAgAIAAAAIACkAIAAAACAEA=</HashCode>
       <FileName>CompositeModel.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
       <Property Name="ImplementedInterfaces" />
     </ShowAsCollectionAssociation>
   </Class>
-  <Class Name="Generate.Model.UnitModel">
-    <Position X="2.5" Y="10.25" Width="1.5" />
-    <Members>
-      <Method Name="UnitModel" Hidden="true" />
-    </Members>
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAIAAAAIAIAAAAAAAAAIAAAAAAAAA=</HashCode>
-      <FileName>UnitModel.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Generate.Model.ClassModel">
-    <Position X="5.75" Y="14.75" Width="2.25" />
+  <Class Name="Allors.Repository.Model.ClassModel">
+    <Position X="5.75" Y="15" Width="2.25" />
     <Members>
       <Method Name="ClassModel" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAACAAAAAIABIAAKgIAAAAAAAAAIAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAACIAAAAAABIAAKgAAAAAAAAAAIAAAAAAAAA=</HashCode>
       <FileName>ClassModel.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Generate.Model.InterfaceModel">
-    <Position X="3.25" Y="14.75" Width="2.25" />
+  <Class Name="Allors.Repository.Model.InterfaceModel">
+    <Position X="3.25" Y="15" Width="2.25" />
     <Members>
       <Method Name="InterfaceModel" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAABBAAIgIAAAAAAAAEIAAAAAAAAg=</HashCode>
+      <HashCode>AAAAAAAAAAIAAAAAABBAAIgAAAAAAAAAEIAAAAAAAAg=</HashCode>
       <FileName>InterfaceModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Allors.Repository.Model.DomainModel">
+    <Position X="1.5" Y="3.75" Width="1.75" />
+    <Members>
+      <Method Name="DomainModel" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAQAAAAAAAAAAIQIAhAAAAAAAAAAAAACAEA=</HashCode>
+      <FileName>DomainModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Allors.Repository.Model.UnitModel">
+    <Position X="2.5" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAIAAAAIAAAAAAAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>UnitModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

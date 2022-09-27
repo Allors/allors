@@ -1,4 +1,4 @@
-group AllorsCSharpRepository;
+﻿group AllorsCSharpRepository;
 
 TemplateId() ::= <<14F49218-A676-43ba-9CBD-B8FFA059D1BF>>
 TemplateName() ::= <<Allors C# Meta>>
@@ -118,7 +118,7 @@ $repository.Units:{unit|$define_unit(unit)$}; separator="\n"$
 
 define_unit(unit) ::= <<
     public class Meta$unit.SingularName$ : Unit {
-        public Meta$unit.SingularName$(M metaPopulation) : base(metaPopulation, Ids.$unit.SingularName$, UnitTags.$unit.SingularName$, UnitNames.$unit.SingularName$, null) {}
+        public Meta$unit.SingularName$(M m) : base(m, Ids.$unit.SingularName$, UnitTags.$unit.SingularName$, UnitNames.$unit.SingularName$, null) {}
     }
 >>
 
@@ -131,7 +131,7 @@ $repository.Interfaces:{interface|$define_interface(interface)$}; separator="\n"
 
 define_interface(interface) ::= <<
     public partial class Meta$interface.SingularName$ : Interface {
-        public Meta$interface.SingularName$(M metaPopulation) : base(metaPopulation, Ids.$interface.SingularName$, "$interface.SingularName$", $if(interface.AssignedPluralName)$"$interface.AssignedPluralName$"$else$null$endif$)
+        public Meta$interface.SingularName$(M m) : base(m, Ids.$interface.SingularName$, new Interface[]{$interface.ImplementedInterfaces:{implementedInterface|m.$implementedInterface.SingularName$}; separator=", "$}, "$interface.SingularName$", $if(interface.AssignedPluralName)$"$interface.AssignedPluralName$"$else$null$endif$)
         {
 $if(interface.ExtensionAttributes)$
                 Extensions = { $interface.ExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ }
@@ -165,7 +165,7 @@ $repository.Classes:{class|$define_class(class)$}; separator="\n"$
 
 define_class(class) ::= <<
     public partial class Meta$class.SingularName$ : Class {
-        public Meta$class.SingularName$(M metaPopulation) : base(metaPopulation, Ids.$class.SingularName$, "$class.SingularName$", $if(class.AssignedPluralName)$"$class.AssignedPluralName$"$else$null$endif$)
+        public Meta$class.SingularName$(M m) : base(m, Ids.$class.SingularName$, new Interface[]{$class.ImplementedInterfaces:{implementedInterface|m.$implementedInterface.SingularName$}; separator=", "$}, "$class.SingularName$", $if(class.AssignedPluralName)$"$class.AssignedPluralName$"$else$null$endif$)
         {
 $if(class.ExtensionAttributes)$
                 Extensions = { $class.ExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ }
@@ -338,7 +338,6 @@ $repository.Composites:{composite|$define_methods(composite)$}; separator="\n"$
             this.BuildUnits(meta, domains);
             this.BuildInterfaces(meta, domains);
             this.BuildClasses(meta, domains);
-            this.BuildInheritances(meta, domains);
             this.BuildRecords(meta, domains);
             this.BuildRelationTypes(meta, domains, relationTypes);
             this.BuildMethodTypes(meta, domains, methodTypes);
@@ -376,11 +375,6 @@ $repository.Interfaces:{interface|$build_interface(interface)$}; separator="\n"$
 		private void BuildClasses(M meta, Domains domains)
 		{
 $repository.Classes:{class|$build_class(class)$}; separator="\n"$
-		}
-
-		private void BuildInheritances(M meta, Domains domains)
-		{
-$repository.Composites:{composite|$inheritance(composite)$}; separator="\n"$
 		}
 
 		private void BuildRecords(M meta, Domains domains)
@@ -457,9 +451,6 @@ build_interface(interface) ::= <<
 build_class(class) ::= <<
 	        meta.$class.SingularName$ = new Meta$class.SingularName$(meta);
 >>
-
-inheritance(composite) ::= <<$composite.ImplementedInterfaces:{implementedInterface|$build_inheritance(composite, implementedInterface)$}; separator="\n"$>>
-build_inheritance(composite, implementedInterface) ::= <<            new Inheritance(meta, meta.$composite.SingularName$, meta.$implementedInterface.SingularName$);>>
 
 build_record(record) ::= <<            meta.$record.Name$ = new Meta$record.Name$(meta);>>
 

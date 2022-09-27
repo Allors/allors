@@ -1,6 +1,5 @@
 ﻿namespace Allors.Meta.Generation.Model;
 
-using Allors.Database.Meta.Extensions;
 using Database.Meta;
 
 public class RoleTypeModel : PropertyTypeModel

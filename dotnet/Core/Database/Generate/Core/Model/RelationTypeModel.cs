@@ -1,6 +1,5 @@
 ﻿namespace Allors.Meta.Generation.Model;
 
-using System;
 using System.Collections.Generic;
 using Allors.Database.Meta.Extensions;
 using Database.Meta;

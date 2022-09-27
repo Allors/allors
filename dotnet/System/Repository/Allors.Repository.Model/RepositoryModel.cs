@@ -1,8 +1,9 @@
-﻿namespace Generate.Model;
+﻿namespace Allors.Repository.Model;
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Allors.Graph;
 using Allors.Repository;
 using Allors.Repository.Domain;
 using NLog;
@@ -21,59 +22,50 @@ public class RepositoryModel
 
         foreach (var @object in this.Repository.Objects)
         {
-            if (@object is Domain domain)
+            switch (@object)
             {
-                this.mapping.Add(domain, new DomainModel(this, domain));
-            }
-            else if (@object is Unit unit)
-            {
-                this.mapping.Add(unit, new UnitModel(this, unit));
-            }
-            else if (@object is Interface @interface)
-            {
-                this.mapping.Add(@interface, new InterfaceModel(this, @interface));
-            }
-            else if (@object is Class @class)
-            {
-                this.mapping.Add(@class, new ClassModel(this, @class));
-            }
-            else if (@object is Property property)
-            {
-                this.mapping.Add(property, new PropertyModel(this, property));
-            }
-            else if (@object is Method method)
-            {
-                this.mapping.Add(method, new MethodModel(this, method));
-            }
-            else if (@object is Record record)
-            {
-                this.mapping.Add(record, new RecordModel(this, record));
-            }
-            else if (@object is Field field)
-            {
-                this.mapping.Add(field, new FieldModel(this, field));
-            }
-            else
-            {
-                throw new Exception($"Missing mapping for {@object}");
+                case Domain domain:
+                    this.mapping.Add(domain, new DomainModel(this, domain));
+                    break;
+                case Unit unit:
+                    this.mapping.Add(unit, new UnitModel(this, unit));
+                    break;
+                case Interface @interface:
+                    this.mapping.Add(@interface, new InterfaceModel(this, @interface));
+                    break;
+                case Class @class:
+                    this.mapping.Add(@class, new ClassModel(this, @class));
+                    break;
+                case Property property:
+                    this.mapping.Add(property, new PropertyModel(this, property));
+                    break;
+                case Method method:
+                    this.mapping.Add(method, new MethodModel(this, method));
+                    break;
+                case Record record:
+                    this.mapping.Add(record, new RecordModel(this, record));
+                    break;
+                case Field field:
+                    this.mapping.Add(field, new FieldModel(this, field));
+                    break;
+                default:
+                    throw new Exception($"Missing mapping for {@object}");
             }
         }
 
         this.Objects = this.Repository.Objects.Select(this.Map).ToArray();
-        this.Domains = this.Objects.OfType<DomainModel>().ToArray();
         this.Units = this.Objects.OfType<UnitModel>().ToArray();
-        this.Composites = this.Objects.OfType<CompositeModel>().ToArray();
-        this.Interfaces = this.Composites.OfType<InterfaceModel>().ToArray();
-        this.Classes = this.Composites.OfType<ClassModel>().ToArray();
+        this.Classes = this.Objects.OfType<ClassModel>().ToArray();
         this.Records = this.Objects.OfType<RecordModel>().ToArray();
 
         Array.Sort(this.Objects);
-        Array.Sort(this.Domains);
         Array.Sort(this.Units);
-        Array.Sort(this.Composites);
-        Array.Sort(this.Interfaces);
         Array.Sort(this.Classes);
         Array.Sort(this.Records);
+
+        this.Domains = new Graph<DomainModel>(this.Objects.OfType<DomainModel>(), v => v.DirectSuperdomains);
+        this.Composites = new Graph<CompositeModel>(this.Objects.OfType<CompositeModel>(), v => v.Interfaces);
+        this.Interfaces = new Graph<InterfaceModel>(this.Objects.OfType<InterfaceModel>(), v => v.Interfaces);
 
         // Validations
         var ids = new HashSet<Guid>();
@@ -100,13 +92,13 @@ public class RepositoryModel
 
     public RepositoryObjectModel[] Objects { get; }
 
-    public DomainModel[] Domains { get; }
+    public Graph<DomainModel> Domains { get; }
 
     public UnitModel[] Units { get; }
 
-    public CompositeModel[] Composites { get; }
+    public Graph<CompositeModel> Composites { get; }
 
-    public InterfaceModel[] Interfaces { get; }
+    public Graph<InterfaceModel> Interfaces { get; }
 
     public ClassModel[] Classes { get; }
 

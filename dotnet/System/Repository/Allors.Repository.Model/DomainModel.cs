@@ -1,4 +1,4 @@
-﻿namespace Generate.Model;
+﻿namespace Allors.Repository.Model;
 
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Linq;
 using Allors.Repository;
 using Allors.Repository.Domain;
 
-public class DomainModel : RepositoryObjectModel, IComparable<DomainModel>
+public class DomainModel : RepositoryObjectModel
 {
     private IEnumerable<DomainModel> superdomains;
 
@@ -28,9 +28,4 @@ public class DomainModel : RepositoryObjectModel, IComparable<DomainModel>
     public ISet<PropertyModel> Properties => new HashSet<PropertyModel>(this.Domain.Properties.Select(this.RepositoryModel.Map));
 
     public ISet<MethodModel> Methods => new HashSet<MethodModel>(this.Domain.Methods.Select(this.RepositoryModel.Map));
-
-    public int CompareTo(DomainModel other)
-    {
-        return this != other ? this.Superdomains.Contains(other) ? 1 : -1 : 0;
-    }
 }

@@ -40,8 +40,6 @@ public abstract class MetaPopulation : IMetaPopulation
 
     public Class[] Classes { get; set; }
 
-    public Inheritance[] Inheritances { get; set; }
-
     IRelationType[] IMetaPopulation.RelationTypes => this.RelationTypes;
 
     public RelationType[] RelationTypes { get; set; }
@@ -131,11 +129,6 @@ public abstract class MetaPopulation : IMetaPopulation
             @class.Validate(log);
         }
 
-        foreach (var inheritance in this.Inheritances)
-        {
-            inheritance.Validate(log);
-        }
-
         foreach (var relationType in this.RelationTypes)
         {
             relationType.Validate(log);
@@ -156,33 +149,6 @@ public abstract class MetaPopulation : IMetaPopulation
             fieldType.Validate(log);
         }
 
-        var inheritancesBySubtype = new Dictionary<Composite, List<Inheritance>>();
-        foreach (var inheritance in this.Inheritances)
-        {
-            var subtype = inheritance.Subtype;
-            if (subtype != null)
-            {
-                if (!inheritancesBySubtype.TryGetValue(subtype, out var inheritanceList))
-                {
-                    inheritanceList = new List<Inheritance>();
-                    inheritancesBySubtype[subtype] = inheritanceList;
-                }
-
-                inheritanceList.Add(inheritance);
-            }
-        }
-
-        var supertypes = new HashSet<Interface>();
-        foreach (var subtype in inheritancesBySubtype.Keys)
-        {
-            supertypes.Clear();
-            if (this.HasCycle(subtype, supertypes, inheritancesBySubtype))
-            {
-                var message = subtype.ValidationName + " has a cycle in its inheritance hierarchy";
-                log.AddError(message, subtype, ValidationKind.Cyclic, "IComposite.Supertypes");
-            }
-        }
-
         return log;
     }
 
@@ -194,7 +160,6 @@ public abstract class MetaPopulation : IMetaPopulation
         this.Units = this.metaObjects.OfType<Unit>().ToArray();
         this.Interfaces = this.metaObjects.OfType<Interface>().ToArray();
         this.Classes = this.metaObjects.OfType<Class>().ToArray();
-        this.Inheritances = this.metaObjects.OfType<Inheritance>().ToArray();
         this.RelationTypes = this.metaObjects.OfType<RelationType>().ToArray();
         this.MethodTypes = this.metaObjects.OfType<MethodType>().ToArray();
         this.Records = this.metaObjects.OfType<Record>().ToArray();
@@ -216,16 +181,10 @@ public abstract class MetaPopulation : IMetaPopulation
             domain.StructuralDeriveSuperdomains(sharedDomains);
         }
 
-        // DirectSupertypes
-        foreach (var type in this.Composites)
-        {
-            type.StructuralDeriveDirectSupertypes(sharedInterfaces);
-        }
-
         // DirectSubtypes
         foreach (var type in this.Interfaces)
         {
-            type.StructuralDeriveDirectSubtypes(sharedComposites);
+            type.StructuralDeriveDirectSubtypes();
         }
 
         // Supertypes
@@ -407,46 +366,5 @@ public abstract class MetaPopulation : IMetaPopulation
     internal void OnCreated(IMetaObject metaObject)
     {
         this.metaObjects.Add(metaObject);
-    }
-
-    private bool HasCycle(Composite subtype, HashSet<Interface> supertypes, Dictionary<Composite, List<Inheritance>> inheritancesBySubtype)
-    {
-        foreach (var inheritance in inheritancesBySubtype[subtype])
-        {
-            var supertype = inheritance.Supertype;
-            if (supertype != null && this.HasCycle(subtype, supertype, supertypes, inheritancesBySubtype))
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private bool HasCycle(Composite originalSubtype, Interface currentSupertype, HashSet<Interface> supertypes, Dictionary<Composite, List<Inheritance>> inheritancesBySubtype)
-    {
-        if (originalSubtype is Interface @interface && supertypes.Contains(@interface))
-        {
-            return true;
-        }
-
-        if (!supertypes.Contains(currentSupertype))
-        {
-            supertypes.Add(currentSupertype);
-
-            if (inheritancesBySubtype.TryGetValue(currentSupertype, out var currentSuperInheritances))
-            {
-                foreach (var inheritance in currentSuperInheritances)
-                {
-                    var newSupertype = inheritance.Supertype;
-                    if (newSupertype != null && this.HasCycle(originalSubtype, newSupertype, supertypes, inheritancesBySubtype))
-                    {
-                        return true;
-                    }
-                }
-            }
-        }
-
-        return false;
     }
 }

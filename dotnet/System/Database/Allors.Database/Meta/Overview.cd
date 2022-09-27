@@ -15,10 +15,21 @@
       <Method Name="ExistSupertype" Hidden="true" />
       <Method Name="IsAssignableFrom" Hidden="true" />
     </Members>
+    <AssociationLine Name="DirectSupertypes" Type="Allors.Database.Meta.IInterface" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="8.5" Y="11.688" />
+        <Point X="7.125" Y="11.688" />
+        <Point X="7.125" Y="13.188" />
+        <Point X="7.5" Y="13.188" />
+      </Path>
+    </AssociationLine>
     <TypeIdentifier>
-      <HashCode>BAJAAAAAAAFACAABACAwAgAAAAAQEAACQQJAAAgAAAA=</HashCode>
+      <HashCode>BAJAAAAAAAFACAABACAwAgAAAQAQEAACQQJAAAgAAAA=</HashCode>
       <FileName>Meta\IComposite.cs</FileName>
     </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="DirectSupertypes" />
+    </ShowAsCollectionAssociation>
   </Interface>
   <Interface Name="Allors.Database.Meta.IInterface">
     <Position X="7.5" Y="13" Width="1.5" />
@@ -147,17 +158,6 @@
     <ShowAsAssociation>
       <Property Name="Input" />
       <Property Name="Output" />
-    </ShowAsAssociation>
-  </Interface>
-  <Interface Name="Allors.Database.Meta.IInheritance">
-    <Position X="5.75" Y="11.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAQAAA=</HashCode>
-      <FileName>Meta\IInheritance.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="Subtype" />
-      <Property Name="Supertype" />
     </ShowAsAssociation>
   </Interface>
   <Font Name="Segoe UI" Size="9" />
