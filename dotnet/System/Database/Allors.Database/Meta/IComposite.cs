@@ -16,11 +16,7 @@ public interface IComposite : IObjectType
 
     IEnumerable<IComposite> Subtypes { get; }
 
-    bool ExistClass { get; }
-
     IEnumerable<IClass> Classes { get; }
-
-    bool ExistExclusiveClass { get; }
 
     IClass ExclusiveClass { get; }
 
@@ -29,6 +25,10 @@ public interface IComposite : IObjectType
     IEnumerable<IRoleType> RoleTypes { get; }
 
     IEnumerable<IMethodType> MethodTypes { get; }
+
+    bool ExistClass { get; }
+
+    bool ExistExclusiveClass { get; }
 
     bool ExistSupertype(IInterface @interface);
 
