@@ -22,16 +22,15 @@ public abstract class CompositeModel : ObjectTypeModel
 
     public bool ExistExclusiveClass => this.Composite.ExistExclusiveClass;
 
-    public IEnumerable<AssociationTypeModel> InheritedAssociationTypes =>
-        this.Composite.InheritedAssociationTypes.Select(this.MetaModel.Map);
+    public IEnumerable<AssociationTypeModel> InheritedAssociationTypes => this.AssociationTypes.Except(this.ExclusiveAssociationTypes);
 
-    public IEnumerable<RoleTypeModel> InheritedRoleTypes => this.Composite.InheritedRoleTypes.Select(this.MetaModel.Map);
+    public IEnumerable<RoleTypeModel> InheritedRoleTypes => this.RoleTypes.Except(this.ExclusiveRoleTypes);
 
     public IEnumerable<MethodTypeModel> MethodTypes => this.Composite.MethodTypes.Select(this.MetaModel.Map);
 
-    public IEnumerable<MethodTypeModel> InheritedMethodTypes => this.Composite.InheritedMethodTypes.Select(this.MetaModel.Map);
+    public IEnumerable<MethodTypeModel> InheritedMethodTypes => this.MethodTypes.Except(this.ExclusiveMethodTypes);
 
-    public IEnumerable<MethodTypeModel> ExclusiveMethodTypes => this.Composite.ExclusiveMethodTypes.Select(this.MetaModel.Map);
+    public IEnumerable<MethodTypeModel> ExclusiveMethodTypes => this.MethodTypes.Where(v => this.Equals(v.ObjectType));
 
     // IComposite Extra
     public bool ExistDirectSupertypes => this.DirectSupertypes.Any();
@@ -56,12 +55,11 @@ public abstract class CompositeModel : ObjectTypeModel
 
     public IEnumerable<AssociationTypeModel> AssociationTypes => this.Composite.AssociationTypes.Select(this.MetaModel.Map);
 
-    public IEnumerable<AssociationTypeModel> ExclusiveAssociationTypes =>
-        this.Composite.ExclusiveAssociationTypes.Select(this.MetaModel.Map);
+    public IEnumerable<AssociationTypeModel> ExclusiveAssociationTypes => this.AssociationTypes.Where(v => this.Equals(v.RoleType.ObjectType));
 
     public IEnumerable<RoleTypeModel> RoleTypes => this.Composite.RoleTypes.Select(this.MetaModel.Map);
 
-    public IEnumerable<RoleTypeModel> ExclusiveRoleTypes => this.Composite.ExclusiveRoleTypes.Select(this.MetaModel.Map);
+    public IEnumerable<RoleTypeModel> ExclusiveRoleTypes => this.RoleTypes.Where(v => this.Equals(v.AssociationType.ObjectType));
 
     public bool ExistClass => this.Composite.ExistClass;
 

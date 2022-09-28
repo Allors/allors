@@ -26,21 +26,9 @@ public interface IComposite : IObjectType
 
     IEnumerable<IAssociationType> AssociationTypes { get; }
 
-    IEnumerable<IAssociationType> InheritedAssociationTypes { get; }
-
-    IEnumerable<IAssociationType> ExclusiveAssociationTypes { get; }
-
     IEnumerable<IRoleType> RoleTypes { get; }
 
-    IEnumerable<IRoleType> InheritedRoleTypes { get; }
-
-    IEnumerable<IRoleType> ExclusiveRoleTypes { get; }
-
     IEnumerable<IMethodType> MethodTypes { get; }
-
-    IEnumerable<IMethodType> InheritedMethodTypes { get; }
-
-    IEnumerable<IMethodType> ExclusiveMethodTypes { get; }
 
     bool ExistSupertype(IInterface @interface);
 

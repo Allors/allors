@@ -18,7 +18,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Database.Meta.Class">
-    <Position X="12.5" Y="19.25" Width="2.75" />
+    <Position X="12.5" Y="19.5" Width="2.75" />
     <Members>
       <Method Name="Actions" Hidden="true" />
       <Method Name="Class" Hidden="true" />
@@ -68,7 +68,7 @@
       <Method Name="Validate" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAAABAAAAAKAAAQMgACAAAQIAAAAAIAAAAAAAAQAAAA=</HashCode>
+      <HashCode>AAAIBAAAAAKAAAQMgACAAAQIAAAAAIAAAAAAAAQAAAA=</HashCode>
       <FileName>Domain.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -87,7 +87,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Database.Meta.Interface">
-    <Position X="9.5" Y="19.25" Width="2.5" />
+    <Position X="9.5" Y="19.5" Width="2.5" />
     <Members>
       <Method Name="DeriveWorkspaceNames" Hidden="true" />
       <Method Name="Interface" Hidden="true" />

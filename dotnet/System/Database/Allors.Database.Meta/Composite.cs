@@ -24,69 +24,41 @@ public abstract class Composite : ObjectType, IComposite
         this.DirectSupertypes = directSupertypes;
     }
 
-    public abstract IEnumerable<Class> Classes { get; }
-
-    public abstract Class ExclusiveClass { get; }
-
     IEnumerable<IInterface> IComposite.DirectSupertypes => this.DirectSupertypes;
 
     public Interface[] DirectSupertypes { get; }
 
+    IEnumerable<IComposite> IComposite.Subtypes => this.Subtypes;
+
+    public abstract IEnumerable<Composite> Subtypes { get; }
+
+    IEnumerable<IClass> IComposite.Classes => this.Classes;
+
+    public abstract IEnumerable<Class> Classes { get; }
+
+    IClass IComposite.ExclusiveClass => this.ExclusiveClass;
+
+    public abstract Class ExclusiveClass { get; }
+
+    IEnumerable<IInterface> IComposite.Supertypes => this.Supertypes;
+
     public IEnumerable<Interface> Supertypes => this.supertypes;
+
+    IEnumerable<IAssociationType> IComposite.AssociationTypes => this.AssociationTypes;
 
     public IEnumerable<AssociationType> AssociationTypes => this.associationTypes;
 
-    public IEnumerable<AssociationType> ExclusiveAssociationTypes => this.AssociationTypes.Where(associationType => this.Equals(associationType.RoleType.ObjectType)).ToArray();
-
-    public IEnumerable<AssociationType> ExclusiveDatabaseAssociationTypes => this.ExclusiveAssociationTypes.ToArray();
-
-    public IEnumerable<AssociationType> InheritedAssociationTypes => this.AssociationTypes.Except(this.ExclusiveAssociationTypes);
+    IEnumerable<IRoleType> IComposite.RoleTypes => this.RoleTypes;
 
     public IEnumerable<RoleType> RoleTypes => this.roleTypes;
 
-    public IEnumerable<RoleType> ExclusiveRoleTypes =>
-        this.RoleTypes.Where(roleType => this.Equals(roleType.AssociationType.ObjectType)).ToArray();
+    IEnumerable<IMethodType> IComposite.MethodTypes => this.MethodTypes;
 
     public IEnumerable<MethodType> MethodTypes => this.methodTypes;
-
-    public IEnumerable<MethodType> ExclusiveMethodTypes =>
-        this.MethodTypes.Where(methodType => this.Equals(methodType.ObjectType)).ToArray();
-
-    public IEnumerable<MethodType> InheritedMethodTypes => this.MethodTypes.Except(this.ExclusiveMethodTypes);
-
-    public IEnumerable<RoleType> InheritedRoleTypes => this.RoleTypes.Except(this.ExclusiveRoleTypes);
-
-    public abstract IEnumerable<Composite> Subtypes { get; }
 
     public abstract bool ExistClass { get; }
 
     public bool ExistExclusiveClass => this.ExclusiveClass != null;
-
-    IClass IComposite.ExclusiveClass => this.ExclusiveClass;
-
-    IEnumerable<IInterface> IComposite.Supertypes => this.Supertypes;
-
-    IEnumerable<IAssociationType> IComposite.AssociationTypes => this.AssociationTypes;
-
-    IEnumerable<IAssociationType> IComposite.ExclusiveAssociationTypes => this.ExclusiveDatabaseAssociationTypes;
-
-    IEnumerable<IAssociationType> IComposite.InheritedAssociationTypes => this.InheritedAssociationTypes;
-
-    IEnumerable<IRoleType> IComposite.RoleTypes => this.RoleTypes;
-
-    IEnumerable<IRoleType> IComposite.ExclusiveRoleTypes => this.ExclusiveRoleTypes;
-
-    IEnumerable<IMethodType> IComposite.MethodTypes => this.MethodTypes;
-
-    IEnumerable<IMethodType> IComposite.ExclusiveMethodTypes => this.ExclusiveMethodTypes;
-
-    IEnumerable<IMethodType> IComposite.InheritedMethodTypes => this.InheritedMethodTypes;
-
-    IEnumerable<IRoleType> IComposite.InheritedRoleTypes => this.InheritedRoleTypes;
-
-    IEnumerable<IComposite> IComposite.Subtypes => this.Subtypes;
-
-    IEnumerable<IClass> IComposite.Classes => this.Classes;
 
     public bool ExistSupertype(IInterface @interface) => this.supertypes.Contains(@interface);
 
@@ -96,16 +68,16 @@ public abstract class Composite : ObjectType, IComposite
 
     public abstract bool IsAssignableFrom(IComposite objectType);
 
-    internal void InitializeSupertypes(HashSet<Interface> superTypes)
+    internal void InitializeSupertypes()
     {
-        superTypes.Clear();
-        this.InitializeSupertypesRecursively(this, superTypes);
-        this.supertypes = new HashSet<Interface>(superTypes);
+        var supertypes = new HashSet<Interface>();
+        this.InitializeSupertypesRecursively(this, supertypes);
+        this.supertypes = new HashSet<Interface>(supertypes);
     }
 
-    internal void InitializeRoleTypes(HashSet<RoleType> roleTypes, Dictionary<Composite, HashSet<RoleType>> roleTypesByAssociationObjectType)
+    internal void InitializeRoleTypes(Dictionary<Composite, HashSet<RoleType>> roleTypesByAssociationObjectType)
     {
-        roleTypes.Clear();
+        var roleTypes = new HashSet<RoleType>();
 
         if (roleTypesByAssociationObjectType.TryGetValue(this, out var directRoleTypes))
         {
@@ -123,9 +95,9 @@ public abstract class Composite : ObjectType, IComposite
         this.roleTypes = new HashSet<RoleType>(roleTypes);
     }
 
-    internal void InitializeAssociationTypes(HashSet<AssociationType> associationTypes, Dictionary<ObjectType, HashSet<AssociationType>> relationTypesByRoleObjectType)
+    internal void InitializeAssociationTypes(Dictionary<ObjectType, HashSet<AssociationType>> relationTypesByRoleObjectType)
     {
-        associationTypes.Clear();
+        var associationTypes = new HashSet<AssociationType>();
 
         if (relationTypesByRoleObjectType.TryGetValue(this, out var classAssociationTypes))
         {
@@ -143,9 +115,9 @@ public abstract class Composite : ObjectType, IComposite
         this.associationTypes = new HashSet<AssociationType>(associationTypes);
     }
 
-    internal void InitializeMethodTypes(HashSet<MethodType> methodTypes, Dictionary<Composite, HashSet<MethodType>> methodTypeByClass)
+    internal void InitializeMethodTypes(Dictionary<Composite, HashSet<MethodType>> methodTypeByClass)
     {
-        methodTypes.Clear();
+        var methodTypes = new HashSet<MethodType>();
 
         if (methodTypeByClass.TryGetValue(this, out var directMethodTypes))
         {

@@ -178,18 +178,11 @@ public abstract class MetaPopulation : IMetaPopulation
 
         this.Composites = this.Classes.Cast<Composite>().Union(this.Interfaces).ToArray();
 
-        var sharedDomains = new HashSet<Domain>();
-        var sharedComposites = new HashSet<Composite>();
-        var sharedInterfaces = new HashSet<Interface>();
-        var sharedClasses = new HashSet<Class>();
-        var sharedAssociationTypes = new HashSet<AssociationType>();
-        var sharedRoleTypes = new HashSet<RoleType>();
-        var sharedMethodTypeList = new HashSet<MethodType>();
 
         // Domains
         foreach (var domain in this.Domains)
         {
-            domain.InitializeSuperdomains(sharedDomains);
+            domain.InitializeSuperdomains();
         }
 
         // DirectSubtypes
@@ -201,19 +194,19 @@ public abstract class MetaPopulation : IMetaPopulation
         // Supertypes
         foreach (var type in this.Composites)
         {
-            type.InitializeSupertypes(sharedInterfaces);
+            type.InitializeSupertypes();
         }
 
         // Subtypes
         foreach (var type in this.Interfaces)
         {
-            type.InitializeSubtypes(sharedComposites);
+            type.InitializeSubtypes();
         }
 
         // Subclasses
         foreach (var type in this.Interfaces)
         {
-            type.InitializeSubclasses(sharedClasses);
+            type.InitializeSubclasses();
         }
 
         // Exclusive Subclass
@@ -234,13 +227,13 @@ public abstract class MetaPopulation : IMetaPopulation
         // RoleTypes
         foreach (var composite in this.Composites)
         {
-            composite.InitializeRoleTypes(sharedRoleTypes, roleTypesByAssociationTypeObjectType);
+            composite.InitializeRoleTypes(roleTypesByAssociationTypeObjectType);
         }
 
         // AssociationTypes
         foreach (var composite in this.Composites)
         {
-            composite.InitializeAssociationTypes(sharedAssociationTypes, associationTypesByRoleTypeObjectType);
+            composite.InitializeAssociationTypes(associationTypesByRoleTypeObjectType);
         }
 
         // MethodTypes
@@ -250,7 +243,7 @@ public abstract class MetaPopulation : IMetaPopulation
 
         foreach (var composite in this.Composites)
         {
-            composite.InitializeMethodTypes(sharedMethodTypeList, methodTypeByClass);
+            composite.InitializeMethodTypes(methodTypeByClass);
         }
 
         // Records

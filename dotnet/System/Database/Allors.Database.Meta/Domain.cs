@@ -94,18 +94,18 @@ public sealed class Domain : MetaIdentifiableObject, IDomain
         }
     }
 
-    internal void InitializeSuperdomains(HashSet<Domain> sharedDomains)
+    internal void InitializeSuperdomains()
     {
-        sharedDomains.Clear();
+        var superdomains = new HashSet<Domain>();
         foreach (var directSuperdomain in this.DirectSuperdomains)
         {
-            directSuperdomain.InitializeSuperdomains(this, sharedDomains);
+            directSuperdomain.InitializeSuperdomains(this, superdomains);
         }
 
-        this.Superdomains = sharedDomains.ToArray();
+        this.Superdomains = superdomains.ToArray();
     }
 
-    private void InitializeSuperdomains(Domain subdomain, HashSet<Domain> superdomains)
+    private void InitializeSuperdomains(Domain subdomain, ISet<Domain> superdomains)
     {
         if (this.Equals(subdomain))
         {
