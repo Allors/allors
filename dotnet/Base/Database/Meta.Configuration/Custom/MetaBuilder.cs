@@ -3,7 +3,7 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Meta
+namespace Allors.Database.Meta.Configuration
 {
     using System;
     using System.Linq;
@@ -16,9 +16,9 @@ namespace Allors.Database.Meta
 
         static void AddWorkspace(RelationType relationType, params string[] workspaceNames) => relationType.AssignedWorkspaceNames = (relationType.AssignedWorkspaceNames ?? Array.Empty<string>()).Union(workspaceNames).ToArray();
 
-        private void BuildCustom(M m, Domains domains, RelationTypes relationTypes, MethodTypes methodTypes) => this.DefaultWorkspace(m, domains, relationTypes, methodTypes);
+        private void BuildCustom(MetaPopulation m, Domains domains, RelationTypes relationTypes, MethodTypes methodTypes) => this.DefaultWorkspace(m, domains, relationTypes, methodTypes);
 
-        private void DefaultWorkspace(M m, Domains domains, RelationTypes relationTypes, MethodTypes methodTypes)
+        private void DefaultWorkspace(MetaPopulation m, Domains domains, RelationTypes relationTypes, MethodTypes methodTypes)
         {
             // RelationTypes & MethodTypes
             // Cacheable

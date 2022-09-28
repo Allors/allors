@@ -1,4 +1,4 @@
-// <copyright file="Commands.cs" company="Allors bvba">
+﻿// <copyright file="Commands.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -14,6 +14,7 @@ namespace Commands
     using Allors.Database.Configuration.Derivations.Default;
     using Allors.Database.Domain;
     using Allors.Database.Meta;
+    using Allors.Database.Meta.Configuration;
     using McMaster.Extensions.CommandLineUtils;
     using Microsoft.Extensions.Configuration;
     using NLog;

@@ -13,7 +13,7 @@ using System.Reflection;
 
 public abstract class MetaPopulation : IMetaPopulation
 {
-    private IList<IMetaObject> metaObjects;
+    private IList<IMetaIdentifiableObject> metaObjects;
 
     private Dictionary<Guid, IMetaIdentifiableObject> metaIdentifiableObjectById;
     private Dictionary<string, IMetaIdentifiableObject> metaIdentifiableObjectByTag;
@@ -27,7 +27,7 @@ public abstract class MetaPopulation : IMetaPopulation
     {
         this.initialized = false;
 
-        this.metaObjects = new List<IMetaObject>();
+        this.metaObjects = new List<IMetaIdentifiableObject>();
     }
 
     public bool IsBound { get; private set; }
@@ -363,7 +363,7 @@ public abstract class MetaPopulation : IMetaPopulation
         }
     }
 
-    internal void OnCreated(IMetaObject metaObject)
+    internal void OnCreated(IMetaIdentifiableObject metaObject)
     {
         this.metaObjects.Add(metaObject);
     }

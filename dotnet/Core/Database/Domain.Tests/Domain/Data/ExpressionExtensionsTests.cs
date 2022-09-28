@@ -1,4 +1,4 @@
-// <copyright file="FilterTests.cs" company="Allors bvba">
+﻿// <copyright file="FilterTests.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -6,28 +6,23 @@
 //   Defines the ApplicationTests type.
 // </summary>
 
-namespace Allors.Database.Data.Tests
+namespace Allors.Database.Domain.Tests
 {
     using System;
     using System.Linq;
     using System.Linq.Expressions;
+    using Allors.Database.Data;
     using Meta;
     using Xunit;
 
-    public class ExpressionExtensionsTests
+    public class ExpressionExtensionsTests : DomainTest, IClassFixture<Fixture>
     {
-        public ExpressionExtensionsTests()
-        {
-            var metaBuilder = new MetaBuilder();
-            this.M = metaBuilder.Build();
-        }
-
-        private M M { get; }
+        public ExpressionExtensionsTests(Fixture fixture) : base(fixture) { }
 
         [Fact]
         public void InterfaceAssociation()
         {
-            Expression<Func<MetaUser, IPropertyType>> expression = v => v.Logins;
+            Expression<Func<IMetaUser, IPropertyType>> expression = v => v.Logins;
 
             var path = expression.Node(this.M);
 
@@ -38,7 +33,7 @@ namespace Allors.Database.Data.Tests
         [Fact]
         public void ClassAssociation()
         {
-            Expression<Func<MetaPerson, IPropertyType>> expression = v => v.OrganizationWhereEmployee;
+            Expression<Func<IMetaPerson, IPropertyType>> expression = v => v.OrganizationWhereEmployee;
 
             var path = expression.Node(this.M);
 
@@ -49,7 +44,7 @@ namespace Allors.Database.Data.Tests
         [Fact]
         public void ClassAssociationClassRole()
         {
-            Expression<Func<MetaPerson, IPropertyType>> expression = v => v.OrganizationWhereEmployee.Organization.Information;
+            Expression<Func<IMetaPerson, IPropertyType>> expression = v => v.OrganizationWhereEmployee.Organization.Information;
 
             var path = expression.Node(this.M);
 
@@ -64,7 +59,7 @@ namespace Allors.Database.Data.Tests
         [Fact]
         public void ClassRole()
         {
-            Expression<Func<MetaOrganization, IPropertyType>> expression = v => v.Name;
+            Expression<Func<IMetaOrganization, IPropertyType>> expression = v => v.Name;
 
             var path = expression.Node(this.M);
 
@@ -75,7 +70,7 @@ namespace Allors.Database.Data.Tests
         [Fact]
         public void ClassRoleOfType()
         {
-            Expression<Func<MetaUserGroup, IComposite>> expression = v => v.Members.User.AsPerson;
+            Expression<Func<IMetaUserGroup, IComposite>> expression = v => v.Members.User.AsPerson;
 
             var path = expression.Node(this.M);
 
@@ -87,7 +82,7 @@ namespace Allors.Database.Data.Tests
         [Fact]
         public void ClassRoleClassRole()
         {
-            Expression<Func<MetaOrganization, IPropertyType>> expression = v => v.Employees.Person.FirstName;
+            Expression<Func<IMetaOrganization, IPropertyType>> expression = v => v.Employees.Person.FirstName;
 
             var path = expression.Node(this.M);
 
@@ -103,7 +98,7 @@ namespace Allors.Database.Data.Tests
         [Fact]
         public void ClassRoleInterfaceAsClassRole()
         {
-            Expression<Func<MetaUserGroup, IPropertyType>> expression = v => v.Members.User.AsPerson.FirstName;
+            Expression<Func<IMetaUserGroup, IPropertyType>> expression = v => v.Members.User.AsPerson.FirstName;
 
             var path = expression.Node(this.M);
 

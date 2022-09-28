@@ -1,4 +1,4 @@
-using Nuke.Common;
+﻿using Nuke.Common;
 using Nuke.Common.Tooling;
 using Nuke.Common.Tools.DotNet;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
@@ -28,6 +28,10 @@ partial class Build
                 .SetProjectFile(Paths.DotnetSystemRepositoryGenerate)
                 .SetApplicationArguments(
                     $"{Paths.DotnetCoreRepository} {Paths.DotnetSystemRepositoryTemplatesMetaCs} {Paths.DotnetCoreDatabaseMetaGenerated}"));
+            DotNetRun(s => s
+                .SetProjectFile(Paths.DotnetSystemRepositoryGenerate)
+                .SetApplicationArguments(
+                    $"{Paths.DotnetCoreRepository} {Paths.DotnetSystemRepositoryTemplatesMetaConfigurationCs} {Paths.DotnetCoreDatabaseMetaConfigurationGenerated}"));
             DotNetRun(s => s
                 .SetProcessWorkingDirectory(Paths.DotnetCore)
                 .SetProjectFile(Paths.DotnetCoreDatabaseGenerate));

@@ -2,7 +2,7 @@
 
 TemplateId() ::= <<14F49218-A676-43ba-9CBD-B8FFA059D1BF>>
 TemplateName() ::= <<Allors C# Meta>>
-TemplateVersion() ::= <<3.0.17>>
+TemplateVersion() ::= <<3.0.18>>
 TemplateAllors() ::= <<1.0>>
 TemplateConfiguration(repository) ::= <<
 $!
@@ -23,7 +23,6 @@ GNU General Public License for more details.
 For more information visit http://www.allors.com/legal
 !$
 <generations>
-    <generation template="ids" output="ids.g.cs"/>
     <generation template="m" output="m.g.cs"/>
     <generation template="units" output="units.g.cs"/>
     <generation template="interfaces" output="interfaces.g.cs"/>
@@ -31,80 +30,24 @@ For more information visit http://www.allors.com/legal
     <generation template="records" output="records.g.cs"/>
     <generation template="associationTypes" output="associationTypes.g.cs"/>
     <generation template="roleTypes" output="roleTypes.g.cs"/>
-    <generation template="builder" output="builder.g.cs"/>
 </generations>
 >>
-
-ids(repository) ::= <<
-namespace Allors.Database.Meta
-{
-    using System;
-
-    public partial class Ids {
-        // Domains
-$repository.Domains:{assembly|$ids_domain(assembly)$}; separator="\n"$
-
-        // Units
-$repository.Units:{unit|$ids_unit(unit)$}; separator="\n"$
-
-        // Composites & Relations
-$repository.composites:{composite|$ids_composite(composite)$}; separator="\n"$
-
-        // Records & Fields
-$repository.records:{record|$ids_record(record)$}; separator="\n"$
-    }
-}
->>
-
-ids_domain(composite) ::= <<
-        public static readonly Guid $assembly.Name$ = new Guid("$assembly.Id$");
->>
-
-ids_unit(composite) ::= <<
-        public static readonly Guid $unit.SingularName$ = new Guid("$unit.Id$");
->>
-
-ids_composite(composite) ::= <<
-        public static readonly Guid $composite.SingularName$ = new Guid("$composite.Id$");
-$composite.DefinedProperties:{property|$ids_composite_property(property)$}; separator="\n"$
-$composite.DefinedMethods:{method|$ids_composite_methodType(method)$}; separator="\n"$
-
->>
-
-ids_composite_property(property) ::= <<
-        public static readonly Guid $composite.SingularName$$property.RoleName$ = new Guid("$property.Id$");
->>
-
-ids_composite_methodType(method) ::= <<
-        public static readonly Guid $composite.SingularName$$method.Name$ = new Guid("$method.Id$");
->>
-
-ids_record(record) ::= <<
-        public static readonly Guid $record.Name$ = new Guid("$record.Id$");
-$record.Fields:{field|$ids_record_field(field)$}; separator="\n"$
-
->>
-
-ids_record_field(field) ::= <<
-        public static readonly Guid $record.Name$$field.Name$ = new Guid("$field.Id$");
->>
-
 
 m(repository) ::= <<
 namespace Allors.Database.Meta
 {
-    public partial class M : MetaPopulation {
+    public interface M : IMetaPopulation {
         // Units
-$repository.Units:{unit|        public Meta$unit.SingularName$ $unit.SingularName$;}; separator="\n"$
+$repository.Units:{unit|        IMeta$unit.SingularName$ $unit.SingularName$ { get; \}}; separator="\n"$
 
         // Interfaces
-$repository.Interfaces:{interface|        public Meta$interface.SingularName$ $interface.SingularName$;}; separator="\n"$
+$repository.Interfaces:{interface|        IMeta$interface.SingularName$ $interface.SingularName$ { get; \}}; separator="\n"$
 
         // Classes
-$repository.Classes:{class|        public Meta$class.SingularName$ $class.SingularName$;}; separator="\n"$
+$repository.Classes:{class|        IMeta$class.SingularName$ $class.SingularName$ { get; \}}; separator="\n"$
 
         // Records
-$repository.Records:{record|        public Meta$record.Name$ $record.Name$;}; separator="\n"$
+$repository.Records:{record|        IMeta$record.Name$ $record.Name$  { get; \}}; separator="\n"$
     }
 }
 >>
@@ -117,8 +60,7 @@ $repository.Units:{unit|$define_unit(unit)$}; separator="\n"$
 >>
 
 define_unit(unit) ::= <<
-    public class Meta$unit.SingularName$ : Unit {
-        public Meta$unit.SingularName$(M m) : base(m, Ids.$unit.SingularName$, UnitTags.$unit.SingularName$, UnitNames.$unit.SingularName$, null) {}
+    public interface IMeta$unit.SingularName$ : IUnit {
     }
 >>
 
@@ -130,17 +72,9 @@ $repository.Interfaces:{interface|$define_interface(interface)$}; separator="\n"
 >>
 
 define_interface(interface) ::= <<
-    public partial class Meta$interface.SingularName$ : Interface {
-        public Meta$interface.SingularName$(M m) : base(m, Ids.$interface.SingularName$, new Interface[]{$interface.ImplementedInterfaces:{implementedInterface|m.$implementedInterface.SingularName$}; separator=", "$}, "$interface.SingularName$", $if(interface.AssignedPluralName)$"$interface.AssignedPluralName$"$else$null$endif$)
-        {
-$if(interface.ExtensionAttributes)$
-                Extensions = { $interface.ExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ }
-$endif$
-        }
+    public interface IMeta$interface.SingularName$ : IInterface {
 
-        public M M => (M)this.MetaPopulation;
-
-$interface.Subtypes:{subtype|           public Meta$subtype.SingularName$ As$subtype.SingularName$ => this.M.$subtype.SingularName$;}; separator="\n"$
+$interface.Subtypes:{subtype|$define_subtype(subtype)$}; separator="\n"$
 
 $interface.DefinedProperties:{property|$define_propertyType(property)$}; separator="\n"$
 
@@ -164,28 +98,47 @@ $repository.Classes:{class|$define_class(class)$}; separator="\n"$
 >>
 
 define_class(class) ::= <<
-    public partial class Meta$class.SingularName$ : Class {
-        public Meta$class.SingularName$(M m) : base(m, Ids.$class.SingularName$, new Interface[]{$class.ImplementedInterfaces:{implementedInterface|m.$implementedInterface.SingularName$}; separator=", "$}, "$class.SingularName$", $if(class.AssignedPluralName)$"$class.AssignedPluralName$"$else$null$endif$)
-        {
-$if(class.ExtensionAttributes)$
-                Extensions = { $class.ExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ }
-$endif$
-        }
-        
-        public M M => (M)this.MetaPopulation;
+    public interface IMeta$class.SingularName$ : IClass {
+$class.DefinedProperties:{property|$define_propertyType(property)$}; separator="\n"$
 
-        $class.DefinedProperties:{property|$define_propertyType(property)$}; separator="\n"$
+$class.InheritedProperties:{property|$define_inheritedpropertyType(property)$}; separator="\n"$
 
-        $class.InheritedProperties:{property|$define_inheritedpropertyType(property)$}; separator="\n"$
+$class.DefinedReverseProperties:{property|$define_reversepropertyType(property)$}; separator="\n"$
 
-        $class.DefinedReverseProperties:{property|$define_reversepropertyType(property)$}; separator="\n"$
+$class.InheritedReverseProperties:{property|$define_inheritedreversepropertyType(property)$}; separator="\n"$
 
-        $class.InheritedReverseProperties:{property|$define_inheritedreversepropertyType(property)$}; separator="\n"$
+$class.DefinedMethods:{method|$define_methodType(method)$}; separator="\n"$
 
-        $class.DefinedMethods:{method|$define_methodType(method)$}; separator="\n"$
-
-        $class.InheritedMethods:{method|$define_methodType(method)$}; separator="\n"$
+$class.InheritedMethods:{method|$define_methodType(method)$}; separator="\n"$
     }
+>>
+
+define_subtype(subtype) ::= <<
+        IMeta$subtype.SingularName$ As$subtype.SingularName$ { get; } 
+>>
+
+define_propertyType(property) ::= <<
+        IMeta$property.DefiningType.SingularName$$property.RoleName$ $property.RoleName$ { get; }
+>>
+
+define_inheritedpropertyType(property) ::= <<
+ $if(property.DefiningProperty)$
+        IMeta$property.DefiningProperty.DefiningType.SingularName$$property.DefiningProperty.RoleName$ $property.DefiningProperty.RoleName$ { get; }
+ $else$
+        IMeta$property.DefiningType.SingularName$$property.RoleName$ $property.RoleName$ { get; }
+ $endif$
+>>
+
+define_reversepropertyType(property) ::= <<
+        IMeta$property.AssociationName$ $property.AssociationName$ { get; }
+>>
+
+define_inheritedreversepropertyType(property) ::= <<
+        IMeta$property.AssociationName$ $property.AssociationName$ { get; }
+>>
+
+define_methodType(method) ::= <<
+        IMethodType $method.Name$ { get; }
 >>
 
 records(repository) ::= <<
@@ -196,28 +149,14 @@ $repository.Records:{record|$define_record(record)$}; separator="\n"$
 >>
 
 define_record(record) ::= <<
-    public partial class Meta$record.Name$ : Record {
-
+    public interface IMeta$record.Name$ : IRecord {
 $record.Fields:{field|$declare_field(field)$}; separator="\n"$
-
-        public Meta$record.Name$(M m) : base(m, Ids.$record.name$, "$record.Name$")
-        {
-$record.Fields:{field|$define_field(field)$}; separator="\n"$
-
-$if(record.ExtensionAttributes)$
-                Extensions = { $record.ExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ }
-$endif$
-        }
     }
 
 >>
 
 declare_field(field) ::= <<
-        public FieldType $field.Name$;
->>
-
-define_field(field) ::= <<
-            this.$field.Name$ = new FieldType(this, Ids.$record.Name$$field.Name$, "$field.Name$", m.$field.Type.SingularName$, $field.IsMany$);
+        IFieldType $field.Name$ { get; }
 >>
 
 associationTypes(repository) ::= <<
@@ -232,14 +171,9 @@ $composite.DefinedProperties:{property|$define_associationType(property)$}; sepa
 >>
 
 define_associationType(property) ::= <<
-    public class Meta$property.AssociationName$ : AssociationType
+    public interface IMeta$property.AssociationName$ : IAssociationType
     {
-        public Meta$property.AssociationName$(M m) : base(m.$property.DefiningType.SingularName$)
-        {
-            this.$property.DefiningType.SingularName$ = m.$property.DefiningType.SingularName$;
-        }
-
-        public Meta$property.DefiningType.SingularName$ $property.DefiningType.SingularName$ { get; }
+        IMeta$property.DefiningType.SingularName$ $property.DefiningType.SingularName$ { get; }
     }
 
 >>
@@ -256,270 +190,13 @@ $composite.DefinedProperties:{property|$define_roleType(property)$}; separator="
 >>
 
 define_roleType(property) ::= <<
-    public class Meta$property.DefiningType.SingularName$$property.RoleName$ : RoleType
+    public interface IMeta$property.DefiningType.SingularName$$property.RoleName$ : IRoleType
     {
-        public Meta$property.DefiningType.SingularName$$property.RoleName$(M meta) : base(meta.$property.ObjectType.SingularName$, $if(property.AssignedRoleSingularName)$"$property.RoleSingularName$"$else$null$endif$, $if(property.AssignedRolePluralName)$"$property.RolePluralName$"$else$null$endif$)
-        {
 $if(property.ObjectType.IsComposite)$
-            this.$property.ObjectType.SingularName$ = meta.$property.ObjectType.SingularName$;
-$endif$
-$if(property.AttributeByName.Required)$             IsRequired = $property.AttributeByName.Required.Value$;$endif$
-$if(property.AttributeByName.Unique)$               IsUnique = $property.AttributeByName.Unique.Value$;$endif$
-$if(property.AttributeByName.Size)$             Size = $property.AttributeByName.Size.Value$;$endif$
-$if(property.AttributeByName.Precision)$                Precision = $property.AttributeByName.Precision.Value$;$endif$
-$if(property.AttributeByName.Scale)$                Scale = $property.AttributeByName.Scale.Value$;$endif$
-        }
-$if(property.ObjectType.IsComposite)$
-
-        public Meta$property.ObjectType.SingularName$ $property.ObjectType.SingularName$ { get; }
+        IMeta$property.ObjectType.SingularName$ $property.ObjectType.SingularName$ { get; }
 $endif$
     }
 
->>
-
-define_propertyType(property) ::= <<
-        public Meta$property.DefiningType.SingularName$$property.RoleName$ $property.RoleName$;
->>
-
-define_inheritedpropertyType(property) ::= <<
- $if(property.DefiningProperty)$
-        public Meta$property.DefiningProperty.DefiningType.SingularName$$property.DefiningProperty.RoleName$ $property.DefiningProperty.RoleName$;
- $else$
-        public Meta$property.DefiningType.SingularName$$property.RoleName$ $property.RoleName$;
- $endif$
->>
-
-define_reversepropertyType(property) ::= <<
-        public Meta$property.AssociationName$ $property.AssociationName$;
->>
-
-define_inheritedreversepropertyType(property) ::= <<
-        public Meta$property.AssociationName$ $property.AssociationName$;
->>
-
-define_methodType(method) ::= <<
-        public MethodType $method.Name$;
->>
-
-builder(repository) ::= <<
-// <auto-generated />
-namespace Allors.Database.Meta
-{
-	public partial class MetaBuilder
-	{
-        #region Domains
-        internal class Domains
-        {
-$repository.Domains:{assembly|              public Domain $assembly.Name$;}; separator="\n"$
-        }
-        #endregion
-
-	    #region RelationTypes
-        internal class RelationTypes
-        {
-$repository.Composites:{composite|$define_relationTypes(composite)$}; separator="\n"$
-        }
-        #endregion
-
-        #region MethodTypes
-        internal class MethodTypes
-        {
-$repository.Composites:{composite|$define_methods(composite)$}; separator="\n"$
-        }
-        #endregion
-
-        public M Build() {
-            var meta =  new M();
-            var domains = new Domains();
-            var relationTypes = new RelationTypes();
-            var methodTypes = new MethodTypes();
-
-            this.BuildDomains(meta, domains);
-            this.BuildUnits(meta, domains);
-            this.BuildInterfaces(meta, domains);
-            this.BuildClasses(meta, domains);
-            this.BuildRecords(meta, domains);
-            this.BuildRelationTypes(meta, domains, relationTypes);
-            this.BuildMethodTypes(meta, domains, methodTypes);
-
-            this.AssignPropertyTypes(meta, relationTypes);
-            this.AssignMethodTypes(meta, methodTypes);
-
-            meta.Initialize();
-
-            this.OverrideRequired(meta, relationTypes);
-            this.OverrideUnique(meta, relationTypes);
-
-$repository.Domains:{assembly|             this.Build$assembly.Name$(meta, domains, relationTypes, methodTypes);}; separator="\n"$
-
-            meta.Derive();
-
-            return meta;
-        }
-
-		private void BuildDomains(M meta, Domains domains)
-		{
-$repository.Domains:{assembly|$build_domain(assembly)$}; separator="\n"$
-		}
-
-		private void BuildUnits(M meta, Domains domains)
-		{
-$repository.Units:{unit|$build_unit(unit)$}; separator="\n"$
-		}
-
-		private void BuildInterfaces(M meta, Domains domains)
-		{
-$repository.Interfaces:{interface|$build_interface(interface)$}; separator="\n"$
-		}
-
-		private void BuildClasses(M meta, Domains domains)
-		{
-$repository.Classes:{class|$build_class(class)$}; separator="\n"$
-		}
-
-		private void BuildRecords(M meta, Domains domains)
-		{
-$repository.Records:{record|$build_record(record)$}; separator="\n"$
-		}
-
-		private void BuildRelationTypes(M meta, Domains domains, RelationTypes relationTypes)
-		{
-$repository.Composites:{composite|$build_relations(composite)$}; separator="\n"$
-		}
-
-		private void BuildMethodTypes(M meta, Domains domains, MethodTypes methodTypes)
-		{
-$repository.Composites:{composite|$build_methods(composite)$}; separator="\n"$
-		}
-
-        private void OverrideRequired(M meta, RelationTypes relationTypes)
-        {
-$repository.Classes:{class|$override_required(class)$}; separator="\n"$
-        }
-
-        private void OverrideUnique(M meta, RelationTypes relationTypes)
-        {
-$repository.Classes:{class|$override_unique(class)$}; separator="\n"$
-        }
-
-        private void AssignPropertyTypes(M meta, RelationTypes relationTypes)
-        {
-$repository.Composites:{composite|$assign_properties(composite)$}; separator="\n"$
-        }
-
-        private void AssignMethodTypes(M meta, MethodTypes methodTypes)
-        {
-$repository.Composites:{composite|$assign_methods(composite)$}; separator="\n"$
-        }
-	}
-}
->>
-
-define_relationTypes(composite) ::= <<
-$composite.DefinedProperties:{property|             public RelationType $property.DefiningType.SingularName$$property.RoleName$;}; separator="\n"$
->>
-
-define_roleClasses(class) ::= <<
-$class.ImplementedProperties:{property|             public RoleClass $class.SingularName$$property.RoleName$;}; separator="\n"$
->>
-
-assign_roleClasses(class) ::= <<
-$class.ImplementedProperties:{property|                 Metathis.$class.SingularName$$property.RoleName$ = relationTypes.$property.DefiningProperty.DefiningType.SingularName$$property.DefiningProperty.RoleName$.RoleClassBy(meta.$class.SingularName$);}; separator="\n"$
->>
-
-define_methods(composite) ::= <<
-$composite.DefinedMethods:{method|          public MethodType $method.DefiningType.SingularName$$method.Name$;}; separator="\n"$
->>
-
-build_domain(assembly) ::= <<
-	        domains.$assembly.Name$ = new Domain(meta, Ids.$assembly.Name$, "$assembly.Name$", new Domain[]{$assembly.DirectSuperdomains:{superdomain|domains.$superdomain.Name$}; separator=","$})
-	        {
-$if(assembly.ExtensionAttributes)$
-                Extensions = { $assembly.ExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ }
-$endif$
-	        };
->>
-
-build_unit(unit) ::= <<
-            meta.$unit.SingularName$ = new Meta$unit.SingularName$(meta);
->>
-
-build_interface(interface) ::= <<
-	        meta.$interface.SingularName$ = new Meta$interface.SingularName$(meta);
->>
-
-build_class(class) ::= <<
-	        meta.$class.SingularName$ = new Meta$class.SingularName$(meta);
->>
-
-build_record(record) ::= <<            meta.$record.Name$ = new Meta$record.Name$(meta);>>
-
-build_relations(composite) ::= <<
-            // $composite.SingularName$
-$composite.DefinedProperties:{property|$build_relation(property)$}; separator="\n"$
-
->>
-
-build_relation(property) ::= <<
-            relationTypes.$property.DefiningType.SingularName$$property.RoleName$ = new RelationType(meta, Ids.$property.DefiningType.SingularName$$property.RoleName$, $if(property.AssignedMultiplicity)$Allors.Multiplicity.$property.AssignedMultiplicity$$else$null$endif$, $if(property.AttributeByName.Derived)$$property.AttributeByName.Derived.Value$$else$false$endif$, new Meta$property.AssociationName$(meta), new Meta$property.DefiningType.SingularName$$property.RoleName$(meta))
-            {
-$if(property.ExtensionAttributes)$
-                Extensions = { $property.ExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ }
-$endif$
-            };
->>
-
-override_required(class) ::= <<$if(class.InheritedRequiredProperties)$
-            meta.$class.SingularName$.OverriddenRequiredRoleTypes = new []{$class.InheritedRequiredProperties:{property|relationTypes.$property.DefiningProperty.DefiningType.SingularName$$property.RoleName$.RoleType}; separator=", "$}; 
-$endif$>>
-
-override_unique(class) ::= <<$if(class.InheritedUniqueProperties)$
-            meta.$class.SingularName$.OverriddenUniqueRoleTypes = new []{$class.InheritedUniqueProperties:{property|relationTypes.$property.DefiningProperty.DefiningType.SingularName$$property.RoleName$.RoleType}; separator=", "$}; 
-$endif$>>
-
-assign_properties(composite) ::= <<
-$composite.DefinedProperties:{property|$assign_propertyType(property)$}; separator="\n"$
-$composite.InheritedProperties:{property|$assign_inheritedpropertyType(property)$}; separator="\n"$
-$composite.DefinedReverseProperties:{property|$assign_reversepropertyType(property)$}; separator="\n"$
-$composite.InheritedReverseProperties:{property|$assign_inheritedreversepropertyType(property)$}; separator="\n"$
->>
-
-assign_propertyType(property) ::= <<
-                meta.$composite.SingularName$.$property.RoleName$ = (Meta$property.DefiningType.SingularName$$property.RoleName$) relationTypes.$property.DefiningType.SingularName$$property.RoleName$.RoleType;
->>
-
-assign_inheritedpropertyType(property) ::= <<
-$if(property.DefiningProperty)$                meta.$composite.SingularName$.$property.DefiningProperty.RoleName$ = (Meta$property.DefiningProperty.DefiningType.SingularName$$property.DefiningProperty.RoleName$) relationTypes.$property.DefiningProperty.DefiningType.SingularName$$property.DefiningProperty.RoleName$.RoleType;
-$else$                meta.$composite.SingularName$.$property.RoleName$ = (Meta$property.DefiningType.SingularName$$property.RoleName$) relationTypes.$property.DefiningType.SingularName$$property.RoleName$.RoleType;
-$endif$
->>
-
-assign_reversepropertyType(property) ::= <<
-                meta.$composite.SingularName$.$property.AssociationName$ = (Meta$property.AssociationName$) relationTypes.$property.DefiningType.SingularName$$property.RoleName$.AssociationType;
->>
-
-assign_inheritedreversepropertyType(property) ::= <<
-$if(property.DefiningProperty)$                meta.$composite.SingularName$.$property.AssociationName$ = (Meta$property.AssociationName$) relationTypes.$property.DefiningProperty.DefiningType.SingularName$$property.DefiningProperty.RoleName$.AssociationType;
-$else$                meta.$composite.SingularName$.$property.AssociationName$ = (Meta$property.AssociationName$) relationTypes.$property.DefiningType.SingularName$$property.RoleName$.AssociationType;
-$endif$
->>
-
-assign_methods(composite) ::= <<
-$composite.DefinedMethods:{method|$assign_methodType(method)$}; separator="\n"$
-$composite.InheritedMethods:{method|$assign_inheritedmethodType(method)$}; separator="\n"$
->>
-
-assign_methodType(method) ::= <<
-                meta.$composite.SingularName$.$method.Name$ = methodTypes.$method.DefiningType.SingularName$$method.Name$;
->>
-
-assign_inheritedmethodType(method) ::= <<
-                meta.$composite.SingularName$.$method.Name$ = methodTypes.$method.DefiningMethod.DefiningType.SingularName$$method.Name$;
->>
-
-build_methods(composite) ::= <<$composite.DefinedMethods:{method|$build_method(method)$}; separator="\n"$>>
-build_method(method) ::= <<
-            methodTypes.$method.DefiningType.SingularName$$method.Name$ = new MethodType(meta.$method.DefiningType.SingularName$, Ids.$method.DefiningType.SingularName$$method.Name$, "$method.Name$", $if(method.Input)$meta.$method.Input.Name$$else$null$endif$, $if(method.Output)$meta.$method.Output.Name$$else$null$endif$);
 >>
 
 boolean(value) ::= "$if(value)$true$else$false$endif$"

@@ -9,7 +9,7 @@ namespace Allors.Database.Meta;
 /// <summary>
 ///     A <see cref="IPropertyType" /> can be a <see cref="IAssociationType" /> or a <see cref="IRoleType" />.
 /// </summary>
-public interface IPropertyType : IOperandType, IMetaObject
+public interface IPropertyType : IOperandType
 {
     IObjectType ObjectType { get; }
 

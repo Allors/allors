@@ -1,4 +1,4 @@
-// <copyright file="ObjectExtensions.cs" company="Allors bvba">
+﻿// <copyright file="ObjectExtensions.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -13,7 +13,7 @@ namespace Allors.Database.Domain
         public static void CoreOnPostBuild(this Object @this, ObjectOnPostBuild method)
         {
             // TODO: Optimize
-            foreach (var roleType in ((Class)@this.Strategy.Class).RequiredRoleTypes)
+            foreach (var roleType in ((IClass)@this.Strategy.Class).RequiredRoleTypes)
             {
                 if (roleType.ObjectType is IUnit unit && !@this.Strategy.ExistRole(roleType))
                 {

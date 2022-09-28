@@ -1,4 +1,4 @@
-// <copyright file="ApiTest.cs" company="Allors bvba">
+﻿// <copyright file="ApiTest.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -14,6 +14,7 @@ namespace Allors.Server.Tests
     using System.Text;
     using System.Text.Json;
     using System.Threading.Tasks;
+    using Allors.Database.Meta.Configuration;
     using Database;
     using Database.Adapters.Sql;
     using Database.Configuration;

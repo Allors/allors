@@ -1,4 +1,4 @@
-// <copyright file="VersionedExtensions.cs" company="Allors bvba">
+﻿// <copyright file="VersionedExtensions.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -16,7 +16,7 @@ namespace Allors.Database.Domain
         {
             // TODO: move parts to Meta
             var derivation = method.Derivation;
-            var versionedClass = (Class)@this.Strategy.Class;
+            var versionedClass = (IClass)@this.Strategy.Class;
             var metaPopulation = versionedClass.MetaPopulation;
             var versionClass = (IClass)metaPopulation.FindCompositeByName(versionedClass.Name + "Version");
             var versionTypeRegex = new Regex(".+Version");

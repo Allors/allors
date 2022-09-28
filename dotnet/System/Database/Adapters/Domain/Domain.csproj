@@ -4,6 +4,6 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Allors.Database\Allors.Database.csproj" />
-    <ProjectReference Include="..\Meta\Meta.csproj" />
+    <ProjectReference Include="..\Meta.Configuration\Meta.Configuration.csproj" />
   </ItemGroup>
 </Project>

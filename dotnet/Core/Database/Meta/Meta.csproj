@@ -3,7 +3,6 @@
     <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\System\Database\Allors.Database.Meta\Allors.Database.Meta.csproj" />
     <ProjectReference Include="..\..\..\System\Database\Allors.Database\Allors.Database.csproj" />
   </ItemGroup>
 

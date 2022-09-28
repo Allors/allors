@@ -8,7 +8,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Allors.Database\Allors.Database.csproj" />
-    <ProjectReference Include="..\Meta\Meta.csproj" />
+    <ProjectReference Include="..\Meta.Configuration\Meta.Configuration.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\..\..\Core\Database\Generate\Core*\**\*.cs" />

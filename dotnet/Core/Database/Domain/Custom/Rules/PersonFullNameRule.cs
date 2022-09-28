@@ -1,4 +1,4 @@
-// <copyright file="Domain.cs" company="Allors bvba">
+﻿// <copyright file="Domain.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -14,10 +14,11 @@ namespace Allors.Database.Domain
 
     public class PersonFullNameRule : Rule
     {
-        public PersonFullNameRule(M m) : base(m, new Guid("C9895CF4-98B2-4023-A3EA-582107C7D80D")) =>
+        public PersonFullNameRule(M m)
+            : base(m, new Guid("C9895CF4-98B2-4023-A3EA-582107C7D80D")) =>
             this.Patterns = new Pattern[]
             {
-                new RolePattern<MetaPerson>(m.Person, v => v.FirstName),
+                new RolePattern<IMetaPerson>(m.Person, v => v.FirstName),
                 m.Person.RolePattern(v => v.LastName),
             };
 

@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\System\Database\Allors.Database.Meta\Allors.Database.Meta.csproj" />
+    <ProjectReference Include="..\Meta\Meta.csproj" />
+  </ItemGroup>
+
+</Project>

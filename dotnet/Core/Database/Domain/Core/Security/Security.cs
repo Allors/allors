@@ -23,7 +23,7 @@ namespace Allors.Database.Domain
         private readonly Dictionary<Guid, Role> roleById;
         private readonly ITransaction transaction;
 
-        private readonly Dictionary<ObjectType, IObjects> objectsByObjectType;
+        private readonly Dictionary<IObjectType, IObjects> objectsByObjectType;
         private readonly Graph<IObjects> objectsGraph;
 
         // TODO: Koen
@@ -31,8 +31,8 @@ namespace Allors.Database.Domain
         {
             this.transaction = transaction;
 
-            this.objectsByObjectType = new Dictionary<ObjectType, IObjects>();
-            foreach (ObjectType objectType in transaction.Database.MetaPopulation.Composites)
+            this.objectsByObjectType = new Dictionary<IObjectType, IObjects>();
+            foreach (IObjectType objectType in transaction.Database.MetaPopulation.Composites)
             {
                 this.objectsByObjectType[objectType] = objectType.GetObjects(transaction);
             }
@@ -122,9 +122,9 @@ namespace Allors.Database.Domain
 
         public void Add(IObjects objects) => this.objectsGraph.Add(objects);
 
-        public void AddDependency(ObjectType dependent, ObjectType dependee) => this.objectsGraph.AddDependency(this.objectsByObjectType[dependent], this.objectsByObjectType[dependee]);
+        public void AddDependency(IObjectType dependent, IObjectType dependee) => this.objectsGraph.AddDependency(this.objectsByObjectType[dependent], this.objectsByObjectType[dependee]);
 
-        public void Grant(Guid roleId, ObjectType objectType, params Operations[] operations)
+        public void Grant(Guid roleId, IObjectType objectType, params Operations[] operations)
         {
             if (this.roleById.TryGetValue(roleId, out var role))
             {
@@ -160,7 +160,7 @@ namespace Allors.Database.Domain
             }
         }
 
-        public void Grant(Guid roleId, ObjectType objectType, IOperandType operandType, params Operations[] operations)
+        public void Grant(Guid roleId, IObjectType objectType, IOperandType operandType, params Operations[] operations)
         {
             if (this.roleById.TryGetValue(roleId, out var role))
             {
@@ -193,11 +193,11 @@ namespace Allors.Database.Domain
             }
         }
 
-        public void GrantAdministrator(ObjectType objectType, params Operations[] operations) => this.Grant(Roles.AdministratorId, objectType, operations);
+        public void GrantAdministrator(IObjectType objectType, params Operations[] operations) => this.Grant(Roles.AdministratorId, objectType, operations);
 
-        public void GrantCreator(ObjectType objectType, params Operations[] operations) => this.Grant(Roles.CreatorId, objectType, operations);
+        public void GrantCreator(IObjectType objectType, params Operations[] operations) => this.Grant(Roles.CreatorId, objectType, operations);
 
-        public void GrantExcept(Guid roleId, ObjectType objectType, ICollection<IOperandType> excepts, params Operations[] operations)
+        public void GrantExcept(Guid roleId, IObjectType objectType, ICollection<IOperandType> excepts, params Operations[] operations)
         {
             if (this.roleById.TryGetValue(roleId, out var role))
             {
@@ -233,11 +233,11 @@ namespace Allors.Database.Domain
             }
         }
 
-        public void GrantGuest(ObjectType objectType, params Operations[] operations) => this.Grant(Roles.GuestId, objectType, operations);
+        public void GrantGuest(IObjectType objectType, params Operations[] operations) => this.Grant(Roles.GuestId, objectType, operations);
 
-        public void GrantGuestCreator(ObjectType objectType, params Operations[] operations) => this.Grant(Roles.GuestCreatorId, objectType, operations);
+        public void GrantGuestCreator(IObjectType objectType, params Operations[] operations) => this.Grant(Roles.GuestCreatorId, objectType, operations);
 
-        public void GrantOwner(ObjectType objectType, params Operations[] operations) => this.Grant(Roles.OwnerId, objectType, operations);
+        public void GrantOwner(IObjectType objectType, params Operations[] operations) => this.Grant(Roles.OwnerId, objectType, operations);
 
         private void CoreOnPreSetup()
         {

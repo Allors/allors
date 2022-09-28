@@ -1,4 +1,4 @@
-using Nuke.Common;
+﻿using Nuke.Common;
 using Nuke.Common.Tooling;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.Npm;
@@ -11,6 +11,10 @@ partial class Build
         .After(Clean)
         .Executes(() =>
         {
+            DotNetRun(s => s
+                .SetProjectFile(Paths.DotnetSystemRepositoryGenerate)
+                .SetApplicationArguments(
+                    $"{Paths.DotnetSystemAdaptersRepository} {Paths.DotnetSystemRepositoryTemplatesMetaConfigurationCs} {Paths.DotnetSystemAdaptersMetaConfigurationGenerated}"));
             DotNetRun(s => s
                 .SetProjectFile(Paths.DotnetSystemRepositoryGenerate)
                 .SetApplicationArguments(

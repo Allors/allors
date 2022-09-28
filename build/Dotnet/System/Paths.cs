@@ -1,10 +1,11 @@
-using Nuke.Common.IO;
+﻿using Nuke.Common.IO;
 
 public partial class Paths
 {
     public AbsolutePath DotnetSystem => Dotnet / "System";
     public AbsolutePath DotnetSystemRepositoryTemplates => DotnetSystem / "Repository/Templates";
     public AbsolutePath DotnetSystemRepositoryTemplatesMetaCs => DotnetSystemRepositoryTemplates / "meta.cs.stg";
+    public AbsolutePath DotnetSystemRepositoryTemplatesMetaConfigurationCs => DotnetSystemRepositoryTemplates / "meta.configuration.cs.stg";
     public AbsolutePath DotnetSystemRepositoryGenerate => DotnetSystem / "Repository/Generate/Generate.csproj";
 
     public AbsolutePath DotnetSystemDatabase => DotnetSystem / "Database";
@@ -14,6 +15,7 @@ public partial class Paths
     public AbsolutePath DotnetSystemAdaptersRepository => DotnetSystemAdapters / "Repository/Repository.csproj";
 
     public AbsolutePath DotnetSystemAdaptersMetaGenerated => DotnetSystemAdapters / "Meta/Generated";
+    public AbsolutePath DotnetSystemAdaptersMetaConfigurationGenerated => DotnetSystemAdapters / "Meta.Configuration/Generated";
     public AbsolutePath DotnetSystemAdaptersGenerate => DotnetSystemAdapters / "Generate/Generate.csproj";
     public AbsolutePath DotnetSystemAdaptersStaticTests => DotnetSystemAdapters / "Tests.Static/Tests.Static.csproj";
 

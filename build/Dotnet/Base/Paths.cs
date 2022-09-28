@@ -1,4 +1,4 @@
-using Nuke.Common.IO;
+﻿using Nuke.Common.IO;
 
 public partial class Paths
 {
@@ -7,6 +7,7 @@ public partial class Paths
 
     public AbsolutePath DotnetBaseDatabase => DotnetBase / "Database";
     public AbsolutePath DotnetBaseDatabaseMetaGenerated => DotnetBaseDatabase / "Meta/Generated";
+    public AbsolutePath DotnetBaseDatabaseMetaConfigurationGenerated => DotnetBaseDatabase / "Meta.Configuration/Generated";
     public AbsolutePath DotnetBaseDatabaseGenerate => DotnetBaseDatabase / "Generate/Generate.csproj";
     public AbsolutePath DotnetBaseDatabaseCommands => DotnetBaseDatabase / "Commands";
     public AbsolutePath DotnetBaseDatabaseServer => DotnetBaseDatabase / "Server";

@@ -1,4 +1,4 @@
-// <copyright file="Permission.cs" company="Allors bvba">
+﻿// <copyright file="Permission.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -13,9 +13,9 @@ namespace Allors.Database.Domain
     public partial class ReadPermission : IReadPermission
     {
         IClass IPermission.Class => this.Class;
-        public Class Class
+        public IClass Class
         {
-            get => (Class)this.Strategy.Transaction.Database.MetaPopulation.FindById(this.ClassPointer);
+            get => (IClass)this.Strategy.Transaction.Database.MetaPopulation.FindById(this.ClassPointer);
 
             set
             {
@@ -39,9 +39,9 @@ namespace Allors.Database.Domain
         public IOperandType OperandType => this.RelationType.RoleType;
 
         IRelationType IReadPermission.RelationType => this.RelationType;
-        public RelationType RelationType
+        public IRelationType RelationType
         {
-            get => (RelationType)this.Strategy.Transaction.Database.MetaPopulation.FindById(this.RelationTypePointer);
+            get => (IRelationType)this.Strategy.Transaction.Database.MetaPopulation.FindById(this.RelationTypePointer);
 
             set
             {

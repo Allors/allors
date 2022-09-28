@@ -27,6 +27,8 @@ public sealed class Domain : MetaIdentifiableObject, IDomain
 
     public Domain[] DirectSuperdomains { get; }
 
+    IEnumerable<IDomain> IDomain.Superdomains => this.Superdomains;
+
     public Domain[] Superdomains { get; private set; }
 
     public override IEnumerable<string> WorkspaceNames => this.MetaPopulation.WorkspaceNames;

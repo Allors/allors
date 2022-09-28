@@ -1,4 +1,4 @@
-// <copyright file="ChangedRoles.cs" company="Allors bvba">
+﻿// <copyright file="ChangedRoles.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -66,7 +66,8 @@ public static class ExpressionExtensions
         }
 
         var root = visitor.MemberExpressions[0].Member.DeclaringType;
-        var composite = metaPopulation.FindCompositeByName(root.Name.Substring(4));
+        var compositeName = root.Name.Substring(5);
+        var composite = metaPopulation.FindCompositeByName(compositeName);
 
         foreach (var memberExpression in visitor.MemberExpressions)
         {
@@ -74,7 +75,8 @@ public static class ExpressionExtensions
             {
                 var propertyInfo = (PropertyInfo)memberExpression.Member;
                 var propertyType = propertyInfo.PropertyType;
-                composite = metaPopulation.FindCompositeByName(propertyType.Name.Substring(4));
+                var propertyName = propertyType.Name.Substring(5);
+                composite = metaPopulation.FindCompositeByName(propertyName);
 
                 if (currentPath != null && !currentPath.PropertyType.ObjectType.Equals(composite))
                 {

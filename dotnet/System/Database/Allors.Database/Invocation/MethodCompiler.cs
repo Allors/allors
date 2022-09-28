@@ -1,4 +1,4 @@
-// <copyright file="MethodInvocation.cs" company="Allors bvba">
+﻿// <copyright file="MethodInvocation.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -16,12 +16,12 @@ public class MethodCompiler
 {
     private readonly ConcurrentDictionary<Type, Dictionary<MethodInfo, Action<object, object>>> actionByMethodInfoByType;
     private readonly Dictionary<Type, MethodInfo[]> extensionMethodsByInterface;
-    private readonly List<Domain> sortedDomains;
+    private readonly List<IDomain> sortedDomains;
 
-    public MethodCompiler(MetaPopulation metaPopulation, Dictionary<Type, MethodInfo[]> extensionMethodsByInterface)
+    public MethodCompiler(IMetaPopulation metaPopulation, Dictionary<Type, MethodInfo[]> extensionMethodsByInterface)
     {
         this.extensionMethodsByInterface = extensionMethodsByInterface;
-        this.sortedDomains = new List<Domain>(metaPopulation.Domains);
+        this.sortedDomains = new List<IDomain>(metaPopulation.Domains);
         this.sortedDomains.Sort((a, b) => a.Superdomains.Contains(b) ? -1 : 1);
 
         this.actionByMethodInfoByType = new ConcurrentDictionary<Type, Dictionary<MethodInfo, Action<object, object>>>();
