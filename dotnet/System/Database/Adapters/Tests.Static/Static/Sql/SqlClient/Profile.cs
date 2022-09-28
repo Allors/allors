@@ -1,4 +1,4 @@
-// <copyright file="Profile.cs" company="Allors bvba">
+﻿// <copyright file="Profile.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Text;
+using Allors.Database.Meta.Configuration;
 using Caching;
 using Domain;
 using Meta;

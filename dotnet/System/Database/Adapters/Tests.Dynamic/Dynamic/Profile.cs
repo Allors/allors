@@ -1,4 +1,4 @@
-// --------------------------------------------------------------------------------------------------------------------
+﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="Profile.cs" company="Allors bvba">
 //   Copyright 2002-2012 Allors bvba.
 // Dual Licensed under
@@ -17,9 +17,11 @@
 namespace Allors.Database.Adapters;
 
 using System;
+using Allors.Database.Meta.Configuration;
 using Domain;
 using Memory;
 using Meta;
+using MetaPopulation = Allors.Database.Meta.MetaPopulation;
 
 public abstract class Profile : IDisposable
 {
