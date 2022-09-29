@@ -66,7 +66,7 @@ public class StrategyAssert
     {
         foreach (var associationType in associationTypes)
         {
-            if (!allorsObject.Strategy.Class.ExistAssociationType(associationType))
+            if (!allorsObject.Strategy.Class.AssociationTypes.Contains(associationType))
             {
                 Assert.True(false); // Fail
             }
@@ -131,7 +131,7 @@ public class StrategyAssert
     {
         foreach (var roleType in roleTypes)
         {
-            if (!allorsObject.Strategy.Class.ExistRoleType(roleType))
+            if (!allorsObject.Strategy.Class.RoleTypes.Contains(roleType))
             {
                 Assert.True(false); // Fail
             }

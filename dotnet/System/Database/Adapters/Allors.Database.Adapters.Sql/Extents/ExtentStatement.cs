@@ -1,4 +1,4 @@
-// <copyright file="ExtentStatement.cs" company="Allors bvba">
+﻿// <copyright file="ExtentStatement.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -139,7 +139,7 @@ internal abstract class ExtentStatement
 
     internal bool AddWhere(IObjectType rootClass, string alias)
     {
-        var useWhere = !this.Extent.ObjectType.ExistExclusiveClass;
+        var useWhere = this.Extent.ObjectType.ExclusiveClass == null;
 
         if (useWhere)
         {

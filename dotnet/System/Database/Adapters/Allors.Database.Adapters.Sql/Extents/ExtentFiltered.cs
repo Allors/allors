@@ -65,7 +65,7 @@ internal class ExtentFiltered : SqlExtent
 
         if (this.objectType.Classes.Count > 0)
         {
-            if (this.objectType.ExistExclusiveClass)
+            if (this.objectType.ExclusiveClass != null)
             {
                 return this.BuildSqlWithExclusiveClass(statement);
             }
@@ -78,7 +78,7 @@ internal class ExtentFiltered : SqlExtent
 
     internal void CheckAssociation(IAssociationType associationType)
     {
-        if (!this.objectType.ExistAssociationType(associationType))
+        if (!this.objectType.AssociationTypes.Contains(associationType))
         {
             throw new ArgumentException("Extent does not have association " + associationType);
         }
@@ -86,7 +86,7 @@ internal class ExtentFiltered : SqlExtent
 
     internal void CheckRole(IRoleType roleType)
     {
-        if (!this.objectType.ExistRoleType(roleType))
+        if (!this.objectType.RoleTypes.Contains(roleType))
         {
             throw new ArgumentException("Extent does not have role " + roleType.SingularName);
         }

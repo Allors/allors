@@ -16,20 +16,16 @@ public sealed class Domain : MetaIdentifiableObject, IDomain
         : base(metaPopulation, id)
     {
         this.Name = name;
-        this.DirectSuperdomains = directSuperdomains ?? Array.Empty<Domain>();
+        this.DirectSuperdomains = directSuperdomains != null ? new HashSet<IDomain>(directSuperdomains) : MetaPopulation.EmptyDomains;
 
         this.MetaPopulation.OnCreated(this);
     }
 
     public string Name { get; }
 
-    IEnumerable<IDomain> IDomain.DirectSuperdomains => this.DirectSuperdomains;
+    public IReadOnlySet<IDomain> DirectSuperdomains { get; }
 
-    public Domain[] DirectSuperdomains { get; }
-
-    IEnumerable<IDomain> IDomain.Superdomains => this.Superdomains;
-
-    public Domain[] Superdomains { get; private set; }
+    public IReadOnlySet<IDomain> Superdomains { get; private set; }
 
     public override IEnumerable<string> WorkspaceNames => this.MetaPopulation.WorkspaceNames;
 
@@ -97,12 +93,12 @@ public sealed class Domain : MetaIdentifiableObject, IDomain
     internal void InitializeSuperdomains()
     {
         var superdomains = new HashSet<Domain>();
-        foreach (var directSuperdomain in this.DirectSuperdomains)
+        foreach (var directSuperdomain in this.DirectSuperdomains.Cast<Domain>())
         {
             directSuperdomain.InitializeSuperdomains(this, superdomains);
         }
 
-        this.Superdomains = superdomains.ToArray();
+        this.Superdomains = new HashSet<IDomain>(superdomains);
     }
 
     private void InitializeSuperdomains(Domain subdomain, ISet<Domain> superdomains)
@@ -115,7 +111,7 @@ public sealed class Domain : MetaIdentifiableObject, IDomain
 
         superdomains.Add(this);
 
-        foreach (var directSuperdomain in this.DirectSuperdomains)
+        foreach (var directSuperdomain in this.DirectSuperdomains.Cast<Domain>())
         {
             if (!superdomains.Contains(directSuperdomain))
             {

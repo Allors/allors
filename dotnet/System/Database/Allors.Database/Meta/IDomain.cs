@@ -13,7 +13,7 @@ public interface IDomain : IMetaIdentifiableObject, IComparable
 {
     string Name { get; }
 
-    IEnumerable<IDomain> DirectSuperdomains { get; }
+    IReadOnlySet<IDomain> DirectSuperdomains { get; }
 
-    IEnumerable<IDomain> Superdomains { get; }
+    IReadOnlySet<IDomain> Superdomains { get; }
 }

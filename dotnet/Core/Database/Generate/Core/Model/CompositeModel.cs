@@ -20,7 +20,7 @@ public abstract class CompositeModel : ObjectTypeModel
 
     public IEnumerable<ClassModel> Classes => this.Composite.Classes.Select(this.MetaModel.Map);
 
-    public bool ExistExclusiveClass => this.Composite.ExistExclusiveClass;
+    public bool ExistExclusiveClass => this.Composite.ExclusiveClass != null;
 
     public IEnumerable<AssociationTypeModel> InheritedAssociationTypes => this.AssociationTypes.Except(this.ExclusiveAssociationTypes);
 

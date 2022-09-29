@@ -477,7 +477,7 @@ internal abstract class Prefetcher
                     if (associationIdValue != null && associationIdValue != DBNull.Value)
                     {
                         var associationId = (long)associationIdValue;
-                        association = associationType.ObjectType.ExistExclusiveClass
+                        association = associationType.ObjectType.ExclusiveClass != null
                             ? this.Transaction.State.GetOrCreateReferenceForExistingObject(associationType.ObjectType.ExclusiveClass,
                                 associationId, this.Transaction)
                             : this.Transaction.State.GetOrCreateReferenceForExistingObject(associationId, this.Transaction);
@@ -541,7 +541,7 @@ internal abstract class Prefetcher
 
                 if (prefetchedAssociationByRole.TryGetValue(role, out var associationId))
                 {
-                    association = associationType.ObjectType.ExistExclusiveClass
+                    association = associationType.ObjectType.ExclusiveClass != null
                         ? this.Transaction.State.GetOrCreateReferenceForExistingObject(associationType.ObjectType.ExclusiveClass,
                             associationId, this.Transaction)
                         : this.Transaction.State.GetOrCreateReferenceForExistingObject(associationId, this.Transaction);
@@ -603,7 +603,7 @@ internal abstract class Prefetcher
                     var associationId = (long)associationIdValue;
                     associations.Add(associationId);
 
-                    if (associationType.ObjectType.ExistExclusiveClass)
+                    if (associationType.ObjectType.ExclusiveClass != null)
                     {
                         this.Transaction.State.GetOrCreateReferenceForExistingObject(associationType.ObjectType.ExclusiveClass,
                             associationId, this.Transaction);
@@ -688,7 +688,7 @@ internal abstract class Prefetcher
 
         foreach (var associationId in prefetchedAssociations)
         {
-            if (associationType.ObjectType.ExistExclusiveClass)
+            if (associationType.ObjectType.ExclusiveClass != null)
             {
                 this.Transaction.State.GetOrCreateReferenceForExistingObject(associationType.ObjectType.ExclusiveClass, associationId,
                     this.Transaction);

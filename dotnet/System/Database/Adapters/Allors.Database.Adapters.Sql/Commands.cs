@@ -429,7 +429,7 @@ public abstract class Commands
         {
             var id = this.Transaction.State.GetObjectIdForExistingObject(result.ToString());
 
-            associationObject = associationType.ObjectType.ExistExclusiveClass
+            associationObject = associationType.ObjectType.ExclusiveClass != null
                 ? this.Transaction.State.GetOrCreateReferenceForExistingObject(associationType.ObjectType.ExclusiveClass, id,
                     this.Transaction)
                 : this.Transaction.State.GetOrCreateReferenceForExistingObject(id, this.Transaction);

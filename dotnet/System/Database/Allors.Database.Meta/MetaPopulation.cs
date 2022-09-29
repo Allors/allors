@@ -15,6 +15,7 @@ using System.Xml;
 public abstract class MetaPopulation : IMetaPopulation
 {
     internal static readonly IReadOnlySet<IComposite> EmptyComposites = new HashSet<IComposite>();
+    internal static readonly IReadOnlySet<IDomain> EmptyDomains = new HashSet<IDomain>();
 
     private IList<IMetaIdentifiableObject> metaObjects;
 

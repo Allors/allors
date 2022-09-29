@@ -37,7 +37,7 @@ internal sealed class RoleInstanceof : Predicate
             return ThreeValuedLogic.True;
         }
 
-        return this.objectType is IInterface @interface && roleObjectType.ExistSupertype(@interface)
+        return this.objectType is IInterface @interface && roleObjectType.Supertypes.Contains(@interface)
             ? ThreeValuedLogic.True
             : ThreeValuedLogic.False;
     }

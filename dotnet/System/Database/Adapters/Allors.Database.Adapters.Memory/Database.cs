@@ -99,7 +99,7 @@ public class Database : IDatabase
     {
         if (!this.concreteClassesByObjectType.TryGetValue(objectType, out var concreteClassOrClasses))
         {
-            if (objectType.ExistExclusiveClass)
+            if (objectType.ExclusiveClass != null)
             {
                 concreteClassOrClasses = objectType.ExclusiveClass;
                 this.concreteClassesByObjectType[objectType] = concreteClassOrClasses;

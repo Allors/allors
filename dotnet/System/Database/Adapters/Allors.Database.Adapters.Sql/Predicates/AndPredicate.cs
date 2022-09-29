@@ -1,4 +1,4 @@
-// <copyright file="AndPredicate.cs" company="Allors bvba">
+﻿// <copyright file="AndPredicate.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -18,7 +18,7 @@ internal sealed class AndPredicate : CompositePredicate
             var root = this.Extent.Filter == null || this.Extent.Filter.Equals(this);
             if (root)
             {
-                var wherePresent = !this.Extent.ObjectType.ExistExclusiveClass;
+                var wherePresent = this.Extent.ObjectType.ExclusiveClass == null;
                 statement.Append(wherePresent ? " AND " : " WHERE ");
             }
             else

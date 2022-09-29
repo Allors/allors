@@ -23,7 +23,7 @@ internal sealed class ExtentFiltered : Extent
 
     internal void CheckForAssociationType(IAssociationType association)
     {
-        if (!this.ObjectType.ExistAssociationType(association))
+        if (!this.ObjectType.AssociationTypes.Contains(association))
         {
             throw new ArgumentException("Extent does not have association " + association);
         }
@@ -31,7 +31,7 @@ internal sealed class ExtentFiltered : Extent
 
     internal void CheckForRoleType(IRoleType roleType)
     {
-        if (!this.ObjectType.ExistRoleType(roleType))
+        if (!this.ObjectType.RoleTypes.Contains(roleType))
         {
             throw new ArgumentException("Extent does not have role " + roleType.SingularName);
         }

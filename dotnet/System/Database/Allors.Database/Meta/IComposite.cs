@@ -26,13 +26,5 @@ public interface IComposite : IObjectType
 
     IReadOnlySet<IMethodType> MethodTypes { get; }
 
-    bool ExistExclusiveClass { get; }
-
-    bool ExistSupertype(IInterface @interface);
-
-    bool ExistAssociationType(IAssociationType association);
-
-    bool ExistRoleType(IRoleType roleType);
-
     bool IsAssignableFrom(IComposite objectType);
 }

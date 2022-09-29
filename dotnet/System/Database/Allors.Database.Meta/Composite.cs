@@ -39,14 +39,6 @@ public abstract class Composite : ObjectType, IComposite
 
     public IReadOnlySet<IMethodType> MethodTypes => this.methodTypes;
 
-    public bool ExistExclusiveClass => this.ExclusiveClass != null;
-
-    public bool ExistSupertype(IInterface @interface) => this.supertypes.Contains(@interface);
-
-    public bool ExistAssociationType(IAssociationType associationType) => this.associationTypes.Contains(associationType);
-
-    public bool ExistRoleType(IRoleType roleType) => this.roleTypes.Contains(roleType);
-
     public abstract bool IsAssignableFrom(IComposite objectType);
 
     internal void InitializeSupertypes()

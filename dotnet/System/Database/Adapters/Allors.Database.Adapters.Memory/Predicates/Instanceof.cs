@@ -25,7 +25,7 @@ internal sealed class Instanceof : Predicate
             return ThreeValuedLogic.True;
         }
 
-        return this.objectType is IInterface @interface && strategy.UncheckedObjectType.ExistSupertype(@interface)
+        return this.objectType is IInterface @interface && strategy.UncheckedObjectType.Supertypes.Contains(@interface)
             ? ThreeValuedLogic.True
             : ThreeValuedLogic.False;
     }

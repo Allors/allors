@@ -37,7 +37,7 @@ internal sealed class AssociationInstanceOf : Predicate
             return ThreeValuedLogic.True;
         }
 
-        return this.objectType is IInterface @interface && associationObjectType.ExistSupertype(@interface)
+        return this.objectType is IInterface @interface && associationObjectType.Supertypes.Contains(@interface)
             ? ThreeValuedLogic.True
             : ThreeValuedLogic.False;
     }

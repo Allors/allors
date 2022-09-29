@@ -1,4 +1,4 @@
-// <copyright file="RoleEqualsRole.cs" company="Allors bvba">
+﻿// <copyright file="RoleEqualsRole.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -41,7 +41,7 @@ internal sealed class RoleEqualsRole : Predicate
                                  schema.ColumnNameByRelationType[this.equalsRole.RelationType]);
             }
         }
-        else if (((IComposite)this.role.ObjectType).ExistExclusiveClass && ((IComposite)this.equalsRole.ObjectType).ExistExclusiveClass)
+        else if (((IComposite)this.role.ObjectType).ExclusiveClass != null && ((IComposite)this.equalsRole.ObjectType).ExclusiveClass != null)
         {
             statement.Append(" " + alias + "." + schema.ColumnNameByRelationType[this.role.RelationType] + "=" + alias + "." +
                              schema.ColumnNameByRelationType[this.equalsRole.RelationType]);
