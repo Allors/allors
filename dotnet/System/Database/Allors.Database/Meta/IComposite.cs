@@ -10,21 +10,21 @@ using System.Collections.Generic;
 
 public interface IComposite : IObjectType
 {
-    IEnumerable<IInterface> DirectSupertypes { get; }
+    IReadOnlySet<IInterface> DirectSupertypes { get; }
 
-    IEnumerable<IInterface> Supertypes { get; }
+    IReadOnlySet<IInterface> Supertypes { get; }
 
-    IEnumerable<IComposite> Subtypes { get; }
+    IReadOnlySet<IComposite> Subtypes { get; }
 
-    IEnumerable<IClass> Classes { get; }
+    IReadOnlySet<IClass> Classes { get; }
 
     IClass ExclusiveClass { get; }
 
-    IEnumerable<IAssociationType> AssociationTypes { get; }
+    IReadOnlySet<IAssociationType> AssociationTypes { get; }
 
-    IEnumerable<IRoleType> RoleTypes { get; }
+    IReadOnlySet<IRoleType> RoleTypes { get; }
 
-    IEnumerable<IMethodType> MethodTypes { get; }
+    IReadOnlySet<IMethodType> MethodTypes { get; }
 
     bool ExistClass { get; }
 

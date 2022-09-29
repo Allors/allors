@@ -13,9 +13,6 @@
       <HashCode>AAJAAAAAAAFAAAABACAQAAAAAQAAEAACQQJAAAAAAAA=</HashCode>
       <FileName>Meta\IComposite.cs</FileName>
     </TypeIdentifier>
-    <ShowAsCollectionAssociation>
-      <Property Name="DirectSupertypes" />
-    </ShowAsCollectionAssociation>
   </Interface>
   <Interface Name="Allors.Database.Meta.IInterface">
     <Position X="7.75" Y="13.25" Width="1.5" />
@@ -142,9 +139,9 @@
       <FileName>Meta\IMethodType.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
+      <Property Name="ObjectType" />
       <Property Name="Input" />
       <Property Name="Output" />
-      <Property Name="ObjectType" />
     </ShowAsAssociation>
   </Interface>
   <Interface Name="Allors.Database.Meta.IMetaPopulation">

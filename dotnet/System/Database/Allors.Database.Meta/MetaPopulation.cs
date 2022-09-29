@@ -10,9 +10,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Xml;
 
 public abstract class MetaPopulation : IMetaPopulation
 {
+    internal static readonly IReadOnlySet<IComposite> EmptyComposites = new HashSet<IComposite>();
+
     private IList<IMetaIdentifiableObject> metaObjects;
 
     private Dictionary<Guid, IMetaIdentifiableObject> metaIdentifiableObjectById;

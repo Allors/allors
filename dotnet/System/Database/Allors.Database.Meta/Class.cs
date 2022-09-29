@@ -13,7 +13,7 @@ using System.Linq;
 
 public abstract class Class : Composite, IClass
 {
-    private readonly Class[] classes;
+    private readonly IReadOnlySet<IClass> classes;
 
     private ConcurrentDictionary<IMethodType, Action<object, object>[]> actionsByMethodType;
     private IRoleType[] derivedRequiredRoleTypes;
@@ -21,17 +21,19 @@ public abstract class Class : Composite, IClass
     protected Class(MetaPopulation metaPopulation, Guid id, Interface[] directSupertypes, string singularName, string assignedPluralName)
         : base(metaPopulation, id, directSupertypes, singularName, assignedPluralName)
     {
-        this.classes = new[] { this };
+        // TODO: Create single element IReadOnlySet
+        this.classes = new HashSet<IClass> { this };
+        this.Subtypes = MetaPopulation.EmptyComposites;
         metaPopulation.OnCreated(this);
     }
 
     public string[] AssignedWorkspaceNames { get; set; } = Array.Empty<string>();
 
-    public override IEnumerable<Class> Classes => this.classes;
+    public override IReadOnlySet<IClass> Classes => this.classes;
 
-    public override Class ExclusiveClass => this;
+    public override IClass ExclusiveClass => this;
 
-    public override IEnumerable<Composite> Subtypes => Array.Empty<Composite>();
+    public override IReadOnlySet<IComposite> Subtypes { get; }
 
     public IRoleType[] OverriddenRequiredRoleTypes { get; set; } = Array.Empty<IRoleType>();
 

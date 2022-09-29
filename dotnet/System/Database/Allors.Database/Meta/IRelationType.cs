@@ -14,6 +14,8 @@ using System;
 /// </summary>
 public interface IRelationType : IMetaIdentifiableObject, IComparable
 {
+    string[] AssignedWorkspaceNames { get; }
+
     IAssociationType AssociationType { get; }
 
     IRoleType RoleType { get; }

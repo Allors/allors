@@ -12,49 +12,32 @@ using System.Linq;
 
 public abstract class Composite : ObjectType, IComposite
 {
-    private HashSet<AssociationType> associationTypes;
+    private IReadOnlySet<IAssociationType> associationTypes;
+    private IReadOnlySet<IRoleType> roleTypes;
+    private IReadOnlySet<IMethodType> methodTypes;
+    private HashSet<IInterface> supertypes;
 
-    private HashSet<MethodType> methodTypes;
-    private HashSet<RoleType> roleTypes;
-    private HashSet<Interface> supertypes;
-
-    protected Composite(MetaPopulation metaPopulation, Guid id, Interface[] directSupertypes, string singularName, string assignedPluralName)
+    protected Composite(MetaPopulation metaPopulation, Guid id, IEnumerable<IInterface> directSupertypes, string singularName, string assignedPluralName)
         : base(metaPopulation, id, singularName, assignedPluralName)
     {
-        this.DirectSupertypes = directSupertypes;
+        this.DirectSupertypes = new HashSet<IInterface>(directSupertypes);
     }
 
-    IEnumerable<IInterface> IComposite.DirectSupertypes => this.DirectSupertypes;
+    public IReadOnlySet<IInterface> DirectSupertypes { get; }
 
-    public Interface[] DirectSupertypes { get; }
+    public abstract IReadOnlySet<IComposite> Subtypes { get; }
 
-    IEnumerable<IComposite> IComposite.Subtypes => this.Subtypes;
+    public abstract IReadOnlySet<IClass> Classes { get; }
 
-    public abstract IEnumerable<Composite> Subtypes { get; }
+    public abstract IClass ExclusiveClass { get; }
 
-    IEnumerable<IClass> IComposite.Classes => this.Classes;
+    public IReadOnlySet<IInterface> Supertypes => this.supertypes;
 
-    public abstract IEnumerable<Class> Classes { get; }
+    public IReadOnlySet<IAssociationType> AssociationTypes => this.associationTypes;
 
-    IClass IComposite.ExclusiveClass => this.ExclusiveClass;
+    public IReadOnlySet<IRoleType> RoleTypes => this.roleTypes;
 
-    public abstract Class ExclusiveClass { get; }
-
-    IEnumerable<IInterface> IComposite.Supertypes => this.Supertypes;
-
-    public IEnumerable<Interface> Supertypes => this.supertypes;
-
-    IEnumerable<IAssociationType> IComposite.AssociationTypes => this.AssociationTypes;
-
-    public IEnumerable<AssociationType> AssociationTypes => this.associationTypes;
-
-    IEnumerable<IRoleType> IComposite.RoleTypes => this.RoleTypes;
-
-    public IEnumerable<RoleType> RoleTypes => this.roleTypes;
-
-    IEnumerable<IMethodType> IComposite.MethodTypes => this.MethodTypes;
-
-    public IEnumerable<MethodType> MethodTypes => this.methodTypes;
+    public IReadOnlySet<IMethodType> MethodTypes => this.methodTypes;
 
     public abstract bool ExistClass { get; }
 
@@ -70,9 +53,9 @@ public abstract class Composite : ObjectType, IComposite
 
     internal void InitializeSupertypes()
     {
-        var supertypes = new HashSet<Interface>();
+        var supertypes = new HashSet<IInterface>();
         this.InitializeSupertypesRecursively(this, supertypes);
-        this.supertypes = new HashSet<Interface>(supertypes);
+        this.supertypes = new HashSet<IInterface>(supertypes);
     }
 
     internal void InitializeRoleTypes(Dictionary<Composite, HashSet<RoleType>> roleTypesByAssociationObjectType)
@@ -84,7 +67,7 @@ public abstract class Composite : ObjectType, IComposite
             roleTypes.UnionWith(directRoleTypes);
         }
 
-        foreach (var superType in this.Supertypes)
+        foreach (var superType in this.Supertypes.Cast<Interface>())
         {
             if (roleTypesByAssociationObjectType.TryGetValue(superType, out var inheritedRoleTypes))
             {
@@ -92,7 +75,7 @@ public abstract class Composite : ObjectType, IComposite
             }
         }
 
-        this.roleTypes = new HashSet<RoleType>(roleTypes);
+        this.roleTypes = new HashSet<IRoleType>(roleTypes);
     }
 
     internal void InitializeAssociationTypes(Dictionary<ObjectType, HashSet<AssociationType>> relationTypesByRoleObjectType)
@@ -104,7 +87,7 @@ public abstract class Composite : ObjectType, IComposite
             associationTypes.UnionWith(classAssociationTypes);
         }
 
-        foreach (var superType in this.Supertypes)
+        foreach (var superType in this.Supertypes.Cast<Interface>())
         {
             if (relationTypesByRoleObjectType.TryGetValue(superType, out var interfaceAssociationTypes))
             {
@@ -112,7 +95,7 @@ public abstract class Composite : ObjectType, IComposite
             }
         }
 
-        this.associationTypes = new HashSet<AssociationType>(associationTypes);
+        this.associationTypes = new HashSet<IAssociationType>(associationTypes);
     }
 
     internal void InitializeMethodTypes(Dictionary<Composite, HashSet<MethodType>> methodTypeByClass)
@@ -124,7 +107,7 @@ public abstract class Composite : ObjectType, IComposite
             methodTypes.UnionWith(directMethodTypes);
         }
 
-        foreach (var superType in this.Supertypes)
+        foreach (var superType in this.Supertypes.Cast<Interface>())
         {
             if (methodTypeByClass.TryGetValue(superType, out var inheritedMethodTypes))
             {
@@ -132,12 +115,12 @@ public abstract class Composite : ObjectType, IComposite
             }
         }
 
-        this.methodTypes = new HashSet<MethodType>(methodTypes);
+        this.methodTypes = new HashSet<IMethodType>(methodTypes);
     }
 
-    private void InitializeSupertypesRecursively(ObjectType type, HashSet<Interface> superTypes)
+    private void InitializeSupertypesRecursively(ObjectType type, ISet<IInterface> superTypes)
     {
-        foreach (var directSupertype in this.DirectSupertypes)
+        foreach (var directSupertype in this.DirectSupertypes.Cast<Interface>())
         {
             if (!Equals(directSupertype, type))
             {

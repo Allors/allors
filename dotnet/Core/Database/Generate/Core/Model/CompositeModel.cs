@@ -63,7 +63,7 @@ public abstract class CompositeModel : ObjectTypeModel
 
     public bool ExistClass => this.Composite.ExistClass;
 
-    public Class ExclusiveClass => this.Composite.ExclusiveClass;
+    public ClassModel ExclusiveClass => this.MetaModel.Map(this.Composite.ExclusiveClass);
 
     public IEnumerable<RoleTypeModel> UnitRoleTypes => this.RoleTypes.Where(roleType => roleType.ObjectType.IsUnit).ToArray();
 

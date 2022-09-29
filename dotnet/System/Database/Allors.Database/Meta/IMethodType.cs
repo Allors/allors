@@ -8,6 +8,8 @@ namespace Allors.Database.Meta;
 
 public interface IMethodType : IMetaIdentifiableObject, IOperandType
 {
+    string[] AssignedWorkspaceNames { get; }
+
     IComposite ObjectType { get; }
 
     string Name { get; }

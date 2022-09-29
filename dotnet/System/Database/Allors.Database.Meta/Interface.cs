@@ -13,27 +13,26 @@ using System.Linq;
 public abstract class Interface : Composite, IInterface
 {
     private string[] derivedWorkspaceNames;
-    private HashSet<Class> subclasses;
 
-    private HashSet<Composite> directSubtypes;
-    private Class exclusiveClass;
-    private HashSet<Composite> subtypes;
+    private IReadOnlySet<IComposite> subtypes;
+    private IReadOnlySet<IClass> subclasses;
+    private IClass exclusiveClass;
 
     protected Interface(MetaPopulation metaPopulation, Guid id, Interface[] directSupertypes, string singularName, string assignedPluralName)
         : base(metaPopulation, id, directSupertypes, singularName, assignedPluralName) =>
         metaPopulation.OnCreated(this);
 
-    public override IEnumerable<Class> Classes => this.subclasses;
+    public IReadOnlySet<IComposite> DirectSubtypes { get; private set; }
 
-    public override IEnumerable<Composite> Subtypes => this.subtypes;
+    public override IReadOnlySet<IClass> Classes => this.subclasses;
 
-    public override Class ExclusiveClass => this.exclusiveClass;
+    public override IReadOnlySet<IComposite> Subtypes => this.subtypes;
+
+    public override IClass ExclusiveClass => this.exclusiveClass;
 
     public override IEnumerable<string> WorkspaceNames => this.derivedWorkspaceNames;
 
     public override bool ExistClass => this.subclasses.Count > 0;
-
-    IEnumerable<IComposite> IComposite.Subtypes => this.Subtypes;
 
     public override bool IsAssignableFrom(IComposite objectType) =>
         this.Equals(objectType) || this.subtypes.Contains(objectType);
@@ -47,7 +46,7 @@ public abstract class Interface : Composite, IInterface
 
     internal void InitializeDirectSubtypes()
     {
-        this.directSubtypes = new HashSet<Composite>(this.MetaPopulation.Composites.Where(v => v.DirectSupertypes.Contains(this)));
+        this.DirectSubtypes = new HashSet<IComposite>(this.MetaPopulation.Composites.Where(v => v.DirectSupertypes.Contains(this)));
     }
 
     internal void InitializeSubclasses()
@@ -58,28 +57,28 @@ public abstract class Interface : Composite, IInterface
             subclasses.Add((Class)subType);
         }
 
-        this.subclasses = new HashSet<Class>(subclasses);
+        this.subclasses = new HashSet<IClass>(subclasses);
     }
 
     internal void InitializeSubtypes()
     {
-        var subtypes = new HashSet<Composite>();
+        var subtypes = new HashSet<IComposite>();
         this.InitializeSubtypesRecursively(this, subtypes);
-        this.subtypes = new HashSet<Composite>(subtypes);
+        this.subtypes = new HashSet<IComposite>(subtypes);
     }
 
     internal void InitializeExclusiveSubclass() => this.exclusiveClass = this.subclasses.Count == 1 ? this.subclasses.First() : null;
 
-    private void InitializeSubtypesRecursively(ObjectType type, ISet<Composite> subtypes)
+    private void InitializeSubtypesRecursively(ObjectType type, ISet<IComposite> subtypes)
     {
-        foreach (var directSubtype in this.directSubtypes)
+        foreach (var directSubtype in this.DirectSubtypes.Cast<Composite>())
         {
             if (!Equals(directSubtype, type))
             {
                 subtypes.Add(directSubtype);
-                if (directSubtype is IInterface)
+                if (directSubtype is Interface directSubinterface)
                 {
-                    ((Interface)directSubtype).InitializeSubtypesRecursively(this, subtypes);
+                    directSubinterface.InitializeSubtypesRecursively(this, subtypes);
                 }
             }
         }
