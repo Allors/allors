@@ -47,8 +47,6 @@ public abstract class Class : Composite, IClass
 
     public override IEnumerable<string> WorkspaceNames => this.AssignedWorkspaceNames;
 
-    public override bool ExistClass => true;
-
     public override bool IsAssignableFrom(IComposite objectType) => this.Equals(objectType);
 
     public Action<object, object>[] Actions(IMethodType methodType)

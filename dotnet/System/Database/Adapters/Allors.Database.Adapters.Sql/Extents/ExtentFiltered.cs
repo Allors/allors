@@ -63,7 +63,7 @@ internal class ExtentFiltered : SqlExtent
         this.LazyLoadFilter();
         this.filter.Setup(statement);
 
-        if (this.objectType.ExistClass)
+        if (this.objectType.Classes.Count > 0)
         {
             if (this.objectType.ExistExclusiveClass)
             {

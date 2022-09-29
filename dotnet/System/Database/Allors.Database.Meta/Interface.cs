@@ -32,8 +32,6 @@ public abstract class Interface : Composite, IInterface
 
     public override IEnumerable<string> WorkspaceNames => this.derivedWorkspaceNames;
 
-    public override bool ExistClass => this.subclasses.Count > 0;
-
     public override bool IsAssignableFrom(IComposite objectType) =>
         this.Equals(objectType) || this.subtypes.Contains(objectType);
 

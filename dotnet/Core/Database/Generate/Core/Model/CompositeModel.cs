@@ -61,7 +61,7 @@ public abstract class CompositeModel : ObjectTypeModel
 
     public IEnumerable<RoleTypeModel> ExclusiveRoleTypes => this.RoleTypes.Where(v => this.Equals(v.AssociationType.ObjectType));
 
-    public bool ExistClass => this.Composite.ExistClass;
+    public bool ExistClass => this.Composite.Classes.Count > 0;
 
     public ClassModel ExclusiveClass => this.MetaModel.Map(this.Composite.ExclusiveClass);
 

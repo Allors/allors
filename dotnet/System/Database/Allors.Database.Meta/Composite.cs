@@ -39,8 +39,6 @@ public abstract class Composite : ObjectType, IComposite
 
     public IReadOnlySet<IMethodType> MethodTypes => this.methodTypes;
 
-    public abstract bool ExistClass { get; }
-
     public bool ExistExclusiveClass => this.ExclusiveClass != null;
 
     public bool ExistSupertype(IInterface @interface) => this.supertypes.Contains(@interface);

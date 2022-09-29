@@ -116,7 +116,7 @@ public class Save
         {
             var associationType = relation.AssociationType;
 
-            if (associationType.ObjectType.ExistClass)
+            if (associationType.ObjectType.Classes.Count > 0)
             {
                 var roleType = relation.RoleType;
 
