@@ -1,4 +1,4 @@
-// <copyright file="IMetaCache.cs" company="Allors bvba">
+﻿// <copyright file="IMetaCache.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -13,7 +13,11 @@ public interface IMetaCache
 {
     Type GetBuilderType(IClass @class);
 
-    ISet<IClass> GetWorkspaceClasses(string workspaceName);
+    IReadOnlySet<IRoleType> GetRequiredRoleTypesByComposite(IComposite composite);
 
-    IDictionary<IClass, ISet<IRoleType>> GetWorkspaceRoleTypesByClass(string workspaceName);
+    IReadOnlySet<IConcreteRoleType> GetRequiredConcreteRoleTypesByClass(IClass @class);
+
+    IReadOnlySet<IClass> GetWorkspaceClasses(string workspaceName);
+
+    IDictionary<IClass, IReadOnlySet<IRoleType>> GetWorkspaceRoleTypesByClass(string workspaceName);
 }

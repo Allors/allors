@@ -15,7 +15,7 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="Allors.Database.Meta.IInterface">
-    <Position X="7.75" Y="12" Width="1.5" />
+    <Position X="9.75" Y="12.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
       <FileName>Meta\IInterface.cs</FileName>
@@ -59,12 +59,12 @@
   <Interface Name="Allors.Database.Meta.IRoleType">
     <Position X="3.75" Y="6.75" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAIAAAAAAAAAhIAAgEIAAAAggAAAAIAAAAAAAAAAEAA=</HashCode>
+      <HashCode>AAMAAAAAAAAAhIAAAEIAAAAAgAAAAIAAAAAAAAAAEAA=</HashCode>
       <FileName>Meta\IRoleType.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Allors.Database.Meta.IDomain">
-    <Position X="17" Y="3" Width="1.75" />
+    <Position X="17" Y="3" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAABAAAAAAAAAAAAAAAAAQIAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Meta\IDomain.cs</FileName>
@@ -74,16 +74,16 @@
     </ShowAsCollectionAssociation>
   </Interface>
   <Interface Name="Allors.Database.Meta.IClass">
-    <Position X="9.5" Y="12" Width="2.25" />
+    <Position X="7.25" Y="12.25" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAIAAAAAEAAAAAAAAAAAAAAAAAACAAAAAAAAA=</HashCode>
+      <HashCode>ABAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Meta\IClass.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Allors.Database.Meta.IMetaIdentifiableObject">
     <Position X="8" Y="0.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAgAAAIAAAAAAAAAAAAAAAAAAgAAABAAAA=</HashCode>
+      <HashCode>AAACAAAAAAAgAAAIAAAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
       <FileName>Meta\IMetaIdentifiableObject.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -156,6 +156,17 @@
       <HashCode>IABAgAEAAAGCAABIAAgAACgAAAABAAAAEAAAQAAAACA=</HashCode>
       <FileName>Meta\IMetaPopulation.cs</FileName>
     </TypeIdentifier>
+  </Interface>
+  <Interface Name="Allors.Database.Meta.IConcreteRoleType">
+    <Position X="4" Y="12" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Meta\IConcreteRoleType.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Class" />
+      <Property Name="RoleType" />
+    </ShowAsAssociation>
   </Interface>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

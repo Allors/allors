@@ -2,18 +2,19 @@
 // Copyright (c) Allors bv. All rights reserved.
 // </copyright>
 
-
 namespace Allors.Repository.Attributes;
 
 using System;
 
 [AttributeUsage(AttributeTargets.Property)]
-public class RequiredAttribute : RepositoryAttribute
+public class UniqueAttribute : RepositoryAttribute, IExtensionAttribute
 {
-    public RequiredAttribute(bool value = true)
+    public UniqueAttribute(bool value = true)
     {
-        this.Value = value;
+        this.Value = value ? "true" : "false";
     }
 
-    public bool Value { get; set; }
+    public string Name => "Unique";
+
+    public string Value { get; }
 }

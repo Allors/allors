@@ -1,4 +1,4 @@
-// <copyright file="CurrencyTests.cs" company="Allors bvba">
+﻿// <copyright file="CurrencyTests.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -6,6 +6,8 @@
 
 namespace Allors.Database.Domain.Tests
 {
+    using System.Linq;
+    using Allors.Database.Meta.Extensions;
     using Xunit;
 
     public class CurrencyTests : DomainTest, IClassFixture<Fixture>
@@ -17,7 +19,9 @@ namespace Allors.Database.Domain.Tests
         {
             var @class = this.M.Currency;
 
-            var requiredRoleTypes = @class.RequiredRoleTypes;
+            var requiredRoleTypes = @class.ConcreteRoleTypeByRoleType.Values
+                .Where(v => v.Required())
+                .Select(v => v.RoleType).ToArray();
 
             Assert.Equal(3, requiredRoleTypes.Length);
 

@@ -1,4 +1,4 @@
-// <copyright file="RulesDerivation.cs" company="Allors bvba">
+﻿// <copyright file="RulesDerivation.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -8,6 +8,7 @@ namespace Allors.Database.Configuration.Derivations.Default
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Allors.Database.Services;
     using Database.Derivations;
     using Domain;
     using Object = Domain.Object;
@@ -26,7 +27,10 @@ namespace Allors.Database.Configuration.Derivations.Default
             this.ContinueOnError = continueOnError;
             this.Id = Guid.NewGuid();
             this.TimeStamp = transaction.Now();
+            this.MetaCache = transaction.Database.Services.Get<IMetaCache>();
         }
+
+        public IMetaCache MetaCache { get; set; }
 
         public Guid Id { get; }
 
@@ -217,9 +221,9 @@ namespace Allors.Database.Configuration.Derivations.Default
                 var @class = grouping.Key;
                 foreach (var @object in grouping)
                 {
-                    foreach (var roleType in @class.RequiredRoleTypes)
+                    foreach (var concreteRoleType in this.MetaCache.GetRequiredConcreteRoleTypesByClass(@class))
                     {
-                        this.Validation.AssertExists(@object, roleType);
+                        this.Validation.AssertExists(@object, concreteRoleType.RoleType);
                     }
                 }
             }
@@ -234,9 +238,9 @@ namespace Allors.Database.Configuration.Derivations.Default
                 // TODO: Prefetch
                 foreach (var @object in grouping)
                 {
-                    foreach (var roleType in @class.RequiredRoleTypes)
+                    foreach (var concreteRoleType in this.MetaCache.GetRequiredConcreteRoleTypesByClass(@class))
                     {
-                        this.Validation.AssertExists(@object, roleType);
+                        this.Validation.AssertExists(@object, concreteRoleType.RoleType);
                     }
                 }
             }

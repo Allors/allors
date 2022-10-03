@@ -6,15 +6,20 @@
 namespace Allors.Database.Domain
 {
     using System;
+    using Allors.Database.Services;
     using Meta;
 
     public static partial class ObjectExtensions
     {
         public static void CoreOnPostBuild(this Object @this, ObjectOnPostBuild method)
         {
-            // TODO: Optimize
-            foreach (var roleType in ((IClass)@this.Strategy.Class).RequiredRoleTypes)
+            var metaCache = @this.Strategy.Transaction.Database.Services.Get<IMetaCache>();
+            var requiredConcreteRoleTypes = metaCache.GetRequiredConcreteRoleTypesByClass(@this.Strategy.Class);
+
+            foreach (var concreteRoleType in requiredConcreteRoleTypes)
             {
+                var roleType = concreteRoleType.RoleType;
+
                 if (roleType.ObjectType is IUnit unit && !@this.Strategy.ExistRole(roleType))
                 {
                     switch (unit.Tag)
@@ -46,5 +51,5 @@ namespace Allors.Database.Domain
                 }
             }
         }
-   }
+    }
 }

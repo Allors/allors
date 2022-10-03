@@ -9,6 +9,6 @@ namespace Allors.Database.Meta;
 /// <summary>
 ///     A <see cref="IOperandType" /> can be a <see cref="IAssociationType" /> or a <see cref="IRoleType" />.
 /// </summary>
-public interface IOperandType
+public interface IOperandType : IMetaExtensible
 {
 }

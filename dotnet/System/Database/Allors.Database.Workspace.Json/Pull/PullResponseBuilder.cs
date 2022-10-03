@@ -1,4 +1,4 @@
-// <copyright file="PullResponseBuilder.cs" company="Allors bvba">
+﻿// <copyright file="PullResponseBuilder.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -35,7 +35,7 @@ public class PullResponseBuilder
     public PullResponseBuilder(
         ITransaction transaction,
         IAccessControl accessControl,
-        ISet<IClass> allowedClasses,
+        IReadOnlySet<IClass> allowedClasses,
         IPreparedSelects preparedSelects,
         IPreparedExtents preparedExtents,
         IUnitConvert unitConvert,
@@ -61,7 +61,7 @@ public class PullResponseBuilder
 
     public IAccessControl AccessControl { get; }
 
-    public ISet<IClass> AllowedClasses { get; }
+    public IReadOnlySet<IClass> AllowedClasses { get; }
 
     public IPreparedSelects PreparedSelects { get; }
 

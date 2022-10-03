@@ -6,13 +6,13 @@ using Database.Meta;
 
 public class MetaModel
 {
-    private readonly Dictionary<IMetaIdentifiableObject, MetaIdentifiableObjectModel> mapping;
+    private readonly Dictionary<IMetaExtensible, IMetaExtensibleModel> mapping;
 
     public MetaModel(MetaPopulation metaPopulation)
     {
         this.MetaPopulation = metaPopulation;
 
-        this.mapping = new Dictionary<IMetaIdentifiableObject, MetaIdentifiableObjectModel>();
+        this.mapping = new Dictionary<IMetaExtensible, IMetaExtensibleModel>();
 
         foreach (var domain in this.MetaPopulation.Domains)
         {
@@ -32,11 +32,17 @@ public class MetaModel
         foreach (var @class in this.MetaPopulation.Classes)
         {
             this.mapping.Add(@class, new ClassModel(this, @class));
+            foreach (var concreteRoleType in @class.ConcreteRoleTypeByRoleType.Values)
+            {
+                this.mapping.Add(concreteRoleType, new ConcreteRoleTypeModel(this, concreteRoleType));
+            }
         }
 
         foreach (var relationType in this.MetaPopulation.RelationTypes)
         {
             this.mapping.Add(relationType, new RelationTypeModel(this, relationType));
+            this.mapping.Add(relationType.AssociationType, new AssociationTypeModel(this, relationType.AssociationType));
+            this.mapping.Add(relationType.RoleType, new RoleTypeModel(this, relationType.RoleType));
         }
 
         foreach (var record in this.MetaPopulation.Records)
@@ -130,7 +136,9 @@ public class MetaModel
                     .Select(w => w.Tag).OrderBy(w => w));
 
     #region Mappers
-    public MetaIdentifiableObjectModel Map(IMetaIdentifiableObject v) => this.mapping[v];
+    public IMetaExtensibleModel Map(IMetaExtensible v) => this.mapping[v];
+
+    public MetaIdentifiableObjectModel Map(IMetaIdentifiableObject v) => (MetaIdentifiableObjectModel)this.mapping[v];
 
     public DomainModel Map(IDomain v) => (DomainModel)this.mapping[v];
 
@@ -146,9 +154,11 @@ public class MetaModel
 
     public RelationTypeModel Map(IRelationType v) => (RelationTypeModel)this.mapping[v];
 
-    public AssociationTypeModel Map(IAssociationType v) => ((RelationTypeModel)this.mapping[v.RelationType]).AssociationType;
+    public AssociationTypeModel Map(IAssociationType v) => (AssociationTypeModel)this.mapping[v];
 
-    public RoleTypeModel Map(IRoleType v) => ((RelationTypeModel)this.mapping[v.RelationType]).RoleType;
+    public RoleTypeModel Map(IRoleType v) => (RoleTypeModel)this.mapping[v];
+
+    public ConcreteRoleTypeModel Map(IConcreteRoleType v) => (ConcreteRoleTypeModel)this.mapping[v];
 
     public RecordModel Map(IRecord v) => (RecordModel)this.mapping[v];
 

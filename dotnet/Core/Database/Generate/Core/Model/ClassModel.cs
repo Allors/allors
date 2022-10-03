@@ -18,14 +18,12 @@ public sealed class ClassModel : CompositeModel
     public override IMetaIdentifiableObject MetaObject => this.Class;
 
     // IClass
-    public IEnumerable<RoleTypeModel> OverriddenRequiredRoleTypes => this.Class.OverriddenRequiredRoleTypes.Select(this.MetaModel.Map);
+    public IEnumerable<ConcreteRoleTypeModel> ConcreteRoleTypes => this.Class.ConcreteRoleTypeByRoleType.Values.Select(this.MetaModel.Map);
 
-    public IEnumerable<RoleTypeModel> RequiredRoleTypes => this.Class.RequiredRoleTypes.Select(this.MetaModel.Map);
+    public IEnumerable<RoleTypeModel> OverriddenRequiredRoleTypes => this.ConcreteRoleTypes.Where(v => v.IsRequiredOverridden).Select(v => v.RoleType);
 
     // IClass Extra
     public IReadOnlyDictionary<string, IOrderedEnumerable<RoleTypeModel>> WorkspaceOverriddenRequiredByWorkspaceName => this.WorkspaceNames
         .ToDictionary(v => v,
             v => this.OverriddenRequiredRoleTypes.Where(w => w.RelationType.WorkspaceNames.Contains(v)).OrderBy(w => w.RelationType.Tag));
-
-
 }

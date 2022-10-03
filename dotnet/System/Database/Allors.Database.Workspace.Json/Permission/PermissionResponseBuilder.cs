@@ -1,4 +1,4 @@
-// <copyright file="SecurityResponseBuilder.cs" company="Allors bvba">
+﻿// <copyright file="SecurityResponseBuilder.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -14,10 +14,10 @@ using Security;
 
 public class PermissionResponseBuilder
 {
-    private readonly ISet<IClass> allowedClasses;
+    private readonly IReadOnlySet<IClass> allowedClasses;
     private readonly ITransaction transaction;
 
-    public PermissionResponseBuilder(ITransaction transaction, ISet<IClass> allowedClasses)
+    public PermissionResponseBuilder(ITransaction transaction, IReadOnlySet<IClass> allowedClasses)
     {
         this.transaction = transaction;
         this.allowedClasses = allowedClasses;

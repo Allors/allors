@@ -1,4 +1,4 @@
-// <copyright file="SyncResponseBuilder.cs" company="Allors bvba">
+﻿// <copyright file="SyncResponseBuilder.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -15,19 +15,19 @@ using Shared.Ranges;
 
 public class SyncResponseBuilder
 {
-    private readonly ISet<IClass> allowedClasses;
+    private readonly IReadOnlySet<IClass> allowedClasses;
 
     private readonly HashSet<IObject> maskedObjects;
     private readonly IDictionary<IClass, PrefetchPolicy> prefetchPolicyByClass;
-    private readonly IDictionary<IClass, ISet<IRoleType>> roleTypesByClass;
+    private readonly IDictionary<IClass, IReadOnlySet<IRoleType>> roleTypesByClass;
 
     private readonly ITransaction transaction;
     private readonly IUnitConvert unitConvert;
 
     public SyncResponseBuilder(ITransaction transaction,
         IAccessControl accessControl,
-        ISet<IClass> allowedClasses,
-        IDictionary<IClass, ISet<IRoleType>> roleTypesByClass,
+        IReadOnlySet<IClass> allowedClasses,
+        IDictionary<IClass, IReadOnlySet<IRoleType>> roleTypesByClass,
         IDictionary<IClass, PrefetchPolicy> prefetchPolicyByClass,
         IUnitConvert unitConvert)
     {

@@ -24,8 +24,11 @@ public abstract class AssociationType : IAssociationType, IComparable
 
     protected AssociationType(Composite objectType)
     {
+        this.Extensions = new MetaExtension();
         this.ObjectType = objectType;
     }
+
+    public dynamic Extensions { get; }
 
     public Composite ObjectType { get; }
 

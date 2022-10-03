@@ -7,6 +7,7 @@
 namespace Allors.Database.Meta;
 
 using System;
+using System.Collections.Generic;
 
 /// <summary>
 ///     A <see cref="IRoleType" /> defines the role side of a relation.
@@ -15,6 +16,8 @@ using System;
 /// </summary>
 public interface IRoleType : IPropertyType, IComparable
 {
+    IReadOnlyDictionary<IClass, IConcreteRoleType> ConcreteRoleTypeByClass { get; }
+
     IAssociationType AssociationType { get; }
 
     IRelationType RelationType { get; }
@@ -30,11 +33,6 @@ public interface IRoleType : IPropertyType, IComparable
     int? Precision { get; }
 
     int? Scale { get; }
-
-    bool IsRequired { get; set; }
-
-    // TODO: Implement in Transaction.Commit() 
-    bool IsUnique { get; set; }
 
     // TODO: move to extension method
     void Set(IStrategy strategy, object value);

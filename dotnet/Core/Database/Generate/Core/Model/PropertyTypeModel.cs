@@ -3,6 +3,7 @@
 using Database.Meta;
 
 public abstract class PropertyTypeModel
+    : IMetaExtensibleModel
 {
     protected PropertyTypeModel(MetaModel metaModel)
     {
@@ -10,6 +11,11 @@ public abstract class PropertyTypeModel
     }
 
     public MetaModel MetaModel { get; }
+
+    // IMetaExtensible
+    public IMetaExtensible MetaExtensible => this.PropertyType;
+
+    public dynamic Extensions => this.MetaExtensible.Extensions;
 
     // IPropertyType
     public ObjectTypeModel ObjectType => this.MetaModel.Map(this.PropertyType.ObjectType);
@@ -29,4 +35,5 @@ public abstract class PropertyTypeModel
     public bool IsMany => this.PropertyType.IsMany;
 
     protected abstract IPropertyType PropertyType { get; }
+
 }

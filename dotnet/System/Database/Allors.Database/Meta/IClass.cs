@@ -7,12 +7,11 @@
 namespace Allors.Database.Meta;
 
 using System;
+using System.Collections.Generic;
 
 public interface IClass : IComposite
 {
-    IRoleType[] RequiredRoleTypes { get; }
-
-    IRoleType[] OverriddenRequiredRoleTypes { get; set; }
+    IReadOnlyDictionary<IRoleType, IConcreteRoleType> ConcreteRoleTypeByRoleType { get; }
 
     Action<object, object>[] Actions(IMethodType methodType);
 }

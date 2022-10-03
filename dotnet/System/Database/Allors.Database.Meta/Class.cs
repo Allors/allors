@@ -16,7 +16,6 @@ public abstract class Class : Composite, IClass
     private readonly IReadOnlySet<IClass> classes;
 
     private ConcurrentDictionary<IMethodType, Action<object, object>[]> actionsByMethodType;
-    private IRoleType[] derivedRequiredRoleTypes;
 
     protected Class(MetaPopulation metaPopulation, Guid id, Interface[] directSupertypes, string singularName, string assignedPluralName)
         : base(metaPopulation, id, directSupertypes, singularName, assignedPluralName)
@@ -35,15 +34,7 @@ public abstract class Class : Composite, IClass
 
     public override IReadOnlySet<IComposite> Subtypes { get; }
 
-    public IRoleType[] OverriddenRequiredRoleTypes { get; set; } = Array.Empty<IRoleType>();
-
-    public IRoleType[] RequiredRoleTypes
-    {
-        get
-        {
-            return this.derivedRequiredRoleTypes;
-        }
-    }
+    public IReadOnlyDictionary<IRoleType, IConcreteRoleType> ConcreteRoleTypeByRoleType { get; private set; }
 
     public override IEnumerable<string> WorkspaceNames => this.AssignedWorkspaceNames;
 
@@ -61,8 +52,8 @@ public abstract class Class : Composite, IClass
         return actions;
     }
 
-    internal void DeriveRequiredRoleTypes() =>
-        this.derivedRequiredRoleTypes = this.RoleTypes
-            .Where(v => v.IsRequired)
-            .Union(this.OverriddenRequiredRoleTypes).ToArray();
+    internal void InitializeConcreteRoleTypes(List<ConcreteRoleType> roleTypes)
+    {
+        this.ConcreteRoleTypeByRoleType = roleTypes.ToDictionary(v => v.RoleType, v => (IConcreteRoleType)v);
+    }
 }

@@ -1,4 +1,4 @@
-// <copyright file="InvokeResponseBuilder.cs" company="Allors bvba">
+﻿// <copyright file="InvokeResponseBuilder.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -16,12 +16,11 @@ using Security;
 public class InvokeResponseBuilder
 {
     private readonly IAccessControl accessControl;
-    private readonly ISet<IClass> allowedClasses;
+    private readonly IReadOnlySet<IClass> allowedClasses;
     private readonly Func<IValidation> derive;
     private readonly ITransaction transaction;
 
-    public InvokeResponseBuilder(ITransaction transaction, Func<IValidation> derive, IAccessControl accessControl,
-        ISet<IClass> allowedClasses)
+    public InvokeResponseBuilder(ITransaction transaction, Func<IValidation> derive, IAccessControl accessControl, IReadOnlySet<IClass> allowedClasses)
     {
         this.transaction = transaction;
         this.derive = derive;

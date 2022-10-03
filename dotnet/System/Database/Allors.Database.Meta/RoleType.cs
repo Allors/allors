@@ -19,12 +19,17 @@ public abstract class RoleType : IRoleType, IComparable
 
     protected RoleType(ObjectType objectType, string assignedSingularName, string assignedPluralName)
     {
+        this.Extensions = new MetaExtension();
         this.ObjectType = objectType;
         this.AssignedSingularName = !string.IsNullOrEmpty(assignedSingularName) ? assignedSingularName : null;
         this.AssignedPluralName = !string.IsNullOrEmpty(assignedPluralName) ? assignedPluralName : null;
     }
 
+    public dynamic Extensions { get; }
+
     public RelationType RelationType { get; internal set; }
+
+    public IReadOnlyDictionary<IClass, IConcreteRoleType> ConcreteRoleTypeByClass { get; private set; }
 
     public AssociationType AssociationType => this.RelationType.AssociationType;
 
@@ -85,10 +90,6 @@ public abstract class RoleType : IRoleType, IComparable
     public int? Precision { get; set; }
 
     public int? Scale { get; set; }
-
-    public bool IsRequired { get; set; }
-
-    public bool IsUnique { get; set; }
 
     public string MediaType { get; set; }
 
@@ -203,5 +204,15 @@ public abstract class RoleType : IRoleType, IComparable
             var message = this.ValidationName + " should have an assigned plural role name with at least 2 characters";
             validationLog.AddError(message, this, ValidationKind.MinimumLength, "RoleType.PluralName");
         }
+    }
+
+    internal void InitializeConcreteRoleTypes(Dictionary<Class, List<ConcreteRoleType>> concreteRoleTypesByClass)
+    {
+        this.ConcreteRoleTypeByClass = this.AssociationType.ObjectType.Classes.ToDictionary(v => v, v =>
+        {
+            var concreteRoleType = new ConcreteRoleType(v, this) { Class = v };
+            concreteRoleTypesByClass[(Class)v].Add(concreteRoleType);
+            return (IConcreteRoleType)concreteRoleType;
+        });
     }
 }

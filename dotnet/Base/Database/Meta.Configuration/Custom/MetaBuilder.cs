@@ -7,6 +7,7 @@ namespace Allors.Database.Meta.Configuration
 {
     using System;
     using System.Linq;
+    using Allors.Database.Meta.Extensions;
 
     public partial class MetaBuilder
     {
@@ -782,7 +783,7 @@ namespace Allors.Database.Meta.Configuration
 
             const string workspaceName = "Default";
 
-            relationTypes.OrganizationName.RoleType.IsRequired = true;
+            relationTypes.OrganizationName.RoleType.RequiredExtension(true);
 
             AddWorkspace(m.Gender, workspaceName);
         }

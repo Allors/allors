@@ -12,21 +12,20 @@
       <Method Name="Validate" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAIEiAAAAACAAAZEgECAAAQAAIEAAIACBZAIAAAAAAA=</HashCode>
+      <HashCode>AAIEiAAAAACAAAZEgECAAAQAAIEAAIACBZgIAAAAAAA=</HashCode>
       <FileName>AssociationType.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Database.Meta.Class">
-    <Position X="12.5" Y="19.5" Width="2.75" />
+    <Position X="12.5" Y="15" Width="2.75" />
     <Members>
       <Method Name="Actions" Hidden="true" />
       <Method Name="Class" Hidden="true" />
-      <Method Name="DeriveRequiredRoleTypes" Hidden="true" />
       <Method Name="IsAssignableFrom" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAAAQAEAIAFAABEJAAAQAEAAAAAAAAAAQCIAAAAAAAA=</HashCode>
+      <HashCode>ABAAQAEAIAFAAAAJBAAAAAAAAAAAAAAAQAIAAAAAAAA=</HashCode>
       <FileName>Class.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -35,13 +34,10 @@
     <Position X="10.75" Y="9.5" Width="2.75" />
     <Members>
       <Method Name="Composite" Hidden="true" />
-      <Method Name="ExistAssociationType" Hidden="true" />
-      <Method Name="ExistRoleType" Hidden="true" />
-      <Method Name="ExistSupertype" Hidden="true" />
       <Method Name="IsAssignableFrom" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>BAZQAQACQAFAKBQRECAwAgEQAQAQEEICQRJoAAgSBAA=</HashCode>
+      <HashCode>AAJAAAAAQAFAIAQBACAAAAAQAQAAAEAAQAJIAAgCAAA=</HashCode>
       <FileName>Composite.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -68,7 +64,7 @@
       <Method Name="Validate" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAAIBAAAAAKAAAQMgACAAAQIAAAAAIAAAAAAAAQAAAA=</HashCode>
+      <HashCode>AAAABAAAAACAAAQMgACAAAQIAAAAAIAAAAAAAAQAAAA=</HashCode>
       <FileName>Domain.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -87,14 +83,14 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Database.Meta.Interface">
-    <Position X="9.5" Y="19.5" Width="2.5" />
+    <Position X="9.5" Y="15" Width="2.5" />
     <Members>
       <Method Name="DeriveWorkspaceNames" Hidden="true" />
       <Method Name="Interface" Hidden="true" />
       <Method Name="IsAssignableFrom" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AYAAAEACAAFAAEEIIAAQAAAAAAAEJgAAQAIAAAAAAAA=</HashCode>
+      <HashCode>AYAAAEAAAAFAAAEIIAAAAAAAAAAEJkAAQAIAAAAAAAA=</HashCode>
       <FileName>Interface.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -113,7 +109,7 @@
       <Method Name="Validate" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>MAFAgEGAIBGCBQDICAgAADgAQCABCAAgGAQAYAAAmCA=</HashCode>
+      <HashCode>MAFAgEGAIBGCBQDICAgAADhAQCABCAAgGAQAYAAAmCA=</HashCode>
       <FileName>MetaPopulation.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -193,7 +189,7 @@
       <Method Name="Validate" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAIEiBAAAACAhI5EgELABAQhgAAAAIACAZAAAACAUAA=</HashCode>
+      <HashCode>AAMEiBAAAACAhI5EhELABAQBgAAAAIACAZgAAACAUAA=</HashCode>
       <FileName>RoleType.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />

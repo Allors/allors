@@ -182,7 +182,6 @@ public abstract class MetaPopulation : IMetaPopulation
 
         this.Composites = this.Classes.Cast<Composite>().Union(this.Interfaces).ToArray();
 
-
         // Domains
         foreach (var domain in this.Domains)
         {
@@ -260,6 +259,21 @@ public abstract class MetaPopulation : IMetaPopulation
             record.InitializeFieldTypes(fieldTypesByRecord);
         }
 
+        // Concrete RoleTypes
+        var concreteRoleTypesByClass = this.Classes.ToDictionary(v => v, v => new List<ConcreteRoleType>());
+        foreach (var relationType in this.RelationTypes)
+        {
+            var roleType = relationType.RoleType;
+            roleType.InitializeConcreteRoleTypes(concreteRoleTypesByClass);
+        }
+
+        foreach (var kvp in concreteRoleTypesByClass)
+        {
+            var @class = kvp.Key;
+            var roleTypes = kvp.Value;
+            @class.InitializeConcreteRoleTypes(roleTypes);
+        }
+
         this.metaObjects = null;
     }
 
@@ -271,12 +285,6 @@ public abstract class MetaPopulation : IMetaPopulation
         foreach (var relationType in this.RelationTypes)
         {
             relationType.RoleType.DeriveScaleAndSize();
-        }
-
-        // Required RoleTypes
-        foreach (var @class in this.Classes)
-        {
-            @class.DeriveRequiredRoleTypes();
         }
 
         // WorkspaceNames

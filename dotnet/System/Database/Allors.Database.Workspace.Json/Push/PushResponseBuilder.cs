@@ -1,4 +1,4 @@
-// <copyright file="PushResponseBuilder.cs" company="Allors bvba">
+﻿// <copyright file="PushResponseBuilder.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -16,15 +16,14 @@ using Security;
 
 public class PushResponseBuilder
 {
-    private readonly ISet<IClass> allowedClasses;
+    private readonly IReadOnlySet<IClass> allowedClasses;
     private readonly Func<IClass, IObject> build;
     private readonly Func<IValidation> derive;
     private readonly IMetaPopulation metaPopulation;
     private readonly ITransaction transaction;
     private readonly IUnitConvert unitConvert;
 
-    public PushResponseBuilder(ITransaction transaction, Func<IValidation> derive, IMetaPopulation metaPopulation,
-        IAccessControl accessControl, ISet<IClass> allowedClasses, Func<IClass, IObject> build, IUnitConvert unitConvert)
+    public PushResponseBuilder(ITransaction transaction, Func<IValidation> derive, IMetaPopulation metaPopulation, IAccessControl accessControl, IReadOnlySet<IClass> allowedClasses, Func<IClass, IObject> build, IUnitConvert unitConvert)
     {
         this.transaction = transaction;
         this.derive = derive;

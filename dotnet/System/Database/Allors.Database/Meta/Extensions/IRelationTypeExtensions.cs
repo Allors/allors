@@ -2,16 +2,6 @@
 
 public static class IRelationTypeExtensions
 {
-    public static bool Indexed(this IRelationType @this)
-    {
-        return @this.Extensions.Indexed ?? false;
-    }
-
-    public static void Indexed(this IRelationType @this, bool value)
-    {
-        @this.Extensions.Indexed = value;
-    }
-
     public static string MediaType(this IRelationType @this)
     {
         return @this.Extensions.MediaType;
@@ -22,4 +12,15 @@ public static class IRelationTypeExtensions
         @this.Extensions.MediaType = value;
     }
 
+    public static bool? IndexedExtension(this IRelationType @this)
+    {
+        return @this.Extensions.Indexed;
+    }
+
+    public static void Indexed(this IRelationType @this, bool? value)
+    {
+        @this.Extensions.Indexed = value;
+    }
+
+    public static bool Indexed(this IRelationType @this) => @this.IndexedExtension() ?? false;
 }

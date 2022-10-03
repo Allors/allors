@@ -406,8 +406,6 @@ define_roleType(property) ::= <<
 $if(property.ObjectType.IsComposite)$
             this.$property.ObjectType.SingularName$ = meta.$property.ObjectType.SingularName$;
 $endif$
-$if(property.AttributeByName.Required)$             IsRequired = $property.AttributeByName.Required.Value$;$endif$
-$if(property.AttributeByName.Unique)$               IsUnique = $property.AttributeByName.Unique.Value$;$endif$
 $if(property.AttributeByName.Size)$             Size = $property.AttributeByName.Size.Value$;$endif$
 $if(property.AttributeByName.Precision)$                Precision = $property.AttributeByName.Precision.Value$;$endif$
 $if(property.AttributeByName.Scale)$                Scale = $property.AttributeByName.Scale.Value$;$endif$
@@ -470,9 +468,6 @@ $repository.Composites:{composite|$define_methods(composite)$}; separator="\n"$
 
             meta.Initialize();
 
-            this.OverrideRequired(meta, relationTypes);
-            this.OverrideUnique(meta, relationTypes);
-
 $repository.Domains:{assembly|             this.Build$assembly.Name$(meta, domains, relationTypes, methodTypes);}; separator="\n"$
 
             meta.Derive();
@@ -514,16 +509,6 @@ $repository.Composites:{composite|$build_relations(composite)$}; separator="\n"$
 		{
 $repository.Composites:{composite|$build_methods(composite)$}; separator="\n"$
 		}
-
-        private void OverrideRequired(MetaPopulation meta, RelationTypes relationTypes)
-        {
-$repository.Classes:{class|$override_required(class)$}; separator="\n"$
-        }
-
-        private void OverrideUnique(MetaPopulation meta, RelationTypes relationTypes)
-        {
-$repository.Classes:{class|$override_unique(class)$}; separator="\n"$
-        }
 
         private void AssignPropertyTypes(MetaPopulation meta, RelationTypes relationTypes)
         {
@@ -584,21 +569,13 @@ $composite.DefinedProperties:{property|$build_relation(property)$}; separator="\
 >>
 
 build_relation(property) ::= <<
-            relationTypes.$property.DefiningType.SingularName$$property.RoleName$ = new RelationType(meta, Ids.$property.DefiningType.SingularName$$property.RoleName$, $if(property.AssignedMultiplicity)$Allors.Multiplicity.$property.AssignedMultiplicity$$else$null$endif$, $if(property.AttributeByName.Derived)$$property.AttributeByName.Derived.Value$$else$false$endif$, new Meta$property.AssociationName$(meta), new Meta$property.DefiningType.SingularName$$property.RoleName$(meta))
+            relationTypes.$property.DefiningType.SingularName$$property.RoleName$ = new RelationType(meta, Ids.$property.DefiningType.SingularName$$property.RoleName$, $if(property.AssignedMultiplicity)$Allors.Multiplicity.$property.AssignedMultiplicity$$else$null$endif$, $if(property.AttributeByName.Derived)$$property.AttributeByName.Derived.Value$$else$false$endif$, new Meta$property.AssociationName$(meta) {$if(property.ExtensionAttributes)$Extensions = { $property.ExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ }$endif$} , new Meta$property.DefiningType.SingularName$$property.RoleName$(meta){$if(property.ExtensionAttributes)$Extensions = { $property.ExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ }$endif$})
             {
 $if(property.ExtensionAttributes)$
                 Extensions = { $property.ExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ }
 $endif$
             };
 >>
-
-override_required(class) ::= <<$if(class.InheritedRequiredProperties)$
-            meta.$class.SingularName$.OverriddenRequiredRoleTypes = new []{$class.InheritedRequiredProperties:{property|relationTypes.$property.DefiningProperty.DefiningType.SingularName$$property.RoleName$.RoleType}; separator=", "$}; 
-$endif$>>
-
-override_unique(class) ::= <<$if(class.InheritedUniqueProperties)$
-            meta.$class.SingularName$.OverriddenUniqueRoleTypes = new []{$class.InheritedUniqueProperties:{property|relationTypes.$property.DefiningProperty.DefiningType.SingularName$$property.RoleName$.RoleType}; separator=", "$}; 
-$endif$>>
 
 assign_properties(composite) ::= <<
 $composite.DefinedProperties:{property|$assign_propertyType(property)$}; separator="\n"$
