@@ -16,6 +16,8 @@ public interface IComposite : IObjectType
 
     IReadOnlySet<IComposite> Subtypes { get; }
 
+    IReadOnlySet<IComposite> Composites { get; }
+
     IReadOnlySet<IClass> Classes { get; }
 
     IClass ExclusiveClass { get; }
@@ -23,6 +25,8 @@ public interface IComposite : IObjectType
     IReadOnlySet<IAssociationType> AssociationTypes { get; }
 
     IReadOnlySet<IRoleType> RoleTypes { get; }
+
+    IReadOnlyDictionary<IRoleType, ICompositeRoleType> CompositeRoleTypeByRoleType { get; }
 
     IReadOnlySet<IMethodType> MethodTypes { get; }
 

@@ -15,7 +15,7 @@ public interface IMetaCache
 
     IReadOnlySet<IRoleType> GetRequiredRoleTypesByComposite(IComposite composite);
 
-    IReadOnlySet<IConcreteRoleType> GetRequiredConcreteRoleTypesByClass(IClass @class);
+    IReadOnlySet<ICompositeRoleType> GetRequiredCompositeRoleTypesByClass(IClass @class);
 
     IReadOnlySet<IClass> GetWorkspaceClasses(string workspaceName);
 

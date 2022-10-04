@@ -18,7 +18,7 @@ namespace Allors.Database.Domain.Tests
         {
             var @class = this.M.Language;
 
-            var requiredRoleTypes = @class.ConcreteRoleTypeByRoleType.Values
+            var requiredRoleTypes = @class.CompositeRoleTypeByRoleType.Values
                 .Where(v => v.Required())
                 .Select(v => v.RoleType).ToArray();
 

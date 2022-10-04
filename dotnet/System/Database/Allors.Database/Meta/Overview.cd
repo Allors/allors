@@ -8,14 +8,14 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="Allors.Database.Meta.IComposite">
-    <Position X="8.5" Y="8.5" Width="1.75" />
+    <Position X="8.25" Y="8.5" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AAJAAAAAAAFAAAAAACAAAAAAAQAAAAAAQAJAAAAAAAA=</HashCode>
+      <HashCode>AAJAAAAAAAFCAAAAACAAAAAAAQAAAAAAQAJAAAAAABA=</HashCode>
       <FileName>Meta\IComposite.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Allors.Database.Meta.IInterface">
-    <Position X="9.75" Y="12.25" Width="1.5" />
+    <Position X="9.75" Y="12.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
       <FileName>Meta\IInterface.cs</FileName>
@@ -40,7 +40,7 @@
     </ShowAsAssociation>
   </Interface>
   <Interface Name="Allors.Database.Meta.IUnit">
-    <Position X="6.75" Y="8.5" Width="1.5" />
+    <Position X="6.5" Y="8.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAIAAAAAAAAAABIgAAAAAABAAAAAAIQAAAAAQAAAAA=</HashCode>
       <FileName>Meta\IUnit.cs</FileName>
@@ -57,9 +57,9 @@
     </ShowAsAssociation>
   </Interface>
   <Interface Name="Allors.Database.Meta.IRoleType">
-    <Position X="3.75" Y="6.75" Width="2" />
+    <Position X="3.5" Y="6.75" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AAMAAAAAAAAAhIAAAEIAAAAAgAAAAIAAAAAAAAAAEAA=</HashCode>
+      <HashCode>AAIAIAAAAAAAhIAAAEIAAAAAgAAAAIAAAAAAAAAAEAA=</HashCode>
       <FileName>Meta\IRoleType.cs</FileName>
     </TypeIdentifier>
   </Interface>
@@ -74,9 +74,9 @@
     </ShowAsCollectionAssociation>
   </Interface>
   <Interface Name="Allors.Database.Meta.IClass">
-    <Position X="7.25" Y="12.25" Width="2.25" />
+    <Position X="8" Y="12.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>ABAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Meta\IClass.cs</FileName>
     </TypeIdentifier>
   </Interface>
@@ -122,8 +122,8 @@
     <AssociationLine Name="ObjectType" Type="Allors.Database.Meta.IComposite" FixedFromPoint="true" FixedToPoint="true">
       <Path>
         <Point X="15.593" Y="4.554" />
-        <Point X="15.593" Y="10.015" />
-        <Point X="10.25" Y="10.015" />
+        <Point X="15.593" Y="10.111" />
+        <Point X="10.75" Y="10.111" />
       </Path>
     </AssociationLine>
     <AssociationLine Name="Input" Type="Allors.Database.Meta.IRecord" FixedFromPoint="true" FixedToPoint="true">
@@ -157,14 +157,14 @@
       <FileName>Meta\IMetaPopulation.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="Allors.Database.Meta.IConcreteRoleType">
-    <Position X="4" Y="12" Width="1.75" />
+  <Interface Name="Allors.Database.Meta.ICompositeRoleType">
+    <Position X="3.75" Y="11.25" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAIAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Meta\IConcreteRoleType.cs</FileName>
+      <HashCode>AAIAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Meta\ICompositeRoleType.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="Class" />
+      <Property Name="Composite" />
       <Property Name="RoleType" />
     </ShowAsAssociation>
   </Interface>

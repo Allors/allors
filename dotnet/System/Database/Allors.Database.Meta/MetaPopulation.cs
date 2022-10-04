@@ -212,6 +212,12 @@ public abstract class MetaPopulation : IMetaPopulation
             type.InitializeSubclasses();
         }
 
+        // Composites
+        foreach (var type in this.Interfaces)
+        {
+            type.InitializeComposites();
+        }
+
         // Exclusive Subclass
         foreach (var type in this.Interfaces)
         {
@@ -259,19 +265,16 @@ public abstract class MetaPopulation : IMetaPopulation
             record.InitializeFieldTypes(fieldTypesByRecord);
         }
 
-        // Concrete RoleTypes
-        var concreteRoleTypesByClass = this.Classes.ToDictionary(v => v, v => new List<ConcreteRoleType>());
+        // Composite RoleTypes
+        var compositeRoleTypesByComposite = this.Composites.ToDictionary(v => (IComposite)v, v => new HashSet<ICompositeRoleType>());
         foreach (var relationType in this.RelationTypes)
         {
-            var roleType = relationType.RoleType;
-            roleType.InitializeConcreteRoleTypes(concreteRoleTypesByClass);
+            relationType.RoleType.InitializeCompositeRoleTypes(compositeRoleTypesByComposite);
         }
 
-        foreach (var kvp in concreteRoleTypesByClass)
+        foreach (var composite in this.Composites)
         {
-            var @class = kvp.Key;
-            var roleTypes = kvp.Value;
-            @class.InitializeConcreteRoleTypes(roleTypes);
+            composite.InitializeCompositeRoleTypes(compositeRoleTypesByComposite);
         }
 
         this.metaObjects = null;

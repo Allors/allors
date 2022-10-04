@@ -11,7 +11,5 @@ using System.Collections.Generic;
 
 public interface IClass : IComposite
 {
-    IReadOnlyDictionary<IRoleType, IConcreteRoleType> ConcreteRoleTypeByRoleType { get; }
-
     Action<object, object>[] Actions(IMethodType methodType);
 }

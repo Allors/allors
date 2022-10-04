@@ -17,10 +17,10 @@ namespace Allors.Database.Configuration
     {
         // TODO: Use EmptySet
         private static readonly IReadOnlySet<IRoleType> EmptyRoleTypeSet = new HashSet<IRoleType>();
-        private static readonly IReadOnlySet<IConcreteRoleType> EmptyConcreteRoleTypeSet = new HashSet<IConcreteRoleType>();
+        private static readonly IReadOnlySet<ICompositeRoleType> EmptyCompositeRoleTypeSet = new HashSet<ICompositeRoleType>();
 
         private readonly IDictionary<IComposite, IReadOnlySet<IRoleType>> requiredRoleTypesByComposite;
-        private readonly IDictionary<IClass, IReadOnlySet<IConcreteRoleType>> requiredConcreteRoleTypesByClass;
+        private readonly IDictionary<IClass, IReadOnlySet<ICompositeRoleType>> requiredCompositeRoleTypesByClass;
         private readonly IDictionary<IClass, Type> builderTypeByClass;
         private readonly IDictionary<string, IReadOnlySet<IClass>> classesByWorkspaceName;
         private readonly IDictionary<string, IDictionary<IClass, IReadOnlySet<IRoleType>>> roleTypesByClassByWorkspaceName;
@@ -33,8 +33,8 @@ namespace Allors.Database.Configuration
             this.requiredRoleTypesByComposite = metaPopulation.Composites
                 .ToDictionary(v => (IComposite)v, v => (IReadOnlySet<IRoleType>)new HashSet<IRoleType>(v.RoleTypes.Where(w => w.Required())));
 
-            this.requiredConcreteRoleTypesByClass = metaPopulation.Classes
-                .ToDictionary(v => (IClass)v, v => (IReadOnlySet<IConcreteRoleType>)new HashSet<IConcreteRoleType>(v.ConcreteRoleTypeByRoleType.Values.Where(w => w.Required())));
+            this.requiredCompositeRoleTypesByClass = metaPopulation.Classes
+                .ToDictionary(v => (IClass)v, v => (IReadOnlySet<ICompositeRoleType>)new HashSet<ICompositeRoleType>(v.CompositeRoleTypeByRoleType.Values.Where(w => w.Required())));
 
             this.builderTypeByClass = metaPopulation.Classes.
                 ToDictionary(
@@ -67,9 +67,9 @@ namespace Allors.Database.Configuration
             return this.requiredRoleTypesByComposite.TryGetValue(composite, out var requiredRoleTypes) ? requiredRoleTypes : EmptyRoleTypeSet;
         }
 
-        public IReadOnlySet<IConcreteRoleType> GetRequiredConcreteRoleTypesByClass(IClass @class)
+        public IReadOnlySet<ICompositeRoleType> GetRequiredCompositeRoleTypesByClass(IClass @class)
         {
-            return this.requiredConcreteRoleTypesByClass.TryGetValue(@class, out var requiredConcreteRoleTypes) ? requiredConcreteRoleTypes : EmptyConcreteRoleTypeSet;
+            return this.requiredCompositeRoleTypesByClass.TryGetValue(@class, out var requiredCompositeRoleTypes) ? requiredCompositeRoleTypes : EmptyCompositeRoleTypeSet;
         }
 
         public IReadOnlySet<IClass> GetWorkspaceClasses(string workspaceName)

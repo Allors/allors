@@ -14,11 +14,11 @@ namespace Allors.Database.Domain
         public static void CoreOnPostBuild(this Object @this, ObjectOnPostBuild method)
         {
             var metaCache = @this.Strategy.Transaction.Database.Services.Get<IMetaCache>();
-            var requiredConcreteRoleTypes = metaCache.GetRequiredConcreteRoleTypesByClass(@this.Strategy.Class);
+            var requiredCompositeRoleTypes = metaCache.GetRequiredCompositeRoleTypesByClass(@this.Strategy.Class);
 
-            foreach (var concreteRoleType in requiredConcreteRoleTypes)
+            foreach (var compositeRoleType in requiredCompositeRoleTypes)
             {
-                var roleType = concreteRoleType.RoleType;
+                var roleType = compositeRoleType.RoleType;
 
                 if (roleType.ObjectType is IUnit unit && !@this.Strategy.ExistRole(roleType))
                 {

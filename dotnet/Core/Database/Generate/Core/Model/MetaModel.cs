@@ -32,9 +32,9 @@ public class MetaModel
         foreach (var @class in this.MetaPopulation.Classes)
         {
             this.mapping.Add(@class, new ClassModel(this, @class));
-            foreach (var concreteRoleType in @class.ConcreteRoleTypeByRoleType.Values)
+            foreach (var compositeRoleType in @class.CompositeRoleTypeByRoleType.Values)
             {
-                this.mapping.Add(concreteRoleType, new ConcreteRoleTypeModel(this, concreteRoleType));
+                this.mapping.Add(compositeRoleType, new CompositeRoleTypeModel(this, compositeRoleType));
             }
         }
 
@@ -158,7 +158,7 @@ public class MetaModel
 
     public RoleTypeModel Map(IRoleType v) => (RoleTypeModel)this.mapping[v];
 
-    public ConcreteRoleTypeModel Map(IConcreteRoleType v) => (ConcreteRoleTypeModel)this.mapping[v];
+    public CompositeRoleTypeModel Map(ICompositeRoleType v) => (CompositeRoleTypeModel)this.mapping[v];
 
     public RecordModel Map(IRecord v) => (RecordModel)this.mapping[v];
 

@@ -27,6 +27,8 @@ public abstract class Composite : ObjectType, IComposite
 
     public abstract IReadOnlySet<IComposite> Subtypes { get; }
 
+    public abstract IReadOnlySet<IComposite> Composites { get; }
+
     public abstract IReadOnlySet<IClass> Classes { get; }
 
     public abstract IClass ExclusiveClass { get; }
@@ -36,6 +38,8 @@ public abstract class Composite : ObjectType, IComposite
     public IReadOnlySet<IAssociationType> AssociationTypes => this.associationTypes;
 
     public IReadOnlySet<IRoleType> RoleTypes => this.roleTypes;
+
+    public IReadOnlyDictionary<IRoleType, ICompositeRoleType> CompositeRoleTypeByRoleType { get; private set; }
 
     public IReadOnlySet<IMethodType> MethodTypes => this.methodTypes;
 
@@ -106,6 +110,12 @@ public abstract class Composite : ObjectType, IComposite
         }
 
         this.methodTypes = new HashSet<IMethodType>(methodTypes);
+    }
+
+    internal void InitializeCompositeRoleTypes(Dictionary<IComposite, HashSet<ICompositeRoleType>> compositeRoleTypesByComposite)
+    {
+        var compositeRoleTypes = compositeRoleTypesByComposite[this];
+        this.CompositeRoleTypeByRoleType = compositeRoleTypes.ToDictionary(v => v.RoleType, v => v);
     }
 
     private void InitializeSupertypesRecursively(ObjectType type, ISet<IInterface> superTypes)

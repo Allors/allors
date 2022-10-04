@@ -22,6 +22,8 @@ public abstract class CompositeModel : ObjectTypeModel
 
     public bool ExistExclusiveClass => this.Composite.ExclusiveClass != null;
 
+    public IEnumerable<CompositeRoleTypeModel> CompositeRoleTypes => this.Composite.CompositeRoleTypeByRoleType.Values.Select(this.MetaModel.Map);
+
     public IEnumerable<AssociationTypeModel> InheritedAssociationTypes => this.AssociationTypes.Except(this.ExclusiveAssociationTypes);
 
     public IEnumerable<RoleTypeModel> InheritedRoleTypes => this.RoleTypes.Except(this.ExclusiveRoleTypes);
@@ -64,11 +66,7 @@ public abstract class CompositeModel : ObjectTypeModel
     public bool ExistClass => this.Composite.Classes.Count > 0;
 
     public ClassModel ExclusiveClass => this.MetaModel.Map(this.Composite.ExclusiveClass);
-
-    public IEnumerable<RoleTypeModel> UnitRoleTypes => this.RoleTypes.Where(roleType => roleType.ObjectType.IsUnit).ToArray();
-
-    public IEnumerable<RoleTypeModel> CompositeRoleTypes => this.RoleTypes.Where(roleType => roleType.ObjectType.IsComposite).ToArray();
-
+    
     public IEnumerable<RoleTypeModel> SortedExclusiveRoleTypes => this.ExclusiveRoleTypes.OrderBy(v => v.Name);
 
     public IEnumerable<RoleTypeModel> ExclusiveCompositeRoleTypes =>

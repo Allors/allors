@@ -221,9 +221,9 @@ namespace Allors.Database.Configuration.Derivations.Default
                 var @class = grouping.Key;
                 foreach (var @object in grouping)
                 {
-                    foreach (var concreteRoleType in this.MetaCache.GetRequiredConcreteRoleTypesByClass(@class))
+                    foreach (var compositeRoleType in this.MetaCache.GetRequiredCompositeRoleTypesByClass(@class))
                     {
-                        this.Validation.AssertExists(@object, concreteRoleType.RoleType);
+                        this.Validation.AssertExists(@object, compositeRoleType.RoleType);
                     }
                 }
             }
@@ -238,9 +238,9 @@ namespace Allors.Database.Configuration.Derivations.Default
                 // TODO: Prefetch
                 foreach (var @object in grouping)
                 {
-                    foreach (var concreteRoleType in this.MetaCache.GetRequiredConcreteRoleTypesByClass(@class))
+                    foreach (var compositeRoleType in this.MetaCache.GetRequiredCompositeRoleTypesByClass(@class))
                     {
-                        this.Validation.AssertExists(@object, concreteRoleType.RoleType);
+                        this.Validation.AssertExists(@object, compositeRoleType.RoleType);
                     }
                 }
             }

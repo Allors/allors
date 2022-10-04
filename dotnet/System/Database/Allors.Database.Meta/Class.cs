@@ -13,28 +13,27 @@ using System.Linq;
 
 public abstract class Class : Composite, IClass
 {
-    private readonly IReadOnlySet<IClass> classes;
-
     private ConcurrentDictionary<IMethodType, Action<object, object>[]> actionsByMethodType;
 
     protected Class(MetaPopulation metaPopulation, Guid id, Interface[] directSupertypes, string singularName, string assignedPluralName)
         : base(metaPopulation, id, directSupertypes, singularName, assignedPluralName)
     {
         // TODO: Create single element IReadOnlySet
-        this.classes = new HashSet<IClass> { this };
+        this.Composites = new HashSet<IComposite> { this };
+        this.Classes = new HashSet<IClass> { this };
         this.Subtypes = MetaPopulation.EmptyComposites;
         metaPopulation.OnCreated(this);
     }
 
     public string[] AssignedWorkspaceNames { get; set; } = Array.Empty<string>();
 
-    public override IReadOnlySet<IClass> Classes => this.classes;
+    public override IReadOnlySet<IComposite> Composites { get; }
+
+    public override IReadOnlySet<IClass> Classes { get; }
 
     public override IClass ExclusiveClass => this;
 
     public override IReadOnlySet<IComposite> Subtypes { get; }
-
-    public IReadOnlyDictionary<IRoleType, IConcreteRoleType> ConcreteRoleTypeByRoleType { get; private set; }
 
     public override IEnumerable<string> WorkspaceNames => this.AssignedWorkspaceNames;
 
@@ -50,10 +49,5 @@ public abstract class Class : Composite, IClass
         }
 
         return actions;
-    }
-
-    internal void InitializeConcreteRoleTypes(List<ConcreteRoleType> roleTypes)
-    {
-        this.ConcreteRoleTypeByRoleType = roleTypes.ToDictionary(v => v.RoleType, v => (IConcreteRoleType)v);
     }
 }

@@ -18,14 +18,14 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Database.Meta.Class">
-    <Position X="12.5" Y="15" Width="2.75" />
+    <Position X="12.5" Y="15.25" Width="2.75" />
     <Members>
       <Method Name="Actions" Hidden="true" />
       <Method Name="Class" Hidden="true" />
       <Method Name="IsAssignableFrom" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>ABAAQAEAIAFAAAAJBAAAAAAAAAAAAAAAQAIAAAAAAAA=</HashCode>
+      <HashCode>ABAAQAEAIAFCAAAIAAAAAAAAAAAAAAAAQAIAAAAAAAA=</HashCode>
       <FileName>Class.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -37,7 +37,7 @@
       <Method Name="IsAssignableFrom" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAJAAAAAQAFAIAQBACAAAAAQAQAAAEAAQAJIAAgCAAA=</HashCode>
+      <HashCode>AAJAAAAAQAFCIAQBACAAAAAQAQAAAEAAQAJIAAgCAAA=</HashCode>
       <FileName>Composite.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -83,14 +83,14 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Database.Meta.Interface">
-    <Position X="9.5" Y="15" Width="2.5" />
+    <Position X="9.5" Y="15.25" Width="2.5" />
     <Members>
       <Method Name="DeriveWorkspaceNames" Hidden="true" />
       <Method Name="Interface" Hidden="true" />
       <Method Name="IsAssignableFrom" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AYAAAEAAAAFAAAEIIAAAAAAAAAAEJkAAQAIAAAAAAAA=</HashCode>
+      <HashCode>AYAAAEAAAAFCAAEIIgAQAAAAAAAEJkAAQAIAAAAAAAA=</HashCode>
       <FileName>Interface.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -189,7 +189,7 @@
       <Method Name="Validate" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAMEiBAAAACAhI5EhELABAQBgAAAAIACAZgAAACAUAA=</HashCode>
+      <HashCode>AAIEqBAAAACAhI5EgELABAQBgAAAAIACAZgAAACAUAA=</HashCode>
       <FileName>RoleType.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />

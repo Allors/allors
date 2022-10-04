@@ -29,7 +29,7 @@ public abstract class RoleType : IRoleType, IComparable
 
     public RelationType RelationType { get; internal set; }
 
-    public IReadOnlyDictionary<IClass, IConcreteRoleType> ConcreteRoleTypeByClass { get; private set; }
+    public IReadOnlyDictionary<IComposite, ICompositeRoleType> CompositeRoleTypeByComposite { get; private set; }
 
     public AssociationType AssociationType => this.RelationType.AssociationType;
 
@@ -206,13 +206,15 @@ public abstract class RoleType : IRoleType, IComparable
         }
     }
 
-    internal void InitializeConcreteRoleTypes(Dictionary<Class, List<ConcreteRoleType>> concreteRoleTypesByClass)
+    internal void InitializeCompositeRoleTypes(Dictionary<IComposite, HashSet<ICompositeRoleType>> compositeRoleTypesByComposite)
     {
-        this.ConcreteRoleTypeByClass = this.AssociationType.ObjectType.Classes.ToDictionary(v => v, v =>
+        var composites = this.AssociationType.ObjectType.Composites;
+
+        this.CompositeRoleTypeByComposite = composites.ToDictionary(v => v, v =>
         {
-            var concreteRoleType = new ConcreteRoleType(v, this) { Class = v };
-            concreteRoleTypesByClass[(Class)v].Add(concreteRoleType);
-            return (IConcreteRoleType)concreteRoleType;
+            var compositeRoleType = (ICompositeRoleType)new CompositeRoleType(v, this);
+            compositeRoleTypesByComposite[v].Add(compositeRoleType);
+            return compositeRoleType;
         });
     }
 }

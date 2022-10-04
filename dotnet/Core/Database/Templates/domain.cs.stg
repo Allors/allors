@@ -185,7 +185,7 @@ namespace Allors.Database.Domain
             return this.Strategy.ObjectId.GetHashCode();
         }
 
-$class.ConcreteRoleTypes:{concreteRoleType|$classConcreteRoleType_Class()$}$
+$class.CompositeRoleTypes:{compositeRoleType|$classCompositeRoleType_Class()$}$
 $class.AssociationTypes:{associationType|$classAssociationType_Class()$}$
 $class.MethodTypes:{methodType|$classMethodType_Method()$}$
 	}
@@ -234,95 +234,95 @@ $else$
 $endif$
 >>
 
-classConcreteRoleType_Class() ::= <<
+classCompositeRoleType_Class() ::= <<
 $\n$
-$if(concreteRoleType.RoleType.ObjectType.IsUnit)$
-		public $roleClass_ObjectType(concreteRoleType)$ $concreteRoleType.RoleType.SingularName$
+$if(compositeRoleType.RoleType.ObjectType.IsUnit)$
+		public $roleClass_ObjectType(compositeRoleType)$ $compositeRoleType.RoleType.SingularName$
 		{
 			get
 			{
-				return ($roleClass_ObjectType(concreteRoleType)$) Strategy.GetUnitRole(Meta.$concreteRoleType.RoleType.Name$);
+				return ($roleClass_ObjectType(compositeRoleType)$) Strategy.GetUnitRole(Meta.$compositeRoleType.RoleType.Name$);
 			}
 			set
 			{
-				Strategy.SetUnitRole(Meta.$concreteRoleType.RoleType.Name$, value);
+				Strategy.SetUnitRole(Meta.$compositeRoleType.RoleType.Name$, value);
 			}
 		}
 
 		[System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]
-		public bool Exist$concreteRoleType.RoleType.SingularName${
+		public bool Exist$compositeRoleType.RoleType.SingularName${
 			get
 			{
-				return Strategy.ExistUnitRole(Meta.$concreteRoleType.RoleType.Name$);
+				return Strategy.ExistUnitRole(Meta.$compositeRoleType.RoleType.Name$);
 			}
 		}
 
-		public void Remove$concreteRoleType.RoleType.SingularName$()
+		public void Remove$compositeRoleType.RoleType.SingularName$()
 		{
-			Strategy.RemoveUnitRole(Meta.$concreteRoleType.RoleType.Name$);
+			Strategy.RemoveUnitRole(Meta.$compositeRoleType.RoleType.Name$);
 		}
 $else$
-$if(concreteRoleType.RoleType.IsMany)$
-		public System.Collections.Generic.IEnumerable<$roleClass_ObjectType(concreteRoleType)$> $concreteRoleType.RoleType.PluralName$
+$if(compositeRoleType.RoleType.IsMany)$
+		public System.Collections.Generic.IEnumerable<$roleClass_ObjectType(compositeRoleType)$> $compositeRoleType.RoleType.PluralName$
 		{
 			get
 			{
-				return Strategy.GetCompositesRole<$roleClass_ObjectType(concreteRoleType)$>(Meta.$concreteRoleType.RoleType.Name$);
+				return Strategy.GetCompositesRole<$roleClass_ObjectType(compositeRoleType)$>(Meta.$compositeRoleType.RoleType.Name$);
 			}
 			set
 			{
-				Strategy.SetCompositesRole(Meta.$concreteRoleType.RoleType.Name$, value);
+				Strategy.SetCompositesRole(Meta.$compositeRoleType.RoleType.Name$, value);
 			}
 		}
 
-		public void Add$concreteRoleType.RoleType.SingularName$ ($roleClass_ObjectType(concreteRoleType)$ value)
+		public void Add$compositeRoleType.RoleType.SingularName$ ($roleClass_ObjectType(compositeRoleType)$ value)
 		{
-			Strategy.AddCompositesRole(Meta.$concreteRoleType.RoleType.Name$, value);
+			Strategy.AddCompositesRole(Meta.$compositeRoleType.RoleType.Name$, value);
 		}
 
-		public void Remove$concreteRoleType.RoleType.SingularName$ ($roleClass_ObjectType(concreteRoleType)$ value)
+		public void Remove$compositeRoleType.RoleType.SingularName$ ($roleClass_ObjectType(compositeRoleType)$ value)
 		{
-			Strategy.RemoveCompositesRole(Meta.$concreteRoleType.RoleType.Name$, value);
+			Strategy.RemoveCompositesRole(Meta.$compositeRoleType.RoleType.Name$, value);
 		}
 
 		[System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]
-		public bool Exist$concreteRoleType.RoleType.PluralName$
+		public bool Exist$compositeRoleType.RoleType.PluralName$
 		{
 			get
 			{
-				return Strategy.ExistCompositesRole(Meta.$concreteRoleType.RoleType.Name$);
+				return Strategy.ExistCompositesRole(Meta.$compositeRoleType.RoleType.Name$);
 			}
 		}
 
-		public void Remove$concreteRoleType.RoleType.PluralName$()
+		public void Remove$compositeRoleType.RoleType.PluralName$()
 		{
-			Strategy.RemoveCompositesRole(Meta.$concreteRoleType.RoleType.Name$);
+			Strategy.RemoveCompositesRole(Meta.$compositeRoleType.RoleType.Name$);
 		}
 $else$
-		public $roleClass_ObjectType(concreteRoleType)$ $concreteRoleType.RoleType.SingularName$
+		public $roleClass_ObjectType(compositeRoleType)$ $compositeRoleType.RoleType.SingularName$
 		{
 			get
 			{
-				return ($roleClass_ObjectType(concreteRoleType)$) Strategy.GetCompositeRole(Meta.$concreteRoleType.RoleType.Name$);
+				return ($roleClass_ObjectType(compositeRoleType)$) Strategy.GetCompositeRole(Meta.$compositeRoleType.RoleType.Name$);
 			}
 			set
 			{
-				Strategy.SetCompositeRole(Meta.$concreteRoleType.RoleType.Name$, value);
+				Strategy.SetCompositeRole(Meta.$compositeRoleType.RoleType.Name$, value);
 			}
 		}
 
 		[System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]
-		public bool Exist$concreteRoleType.RoleType.SingularName$
+		public bool Exist$compositeRoleType.RoleType.SingularName$
 		{
 			get
 			{
-				return Strategy.ExistCompositeRole(Meta.$concreteRoleType.RoleType.Name$);
+				return Strategy.ExistCompositeRole(Meta.$compositeRoleType.RoleType.Name$);
 			}
 		}
 
-		public void Remove$concreteRoleType.RoleType.SingularName$()
+		public void Remove$compositeRoleType.RoleType.SingularName$()
 		{
-			Strategy.RemoveCompositeRole(Meta.$concreteRoleType.RoleType.Name$);
+			Strategy.RemoveCompositeRole(Meta.$compositeRoleType.RoleType.Name$);
 		}
 $endif$
 $endif$
@@ -446,11 +446,11 @@ $objectType_NullableName(roleType.ObjectType)$
 $endif$
 %>
 
-roleClass_ObjectType(concreteRoleType) ::= <%
-$if(concreteRoleType.IsRequired)$
-$objectType_Name(concreteRoleType.RoleType.ObjectType)$
+roleClass_ObjectType(compositeRoleType) ::= <%
+$if(compositeRoleType.IsRequired)$
+$objectType_Name(compositeRoleType.RoleType.ObjectType)$
 $else$
-$objectType_NullableName(concreteRoleType.RoleType.ObjectType)$
+$objectType_NullableName(compositeRoleType.RoleType.ObjectType)$
 $endif$
 %>
 
