@@ -14,6 +14,14 @@ public class UniqueAttribute : RepositoryAttribute, IExtensionAttribute
         this.Value = value ? "true" : "false";
     }
 
+    public bool ForRelationType => false;
+
+    public bool ForAssociationType => false;
+
+    public bool ForRoleType => false;
+
+    public bool ForCompositeRoleType => true;
+
     public string Name => "Unique";
 
     public string Value { get; }

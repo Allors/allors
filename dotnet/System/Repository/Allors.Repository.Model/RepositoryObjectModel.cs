@@ -27,4 +27,12 @@ public abstract class RepositoryObjectModel : IComparable<RepositoryObjectModel>
     public override string ToString() => this.RepositoryObject.ToString();
 
     public Attribute[] ExtensionAttributes => this.AttributeByName.Values.Where(v => v.GetType().GetInterfaces().Any(v => "IExtensionAttribute" == v.Name)).ToArray();
+
+    public Attribute[] RelationTypeExtensionAttributes => this.ExtensionAttributes.Where(v => ((dynamic)v).ForRelationType).ToArray();
+
+    public Attribute[] AssociationTypeExtensionAttributes => this.ExtensionAttributes.Where(v => ((dynamic)v).ForAssociationType).ToArray();
+
+    public Attribute[] RoleTypeExtensionAttributes => this.ExtensionAttributes.Where(v => ((dynamic)v).ForRoleType).ToArray();
+
+    public Attribute[] CompositeRoleTypeExtensionAttributes => this.ExtensionAttributes.Where(v => ((dynamic)v).ForCompositeRoleType).ToArray();
 }

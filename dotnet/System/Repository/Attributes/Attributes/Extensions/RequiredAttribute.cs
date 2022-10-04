@@ -14,6 +14,14 @@ public class RequiredAttribute : RepositoryAttribute, IExtensionAttribute
         this.Value = value ? "true" : "false";
     }
 
+    public bool ForRelationType => false;
+
+    public bool ForAssociationType => false;
+
+    public bool ForRoleType => false;
+
+    public bool ForCompositeRoleType => true;
+
     public string Name => "Required";
 
     public string Value { get; }

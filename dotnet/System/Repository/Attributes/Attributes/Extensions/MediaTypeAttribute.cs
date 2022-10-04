@@ -14,6 +14,14 @@ public class MediaTypeAttribute : RepositoryAttribute, IExtensionAttribute
         this.Value = @$"""{value}""";
     }
 
+    public bool ForRelationType => false;
+
+    public bool ForAssociationType => false;
+
+    public bool ForRoleType => true;
+
+    public bool ForCompositeRoleType => false;
+    
     public string Name => "MediaType";
 
     public string Value { get; }

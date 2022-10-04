@@ -8,7 +8,7 @@
       <Method Name="RepositoryModel" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>IAAAAAIAAAMCAAAAAQAAAAgAAAAAAAEIEAAAQAAAAAA=</HashCode>
+      <HashCode>IAAAAAIAABMCAACAAQAAAAgAAAAAAAEIEAAAQAAAAAA=</HashCode>
       <FileName>RepositoryModel.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
@@ -22,13 +22,13 @@
       <Method Name="ToString" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAQEAAAAAIAAAAAAACAAAAEAAAAAAEQ=</HashCode>
+      <HashCode>AAACAAAIAAAAAAQEAAAAAICAAAAAACAABAEAAAACAEQ=</HashCode>
       <FileName>RepositoryObjectModel.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Repository.Model.FieldModel">
-    <Position X="7.25" Y="3.75" Width="1.5" />
+    <Position X="7.25" Y="4.5" Width="1.5" />
     <Members>
       <Method Name="FieldModel" Hidden="true" />
     </Members>
@@ -41,7 +41,7 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="Allors.Repository.Model.DataTypeModel">
-    <Position X="4.5" Y="3.75" Width="1.5" />
+    <Position X="4.5" Y="4.75" Width="1.5" />
     <Members>
       <Method Name="DataTypeModel" Hidden="true" />
     </Members>
@@ -51,17 +51,22 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Allors.Repository.Model.MethodModel">
-    <Position X="10" Y="3.75" Width="1.5" />
+    <Position X="10" Y="4.5" Width="1.5" />
     <Members>
       <Method Name="MethodModel" Hidden="true" />
     </Members>
+    <AssociationLine Name="DefiningType" Type="Allors.Repository.Model.CompositeModel" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="11" Y="6.31" />
+        <Point X="11" Y="12.938" />
+        <Point X="6.75" Y="12.938" />
+      </Path>
+    </AssociationLine>
     <AssociationLine Name="Output" Type="Allors.Repository.Model.RecordModel" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="11.156" Y="5.56" />
-        <Point X="11.156" Y="8.688" />
-        <Point X="10.833" Y="8.688" Type="JumpStart" />
-        <Point X="10.667" Y="8.688" Type="JumpEnd" />
-        <Point X="7.25" Y="8.688" />
+        <Point X="10.688" Y="6.31" />
+        <Point X="10.688" Y="9.438" />
+        <Point X="7.25" Y="9.438" />
       </Path>
     </AssociationLine>
     <TypeIdentifier>
@@ -76,18 +81,25 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="Allors.Repository.Model.PropertyModel">
-    <Position X="12.75" Y="3.75" Width="2.25" />
+    <Position X="12.75" Y="4.5" Width="2.25" />
     <Members>
       <Method Name="PropertyModel" Hidden="true" />
     </Members>
+    <AssociationLine Name="DefiningType" Type="Allors.Repository.Model.CompositeModel" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="13.875" Y="8.04" />
+        <Point X="13.875" Y="13.812" />
+        <Point X="6.75" Y="13.812" />
+      </Path>
+    </AssociationLine>
     <AssociationLine Name="ObjectType" Type="Allors.Repository.Model.ObjectTypeModel" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="13.188" Y="7.29" />
-        <Point X="13.188" Y="9.242" />
-        <Point X="10.833" Y="9.242" Type="JumpStart" />
-        <Point X="10.667" Y="9.242" Type="JumpEnd" />
-        <Point X="4.688" Y="9.242" />
-        <Point X="4.688" Y="8.867" />
+        <Point X="13.188" Y="8.04" />
+        <Point X="13.188" Y="9.992" />
+        <Point X="11.083" Y="9.992" Type="JumpStart" />
+        <Point X="10.917" Y="9.992" Type="JumpEnd" />
+        <Point X="4.688" Y="9.992" />
+        <Point X="4.688" Y="9.617" />
       </Path>
     </AssociationLine>
     <TypeIdentifier>
@@ -101,7 +113,7 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="Allors.Repository.Model.ObjectTypeModel">
-    <Position X="3.5" Y="7.25" Width="1.5" />
+    <Position X="3.5" Y="8" Width="1.5" />
     <Members>
       <Method Name="ObjectTypeModel" Hidden="true" />
     </Members>
@@ -111,15 +123,15 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Allors.Repository.Model.RecordModel">
-    <Position X="5.75" Y="7.25" Width="1.5" />
+    <Position X="5.75" Y="8" Width="1.5" />
     <Members>
       <Method Name="RecordModel" Hidden="true" />
     </Members>
     <AssociationLine Name="Fields" Type="Allors.Repository.Model.FieldModel" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="7.25" Y="7.5" />
-        <Point X="8.031" Y="7.5" />
-        <Point X="8.031" Y="5.752" />
+        <Point X="7.25" Y="8.25" />
+        <Point X="8.031" Y="8.25" />
+        <Point X="8.031" Y="6.502" />
       </Path>
     </AssociationLine>
     <TypeIdentifier>
@@ -131,7 +143,7 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="Allors.Repository.Model.CompositeModel">
-    <Position X="4.5" Y="10.5" Width="2.25" />
+    <Position X="4.5" Y="11.25" Width="2.25" />
     <Members>
       <Method Name="CompositeModel" Hidden="true" />
     </Members>
@@ -144,7 +156,7 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="Allors.Repository.Model.ClassModel">
-    <Position X="5.75" Y="15" Width="2.25" />
+    <Position X="5.75" Y="16.25" Width="2.25" />
     <Members>
       <Method Name="ClassModel" Hidden="true" />
     </Members>
@@ -154,7 +166,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Allors.Repository.Model.InterfaceModel">
-    <Position X="3.25" Y="15" Width="2.25" />
+    <Position X="3.25" Y="16.25" Width="2.25" />
     <Members>
       <Method Name="InterfaceModel" Hidden="true" />
     </Members>
@@ -164,7 +176,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Allors.Repository.Model.DomainModel">
-    <Position X="1.5" Y="3.75" Width="1.75" />
+    <Position X="1.5" Y="4.5" Width="1.75" />
     <Members>
       <Method Name="DomainModel" Hidden="true" />
     </Members>
@@ -174,7 +186,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Allors.Repository.Model.UnitModel">
-    <Position X="2.5" Y="10.5" Width="1.5" />
+    <Position X="2.5" Y="11.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAIAAAAAIAAAAIAAAAAAAAAAAIAAAAAAAAA=</HashCode>
       <FileName>UnitModel.cs</FileName>

@@ -1,4 +1,4 @@
-// <copyright file="OverrideClass.cs" company="Allors bv">
+﻿// <copyright file="OverrideClass.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // </copyright>
 
@@ -14,7 +14,8 @@ using Allors.Repository.Attributes;
 
 public class OverrideClass : OverrideInterface
 {
-    [Required] public string OverrideRequired { get; set; }
+    [Required] 
+    public string OverrideRequired { get; set; }
 
     #region inherited
 

@@ -15,6 +15,14 @@ public class IndexedAttribute : RepositoryAttribute, IExtensionAttribute
         this.Value = value ? "true" : "false";
     }
 
+    public bool ForRelationType => true;
+
+    public bool ForAssociationType => false;
+
+    public bool ForRoleType => false;
+
+    public bool ForCompositeRoleType => false;
+
     public string Name => "Indexed";
 
     public string Value { get; }
