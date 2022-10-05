@@ -33,6 +33,8 @@ public sealed class RelationType : MetaIdentifiableObject, IRelationType
         this.RoleType.SingularName = this.RoleType.AssignedSingularName ?? this.RoleType.ObjectType.SingularName;
         this.RoleType.PluralName = this.RoleType.AssignedPluralName ?? (this.RoleType.ExistAssignedSingularName ? Pluralizer.Pluralize(this.RoleType.AssignedSingularName) : this.RoleType.ObjectType.PluralName);
 
+        this.RoleType.CompositeRoleType = new CompositeRoleType(this.AssociationType.ObjectType, this.RoleType);
+
         this.MetaPopulation.OnCreated(this);
     }
 

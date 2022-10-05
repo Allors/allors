@@ -30,7 +30,7 @@ public abstract class RoleType : IRoleType, IComparable
 
     public RelationType RelationType { get; internal set; }
 
-    public ICompositeRoleType CompositeRoleType { get; private set; }
+    public ICompositeRoleType CompositeRoleType { get; internal set; }
 
     public IReadOnlyDictionary<IComposite, ICompositeRoleType> CompositeRoleTypeByComposite { get; private set; }
 
@@ -211,16 +211,19 @@ public abstract class RoleType : IRoleType, IComparable
 
     internal void InitializeCompositeRoleTypes(Dictionary<IComposite, HashSet<ICompositeRoleType>> compositeRoleTypesByComposite)
     {
-        var composites = this.AssociationType.ObjectType.Composites;
+        var composite = this.AssociationType.ObjectType;
+        compositeRoleTypesByComposite[composite].Add(this.CompositeRoleType);
 
-        this.CompositeRoleTypeByComposite = composites.ToDictionary(v => v, v =>
+        var dictionary = composite.Subtypes.ToDictionary(v => v, v =>
         {
             var compositeRoleType = (ICompositeRoleType)new CompositeRoleType(v, this);
             compositeRoleTypesByComposite[v].Add(compositeRoleType);
             return compositeRoleType;
         });
 
-        this.CompositeRoleType = this.CompositeRoleTypeByComposite[this.AssociationType.ObjectType];
+        dictionary[composite] = this.CompositeRoleType;
+
+        this.CompositeRoleTypeByComposite = dictionary;
     }
 
     internal void DeriveIsRequired()

@@ -300,7 +300,7 @@ CREATE SCHEMA " + this.database.SchemaName;
                     foreach (var associationType in @class.AssociationTypes)
                     {
                         var relationType = associationType.RelationType;
-                        if (relationType.Indexed())
+                        if (relationType.IsIndexed())
                         {
                             var roleType = relationType.RoleType;
 
@@ -316,7 +316,7 @@ CREATE SCHEMA " + this.database.SchemaName;
                     foreach (var roleType in @class.RoleTypes)
                     {
                         var relationType = roleType.RelationType;
-                        if (relationType.Indexed())
+                        if (relationType.IsIndexed())
                         {
                             if (roleType.ObjectType.IsUnit)
                             {
@@ -349,7 +349,7 @@ CREATE SCHEMA " + this.database.SchemaName;
 
                 foreach (var relationType in this.mapping.Database.MetaPopulation.RelationTypes)
                 {
-                    if (relationType.Indexed())
+                    if (relationType.IsIndexed())
                     {
                         var associationType = relationType.AssociationType;
                         var roleType = relationType.RoleType;

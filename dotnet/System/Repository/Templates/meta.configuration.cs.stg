@@ -582,12 +582,7 @@ $composite.DefinedProperties:{property|$build_relation(property)$}; separator="\
 >>
 
 build_relation(property) ::= <<
-            relationTypes.$property.DefiningType.SingularName$$property.RoleName$ = new RelationType(meta, Ids.$property.DefiningType.SingularName$$property.RoleName$, $if(property.AssignedMultiplicity)$Allors.Multiplicity.$property.AssignedMultiplicity$$else$null$endif$, $if(property.AttributeByName.Derived)$$property.AttributeByName.Derived.Value$$else$false$endif$, new Meta$property.AssociationName$(meta) {$if(property.AssociationTypeExtensionAttributes)$Attributes = { $property.AssociationTypeExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ }$endif$} , new Meta$property.DefiningType.SingularName$$property.RoleName$(meta){$if(property.RoleTypeExtensionAttributes)$Attributes = { $property.RoleTypeExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ }$endif$})
-            {
-$if(property.RelationTypeExtensionAttributes)$
-                Attributes = { $property.RelationTypeExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ }
-$endif$
-            };
+            relationTypes.$property.DefiningType.SingularName$$property.RoleName$ = new RelationType(meta, Ids.$property.DefiningType.SingularName$$property.RoleName$, $if(property.AssignedMultiplicity)$Allors.Multiplicity.$property.AssignedMultiplicity$$else$null$endif$, $if(property.AttributeByName.Derived)$$property.AttributeByName.Derived.Value$$else$false$endif$, new Meta$property.AssociationName$(meta)$if(property.AssociationTypeExtensionAttributes)$ { Attributes = { $property.AssociationTypeExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ } }$endif$, new Meta$property.DefiningType.SingularName$$property.RoleName$(meta)$if(property.RoleTypeExtensionAttributes)${ Attributes = { $property.RoleTypeExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ } }$endif$)$if(property.RelationTypeExtensionAttributes || property.CompositeRoleTypeExtensionAttributes)$ { $if(property.RelationTypeExtensionAttributes)$Attributes = { $property.RelationTypeExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ }$if(property.RelationTypeExtensionAttributes && property.CompositeRoleTypeExtensionAttributes)$,$endif$$endif$$if(property.CompositeRoleTypeExtensionAttributes)$ RoleType = { CompositeRoleType = { Attributes = { $property.CompositeRoleTypeExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ } } } $endif$  } $endif$;
 >>
 
 assign_properties(composite) ::= <<
@@ -636,7 +631,7 @@ build_method(method) ::= <<
 >>
 
 extend_compositeRoleTypes(relationType) ::= <<
-$composite.Properties:{property|$extend_compositeRoleType(property)$}; separator="\n"$
+$composite.InheritedProperties:{property|$extend_compositeRoleType(property)$}; separator="\n"$
 >>
 
 extend_compositeRoleType(property) ::= <<
@@ -646,8 +641,6 @@ $property.ExtensionAttributes:{attribute|$extend_compositeRoleType_attribute(att
 extend_compositeRoleType_attribute(attribute) ::= <<
 $if(property.DefiningProperty)$
             relationTypes.$property.DefiningProperty.DefiningType.ObjectType.SingularName$$property.RoleName$.RoleType.CompositeRoleTypeByComposite[meta.$composite.SingularName$].Attributes.$attribute.Name$ = $attribute.Value$;
-$else$
-            relationTypes.$composite.SingularName$$property.RoleName$.RoleType.CompositeRoleTypeByComposite[meta.$composite.SingularName$].Attributes.$attribute.Name$ = $attribute.Value$;
 $endif$
 >>
 
