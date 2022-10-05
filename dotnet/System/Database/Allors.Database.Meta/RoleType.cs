@@ -259,6 +259,4 @@ public abstract class RoleType : IRoleType, IComparable
             previousUnique = required;
         }
     }
-
-
 }
