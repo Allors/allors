@@ -18,7 +18,7 @@ public sealed class ClassModel : CompositeModel
     public override IMetaIdentifiableObject MetaObject => this.Class;
 
     // IClass
-    public IEnumerable<RoleTypeModel> OverriddenRequiredRoleTypes => this.CompositeRoleTypes.Where(v => v.IsRequiredOverridden).Select(v => v.RoleType);
+    public IEnumerable<RoleTypeModel> OverriddenRequiredRoleTypes => this.CompositeRoleTypes.Where(v => v.IsAssignedRequired).Select(v => v.RoleType);
 
     // IClass Extra
     public IReadOnlyDictionary<string, IOrderedEnumerable<RoleTypeModel>> WorkspaceOverriddenRequiredByWorkspaceName => this.WorkspaceNames

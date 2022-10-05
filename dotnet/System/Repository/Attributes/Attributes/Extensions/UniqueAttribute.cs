@@ -22,7 +22,7 @@ public class UniqueAttribute : RepositoryAttribute, IExtensionAttribute
 
     public bool ForCompositeRoleType => true;
 
-    public string Name => "Unique";
+    public string Name => "AssignedIsUnique";
 
     public string Value { get; }
 }

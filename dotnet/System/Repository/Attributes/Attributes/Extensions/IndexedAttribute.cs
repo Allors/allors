@@ -23,7 +23,7 @@ public class IndexedAttribute : RepositoryAttribute, IExtensionAttribute
 
     public bool ForCompositeRoleType => false;
 
-    public string Name => "Indexed";
+    public string Name => "AssignedIsIndexed";
 
     public string Value { get; }
 }

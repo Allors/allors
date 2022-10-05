@@ -25,6 +25,8 @@ public abstract class Composite : ObjectType, IComposite
 
     public IReadOnlySet<IInterface> DirectSupertypes { get; }
 
+    public abstract IReadOnlySet<IComposite> DirectSubtypes { get; }
+
     public abstract IReadOnlySet<IComposite> Subtypes { get; }
 
     public abstract IReadOnlySet<IComposite> Composites { get; }

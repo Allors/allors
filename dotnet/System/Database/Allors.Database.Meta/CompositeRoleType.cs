@@ -4,12 +4,12 @@ public class CompositeRoleType : ICompositeRoleType
 {
     public CompositeRoleType(IComposite composite, RoleType roleType)
     {
-        this.Extensions = new MetaExtension();
+        this.Attributes = new MetaExtension();
         this.Composite = composite;
         this.RoleType = roleType;
     }
 
-    public dynamic Extensions { get; }
+    public dynamic Attributes { get; }
 
     public IComposite Composite { get; }
 

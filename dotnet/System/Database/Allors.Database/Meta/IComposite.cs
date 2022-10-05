@@ -14,6 +14,8 @@ public interface IComposite : IObjectType
 
     IReadOnlySet<IInterface> Supertypes { get; }
 
+    IReadOnlySet<IComposite> DirectSubtypes { get; }
+
     IReadOnlySet<IComposite> Subtypes { get; }
 
     IReadOnlySet<IComposite> Composites { get; }

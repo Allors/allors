@@ -9,7 +9,6 @@ namespace Allors.Database.Meta;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
 
 public abstract class Class : Composite, IClass
 {
@@ -21,6 +20,7 @@ public abstract class Class : Composite, IClass
         // TODO: Create single element IReadOnlySet
         this.Composites = new HashSet<IComposite> { this };
         this.Classes = new HashSet<IClass> { this };
+        this.DirectSubtypes = MetaPopulation.EmptyComposites;
         this.Subtypes = MetaPopulation.EmptyComposites;
         metaPopulation.OnCreated(this);
     }
@@ -32,6 +32,8 @@ public abstract class Class : Composite, IClass
     public override IReadOnlySet<IClass> Classes { get; }
 
     public override IClass ExclusiveClass => this;
+
+    public override IReadOnlySet<IComposite> DirectSubtypes { get; }
 
     public override IReadOnlySet<IComposite> Subtypes { get; }
 

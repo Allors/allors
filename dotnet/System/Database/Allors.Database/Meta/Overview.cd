@@ -10,12 +10,12 @@
   <Interface Name="Allors.Database.Meta.IComposite">
     <Position X="8.25" Y="8.5" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AAJAAAAAAAFCAAAAACAAAAAAAQAAAAAAQAJAAAAAABA=</HashCode>
+      <HashCode>AAJAAAAAAAFCAAAAACAAAAAAAQAAAEAAQAJAAAAAABA=</HashCode>
       <FileName>Meta\IComposite.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Allors.Database.Meta.IInterface">
-    <Position X="9.75" Y="12.5" Width="1.5" />
+    <Position X="9.75" Y="12.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
       <FileName>Meta\IInterface.cs</FileName>
@@ -74,7 +74,7 @@
     </ShowAsCollectionAssociation>
   </Interface>
   <Interface Name="Allors.Database.Meta.IClass">
-    <Position X="8" Y="12.5" Width="1.5" />
+    <Position X="8" Y="12.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Meta\IClass.cs</FileName>
@@ -122,8 +122,8 @@
     <AssociationLine Name="ObjectType" Type="Allors.Database.Meta.IComposite" FixedFromPoint="true" FixedToPoint="true">
       <Path>
         <Point X="15.593" Y="4.554" />
-        <Point X="15.593" Y="10.111" />
-        <Point X="10.75" Y="10.111" />
+        <Point X="15.593" Y="10.202" />
+        <Point X="10.75" Y="10.202" />
       </Path>
     </AssociationLine>
     <AssociationLine Name="Input" Type="Allors.Database.Meta.IRecord" FixedFromPoint="true" FixedToPoint="true">

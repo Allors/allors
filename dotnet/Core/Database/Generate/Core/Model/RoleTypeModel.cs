@@ -29,7 +29,7 @@ public class RoleTypeModel : PropertyTypeModel
 
     public int? Scale => this.RoleType.Scale;
 
-    public bool IsRequired => this.RoleType.Required();
+    public bool IsRequired => this.RoleType.CompositeRoleType.IsRequired();
 
-    public bool IsUnique => this.RoleType.Unique();
+    public bool IsUnique => this.RoleType.CompositeRoleType.IsUnique();
 }

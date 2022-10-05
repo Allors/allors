@@ -8,6 +8,7 @@ namespace Allors.Graph
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Linq;
 
     public class Graph<T> : IEnumerable<T>
         where T : class
@@ -24,7 +25,7 @@ namespace Allors.Graph
                 this.Add(@object);
             }
 
-            foreach (var dependent in this.nodeByObject.Keys)
+            foreach (var dependent in this.nodeByObject.Keys.ToArray())
             {
                 var dependencies = dependencyFunc(dependent);
                 foreach (var dependency in dependencies)

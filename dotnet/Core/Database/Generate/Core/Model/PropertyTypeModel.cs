@@ -15,7 +15,7 @@ public abstract class PropertyTypeModel
     // IMetaExtensible
     public IMetaExtensible MetaExtensible => this.PropertyType;
 
-    public dynamic Extensions => this.MetaExtensible.Extensions;
+    public dynamic Extensions => this.MetaExtensible.Attributes;
 
     // IPropertyType
     public ObjectTypeModel ObjectType => this.MetaModel.Map(this.PropertyType.ObjectType);

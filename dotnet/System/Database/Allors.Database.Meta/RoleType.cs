@@ -9,6 +9,7 @@ namespace Allors.Database.Meta;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Allors.Graph;
 
 public abstract class RoleType : IRoleType, IComparable
 {
@@ -19,15 +20,17 @@ public abstract class RoleType : IRoleType, IComparable
 
     protected RoleType(ObjectType objectType, string assignedSingularName, string assignedPluralName)
     {
-        this.Extensions = new MetaExtension();
+        this.Attributes = new MetaExtension();
         this.ObjectType = objectType;
         this.AssignedSingularName = !string.IsNullOrEmpty(assignedSingularName) ? assignedSingularName : null;
         this.AssignedPluralName = !string.IsNullOrEmpty(assignedPluralName) ? assignedPluralName : null;
     }
 
-    public dynamic Extensions { get; }
+    public dynamic Attributes { get; }
 
     public RelationType RelationType { get; internal set; }
+
+    public ICompositeRoleType CompositeRoleType { get; private set; }
 
     public IReadOnlyDictionary<IComposite, ICompositeRoleType> CompositeRoleTypeByComposite { get; private set; }
 
@@ -216,5 +219,43 @@ public abstract class RoleType : IRoleType, IComparable
             compositeRoleTypesByComposite[v].Add(compositeRoleType);
             return compositeRoleType;
         });
+
+        this.CompositeRoleType = this.CompositeRoleTypeByComposite[this.AssociationType.ObjectType];
     }
+
+    internal void DeriveIsRequired()
+    {
+        var composites = new Graph<IComposite>(this.AssociationType.ObjectType.Composites, v => v.DirectSubtypes).Reverse();
+
+        bool previousRequired = false;
+        foreach (var composite in composites)
+        {
+            var compositeRoleType = this.CompositeRoleTypeByComposite[composite];
+            var attributes = compositeRoleType.Attributes;
+            bool? assignedIsRequired = attributes.AssignedIsRequired;
+
+            var required = previousRequired || assignedIsRequired is true;
+            attributes.IsRequired = required;
+            previousRequired = required;
+        }
+    }
+
+    internal void DeriveIsUnique()
+    {
+        var composites = new Graph<IComposite>(this.AssociationType.ObjectType.Composites, v => v.DirectSubtypes).Reverse();
+
+        bool previousUnique = false;
+        foreach (var composite in composites)
+        {
+            var compositeRoleType = this.CompositeRoleTypeByComposite[composite];
+            var attributes = compositeRoleType.Attributes;
+            bool? assignedIsUnique = attributes.AssignedIsUnique;
+
+            var required = previousUnique || assignedIsUnique is true;
+            attributes.IsUnique = required;
+            previousUnique = required;
+        }
+    }
+
+
 }

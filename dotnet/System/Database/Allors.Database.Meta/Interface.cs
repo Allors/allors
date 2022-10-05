@@ -15,6 +15,7 @@ public abstract class Interface : Composite, IInterface
     private string[] derivedWorkspaceNames;
 
     private IReadOnlySet<IComposite> composites;
+    private IReadOnlySet<IComposite> directSubtypes;
     private IReadOnlySet<IComposite> subtypes;
     private IReadOnlySet<IClass> subclasses;
     private IClass exclusiveClass;
@@ -23,7 +24,7 @@ public abstract class Interface : Composite, IInterface
         : base(metaPopulation, id, directSupertypes, singularName, assignedPluralName) =>
         metaPopulation.OnCreated(this);
 
-    public IReadOnlySet<IComposite> DirectSubtypes { get; private set; }
+    public override IReadOnlySet<IComposite> DirectSubtypes => this.directSubtypes;
 
     public override IReadOnlySet<IComposite> Composites => this.composites;
 
@@ -47,7 +48,7 @@ public abstract class Interface : Composite, IInterface
 
     internal void InitializeDirectSubtypes()
     {
-        this.DirectSubtypes = new HashSet<IComposite>(this.MetaPopulation.Composites.Where(v => v.DirectSupertypes.Contains(this)));
+        this.directSubtypes = new HashSet<IComposite>(this.MetaPopulation.Composites.Where(v => v.DirectSupertypes.Contains(this)));
     }
 
     internal void InitializeSubtypes()

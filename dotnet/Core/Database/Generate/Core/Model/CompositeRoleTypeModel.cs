@@ -16,18 +16,18 @@ public class CompositeRoleTypeModel : IMetaExtensibleModel
 
     public IMetaExtensible MetaExtensible => this.CompositeRoleType;
 
-    public dynamic Extensions => this.MetaExtensible.Extensions;
+    public dynamic Extensions => this.MetaExtensible.Attributes;
 
     public ICompositeRoleType CompositeRoleType { get; }
 
     public RoleTypeModel RoleType => this.MetaModel.Map(this.CompositeRoleType.RoleType);
 
     // ICompositeRoleType
-    public bool IsRequired => this.CompositeRoleType.Required();
+    public bool IsRequired => this.CompositeRoleType.IsRequired();
 
-    public bool IsRequiredOverridden => this.CompositeRoleType.RequiredOverridden();
+    public bool IsAssignedRequired => this.CompositeRoleType.Attributes.IsAssignedRequired ?? false;
 
-    public bool IsUnique => this.CompositeRoleType.Unique();
+    public bool IsUnique => this.CompositeRoleType.IsUnique();
 
-    public bool IsUniqueOverridden => this.CompositeRoleType.UniqueOverriden();
+    public bool IsAssignedUnique => this.CompositeRoleType.Attributes.IsAssignedUnique ?? false;
 }

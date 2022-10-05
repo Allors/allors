@@ -2,5 +2,5 @@
 
 public interface IMetaExtensible
 {
-    dynamic Extensions { get; }
+    dynamic Attributes { get; }
 }

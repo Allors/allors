@@ -31,10 +31,10 @@ namespace Allors.Database.Configuration
             var assembly = database.ObjectFactory.Assembly;
 
             this.requiredRoleTypesByComposite = metaPopulation.Composites
-                .ToDictionary(v => (IComposite)v, v => (IReadOnlySet<IRoleType>)new HashSet<IRoleType>(v.RoleTypes.Where(w => w.Required())));
+                .ToDictionary(v => (IComposite)v, v => (IReadOnlySet<IRoleType>)new HashSet<IRoleType>(v.RoleTypes.Where(w => w.CompositeRoleType.IsRequired())));
 
             this.requiredCompositeRoleTypesByClass = metaPopulation.Classes
-                .ToDictionary(v => (IClass)v, v => (IReadOnlySet<ICompositeRoleType>)new HashSet<ICompositeRoleType>(v.CompositeRoleTypeByRoleType.Values.Where(w => w.Required())));
+                .ToDictionary(v => (IClass)v, v => (IReadOnlySet<ICompositeRoleType>)new HashSet<ICompositeRoleType>(v.CompositeRoleTypeByRoleType.Values.Where(w => w.IsRequired())));
 
             this.builderTypeByClass = metaPopulation.Classes.
                 ToDictionary(

@@ -179,7 +179,7 @@ define_interface(interface) ::= <<
         public Meta$interface.SingularName$(MetaPopulation m) : base(m, Ids.$interface.SingularName$, new Interface[]{$interface.ImplementedInterfaces:{implementedInterface|m.$implementedInterface.SingularName$}; separator=", "$}, "$interface.SingularName$", $if(interface.AssignedPluralName)$"$interface.AssignedPluralName$"$else$null$endif$)
         {
 $if(interface.ExtensionAttributes)$
-                Extensions = { $interface.ExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ }
+                Attributes = { $interface.ExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ }
 $endif$
         }
 
@@ -229,7 +229,7 @@ define_class(class) ::= <<
         public Meta$class.SingularName$(MetaPopulation m) : base(m, Ids.$class.SingularName$, new Interface[]{$class.ImplementedInterfaces:{implementedInterface|m.$implementedInterface.SingularName$}; separator=", "$}, "$class.SingularName$", $if(class.AssignedPluralName)$"$class.AssignedPluralName$"$else$null$endif$)
         {
 $if(class.ExtensionAttributes)$
-                Extensions = { $class.ExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ }
+                Attributes = { $class.ExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ }
 $endif$
         }
         
@@ -336,7 +336,7 @@ $record.Fields:{field|$declare_field(field)$}; separator="\n"$
 $record.Fields:{field|$define_field(field)$}; separator="\n"$
 
 $if(record.ExtensionAttributes)$
-                Extensions = { $record.ExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ }
+                Attributes = { $record.ExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ }
 $endif$
         }
         
@@ -550,7 +550,7 @@ build_domain(assembly) ::= <<
 	        domains.$assembly.Name$ = new Domain(meta, Ids.$assembly.Name$, "$assembly.Name$", new Domain[]{$assembly.DirectSuperdomains:{superdomain|domains.$superdomain.Name$}; separator=","$})
 	        {
 $if(assembly.ExtensionAttributes)$
-                Extensions = { $assembly.ExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ }
+                Attributes = { $assembly.ExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ }
 $endif$
 	        };
 >>
@@ -576,10 +576,10 @@ $composite.DefinedProperties:{property|$build_relation(property)$}; separator="\
 >>
 
 build_relation(property) ::= <<
-            relationTypes.$property.DefiningType.SingularName$$property.RoleName$ = new RelationType(meta, Ids.$property.DefiningType.SingularName$$property.RoleName$, $if(property.AssignedMultiplicity)$Allors.Multiplicity.$property.AssignedMultiplicity$$else$null$endif$, $if(property.AttributeByName.Derived)$$property.AttributeByName.Derived.Value$$else$false$endif$, new Meta$property.AssociationName$(meta) {$if(property.AssociationTypeExtensionAttributes)$Extensions = { $property.AssociationTypeExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ }$endif$} , new Meta$property.DefiningType.SingularName$$property.RoleName$(meta){$if(property.RoleTypeExtensionAttributes)$Extensions = { $property.RoleTypeExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ }$endif$})
+            relationTypes.$property.DefiningType.SingularName$$property.RoleName$ = new RelationType(meta, Ids.$property.DefiningType.SingularName$$property.RoleName$, $if(property.AssignedMultiplicity)$Allors.Multiplicity.$property.AssignedMultiplicity$$else$null$endif$, $if(property.AttributeByName.Derived)$$property.AttributeByName.Derived.Value$$else$false$endif$, new Meta$property.AssociationName$(meta) {$if(property.AssociationTypeExtensionAttributes)$Attributes = { $property.AssociationTypeExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ }$endif$} , new Meta$property.DefiningType.SingularName$$property.RoleName$(meta){$if(property.RoleTypeExtensionAttributes)$Attributes = { $property.RoleTypeExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ }$endif$})
             {
 $if(property.RelationTypeExtensionAttributes)$
-                Extensions = { $property.RelationTypeExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ }
+                Attributes = { $property.RelationTypeExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ }
 $endif$
             };
 >>
@@ -639,9 +639,9 @@ $property.ExtensionAttributes:{attribute|$extend_compositeRoleType_attribute(att
 
 extend_compositeRoleType_attribute(attribute) ::= <<
 $if(property.DefiningProperty)$
-            relationTypes.$property.DefiningProperty.DefiningType.ObjectType.SingularName$$property.RoleName$.RoleType.CompositeRoleTypeByComposite[meta.$composite.SingularName$].Extensions.$attribute.Name$ = $attribute.Value$;
+            relationTypes.$property.DefiningProperty.DefiningType.ObjectType.SingularName$$property.RoleName$.RoleType.CompositeRoleTypeByComposite[meta.$composite.SingularName$].Attributes.$attribute.Name$ = $attribute.Value$;
 $else$
-            relationTypes.$composite.SingularName$$property.RoleName$.RoleType.CompositeRoleTypeByComposite[meta.$composite.SingularName$].Extensions.$attribute.Name$ = $attribute.Value$;
+            relationTypes.$composite.SingularName$$property.RoleName$.RoleType.CompositeRoleTypeByComposite[meta.$composite.SingularName$].Attributes.$attribute.Name$ = $attribute.Value$;
 $endif$
 >>
 

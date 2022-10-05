@@ -325,6 +325,16 @@ public abstract class MetaPopulation : IMetaPopulation
             fieldType.DeriveWorkspaceNames();
         }
 
+        foreach (var roleType in this.RelationTypes.Select(v => v.RoleType))
+        {
+            roleType.DeriveIsRequired();
+        }
+
+        foreach (var roleType in this.RelationTypes.Select(v => v.RoleType))
+        {
+            roleType.DeriveIsUnique();
+        }
+
         this.compositeByLowercaseName = this.Composites.ToDictionary(v => v.Name.ToLowerInvariant());
     }
 

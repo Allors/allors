@@ -16,6 +16,8 @@ using System.Collections.Generic;
 /// </summary>
 public interface IRoleType : IPropertyType, IComparable
 {
+    ICompositeRoleType CompositeRoleType { get; }
+
     IReadOnlyDictionary<IComposite, ICompositeRoleType> CompositeRoleTypeByComposite { get; }
 
     IAssociationType AssociationType { get; }

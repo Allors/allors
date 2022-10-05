@@ -17,7 +17,7 @@ public abstract class MetaIdentifiableObjectModel : IMetaExtensibleModel
 
     public IMetaExtensible MetaExtensible => this.MetaObject;
 
-    public dynamic Extensions => this.MetaExtensible.Extensions;
+    public dynamic Extensions => this.MetaExtensible.Attributes;
 
     public Guid Id => this.MetaObject.Id;
 

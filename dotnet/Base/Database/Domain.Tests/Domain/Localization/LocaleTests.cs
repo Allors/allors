@@ -19,7 +19,7 @@ namespace Allors.Database.Domain.Tests
             var @class = this.M.Locale;
 
             var requiredRoleTypes = @class.CompositeRoleTypeByRoleType.Values
-                .Where(v => v.Required())
+                .Where(v => v.IsRequired())
                 .Select(v => v.RoleType).ToArray();
 
             Assert.Equal(2, requiredRoleTypes.Length);
