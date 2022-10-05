@@ -45,6 +45,8 @@ public abstract class Composite : ObjectType, IComposite
 
     public IReadOnlySet<IMethodType> MethodTypes => this.methodTypes;
 
+    public IReadOnlyDictionary<IMethodType, ICompositeMethodType> CompositeMethodTypeByMethodType { get; private set; }
+
     public abstract bool IsAssignableFrom(IComposite objectType);
 
     internal void InitializeSupertypes()
@@ -120,6 +122,12 @@ public abstract class Composite : ObjectType, IComposite
         this.CompositeRoleTypeByRoleType = compositeRoleTypes.ToDictionary(v => v.RoleType, v => v);
     }
 
+    internal void InitializeCompositeMethodTypes(Dictionary<IComposite, HashSet<ICompositeMethodType>> compositeMethodTypesByComposite)
+    {
+        var compositeMethodTypes = compositeMethodTypesByComposite[this];
+        this.CompositeMethodTypeByMethodType = compositeMethodTypes.ToDictionary(v => v.MethodType, v => v);
+    }
+
     private void InitializeSupertypesRecursively(ObjectType type, ISet<IInterface> superTypes)
     {
         foreach (var directSupertype in this.DirectSupertypes.Cast<Interface>())
@@ -131,4 +139,5 @@ public abstract class Composite : ObjectType, IComposite
             }
         }
     }
+
 }

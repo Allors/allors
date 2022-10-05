@@ -59,7 +59,7 @@
   <Interface Name="Allors.Database.Meta.IRoleType">
     <Position X="3.5" Y="6.75" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AAIAIAAAAAAAhIAAAEIAAAAAgAAAAIAAAAAAAAAAEAA=</HashCode>
+      <HashCode>AAIAIAAAAAAAhIAACEIAAAAAgAAAAIAAAAAAAAAAEAA=</HashCode>
       <FileName>Meta\IRoleType.cs</FileName>
     </TypeIdentifier>
   </Interface>
@@ -119,33 +119,25 @@
   </Interface>
   <Interface Name="Allors.Database.Meta.IMethodType">
     <Position X="14" Y="3" Width="2.25" />
-    <AssociationLine Name="ObjectType" Type="Allors.Database.Meta.IComposite" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="15.593" Y="4.554" />
-        <Point X="15.593" Y="10.202" />
-        <Point X="10.75" Y="10.202" />
-      </Path>
-    </AssociationLine>
     <AssociationLine Name="Input" Type="Allors.Database.Meta.IRecord" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="14.516" Y="4.554" />
+        <Point X="14.516" Y="4.938" />
         <Point X="14.516" Y="5.562" />
         <Point X="11" Y="5.562" />
       </Path>
     </AssociationLine>
     <AssociationLine Name="Output" Type="Allors.Database.Meta.IRecord" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="15.032" Y="4.554" />
+        <Point X="15.032" Y="4.938" />
         <Point X="15.032" Y="5.938" />
         <Point X="11" Y="5.938" />
       </Path>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAEAAAAAAAAAAAAIAAQAEAAAAAAAAIAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAEIAAAAAAAAAAAIAAQAEAAAAAAAAIAAAAAAAAA=</HashCode>
       <FileName>Meta\IMethodType.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="ObjectType" />
       <Property Name="Input" />
       <Property Name="Output" />
     </ShowAsAssociation>
@@ -166,6 +158,17 @@
     <ShowAsAssociation>
       <Property Name="Composite" />
       <Property Name="RoleType" />
+    </ShowAsAssociation>
+  </Interface>
+  <Interface Name="Allors.Database.Meta.ICompositeMethodType">
+    <Position X="13.75" Y="9" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Meta\ICompositeMethodType.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Composite" />
+      <Property Name="MethodType" />
     </ShowAsAssociation>
   </Interface>
   <Font Name="Segoe UI" Size="9" />

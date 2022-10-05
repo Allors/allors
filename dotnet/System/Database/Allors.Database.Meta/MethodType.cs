@@ -24,6 +24,10 @@ public sealed class MethodType : MetaIdentifiableObject, IMethodType, IComparabl
         this.MetaPopulation.OnCreated(this);
     }
 
+    public ICompositeMethodType CompositeMethodType { get; private set; }
+
+    public IReadOnlyDictionary<IComposite, ICompositeMethodType> CompositeMethodTypeByComposite { get; private set; }
+
     IComposite IMethodType.ObjectType => this.ObjectType;
 
     public Composite ObjectType { get; }
@@ -96,5 +100,19 @@ public sealed class MethodType : MetaIdentifiableObject, IMethodType, IComparabl
             this.Input?.PrepareWorkspaceNames(workspaceNamesByRecord, visited, this.derivedWorkspaceNames);
             this.Output?.PrepareWorkspaceNames(workspaceNamesByRecord, visited, this.derivedWorkspaceNames);
         }
+    }
+
+    internal void InitializeCompositeMethodTypes(Dictionary<IComposite, HashSet<ICompositeMethodType>> compositeMethodTypesByComposite)
+    {
+        var composites = this.ObjectType.Composites;
+
+        this.CompositeMethodTypeByComposite = composites.ToDictionary(v => v, v =>
+        {
+            var compositeMethodType = (ICompositeMethodType)new CompositeMethodType(v, this);
+            compositeMethodTypesByComposite[v].Add(compositeMethodType);
+            return compositeMethodType;
+        });
+
+        this.CompositeMethodType = this.CompositeMethodTypeByComposite[this.ObjectType];
     }
 }

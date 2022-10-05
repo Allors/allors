@@ -277,6 +277,18 @@ public abstract class MetaPopulation : IMetaPopulation
             composite.InitializeCompositeRoleTypes(compositeRoleTypesByComposite);
         }
 
+        // Composite MethodTypes
+        var compositeMethodTypesByComposite = this.Composites.ToDictionary(v => (IComposite)v, v => new HashSet<ICompositeMethodType>());
+        foreach (var methodType in this.MethodTypes)
+        {
+            methodType.InitializeCompositeMethodTypes(compositeMethodTypesByComposite);
+        }
+
+        foreach (var composite in this.Composites)
+        {
+            composite.InitializeCompositeMethodTypes(compositeMethodTypesByComposite);
+        }
+
         this.metaObjects = null;
     }
 

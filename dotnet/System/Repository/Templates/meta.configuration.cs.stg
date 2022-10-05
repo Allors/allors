@@ -2,7 +2,7 @@
 
 TemplateId() ::= <<14F49218-A676-43ba-9CBD-B8FFA059D1BF>>
 TemplateName() ::= <<Allors C# Meta>>
-TemplateVersion() ::= <<3.0.0>>
+TemplateVersion() ::= <<3.0.1>>
 TemplateAllors() ::= <<1.0>>
 TemplateConfiguration(repository) ::= <<
 $!
@@ -469,6 +469,7 @@ $repository.Composites:{composite|$define_methods(composite)$}; separator="\n"$
             meta.Initialize();
 
             this.ExtendCompositeRoleTypes(meta, relationTypes);
+            this.ExtendCompositeMethodTypes(meta, methodTypes);
 
 $repository.Domains:{assembly|             this.Build$assembly.Name$(meta, domains, relationTypes, methodTypes);}; separator="\n"$
 
@@ -525,6 +526,11 @@ $repository.Composites:{composite|$assign_methods(composite)$}; separator="\n"$
         private void ExtendCompositeRoleTypes(MetaPopulation meta, RelationTypes relationTypes)
         {
 $repository.Composites:{composite|$extend_compositeRoleTypes(composite)$}; separator="\n"$
+        }
+
+        private void ExtendCompositeMethodTypes(MetaPopulation meta, MethodTypes methodTypes)
+        {
+$repository.Composites:{composite|$extend_compositeMethodTypes(composite)$}; separator="\n"$
         }
 	}
 }
@@ -642,6 +648,22 @@ $if(property.DefiningProperty)$
             relationTypes.$property.DefiningProperty.DefiningType.ObjectType.SingularName$$property.RoleName$.RoleType.CompositeRoleTypeByComposite[meta.$composite.SingularName$].Attributes.$attribute.Name$ = $attribute.Value$;
 $else$
             relationTypes.$composite.SingularName$$property.RoleName$.RoleType.CompositeRoleTypeByComposite[meta.$composite.SingularName$].Attributes.$attribute.Name$ = $attribute.Value$;
+$endif$
+>>
+
+extend_compositeMethodTypes(relationType) ::= <<
+$composite.Methods:{method|$extend_compositeMethodType(method)$}; separator="\n"$
+>>
+
+extend_compositeMethodType(method) ::= <<
+$method.ExtensionAttributes:{attribute|$extend_compositeMethodType_attribute(attribute)$}; separator="\n"$
+>>
+
+extend_compositeMethodType_attribute(attribute) ::= <<
+$if(method.DefiningMethod)$
+            methodTypes.$method.DefiningMethod.DefiningType.ObjectType.SingularName$$method.MethodName$.MethodType.CompositeMethodTypeByComposite[meta.$composite.SingularName$].Attributes.$attribute.Name$ = $attribute.Value$;
+$else$
+            methodTypes.$composite.SingularName$$method.MethodName$.MethodType.CompositeMethodTypeByComposite[meta.$composite.SingularName$].Attributes.$attribute.Name$ = $attribute.Value$;
 $endif$
 >>
 

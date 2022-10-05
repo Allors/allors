@@ -783,7 +783,7 @@ namespace Allors.Database.Meta.Configuration
 
             const string workspaceName = "Default";
 
-            relationTypes.OrganizationName.RoleType.RequiredExtension(true);
+            relationTypes.OrganizationName.RoleType.CompositeRoleType.Attributes.IsAssignedRequired = true;
 
             AddWorkspace(m.Gender, workspaceName);
         }

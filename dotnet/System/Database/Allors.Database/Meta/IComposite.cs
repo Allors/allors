@@ -32,5 +32,7 @@ public interface IComposite : IObjectType
 
     IReadOnlySet<IMethodType> MethodTypes { get; }
 
+    IReadOnlyDictionary<IMethodType, ICompositeMethodType> CompositeMethodTypeByMethodType { get; }
+
     bool IsAssignableFrom(IComposite objectType);
 }
