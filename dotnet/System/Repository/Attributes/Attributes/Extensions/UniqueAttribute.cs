@@ -22,6 +22,10 @@ public class UniqueAttribute : RepositoryAttribute, IExtensionAttribute
 
     public bool ForCompositeRoleType => true;
 
+    public bool ForMethodType => false;
+
+    public bool ForCompositeMethodType => false;
+
     public string Name => "AssignedIsUnique";
 
     public string Value { get; }

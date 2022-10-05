@@ -22,6 +22,10 @@ public class RequiredAttribute : RepositoryAttribute, IExtensionAttribute
 
     public bool ForCompositeRoleType => true;
 
+    public bool ForMethodType => false;
+
+    public bool ForCompositeMethodType => false;
+
     public string Name => "AssignedIsRequired";
 
     public string Value { get; }

@@ -23,6 +23,10 @@ public class IndexedAttribute : RepositoryAttribute, IExtensionAttribute
 
     public bool ForCompositeRoleType => false;
 
+    public bool ForMethodType => false;
+
+    public bool ForCompositeMethodType => false;
+
     public string Name => "IsIndexed";
 
     public string Value { get; }

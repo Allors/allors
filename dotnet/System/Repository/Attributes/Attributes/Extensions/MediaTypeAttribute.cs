@@ -22,6 +22,10 @@ public class MediaTypeAttribute : RepositoryAttribute, IExtensionAttribute
 
     public bool ForCompositeRoleType => false;
 
+    public bool ForMethodType => false;
+
+    public bool ForCompositeMethodType => false;
+
     public string Name => "AssignedMediaType";
 
     public string Value { get; }

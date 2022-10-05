@@ -35,4 +35,8 @@ public abstract class RepositoryObjectModel : IComparable<RepositoryObjectModel>
     public Attribute[] RoleTypeExtensionAttributes => this.ExtensionAttributes.Where(v => ((dynamic)v).ForRoleType).ToArray();
 
     public Attribute[] CompositeRoleTypeExtensionAttributes => this.ExtensionAttributes.Where(v => ((dynamic)v).ForCompositeRoleType).ToArray();
+
+    public Attribute[] MethodTypeExtensionAttributes => this.ExtensionAttributes.Where(v => ((dynamic)v).ForMethodType).ToArray();
+
+    public Attribute[] CompositeMethodTypeExtensionAttributes => this.ExtensionAttributes.Where(v => ((dynamic)v).ForCompositeMethodType).ToArray();
 }

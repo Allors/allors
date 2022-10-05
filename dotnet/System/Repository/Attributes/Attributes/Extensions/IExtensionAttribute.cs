@@ -10,6 +10,10 @@ public interface IExtensionAttribute
 
     bool ForCompositeRoleType { get; }
 
+    bool ForMethodType { get; }
+
+    bool ForCompositeMethodType { get; }
+
     string Name { get; }
 
     string Value { get; }

@@ -627,7 +627,7 @@ assign_inheritedmethodType(method) ::= <<
 
 build_methods(composite) ::= <<$composite.DefinedMethods:{method|$build_method(method)$}; separator="\n"$>>
 build_method(method) ::= <<
-            methodTypes.$method.DefiningType.SingularName$$method.Name$ = new MethodType(meta.$method.DefiningType.SingularName$, Ids.$method.DefiningType.SingularName$$method.Name$, "$method.Name$", $if(method.Input)$meta.$method.Input.Name$$else$null$endif$, $if(method.Output)$meta.$method.Output.Name$$else$null$endif$);
+            methodTypes.$method.DefiningType.SingularName$$method.Name$ = new MethodType(meta.$method.DefiningType.SingularName$, Ids.$method.DefiningType.SingularName$$method.Name$, "$method.Name$", $if(method.Input)$meta.$method.Input.Name$$else$null$endif$, $if(method.Output)$meta.$method.Output.Name$$else$null$endif$)$if(method.MethodTypeExtensionAttributes || method.CompositeMethodTypeExtensionAttributes)$ { $if(method.MethodTypeExtensionAttributes)$Attributes = { $method.MethodTypeExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ }$if(method.MethodTypeExtensionAttributes && method.CompositeMethodTypeExtensionAttributes)$,$endif$$endif$$if(method.CompositeMethodTypeExtensionAttributes)$ CompositeMethodType = { Attributes = { $method.CompositeMethodTypeExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ } } $endif$  } $endif$;
 >>
 
 extend_compositeRoleTypes(relationType) ::= <<
@@ -645,7 +645,7 @@ $endif$
 >>
 
 extend_compositeMethodTypes(relationType) ::= <<
-$composite.Methods:{method|$extend_compositeMethodType(method)$}; separator="\n"$
+$composite.InheritedMethods:{method|$extend_compositeMethodType(method)$}; separator="\n"$
 >>
 
 extend_compositeMethodType(method) ::= <<
@@ -656,10 +656,7 @@ extend_compositeMethodType_attribute(attribute) ::= <<
 $if(method.DefiningMethod)$
             methodTypes.$method.DefiningMethod.DefiningType.ObjectType.SingularName$$method.MethodName$.MethodType.CompositeMethodTypeByComposite[meta.$composite.SingularName$].Attributes.$attribute.Name$ = $attribute.Value$;
 $else$
-            methodTypes.$composite.SingularName$$method.MethodName$.MethodType.CompositeMethodTypeByComposite[meta.$composite.SingularName$].Attributes.$attribute.Name$ = $attribute.Value$;
-$endif$
 >>
-
 
 
 boolean(value) ::= "$if(value)$true$else$false$endif$"
