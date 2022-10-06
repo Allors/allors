@@ -1,5 +1,7 @@
 ﻿namespace Allors.Meta.Generation.Model;
 
+using System.Collections.Generic;
+using System.Linq;
 using Database.Meta;
 
 public class RecordModel : DataTypeModel
@@ -12,4 +14,6 @@ public class RecordModel : DataTypeModel
     public override IMetaIdentifiableObject MetaObject => this.Record;
 
     protected override IDataType DataType => this.Record;
+
+    public IEnumerable<FieldTypeModel> FieldTypes => this.Record.FieldTypes.Select(this.MetaModel.Map);
 }

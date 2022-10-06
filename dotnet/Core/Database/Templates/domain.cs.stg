@@ -1,8 +1,8 @@
-delimiters "$", "$"
+﻿delimiters "$", "$"
 
 TemplateId() ::= <<17ED40F8-BDF8-4A7C-9AE9-1C4D2AD6BA2B>>
 TemplateName() ::= <<Allors C# Domain>>
-TemplateVersion() ::= <<3.0.1>>
+TemplateVersion() ::= <<3.0.2>>
 TemplateAllors() ::= <<1.0>>
 TemplateConfiguration(meta) ::= <<
 $!
@@ -125,9 +125,7 @@ $endif$
 
 interfaceExclusiveMethodType_Interface() ::= <<
 $\n$
-		$methodType.FullName$ $methodType.Name$();
-
-		$methodType.FullName$ $methodType.Name$(System.Action<$methodType.FullName$> action);
+		$if(methodType.Output)$$methodType.Output.Name$$else$void$endif$ $methodType.Name$($if(methodType.Input)$$methodType.Input.Name$ input, $endif$System.Action<$methodType.FullName$> init = null);
 >>
 
 castClass(meta, objectType) ::= <<
@@ -331,20 +329,12 @@ $endif$
 classMethodType_Method() ::= <<
 $\n$
 		[System.Diagnostics.DebuggerStepThrough]
-		public $methodType.FullName$ $methodType.Name$()
+		public $if(methodType.Output)$$methodType.Output.Name$$else$void$endif$ $methodType.Name$($if(methodType.Input)$$methodType.Input.Name$ input = default, $endif$System.Action<$methodType.FullName$> init = null)
 		{
-			var method = new $class.Name$$methodType.Name$(this);
+			var method = new $class.Name$$methodType.Name$(this$if(methodType.Input)$, input$endif$);
+            init?.Invoke(method);
             method.Execute();
-            return method;
-		}
-
-		[System.Diagnostics.DebuggerStepThrough]
-		public $methodType.FullName$ $methodType.Name$(System.Action<$methodType.FullName$> action)
-		{
-			var method = new $class.Name$$methodType.Name$(this);
-            action(method);
-            method.Execute();
-            return method;
+$if(methodType.Output)$             return method.Output;$endif$
 		}
 >>
 
@@ -380,8 +370,13 @@ namespace Allors.Database.Domain
 {
 	public partial record $record.name$ : IDataObject
 	{
+$record.FieldTypes:{fieldType|$record_fieldType()$}; separator="\n"$
 	}
 }
+>>
+
+record_fieldType() ::= <<
+        public $objectType_Name(fieldType.DataType)$$if(fieldType.IsMany)$[]$endif$ $fieldType.Name$ { get; set; }
 >>
 
 methodType(meta, methodType) ::= <<
@@ -392,8 +387,10 @@ namespace Allors.Database.Domain
 $if(methodType.ObjectType.IsClass)$
 	public partial class $methodType.FullName$ : Allors.Database.Meta.Method
 	{
-		public $methodType.FullName$($objectType_Name(methodType.ObjectType)$ @object) : base(@object)
+		public $methodType.FullName$($objectType_Name(methodType.ObjectType)$ @object$if(methodType.Input)$, $methodType.Input.Name$ input$endif$) : base(@object)
 		{
+$if(methodType.Input)$              this.Input = input;$endif$
+$if(methodType.Output)$              this.Output = new $methodType.Output.Name$();$endif$
 		}
 
 		public override Allors.Database.Meta.MethodInvocation MethodInvocation
@@ -404,6 +401,10 @@ $if(methodType.ObjectType.IsClass)$
 				return new Allors.Database.Meta.MethodInvocation(m.$methodType.ObjectType.SingularName$, m.$methodType.ObjectType.SingularName$.$methodType.Name$);
 			}
 		}
+
+$if(methodType.Input)$         public $methodType.Input.Name$ Input { get; }$endif$
+
+$if(methodType.Output)$         public $methodType.Output.Name$ Output { get; }$endif$
 	}
 $else$
 	public abstract partial class $methodType.FullName$ : Allors.Database.Meta.Method
@@ -411,10 +412,15 @@ $else$
 		protected $methodType.FullName$($objectType_Name(methodType.ObjectType)$ @object) : base(@object)
 		{
 		}
+		
+$if(methodType.Input)$         public abstract $methodType.Input.Name$ Input { get; }$endif$
+
+$if(methodType.Output)$         public abstract $methodType.Output.Name$ Output { get; }$endif$
 	}
 
 $methodType.ObjectType.Classes:{class|$methodTypeLeafClass()$}$
 $endif$
+
 }
 >>
 

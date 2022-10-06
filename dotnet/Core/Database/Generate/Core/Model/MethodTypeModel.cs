@@ -17,4 +17,8 @@ public class MethodTypeModel : MetaIdentifiableObjectModel
     public string Name => this.MethodType.Name;
 
     public string FullName => $"{this.MethodType.ObjectType.Name}{this.MethodType.Name}";
+
+    public RecordModel Input => this.MetaModel.Map(this.MethodType.Input);
+
+    public RecordModel Output => this.MetaModel.Map(this.MethodType.Output);
 }

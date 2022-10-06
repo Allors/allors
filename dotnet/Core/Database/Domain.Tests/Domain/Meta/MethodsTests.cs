@@ -1,4 +1,4 @@
-// <copyright file="MethodsTests.cs" company="Allors bvba">
+﻿// <copyright file="MethodsTests.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -19,7 +19,8 @@ namespace Allors.Database.Domain.Tests
         {
             var c1 = this.Transaction.Build<C1>();
 
-            var classMethod = c1.ClassMethod();
+            var classMethod = new C1ClassMethod(c1);
+            classMethod.Execute();
 
             Assert.Equal("C1CustomC1Core", classMethod.Value);
         }
@@ -29,7 +30,8 @@ namespace Allors.Database.Domain.Tests
         {
             var c1 = this.Transaction.Build<C1>();
 
-            var interfaceMethod = c1.InterfaceMethod();
+            var interfaceMethod = new C1InterfaceMethod(c1);
+            interfaceMethod.Execute();
 
             Assert.Equal("I1CustomI1CoreC1CustomC1Core", interfaceMethod.Value);
         }
@@ -39,24 +41,10 @@ namespace Allors.Database.Domain.Tests
         {
             var c1 = this.Transaction.Build<C1>();
 
-            var interfaceMethod = c1.SuperinterfaceMethod();
+            var superinterfaceMethod = new C1SuperinterfaceMethod(c1);
+            superinterfaceMethod.Execute();
 
-            Assert.Equal("S1CustomS1CoreI1CustomI1CoreC1CustomC1Core", interfaceMethod.Value);
-        }
-
-        [Fact]
-        public void MethodWithResults()
-        {
-            var c1 = this.Transaction.Build<C1>();
-
-            var method = c1.Sum(
-                m =>
-                {
-                    m.A = 1;
-                    m.B = 2;
-                });
-
-            Assert.Equal(3, method.Result);
+            Assert.Equal("S1CustomS1CoreI1CustomI1CoreC1CustomC1Core", superinterfaceMethod.Value);
         }
 
         [Fact]
@@ -64,7 +52,8 @@ namespace Allors.Database.Domain.Tests
         {
             var c1 = this.Transaction.Build<C1>();
 
-            var classMethod = c1.ClassMethod();
+            var classMethod = new C1ClassMethod(c1);
+            classMethod.Execute();
 
             var exceptionThrown = false;
             try
@@ -78,5 +67,16 @@ namespace Allors.Database.Domain.Tests
 
             Assert.True(exceptionThrown);
         }
+
+        [Fact]
+        public void MethodWithResults()
+        {
+            var c1 = this.Transaction.Build<C1>();
+
+            var output = c1.Sum(new SumInput { ValueA = 1, ValueB = 2 });
+
+            Assert.Equal(3, output.Result);
+        }
+
     }
 }

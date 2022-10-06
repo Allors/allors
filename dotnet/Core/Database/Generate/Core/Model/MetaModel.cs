@@ -50,6 +50,11 @@ public class MetaModel
             this.mapping.Add(record, new RecordModel(this, record));
         }
 
+        foreach (var fieldType in this.MetaPopulation.FieldTypes)
+        {
+            this.mapping.Add(fieldType, new FieldTypeModel(this, fieldType));
+        }
+
         foreach (var methodType in this.MetaPopulation.MethodTypes)
         {
             this.mapping.Add(methodType, new MethodTypeModel(this, methodType));
@@ -136,32 +141,36 @@ public class MetaModel
                     .Select(w => w.Tag).OrderBy(w => w));
 
     #region Mappers
-    public IMetaExtensibleModel Map(IMetaExtensible v) => this.mapping[v];
+    public IMetaExtensibleModel Map(IMetaExtensible v) => v != null ? this.mapping[v] : null;
 
-    public MetaIdentifiableObjectModel Map(IMetaIdentifiableObject v) => (MetaIdentifiableObjectModel)this.mapping[v];
+    public MetaIdentifiableObjectModel Map(IMetaIdentifiableObject v) => v != null ? (MetaIdentifiableObjectModel)this.mapping[v] : null;
 
-    public DomainModel Map(IDomain v) => (DomainModel)this.mapping[v];
+    public DomainModel Map(IDomain v) => v != null ? (DomainModel)this.mapping[v] : null;
 
-    public ObjectTypeModel Map(IObjectType v) => (ObjectTypeModel)this.mapping[v];
+    public ObjectTypeModel Map(IObjectType v) => v != null ? (ObjectTypeModel)this.mapping[v] : null;
 
-    public UnitModel Map(IUnit v) => (UnitModel)this.mapping[v];
+    public DataTypeModel Map(IDataType v) => v != null ? (DataTypeModel)this.mapping[v] : null;
 
-    public CompositeModel Map(IComposite v) => (CompositeModel)this.mapping[v];
+    public UnitModel Map(IUnit v) => v != null ? (UnitModel)this.mapping[v] : null;
 
-    public InterfaceModel Map(IInterface v) => (InterfaceModel)this.mapping[v];
+    public CompositeModel Map(IComposite v) => v != null ? (CompositeModel)this.mapping[v] : null;
 
-    public ClassModel Map(IClass v) => (ClassModel)this.mapping[v];
+    public InterfaceModel Map(IInterface v) => v != null ? (InterfaceModel)this.mapping[v] : null;
 
-    public RelationTypeModel Map(IRelationType v) => (RelationTypeModel)this.mapping[v];
+    public ClassModel Map(IClass v) => v != null ? (ClassModel)this.mapping[v] : null;
 
-    public AssociationTypeModel Map(IAssociationType v) => (AssociationTypeModel)this.mapping[v];
+    public RelationTypeModel Map(IRelationType v) => v != null ? (RelationTypeModel)this.mapping[v] : null;
 
-    public RoleTypeModel Map(IRoleType v) => (RoleTypeModel)this.mapping[v];
+    public AssociationTypeModel Map(IAssociationType v) => v != null ? (AssociationTypeModel)this.mapping[v] : null;
 
-    public CompositeRoleTypeModel Map(ICompositeRoleType v) => (CompositeRoleTypeModel)this.mapping[v];
+    public RoleTypeModel Map(IRoleType v) => v != null ? (RoleTypeModel)this.mapping[v] : null;
 
-    public RecordModel Map(IRecord v) => (RecordModel)this.mapping[v];
+    public CompositeRoleTypeModel Map(ICompositeRoleType v) => v != null ? (CompositeRoleTypeModel)this.mapping[v] : null;
 
-    public MethodTypeModel Map(IMethodType v) => (MethodTypeModel)this.mapping[v];
+    public RecordModel Map(IRecord v) => v != null ? (RecordModel)this.mapping[v] : null;
+
+    public FieldTypeModel Map(IFieldType v) => v != null ? (FieldTypeModel)this.mapping[v] : null;
+
+    public MethodTypeModel Map(IMethodType v) => v != null ? (MethodTypeModel)this.mapping[v] : null;
     #endregion
 }
