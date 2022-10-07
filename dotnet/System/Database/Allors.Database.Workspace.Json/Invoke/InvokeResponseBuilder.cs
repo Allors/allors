@@ -8,6 +8,7 @@ namespace Allors.Database.Protocol.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using Allors.Protocol.Json.Api.Invoke;
 using Derivations;
 using Meta;
@@ -144,11 +145,20 @@ public class InvokeResponseBuilder
             return true;
         }
 
-        var method = obj.GetType().GetMethod(methodType.Name, new Type[] { });
+        // TODO: No need for reflection
+        var method = obj.GetType().GetMethod(methodType.Name);
+
+        if (method == null)
+        {
+            invokeResponse._e = $"No method {methodType.Name} on object type {obj.GetType().Name}";
+            return true;
+        }
 
         try
         {
-            method.Invoke(obj, null);
+            var parameterLength = method.GetParameters().Length;
+            var args = parameterLength > 0 ? new object[method.GetParameters().Length] : null;
+            method.Invoke(obj, args);
         }
         catch (Exception e)
         {
