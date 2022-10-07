@@ -14,8 +14,8 @@ using System.Xml;
 
 public abstract class MetaPopulation : IMetaPopulation
 {
-    internal static readonly IReadOnlySet<IComposite> EmptyComposites = new HashSet<IComposite>();
-    internal static readonly IReadOnlySet<IDomain> EmptyDomains = new HashSet<IDomain>();
+    internal static readonly IReadOnlyList<IComposite> EmptyComposites = Array.Empty<IComposite>();
+    internal static readonly IReadOnlyList<IDomain> EmptyDomains = Array.Empty<IDomain>();
 
     private IList<IMetaIdentifiableObject> metaObjects;
 
@@ -38,41 +38,41 @@ public abstract class MetaPopulation : IMetaPopulation
 
     public MethodCompiler MethodCompiler { get; private set; }
 
-    public IEnumerable<string> WorkspaceNames => this.derivedWorkspaceNames;
+    public IReadOnlyList<string> WorkspaceNames => this.derivedWorkspaceNames;
 
-    IDomain[] IMetaPopulation.Domains => this.Domains;
+    IReadOnlyList<IDomain> IMetaPopulation.Domains => this.Domains;
 
     public Domain[] Domains { get; set; }
 
-    IClass[] IMetaPopulation.Classes => this.Classes;
+    IReadOnlyList<IClass> IMetaPopulation.Classes => this.Classes;
 
     public Class[] Classes { get; set; }
 
-    IRelationType[] IMetaPopulation.RelationTypes => this.RelationTypes;
+    IReadOnlyList<IRelationType> IMetaPopulation.RelationTypes => this.RelationTypes;
 
     public RelationType[] RelationTypes { get; set; }
 
-    IInterface[] IMetaPopulation.Interfaces => this.Interfaces;
+    IReadOnlyList<IInterface> IMetaPopulation.Interfaces => this.Interfaces;
 
     public Interface[] Interfaces { get; set; }
 
-    IComposite[] IMetaPopulation.Composites => this.Composites;
+    IReadOnlyList<IComposite> IMetaPopulation.Composites => this.Composites;
 
     public Composite[] Composites { get; set; }
 
-    IUnit[] IMetaPopulation.Units => this.Units;
+    IReadOnlyList<IUnit> IMetaPopulation.Units => this.Units;
 
     public Unit[] Units { get; set; }
 
-    IMethodType[] IMetaPopulation.MethodTypes => this.MethodTypes;
+    IReadOnlyList<IMethodType> IMetaPopulation.MethodTypes => this.MethodTypes;
 
     public MethodType[] MethodTypes { get; set; }
 
-    IRecord[] IMetaPopulation.Records => this.Records;
+    IReadOnlyList<IRecord> IMetaPopulation.Records => this.Records;
 
     public Record[] Records { get; set; }
 
-    IFieldType[] IMetaPopulation.FieldTypes => this.FieldTypes;
+    IReadOnlyList<IFieldType> IMetaPopulation.FieldTypes => this.FieldTypes;
 
     public FieldType[] FieldTypes { get; set; }
 

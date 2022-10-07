@@ -10,5 +10,5 @@ using System.Collections.Generic;
 
 public interface IInterface : IComposite
 {
-    IReadOnlySet<IComposite> DirectSubtypes { get; }
+    IReadOnlyList<IComposite> DirectSubtypes { get; }
 }

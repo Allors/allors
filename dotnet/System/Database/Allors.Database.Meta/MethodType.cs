@@ -34,7 +34,7 @@ public sealed class MethodType : MetaIdentifiableObject, IMethodType, IComparabl
 
     public Composite ObjectType { get; }
 
-    public string[] AssignedWorkspaceNames { get; set; }
+    public IReadOnlyList<string> AssignedWorkspaceNames { get; set; }
 
     public string Name { get; }
 

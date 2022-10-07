@@ -17,9 +17,9 @@ public abstract class Class : Composite, IClass
     protected Class(MetaPopulation metaPopulation, Guid id, Interface[] directSupertypes, string singularName, string assignedPluralName)
         : base(metaPopulation, id, directSupertypes, singularName, assignedPluralName)
     {
-        // TODO: Create single element IReadOnlySet
-        this.Composites = new HashSet<IComposite> { this };
-        this.Classes = new HashSet<IClass> { this };
+        // TODO: Create single element IReadOnlyList
+        this.Composites = new[] { this };
+        this.Classes = new[] { this };
         this.DirectSubtypes = MetaPopulation.EmptyComposites;
         this.Subtypes = MetaPopulation.EmptyComposites;
         metaPopulation.OnCreated(this);
@@ -27,15 +27,15 @@ public abstract class Class : Composite, IClass
 
     public string[] AssignedWorkspaceNames { get; set; } = Array.Empty<string>();
 
-    public override IReadOnlySet<IComposite> Composites { get; }
+    public override IReadOnlyList<IComposite> Composites { get; }
 
-    public override IReadOnlySet<IClass> Classes { get; }
+    public override IReadOnlyList<IClass> Classes { get; }
 
     public override IClass ExclusiveClass => this;
 
-    public override IReadOnlySet<IComposite> DirectSubtypes { get; }
+    public override IReadOnlyList<IComposite> DirectSubtypes { get; }
 
-    public override IReadOnlySet<IComposite> Subtypes { get; }
+    public override IReadOnlyList<IComposite> Subtypes { get; }
 
     public override IEnumerable<string> WorkspaceNames => this.AssignedWorkspaceNames;
 

@@ -110,7 +110,7 @@ public class Save
             strategies.Sort(strategySorter);
         }
 
-        var sortedRelationTypes = new List<IRelationType>(this.transaction.Population.MetaPopulation.RelationTypes);
+        var sortedRelationTypes = new List<IRelationType>(((IDatabase)this.transaction.Database).MetaPopulation.RelationTypes);
         sortedRelationTypes.Sort();
         foreach (var relationType in sortedRelationTypes)
         {

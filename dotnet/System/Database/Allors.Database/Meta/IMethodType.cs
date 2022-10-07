@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 public interface IMethodType : IMetaIdentifiableObject, IOperandType
 {
-    string[] AssignedWorkspaceNames { get; }
+    IReadOnlyList<string> AssignedWorkspaceNames { get; }
 
     ICompositeMethodType CompositeMethodType { get; }
 

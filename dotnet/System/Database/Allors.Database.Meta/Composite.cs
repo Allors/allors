@@ -12,38 +12,38 @@ using System.Linq;
 
 public abstract class Composite : ObjectType, IComposite
 {
-    private IReadOnlySet<IAssociationType> associationTypes;
-    private IReadOnlySet<IRoleType> roleTypes;
-    private IReadOnlySet<IMethodType> methodTypes;
-    private HashSet<IInterface> supertypes;
+    private IReadOnlyList<IAssociationType> associationTypes;
+    private IReadOnlyList<IRoleType> roleTypes;
+    private IReadOnlyList<IMethodType> methodTypes;
+    private IReadOnlyList<IInterface> supertypes;
 
-    protected Composite(MetaPopulation metaPopulation, Guid id, IEnumerable<IInterface> directSupertypes, string singularName, string assignedPluralName)
+    protected Composite(MetaPopulation metaPopulation, Guid id, IReadOnlyList<IInterface> directSupertypes, string singularName, string assignedPluralName)
         : base(metaPopulation, id, singularName, assignedPluralName)
     {
-        this.DirectSupertypes = new HashSet<IInterface>(directSupertypes);
+        this.DirectSupertypes = directSupertypes;
     }
 
-    public IReadOnlySet<IInterface> DirectSupertypes { get; }
+    public IReadOnlyList<IInterface> DirectSupertypes { get; }
 
-    public abstract IReadOnlySet<IComposite> DirectSubtypes { get; }
+    public abstract IReadOnlyList<IComposite> DirectSubtypes { get; }
 
-    public abstract IReadOnlySet<IComposite> Subtypes { get; }
+    public abstract IReadOnlyList<IComposite> Subtypes { get; }
 
-    public abstract IReadOnlySet<IComposite> Composites { get; }
+    public abstract IReadOnlyList<IComposite> Composites { get; }
 
-    public abstract IReadOnlySet<IClass> Classes { get; }
+    public abstract IReadOnlyList<IClass> Classes { get; }
 
     public abstract IClass ExclusiveClass { get; }
 
-    public IReadOnlySet<IInterface> Supertypes => this.supertypes;
+    public IReadOnlyList<IInterface> Supertypes => this.supertypes;
 
-    public IReadOnlySet<IAssociationType> AssociationTypes => this.associationTypes;
+    public IReadOnlyList<IAssociationType> AssociationTypes => this.associationTypes;
 
-    public IReadOnlySet<IRoleType> RoleTypes => this.roleTypes;
+    public IReadOnlyList<IRoleType> RoleTypes => this.roleTypes;
 
     public IReadOnlyDictionary<IRoleType, ICompositeRoleType> CompositeRoleTypeByRoleType { get; private set; }
 
-    public IReadOnlySet<IMethodType> MethodTypes => this.methodTypes;
+    public IReadOnlyList<IMethodType> MethodTypes => this.methodTypes;
 
     public IReadOnlyDictionary<IMethodType, ICompositeMethodType> CompositeMethodTypeByMethodType { get; private set; }
 
@@ -53,7 +53,7 @@ public abstract class Composite : ObjectType, IComposite
     {
         var supertypes = new HashSet<IInterface>();
         this.InitializeSupertypesRecursively(this, supertypes);
-        this.supertypes = new HashSet<IInterface>(supertypes);
+        this.supertypes = supertypes.ToArray();
     }
 
     internal void InitializeRoleTypes(Dictionary<Composite, HashSet<RoleType>> roleTypesByAssociationObjectType)
@@ -73,7 +73,7 @@ public abstract class Composite : ObjectType, IComposite
             }
         }
 
-        this.roleTypes = new HashSet<IRoleType>(roleTypes);
+        this.roleTypes = roleTypes.ToArray();
     }
 
     internal void InitializeAssociationTypes(Dictionary<ObjectType, HashSet<AssociationType>> relationTypesByRoleObjectType)
@@ -93,7 +93,7 @@ public abstract class Composite : ObjectType, IComposite
             }
         }
 
-        this.associationTypes = new HashSet<IAssociationType>(associationTypes);
+        this.associationTypes = associationTypes.ToArray();
     }
 
     internal void InitializeMethodTypes(Dictionary<Composite, HashSet<MethodType>> methodTypeByClass)
@@ -113,7 +113,7 @@ public abstract class Composite : ObjectType, IComposite
             }
         }
 
-        this.methodTypes = new HashSet<IMethodType>(methodTypes);
+        this.methodTypes = methodTypes.ToArray();
     }
 
     internal void InitializeCompositeRoleTypes(Dictionary<IComposite, HashSet<ICompositeRoleType>> compositeRoleTypesByComposite)

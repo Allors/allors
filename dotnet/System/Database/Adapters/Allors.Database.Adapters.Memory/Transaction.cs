@@ -1,4 +1,4 @@
-// <copyright file="Transaction.cs" company="Allors bvba">
+﻿// <copyright file="Transaction.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
+using Allors.Database.Services;
 using Meta;
 using Version = Allors.Version;
 
@@ -24,10 +25,10 @@ public class Transaction : ITransaction
 
     private Dictionary<long, Strategy> strategyByObjectId;
 
-    internal Transaction(Database database, ITransactionServices scope)
+    internal Transaction(Database database, ITransactionServices services)
     {
         this.Database = database;
-        this.Services = scope;
+        this.Services = services;
 
         this.busyCommittingOrRollingBack = false;
 
@@ -40,15 +41,13 @@ public class Transaction : ITransaction
         this.Services.OnInit(this);
     }
 
-    public IDatabase Population => this.Database;
-
-    internal ChangeLog ChangeLog { get; private set; }
-
-    internal Database Database { get; }
+    public ITransactionServices Services { get; }
 
     IDatabase ITransaction.Database => this.Database;
 
-    public ITransactionServices Services { get; }
+    internal Database Database { get; }
+
+    internal ChangeLog ChangeLog { get; private set; }
 
     public void Commit()
     {
@@ -453,30 +452,30 @@ public class Transaction : ITransaction
                 return EmptyStrategies;
 
             case 1:
-            {
-                var objectType = concreteClasses[0];
-                if (this.strategiesByObjectType.TryGetValue(objectType, out var strategies))
                 {
-                    return strategies;
-                }
+                    var objectType = concreteClasses[0];
+                    if (this.strategiesByObjectType.TryGetValue(objectType, out var strategies))
+                    {
+                        return strategies;
+                    }
 
-                return EmptyStrategies;
-            }
+                    return EmptyStrategies;
+                }
 
             default:
-            {
-                var strategies = new HashSet<Strategy>();
-
-                foreach (var objectType in concreteClasses)
                 {
-                    if (this.strategiesByObjectType.TryGetValue(objectType, out var objectTypeStrategies))
-                    {
-                        strategies.UnionWith(objectTypeStrategies);
-                    }
-                }
+                    var strategies = new HashSet<Strategy>();
 
-                return strategies;
-            }
+                    foreach (var objectType in concreteClasses)
+                    {
+                        if (this.strategiesByObjectType.TryGetValue(objectType, out var objectTypeStrategies))
+                        {
+                            strategies.UnionWith(objectTypeStrategies);
+                        }
+                    }
+
+                    return strategies;
+                }
         }
     }
 

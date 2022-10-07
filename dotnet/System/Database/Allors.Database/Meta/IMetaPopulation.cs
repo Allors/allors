@@ -12,25 +12,25 @@ using System.Reflection;
 
 public interface IMetaPopulation
 {
-    IDomain[] Domains { get; }
+    IReadOnlyList<IDomain> Domains { get; }
 
-    IUnit[] Units { get; }
+    IReadOnlyList<IUnit> Units { get; }
 
-    IComposite[] Composites { get; }
+    IReadOnlyList<IComposite> Composites { get; }
 
-    IInterface[] Interfaces { get; }
+    IReadOnlyList<IInterface> Interfaces { get; }
 
-    IClass[] Classes { get; }
+    IReadOnlyList<IClass> Classes { get; }
 
-    IRelationType[] RelationTypes { get; }
+    IReadOnlyList<IRelationType> RelationTypes { get; }
 
-    IMethodType[] MethodTypes { get; }
+    IReadOnlyList<IMethodType> MethodTypes { get; }
 
-    IRecord[] Records { get; }
+    IReadOnlyList<IRecord> Records { get; }
 
-    IFieldType[] FieldTypes { get; }
+    IReadOnlyList<IFieldType> FieldTypes { get; }
 
-    IEnumerable<string> WorkspaceNames { get; }
+    IReadOnlyList<string> WorkspaceNames { get; }
 
     bool IsValid { get; }
 

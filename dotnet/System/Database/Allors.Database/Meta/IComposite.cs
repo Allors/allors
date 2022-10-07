@@ -10,27 +10,27 @@ using System.Collections.Generic;
 
 public interface IComposite : IObjectType
 {
-    IReadOnlySet<IInterface> DirectSupertypes { get; }
+    IReadOnlyList<IInterface> DirectSupertypes { get; }
 
-    IReadOnlySet<IInterface> Supertypes { get; }
+    IReadOnlyList<IInterface> Supertypes { get; }
 
-    IReadOnlySet<IComposite> DirectSubtypes { get; }
+    IReadOnlyList<IComposite> DirectSubtypes { get; }
 
-    IReadOnlySet<IComposite> Subtypes { get; }
+    IReadOnlyList<IComposite> Subtypes { get; }
 
-    IReadOnlySet<IComposite> Composites { get; }
+    IReadOnlyList<IComposite> Composites { get; }
 
-    IReadOnlySet<IClass> Classes { get; }
+    IReadOnlyList<IClass> Classes { get; }
 
     IClass ExclusiveClass { get; }
 
-    IReadOnlySet<IAssociationType> AssociationTypes { get; }
+    IReadOnlyList<IAssociationType> AssociationTypes { get; }
 
-    IReadOnlySet<IRoleType> RoleTypes { get; }
+    IReadOnlyList<IRoleType> RoleTypes { get; }
 
     IReadOnlyDictionary<IRoleType, ICompositeRoleType> CompositeRoleTypeByRoleType { get; }
 
-    IReadOnlySet<IMethodType> MethodTypes { get; }
+    IReadOnlyList<IMethodType> MethodTypes { get; }
 
     IReadOnlyDictionary<IMethodType, ICompositeMethodType> CompositeMethodTypeByMethodType { get; }
 

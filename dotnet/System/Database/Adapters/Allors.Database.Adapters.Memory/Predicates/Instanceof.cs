@@ -1,4 +1,4 @@
-// <copyright file="InstanceOf.cs" company="Allors bvba">
+﻿// <copyright file="InstanceOf.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -25,7 +25,9 @@ internal sealed class Instanceof : Predicate
             return ThreeValuedLogic.True;
         }
 
-        return this.objectType is IInterface @interface && strategy.UncheckedObjectType.Supertypes.Contains(@interface)
+        var metaCache = strategy.Transaction.Database.MetaCache;
+
+        return this.objectType is IInterface @interface && metaCache.GetSupertypesByComposite(strategy.UncheckedObjectType).Contains(@interface)
             ? ThreeValuedLogic.True
             : ThreeValuedLogic.False;
     }

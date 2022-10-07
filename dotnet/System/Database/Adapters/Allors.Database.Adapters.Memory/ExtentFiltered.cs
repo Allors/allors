@@ -1,4 +1,4 @@
-// <copyright file="ExtentFiltered.cs" company="Allors bvba">
+﻿// <copyright file="ExtentFiltered.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -23,7 +23,7 @@ internal sealed class ExtentFiltered : Extent
 
     internal void CheckForAssociationType(IAssociationType association)
     {
-        if (!this.ObjectType.AssociationTypes.Contains(association))
+        if (!this.Transaction.Database.MetaCache.GetAssociationTypesByComposite(this.ObjectType).Contains(association))
         {
             throw new ArgumentException("Extent does not have association " + association);
         }
@@ -31,7 +31,7 @@ internal sealed class ExtentFiltered : Extent
 
     internal void CheckForRoleType(IRoleType roleType)
     {
-        if (!this.ObjectType.RoleTypes.Contains(roleType))
+        if (!this.Transaction.Database.MetaCache.GetRoleTypesByComposite(this.ObjectType).Contains(roleType))
         {
             throw new ArgumentException("Extent does not have role " + roleType.SingularName);
         }

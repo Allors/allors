@@ -8,7 +8,6 @@ namespace Allors.Database.Configuration
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Allors.Collections;
     using Allors.Database.Meta;
     using Allors.Database.Meta.Extensions;
     using Allors.Database.Services;
@@ -16,9 +15,14 @@ namespace Allors.Database.Configuration
     public class MetaCache : IMetaCache
     {
         // TODO: Use EmptySet
+        private static readonly IReadOnlySet<IInterface> EmptyInterfaceSet = new HashSet<IInterface>();
+        private static readonly IReadOnlySet<IAssociationType> EmptyAssociationTypeSet = new HashSet<IAssociationType>();
         private static readonly IReadOnlySet<IRoleType> EmptyRoleTypeSet = new HashSet<IRoleType>();
         private static readonly IReadOnlySet<ICompositeRoleType> EmptyCompositeRoleTypeSet = new HashSet<ICompositeRoleType>();
 
+        private readonly IDictionary<IComposite, IReadOnlySet<IInterface>> supertypesByComposite;
+        private readonly IDictionary<IComposite, IReadOnlySet<IAssociationType>> associationTypesByComposite;
+        private readonly IDictionary<IComposite, IReadOnlySet<IRoleType>> roleTypesByComposite;
         private readonly IDictionary<IComposite, IReadOnlySet<IRoleType>> requiredRoleTypesByComposite;
         private readonly IDictionary<IClass, IReadOnlySet<ICompositeRoleType>> requiredCompositeRoleTypesByClass;
         private readonly IDictionary<IClass, Type> builderTypeByClass;
@@ -29,6 +33,15 @@ namespace Allors.Database.Configuration
         {
             var metaPopulation = (MetaPopulation)database.MetaPopulation;
             var assembly = database.ObjectFactory.Assembly;
+
+            this.supertypesByComposite = metaPopulation.Composites
+                .ToDictionary(v => (IComposite)v, v => (IReadOnlySet<IInterface>)new HashSet<IInterface>(v.Supertypes));
+
+            this.associationTypesByComposite = metaPopulation.Composites
+                .ToDictionary(v => (IComposite)v, v => (IReadOnlySet<IAssociationType>)new HashSet<IAssociationType>(v.AssociationTypes));
+
+            this.roleTypesByComposite = metaPopulation.Composites
+                .ToDictionary(v => (IComposite)v, v => (IReadOnlySet<IRoleType>)new HashSet<IRoleType>(v.RoleTypes));
 
             this.requiredRoleTypesByComposite = metaPopulation.Composites
                 .ToDictionary(v => (IComposite)v, v => (IReadOnlySet<IRoleType>)new HashSet<IRoleType>(v.RoleTypes.Where(w => w.CompositeRoleType.IsRequired())));
@@ -61,6 +74,21 @@ namespace Allors.Database.Configuration
         }
 
         public Type GetBuilderType(IClass @class) => this.builderTypeByClass[@class];
+
+        public IReadOnlySet<IInterface> GetSupertypesByComposite(IComposite composite)
+        {
+            return this.supertypesByComposite.TryGetValue(composite, out var supertype) ? supertype : EmptyInterfaceSet;
+        }
+
+        public IReadOnlySet<IAssociationType> GetAssociationTypesByComposite(IComposite composite)
+        {
+            return this.associationTypesByComposite.TryGetValue(composite, out var associationTypes) ? associationTypes : EmptyAssociationTypeSet;
+        }
+
+        public IReadOnlySet<IRoleType> GetRoleTypesByComposite(IComposite composite)
+        {
+            return this.roleTypesByComposite.TryGetValue(composite, out var roleTypes) ? roleTypes : EmptyRoleTypeSet;
+        }
 
         public IReadOnlySet<IRoleType> GetRequiredRoleTypesByComposite(IComposite composite)
         {

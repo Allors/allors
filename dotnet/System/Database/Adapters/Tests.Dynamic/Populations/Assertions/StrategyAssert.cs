@@ -1,4 +1,4 @@
-// --------------------------------------------------------------------------------------------------------------------
+﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="StrategyAssert.cs" company="Allors bvba">
 //   Copyright 2002-2012 Allors bvba.
 // 
@@ -21,6 +21,7 @@
 namespace Allors.Database.Adapters;
 
 using System;
+using System.Linq;
 using Meta;
 using Xunit;
 

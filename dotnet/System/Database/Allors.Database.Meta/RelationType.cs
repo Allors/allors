@@ -38,7 +38,7 @@ public sealed class RelationType : MetaIdentifiableObject, IRelationType
         this.MetaPopulation.OnCreated(this);
     }
 
-    public string[] AssignedWorkspaceNames { get; set; }
+    public IReadOnlyList<string> AssignedWorkspaceNames { get; set; }
 
     public Multiplicity Multiplicity { get; }
 

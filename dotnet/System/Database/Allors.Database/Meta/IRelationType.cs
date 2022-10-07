@@ -7,6 +7,7 @@
 namespace Allors.Database.Meta;
 
 using System;
+using System.Collections.Generic;
 
 /// <summary>
 ///     A relation type defines the state and behavior for
@@ -14,7 +15,7 @@ using System;
 /// </summary>
 public interface IRelationType : IMetaIdentifiableObject, IComparable
 {
-    string[] AssignedWorkspaceNames { get; }
+    IReadOnlyList<string> AssignedWorkspaceNames { get; }
 
     IAssociationType AssociationType { get; }
 

@@ -17,7 +17,7 @@ public class Record : DataType, IRecord
         metaPopulation.OnCreated(this);
     }
 
-    IFieldType[] IRecord.FieldTypes => this.FieldTypes;
+    IReadOnlyList<IFieldType> IRecord.FieldTypes => this.FieldTypes;
 
     public FieldType[] FieldTypes
     {

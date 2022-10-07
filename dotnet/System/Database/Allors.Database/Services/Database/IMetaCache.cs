@@ -13,6 +13,12 @@ public interface IMetaCache
 {
     Type GetBuilderType(IClass @class);
 
+    IReadOnlySet<IInterface> GetSupertypesByComposite(IComposite composite);
+
+    IReadOnlySet<IAssociationType> GetAssociationTypesByComposite(IComposite composite);
+
+    IReadOnlySet<IRoleType> GetRoleTypesByComposite(IComposite composite);
+
     IReadOnlySet<IRoleType> GetRequiredRoleTypesByComposite(IComposite composite);
 
     IReadOnlySet<ICompositeRoleType> GetRequiredCompositeRoleTypesByClass(IClass @class);

@@ -16,16 +16,16 @@ public sealed class Domain : MetaIdentifiableObject, IDomain
         : base(metaPopulation, id)
     {
         this.Name = name;
-        this.DirectSuperdomains = directSuperdomains != null ? new HashSet<IDomain>(directSuperdomains) : MetaPopulation.EmptyDomains;
+        this.DirectSuperdomains = directSuperdomains ?? MetaPopulation.EmptyDomains;
 
         this.MetaPopulation.OnCreated(this);
     }
 
     public string Name { get; }
 
-    public IReadOnlySet<IDomain> DirectSuperdomains { get; }
+    public IReadOnlyList<IDomain> DirectSuperdomains { get; }
 
-    public IReadOnlySet<IDomain> Superdomains { get; private set; }
+    public IReadOnlyList<IDomain> Superdomains { get; private set; }
 
     public override IEnumerable<string> WorkspaceNames => this.MetaPopulation.WorkspaceNames;
 
@@ -98,7 +98,7 @@ public sealed class Domain : MetaIdentifiableObject, IDomain
             directSuperdomain.InitializeSuperdomains(this, superdomains);
         }
 
-        this.Superdomains = new HashSet<IDomain>(superdomains);
+        this.Superdomains = superdomains.ToArray();
     }
 
     private void InitializeSuperdomains(Domain subdomain, ISet<Domain> superdomains)

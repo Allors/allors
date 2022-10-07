@@ -1,4 +1,4 @@
-// <copyright file="Database.cs" company="Allors bvba">
+﻿// <copyright file="Database.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -8,6 +8,7 @@ namespace Allors.Database.Adapters.Memory;
 using System;
 using System.Collections.Generic;
 using System.Xml;
+using Allors.Database.Services;
 using Allors.Database.Tracing;
 using Meta;
 
@@ -16,9 +17,9 @@ public class Database : IDatabase
     private readonly Dictionary<IObjectType, object> concreteClassesByObjectType;
     private Transaction transaction;
 
-    public Database(IDatabaseServices state, Configuration configuration)
+    public Database(IDatabaseServices services, Configuration configuration)
     {
-        this.Services = state;
+        this.Services = services;
         if (this.Services == null)
         {
             throw new Exception("Services is missing");
@@ -37,9 +38,14 @@ public class Database : IDatabase
         this.Id = string.IsNullOrWhiteSpace(configuration.Id) ? Guid.NewGuid().ToString("N").ToLowerInvariant() : configuration.Id;
 
         this.Services.OnInit(this);
+
+
+        this.MetaCache = this.Services.Get<IMetaCache>();
     }
 
     internal bool IsLoading { get; private set; }
+
+    internal IMetaCache MetaCache { get; set; }
 
     protected virtual Transaction Transaction => this.transaction ??= new Transaction(this, this.Services.CreateTransactionServices());
 
