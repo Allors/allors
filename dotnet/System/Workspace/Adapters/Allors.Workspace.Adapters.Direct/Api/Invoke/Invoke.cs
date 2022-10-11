@@ -134,11 +134,13 @@ public class Invoke : Result
             return true;
         }
 
-        var method = obj.GetType().GetMethod(methodType.Name, new Type[] { });
+        var method = obj.GetType().GetMethod(methodType.Name);
 
         try
         {
-            method.Invoke(obj, null);
+            var parameterLength = method.GetParameters().Length;
+            var args = parameterLength > 0 ? new object[method.GetParameters().Length] : null;
+            method.Invoke(obj, args);
         }
         catch (Exception e)
         {

@@ -6,4 +6,9 @@
     <ProjectReference Include="..\..\Allors.Database\Allors.Database.csproj" />
     <ProjectReference Include="..\Meta.Configuration\Meta.Configuration.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\..\..\Core\Database\Configuration\Core\Database\Metacache\**\*.cs" />
+  </ItemGroup>
+
 </Project>

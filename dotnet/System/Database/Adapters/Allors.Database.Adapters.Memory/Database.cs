@@ -39,7 +39,6 @@ public class Database : IDatabase
 
         this.Services.OnInit(this);
 
-
         this.MetaCache = this.Services.Get<IMetaCache>();
     }
 
