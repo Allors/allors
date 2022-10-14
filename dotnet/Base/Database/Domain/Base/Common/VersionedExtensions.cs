@@ -15,7 +15,7 @@ namespace Allors.Database.Domain
         public static void CoreOnPostDerive(this Versioned @this, ObjectOnPostDerive method)
         {
             // TODO: move parts to Meta
-            var derivation = method.Derivation;
+            var derivation = method.Input.Derivation;
             var versionedClass = (IClass)@this.Strategy.Class;
             var metaPopulation = versionedClass.MetaPopulation;
             var versionClass = (IClass)metaPopulation.FindCompositeByName(versionedClass.Name + "Version");

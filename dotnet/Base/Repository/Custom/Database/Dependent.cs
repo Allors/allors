@@ -56,7 +56,7 @@ public class Dependent : Object, Deletable, DerivationCounted
     {
     }
 
-    public void OnPostDerive() { }
+    public void OnPostDerive(OnPostDeriveInput input) { }
 
     public void Delete() { }
 

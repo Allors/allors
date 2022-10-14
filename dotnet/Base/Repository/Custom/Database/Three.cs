@@ -47,7 +47,7 @@ public class Three : Shared
     {
     }
 
-    public void OnPostDerive() { }
+    public void OnPostDerive(OnPostDeriveInput input) { }
 
     #endregion
 }

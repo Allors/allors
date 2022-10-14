@@ -51,7 +51,7 @@ public class SyncRoot : Object, DerivationCounted
     {
     }
 
-    public void OnPostDerive() { }
+    public void OnPostDerive(OnPostDeriveInput input) { }
 
     #endregion
 }

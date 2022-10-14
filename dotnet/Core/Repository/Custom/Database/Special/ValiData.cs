@@ -38,7 +38,7 @@ public class ValiData : Object
     {
     }
 
-    public void OnPostDerive() { }
+    public void OnPostDerive(OnPostDeriveInput input) { }
 
     #endregion
 }

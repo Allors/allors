@@ -250,7 +250,7 @@ public class Organization : Addressable, Deletable, UniquelyIdentifiable
     {
     }
 
-    public void OnPostDerive() { }
+    public void OnPostDerive(OnPostDeriveInput input) { }
 
     public void Delete() { }
 

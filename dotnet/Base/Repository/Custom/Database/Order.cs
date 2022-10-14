@@ -208,7 +208,7 @@ public class Order : Transitional, Versioned
     {
     }
 
-    public void OnPostDerive() { }
+    public void OnPostDerive(OnPostDeriveInput input) { }
 
     #endregion
 }

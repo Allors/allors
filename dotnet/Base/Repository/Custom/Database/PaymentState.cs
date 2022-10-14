@@ -35,7 +35,7 @@ public class PaymentState : Object, ObjectState
     {
     }
 
-    public void OnPostDerive() { }
+    public void OnPostDerive(OnPostDeriveInput input) { }
 
     #endregion
 }

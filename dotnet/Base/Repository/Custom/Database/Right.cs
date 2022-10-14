@@ -1,4 +1,4 @@
-// <copyright file="Right.cs" company="Allors bv">
+﻿// <copyright file="Right.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // </copyright>
 
@@ -41,7 +41,7 @@ public class Right : DerivationCounted
     {
     }
 
-    public void OnPostDerive()
+    public void OnPostDerive(OnPostDeriveInput input)
     {
     }
 

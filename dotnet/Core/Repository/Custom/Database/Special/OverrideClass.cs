@@ -29,7 +29,7 @@ public class OverrideClass : OverrideInterface
 
     public void OnInit() { }
 
-    public void OnPostDerive() { }
+    public void OnPostDerive(OnPostDeriveInput input) { }
 
     #endregion
 }

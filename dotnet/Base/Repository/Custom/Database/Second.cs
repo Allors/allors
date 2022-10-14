@@ -48,7 +48,7 @@ public class Second : Object, DerivationCounted
     {
     }
 
-    public void OnPostDerive() { }
+    public void OnPostDerive(OnPostDeriveInput input) { }
 
     #endregion
 }

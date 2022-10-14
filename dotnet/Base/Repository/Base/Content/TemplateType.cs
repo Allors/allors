@@ -40,7 +40,7 @@ public class TemplateType : Enumeration, Deletable
     {
     }
 
-    public void OnPostDerive() { }
+    public void OnPostDerive(OnPostDeriveInput input) { }
 
     public void Delete() { }
 

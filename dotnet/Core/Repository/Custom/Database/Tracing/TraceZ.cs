@@ -100,7 +100,7 @@ public class TraceZ : Object
 
     public void OnInit() { }
 
-    public void OnPostDerive() { }
+    public void OnPostDerive(OnPostDeriveInput input) { }
 
     #endregion
 }

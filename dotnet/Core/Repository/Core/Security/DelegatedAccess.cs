@@ -50,7 +50,7 @@ public class DelegatedAccess : UniquelyIdentifiable, Deletable
 
     public void OnInit() { }
 
-    public void OnPostDerive() { }
+    public void OnPostDerive(OnPostDeriveInput input) { }
 
     public void Delete() { }
 

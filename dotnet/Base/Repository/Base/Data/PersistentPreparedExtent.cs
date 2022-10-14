@@ -62,7 +62,7 @@ public class PersistentPreparedExtent : UniquelyIdentifiable, Deletable
     {
     }
 
-    public void OnPostDerive()
+    public void OnPostDerive(OnPostDeriveInput input)
     {
     }
 

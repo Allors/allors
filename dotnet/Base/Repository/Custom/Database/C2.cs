@@ -415,7 +415,7 @@ public class C2 : Object, DerivationCounted, I2
     {
     }
 
-    public void OnPostDerive() { }
+    public void OnPostDerive(OnPostDeriveInput input) { }
 
     #endregion
 }

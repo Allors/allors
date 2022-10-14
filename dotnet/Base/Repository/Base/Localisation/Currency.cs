@@ -49,7 +49,7 @@ public class Currency : Enumeration, Object
     {
     }
 
-    public void OnPostDerive() { }
+    public void OnPostDerive(OnPostDeriveInput input) { }
 
     #endregion
 }

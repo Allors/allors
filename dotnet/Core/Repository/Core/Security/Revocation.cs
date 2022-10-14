@@ -39,7 +39,7 @@ public class Revocation : UniquelyIdentifiable, Deletable
 
     public void OnInit() { }
 
-    public void OnPostDerive() { }
+    public void OnPostDerive(OnPostDeriveInput input) { }
 
     public void Delete() { }
 

@@ -35,7 +35,7 @@ public class SyncDepthC1 : SyncDepthI1
     {
     }
 
-    public void OnPostDerive() { }
+    public void OnPostDerive(OnPostDeriveInput input) { }
 
     #endregion
 }

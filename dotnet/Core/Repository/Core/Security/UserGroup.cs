@@ -52,7 +52,7 @@ public class UserGroup : UniquelyIdentifiable
     {
     }
 
-    public void OnPostDerive() { }
+    public void OnPostDerive(OnPostDeriveInput input) { }
 
     #endregion
 }

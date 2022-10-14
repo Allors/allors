@@ -47,7 +47,7 @@ public class Build : Object
     {
     }
 
-    public void OnPostDerive()
+    public void OnPostDerive(OnPostDeriveInput input)
     {
     }
 

@@ -43,7 +43,7 @@ public class Counter : UniquelyIdentifiable
     {
     }
 
-    public void OnPostDerive()
+    public void OnPostDerive(OnPostDeriveInput input)
     {
     }
 

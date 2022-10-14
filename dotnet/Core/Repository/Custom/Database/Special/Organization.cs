@@ -206,7 +206,7 @@ public class Organization : Deletable, UniquelyIdentifiable
 
     public void OnInit() { }
 
-    public void OnPostDerive() { }
+    public void OnPostDerive(OnPostDeriveInput input) { }
 
     public void Delete() { }
 

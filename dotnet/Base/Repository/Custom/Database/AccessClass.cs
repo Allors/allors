@@ -38,7 +38,7 @@ public class AccessClass : AccessInterface
     {
     }
 
-    public void OnPostDerive()
+    public void OnPostDerive(OnPostDeriveInput input)
     {
     }
 

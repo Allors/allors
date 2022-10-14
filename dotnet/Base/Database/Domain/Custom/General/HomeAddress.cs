@@ -1,4 +1,4 @@
-// <copyright file="HomeAddress.cs" company="Allors bvba">
+﻿// <copyright file="HomeAddress.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -13,7 +13,7 @@ namespace Allors.Database.Domain
     {
         public void CustomOnPostDerive(ObjectOnPostDerive method)
         {
-            var derivation = method.Derivation;
+            var derivation = method.Input.Derivation;
 
             derivation.Validation.AssertExists(this, this.M.HomeAddress.Street);
             derivation.Validation.AssertNonEmptyString(this, this.M.HomeAddress.Street);

@@ -29,7 +29,7 @@ public class Four : Object, Shared
     {
     }
 
-    public void OnPostDerive() { }
+    public void OnPostDerive(OnPostDeriveInput input) { }
 
     #endregion
 }

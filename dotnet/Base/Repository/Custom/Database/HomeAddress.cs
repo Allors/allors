@@ -49,7 +49,7 @@ public class HomeAddress : Object, Address
     {
     }
 
-    public void OnPostDerive() { }
+    public void OnPostDerive(OnPostDeriveInput input) { }
 
     #endregion
 }

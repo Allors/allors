@@ -51,7 +51,7 @@ public class Role : UniquelyIdentifiable
     {
     }
 
-    public void OnPostDerive() { }
+    public void OnPostDerive(OnPostDeriveInput input) { }
 
     #endregion
 }

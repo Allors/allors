@@ -38,7 +38,7 @@ public class One : Object, Shared
     {
     }
 
-    public void OnPostDerive() { }
+    public void OnPostDerive(OnPostDeriveInput input) { }
 
     #endregion
 }

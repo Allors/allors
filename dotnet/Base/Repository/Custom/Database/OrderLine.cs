@@ -62,7 +62,7 @@ public class OrderLine : Versioned, Object
     {
     }
 
-    public void OnPostDerive()
+    public void OnPostDerive(OnPostDeriveInput input)
     {
     }
 

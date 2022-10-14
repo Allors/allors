@@ -63,7 +63,7 @@ public class OrderVersion : Version
     {
     }
 
-    public void OnPostDerive()
+    public void OnPostDerive(OnPostDeriveInput input)
     {
     }
 

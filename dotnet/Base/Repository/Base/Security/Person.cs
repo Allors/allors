@@ -98,7 +98,7 @@ public partial class Person : User
     {
     }
 
-    public void OnPostDerive() { }
+    public void OnPostDerive(OnPostDeriveInput input) { }
 
     public void Delete()
     {

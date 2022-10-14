@@ -1,4 +1,4 @@
-// <copyright file="Grant.cs" company="Allors bv">
+﻿// <copyright file="Grant.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // </copyright>
 
@@ -81,7 +81,7 @@ public class Grant : UniquelyIdentifiable, Deletable
     {
     }
 
-    public void OnPostDerive() { }
+    public void OnPostDerive(OnPostDeriveInput input) { }
 
     public void Delete() { }
 

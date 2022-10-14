@@ -50,7 +50,7 @@ public class SecurityToken : UniquelyIdentifiable, Deletable
     {
     }
 
-    public void OnPostDerive() { }
+    public void OnPostDerive(OnPostDeriveInput input) { }
 
     public void Delete() { }
 

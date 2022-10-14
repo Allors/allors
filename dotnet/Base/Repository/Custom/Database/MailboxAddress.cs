@@ -40,7 +40,7 @@ public class MailboxAddress : Object, Address
     {
     }
 
-    public void OnPostDerive() { }
+    public void OnPostDerive(OnPostDeriveInput input) { }
 
     #endregion
 }

@@ -61,7 +61,7 @@ public class Left : DerivationCounted
     {
     }
 
-    public void OnPostDerive()
+    public void OnPostDerive(OnPostDeriveInput input)
     {
     }
 

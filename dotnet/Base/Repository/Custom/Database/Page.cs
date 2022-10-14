@@ -48,7 +48,7 @@ public class Page : UniquelyIdentifiable
 
     public void OnInit() { }
 
-    public void OnPostDerive() { }
+    public void OnPostDerive(OnPostDeriveInput input) { }
 
     #endregion
 }

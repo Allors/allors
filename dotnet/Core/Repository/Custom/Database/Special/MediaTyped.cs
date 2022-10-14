@@ -40,7 +40,7 @@ public class MediaTyped : Object
     {
     }
 
-    public void OnPostDerive()
+    public void OnPostDerive(OnPostDeriveInput input)
     {
     }
 

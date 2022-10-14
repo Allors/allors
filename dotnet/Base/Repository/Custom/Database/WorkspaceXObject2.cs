@@ -28,7 +28,7 @@ public class WorkspaceXObject2 : Object
     {
     }
 
-    public void OnPostDerive() { }
+    public void OnPostDerive(OnPostDeriveInput input) { }
 
     #endregion
 }

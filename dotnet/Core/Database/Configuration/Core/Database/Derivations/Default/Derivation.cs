@@ -173,7 +173,6 @@ namespace Allors.Database.Configuration.Derivations.Default
                 }
 
                 // TODO: Prefetching
-
                 foreach (var kvp in matchesByRule)
                 {
                     var domainDerivation = kvp.Key;
@@ -195,14 +194,14 @@ namespace Allors.Database.Configuration.Derivations.Default
                         var created = this.PostDeriveAccumulatedChangeSet.Created;
                         foreach (Object @object in created)
                         {
-                            @object.OnPostDerive(x => x.WithDerivation(this));
+                            @object.OnPostDerive(new OnPostDeriveInput { Derivation = this });
                         }
 
                         foreach (Object @object in this.PostDeriveAccumulatedChangeSet.Associations)
                         {
                             if (!created.Contains(@object))
                             {
-                                @object.OnPostDerive(x => x.WithDerivation(this));
+                                @object.OnPostDerive(new OnPostDeriveInput { Derivation = this });
                             }
                         }
 

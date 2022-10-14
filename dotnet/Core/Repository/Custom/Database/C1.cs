@@ -597,7 +597,7 @@ public class C1 : I1, DerivationCounted, Object
     {
     }
 
-    public void OnPostDerive() { }
+    public void OnPostDerive(OnPostDeriveInput input) { }
 
     public void InterfaceMethod() { }
 

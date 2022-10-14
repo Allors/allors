@@ -38,7 +38,7 @@ public class Gender : Enumeration
     {
     }
 
-    public void OnPostDerive() { }
+    public void OnPostDerive(OnPostDeriveInput input) { }
 
     #endregion
 }

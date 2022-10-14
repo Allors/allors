@@ -38,7 +38,7 @@ public class PrintDocument : Deletable, Object
     {
     }
 
-    public void OnPostDerive() { }
+    public void OnPostDerive(OnPostDeriveInput input) { }
 
     public void Delete() { }
 

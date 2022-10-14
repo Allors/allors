@@ -65,7 +65,7 @@ public class Dependee : Object, DerivationCounted
     {
     }
 
-    public void OnPostDerive() { }
+    public void OnPostDerive(OnPostDeriveInput input) { }
 
     #endregion
 }

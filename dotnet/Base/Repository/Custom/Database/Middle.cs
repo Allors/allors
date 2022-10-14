@@ -51,7 +51,7 @@ public class Middle : DerivationCounted
     {
     }
 
-    public void OnPostDerive()
+    public void OnPostDerive(OnPostDeriveInput input)
     {
     }
 
