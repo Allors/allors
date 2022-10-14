@@ -5,7 +5,7 @@
 
 namespace Allors.Workspace.Request
 {
-    using Visitor;
+    using Allors.Workspace.Request.Visitor;
 
     public class Not : ICompositePredicate
     {

@@ -6,7 +6,7 @@
 namespace Allors.Database.Adapters.Sql;
 
 using System.Data;
-using Caching;
+using Allors.Database.Adapters.Sql.Caching;
 
 public class Configuration : Adapters.Configuration
 {

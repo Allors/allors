@@ -7,7 +7,7 @@
 namespace Allors.Database;
 
 using System.Collections.Generic;
-using Meta;
+using Allors.Database.Meta;
 
 public sealed class PrefetchPolicyBuilder
 {

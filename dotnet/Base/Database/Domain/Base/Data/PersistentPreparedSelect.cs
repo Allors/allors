@@ -9,8 +9,8 @@ namespace Allors.Database.Domain
     using System.Text;
     using System.Xml.Serialization;
     using Allors.Protocol.Json.SystemText;
-    using Database.Data;
-    using Protocol.Json;
+    using Allors.Database.Data;
+    using Allors.Database.Protocol.Json;
 
     public partial class PersistentPreparedSelect
     {

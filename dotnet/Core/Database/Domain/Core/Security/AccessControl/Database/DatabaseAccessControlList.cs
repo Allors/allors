@@ -9,8 +9,8 @@ namespace Allors.Database.Domain
     using System.Collections.Generic;
     using System.Linq;
     using Allors.Database.Meta.Extensions;
-    using Database.Security;
-    using Meta;
+    using Allors.Database.Security;
+    using Allors.Database.Meta;
 
     /// <summary>
     /// List of permissions for an object/user combination.

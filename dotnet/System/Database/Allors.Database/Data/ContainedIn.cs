@@ -6,7 +6,7 @@
 namespace Allors.Database.Data;
 
 using System.Collections.Generic;
-using Meta;
+using Allors.Database.Meta;
 
 public class ContainedIn : IPropertyPredicate
 {

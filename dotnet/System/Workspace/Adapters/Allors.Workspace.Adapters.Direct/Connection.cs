@@ -11,15 +11,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Allors.Database.Meta.Extensions;
-using Database;
-using Database.Meta;
-using Database.Security;
-using Meta;
-using Request;
-using Response;
-using Shared.Ranges;
-using IObject = Database.IObject;
-using IOperandType = Meta.IOperandType;
+using Allors.Database;
+using Allors.Database.Meta;
+using Allors.Database.Security;
+using Allors.Workspace.Meta;
+using Allors.Workspace.Request;
+using Allors.Workspace.Response;
+using Allors.Shared.Ranges;
+using IObject = Allors.Database.IObject;
+using IOperandType = Allors.Workspace.Meta.IOperandType;
 
 public class Connection : Adapters.Connection
 {

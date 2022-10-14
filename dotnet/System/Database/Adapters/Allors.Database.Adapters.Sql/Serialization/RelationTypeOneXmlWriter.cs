@@ -8,7 +8,7 @@ namespace Allors.Database.Adapters.Sql;
 
 using System;
 using System.Xml;
-using Meta;
+using Allors.Database.Meta;
 
 /// <summary>
 ///     Writes all relations from a <see cref="IRelationType" /> with a Role

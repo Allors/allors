@@ -7,7 +7,7 @@ namespace Allors.Database;
 
 using System;
 using System.Collections.Generic;
-using Meta;
+using Allors.Database.Meta;
 
 /// <summary>
 ///     Extends the <see cref="ITransaction" /> with database capabilities.

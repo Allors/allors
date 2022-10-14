@@ -6,7 +6,7 @@
 namespace Allors.Database.Adapters.Sql;
 
 using System.Collections.Generic;
-using Meta;
+using Allors.Database.Meta;
 
 internal class CompositesRole
 {

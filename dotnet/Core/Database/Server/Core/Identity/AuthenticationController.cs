@@ -11,9 +11,9 @@ namespace Allors.Server
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
     using NLog;
-    using Protocol.Json.Auth;
-    using Security;
-    using Services;
+    using Allors.Protocol.Json.Auth;
+    using Allors.Security;
+    using Allors.Services;
 
     public class AuthenticationController : Controller
     {

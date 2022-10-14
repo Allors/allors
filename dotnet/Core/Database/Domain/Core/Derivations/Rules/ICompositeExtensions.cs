@@ -10,8 +10,8 @@ namespace Allors.Database.Domain.Derivations.Rules
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
-    using Database.Data;
-    using Meta;
+    using Allors.Database.Data;
+    using Allors.Database.Meta;
 
     public static class ICompositeExtensions
     {

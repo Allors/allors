@@ -6,7 +6,7 @@
 
 namespace Allors.Database.Data;
 
-using Meta;
+using Allors.Database.Meta;
 
 public static class IPropertyTypesExtensions
 {

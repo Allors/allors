@@ -7,7 +7,7 @@
 namespace Allors.Database.Domain
 {
     using Allors.Database.Meta.Extensions;
-    using Meta;
+    using Allors.Database.Meta;
 
     public partial class Permissions
     {

@@ -6,7 +6,7 @@
 namespace Allors.Workspace.Response
 {
     using System.Collections.Generic;
-    using Meta;
+    using Allors.Workspace.Meta;
 
     public interface IObject
     {

@@ -6,7 +6,7 @@
 namespace Allors.Database.Data;
 
 using System.Text;
-using Meta;
+using Allors.Database.Meta;
 
 public class Select : IVisitable
 {

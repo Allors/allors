@@ -5,7 +5,7 @@
 
 namespace Allors.Database;
 
-using Meta;
+using Allors.Database.Meta;
 
 public class Sort
 {

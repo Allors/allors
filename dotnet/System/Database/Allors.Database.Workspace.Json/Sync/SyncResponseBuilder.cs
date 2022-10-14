@@ -9,9 +9,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Allors.Protocol.Json;
 using Allors.Protocol.Json.Api.Sync;
-using Meta;
-using Security;
-using Shared.Ranges;
+using Allors.Database.Meta;
+using Allors.Database.Security;
+using Allors.Shared.Ranges;
 
 public class SyncResponseBuilder
 {

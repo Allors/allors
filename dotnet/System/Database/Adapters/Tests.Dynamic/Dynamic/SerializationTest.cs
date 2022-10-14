@@ -20,7 +20,7 @@ using System;
 using System.Collections;
 using System.Linq;
 using System.Xml;
-using Meta;
+using Allors.Database.Meta;
 using Xunit;
 
 /// <summary>

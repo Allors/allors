@@ -9,7 +9,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
-using Meta;
+using Allors.Database.Meta;
 using Version = Allors.Version;
 
 public class Objects : IEnumerable<object[]>

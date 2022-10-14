@@ -5,11 +5,11 @@
 
 namespace Allors.Server.Controllers
 {
-    using Database;
-    using Database.Domain;
+    using Allors.Database;
+    using Allors.Database.Domain;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using Services;
+    using Allors.Services;
 
     public class TestTransactionController : Controller
     {

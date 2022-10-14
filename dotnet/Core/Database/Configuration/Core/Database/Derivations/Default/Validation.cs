@@ -7,8 +7,8 @@
 namespace Allors.Database.Configuration.Derivations.Default
 {
     using System.Collections.Generic;
-    using Database.Derivations;
-    using Meta;
+    using Allors.Database.Derivations;
+    using Allors.Database.Meta;
 
     public class Validation : IValidation
     {

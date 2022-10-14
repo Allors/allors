@@ -8,7 +8,7 @@
 
 namespace Allors.Database.Adapters.Sql;
 
-using Meta;
+using Allors.Database.Meta;
 
 internal sealed class RoleContains : Predicate
 {

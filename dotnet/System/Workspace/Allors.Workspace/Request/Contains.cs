@@ -5,9 +5,9 @@
 
 namespace Allors.Workspace.Request
 {
-    using Meta;
-    using Response;
-    using Visitor;
+    using Allors.Workspace.Meta;
+    using Allors.Workspace.Response;
+    using Allors.Workspace.Request.Visitor;
 
     public class Contains : IPropertyPredicate
     {

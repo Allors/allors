@@ -6,7 +6,7 @@
 namespace Allors.Database.Configuration
 {
     using System;
-    using Domain;
+    using Allors.Database.Domain;
 
     public class Time : ITime
     {

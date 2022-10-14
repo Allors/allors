@@ -7,7 +7,7 @@ namespace Allors.Database.Configuration
 {
     using System;
     using System.IO;
-    using Domain;
+    using Allors.Database.Domain;
     using SkiaSharp;
     using ZXing;
     using ZXing.Common;

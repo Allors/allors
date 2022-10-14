@@ -6,7 +6,7 @@
 namespace Allors.Workspace.Request
 {
     using System.Collections.Generic;
-    using Visitor;
+    using Allors.Workspace.Request.Visitor;
 
     public class And : ICompositePredicate
     {

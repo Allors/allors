@@ -2,7 +2,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Database.Meta;
+using Allors.Database.Meta;
 
 public sealed class ClassModel : CompositeModel
 {

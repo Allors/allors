@@ -8,8 +8,8 @@ namespace Allors.Meta.Generation.Storage
     using System;
     using System.IO;
     using Allors.Database.Meta.Configuration;
-    using Database.Meta;
-    using Model;
+    using Allors.Database.Meta;
+    using Allors.Meta.Generation.Model;
 
     internal class Program
     {

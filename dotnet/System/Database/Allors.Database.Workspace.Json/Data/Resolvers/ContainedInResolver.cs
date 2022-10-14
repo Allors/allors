@@ -7,7 +7,7 @@ namespace Allors.Database.Protocol.Json;
 
 using System.Collections.Generic;
 using System.Linq;
-using Data;
+using Allors.Database.Data;
 
 public class ContainedInResolver : IResolver
 {

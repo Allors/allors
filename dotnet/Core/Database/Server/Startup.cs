@@ -9,11 +9,11 @@ namespace Allors.Server
     using System.Linq;
     using System.Text;
     using Allors.Database.Meta.Configuration;
-    using Database.Adapters;
-    using Database.Configuration;
-    using Database.Configuration.Derivations.Default;
-    using Database.Domain;
-    using Database.Meta;
+    using Allors.Database.Adapters;
+    using Allors.Database.Configuration;
+    using Allors.Database.Configuration.Derivations.Default;
+    using Allors.Database.Domain;
+    using Allors.Database.Meta;
     using JSNLog;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Builder;
@@ -25,9 +25,9 @@ namespace Allors.Server
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
     using Microsoft.IdentityModel.Tokens;
-    using Security;
-    using Services;
-    using ObjectFactory = Database.ObjectFactory;
+    using Allors.Security;
+    using Allors.Services;
+    using ObjectFactory = Allors.Database.ObjectFactory;
 
     public class Startup
     {

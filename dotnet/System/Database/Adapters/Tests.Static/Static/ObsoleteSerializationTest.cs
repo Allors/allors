@@ -11,8 +11,8 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Xml;
-using Domain;
-using Meta;
+using Allors.Database.Domain;
+using Allors.Database.Meta;
 using Xunit;
 
 public abstract class ObsoleteSerializationTest : IDisposable

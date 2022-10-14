@@ -5,7 +5,7 @@
 
 namespace Allors.Database.Adapters.Sql.Caching;
 
-using Meta;
+using Allors.Database.Meta;
 
 /// <summary>
 ///     Factory for default cache.

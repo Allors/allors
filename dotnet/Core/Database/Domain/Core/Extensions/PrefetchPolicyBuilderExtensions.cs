@@ -7,8 +7,8 @@
 namespace Allors.Database.Domain
 {
     using System.Collections.Generic;
-    using Database.Data;
-    using Meta;
+    using Allors.Database.Data;
+    using Allors.Database.Meta;
 
     public static class PrefetchPolicyBuilderExtensions
     {

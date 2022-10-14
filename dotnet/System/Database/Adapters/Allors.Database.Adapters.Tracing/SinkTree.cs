@@ -7,7 +7,7 @@ namespace Allors.Database.Adapters.Sql.Tracing;
 
 using System;
 using System.Collections.Generic;
-using Database.Tracing;
+using Allors.Database.Tracing;
 
 public class SinkTree
 {

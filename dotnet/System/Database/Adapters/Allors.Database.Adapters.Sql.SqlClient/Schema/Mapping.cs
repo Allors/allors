@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Meta;
+using Allors.Database.Meta;
 using Version = Allors.Version;
 
 [SuppressMessage("ReSharper", "PossibleInvalidOperationException")]

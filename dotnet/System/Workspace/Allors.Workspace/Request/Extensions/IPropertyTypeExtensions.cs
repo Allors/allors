@@ -9,8 +9,8 @@ namespace Allors.Workspace.Request.Extensions
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Meta;
-    using Response;
+    using Allors.Workspace.Meta;
+    using Allors.Workspace.Response;
 
     public static class IPropertyTypeExtensions
     {

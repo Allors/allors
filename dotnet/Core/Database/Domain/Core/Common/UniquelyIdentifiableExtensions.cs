@@ -6,7 +6,7 @@
 namespace Allors.Database.Domain
 {
     using System;
-    using Meta;
+    using Allors.Database.Meta;
 
     public static class UniquelyIdentifiableExtensions
     {

@@ -7,8 +7,8 @@ namespace Allors.Workspace.Request
 {
     using System.Collections.Generic;
     using System.Text;
-    using Meta;
-    using Visitor;
+    using Allors.Workspace.Meta;
+    using Allors.Workspace.Request.Visitor;
 
     public class Select : IVisitable
     {

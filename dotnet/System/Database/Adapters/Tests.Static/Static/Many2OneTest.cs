@@ -10,7 +10,7 @@ namespace Allors.Database.Adapters;
 
 using System;
 using System.Linq;
-using Domain;
+using Allors.Database.Domain;
 using Xunit;
 
 public abstract class Many2OneTest : IDisposable

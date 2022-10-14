@@ -1,8 +1,8 @@
 namespace Allors.Database.Domain
 {
     using System;
-    using Database.Derivations;
-    using Derivations;
+    using Allors.Database.Derivations;
+    using Allors.Database.Domain.Derivations;
 
     public static class ITransactionExtensions
     {

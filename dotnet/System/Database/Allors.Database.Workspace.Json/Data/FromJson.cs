@@ -8,8 +8,8 @@ namespace Allors.Database.Protocol.Json;
 using System.Collections.Generic;
 using System.Linq;
 using Allors.Protocol.Json;
-using Data;
-using Meta;
+using Allors.Database.Data;
+using Allors.Database.Meta;
 
 public class FromJson
 {

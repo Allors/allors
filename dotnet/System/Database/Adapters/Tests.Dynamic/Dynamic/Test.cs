@@ -22,7 +22,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml;
-using Meta;
+using Allors.Database.Meta;
 
 public abstract class Test : IDisposable
 {

@@ -6,9 +6,9 @@
 namespace Allors.Database.Configuration
 {
     using System;
-    using Domain;
+    using Allors.Database.Domain;
     using Microsoft.AspNetCore.Http;
-    using Services;
+    using Allors.Database.Services;
 
     public class TransactionServices : ITransactionServices
     {

@@ -5,7 +5,7 @@
 
 namespace Allors.Database.Configuration
 {
-    using Domain;
+    using Allors.Database.Domain;
     using MailKit.Net.Smtp;
     using MimeKit;
     using MailboxAddress = MimeKit.MailboxAddress;

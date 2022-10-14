@@ -6,7 +6,7 @@
 namespace Allors.Database.Adapters.Sql.Tracing;
 
 using System.Text;
-using Adapters.Tracing;
+using Allors.Database.Adapters.Tracing;
 
 public sealed class SqlUpdateVersionEvent : Event
 {

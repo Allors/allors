@@ -8,7 +8,7 @@ namespace Allors.Database.Adapters.Sql.Tracing;
 using System;
 using System.Collections.Concurrent;
 using System.Linq;
-using Database.Tracing;
+using Allors.Database.Tracing;
 
 public class Sink : ISink
 {

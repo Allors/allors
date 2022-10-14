@@ -11,7 +11,7 @@ using System.Data;
 using System.Linq;
 using System.Xml;
 using global::Npgsql;
-using Meta;
+using Allors.Database.Meta;
 using NpgsqlTypes;
 
 public class Load

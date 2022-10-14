@@ -6,7 +6,7 @@
 namespace Allors.Database.Domain
 {
     using System.Linq;
-    using Database.Security;
+    using Allors.Database.Security;
 
     public partial class Revocation : IRevocation
     {

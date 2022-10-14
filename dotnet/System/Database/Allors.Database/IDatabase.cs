@@ -6,8 +6,8 @@
 namespace Allors.Database;
 
 using System.Xml;
-using Meta;
-using Tracing;
+using Allors.Database.Meta;
+using Allors.Database.Tracing;
 
 /// <summary>
 ///     A database is an online <see cref="IDatabase" />.

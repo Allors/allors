@@ -9,8 +9,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Meta;
-using Security;
+using Allors.Database.Meta;
+using Allors.Database.Security;
 
 public static class SelectExtension
 {

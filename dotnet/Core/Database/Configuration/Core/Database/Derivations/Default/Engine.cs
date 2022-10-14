@@ -8,8 +8,8 @@ namespace Allors.Database.Configuration.Derivations.Default
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Database.Derivations;
-    using Meta;
+    using Allors.Database.Derivations;
+    using Allors.Database.Meta;
 
     public class Engine
     {

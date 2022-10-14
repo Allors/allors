@@ -7,8 +7,8 @@ namespace Allors.Database.Protocol.Json;
 
 using System.Linq;
 using Allors.Protocol.Json.Api.Security;
-using Domain;
-using Security;
+using Allors.Database.Domain;
+using Allors.Database.Security;
 
 public class AccessResponseBuilder
 {

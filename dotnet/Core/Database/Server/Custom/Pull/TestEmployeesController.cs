@@ -6,13 +6,13 @@
 namespace Allors.Server.Controllers
 {
     using System.Threading;
-    using Database;
-    using Database.Data;
-    using Database.Domain;
-    using Database.Meta;
-    using Database.Protocol.Json;
+    using Allors.Database;
+    using Allors.Database.Data;
+    using Allors.Database.Domain;
+    using Allors.Database.Meta;
+    using Allors.Database.Protocol.Json;
     using Microsoft.AspNetCore.Mvc;
-    using Services;
+    using Allors.Services;
 
     public class TestEmployeesController : Controller
     {

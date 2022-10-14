@@ -8,7 +8,7 @@ namespace Allors.Database.Adapters.Sql.Npgsql;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Meta;
+using Allors.Database.Meta;
 using NpgsqlTypes;
 using Version = Allors.Version;
 

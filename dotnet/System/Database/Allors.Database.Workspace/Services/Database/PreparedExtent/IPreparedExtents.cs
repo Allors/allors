@@ -6,7 +6,7 @@
 namespace Allors.Database.Services;
 
 using System;
-using Data;
+using Allors.Database.Data;
 
 public interface IPreparedExtents
 {

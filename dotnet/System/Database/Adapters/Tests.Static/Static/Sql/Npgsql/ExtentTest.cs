@@ -6,7 +6,7 @@
 namespace Allors.Database.Adapters.Sql.Npgsql;
 
 using System.Linq;
-using Domain;
+using Allors.Database.Domain;
 using Xunit;
 
 public class ExtentTest : Adapters.ExtentTest, IClassFixture<Fixture<ExtentTest>>

@@ -9,9 +9,9 @@ namespace Allors.Database.Configuration.Derivations.Default
     using System.Collections.Generic;
     using System.Linq;
     using Allors.Database.Services;
-    using Database.Derivations;
-    using Domain;
-    using Object = Domain.Object;
+    using Allors.Database.Derivations;
+    using Allors.Database.Domain;
+    using Object = Allors.Database.Domain.Object;
 
     public class Derivation : IDerivation
     {

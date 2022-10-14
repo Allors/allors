@@ -6,7 +6,7 @@
 namespace Allors.Database.Adapters.Sql.Tracing;
 
 using System.Collections.Generic;
-using Database.Tracing;
+using Allors.Database.Tracing;
 
 public class SinkNode
 {

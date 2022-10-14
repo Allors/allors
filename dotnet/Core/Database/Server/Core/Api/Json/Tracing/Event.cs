@@ -7,7 +7,7 @@ namespace Allors.Database.Protocol.Json
 {
     using System;
     using System.Text;
-    using Tracing;
+    using Allors.Database.Tracing;
 
     public abstract class Event : IEvent
     {

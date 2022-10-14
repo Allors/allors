@@ -11,7 +11,7 @@ namespace Allors.Database.Adapters;
 using System;
 using System.Data;
 using Microsoft.Extensions.Configuration;
-using Sql.Npgsql;
+using Allors.Database.Adapters.Sql.Npgsql;
 
 public class DatabaseBuilder
 {

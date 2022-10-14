@@ -7,8 +7,8 @@ namespace Allors.Database.Domain
 {
     using System;
     using System.Linq;
-    using Meta;
-    using Services;
+    using Allors.Database.Meta;
+    using Allors.Database.Services;
 
     public partial class Setup
     {

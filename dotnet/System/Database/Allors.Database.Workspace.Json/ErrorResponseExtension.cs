@@ -8,7 +8,7 @@ namespace Allors.Database.Protocol.Json;
 using System.Collections.Generic;
 using System.Linq;
 using Allors.Protocol.Json.Api;
-using Derivations;
+using Allors.Database.Derivations;
 
 public static class ResponseExtensions
 {

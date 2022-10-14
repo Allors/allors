@@ -7,7 +7,7 @@
 
 namespace Allors.Database.Adapters.Sql.Npgsql;
 
-using Domain;
+using Allors.Database.Domain;
 using Xunit;
 
 public class UnitTest : Adapters.UnitTest, IClassFixture<Fixture<UnitTest>>

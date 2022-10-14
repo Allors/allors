@@ -6,10 +6,10 @@
 namespace Allors.Database.Configuration
 {
     using System.Collections.Generic;
-    using Data;
-    using Domain;
-    using Meta;
-    using Services;
+    using Allors.Database.Data;
+    using Allors.Database.Domain;
+    using Allors.Database.Meta;
+    using Allors.Database.Services;
 
     public class PrefetchPolicyCache : IPrefetchPolicyCache
     {

@@ -6,7 +6,7 @@
 namespace Allors.Database.Domain
 {
     using System;
-    using Database.Data;
+    using Allors.Database.Data;
 
     public partial class PersistentPreparedExtents
     {

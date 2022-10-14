@@ -5,8 +5,8 @@
 
 namespace Allors.Database.Security;
 
-using Domain;
-using Meta;
+using Allors.Database.Domain;
+using Allors.Database.Meta;
 
 /// <summary>
 ///     List of permissions for an object/user combination.

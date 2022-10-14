@@ -7,7 +7,7 @@ namespace Allors.Database.Domain
 {
     using System.Collections.Generic;
     using Allors.Graph;
-    using Meta;
+    using Allors.Database.Meta;
 
     public partial class Setup
     {

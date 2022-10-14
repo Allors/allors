@@ -6,8 +6,8 @@
 namespace Allors.Database.Domain;
 
 using System.Collections.Generic;
-using Data;
-using Meta;
+using Allors.Database.Data;
+using Allors.Database.Meta;
 
 public interface IPrefetchPolicyCache
 {

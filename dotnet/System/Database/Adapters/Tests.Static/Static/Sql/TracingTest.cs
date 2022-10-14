@@ -6,9 +6,9 @@
 namespace Allors.Database.Adapters.Sql;
 
 using System;
-using Domain;
-using Meta;
-using Tracing;
+using Allors.Database.Domain;
+using Allors.Database.Meta;
+using Allors.Database.Adapters.Sql.Tracing;
 using Xunit;
 
 public abstract class TracingTest : IDisposable

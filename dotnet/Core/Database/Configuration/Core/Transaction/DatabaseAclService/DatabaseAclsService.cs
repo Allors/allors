@@ -5,9 +5,9 @@
 
 namespace Allors.Database.Configuration
 {
-    using Database.Security;
-    using Domain;
-    using Services;
+    using Allors.Database.Security;
+    using Allors.Database.Domain;
+    using Allors.Database.Services;
 
     public class DatabaseAclsService : IDatabaseAclsService
     {

@@ -8,7 +8,7 @@ namespace Allors.Database.Configuration
 {
     using System.Linq;
     using System.Security.Claims;
-    using Domain;
+    using Allors.Database.Domain;
     using Microsoft.AspNetCore.Http;
 
     public class HttpUserService : IUserService

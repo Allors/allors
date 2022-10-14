@@ -8,7 +8,7 @@ namespace Allors.Database.Domain
     using System;
     using System.Linq;
     using System.Text.RegularExpressions;
-    using Meta;
+    using Allors.Database.Meta;
 
     public static class VersionedExtensions
     {

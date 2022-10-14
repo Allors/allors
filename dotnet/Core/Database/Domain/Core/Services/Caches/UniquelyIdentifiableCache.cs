@@ -6,7 +6,7 @@
 namespace Allors.Database.Domain
 {
     using System;
-    using Meta;
+    using Allors.Database.Meta;
 
     public class UniquelyIdentifiableCache<TObject> : Cache<Guid, TObject>
         where TObject : class, UniquelyIdentifiable

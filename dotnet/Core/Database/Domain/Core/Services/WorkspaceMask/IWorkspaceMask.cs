@@ -6,7 +6,7 @@
 namespace Allors.Database.Domain
 {
     using System.Collections.Generic;
-    using Meta;
+    using Allors.Database.Meta;
 
     // TODO: Remove
     public interface IWorkspaceMask

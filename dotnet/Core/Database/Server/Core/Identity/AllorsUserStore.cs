@@ -10,11 +10,11 @@ namespace Allors.Security
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
-    using Database;
-    using Database.Domain;
-    using Database.Meta;
+    using Allors.Database;
+    using Allors.Database.Domain;
+    using Allors.Database.Meta;
     using Microsoft.AspNetCore.Identity;
-    using Services;
+    using Allors.Services;
     using Task = System.Threading.Tasks.Task;
 
     public class AllorsUserStore : IUserPasswordStore<IdentityUser>,

@@ -6,7 +6,7 @@
 namespace Allors.Ranges.Long;
 
 using Xunit;
-using Range = Shared.Ranges.ValueRange<long>;
+using Range = Allors.Shared.Ranges.ValueRange<long>;
 
 public class RangeAddTests
 {

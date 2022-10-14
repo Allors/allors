@@ -7,11 +7,11 @@ namespace Allors.Database.Server.Controllers
 {
     using System.Threading;
     using Allors.Services;
-    using Data;
-    using Domain;
-    using Meta;
+    using Allors.Database.Data;
+    using Allors.Database.Domain;
+    using Allors.Database.Meta;
     using Microsoft.AspNetCore.Mvc;
-    using Protocol.Json;
+    using Allors.Database.Protocol.Json;
 
     public class TestHomeController : Controller
     {

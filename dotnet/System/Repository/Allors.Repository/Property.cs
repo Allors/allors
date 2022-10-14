@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using Inflector;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Text;
+using Allors.Text;
 
 public class Property : RepositoryObject
 {

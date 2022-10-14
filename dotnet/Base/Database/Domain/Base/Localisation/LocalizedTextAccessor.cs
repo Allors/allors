@@ -5,7 +5,7 @@
 
 namespace Allors.Database.Domain
 {
-    using Meta;
+    using Allors.Database.Meta;
 
     public class LocalizedTextAccessor
     {

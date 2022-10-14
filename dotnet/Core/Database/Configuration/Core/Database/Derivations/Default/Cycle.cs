@@ -5,7 +5,7 @@
 
 namespace Allors.Database.Configuration.Derivations.Default
 {
-    using Database.Derivations;
+    using Allors.Database.Derivations;
 
     public class Cycle : ICycle
     {

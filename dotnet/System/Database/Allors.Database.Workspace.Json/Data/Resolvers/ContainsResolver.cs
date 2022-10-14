@@ -6,7 +6,7 @@
 namespace Allors.Database.Protocol.Json;
 
 using System.Collections.Generic;
-using Data;
+using Allors.Database.Data;
 
 public class ContainsResolver : IResolver
 {

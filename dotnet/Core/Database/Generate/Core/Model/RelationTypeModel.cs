@@ -2,7 +2,7 @@
 
 using System.Collections.Generic;
 using Allors.Database.Meta.Extensions;
-using Database.Meta;
+using Allors.Database.Meta;
 
 public class RelationTypeModel : MetaIdentifiableObjectModel
 {

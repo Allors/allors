@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
 using Allors.Database.Services;
-using Meta;
+using Allors.Database.Meta;
 using Version = Allors.Version;
 
 public class Transaction : ITransaction

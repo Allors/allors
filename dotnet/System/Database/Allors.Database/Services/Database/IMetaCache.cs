@@ -7,7 +7,7 @@ namespace Allors.Database.Services;
 
 using System;
 using System.Collections.Generic;
-using Meta;
+using Allors.Database.Meta;
 
 public interface IMetaCache
 {

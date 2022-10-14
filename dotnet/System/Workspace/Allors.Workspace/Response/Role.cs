@@ -5,7 +5,7 @@
 
 namespace Allors.Workspace.Response
 {
-    using Meta;
+    using Allors.Workspace.Meta;
 
     public struct Role
     {

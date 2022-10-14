@@ -6,9 +6,9 @@
 namespace Allors.Workspace.Request
 {
     using System.Collections.Generic;
-    using Meta;
-    using Response;
-    using Visitor;
+    using Allors.Workspace.Meta;
+    using Allors.Workspace.Response;
+    using Allors.Workspace.Request.Visitor;
 
     public class ContainedIn : IPropertyPredicate
     {

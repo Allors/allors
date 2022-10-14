@@ -6,7 +6,7 @@
 namespace Allors.Database.Data;
 
 using System.Linq;
-using Meta;
+using Allors.Database.Meta;
 
 public class Intersect : IExtentOperator
 {

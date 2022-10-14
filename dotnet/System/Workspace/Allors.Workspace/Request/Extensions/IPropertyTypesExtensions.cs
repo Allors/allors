@@ -6,7 +6,7 @@
 
 namespace Allors.Workspace.Request.Extensions
 {
-    using Meta;
+    using Allors.Workspace.Meta;
 
     public static class IPropertyTypesExtensions
     {

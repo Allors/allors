@@ -6,8 +6,8 @@
 namespace Allors.Database.Domain.Tests
 {
     using System.Collections.Generic;
-    using Configuration;
-    using Meta;
+    using Allors.Database.Configuration;
+    using Allors.Database.Meta;
     using Xunit;
 
     public class WorkspaceMaskTests : DomainTest, IClassFixture<Fixture>

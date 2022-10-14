@@ -6,8 +6,8 @@
 namespace Allors.Database.Configuration
 {
     using System.Collections.Generic;
-    using Domain;
-    using Shared.Ranges;
+    using Allors.Database.Domain;
+    using Allors.Shared.Ranges;
 
     public class VersionedGrant : IVersionedGrant
     {

@@ -11,7 +11,7 @@ namespace Allors.Database.Adapters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Domain;
+using Allors.Database.Domain;
 using Xunit;
 
 public abstract class One2ManyTest : IDisposable

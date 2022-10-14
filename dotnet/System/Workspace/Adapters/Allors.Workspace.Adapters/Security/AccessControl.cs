@@ -5,7 +5,7 @@
 
 namespace Allors.Workspace.Adapters
 {
-    using Shared.Ranges;
+    using Allors.Shared.Ranges;
 
     public class Grant
     {

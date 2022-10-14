@@ -8,9 +8,9 @@ namespace Allors.Database.Domain
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Database.Derivations;
-    using Derivations.Rules;
-    using Meta;
+    using Allors.Database.Derivations;
+    using Allors.Database.Domain.Derivations.Rules;
+    using Allors.Database.Meta;
 
     public class TransitionalDeniedPermissionRule : Rule
     {

@@ -9,8 +9,8 @@ namespace Allors.Workspace.Protocol.Json
     using System.Linq;
     using Allors.Protocol.Json;
     using Allors.Protocol.Json.Data;
-    using Request;
-    using Response;
+    using Allors.Workspace.Request;
+    using Allors.Workspace.Response;
 
     public static class Extensions
     {

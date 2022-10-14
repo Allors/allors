@@ -6,7 +6,7 @@
 namespace Allors.Workspace.Adapters.Json
 {
     using Allors.Protocol.Json.Api.Invoke;
-    using Response;
+    using Allors.Workspace.Response;
 
     public class InvokeResult : Result, IInvokeResult
     {

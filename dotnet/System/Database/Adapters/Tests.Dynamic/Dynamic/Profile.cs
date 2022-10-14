@@ -18,9 +18,9 @@ namespace Allors.Database.Adapters;
 
 using System;
 using Allors.Database.Meta.Configuration;
-using Domain;
-using Memory;
-using Meta;
+using Allors.Database.Domain;
+using Allors.Database.Adapters.Memory;
+using Allors.Database.Meta;
 using MetaPopulation = Allors.Database.Meta.MetaPopulation;
 
 public abstract class Profile : IDisposable

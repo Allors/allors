@@ -6,7 +6,7 @@
 namespace Allors.Database.Data;
 
 using System;
-using Meta;
+using Allors.Database.Meta;
 
 public class Pull : IVisitable
 {

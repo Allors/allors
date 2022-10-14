@@ -8,8 +8,8 @@
 
 namespace Allors.Database.Configuration.Derivations.Default
 {
-    using Database.Derivations;
-    using Meta;
+    using Allors.Database.Derivations;
+    using Allors.Database.Meta;
     using Resources;
 
     public class DerivationErrorNotAllowed : DerivationError, IDerivationErrorNotAllowed

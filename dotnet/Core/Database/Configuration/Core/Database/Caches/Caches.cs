@@ -7,7 +7,7 @@ namespace Allors.Database.Configuration
 {
     using System.Collections.Concurrent;
     using System.Collections.Generic;
-    using Domain;
+    using Allors.Database.Domain;
 
     public class Caches : ICaches
     {

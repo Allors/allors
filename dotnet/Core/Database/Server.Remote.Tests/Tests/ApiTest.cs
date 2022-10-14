@@ -15,16 +15,16 @@ namespace Allors.Server.Tests
     using System.Text.Json;
     using System.Threading.Tasks;
     using Allors.Database.Meta.Configuration;
-    using Database;
-    using Database.Adapters.Sql;
-    using Database.Configuration;
-    using Database.Configuration.Derivations.Default;
-    using Database.Domain;
-    using Database.Meta;
+    using Allors.Database;
+    using Allors.Database.Adapters.Sql;
+    using Allors.Database.Configuration;
+    using Allors.Database.Configuration.Derivations.Default;
+    using Allors.Database.Domain;
+    using Allors.Database.Meta;
     using Microsoft.Extensions.Configuration;
-    using Protocol.Json.Auth;
+    using Allors.Protocol.Json.Auth;
     using Xunit;
-    using Database = Database.Adapters.Sql.SqlClient.Database;
+    using Database = Allors.Database.Adapters.Sql.SqlClient.Database;
 
     public abstract class ApiTest : IDisposable
     {

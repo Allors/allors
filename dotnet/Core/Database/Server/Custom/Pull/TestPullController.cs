@@ -7,11 +7,11 @@ namespace Allors.Server.Controllers
 {
     using System;
     using System.Threading;
-    using Database;
-    using Database.Domain;
-    using Database.Protocol.Json;
+    using Allors.Database;
+    using Allors.Database.Domain;
+    using Allors.Database.Protocol.Json;
     using Microsoft.AspNetCore.Mvc;
-    using Services;
+    using Allors.Services;
 
     public class TestPullController : Controller
     {

@@ -12,7 +12,7 @@ namespace Allors.Database.Domain.Tests
     using System.Linq;
     using System.Linq.Expressions;
     using Allors.Database.Data;
-    using Meta;
+    using Allors.Database.Meta;
     using Xunit;
 
     public class ExpressionExtensionsTests : DomainTest, IClassFixture<Fixture>

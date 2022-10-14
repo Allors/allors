@@ -8,8 +8,8 @@ namespace Allors.Workspace.Adapters.Json
     using System.Collections.Generic;
     using System.Linq;
     using Allors.Protocol.Json.Api.Sync;
-    using Meta;
-    using Shared.Ranges;
+    using Allors.Workspace.Meta;
+    using Allors.Shared.Ranges;
 
     internal class Record : Adapters.Record
     {

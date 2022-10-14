@@ -7,7 +7,7 @@ namespace Allors.Database.Adapters;
 
 using System;
 using System.Linq;
-using Meta;
+using Allors.Database.Meta;
 using Xunit;
 
 public class StrategyAssert

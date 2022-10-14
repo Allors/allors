@@ -7,7 +7,7 @@
 namespace Allors.Workspace.Meta
 {
     using System;
-    using Text;
+    using Allors.Text;
 
     public abstract class Unit : IObjectType
     {

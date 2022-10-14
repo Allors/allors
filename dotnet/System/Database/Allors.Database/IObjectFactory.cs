@@ -8,7 +8,7 @@ namespace Allors.Database;
 
 using System;
 using System.Reflection;
-using Meta;
+using Allors.Database.Meta;
 
 /// <summary>
 ///     A factory for creating new IObject instances.

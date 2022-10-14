@@ -11,8 +11,8 @@ using System.Data;
 using System.Linq;
 using System.Xml;
 using Allors.Database.Tracing;
-using Caching;
-using Meta;
+using Allors.Database.Adapters.Sql.Caching;
+using Allors.Database.Meta;
 
 public abstract class Database : IDatabase
 {

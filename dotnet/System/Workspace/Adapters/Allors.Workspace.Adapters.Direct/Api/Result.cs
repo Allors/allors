@@ -7,8 +7,8 @@ namespace Allors.Workspace.Adapters.Direct;
 
 using System.Collections.Generic;
 using System.Linq;
-using Response;
-using IDerivationError = Database.Derivations.IDerivationError;
+using Allors.Workspace.Response;
+using IDerivationError = Allors.Database.Derivations.IDerivationError;
 
 public abstract class Result : IInvokeResult
 {

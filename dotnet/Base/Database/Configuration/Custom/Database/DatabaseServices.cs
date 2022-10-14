@@ -7,13 +7,13 @@
 namespace Allors.Database.Configuration
 {
     using System;
-    using Data;
-    using Database.Derivations;
-    using Derivations.Default;
-    using Domain;
-    using Meta;
+    using Allors.Database.Data;
+    using Allors.Database.Derivations;
+    using Allors.Database.Configuration.Derivations.Default;
+    using Allors.Database.Domain;
+    using Allors.Database.Meta;
     using Microsoft.AspNetCore.Http;
-    using Services;
+    using Allors.Database.Services;
 
     public abstract class DatabaseServices : IDatabaseServices
     {

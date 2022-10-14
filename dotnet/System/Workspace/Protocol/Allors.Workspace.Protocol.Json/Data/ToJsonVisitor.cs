@@ -10,9 +10,9 @@ namespace Allors.Workspace.Protocol.Json
     using System.Linq;
     using Allors.Protocol.Json;
     using Allors.Protocol.Json.Data;
-    using Meta;
-    using Request;
-    using IVisitor = Request.Visitor.IVisitor;
+    using Allors.Workspace.Meta;
+    using Allors.Workspace.Request;
+    using IVisitor = Allors.Workspace.Request.Visitor.IVisitor;
     using Node = Allors.Protocol.Json.Data.Node;
     using Result = Allors.Protocol.Json.Data.Result;
     using Select = Allors.Protocol.Json.Data.Select;

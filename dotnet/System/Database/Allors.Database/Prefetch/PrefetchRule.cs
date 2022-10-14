@@ -7,7 +7,7 @@
 namespace Allors.Database;
 
 using System;
-using Meta;
+using Allors.Database.Meta;
 
 public sealed class PrefetchRule
 {

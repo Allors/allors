@@ -7,7 +7,7 @@
 namespace Allors.Database.Domain.Tests
 {
     using System.Collections;
-    using Configuration.Derivations.Default;
+    using Allors.Database.Configuration.Derivations.Default;
     using Xunit;
 
     public class AccessControlTests : DomainTest, IClassFixture<Fixture>

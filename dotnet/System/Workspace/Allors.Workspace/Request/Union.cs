@@ -5,8 +5,8 @@
 
 namespace Allors.Workspace.Request
 {
-    using Meta;
-    using Visitor;
+    using Allors.Workspace.Meta;
+    using Allors.Workspace.Request.Visitor;
 
     public class Union : IExtentOperator
     {

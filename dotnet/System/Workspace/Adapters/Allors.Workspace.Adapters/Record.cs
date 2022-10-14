@@ -5,7 +5,7 @@
 
 namespace Allors.Workspace.Adapters
 {
-    using Meta;
+    using Allors.Workspace.Meta;
 
     public abstract class Record
     {

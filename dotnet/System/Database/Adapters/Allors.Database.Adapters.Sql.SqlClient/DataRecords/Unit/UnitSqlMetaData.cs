@@ -7,7 +7,7 @@ namespace Allors.Database.Adapters.Sql.SqlClient;
 
 using System;
 using System.Data;
-using Meta;
+using Allors.Database.Meta;
 using Microsoft.Data.SqlClient.Server;
 
 internal class UnitSqlMetaData

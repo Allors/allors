@@ -6,7 +6,7 @@
 namespace Allors.Database.Adapters.Sql.Caching;
 
 using System.Collections.Generic;
-using Meta;
+using Allors.Database.Meta;
 
 /// <summary>
 ///     The Cache holds a CachedObject and/or IObjectType by ObjectId.

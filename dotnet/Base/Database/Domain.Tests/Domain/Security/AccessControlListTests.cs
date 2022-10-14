@@ -5,7 +5,7 @@
 
 namespace Allors.Database.Domain.Tests
 {
-    using Meta;
+    using Allors.Database.Meta;
     using Xunit;
 
     public class AccessControlListTests : DomainTest, IClassFixture<Fixture>

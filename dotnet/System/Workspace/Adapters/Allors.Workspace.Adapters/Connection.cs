@@ -6,9 +6,9 @@
 namespace Allors.Workspace.Adapters
 {
     using System.Threading.Tasks;
-    using Meta;
-    using Request;
-    using Response;
+    using Allors.Workspace.Meta;
+    using Allors.Workspace.Request;
+    using Allors.Workspace.Response;
 
     public abstract class Connection : IConnection
     {

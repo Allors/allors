@@ -8,10 +8,10 @@ namespace Allors.Database.Server.Controllers
     using System.Threading;
     using System.Threading.Tasks;
     using Allors.Services;
-    using Domain;
+    using Allors.Database.Domain;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using Protocol.Json;
+    using Allors.Database.Protocol.Json;
 
     public class PeopleController : Controller
     {

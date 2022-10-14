@@ -10,7 +10,7 @@ namespace Allors.Database;
 using System;
 using Allors.Database.Configuration;
 using Allors.Database.Services;
-using Meta;
+using Allors.Database.Meta;
 
 public class DefaultDomainDatabaseServices : IDomainDatabaseServices
 {

@@ -8,7 +8,7 @@ namespace Allors.Database.Configuration
     using System.Collections.Generic;
     using System.Linq;
     using System.Text.RegularExpressions;
-    using Domain;
+    using Allors.Database.Domain;
     using Microsoft.AspNetCore.Identity;
 
     public class PasswordHasher : IPasswordHasher

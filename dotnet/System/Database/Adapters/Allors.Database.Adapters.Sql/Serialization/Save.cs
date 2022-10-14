@@ -7,7 +7,7 @@ namespace Allors.Database.Adapters.Sql;
 
 using System.Collections.Generic;
 using System.Xml;
-using Meta;
+using Allors.Database.Meta;
 
 public class Save
 {

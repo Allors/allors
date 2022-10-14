@@ -10,10 +10,10 @@ namespace Allors.Workspace.Request
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
-    using Extensions;
-    using Meta;
-    using Response;
-    using Visitor;
+    using Allors.Workspace.Request.Extensions;
+    using Allors.Workspace.Meta;
+    using Allors.Workspace.Response;
+    using Allors.Workspace.Request.Visitor;
 
     public class Node : IVisitable
     {

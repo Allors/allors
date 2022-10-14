@@ -6,9 +6,9 @@
 namespace Allors.Database.Configuration
 {
     using System.Collections.Concurrent;
-    using Data;
-    using Domain;
-    using Meta;
+    using Allors.Database.Data;
+    using Allors.Database.Domain;
+    using Allors.Database.Meta;
 
     public class TreeCache : ITreeCache
     {

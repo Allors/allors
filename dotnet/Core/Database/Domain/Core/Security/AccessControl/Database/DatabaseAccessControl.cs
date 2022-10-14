@@ -7,7 +7,7 @@ namespace Allors.Database.Domain
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Database.Security;
+    using Allors.Database.Security;
 
     public class DatabaseAccessControl : IAccessControl
     {

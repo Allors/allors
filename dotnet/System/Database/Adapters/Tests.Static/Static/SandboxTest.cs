@@ -6,8 +6,8 @@
 namespace Allors.Database.Adapters;
 
 using System;
-using Data;
-using Domain;
+using Allors.Database.Data;
+using Allors.Database.Domain;
 using Moq;
 using Xunit;
 

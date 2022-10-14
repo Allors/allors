@@ -5,7 +5,7 @@
 
 namespace Allors.Database.Services;
 
-using Meta;
+using Allors.Database.Meta;
 
 public interface IObjectBuilderService
 {

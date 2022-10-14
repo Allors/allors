@@ -9,7 +9,7 @@
 namespace Allors.Database.Domain.Tests
 {
     using System.Collections.Generic;
-    using Database.Data;
+    using Allors.Database.Data;
     using Xunit;
 
     public class ParametrizedTests : DomainTest, IClassFixture<Fixture>

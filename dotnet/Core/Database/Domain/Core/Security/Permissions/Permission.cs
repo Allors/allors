@@ -5,8 +5,8 @@
 
 namespace Allors.Database.Domain
 {
-    using Database.Security;
-    using Meta;
+    using Allors.Database.Security;
+    using Allors.Database.Meta;
 
     public partial interface Permission : IPermission
     {

@@ -7,8 +7,8 @@ namespace Allors.Database.Configuration
 {
     using System;
     using System.Collections.Concurrent;
-    using Data;
-    using Meta;
+    using Allors.Database.Data;
+    using Allors.Database.Meta;
 
     public class PreparedSelects : IPreparedSelects
     {

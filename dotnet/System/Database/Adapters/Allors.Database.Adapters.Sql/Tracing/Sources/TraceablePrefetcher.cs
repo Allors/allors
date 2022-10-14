@@ -8,8 +8,8 @@ namespace Allors.Database.Adapters.Sql;
 using System.Collections.Generic;
 using System.Linq;
 using Allors.Database.Tracing;
-using Meta;
-using Tracing;
+using Allors.Database.Meta;
+using Allors.Database.Adapters.Sql.Tracing;
 
 internal sealed class TraceablePrefetcher : Prefetcher
 {

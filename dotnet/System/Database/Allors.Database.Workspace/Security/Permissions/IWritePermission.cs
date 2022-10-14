@@ -5,7 +5,7 @@
 
 namespace Allors.Database.Security;
 
-using Meta;
+using Allors.Database.Meta;
 
 public interface IWritePermission : IPermission
 {

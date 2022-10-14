@@ -1,7 +1,7 @@
 namespace Allors.Meta.Generation;
 
 using System.IO;
-using Model;
+using Allors.Meta.Generation.Model;
 
 public static class Generate
 {

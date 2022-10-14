@@ -7,8 +7,8 @@ namespace Allors.Database.Adapters.Sql.Tracing;
 
 using System.Linq;
 using System.Text;
-using Adapters.Tracing;
-using Meta;
+using Allors.Database.Adapters.Tracing;
+using Allors.Database.Meta;
 
 public sealed class SqlSetUnitRolesEvent : Event
 {

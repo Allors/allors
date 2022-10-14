@@ -9,7 +9,7 @@ namespace Allors.Database.Domain
     using System.Collections.Generic;
     using System.Linq;
     using Allors.Graph;
-    using Meta;
+    using Allors.Database.Meta;
 
     public partial class Security
     {

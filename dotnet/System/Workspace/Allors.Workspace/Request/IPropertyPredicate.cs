@@ -5,7 +5,7 @@
 
 namespace Allors.Workspace.Request
 {
-    using Meta;
+    using Allors.Workspace.Meta;
 
     public interface IPropertyPredicate : IPredicate
     {

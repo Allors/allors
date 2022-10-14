@@ -8,7 +8,7 @@ namespace Allors.Database.Adapters.Sql.Npgsql;
 using System.Text;
 using Allors.Database.Meta.Extensions;
 using global::Npgsql;
-using Meta;
+using Allors.Database.Meta;
 
 public class Initialization
 {

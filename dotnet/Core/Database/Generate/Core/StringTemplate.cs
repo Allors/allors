@@ -13,8 +13,8 @@ using System.IO;
 using System.Xml;
 using Antlr4.StringTemplate;
 using Antlr4.StringTemplate.Misc;
-using Model;
-using Storage;
+using Allors.Meta.Generation.Model;
+using Allors.Meta.Generation.Storage;
 
 public class StringTemplate
 {

@@ -20,7 +20,7 @@ using System;
 using System.Collections;
 using System.Globalization;
 using System.Linq;
-using Meta;
+using Allors.Database.Meta;
 using Xunit;
 
 public abstract class ServicesTest : Test

@@ -8,7 +8,7 @@ namespace Allors.Database.Adapters;
 using System;
 using System.Collections;
 using System.Text;
-using Domain;
+using Allors.Database.Domain;
 using Xunit;
 
 /// <summary>

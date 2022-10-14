@@ -6,8 +6,8 @@
 namespace Allors.Workspace.Request
 {
     using System.Collections.Generic;
-    using Meta;
-    using Visitor;
+    using Allors.Workspace.Meta;
+    using Allors.Workspace.Request.Visitor;
 
     public class Between : IRolePredicate
     {

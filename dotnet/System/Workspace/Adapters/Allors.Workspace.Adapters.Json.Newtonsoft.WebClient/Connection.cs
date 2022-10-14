@@ -15,7 +15,7 @@ namespace Allors.Workspace.Adapters.Json.Newtonsoft.WebClient
     using Allors.Protocol.Json.Api.Security;
     using Allors.Protocol.Json.Api.Sync;
     using Allors.Protocol.Json.Newtonsoft;
-    using Meta;
+    using Allors.Workspace.Meta;
 
     [SuppressMessage("Design", "RCS1090:Add call to 'ConfigureAwait' (or vice versa).", Justification = "<Pending>")]
     public class Connection : Json.Connection

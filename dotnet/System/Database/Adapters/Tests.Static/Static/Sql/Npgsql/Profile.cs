@@ -9,10 +9,10 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Allors.Database.Meta.Configuration;
-using Caching;
-using Domain;
+using Allors.Database.Adapters.Sql.Caching;
+using Allors.Database.Domain;
 using global::Npgsql;
-using Meta;
+using Allors.Database.Meta;
 
 public class Profile : Adapters.Profile
 {

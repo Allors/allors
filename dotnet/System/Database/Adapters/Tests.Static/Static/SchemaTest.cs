@@ -6,7 +6,7 @@
 namespace Allors.Database.Adapters;
 
 using System;
-using Meta;
+using Allors.Database.Meta;
 using Xunit;
 
 public enum ColumnTypes

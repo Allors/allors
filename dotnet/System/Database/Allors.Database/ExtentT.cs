@@ -10,7 +10,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Meta;
+using Allors.Database.Meta;
 
 /// <summary>
 ///     The Extent of a <see cref="ObjectType" /> is the set of all objects that either

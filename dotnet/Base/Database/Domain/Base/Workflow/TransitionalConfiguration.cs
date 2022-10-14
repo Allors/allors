@@ -7,7 +7,7 @@ namespace Allors.Database.Domain
 {
     using System;
     using System.Linq;
-    using Meta;
+    using Allors.Database.Meta;
 
     public class TransitionalConfiguration
     {

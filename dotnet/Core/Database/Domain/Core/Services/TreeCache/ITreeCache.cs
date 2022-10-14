@@ -5,8 +5,8 @@
 
 namespace Allors.Database.Domain
 {
-    using Database.Data;
-    using Meta;
+    using Allors.Database.Data;
+    using Allors.Database.Meta;
 
     // TODO: Remove
     public interface ITreeCache

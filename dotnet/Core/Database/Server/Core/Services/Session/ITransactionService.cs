@@ -5,7 +5,7 @@
 
 namespace Allors.Services
 {
-    using Database;
+    using Allors.Database;
 
     public interface ITransactionService
     {

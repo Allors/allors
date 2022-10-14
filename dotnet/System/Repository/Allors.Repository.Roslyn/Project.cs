@@ -16,7 +16,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Buildalyzer;
 using Buildalyzer.Workspaces;
-using Domain;
+using Allors.Repository.Domain;
 using Inflector;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;

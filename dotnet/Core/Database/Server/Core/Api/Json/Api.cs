@@ -14,13 +14,13 @@ namespace Allors.Database.Protocol.Json
     using Allors.Protocol.Json.Api.Security;
     using Allors.Protocol.Json.Api.Sync;
     using Allors.Protocol.Json.SystemText;
-    using Data;
-    using Derivations;
-    using Domain;
-    using Meta;
-    using Security;
-    using Services;
-    using Tracing;
+    using Allors.Database.Data;
+    using Allors.Database.Derivations;
+    using Allors.Database.Domain;
+    using Allors.Database.Meta;
+    using Allors.Database.Security;
+    using Allors.Database.Services;
+    using Allors.Database.Tracing;
 
     public class Api
     {

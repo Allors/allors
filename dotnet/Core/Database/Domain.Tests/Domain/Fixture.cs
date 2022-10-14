@@ -8,8 +8,8 @@ namespace Allors.Database.Domain.Tests
 {
     using System;
     using Allors.Database.Meta.Configuration;
-    using Configuration.Derivations.Default;
-    using Meta;
+    using Allors.Database.Configuration.Derivations.Default;
+    using Allors.Database.Meta;
 
     public class Fixture : IDisposable
     {

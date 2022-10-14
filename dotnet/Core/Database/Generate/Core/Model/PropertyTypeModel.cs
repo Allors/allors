@@ -1,6 +1,6 @@
 ﻿namespace Allors.Meta.Generation.Model;
 
-using Database.Meta;
+using Allors.Database.Meta;
 
 public abstract class PropertyTypeModel
     : IMetaExtensibleModel

@@ -9,8 +9,8 @@ namespace Allors.Database.Configuration
     using System.Collections.Generic;
     using System.Linq;
     using Allors.Database.Meta.Extensions;
-    using Domain;
-    using Services;
+    using Allors.Database.Domain;
+    using Allors.Database.Services;
 
     public class Permissions : IPermissions
     {

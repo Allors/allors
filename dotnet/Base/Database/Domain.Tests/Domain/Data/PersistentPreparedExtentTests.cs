@@ -7,8 +7,8 @@ namespace Allors.Database.Domain.Tests
 {
     using System.Collections.Generic;
     using Allors.Protocol.Json.SystemText;
-    using Protocol.Json;
-    using Services;
+    using Allors.Database.Protocol.Json;
+    using Allors.Database.Services;
     using Xunit;
 
     public class PersistentPreparedExtentTests : DomainTest, IClassFixture<Fixture>

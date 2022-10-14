@@ -9,7 +9,7 @@ namespace Allors.Workspace.Adapters.Json
     using System.Collections.Generic;
     using System.Linq;
     using Allors.Protocol.Json.Api;
-    using Response;
+    using Allors.Workspace.Response;
 
     public abstract class Result : IResult
     {

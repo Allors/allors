@@ -8,7 +8,7 @@
 
 namespace Allors.Database.Adapters.Sql;
 
-using Shared.Ranges;
+using Allors.Shared.Ranges;
 
 internal struct ChangeTracker
 {

@@ -9,7 +9,7 @@ namespace Allors.Shared.Ranges
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
-    using Collections;
+    using Allors.Collections;
 
     public readonly struct ValueRange<T> : IEquatable<ValueRange<T>>, IEnumerable<T> where T : struct, IComparable<T>
     {

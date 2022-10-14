@@ -6,8 +6,8 @@
 namespace Allors.Database.Configuration.Derivations.Default
 {
     using System;
-    using Database.Derivations;
-    using Meta;
+    using Allors.Database.Derivations;
+    using Allors.Database.Meta;
 
     public class DerivationErrorGeneric : DerivationError, IDerivationErrorGeneric
     {

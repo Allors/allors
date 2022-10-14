@@ -9,11 +9,11 @@ namespace Allors.Database.Domain
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using Database.Derivations;
+    using Allors.Database.Derivations;
     using DataUtils;
-    using Derivations.Rules;
+    using Allors.Database.Domain.Derivations.Rules;
     using HeyRed.Mime;
-    using Meta;
+    using Allors.Database.Meta;
 
     public class MediaRule : Rule
     {

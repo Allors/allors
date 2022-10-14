@@ -6,7 +6,7 @@
 namespace Allors.Database.Adapters;
 
 using System;
-using Domain;
+using Allors.Database.Domain;
 using Xunit;
 
 // TODO: Add remove with null and zero array

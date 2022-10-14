@@ -7,7 +7,7 @@ namespace Allors.Database.Adapters.Sql.SqlClient;
 
 using System.Text;
 using Allors.Database.Meta.Extensions;
-using Meta;
+using Allors.Database.Meta;
 using Microsoft.Data.SqlClient;
 
 public class Initialization

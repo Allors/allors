@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Xml;
 using Allors.Database.Services;
 using Allors.Database.Tracing;
-using Meta;
+using Allors.Database.Meta;
 
 public class Database : IDatabase
 {

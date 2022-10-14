@@ -6,7 +6,7 @@
 namespace Allors.Database.Configuration
 {
     using System.Collections.Generic;
-    using Domain;
+    using Allors.Database.Domain;
 
     public class VersionedSecurityToken : IVersionedSecurityToken
     {

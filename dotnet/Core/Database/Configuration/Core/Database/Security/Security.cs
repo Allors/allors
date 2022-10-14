@@ -9,10 +9,10 @@ namespace Allors.Database.Configuration
     using System.Collections.Generic;
     using System.Linq;
     using Allors.Database.Meta.Extensions;
-    using Database.Security;
-    using Domain;
-    using Meta;
-    using Services;
+    using Allors.Database.Security;
+    using Allors.Database.Domain;
+    using Allors.Database.Meta;
+    using Allors.Database.Services;
 
     public class Security : ISecurity
     {

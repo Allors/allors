@@ -6,7 +6,7 @@
 namespace Allors.Database.Domain.Tests
 {
     using System.Collections.Generic;
-    using Database.Data;
+    using Allors.Database.Data;
 
     public class Arguments : IArguments
     {

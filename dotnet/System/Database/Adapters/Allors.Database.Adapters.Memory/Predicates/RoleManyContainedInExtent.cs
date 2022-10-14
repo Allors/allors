@@ -6,7 +6,7 @@
 namespace Allors.Database.Adapters.Memory;
 
 using System.Linq;
-using Meta;
+using Allors.Database.Meta;
 
 internal sealed class RoleManyContainedInExtent : Predicate
 {

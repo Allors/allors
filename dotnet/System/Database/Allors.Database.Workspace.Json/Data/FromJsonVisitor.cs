@@ -10,15 +10,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
 using Allors.Protocol.Json.Data;
-using Data;
-using Meta;
+using Allors.Database.Data;
+using Allors.Database.Meta;
 using Extent = Allors.Protocol.Json.Data.Extent;
 using IVisitor = Allors.Protocol.Json.Data.IVisitor;
-using Node = Data.Node;
-using Pull = Data.Pull;
-using Result = Data.Result;
-using Select = Data.Select;
-using Sort = Data.Sort;
+using Node = Allors.Database.Data.Node;
+using Pull = Allors.Database.Data.Pull;
+using Result = Allors.Database.Data.Result;
+using Select = Allors.Database.Data.Select;
+using Sort = Allors.Database.Data.Sort;
 
 public class FromJsonVisitor : IVisitor
 {

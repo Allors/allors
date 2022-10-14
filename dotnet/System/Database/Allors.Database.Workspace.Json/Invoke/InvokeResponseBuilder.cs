@@ -10,9 +10,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Metadata;
 using Allors.Protocol.Json.Api.Invoke;
-using Derivations;
-using Meta;
-using Security;
+using Allors.Database.Derivations;
+using Allors.Database.Meta;
+using Allors.Database.Security;
 
 public class InvokeResponseBuilder
 {

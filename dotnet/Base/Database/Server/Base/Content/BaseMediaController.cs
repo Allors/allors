@@ -8,8 +8,8 @@ namespace Allors.Database.Server.Controllers
     using System;
     using System.Linq;
     using Allors.Services;
-    using Domain;
-    using Meta;
+    using Allors.Database.Domain;
+    using Allors.Database.Meta;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;

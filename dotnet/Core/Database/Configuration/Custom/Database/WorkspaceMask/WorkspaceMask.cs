@@ -6,8 +6,8 @@
 namespace Allors.Database.Configuration
 {
     using System.Collections.Generic;
-    using Domain;
-    using Meta;
+    using Allors.Database.Domain;
+    using Allors.Database.Meta;
 
     public class WorkspaceMask : IWorkspaceMask
     {

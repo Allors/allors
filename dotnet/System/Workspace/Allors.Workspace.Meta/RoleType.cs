@@ -7,7 +7,7 @@
 namespace Allors.Workspace.Meta
 {
     using System;
-    using Text;
+    using Allors.Text;
 
     /// <summary>
     ///     A <see cref="RoleType" /> defines the role side of a relation.

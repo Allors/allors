@@ -8,9 +8,9 @@ namespace Allors.Database.Server.Controllers
     using System;
     using System.Threading;
     using Allors.Services;
-    using Domain;
+    using Allors.Database.Domain;
     using Microsoft.AspNetCore.Mvc;
-    using Protocol.Json;
+    using Allors.Database.Protocol.Json;
 
     public class TestPullController : Controller
     {

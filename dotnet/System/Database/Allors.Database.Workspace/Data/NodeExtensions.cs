@@ -8,9 +8,9 @@ namespace Allors.Database.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Domain;
-using Meta;
-using Security;
+using Allors.Database.Domain;
+using Allors.Database.Meta;
+using Allors.Database.Security;
 
 public static class NodeExtensions
 {

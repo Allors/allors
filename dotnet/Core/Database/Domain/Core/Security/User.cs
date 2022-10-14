@@ -5,7 +5,7 @@
 
 namespace Allors.Database.Domain
 {
-    using Database.Security;
+    using Allors.Database.Security;
 
     public partial interface User : IUser
     {

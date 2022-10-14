@@ -1,7 +1,7 @@
 ﻿namespace Allors.Meta.Generation.Model;
 
 using System;
-using Database.Meta;
+using Allors.Database.Meta;
 
 public abstract class DataTypeModel : MetaIdentifiableObjectModel
 {

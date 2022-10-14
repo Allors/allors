@@ -6,7 +6,7 @@
 namespace Allors.Database.Domain
 {
     using System.Collections.Concurrent;
-    using Meta;
+    using Allors.Database.Meta;
 
     public class ClassById : IClassById
     {

@@ -8,7 +8,7 @@ namespace Allors.Repository.Domain;
 
 using System.Collections.Generic;
 using Inflector;
-using Text;
+using Allors.Text;
 
 public abstract class Composite : ObjectType
 {

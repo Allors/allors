@@ -5,7 +5,7 @@
 
 namespace Allors.Database.Services;
 
-using Security;
+using Allors.Database.Security;
 
 public interface IWorkspaceAclsService
 {

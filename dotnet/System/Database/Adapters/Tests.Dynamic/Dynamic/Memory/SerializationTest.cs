@@ -21,7 +21,7 @@
 
 namespace Allors.Database.Adapters.Memory;
 
-using Meta;
+using Allors.Database.Meta;
 
 public class SerializationTest : Adapters.SerializationTest
 {

@@ -5,7 +5,7 @@
 
 namespace Allors.Database.Domain.Tests
 {
-    using Database.Data;
+    using Allors.Database.Data;
     using Xunit;
 
     public class CloneTest : DomainTest, IClassFixture<Fixture>

@@ -11,8 +11,8 @@ namespace Allors.Database.Adapters.Sql;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Caching;
-using Meta;
+using Allors.Database.Adapters.Sql.Caching;
+using Allors.Database.Meta;
 
 public class Strategy : IStrategy
 {

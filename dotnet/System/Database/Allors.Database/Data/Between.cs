@@ -7,7 +7,7 @@ namespace Allors.Database.Data;
 
 using System.Collections.Generic;
 using System.Linq;
-using Meta;
+using Allors.Database.Meta;
 
 public class Between : IRolePredicate
 {

@@ -5,7 +5,7 @@
 
 namespace Allors.Database.Adapters.Sql;
 
-using Meta;
+using Allors.Database.Meta;
 
 internal sealed class InstanceOf : Predicate
 {

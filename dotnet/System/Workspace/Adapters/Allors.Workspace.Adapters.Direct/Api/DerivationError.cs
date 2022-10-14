@@ -7,8 +7,8 @@ namespace Allors.Workspace.Adapters.Direct;
 
 using System.Collections.Generic;
 using System.Linq;
-using Meta;
-using Response;
+using Allors.Workspace.Meta;
+using Allors.Workspace.Response;
 
 public class DerivationError : IDerivationError
 {

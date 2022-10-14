@@ -6,7 +6,7 @@
 namespace Allors.Workspace.Protocol.Direct;
 
 using System.Collections.Generic;
-using Database.Data;
+using Allors.Database.Data;
 
 public class Arguments : IArguments
 {

@@ -7,8 +7,8 @@ namespace Allors.Database.Protocol.Json;
 
 using System.Linq;
 using Allors.Protocol.Json;
-using Data;
-using Meta;
+using Allors.Database.Data;
+using Allors.Database.Meta;
 using Extent = Allors.Protocol.Json.Data.Extent;
 
 public static class Extensions

@@ -6,8 +6,8 @@
 
 namespace Allors.Database.Domain.Derivations.Rules
 {
-    using Database.Derivations;
-    using Meta;
+    using Allors.Database.Derivations;
+    using Allors.Database.Meta;
 
     public class RolePattern : Pattern, IRolePattern
     {
