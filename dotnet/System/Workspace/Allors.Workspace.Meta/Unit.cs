@@ -1,4 +1,4 @@
-// <copyright file="IUnit.cs" company="Allors bvba">
+﻿// <copyright file="IUnit.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -11,6 +11,22 @@ namespace Allors.Workspace.Meta
 
     public abstract class Unit : IObjectType
     {
+        protected Unit(MetaPopulation metaPopulation, string tag, string singularName)
+        {
+            this.MetaPopulation = metaPopulation;
+            this.Tag = tag;
+            this.SingularName = singularName;
+            this.PluralName = Pluralizer.Pluralize(singularName);
+        }
+
+        public MetaPopulation MetaPopulation { get; }
+
+        public string Tag { get; }
+
+        public string SingularName { get; }
+
+        public string PluralName { get; }
+
         public bool IsBinary => this.Tag == UnitTags.Binary;
 
         public bool IsBoolean => this.Tag == UnitTags.Boolean;
@@ -26,13 +42,8 @@ namespace Allors.Workspace.Meta
         public bool IsString => this.Tag == UnitTags.String;
 
         public bool IsUnique => this.Tag == UnitTags.Unique;
-        public MetaPopulation MetaPopulation { get; set; }
 
-        public string Tag { get; set; }
 
-        public string SingularName { get; set; }
-
-        public string PluralName { get; set; }
 
         public Type ClrType { get; set; }
 
@@ -46,15 +57,6 @@ namespace Allors.Workspace.Meta
         public bool IsInterface => false;
 
         public bool IsClass => false;
-
-        public Unit Init(string tag, string singularName)
-        {
-            this.Tag = tag;
-            this.SingularName = singularName;
-            this.PluralName = Pluralizer.Pluralize(singularName);
-
-            return this;
-        }
 
         public void Bind() =>
             this.ClrType = this.Tag switch

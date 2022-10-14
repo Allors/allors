@@ -21,7 +21,8 @@ public sealed class ClassModel : CompositeModel
     public IEnumerable<RoleTypeModel> OverriddenRequiredRoleTypes => this.CompositeRoleTypes.Where(v => v.IsAssignedRequired).Select(v => v.RoleType);
 
     // IClass Extra
-    public IReadOnlyDictionary<string, IOrderedEnumerable<RoleTypeModel>> WorkspaceOverriddenRequiredByWorkspaceName => this.WorkspaceNames
-        .ToDictionary(v => v,
-            v => this.OverriddenRequiredRoleTypes.Where(w => w.RelationType.WorkspaceNames.Contains(v)).OrderBy(w => w.RelationType.Tag));
+    public IReadOnlyDictionary<string, IEnumerable<RoleTypeModel>> WorkspaceOverriddenRequiredByWorkspaceName => this.WorkspaceNames
+        .ToDictionary(
+            v => v,
+            v => this.OverriddenRequiredRoleTypes.Where(w => w.RelationType.WorkspaceNames.Contains(v)));
 }

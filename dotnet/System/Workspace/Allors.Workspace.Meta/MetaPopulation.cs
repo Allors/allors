@@ -1,4 +1,4 @@
-// <copyright file="IMetaPopulation.cs" company="Allors bvba">
+﻿// <copyright file="IMetaPopulation.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -13,14 +13,20 @@ namespace Allors.Workspace.Meta
     public abstract class MetaPopulation
     {
         // class
-        public Unit[] Units { get; private set; }
-        public Interface[] Interfaces { get; private set; }
-        public Class[] Classes { get; private set; }
+        public Unit[] Units { get; protected set; }
+
+        public Interface[] Interfaces { get; protected set; }
+
+        public Class[] Classes { get; protected set; }
+
         public RelationType[] RelationTypes { get; private set; }
+
         public MethodType[] MethodTypes { get; private set; }
 
         public Dictionary<string, IMetaObject> MetaObjectByTag { get; private set; }
+
         public IComposite[] Composites { get; private set; }
+
         public Dictionary<string, IComposite> CompositeByLowercaseName { get; private set; }
 
         public IMetaObject FindByTag(string tag)
@@ -55,12 +61,8 @@ namespace Allors.Workspace.Meta
             }
         }
 
-        public void Init(Unit[] units, Interface[] interfaces, Class[] classes, Inheritance[] inheritances, RelationType[] relationTypes,
-            MethodType[] methodTypes)
+        public void Init(RelationType[] relationTypes, MethodType[] methodTypes)
         {
-            this.Units = units;
-            this.Interfaces = interfaces;
-            this.Classes = classes;
             this.RelationTypes = relationTypes;
             this.MethodTypes = methodTypes;
 
@@ -75,33 +77,15 @@ namespace Allors.Workspace.Meta
             this.Composites = this.Interfaces.Cast<IComposite>().Union(this.Classes).ToArray();
             this.CompositeByLowercaseName = this.Composites.ToDictionary(v => v.SingularName.ToLowerInvariant());
 
-            foreach (var composite in this.Composites)
-            {
-                composite.MetaPopulation = this;
-            }
-
-            foreach (var unit in this.Units)
-            {
-                unit.MetaPopulation = this;
-            }
-
             foreach (var methodType in this.MethodTypes)
             {
                 methodType.MetaPopulation = this;
             }
 
-            // DirectSupertypes
-            foreach (var grouping in inheritances.GroupBy(v => v.Subtype, v => v.Supertype))
-            {
-                var composite = grouping.Key;
-                composite.DirectSupertypes = new HashSet<Interface>(grouping);
-            }
-
             // DirectSubtypes
-            foreach (var grouping in inheritances.GroupBy(v => v.Supertype, v => v.Subtype))
+            foreach (var @interface in this.Interfaces)
             {
-                var @interface = grouping.Key;
-                @interface.DirectSubtypes = new HashSet<IComposite>(grouping);
+                @interface.InitializeDirectSubtypes();
             }
 
             // Supertypes

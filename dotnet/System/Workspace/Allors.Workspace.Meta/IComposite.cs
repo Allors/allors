@@ -1,4 +1,4 @@
-// <copyright file="AssociationType.cs" company="Allors bvba">
+﻿// <copyright file="AssociationType.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -11,7 +11,7 @@ namespace Allors.Workspace.Meta
 
     public interface IComposite : IObjectType
     {
-        ISet<Interface> DirectSupertypes { get; set; } // TODO: move set;
+        ISet<Interface> DirectSupertypes { get; } 
 
         ISet<Interface> Supertypes { get; set; } // TODO: move set;
 
@@ -24,8 +24,6 @@ namespace Allors.Workspace.Meta
         ISet<RoleType> DatabaseOriginRoleTypes { get; }
 
         ISet<MethodType> MethodTypes { get; }
-
-        new MetaPopulation MetaPopulation { get; set; }
 
         RoleType[] ExclusiveRoleTypes { get; set; }
 

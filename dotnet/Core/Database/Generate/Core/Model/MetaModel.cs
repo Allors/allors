@@ -92,18 +92,21 @@ public class MetaModel
 
     public IReadOnlyDictionary<string, IOrderedEnumerable<string>> WorkspaceDerivedTagsByWorkspaceName =>
         this.WorkspaceNames
-            .ToDictionary(v => v,
+            .ToDictionary(
+                v => v,
                 v => this.RelationTypes.Where(w => w.IsDerived && w.WorkspaceNames.Contains(v)).Select(w => w.Tag).OrderBy(w => w));
 
     public IReadOnlyDictionary<string, IOrderedEnumerable<string>> WorkspaceRequiredTagsByWorkspaceName =>
         this.WorkspaceNames
-            .ToDictionary(v => v,
+            .ToDictionary(
+                v => v,
                 v => this.RelationTypes.Where(w => w.RoleType.IsRequired && w.WorkspaceNames.Contains(v)).Select(w => w.Tag)
                     .OrderBy(w => w));
 
     public IReadOnlyDictionary<string, IOrderedEnumerable<string>> WorkspaceUniqueTagsByWorkspaceName =>
         this.WorkspaceNames
-            .ToDictionary(v => v,
+            .ToDictionary(
+                v => v,
                 v => this.RelationTypes.Where(w => w.RoleType.IsUnique && w.WorkspaceNames.Contains(v)).Select(w => w.Tag).OrderBy(w => w));
 
     public IReadOnlyDictionary<string, Dictionary<string, IOrderedEnumerable<string>>> WorkspaceMediaTagsByMediaTypeNameByWorkspaceName =>
@@ -113,17 +116,17 @@ public class MetaModel
                     .GroupBy(w => w.MediaType, w => w.Tag)
                     .ToDictionary(w => w.Key, w => w.OrderBy(x => x)));
 
-    public IReadOnlyDictionary<string, IOrderedEnumerable<CompositeModel>> WorkspaceCompositesByWorkspaceName =>
+    public IReadOnlyDictionary<string, IEnumerable<CompositeModel>> WorkspaceCompositesByWorkspaceName =>
         this.WorkspaceNames
-            .ToDictionary(v => v, v => this.Composites.Where(w => w.WorkspaceNames.Contains(v)).OrderBy(w => w.Tag));
+            .ToDictionary(v => v, v => this.Composites.Where(w => w.WorkspaceNames.Contains(v)));
 
-    public IReadOnlyDictionary<string, IOrderedEnumerable<InterfaceModel>> WorkspaceInterfacesByWorkspaceName =>
+    public IReadOnlyDictionary<string, IEnumerable<InterfaceModel>> WorkspaceInterfacesByWorkspaceName =>
         this.WorkspaceNames
-            .ToDictionary(v => v, v => this.Interfaces.Where(w => w.WorkspaceNames.Contains(v)).OrderBy(w => w.Tag));
+            .ToDictionary(v => v, v => this.Interfaces.Where(w => w.WorkspaceNames.Contains(v)));
 
-    public IReadOnlyDictionary<string, IOrderedEnumerable<ClassModel>> WorkspaceClassesByWorkspaceName =>
+    public IReadOnlyDictionary<string, IEnumerable<ClassModel>> WorkspaceClassesByWorkspaceName =>
         this.WorkspaceNames
-            .ToDictionary(v => v, v => this.Classes.Where(w => w.WorkspaceNames.Contains(v)).OrderBy(w => w.Tag));
+            .ToDictionary(v => v, v => this.Classes.Where(w => w.WorkspaceNames.Contains(v)));
 
     public IReadOnlyDictionary<string, IOrderedEnumerable<RelationTypeModel>> WorkspaceRelationTypesByWorkspaceName =>
         this.WorkspaceNames
@@ -135,7 +138,8 @@ public class MetaModel
 
     public IReadOnlyDictionary<string, IOrderedEnumerable<string>> WorkspaceMultiplicityTagsByWorkspaceName(Multiplicity multiplicity) =>
         this.WorkspaceNames
-            .ToDictionary(v => v,
+            .ToDictionary(
+                v => v,
                 v => this.RelationTypes
                     .Where(w => w.RoleType.ObjectType.IsComposite && w.Multiplicity == multiplicity && w.WorkspaceNames.Contains(v))
                     .Select(w => w.Tag).OrderBy(w => w));

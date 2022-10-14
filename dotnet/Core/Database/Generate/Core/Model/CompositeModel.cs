@@ -14,6 +14,8 @@ public abstract class CompositeModel : ObjectTypeModel
     protected abstract Composite Composite { get; }
 
     // IComposite
+    public string AssignedPluralName => this.Composite.AssignedPluralName;
+
     public IEnumerable<InterfaceModel> Supertypes => this.Composite.Supertypes.Select(this.MetaModel.Map);
 
     public IEnumerable<CompositeModel> Subtypes => this.Composite.Subtypes.Select(this.MetaModel.Map);
@@ -66,77 +68,85 @@ public abstract class CompositeModel : ObjectTypeModel
     public bool ExistClass => this.Composite.Classes.Count > 0;
 
     public ClassModel ExclusiveClass => this.MetaModel.Map(this.Composite.ExclusiveClass);
-    
+
     public IEnumerable<RoleTypeModel> SortedExclusiveRoleTypes => this.ExclusiveRoleTypes.OrderBy(v => v.Name);
 
     public IEnumerable<RoleTypeModel> ExclusiveCompositeRoleTypes =>
         this.ExclusiveRoleTypes.Where(roleType => roleType.ObjectType.IsComposite);
 
-    public IReadOnlyDictionary<string, IOrderedEnumerable<AssociationTypeModel>> WorkspaceAssociationTypesByWorkspaceName =>
+    public IReadOnlyDictionary<string, IEnumerable<AssociationTypeModel>> WorkspaceAssociationTypesByWorkspaceName => this.WorkspaceNames
+            .ToDictionary(
+                v => v,
+                v => this.AssociationTypes.Where(w => w.RelationType.WorkspaceNames.Contains(v)));
+
+    public IReadOnlyDictionary<string, IEnumerable<AssociationTypeModel>> WorkspaceExclusiveAssociationTypesByWorkspaceName => this.WorkspaceNames
+            .ToDictionary(
+                v => v,
+                v => this.ExclusiveAssociationTypes.Where(w => w.RelationType.WorkspaceNames.Contains(v)));
+
+    public IReadOnlyDictionary<string, IEnumerable<AssociationTypeModel>> WorkspaceInheritedAssociationTypesByWorkspaceName => this.WorkspaceNames
+            .ToDictionary(
+                v => v,
+                v => this.InheritedAssociationTypes.Where(w => w.RelationType.WorkspaceNames.Contains(v)));
+
+    public IReadOnlyDictionary<string, IEnumerable<RoleTypeModel>> WorkspaceRoleTypesByWorkspaceName => this.WorkspaceNames
+            .ToDictionary(
+                v => v,
+                v => this.RoleTypes.Where(w => w.RelationType.WorkspaceNames.Contains(v)));
+
+    public IReadOnlyDictionary<string, IEnumerable<RoleTypeModel>> WorkspaceCompositeRoleTypesByWorkspaceName => this.WorkspaceNames
+            .ToDictionary(
+                v => v,
+                v => this.RoleTypes.Where(w => w.ObjectType.IsComposite && w.RelationType.WorkspaceNames.Contains(v)));
+
+    public IReadOnlyDictionary<string, IEnumerable<RoleTypeModel>> WorkspaceInheritedRoleTypesByWorkspaceName => this.WorkspaceNames
+            .ToDictionary(
+                v => v,
+                v => this.InheritedRoleTypes.Where(w => w.RelationType.WorkspaceNames.Contains(v)));
+
+    public IReadOnlyDictionary<string, IEnumerable<RoleTypeModel>> WorkspaceExclusiveRoleTypesByWorkspaceName => this.WorkspaceNames
+            .ToDictionary(
+                v => v,
+                v => this.ExclusiveRoleTypes.Where(w => w.RelationType.WorkspaceNames.Contains(v)));
+
+    public IReadOnlyDictionary<string, IEnumerable<RoleTypeModel>> WorkspaceExclusiveCompositeRoleTypesByWorkspaceName => this.WorkspaceNames
+            .ToDictionary(
+                v => v,
+                v => this.ExclusiveRoleTypes.Where(w => w.ObjectType.IsComposite && w.RelationType.WorkspaceNames.Contains(v)));
+
+    public IReadOnlyDictionary<string, IEnumerable<MethodTypeModel>> WorkspaceExclusiveMethodTypesByWorkspaceName => this.WorkspaceNames.ToDictionary(
+            v => v,
+            v => this.ExclusiveMethodTypes.Where(w => w.WorkspaceNames.Contains(v)));
+
+    public IReadOnlyDictionary<string, IEnumerable<MethodTypeModel>> WorkspaceInheritedMethodTypesByWorkspaceName => this.WorkspaceNames
+            .ToDictionary(
+                v => v,
+                v => this.InheritedMethodTypes.Where(w => w.WorkspaceNames.Contains(v)));
+
+    public IReadOnlyDictionary<string, IEnumerable<MethodTypeModel>> WorkspaceMethodTypesByWorkspaceName => this.WorkspaceNames
+            .ToDictionary(
+                v => v,
+                v => this.MethodTypes.Where(w => w.WorkspaceNames.Contains(v)));
+
+    public IReadOnlyDictionary<string, IEnumerable<InterfaceModel>> WorkspaceDirectSupertypesByWorkspaceName => this.WorkspaceNames
+        .ToDictionary(
+            v => v,
+            v => this.DirectSupertypes.Where(w => w.WorkspaceNames.Contains(v)));
+
+    public IReadOnlyDictionary<string, IEnumerable<InterfaceModel>> WorkspaceSupertypesByWorkspaceName =>
         this.WorkspaceNames
-            .ToDictionary(v => v,
-                v => this.AssociationTypes.Where(w => w.RelationType.WorkspaceNames.Contains(v)).OrderBy(w => w.RelationType.Tag));
+            .ToDictionary(
+                v => v,
+                v => this.Supertypes.Where(w => w.WorkspaceNames.Contains(v)));
 
-    public IReadOnlyDictionary<string, IOrderedEnumerable<AssociationTypeModel>> WorkspaceExclusiveAssociationTypesByWorkspaceName =>
+    public IReadOnlyDictionary<string, IEnumerable<CompositeModel>> WorkspaceSubtypesByWorkspaceName =>
         this.WorkspaceNames
-            .ToDictionary(v => v,
-                v => this.ExclusiveAssociationTypes.Where(w => w.RelationType.WorkspaceNames.Contains(v)).OrderBy(w => w.RelationType.Tag));
+            .ToDictionary(
+                v => v,
+                v => this.Subtypes.Where(w => w.WorkspaceNames.Contains(v)));
 
-    public IReadOnlyDictionary<string, IOrderedEnumerable<AssociationTypeModel>> WorkspaceInheritedAssociationTypesByWorkspaceName =>
-        this.WorkspaceNames
-            .ToDictionary(v => v,
-                v => this.InheritedAssociationTypes.Where(w => w.RelationType.WorkspaceNames.Contains(v)).OrderBy(w => w.RelationType.Tag));
-
-    public IReadOnlyDictionary<string, IOrderedEnumerable<RoleTypeModel>> WorkspaceRoleTypesByWorkspaceName =>
-        this.WorkspaceNames
-            .ToDictionary(v => v,
-                v => this.RoleTypes.Where(w => w.RelationType.WorkspaceNames.Contains(v)).OrderBy(w => w.RelationType.Tag));
-
-    public IReadOnlyDictionary<string, IOrderedEnumerable<RoleTypeModel>> WorkspaceCompositeRoleTypesByWorkspaceName =>
-        this.WorkspaceNames
-            .ToDictionary(v => v,
-                v => this.RoleTypes.Where(w => w.ObjectType.IsComposite && w.RelationType.WorkspaceNames.Contains(v))
-                    .OrderBy(w => w.RelationType.Tag));
-
-    public IReadOnlyDictionary<string, IOrderedEnumerable<RoleTypeModel>> WorkspaceInheritedRoleTypesByWorkspaceName =>
-        this.WorkspaceNames
-            .ToDictionary(v => v,
-                v => this.InheritedRoleTypes.Where(w => w.RelationType.WorkspaceNames.Contains(v)).OrderBy(w => w.RelationType.Tag));
-
-    public IReadOnlyDictionary<string, IOrderedEnumerable<RoleTypeModel>> WorkspaceExclusiveRoleTypesByWorkspaceName =>
-        this.WorkspaceNames
-            .ToDictionary(v => v,
-                v => this.ExclusiveRoleTypes.Where(w => w.RelationType.WorkspaceNames.Contains(v)).OrderBy(w => w.RelationType.Tag));
-
-    public IReadOnlyDictionary<string, IOrderedEnumerable<RoleTypeModel>> WorkspaceExclusiveCompositeRoleTypesByWorkspaceName =>
-        this.WorkspaceNames
-            .ToDictionary(v => v,
-                v => this.ExclusiveRoleTypes.Where(w => w.ObjectType.IsComposite && w.RelationType.WorkspaceNames.Contains(v))
-                    .OrderBy(w => w.RelationType.Tag));
-
-    public IReadOnlyDictionary<string, IOrderedEnumerable<MethodTypeModel>> WorkspaceExclusiveMethodTypesByWorkspaceName =>
-        this.WorkspaceNames
-            .ToDictionary(v => v, v => this.ExclusiveMethodTypes.Where(w => w.WorkspaceNames.Contains(v)).OrderBy(w => w.Tag));
-
-    public IReadOnlyDictionary<string, IOrderedEnumerable<MethodTypeModel>> WorkspaceInheritedMethodTypesByWorkspaceName =>
-        this.WorkspaceNames
-            .ToDictionary(v => v, v => this.InheritedMethodTypes.Where(w => w.WorkspaceNames.Contains(v)).OrderBy(w => w.Tag));
-
-    public IReadOnlyDictionary<string, IOrderedEnumerable<MethodTypeModel>> WorkspaceMethodTypesByWorkspaceName =>
-        this.WorkspaceNames
-            .ToDictionary(v => v, v => this.MethodTypes.Where(w => w.WorkspaceNames.Contains(v)).OrderBy(w => w.Tag));
-
-    public IReadOnlyDictionary<string, IOrderedEnumerable<InterfaceModel>> WorkspaceDirectSupertypesByWorkspaceName => this.WorkspaceNames
-        .ToDictionary(v => v, v => this.DirectSupertypes.Where(w => w.WorkspaceNames.Contains(v)).OrderBy(w => w.Tag));
-
-    public IReadOnlyDictionary<string, IOrderedEnumerable<InterfaceModel>> WorkspaceSupertypesByWorkspaceName =>
-        this.WorkspaceNames
-            .ToDictionary(v => v, v => this.Supertypes.Where(w => w.WorkspaceNames.Contains(v)).OrderBy(w => w.Tag));
-
-    public IReadOnlyDictionary<string, IOrderedEnumerable<CompositeModel>> WorkspaceSubtypesByWorkspaceName =>
-        this.WorkspaceNames
-            .ToDictionary(v => v, v => this.Subtypes.Where(w => w.WorkspaceNames.Contains(v)).OrderBy(w => w.Tag));
-
-    public IReadOnlyDictionary<string, IOrderedEnumerable<CompositeModel>> WorkspaceRelatedCompositesByWorkspaceName => this.WorkspaceNames
-        .ToDictionary(v => v, v => this.RelatedComposites.Where(w => w.WorkspaceNames.Contains(v)).OrderBy(w => w.Tag));
+    public IReadOnlyDictionary<string, IEnumerable<CompositeModel>> WorkspaceRelatedCompositesByWorkspaceName => this.WorkspaceNames
+        .ToDictionary(
+            v => v,
+            v => this.RelatedComposites.Where(w => w.WorkspaceNames.Contains(v)));
 }
