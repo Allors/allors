@@ -18,7 +18,7 @@
   <Class Name="Allors.Workspace.Meta.Class" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="5.25" Y="5.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>BQJAiIMBAAFgAAJAACAAAwAAASCAAAACBQBCAUhAAAg=</HashCode>
+      <HashCode>BQJAiIMBAAFgAAJAACAAAwAAASCAAAACBQBAAUhAAAg=</HashCode>
       <FileName>Class.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -26,7 +26,7 @@
   <Class Name="Allors.Workspace.Meta.Interface" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="7" Y="5.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>BQJAiIMBAAFgAAIAACAAAwAAASCAAEACAQJCAUhAAAg=</HashCode>
+      <HashCode>BQJAiIMBAAFgAAIAACAAAwAAASCAIEACAQJAAUhAAAg=</HashCode>
       <FileName>Interface.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -65,7 +65,7 @@
   <Class Name="Allors.Workspace.Meta.Unit" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="4.5" Y="3.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAIgIIAAAAgAAJIgAAAAAABACCAAAISAAACAUBAAAA=</HashCode>
+      <HashCode>AAAIgIIAAAAgAAJIgAAAAAABACCAAAISAAAAAUBAAAA=</HashCode>
       <FileName>Unit.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -73,7 +73,7 @@
   <Interface Name="Allors.Workspace.Meta.IComposite" Collapsed="true">
     <Position X="6.5" Y="3.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>BAJAgAAAAAFAAAAAACAAAgAAAQAAAAAAAQBAAAhAAAA=</HashCode>
+      <HashCode>BAJAgAAAAAFAAAAAACAAAgAAAQAAAAAAAQBAAAgAAAA=</HashCode>
       <FileName>IComposite.cs</FileName>
     </TypeIdentifier>
   </Interface>
@@ -92,7 +92,7 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="Allors.Workspace.Meta.IOperandType" Collapsed="true">
-    <Position X="12.25" Y="0.75" Width="1.5" />
+    <Position X="11.5" Y="0.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>IOperandType.cs</FileName>
