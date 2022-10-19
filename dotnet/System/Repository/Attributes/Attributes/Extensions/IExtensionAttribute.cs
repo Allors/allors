@@ -1,6 +1,6 @@
 ﻿namespace Allors.Repository.Attributes;
 
-public interface IExtensionAttribute
+public partial interface IExtensionAttribute
 {
     bool ForRelationType { get; }
 

@@ -13,7 +13,7 @@ using Allors.Repository.Attributes;
 
 #endregion
 
-public class Locale : Object
+public partial class Locale : Object
 {
     #region Allors
 

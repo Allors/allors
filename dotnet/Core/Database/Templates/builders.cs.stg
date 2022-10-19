@@ -23,7 +23,7 @@ GNU General Public License for more details.
 For more information visit http://www.allors.com/legal
 !$
 <generations>
-$meta.DatabaseClasses:{class|<generation template="castClass" input="$class.Id $" output="$class.SingularName$.g.cs"/>}$
+$meta.Classes:{class|<generation template="castClass" input="$class.Id $" output="$class.SingularName$.g.cs"/>}$
 </generations>
 >>
 

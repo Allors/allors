@@ -7,7 +7,7 @@ namespace Allors.Repository.Attributes;
 using System;
 
 [AttributeUsage(AttributeTargets.Property)]
-public class MediaTypeAttribute : RepositoryAttribute, IExtensionAttribute
+public partial class MediaTypeAttribute : RepositoryAttribute, IExtensionAttribute
 {
     public MediaTypeAttribute(string value)
     {

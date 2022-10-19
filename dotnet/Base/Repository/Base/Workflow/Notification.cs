@@ -14,7 +14,7 @@ using Allors.Repository.Attributes;
 
 #endregion
 
-public class Notification : Deletable, Object
+public partial class Notification : Deletable, Object
 {
     #region Allors
 

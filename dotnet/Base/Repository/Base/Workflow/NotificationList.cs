@@ -13,7 +13,7 @@ using Allors.Repository.Attributes;
 
 #endregion
 
-public class NotificationList : Deletable, Object
+public partial class NotificationList : Deletable, Object
 {
     #region Allors
 

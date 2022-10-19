@@ -14,7 +14,7 @@ using Allors.Repository.Attributes;
 
 #endregion
 
-public class Grant : UniquelyIdentifiable, Deletable
+public partial class Grant : UniquelyIdentifiable, Deletable
 {
     #region Allors
 

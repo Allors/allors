@@ -14,7 +14,7 @@ using Allors.Repository.Attributes;
 
 #endregion
 
-public class EmailMessage : Object
+public partial class EmailMessage : Object
 {
     #region Allors
 

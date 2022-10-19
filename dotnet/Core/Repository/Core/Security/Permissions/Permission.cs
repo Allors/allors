@@ -14,7 +14,7 @@ using Allors.Repository.Attributes;
 
 #endregion
 
-public interface Permission : Deletable
+public partial interface Permission : Deletable
 {
     #region Allors
 

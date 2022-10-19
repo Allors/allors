@@ -13,7 +13,7 @@ using Allors.Repository.Attributes;
 
 #endregion
 
-public class TaskAssignment : Deletable, Object
+public partial class TaskAssignment : Deletable, Object
 {
     #region Allors
 

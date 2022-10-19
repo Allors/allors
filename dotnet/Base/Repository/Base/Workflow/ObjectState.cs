@@ -13,7 +13,7 @@ using Allors.Repository.Attributes;
 
 #endregion
 
-public interface ObjectState : UniquelyIdentifiable
+public partial interface ObjectState : UniquelyIdentifiable
 {
     #region Allors
 

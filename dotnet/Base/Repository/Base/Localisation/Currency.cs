@@ -1,4 +1,4 @@
-// <copyright file="Currency.cs" company="Allors bv">
+﻿// <copyright file="Currency.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // </copyright>
 
@@ -15,7 +15,7 @@ using Allors.Repository.Attributes;
 #endregion
 
 [Plural("Currencies")]
-public class Currency : Enumeration, Object
+public partial class Currency : Enumeration, Object
 {
     #region Allors
 

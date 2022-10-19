@@ -8,7 +8,7 @@ namespace Allors.Repository.Attributes;
 using System;
 
 [AttributeUsage(AttributeTargets.Property)]
-public class IndexedAttribute : RepositoryAttribute, IExtensionAttribute
+public partial class IndexedAttribute : RepositoryAttribute, IExtensionAttribute
 {
     public IndexedAttribute(bool value = true)
     {

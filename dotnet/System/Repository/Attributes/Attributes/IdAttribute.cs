@@ -9,7 +9,7 @@ using System;
 
 [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Struct | AttributeTargets.Class |
                 AttributeTargets.Interface | AttributeTargets.Property | AttributeTargets.Method)]
-public class IdAttribute : RepositoryAttribute
+public partial class IdAttribute : RepositoryAttribute
 {
     public IdAttribute(string value)
     {

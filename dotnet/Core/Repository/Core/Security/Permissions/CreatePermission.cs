@@ -14,7 +14,7 @@ using Allors.Repository.Attributes;
 
 #endregion
 
-public class CreatePermission : Permission
+public partial class CreatePermission : Permission
 {
     #region inherited
 

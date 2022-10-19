@@ -14,7 +14,7 @@ using Allors.Repository.Attributes;
 
 #endregion
 
-public interface Cacheable : Object
+public partial interface Cacheable : Object
 {
     #region Allors
 

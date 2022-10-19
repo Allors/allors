@@ -13,7 +13,7 @@ using Allors.Repository.Attributes;
 
 #endregion
 
-public interface Version : Object
+public partial interface Version : Object
 {
     // TODO: Is this still necessary?
 

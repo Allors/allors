@@ -8,7 +8,7 @@ namespace Allors.Repository.Attributes;
 using System;
 
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface | AttributeTargets.Property)]
-public class PluralAttribute : RepositoryAttribute
+public partial class PluralAttribute : RepositoryAttribute
 {
     public PluralAttribute(string value)
     {

@@ -13,7 +13,7 @@ using Allors.Repository.Attributes;
 
 #endregion
 
-public interface Transitional : Object
+public partial interface Transitional : Object
 {
     #region Allors
 

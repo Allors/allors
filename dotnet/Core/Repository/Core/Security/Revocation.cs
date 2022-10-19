@@ -14,7 +14,7 @@ using Allors.Repository.Attributes;
 
 #endregion
 
-public class Revocation : UniquelyIdentifiable, Deletable
+public partial class Revocation : UniquelyIdentifiable, Deletable
 {
     #region Allors
 

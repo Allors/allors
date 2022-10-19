@@ -7,7 +7,7 @@ namespace Allors.Repository.Attributes;
 using System;
 
 [AttributeUsage(AttributeTargets.Property)]
-public class RequiredAttribute : RepositoryAttribute, IExtensionAttribute
+public partial class RequiredAttribute : RepositoryAttribute, IExtensionAttribute
 {
     public RequiredAttribute(bool value = true)
     {

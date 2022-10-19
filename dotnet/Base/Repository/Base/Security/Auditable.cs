@@ -13,7 +13,7 @@ using Allors.Repository.Attributes;
 
 #endregion
 
-public interface Auditable : Object
+public partial interface Auditable : Object
 {
     #region Allors
 

@@ -13,7 +13,7 @@ using Allors.Repository.Attributes;
 
 #endregion
 
-public interface UserPasswordReset
+public partial interface UserPasswordReset
 {
     #region Allors
 

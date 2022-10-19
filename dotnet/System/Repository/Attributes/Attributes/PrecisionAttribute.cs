@@ -8,7 +8,7 @@ namespace Allors.Repository.Attributes;
 using System;
 
 [AttributeUsage(AttributeTargets.Property)]
-public class PrecisionAttribute : RepositoryAttribute
+public partial class PrecisionAttribute : RepositoryAttribute
 {
     public PrecisionAttribute(int value)
     {

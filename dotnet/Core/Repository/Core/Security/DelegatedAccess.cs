@@ -14,7 +14,7 @@ using Allors.Repository.Attributes;
 
 #endregion
 
-public class DelegatedAccess : UniquelyIdentifiable, Deletable
+public partial class DelegatedAccess : UniquelyIdentifiable, Deletable
 {
     #region Allors
 

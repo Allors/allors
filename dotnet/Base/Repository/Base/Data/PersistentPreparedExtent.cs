@@ -14,7 +14,7 @@ using Allors.Repository.Attributes;
 
 #endregion
 
-public class PersistentPreparedExtent : UniquelyIdentifiable, Deletable
+public partial class PersistentPreparedExtent : UniquelyIdentifiable, Deletable
 {
     #region Allors
 

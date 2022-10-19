@@ -14,7 +14,7 @@ using Allors.Repository.Attributes;
 
 #endregion
 
-public class ExecutePermission : Permission
+public partial class ExecutePermission : Permission
 {
     #region Allors
 

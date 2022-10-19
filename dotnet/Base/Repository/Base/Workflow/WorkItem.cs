@@ -13,7 +13,7 @@ using Allors.Repository.Attributes;
 
 #endregion
 
-public interface WorkItem : Object
+public partial interface WorkItem : Object
 {
     #region Allors
 

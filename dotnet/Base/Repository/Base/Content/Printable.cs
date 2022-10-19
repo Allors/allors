@@ -1,4 +1,4 @@
-// <copyright file="Printable.cs" company="Allors bv">
+﻿// <copyright file="Printable.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // </copyright>
 
@@ -12,7 +12,7 @@ using Allors.Repository.Attributes;
 
 #endregion
 
-public interface Printable : Object
+public partial interface Printable : Object
 {
     #region Allors
 

@@ -14,7 +14,7 @@ using Allors.Repository.Attributes;
 
 #endregion
 
-public interface UniquelyIdentifiable : Object
+public partial interface UniquelyIdentifiable : Object
 {
     #region Allors
 

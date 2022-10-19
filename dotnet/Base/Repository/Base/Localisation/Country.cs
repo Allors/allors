@@ -14,7 +14,7 @@ using Allors.Repository.Attributes;
 #endregion
 
 [Plural("Countries")]
-public class Country : Object
+public partial class Country : Object
 {
     #region Allors
 

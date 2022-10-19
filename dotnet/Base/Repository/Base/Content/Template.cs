@@ -14,7 +14,7 @@ using Allors.Repository.Attributes;
 
 #endregion
 
-public class Template : UniquelyIdentifiable, Deletable, Object
+public partial class Template : UniquelyIdentifiable, Deletable, Object
 {
     #region Allors
 

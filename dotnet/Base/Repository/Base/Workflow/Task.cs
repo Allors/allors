@@ -14,7 +14,7 @@ using Allors.Repository.Attributes;
 
 #endregion
 
-public interface Task : UniquelyIdentifiable, Deletable
+public partial interface Task : UniquelyIdentifiable, Deletable
 {
     #region Allors
 

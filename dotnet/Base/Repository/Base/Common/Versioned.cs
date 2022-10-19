@@ -13,6 +13,6 @@ using Allors.Repository.Attributes;
 
 #endregion
 
-public interface Versioned : Object
+public partial interface Versioned : Object
 {
 }

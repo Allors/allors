@@ -8,6 +8,6 @@ namespace Allors.Repository.Attributes;
 using System;
 
 [AttributeUsage(AttributeTargets.Struct)]
-public class DomainAttribute : RepositoryAttribute
+public partial class DomainAttribute : RepositoryAttribute
 {
 }

@@ -14,7 +14,7 @@ using Allors.Repository.Attributes;
 
 #endregion
 
-public class AutomatedAgent : User
+public partial class AutomatedAgent : User
 {
     #region Allors
 

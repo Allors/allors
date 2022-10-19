@@ -12,7 +12,7 @@ using Allors.Repository.Attributes;
 
 #endregion
 
-public class PrintDocument : Deletable, Object
+public partial class PrintDocument : Deletable, Object
 {
     #region Allors
 

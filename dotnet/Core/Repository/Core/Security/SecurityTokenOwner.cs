@@ -13,7 +13,7 @@ using Allors.Repository.Attributes;
 
 #endregion
 
-public interface SecurityTokenOwner : Object
+public partial interface SecurityTokenOwner : Object
 {
     #region Allors
 

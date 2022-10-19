@@ -7,7 +7,7 @@ namespace Allors.Repository.Attributes;
 using System;
 
 [AttributeUsage(AttributeTargets.Property)]
-public class UniqueAttribute : RepositoryAttribute, IExtensionAttribute
+public partial class UniqueAttribute : RepositoryAttribute, IExtensionAttribute
 {
     public UniqueAttribute(bool value = true)
     {

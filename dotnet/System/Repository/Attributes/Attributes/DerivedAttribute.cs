@@ -8,7 +8,7 @@ namespace Allors.Repository.Attributes;
 using System;
 
 [AttributeUsage(AttributeTargets.Property)]
-public class DerivedAttribute : RepositoryAttribute
+public partial class DerivedAttribute : RepositoryAttribute
 {
     public DerivedAttribute(bool value = true)
     {

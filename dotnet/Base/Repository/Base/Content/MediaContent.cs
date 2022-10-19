@@ -13,7 +13,7 @@ using Allors.Repository.Attributes;
 
 #endregion
 
-public class MediaContent : Deletable, Object
+public partial class MediaContent : Deletable, Object
 {
     #region Allors
 

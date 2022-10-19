@@ -13,7 +13,7 @@ using Allors.Repository.Attributes;
 
 #endregion
 
-public class Login : Deletable
+public partial class Login : Deletable
 {
     #region Allors
 

@@ -13,7 +13,7 @@ using Allors.Repository.Attributes;
 
 #endregion
 
-public class LocalizedText : Localized, Deletable, Object
+public partial class LocalizedText : Localized, Deletable, Object
 {
     #region Allors
 

@@ -7,6 +7,6 @@ namespace Allors.Repository.Attributes;
 
 using System;
 
-public class RepositoryAttribute : Attribute
+public partial class RepositoryAttribute : Attribute
 {
 }

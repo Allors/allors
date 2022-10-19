@@ -14,7 +14,7 @@ using Allors.Repository.Attributes;
 
 #endregion
 
-public class UserGroup : UniquelyIdentifiable
+public partial class UserGroup : UniquelyIdentifiable
 {
     #region Allors
 

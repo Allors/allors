@@ -14,7 +14,7 @@ using Allors.Repository.Attributes;
 
 #endregion
 
-public class SecurityToken : UniquelyIdentifiable, Deletable
+public partial class SecurityToken : UniquelyIdentifiable, Deletable
 {
     #region Allors
 

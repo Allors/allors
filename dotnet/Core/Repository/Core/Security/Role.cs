@@ -14,7 +14,7 @@ using Allors.Repository.Attributes;
 
 #endregion
 
-public class Role : UniquelyIdentifiable
+public partial class Role : UniquelyIdentifiable
 {
     #region Allors
 

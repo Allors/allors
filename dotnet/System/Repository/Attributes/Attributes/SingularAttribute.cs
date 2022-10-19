@@ -8,7 +8,7 @@ namespace Allors.Repository.Attributes;
 using System;
 
 [AttributeUsage(AttributeTargets.Property)]
-public class SingularAttribute : RepositoryAttribute
+public partial class SingularAttribute : RepositoryAttribute
 {
     public SingularAttribute(string value)
     {

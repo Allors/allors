@@ -13,7 +13,7 @@ using Allors.Repository.Attributes;
 
 #endregion
 
-public class LocalizedMedia : Localized, Deletable
+public partial class LocalizedMedia : Localized, Deletable
 {
     #region Allors
 

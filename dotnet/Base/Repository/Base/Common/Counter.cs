@@ -1,4 +1,4 @@
-// <copyright file="Counter.cs" company="Allors bv">
+﻿// <copyright file="Counter.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // </copyright>
 
@@ -14,7 +14,7 @@ using Allors.Repository.Attributes;
 
 #endregion
 
-public class Counter : UniquelyIdentifiable
+public partial class Counter : UniquelyIdentifiable
 {
     #region Allors
 

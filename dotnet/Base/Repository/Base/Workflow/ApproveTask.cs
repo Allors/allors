@@ -16,7 +16,7 @@ using Allors.Repository.Attributes;
 
 #endregion
 
-public interface ApproveTask : Task
+public partial interface ApproveTask : Task
 {
     /// <summary>
     ///     A text the user can enter when approving or rejecting a task.

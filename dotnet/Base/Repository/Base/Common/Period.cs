@@ -13,7 +13,7 @@ using Allors.Repository.Attributes;
 
 #endregion
 
-public interface Period : Object
+public partial interface Period : Object
 {
     #region Allors
 

@@ -14,7 +14,7 @@ using Allors.Repository.Attributes;
 
 #endregion
 
-public class TemplateType : Enumeration, Deletable
+public partial class TemplateType : Enumeration, Deletable
 {
     #region inherited
 

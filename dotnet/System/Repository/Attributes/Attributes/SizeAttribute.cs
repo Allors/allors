@@ -8,7 +8,7 @@ namespace Allors.Repository.Attributes;
 using System;
 
 [AttributeUsage(AttributeTargets.Property)]
-public class SizeAttribute : RepositoryAttribute
+public partial class SizeAttribute : RepositoryAttribute
 {
     public SizeAttribute(int value)
     {

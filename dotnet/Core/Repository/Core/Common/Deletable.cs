@@ -13,7 +13,7 @@ using Allors.Repository.Attributes;
 
 #endregion
 
-public interface Deletable : Object
+public partial interface Deletable : Object
 {
     #region Allors
 
