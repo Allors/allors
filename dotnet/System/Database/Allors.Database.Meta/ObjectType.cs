@@ -54,7 +54,10 @@ public abstract class ObjectType : DataType, IObjectType
 
     public override int GetHashCode() => this.Id.GetHashCode();
 
-    public int CompareTo(object other) => this.Id.CompareTo((other as IMetaIdentifiableObject)?.Id);
+    public int CompareTo(IObjectType other)
+    {
+        return this.Id.CompareTo(other?.Id);
+    }
 
     public override string ToString()
     {

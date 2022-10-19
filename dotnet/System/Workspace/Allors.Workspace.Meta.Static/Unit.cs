@@ -9,23 +9,12 @@ namespace Allors.Workspace.Meta
     using System;
     using Allors.Text;
 
-    public abstract class Unit : IObjectType
+    public abstract class Unit : ObjectType
     {
         protected Unit(MetaPopulation metaPopulation, string tag, string singularName)
+            : base(metaPopulation, tag, singularName, Pluralizer.Pluralize(singularName))
         {
-            this.MetaPopulation = metaPopulation;
-            this.Tag = tag;
-            this.SingularName = singularName;
-            this.PluralName = Pluralizer.Pluralize(singularName);
         }
-
-        public MetaPopulation MetaPopulation { get; }
-
-        public string Tag { get; }
-
-        public string SingularName { get; }
-
-        public string PluralName { get; }
 
         public bool IsBinary => this.Tag == UnitTags.Binary;
 
@@ -43,20 +32,7 @@ namespace Allors.Workspace.Meta
 
         public bool IsUnique => this.Tag == UnitTags.Unique;
 
-
-
-        public Type ClrType { get; set; }
-
-        int IComparable<IObjectType>.CompareTo(IObjectType other) =>
-            string.Compare(this.SingularName, other.SingularName, StringComparison.InvariantCulture);
-
-        public bool IsUnit => true;
-
-        public bool IsComposite => false;
-
-        public bool IsInterface => false;
-
-        public bool IsClass => false;
+        public override Type ClrType { get; set; }
 
         public void Bind() =>
             this.ClrType = this.Tag switch

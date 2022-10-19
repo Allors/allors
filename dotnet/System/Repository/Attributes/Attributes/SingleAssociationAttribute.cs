@@ -8,6 +8,6 @@ namespace Allors.Repository.Attributes;
 using System;
 
 [AttributeUsage(AttributeTargets.Property)]
-public partial class SingleAssociationAttribute : RepositoryAttribute
+public class SingleAssociationAttribute : RepositoryAttribute
 {
 }

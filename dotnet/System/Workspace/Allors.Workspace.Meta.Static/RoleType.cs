@@ -1,4 +1,4 @@
-// <copyright file="IRoleType.cs" company="Allors bvba">
+﻿// <copyright file="IRoleType.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -14,7 +14,7 @@ namespace Allors.Workspace.Meta
     ///     This is also called the 'passive' side.
     ///     RoleTypes can have composite and unit <see cref="ObjectType" />s.
     /// </summary>
-    public abstract class RoleType : IPropertyType
+    public abstract class RoleType : IRoleType
     {
         /// <summary>
         ///     The maximum size value.

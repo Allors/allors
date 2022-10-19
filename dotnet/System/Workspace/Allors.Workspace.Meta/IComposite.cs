@@ -11,25 +11,17 @@ namespace Allors.Workspace.Meta
 
     public interface IComposite : IObjectType
     {
-        ISet<Interface> DirectSupertypes { get; } 
+        IReadOnlyList<IInterface> DirectSupertypes { get; }
 
-        ISet<Interface> Supertypes { get; set; } // TODO: move set;
+        IReadOnlyList<IInterface> Supertypes { get; }
 
-        ISet<Class> Classes { get; }
+        IReadOnlyList<IClass> Classes { get; }
 
-        ISet<AssociationType> AssociationTypes { get; }
+        IReadOnlyList<IAssociationType> AssociationTypes { get; }
 
-        ISet<RoleType> RoleTypes { get; }
+        IReadOnlyList<IRoleType> RoleTypes { get; }
 
-        ISet<RoleType> DatabaseOriginRoleTypes { get; }
-
-        ISet<MethodType> MethodTypes { get; }
-
-        RoleType[] ExclusiveRoleTypes { get; set; }
-
-        AssociationType[] ExclusiveAssociationTypes { get; set; }
-
-        MethodType[] ExclusiveMethodTypes { get; set; }
+        IReadOnlyList<IMethodType> MethodTypes { get; }
 
         bool IsAssignableFrom(IComposite objectType);
 

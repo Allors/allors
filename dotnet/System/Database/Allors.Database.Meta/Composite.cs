@@ -139,5 +139,4 @@ public abstract class Composite : ObjectType, IComposite
             }
         }
     }
-
 }

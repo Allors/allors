@@ -1,6 +1,6 @@
 ﻿namespace Allors.Database.Meta;
 
-public interface ICompositeMethodType
+public interface ICompositeMethodType : IMetaExtensible
 {
     public IComposite Composite { get; }
 

@@ -12,20 +12,20 @@
       <Method Name="Validate" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAIEiAAAAACAAAZEgECAAAQAAIEAAIACBZgIAAAAAAA=</HashCode>
+      <HashCode>AAIEiAAAAACAAAZEgECAAAQQAIEAAIACBZAIAAAAAAA=</HashCode>
       <FileName>AssociationType.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Database.Meta.Class">
-    <Position X="12.5" Y="15.25" Width="2.75" />
+    <Position X="12.5" Y="16.25" Width="2.75" />
     <Members>
       <Method Name="Actions" Hidden="true" />
       <Method Name="Class" Hidden="true" />
       <Method Name="IsAssignableFrom" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>ABAAQAEAIAFCAAAIAAAAAAAAAAAAAAAAQAIAAAAAAAA=</HashCode>
+      <HashCode>AAAAQAEAIAFCAAAIAAAAAAAAAAAAAEAAQAIAAAAAAAA=</HashCode>
       <FileName>Class.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -37,7 +37,7 @@
       <Method Name="IsAssignableFrom" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAJAAAAAQAFCIAQBACAAAAAQAQAAAEAAQAJIAAgCAAA=</HashCode>
+      <HashCode>AAJAIAAAQAFCIAQFACAAAAQQAQAAAEAAQAJIAAgCABA=</HashCode>
       <FileName>Composite.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -83,14 +83,14 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Database.Meta.Interface">
-    <Position X="9.5" Y="15.25" Width="2.5" />
+    <Position X="9.5" Y="16.25" Width="2.5" />
     <Members>
       <Method Name="DeriveWorkspaceNames" Hidden="true" />
       <Method Name="Interface" Hidden="true" />
       <Method Name="IsAssignableFrom" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AYAAAEAAAAFCAAEIIgAQAAAAAAAEJkAAQAIAAAAAAAA=</HashCode>
+      <HashCode>AYAAAEAAAAFCAEEIIgAQAAAAAAAEJkAAQAIAAAAAAAA=</HashCode>
       <FileName>Interface.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -127,7 +127,7 @@
       <Method Name="Validate" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAAAEEEAAACAAQQMoADIABQAEAAAAIAAgIAAAAAAAAA=</HashCode>
+      <HashCode>AAAAMEEIAACAASQMoADIABQAEAAAAIAAgIAAAAAAAAA=</HashCode>
       <FileName>MethodType.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -189,7 +189,7 @@
       <Method Name="Validate" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAIEqBAAAACAhI5EgELABAQBgAAAAIACAZgAAACAUAA=</HashCode>
+      <HashCode>AAIEqBAAAACAhI5GiELABAQRgAAAAIACAZAAAACAUAI=</HashCode>
       <FileName>RoleType.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -235,7 +235,7 @@
       <Method Name="MetaIdentifiableObject" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAgAAAIAAIAAAAAAAAAAAAAAAgAAABAAAA=</HashCode>
+      <HashCode>AAACAAAAAAAgAAAIAAIAAAAQAAAAAAAAAAAAAABAAAA=</HashCode>
       <FileName>MetaIdentifiableObject.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />

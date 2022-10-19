@@ -1,4 +1,4 @@
-// <copyright file="IMethodType.cs" company="Allors bvba">
+﻿// <copyright file="IMethodType.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -6,15 +6,22 @@
 
 namespace Allors.Workspace.Meta
 {
-    public sealed class MethodType : IMetaObject, IOperandType
+    public sealed class MethodType : MetaIdentifiableObject, IMethodType
     {
-        public IComposite ObjectType { get; set; }
-        private string Name { get; set; }
-        public MetaPopulation MetaPopulation { get; set; }
+        public MethodType(MetaPopulation metaPopulation, string tag)
+            : base(metaPopulation, tag)
+        {
+        }
 
-        public string Tag { get; set; }
+        public IComposite ObjectType { get; set; }
+
+        private string Name { get; set; }
 
         public string OperandTag => this.Tag;
+
+        public IRecord Input { get; }
+
+        public IRecord Output { get; }
 
         public override string ToString() => this.Name;
 
@@ -26,5 +33,6 @@ namespace Allors.Workspace.Meta
 
             return this;
         }
+
     }
 }

@@ -1,0 +1,26 @@
+﻿// <copyright file="IClass.cs" company="Allors bvba">
+// Copyright (c) Allors bvba. All rights reserved.
+// Licensed under the LGPL license. See LICENSE file in the project root for full license information.
+// </copyright>
+// <summary>Defines the IObjectType type.</summary>
+
+namespace Allors.Workspace.Meta
+{
+    public abstract class MetaIdentifiableObject : IMetaIdentifiableObject
+    {
+        protected MetaIdentifiableObject(MetaPopulation metaPopulation, string tag)
+        {
+            this.Attributes = new MetaExtension();
+            this.MetaPopulation = metaPopulation;
+            this.Tag = tag;
+        }
+
+        public dynamic Attributes { get; }
+
+        IMetaPopulation IMetaIdentifiableObject.MetaPopulation => this.MetaPopulation;
+
+        public MetaPopulation MetaPopulation { get; }
+
+        public string Tag { get; set; }
+    }
+}
