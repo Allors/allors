@@ -7,6 +7,7 @@
 namespace Allors.Workspace.Meta
 {
     using System;
+    using System.Drawing;
     using Allors.Text;
 
     /// <summary>
@@ -21,64 +22,72 @@ namespace Allors.Workspace.Meta
         /// </summary>
         public const int MaximumSize = -1;
 
-        public MetaPopulation MetaPopulation { get; set; }
-        public RelationType RelationType { get; set; }
+        protected RoleType(IObjectType objectType, string singularName = null, string pluralName = null)
+        {
+            this.ObjectType = objectType;
+            this.SingularName = singularName ?? this.ObjectType.SingularName;
+            this.PluralName = pluralName ?? Pluralizer.Pluralize(this.SingularName);
+            this.Name = this.IsMany ? this.PluralName : this.SingularName;
+        }
+
+        public MetaPopulation MetaPopulation => this.RelationType.MetaPopulation;
+
+        public RelationType RelationType { get; internal set; }
+
         public IAssociationType AssociationType => this.RelationType.AssociationType;
-        public int? Size { get; set; }
-        public int? Precision { get; set; }
-        public int? Scale { get; set; }
-        public bool IsRequired { get; set; }
-        public bool IsUnique { get; set; }
-        public string MediaType { get; set; }
 
-        public IObjectType ObjectType { get; set; }
+        public IObjectType ObjectType { get; }
 
-        public string SingularName { get; set; }
-        public string PluralName { get; set; }
-        public string Name { get; set; }
-        public bool IsMany { get; set; }
-        public bool IsOne { get; set; }
+        public string SingularName { get; }
+
+        public string PluralName { get; }
+
+        public string Name { get; }
+
+        public bool IsMany => this.RelationType.Multiplicity == Multiplicity.OneToMany ||
+                              this.RelationType.Multiplicity == Multiplicity.ManyToMany;
+
+        public bool IsOne => !this.IsMany;
+
+        public string OperandTag => this.RelationType.Tag;
+
+        public int? Size { get; protected set; }
+
+        public int? Precision { get; protected set; }
+
+        public int? Scale { get; protected set; }
+
+        public bool IsRequired { get; protected set; }
+
+        public bool IsUnique { get; protected set; }
+
+        public string MediaType { get; protected set; }
 
         int IComparable<IPropertyType>.CompareTo(IPropertyType other) =>
             string.Compare(this.Name, other.Name, StringComparison.InvariantCulture);
 
-        public string OperandTag => this.RelationType.Tag;
-
         public override string ToString() => $"{this.Name}";
 
-        public void Init(string singularName = null, string pluralName = null, int? size = null, int? precision = null, int? scale = null,
-            bool isRequired = false, bool isUnique = false, string mediaType = null)
+        internal void InitializeSizeScaleAndPrecision()
         {
-            this.SingularName = singularName ?? this.ObjectType.SingularName;
-            this.PluralName = pluralName ?? Pluralizer.Pluralize(this.SingularName);
-
-            this.IsMany = this.RelationType.Multiplicity == Multiplicity.OneToMany ||
-                          this.RelationType.Multiplicity == Multiplicity.ManyToMany;
-            this.IsOne = !this.IsMany;
-            this.Name = this.IsMany ? this.PluralName : this.SingularName;
-
             if (this.ObjectType is Unit unitType)
             {
                 switch (unitType.Tag)
                 {
                     case UnitTags.String:
-                        this.Size = size ?? 256;
+                        this.Size ??= 256;
                         break;
 
                     case UnitTags.Binary:
-                        this.Size = size ?? MaximumSize;
+                        this.Size ??= MaximumSize;
                         break;
 
                     case UnitTags.Decimal:
-                        this.Precision = precision ?? 19;
-                        this.Scale = scale ?? 2;
+                        this.Precision ??= 19;
+                        this.Scale ??= 2;
                         break;
                 }
             }
-
-            this.IsRequired = isRequired;
-            this.IsUnique = isUnique;
-            this.MediaType = mediaType;
         }
     }
 }

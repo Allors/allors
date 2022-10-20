@@ -207,6 +207,10 @@ $composite.WorkspaceExclusiveRoleTypesByWorkspaceName.(workspaceName):{roleType|
 define_associationType(associationType) ::= <<
     public class Meta$associationType.Name$ : AssociationType, IMeta$associationType.Name$
     {
+        public Meta$associationType.Name$(MetaPopulation m) : base(m.$associationType.ObjectType.SingularName$)
+        {
+        }
+
         IMeta$associationType.ObjectType.SingularName$ IMeta$associationType.Name$.ObjectType => ((M)this.MetaPopulation).$associationType.ObjectType.SingularName$;
     }
 
@@ -226,7 +230,15 @@ $composite.WorkspaceExclusiveRoleTypesByWorkspaceName.(workspaceName):{roleType|
 define_roleType(roleType) ::= <<
     public class Meta$roleType.FullName$ : RoleType, IMeta$roleType.FullName$
     {
-
+        public Meta$roleType.FullName$(MetaPopulation m) : base(m.$roleType.ObjectType.SingularName$$if(roleType.AssignedSingularName)$, "$roleType.AssignedSingularName$"$endif$$if(roleType.AssignedPluralName)$, "$roleType.AssignedPluralName$"$endif$)
+        {
+$if(roleType.Size)$             this.Size = $roleType.Size$;$endif$        
+$if(roleType.Precision)$            this.Precision = $roleType.Precision$;$endif$        
+$if(roleType.Scale)$            this.Scale = $roleType.Scale$;$endif$        
+$if(roleType.IsRequired)$           this.IsRequired = $roleType.IsRequired$;$endif$        
+$if(roleType.IsUnique)$             this.IsUnique = $roleType.IsUnique$;$endif$        
+        }
+        
 $if(roleType.ObjectType.IsComposite)$
         IMeta$roleType.ObjectType.SingularName$ IMeta$roleType.FullName$.ObjectType => ((M)this.MetaPopulation).$roleType.ObjectType.SingularName$;
 $endif$
@@ -259,11 +271,10 @@ namespace Allors.Workspace.Meta.Static
 
             return new RelationType[]
             {
-$meta.WorkspaceRelationTypesByWorkspaceName.(workspaceName):{relationType|            this.Build$relationType.Name$(m),}; separator="\n"$
+$meta.WorkspaceRelationTypesByWorkspaceName.(workspaceName):{relationType|$build_relationType(relationType)$}; separator=",\n"$
             };
         }
 
-$meta.WorkspaceRelationTypesByWorkspaceName.(workspaceName):{relationType|$build_relationType(relationType)$}; separator="\n"$
 
         private MethodType[] BuildMethodTypes(MetaPopulation m)
 		{
@@ -303,26 +314,10 @@ inheritance(composite) ::= <<$composite.WorkspaceDirectSupertypesByWorkspaceName
 build_inheritance(composite, superType) ::= <<$\n$                new Inheritance(m.$composite.SingularName$, m.$superType.SingularName$),>>
 
 build_relationType(relationType) ::= <<
-        private RelationType Build$relationType.Name$(MetaPopulation m)
-        {
-            var associationType = (AssociationType)$if(relationType.RoleType.ObjectType.IsUnit)$new AssociationTypeWithUnitRole();$else$m.$relationType.RoleType.ObjectType.SingularName$.$relationType.AssociationType.Name$;$endif$
-            var roleType = (RoleType)m.$relationType.AssociationType.ObjectType.SingularName$.$relationType.RoleType.Name$;
-
-            var relationType = new RelationType(m, "$relationType.Tag$", associationType, m.$relationType.AssociationType.ObjectType.Name$, roleType, m.$relationType.RoleType.ObjectType.Name$$if(relationType.Multiplicity)$, Allors.Multiplicity.$relationType.Multiplicity$$endif$);
-
-            relationType.Init($Separated([isDerived(relationType)], ",")$);
-
-$initRoleType(roleType=relationType.RoleType)$
-
-            return relationType;
-        }
+                new RelationType(m, "$relationType.Tag$", new Meta$relationType.AssociationType.Name$(m), new Meta$relationType.RoleType.FullName$(m), Allors.Multiplicity.$relationType.Multiplicity$)
 >>
 
 isDerived(relationType) ::= <<$if(relationType.IsDerived)$isDerived: $relationType.IsDerived$$endif$>>
-
-initRoleType(roleType) ::= <<
-            roleType.Init($Separated([singularName(roleType), pluralName(roleType), size(roleType), precision(roleType), scale(roleType), isRequired(roleType), isUnique(roleType), mediaType(roleType)], ",")$);
->>
 
 singularName(roleType) ::= <<$if(roleType.ExistAssignedSingularName)$singularName: "$roleType.SingularName$"$endif$>>
 pluralName(roleType) ::= <<$if(roleType.ExistAssignedPluralName)$pluralName: "$roleType.PluralName$"$endif$>>

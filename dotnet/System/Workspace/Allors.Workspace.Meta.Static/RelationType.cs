@@ -6,6 +6,8 @@
 
 namespace Allors.Workspace.Meta
 {
+    using System.Drawing;
+
     /// <summary>
     ///     A relation type defines the state and behavior for
     ///     a set of association types and role types.
@@ -13,15 +15,13 @@ namespace Allors.Workspace.Meta
     public sealed class RelationType : MetaIdentifiableObject
     {
         // Class
-        public RelationType(MetaPopulation metaPopulation, string tag, AssociationType associationType, IComposite associationObjectType, RoleType roleType, IObjectType roleObjectType, Multiplicity multiplicity = Multiplicity.ManyToOne)
+        public RelationType(MetaPopulation metaPopulation, string tag, AssociationType associationType, RoleType roleType, Multiplicity multiplicity = Multiplicity.ManyToOne)
         : base(metaPopulation, tag)
         {
             this.AssociationType = associationType;
             this.AssociationType.RelationType = this;
-            this.AssociationType.ObjectType = associationObjectType;
             this.RoleType = roleType;
             this.RoleType.RelationType = this;
-            this.RoleType.ObjectType = roleObjectType;
             this.Multiplicity = this.RoleType.ObjectType.IsUnit ? Multiplicity.OneToOne : multiplicity;
         }
 
@@ -34,12 +34,5 @@ namespace Allors.Workspace.Meta
         public bool IsDerived { get; set; }
 
         public override string ToString() => $"{this.AssociationType.ObjectType.SingularName}{this.RoleType.Name}";
-
-        public void Init(bool isDerived = false)
-        {
-            this.IsDerived = isDerived;
-
-            this.AssociationType.Init();
-        }
     }
 }

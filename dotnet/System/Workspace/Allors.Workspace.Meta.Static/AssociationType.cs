@@ -15,20 +15,37 @@ namespace Allors.Workspace.Meta
     /// </summary>
     public abstract class AssociationType : IAssociationType
     {
-        public MetaPopulation MetaPopulation { get; set; }
-        public IComposite ObjectType { get; set; }
+        protected AssociationType(IComposite objectType)
+        {
+            this.ObjectType = objectType;
 
-        public RelationType RelationType { get; set; }
+            const string where = "Where";
 
-        public RoleType RoleType => this.RelationType.RoleType;
+            this.SingularName = this.ObjectType.SingularName + where + this.RoleType.SingularName;
+            this.PluralName = this.ObjectType.PluralName + where + this.RoleType.SingularName;
+            this.Name = this.IsMany ? this.PluralName : this.SingularName;
+        }
 
         IObjectType IPropertyType.ObjectType => this.ObjectType;
 
-        public string SingularName { get; set; }
-        public string PluralName { get; set; }
-        public string Name { get; set; }
-        public bool IsMany { get; set; }
-        public bool IsOne { get; set; }
+        public IComposite ObjectType { get; }
+
+        public MetaPopulation MetaPopulation => this.RelationType.MetaPopulation;
+
+        public RelationType RelationType { get; internal set; }
+
+        public RoleType RoleType => this.RelationType.RoleType;
+
+        public string SingularName { get; }
+
+        public string PluralName { get; }
+
+        public string Name { get; }
+
+        public bool IsMany => this.RelationType.Multiplicity == Multiplicity.ManyToOne ||
+                              this.RelationType.Multiplicity == Multiplicity.ManyToMany;
+
+        public bool IsOne => !this.IsMany;
 
         public string OperandTag => this.RelationType.Tag;
 
@@ -36,17 +53,5 @@ namespace Allors.Workspace.Meta
             string.Compare(this.Name, other.Name, StringComparison.InvariantCulture);
 
         public override string ToString() => $"{this.RoleType.ObjectType.SingularName}.{this.Name}";
-
-        public void Init()
-        {
-            const string where = "Where";
-
-            this.IsMany = this.RelationType.Multiplicity == Multiplicity.ManyToOne ||
-                          this.RelationType.Multiplicity == Multiplicity.ManyToMany;
-            this.IsOne = !this.IsMany;
-            this.SingularName = this.ObjectType.SingularName + where + this.RoleType.SingularName;
-            this.PluralName = this.ObjectType.PluralName + where + this.RoleType.SingularName;
-            this.Name = this.IsMany ? this.PluralName : this.SingularName;
-        }
     }
 }

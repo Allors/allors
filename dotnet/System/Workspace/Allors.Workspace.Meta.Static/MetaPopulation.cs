@@ -116,9 +116,14 @@ namespace Allors.Workspace.Meta
 
             // RoleTypes
             {
+                foreach (RoleType roleType in this.RelationTypes.Select(v => v.RoleType))
+                {
+                    roleType.InitializeSizeScaleAndPrecision();
+                }
+
                 var exclusiveRoleTypesObjectType = this.RelationTypes
-                    .GroupBy(v => v.AssociationType.ObjectType)
-                    .ToDictionary(g => g.Key, g => g.Select(v => v.RoleType).ToArray());
+                .GroupBy(v => v.AssociationType.ObjectType)
+                .ToDictionary(g => g.Key, g => g.Select(v => v.RoleType).ToArray());
 
                 foreach (Composite objectType in this.Composites)
                 {

@@ -21,7 +21,11 @@ public class RoleTypeModel : PropertyTypeModel
 
     public bool ExistAssignedSingularName => ((RoleType)this.RoleType).ExistAssignedSingularName;
 
+    public string AssignedSingularName => ((RoleType)this.RoleType).AssignedSingularName;
+
     public bool ExistAssignedPluralName => ((RoleType)this.RoleType).ExistAssignedPluralName;
+
+    public string AssignedPluralName => ((RoleType)this.RoleType).AssignedPluralName;
 
     public int? Size => this.RoleType.Size;
 
