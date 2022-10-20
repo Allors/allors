@@ -18,10 +18,30 @@ namespace Allors.Workspace.Meta
 
         public override Type ClrType { get; set; }
 
+        public override IReadOnlyList<IComposite> DirectSubtypes { get; set; }
+
+        public override IReadOnlyList<IComposite> Subtypes { get; set; }
+
+        public override IReadOnlyList<IComposite> Composites { get; }
+
+        public override IReadOnlyList<IClass> Classes { get; set; }
+
+        public override IClass ExclusiveClass { get; }
+
         public override IReadOnlyList<IRoleType> ExclusiveRoleTypes { get; set; }
 
         public override IReadOnlyList<IAssociationType> ExclusiveAssociationTypes { get; set; }
 
         public override IReadOnlyList<IMethodType> ExclusiveMethodTypes { get; set; }
+
+        public override bool IsAssignableFrom(IComposite objectType)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Bind(Dictionary<string, Type> typeByName)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

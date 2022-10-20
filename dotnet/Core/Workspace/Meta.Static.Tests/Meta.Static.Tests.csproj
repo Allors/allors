@@ -13,10 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\System\Workspace\Adapters\Allors.Workspace.Adapters.direct\Allors.Workspace.Adapters.Direct.csproj" />
-    <ProjectReference Include="..\..\..\System\Workspace\Adapters\Allors.Workspace.Adapters\Allors.Workspace.Adapters.csproj" />
     <ProjectReference Include="..\Meta.Static\Workspace.Meta.Static.csproj" />
-    <ProjectReference Include="..\Tests\Workspace.Tests.csproj" />
   </ItemGroup>
 
 </Project>

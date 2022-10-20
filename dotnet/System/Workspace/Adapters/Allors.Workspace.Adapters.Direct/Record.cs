@@ -1,4 +1,4 @@
-// <copyright file="DatabaseRecord.cs" company="Allors bvba">
+﻿// <copyright file="DatabaseRecord.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -15,15 +15,14 @@ public class Record : Adapters.Record
     private readonly Grant[] accessControls;
     private readonly ValueRange<long> deniedPermissionIds;
 
-    private readonly Dictionary<RoleType, object> roleByRoleType;
+    private readonly Dictionary<IRoleType, object> roleByRoleType;
 
-    internal Record(Class @class, long id)
+    internal Record(IClass @class, long id)
         : base(@class, id, 0)
     {
     }
 
-    internal Record(Class @class, long id, long version, Dictionary<RoleType, object> roleByRoleType, ValueRange<long> deniedPermissionIds,
-        Grant[] accessControls)
+    internal Record(IClass @class, long id, long version, Dictionary<IRoleType, object> roleByRoleType, ValueRange<long> deniedPermissionIds, Grant[] accessControls)
         : base(@class, id, version)
     {
         this.roleByRoleType = roleByRoleType;
@@ -31,7 +30,7 @@ public class Record : Adapters.Record
         this.accessControls = accessControls;
     }
 
-    public override object GetRole(RoleType roleType)
+    public override object GetRole(IRoleType roleType)
     {
         if (this.roleByRoleType == null)
         {

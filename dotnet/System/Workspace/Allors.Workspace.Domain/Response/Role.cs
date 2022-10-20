@@ -1,4 +1,4 @@
-// <copyright file="Method.cs" company="Allors bvba">
+﻿// <copyright file="Method.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -9,7 +9,7 @@ namespace Allors.Workspace.Response
 
     public struct Role
     {
-        public Role(IObject @object, RelationType relationType)
+        public Role(IObject @object, IRelationType relationType)
         {
             this.Object = @object;
             this.RelationType = relationType;
@@ -17,6 +17,6 @@ namespace Allors.Workspace.Response
 
         public IObject Object { get; }
 
-        public RelationType RelationType { get; }
+        public IRelationType RelationType { get; }
     }
 }

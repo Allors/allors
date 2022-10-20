@@ -9,5 +9,6 @@ namespace Allors.Workspace.Meta
 {
     public interface IRoleType : IPropertyType
     {
+        IAssociationType AssociationType { get; }
     }
 }

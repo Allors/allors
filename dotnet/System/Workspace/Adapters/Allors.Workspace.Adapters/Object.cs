@@ -1,4 +1,4 @@
-// <copyright file="Object.cs" company="Allors bvba">
+﻿// <copyright file="Object.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -29,7 +29,7 @@ namespace Allors.Workspace.Adapters
 
         public Record Record { get; private set; }
 
-        protected IEnumerable<RoleType> RoleTypes => this.Class.DatabaseOriginRoleTypes;
+        protected IEnumerable<IRoleType> RoleTypes => this.Class.RoleTypes;
 
         int IComparable<Object>.CompareTo(Object other)
         {
@@ -43,11 +43,11 @@ namespace Allors.Workspace.Adapters
 
         IWorkspace IObject.Workspace => this.Workspace;
 
-        public Class Class { get; }
+        public IClass Class { get; }
 
         public long Id { get; }
 
-        public bool ExistRole(RoleType roleType)
+        public bool ExistRole(IRoleType roleType)
         {
             if (roleType.ObjectType.IsUnit)
             {
@@ -62,7 +62,7 @@ namespace Allors.Workspace.Adapters
             return this.GetCompositesRole(roleType).Any();
         }
 
-        public object GetRole(RoleType roleType)
+        public object GetRole(IRoleType roleType)
         {
             if (roleType == null)
             {
@@ -83,33 +83,33 @@ namespace Allors.Workspace.Adapters
         }
 
 
-        public object GetUnitRole(RoleType roleType) => this.Record?.GetRole(roleType);
+        public object GetUnitRole(IRoleType roleType) => this.Record?.GetRole(roleType);
 
-        IObject IObject.GetCompositeRole(RoleType roleType) => this.GetCompositeRole(roleType);
+        IObject IObject.GetCompositeRole(IRoleType roleType) => this.GetCompositeRole(roleType);
 
-        IEnumerable<IObject> IObject.GetCompositesRole(RoleType roleType) => this.GetCompositesRole(roleType);
+        IEnumerable<IObject> IObject.GetCompositesRole(IRoleType roleType) => this.GetCompositesRole(roleType);
 
         public long Version => this.Record?.Version ?? Allors.Version.WorkspaceInitial;
 
-        public bool CanRead(RoleType roleType)
+        public bool CanRead(IRoleType roleType)
         {
             var permission = this.Workspace.Connection.GetPermission(this.Class, roleType, Operations.Read);
             return this.Record.IsPermitted(permission);
         }
 
-        public bool CanWrite(RoleType roleType)
+        public bool CanWrite(IRoleType roleType)
         {
             var permission = this.Workspace.Connection.GetPermission(this.Class, roleType, Operations.Write);
             return this.Record.IsPermitted(permission);
         }
 
-        public bool CanExecute(MethodType methodType)
+        public bool CanExecute(IMethodType methodType)
         {
             var permission = this.Workspace.Connection.GetPermission(this.Class, methodType, Operations.Execute);
             return this.Record.IsPermitted(permission);
         }
 
-        public Object GetCompositeRole(RoleType roleType)
+        public Object GetCompositeRole(IRoleType roleType)
         {
             var role = this.Record?.GetRole(roleType);
 
@@ -123,7 +123,7 @@ namespace Allors.Workspace.Adapters
             return @object;
         }
 
-        public RefRange<Object> GetCompositesRole(RoleType roleType)
+        public RefRange<Object> GetCompositesRole(IRoleType roleType)
         {
             var role = (ValueRange<long>)(this.Record?.GetRole(roleType) ?? ValueRange<long>.Empty);
 

@@ -1,4 +1,4 @@
-// <copyright file="IPropertyTypeExtensions.cs" company="Allors bvba">
+﻿// <copyright file="IPropertyTypeExtensions.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -26,7 +26,7 @@ namespace Allors.Workspace.Request.Extensions
 
         public static object Get<T>(this T @this, IObject strategy, IComposite ofType = null) where T : IPropertyType
         {
-            if (@this is RoleType roleType)
+            if (@this is IRoleType roleType)
             {
                 if (roleType.IsOne)
                 {

@@ -1,4 +1,4 @@
-// <copyright file="ToJsonVisitor.cs" company="Allors bvba">
+﻿// <copyright file="ToJsonVisitor.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -11,7 +11,6 @@ using System.Linq;
 using Allors.Database;
 using Allors.Database.Data;
 using Allors.Database.Meta;
-using Allors.Workspace.Meta;
 using Allors.Workspace.Request;
 using And = Allors.Workspace.Request.And;
 using Between = Allors.Workspace.Request.Between;
@@ -41,7 +40,7 @@ using Union = Allors.Workspace.Request.Union;
 
 public class ToDatabaseVisitor
 {
-    private readonly IMetaPopulation metaPopulation;
+    private readonly Allors.Database.Meta.IMetaPopulation metaPopulation;
     private readonly ITransaction transaction;
 
     public ToDatabaseVisitor(ITransaction transaction)
@@ -74,7 +73,8 @@ public class ToDatabaseVisitor
 
     private Extent Visit(Filter ws) => new(this.Visit(ws.ObjectType))
     {
-        Predicate = this.Visit(ws.Predicate), Sorting = this.Visit(ws.Sorting),
+        Predicate = this.Visit(ws.Predicate),
+        Sorting = this.Visit(ws.Sorting),
     };
 
     private IPredicate Visit(Request.IPredicate ws) =>
@@ -100,39 +100,52 @@ public class ToDatabaseVisitor
 
     private IPredicate Visit(Between ws) => new Database.Data.Between(this.Visit(ws.RoleType))
     {
-        Parameter = ws.Parameter, Values = ws.Values, Paths = this.Visit(ws.Paths),
+        Parameter = ws.Parameter,
+        Values = ws.Values,
+        Paths = this.Visit(ws.Paths),
     };
 
     private IPredicate Visit(ContainedIn ws) => new Database.Data.ContainedIn(this.Visit(ws.PropertyType))
     {
-        Parameter = ws.Parameter, Objects = this.Visit(ws.Objects), Extent = this.Visit(ws.Extent),
+        Parameter = ws.Parameter,
+        Objects = this.Visit(ws.Objects),
+        Extent = this.Visit(ws.Extent),
     };
 
     private IPredicate Visit(Contains ws) => new Database.Data.Contains(this.Visit(ws.PropertyType))
     {
-        Parameter = ws.Parameter, Object = this.Visit(ws.Object),
+        Parameter = ws.Parameter,
+        Object = this.Visit(ws.Object),
     };
 
     private IPredicate Visit(Equals ws) => new Database.Data.Equals(this.Visit(ws.PropertyType))
     {
-        Parameter = ws.Parameter, Object = this.Visit(ws.Object), Value = ws.Value, Path = this.Visit(ws.Path),
+        Parameter = ws.Parameter,
+        Object = this.Visit(ws.Object),
+        Value = ws.Value,
+        Path = this.Visit(ws.Path),
     };
 
     private IPredicate Visit(Exists ws) => new Database.Data.Exists(this.Visit(ws.PropertyType)) { Parameter = ws.Parameter };
 
     private IPredicate Visit(GreaterThan ws) => new Database.Data.GreaterThan(this.Visit(ws.RoleType))
     {
-        Parameter = ws.Parameter, Value = ws.Value, Path = this.Visit(ws.Path),
+        Parameter = ws.Parameter,
+        Value = ws.Value,
+        Path = this.Visit(ws.Path),
     };
 
     private IPredicate Visit(Instanceof ws) => new Database.Data.Instanceof(this.Visit(ws.PropertyType))
     {
-        Parameter = ws.Parameter, ObjectType = this.Visit(ws.ObjectType),
+        Parameter = ws.Parameter,
+        ObjectType = this.Visit(ws.ObjectType),
     };
 
     private IPredicate Visit(LessThan ws) => new Database.Data.LessThan(this.Visit(ws.RoleType))
     {
-        Parameter = ws.Parameter, Value = ws.Value, Path = this.Visit(ws.Path),
+        Parameter = ws.Parameter,
+        Value = ws.Value,
+        Path = this.Visit(ws.Path),
     };
 
     private IPredicate Visit(Like ws) => new Database.Data.Like(this.Visit(ws.RoleType)) { Parameter = ws.Parameter, Value = ws.Value };
@@ -184,18 +197,18 @@ public class ToDatabaseVisitor
     private IPropertyType Visit(Meta.IPropertyType ws) =>
         ws switch
         {
-            AssociationType associationType => this.Visit(associationType),
-            RoleType roleType => this.Visit(roleType),
+            Meta.IAssociationType associationType => this.Visit(associationType),
+            Meta.IRoleType roleType => this.Visit(roleType),
             null => null,
             _ => throw new ArgumentException("Invalid property type"),
         };
 
-    private IAssociationType Visit(AssociationType ws) =>
+    private IAssociationType Visit(Meta.IAssociationType ws) =>
         ws != null ? ((IRelationType)this.metaPopulation.FindByTag(ws.OperandTag)).AssociationType : null;
 
-    private IRoleType Visit(RoleType ws) => ws != null ? ((IRelationType)this.metaPopulation.FindByTag(ws.OperandTag)).RoleType : null;
+    private IRoleType Visit(Meta.IRoleType ws) => ws != null ? ((IRelationType)this.metaPopulation.FindByTag(ws.OperandTag)).RoleType : null;
 
-    private IRoleType[] Visit(IEnumerable<RoleType> ws) =>
+    private IRoleType[] Visit(IEnumerable<Meta.IRoleType> ws) =>
         ws?.Select(v => ((IRelationType)this.metaPopulation.FindByTag(v.OperandTag)).RoleType).ToArray();
 
     private IObject[] Visit(IEnumerable<Response.IObject> ws) => ws != null ? this.transaction.Instantiate(ws.Select(v => v.Id)) : null;

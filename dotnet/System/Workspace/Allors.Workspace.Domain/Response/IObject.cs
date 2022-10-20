@@ -1,4 +1,4 @@
-// <copyright file="Object.cs" company="Allors bvba">
+﻿// <copyright file="Object.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -12,26 +12,26 @@ namespace Allors.Workspace.Response
     {
         IWorkspace Workspace { get; }
 
-        Class Class { get; }
+        IClass Class { get; }
 
         long Id { get; }
 
         long Version { get; }
 
-        bool CanRead(RoleType roleType);
+        bool CanRead(IRoleType roleType);
 
-        bool CanWrite(RoleType roleType);
+        bool CanWrite(IRoleType roleType);
 
-        bool CanExecute(MethodType methodType);
+        bool CanExecute(IMethodType methodType);
 
-        bool ExistRole(RoleType roleType);
+        bool ExistRole(IRoleType roleType);
 
-        object GetRole(RoleType roleType);
+        object GetRole(IRoleType roleType);
 
-        object GetUnitRole(RoleType roleType);
+        object GetUnitRole(IRoleType roleType);
 
-        IObject GetCompositeRole(RoleType roleType);
+        IObject GetCompositeRole(IRoleType roleType);
 
-        IEnumerable<IObject> GetCompositesRole(RoleType roleType);
+        IEnumerable<IObject> GetCompositesRole(IRoleType roleType);
     }
 }

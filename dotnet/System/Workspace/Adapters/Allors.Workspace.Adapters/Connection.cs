@@ -1,4 +1,4 @@
-// <copyright file="Workspace.cs" company="Allors bvba">
+﻿// <copyright file="Workspace.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -12,7 +12,7 @@ namespace Allors.Workspace.Adapters
 
     public abstract class Connection : IConnection
     {
-        protected Connection(string name, MetaPopulation metaPopulation)
+        protected Connection(string name, IMetaPopulation metaPopulation)
         {
             this.Name = name;
             this.MetaPopulation = metaPopulation;
@@ -20,7 +20,7 @@ namespace Allors.Workspace.Adapters
 
         public string Name { get; }
 
-        public MetaPopulation MetaPopulation { get; }
+        public IMetaPopulation MetaPopulation { get; }
 
         public abstract Task<IInvokeResult> InvokeAsync(MethodRequest method, BatchOptions options = null);
 
@@ -30,6 +30,6 @@ namespace Allors.Workspace.Adapters
 
         public abstract Record GetRecord(long id);
 
-        public abstract long GetPermission(Class @class, IOperandType operandType, Operations operation);
+        public abstract long GetPermission(IClass @class, IOperandType operandType, Operations operation);
     }
 }

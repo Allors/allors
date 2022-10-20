@@ -10,9 +10,9 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Allors.Database.Meta.Extensions;
 using Allors.Database;
 using Allors.Database.Meta;
+using Allors.Database.Meta.Extensions;
 using Allors.Database.Security;
 using Allors.Workspace.Meta;
 using Allors.Workspace.Request;
@@ -26,7 +26,7 @@ public class Connection : Adapters.Connection
     private readonly Dictionary<long, Grant> accessControlById;
     private readonly ConcurrentDictionary<long, Record> recordsById;
 
-    public Connection(IDatabase database, string name, MetaPopulation metaPopulation) : base(name, metaPopulation)
+    public Connection(IDatabase database, string name, Meta.IMetaPopulation metaPopulation) : base(name, metaPopulation)
     {
         this.Database = database;
 
@@ -48,8 +48,8 @@ public class Connection : Adapters.Connection
                 var databaseClass = @object.Strategy.Class;
                 var roleTypes = databaseClass.RoleTypes.Where(w => w.RelationType.WorkspaceNames.Any());
 
-                var workspaceClass = (Class)this.MetaPopulation.FindByTag(databaseClass.Tag);
-                var roleByRoleType = roleTypes.ToDictionary(w => ((RelationType)this.MetaPopulation.FindByTag(w.RelationType.Tag)).RoleType,
+                var workspaceClass = (Meta.IClass)this.MetaPopulation.FindByTag(databaseClass.Tag);
+                var roleByRoleType = roleTypes.ToDictionary(w => ((Meta.IRelationType)this.MetaPopulation.FindByTag(w.RelationType.Tag)).RoleType,
                     w => this.GetRole(@object, w));
 
                 var acl = accessControl[@object];
@@ -100,9 +100,9 @@ public class Connection : Adapters.Connection
         return databaseObjects;
     }
 
-    public override long GetPermission(Class workspaceClass, IOperandType operandType, Operations operation)
+    public override long GetPermission(Meta.IClass workspaceClass, IOperandType operandType, Operations operation)
     {
-        var @class = (IClass)this.Database.MetaPopulation.FindByTag(workspaceClass.Tag);
+        var @class = (Allors.Database.Meta.IClass)this.Database.MetaPopulation.FindByTag(workspaceClass.Tag);
         var operandId = this.Database.MetaPopulation.FindByTag(operandType.OperandTag).Id;
 
         long permission;
@@ -156,7 +156,7 @@ public class Connection : Adapters.Connection
         return acessControl;
     }
 
-    private object GetRole(IObject @object, IRoleType roleType)
+    private object GetRole(IObject @object, Allors.Database.Meta.IRoleType roleType)
     {
         if (roleType.ObjectType.IsUnit)
         {

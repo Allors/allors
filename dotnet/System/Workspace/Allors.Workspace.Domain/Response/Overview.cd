@@ -1,10 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="Allors.Workspace.Meta.RelationType" Collapsed="true">
-    <Position X="14.75" Y="4.25" Width="1.5" />
-    <TypeIdentifier />
-    <Lollipop Position="0.2" />
-  </Class>
   <Struct Name="Allors.Workspace.Response.Role">
     <Position X="12.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
@@ -13,7 +8,6 @@
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="Object" />
-      <Property Name="RelationType" />
     </ShowAsAssociation>
   </Struct>
   <Interface Name="Allors.Workspace.Response.IResult">
@@ -34,7 +28,7 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="Allors.Workspace.Response.IPullResult">
-    <Position X="7.5" Y="5.25" Width="1.5" />
+    <Position X="7.5" Y="5.25" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAIAAAIAAAAAAAAAAAAAAAAAEAAAAgAMAAAAA=</HashCode>
       <FileName>Response\IPullResult.cs</FileName>
@@ -50,17 +44,17 @@
       <Property Name="Roles" />
     </ShowAsCollectionAssociation>
   </Interface>
-  <Interface Name="Allors.Workspace.Response.IObject" Collapsed="true">
-    <Position X="16" Y="2.5" Width="1.5" />
+  <Interface Name="Allors.Workspace.Response.IObject">
+    <Position X="10.75" Y="4.75" Width="1.75" />
     <TypeIdentifier>
       <HashCode>IABCAAEIAABAAAAAEEYQAAAAAAAAAAAAAAAAAAAIAAA=</HashCode>
       <FileName>Response\IObject.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Allors.Workspace.IConnection">
-    <Position X="0.5" Y="0.5" Width="1.5" />
+    <Position X="0.5" Y="0.5" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAABAAAQAAAAgAAAQAAAAAABAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAgAAAQAAAAAABAAAA=</HashCode>
       <FileName>IConnection.cs</FileName>
     </TypeIdentifier>
   </Interface>

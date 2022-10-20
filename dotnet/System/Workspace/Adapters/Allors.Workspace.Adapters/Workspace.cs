@@ -1,4 +1,4 @@
-// <copyright file="Workspace.cs" company="Allors bvba">
+﻿// <copyright file="Workspace.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -11,13 +11,13 @@ namespace Allors.Workspace.Adapters
 
     public abstract class Workspace : IWorkspace
     {
-        private readonly Dictionary<Class, ISet<Object>> objectsByClass;
+        private readonly Dictionary<IClass, ISet<Object>> objectsByClass;
 
         protected Workspace(Connection connection)
         {
             this.Connection = connection;
             this.ObjectByWorkspaceId = new Dictionary<long, Object>();
-            this.objectsByClass = new Dictionary<Class, ISet<Object>>();
+            this.objectsByClass = new Dictionary<IClass, ISet<Object>>();
         }
 
         public Connection Connection { get; }

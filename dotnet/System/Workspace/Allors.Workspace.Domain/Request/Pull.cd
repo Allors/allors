@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="Allors.Workspace.Request.Pull">
+  <Class Name="Allors.Workspace.Request.PullRequest">
     <Position X="0.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>UIAAAAAAAAAAAAAgAAAAAAAACAAAAAAAIIAACAAAAAA=</HashCode>
-      <FileName>Request\Pull.cs</FileName>
+      <FileName>Request\PullRequest.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="Extent" />

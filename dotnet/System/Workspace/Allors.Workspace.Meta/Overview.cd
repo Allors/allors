@@ -2,10 +2,21 @@
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Interface Name="Allors.Workspace.Meta.IComposite">
     <Position X="8.75" Y="8.25" Width="2" />
+    <AssociationLine Name="DirectSupertypes" Type="Allors.Workspace.Meta.IInterface" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="8.75" Y="10.438" />
+        <Point X="7.625" Y="10.438" />
+        <Point X="7.625" Y="12.875" />
+        <Point X="8" Y="12.875" />
+      </Path>
+    </AssociationLine>
     <TypeIdentifier>
-      <HashCode>BAJAgAAAAAFAAAAAACAAAgAAAQAAAAAAAQBAAAgAAAA=</HashCode>
+      <HashCode>AAJAgAAAAAFAAAAAACAAAAAAAQAAAAAAAABAAAAAAAA=</HashCode>
       <FileName>IComposite.cs</FileName>
     </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="DirectSupertypes" />
+    </ShowAsCollectionAssociation>
   </Interface>
   <Interface Name="Allors.Workspace.Meta.IMetaIdentifiableObject">
     <Position X="6" Y="0.5" Width="2" />
@@ -102,7 +113,7 @@
   <Interface Name="Allors.Workspace.Meta.IRelationType">
     <Position X="0.5" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAiAAAAAAAEAAAAAAAAAA=</HashCode>
       <FileName>IRelationType.cs</FileName>
     </TypeIdentifier>
   </Interface>
@@ -134,8 +145,8 @@
       <FileName>ICompositeRoleType.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="Composite" />
       <Property Name="RoleType" />
+      <Property Name="Composite" />
     </ShowAsAssociation>
   </Interface>
   <Interface Name="Allors.Workspace.Meta.ICompositeMethodType">
@@ -147,12 +158,12 @@
       </Path>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAIAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAIAAAAAAABAAAAAQAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ICompositeMethodType.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="Composite" />
       <Property Name="MethodType" />
+      <Property Name="Composite" />
     </ShowAsAssociation>
   </Interface>
   <Font Name="Segoe UI" Size="9" />

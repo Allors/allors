@@ -1,4 +1,4 @@
-// <copyright file="Many2OneTests.cs" company="Allors bvba">
+﻿// <copyright file="Many2OneTests.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -38,7 +38,7 @@ namespace Tests.Workspace
 
                 foreach (var c1 in result.GetCollection(m.C1))
                 {
-                    foreach (var roleType in this.M.C1.DatabaseOriginRoleTypes)
+                    foreach (var roleType in this.M.C1.RoleTypes)
                     {
                         Assert.True(c1.CanRead(roleType));
                         Assert.True(c1.CanWrite(roleType));
@@ -64,7 +64,7 @@ namespace Tests.Workspace
 
                 foreach (var c1 in result.GetCollection(m.C1))
                 {
-                    foreach (var roleType in this.M.C1.DatabaseOriginRoleTypes)
+                    foreach (var roleType in this.M.C1.RoleTypes)
                     {
                         Assert.False(c1.CanRead(roleType));
                         Assert.False(c1.CanWrite(roleType));
@@ -90,7 +90,7 @@ namespace Tests.Workspace
 
                 foreach (var c1 in result.GetCollection(m.C1))
                 {
-                    foreach (var roleType in this.M.C1.DatabaseOriginRoleTypes)
+                    foreach (var roleType in this.M.C1.RoleTypes)
                     {
                         Assert.False(c1.CanRead(roleType));
                         Assert.False(c1.CanWrite(roleType));
@@ -110,7 +110,7 @@ namespace Tests.Workspace
 
                 foreach (var denied in result.GetCollection(m.Denied))
                 {
-                    foreach (var roleType in this.M.C1.DatabaseOriginRoleTypes)
+                    foreach (var roleType in this.M.C1.RoleTypes)
                     {
                         Assert.False(denied.CanRead(roleType));
                         Assert.False(denied.CanWrite(roleType));

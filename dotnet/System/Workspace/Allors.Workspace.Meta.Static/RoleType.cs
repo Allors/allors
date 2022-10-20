@@ -23,7 +23,7 @@ namespace Allors.Workspace.Meta
 
         public MetaPopulation MetaPopulation { get; set; }
         public RelationType RelationType { get; set; }
-        public AssociationType AssociationType => this.RelationType.AssociationType;
+        public IAssociationType AssociationType => this.RelationType.AssociationType;
         public int? Size { get; set; }
         public int? Precision { get; set; }
         public int? Scale { get; set; }

@@ -1,4 +1,4 @@
-// <copyright file="IWorkspace.cs" company="Allors bvba">
+﻿// <copyright file="IWorkspace.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -14,7 +14,7 @@ namespace Allors.Workspace
     {
         string Name { get; }
 
-        MetaPopulation MetaPopulation { get; }
+        IMetaPopulation MetaPopulation { get; }
 
         Task<IInvokeResult> InvokeAsync(MethodRequest method, BatchOptions options = null);
 
