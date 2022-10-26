@@ -27,7 +27,6 @@ namespace Allors.Workspace.Meta
             this.ObjectType = objectType;
             this.SingularName = singularName ?? this.ObjectType.SingularName;
             this.PluralName = pluralName ?? Pluralizer.Pluralize(this.SingularName);
-            this.Name = this.IsMany ? this.PluralName : this.SingularName;
         }
 
         public MetaPopulation MetaPopulation => this.RelationType.MetaPopulation;
@@ -42,7 +41,7 @@ namespace Allors.Workspace.Meta
 
         public string PluralName { get; }
 
-        public string Name { get; }
+        public string Name { get; internal set; }
 
         public bool IsMany => this.RelationType.Multiplicity == Multiplicity.OneToMany ||
                               this.RelationType.Multiplicity == Multiplicity.ManyToMany;

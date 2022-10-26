@@ -7,6 +7,7 @@
 namespace Allors.Workspace.Meta
 {
     using System.Drawing;
+    using Allors.Text;
 
     /// <summary>
     ///     A relation type defines the state and behavior for
@@ -22,7 +23,16 @@ namespace Allors.Workspace.Meta
             this.AssociationType.RelationType = this;
             this.RoleType = roleType;
             this.RoleType.RelationType = this;
+
             this.Multiplicity = this.RoleType.ObjectType.IsUnit ? Multiplicity.OneToOne : multiplicity;
+
+            const string where = "Where";
+
+            this.AssociationType.SingularName = this.AssociationType.ObjectType.SingularName + where + this.RoleType.SingularName;
+            this.AssociationType.PluralName = this.AssociationType.ObjectType.PluralName + where + this.RoleType.SingularName;
+            this.AssociationType.Name = this.AssociationType.IsMany ? this.AssociationType.PluralName : this.AssociationType.SingularName;
+
+            this.RoleType.Name = this.RoleType.IsMany ? this.RoleType.PluralName : this.RoleType.SingularName;
         }
 
         public AssociationType AssociationType { get; }

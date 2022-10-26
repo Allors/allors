@@ -275,12 +275,12 @@ $meta.WorkspaceRelationTypesByWorkspaceName.(workspaceName):{relationType|$build
             };
         }
 
-
         private MethodType[] BuildMethodTypes(MetaPopulation m)
 		{
 		    return new MethodType[]
-                {$meta.WorkspaceMethodTypesByWorkspaceName.(workspaceName):{methodType|            this.Build$methodType.FullName$(m),}; separator="\n"$
-                };
+            {
+$meta.WorkspaceMethodTypesByWorkspaceName.(workspaceName):{methodType|$build_methodType(methodType)$}; separator=",\n"$
+            };
 		}
 
         private void AssignPropertyTypes(MetaPopulation m)
@@ -292,8 +292,6 @@ $meta.WorkspaceCompositesByWorkspaceName.(workspaceName):{composite|$assign_prop
         {
 $meta.WorkspaceCompositesByWorkspaceName.(workspaceName):{composite|$assign_methods(composite)$}; separator="\n"$
         }
-
-$meta.WorkspaceMethodTypesByWorkspaceName.(workspaceName):{methodType|$build_methodType(methodType)$}; separator="\n"$
     }
 }
 >>
@@ -329,10 +327,7 @@ isUnique(roleType) ::= <<$if(relationType.RoleType.IsUnique)$isUnique: $relation
 mediaType(roleType) ::= <<$if(relationType.MediaType)$mediaType: "$relationType.MediaType$"$endif$>>
 
 build_methodType(methodType) ::= <<
-        private MethodType Build$methodType.FullName$(MetaPopulation m)
-        {
-            return ((MethodType)m.$methodType.ObjectType.Name$.$methodType.Name$).Init("$methodType.Tag$", m.$methodType.ObjectType.Name$, "$methodType.Name$");
-        }
+                new MethodType(m, "$methodType.Tag$", m.$methodType.ObjectType.Name$, "$methodType.Name$")
 >>
 
 assign_properties(composite) ::= <<

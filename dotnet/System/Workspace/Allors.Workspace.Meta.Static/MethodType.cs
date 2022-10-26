@@ -8,9 +8,11 @@ namespace Allors.Workspace.Meta
 {
     public sealed class MethodType : MetaIdentifiableObject, IMethodType
     {
-        public MethodType(MetaPopulation metaPopulation, string tag)
+        public MethodType(MetaPopulation metaPopulation, string tag, IComposite objectType, string name)
             : base(metaPopulation, tag)
         {
+            this.ObjectType = objectType;
+            this.Name = name;
         }
 
         public IComposite ObjectType { get; set; }
@@ -24,15 +26,5 @@ namespace Allors.Workspace.Meta
         public IRecord Output { get; }
 
         public override string ToString() => this.Name;
-
-        public MethodType Init(string tag, IComposite objectType, string name)
-        {
-            this.Tag = tag;
-            this.ObjectType = objectType;
-            this.Name = name;
-
-            return this;
-        }
-
     }
 }

@@ -18,12 +18,6 @@ namespace Allors.Workspace.Meta
         protected AssociationType(IComposite objectType)
         {
             this.ObjectType = objectType;
-
-            const string where = "Where";
-
-            this.SingularName = this.ObjectType.SingularName + where + this.RoleType.SingularName;
-            this.PluralName = this.ObjectType.PluralName + where + this.RoleType.SingularName;
-            this.Name = this.IsMany ? this.PluralName : this.SingularName;
         }
 
         IObjectType IPropertyType.ObjectType => this.ObjectType;
@@ -36,11 +30,11 @@ namespace Allors.Workspace.Meta
 
         public RoleType RoleType => this.RelationType.RoleType;
 
-        public string SingularName { get; }
+        public string SingularName { get; internal set; }
 
-        public string PluralName { get; }
+        public string PluralName { get; internal set; }
 
-        public string Name { get; }
+        public string Name { get; internal set; }
 
         public bool IsMany => this.RelationType.Multiplicity == Multiplicity.ManyToOne ||
                               this.RelationType.Multiplicity == Multiplicity.ManyToMany;
