@@ -1,4 +1,4 @@
-// <copyright file="RemoteDatabase.cs" company="Allors bvba">
+﻿// <copyright file="RemoteDatabase.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -22,7 +22,7 @@ namespace Allors.Workspace.Adapters.Json.SystemText
     [SuppressMessage("Design", "RCS1090:Add call to 'ConfigureAwait' (or vice versa).", Justification = "<Pending>")]
     public class Connection : Json.Connection
     {
-        public Connection(Client client, string name, MetaPopulation metaPopulation) : base(name, metaPopulation)
+        public Connection(Client client, string name, IMetaPopulation metaPopulation) : base(name, metaPopulation)
         {
             this.Client = client;
             this.UnitConvert = new UnitConvert();

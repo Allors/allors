@@ -1,4 +1,4 @@
-// <copyright file="RemoteDatabaseObject.cs" company="Allors bvba">
+﻿// <copyright file="RemoteDatabaseObject.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -15,17 +15,17 @@ namespace Allors.Workspace.Adapters.Json
     {
         private readonly Connection connection;
 
-        private Dictionary<RelationType, object> roleByRelationType;
+        private Dictionary<IRelationType, object> roleByRelationType;
         private SyncResponseRole[] syncResponseRoles;
 
-        internal Record(Connection connection, Class @class, long id, long version) : base(@class, id, version) =>
+        internal Record(Connection connection, IClass @class, long id, long version) : base(@class, id, version) =>
             this.connection = connection;
 
         internal ValueRange<long> GrantIds { get; private set; }
 
         internal ValueRange<long> RevocationIds { get; private set; }
 
-        private Dictionary<RelationType, object> RoleByRelationType
+        private Dictionary<IRelationType, object> RoleByRelationType
         {
             get
             {
@@ -33,10 +33,10 @@ namespace Allors.Workspace.Adapters.Json
                 {
                     var metaPopulation = this.connection.MetaPopulation;
                     this.roleByRelationType = this.syncResponseRoles.ToDictionary(
-                        v => (RelationType)metaPopulation.FindByTag(v.t),
+                        v => (IRelationType)metaPopulation.FindByTag(v.t),
                         v =>
                         {
-                            var roleType = ((RelationType)metaPopulation.FindByTag(v.t)).RoleType;
+                            var roleType = ((IRelationType)metaPopulation.FindByTag(v.t)).RoleType;
                             var objectType = roleType.ObjectType;
 
                             if (objectType.IsUnit)
@@ -60,14 +60,14 @@ namespace Allors.Workspace.Adapters.Json
         }
 
         internal static Record FromResponse(Connection database, ResponseContext ctx, SyncResponseObject syncResponseObject) =>
-            new Record(database, (Class)database.MetaPopulation.FindByTag(syncResponseObject.c), syncResponseObject.i, syncResponseObject.v)
+            new Record(database, (IClass)database.MetaPopulation.FindByTag(syncResponseObject.c), syncResponseObject.i, syncResponseObject.v)
             {
                 syncResponseRoles = syncResponseObject.ro,
                 GrantIds = ValueRange<long>.Load(ctx.CheckForMissingGrants(syncResponseObject.g)),
                 RevocationIds = ValueRange<long>.Load(ctx.CheckForMissingRevocations(syncResponseObject.r)),
             };
 
-        public override object GetRole(RoleType roleType)
+        public override object GetRole(IRoleType roleType)
         {
             object @object = null;
             this.RoleByRelationType?.TryGetValue(roleType.RelationType, out @object);

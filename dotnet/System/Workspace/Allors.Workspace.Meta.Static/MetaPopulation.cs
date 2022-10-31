@@ -110,7 +110,7 @@ namespace Allors.Workspace.Meta
                     }
                 }
 
-                @interface.Subtypes = RecurseDirectSubtypes(@interface).Cast<IInterface>().ToArray();
+                @interface.Subtypes = RecurseDirectSubtypes(@interface).ToArray();
                 @interface.Classes = @interface.Subtypes.Where(v => v.IsClass).Cast<IClass>().ToArray();
             }
 

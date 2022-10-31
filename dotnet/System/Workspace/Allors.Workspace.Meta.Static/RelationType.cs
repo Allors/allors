@@ -13,15 +13,20 @@ namespace Allors.Workspace.Meta
     ///     A relation type defines the state and behavior for
     ///     a set of association types and role types.
     /// </summary>
-    public sealed class RelationType : MetaIdentifiableObject
+    public sealed class RelationType : MetaIdentifiableObject, IRelationType
     {
-        // Class
-        public RelationType(MetaPopulation metaPopulation, string tag, AssociationType associationType, RoleType roleType, Multiplicity multiplicity = Multiplicity.ManyToOne)
+        // Unit Role
+        public RelationType(MetaPopulation metaPopulation, string tag, Composite objectType, IRoleType roleType, Multiplicity multiplicity = Multiplicity.ManyToOne)
+            : this(metaPopulation, tag, new UnitRoleAssociationType(objectType), roleType, multiplicity)
+        {
+        }
+
+        public RelationType(MetaPopulation metaPopulation, string tag, IAssociationType associationType, IRoleType roleType, Multiplicity multiplicity = Multiplicity.ManyToOne)
         : base(metaPopulation, tag)
         {
-            this.AssociationType = associationType;
+            this.AssociationType = (AssociationType)associationType;
             this.AssociationType.RelationType = this;
-            this.RoleType = roleType;
+            this.RoleType = (RoleType)roleType;
             this.RoleType.RelationType = this;
 
             this.Multiplicity = this.RoleType.ObjectType.IsUnit ? Multiplicity.OneToOne : multiplicity;
@@ -35,7 +40,11 @@ namespace Allors.Workspace.Meta
             this.RoleType.Name = this.RoleType.IsMany ? this.RoleType.PluralName : this.RoleType.SingularName;
         }
 
+        IAssociationType IRelationType.AssociationType => this.AssociationType;
+
         public AssociationType AssociationType { get; }
+
+        IRoleType IRelationType.RoleType => this.RoleType;
 
         public RoleType RoleType { get; }
 

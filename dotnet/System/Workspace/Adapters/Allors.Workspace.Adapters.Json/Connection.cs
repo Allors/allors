@@ -1,4 +1,4 @@
-// <copyright file="RemoteWorkspace.cs" company="Allors bvba">
+﻿// <copyright file="RemoteWorkspace.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -24,14 +24,15 @@ namespace Allors.Workspace.Adapters.Json
 
     public abstract class Connection : Adapters.Connection
     {
-        private readonly Dictionary<Class, Dictionary<IOperandType, long>> executePermissionByOperandTypeByClass;
+        private readonly Dictionary<IClass, Dictionary<IOperandType, long>> executePermissionByOperandTypeByClass;
 
-        private readonly Dictionary<Class, Dictionary<IOperandType, long>> readPermissionByOperandTypeByClass;
+        private readonly Dictionary<IClass, Dictionary<IOperandType, long>> readPermissionByOperandTypeByClass;
         private readonly Dictionary<long, Record> recordsById;
-        private readonly Dictionary<Class, Dictionary<IOperandType, long>> writePermissionByOperandTypeByClass;
+        private readonly Dictionary<IClass, Dictionary<IOperandType, long>> writePermissionByOperandTypeByClass;
 
 
-        protected Connection(string name, MetaPopulation metaPopulation) : base(name, metaPopulation)
+        protected Connection(string name, IMetaPopulation metaPopulation)
+            : base(name, metaPopulation)
         {
             this.recordsById = new Dictionary<long, Record>();
 
@@ -39,9 +40,9 @@ namespace Allors.Workspace.Adapters.Json
             this.RevocationById = new Dictionary<long, Revocation>();
             this.Permissions = new HashSet<long>();
 
-            this.readPermissionByOperandTypeByClass = new Dictionary<Class, Dictionary<IOperandType, long>>();
-            this.writePermissionByOperandTypeByClass = new Dictionary<Class, Dictionary<IOperandType, long>>();
-            this.executePermissionByOperandTypeByClass = new Dictionary<Class, Dictionary<IOperandType, long>>();
+            this.readPermissionByOperandTypeByClass = new Dictionary<IClass, Dictionary<IOperandType, long>>();
+            this.writePermissionByOperandTypeByClass = new Dictionary<IClass, Dictionary<IOperandType, long>>();
+            this.executePermissionByOperandTypeByClass = new Dictionary<IClass, Dictionary<IOperandType, long>>();
         }
 
         internal Dictionary<long, Grant> GrantById { get; }
@@ -99,7 +100,8 @@ namespace Allors.Workspace.Adapters.Json
             {
                 return new AccessRequest
                 {
-                    g = ctx.MissingGrantIds.Select(v => v).ToArray(), r = ctx.MissingRevocationIds.Select(v => v).ToArray(),
+                    g = ctx.MissingGrantIds.Select(v => v).ToArray(),
+                    r = ctx.MissingRevocationIds.Select(v => v).ToArray(),
                 };
             }
 
@@ -165,9 +167,9 @@ namespace Allors.Workspace.Adapters.Json
                 foreach (var syncResponsePermission in permissionResponse.p)
                 {
                     var id = syncResponsePermission.i;
-                    var @class = (Class)this.MetaPopulation.FindByTag(syncResponsePermission.c);
+                    var @class = (IClass)this.MetaPopulation.FindByTag(syncResponsePermission.c);
                     var metaObject = this.MetaPopulation.FindByTag(syncResponsePermission.t);
-                    var operandType = (IOperandType)(metaObject as RelationType)?.RoleType ?? (MethodType)metaObject;
+                    var operandType = (IOperandType)(metaObject as IRelationType)?.RoleType ?? (IMethodType)metaObject;
                     var operation = (Operations)syncResponsePermission.o;
 
                     this.Permissions.Add(id);
@@ -251,7 +253,7 @@ namespace Allors.Workspace.Adapters.Json
             return await workspace.OnPull(pullResponse);
         }
 
-        public override long GetPermission(Class @class, IOperandType operandType, Operations operation)
+        public override long GetPermission(IClass @class, IOperandType operandType, Operations operation)
         {
             switch (operation)
             {

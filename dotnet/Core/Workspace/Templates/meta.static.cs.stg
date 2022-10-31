@@ -255,23 +255,36 @@ namespace Allors.Workspace.Meta.Static
         public MetaPopulation Build() {
             var m =  new MetaPopulation();
 
+            this.BuildAssociationTypes(m);
+            this.BuildRoleTypes(m);
+
             var relationTypes = this.BuildRelationTypes(m);
             var methodTypes = this.BuildMethodTypes(m);
 
+            m.Init(relationTypes, methodTypes);
+            
             this.AssignPropertyTypes(m);
             this.AssignMethodTypes(m);
-
-            m.Init(relationTypes, methodTypes);
 
             return m;
         }
 
+        private void BuildAssociationTypes(MetaPopulation m)
+        {
+$meta.WorkspaceCompositeRelationTypesByWorkspaceName.(workspaceName):{relationType|$build_associationType(relationType)$}; separator="\n"$
+        }
+
+        private void BuildRoleTypes(MetaPopulation m)
+        {
+$meta.WorkspaceRelationTypesByWorkspaceName.(workspaceName):{relationType|$build_roleType(relationType)$}; separator="\n"$
+        }
+
         private RelationType[] BuildRelationTypes(MetaPopulation m)
         {
-
-            return new RelationType[]
+		    return new RelationType[]
             {
-$meta.WorkspaceRelationTypesByWorkspaceName.(workspaceName):{relationType|$build_relationType(relationType)$}; separator=",\n"$
+$meta.WorkspaceCompositeRelationTypesByWorkspaceName.(workspaceName):{relationType|$build_compositeRelationType(relationType)$}; separator="\n"$
+$meta.WorkspaceUnitRelationTypesByWorkspaceName.(workspaceName):{relationType|$build_unitRelationType(relationType)$}; separator="\n"$
             };
         }
 
@@ -311,8 +324,20 @@ build_unit(unit) ::= <<
 inheritance(composite) ::= <<$composite.WorkspaceDirectSupertypesByWorkspaceName.(workspaceName):{superType|$build_inheritance(composite, superType)$}$>>
 build_inheritance(composite, superType) ::= <<$\n$                new Inheritance(m.$composite.SingularName$, m.$superType.SingularName$),>>
 
-build_relationType(relationType) ::= <<
-                new RelationType(m, "$relationType.Tag$", new Meta$relationType.AssociationType.Name$(m), new Meta$relationType.RoleType.FullName$(m), Allors.Multiplicity.$relationType.Multiplicity$)
+build_associationType(relationType) ::= <<
+            m.$relationType.RoleType.ObjectType.SingularName$.$relationType.AssociationType.Name$ = new Meta$relationType.AssociationType.Name$(m);
+>>
+
+build_roleType(relationType) ::= <<
+            m.$relationType.AssociationType.ObjectType.SingularName$.$relationType.RoleType.Name$ = new Meta$relationType.RoleType.FullName$(m);
+>>
+
+build_compositeRelationType(relationType) ::= <<
+                new RelationType(m, "$relationType.Tag$", m.$relationType.RoleType.ObjectType.SingularName$.$relationType.AssociationType.Name$, m.$relationType.AssociationType.ObjectType.SingularName$.$relationType.RoleType.Name$, Allors.Multiplicity.$relationType.Multiplicity$),
+>>
+
+build_unitRelationType(relationType) ::= <<
+                new RelationType(m, "$relationType.Tag$", m.$relationType.AssociationType.ObjectType.SingularName$, m.$relationType.AssociationType.ObjectType.SingularName$.$relationType.RoleType.Name$, Allors.Multiplicity.$relationType.Multiplicity$),
 >>
 
 isDerived(relationType) ::= <<$if(relationType.IsDerived)$isDerived: $relationType.IsDerived$$endif$>>

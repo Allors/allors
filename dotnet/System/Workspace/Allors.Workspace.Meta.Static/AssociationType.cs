@@ -26,6 +26,8 @@ namespace Allors.Workspace.Meta
 
         public MetaPopulation MetaPopulation => this.RelationType.MetaPopulation;
 
+        IRelationType IAssociationType.RelationType => this.RelationType;
+
         public RelationType RelationType { get; internal set; }
 
         public RoleType RoleType => this.RelationType.RoleType;

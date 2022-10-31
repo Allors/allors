@@ -1,5 +1,4 @@
-﻿
-// <copyright file="AssociationType.cs" company="Allors bvba">
+﻿// <copyright file="IAssociationType.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -7,10 +6,11 @@
 
 namespace Allors.Workspace.Meta
 {
-    public interface IRoleType : IPropertyType
+    public class UnitRoleAssociationType : AssociationType
     {
-        IRelationType RelationType { get; }
-
-        IAssociationType AssociationType { get; }
+        public UnitRoleAssociationType(IComposite objectType)
+            : base(objectType)
+        {
+        }
     }
 }

@@ -132,6 +132,14 @@ public class MetaModel
         this.WorkspaceNames
             .ToDictionary(v => v, v => this.RelationTypes.Where(w => w.WorkspaceNames.Contains(v)).OrderBy(w => w.Tag));
 
+    public IReadOnlyDictionary<string, IOrderedEnumerable<RelationTypeModel>> WorkspaceCompositeRelationTypesByWorkspaceName =>
+        this.WorkspaceNames
+            .ToDictionary(v => v, v => this.RelationTypes.Where(w => w.WorkspaceNames.Contains(v) && w.RoleType.ObjectType.IsComposite).OrderBy(w => w.Tag));
+
+    public IReadOnlyDictionary<string, IOrderedEnumerable<RelationTypeModel>> WorkspaceUnitRelationTypesByWorkspaceName =>
+        this.WorkspaceNames
+            .ToDictionary(v => v, v => this.RelationTypes.Where(w => w.WorkspaceNames.Contains(v) && w.RoleType.ObjectType.IsUnit).OrderBy(w => w.Tag));
+
     public IReadOnlyDictionary<string, IOrderedEnumerable<MethodTypeModel>> WorkspaceMethodTypesByWorkspaceName =>
         this.WorkspaceNames
             .ToDictionary(v => v, v => this.MethodTypes.Where(w => w.WorkspaceNames.Contains(v)).OrderBy(w => w.Tag));
