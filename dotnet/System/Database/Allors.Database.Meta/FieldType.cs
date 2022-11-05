@@ -19,7 +19,7 @@ public class FieldType : MetaIdentifiableObject, IFieldType
         this.MetaPopulation.OnCreated(this);
     }
 
-    IRecord IFieldType.Record => this.Record;
+    IRecordType IFieldType.Record => this.Record;
 
     public Record Record { get; }
 

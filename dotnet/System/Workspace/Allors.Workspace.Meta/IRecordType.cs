@@ -1,4 +1,4 @@
-﻿// <copyright file="IRecord.cs" company="Allors bvba">
+﻿// <copyright file="IRecordType.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -8,8 +8,8 @@ namespace Allors.Workspace.Meta
 {
     using System.Collections.Generic;
 
-    public interface IRecord : IDataType
+    public interface IRecordType : IDataType
     {
-        IReadOnlyList<Allors.Workspace.Meta.IFieldType> FieldTypes { get; }
+        IReadOnlyList<IFieldType> FieldTypes { get; }
     }
 }

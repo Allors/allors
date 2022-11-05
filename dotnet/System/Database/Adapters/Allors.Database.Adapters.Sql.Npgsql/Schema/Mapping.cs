@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Allors.Database.Meta;
 using NpgsqlTypes;
-using Version = Allors.Version;
 
 public class Mapping : Sql.Mapping
 {
@@ -455,7 +454,7 @@ DECLARE {this.ParamNameForObject} {SqlTypeForObject};
 BEGIN
 
     INSERT INTO {this.TableNameForObjects} ({ColumnNameForClass}, {ColumnNameForVersion})
-    VALUES ({this.ParamNameForClass}, {(long)Version.DatabaseInitial})
+    VALUES ({this.ParamNameForClass}, {(long)ObjectVersion.DatabaseInitial})
     RETURNING {ColumnNameForObject} INTO {this.ParamNameForObject};
 
     INSERT INTO {table} ({ColumnNameForObject},{ColumnNameForClass})
@@ -486,7 +485,7 @@ BEGIN
     WHILE COUNTER < {this.ParamNameForCount} LOOP
 
         INSERT INTO {this.TableNameForObjects} ({ColumnNameForClass}, {ColumnNameForVersion})
-        VALUES ({this.ParamNameForClass}, {(long)Version.DatabaseInitial} )
+        VALUES ({this.ParamNameForClass}, {(long)ObjectVersion.DatabaseInitial} )
         RETURNING {ColumnNameForObject} INTO ID;
 
         INSERT INTO {this.tableNameForObjectByClass[@class.ExclusiveClass]} ({ColumnNameForObject},{ColumnNameForClass})

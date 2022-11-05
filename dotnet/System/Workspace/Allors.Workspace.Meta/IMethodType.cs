@@ -8,8 +8,8 @@ namespace Allors.Workspace.Meta
 {
     public interface IMethodType : IMetaIdentifiableObject, IOperandType
     {
-        IRecord Input { get; }
+        IRecordType Input { get; }
 
-        IRecord Output { get; }
+        IRecordType Output { get; }
     }
 }

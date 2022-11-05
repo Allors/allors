@@ -2,7 +2,7 @@
 
 public interface IFieldType : IMetaIdentifiableObject
 {
-    IRecord Record { get; }
+    IRecordType Record { get; }
 
     IDataType DataType { get; }
 

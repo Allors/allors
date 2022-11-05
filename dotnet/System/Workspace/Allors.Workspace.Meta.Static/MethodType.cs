@@ -21,9 +21,9 @@ namespace Allors.Workspace.Meta
 
         public string OperandTag => this.Tag;
 
-        public IRecord Input { get; }
+        public IRecordType Input { get; }
 
-        public IRecord Output { get; }
+        public IRecordType Output { get; }
 
         public override string ToString() => this.Name;
     }

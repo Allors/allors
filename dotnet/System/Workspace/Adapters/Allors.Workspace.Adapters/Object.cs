@@ -89,7 +89,7 @@ namespace Allors.Workspace.Adapters
 
         IEnumerable<IObject> IObject.GetCompositesRole(IRoleType roleType) => this.GetCompositesRole(roleType);
 
-        public long Version => this.Record?.Version ?? Allors.Version.WorkspaceInitial;
+        public long Version => this.Record?.Version ?? Allors.ObjectVersion.WorkspaceInitial;
 
         public bool CanRead(IRoleType roleType)
         {

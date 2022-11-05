@@ -68,7 +68,7 @@ public abstract class MetaPopulation : IMetaPopulation
 
     public MethodType[] MethodTypes { get; set; }
 
-    IReadOnlyList<IRecord> IMetaPopulation.Records => this.Records;
+    IReadOnlyList<IRecordType> IMetaPopulation.Records => this.Records;
 
     public Record[] Records { get; set; }
 

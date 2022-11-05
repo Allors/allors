@@ -11,7 +11,6 @@ using System.Linq;
 using System.Xml;
 using Allors.Database.Services;
 using Allors.Database.Meta;
-using Version = Allors.Version;
 
 public class Transaction : ITransaction
 {
@@ -354,7 +353,7 @@ public class Transaction : ITransaction
 
     private IObject CreateWithoutOnBuild(IClass objectType)
     {
-        var strategy = new Strategy(this, objectType, ++this.currentId, Version.DatabaseInitial);
+        var strategy = new Strategy(this, objectType, ++this.currentId, ObjectVersion.DatabaseInitial);
         this.AddStrategy(strategy);
 
         this.ChangeLog.OnCreated(strategy);

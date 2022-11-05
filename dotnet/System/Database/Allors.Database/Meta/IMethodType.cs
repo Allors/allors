@@ -20,7 +20,7 @@ public interface IMethodType : IMetaIdentifiableObject, IOperandType
 
     string Name { get; }
 
-    IRecord Input { get; }
+    IRecordType Input { get; }
 
-    IRecord Output { get; }
+    IRecordType Output { get; }
 }

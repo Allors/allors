@@ -38,11 +38,11 @@ public sealed class MethodType : MetaIdentifiableObject, IMethodType, IComparabl
 
     public string Name { get; }
 
-    IRecord IMethodType.Input => this.Input;
+    IRecordType IMethodType.Input => this.Input;
 
     public Record Input { get; }
 
-    IRecord IMethodType.Output => this.Output;
+    IRecordType IMethodType.Output => this.Output;
 
     public Record Output { get; }
 

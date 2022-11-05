@@ -1,4 +1,4 @@
-﻿// <copyright file="Record.cs" company="Allors bvba">
+﻿// <copyright file="RecordType.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -8,9 +8,9 @@ namespace Allors.Workspace.Meta
 {
     using System.Collections.Generic;
 
-    public abstract class Record : DataType, IRecord
+    public abstract class RecordType : DataType, IRecordType
     {
-        protected Record(MetaPopulation metaPopulation, string tag) 
+        protected RecordType(MetaPopulation metaPopulation, string tag) 
             : base(metaPopulation, tag)
         {
         }

@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Xml;
 using Allors.Database.Meta;
-using Version = Allors.Version;
 
 public class Load
 {
@@ -159,7 +158,7 @@ public class Load
                                 var objectId = long.Parse(objectArray[0]);
                                 var objectVersion = objectArray.Length > 1
                                     ? Serialization.EnsureVersion(long.Parse(objectArray[1]))
-                                    : (long)Version.DatabaseInitial;
+                                    : (long)ObjectVersion.DatabaseInitial;
 
                                 if (objectType is IClass)
                                 {

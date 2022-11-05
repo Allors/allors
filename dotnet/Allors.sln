@@ -194,6 +194,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Workspace.Meta.Static", "Co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Workspace.Meta.Static.Tests", "Core\Workspace\Meta.Static.Tests\Workspace.Meta.Static.Tests.csproj", "{9A87C04C-4A92-435F-A28C-DE46E927F42C}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Workspace.Client", "System\Workspace\Allors.Workspace.Client\Allors.Workspace.Client.csproj", "{4B40D1E2-7DE1-4201-A3E0-7AF197F37386}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -508,6 +510,10 @@ Global
 		{9A87C04C-4A92-435F-A28C-DE46E927F42C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9A87C04C-4A92-435F-A28C-DE46E927F42C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9A87C04C-4A92-435F-A28C-DE46E927F42C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B40D1E2-7DE1-4201-A3E0-7AF197F37386}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B40D1E2-7DE1-4201-A3E0-7AF197F37386}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B40D1E2-7DE1-4201-A3E0-7AF197F37386}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B40D1E2-7DE1-4201-A3E0-7AF197F37386}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -603,6 +609,7 @@ Global
 		{1D82D836-D2ED-49E6-80EE-B96BC2E5A9D3} = {F0CFA0DB-205F-4914-8D96-33D1D500A0CC}
 		{40387EEA-46B1-41A0-AB53-C862CB294349} = {38DA0455-9724-498A-83EF-B4285EB00AD1}
 		{9A87C04C-4A92-435F-A28C-DE46E927F42C} = {38DA0455-9724-498A-83EF-B4285EB00AD1}
+		{4B40D1E2-7DE1-4201-A3E0-7AF197F37386} = {F0CFA0DB-205F-4914-8D96-33D1D500A0CC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {00D78C3D-8536-4549-B1EE-C19BD0C50387}

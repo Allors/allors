@@ -26,7 +26,7 @@ public interface IMetaPopulation
 
     IReadOnlyList<IMethodType> MethodTypes { get; }
 
-    IReadOnlyList<IRecord> Records { get; }
+    IReadOnlyList<IRecordType> Records { get; }
 
     IReadOnlyList<IFieldType> FieldTypes { get; }
 

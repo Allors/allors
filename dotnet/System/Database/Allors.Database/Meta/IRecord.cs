@@ -2,7 +2,7 @@
 
 using System.Collections.Generic;
 
-public interface IRecord : IDataType
+public interface IRecordType : IDataType
 {
     IReadOnlyList<IFieldType> FieldTypes { get; }
 }

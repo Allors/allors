@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-public class Record : DataType, IRecord
+public class Record : DataType, IRecordType
 {
     private string[] derivedWorkspaceNames;
     private FieldType[] fieldTypes;
@@ -17,7 +17,7 @@ public class Record : DataType, IRecord
         metaPopulation.OnCreated(this);
     }
 
-    IReadOnlyList<IFieldType> IRecord.FieldTypes => this.FieldTypes;
+    IReadOnlyList<IFieldType> IRecordType.FieldTypes => this.FieldTypes;
 
     public FieldType[] FieldTypes
     {

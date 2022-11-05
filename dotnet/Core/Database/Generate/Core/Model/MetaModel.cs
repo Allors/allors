@@ -179,7 +179,7 @@ public class MetaModel
 
     public CompositeRoleTypeModel Map(ICompositeRoleType v) => v != null ? (CompositeRoleTypeModel)this.mapping[v] : null;
 
-    public RecordModel Map(IRecord v) => v != null ? (RecordModel)this.mapping[v] : null;
+    public RecordModel Map(IRecordType v) => v != null ? (RecordModel)this.mapping[v] : null;
 
     public FieldTypeModel Map(IFieldType v) => v != null ? (FieldTypeModel)this.mapping[v] : null;
 
