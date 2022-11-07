@@ -8,11 +8,14 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="Allors.Workspace.Request.IRequest">
-    <Position X="3.25" Y="0.5" Width="1.75" />
+    <Position X="3.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAABAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAEAAAAAAAAAAAAAIAAAAAAAAAAAAAA=</HashCode>
       <FileName>Request\IRequest.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Connection" />
+    </ShowAsAssociation>
     <ShowAsCollectionAssociation>
       <Property Name="Invocations" />
     </ShowAsCollectionAssociation>
@@ -28,11 +31,15 @@
     </ShowAsAssociation>
   </Interface>
   <Interface Name="Allors.Workspace.Response.IResponse">
-    <Position X="15" Y="0.5" Width="1.5" />
+    <Position X="3.25" Y="4.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAA=</HashCode>
       <FileName>Response\IResponse.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Invocations" />
+      <Property Name="Request" />
+    </ShowAsAssociation>
   </Interface>
   <Interface Name="Allors.Workspace.Request.IRequestRecord">
     <Position X="9.25" Y="0.5" Width="1.5" />
@@ -49,6 +56,33 @@
     <TypeIdentifier>
       <HashCode>AAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
       <FileName>Request\IRequestField.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Allors.Workspace.Response.IResponseInvocation">
+    <Position X="6.25" Y="4.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAIAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Response\IResponseInvocation.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Output" />
+    </ShowAsAssociation>
+  </Interface>
+  <Interface Name="Allors.Workspace.Response.IResponseRecord">
+    <Position X="9.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAgAA=</HashCode>
+      <FileName>Response\IResponseRecord.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Fields" />
+    </ShowAsCollectionAssociation>
+  </Interface>
+  <Interface Name="Allors.Workspace.Response.IResponseField">
+    <Position X="12.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Response\IResponseField.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Font Name="Segoe UI" Size="9" />

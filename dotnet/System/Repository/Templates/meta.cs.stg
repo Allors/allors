@@ -2,7 +2,7 @@
 
 TemplateId() ::= <<14F49218-A676-43ba-9CBD-B8FFA059D1BF>>
 TemplateName() ::= <<Allors C# Meta>>
-TemplateVersion() ::= <<3.0.18>>
+TemplateVersion() ::= <<3.0.19>>
 TemplateAllors() ::= <<1.0>>
 TemplateConfiguration(repository) ::= <<
 $!
@@ -149,7 +149,7 @@ $repository.Records:{record|$define_record(record)$}; separator="\n"$
 >>
 
 define_record(record) ::= <<
-    public interface IMeta$record.Name$ : IRecord {
+    public interface IMeta$record.Name$ : IRecordType {
 $record.Fields:{field|$declare_field(field)$}; separator="\n"$
     }
 

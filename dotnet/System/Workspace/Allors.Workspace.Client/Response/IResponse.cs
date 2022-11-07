@@ -5,7 +5,12 @@
 
 namespace Allors.Workspace.Response
 {
+    using Allors.Workspace.Request;
+
     public interface IResponse
     {
+        IRequest Request { get; }
+
+        IResponseInvocation[] Invocations { get; }
     }
 }

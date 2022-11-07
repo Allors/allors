@@ -4,7 +4,7 @@
 
     public interface IRequest
     {
-        ISet<VersionedObjectId> RequiredVersions { get; }
+        IConnection Connection { get; }
 
         IReadOnlyList<IRequestInvocation> Invocations { get; }
     }
