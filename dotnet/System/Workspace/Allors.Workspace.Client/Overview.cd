@@ -8,82 +8,101 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="Allors.Workspace.Request.IRequest">
-    <Position X="3.25" Y="0.5" Width="1.5" />
+    <Position X="2.75" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAEAAAAAAAAAAAAAIAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Request\IRequest.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="Connection" />
-    </ShowAsAssociation>
     <ShowAsCollectionAssociation>
-      <Property Name="Invocations" />
+      <Property Name="InvocationRequests" />
     </ShowAsCollectionAssociation>
   </Interface>
-  <Interface Name="Allors.Workspace.Request.IRequestInvocation">
-    <Position X="6.25" Y="0.5" Width="1.75" />
+  <Interface Name="Allors.Workspace.Request.IInvocationRequest">
+    <Position X="6.25" Y="3.5" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>QAAAAAAAAIAAAAAAAAAAAAQAEAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Request\IRequestInvocation.cs</FileName>
+      <HashCode>QAAAAAAAAIAAAAAAQAAAAAAAEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Request\IInvocationRequest.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
+      <Property Name="MethodType" />
       <Property Name="Input" />
     </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Includes" />
+    </ShowAsCollectionAssociation>
   </Interface>
   <Interface Name="Allors.Workspace.Response.IResponse">
-    <Position X="3.25" Y="4.25" Width="1.5" />
+    <Position X="2.75" Y="7.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAIAAAAA=</HashCode>
       <FileName>Response\IResponse.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="Invocations" />
       <Property Name="Request" />
     </ShowAsAssociation>
-  </Interface>
-  <Interface Name="Allors.Workspace.Request.IRequestRecord">
-    <Position X="9.25" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAgAA=</HashCode>
-      <FileName>Request\IRequestRecord.cs</FileName>
-    </TypeIdentifier>
     <ShowAsCollectionAssociation>
-      <Property Name="Fields" />
+      <Property Name="InvocationResponses" />
     </ShowAsCollectionAssociation>
   </Interface>
-  <Interface Name="Allors.Workspace.Request.IRequestField">
-    <Position X="12" Y="0.5" Width="1.5" />
+  <Interface Name="Allors.Workspace.Response.IInvocationResponse">
+    <Position X="5.75" Y="7.25" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
-      <FileName>Request\IRequestField.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="Allors.Workspace.Response.IResponseInvocation">
-    <Position X="6.25" Y="4.25" Width="1.75" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAIAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Response\IResponseInvocation.cs</FileName>
+      <HashCode>AAgAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Response\IInvocationResponse.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
+      <Property Name="InvocationRequest" />
       <Property Name="Output" />
     </ShowAsAssociation>
   </Interface>
-  <Interface Name="Allors.Workspace.Response.IResponseRecord">
-    <Position X="9.25" Y="4.25" Width="1.5" />
+  <Interface Name="Allors.Workspace.IRecord">
+    <Position X="9.5" Y="6" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAgAA=</HashCode>
-      <FileName>Response\IResponseRecord.cs</FileName>
+      <FileName>IRecord.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="RecordType" />
+    </ShowAsAssociation>
     <ShowAsCollectionAssociation>
       <Property Name="Fields" />
     </ShowAsCollectionAssociation>
   </Interface>
-  <Interface Name="Allors.Workspace.Response.IResponseField">
-    <Position X="12.25" Y="4.25" Width="1.5" />
+  <Interface Name="Allors.Workspace.IField">
+    <Position X="12" Y="6" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
-      <FileName>Response\IResponseField.cs</FileName>
+      <FileName>IField.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="FieldType" />
+    </ShowAsAssociation>
+  </Interface>
+  <Interface Name="Allors.Workspace.Meta.IMethodType">
+    <Position X="6.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Property Name="Input" />
+      <Property Name="Output" />
+    </ShowAsAssociation>
+  </Interface>
+  <Interface Name="Allors.Workspace.Meta.IFieldType">
+    <Position X="12" Y="0.75" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="Allors.Workspace.Meta.IRecordType">
+    <Position X="9.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="Allors.Workspace.Request.IInclude">
+    <Position X="10.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAIAAAA=</HashCode>
+      <FileName>Request\IInclude.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="OutputFieldType" />
+    </ShowAsAssociation>
   </Interface>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

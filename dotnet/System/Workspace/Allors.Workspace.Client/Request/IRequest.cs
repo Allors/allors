@@ -4,8 +4,6 @@
 
     public interface IRequest
     {
-        IConnection Connection { get; }
-
-        IReadOnlyList<IRequestInvocation> Invocations { get; }
+        IReadOnlyList<IInvocationRequest> InvocationRequests { get; }
     }
 }

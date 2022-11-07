@@ -1,8 +1,8 @@
-﻿namespace Allors.Workspace.Response
+﻿namespace Allors.Workspace
 {
     using Allors.Workspace.Meta;
 
-    public interface IResponseField
+    public interface IField
     {
         IFieldType FieldType { get; }
 

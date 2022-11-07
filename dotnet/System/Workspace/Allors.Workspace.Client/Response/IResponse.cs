@@ -11,6 +11,6 @@ namespace Allors.Workspace.Response
     {
         IRequest Request { get; }
 
-        IResponseInvocation[] Invocations { get; }
+        IInvocationResponse[] InvocationResponses { get; }
     }
 }

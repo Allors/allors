@@ -1,15 +1,17 @@
 ﻿namespace Allors.Workspace.Request
 {
+    using System.Collections.Generic;
     using Allors.Workspace.Meta;
 
-    public interface IRequestInvocation
+    public interface IInvocationRequest
     {
-        string Name { get; }
 
         long ObjectId { get; }
 
         IMethodType MethodType { get; }
 
-        IRequestRecord Input { get; }
+        IRecord Input { get; }
+
+        IReadOnlyList<IInclude> Includes { get; }
     }
 }

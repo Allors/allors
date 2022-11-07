@@ -1,12 +1,12 @@
-﻿namespace Allors.Workspace.Request
+﻿namespace Allors.Workspace
 {
     using System.Collections.Generic;
     using Allors.Workspace.Meta;
 
-    public interface IRequestRecord
+    public interface IRecord
     {
         IRecordType RecordType { get; }
 
-        IReadOnlyList<IRequestField> Fields { get; }
+        IReadOnlyList<IField> Fields { get; }
     }
 }
