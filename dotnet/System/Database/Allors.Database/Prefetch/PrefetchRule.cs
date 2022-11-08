@@ -11,25 +11,25 @@ using Allors.Database.Meta;
 
 public sealed class PrefetchRule
 {
-    public PrefetchRule(IPropertyType propertyType, PrefetchPolicy prefetchPolicy)
+    public PrefetchRule(IRelationEndType relationEndType, PrefetchPolicy prefetchPolicy)
     {
-        if (propertyType == null)
+        if (relationEndType == null)
         {
-            throw new ArgumentNullException("propertyType");
+            throw new ArgumentNullException("relationEndType");
         }
 
-        if (prefetchPolicy != null && propertyType is IRoleType roleType && roleType.ObjectType.IsUnit)
+        if (prefetchPolicy != null && relationEndType is IRoleType roleType && roleType.ObjectType.IsUnit)
         {
             throw new ArgumentException("prefetchPolicy");
         }
 
-        this.PropertyType = propertyType;
+        this.RelationEndType = relationEndType;
         this.PrefetchPolicy = prefetchPolicy;
     }
 
-    public IPropertyType PropertyType { get; }
+    public IRelationEndType RelationEndType { get; }
 
     public PrefetchPolicy PrefetchPolicy { get; }
 
-    public override string ToString() => this.PropertyType.ToString();
+    public override string ToString() => this.RelationEndType.ToString();
 }

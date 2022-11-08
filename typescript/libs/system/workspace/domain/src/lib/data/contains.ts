@@ -1,10 +1,10 @@
-import { PropertyType } from '@allors/system/workspace/meta';
+import { RelationEndType } from '@allors/system/workspace/meta';
 import { IObject } from '../iobject';
 import { ParameterizablePredicateBase } from './parameterizable-predicate';
 
 export interface Contains extends ParameterizablePredicateBase {
   kind: 'Contains';
-  propertyType: PropertyType;
+  relationEndType: RelationEndType;
   object?: IObject;
   objectId?: number;
 }

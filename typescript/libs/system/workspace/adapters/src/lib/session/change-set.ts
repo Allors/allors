@@ -1,7 +1,7 @@
 import { IChangeSet, IObject } from '@allors/system/workspace/domain';
 import {
   AssociationType,
-  PropertyType,
+  RelationEndType,
   RelationType,
   RoleType,
 } from '@allors/system/workspace/meta';
@@ -27,24 +27,24 @@ export class ChangeSet implements IChangeSet {
   }
 
   public addSessionStateChanges(
-    sessionStateChangeSet: MapMap<PropertyType, IObject, unknown>
+    sessionStateChangeSet: MapMap<RelationEndType, IObject, unknown>
   ) {
-    for (const [propertyType, map] of sessionStateChangeSet.mapMap) {
+    for (const [relationEndType, map] of sessionStateChangeSet.mapMap) {
       const strategies = new Set<IObject>();
 
       for (const [strategy] of map) {
         strategies.add(strategy);
       }
 
-      if (propertyType.isAssociationType) {
+      if (relationEndType.isAssociationType) {
         this.rolesByAssociationType.set(
-          propertyType as AssociationType,
+          relationEndType as AssociationType,
           strategies
         );
-      } else if (propertyType.isRoleType) {
-        this.associationsByRoleType.set(propertyType as RoleType, strategies);
+      } else if (relationEndType.isRoleType) {
+        this.associationsByRoleType.set(relationEndType as RoleType, strategies);
       } else {
-        throw new Error(`PropertyType ${propertyType.name} is not supported`);
+        throw new Error(`RelationEndType ${relationEndType.name} is not supported`);
       }
     }
   }

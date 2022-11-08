@@ -56,20 +56,20 @@ public class PullInstantiate
                     {
                         var include = select.End.Include;
 
-                        if (select.PropertyType != null)
+                        if (select.RelationEndType != null)
                         {
-                            var propertyType = select.End.PropertyType;
+                            var relationEndType = select.End.RelationEndType;
 
                             if (select.IsOne)
                             {
-                                name ??= propertyType.SingularName;
+                                name ??= relationEndType.SingularName;
 
                                 @object = (IObject)select.Get(@object, this.acls);
                                 response.AddObject(name, @object, include);
                             }
                             else
                             {
-                                name ??= propertyType.PluralName;
+                                name ??= relationEndType.PluralName;
 
                                 var stepResult = select.Get(@object, this.acls);
 

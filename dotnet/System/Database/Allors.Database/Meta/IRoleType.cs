@@ -14,7 +14,7 @@ using System.Collections.Generic;
 ///     This is also called the 'passive' side.
 ///     RoleTypes can have composite and unit <see cref="ObjectType" />s.
 /// </summary>
-public interface IRoleType : IPropertyType, IComparable
+public interface IRoleType : IRelationEndType, IComparable
 {
     ICompositeRoleType CompositeRoleType { get; }
 

@@ -17,13 +17,13 @@ namespace Allors.Workspace.Request
 
     public class Node : IVisitable
     {
-        public Node(IPropertyType propertyType = null, IEnumerable<Node> nodes = null)
+        public Node(IRelationEndType relationEndType = null, IEnumerable<Node> nodes = null)
         {
-            this.PropertyType = propertyType;
+            this.RelationEndType = relationEndType;
             this.Nodes = nodes?.ToArray() ?? Array.Empty<Node>();
         }
 
-        public IPropertyType PropertyType { get; }
+        public IRelationEndType RelationEndType { get; }
 
         public IComposite OfType { get; set; }
 
@@ -37,23 +37,23 @@ namespace Allors.Workspace.Request
             return this;
         }
 
-        public Node Add(IPropertyType propertyType)
+        public Node Add(IRelationEndType relationEndType)
         {
-            var node = new Node(propertyType);
+            var node = new Node(relationEndType);
             return this.Add(node);
         }
 
-        public Node Add(IPropertyType propertyType, Node childNode)
+        public Node Add(IRelationEndType relationEndType, Node childNode)
         {
-            var node = new Node(propertyType, childNode.Nodes);
+            var node = new Node(relationEndType, childNode.Nodes);
             return this.Add(node);
         }
 
         public IEnumerable<IObject> Resolve(IObject @object)
         {
-            if (this.PropertyType.IsOne)
+            if (this.RelationEndType.IsOne)
             {
-                var resolved = this.PropertyType.Get(@object, this.OfType);
+                var resolved = this.RelationEndType.Get(@object, this.OfType);
                 if (resolved != null)
                 {
                     if (this.Nodes.Length > 0)
@@ -74,7 +74,7 @@ namespace Allors.Workspace.Request
             }
             else
             {
-                var resolved = (IEnumerable)this.PropertyType.Get(@object, this.OfType);
+                var resolved = (IEnumerable)this.RelationEndType.Get(@object, this.OfType);
                 if (resolved != null)
                 {
                     if (this.Nodes.Length > 0)
@@ -105,7 +105,7 @@ namespace Allors.Workspace.Request
         public override string ToString()
         {
             var toString = new StringBuilder();
-            toString.Append(this.PropertyType.Name + "\n");
+            toString.Append(this.RelationEndType.Name + "\n");
             this.ToString(toString, this.Nodes, 1);
             return toString.ToString();
         }
@@ -115,7 +115,7 @@ namespace Allors.Workspace.Request
             foreach (var node in nodes)
             {
                 var indent = new string(' ', level * 2);
-                toString.Append(indent + "- " + node.PropertyType + "\n");
+                toString.Append(indent + "- " + node.RelationEndType + "\n");
                 this.ToString(toString, node.Nodes, level + 1);
             }
         }

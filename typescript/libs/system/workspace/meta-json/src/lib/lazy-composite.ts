@@ -2,7 +2,7 @@ import {
   AssociationType,
   MethodType,
   pluralize,
-  PropertyType,
+  RelationEndType,
   RoleType,
 } from '@allors/system/workspace/meta';
 import { ObjectTypeData } from '@allors/system/common/protocol-json';
@@ -28,7 +28,7 @@ export abstract class LazyComposite implements InternalComposite {
   associationTypes!: Set<AssociationType>;
   roleTypes!: Set<RoleType>;
   methodTypes!: Set<MethodType>;
-  propertyTypeByPropertyName!: Map<string, PropertyType>;
+  relationEndTypeByPropertyName!: Map<string, RelationEndType>;
 
   directSupertypes!: Set<InternalInterface>;
   supertypes!: Set<InternalInterface>;
@@ -125,7 +125,7 @@ export abstract class LazyComposite implements InternalComposite {
     );
   }
 
-  abstract derivePropertyTypeByPropertyName();
+  abstract deriveRelationEndTypeByPropertyName();
 
   *supertypeGenerator(): IterableIterator<InternalInterface> {
     if (this.supertypes) {

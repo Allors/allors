@@ -3,7 +3,7 @@ import { Class } from './class';
 import { Interface } from './interface';
 import { MethodType } from './method-type';
 import { ObjectType } from './object-type';
-import { PropertyType } from './property-type';
+import { RelationEndType } from './relation-end-type';
 import { RoleType } from './role-type';
 
 export interface Composite extends ObjectType {
@@ -11,7 +11,7 @@ export interface Composite extends ObjectType {
   directAssociationTypes: Set<AssociationType>;
   directRoleTypes: Set<RoleType>;
   directMethodTypes: Set<MethodType>;
-  propertyTypeByPropertyName: Map<string, PropertyType>;
+  relationEndTypeByPropertyName: Map<string, RelationEndType>;
 
   supertypes: Set<Interface>;
   classes: Set<Class>;

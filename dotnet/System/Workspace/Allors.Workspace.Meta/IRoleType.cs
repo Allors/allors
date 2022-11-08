@@ -7,7 +7,7 @@
 
 namespace Allors.Workspace.Meta
 {
-    public interface IRoleType : IPropertyType
+    public interface IRoleType : IRelationEndType
     {
         IRelationType RelationType { get; }
 

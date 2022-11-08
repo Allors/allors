@@ -63,7 +63,7 @@ namespace Allors.Workspace.Meta
 
         public string MediaType { get; protected set; }
 
-        int IComparable<IPropertyType>.CompareTo(IPropertyType other) =>
+        int IComparable<IRelationEndType>.CompareTo(IRelationEndType other) =>
             string.Compare(this.Name, other.Name, StringComparison.InvariantCulture);
 
         public override string ToString() => $"{this.Name}";

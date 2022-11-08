@@ -1,11 +1,11 @@
-import { PropertyType, RoleType } from '@allors/system/workspace/meta';
+import { RelationEndType, RoleType } from '@allors/system/workspace/meta';
 import { IObject } from '../iobject';
 import { IUnit } from '../types';
 import { ParameterizablePredicateBase } from './parameterizable-predicate';
 
 export interface Equals extends ParameterizablePredicateBase {
   kind: 'Equals';
-  propertyType?: PropertyType;
+  relationEndType?: RelationEndType;
   value?: IUnit;
   object?: IObject;
   objectId?: number;

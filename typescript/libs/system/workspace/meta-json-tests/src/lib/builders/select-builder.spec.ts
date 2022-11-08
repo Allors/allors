@@ -21,20 +21,20 @@ describe('SelectBuilder', () => {
       });
 
       expect(selection).toBeDefined();
-      expect(selection.propertyType).toBe(m.Organization.Owner);
+      expect(selection.relationEndType).toBe(m.Organization.Owner);
       expect(selection.include).toBeUndefined();
 
       const next = selection.next;
 
       expect(next).toBeDefined();
       expect(next.next).toBeUndefined();
-      expect(next.propertyType).toBe(m.Person.OrganizationsWhereOwner);
+      expect(next.relationEndType).toBe(m.Person.OrganizationsWhereOwner);
       expect(next.include).toBeDefined();
 
       const include = next.include;
 
       expect(include.length).toBe(1);
-      expect(include[0].propertyType).toBe(m.Organization.Shareholders);
+      expect(include[0].relationEndType).toBe(m.Organization.Shareholders);
       expect(include[0].nodes).toBeUndefined();
     });
   });

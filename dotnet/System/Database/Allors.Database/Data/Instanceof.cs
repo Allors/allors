@@ -9,13 +9,13 @@ using Allors.Database.Meta;
 
 public class Instanceof : IPropertyPredicate
 {
-    public Instanceof(IPropertyType propertyType = null) => this.PropertyType = propertyType;
+    public Instanceof(IRelationEndType relationEndType = null) => this.RelationEndType = relationEndType;
 
     public string Parameter { get; set; }
 
     public IComposite ObjectType { get; set; }
 
-    public IPropertyType PropertyType { get; set; }
+    public IRelationEndType RelationEndType { get; set; }
 
     bool IPredicate.ShouldTreeShake(IArguments arguments) => ((IPredicate)this).HasMissingArguments(arguments);
 
@@ -27,15 +27,15 @@ public class Instanceof : IPropertyPredicate
             ? (IComposite)transaction.GetMetaObject(arguments.ResolveMetaObject(this.Parameter))
             : this.ObjectType;
 
-        if (this.PropertyType != null)
+        if (this.RelationEndType != null)
         {
-            if (this.PropertyType is IRoleType roleType)
+            if (this.RelationEndType is IRoleType roleType)
             {
                 compositePredicate.AddInstanceof(roleType, composite);
             }
             else
             {
-                var associationType = (IAssociationType)this.PropertyType;
+                var associationType = (IAssociationType)this.RelationEndType;
                 compositePredicate.AddInstanceof(associationType, composite);
             }
         }

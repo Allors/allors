@@ -2,7 +2,7 @@
 
 using Allors.Database.Meta;
 
-public class AssociationTypeModel : PropertyTypeModel
+public class AssociationTypeModel : RelationEndTypeModel
 {
     public AssociationTypeModel(MetaModel metaModel, IAssociationType associationType)
         : base(metaModel) =>
@@ -10,7 +10,7 @@ public class AssociationTypeModel : PropertyTypeModel
 
     public IAssociationType AssociationType { get; }
 
-    protected override IPropertyType PropertyType => this.AssociationType;
+    protected override IRelationEndType RelationEndType => this.AssociationType;
 
     // IAssociationType
     public RelationTypeModel RelationType => this.MetaModel.Map(this.AssociationType.RelationType);

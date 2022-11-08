@@ -28,7 +28,7 @@ internal class MemberExpressionsVisitor : ExpressionVisitor
 
 public static class ExpressionExtensions
 {
-    public static Node Node<T>(this Expression<Func<T, IPropertyType>> @this, IMetaPopulation metaPopulation) where T : IComposite
+    public static Node Node<T>(this Expression<Func<T, IRelationEndType>> @this, IMetaPopulation metaPopulation) where T : IComposite
     {
         var visitor = new MemberExpressionsVisitor();
         visitor.Visit(@this);
@@ -49,9 +49,9 @@ public static class ExpressionExtensions
         Node path = null;
         Node currentPath = null;
 
-        void AddPath(IPropertyType propertyType)
+        void AddPath(IRelationEndType relationEndType)
         {
-            var newNode = new Node(propertyType);
+            var newNode = new Node(relationEndType);
 
             if (path == null)
             {
@@ -74,11 +74,11 @@ public static class ExpressionExtensions
             if (memberExpression.Type.GetInterfaces().Contains(typeof(IComposite)))
             {
                 var propertyInfo = (PropertyInfo)memberExpression.Member;
-                var propertyType = propertyInfo.PropertyType;
-                var propertyName = propertyType.Name.Substring(5);
+                var relationEndType = propertyInfo.PropertyType;
+                var propertyName = relationEndType.Name.Substring(5);
                 composite = metaPopulation.FindCompositeByName(propertyName);
 
-                if (currentPath != null && !currentPath.PropertyType.ObjectType.Equals(composite))
+                if (currentPath != null && !currentPath.RelationEndType.ObjectType.Equals(composite))
                 {
                     currentPath.OfType = composite;
                 }
@@ -87,15 +87,15 @@ public static class ExpressionExtensions
             if (memberExpression.Type.GetInterfaces().Contains(typeof(IRoleType)))
             {
                 var name = memberExpression.Member.Name;
-                var propertyType = composite.RoleTypes.First(v => v.Name.Equals(name));
-                AddPath(propertyType);
+                var relationEndType = composite.RoleTypes.First(v => v.Name.Equals(name));
+                AddPath(relationEndType);
             }
 
             if (memberExpression.Type.GetInterfaces().Contains(typeof(IAssociationType)))
             {
                 var name = memberExpression.Member.Name;
-                var propertyType = composite.AssociationTypes.First(v => v.Name.Equals(name));
-                AddPath(propertyType);
+                var relationEndType = composite.AssociationTypes.First(v => v.Name.Equals(name));
+                AddPath(relationEndType);
             }
         }
 

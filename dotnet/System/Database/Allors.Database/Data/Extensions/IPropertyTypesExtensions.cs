@@ -1,4 +1,4 @@
-// <copyright file="IPropertyTypesExtensions.cs" company="Allors bvba">
+// <copyright file="IRelationEndTypesExtensions.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -8,9 +8,9 @@ namespace Allors.Database.Data;
 
 using Allors.Database.Meta;
 
-public static class IPropertyTypesExtensions
+public static class IRelationEndTypesExtensions
 {
-    public static Node Path(this IPropertyType[] @this)
+    public static Node Path(this IRelationEndType[] @this)
     {
         if (@this == null)
         {
@@ -20,16 +20,16 @@ public static class IPropertyTypesExtensions
         Node node = null;
         Node currentNode = null;
 
-        foreach (var propertyType in @this)
+        foreach (var relationEndType in @this)
         {
             if (node == null)
             {
-                node = new Node(propertyType);
+                node = new Node(relationEndType);
                 currentNode = node;
             }
             else
             {
-                var newNode = new Node(propertyType);
+                var newNode = new Node(relationEndType);
                 currentNode.Add(newNode);
                 currentNode = newNode;
             }

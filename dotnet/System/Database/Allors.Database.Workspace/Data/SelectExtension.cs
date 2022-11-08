@@ -28,11 +28,11 @@ public static class SelectExtension
     {
         var acl = acls[@object];
         // TODO: Access check for AssociationType
-        if (@this.PropertyType is IAssociationType || acl.CanRead((IRoleType)@this.PropertyType))
+        if (@this.RelationEndType is IAssociationType || acl.CanRead((IRoleType)@this.RelationEndType))
         {
             if (@this.ExistNext)
             {
-                var current = @this.PropertyType.Get(@object.Strategy);
+                var current = @this.RelationEndType.Get(@object.Strategy);
 
                 switch (current)
                 {
@@ -64,7 +64,7 @@ public static class SelectExtension
                 }
             }
 
-            var selection = @this.PropertyType.Get(@object.Strategy);
+            var selection = @this.RelationEndType.Get(@object.Strategy);
             return selection switch
             {
                 null => null,
@@ -83,9 +83,9 @@ public static class SelectExtension
         if (@this.ExistNext)
         {
             // TODO: Access check for AssociationType
-            if (@this.PropertyType is IAssociationType || acl.CanRead((IRoleType)@this.PropertyType))
+            if (@this.RelationEndType is IAssociationType || acl.CanRead((IRoleType)@this.RelationEndType))
             {
-                if (@this.PropertyType.Get(@object.Strategy) is IObject property)
+                if (@this.RelationEndType.Get(@object.Strategy) is IObject property)
                 {
                     @this.Next.Set(property, acls, value);
                     return true;
@@ -95,7 +95,7 @@ public static class SelectExtension
             return false;
         }
 
-        if (@this.PropertyType is IRoleType roleType && acl.CanWrite(roleType))
+        if (@this.RelationEndType is IRoleType roleType && acl.CanWrite(roleType))
         {
             roleType.Set(@object.Strategy, value);
             return true;
@@ -108,7 +108,7 @@ public static class SelectExtension
     {
         var acl = acls[@object];
 
-        if (@this.PropertyType is IRoleType roleType)
+        if (@this.RelationEndType is IRoleType roleType)
         {
             if (roleType.IsMany)
             {
@@ -132,7 +132,7 @@ public static class SelectExtension
         }
         else
         {
-            var associationType = (IAssociationType)@this.PropertyType;
+            var associationType = (IAssociationType)@this.RelationEndType;
             if (associationType.IsMany)
             {
                 throw new NotSupportedException("AssociationType with multiplicity many");

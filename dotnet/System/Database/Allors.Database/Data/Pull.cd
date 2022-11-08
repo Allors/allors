@@ -33,7 +33,7 @@
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="Include" />
-      <Property Name="PropertyType" />
+      <Property Name="RelationEndType" />
       <Property Name="Next" />
       <Property Name="End" />
     </ShowAsAssociation>
@@ -64,11 +64,11 @@
       <FileName>IObject.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="Allors.Database.Meta.IPropertyType" Collapsed="true">
+  <Interface Name="Allors.Database.Meta.IRelationEndType" Collapsed="true">
     <Position X="10.5" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAEiAAAAAAAAAJAAAAAAAQAAAAAAAACAJAAAAAAAAA=</HashCode>
-      <FileName>meta\IPropertyType.cs</FileName>
+      <FileName>meta\IRelationEndType.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Font Name="Segoe UI" Size="9" />

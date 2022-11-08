@@ -14,7 +14,7 @@ namespace Allors.Database.Domain.Tests
         public SelectTests(Fixture fixture) : base(fixture) { }
 
         [Fact]
-        public void One2ManyWithPropertyTypes()
+        public void One2ManyWithRelationEndTypes()
         {
             var c2A = this.BuildC2("c2A");
             var c2B = this.BuildC2("c2B");
@@ -38,7 +38,7 @@ namespace Allors.Database.Domain.Tests
         }
 
         [Fact]
-        public void One2ManyWithPropertyTypeIds()
+        public void One2ManyWithRelationEndTypeIds()
         {
             var c2A = this.BuildC2("c2A");
             var c2B = this.BuildC2("c2B");

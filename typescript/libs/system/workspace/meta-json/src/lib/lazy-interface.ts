@@ -34,15 +34,15 @@ export class LazyInterface extends LazyComposite implements InternalInterface {
     });
   }
 
-  derivePropertyTypeByPropertyName() {
-    this.propertyTypeByPropertyName = new Map();
+  deriveRelationEndTypeByPropertyName() {
+    this.relationEndTypeByPropertyName = new Map();
 
     for (const roleType of this.roleTypes) {
-      this.propertyTypeByPropertyName.set(roleType.name, roleType);
+      this.relationEndTypeByPropertyName.set(roleType.name, roleType);
     }
 
     for (const associationType of this.associationTypes) {
-      this.propertyTypeByPropertyName.set(
+      this.relationEndTypeByPropertyName.set(
         associationType.name,
         associationType
       );
@@ -50,14 +50,14 @@ export class LazyInterface extends LazyComposite implements InternalInterface {
 
     for (const subtype of this.subtypes) {
       for (const roleType of subtype.roleTypes) {
-        this.propertyTypeByPropertyName.set(
+        this.relationEndTypeByPropertyName.set(
           subtype.singularName + '_' + roleType.name,
           roleType
         );
       }
 
       for (const associationType of subtype.associationTypes) {
-        this.propertyTypeByPropertyName.set(
+        this.relationEndTypeByPropertyName.set(
           subtype.singularName + '_' + associationType.name,
           associationType
         );

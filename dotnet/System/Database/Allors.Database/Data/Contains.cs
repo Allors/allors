@@ -9,13 +9,13 @@ using Allors.Database.Meta;
 
 public class Contains : IPropertyPredicate
 {
-    public Contains(IPropertyType propertyType = null) => this.PropertyType = propertyType;
+    public Contains(IRelationEndType relationEndType = null) => this.RelationEndType = relationEndType;
 
     public IObject Object { get; set; }
 
     public string Parameter { get; set; }
 
-    public IPropertyType PropertyType { get; set; }
+    public IRelationEndType RelationEndType { get; set; }
 
     bool IPredicate.ShouldTreeShake(IArguments arguments) => ((IPredicate)this).HasMissingArguments(arguments);
 
@@ -25,13 +25,13 @@ public class Contains : IPropertyPredicate
     {
         var containedObject = this.Parameter != null ? transaction.GetObject(arguments.ResolveObject(this.Parameter)) : this.Object;
 
-        if (this.PropertyType is IRoleType roleType)
+        if (this.RelationEndType is IRoleType roleType)
         {
             compositePredicate.AddContains(roleType, containedObject);
         }
         else
         {
-            var associationType = (IAssociationType)this.PropertyType;
+            var associationType = (IAssociationType)this.RelationEndType;
             compositePredicate.AddContains(associationType, containedObject);
         }
     }

@@ -2,10 +2,10 @@
 
 using Allors.Database.Meta;
 
-public abstract class PropertyTypeModel
+public abstract class RelationEndTypeModel
     : IMetaExtensibleModel
 {
-    protected PropertyTypeModel(MetaModel metaModel)
+    protected RelationEndTypeModel(MetaModel metaModel)
     {
         this.MetaModel = metaModel;
     }
@@ -13,27 +13,27 @@ public abstract class PropertyTypeModel
     public MetaModel MetaModel { get; }
 
     // IMetaExtensible
-    public IMetaExtensible MetaExtensible => this.PropertyType;
+    public IMetaExtensible MetaExtensible => this.RelationEndType;
 
     public dynamic Extensions => this.MetaExtensible.Attributes;
 
-    // IPropertyType
-    public ObjectTypeModel ObjectType => this.MetaModel.Map(this.PropertyType.ObjectType);
+    // IRelationEndType
+    public ObjectTypeModel ObjectType => this.MetaModel.Map(this.RelationEndType.ObjectType);
 
-    public string Name => this.PropertyType.Name;
+    public string Name => this.RelationEndType.Name;
 
-    public string SingularName => this.PropertyType.SingularName;
+    public string SingularName => this.RelationEndType.SingularName;
 
-    public string SingularFullName => this.PropertyType.SingularFullName;
+    public string SingularFullName => this.RelationEndType.SingularFullName;
 
-    public string PluralName => this.PropertyType.PluralName;
+    public string PluralName => this.RelationEndType.PluralName;
 
-    public string PluralFullName => this.PropertyType.PluralFullName;
+    public string PluralFullName => this.RelationEndType.PluralFullName;
 
-    public bool IsOne => this.PropertyType.IsOne;
+    public bool IsOne => this.RelationEndType.IsOne;
 
-    public bool IsMany => this.PropertyType.IsMany;
+    public bool IsMany => this.RelationEndType.IsMany;
 
-    protected abstract IPropertyType PropertyType { get; }
+    protected abstract IRelationEndType RelationEndType { get; }
 
 }

@@ -49,11 +49,11 @@
       <FileName>Core\Model\MethodTypeModel.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Allors.Meta.Generation.Model.PropertyTypeModel" Collapsed="true">
+  <Class Name="Allors.Meta.Generation.Model.RelationEndTypeModel" Collapsed="true">
     <Position X="7.25" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAEiAAAAAAAAAIAAAAAAAQAAAAAAAACAJgCAAAAAEA=</HashCode>
-      <FileName>Core\Model\PropertyTypeModel.cs</FileName>
+      <FileName>Core\Model\RelationEndTypeModel.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>

@@ -46,7 +46,7 @@ describe('Pulls', () => {
 
       expect(select.include).toBeDefined();
       expect(select.next).toBeUndefined();
-      expect(select.propertyType).toBe(m.Organization.Owner);
+      expect(select.relationEndType).toBe(m.Organization.Owner);
 
       const include = select.include;
 
@@ -56,7 +56,7 @@ describe('Pulls', () => {
 
       expect(node.nodes).toBeUndefined();
       expect(node.ofType).toBeUndefined();
-      expect(node.propertyType).toBe(m.Person.OrganizationsWhereOwner);
+      expect(node.relationEndType).toBe(m.Person.OrganizationsWhereOwner);
     });
   });
 });

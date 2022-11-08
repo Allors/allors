@@ -33,7 +33,7 @@ namespace Allors.Database.Domain.Tests
             {
                 Predicate = new Equals
                 {
-                    PropertyType = this.M.Person.FirstName,
+                    RelationEndType = this.M.Person.FirstName,
                     Value = "John",
                 },
             };
@@ -58,12 +58,12 @@ namespace Allors.Database.Domain.Tests
                     {
                         new Equals
                             {
-                                PropertyType = this.M.Person.FirstName,
+                                RelationEndType = this.M.Person.FirstName,
                                 Value = "John",
                             },
                         new Equals
                             {
-                                PropertyType = this.M.Person.LastName,
+                                RelationEndType = this.M.Person.LastName,
                                 Value = "Doe",
                             },
                     },

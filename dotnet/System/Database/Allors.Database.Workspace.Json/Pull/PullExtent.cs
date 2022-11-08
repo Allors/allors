@@ -113,7 +113,7 @@ public class PullExtent
             {
                 var include = select.End.Include;
 
-                if (select.PropertyType != null)
+                if (select.RelationEndType != null)
                 {
                     objects = select.IsOne
                         ? objects.Select(v => select.Get(v, this.acls)).Where(v => v != null).Cast<IObject>().Distinct().ToArray()
@@ -123,8 +123,8 @@ public class PullExtent
                             return (IEnumerable<IObject>)stepResult ?? Array.Empty<IObject>();
                         }).Distinct().ToArray();
 
-                    var propertyType = select.End.PropertyType;
-                    name ??= propertyType.PluralName;
+                    var relationEndType = select.End.RelationEndType;
+                    name ??= relationEndType.PluralName;
                 }
 
                 name ??= dataExtent.ObjectType.PluralName;

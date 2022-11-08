@@ -14,27 +14,27 @@ public class Select : IVisitable
     {
     }
 
-    public Select(params IPropertyType[] propertyTypes) : this(propertyTypes, 0)
+    public Select(params IRelationEndType[] relationEndTypes) : this(relationEndTypes, 0)
     {
     }
 
-    private Select(IPropertyType[] propertyTypes, int index)
+    private Select(IRelationEndType[] relationEndTypes, int index)
     {
-        if (propertyTypes?.Length > 0)
+        if (relationEndTypes?.Length > 0)
         {
-            this.PropertyType = propertyTypes[index];
+            this.RelationEndType = relationEndTypes[index];
 
             var nextIndex = index + 1;
-            if (nextIndex < propertyTypes.Length)
+            if (nextIndex < relationEndTypes.Length)
             {
-                this.Next = new Select(propertyTypes, nextIndex);
+                this.Next = new Select(relationEndTypes, nextIndex);
             }
         }
     }
 
     public Node[] Include { get; set; }
 
-    public IPropertyType PropertyType { get; set; }
+    public IRelationEndType RelationEndType { get; set; }
 
     public IComposite OfType { get; set; }
 
@@ -44,12 +44,12 @@ public class Select : IVisitable
     {
         get
         {
-            if (this.PropertyType.IsMany)
+            if (this.RelationEndType.IsMany)
             {
                 return false;
             }
 
-            return this.ExistNext ? this.Next.IsOne : this.PropertyType.IsOne;
+            return this.ExistNext ? this.Next.IsOne : this.RelationEndType.IsOne;
         }
     }
 
@@ -66,13 +66,13 @@ public class Select : IVisitable
             return this.Next.GetObjectType();
         }
 
-        return this.PropertyType?.ObjectType;
+        return this.RelationEndType?.ObjectType;
     }
 
     public override string ToString()
     {
         var name = new StringBuilder();
-        name.Append(this.PropertyType.Name);
+        name.Append(this.RelationEndType.Name);
         if (this.ExistNext)
         {
             this.Next.ToStringAppendToName(name);
@@ -83,7 +83,7 @@ public class Select : IVisitable
 
     private void ToStringAppendToName(StringBuilder name)
     {
-        name.Append("." + this.PropertyType.Name);
+        name.Append("." + this.RelationEndType.Name);
 
         if (this.ExistNext)
         {
@@ -93,12 +93,12 @@ public class Select : IVisitable
 
     public static bool TryParse(IComposite composite, string selectString, out Select select)
     {
-        var propertyType = Resolve(composite, selectString);
-        select = propertyType == null ? null : new Select(propertyType);
+        var relationEndType = Resolve(composite, selectString);
+        select = relationEndType == null ? null : new Select(relationEndType);
         return select != null;
     }
 
-    private static IPropertyType Resolve(IComposite composite, string propertyName)
+    private static IRelationEndType Resolve(IComposite composite, string propertyName)
     {
         var lowerCasePropertyName = propertyName.ToLowerInvariant();
 

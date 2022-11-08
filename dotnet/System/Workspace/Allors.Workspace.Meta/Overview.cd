@@ -32,11 +32,11 @@
       <FileName>IObjectType.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="Allors.Workspace.Meta.IPropertyType">
+  <Interface Name="Allors.Workspace.Meta.IRelationEndType">
     <Position X="2.5" Y="3.25" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAiAAAAAAAAAIAAAAAAAQAAAAAAAACAIAAAAAAAAA=</HashCode>
-      <FileName>IPropertyType.cs</FileName>
+      <FileName>IRelationEndType.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Allors.Workspace.Meta.IFieldType">

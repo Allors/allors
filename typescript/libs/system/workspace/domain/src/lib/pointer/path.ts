@@ -1,27 +1,27 @@
 import {
   AssociationType,
   Composite,
-  PropertyType,
+  RelationEndType,
   RoleType,
 } from '@allors/system/workspace/meta';
 import { IObject } from '../iobject';
 import { IStrategy } from '../istrategy';
 
 export interface Path {
-  propertyType: PropertyType;
+  relationEndType: RelationEndType;
   ofType?: Composite;
   next?: Path;
 }
 
 function getComposite(
   strategy: IStrategy,
-  propertyType: PropertyType,
+  relationEndType: RelationEndType,
   ofType: Composite,
   skipMissing?: boolean
 ): IObject {
-  const composite = propertyType.isRoleType
-    ? strategy.getCompositeRole(propertyType as RoleType, skipMissing)
-    : strategy.getCompositeAssociation(propertyType as AssociationType);
+  const composite = relationEndType.isRoleType
+    ? strategy.getCompositeRole(relationEndType as RoleType, skipMissing)
+    : strategy.getCompositeAssociation(relationEndType as AssociationType);
 
   if (composite == null || ofType == null) {
     return composite;
@@ -32,13 +32,13 @@ function getComposite(
 
 function getComposites(
   strategy: IStrategy,
-  propertyType: PropertyType,
+  relationEndType: RelationEndType,
   ofType: Composite,
   skipMissing?: boolean
 ): Readonly<IObject[]> {
-  const composites = propertyType.isRoleType
-    ? strategy.getCompositesRole(propertyType as RoleType, skipMissing)
-    : strategy.getCompositesAssociation(propertyType as AssociationType);
+  const composites = relationEndType.isRoleType
+    ? strategy.getCompositesRole(relationEndType as RoleType, skipMissing)
+    : strategy.getCompositesAssociation(relationEndType as AssociationType);
 
   if (composites == null || ofType == null) {
     return composites;
@@ -53,10 +53,10 @@ function resolveRecursive(
   results: Set<IObject>,
   skipMissing?: boolean
 ): void {
-  if (path.propertyType.isOne) {
+  if (path.relationEndType.isOne) {
     const resolved = getComposite(
       object.strategy,
-      path.propertyType,
+      path.relationEndType,
       path.ofType,
       skipMissing
     );
@@ -70,7 +70,7 @@ function resolveRecursive(
   } else {
     const resolveds = getComposites(
       object.strategy,
-      path.propertyType,
+      path.relationEndType,
       path.ofType,
       skipMissing
     );
@@ -89,7 +89,7 @@ function resolveRecursive(
 }
 
 export function isPath(path: unknown): path is Path {
-  return (path as Path).propertyType !== undefined;
+  return (path as Path).relationEndType !== undefined;
 }
 
 export function pathResolve(
@@ -113,7 +113,7 @@ export function pathLeaf(path: Path): Path {
 
 export function pathObjectType(path: Path): Composite {
   const leaf = pathLeaf(path);
-  return leaf.ofType ?? (leaf.propertyType.objectType as Composite);
+  return leaf.ofType ?? (leaf.relationEndType.objectType as Composite);
 }
 
 export function pathTag(path: Path): string {
@@ -121,7 +121,7 @@ export function pathTag(path: Path): string {
 
   let next = path;
   while (next.next) {
-    tag = `${tag ? `_${tag}` : tag}${next.propertyType.relationType.tag}`;
+    tag = `${tag ? `_${tag}` : tag}${next.relationEndType.relationType.tag}`;
     next = next.next;
   }
 

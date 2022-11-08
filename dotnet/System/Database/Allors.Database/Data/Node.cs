@@ -13,12 +13,12 @@ using Allors.Database.Meta;
 
 public class Node : IVisitable
 {
-    public Node(IPropertyType propertyType, IEnumerable<Node> nodes = null)
+    public Node(IRelationEndType relationEndType, IEnumerable<Node> nodes = null)
     {
-        this.PropertyType = propertyType;
-        this.Composite = this.PropertyType.ObjectType.IsComposite ? (IComposite)propertyType.ObjectType : null;
+        this.RelationEndType = relationEndType;
+        this.Composite = this.RelationEndType.ObjectType.IsComposite ? (IComposite)relationEndType.ObjectType : null;
 
-        if (propertyType.ObjectType.IsComposite)
+        if (relationEndType.ObjectType.IsComposite)
         {
             this.Nodes = nodes?.Select(this.AssertAssignable).ToArray();
         }
@@ -26,7 +26,7 @@ public class Node : IVisitable
         this.Nodes ??= Array.Empty<Node>();
     }
 
-    public IPropertyType PropertyType { get; }
+    public IRelationEndType RelationEndType { get; }
 
     public IComposite Composite { get; }
 
@@ -38,9 +38,9 @@ public class Node : IVisitable
 
     public IEnumerable<IObject> Resolve(IObject @object)
     {
-        if (this.PropertyType.IsOne)
+        if (this.RelationEndType.IsOne)
         {
-            var resolved = this.PropertyType.Get(@object.Strategy, this.OfType);
+            var resolved = this.RelationEndType.Get(@object.Strategy, this.OfType);
             if (resolved != null)
             {
                 if (this.Nodes.Length > 0)
@@ -61,7 +61,7 @@ public class Node : IVisitable
         }
         else
         {
-            var resolved = (IEnumerable)this.PropertyType.Get(@object.Strategy, this.OfType);
+            var resolved = (IEnumerable)this.RelationEndType.Get(@object.Strategy, this.OfType);
             if (resolved != null)
             {
                 if (this.Nodes.Length > 0)
@@ -88,26 +88,26 @@ public class Node : IVisitable
         }
     }
 
-    public Node Add(IEnumerable<IPropertyType> propertyTypes)
+    public Node Add(IEnumerable<IRelationEndType> relationEndTypes)
     {
-        foreach (var propertyType in propertyTypes)
+        foreach (var relationEndType in relationEndTypes)
         {
-            this.Add(propertyType);
+            this.Add(relationEndType);
         }
 
         return this;
     }
 
-    public Node Add(IPropertyType propertyType)
+    public Node Add(IRelationEndType relationEndType)
     {
-        var treeNode = new Node(propertyType);
+        var treeNode = new Node(relationEndType);
         this.Add(treeNode);
         return this;
     }
 
-    public Node Add(IPropertyType propertyType, Node[] subTree)
+    public Node Add(IRelationEndType relationEndType, Node[] subTree)
     {
-        var treeNode = new Node(propertyType, subTree);
+        var treeNode = new Node(relationEndType, subTree);
         this.Add(treeNode);
         return this;
     }
@@ -120,11 +120,11 @@ public class Node : IVisitable
         {
             IComposite addedComposite = null;
 
-            if (node.PropertyType is IRoleType roleType)
+            if (node.RelationEndType is IRoleType roleType)
             {
                 addedComposite = roleType.AssociationType.ObjectType;
             }
-            else if (node.PropertyType is IAssociationType associationType)
+            else if (node.RelationEndType is IAssociationType associationType)
             {
                 addedComposite = (IComposite)associationType.RoleType.ObjectType;
             }
@@ -132,7 +132,7 @@ public class Node : IVisitable
             if (addedComposite == null ||
                 !(this.Composite.Equals(addedComposite) || this.Composite.Classes.Intersect(addedComposite.Classes).Any()))
             {
-                throw new ArgumentException(node.PropertyType + " is not a valid tree node on " + this.Composite + ".");
+                throw new ArgumentException(node.RelationEndType + " is not a valid tree node on " + this.Composite + ".");
             }
         }
 

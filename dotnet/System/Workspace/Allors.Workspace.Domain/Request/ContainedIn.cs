@@ -12,7 +12,7 @@ namespace Allors.Workspace.Request
 
     public class ContainedIn : IPropertyPredicate
     {
-        public ContainedIn(IPropertyType propertyType = null) => this.PropertyType = propertyType;
+        public ContainedIn(IRelationEndType relationEndType = null) => this.RelationEndType = relationEndType;
 
         public IExtent Extent { get; set; }
 
@@ -20,7 +20,7 @@ namespace Allors.Workspace.Request
 
         public string Parameter { get; set; }
 
-        public IPropertyType PropertyType { get; set; }
+        public IRelationEndType RelationEndType { get; set; }
 
         public void Accept(IVisitor visitor) => visitor.VisitContainedIn(this);
     }

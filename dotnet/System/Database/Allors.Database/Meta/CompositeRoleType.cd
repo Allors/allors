@@ -17,11 +17,11 @@
       <FileName>Meta\IObjectType.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="Allors.Database.Meta.IPropertyType">
+  <Interface Name="Allors.Database.Meta.IRelationEndType">
     <Position X="0.75" Y="0.5" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAEiAAAAAAAAAJAAAAAAAQAAAAAAAACAJAAAAAAAAA=</HashCode>
-      <FileName>Meta\IPropertyType.cs</FileName>
+      <FileName>Meta\IRelationEndType.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="ObjectType" />

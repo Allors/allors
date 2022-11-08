@@ -16,16 +16,16 @@ public sealed class PrefetchPolicyBuilder
 
     public PrefetchPolicyBuilder() => this.rules = new List<PrefetchRule>();
 
-    public PrefetchPolicyBuilder WithRule(IPropertyType propertyType)
+    public PrefetchPolicyBuilder WithRule(IRelationEndType relationEndType)
     {
-        var rule = new PrefetchRule(propertyType, null);
+        var rule = new PrefetchRule(relationEndType, null);
         this.rules.Add(rule);
         return this;
     }
 
-    public PrefetchPolicyBuilder WithRule(IPropertyType propertyType, PrefetchPolicy prefetch)
+    public PrefetchPolicyBuilder WithRule(IRelationEndType relationEndType, PrefetchPolicy prefetch)
     {
-        var rule = new PrefetchRule(propertyType, prefetch);
+        var rule = new PrefetchRule(relationEndType, prefetch);
         this.rules.Add(rule);
         return this;
     }

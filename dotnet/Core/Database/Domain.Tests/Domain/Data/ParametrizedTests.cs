@@ -21,7 +21,7 @@ namespace Allors.Database.Domain.Tests
         {
             var filter = new Extent(this.M.Person)
             {
-                Predicate = new Equals { PropertyType = this.M.Person.FirstName, Parameter = "firstName" },
+                Predicate = new Equals { RelationEndType = this.M.Person.FirstName, Parameter = "firstName" },
             };
 
             var arguments = new Arguments(new Dictionary<string, object> { { "firstName", "John" } });
@@ -38,7 +38,7 @@ namespace Allors.Database.Domain.Tests
         {
             var filter = new Extent(this.M.Person)
             {
-                Predicate = new Equals { PropertyType = this.M.Person.FirstName, Parameter = "firstName" },
+                Predicate = new Equals { RelationEndType = this.M.Person.FirstName, Parameter = "firstName" },
             };
 
             var queryExtent = filter.Build(this.Transaction);
@@ -60,12 +60,12 @@ namespace Allors.Database.Domain.Tests
                                 {
                                     new Equals
                                         {
-                                            PropertyType = this.M.Person.FirstName,
+                                            RelationEndType = this.M.Person.FirstName,
                                             Parameter = "firstName",
                                         },
                                     new Equals
                                         {
-                                            PropertyType = this.M.Person.LastName,
+                                            RelationEndType = this.M.Person.LastName,
                                             Parameter = "lastName",
                                         },
                                 },
@@ -99,12 +99,12 @@ namespace Allors.Database.Domain.Tests
                         {
                             new Equals
                                 {
-                                    PropertyType = this.M.Person.FirstName,
+                                    RelationEndType = this.M.Person.FirstName,
                                     Parameter = "firstName",
                                 },
                             new Equals
                                 {
-                                    PropertyType = this.M.Person.LastName,
+                                    RelationEndType = this.M.Person.LastName,
                                     Parameter = "lastName",
                                 },
                         },
@@ -139,12 +139,12 @@ namespace Allors.Database.Domain.Tests
             {
                 Predicate = new ContainedIn
                 {
-                    PropertyType = this.M.C1.C1C2One2One,
+                    RelationEndType = this.M.C1.C1C2One2One,
                     Extent = new Extent(this.M.C2)
                     {
                         Predicate = new Equals
                         {
-                            PropertyType = this.M.C2.C2AllorsString,
+                            RelationEndType = this.M.C2.C2AllorsString,
                             Parameter = "nested",
                         },
                     },
@@ -169,12 +169,12 @@ namespace Allors.Database.Domain.Tests
             {
                 Predicate = new ContainedIn
                 {
-                    PropertyType = this.M.C1.C1C2One2One,
+                    RelationEndType = this.M.C1.C1C2One2One,
                     Extent = new Extent(this.M.C2)
                     {
                         Predicate = new Equals
                         {
-                            PropertyType = this.M.C2.C2AllorsString,
+                            RelationEndType = this.M.C2.C2AllorsString,
                             Parameter = "nested",
                         },
                     },
@@ -200,12 +200,12 @@ namespace Allors.Database.Domain.Tests
                     {
                         new ContainedIn
                         {
-                            PropertyType = this.M.C1.C1C2One2One,
+                            RelationEndType = this.M.C1.C1C2One2One,
                             Extent = new Extent(this.M.C2)
                             {
                                 Predicate = new Equals
                                 {
-                                    PropertyType = this.M.C2.C2AllorsString,
+                                    RelationEndType = this.M.C2.C2AllorsString,
                                     Parameter = "nested",
                                 },
                             },
@@ -233,12 +233,12 @@ namespace Allors.Database.Domain.Tests
                     {
                         new ContainedIn
                             {
-                                PropertyType = this.M.C1.C1C2One2One,
+                                RelationEndType = this.M.C1.C1C2One2One,
                                 Extent = new Extent(this.M.C2)
                                              {
                                                  Predicate = new Contains
                                                                  {
-                                                                     PropertyType = this.M.C2.C1WhereC1C2One2One,
+                                                                     RelationEndType = this.M.C2.C1WhereC1C2One2One,
                                                                      Parameter = "nested",
                                                                  },
                                              },

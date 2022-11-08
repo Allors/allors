@@ -19,7 +19,7 @@ test('databaseGetOne2Many', async () => {
       objectType: m.C2,
       predicate: {
         kind: 'Equals',
-        propertyType: m.C2.Name,
+        relationEndType: m.C2.Name,
         value: 'c2C',
       },
     },
@@ -27,7 +27,7 @@ test('databaseGetOne2Many', async () => {
       {
         include: [
           {
-            propertyType: m.C2.C1WhereC1C2One2Many,
+            relationEndType: m.C2.C1WhereC1C2One2Many,
           },
         ],
       },
@@ -56,7 +56,7 @@ test('databaseGetOne2One', async () => {
       objectType: m.C2,
       predicate: {
         kind: 'Equals',
-        propertyType: m.C2.Name,
+        relationEndType: m.C2.Name,
         value: 'c2C',
       },
     },
@@ -64,7 +64,7 @@ test('databaseGetOne2One', async () => {
       {
         include: [
           {
-            propertyType: m.C2.C1WhereC1C2One2One,
+            relationEndType: m.C2.C1WhereC1C2One2One,
           },
         ],
       },

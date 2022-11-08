@@ -20,7 +20,7 @@ namespace Allors.Workspace.Meta
             this.ObjectType = objectType;
         }
 
-        IObjectType IPropertyType.ObjectType => this.ObjectType;
+        IObjectType IRelationEndType.ObjectType => this.ObjectType;
 
         public IComposite ObjectType { get; }
 
@@ -45,7 +45,7 @@ namespace Allors.Workspace.Meta
 
         public string OperandTag => this.RelationType.Tag;
 
-        int IComparable<IPropertyType>.CompareTo(IPropertyType other) =>
+        int IComparable<IRelationEndType>.CompareTo(IRelationEndType other) =>
             string.Compare(this.Name, other.Name, StringComparison.InvariantCulture);
 
         public override string ToString() => $"{this.RoleType.ObjectType.SingularName}.{this.Name}";

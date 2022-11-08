@@ -32,10 +32,10 @@ internal class Prefetch
         var unitRoles = false;
         foreach (var prefetchRule in this.prefetchPolicy)
         {
-            var propertyType = prefetchRule.PropertyType;
-            if (propertyType is IRoleType)
+            var relationEndType = prefetchRule.RelationEndType;
+            if (relationEndType is IRoleType)
             {
-                var roleType = (IRoleType)propertyType;
+                var roleType = (IRoleType)relationEndType;
                 var objectType = roleType.ObjectType;
                 if (objectType.IsUnit)
                 {
@@ -112,7 +112,7 @@ internal class Prefetch
             }
             else
             {
-                var associationType = (IAssociationType)propertyType;
+                var associationType = (IAssociationType)relationEndType;
                 var relationType = associationType.RelationType;
                 var roleType = relationType.RoleType;
 
@@ -161,10 +161,10 @@ internal class Prefetch
 
         foreach (var prefetchRule in this.prefetchPolicy)
         {
-            var propertyType = prefetchRule.PropertyType;
-            if (propertyType is IRoleType)
+            var relationEndType = prefetchRule.RelationEndType;
+            if (relationEndType is IRoleType)
             {
-                var roleType = (IRoleType)propertyType;
+                var roleType = (IRoleType)relationEndType;
                 var objectType = roleType.ObjectType;
                 if (!objectType.IsUnit)
                 {
@@ -181,7 +181,7 @@ internal class Prefetch
             }
             else
             {
-                var associationType = (IAssociationType)propertyType;
+                var associationType = (IAssociationType)relationEndType;
                 var relationType = associationType.RelationType;
                 var roleType = relationType.RoleType;
 

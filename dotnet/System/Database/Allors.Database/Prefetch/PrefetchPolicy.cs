@@ -52,9 +52,9 @@ public sealed class PrefetchPolicy : IEnumerable<PrefetchRule>
         return new PrefetchPolicy(rules) { AllowCompilation = false };
     }
 
-    public static implicit operator PrefetchPolicy(IPropertyType[] propertyTypes)
+    public static implicit operator PrefetchPolicy(IRelationEndType[] relationEndTypes)
     {
-        var rules = propertyTypes.Select(x => new PrefetchRule(x, null)).ToArray();
+        var rules = relationEndTypes.Select(x => new PrefetchRule(x, null)).ToArray();
         return new PrefetchPolicy(rules) { AllowCompilation = false };
     }
 
@@ -65,7 +65,7 @@ public sealed class PrefetchPolicy : IEnumerable<PrefetchRule>
             foreach (var rule in rules)
             {
                 var indent = new string(' ', level * 2);
-                toString.Append($"{indent}- {rule.PropertyType}\n");
+                toString.Append($"{indent}- {rule.RelationEndType}\n");
 
                 if (rule.PrefetchPolicy != null)
                 {

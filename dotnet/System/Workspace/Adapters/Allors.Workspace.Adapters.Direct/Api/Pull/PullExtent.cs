@@ -64,7 +64,7 @@ public class PullExtent
                     {
                         var include = select.Include ?? select.End.Include;
 
-                        if (select.PropertyType != null)
+                        if (select.RelationEndType != null)
                         {
                             objects = select.IsOne
                                 ? objects.Select(v => select.Get(v, this.acls))
@@ -83,8 +83,8 @@ public class PullExtent
                                     .Distinct()
                                     .ToArray();
 
-                            var propertyType = select.End.PropertyType;
-                            name ??= propertyType.PluralFullName;
+                            var relationEndType = select.End.RelationEndType;
+                            name ??= relationEndType.PluralFullName;
                         }
 
                         name ??= extent.ObjectType.PluralName;

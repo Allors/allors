@@ -11,13 +11,13 @@ namespace Allors.Workspace.Request
 
     public class Contains : IPropertyPredicate
     {
-        public Contains(IPropertyType propertyType = null) => this.PropertyType = propertyType;
+        public Contains(IRelationEndType relationEndType = null) => this.RelationEndType = relationEndType;
 
         public IObject Object { get; set; }
 
         public string Parameter { get; set; }
 
-        public IPropertyType PropertyType { get; set; }
+        public IRelationEndType RelationEndType { get; set; }
 
         public void Accept(IVisitor visitor) => visitor.VisitContains(this);
     }

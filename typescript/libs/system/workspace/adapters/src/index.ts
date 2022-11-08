@@ -13,7 +13,7 @@ export * from './lib/database/database-connection';
 export * from './lib/database/database-record';
 
 export * from './lib/session/state/database-state';
-export * from './lib/session/state/property-by-object-by-property-type';
+export * from './lib/session/state/property-by-object-by-relation-end-type';
 export * from './lib/session/state/record-based-state';
 
 export * from './lib/session/trackers/change-set-tracker';

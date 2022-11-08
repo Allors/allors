@@ -44,15 +44,15 @@ export class LazyClass extends LazyComposite implements InternalClass {
     return this.tag === objectType?.tag;
   }
 
-  derivePropertyTypeByPropertyName() {
-    this.propertyTypeByPropertyName = new Map();
+  deriveRelationEndTypeByPropertyName() {
+    this.relationEndTypeByPropertyName = new Map();
 
     for (const roleType of this.roleTypes) {
-      this.propertyTypeByPropertyName.set(roleType.name, roleType);
+      this.relationEndTypeByPropertyName.set(roleType.name, roleType);
     }
 
     for (const associationType of this.associationTypes) {
-      this.propertyTypeByPropertyName.set(
+      this.relationEndTypeByPropertyName.set(
         associationType.name,
         associationType
       );

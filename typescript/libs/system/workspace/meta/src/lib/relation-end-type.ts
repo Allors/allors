@@ -2,7 +2,7 @@ import { ObjectType } from './object-type';
 import { OperandType } from './operand-type';
 import { RelationType } from './relation-type';
 
-export interface PropertyType extends OperandType {
+export interface RelationEndType extends OperandType {
   isRoleType: boolean;
   isAssociationType: boolean;
   isMethodType: boolean;

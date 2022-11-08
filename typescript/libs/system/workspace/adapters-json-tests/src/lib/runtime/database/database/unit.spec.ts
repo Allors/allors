@@ -19,7 +19,7 @@ test('unit', async () => {
       objectType: m.C2,
       predicate: {
         kind: 'Equals',
-        propertyType: m.C2.Name,
+        relationEndType: m.C2.Name,
         value: 'c2C',
       },
     },
@@ -27,7 +27,7 @@ test('unit', async () => {
       {
         include: [
           {
-            propertyType: m.C2.C1WhereC1C2One2Many,
+            relationEndType: m.C2.C1WhereC1C2One2Many,
           },
         ],
       },

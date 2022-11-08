@@ -27,14 +27,14 @@
     </TypeIdentifier>
     <ShowAsAssociation>
       <Field Name="prefetchPolicy" />
-      <Field Name="propertyType" />
+      <Field Name="relationEndType" />
     </ShowAsAssociation>
   </Class>
-  <Interface Name="Allors.Meta.IPropertyType" Collapsed="true">
+  <Interface Name="Allors.Meta.IRelationEndType" Collapsed="true">
     <Position X="7.5" Y="1.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Meta\IPropertyType.cs</FileName>
+      <FileName>Meta\IRelationEndType.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Allors.Meta.IAssociationType" Collapsed="true">

@@ -29,7 +29,7 @@
   <Class Name="Allors.Data.Contains" BaseTypeListCollapsed="true">
     <Position X="7.5" Y="9.5" Width="1.5" />
     <Members>
-      <Property Name="PropertyType" Hidden="true" />
+      <Property Name="RelationEndType" Hidden="true" />
     </Members>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAACgAIAAAAAAAAAQAAAAAAACCAAABAA=</HashCode>
@@ -52,14 +52,14 @@
   <Class Name="Allors.Data.Equals" BaseTypeListCollapsed="true">
     <Position X="5.75" Y="9.5" Width="1.5" />
     <Members>
-      <Property Name="PropertyType" Hidden="true" />
+      <Property Name="RelationEndType" Hidden="true" />
     </Members>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAACgAIAAAAAAAAAQAAAAAAAiCAAABAA=</HashCode>
       <FileName>Data\Equals.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="PropertyType" />
+      <Property Name="RelationEndType" />
     </ShowAsAssociation>
     <Lollipop Position="0.2" />
   </Class>
@@ -77,14 +77,14 @@
   <Class Name="Allors.Data.Exists" BaseTypeListCollapsed="true">
     <Position X="4" Y="9.5" Width="1.5" />
     <Members>
-      <Property Name="PropertyType" Hidden="true" />
+      <Property Name="RelationEndType" Hidden="true" />
     </Members>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAACAAIAAAAAAAAAQAAAAAAACCAAABAA=</HashCode>
       <FileName>Data\Exists.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="PropertyType" />
+      <Property Name="RelationEndType" />
     </ShowAsAssociation>
     <Lollipop Position="0.2" />
   </Class>
@@ -102,7 +102,7 @@
   <Class Name="Allors.Data.Instanceof" BaseTypeListCollapsed="true">
     <Position X="2.25" Y="9.5" Width="1.5" />
     <Members>
-      <Property Name="PropertyType" Hidden="true" />
+      <Property Name="RelationEndType" Hidden="true" />
     </Members>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAACAAIAAAAAAAAAAAAAAIIACCAAABAA=</HashCode>
@@ -110,7 +110,7 @@
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="ObjectType" />
-      <Property Name="PropertyType" />
+      <Property Name="RelationEndType" />
     </ShowAsAssociation>
     <Lollipop Position="0.2" />
   </Class>
@@ -235,11 +235,11 @@
       <FileName>Meta\IObjectType.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="Allors.Meta.IPropertyType" Collapsed="true">
+  <Interface Name="Allors.Meta.IRelationEndType" Collapsed="true">
     <Position X="10.75" Y="8.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAiAAAAAAAAAJAAAAAAAQAAAAAAAACAIAAAAAAAAA=</HashCode>
-      <FileName>Meta\IPropertyType.cs</FileName>
+      <FileName>Meta\IRelationEndType.cs</FileName>
       <NewMemberFileName>Meta\IRoleType.cs</NewMemberFileName>
     </TypeIdentifier>
   </Interface>
@@ -288,7 +288,7 @@
       <FileName>Data\IPropertyPredicate.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="PropertyType" />
+      <Property Name="RelationEndType" />
     </ShowAsAssociation>
   </Interface>
   <Interface Name="Allors.Meta.IRoleType" Collapsed="true">

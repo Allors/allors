@@ -76,13 +76,13 @@ define_interface(interface) ::= <<
 
 $interface.Subtypes:{subtype|$define_subtype(subtype)$}; separator="\n"$
 
-$interface.DefinedProperties:{property|$define_propertyType(property)$}; separator="\n"$
+$interface.DefinedProperties:{property|$define_relationEndType(property)$}; separator="\n"$
 
-$interface.InheritedProperties:{property|$define_inheritedpropertyType(property)$}; separator="\n"$
+$interface.InheritedProperties:{property|$define_inheritedrelationEndType(property)$}; separator="\n"$
 
-$interface.DefinedReverseProperties:{property|$define_reversepropertyType(property)$}; separator="\n"$
+$interface.DefinedReverseProperties:{property|$define_reverserelationEndType(property)$}; separator="\n"$
 
-$interface.InheritedReverseProperties:{property|$define_inheritedreversepropertyType(property)$}; separator="\n"$
+$interface.InheritedReverseProperties:{property|$define_inheritedreverserelationEndType(property)$}; separator="\n"$
 
 $interface.DefinedMethods:{method|$define_methodType(method)$}; separator="\n"$
 
@@ -99,13 +99,13 @@ $repository.Classes:{class|$define_class(class)$}; separator="\n"$
 
 define_class(class) ::= <<
     public interface IMeta$class.SingularName$ : IClass {
-$class.DefinedProperties:{property|$define_propertyType(property)$}; separator="\n"$
+$class.DefinedProperties:{property|$define_relationEndType(property)$}; separator="\n"$
 
-$class.InheritedProperties:{property|$define_inheritedpropertyType(property)$}; separator="\n"$
+$class.InheritedProperties:{property|$define_inheritedrelationEndType(property)$}; separator="\n"$
 
-$class.DefinedReverseProperties:{property|$define_reversepropertyType(property)$}; separator="\n"$
+$class.DefinedReverseProperties:{property|$define_reverserelationEndType(property)$}; separator="\n"$
 
-$class.InheritedReverseProperties:{property|$define_inheritedreversepropertyType(property)$}; separator="\n"$
+$class.InheritedReverseProperties:{property|$define_inheritedreverserelationEndType(property)$}; separator="\n"$
 
 $class.DefinedMethods:{method|$define_methodType(method)$}; separator="\n"$
 
@@ -117,11 +117,11 @@ define_subtype(subtype) ::= <<
         IMeta$subtype.SingularName$ As$subtype.SingularName$ { get; } 
 >>
 
-define_propertyType(property) ::= <<
+define_relationEndType(property) ::= <<
         IMeta$property.DefiningType.SingularName$$property.RoleName$ $property.RoleName$ { get; }
 >>
 
-define_inheritedpropertyType(property) ::= <<
+define_inheritedrelationEndType(property) ::= <<
  $if(property.DefiningProperty)$
         IMeta$property.DefiningProperty.DefiningType.SingularName$$property.DefiningProperty.RoleName$ $property.DefiningProperty.RoleName$ { get; }
  $else$
@@ -129,11 +129,11 @@ define_inheritedpropertyType(property) ::= <<
  $endif$
 >>
 
-define_reversepropertyType(property) ::= <<
+define_reverserelationEndType(property) ::= <<
         IMeta$property.AssociationName$ $property.AssociationName$ { get; }
 >>
 
-define_inheritedreversepropertyType(property) ::= <<
+define_inheritedreverserelationEndType(property) ::= <<
         IMeta$property.AssociationName$ $property.AssociationName$ { get; }
 >>
 

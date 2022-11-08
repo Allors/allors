@@ -10,7 +10,7 @@ using Allors.Database.Meta;
 
 public class ContainedIn : IPropertyPredicate
 {
-    public ContainedIn(IPropertyType propertyType = null) => this.PropertyType = propertyType;
+    public ContainedIn(IRelationEndType relationEndType = null) => this.RelationEndType = relationEndType;
 
     public IExtent Extent { get; set; }
 
@@ -18,7 +18,7 @@ public class ContainedIn : IPropertyPredicate
 
     public string Parameter { get; set; }
 
-    public IPropertyType PropertyType { get; set; }
+    public IRelationEndType RelationEndType { get; set; }
 
     bool IPredicate.ShouldTreeShake(IArguments arguments) => this.HasMissingArguments(arguments);
 
@@ -30,7 +30,7 @@ public class ContainedIn : IPropertyPredicate
         {
             var objects = this.Parameter != null ? transaction.GetObjects(arguments.ResolveObjects(this.Parameter)) : this.Objects;
 
-            if (this.PropertyType is IRoleType roleType)
+            if (this.RelationEndType is IRoleType roleType)
             {
                 if (objects != null)
                 {
@@ -43,7 +43,7 @@ public class ContainedIn : IPropertyPredicate
             }
             else
             {
-                var associationType = (IAssociationType)this.PropertyType;
+                var associationType = (IAssociationType)this.RelationEndType;
                 if (objects != null)
                 {
                     compositePredicate.AddContainedIn(associationType, objects);

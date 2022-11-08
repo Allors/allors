@@ -61,12 +61,12 @@ public static class NodeExtensions
 
         var acl = acls[@object];
         // TODO: Access check for AssociationType
-        if (!(@this.PropertyType is IAssociationType) && !acl.CanRead((IRoleType)@this.PropertyType))
+        if (!(@this.RelationEndType is IAssociationType) && !acl.CanRead((IRoleType)@this.RelationEndType))
         {
             return;
         }
 
-        if (@this.PropertyType is IRoleType roleType)
+        if (@this.RelationEndType is IRoleType roleType)
         {
             if (roleType.ObjectType.IsComposite)
             {
@@ -92,7 +92,7 @@ public static class NodeExtensions
                 }
             }
         }
-        else if (@this.PropertyType is IAssociationType associationType)
+        else if (@this.RelationEndType is IAssociationType associationType)
         {
             if (associationType.IsOne)
             {

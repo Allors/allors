@@ -16,18 +16,18 @@ namespace Allors.Workspace.Request
         {
         }
 
-        public Select(params IPropertyType[] propertyTypes) : this(propertyTypes, 0)
+        public Select(params IRelationEndType[] relationEndTypes) : this(relationEndTypes, 0)
         {
         }
 
-        internal Select(IPropertyType[] propertyTypes, int index)
+        internal Select(IRelationEndType[] relationEndTypes, int index)
         {
-            this.PropertyType = propertyTypes[index];
+            this.RelationEndType = relationEndTypes[index];
 
             var nextIndex = index + 1;
-            if (nextIndex < propertyTypes.Length)
+            if (nextIndex < relationEndTypes.Length)
             {
-                this.Next = new Select(propertyTypes, nextIndex);
+                this.Next = new Select(relationEndTypes, nextIndex);
             }
         }
 
@@ -35,18 +35,18 @@ namespace Allors.Workspace.Request
         {
             get
             {
-                if (this.PropertyType.IsMany)
+                if (this.RelationEndType.IsMany)
                 {
                     return false;
                 }
 
-                return this.ExistNext ? this.Next.IsOne : this.PropertyType.IsOne;
+                return this.ExistNext ? this.Next.IsOne : this.RelationEndType.IsOne;
             }
         }
 
         public IEnumerable<Node> Include { get; set; }
 
-        public IPropertyType PropertyType { get; set; }
+        public IRelationEndType RelationEndType { get; set; }
 
         public IComposite OfType { get; set; }
 
@@ -65,13 +65,13 @@ namespace Allors.Workspace.Request
                 return this.Next.GetObjectType();
             }
 
-            return this.PropertyType.ObjectType;
+            return this.RelationEndType.ObjectType;
         }
 
         public override string ToString()
         {
             var name = new StringBuilder();
-            name.Append(this.PropertyType.Name);
+            name.Append(this.RelationEndType.Name);
             if (this.ExistNext)
             {
                 this.Next.ToStringAppendToName(name);
@@ -82,7 +82,7 @@ namespace Allors.Workspace.Request
 
         private void ToStringAppendToName(StringBuilder name)
         {
-            name.Append('.').Append(this.PropertyType.Name);
+            name.Append('.').Append(this.RelationEndType.Name);
 
             if (this.ExistNext)
             {

@@ -10,13 +10,13 @@ namespace Allors.Workspace.Request
 
     public class Instanceof : IPropertyPredicate
     {
-        public Instanceof(IPropertyType propertyType = null) => this.PropertyType = propertyType;
+        public Instanceof(IRelationEndType relationEndType = null) => this.RelationEndType = relationEndType;
 
         public string Parameter { get; set; }
 
         public IComposite ObjectType { get; set; }
 
-        public IPropertyType PropertyType { get; set; }
+        public IRelationEndType RelationEndType { get; set; }
 
         public void Accept(IVisitor visitor) => visitor.VisitInstanceOf(this);
     }

@@ -4,7 +4,7 @@ import {
   AssociationType,
   Composite,
   humanize,
-  PropertyType,
+  RelationEndType,
   RoleType,
 } from '@allors/system/workspace/meta';
 import {
@@ -22,11 +22,11 @@ import { AllorsScopedPanelComponent } from '../../scoped/scoped-panel.component'
 import { ScopedService } from '../../scoped/scoped.service';
 import { PanelService } from '../../panel/panel.service';
 
-export type ExtentSelectType = PropertyType | Path | (PropertyType | Path)[];
+export type ExtentSelectType = RelationEndType | Path | (RelationEndType | Path)[];
 
-export type ExtentInitType = PropertyType;
+export type ExtentInitType = RelationEndType;
 
-export type ExtentIncludeType = PropertyType;
+export type ExtentIncludeType = RelationEndType;
 
 @Directive()
 export abstract class AllorsDynamicExtentPanelComponent extends AllorsScopedPanelComponent {
@@ -74,13 +74,13 @@ export abstract class AllorsDynamicExtentPanelComponent extends AllorsScopedPane
 
     if (Array.isArray(this.select)) {
       return this.select.map((v) =>
-        isPath(v) ? v : ({ propertyType: v } as Path)
+        isPath(v) ? v : ({ relationEndType: v } as Path)
       );
     } else {
       if (isPath(this.select)) {
         return [this.select];
       } else {
-        return [{ propertyType: this.select }];
+        return [{ relationEndType: this.select }];
       }
     }
   }
@@ -91,10 +91,10 @@ export abstract class AllorsDynamicExtentPanelComponent extends AllorsScopedPane
   @Input()
   include: ExtentIncludeType;
 
-  get propertyType(): PropertyType {
+  get relationEndType(): RelationEndType {
     return this.include
       ? this.include
-      : pathLeaf(this.selectAsPaths[0]).propertyType;
+      : pathLeaf(this.selectAsPaths[0]).relationEndType;
   }
 
   get title() {
@@ -102,7 +102,7 @@ export abstract class AllorsDynamicExtentPanelComponent extends AllorsScopedPane
       return this.assignedTitle;
     }
 
-    const name = this.metaService.pluralName(this.propertyType);
+    const name = this.metaService.pluralName(this.relationEndType);
     return humanize(name);
   }
 

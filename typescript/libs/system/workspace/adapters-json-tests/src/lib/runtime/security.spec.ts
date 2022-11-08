@@ -92,10 +92,10 @@ test('trim', async () => {
       {
         include: [
           {
-            propertyType: m.TrimFrom.Many2One,
+            relationEndType: m.TrimFrom.Many2One,
           },
           {
-            propertyType: m.TrimFrom.Many2Manies,
+            relationEndType: m.TrimFrom.Many2Manies,
           },
         ],
       },

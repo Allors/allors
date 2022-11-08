@@ -4305,7 +4305,7 @@ public abstract class ServicesTest : IDisposable
                 this.Transaction.Prefetch(prefetchPolicy, new[] { c1A.Strategy.ObjectId });
                 if (twice)
                 {
-                    this.Transaction.Prefetch(new IPropertyType[] { m.C1.C1AllorsString }, new[] { c1A.Strategy.ObjectId });
+                    this.Transaction.Prefetch(new IRelationEndType[] { m.C1.C1AllorsString }, new[] { c1A.Strategy.ObjectId });
                 }
             }
         }
@@ -4324,10 +4324,10 @@ public abstract class ServicesTest : IDisposable
                 var c1A = C1.Create(this.Transaction);
                 c1A.C1AllorsString = "1";
 
-                this.Transaction.Prefetch(new IPropertyType[] { m.C1.C1AllorsString }, new[] { c1A.Strategy.ObjectId });
+                this.Transaction.Prefetch(new IRelationEndType[] { m.C1.C1AllorsString }, new[] { c1A.Strategy.ObjectId });
                 if (twice)
                 {
-                    this.Transaction.Prefetch(new IPropertyType[] { m.C1.C1AllorsString }, new[] { c1A.Strategy.ObjectId });
+                    this.Transaction.Prefetch(new IRelationEndType[] { m.C1.C1AllorsString }, new[] { c1A.Strategy.ObjectId });
                 }
 
                 Assert.Equal("1", c1A.C1AllorsString);
@@ -4338,10 +4338,10 @@ public abstract class ServicesTest : IDisposable
 
                 this.Transaction.Commit();
 
-                this.Transaction.Prefetch(new IPropertyType[] { m.C1.C1AllorsString }, new[] { c1A.Strategy.ObjectId });
+                this.Transaction.Prefetch(new IRelationEndType[] { m.C1.C1AllorsString }, new[] { c1A.Strategy.ObjectId });
                 if (twice)
                 {
-                    this.Transaction.Prefetch(new IPropertyType[] { m.C1.C1AllorsString }, new[] { c1A.Strategy.ObjectId });
+                    this.Transaction.Prefetch(new IRelationEndType[] { m.C1.C1AllorsString }, new[] { c1A.Strategy.ObjectId });
                 }
 
                 Assert.Equal("1", c1A.C1AllorsString);
@@ -4350,20 +4350,20 @@ public abstract class ServicesTest : IDisposable
 
                 c1A.C1AllorsString = "2";
 
-                this.Transaction.Prefetch(new IPropertyType[] { m.C1.C1AllorsString }, new[] { c1A.Strategy.ObjectId });
+                this.Transaction.Prefetch(new IRelationEndType[] { m.C1.C1AllorsString }, new[] { c1A.Strategy.ObjectId });
                 if (twice)
                 {
-                    this.Transaction.Prefetch(new IPropertyType[] { m.C1.C1AllorsString }, new[] { c1A.Strategy.ObjectId });
+                    this.Transaction.Prefetch(new IRelationEndType[] { m.C1.C1AllorsString }, new[] { c1A.Strategy.ObjectId });
                 }
 
                 Assert.Equal("2", c1A.C1AllorsString);
 
                 this.Transaction.Rollback();
 
-                this.Transaction.Prefetch(new IPropertyType[] { m.C1.C1AllorsString }, new[] { c1A.Strategy.ObjectId });
+                this.Transaction.Prefetch(new IRelationEndType[] { m.C1.C1AllorsString }, new[] { c1A.Strategy.ObjectId });
                 if (twice)
                 {
-                    this.Transaction.Prefetch(new IPropertyType[] { m.C1.C1AllorsString }, new[] { c1A.Strategy.ObjectId });
+                    this.Transaction.Prefetch(new IRelationEndType[] { m.C1.C1AllorsString }, new[] { c1A.Strategy.ObjectId });
                 }
 
                 Assert.Equal("1", c1A.C1AllorsString);
@@ -4391,10 +4391,10 @@ public abstract class ServicesTest : IDisposable
 
                 c1A.C1C2one2one = c2A;
 
-                this.Transaction.Prefetch(new IPropertyType[] { m.C1.C1C2one2one }, new[] { c1A.Strategy.ObjectId });
+                this.Transaction.Prefetch(new IRelationEndType[] { m.C1.C1C2one2one }, new[] { c1A.Strategy.ObjectId });
                 if (twice)
                 {
-                    this.Transaction.Prefetch(new IPropertyType[] { m.C1.C1C2one2one }, new[] { c1A.Strategy.ObjectId });
+                    this.Transaction.Prefetch(new IRelationEndType[] { m.C1.C1C2one2one }, new[] { c1A.Strategy.ObjectId });
                 }
 
                 Assert.Equal(c2A, c1A.C1C2one2one);
@@ -4405,10 +4405,10 @@ public abstract class ServicesTest : IDisposable
 
                 this.Transaction.Commit();
 
-                this.Transaction.Prefetch(new IPropertyType[] { m.C1.C1C2one2one }, new[] { c1A.Strategy.ObjectId });
+                this.Transaction.Prefetch(new IRelationEndType[] { m.C1.C1C2one2one }, new[] { c1A.Strategy.ObjectId });
                 if (twice)
                 {
-                    this.Transaction.Prefetch(new IPropertyType[] { m.C1.C1C2one2one }, new[] { c1A.Strategy.ObjectId });
+                    this.Transaction.Prefetch(new IRelationEndType[] { m.C1.C1C2one2one }, new[] { c1A.Strategy.ObjectId });
                 }
 
                 Assert.Equal(c2A, c1A.C1C2one2one);
@@ -4417,20 +4417,20 @@ public abstract class ServicesTest : IDisposable
 
                 c1A.C1C2one2one = c2b;
 
-                this.Transaction.Prefetch(new IPropertyType[] { m.C1.C1C2one2one }, new[] { c1A.Strategy.ObjectId });
+                this.Transaction.Prefetch(new IRelationEndType[] { m.C1.C1C2one2one }, new[] { c1A.Strategy.ObjectId });
                 if (twice)
                 {
-                    this.Transaction.Prefetch(new IPropertyType[] { m.C1.C1C2one2one }, new[] { c1A.Strategy.ObjectId });
+                    this.Transaction.Prefetch(new IRelationEndType[] { m.C1.C1C2one2one }, new[] { c1A.Strategy.ObjectId });
                 }
 
                 Assert.Equal(c2b, c1A.C1C2one2one);
 
                 this.Transaction.Rollback();
 
-                this.Transaction.Prefetch(new IPropertyType[] { m.C1.C1C2one2one }, new[] { c1A.Strategy.ObjectId });
+                this.Transaction.Prefetch(new IRelationEndType[] { m.C1.C1C2one2one }, new[] { c1A.Strategy.ObjectId });
                 if (twice)
                 {
-                    this.Transaction.Prefetch(new IPropertyType[] { m.C1.C1C2one2one }, new[] { c1A.Strategy.ObjectId });
+                    this.Transaction.Prefetch(new IRelationEndType[] { m.C1.C1C2one2one }, new[] { c1A.Strategy.ObjectId });
                 }
 
                 Assert.Equal(c2A, c1A.C1C2one2one);
@@ -4453,7 +4453,7 @@ public abstract class ServicesTest : IDisposable
                 var m = this.Transaction.Database.Context().M;
 
                 var prefetchPolicy = new PrefetchPolicyBuilder()
-                    .WithRule(m.C1.C1C2one2one, new IPropertyType[] { m.C2.C2AllorsString })
+                    .WithRule(m.C1.C1C2one2one, new IRelationEndType[] { m.C2.C2AllorsString })
                     .Build();
 
                 var c1a = C1.Create(this.Transaction);
@@ -4523,7 +4523,7 @@ public abstract class ServicesTest : IDisposable
                 var m = this.Transaction.Database.Context().M;
 
                 var prefetchPolicy = new PrefetchPolicyBuilder()
-                    .WithRule(m.C1.C1C2one2one, new IPropertyType[] { m.C2.C2AllorsString })
+                    .WithRule(m.C1.C1C2one2one, new IRelationEndType[] { m.C2.C2AllorsString })
                     .Build();
 
                 var c1A = C1.Create(this.Transaction);
@@ -4566,7 +4566,7 @@ public abstract class ServicesTest : IDisposable
                 var c2b = C2.Create(this.Transaction);
                 c1A.AddC1C2one2many(c2A);
 
-                this.Transaction.Prefetch(new IPropertyType[] { m.C1.C1C2one2manies }, new[] { c1A.Strategy.ObjectId });
+                this.Transaction.Prefetch(new IRelationEndType[] { m.C1.C1C2one2manies }, new[] { c1A.Strategy.ObjectId });
 
                 Assert.Contains(c2A, c1A.C1C2one2manies);
 
@@ -4576,10 +4576,10 @@ public abstract class ServicesTest : IDisposable
 
                 this.Transaction.Commit();
 
-                this.Transaction.Prefetch(new IPropertyType[] { m.C1.C1C2one2manies }, new[] { c1A.Strategy.ObjectId });
+                this.Transaction.Prefetch(new IRelationEndType[] { m.C1.C1C2one2manies }, new[] { c1A.Strategy.ObjectId });
                 if (twice)
                 {
-                    this.Transaction.Prefetch(new IPropertyType[] { m.C1.C1C2one2manies }, new[] { c1A.Strategy.ObjectId });
+                    this.Transaction.Prefetch(new IRelationEndType[] { m.C1.C1C2one2manies }, new[] { c1A.Strategy.ObjectId });
                 }
 
                 Assert.Contains(c2A, c1A.C1C2one2manies);
@@ -4589,20 +4589,20 @@ public abstract class ServicesTest : IDisposable
                 c1A.RemoveC1C2one2many(c2A);
                 c1A.AddC1C2one2many(c2b);
 
-                this.Transaction.Prefetch(new IPropertyType[] { m.C1.C1C2one2manies }, new[] { c1A.Strategy.ObjectId });
+                this.Transaction.Prefetch(new IRelationEndType[] { m.C1.C1C2one2manies }, new[] { c1A.Strategy.ObjectId });
                 if (twice)
                 {
-                    this.Transaction.Prefetch(new IPropertyType[] { m.C1.C1C2one2manies }, new[] { c1A.Strategy.ObjectId });
+                    this.Transaction.Prefetch(new IRelationEndType[] { m.C1.C1C2one2manies }, new[] { c1A.Strategy.ObjectId });
                 }
 
                 Assert.Contains(c2b, c1A.C1C2one2manies);
 
                 this.Transaction.Rollback();
 
-                this.Transaction.Prefetch(new IPropertyType[] { m.C1.C1C2one2manies }, new[] { c1A.Strategy.ObjectId });
+                this.Transaction.Prefetch(new IRelationEndType[] { m.C1.C1C2one2manies }, new[] { c1A.Strategy.ObjectId });
                 if (twice)
                 {
-                    this.Transaction.Prefetch(new IPropertyType[] { m.C1.C1C2one2manies }, new[] { c1A.Strategy.ObjectId });
+                    this.Transaction.Prefetch(new IRelationEndType[] { m.C1.C1C2one2manies }, new[] { c1A.Strategy.ObjectId });
                 }
 
                 Assert.Contains(c2A, c1A.C1C2one2manies);
@@ -4628,20 +4628,20 @@ public abstract class ServicesTest : IDisposable
 
                 this.Transaction.Commit();
 
-                this.Transaction.Prefetch(new IPropertyType[] { m.C1.C1C2one2manies }, c1A);
+                this.Transaction.Prefetch(new IRelationEndType[] { m.C1.C1C2one2manies }, c1A);
                 if (twice)
                 {
-                    this.Transaction.Prefetch(new IPropertyType[] { m.C1.C1C2one2manies }, c1A);
+                    this.Transaction.Prefetch(new IRelationEndType[] { m.C1.C1C2one2manies }, c1A);
                 }
 
                 Assert.Empty(c1A.C1C2one2manies);
 
                 this.Transaction.Commit();
 
-                this.Transaction.Prefetch(new IPropertyType[] { m.C1.C1C2one2manies }, c1A);
+                this.Transaction.Prefetch(new IRelationEndType[] { m.C1.C1C2one2manies }, c1A);
                 if (twice)
                 {
-                    this.Transaction.Prefetch(new IPropertyType[] { m.C1.C1C2one2manies }, c1A);
+                    this.Transaction.Prefetch(new IRelationEndType[] { m.C1.C1C2one2manies }, c1A);
                 }
 
                 Assert.Empty(c1A.C1C2one2manies);
@@ -4660,7 +4660,7 @@ public abstract class ServicesTest : IDisposable
                 var m = this.Transaction.Database.Context().M;
 
                 var prefetchPolicy = new PrefetchPolicyBuilder()
-                    .WithRule(m.C1.C1C2one2manies, new IPropertyType[] { m.C2.C2AllorsString })
+                    .WithRule(m.C1.C1C2one2manies, new IRelationEndType[] { m.C2.C2AllorsString })
                     .Build();
 
                 var c1A = C1.Create(this.Transaction);
@@ -4701,10 +4701,10 @@ public abstract class ServicesTest : IDisposable
                 var c2b = C2.Create(this.Transaction);
                 c1A.AddC1C2many2many(c2A);
 
-                this.Transaction.Prefetch(new IPropertyType[] { m.C1.C1C2many2manies }, new[] { c1A.Strategy.ObjectId });
+                this.Transaction.Prefetch(new IRelationEndType[] { m.C1.C1C2many2manies }, new[] { c1A.Strategy.ObjectId });
                 if (twice)
                 {
-                    this.Transaction.Prefetch(new IPropertyType[] { m.C1.C1C2many2manies }, new[] { c1A.Strategy.ObjectId });
+                    this.Transaction.Prefetch(new IRelationEndType[] { m.C1.C1C2many2manies }, new[] { c1A.Strategy.ObjectId });
                 }
 
                 Assert.Contains(c2A, c1A.C1C2many2manies);
@@ -4715,10 +4715,10 @@ public abstract class ServicesTest : IDisposable
 
                 this.Transaction.Commit();
 
-                this.Transaction.Prefetch(new IPropertyType[] { m.C1.C1C2many2manies }, new[] { c1A.Strategy.ObjectId });
+                this.Transaction.Prefetch(new IRelationEndType[] { m.C1.C1C2many2manies }, new[] { c1A.Strategy.ObjectId });
                 if (twice)
                 {
-                    this.Transaction.Prefetch(new IPropertyType[] { m.C1.C1C2many2manies }, new[] { c1A.Strategy.ObjectId });
+                    this.Transaction.Prefetch(new IRelationEndType[] { m.C1.C1C2many2manies }, new[] { c1A.Strategy.ObjectId });
                 }
 
                 Assert.Contains(c2A, c1A.C1C2many2manies);
@@ -4728,20 +4728,20 @@ public abstract class ServicesTest : IDisposable
                 c1A.RemoveC1C2many2many(c2A);
                 c1A.AddC1C2many2many(c2b);
 
-                this.Transaction.Prefetch(new IPropertyType[] { m.C1.C1C2many2manies }, new[] { c1A.Strategy.ObjectId });
+                this.Transaction.Prefetch(new IRelationEndType[] { m.C1.C1C2many2manies }, new[] { c1A.Strategy.ObjectId });
                 if (twice)
                 {
-                    this.Transaction.Prefetch(new IPropertyType[] { m.C1.C1C2many2manies }, new[] { c1A.Strategy.ObjectId });
+                    this.Transaction.Prefetch(new IRelationEndType[] { m.C1.C1C2many2manies }, new[] { c1A.Strategy.ObjectId });
                 }
 
                 Assert.Contains(c2b, c1A.C1C2many2manies);
 
                 this.Transaction.Rollback();
 
-                this.Transaction.Prefetch(new IPropertyType[] { m.C1.C1C2many2manies }, new[] { c1A.Strategy.ObjectId });
+                this.Transaction.Prefetch(new IRelationEndType[] { m.C1.C1C2many2manies }, new[] { c1A.Strategy.ObjectId });
                 if (twice)
                 {
-                    this.Transaction.Prefetch(new IPropertyType[] { m.C1.C1C2many2manies }, new[] { c1A.Strategy.ObjectId });
+                    this.Transaction.Prefetch(new IRelationEndType[] { m.C1.C1C2many2manies }, new[] { c1A.Strategy.ObjectId });
                 }
 
                 Assert.Contains(c2A, c1A.C1C2many2manies);
@@ -4767,20 +4767,20 @@ public abstract class ServicesTest : IDisposable
 
                 this.Transaction.Commit();
 
-                this.Transaction.Prefetch(new IPropertyType[] { m.C1.C1C2many2manies }, c1A);
+                this.Transaction.Prefetch(new IRelationEndType[] { m.C1.C1C2many2manies }, c1A);
                 if (twice)
                 {
-                    this.Transaction.Prefetch(new IPropertyType[] { m.C1.C1C2many2manies }, c1A);
+                    this.Transaction.Prefetch(new IRelationEndType[] { m.C1.C1C2many2manies }, c1A);
                 }
 
                 Assert.Empty(c1A.C1C2many2manies);
 
                 this.Transaction.Commit();
 
-                this.Transaction.Prefetch(new IPropertyType[] { m.C1.C1C2many2manies }, c1A);
+                this.Transaction.Prefetch(new IRelationEndType[] { m.C1.C1C2many2manies }, c1A);
                 if (twice)
                 {
-                    this.Transaction.Prefetch(new IPropertyType[] { m.C1.C1C2many2manies }, c1A);
+                    this.Transaction.Prefetch(new IRelationEndType[] { m.C1.C1C2many2manies }, c1A);
                 }
 
                 Assert.Empty(c1A.C1C2many2manies);
@@ -4799,7 +4799,7 @@ public abstract class ServicesTest : IDisposable
                 var m = this.Transaction.Database.Context().M;
 
                 var prefetchPolicy = new PrefetchPolicyBuilder()
-                    .WithRule(m.C1.C1C2many2manies, new IPropertyType[] { m.C2.C2AllorsString })
+                    .WithRule(m.C1.C1C2many2manies, new IRelationEndType[] { m.C2.C2AllorsString })
                     .Build();
 
                 var c1A = C1.Create(this.Transaction);
@@ -4842,7 +4842,7 @@ public abstract class ServicesTest : IDisposable
                 var c2a = C2.Create(this.Transaction);
                 c1a.C1C2one2one = c2a;
 
-                this.Transaction.Prefetch(new IPropertyType[] { m.C2.C1WhereC1C2one2one }, new[] { c2a.Strategy.ObjectId });
+                this.Transaction.Prefetch(new IRelationEndType[] { m.C2.C1WhereC1C2one2one }, new[] { c2a.Strategy.ObjectId });
 
                 Assert.Equal(c1a, c2a.C1WhereC1C2one2one);
 
@@ -4852,10 +4852,10 @@ public abstract class ServicesTest : IDisposable
 
                 this.Transaction.Commit();
 
-                this.Transaction.Prefetch(new IPropertyType[] { m.C2.C1WhereC1C2one2one }, new[] { c2a.Strategy.ObjectId });
+                this.Transaction.Prefetch(new IRelationEndType[] { m.C2.C1WhereC1C2one2one }, new[] { c2a.Strategy.ObjectId });
                 if (twice)
                 {
-                    this.Transaction.Prefetch(new IPropertyType[] { m.C2.C1WhereC1C2one2one }, new[] { c2a.Strategy.ObjectId });
+                    this.Transaction.Prefetch(new IRelationEndType[] { m.C2.C1WhereC1C2one2one }, new[] { c2a.Strategy.ObjectId });
                 }
 
                 Assert.Equal(c1a, c2a.C1WhereC1C2one2one);
@@ -4864,20 +4864,20 @@ public abstract class ServicesTest : IDisposable
 
                 c1b.C1C2one2one = c2a;
 
-                this.Transaction.Prefetch(new IPropertyType[] { m.C2.C1WhereC1C2one2one }, new[] { c2a.Strategy.ObjectId });
+                this.Transaction.Prefetch(new IRelationEndType[] { m.C2.C1WhereC1C2one2one }, new[] { c2a.Strategy.ObjectId });
                 if (twice)
                 {
-                    this.Transaction.Prefetch(new IPropertyType[] { m.C2.C1WhereC1C2one2one }, new[] { c2a.Strategy.ObjectId });
+                    this.Transaction.Prefetch(new IRelationEndType[] { m.C2.C1WhereC1C2one2one }, new[] { c2a.Strategy.ObjectId });
                 }
 
                 Assert.Equal(c1b, c2a.C1WhereC1C2one2one);
 
                 this.Transaction.Rollback();
 
-                this.Transaction.Prefetch(new IPropertyType[] { m.C2.C1WhereC1C2one2one }, new[] { c2a.Strategy.ObjectId });
+                this.Transaction.Prefetch(new IRelationEndType[] { m.C2.C1WhereC1C2one2one }, new[] { c2a.Strategy.ObjectId });
                 if (twice)
                 {
-                    this.Transaction.Prefetch(new IPropertyType[] { m.C2.C1WhereC1C2one2one }, new[] { c2a.Strategy.ObjectId });
+                    this.Transaction.Prefetch(new IRelationEndType[] { m.C2.C1WhereC1C2one2one }, new[] { c2a.Strategy.ObjectId });
                 }
 
                 Assert.Equal(c1a, c2a.C1WhereC1C2one2one);
@@ -4903,20 +4903,20 @@ public abstract class ServicesTest : IDisposable
 
                 this.Transaction.Commit();
 
-                this.Transaction.Prefetch(new IPropertyType[] { m.C2.C1WhereC1C2one2one }, c2A);
+                this.Transaction.Prefetch(new IRelationEndType[] { m.C2.C1WhereC1C2one2one }, c2A);
                 if (twice)
                 {
-                    this.Transaction.Prefetch(new IPropertyType[] { m.C2.C1WhereC1C2one2one }, c2A);
+                    this.Transaction.Prefetch(new IRelationEndType[] { m.C2.C1WhereC1C2one2one }, c2A);
                 }
 
                 Assert.Empty(c2A.C1sWhereC1C2many2many);
 
                 this.Transaction.Commit();
 
-                this.Transaction.Prefetch(new IPropertyType[] { m.C2.C1WhereC1C2one2one }, c2A);
+                this.Transaction.Prefetch(new IRelationEndType[] { m.C2.C1WhereC1C2one2one }, c2A);
                 if (twice)
                 {
-                    this.Transaction.Prefetch(new IPropertyType[] { m.C2.C1WhereC1C2one2one }, c2A);
+                    this.Transaction.Prefetch(new IRelationEndType[] { m.C2.C1WhereC1C2one2one }, c2A);
                 }
 
                 Assert.Empty(c2A.C1sWhereC1C2many2many);
@@ -4935,7 +4935,7 @@ public abstract class ServicesTest : IDisposable
                 var m = this.Transaction.Database.Context().M;
 
                 var prefetchPolicy = new PrefetchPolicyBuilder()
-                    .WithRule(m.C2.C1WhereC1C2one2one.RoleType, new IPropertyType[] { m.C1.C1AllorsString }).Build();
+                    .WithRule(m.C2.C1WhereC1C2one2one.RoleType, new IRelationEndType[] { m.C1.C1AllorsString }).Build();
 
                 var c2A = C2.Create(this.Transaction);
 
@@ -4977,10 +4977,10 @@ public abstract class ServicesTest : IDisposable
                 var c2a = C2.Create(this.Transaction);
                 c1a.AddC1C2many2many(c2a);
 
-                this.Transaction.Prefetch(new IPropertyType[] { m.C2.C1sWhereC1C2many2many }, new[] { c2a.Strategy.ObjectId });
+                this.Transaction.Prefetch(new IRelationEndType[] { m.C2.C1sWhereC1C2many2many }, new[] { c2a.Strategy.ObjectId });
                 if (twice)
                 {
-                    this.Transaction.Prefetch(new IPropertyType[] { m.C2.C1sWhereC1C2many2many }, new[] { c2a.Strategy.ObjectId });
+                    this.Transaction.Prefetch(new IRelationEndType[] { m.C2.C1sWhereC1C2many2many }, new[] { c2a.Strategy.ObjectId });
                 }
 
                 Assert.Contains(c1a, c2a.C1sWhereC1C2many2many);
@@ -4991,10 +4991,10 @@ public abstract class ServicesTest : IDisposable
 
                 this.Transaction.Commit();
 
-                this.Transaction.Prefetch(new IPropertyType[] { m.C2.C1sWhereC1C2many2many }, new[] { c2a.Strategy.ObjectId });
+                this.Transaction.Prefetch(new IRelationEndType[] { m.C2.C1sWhereC1C2many2many }, new[] { c2a.Strategy.ObjectId });
                 if (twice)
                 {
-                    this.Transaction.Prefetch(new IPropertyType[] { m.C2.C1sWhereC1C2many2many }, new[] { c2a.Strategy.ObjectId });
+                    this.Transaction.Prefetch(new IRelationEndType[] { m.C2.C1sWhereC1C2many2many }, new[] { c2a.Strategy.ObjectId });
                 }
 
                 Assert.Contains(c1a, c2a.C1sWhereC1C2many2many);
@@ -5004,10 +5004,10 @@ public abstract class ServicesTest : IDisposable
                 c1a.RemoveC1C2many2many(c2a);
                 c1b.AddC1C2many2many(c2a);
 
-                this.Transaction.Prefetch(new IPropertyType[] { m.C2.C1sWhereC1C2many2many }, new[] { c2a.Strategy.ObjectId });
+                this.Transaction.Prefetch(new IRelationEndType[] { m.C2.C1sWhereC1C2many2many }, new[] { c2a.Strategy.ObjectId });
                 if (twice)
                 {
-                    this.Transaction.Prefetch(new IPropertyType[] { m.C2.C1sWhereC1C2many2many }, new[] { c2a.Strategy.ObjectId });
+                    this.Transaction.Prefetch(new IRelationEndType[] { m.C2.C1sWhereC1C2many2many }, new[] { c2a.Strategy.ObjectId });
                 }
 
                 var b = c1b.Strategy.ObjectId;
@@ -5017,10 +5017,10 @@ public abstract class ServicesTest : IDisposable
 
                 this.Transaction.Rollback();
 
-                this.Transaction.Prefetch(new IPropertyType[] { m.C2.C1sWhereC1C2many2many }, new[] { c2a.Strategy.ObjectId });
+                this.Transaction.Prefetch(new IRelationEndType[] { m.C2.C1sWhereC1C2many2many }, new[] { c2a.Strategy.ObjectId });
                 if (twice)
                 {
-                    this.Transaction.Prefetch(new IPropertyType[] { m.C2.C1sWhereC1C2many2many }, new[] { c2a.Strategy.ObjectId });
+                    this.Transaction.Prefetch(new IRelationEndType[] { m.C2.C1sWhereC1C2many2many }, new[] { c2a.Strategy.ObjectId });
                 }
 
                 Assert.Contains(c1a, c2a.C1sWhereC1C2many2many);
@@ -5046,20 +5046,20 @@ public abstract class ServicesTest : IDisposable
 
                 this.Transaction.Commit();
 
-                this.Transaction.Prefetch(new IPropertyType[] { m.C2.C1sWhereC1C2many2many }, c2A);
+                this.Transaction.Prefetch(new IRelationEndType[] { m.C2.C1sWhereC1C2many2many }, c2A);
                 if (twice)
                 {
-                    this.Transaction.Prefetch(new IPropertyType[] { m.C2.C1sWhereC1C2many2many }, c2A);
+                    this.Transaction.Prefetch(new IRelationEndType[] { m.C2.C1sWhereC1C2many2many }, c2A);
                 }
 
                 Assert.Empty(c2A.C1sWhereC1C2many2many);
 
                 this.Transaction.Commit();
 
-                this.Transaction.Prefetch(new IPropertyType[] { m.C2.C1sWhereC1C2many2many }, c2A);
+                this.Transaction.Prefetch(new IRelationEndType[] { m.C2.C1sWhereC1C2many2many }, c2A);
                 if (twice)
                 {
-                    this.Transaction.Prefetch(new IPropertyType[] { m.C2.C1sWhereC1C2many2many }, c2A);
+                    this.Transaction.Prefetch(new IRelationEndType[] { m.C2.C1sWhereC1C2many2many }, c2A);
                 }
 
                 Assert.Empty(c2A.C1sWhereC1C2many2many);
@@ -5078,7 +5078,7 @@ public abstract class ServicesTest : IDisposable
                 var m = this.Transaction.Database.Context().M;
 
                 var prefetchPolicy = new PrefetchPolicyBuilder()
-                    .WithRule(m.C2.C1sWhereC1C2many2many, new IPropertyType[] { m.C1.C1AllorsString }).Build();
+                    .WithRule(m.C2.C1sWhereC1C2many2many, new IRelationEndType[] { m.C1.C1AllorsString }).Build();
 
                 var c2A = C2.Create(this.Transaction);
 
@@ -5119,20 +5119,20 @@ public abstract class ServicesTest : IDisposable
 
                 this.Transaction.Commit();
 
-                this.Transaction.Prefetch(new IPropertyType[] { m.C2.C1sWhereC1C2many2one }, c2A);
+                this.Transaction.Prefetch(new IRelationEndType[] { m.C2.C1sWhereC1C2many2one }, c2A);
                 if (twice)
                 {
-                    this.Transaction.Prefetch(new IPropertyType[] { m.C2.C1sWhereC1C2many2one }, c2A);
+                    this.Transaction.Prefetch(new IRelationEndType[] { m.C2.C1sWhereC1C2many2one }, c2A);
                 }
 
                 Assert.Empty(c2A.C1sWhereC1C2many2one);
 
                 this.Transaction.Commit();
 
-                this.Transaction.Prefetch(new IPropertyType[] { m.C2.C1sWhereC1C2many2one }, c2A);
+                this.Transaction.Prefetch(new IRelationEndType[] { m.C2.C1sWhereC1C2many2one }, c2A);
                 if (twice)
                 {
-                    this.Transaction.Prefetch(new IPropertyType[] { m.C2.C1sWhereC1C2many2one }, c2A);
+                    this.Transaction.Prefetch(new IRelationEndType[] { m.C2.C1sWhereC1C2many2one }, c2A);
                 }
 
                 Assert.Empty(c2A.C1sWhereC1C2many2one);
@@ -5151,7 +5151,7 @@ public abstract class ServicesTest : IDisposable
                 var m = this.Transaction.Database.Context().M;
 
                 var prefetchPolicy = new PrefetchPolicyBuilder()
-                    .WithRule(m.C2.C1sWhereC1C2many2one, new IPropertyType[] { m.C1.C1AllorsString })
+                    .WithRule(m.C2.C1sWhereC1C2many2one, new IRelationEndType[] { m.C1.C1AllorsString })
                     .Build();
 
                 var c2A = C2.Create(this.Transaction);

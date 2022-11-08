@@ -25,7 +25,7 @@ namespace Allors.Database.Domain.Derivations.Rules
 
         public AssociationPattern(T objectType, IAssociationType associationType, Expression<Func<T, IComposite>> path) : base(objectType, associationType) => this.Tree = new[] { path.Node(objectType.MetaPopulation) };
 
-        public AssociationPattern(T objectType, IAssociationType associationType, Expression<Func<T, IPropertyType>> path) : base(objectType, associationType) => this.Tree = new[] { path.Node(objectType.MetaPopulation) };
+        public AssociationPattern(T objectType, IAssociationType associationType, Expression<Func<T, IRelationEndType>> path) : base(objectType, associationType) => this.Tree = new[] { path.Node(objectType.MetaPopulation) };
 
         public AssociationPattern(T objectType, Func<T, IAssociationType> associationType) : base(objectType, associationType(objectType))
         {
@@ -37,6 +37,6 @@ namespace Allors.Database.Domain.Derivations.Rules
 
         public AssociationPattern(T objectType, Func<T, IAssociationType> associationType, Expression<Func<T, IComposite>> path) : base(objectType, associationType(objectType)) => this.Tree = new[] { path.Node(objectType.MetaPopulation) };
 
-        public AssociationPattern(T objectType, Func<T, IAssociationType> associationType, Expression<Func<T, IPropertyType>> path) : base(objectType, associationType(objectType)) => this.Tree = new[] { path.Node(objectType.MetaPopulation) };
+        public AssociationPattern(T objectType, Func<T, IAssociationType> associationType, Expression<Func<T, IRelationEndType>> path) : base(objectType, associationType(objectType)) => this.Tree = new[] { path.Node(objectType.MetaPopulation) };
     }
 }

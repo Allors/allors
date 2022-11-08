@@ -12,11 +12,11 @@ export class LazyPathBuilder {
         }
 
         const [key, value] = entry;
-        const propertyType = composite.propertyTypeByPropertyName.get(key);
-        const builder = this[propertyType.objectType.singularName];
+        const relationEndType = composite.relationEndTypeByPropertyName.get(key);
+        const builder = this[relationEndType.objectType.singularName];
 
         const path: Path = {
-          propertyType,
+          relationEndType,
         };
 
         const ofTypeEntry = Object.entries(obj).find(([k]) => k === 'ofType');

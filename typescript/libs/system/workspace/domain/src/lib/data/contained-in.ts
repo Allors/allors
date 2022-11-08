@@ -1,11 +1,11 @@
-import { PropertyType } from '@allors/system/workspace/meta';
+import { RelationEndType } from '@allors/system/workspace/meta';
 import { IObject } from '../iobject';
 import { Extent } from './extent';
 import { ParameterizablePredicateBase } from './parameterizable-predicate';
 
 export interface ContainedIn extends ParameterizablePredicateBase {
   kind: 'ContainedIn';
-  propertyType: PropertyType;
+  relationEndType: RelationEndType;
   extent?: Extent;
   objects?: Array<IObject>;
   objectIds?: Array<number>;

@@ -1,6 +1,6 @@
-import { PropertyType } from '@allors/system/workspace/meta';
+import { RelationEndType } from '@allors/system/workspace/meta';
 
 export interface Initializer {
-  propertyType: PropertyType;
+  relationEndType: RelationEndType;
   id: number;
 }

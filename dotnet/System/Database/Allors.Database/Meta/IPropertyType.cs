@@ -1,4 +1,4 @@
-﻿// <copyright file="IPropertyType.cs" company="Allors bvba">
+﻿// <copyright file="IRelationEndType.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -7,9 +7,9 @@
 namespace Allors.Database.Meta;
 
 /// <summary>
-///     A <see cref="IPropertyType" /> can be a <see cref="IAssociationType" /> or a <see cref="IRoleType" />.
+///     A <see cref="IRelationEndType" /> can be a <see cref="IAssociationType" /> or a <see cref="IRoleType" />.
 /// </summary>
-public interface IPropertyType : IOperandType
+public interface IRelationEndType : IOperandType
 {
     IObjectType ObjectType { get; }
 

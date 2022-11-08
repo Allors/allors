@@ -408,11 +408,11 @@ public class Project
 
                 var propertyAttributesByTypeName = reflectedProperty.GetCustomAttributes(false).Cast<Attribute>().GroupBy(v => v.GetType());
 
-                var reflectedPropertyType = reflectedProperty.PropertyType;
-                var typeName = this.GetTypeName(reflectedPropertyType);
+                var reflectedRelationEndType = reflectedProperty.PropertyType;
+                var typeName = this.GetTypeName(reflectedRelationEndType);
                 var objectType = this.Repository.Objects.OfType<ObjectType>().First(v => v.SingularName == typeName);
                 property.ObjectType = objectType;
-                property.SingleRole = objectType is Unit || !this.IsArray(reflectedPropertyType);
+                property.SingleRole = objectType is Unit || !this.IsArray(reflectedRelationEndType);
 
                 foreach (var group in propertyAttributesByTypeName)
                 {
@@ -503,8 +503,8 @@ public class Project
 
                 var propertyAttributesByTypeName = reflectedProperty.GetCustomAttributes(false).Cast<Attribute>().GroupBy(v => v.GetType());
 
-                var reflectedPropertyType = reflectedProperty.PropertyType;
-                var typeName = this.GetTypeName(reflectedPropertyType);
+                var reflectedRelationEndType = reflectedProperty.PropertyType;
+                var typeName = this.GetTypeName(reflectedRelationEndType);
 
                 property.Type = (DataType)this.Repository.Objects.OfType<Record>().FirstOrDefault(v => v.Name == typeName) ??
                                 this.Repository.Objects.OfType<ObjectType>().First(v => v.SingularName == typeName);

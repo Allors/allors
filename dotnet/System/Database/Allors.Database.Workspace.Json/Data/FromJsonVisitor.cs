@@ -129,8 +129,8 @@ public class FromJsonVisitor : IVisitor
     {
         var select = new Select
         {
-            PropertyType =
-                (IPropertyType)this.fromJson.MetaPopulation.FindAssociationType(visited.a) ??
+            RelationEndType =
+                (IRelationEndType)this.fromJson.MetaPopulation.FindAssociationType(visited.a) ??
                 this.fromJson.MetaPopulation.FindRoleType(visited.r),
             OfType = this.fromJson.MetaPopulation.FindComposite(visited.o),
         };
@@ -156,9 +156,9 @@ public class FromJsonVisitor : IVisitor
 
     public void VisitNode(Allors.Protocol.Json.Data.Node visited)
     {
-        var propertyType = (IPropertyType)this.fromJson.MetaPopulation.FindAssociationType(visited.a) ??
+        var relationEndType = (IRelationEndType)this.fromJson.MetaPopulation.FindAssociationType(visited.a) ??
                            this.fromJson.MetaPopulation.FindRoleType(visited.r);
-        var node = new Node(propertyType);
+        var node = new Node(relationEndType);
 
         this.nodes.Push(node);
 
@@ -232,13 +232,13 @@ public class FromJsonVisitor : IVisitor
             default:
                 var associationType = this.fromJson.MetaPopulation.FindAssociationType(visited.a);
                 var roleType = this.fromJson.MetaPopulation.FindRoleType(visited.r);
-                var propertyType = (IPropertyType)associationType ?? roleType;
+                var relationEndType = (IRelationEndType)associationType ?? roleType;
 
                 switch (visited.k)
                 {
                     case PredicateKind.InstanceOf:
 
-                        var instanceOf = new Instanceof(propertyType)
+                        var instanceOf = new Instanceof(relationEndType)
                         {
                             ObjectType = visited.o != null ? (IComposite)this.fromJson.MetaPopulation.FindByTag(visited.o) : null,
                             Parameter = visited.p,
@@ -249,14 +249,14 @@ public class FromJsonVisitor : IVisitor
 
                     case PredicateKind.Exists:
 
-                        var exists = new Exists(propertyType) { Parameter = visited.p };
+                        var exists = new Exists(relationEndType) { Parameter = visited.p };
 
                         this.predicates.Push(exists);
                         break;
 
                     case PredicateKind.Contains:
 
-                        var contains = new Contains(propertyType) { Parameter = visited.p };
+                        var contains = new Contains(relationEndType) { Parameter = visited.p };
 
                         if (visited.ob.HasValue)
                         {
@@ -268,7 +268,7 @@ public class FromJsonVisitor : IVisitor
 
                     case PredicateKind.ContainedIn:
 
-                        var containedIn = new ContainedIn(propertyType) { Parameter = visited.p };
+                        var containedIn = new ContainedIn(relationEndType) { Parameter = visited.p };
 
                         this.predicates.Push(containedIn);
 
@@ -286,7 +286,7 @@ public class FromJsonVisitor : IVisitor
 
                     case PredicateKind.Equals:
 
-                        var equals = new Equals(propertyType)
+                        var equals = new Equals(relationEndType)
                         {
                             Parameter = visited.p, Path = this.fromJson.MetaPopulation.FindRoleType(visited.pa),
                         };
@@ -301,7 +301,7 @@ public class FromJsonVisitor : IVisitor
                         {
                             if (roleType?.ObjectType.IsUnit == true)
                             {
-                                equals.Value = this.fromJson.UnitConvert.UnitFromJson(((IRoleType)propertyType).ObjectType.Tag, visited.v);
+                                equals.Value = this.fromJson.UnitConvert.UnitFromJson(((IRoleType)relationEndType).ObjectType.Tag, visited.v);
                             }
                             else
                             {

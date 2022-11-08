@@ -8,7 +8,7 @@ export * from './lib/method-type';
 export * from './lib/multiplicity';
 export * from './lib/object-type';
 export * from './lib/operand-type';
-export * from './lib/property-type';
+export * from './lib/relation-end-type';
 export * from './lib/relation-type';
 export * from './lib/role-type';
 export * from './lib/unit';

@@ -11,7 +11,7 @@ namespace Allors.Workspace.Request
 
     public class Equals : IPropertyPredicate
     {
-        public Equals(IPropertyType propertyType = null) => this.PropertyType = propertyType;
+        public Equals(IRelationEndType relationEndType = null) => this.RelationEndType = relationEndType;
 
         public IObject Object { get; set; }
 
@@ -22,7 +22,7 @@ namespace Allors.Workspace.Request
         public string Parameter { get; set; }
 
         /// <inheritdoc />
-        public IPropertyType PropertyType { get; set; }
+        public IRelationEndType RelationEndType { get; set; }
 
         public void Accept(IVisitor visitor) => visitor.VisitEquals(this);
     }

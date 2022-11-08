@@ -52,7 +52,7 @@ public abstract class RoleType : IRoleType, IComparable
 
     IAssociationType IRoleType.AssociationType => this.AssociationType;
 
-    IObjectType IPropertyType.ObjectType => this.ObjectType;
+    IObjectType IRelationEndType.ObjectType => this.ObjectType;
 
     public string SingularName { get; internal set; }
 

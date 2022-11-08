@@ -30,7 +30,7 @@ test('changeSetAfterPush', async () => {
       objectType: m.C1,
       predicate: {
         kind: 'Equals',
-        propertyType: m.C1.Name,
+        relationEndType: m.C1.Name,
         value: 'c1A',
       },
     },
@@ -61,7 +61,7 @@ test('changeSetPushChangeNoPush', async () => {
       objectType: m.C1,
       predicate: {
         kind: 'Equals',
-        propertyType: m.C1.Name,
+        relationEndType: m.C1.Name,
         value: 'c1A',
       },
     },
@@ -103,7 +103,7 @@ test('changeSetPushChangePush', async () => {
       objectType: m.C1,
       predicate: {
         kind: 'Equals',
-        propertyType: m.C1.Name,
+        relationEndType: m.C1.Name,
         value: 'c1A',
       },
     },
@@ -169,7 +169,7 @@ test('changeSetAfterPushWithPull', async () => {
       objectType: m.C1,
       predicate: {
         kind: 'Equals',
-        propertyType: m.C1.Name,
+        relationEndType: m.C1.Name,
         value: 'c1A',
       },
     },
@@ -201,7 +201,7 @@ test('changeSetAfterPushWithPullWithNoChanges', async () => {
       objectType: m.C1,
       predicate: {
         kind: 'Equals',
-        propertyType: m.C1.Name,
+        relationEndType: m.C1.Name,
         value: 'c1A',
       },
     },
@@ -235,7 +235,7 @@ test('changeSetOne2One', async () => {
       objectType: m.C1,
       predicate: {
         kind: 'Equals',
-        propertyType: m.C1.Name,
+        relationEndType: m.C1.Name,
         value: 'c1A',
       },
     },
@@ -309,7 +309,7 @@ test('changeSetAfterPushOne2One', async () => {
       objectType: m.C1,
       predicate: {
         kind: 'Equals',
-        propertyType: m.C1.Name,
+        relationEndType: m.C1.Name,
         value: 'c1A',
       },
     },
@@ -364,11 +364,11 @@ test('changeSetIncludeAfterPushOne2One', async () => {
       objectType: m.C1,
       predicate: {
         kind: 'Equals',
-        propertyType: m.C1.Name,
+        relationEndType: m.C1.Name,
         value: 'c1A',
       },
     },
-    results: [{ include: [{ propertyType: m.C1.C1C1One2One }] }],
+    results: [{ include: [{ relationEndType: m.C1.C1C1One2One }] }],
   };
 
   const result = await session.pull([pull]);
@@ -420,7 +420,7 @@ test('changeSetAfterPushOne2OneWithPreviousIncluded', async () => {
       objectType: m.C1,
       predicate: {
         kind: 'Equals',
-        propertyType: m.C1.Name,
+        relationEndType: m.C1.Name,
         value: 'c1A',
       },
     },
@@ -428,7 +428,7 @@ test('changeSetAfterPushOne2OneWithPreviousIncluded', async () => {
       {
         include: [
           {
-            propertyType: m.C1.C1C1One2One,
+            relationEndType: m.C1.C1C1One2One,
           },
         ],
       },
@@ -482,7 +482,7 @@ test('changeSetAfterPushOne2OneRemove', async () => {
       objectType: m.C1,
       predicate: {
         kind: 'Equals',
-        propertyType: m.C1.Name,
+        relationEndType: m.C1.Name,
         value: 'c1A',
       },
     },
@@ -528,7 +528,7 @@ test('changeSetAfterPushMany2One', async () => {
       objectType: m.C1,
       predicate: {
         kind: 'Equals',
-        propertyType: m.C1.Name,
+        relationEndType: m.C1.Name,
         value: 'c1A',
       },
     },
@@ -578,7 +578,7 @@ test('changeSetAfterPushMany2OneRemove', async () => {
       objectType: m.C1,
       predicate: {
         kind: 'Equals',
-        propertyType: m.C1.Name,
+        relationEndType: m.C1.Name,
         value: 'c1A',
       },
     },
@@ -625,7 +625,7 @@ test('changeSetAfterPushOne2Many', async () => {
       objectType: m.C1,
       predicate: {
         kind: 'Equals',
-        propertyType: m.C1.Name,
+        relationEndType: m.C1.Name,
         value: 'c1A',
       },
     },
@@ -675,7 +675,7 @@ test('changeSetAfterPushOne2ManyRemove', async () => {
       objectType: m.C1,
       predicate: {
         kind: 'Equals',
-        propertyType: m.C1.Name,
+        relationEndType: m.C1.Name,
         value: 'c1A',
       },
     },
@@ -722,7 +722,7 @@ test('changeSetMany2Many', async () => {
       objectType: m.C1,
       predicate: {
         kind: 'Equals',
-        propertyType: m.C1.Name,
+        relationEndType: m.C1.Name,
         value: 'c1A',
       },
     },
@@ -783,7 +783,7 @@ test('changeSetAfterPushMany2Many', async () => {
       objectType: m.C1,
       predicate: {
         kind: 'Equals',
-        propertyType: m.C1.Name,
+        relationEndType: m.C1.Name,
         value: 'c1A',
       },
     },
@@ -833,7 +833,7 @@ test('changeSetAfterPushMany2ManyRemove', async () => {
       objectType: m.C1,
       predicate: {
         kind: 'Equals',
-        propertyType: m.C1.Name,
+        relationEndType: m.C1.Name,
         value: 'c1A',
       },
     },
@@ -893,7 +893,7 @@ test('changeSetAfterDoubleReset', async () => {
       objectType: m.C1,
       predicate: {
         kind: 'Equals',
-        propertyType: m.C1.Name,
+        relationEndType: m.C1.Name,
         value: 'c1A',
       },
     },

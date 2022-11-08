@@ -101,13 +101,13 @@ test('associationMany2ManyContainedIn', async () => {
       objectType: m.C2,
       predicate: {
         kind: 'ContainedIn',
-        propertyType: m.C2.C1sWhereC1C2Many2Many,
+        relationEndType: m.C2.C1sWhereC1C2Many2Many,
         extent: {
           kind: 'Filter',
           objectType: m.C1,
           predicate: {
             kind: 'Equals',
-            propertyType: m.C1.C1AllorsString,
+            relationEndType: m.C1.C1AllorsString,
             value: 'Nothing here!',
           },
         },
@@ -128,7 +128,7 @@ test('associationMany2ManyContainedIn', async () => {
       objectType: m.C2,
       predicate: {
         kind: 'ContainedIn',
-        propertyType: m.C2.C1sWhereC1C2Many2Many,
+        relationEndType: m.C2.C1sWhereC1C2Many2Many,
         extent: {
           kind: 'Filter',
           objectType: m.C1,
@@ -154,13 +154,13 @@ test('associationMany2ManyContainedIn', async () => {
       objectType: m.C2,
       predicate: {
         kind: 'ContainedIn',
-        propertyType: m.C2.C1sWhereC1C2Many2Many,
+        relationEndType: m.C2.C1sWhereC1C2Many2Many,
         extent: {
           kind: 'Filter',
           objectType: m.C1,
           predicate: {
             kind: 'Equals',
-            propertyType: m.C1.C1AllorsString,
+            relationEndType: m.C1.C1AllorsString,
             value: 'ᴀbra',
           },
         },
@@ -192,7 +192,7 @@ test('associationMany2ManyContains', async () => {
       objectType: m.C2,
       predicate: {
         kind: 'Contains',
-        propertyType: m.C2.C1sWhereC1C2Many2Many,
+        relationEndType: m.C2.C1sWhereC1C2Many2Many,
         object: c1c,
       },
     },
@@ -220,7 +220,7 @@ test('associationMany2ManyExists', async () => {
       objectType: m.C2,
       predicate: {
         kind: 'Exists',
-        propertyType: m.C2.C1sWhereC1C2Many2Many,
+        relationEndType: m.C2.C1sWhereC1C2Many2Many,
       },
     },
   };
@@ -247,13 +247,13 @@ test('associationMany2OneContainedIn', async () => {
       objectType: m.C2,
       predicate: {
         kind: 'ContainedIn',
-        propertyType: m.C2.C1sWhereC1C2Many2One,
+        relationEndType: m.C2.C1sWhereC1C2Many2One,
         extent: {
           kind: 'Filter',
           objectType: m.C1,
           predicate: {
             kind: 'Equals',
-            propertyType: m.C1.C1AllorsString,
+            relationEndType: m.C1.C1AllorsString,
             value: 'ᴀbra',
           },
         },
@@ -285,7 +285,7 @@ test('associationMany2OneContains', async () => {
       objectType: m.C2,
       predicate: {
         kind: 'Contains',
-        propertyType: m.C2.C1sWhereC1C2Many2One,
+        relationEndType: m.C2.C1sWhereC1C2Many2One,
         object: c1c,
       },
     },
@@ -313,13 +313,13 @@ test('associationOne2ManyContainedIn', async () => {
       objectType: m.C2,
       predicate: {
         kind: 'ContainedIn',
-        propertyType: m.C2.C1WhereC1C2One2Many,
+        relationEndType: m.C2.C1WhereC1C2One2Many,
         extent: {
           kind: 'Filter',
           objectType: m.C1,
           predicate: {
             kind: 'Equals',
-            propertyType: m.C1.C1AllorsString,
+            relationEndType: m.C1.C1AllorsString,
             value: 'ᴀbra',
           },
         },
@@ -351,7 +351,7 @@ test('associationOne2ManyEquals', async () => {
       objectType: m.C2,
       predicate: {
         kind: 'Equals',
-        propertyType: m.C2.C1WhereC1C2One2Many,
+        relationEndType: m.C2.C1WhereC1C2One2Many,
         object: c1b,
       },
     },
@@ -373,7 +373,7 @@ test('associationOne2ManyEquals', async () => {
       objectType: m.C2,
       predicate: {
         kind: 'Equals',
-        propertyType: m.C2.C1WhereC1C2One2Many,
+        relationEndType: m.C2.C1WhereC1C2One2Many,
         object: c1c,
       },
     },
@@ -401,7 +401,7 @@ test('associationOne2ManyExists', async () => {
       objectType: m.C2,
       predicate: {
         kind: 'Exists',
-        propertyType: m.C2.C1WhereC1C2One2Many,
+        relationEndType: m.C2.C1WhereC1C2One2Many,
       },
     },
   };
@@ -423,7 +423,7 @@ test('associationOne2ManyExists', async () => {
       objectType: m.C2,
       predicate: {
         kind: 'Exists',
-        propertyType: m.I2.I1WhereI1I2One2Many,
+        relationEndType: m.I2.I1WhereI1I2One2Many,
       },
     },
   };
@@ -450,7 +450,7 @@ test('associationOne2ManyInstanceof', async () => {
       objectType: m.C2,
       predicate: {
         kind: 'Instanceof',
-        propertyType: m.C2.C1WhereC1C2One2Many,
+        relationEndType: m.C2.C1WhereC1C2One2Many,
         objectType: m.C1,
       },
     },
@@ -478,13 +478,13 @@ test('associationOne2OneContainedIn', async () => {
       objectType: m.C2,
       predicate: {
         kind: 'ContainedIn',
-        propertyType: m.C2.C1WhereC1C2One2One,
+        relationEndType: m.C2.C1WhereC1C2One2One,
         extent: {
           kind: 'Filter',
           objectType: m.C1,
           predicate: {
             kind: 'Equals',
-            propertyType: m.C1.C1AllorsString,
+            relationEndType: m.C1.C1AllorsString,
             value: 'ᴀbra',
           },
         },
@@ -516,7 +516,7 @@ test('associationOne2OneEquals', async () => {
       objectType: m.C2,
       predicate: {
         kind: 'Equals',
-        propertyType: m.C2.C1WhereC1C2One2One,
+        relationEndType: m.C2.C1WhereC1C2One2One,
         object: c1b,
       },
     },
@@ -538,7 +538,7 @@ test('associationOne2OneEquals', async () => {
       objectType: m.C2,
       predicate: {
         kind: 'Equals',
-        propertyType: m.C2.C1WhereC1C2One2One,
+        relationEndType: m.C2.C1WhereC1C2One2One,
         object: c1c,
       },
     },
@@ -566,7 +566,7 @@ test('associationOne2OneExists', async () => {
       objectType: m.C1,
       predicate: {
         kind: 'Exists',
-        propertyType: m.C1.C1WhereC1C1One2One,
+        relationEndType: m.C1.C1WhereC1C1One2One,
       },
     },
   };
@@ -588,7 +588,7 @@ test('associationOne2OneExists', async () => {
       objectType: m.C2,
       predicate: {
         kind: 'Exists',
-        propertyType: m.C2.C1WhereC1C2One2One,
+        relationEndType: m.C2.C1WhereC1C2One2One,
       },
     },
   };
@@ -615,7 +615,7 @@ test('associationOne2OneInstanceof', async () => {
       objectType: m.I12,
       predicate: {
         kind: 'Instanceof',
-        propertyType: m.I12.I12WhereI12I12One2One,
+        relationEndType: m.I12.I12WhereI12I12One2One,
         objectType: m.C1,
       },
     },
@@ -638,7 +638,7 @@ test('associationOne2OneInstanceof', async () => {
       objectType: m.I12,
       predicate: {
         kind: 'Instanceof',
-        propertyType: m.I12.I12WhereI12I12One2One,
+        relationEndType: m.I12.I12WhereI12I12One2One,
         objectType: m.I2,
       },
     },
@@ -945,7 +945,7 @@ test('operatorUnion', async () => {
           objectType: m.C1,
           predicate: {
             kind: 'Equals',
-            propertyType: m.C1.Name,
+            relationEndType: m.C1.Name,
             value: 'c1A',
           },
         },
@@ -954,7 +954,7 @@ test('operatorUnion', async () => {
           objectType: m.C1,
           predicate: {
             kind: 'Equals',
-            propertyType: m.C1.Name,
+            relationEndType: m.C1.Name,
             value: 'c1B',
           },
         },
@@ -1148,7 +1148,7 @@ test('roleDateTimeEquals', async () => {
       objectType: m.C1,
       predicate: {
         kind: 'Equals',
-        propertyType: m.C1.C1AllorsDateTime,
+        relationEndType: m.C1.C1AllorsDateTime,
         value: new Date('Sat Jan 01 2000 00:00:04 GMT+0000'),
       },
     },
@@ -1337,7 +1337,7 @@ test('roleDecimalEquals', async () => {
       objectType: m.C1,
       predicate: {
         kind: 'Equals',
-        propertyType: m.C1.C1AllorsDecimal,
+        relationEndType: m.C1.C1AllorsDecimal,
         value: '2.2',
       },
     },
@@ -1526,7 +1526,7 @@ test('roleDoubleEquals', async () => {
       objectType: m.C1,
       predicate: {
         kind: 'Equals',
-        propertyType: m.C1.C1AllorsDouble,
+        relationEndType: m.C1.C1AllorsDouble,
         value: 2.2,
       },
     },
@@ -1715,7 +1715,7 @@ test('roleIntegerEquals', async () => {
       objectType: m.C1,
       predicate: {
         kind: 'Equals',
-        propertyType: m.C1.C1AllorsInteger,
+        relationEndType: m.C1.C1AllorsInteger,
         value: 2,
       },
     },
@@ -1742,7 +1742,7 @@ test('roleIntegerExist', async () => {
       objectType: m.C1,
       predicate: {
         kind: 'Exists',
-        propertyType: m.C1.C1AllorsInteger,
+        relationEndType: m.C1.C1AllorsInteger,
       },
     },
   };
@@ -1768,7 +1768,7 @@ test('roleStringEqualsPath', async () => {
       objectType: m.C1,
       predicate: {
         kind: 'Equals',
-        propertyType: m.C1.C1AllorsString,
+        relationEndType: m.C1.C1AllorsString,
         path: m.C1.C1AllorsStringEquals,
       },
     },
@@ -1796,7 +1796,7 @@ test('roleStringEqualsValue', async () => {
         objectType: m.C1,
         predicate: {
           kind: 'Equals',
-          propertyType: m.C1.C1AllorsString,
+          relationEndType: m.C1.C1AllorsString,
           value: 'ᴀbra',
         },
       },
@@ -1820,7 +1820,7 @@ test('roleStringEqualsValue', async () => {
         objectType: m.C1,
         predicate: {
           kind: 'Equals',
-          propertyType: m.C1.C1AllorsString,
+          relationEndType: m.C1.C1AllorsString,
           parameter: 'str',
         },
       },
@@ -1876,7 +1876,7 @@ test('roleUniqueEquals', async () => {
       objectType: m.C1,
       predicate: {
         kind: 'Equals',
-        propertyType: m.C1.C1AllorsUnique,
+        relationEndType: m.C1.C1AllorsUnique,
         value: '8B3C4978-72D3-40BA-B302-114EB331FE04',
       },
     },
@@ -1904,13 +1904,13 @@ test('roleMany2ManyContainedIn', async () => {
       objectType: m.C1,
       predicate: {
         kind: 'ContainedIn',
-        propertyType: m.C1.C1I12Many2Manies,
+        relationEndType: m.C1.C1I12Many2Manies,
         extent: {
           kind: 'Filter',
           objectType: m.I12,
           predicate: {
             kind: 'Equals',
-            propertyType: m.I12.I12AllorsString,
+            relationEndType: m.I12.I12AllorsString,
             value: 'Nothing here!',
           },
         },
@@ -1931,7 +1931,7 @@ test('roleMany2ManyContainedIn', async () => {
       objectType: m.C1,
       predicate: {
         kind: 'ContainedIn',
-        propertyType: m.C1.C1I12Many2Manies,
+        relationEndType: m.C1.C1I12Many2Manies,
         extent: {
           kind: 'Filter',
           objectType: m.I12,
@@ -1957,13 +1957,13 @@ test('roleMany2ManyContainedIn', async () => {
       objectType: m.C1,
       predicate: {
         kind: 'ContainedIn',
-        propertyType: m.C1.C1I12Many2Manies,
+        relationEndType: m.C1.C1I12Many2Manies,
         extent: {
           kind: 'Filter',
           objectType: m.I12,
           predicate: {
             kind: 'Equals',
-            propertyType: m.I12.I12AllorsString,
+            relationEndType: m.I12.I12AllorsString,
             value: 'ᴀbra',
           },
         },
@@ -1995,7 +1995,7 @@ test('roleMany2ManyContains', async () => {
   //       objectType: m.C1,
   //       predicate: {
   //         kind: 'Contains',
-  //         propertyType: m.C1.C1C2Many2Manies,
+  //         relationEndType: m.C1.C1C2Many2Manies,
   //         object: c2c,
   //       },
   //     },
@@ -2019,7 +2019,7 @@ test('roleMany2ManyContains', async () => {
         objectType: m.C1,
         predicate: {
           kind: 'Contains',
-          propertyType: m.C1.C1C2Many2Manies,
+          relationEndType: m.C1.C1C2Many2Manies,
           parameter: 'obj',
         },
       },
@@ -2048,13 +2048,13 @@ test('roleOne2ManyContainedIn', async () => {
       objectType: m.C1,
       predicate: {
         kind: 'ContainedIn',
-        propertyType: m.C1.C1I12One2Manies,
+        relationEndType: m.C1.C1I12One2Manies,
         extent: {
           kind: 'Filter',
           objectType: m.I12,
           predicate: {
             kind: 'Equals',
-            propertyType: m.I12.I12AllorsString,
+            relationEndType: m.I12.I12AllorsString,
             value: 'ᴀbra',
           },
         },
@@ -2085,7 +2085,7 @@ test('roleOne2ManyContains', async () => {
       objectType: m.C1,
       predicate: {
         kind: 'Contains',
-        propertyType: m.C1.C1C2One2Manies,
+        relationEndType: m.C1.C1C2One2Manies,
         object: c2d,
       },
     },
@@ -2113,13 +2113,13 @@ test('roleMany2OneContainedIn', async () => {
         objectType: m.C1,
         predicate: {
           kind: 'ContainedIn',
-          propertyType: m.C1.C1I12Many2One,
+          relationEndType: m.C1.C1I12Many2One,
           extent: {
             kind: 'Filter',
             objectType: m.I12,
             predicate: {
               kind: 'Equals',
-              propertyType: m.I12.I12AllorsString,
+              relationEndType: m.I12.I12AllorsString,
               value: 'ᴀbra',
             },
           },
@@ -2145,7 +2145,7 @@ test('roleMany2OneContainedIn', async () => {
         objectType: m.I12,
         predicate: {
           kind: 'Equals',
-          propertyType: m.I12.I12AllorsString,
+          relationEndType: m.I12.I12AllorsString,
           value: 'ᴀbra',
         },
       },
@@ -2160,7 +2160,7 @@ test('roleMany2OneContainedIn', async () => {
         objectType: m.C1,
         predicate: {
           kind: 'ContainedIn',
-          propertyType: m.C1.C1I12Many2One,
+          relationEndType: m.C1.C1I12Many2One,
           parameter: 'objects',
         },
       },
@@ -2191,13 +2191,13 @@ test('roleOne2OneContainedIn', async () => {
       objectType: m.C1,
       predicate: {
         kind: 'ContainedIn',
-        propertyType: m.C1.C1I12One2One,
+        relationEndType: m.C1.C1I12One2One,
         extent: {
           kind: 'Filter',
           objectType: m.I12,
           predicate: {
             kind: 'Equals',
-            propertyType: m.I12.I12AllorsString,
+            relationEndType: m.I12.I12AllorsString,
             value: 'ᴀbra',
           },
         },
@@ -2226,7 +2226,7 @@ test('withResultName', async () => {
       objectType: m.C1,
       predicate: {
         kind: 'Equals',
-        propertyType: m.C1.C1AllorsInteger,
+        relationEndType: m.C1.C1AllorsInteger,
         value: 2,
       },
     },
@@ -2282,7 +2282,7 @@ test('pullWithInclude', async () => {
       {
         include: [
           {
-            propertyType: m.C1.C1C2One2One,
+            relationEndType: m.C1.C1C2One2One,
           },
         ],
       },

@@ -2,7 +2,7 @@ import {
   AssociationType,
   MetaObject,
   ObjectType,
-  PropertyType,
+  RelationEndType,
   RoleType,
 } from '@allors/system/workspace/meta';
 import {
@@ -113,8 +113,8 @@ export function predicateToJson(from: DataPredicate): Predicate {
     case 'ContainedIn':
       return {
         k: PredicateKind.ContainedIn,
-        a: asAssociationTypeToJson(from.propertyType),
-        r: asRoleTypeToJson(from.propertyType),
+        a: asAssociationTypeToJson(from.relationEndType),
+        r: asRoleTypeToJson(from.relationEndType),
         obs: from.objects?.map((v) => v.id) ?? from.objectIds,
         p: from.parameter,
         e: extentToJson(from.extent),
@@ -123,8 +123,8 @@ export function predicateToJson(from: DataPredicate): Predicate {
     case 'Contains':
       return {
         k: PredicateKind.Contains,
-        a: asAssociationTypeToJson(from.propertyType),
-        r: asRoleTypeToJson(from.propertyType),
+        a: asAssociationTypeToJson(from.relationEndType),
+        r: asRoleTypeToJson(from.relationEndType),
         ob: from.objectId ?? objectToJson(from.object),
         p: from.parameter,
       };
@@ -132,8 +132,8 @@ export function predicateToJson(from: DataPredicate): Predicate {
     case 'Equals':
       return {
         k: PredicateKind[from.kind],
-        a: asAssociationTypeToJson(from.propertyType),
-        r: asRoleTypeToJson(from.propertyType),
+        a: asAssociationTypeToJson(from.relationEndType),
+        r: asRoleTypeToJson(from.relationEndType),
         ob: from.object?.id ?? from.objectId,
         v: unitToJson(from.value),
         pa: roleTypeToJson(from.path),
@@ -143,8 +143,8 @@ export function predicateToJson(from: DataPredicate): Predicate {
     case 'Exists':
       return {
         k: PredicateKind[from.kind],
-        a: asAssociationTypeToJson(from.propertyType),
-        r: asRoleTypeToJson(from.propertyType),
+        a: asAssociationTypeToJson(from.relationEndType),
+        r: asRoleTypeToJson(from.relationEndType),
         p: from.parameter,
       };
 
@@ -161,8 +161,8 @@ export function predicateToJson(from: DataPredicate): Predicate {
       return {
         k: PredicateKind[from.kind],
         o: objectTypeToJson(from.objectType),
-        a: asAssociationTypeToJson(from.propertyType),
-        r: asRoleTypeToJson(from.propertyType),
+        a: asAssociationTypeToJson(from.relationEndType),
+        r: asRoleTypeToJson(from.relationEndType),
         p: from.parameter,
       };
 
@@ -231,8 +231,8 @@ function selectToJson(from: DataSelect): Select {
   }
 
   return {
-    a: asAssociationTypeToJson(from.propertyType),
-    r: asRoleTypeToJson(from.propertyType),
+    a: asAssociationTypeToJson(from.relationEndType),
+    r: asRoleTypeToJson(from.relationEndType),
     o: objectTypeToJson(from.ofType),
     n: selectToJson(from.next),
     i: nodesToJson(from.include),
@@ -245,8 +245,8 @@ function nodeToJson(from: DataNode): Node {
   }
 
   return {
-    a: asAssociationTypeToJson(from.propertyType),
-    r: asRoleTypeToJson(from.propertyType),
+    a: asAssociationTypeToJson(from.relationEndType),
+    r: asRoleTypeToJson(from.relationEndType),
     n: nodesToJson(from.nodes),
   };
 }
@@ -305,7 +305,7 @@ export function roleTypeToJson(from: RoleType): string {
   return from?.relationType.tag;
 }
 
-export function asAssociationTypeToJson(from: PropertyType): string {
+export function asAssociationTypeToJson(from: RelationEndType): string {
   if (from?.isAssociationType) {
     return (from as AssociationType).relationType.tag;
   }
@@ -313,7 +313,7 @@ export function asAssociationTypeToJson(from: PropertyType): string {
   return null;
 }
 
-export function asRoleTypeToJson(from: PropertyType): string {
+export function asRoleTypeToJson(from: RelationEndType): string {
   if (from?.isRoleType) {
     return (from as RoleType).relationType.tag;
   }

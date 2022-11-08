@@ -15,9 +15,9 @@ namespace Allors.Workspace.Domain
     {
         public static IEnumerable<IObject> Get(this Select @this, IObject @object)
         {
-            if (@this.PropertyType.IsOne)
+            if (@this.RelationEndType.IsOne)
             {
-                var resolved = @this.PropertyType.Get(@object);
+                var resolved = @this.RelationEndType.Get(@object);
                 if (resolved != null)
                 {
                     if (@this.ExistNext)
@@ -29,13 +29,13 @@ namespace Allors.Workspace.Domain
                     }
                     else
                     {
-                        yield return (IObject)@this.PropertyType.Get(@object);
+                        yield return (IObject)@this.RelationEndType.Get(@object);
                     }
                 }
             }
             else
             {
-                var resolved = (IEnumerable)@this.PropertyType.Get(@object);
+                var resolved = (IEnumerable)@this.RelationEndType.Get(@object);
                 if (resolved != null)
                 {
                     if (@this.ExistNext)
@@ -50,7 +50,7 @@ namespace Allors.Workspace.Domain
                     }
                     else
                     {
-                        foreach (var child in (IEnumerable<IObject>)@this.PropertyType.Get(@object))
+                        foreach (var child in (IEnumerable<IObject>)@this.RelationEndType.Get(@object))
                         {
                             yield return child;
                         }

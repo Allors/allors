@@ -6,7 +6,7 @@ export class LazySelectBuilder {
   constructor(metaPopulation: MetaPopulation) {
     for (const composite of metaPopulation.composites) {
       this[composite.singularName] = (obj, previous: Select) => {
-        if (obj['propertyType']) {
+        if (obj['relationEndType']) {
           return obj;
         }
 
@@ -25,9 +25,9 @@ export class LazySelectBuilder {
               }
               break;
             default:
-              current.propertyType =
-                composite.propertyTypeByPropertyName.get(key);
-              current.next = this[current.propertyType.objectType.singularName](
+              current.relationEndType =
+                composite.relationEndTypeByPropertyName.get(key);
+              current.next = this[current.relationEndType.objectType.singularName](
                 value,
                 current
               );
@@ -35,7 +35,7 @@ export class LazySelectBuilder {
           }
         }
 
-        return current.propertyType || current.include ? current : undefined;
+        return current.relationEndType || current.include ? current : undefined;
       };
     }
   }

@@ -64,7 +64,7 @@ export class LazyMetaPopulation implements InternalMetaPopulation {
     this.interfaces.forEach((v) => v.deriveSub());
     this.composites.forEach((v) => v.deriveOperand());
     this.composites.forEach((v) => v.deriveOriginRoleType());
-    this.composites.forEach((v) => v.derivePropertyTypeByPropertyName());
+    this.composites.forEach((v) => v.deriveRelationEndTypeByPropertyName());
     this.classes.forEach((v) => v.deriveOverridden(lookup));
 
     this['pathBuilder'] = new LazyPathBuilder(this);

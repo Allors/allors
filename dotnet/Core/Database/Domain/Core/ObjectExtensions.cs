@@ -88,7 +88,7 @@ namespace Allors.Database.Domain
 
             var clone = (T)strategy.Transaction.Build(strategy.Class);
 
-            foreach (var roleType in strategy.Class.RoleTypes.Where(v => v.IsCloneable() && !deepClone.Any(w => w.PropertyType.Equals(v))))
+            foreach (var roleType in strategy.Class.RoleTypes.Where(v => v.IsCloneable() && !deepClone.Any(w => w.RelationEndType.Equals(v))))
             {
                 var role = strategy.GetRole(roleType);
                 clone.Strategy.SetRole(roleType, role);
@@ -96,7 +96,7 @@ namespace Allors.Database.Domain
 
             foreach (var node in deepClone)
             {
-                var roleType = (IRoleType)node.PropertyType;
+                var roleType = (IRoleType)node.RelationEndType;
                 if (roleType.IsOne)
                 {
                     var role = strategy.GetCompositeRole(roleType);

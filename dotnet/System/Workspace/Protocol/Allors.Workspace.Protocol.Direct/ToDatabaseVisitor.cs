@@ -27,7 +27,7 @@ using Instanceof = Allors.Workspace.Request.Instanceof;
 using Intersect = Allors.Workspace.Request.Intersect;
 using IObjectType = Allors.Database.Meta.IObjectType;
 using IPredicate = Allors.Database.Data.IPredicate;
-using IPropertyType = Allors.Database.Meta.IPropertyType;
+using IRelationEndType = Allors.Database.Meta.IRelationEndType;
 using LessThan = Allors.Workspace.Request.LessThan;
 using Like = Allors.Workspace.Request.Like;
 using Node = Allors.Database.Data.Node;
@@ -105,20 +105,20 @@ public class ToDatabaseVisitor
         Paths = this.Visit(ws.Paths),
     };
 
-    private IPredicate Visit(ContainedIn ws) => new Database.Data.ContainedIn(this.Visit(ws.PropertyType))
+    private IPredicate Visit(ContainedIn ws) => new Database.Data.ContainedIn(this.Visit(ws.RelationEndType))
     {
         Parameter = ws.Parameter,
         Objects = this.Visit(ws.Objects),
         Extent = this.Visit(ws.Extent),
     };
 
-    private IPredicate Visit(Contains ws) => new Database.Data.Contains(this.Visit(ws.PropertyType))
+    private IPredicate Visit(Contains ws) => new Database.Data.Contains(this.Visit(ws.RelationEndType))
     {
         Parameter = ws.Parameter,
         Object = this.Visit(ws.Object),
     };
 
-    private IPredicate Visit(Equals ws) => new Database.Data.Equals(this.Visit(ws.PropertyType))
+    private IPredicate Visit(Equals ws) => new Database.Data.Equals(this.Visit(ws.RelationEndType))
     {
         Parameter = ws.Parameter,
         Object = this.Visit(ws.Object),
@@ -126,7 +126,7 @@ public class ToDatabaseVisitor
         Path = this.Visit(ws.Path),
     };
 
-    private IPredicate Visit(Exists ws) => new Database.Data.Exists(this.Visit(ws.PropertyType)) { Parameter = ws.Parameter };
+    private IPredicate Visit(Exists ws) => new Database.Data.Exists(this.Visit(ws.RelationEndType)) { Parameter = ws.Parameter };
 
     private IPredicate Visit(GreaterThan ws) => new Database.Data.GreaterThan(this.Visit(ws.RoleType))
     {
@@ -135,7 +135,7 @@ public class ToDatabaseVisitor
         Path = this.Visit(ws.Path),
     };
 
-    private IPredicate Visit(Instanceof ws) => new Database.Data.Instanceof(this.Visit(ws.PropertyType))
+    private IPredicate Visit(Instanceof ws) => new Database.Data.Instanceof(this.Visit(ws.RelationEndType))
     {
         Parameter = ws.Parameter,
         ObjectType = this.Visit(ws.ObjectType),
@@ -177,13 +177,13 @@ public class ToDatabaseVisitor
         }).ToArray();
 
     private Select Visit(Request.Select ws) => ws != null
-        ? new Select { Include = this.Visit(ws.Include), PropertyType = this.Visit(ws.PropertyType), Next = this.Visit(ws.Next) }
+        ? new Select { Include = this.Visit(ws.Include), RelationEndType = this.Visit(ws.RelationEndType), Next = this.Visit(ws.Next) }
         : null;
 
     private Node[] Visit(IEnumerable<Request.Node> ws) => ws?.Select(this.Visit).ToArray();
 
     private Node Visit(Request.Node ws) =>
-        ws != null ? new Node(this.Visit(ws.PropertyType), ws.Nodes?.Select(this.Visit).ToArray()) : null;
+        ws != null ? new Node(this.Visit(ws.RelationEndType), ws.Nodes?.Select(this.Visit).ToArray()) : null;
 
     private Sort[] Visit(Request.Sort[] ws) => ws?.Select(v =>
     {
@@ -194,7 +194,7 @@ public class ToDatabaseVisitor
 
     private IComposite Visit(Meta.IComposite ws) => ws != null ? (IComposite)this.metaPopulation.FindByTag(ws.Tag) : null;
 
-    private IPropertyType Visit(Meta.IPropertyType ws) =>
+    private IRelationEndType Visit(Meta.IRelationEndType ws) =>
         ws switch
         {
             Meta.IAssociationType associationType => this.Visit(associationType),

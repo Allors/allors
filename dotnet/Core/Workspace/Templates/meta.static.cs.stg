@@ -263,7 +263,7 @@ namespace Allors.Workspace.Meta.Static
 
             m.Init(relationTypes, methodTypes);
             
-            this.AssignPropertyTypes(m);
+            this.AssignRelationEndTypes(m);
             this.AssignMethodTypes(m);
 
             return m;
@@ -296,7 +296,7 @@ $meta.WorkspaceMethodTypesByWorkspaceName.(workspaceName):{methodType|$build_met
             };
 		}
 
-        private void AssignPropertyTypes(MetaPopulation m)
+        private void AssignRelationEndTypes(MetaPopulation m)
         {
 $meta.WorkspaceCompositesByWorkspaceName.(workspaceName):{composite|$assign_properties(composite)$}; separator="\n"$
         }

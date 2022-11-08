@@ -121,7 +121,7 @@ namespace Tests
                     {
                         Select = new Select
                         {
-                            PropertyType = this.M.C1.C1C2One2One,
+                            RelationEndType = this.M.C1.C1C2One2One,
                             Include = new[] { new Node(this.M.C2.C2C2One2One) },
                         },
                     },
@@ -160,7 +160,7 @@ namespace Tests
                     {
                         Select = new Select
                         {
-                            PropertyType = this.M.C2.C1WhereC1C2One2One,
+                            RelationEndType = this.M.C2.C1WhereC1C2One2One,
                             Include = new[] { new Node(this.M.C1.C1WhereC1C1One2One) },
                         },
                     },
@@ -200,7 +200,7 @@ namespace Tests
                     {
                         Select = new Select
                         {
-                            PropertyType = this.M.C1.C1I12Many2Manies,
+                            RelationEndType = this.M.C1.C1I12Many2Manies,
                             OfType = this.M.C1,
                         },
                     },

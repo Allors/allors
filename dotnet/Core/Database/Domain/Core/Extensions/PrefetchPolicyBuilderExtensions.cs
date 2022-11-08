@@ -64,7 +64,7 @@ namespace Allors.Database.Domain
         {
             if (treeNode.Nodes == null || treeNode.Nodes.Length == 0)
             {
-                @this.WithRule(treeNode.PropertyType);
+                @this.WithRule(treeNode.RelationEndType);
             }
             else
             {
@@ -75,10 +75,10 @@ namespace Allors.Database.Domain
                 }
 
                 var nestedPrefetchPolicy = nestedPrefetchPolicyBuilder.Build();
-                @this.WithRule(treeNode.PropertyType, nestedPrefetchPolicy);
+                @this.WithRule(treeNode.RelationEndType, nestedPrefetchPolicy);
             }
 
-            if (treeNode.PropertyType.ObjectType is IComposite)
+            if (treeNode.RelationEndType.ObjectType is IComposite)
             {
                 @this.WithSecurityRules(m);
             }

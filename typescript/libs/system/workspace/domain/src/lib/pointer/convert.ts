@@ -9,14 +9,14 @@ function toPathsRecursive(node: Node, nodePath: Node[], paths: Path[]): void {
     }
   } else {
     const path: Path = {
-      propertyType: nodePath[0].propertyType,
+      relationEndType: nodePath[0].relationEndType,
       ofType: nodePath[0].ofType,
     };
 
     let next = path;
     for (let i = 1; i < nodePath.length; i++) {
       next = next.next = {
-        propertyType: nodePath[i].propertyType,
+        relationEndType: nodePath[i].relationEndType,
         ofType: nodePath[i].ofType,
       };
     }
@@ -38,7 +38,7 @@ export function toPaths(tree: Node[]): Path[] {
 
 function toNodeRecursive(parent: Node, path: Path): Node {
   const node: Node = {
-    propertyType: path.propertyType,
+    relationEndType: path.relationEndType,
     ofType: path.ofType,
   };
 
@@ -59,7 +59,7 @@ export function toNode(path: Path): Node {
 
 function toSelectRecursive(parent: Select, path: Path): Select {
   const select: Select = {
-    propertyType: path.propertyType,
+    relationEndType: path.relationEndType,
     ofType: path.ofType,
   };
 

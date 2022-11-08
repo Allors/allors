@@ -3,14 +3,14 @@
 using Allors.Database.Meta.Extensions;
 using Allors.Database.Meta;
 
-public class RoleTypeModel : PropertyTypeModel
+public class RoleTypeModel : RelationEndTypeModel
 {
     public RoleTypeModel(MetaModel metaModel, IRoleType roleType)
         : base(metaModel) => this.RoleType = roleType;
 
     public IRoleType RoleType { get; }
 
-    protected override IPropertyType PropertyType => this.RoleType;
+    protected override IRelationEndType RelationEndType => this.RoleType;
 
     // IRoleType
     public AssociationTypeModel AssociationType => this.MetaModel.Map(this.RoleType.AssociationType);

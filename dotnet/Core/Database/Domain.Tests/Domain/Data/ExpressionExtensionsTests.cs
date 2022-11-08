@@ -22,48 +22,48 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void InterfaceAssociation()
         {
-            Expression<Func<IMetaUser, IPropertyType>> expression = v => v.Logins;
+            Expression<Func<IMetaUser, IRelationEndType>> expression = v => v.Logins;
 
             var path = expression.Node(this.M);
 
-            Assert.Equal(this.M.User.Logins, path.PropertyType);
+            Assert.Equal(this.M.User.Logins, path.RelationEndType);
             Assert.Empty(path.Nodes);
         }
 
         [Fact]
         public void ClassAssociation()
         {
-            Expression<Func<IMetaPerson, IPropertyType>> expression = v => v.OrganizationWhereEmployee;
+            Expression<Func<IMetaPerson, IRelationEndType>> expression = v => v.OrganizationWhereEmployee;
 
             var path = expression.Node(this.M);
 
-            Assert.Equal(this.M.Person.OrganizationWhereEmployee, path.PropertyType);
+            Assert.Equal(this.M.Person.OrganizationWhereEmployee, path.RelationEndType);
             Assert.Empty(path.Nodes);
         }
 
         [Fact]
         public void ClassAssociationClassRole()
         {
-            Expression<Func<IMetaPerson, IPropertyType>> expression = v => v.OrganizationWhereEmployee.Organization.Information;
+            Expression<Func<IMetaPerson, IRelationEndType>> expression = v => v.OrganizationWhereEmployee.Organization.Information;
 
             var path = expression.Node(this.M);
 
-            Assert.Equal(this.M.Person.OrganizationWhereEmployee, path.PropertyType);
+            Assert.Equal(this.M.Person.OrganizationWhereEmployee, path.RelationEndType);
 
             var next = path.Nodes.First();
 
-            Assert.Equal(this.M.Organization.Information, next.PropertyType);
+            Assert.Equal(this.M.Organization.Information, next.RelationEndType);
             Assert.Empty(next.Nodes);
         }
 
         [Fact]
         public void ClassRole()
         {
-            Expression<Func<IMetaOrganization, IPropertyType>> expression = v => v.Name;
+            Expression<Func<IMetaOrganization, IRelationEndType>> expression = v => v.Name;
 
             var path = expression.Node(this.M);
 
-            Assert.Equal(this.M.Organization.Name, path.PropertyType);
+            Assert.Equal(this.M.Organization.Name, path.RelationEndType);
             Assert.Empty(path.Nodes);
         }
 
@@ -74,7 +74,7 @@ namespace Allors.Database.Domain.Tests
 
             var path = expression.Node(this.M);
 
-            Assert.Equal(this.M.UserGroup.Members, path.PropertyType);
+            Assert.Equal(this.M.UserGroup.Members, path.RelationEndType);
             Assert.Equal(this.M.Person, path.OfType);
             Assert.Empty(path.Nodes);
         }
@@ -82,15 +82,15 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void ClassRoleClassRole()
         {
-            Expression<Func<IMetaOrganization, IPropertyType>> expression = v => v.Employees.Person.FirstName;
+            Expression<Func<IMetaOrganization, IRelationEndType>> expression = v => v.Employees.Person.FirstName;
 
             var path = expression.Node(this.M);
 
-            Assert.Equal(this.M.Organization.Employees, path.PropertyType);
+            Assert.Equal(this.M.Organization.Employees, path.RelationEndType);
 
             var next = path.Nodes.First();
 
-            Assert.Equal(this.M.Person.FirstName, next.PropertyType);
+            Assert.Equal(this.M.Person.FirstName, next.RelationEndType);
             Assert.Empty(next.Nodes);
         }
 
@@ -98,15 +98,15 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void ClassRoleInterfaceAsClassRole()
         {
-            Expression<Func<IMetaUserGroup, IPropertyType>> expression = v => v.Members.User.AsPerson.FirstName;
+            Expression<Func<IMetaUserGroup, IRelationEndType>> expression = v => v.Members.User.AsPerson.FirstName;
 
             var path = expression.Node(this.M);
 
-            Assert.Equal(this.M.UserGroup.Members, path.PropertyType);
+            Assert.Equal(this.M.UserGroup.Members, path.RelationEndType);
 
             var next = path.Nodes.First();
 
-            Assert.Equal(this.M.Person.FirstName, next.PropertyType);
+            Assert.Equal(this.M.Person.FirstName, next.RelationEndType);
             Assert.Empty(next.Nodes);
         }
     }

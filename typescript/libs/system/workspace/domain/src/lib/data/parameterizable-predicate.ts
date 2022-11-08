@@ -44,6 +44,6 @@ export function parameterizablePredicateObjectType(
     case 'Equals':
     case 'Exists':
     case 'Instanceof':
-      return predicate.propertyType.objectType;
+      return predicate.relationEndType.objectType;
   }
 }

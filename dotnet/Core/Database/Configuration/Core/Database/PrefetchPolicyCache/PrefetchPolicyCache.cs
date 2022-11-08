@@ -56,33 +56,33 @@ namespace Allors.Database.Configuration
             builder.WithSecurityRules(this.m);
             foreach (var node in nodes)
             {
-                var propertyType = node.PropertyType;
-                if (propertyType.ObjectType.IsComposite)
+                var relationEndType = node.RelationEndType;
+                if (relationEndType.ObjectType.IsComposite)
                 {
-                    builder.WithRule(propertyType, this.Security);
+                    builder.WithRule(relationEndType, this.Security);
                 }
                 else
                 {
-                    builder.WithRule(propertyType);
+                    builder.WithRule(relationEndType);
                 }
             }
 
             return builder.Build();
         }
 
-        public PrefetchPolicy ForDependency(IComposite composite, ISet<IPropertyType> propertyTypes)
+        public PrefetchPolicy ForDependency(IComposite composite, ISet<IRelationEndType> relationEndTypes)
         {
             var builder = new PrefetchPolicyBuilder();
             builder.WithSecurityRules(this.m);
-            foreach (var propertyType in propertyTypes)
+            foreach (var relationEndType in relationEndTypes)
             {
-                if (propertyType.ObjectType.IsComposite)
+                if (relationEndType.ObjectType.IsComposite)
                 {
-                    builder.WithRule(propertyType, this.Security);
+                    builder.WithRule(relationEndType, this.Security);
                 }
                 else
                 {
-                    builder.WithRule(propertyType);
+                    builder.WithRule(relationEndType);
                 }
             }
 

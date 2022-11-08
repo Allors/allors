@@ -9,7 +9,7 @@ using Allors.Database.Meta;
 
 public class Equals : IPropertyPredicate
 {
-    public Equals(IPropertyType propertyType = null) => this.PropertyType = propertyType;
+    public Equals(IRelationEndType relationEndType = null) => this.RelationEndType = relationEndType;
 
     public IObject Object { get; set; }
 
@@ -20,7 +20,7 @@ public class Equals : IPropertyPredicate
     public string Parameter { get; set; }
 
     /// <inheritdoc />
-    public IPropertyType PropertyType { get; set; }
+    public IRelationEndType RelationEndType { get; set; }
 
     bool IPredicate.ShouldTreeShake(IArguments arguments) => ((IPredicate)this).HasMissingArguments(arguments);
 
@@ -29,7 +29,7 @@ public class Equals : IPropertyPredicate
     /// <inheritdoc />
     void IPredicate.Build(ITransaction transaction, IArguments arguments, Database.ICompositePredicate compositePredicate)
     {
-        switch (this.PropertyType)
+        switch (this.RelationEndType)
         {
             case null:
             {
@@ -66,7 +66,7 @@ public class Equals : IPropertyPredicate
             }
             default:
             {
-                var associationType = (IAssociationType)this.PropertyType;
+                var associationType = (IAssociationType)this.RelationEndType;
                 var equals = this.Parameter != null ? transaction.GetObject(arguments.ResolveObject(this.Parameter)) : this.Object;
                 if (equals != null)
                 {

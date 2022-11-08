@@ -11,7 +11,7 @@ namespace Allors.Database.Meta;
 ///     This is also called the 'active', 'controlling' or 'owning' side.
 ///     AssociationTypes can only have composite <see cref="ObjectType" />s.
 /// </summary>
-public interface IAssociationType : IPropertyType
+public interface IAssociationType : IRelationEndType
 {
     IRelationType RelationType { get; }
 

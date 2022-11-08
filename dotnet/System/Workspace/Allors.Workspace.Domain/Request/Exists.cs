@@ -10,11 +10,11 @@ namespace Allors.Workspace.Request
 
     public class Exists : IPropertyPredicate
     {
-        public Exists(IPropertyType propertyType = null) => this.PropertyType = propertyType;
+        public Exists(IRelationEndType relationEndType = null) => this.RelationEndType = relationEndType;
 
         public string Parameter { get; set; }
 
-        public IPropertyType PropertyType { get; set; }
+        public IRelationEndType RelationEndType { get; set; }
 
         public void Accept(IVisitor visitor) => visitor.VisitExists(this);
     }

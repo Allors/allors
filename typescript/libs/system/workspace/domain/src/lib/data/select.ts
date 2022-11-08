@@ -1,8 +1,8 @@
-import { Composite, PropertyType } from '@allors/system/workspace/meta';
+import { Composite, RelationEndType } from '@allors/system/workspace/meta';
 import { Node } from '../pointer/node';
 
 export interface Select {
-  propertyType: PropertyType;
+  relationEndType: RelationEndType;
 
   ofType?: Composite;
 

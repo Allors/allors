@@ -21,7 +21,7 @@ test('databaseMergeError', async () => {
       objectType: m.C1,
       predicate: {
         kind: 'Equals',
-        propertyType: m.C1.Name,
+        relationEndType: m.C1.Name,
         value: 'C1A',
       },
     },

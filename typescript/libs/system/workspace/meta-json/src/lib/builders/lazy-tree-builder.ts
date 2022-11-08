@@ -11,16 +11,16 @@ export class LazyTreeBuilder {
         const entries = Object.entries(obj);
         return entries.length > 0
           ? entries.map(([key, value]) => {
-              const propertyType =
-                composite.propertyTypeByPropertyName.get(key);
+              const relationEndType =
+                composite.relationEndTypeByPropertyName.get(key);
               return value != null
                 ? {
-                    propertyType,
+                    relationEndType,
                     ofType: this['ofType'],
-                    nodes: this[propertyType.objectType.singularName](value),
+                    nodes: this[relationEndType.objectType.singularName](value),
                   }
                 : {
-                    propertyType,
+                    relationEndType,
                     ofType: this['ofType'],
                   };
             })

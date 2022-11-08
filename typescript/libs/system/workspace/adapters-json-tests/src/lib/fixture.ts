@@ -77,7 +77,7 @@ export class Fixture {
         objectType: m.C1,
         predicate: {
           kind: 'Equals',
-          propertyType: m.C1.Name,
+          relationEndType: m.C1.Name,
           value: name,
         },
       },
@@ -96,7 +96,7 @@ export class Fixture {
         objectType: m.C2,
         predicate: {
           kind: 'Equals',
-          propertyType: m.C2.Name,
+          relationEndType: m.C2.Name,
           value: name,
         },
       },

@@ -48,7 +48,7 @@ public abstract class AssociationType : IAssociationType, IComparable
 
     public string PluralFullName => this.PluralName;
 
-    IObjectType IPropertyType.ObjectType => this.ObjectType;
+    IObjectType IRelationEndType.ObjectType => this.ObjectType;
 
     IComposite IAssociationType.ObjectType => this.ObjectType;
 

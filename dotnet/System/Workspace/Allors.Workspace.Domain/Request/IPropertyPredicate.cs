@@ -9,6 +9,6 @@ namespace Allors.Workspace.Request
 
     public interface IPropertyPredicate : IPredicate
     {
-        IPropertyType PropertyType { get; set; }
+        IRelationEndType RelationEndType { get; set; }
     }
 }

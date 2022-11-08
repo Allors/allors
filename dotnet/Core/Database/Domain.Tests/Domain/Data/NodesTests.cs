@@ -23,7 +23,7 @@ namespace Allors.Database.Data.Tests
 
             var node = m.UserGroup.Members.Node();
 
-            Assert.Equal(m.UserGroup.Members, node.PropertyType);
+            Assert.Equal(m.UserGroup.Members, node.RelationEndType);
             Assert.Empty(node.Nodes);
         }
 
@@ -34,12 +34,12 @@ namespace Allors.Database.Data.Tests
 
             var node = m.UserGroup.Members.Node(v => v.User.UniqueId.Node());
 
-            Assert.Equal(m.UserGroup.Members, node.PropertyType);
+            Assert.Equal(m.UserGroup.Members, node.RelationEndType);
             Assert.Single(node.Nodes);
 
             var child = node.Nodes.First();
 
-            Assert.Equal(m.User.UniqueId, child.PropertyType);
+            Assert.Equal(m.User.UniqueId, child.RelationEndType);
             Assert.Empty(child.Nodes);
         }
 
@@ -54,15 +54,15 @@ namespace Allors.Database.Data.Tests
                 v.User.SecurityTokens.Node(),
             });
 
-            Assert.Equal(m.UserGroup.Members, node.PropertyType);
+            Assert.Equal(m.UserGroup.Members, node.RelationEndType);
             Assert.Equal(2, node.Nodes.Length);
 
-            var uniqueIdChild = node.Nodes.First(v => v.PropertyType.Equals(m.User.UniqueId));
+            var uniqueIdChild = node.Nodes.First(v => v.RelationEndType.Equals(m.User.UniqueId));
 
             Assert.NotNull(uniqueIdChild);
             Assert.Empty(uniqueIdChild.Nodes);
 
-            var securityTokens = node.Nodes.First(v => v.PropertyType.Equals(m.User.SecurityTokens));
+            var securityTokens = node.Nodes.First(v => v.RelationEndType.Equals(m.User.SecurityTokens));
 
             Assert.NotNull(securityTokens);
             Assert.Empty(securityTokens.Nodes);
@@ -78,15 +78,15 @@ namespace Allors.Database.Data.Tests
                 v => v.User.UniqueId.Node(),
                 v => v.User.SecurityTokens.Node());
 
-            Assert.Equal(m.UserGroup.Members, node.PropertyType);
+            Assert.Equal(m.UserGroup.Members, node.RelationEndType);
             Assert.Equal(2, node.Nodes.Length);
 
-            var uniqueIdChild = node.Nodes.First(v => v.PropertyType.Equals(m.User.UniqueId));
+            var uniqueIdChild = node.Nodes.First(v => v.RelationEndType.Equals(m.User.UniqueId));
 
             Assert.NotNull(uniqueIdChild);
             Assert.Empty(uniqueIdChild.Nodes);
 
-            var securityTokens = node.Nodes.First(v => v.PropertyType.Equals(m.User.SecurityTokens));
+            var securityTokens = node.Nodes.First(v => v.RelationEndType.Equals(m.User.SecurityTokens));
 
             Assert.NotNull(securityTokens);
             Assert.Empty(securityTokens.Nodes);
