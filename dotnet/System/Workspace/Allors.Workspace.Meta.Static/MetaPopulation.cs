@@ -18,9 +18,9 @@ namespace Allors.Workspace.Meta
 
         public IReadOnlyList<IClass> Classes { get; protected set; }
 
-        public IReadOnlyList<IRelationType> RelationTypes { get; private set; }
+        public IReadOnlyList<IRelationType> RelationTypes { get; set; }
 
-        public IReadOnlyList<IMethodType> MethodTypes { get; private set; }
+        public IReadOnlyList<IMethodType> MethodTypes { get; set; }
 
         public IReadOnlyDictionary<string, IMetaIdentifiableObject> MetaObjectByTag { get; private set; }
 
@@ -60,11 +60,8 @@ namespace Allors.Workspace.Meta
             }
         }
 
-        public void Init(RelationType[] relationTypes, MethodType[] methodTypes)
+        public void Init()
         {
-            this.RelationTypes = relationTypes.Cast<IRelationType>().ToArray();
-            this.MethodTypes = methodTypes;
-
             this.MetaObjectByTag =
                 this.Units.Cast<IMetaIdentifiableObject>()
                     .Union(this.Classes)
@@ -157,6 +154,37 @@ namespace Allors.Workspace.Meta
                     exclusiveMethodTypeByObjectType.TryGetValue(objectType, out var exclusiveMethodTypes);
                     objectType.ExclusiveMethodTypes = exclusiveMethodTypes ?? Array.Empty<MethodType>();
                 }
+            }
+
+            // RoleTypes & AssociationTypes
+            var roleTypesByAssociationTypeObjectType = this.RelationTypes
+                .GroupBy(v => (Composite)v.AssociationType.ObjectType)
+                .ToDictionary(g => g.Key, g => new HashSet<RoleType>(g.Select(v => (RoleType)v.RoleType)));
+
+            var associationTypesByRoleTypeObjectType = this.RelationTypes
+                .GroupBy(v => (ObjectType)v.RoleType.ObjectType)
+                .ToDictionary(g => g.Key, g => new HashSet<AssociationType>(g.Select(v => (AssociationType)v.AssociationType)));
+
+            // RoleTypes
+            foreach (Composite composite in this.Composites)
+            {
+                composite.InitializeRoleTypes(roleTypesByAssociationTypeObjectType);
+            }
+
+            // AssociationTypes
+            foreach (Composite composite in this.Composites)
+            {
+                composite.InitializeAssociationTypes(associationTypesByRoleTypeObjectType);
+            }
+
+            // MethodTypes
+            var methodTypeByClass = this.MethodTypes
+                .GroupBy(v => (Composite)v.ObjectType)
+                .ToDictionary(g => g.Key, g => new HashSet<IMethodType>(g));
+
+            foreach (Composite composite in this.Composites)
+            {
+                composite.InitializeMethodTypes(methodTypeByClass);
             }
         }
     }

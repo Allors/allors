@@ -7,6 +7,7 @@
 namespace Allors.Workspace.Meta
 {
     using System;
+    using System.Collections.Generic;
     using System.Drawing;
     using Allors.Text;
 

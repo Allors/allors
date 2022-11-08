@@ -103,9 +103,9 @@ namespace Allors.Workspace.Meta
             this.associationTypes = associationTypes.ToArray();
         }
 
-        internal void InitializeMethodTypes(Dictionary<Composite, HashSet<MethodType>> methodTypeByClass)
+        internal void InitializeMethodTypes(Dictionary<Composite, HashSet<IMethodType>> methodTypeByClass)
         {
-            var methodTypes = new HashSet<MethodType>();
+            var methodTypes = new HashSet<IMethodType>();
 
             if (methodTypeByClass.TryGetValue(this, out var directMethodTypes))
             {

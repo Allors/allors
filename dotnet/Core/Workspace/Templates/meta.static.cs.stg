@@ -259,9 +259,17 @@ namespace Allors.Workspace.Meta.Static
             this.BuildRoleTypes(m);
 
             var relationTypes = this.BuildRelationTypes(m);
-            var methodTypes = this.BuildMethodTypes(m);
 
-            m.Init(relationTypes, methodTypes);
+            m.RelationTypes = relationTypes;
+
+            this.BuildMethodTypes(m);
+
+            m.MethodTypes = new MethodType[]
+            {
+                $meta.WorkspaceMethodTypesByWorkspaceName.(workspaceName):{methodType|(MethodType)m.$methodType.ObjectType.Name$.$methodType.Name$}; separator=",\n"$
+            };
+
+            m.Init();
             
             this.AssignRelationEndTypes(m);
             this.AssignMethodTypes(m);
@@ -288,12 +296,9 @@ $meta.WorkspaceUnitRelationTypesByWorkspaceName.(workspaceName):{relationType|$b
             };
         }
 
-        private MethodType[] BuildMethodTypes(MetaPopulation m)
+        private void BuildMethodTypes(MetaPopulation m)
 		{
-		    return new MethodType[]
-            {
-$meta.WorkspaceMethodTypesByWorkspaceName.(workspaceName):{methodType|$build_methodType(methodType)$}; separator=",\n"$
-            };
+$meta.WorkspaceMethodTypesByWorkspaceName.(workspaceName):{methodType|$build_methodType(methodType)$}; separator="\n"$
 		}
 
         private void AssignRelationEndTypes(MetaPopulation m)
@@ -352,7 +357,7 @@ isUnique(roleType) ::= <<$if(relationType.RoleType.IsUnique)$isUnique: $relation
 mediaType(roleType) ::= <<$if(relationType.MediaType)$mediaType: "$relationType.MediaType$"$endif$>>
 
 build_methodType(methodType) ::= <<
-                new MethodType(m, "$methodType.Tag$", m.$methodType.ObjectType.Name$, "$methodType.Name$")
+            m.$methodType.ObjectType.SingularName$.$methodType.Name$ = new MethodType(m, "$methodType.Tag$", m.$methodType.ObjectType.Name$, "$methodType.Name$");
 >>
 
 assign_properties(composite) ::= <<
