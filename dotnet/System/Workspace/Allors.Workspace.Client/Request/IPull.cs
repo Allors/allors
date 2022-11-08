@@ -3,10 +3,10 @@
     using System.Collections.Generic;
     using Allors.Workspace.Meta;
 
-    public interface IInclude
+    public interface IPull
     {
         IFieldType OutputFieldType { get; }
 
-        IReadOnlyList<IInclude> Children { get; }
+        IReadOnlyList<IPull> Children { get; }
     }
 }

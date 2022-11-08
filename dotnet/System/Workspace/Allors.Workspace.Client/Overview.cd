@@ -8,7 +8,7 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="Allors.Workspace.Request.IRequest">
-    <Position X="2.75" Y="3.5" Width="1.5" />
+    <Position X="3" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Request\IRequest.cs</FileName>
@@ -18,21 +18,20 @@
     </ShowAsCollectionAssociation>
   </Interface>
   <Interface Name="Allors.Workspace.Request.IInvocationRequest">
-    <Position X="6.25" Y="3.5" Width="1.75" />
+    <Position X="6.5" Y="0.5" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>QAAAAAAAAIAAAAAAQAAAAAAAEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>QAAAAAAAAIAAAQAAAAAAAAAAEAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Request\IInvocationRequest.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="MethodType" />
       <Property Name="Input" />
     </ShowAsAssociation>
     <ShowAsCollectionAssociation>
-      <Property Name="Includes" />
+      <Property Name="Pulls" />
     </ShowAsCollectionAssociation>
   </Interface>
   <Interface Name="Allors.Workspace.Response.IResponse">
-    <Position X="2.75" Y="7.25" Width="1.5" />
+    <Position X="3" Y="4.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAIAAAAA=</HashCode>
       <FileName>Response\IResponse.cs</FileName>
@@ -45,7 +44,7 @@
     </ShowAsCollectionAssociation>
   </Interface>
   <Interface Name="Allors.Workspace.Response.IInvocationResponse">
-    <Position X="5.75" Y="7.25" Width="1.75" />
+    <Position X="6" Y="4.25" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAgAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Response\IInvocationResponse.cs</FileName>
@@ -56,53 +55,28 @@
     </ShowAsAssociation>
   </Interface>
   <Interface Name="Allors.Workspace.IRecord">
-    <Position X="9.5" Y="6" Width="1.5" />
+    <Position X="9.75" Y="3" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAgAA=</HashCode>
       <FileName>IRecord.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="RecordType" />
-    </ShowAsAssociation>
     <ShowAsCollectionAssociation>
       <Property Name="Fields" />
     </ShowAsCollectionAssociation>
   </Interface>
   <Interface Name="Allors.Workspace.IField">
-    <Position X="12" Y="6" Width="1.5" />
+    <Position X="12.75" Y="3" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
       <FileName>IField.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="FieldType" />
-    </ShowAsAssociation>
   </Interface>
-  <Interface Name="Allors.Workspace.Meta.IMethodType">
-    <Position X="6.5" Y="0.5" Width="1.5" />
-    <TypeIdentifier />
-    <ShowAsAssociation>
-      <Property Name="Input" />
-      <Property Name="Output" />
-    </ShowAsAssociation>
-  </Interface>
-  <Interface Name="Allors.Workspace.Meta.IFieldType">
-    <Position X="12" Y="0.75" Width="1.5" />
-    <TypeIdentifier />
-  </Interface>
-  <Interface Name="Allors.Workspace.Meta.IRecordType">
-    <Position X="9.5" Y="0.5" Width="1.5" />
-    <TypeIdentifier />
-  </Interface>
-  <Interface Name="Allors.Workspace.Request.IInclude">
-    <Position X="10.5" Y="3.25" Width="1.5" />
+  <Interface Name="Allors.Workspace.Request.IPull">
+    <Position X="10.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAIAAAA=</HashCode>
-      <FileName>Request\IInclude.cs</FileName>
+      <FileName>Request\IPull.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="OutputFieldType" />
-    </ShowAsAssociation>
   </Interface>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

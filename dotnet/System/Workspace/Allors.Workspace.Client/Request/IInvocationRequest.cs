@@ -12,6 +12,6 @@
 
         IRecord Input { get; }
 
-        IReadOnlyList<IInclude> Includes { get; }
+        IReadOnlyList<IPull> Pulls { get; }
     }
 }
