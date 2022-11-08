@@ -15,7 +15,7 @@ namespace Allors.Database.Configuration.Derivations.Default
 
     public class Derivation : IDerivation
     {
-        private Properties properties;
+        private RelationEnds relationEnds;
 
         public Derivation(ITransaction transaction, IValidation validation, Engine engine, int maxCycles, bool embedded, bool continueOnError)
         {
@@ -249,12 +249,12 @@ namespace Allors.Database.Configuration.Derivations.Default
 
         public object this[string name]
         {
-            get => this.properties?.Get(name);
+            get => this.relationEnds?.Get(name);
 
             set
             {
-                this.properties ??= new Properties();
-                this.properties.Set(name, value);
+                this.relationEnds ??= new RelationEnds();
+                this.relationEnds.Set(name, value);
             }
         }
     }
