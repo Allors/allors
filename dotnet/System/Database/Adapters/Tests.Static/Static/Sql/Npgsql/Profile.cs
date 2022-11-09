@@ -38,7 +38,7 @@ public class Profile : Adapters.Profile
     }
 
     protected string ConnectionString =>
-        $"Server=localhost; User Id=postgresql; Password=root; Database={this.database}; Pooling=false; Enlist=false; CommandTimeout=300";
+        $"Server=localhost; User Id=postgres; Password=root; Database={this.database}; Pooling=false; Enlist=false; CommandTimeout=300";
 
     public override IDatabase CreateDatabase()
     {

@@ -17,7 +17,7 @@ public class Fixture<T>
     public Fixture()
     {
         var database = typeof(T).Name;
-        var connectionString = "Server=localhost; User Id=postgresql; Password=root; Database=postgres; Pooling=false; CommandTimeout=300";
+        var connectionString = "Server=localhost; User Id=postgres; Password=root; Database=postgres; Pooling=false; CommandTimeout=300";
 
         int version;
 
