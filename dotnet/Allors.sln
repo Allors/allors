@@ -1,4 +1,4 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32014.148
@@ -131,21 +131,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Database.Adapters.Sq
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Database.Adapters.Sql.SqlClient", "System\Database\Adapters\Allors.Database.Adapters.Sql.SqlClient\Allors.Database.Adapters.Sql.SqlClient.csproj", "{2848F034-C0E1-4934-AD2C-982A23BB940C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Adapters", "Adapters", "{49B4B74D-15DE-4F38-8BFF-9F29068C895B}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Clients", "Clients", "{49B4B74D-15DE-4F38-8BFF-9F29068C895B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Workspace.Adapters", "System\Workspace\Adapters\Allors.Workspace.Adapters\Allors.Workspace.Adapters.csproj", "{7B5A738C-88CB-4AFC-93FD-9B34316661C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Workspace.Client.Common", "System\Workspace\Clients\Allors.Workspace.Client.Common\Allors.Workspace.Client.Common.csproj", "{7B5A738C-88CB-4AFC-93FD-9B34316661C2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Workspace.Adapters.Direct", "System\Workspace\Adapters\Allors.Workspace.Adapters.Direct\Allors.Workspace.Adapters.Direct.csproj", "{EE8D0979-3202-4EDD-A02E-B9D187110AA0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Workspace.Client.Direct", "System\Workspace\Clients\Allors.Workspace.Client.Direct\Allors.Workspace.Client.Direct.csproj", "{EE8D0979-3202-4EDD-A02E-B9D187110AA0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Workspace.Adapters.Json", "System\Workspace\Adapters\Allors.Workspace.Adapters.Json\Allors.Workspace.Adapters.Json.csproj", "{7CE64CC4-F2B2-43EC-98D4-9166AF07E3F5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Workspace.Client.Json", "System\Workspace\Clients\Allors.Workspace.Client.Json\Allors.Workspace.Client.Json.csproj", "{7CE64CC4-F2B2-43EC-98D4-9166AF07E3F5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Workspace.Adapters.Json.Newtonsoft.WebClient", "System\Workspace\Adapters\Allors.Workspace.Adapters.Json.Newtonsoft.WebClient\Allors.Workspace.Adapters.Json.Newtonsoft.WebClient.csproj", "{3B55B7BD-79D1-4292-8919-485E39F3E16B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Workspace.Client.Json.Newtonsoft.WebClient", "System\Workspace\Clients\Allors.Workspace.Client.Json.Newtonsoft.WebClient\Allors.Workspace.Client.Json.Newtonsoft.WebClient.csproj", "{3B55B7BD-79D1-4292-8919-485E39F3E16B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Protocol.Json.Newtonsoft", "System\Protocol\Allors.Protocol.Json.Newtonsoft\Allors.Protocol.Json.Newtonsoft.csproj", "{D1681254-792A-453E-BA73-DDF4BF4A2175}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Protocol.Json.SystemText", "System\Protocol\Allors.Protocol.Json.SystemText\Allors.Protocol.Json.SystemText.csproj", "{0AD34687-9B75-4086-B0CC-3DBFC5B4FEE6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Workspace.Adapters.Json.SystemText", "System\Workspace\Adapters\Allors.Workspace.Adapters.Json.SystemText\Allors.Workspace.Adapters.Json.SystemText.csproj", "{500BADB0-E5B5-4C4B-A814-AEAC0C638DFB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Workspace.Client.Json.SystemText", "System\Workspace\Clients\Allors.Workspace.Client.Json.SystemText\Allors.Workspace.Client.Json.SystemText.csproj", "{500BADB0-E5B5-4C4B-A814-AEAC0C638DFB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Workspace.Meta", "System\Workspace\Allors.Workspace.Meta\Allors.Workspace.Meta.csproj", "{3FD43D90-578E-4E37-AB32-32854DB7B184}"
 EndProject

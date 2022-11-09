@@ -10,8 +10,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Protocol\Allors.Protocol.Json.Newtonsoft\Allors.Protocol.Json.Newtonsoft.csproj" />
-    <ProjectReference Include="..\Allors.Workspace.Adapters.Json\Allors.Workspace.Adapters.Json.csproj" />
-    <ProjectReference Include="..\Allors.Workspace.Adapters\Allors.Workspace.Adapters.csproj" />
+    <ProjectReference Include="..\Allors.Workspace.Client.Json\Allors.Workspace.Client.Json.csproj" />
+    <ProjectReference Include="..\Allors.Workspace.Client.Common\Allors.Workspace.Client.Common.csproj" />
   </ItemGroup>
 
 </Project>

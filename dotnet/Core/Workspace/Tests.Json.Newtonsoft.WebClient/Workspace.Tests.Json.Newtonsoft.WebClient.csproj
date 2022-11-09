@@ -14,9 +14,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\System\Workspace\Adapters\Allors.Workspace.Adapters.Json.Newtonsoft.WebClient\Allors.Workspace.Adapters.Json.Newtonsoft.WebClient.csproj" />
-    <ProjectReference Include="..\..\..\System\Workspace\Adapters\Allors.Workspace.Adapters.Json\Allors.Workspace.Adapters.Json.csproj" />
-    <ProjectReference Include="..\..\..\System\Workspace\Adapters\Allors.Workspace.Adapters\Allors.Workspace.Adapters.csproj" />
+    <ProjectReference Include="..\..\..\System\Workspace\Clients\Allors.Workspace.Client.Json.Newtonsoft.WebClient\Allors.Workspace.Client.Json.Newtonsoft.WebClient.csproj" />
+    <ProjectReference Include="..\..\..\System\Workspace\Clients\Allors.Workspace.Client.Json\Allors.Workspace.Client.Json.csproj" />
+    <ProjectReference Include="..\..\..\System\Workspace\Clients\Allors.Workspace.Client.Common\Allors.Workspace.Client.Common.csproj" />
     <ProjectReference Include="..\Meta.Static\Workspace.Meta.Static.csproj" />
     <ProjectReference Include="..\Tests\Workspace.Tests.csproj" />
   </ItemGroup>
