@@ -1,4 +1,4 @@
-// <copyright file="Profile.cs" company="Allors bvba">
+﻿// <copyright file="Profile.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -17,7 +17,7 @@ public class Fixture<T>
     public Fixture()
     {
         var database = typeof(T).Name;
-        var connectionString = "Server=localhost; User Id=allors; Database=postgres; Pooling=false; CommandTimeout=300";
+        var connectionString = "Server=localhost; User Id=postgresql; Password=root; Database=postgres; Pooling=false; CommandTimeout=300";
 
         int version;
 
