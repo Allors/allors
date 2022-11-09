@@ -1,81 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Interface Name="Allors.Workspace.IConnection">
-    <Position X="0.5" Y="0.5" Width="1.5" />
+    <Position X="0.5" Y="0.5" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAABAAEA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAABAAAQAAAAgAAAQAAAAAABAAAA=</HashCode>
       <FileName>IConnection.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="Allors.Workspace.Request.IRequest">
-    <Position X="3" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Request\IRequest.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsCollectionAssociation>
-      <Property Name="InvocationRequests" />
-    </ShowAsCollectionAssociation>
-  </Interface>
-  <Interface Name="Allors.Workspace.Request.IInvocationRequest">
-    <Position X="6.5" Y="0.5" Width="1.75" />
-    <TypeIdentifier>
-      <HashCode>QAAAAAAAAIAAAQAAAAAAAAAAEAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Request\IInvocationRequest.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="Input" />
-    </ShowAsAssociation>
-    <ShowAsCollectionAssociation>
-      <Property Name="Pulls" />
-    </ShowAsCollectionAssociation>
-  </Interface>
-  <Interface Name="Allors.Workspace.Response.IResponse">
-    <Position X="3" Y="4.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAIAAAAA=</HashCode>
-      <FileName>Response\IResponse.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="Request" />
-    </ShowAsAssociation>
-    <ShowAsCollectionAssociation>
-      <Property Name="InvocationResponses" />
-    </ShowAsCollectionAssociation>
-  </Interface>
-  <Interface Name="Allors.Workspace.Response.IInvocationResponse">
-    <Position X="6" Y="4.25" Width="1.75" />
-    <TypeIdentifier>
-      <HashCode>AAgAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Response\IInvocationResponse.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="InvocationRequest" />
-      <Property Name="Output" />
-    </ShowAsAssociation>
-  </Interface>
-  <Interface Name="Allors.Workspace.IRecord">
-    <Position X="9.75" Y="3" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAgAA=</HashCode>
-      <FileName>IRecord.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsCollectionAssociation>
-      <Property Name="Fields" />
-    </ShowAsCollectionAssociation>
-  </Interface>
-  <Interface Name="Allors.Workspace.IField">
-    <Position X="12.75" Y="3" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
-      <FileName>IField.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="Allors.Workspace.Request.IPull">
-    <Position X="10.25" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAIAAAA=</HashCode>
-      <FileName>Request\IPull.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Font Name="Segoe UI" Size="9" />

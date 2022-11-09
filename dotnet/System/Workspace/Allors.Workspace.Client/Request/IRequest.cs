@@ -1,9 +1,8 @@
-﻿namespace Allors.Workspace.Request
+namespace Allors.Workspace.Request
 {
-    using System.Collections.Generic;
+    using Allors.Workspace.Request.Visitor;
 
-    public interface IRequest
+    public interface IRequest : IVisitable
     {
-        IReadOnlyList<IInvocationRequest> InvocationRequests { get; }
     }
 }

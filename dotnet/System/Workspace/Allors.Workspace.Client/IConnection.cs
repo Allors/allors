@@ -16,6 +16,10 @@ namespace Allors.Workspace
 
         IMetaPopulation MetaPopulation { get; }
 
-        Task<IResponse> ExecuteAsync(IRequest request);
+        Task<IInvokeResult> InvokeAsync(MethodRequest method, BatchOptions options = null);
+
+        Task<IInvokeResult> InvokeAsync(MethodRequest[] methods, BatchOptions options = null);
+
+        Task<IPullResult> PullAsync(params PullRequest[] pull);
     }
 }

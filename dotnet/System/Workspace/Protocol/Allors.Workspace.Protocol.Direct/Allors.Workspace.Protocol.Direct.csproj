@@ -4,7 +4,7 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Database\Allors.Database\Allors.Database.csproj" />
-    <ProjectReference Include="..\..\Allors.Workspace.Domain\Allors.Workspace.Domain.csproj" />
+    <ProjectReference Include="..\..\Allors.Workspace.Client\Allors.Workspace.Client.csproj" />
   </ItemGroup>
   
 </Project>

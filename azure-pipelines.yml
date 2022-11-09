@@ -41,11 +41,16 @@ stages:
     - powershell: Set-Culture -CultureInfo nl-BE
       displayName: CultureInfo nl-BE
     - task: UseDotNet@2
-      displayName: 'Use .NET 7.0 sdk'
       inputs:
         packageType: sdk
         version: 7.0.x
         installationPath: $(Agent.ToolsDirectory)/dotnet
+      displayName: 'Use .NET 7.0 sdk'
+    - powershell: |
+        ls $env:PGBIN
+        Set-Service postgresql-x64-14 -StartupType manual
+        Start-Service postgresql-x64-14
+      displayName: 'Start PostgreSQL'
     - task: PowerShell@2
       env:
         NODE_OPTIONS: --max_old_space_size=16384

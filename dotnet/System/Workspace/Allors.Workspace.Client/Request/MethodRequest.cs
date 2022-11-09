@@ -6,20 +6,23 @@
 namespace Allors.Workspace.Request
 {
     using Allors.Workspace.Meta;
-    using Allors.Workspace.Response;
     using Allors.Workspace.Request.Visitor;
+    using Allors.Workspace.Response;
 
     public class MethodRequest : IRequest, IVisitable
     {
-        public MethodRequest(IObject @object, IMethodType methodType)
+        public MethodRequest(IObject @object, IMethodType methodType, IRecord input = null)
         {
             this.Object = @object;
             this.MethodType = methodType;
+            this.Input = input;
         }
 
         public IObject Object { get; }
 
         public IMethodType MethodType { get; }
+
+        public IRecord Input { get; }
 
         public void Accept(IVisitor visitor) => visitor.VisitMethodCall(this);
     }
