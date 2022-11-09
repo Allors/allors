@@ -16,6 +16,7 @@
     <ProjectReference Include="..\..\..\System\Workspace\Adapters\Allors.Workspace.Adapters.Json.SystemText\Allors.Workspace.Adapters.Json.SystemText.csproj" />
     <ProjectReference Include="..\..\..\System\Workspace\Adapters\Allors.Workspace.Adapters.Json\Allors.Workspace.Adapters.Json.csproj" />
     <ProjectReference Include="..\..\..\System\Workspace\Adapters\Allors.Workspace.Adapters\Allors.Workspace.Adapters.csproj" />
+    <ProjectReference Include="..\Meta.Static\Workspace.Meta.Static.csproj" />
     <ProjectReference Include="..\Tests\Workspace.Tests.csproj" />
   </ItemGroup>
 
