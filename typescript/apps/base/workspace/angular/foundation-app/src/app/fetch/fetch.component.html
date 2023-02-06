@@ -1,7 +1,0 @@
-<div *ngIf="organization">{{ organization.Name }} with owner {{ organization.Owner?.UserName }}</div>
-
-<ul>
-  <li *ngFor="let organization of organizations">
-    <a [routerLink]="['/fetch/' + organization.id]">{{ organization.Name }}</a> with owner {{ organization.Owner?.UserName }}
-  </li>
-</ul>

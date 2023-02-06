@@ -1,4 +1,4 @@
-using Nuke.Common;
+﻿using Nuke.Common;
 
 partial class Build
 {
@@ -22,9 +22,6 @@ partial class Build
 
     private Target CiDotnetCoreWorkspaceRemoteJsonRestSharpTest => _ => _
         .DependsOn(DotnetCoreWorkspaceJsonNewtonsoftWebClientTest);
-
-    private Target CiDotnetBaseDatabaseTest => _ => _
-        .DependsOn(DotnetBaseDatabaseTest);
 
     private Target CiTypescriptWorkspaceTest => _ => _
         .DependsOn(TypescriptInstall)
