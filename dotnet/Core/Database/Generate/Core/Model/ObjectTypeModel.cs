@@ -1,8 +1,9 @@
-﻿namespace Allors.Meta.Generation.Model;
+namespace Allors.Meta.Generation.Model;
 
+using System;
 using Allors.Database.Meta;
 
-public abstract class ObjectTypeModel : DataTypeModel
+public abstract class ObjectTypeModel : MetaIdentifiableObjectModel
 {
     protected ObjectTypeModel(MetaModel metaModel)
         : base(metaModel)
@@ -11,7 +12,15 @@ public abstract class ObjectTypeModel : DataTypeModel
 
     protected abstract IObjectType ObjectType { get; }
 
-    protected override IDataType DataType => this.ObjectType;
+    // IMetaIdentifiableObject
+    public Guid Id => this.ObjectType.Id;
+
+    public string Tag => this.ObjectType.Tag;
+
+    // IDataType
+    public string Name => this.ObjectType.Name;
+
+    public Type ClrType => this.ObjectType.BoundType;
 
     // IObjectType
     public bool IsUnit => this.ObjectType.IsUnit;

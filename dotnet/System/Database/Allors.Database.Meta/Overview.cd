@@ -12,13 +12,13 @@
       <Method Name="Validate" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAIEiAAAAACAAAZEgECAAAQQAIEAAIACBZAIAAAAAAA=</HashCode>
+      <HashCode>AAIEiAAAAACAAAZEgECAAAQQAIEAAIACBJAIAAAAIAA=</HashCode>
       <FileName>AssociationType.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Database.Meta.Class">
-    <Position X="12.5" Y="16.25" Width="2.75" />
+    <Position X="12.5" Y="15.25" Width="2.75" />
     <Members>
       <Method Name="Actions" Hidden="true" />
       <Method Name="Class" Hidden="true" />
@@ -31,7 +31,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Database.Meta.Composite">
-    <Position X="10.75" Y="9.5" Width="2.75" />
+    <Position X="10.75" Y="8.25" Width="2.75" />
     <Members>
       <Method Name="Composite" Hidden="true" />
       <Method Name="IsAssignableFrom" Hidden="true" />
@@ -42,19 +42,8 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="Allors.Database.Meta.DataType">
-    <Position X="10.75" Y="3.75" Width="1.5" />
-    <Members>
-      <Method Name="DataType" Hidden="true" />
-    </Members>
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAQAAAAAAAAAA=</HashCode>
-      <FileName>DataType.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
   <Class Name="Allors.Database.Meta.Domain" BaseTypeListCollapsed="true">
-    <Position X="21.5" Y="3.75" Width="2.5" />
+    <Position X="17" Y="3.75" Width="2.5" />
     <Members>
       <Method Name="CompareTo" Hidden="true" />
       <Method Name="Domain" Hidden="true" />
@@ -69,21 +58,8 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="Allors.Database.Meta.FieldType" BaseTypeListCollapsed="true">
-    <Position X="15.75" Y="3.75" Width="2" />
-    <Members>
-      <Method Name="DeriveWorkspaceNames" Hidden="true" />
-      <Method Name="FieldType" Hidden="true" />
-      <Method Name="Validate" Hidden="true" />
-    </Members>
-    <TypeIdentifier>
-      <HashCode>AAAAiEAEAgKAAAAIIAAAAAQAAAAAAAAAAAAAAAAABAA=</HashCode>
-      <FileName>FieldType.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
   <Class Name="Allors.Database.Meta.Interface">
-    <Position X="9.5" Y="16.25" Width="2.5" />
+    <Position X="9.5" Y="15.25" Width="2.5" />
     <Members>
       <Method Name="DeriveWorkspaceNames" Hidden="true" />
       <Method Name="Interface" Hidden="true" />
@@ -109,49 +85,26 @@
       <Method Name="Validate" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>MAFAgEGAIBGCBQDICAgAADhAQCABCAAgGAQAYAAAmCA=</HashCode>
+      <HashCode>EAFAgEGAIBGCBQDICAgAADhAQCABCAAgGAQAYAAAmAA=</HashCode>
       <FileName>MetaPopulation.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Database.Meta.MethodType" BaseTypeListCollapsed="true">
-    <Position X="18.75" Y="3.75" Width="2.25" />
+    <Position X="14.25" Y="3.75" Width="2.25" />
     <Members>
       <Method Name="CompareTo" Hidden="true" />
       <Method Name="DeriveWorkspaceNames" Hidden="true" />
       <Method Name="Equals" Hidden="true" />
       <Method Name="GetHashCode" Hidden="true" />
       <Method Name="MethodType" Hidden="true" />
-      <Method Name="PrepareWorkspaceNames" Hidden="true" />
       <Method Name="ToString" Hidden="true" />
       <Method Name="Validate" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAAAMEEIAACAASQMoADIABQAEAAAAIAAgIAAAAAAAAA=</HashCode>
+      <HashCode>AAAAMEEIAACAACQMoACAABQAAAAAAIAAAIAAAAAAAAA=</HashCode>
       <FileName>MethodType.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="Input" />
-      <Property Name="Output" />
-    </ShowAsAssociation>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="Allors.Database.Meta.Record">
-    <Position X="12" Y="5.75" Width="2.25" />
-    <Members>
-      <Method Name="Bind" Hidden="true" />
-      <Method Name="DeriveWorkspaceNames" Hidden="true" />
-      <Method Name="PrepareWorkspaceNames" Hidden="true" />
-      <Method Name="Record" Hidden="true" />
-      <Method Name="Validate" Hidden="true" />
-    </Members>
-    <TypeIdentifier>
-      <HashCode>AAAAsEAAAACAAAAIIQBAAAQAAAAAAAAAAAAAAAAAACA=</HashCode>
-      <FileName>Record.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="FieldTypes" />
-    </ShowAsAssociation>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Database.Meta.RelationType" BaseTypeListCollapsed="true">
@@ -189,13 +142,13 @@
       <Method Name="Validate" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAIEqBAAAACAhI5GiELABAQRgAAAAIACAZAAAACAUAI=</HashCode>
+      <HashCode>AAIEqBAAAACAhI5GiELABAQRgAAAAIACAJAAAACAcAI=</HashCode>
       <FileName>RoleType.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Database.Meta.Unit">
-    <Position X="8.75" Y="9.5" Width="1.75" />
+    <Position X="8.75" Y="8.25" Width="1.75" />
     <Members>
       <Property Name="IsBinary" Hidden="true" />
       <Property Name="IsBoolean" Hidden="true" />
@@ -214,7 +167,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Database.Meta.ObjectType">
-    <Position X="9.5" Y="5.75" Width="2" />
+    <Position X="9.75" Y="3.75" Width="2" />
     <Members>
       <Method Name="CompareTo" Hidden="true" />
       <Method Name="Equals" Hidden="true" />
@@ -224,13 +177,13 @@
       <Method Name="Validate" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAACAAAYEgACAAAQBACCAAIACAAAAAUAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAACAAAYEgACAAAQBACCAAIACQAAAAUAAAAA=</HashCode>
       <FileName>ObjectType.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Database.Meta.MetaIdentifiableObject">
-    <Position X="12.75" Y="0.5" Width="3" />
+    <Position X="10" Y="0.5" Width="3" />
     <Members>
       <Method Name="MetaIdentifiableObject" Hidden="true" />
     </Members>

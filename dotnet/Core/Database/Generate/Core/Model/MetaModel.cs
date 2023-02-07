@@ -1,4 +1,4 @@
-﻿namespace Allors.Meta.Generation.Model;
+namespace Allors.Meta.Generation.Model;
 
 using System.Collections.Generic;
 using System.Linq;
@@ -45,16 +45,6 @@ public class MetaModel
             this.mapping.Add(relationType.RoleType, new RoleTypeModel(this, relationType.RoleType));
         }
 
-        foreach (var record in this.MetaPopulation.Records)
-        {
-            this.mapping.Add(record, new RecordModel(this, record));
-        }
-
-        foreach (var fieldType in this.MetaPopulation.FieldTypes)
-        {
-            this.mapping.Add(fieldType, new FieldTypeModel(this, fieldType));
-        }
-
         foreach (var methodType in this.MetaPopulation.MethodTypes)
         {
             this.mapping.Add(methodType, new MethodTypeModel(this, methodType));
@@ -74,8 +64,6 @@ public class MetaModel
     public IEnumerable<ClassModel> Classes => this.MetaPopulation.Classes.Select(this.Map);
 
     public IEnumerable<RelationTypeModel> RelationTypes => this.MetaPopulation.RelationTypes.Select(this.Map);
-
-    public IEnumerable<RecordModel> Records => this.MetaPopulation.Records.Select(this.Map);
 
     public IEnumerable<MethodTypeModel> MethodTypes => this.MetaPopulation.MethodTypes.Select(this.Map);
 
@@ -161,8 +149,6 @@ public class MetaModel
 
     public ObjectTypeModel Map(IObjectType v) => v != null ? (ObjectTypeModel)this.mapping[v] : null;
 
-    public DataTypeModel Map(IDataType v) => v != null ? (DataTypeModel)this.mapping[v] : null;
-
     public UnitModel Map(IUnit v) => v != null ? (UnitModel)this.mapping[v] : null;
 
     public CompositeModel Map(IComposite v) => v != null ? (CompositeModel)this.mapping[v] : null;
@@ -178,10 +164,6 @@ public class MetaModel
     public RoleTypeModel Map(IRoleType v) => v != null ? (RoleTypeModel)this.mapping[v] : null;
 
     public CompositeRoleTypeModel Map(ICompositeRoleType v) => v != null ? (CompositeRoleTypeModel)this.mapping[v] : null;
-
-    public RecordModel Map(IRecordType v) => v != null ? (RecordModel)this.mapping[v] : null;
-
-    public FieldTypeModel Map(IFieldType v) => v != null ? (FieldTypeModel)this.mapping[v] : null;
 
     public MethodTypeModel Map(IMethodType v) => v != null ? (MethodTypeModel)this.mapping[v] : null;
     #endregion

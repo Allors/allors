@@ -1,4 +1,4 @@
-﻿// <copyright file="MetaPopulation.cs" company="Allors bvba">
+// <copyright file="MetaPopulation.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -67,14 +67,6 @@ public abstract class MetaPopulation : IMetaPopulation
     IReadOnlyList<IMethodType> IMetaPopulation.MethodTypes => this.MethodTypes;
 
     public MethodType[] MethodTypes { get; set; }
-
-    IReadOnlyList<IRecordType> IMetaPopulation.Records => this.Records;
-
-    public Record[] Records { get; set; }
-
-    IReadOnlyList<IFieldType> IMetaPopulation.FieldTypes => this.FieldTypes;
-
-    public FieldType[] FieldTypes { get; set; }
 
     public bool IsValid
     {
@@ -147,16 +139,6 @@ public abstract class MetaPopulation : IMetaPopulation
             methodType.Validate(log);
         }
 
-        foreach (var record in this.Records)
-        {
-            record.Validate(log);
-        }
-
-        foreach (var fieldType in this.FieldTypes)
-        {
-            fieldType.Validate(log);
-        }
-
         return log;
     }
 
@@ -177,8 +159,6 @@ public abstract class MetaPopulation : IMetaPopulation
         this.Classes = this.metaObjects.OfType<Class>().ToArray();
         this.RelationTypes = this.metaObjects.OfType<RelationType>().ToArray();
         this.MethodTypes = this.metaObjects.OfType<MethodType>().ToArray();
-        this.Records = this.metaObjects.OfType<Record>().ToArray();
-        this.FieldTypes = this.metaObjects.OfType<FieldType>().ToArray();
 
         this.Composites = this.Classes.Cast<Composite>().Union(this.Interfaces).ToArray();
 
@@ -255,16 +235,6 @@ public abstract class MetaPopulation : IMetaPopulation
             composite.InitializeMethodTypes(methodTypeByClass);
         }
 
-        // Records
-        var fieldTypesByRecord = this.FieldTypes
-            .GroupBy(v => v.Record)
-            .ToDictionary(g => g.Key, g => g.ToArray());
-
-        foreach (var record in this.Records)
-        {
-            record.InitializeFieldTypes(fieldTypesByRecord);
-        }
-
         // Composite RoleTypes
         var compositeRoleTypesByComposite = this.Composites.ToDictionary(v => (IComposite)v, v => new HashSet<ICompositeRoleType>());
         foreach (var relationType in this.RelationTypes)
@@ -320,23 +290,6 @@ public abstract class MetaPopulation : IMetaPopulation
             @interface.DeriveWorkspaceNames();
         }
 
-        IDictionary<Record, ISet<string>> workspaceNamesByRecord = new Dictionary<Record, ISet<string>>();
-
-        foreach (var methodType in this.MethodTypes)
-        {
-            methodType.PrepareWorkspaceNames(workspaceNamesByRecord);
-        }
-
-        foreach (var record in this.Records)
-        {
-            record.DeriveWorkspaceNames(workspaceNamesByRecord);
-        }
-
-        foreach (var fieldType in this.FieldTypes)
-        {
-            fieldType.DeriveWorkspaceNames();
-        }
-
         foreach (var roleType in this.RelationTypes.Select(v => v.RoleType))
         {
             roleType.DeriveIsRequired();
@@ -382,11 +335,6 @@ public abstract class MetaPopulation : IMetaPopulation
             foreach (var @class in this.Classes)
             {
                 @class.BoundType = typeByName[@class.Name];
-            }
-
-            foreach (var record in this.Records)
-            {
-                record.Bind(typeByName);
             }
 
             this.MethodCompiler = new MethodCompiler(this, extensionMethodsByInterface);

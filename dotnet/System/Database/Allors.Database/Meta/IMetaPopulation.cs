@@ -1,4 +1,4 @@
-﻿// <copyright file="IMetaPopulation.cs" company="Allors bvba">
+// <copyright file="IMetaPopulation.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -25,10 +25,6 @@ public interface IMetaPopulation
     IReadOnlyList<IRelationType> RelationTypes { get; }
 
     IReadOnlyList<IMethodType> MethodTypes { get; }
-
-    IReadOnlyList<IRecordType> Records { get; }
-
-    IReadOnlyList<IFieldType> FieldTypes { get; }
 
     IReadOnlyList<string> WorkspaceNames { get; }
 

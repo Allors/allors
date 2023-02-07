@@ -1,4 +1,4 @@
-﻿// <copyright file="ObjectType.cs" company="Allors bvba">
+// <copyright file="ObjectType.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -9,7 +9,7 @@ namespace Allors.Database.Meta;
 using System;
 using Allors.Text;
 
-public abstract class ObjectType : DataType, IObjectType
+public abstract class ObjectType : MetaIdentifiableObject, IObjectType
 {
     protected ObjectType(MetaPopulation metaPopulation, Guid id, string singularName, string assignedPluralName)
         : base(metaPopulation, id)
@@ -19,6 +19,10 @@ public abstract class ObjectType : DataType, IObjectType
         this.PluralName = this.ExistAssignedPluralName ? this.AssignedPluralName : Pluralizer.Pluralize(this.SingularName);
     }
 
+    public Type BoundType { get; set; }
+
+    public string Name => this.SingularName;
+
     public string SingularName { get; }
 
     public bool ExistAssignedPluralName => this.AssignedPluralName != null;
@@ -26,8 +30,6 @@ public abstract class ObjectType : DataType, IObjectType
     public string AssignedPluralName { get; }
 
     public string PluralName { get; }
-
-    public override string Name => this.SingularName;
 
     public bool IsUnit => this is IUnit;
 

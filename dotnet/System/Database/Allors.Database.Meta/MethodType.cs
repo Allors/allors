@@ -36,14 +36,6 @@ public sealed class MethodType : MetaIdentifiableObject, IMethodType, IComparabl
 
     public string Name { get; }
 
-    IRecordType IMethodType.Input => this.Input;
-
-    public Record Input { get; }
-
-    IRecordType IMethodType.Output => this.Output;
-
-    public Record Output { get; }
-
     public string DisplayName => this.Name;
 
     public override IEnumerable<string> WorkspaceNames
@@ -90,17 +82,6 @@ public sealed class MethodType : MetaIdentifiableObject, IMethodType, IComparabl
                 .Intersect(this.ObjectType.Classes.SelectMany(v => v.WorkspaceNames))
                 .ToArray()
             : Array.Empty<string>();
-
-    internal void PrepareWorkspaceNames(IDictionary<Record, ISet<string>> workspaceNamesByRecord)
-    {
-        var visited = new HashSet<Record>();
-
-        if (this.derivedWorkspaceNames.Length > 0)
-        {
-            this.Input?.PrepareWorkspaceNames(workspaceNamesByRecord, visited, this.derivedWorkspaceNames);
-            this.Output?.PrepareWorkspaceNames(workspaceNamesByRecord, visited, this.derivedWorkspaceNames);
-        }
-    }
 
     internal void InitializeCompositeMethodTypes(Dictionary<IComposite, HashSet<ICompositeMethodType>> compositeMethodTypesByComposite)
     {
