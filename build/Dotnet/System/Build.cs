@@ -1,12 +1,25 @@
 ﻿using Nuke.Common;
 using Nuke.Common.Tooling;
 using Nuke.Common.Tools.DotNet;
-using Nuke.Common.Tools.Npm;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 using static Nuke.Common.Tools.Npm.NpmTasks;
 
 partial class Build
 {
+    private Target DotnetSystemSharedTest => _ => _
+        .Executes(() => DotNetTest(s => s
+            .SetProjectFile(Paths.DotnetSystemSharedTests)
+            .SetFilter("FullyQualifiedName~Allors.Shared")
+            .AddLoggers("trx;LogFileName=Shared.trx")
+            .SetResultsDirectory(Paths.ArtifactsTests)));
+
+    private Target DotnetSystemRepositoryModelTest => _ => _
+        .Executes(() => DotNetTest(s => s
+            .SetProjectFile(Paths.DotnetSystemRepositoryModelTests)
+            .SetFilter("FullyQualifiedName~Allors.Repository.Model")
+            .AddLoggers("trx;LogFileName=RepositoryModel.trx")
+            .SetResultsDirectory(Paths.ArtifactsTests)));
+
     private Target DotnetSystemAdaptersGenerate => _ => _
         .After(Clean)
         .Executes(() =>
@@ -50,16 +63,21 @@ partial class Build
         .DependsOn(DotnetSystemAdaptersGenerate)
         .Executes(() =>
         {
-           DotNetTest(s => s
-                .SetProjectFile(Paths.DotnetSystemAdaptersStaticTests)
-                .SetFilter("FullyQualifiedName~Allors.Database.Adapters.Sql.Npgsql")
-                .AddLoggers("trx;LogFileName=AdaptersNpgsql.trx")
-                .SetResultsDirectory(Paths.ArtifactsTests));
+            DotNetTest(s => s
+                 .SetProjectFile(Paths.DotnetSystemAdaptersStaticTests)
+                 .SetFilter("FullyQualifiedName~Allors.Database.Adapters.Sql.Npgsql")
+                 .AddLoggers("trx;LogFileName=AdaptersNpgsql.trx")
+                 .SetResultsDirectory(Paths.ArtifactsTests));
         });
 
-    private Target DotnetSystemAdapters => _ => _
+    private Target DotnetSystemAdaptersTest => _ => _
         .DependsOn(Clean)
         .DependsOn(DotnetSystemAdaptersTestMemory)
         .DependsOn(DotnetSystemAdaptersTestSqlClient)
         .DependsOn(DotnetSystemAdaptersTestNpgsql);
+
+    private Target DotnetSystemTest => _ => _
+        .DependsOn(Clean)
+        .DependsOn(DotnetSystemSharedTest)
+        .DependsOn(DotnetSystemRepositoryModelTest);
 }

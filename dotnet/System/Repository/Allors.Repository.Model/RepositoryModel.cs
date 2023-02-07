@@ -1,4 +1,4 @@
-﻿namespace Allors.Repository.Model;
+namespace Allors.Repository.Model;
 
 using System;
 using System.Collections.Generic;
@@ -42,12 +42,6 @@ public class RepositoryModel
                 case Method method:
                     this.mapping.Add(method, new MethodModel(this, method));
                     break;
-                case Record record:
-                    this.mapping.Add(record, new RecordModel(this, record));
-                    break;
-                case Field field:
-                    this.mapping.Add(field, new FieldModel(this, field));
-                    break;
                 default:
                     throw new Exception($"Missing mapping for {@object}");
             }
@@ -56,12 +50,10 @@ public class RepositoryModel
         this.Objects = this.Repository.Objects.Select(this.Map).ToArray();
         this.Units = this.Objects.OfType<UnitModel>().ToArray();
         this.Classes = this.Objects.OfType<ClassModel>().ToArray();
-        this.Records = this.Objects.OfType<RecordModel>().ToArray();
 
         Array.Sort(this.Objects);
         Array.Sort(this.Units);
         Array.Sort(this.Classes);
-        Array.Sort(this.Records);
 
         this.Domains = new Graph<DomainModel>(this.Objects.OfType<DomainModel>(), v => v.DirectSuperdomains);
         this.Composites = new Graph<CompositeModel>(this.Objects.OfType<CompositeModel>(), v => v.Interfaces);
@@ -102,8 +94,6 @@ public class RepositoryModel
 
     public ClassModel[] Classes { get; }
 
-    public RecordModel[] Records { get; }
-
     private void CheckId(ISet<Guid> ids, string id, string name, string key)
     {
         if (!Guid.TryParse(id, out var idGuid))
@@ -129,8 +119,6 @@ public class RepositoryModel
     #region Mappers
     public RepositoryObjectModel Map(RepositoryObject v) => v != null ? this.mapping[v] : null;
 
-    public DataTypeModel Map(DataType v) => v != null ? (DataTypeModel)this.mapping[v] : null;
-
     public ObjectTypeModel Map(ObjectType v) => v != null ? (ObjectTypeModel)this.mapping[v] : null;
 
     public CompositeModel Map(Composite v) => v != null ? (CompositeModel)this.mapping[v] : null;
@@ -146,9 +134,5 @@ public class RepositoryModel
     public PropertyModel Map(Property v) => v != null ? (PropertyModel)this.mapping[v] : null;
 
     public MethodModel Map(Method v) => v != null ? (MethodModel)this.mapping[v] : null;
-
-    public RecordModel Map(Record v) => v != null ? (RecordModel)this.mapping[v] : null;
-
-    public FieldModel Map(Field v) => v != null ? (FieldModel)this.mapping[v] : null;
     #endregion
 }

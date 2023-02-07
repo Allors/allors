@@ -109,9 +109,7 @@ public class Project
         this.CreateUnits();
         this.CreateTypes();
         this.CreateHierarchy();
-        this.CreateRecords();
         this.CreateMembers();
-        this.CreateFields();
 
         this.FromReflection();
 
@@ -258,25 +256,6 @@ public class Project
         }
     }
 
-    private void CreateRecords()
-    {
-        foreach (var syntaxTree in this.DocumentBySyntaxTree.Keys)
-        {
-            var root = syntaxTree.GetRoot();
-            var semanticModel = this.SemanticModelBySyntaxTree[syntaxTree];
-
-            foreach (var recordDeclaration in root.DescendantNodes().OfType<RecordDeclarationSyntax>())
-            {
-                var symbol = semanticModel.GetDeclaredSymbol(recordDeclaration);
-                if (RepositoryNamespaceName.Equals(symbol.ContainingNamespace.ToDisplayString()))
-                {
-                    var recordName = symbol.Name;
-                    _ = this.Repository.Objects.OfType<Record>().FirstOrDefault(v => v.Name == recordName) ?? new Record(this.Repository.Objects, recordName);
-                }
-            }
-        }
-    }
-
     private void CreateMembers()
     {
         foreach (var syntaxTree in this.DocumentBySyntaxTree.Keys)
@@ -310,31 +289,6 @@ public class Project
                         {
                             _ = new Method(this.inflector, this.Repository.Objects, domain, semanticModel, composite, methodDeclaration);
                         }
-                    }
-                }
-            }
-        }
-    }
-
-    private void CreateFields()
-    {
-        foreach (var syntaxTree in this.DocumentBySyntaxTree.Keys)
-        {
-            var root = syntaxTree.GetRoot();
-            var semanticModel = this.SemanticModelBySyntaxTree[syntaxTree];
-
-            foreach (var recordDeclaration in root.DescendantNodes().OfType<RecordDeclarationSyntax>())
-            {
-                var symbol = semanticModel.GetDeclaredSymbol(recordDeclaration);
-                var recordName = symbol.Name;
-
-                var record = this.Repository.Objects.OfType<Record>().FirstOrDefault(v => v.Name == recordName);
-
-                if (record != null)
-                {
-                    foreach (var propertyDeclaration in recordDeclaration.DescendantNodes().OfType<PropertyDeclarationSyntax>())
-                    {
-                        _ = new Field(this.Repository.Objects, semanticModel, record, propertyDeclaration);
                     }
                 }
             }
@@ -458,78 +412,6 @@ public class Project
                     else
                     {
                         method.AttributeByName.Add(attributeTypeName, group.First());
-                    }
-                }
-            }
-        }
-
-        foreach (var record in this.Repository.Objects.OfType<Record>())
-        {
-            var typeInfo = this.typeInfoByName[record.Name];
-
-            // Type attributes
-            {
-                foreach (var group in typeInfo.GetCustomAttributes(false).Cast<Attribute>().GroupBy(v => v.GetType()))
-                {
-                    var type = group.Key;
-                    var typeName = type.Name;
-                    if (typeName.ToLowerInvariant().EndsWith("attribute"))
-                    {
-                        typeName = typeName.Substring(0, typeName.Length - "attribute".Length);
-                    }
-
-                    var attributeUsage = type.GetCustomAttributes<AttributeUsageAttribute>().FirstOrDefault();
-                    if (attributeUsage != null && attributeUsage.AllowMultiple)
-                    {
-                        record.AttributesByName[typeName] = group.ToArray();
-                    }
-                    else
-                    {
-                        record.AttributeByName[typeName] = group.First();
-                    }
-                }
-            }
-
-            // Field attributes
-            foreach (var property in record.Fields)
-            {
-                var reflectedProperty = typeInfo.GetProperty(property.Name);
-                if (reflectedProperty == null)
-                {
-                    this.HasErrors = true;
-                    Logger.Error($"{typeInfo.Name}.{property.Name} should be public");
-                    continue;
-                }
-
-                var propertyAttributesByTypeName = reflectedProperty.GetCustomAttributes(false).Cast<Attribute>().GroupBy(v => v.GetType());
-
-                var reflectedRelationEndType = reflectedProperty.PropertyType;
-                var typeName = this.GetTypeName(reflectedRelationEndType);
-
-                property.Type = (DataType)this.Repository.Objects.OfType<Record>().FirstOrDefault(v => v.Name == typeName) ??
-                                this.Repository.Objects.OfType<ObjectType>().First(v => v.SingularName == typeName);
-                property.IsMany = typeName.EndsWith("[]");
-
-                foreach (var group in propertyAttributesByTypeName)
-                {
-                    var attributeType = group.Key;
-                    var attributeTypeName = attributeType.Name;
-                    if (attributeTypeName.ToLowerInvariant().EndsWith("attribute"))
-                    {
-                        attributeTypeName = attributeTypeName.Substring(
-                            0,
-                            attributeTypeName.Length - "attribute".Length);
-                    }
-
-                    var attributeUsage =
-                        attributeType.GetCustomAttributes<AttributeUsageAttribute>().FirstOrDefault();
-                    if (attributeUsage != null && attributeUsage.AllowMultiple)
-                    {
-                        property.AttributesByName.Add(attributeTypeName, group.ToArray());
-                    }
-                    else
-                    {
-                        property.AttributeByName.Add(attributeTypeName, group.First());
                     }
                 }
             }

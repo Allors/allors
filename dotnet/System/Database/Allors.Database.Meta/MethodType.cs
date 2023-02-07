@@ -1,4 +1,4 @@
-﻿// <copyright file="MethodInterface.cs" company="Allors bvba">
+// <copyright file="MethodInterface.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -13,13 +13,11 @@ public sealed class MethodType : MetaIdentifiableObject, IMethodType, IComparabl
 {
     private string[] derivedWorkspaceNames;
 
-    public MethodType(Composite objectType, Guid id, string name, Record input, Record output)
+    public MethodType(Composite objectType, Guid id, string name)
     : base(objectType.MetaPopulation, id)
     {
         this.ObjectType = objectType;
         this.Name = name;
-        this.Input = input;
-        this.Output = output;
 
         this.CompositeMethodType = new CompositeMethodType(objectType, this);
 

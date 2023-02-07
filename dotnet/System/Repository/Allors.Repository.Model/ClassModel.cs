@@ -1,4 +1,4 @@
-﻿namespace Allors.Repository.Model;
+namespace Allors.Repository.Model;
 
 using System.Linq;
 using Allors.Repository;
@@ -12,8 +12,6 @@ public class ClassModel : CompositeModel
     public Class Class { get; }
 
     protected override RepositoryObject RepositoryObject => this.Class;
-
-    public override DataType DataType => this.Class;
 
     public override ObjectType ObjectType => this.Class;
 

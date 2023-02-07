@@ -1,4 +1,4 @@
-﻿namespace Allors.Repository.Model;
+namespace Allors.Repository.Model;
 
 using Allors.Repository;
 using Allors.Repository.Domain;
@@ -18,8 +18,4 @@ public class MethodModel : RepositoryObjectModel
     public MethodModel DefiningMethod => this.RepositoryModel.Map(this.Method.DefiningMethod);
 
     public CompositeModel DefiningType => this.RepositoryModel.Map(this.Method.DefiningType);
-
-    public RecordModel Input => this.RepositoryModel.Map(this.Method.Input);
-
-    public RecordModel Output => this.RepositoryModel.Map(this.Method.Output);
 }

@@ -3,10 +3,16 @@
 public partial class Paths
 {
     public AbsolutePath DotnetSystem => Dotnet / "System";
-    public AbsolutePath DotnetSystemRepositoryTemplates => DotnetSystem / "Repository/Templates";
+
+    public AbsolutePath DotnetSystemSharedTests => DotnetSystemRepository / "Shared.Tests";
+
+    public AbsolutePath DotnetSystemRepositoryModelTests => DotnetSystemRepository / "Allors.Repository.Model.Tests";
+
+    public AbsolutePath DotnetSystemRepository => DotnetSystem / "Repository";
+    public AbsolutePath DotnetSystemRepositoryTemplates => DotnetSystemRepository / "Templates";
     public AbsolutePath DotnetSystemRepositoryTemplatesMetaCs => DotnetSystemRepositoryTemplates / "meta.cs.stg";
     public AbsolutePath DotnetSystemRepositoryTemplatesMetaConfigurationCs => DotnetSystemRepositoryTemplates / "meta.configuration.cs.stg";
-    public AbsolutePath DotnetSystemRepositoryGenerate => DotnetSystem / "Repository/Generate/Generate.csproj";
+    public AbsolutePath DotnetSystemRepositoryGenerate => DotnetSystemRepository / "Generate/Generate.csproj";
 
     public AbsolutePath DotnetSystemDatabase => DotnetSystem / "Database";
 

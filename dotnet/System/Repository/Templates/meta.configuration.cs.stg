@@ -28,7 +28,6 @@ For more information visit http://www.allors.com/legal
     <generation template="units" output="units.g.cs"/>
     <generation template="interfaces" output="interfaces.g.cs"/>
     <generation template="classes" output="classes.g.cs"/>
-    <generation template="records" output="records.g.cs"/>
     <generation template="associationTypes" output="associationTypes.g.cs"/>
     <generation template="roleTypes" output="roleTypes.g.cs"/>
     <generation template="builder" output="builder.g.cs"/>
@@ -49,9 +48,6 @@ $repository.Units:{unit|$ids_unit(unit)$}; separator="\n"$
 
         // Composites & Relations
 $repository.composites:{composite|$ids_composite(composite)$}; separator="\n"$
-
-        // Records & Fields
-$repository.records:{record|$ids_record(record)$}; separator="\n"$
     }
 }
 >>
@@ -79,16 +75,6 @@ ids_composite_methodType(method) ::= <<
         public static readonly Guid $composite.SingularName$$method.Name$ = new Guid("$method.Id$");
 >>
 
-ids_record(record) ::= <<
-        public static readonly Guid $record.Name$ = new Guid("$record.Id$");
-$record.Fields:{field|$ids_record_field(field)$}; separator="\n"$
-
->>
-
-ids_record_field(field) ::= <<
-        public static readonly Guid $record.Name$$field.Name$ = new Guid("$field.Id$");
->>
-
 m(repository) ::= <<
 namespace Allors.Database.Meta.Configuration
 {
@@ -102,9 +88,6 @@ $repository.Interfaces:{interface|$m_interface_declaration(interface)$}; separat
         // Classes
 $repository.Classes:{class|$m_class_declaration(class)$}; separator="\n"$
 
-        // Records
-$repository.Records:{record|$m_record_declaration(record)$}; separator="\n"$
-
         #region Interface implementations
         // Units
 $repository.Units:{unit|$m_unit_implementation(unit)$}; separator="\n"$
@@ -114,9 +97,6 @@ $repository.Interfaces:{interface|$m_interface_implementation(interface)$}; sepa
 
         // Classes
 $repository.Classes:{class|$m_class_implementation(class)$}; separator="\n"$
-
-        // Records
-$repository.Records:{record|$m_record_implementation(record)$}; separator="\n"$
         #endregion
     }
 }
@@ -134,10 +114,6 @@ m_class_declaration(class) ::= <<
         public Meta$class.SingularName$ $class.SingularName$; 
 >>
 
-m_record_declaration(class) ::= <<
-        public Meta$record.Name$ $record.Name$;
->>
-
 m_unit_implementation(unit) ::= <<
         IMeta$unit.SingularName$ M.$unit.SingularName$ => this.$unit.SingularName$;
 >>
@@ -148,10 +124,6 @@ m_interface_implementation(interface) ::= <<
 
 m_class_implementation(class) ::= <<
         IMeta$class.SingularName$ M.$class.SingularName$ => this.$class.SingularName$;
->>
-
-m_record_implementation(class) ::= <<
-        IMeta$record.Name$ M.$record.Name$ => this.$record.Name$;
 >>
 
 units(repository) ::= <<
@@ -319,46 +291,6 @@ implement_methodType(composite, method) ::= <<
         IMethodType IMeta$composite.SingularName$.$method.Name$ => this.$method.Name$;
 >>
 
-records(repository) ::= <<
-namespace Allors.Database.Meta.Configuration
-{
-$repository.Records:{record|$define_record(record)$}; separator="\n"$
-}
->>
-
-define_record(record) ::= <<
-    public partial class Meta$record.Name$ : Record, IMeta$record.Name$ {
-
-$record.Fields:{field|$declare_field(field)$}; separator="\n"$
-
-        public Meta$record.Name$(MetaPopulation m) : base(m, Ids.$record.name$, "$record.Name$")
-        {
-$record.Fields:{field|$define_field(field)$}; separator="\n"$
-
-$if(record.ExtensionAttributes)$
-                Attributes = { $record.ExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ }
-$endif$
-        }
-        
-        #region Interface implementations
-$record.Fields:{field|$implement_field(field)$}; separator="\n"$
-        #endregion
-    }
-
->>
-
-declare_field(field) ::= <<
-        public FieldType $field.Name$;
->>
-
-implement_field(field) ::= <<
-        IFieldType IMeta$record.Name$.$field.Name$ => this.$field.Name$;
->>
-
-define_field(field) ::= <<
-            this.$field.Name$ = new FieldType(this, Ids.$record.Name$$field.Name$, "$field.Name$", m.$field.Type.SingularName$, $field.IsMany$);
->>
-
 associationTypes(repository) ::= <<
 namespace Allors.Database.Meta.Configuration
 {
@@ -459,7 +391,6 @@ $repository.Composites:{composite|$define_methods(composite)$}; separator="\n"$
             this.BuildUnits(meta, domains);
             this.BuildInterfaces(meta, domains);
             this.BuildClasses(meta, domains);
-            this.BuildRecords(meta, domains);
             this.BuildRelationTypes(meta, domains, relationTypes);
             this.BuildMethodTypes(meta, domains, methodTypes);
 
@@ -496,11 +427,6 @@ $repository.Interfaces:{interface|$build_interface(interface)$}; separator="\n"$
 		private void BuildClasses(MetaPopulation meta, Domains domains)
 		{
 $repository.Classes:{class|$build_class(class)$}; separator="\n"$
-		}
-
-		private void BuildRecords(MetaPopulation meta, Domains domains)
-		{
-$repository.Records:{record|$build_record(record)$}; separator="\n"$
 		}
 
 		private void BuildRelationTypes(MetaPopulation meta, Domains domains, RelationTypes relationTypes)
@@ -573,8 +499,6 @@ build_class(class) ::= <<
 	        meta.$class.SingularName$ = new Meta$class.SingularName$(meta);
 >>
 
-build_record(record) ::= <<            meta.$record.Name$ = new Meta$record.Name$(meta);>>
-
 build_relations(composite) ::= <<
             // $composite.SingularName$
 $composite.DefinedProperties:{property|$build_relation(property)$}; separator="\n"$
@@ -627,7 +551,7 @@ assign_inheritedmethodType(method) ::= <<
 
 build_methods(composite) ::= <<$composite.DefinedMethods:{method|$build_method(method)$}; separator="\n"$>>
 build_method(method) ::= <<
-            methodTypes.$method.DefiningType.SingularName$$method.Name$ = new MethodType(meta.$method.DefiningType.SingularName$, Ids.$method.DefiningType.SingularName$$method.Name$, "$method.Name$", $if(method.Input)$meta.$method.Input.Name$$else$null$endif$, $if(method.Output)$meta.$method.Output.Name$$else$null$endif$)$if(method.MethodTypeExtensionAttributes || method.CompositeMethodTypeExtensionAttributes)$ { $if(method.MethodTypeExtensionAttributes)$Attributes = { $method.MethodTypeExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ }$if(method.MethodTypeExtensionAttributes && method.CompositeMethodTypeExtensionAttributes)$,$endif$$endif$$if(method.CompositeMethodTypeExtensionAttributes)$ CompositeMethodType = { Attributes = { $method.CompositeMethodTypeExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ } } $endif$  } $endif$;
+            methodTypes.$method.DefiningType.SingularName$$method.Name$ = new MethodType(meta.$method.DefiningType.SingularName$, Ids.$method.DefiningType.SingularName$$method.Name$, "$method.Name$")$if(method.MethodTypeExtensionAttributes || method.CompositeMethodTypeExtensionAttributes)$ { $if(method.MethodTypeExtensionAttributes)$Attributes = { $method.MethodTypeExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ }$if(method.MethodTypeExtensionAttributes && method.CompositeMethodTypeExtensionAttributes)$,$endif$$endif$$if(method.CompositeMethodTypeExtensionAttributes)$ CompositeMethodType = { Attributes = { $method.CompositeMethodTypeExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ } } $endif$  } $endif$;
 >>
 
 extend_compositeRoleTypes(relationType) ::= <<

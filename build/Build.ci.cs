@@ -2,6 +2,9 @@
 
 partial class Build
 {
+    private Target CiDotnetSystemTest => _ => _
+        .DependsOn(DotnetSystemTest);
+
     private Target CiDotnetSystemAdaptersTestMemory => _ => _
         .DependsOn(DotnetSystemAdaptersTestMemory);
 

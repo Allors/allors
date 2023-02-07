@@ -1,4 +1,4 @@
-﻿namespace Allors.Repository.Model;
+namespace Allors.Repository.Model;
 
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +12,6 @@ public class InterfaceModel : CompositeModel
     public Interface Interface { get; }
 
     protected override RepositoryObject RepositoryObject => this.Interface;
-
-    public override DataType DataType => this.Interface;
 
     public override ObjectType ObjectType => this.Interface;
 
