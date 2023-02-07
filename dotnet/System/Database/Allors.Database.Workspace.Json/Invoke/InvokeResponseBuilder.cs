@@ -1,4 +1,4 @@
-﻿// <copyright file="InvokeResponseBuilder.cs" company="Allors bvba">
+// <copyright file="InvokeResponseBuilder.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -146,7 +146,7 @@ public class InvokeResponseBuilder
         }
 
         // TODO: No need for reflection
-        var method = obj.GetType().GetMethod(methodType.Name);
+        var method = obj.GetType().GetMethod(methodType.Name, Array.Empty<Type>());
 
         if (method == null)
         {
