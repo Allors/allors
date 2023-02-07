@@ -35,13 +35,13 @@ public interface S12 : Object
 
     #region Allors
     [Id("830117d4-fbe1-4944-bacf-54331e8451d7")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToOne)]
     #endregion
     C2 S12C2one2one { get; set; }
 
     #region Allors
     [Id("a3aac482-aad0-4b59-9361-51b23867e5a2")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToMany)]
     #endregion
     C2[] S12C2one2manies { get; set; }
 

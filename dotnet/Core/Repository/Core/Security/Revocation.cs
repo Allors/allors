@@ -9,19 +9,13 @@ using System;
 using Allors.Repository.Attributes;
 
 #region Allors
-
 [Id("753A230E-6C29-4C3C-9592-323BE0778ED6")]
-
 #endregion
-
 public partial class Revocation : UniquelyIdentifiable, Deletable
 {
     #region Allors
-
     [Id("F7F98147-FD94-4BB1-A974-6405A3AB369E")]
-
     #endregion
-
     [Indexed]
     public Permission[] DeniedPermissions { get; set; }
 
@@ -39,7 +33,7 @@ public partial class Revocation : UniquelyIdentifiable, Deletable
 
     public void OnInit() { }
 
-    public void OnPostDerive(OnPostDeriveInput input) { }
+    public void OnPostDerive() { }
 
     public void Delete() { }
 

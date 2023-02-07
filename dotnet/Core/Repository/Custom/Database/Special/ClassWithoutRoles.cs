@@ -29,7 +29,7 @@ public class ClassWithoutRoles : Object
     {
     }
 
-    public void OnPostDerive(OnPostDeriveInput input) { }
+    public void OnPostDerive() { }
 
     #endregion
 }

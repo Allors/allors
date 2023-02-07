@@ -53,7 +53,7 @@ public class Denied : Object
     {
     }
 
-    public void OnPostDerive(OnPostDeriveInput input)
+    public void OnPostDerive()
     {
     }
 

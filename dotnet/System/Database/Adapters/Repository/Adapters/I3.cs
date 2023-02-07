@@ -24,13 +24,13 @@ public interface I3 : Object, S1234, S3
 
     #region Allors
     [Id("2b273c39-cc85-4585-806f-d991f43dda29")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToMany)]
     #endregion
     I4[] I3I4one2manies { get; set; }
 
     #region Allors
     [Id("3a55d57f-768f-4c11-9c18-baa5f3eeda8c")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToMany)]
     #endregion
     C4[] I3C4one2manies { get; set; }
 
@@ -46,13 +46,13 @@ public interface I3 : Object, S1234, S3
 
     #region Allors
     [Id("cc48853e-46f3-4292-be9b-8a4937cea308")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToOne)]
     #endregion
     C4 I3C4one2one { get; set; }
 
     #region Allors
     [Id("d36e7cf1-08d1-4333-b539-e50503c10934")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToOne)]
     #endregion
     I4 I3I4one2one { get; set; }
 
@@ -69,7 +69,7 @@ public interface I3 : Object, S1234, S3
 
     #region Allors
     [Id("fb90c539-a392-4618-bb0b-9809a3a673aa")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToOne)]
     #endregion
     C1 C1one2one { get; set; }
 }

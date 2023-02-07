@@ -1,4 +1,4 @@
-﻿// <copyright file="C1.cs" company="Allors bv">
+// <copyright file="C1.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // </copyright>
 
@@ -22,14 +22,6 @@ public class C1 : I1, DerivationCounted, Object
     #endregion
 
     public void ClassMethod() { }
-
-    #region Allors
-
-    [Id("26FE4FD7-68C3-4DDA-8A44-87857B35B000")]
-
-    #endregion
-
-    public SumOutput Sum(SumInput input) => default;
 
     #region Database Relation
 
@@ -286,8 +278,7 @@ public class C1 : I1, DerivationCounted, Object
     [Indexed]
 
     #endregion
-
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToMany)]
     public C1[] C1C1One2Manies { get; set; }
 
     #region Allors
@@ -296,8 +287,7 @@ public class C1 : I1, DerivationCounted, Object
     [Indexed]
 
     #endregion
-
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToOne)]
     public C1 C1C1One2One { get; set; }
 
     #region Allors
@@ -325,7 +315,7 @@ public class C1 : I1, DerivationCounted, Object
 
     #endregion
 
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToMany)]
     public C2[] C1C2One2Manies { get; set; }
 
     #region Allors
@@ -334,8 +324,7 @@ public class C1 : I1, DerivationCounted, Object
     [Indexed]
 
     #endregion
-
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToOne)]
     public C2 C1C2One2One { get; set; }
 
     #region Allors
@@ -362,8 +351,7 @@ public class C1 : I1, DerivationCounted, Object
     [Indexed]
 
     #endregion
-
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToMany)]
     public I12[] C1I12One2Manies { get; set; }
 
     #region Allors
@@ -372,8 +360,7 @@ public class C1 : I1, DerivationCounted, Object
     [Indexed]
 
     #endregion
-
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToOne)]
     public I12 C1I12One2One { get; set; }
 
     #region Allors
@@ -400,8 +387,7 @@ public class C1 : I1, DerivationCounted, Object
     [Indexed]
 
     #endregion
-
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToMany)]
     public I1[] C1I1One2Manies { get; set; }
 
     #region Allors
@@ -410,8 +396,7 @@ public class C1 : I1, DerivationCounted, Object
     [Indexed]
 
     #endregion
-
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToOne)]
     public I1 C1I1One2One { get; set; }
 
     #region Allors
@@ -438,8 +423,7 @@ public class C1 : I1, DerivationCounted, Object
     [Indexed]
 
     #endregion
-
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToMany)]
     public I2[] C1I2One2Manies { get; set; }
 
     #region Allors
@@ -447,8 +431,7 @@ public class C1 : I1, DerivationCounted, Object
     [Id("6def7988-4bcf-4964-9de6-c6ede41d5e5a")]
 
     #endregion
-
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToOne)]
     [Indexed]
     public I2 C1I2One2One { get; set; }
 
@@ -597,53 +580,11 @@ public class C1 : I1, DerivationCounted, Object
     {
     }
 
-    public void OnPostDerive(OnPostDeriveInput input) { }
+    public void OnPostDerive() { }
 
     public void InterfaceMethod() { }
 
     public void SuperinterfaceMethod() { }
 
     #endregion
-}
-
-#region Allors
-
-[Id("7EF57548-55F2-4A12-815F-0B39C3342320")]
-
-#endregion
-
-public record SumInput
-{
-    #region Allors
-
-    [Id("323A1F18-F535-46DD-94EA-68E858FD3B01")]
-
-    #endregion
-
-    public int ValueA { get; set; }
-
-    #region Allors
-
-    [Id("388A6284-7A08-4DB7-BA7A-5BC6B065D639")]
-
-    #endregion
-
-    public int ValueB { get; set; }
-}
-
-#region Allors
-
-[Id("3426402F-C565-4C06-9F86-28C19E8F9AA5")]
-
-#endregion
-
-public record SumOutput
-{
-    #region Allors
-
-    [Id("E35CB4C3-E04F-4204-ADBD-2D97C6221B9B")]
-
-    #endregion
-
-    public int Result { get; set; }
 }

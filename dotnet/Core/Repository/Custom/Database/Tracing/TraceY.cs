@@ -115,7 +115,7 @@ public class TraceY : Object
 
     #endregion
 
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToMany)]
     public TraceZ[] One2Manies { get; set; }
 
     #region Allors
@@ -125,7 +125,7 @@ public class TraceY : Object
 
     #endregion
 
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToOne)]
     public TraceZ One2One { get; set; }
 
     #endregion
@@ -142,7 +142,7 @@ public class TraceY : Object
 
     public void OnInit() { }
 
-    public void OnPostDerive(OnPostDeriveInput input) { }
+    public void OnPostDerive() { }
 
     #endregion
 }

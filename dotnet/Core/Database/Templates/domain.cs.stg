@@ -125,7 +125,9 @@ $endif$
 
 interfaceExclusiveMethodType_Interface() ::= <<
 $\n$
-		$if(methodType.Output)$$methodType.Output.Name$$else$void$endif$ $methodType.Name$($if(methodType.Input)$$methodType.Input.Name$ input$endif$);
+		$methodType.FullName$ $methodType.Name$();
+
+		$methodType.FullName$ $methodType.Name$(System.Action<$methodType.FullName$> action);
 >>
 
 castClass(meta, objectType) ::= <<
@@ -329,11 +331,20 @@ $endif$
 classMethodType_Method() ::= <<
 $\n$
 		[System.Diagnostics.DebuggerStepThrough]
-		public $if(methodType.Output)$$methodType.Output.Name$$else$void$endif$ $methodType.Name$($if(methodType.Input)$$methodType.Input.Name$ input = default$endif$)
+		public $methodType.FullName$ $methodType.Name$()
 		{
-			var method = new $class.Name$$methodType.Name$(this$if(methodType.Input)$, input$endif$);
+			var method = new $class.Name$$methodType.Name$(this);
             method.Execute();
-$if(methodType.Output)$             return method.Output;$endif$
+            return method;
+		}
+
+		[System.Diagnostics.DebuggerStepThrough]
+		public $methodType.FullName$ $methodType.Name$(System.Action<$methodType.FullName$> action)
+		{
+			var method = new $class.Name$$methodType.Name$(this);
+            action(method);
+            method.Execute();
+            return method;
 		}
 >>
 

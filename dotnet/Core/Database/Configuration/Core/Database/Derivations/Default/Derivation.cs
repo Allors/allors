@@ -1,4 +1,4 @@
-﻿// <copyright file="RulesDerivation.cs" company="Allors bvba">
+// <copyright file="RulesDerivation.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -194,14 +194,14 @@ namespace Allors.Database.Configuration.Derivations.Default
                         var created = this.PostDeriveAccumulatedChangeSet.Created;
                         foreach (Object @object in created)
                         {
-                            @object.OnPostDerive(new OnPostDeriveInput { Derivation = this });
+                            @object.OnPostDerive(x => x.WithDerivation(this));
                         }
 
                         foreach (Object @object in this.PostDeriveAccumulatedChangeSet.Associations)
                         {
                             if (!created.Contains(@object))
                             {
-                                @object.OnPostDerive(new OnPostDeriveInput { Derivation = this });
+                                @object.OnPostDerive(x => x.WithDerivation(this));
                             }
                         }
 

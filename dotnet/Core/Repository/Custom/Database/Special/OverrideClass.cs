@@ -1,4 +1,4 @@
-﻿// <copyright file="OverrideClass.cs" company="Allors bv">
+// <copyright file="OverrideClass.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // </copyright>
 
@@ -29,7 +29,7 @@ public class OverrideClass : OverrideInterface
 
     public void OnInit() { }
 
-    public void OnPostDerive(OnPostDeriveInput input) { }
+    public void OnPostDerive() { }
 
     #endregion
 }

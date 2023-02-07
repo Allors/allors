@@ -31,7 +31,7 @@ public class ValidationC2 : Object, ValidationI12
     {
     }
 
-    public void OnPostDerive(OnPostDeriveInput input) { }
+    public void OnPostDerive() { }
 
     #endregion
 }

@@ -48,7 +48,7 @@ public class Data : Object
 
     #endregion
 
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToMany)]
     public Person[] Chips { get; set; }
 
     #region Allors
@@ -161,7 +161,7 @@ public class Data : Object
     {
     }
 
-    public void OnPostDerive(OnPostDeriveInput input) { }
+    public void OnPostDerive() { }
 
     #endregion
 }

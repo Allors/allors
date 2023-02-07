@@ -26,13 +26,10 @@ public class C2 : Object, DerivationCounted, I2
     public decimal C2AllorsDecimal { get; set; }
 
     #region Allors
-
     [Id("0c8209e3-b2fc-4c7a-acd2-6b5b8ac89bf4")]
-    [SingleAssociation]
-    [Indexed]
-
     #endregion
-
+    [Indexed]
+    [Multiplicity(Multiplicity.OneToOne)]
     public C1 C2C1One2One { get; set; }
 
     #region Allors
@@ -53,13 +50,10 @@ public class C2 : Object, DerivationCounted, I2
     public I12 C2I12Many2One { get; set; }
 
     #region Allors
-
     [Id("1d0c57c9-a3d1-4134-bc7d-7bb587d8250f")]
-    [SingleAssociation]
-    [Indexed]
-
     #endregion
-
+    [Indexed]
+    [Multiplicity(Multiplicity.OneToOne)]
     public I12 C2I12One2One { get; set; }
 
     #region Allors
@@ -80,23 +74,17 @@ public class C2 : Object, DerivationCounted, I2
     public double C2AllorsDouble { get; set; }
 
     #region Allors
-
     [Id("2ac55066-c748-4f90-9d0f-1090fe02cc76")]
-    [SingleAssociation]
-    [Indexed]
-
     #endregion
-
+    [Indexed]
+    [Multiplicity(Multiplicity.OneToMany)]
     public I1[] C2I1One2Manies { get; set; }
 
     #region Allors
-
     [Id("38063edc-271a-410d-b857-807a9100c7b5")]
-    [SingleAssociation]
-    [Indexed]
-
     #endregion
-
+    [Indexed]
+    [Multiplicity(Multiplicity.OneToOne)]
     public I2 C2I2One2One { get; set; }
 
     #region Allors
@@ -143,13 +131,10 @@ public class C2 : Object, DerivationCounted, I2
     public I1 C2I1Many2One { get; set; }
 
     #region Allors
-
     [Id("67780894-fa62-48ba-8f47-7f54106090cd")]
-    [SingleAssociation]
-    [Indexed]
-
     #endregion
-
+    [Indexed]
+    [Multiplicity(Multiplicity.OneToOne)]
     public I1 C2I1One2One { get; set; }
 
     #region Allors
@@ -162,43 +147,31 @@ public class C2 : Object, DerivationCounted, I2
     public C1[] C2C1Many2Manies { get; set; }
 
     #region Allors
-
     [Id("770eb33c-c8ef-4629-a3a0-20decd92ff62")]
-    [SingleAssociation]
-    [Indexed]
-
     #endregion
-
+    [Indexed]
+    [Multiplicity(Multiplicity.OneToMany)]
     public I12[] C2I12One2Manies { get; set; }
 
     #region Allors
-
     [Id("7a9129c9-7b6d-4bdd-a630-cfd1392549b7")]
-    [SingleAssociation]
-    [Indexed]
-
     #endregion
-
+    [Indexed]
+    [Multiplicity(Multiplicity.OneToMany)]
     public I2[] C2I2One2Manies { get; set; }
 
     #region Allors
-
     [Id("86ad371b-0afd-420b-a855-38ebb3f39f38")]
-    [SingleAssociation]
-    [Indexed]
-
     #endregion
-
+    [Indexed]
+    [Multiplicity(Multiplicity.OneToOne)]
     public C2 C2C2One2One { get; set; }
 
     #region Allors
-
     [Id("60680366-4790-4443-a941-b30cd4bd3848")]
-    [SingleAssociation]
-    [Indexed]
-
     #endregion
-
+    [Indexed]
+    [Multiplicity(Multiplicity.OneToMany)]
     public C2[] C2C2One2Manies { get; set; }
 
     #region Allors
@@ -255,13 +228,10 @@ public class C2 : Object, DerivationCounted, I2
     public I2 C2I2Many2One { get; set; }
 
     #region Allors
-
     [Id("f748949e-de5a-4f2e-85e2-e15516d9bf24")]
-    [SingleAssociation]
-    [Indexed]
-
     #endregion
-
+    [Indexed]
+    [Multiplicity(Multiplicity.OneToMany)]
     public C1[] C2C1One2Manies { get; set; }
 
     #region Allors
@@ -274,13 +244,10 @@ public class C2 : Object, DerivationCounted, I2
     public byte[] C2AllorsBinary { get; set; }
 
     #region Allors
-
     [Id("8695D9F6-AE00-4001-9990-851260F3ABE7")]
-    [SingleAssociation]
-    [Indexed]
-
     #endregion
-
+    [Indexed]
+    [Multiplicity(Multiplicity.OneToOne)]
     public S1 S1One2One { get; set; }
 
     #region inherited
@@ -424,7 +391,7 @@ public class C2 : Object, DerivationCounted, I2
     {
     }
 
-    public void OnPostDerive(OnPostDeriveInput input) { }
+    public void OnPostDerive() { }
 
     #endregion
 }

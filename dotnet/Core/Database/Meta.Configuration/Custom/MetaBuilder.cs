@@ -1,4 +1,4 @@
-﻿// <copyright file="Organization.cs" company="Allors bvba">
+// <copyright file="Organization.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -123,7 +123,6 @@ namespace Allors.Database.Meta.Configuration
             AddWorkspace(relationTypes.C1C1I2One2Manies, new[] { "Default" });
             AddWorkspace(relationTypes.C1C1I2One2One, new[] { "Default" });
             AddWorkspace(methodTypes.C1ClassMethod, new[] { "Default" });
-            AddWorkspace(methodTypes.C1Sum, new[] { "Default" });
 
             // C2
             AddWorkspace(relationTypes.C2C2AllorsDecimal, new[] { "Default" });

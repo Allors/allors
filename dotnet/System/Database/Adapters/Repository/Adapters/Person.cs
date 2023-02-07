@@ -13,7 +13,7 @@ public class Person : object, Named
 {
     #region Allors
     [Id("25ff791d-9547-41ba-ac34-f2fe501ef217")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToOne)]
     #endregion
     public Person NextPerson { get; set; }
 

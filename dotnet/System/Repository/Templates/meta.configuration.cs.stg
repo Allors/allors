@@ -655,7 +655,7 @@ $method.ExtensionAttributes:{attribute|$extend_compositeMethodType_attribute(att
 extend_compositeMethodType_attribute(attribute) ::= <<
 $if(method.DefiningMethod)$
             methodTypes.$method.DefiningMethod.DefiningType.ObjectType.SingularName$$method.MethodName$.MethodType.CompositeMethodTypeByComposite[meta.$composite.SingularName$].Attributes.$attribute.Name$ = $attribute.Value$;
-$else$
+$endif$
 >>
 
 

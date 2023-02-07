@@ -80,7 +80,7 @@ public interface I1 : Object, I12, S1
     #region Allors
 
     [Id("39e28141-fd6b-4f49-8884-d5400f6c57ff")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToMany)]
     [Indexed]
 
     #endregion
@@ -90,7 +90,7 @@ public interface I1 : Object, I12, S1
     #region Allors
 
     [Id("4506a14b-22f1-41fe-972b-40fab7c6dd31")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToMany)]
     [Indexed]
 
     #endregion
@@ -100,7 +100,7 @@ public interface I1 : Object, I12, S1
     #region Allors
 
     [Id("593914b1-af95-4992-9703-2b60f4ea0926")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToOne)]
     [Indexed]
 
     #endregion
@@ -127,7 +127,7 @@ public interface I1 : Object, I12, S1
     #region Allors
 
     [Id("670c753e-8ea0-40b1-bfc9-7388074191d3")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToMany)]
     [Indexed]
 
     #endregion
@@ -164,7 +164,7 @@ public interface I1 : Object, I12, S1
     #region Allors
 
     [Id("a51d9d21-40ec-44b9-853d-8c18f54d659d")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToOne)]
     [Indexed]
 
     #endregion
@@ -174,7 +174,7 @@ public interface I1 : Object, I12, S1
     #region Allors
 
     [Id("a5761a0e-5c10-407a-bd68-0c4f69d78968")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToOne)]
     [Indexed]
 
     #endregion
@@ -184,7 +184,7 @@ public interface I1 : Object, I12, S1
     #region Allors
 
     [Id("b6e0fce0-14fc-46e3-995d-1b6e3699ed96")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToOne)]
     [Indexed]
 
     #endregion
@@ -194,7 +194,7 @@ public interface I1 : Object, I12, S1
     #region Allors
 
     [Id("b89092f1-8775-4b6a-99ef-f8626bc770bd")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToMany)]
     [Indexed]
 
     #endregion
@@ -230,7 +230,7 @@ public interface I1 : Object, I12, S1
     #region Allors
 
     [Id("e1b13216-7210-4c24-a668-83b40162a21b")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToOne)]
     [Indexed]
 
     #endregion
@@ -249,7 +249,7 @@ public interface I1 : Object, I12, S1
     #region Allors
 
     [Id("e386cca6-e738-4c37-8bfc-b23057d7a0be")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToMany)]
     [Indexed]
 
     #endregion

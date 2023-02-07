@@ -53,7 +53,7 @@ public class TrimFrom : Object
 
     public void OnInit() { }
 
-    public void OnPostDerive(OnPostDeriveInput input) { }
+    public void OnPostDerive() { }
 
     #endregion
 }

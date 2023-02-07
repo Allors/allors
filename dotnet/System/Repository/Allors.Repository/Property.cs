@@ -1,4 +1,4 @@
-﻿// <copyright file="Property.cs" company="Allors bvba">
+// <copyright file="Property.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -40,41 +40,65 @@ public class Property : RepositoryObject
 
     public Property DefiningProperty { get; set; }
 
-    public bool SingleAssociation
+    public Multiplicity Multiplicity
     {
         get
         {
             if (this.ObjectType is Unit)
             {
-                return true;
+                return Multiplicity.OneToOne;
             }
 
-            var singleAssociation = this.AttributeByName.ContainsKey("SingleAssociation");
-            if (singleAssociation)
+            dynamic attribute = this.AttributeByName.Get("Multiplicity");
+            if (attribute == null)
             {
-                return singleAssociation;
+                if (this.IsArray)
+                {
+                    return Multiplicity.ManyToMany;
+                }
+                else
+                {
+                    return Multiplicity.ManyToOne;
+                }
             }
 
-            return singleAssociation;
+            return (Multiplicity)(int)attribute.Value;
         }
     }
 
-    public bool MultipleAssociation => !this.SingleAssociation;
+    public bool IsRoleOne => !this.IsRoleMany;
 
-    public bool SingleRole { get; set; }
-
-    public bool MultipleRole => !this.SingleRole;
-
-    public Multiplicity Multiplicity
+    public bool IsRoleMany
     {
         get
         {
-            if (this.SingleAssociation)
+            switch (this.Multiplicity)
             {
-                return this.SingleRole ? Multiplicity.OneToOne : Multiplicity.OneToMany;
-            }
+                case Multiplicity.OneToMany:
+                case Multiplicity.ManyToMany:
+                    return true;
 
-            return this.SingleRole ? Multiplicity.ManyToOne : Multiplicity.ManyToMany;
+                default:
+                    return false;
+            }
+        }
+    }
+
+    public bool IsAssociationOne => !this.IsAssociationMany;
+
+    public bool IsAssociationMany
+    {
+        get
+        {
+            switch (this.Multiplicity)
+            {
+                case Multiplicity.ManyToOne:
+                case Multiplicity.ManyToMany:
+                    return true;
+
+                default:
+                    return false;
+            }
         }
     }
 
@@ -125,6 +149,8 @@ public class Property : RepositoryObject
             return this.DefiningType.SingularName + "Where" + this.RoleSingularName;
         }
     }
+
+    public bool IsArray { get; set; }
 
     public override string ToString() => $"{this.DefiningType.SingularName}.{this.RoleSingularName}";
 }

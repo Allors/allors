@@ -56,7 +56,7 @@ public class C2 : object, I2, I23, I12
 
     #region Allors
     [Id("9540e8d3-9fe3-4aea-9918-fc31210f2622")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToOne)]
     #endregion
     public C1 C1one2one { get; set; }
 
@@ -68,13 +68,13 @@ public class C2 : object, I2, I23, I12
 
     #region Allors
     [Id("9e9d1c6a-f647-4922-b5f4-874b8b6c1907")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToOne)]
     #endregion
     public C2 C2C2one2one { get; set; }
 
     #region Allors
     [Id("a95948a7-3f12-4b85-8823-82dea87740c0")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToMany)]
     #endregion
     public C2[] C2C2one2manies { get; set; }
 
@@ -85,7 +85,7 @@ public class C2 : object, I2, I23, I12
 
     #region Allors
     [Id("d82be8f5-673a-466b-8abb-077be0bc6eb5")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToMany)]
     #endregion
     public C1[] C1one2manies { get; set; }
 

@@ -24,7 +24,7 @@ public interface ISandbox : Object
 
     #region Allors
     [Id("dba5deb2-880d-47f4-adae-0b3125ff1379")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToOne)]
     #endregion
     ISandbox InvisibleOne { get; set; }
 }

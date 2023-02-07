@@ -1,4 +1,4 @@
-﻿// <copyright file="MethodsTests.cs" company="Allors bvba">
+// <copyright file="MethodsTests.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -67,16 +67,5 @@ namespace Allors.Database.Domain.Tests
 
             Assert.True(exceptionThrown);
         }
-
-        [Fact]
-        public void MethodWithResults()
-        {
-            var c1 = this.Transaction.Build<C1>();
-
-            var output = c1.Sum(new SumInput { ValueA = 1, ValueB = 2 });
-
-            Assert.Equal(3, output.Result);
-        }
-
     }
 }

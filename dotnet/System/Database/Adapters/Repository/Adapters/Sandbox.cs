@@ -18,7 +18,7 @@ public class Sandbox : object
 
     #region Allors
     [Id("122b0376-8d1a-4d46-b8a0-9f4ea94c9e96")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToOne)]
     #endregion
     public Sandbox InvisibleOne { get; set; }
 

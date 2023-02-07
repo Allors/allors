@@ -20,18 +20,18 @@ public class Company : object, Named
     #region Allors
     [Id("1a4087de-f116-4f79-9441-31faee8054f3")]
     #endregion
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToMany)]
     public Person[] Employees { get; set; }
 
     #region Allors
     [Id("28021756-f15f-4671-aa01-a40d3707d61a")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToOne)]
     #endregion
     public Person FirstPerson { get; set; }
 
     #region Allors
     [Id("2f9fc05e-c904-4056-83f0-a7081762594a")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToMany)]
     #endregion
     public Named[] NamedsOneSort2 { get; set; }
 
@@ -49,7 +49,7 @@ public class Company : object, Named
 
     #region Allors
     [Id("62b4ddac-efd7-4fc9-bbed-91c831a62f01")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToMany)]
     #endregion
     public Person[] PersonsOneSort1 { get; set; }
 
@@ -70,7 +70,7 @@ public class Company : object, Named
 
     #region Allors
     [Id("bdf71d38-8082-4a99-9636-4f4ec26fd45c")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToMany)]
     #endregion
     public Person[] PersonsOneSort2 { get; set; }
 
@@ -86,13 +86,13 @@ public class Company : object, Named
 
     #region Allors
     [Id("cde0a8e7-1a14-4f1a-a0ca-a305f0548df8")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToMany)]
     #endregion
     public Company[] Children { get; set; }
 
     #region Allors
     [Id("cdf04399-aa37-4ea2-9ac8-bf6d19884933")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToMany)]
     #endregion
     public Named[] NamedsOneSort1 { get; set; }
 

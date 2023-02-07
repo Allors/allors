@@ -9,20 +9,14 @@ using System;
 using Allors.Repository.Attributes;
 
 #region Allors
-
 [Id("4F00E50D-4324-4005-A405-6DFD1232982A")]
-
 #endregion
-
 public partial class WritePermission : Permission
 {
     #region Allors
-
     [Id("86675DEA-D9F0-4930-99EC-13F2137CFB45")]
-    [Indexed]
-
     #endregion
-
+    [Indexed]
     [Required]
     public Guid RelationTypePointer { get; set; }
 
@@ -40,7 +34,7 @@ public partial class WritePermission : Permission
 
     public void OnInit() { }
 
-    public void OnPostDerive(OnPostDeriveInput input) { }
+    public void OnPostDerive() { }
 
     public void Delete() { }
 

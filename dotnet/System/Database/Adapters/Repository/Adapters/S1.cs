@@ -48,7 +48,7 @@ public interface S1 : Object, S1234
 
     #region Allors
     [Id("6ee98698-15dc-4998-88c3-d2a4d1c19e8c")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToMany)]
     #endregion
     S2[] S1S2one2manies { get; set; }
 
@@ -70,7 +70,7 @@ public interface S1 : Object, S1234
 
     #region Allors
     [Id("8f5485ba-5a82-4d01-809e-52b467f958d8")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToOne)]
     #endregion
     C1 S1C1one2one { get; set; }
 
@@ -91,7 +91,7 @@ public interface S1 : Object, S1234
 
     #region Allors
     [Id("dc22175f-185d-4cd3-b492-74b0a9389c91")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToOne)]
     #endregion
     S2 S1S2one2one { get; set; }
 
@@ -102,7 +102,7 @@ public interface S1 : Object, S1234
 
     #region Allors
     [Id("ef918b82-87f4-4591-bf19-2fd5a1019ece")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToMany)]
     #endregion
     C1[] S1C1one2manies { get; set; }
 }

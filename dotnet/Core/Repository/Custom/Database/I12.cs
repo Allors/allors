@@ -27,7 +27,7 @@ public interface I12 : S12
     #region Allors
 
     [Id("107c212d-cc1c-41b2-9c1d-b40c0102072c")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToOne)]
     [Indexed]
 
     #endregion
@@ -109,7 +109,7 @@ public interface I12 : S12
     #region Allors
 
     [Id("5e473f63-b1d7-4530-b64f-26435fb5063c")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToMany)]
     [Indexed]
 
     #endregion
@@ -170,7 +170,7 @@ public interface I12 : S12
     #region Allors
 
     [Id("95c77a0f-7f4c-4142-a93f-f688cfd554af")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToMany)]
     [Indexed]
 
     #endregion
@@ -180,7 +180,7 @@ public interface I12 : S12
     #region Allors
 
     [Id("9aefdda0-e547-4c9b-bf28-431669f8ea2e")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToOne)]
     [Indexed]
 
     #endregion
@@ -190,7 +190,7 @@ public interface I12 : S12
     #region Allors
 
     [Id("a89b4c06-bba5-4b05-bd6f-c32bc195c32f")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToOne)]
     [Indexed]
 
     #endregion
@@ -200,7 +200,7 @@ public interface I12 : S12
     #region Allors
 
     [Id("ac920d1d-290b-484b-9283-3829337182bc")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToOne)]
     [Indexed]
 
     #endregion
@@ -219,7 +219,7 @@ public interface I12 : S12
     #region Allors
 
     [Id("b2f568a1-51ba-4b6b-a1f1-b82bdec382b5")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToMany)]
     [Indexed]
 
     #endregion
@@ -255,7 +255,7 @@ public interface I12 : S12
     #region Allors
 
     [Id("ce0f7d58-b415-43f3-989b-9d8b34754e4b")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToOne)]
     [Indexed]
 
     #endregion
@@ -265,7 +265,7 @@ public interface I12 : S12
     #region Allors
 
     [Id("f302dd07-1abc-409e-aa71-ec9f7ac439aa")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToMany)]
     [Indexed]
 
     #endregion

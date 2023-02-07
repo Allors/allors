@@ -28,7 +28,7 @@ public class WorkspaceNonObject2 : Object
     {
     }
 
-    public void OnPostDerive(OnPostDeriveInput input) { }
+    public void OnPostDerive() { }
 
     #endregion
 }

@@ -53,7 +53,7 @@ public interface I2 : Object, I12
     #region Allors
 
     [Id("40b8edb3-e8c4-46c0-855b-4b18e0e8d7f3")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToMany)]
     [Indexed]
 
     #endregion
@@ -63,7 +63,7 @@ public interface I2 : Object, I12
     #region Allors
 
     [Id("49736daf-d0bd-4216-97fa-958cfa21a4f0")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToOne)]
     [Indexed]
 
     #endregion
@@ -126,7 +126,7 @@ public interface I2 : Object, I12
     #region Allors
 
     [Id("83dc0581-e04a-4f51-a44e-4fef63d44356")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToMany)]
     [Indexed]
 
     #endregion
@@ -136,7 +136,7 @@ public interface I2 : Object, I12
     #region Allors
 
     [Id("87499e99-ed77-44c1-89d6-b4f570b6f217")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToOne)]
     [Indexed]
 
     #endregion
@@ -182,7 +182,7 @@ public interface I2 : Object, I12
     #region Allors
 
     [Id("b39fdd23-d7dd-473f-9705-df2f29be5ffe")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToMany)]
     [Indexed]
 
     #endregion
@@ -192,7 +192,7 @@ public interface I2 : Object, I12
     #region Allors
 
     [Id("b640bf16-0dc0-4203-aa76-f456371239ae")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToOne)]
     [Indexed]
 
     #endregion
@@ -202,7 +202,7 @@ public interface I2 : Object, I12
     #region Allors
 
     [Id("bbb01166-2671-4ca1-8b1e-12e6ae8aeb03")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToMany)]
     [Indexed]
 
     #endregion
@@ -221,7 +221,7 @@ public interface I2 : Object, I12
     #region Allors
 
     [Id("cc4c704c-ab7e-45d4-baa9-b67cfff9448e")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToOne)]
     [Indexed]
 
     #endregion
@@ -239,7 +239,7 @@ public interface I2 : Object, I12
     #region Allors
 
     [Id("deb9cbd3-386f-4599-802c-be50945b9f1d")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToMany)]
     [Indexed]
 
     #endregion
@@ -258,7 +258,7 @@ public interface I2 : Object, I12
     #region Allors
 
     [Id("f85c2d97-10b9-478d-9b82-2700d95d5cb1")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToOne)]
     [Indexed]
 
     #endregion

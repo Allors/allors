@@ -240,7 +240,7 @@ public class Person : User
     {
     }
 
-    public void OnPostDerive(OnPostDeriveInput input) { }
+    public void OnPostDerive() { }
 
     public void Delete()
     {

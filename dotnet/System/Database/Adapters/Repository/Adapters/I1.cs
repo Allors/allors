@@ -14,13 +14,13 @@ public interface I1 : Object, S1, S1234
 {
     #region Allors
     [Id("00a70a04-4fc8-4585-83ce-0f7f0e0db7ab")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToMany)]
     #endregion
     I34[] I1I34one2manies { get; set; }
 
     #region Allors
     [Id("036e3008-07f8-4a15-bca2-eb21837778a0")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToMany)]
     #endregion
     I2[] I1I2one2manies { get; set; }
 
@@ -36,7 +36,7 @@ public interface I1 : Object, S1, S1234
 
     #region Allors
     [Id("14a93943-13f6-481d-98c7-19fb55625af9")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToOne)]
     #endregion
     C2 I1C2one2one { get; set; }
 
@@ -49,7 +49,7 @@ public interface I1 : Object, S1, S1234
 
     #region Allors
     [Id("1d41941b-3b1d-48d7-bc6f-e8811cbd96e4")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToOne)]
     #endregion
     S1 I1S1one2one { get; set; }
 
@@ -71,7 +71,7 @@ public interface I1 : Object, S1, S1234
 
     #region Allors
     [Id("2cd562b6-7f54-49af-b853-2244f10ec60e")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToMany)]
     #endregion
     C2[] I1C2one2manies { get; set; }
 
@@ -98,7 +98,7 @@ public interface I1 : Object, S1, S1234
 
     #region Allors
     [Id("381c61c1-312d-47ea-8314-8ac051378a81")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToOne)]
     #endregion
     [Indexed]
     I12 I1I12one2one { get; set; }
@@ -112,7 +112,7 @@ public interface I1 : Object, S1, S1234
 
     #region Allors
     [Id("4401d0b8-2450-45a8-92d2-ff3961e129b2")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToOne)]
     #endregion
     C1 I1C1one2one { get; set; }
 
@@ -148,7 +148,7 @@ public interface I1 : Object, S1, S1234
 
     #region Allors
     [Id("68549750-b8f9-4a29-a078-803e7348e142")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToOne)]
     #endregion
     S2 I1S2one2one { get; set; }
 
@@ -169,7 +169,7 @@ public interface I1 : Object, S1, S1234
 
     #region Allors
     [Id("70312f37-52e9-4cf6-9dd6-b357628ea3ed")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToOne)]
     #endregion
     I2 I1I2one2one { get; set; }
 
@@ -197,13 +197,13 @@ public interface I1 : Object, S1, S1234
 
     #region Allors
     [Id("9291fb85-9d1f-4c5d-96ec-797be51557ce")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToOne)]
     #endregion
     I34 I1I34one2one { get; set; }
 
     #region Allors
     [Id("95fff847-922f-4d6f-9e98-37013bdf6b06")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToMany)]
     #endregion
     I1[] I1I1one2manies { get; set; }
 
@@ -230,13 +230,13 @@ public interface I1 : Object, S1, S1234
 
     #region Allors
     [Id("a458ad6e-0f4a-473b-a233-04b8e7fadf62")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToMany)]
     #endregion
     I12[] I1I12one2manies { get; set; }
 
     #region Allors
     [Id("a77bcd80-82df-4b76-a1bc-8e78106d7d53")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToMany)]
     #endregion
     S2[] I1S2one2manies { get; set; }
 
@@ -280,13 +280,13 @@ public interface I1 : Object, S1, S1234
 
     #region Allors
     [Id("d24b5b74-6ea2-4788-857c-90e0ba1433a5")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToMany)]
     #endregion
     S1[] I1S1one2manies { get; set; }
 
     #region Allors
     [Id("ddbfe021-3310-4d8e-a4ef-438306aaf191")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToOne)]
     #endregion
     I1 I1I1one2one { get; set; }
 
@@ -324,7 +324,7 @@ public interface I1 : Object, S1, S1234
 
     #region Allors
     [Id("fbc1fd9f-853a-4b7d-b618-447b765b3bcb")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToMany)]
     #endregion
     C1[] I1C1one2manies { get; set; }
 

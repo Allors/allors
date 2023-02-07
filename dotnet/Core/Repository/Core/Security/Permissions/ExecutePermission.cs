@@ -17,12 +17,9 @@ using Allors.Repository.Attributes;
 public partial class ExecutePermission : Permission
 {
     #region Allors
-
     [Id("CB76C8B7-681E-450B-A3EC-95C32E1ED5B6")]
-    [Indexed]
-
     #endregion
-
+    [Indexed]
     [Required]
     public Guid MethodTypePointer { get; set; }
 
@@ -41,7 +38,7 @@ public partial class ExecutePermission : Permission
 
     public void OnInit() { }
 
-    public void OnPostDerive(OnPostDeriveInput input) { }
+    public void OnPostDerive() { }
 
     public void Delete() { }
 

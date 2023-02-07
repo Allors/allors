@@ -1,4 +1,4 @@
-﻿// -------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------
 // <copyright file="RepositoryProject.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
@@ -412,7 +412,7 @@ public class Project
                 var typeName = this.GetTypeName(reflectedRelationEndType);
                 var objectType = this.Repository.Objects.OfType<ObjectType>().First(v => v.SingularName == typeName);
                 property.ObjectType = objectType;
-                property.SingleRole = objectType is Unit || !this.IsArray(reflectedRelationEndType);
+                property.IsArray = this.IsArray(reflectedRelationEndType);
 
                 foreach (var group in propertyAttributesByTypeName)
                 {

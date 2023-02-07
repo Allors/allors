@@ -24,7 +24,7 @@ public interface I12 : Object, S12
 
     #region Allors
     [Id("2c05b90e-a036-450a-8b4e-ee70c8146fed")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToOne)]
     #endregion
     I34[] I12I34one2manies { get; set; }
 
@@ -55,7 +55,7 @@ public interface I12 : Object, S12
 
     #region Allors
     [Id("74a22498-ec2c-441b-a42c-0c248ace685d")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToOne)]
     #endregion
     C3 I12C3one2one { get; set; }
 
@@ -73,13 +73,13 @@ public interface I12 : Object, S12
 
     #region Allors
     [Id("afabb84c-f1b3-423b-9028-2ec5bb58e994")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToOne)]
     #endregion
     C2 I12C2one2one { get; set; }
 
     #region Allors
     [Id("b0fc73fb-fa74-4e8c-b9e1-17c01698f342")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToMany)]
     #endregion
     C3[] I12C3one2manies { get; set; }
 
@@ -107,13 +107,13 @@ public interface I12 : Object, S12
 
     #region Allors
     [Id("f31ace17-76b1-46db-9fc0-099b94fbada5")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToOne)]
     #endregion
     I34 I12I34one2one { get; set; }
 
     #region Allors
     [Id("f37b107e-74e5-401f-a7e8-8ac54ceb6c73")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToMany)]
     #endregion
     C2[] I12C2one2manies { get; set; }
 }

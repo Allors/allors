@@ -30,7 +30,7 @@ public class Organization : Deletable, UniquelyIdentifiable
 
     #endregion
 
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToMany)]
     public Person[] Employees { get; set; }
 
     #region Allors
@@ -40,7 +40,7 @@ public class Organization : Deletable, UniquelyIdentifiable
 
     #endregion
 
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToOne)]
     public Person Manager { get; set; }
 
     #region Allors
@@ -206,7 +206,7 @@ public class Organization : Deletable, UniquelyIdentifiable
 
     public void OnInit() { }
 
-    public void OnPostDerive(OnPostDeriveInput input) { }
+    public void OnPostDerive() { }
 
     public void Delete() { }
 

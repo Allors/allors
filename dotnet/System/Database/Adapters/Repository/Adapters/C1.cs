@@ -21,7 +21,7 @@ public class C1 : object, I1, I12
 
     #region Allors
     [Id("03fc18eb-46be-411a-9b1e-4a1953843d92")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToOne)]
     #endregion
     public I2 C1I2one2one { get; set; }
 
@@ -40,13 +40,13 @@ public class C1 : object, I1, I12
 
     #region Allors
     [Id("10df748e-3b9c-48f4-82dc-85498f199567")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToMany)]
     #endregion
     public S1[] C1S1one2manies { get; set; }
 
     #region Allors
     [Id("13761939-4842-45ba-af73-2a5976e2d6e3")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToOne)]
     #endregion
     public I12 C1I12one2one { get; set; }
 
@@ -95,7 +95,7 @@ public class C1 : object, I1, I12
 
     #region Allors
     [Id("3fea182f-07b0-4c36-8170-960b484801f6")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToOne)]
     #endregion
     public I1 C1I1one2one { get; set; }
 
@@ -112,13 +112,13 @@ public class C1 : object, I1, I12
 
     #region Allors
     [Id("4c0362ad-4d0e-4e57-a057-1852ddd8eed8")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToMany)]
     #endregion
     public I2[] C1I2one2manies { get; set; }
 
     #region Allors
     [Id("4c776502-77d7-45d9-b101-62dee27c0c2e")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToOne)]
     #endregion
     public C1 C1C1one2one { get; set; }
 
@@ -202,7 +202,7 @@ public class C1 : object, I1, I12
 
     #region Allors
     [Id("92cbd254-9763-41e1-9c73-4a378aab4b8e")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToOne)]
     #endregion
     public S2 C1S2one2one { get; set; }
 
@@ -224,19 +224,19 @@ public class C1 : object, I1, I12
 
     #region Allors
     [Id("9df07ff8-7a29-4d41-a08e-d46efdd15e32")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToOne)]
     #endregion
     public S1 C1S1one2one { get; set; }
 
     #region Allors
     [Id("ab6d11cc-ec86-4828-8875-2e9a779ba627")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToMany)]
     #endregion
     public C1[] C1C1one2manies { get; set; }
 
     #region Allors
     [Id("ac0cfbe2-a2ff-4781-83aa-5d4e459d939f")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToMany)]
     #endregion
     public I1[] C1I1one2manies { get; set; }
 
@@ -247,7 +247,7 @@ public class C1 : object, I1, I12
 
     #region Allors
     [Id("ad1b1fb1-b30c-431f-b975-5505f6311a18")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToMany)]
     #endregion
     public I12[] C1I12one2manies { get; set; }
 
@@ -258,7 +258,7 @@ public class C1 : object, I1, I12
 
     #region Allors
     [Id("b4e3d3d1-65b2-4803-954f-1e09f39e5594")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToOne)]
     #endregion
     public C2 C1C2one2one { get; set; }
 
@@ -284,7 +284,7 @@ public class C1 : object, I1, I12
 
     #region Allors
     [Id("d3f73a6d-8f95-44c6-bbc8-ddc468b803f7")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToOne)]
     #endregion
     public C3 C1C3one2one { get; set; }
 
@@ -331,13 +331,13 @@ public class C1 : object, I1, I12
 
     #region Allors
     [Id("f39739d2-e8fc-406e-be6a-c92acee07686")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToMany)]
     #endregion
     public C2[] C1C2one2manies { get; set; }
 
     #region Allors
     [Id("f47b9392-1391-416e-9a49-23ab0627133e")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToMany)]
     #endregion
     public S2[] C1S2one2manies { get; set; }
 
@@ -356,7 +356,7 @@ public class C1 : object, I1, I12
 
     #region Allors
     [Id("fee2d1a8-bb65-4bfe-b25f-407c629dec18")]
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToMany)]
     #endregion
     public C3[] C1C3one2manies { get; set; }
 

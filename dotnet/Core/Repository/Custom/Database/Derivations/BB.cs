@@ -20,8 +20,7 @@ public class BB : Object
     [Indexed]
 
     #endregion
-
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToOne)]
     public CC One2One { get; set; }
 
     #region Allors
@@ -30,8 +29,7 @@ public class BB : Object
     [Indexed]
 
     #endregion
-
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToOne)]
     public CC UnusedOne2One { get; set; }
 
     #region Allors
@@ -59,7 +57,7 @@ public class BB : Object
 
     #endregion
 
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToMany)]
     public CC[] One2Many { get; set; }
 
     #region Allors
@@ -69,7 +67,7 @@ public class BB : Object
 
     #endregion
 
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToMany)]
     public CC[] UnusedOne2Many { get; set; }
 
     #region Allors
@@ -120,7 +118,7 @@ public class BB : Object
 
     public void OnInit() { }
 
-    public void OnPostDerive(OnPostDeriveInput input) { }
+    public void OnPostDerive() { }
 
     #endregion
 }

@@ -16,24 +16,18 @@ using Allors.Repository.Attributes;
 public partial interface SecurityTokenOwner : Object
 {
     #region Allors
-
     [Id("5fb15e8b-011c-46f7-83dd-485d4cc4f9f2")]
-
     #endregion
-
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToOne)]
     [Indexed]
     [Required]
     [Derived]
     SecurityToken OwnerSecurityToken { get; set; }
 
     #region Allors
-
     [Id("056914ed-a658-4ae5-b859-97300e1b8911")]
-
     #endregion
-
-    [SingleAssociation]
+    [Multiplicity(Multiplicity.OneToOne)]
     [Indexed]
     [Derived]
     Grant OwnerGrant { get; set; }
