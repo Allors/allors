@@ -10,9 +10,14 @@ using global::Npgsql;
 
 public class Fixture<T>
 {
-    static Fixture() =>
+    static Fixture()
+    {
         // TODO: replace timestamp with timestamp with time zone
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
+        // TODO: https://www.npgsql.org/doc/release-notes/7.0.html#a-namecommandtypestoredprocedure-commandtypestoredprocedure-now-invokes-procedures-instead-of-functions
+        AppContext.SetSwitch("Npgsql.EnableStoredProcedureCompatMode", true);
+    }
 
     public Fixture()
     {
