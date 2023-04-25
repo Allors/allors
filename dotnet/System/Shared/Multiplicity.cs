@@ -8,23 +8,23 @@ namespace Allors
     public enum Multiplicity
     {
         /// <summary>
-        ///     One to one.
+        /// One to one.
         /// </summary>
         OneToOne = 0, //0b00 
 
         /// <summary>
-        ///     One to many.
+        /// One to many.
         /// </summary>
         OneToMany = 1, //0b01
 
         /// <summary>
-        ///     Many to one.
+        /// Many to one.
         /// </summary>
         ManyToOne = 2, //0b11
 
         /// <summary>
-        ///     Many to Many.
+        /// Many to Many.
         /// </summary>
-        ManyToMany = 3, //0b11
+        ManyToMany = 3 //0b11
     }
 }

@@ -1,7 +1,9 @@
-﻿// <copyright file="IMetaObject.cs" company="Allors bvba">
+// <copyright file="IMetaObject.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
+
+using System;
 
 namespace Allors.Workspace.Meta
 {
@@ -31,5 +33,7 @@ namespace Allors.Workspace.Meta
         IMetaIdentifiableObject FindByTag(string tag);
 
         IComposite FindByName(string name);
+
+        void Bind(Type[] types);
     }
 }

@@ -1,4 +1,4 @@
-﻿// <copyright file="Program.cs" company="Allors bvba">
+// <copyright file="Program.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -27,7 +27,7 @@ namespace Allors.Meta.Generation
                 { "Workspace/Templates/uml.cs.stg", "Workspace/Diagrams/Generated" },
                 { "Workspace/Templates/meta.cs.stg", "Workspace/Meta/Generated" },
                 { "Workspace/Templates/meta.static.cs.stg", "Workspace/Meta.Static/Generated" },
-                //{ "Workspace/Templates/domain.cs.stg", "Workspace/Domain/Generated" },
+                { "Workspace/Templates/domain.cs.stg", "Workspace/Domain/Generated" },
 
                 { "../../typescript/templates/workspace.meta.ts.stg", "../../typescript/libs/core/workspace/meta/src/lib/generated" },
                 { "../../typescript/templates/workspace.meta.json.ts.stg", "../../typescript/libs/core/workspace/meta-json/src/lib/generated" },

@@ -1,4 +1,4 @@
-﻿// <copyright file="PullExtent.cs" company="Allors bvba">
+// <copyright file="PullExtent.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -64,7 +64,7 @@ namespace Allors.Database.Protocol.Json
 
         public IPrefetchPolicyCache PrefetchPolicyCache { get; set; }
 
-        public User User { get; }
+        public IUser User { get; }
 
         public IAccessControl AccessControl { get; }
 

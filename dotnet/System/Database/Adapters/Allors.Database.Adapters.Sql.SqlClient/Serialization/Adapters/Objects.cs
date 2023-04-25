@@ -62,7 +62,7 @@ public class Objects : IEnumerable<object[]>
                                 var objectId = long.Parse(objectArray[0]);
                                 var objectVersion = objectArray.Length > 1
                                     ? Serialization.EnsureVersion(long.Parse(objectArray[1]))
-                                    : (long)ObjectVersion.DatabaseInitial;
+                                    : (long)Allors.Version.DatabaseInitial;
 
                                 if (objectType is IClass @class)
                                 {

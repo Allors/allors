@@ -11,10 +11,7 @@ namespace Allors.Text
     {
         public static string Pluralize(string singular)
         {
-            static bool EndsWith(string word, string ending)
-            {
-                return word.EndsWith(ending, StringComparison.InvariantCultureIgnoreCase);
-            }
+            static bool EndsWith(string word, string ending) => word.EndsWith(ending, StringComparison.InvariantCultureIgnoreCase);
 
             if (EndsWith(singular, "y") &&
                 !EndsWith(singular, "ay") &&

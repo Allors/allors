@@ -1,33 +1,37 @@
-﻿// <copyright file="Startup.cs" company="Allors bvba">
+// <copyright file="Startup.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
+
+using Allors.Database.Meta.Configuration;
 
 namespace Allors.Server
 {
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
-    using Allors.Database.Meta.Configuration;
-    using Allors.Database.Adapters;
-    using Allors.Database.Configuration;
-    using Allors.Database.Configuration.Derivations.Default;
-    using Allors.Database.Domain;
-    using Allors.Database.Meta;
+    using Database.Adapters;
+    using Database.Configuration;
+    using Database.Configuration.Derivations.Default;
+    using Database.Domain;
+    using Database.Meta;
     using JSNLog;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Components.Server.Circuits;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.DependencyInjection.Extensions;
     using Microsoft.Extensions.Logging;
     using Microsoft.IdentityModel.Tokens;
-    using Allors.Security;
-    using Allors.Services;
-    using ObjectFactory = Allors.Database.ObjectFactory;
+    using Security;
+    using Services;
+    using ObjectFactory = Database.ObjectFactory;
+    using User = Database.Domain.User;
 
     public class Startup
     {
@@ -41,7 +45,7 @@ namespace Allors.Server
 
             var workspaceConfig = new WorkspaceConfig(new Dictionary<HostString, string>
             {
-                { new HostString("localhost", 5000), "Default" },
+                {new HostString("localhost", 5000), "Default"}
             });
 
             // Allors
@@ -50,6 +54,7 @@ namespace Allors.Server
             services.AddSingleton<IDatabaseService, DatabaseService>();
             services.AddSingleton(workspaceConfig);
             // Allors Scoped
+            services.AddScoped<IClaimsPrincipalService, ClaimsPrincipalService>();
             services.AddScoped<ITransactionService, TransactionService>();
             services.AddScoped<IWorkspaceService, WorkspaceService>();
 
@@ -101,8 +106,8 @@ namespace Allors.Server
             var metaPopulation = new MetaBuilder().Build();
             var engine = new Engine(Rules.Create(metaPopulation));
             var objectFactory = new ObjectFactory(metaPopulation, typeof(User));
-            var databaseScope = new DefaultDatabaseServices(engine, httpContextAccessor);
-            var databaseBuilder = new DatabaseBuilder(databaseScope, this.Configuration, objectFactory);
+            var databaseScope = new DefaultDatabaseServices(engine);
+            var databaseBuilder = new DatabaseBuilder(databaseScope, this.Configuration, objectFactory, null, 60);
             app.ApplicationServices.GetRequiredService<IDatabaseService>().Database = databaseBuilder.Build();
 
             if (env.IsDevelopment())
@@ -132,8 +137,10 @@ namespace Allors.Server
             app.UseAuthorization();
 
             app.ConfigureExceptionHandler(env);
-
             app.UseResponseCaching();
+
+            app.UseMiddleware<ClaimsPrincipalServiceMiddleware>();
+
             app.UseEndpoints(endpoints =>
               {
                   endpoints.MapControllerRoute(

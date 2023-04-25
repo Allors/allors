@@ -8,19 +8,17 @@ namespace Allors.Workspace.Protocol.Json
     using System.Collections.Generic;
     using System.Linq;
     using Allors.Protocol.Json;
-    using Allors.Protocol.Json.Data;
-    using Allors.Workspace.Request;
-    using Allors.Workspace.Response;
+    using Pull = Allors.Protocol.Json.Data.Pull;
 
     public static class Extensions
     {
-        public static Pull ToJson(this PullRequest pullRequest, IUnitConvert unitConvert)
+        public static Pull ToJson(this Data.Pull pull, IUnitConvert unitConvert)
         {
             var toJsonVisitor = new ToJsonVisitor(unitConvert);
-            pullRequest.Accept(toJsonVisitor);
+            pull.Accept(toJsonVisitor);
             return toJsonVisitor.Pull;
         }
-
+        
         public static string[][] ToJsonForCollectionByName(this IDictionary<string, IObject[]> collectionByName) =>
             collectionByName?.Select(kvp =>
             {

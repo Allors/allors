@@ -2,7 +2,7 @@ delimiters "$", "$"
 
 TemplateId() ::= <<07F63139-1791-4F55-AAED-F1A6D8D40055>>
 TemplateName() ::= <<Allors C# Workspace Domain>>
-TemplateVersion() ::= <<3.0.6>>
+TemplateVersion() ::= <<3.0.7>>
 TemplateAllors() ::= <<1.0>>
 TemplateConfiguration(meta, workspaceName) ::= <<
 $!
@@ -122,7 +122,7 @@ namespace Allors.Workspace.Domain
 		public $class.name$(IStrategy strategy)
 		{
             this.Strategy = strategy;
-			this.M = (Allors.Workspace.Meta.M)strategy.Workspace.WorkspaceConnection.MetaPopulation;
+			this.M = (Allors.Workspace.Meta.M)strategy.Session.Workspace.Configuration.MetaPopulation;
         }
 
         IStrategy IObject.Strategy => this.Strategy;
@@ -137,7 +137,7 @@ namespace Allors.Workspace.Domain
 			}
 		}
 
-		public Allors.Workspace.Meta.Meta$class.name$ Meta
+		public Allors.Workspace.Meta.IMeta$class.name$ Meta
 		{
 			get
 			{

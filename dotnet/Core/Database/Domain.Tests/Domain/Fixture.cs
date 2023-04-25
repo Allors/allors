@@ -1,13 +1,14 @@
-﻿// <copyright file="DomainTest.cs" company="Allors bvba">
+// <copyright file="DomainTest.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 // <summary>Defines the DomainTest type.</summary>
 
+using Allors.Database.Meta.Configuration;
+
 namespace Allors.Database.Domain.Tests
 {
     using System;
-    using Allors.Database.Meta.Configuration;
     using Allors.Database.Configuration.Derivations.Default;
     using Allors.Database.Meta;
 

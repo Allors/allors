@@ -5,11 +5,12 @@
 
 namespace Allors.Server.Controllers
 {
-    using Allors.Database;
-    using Allors.Database.Domain;
+    using Database;
+    using Database.Domain;
+    using Database.Services;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using Allors.Services;
+    using Services;
 
     public class TestTransactionController : Controller
     {
@@ -32,7 +33,7 @@ namespace Allors.Server.Controllers
         public IActionResult UserName()
         {
             var userService = this.Transaction.Services.Get<IUserService>();
-            var result = userService?.User?.UserName ?? string.Empty;
+            var result = (userService?.User as User)?.UserName ?? string.Empty;
             return this.Content(result);
         }
     }

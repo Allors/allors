@@ -40,7 +40,7 @@ namespace Allors.Database.Configuration.Derivations.Default
                         IRolePattern { ObjectType: null } rolePattern => rolePattern.RoleType.AssociationType.ObjectType.Classes.ToArray(),
                         IRolePattern { ObjectType: { } } rolePattern => rolePattern.ObjectType.Classes.ToArray(),
 
-                        IAssociationPattern { ObjectType: null } associationPattern => associationPattern.AssociationType.RoleType.ObjectType.IsComposite ? ((Composite)associationPattern.AssociationType.RoleType.ObjectType).Classes.ToArray() : Array.Empty<IClass>(),
+                        IAssociationPattern { ObjectType: null } associationPattern => associationPattern.AssociationType.RoleType.ObjectType.IsComposite ? ((IComposite)associationPattern.AssociationType.RoleType.ObjectType).Classes.ToArray() : Array.Empty<IClass>(),
                         IAssociationPattern { ObjectType: { } } associationPattern => associationPattern.ObjectType.Classes.ToArray(),
 
                         _ => Array.Empty<IClass>(),

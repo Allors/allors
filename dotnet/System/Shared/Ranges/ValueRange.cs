@@ -1,4 +1,4 @@
-﻿// <copyright file="IOperator.cs" company="Allors bvba">
+// <copyright file="IOperator.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -39,6 +39,13 @@ namespace Allors.Shared.Ranges
         }
 
         public bool Contains(T item) => this.items != null && Array.BinarySearch(this.items, item) >= 0;
+
+        public static ValueRange<T> Ensure(object? range) =>
+            range switch
+            {
+                null => Empty,
+                _ => (ValueRange<T>)range
+            };
 
         public static ValueRange<T> Load(IEnumerable<T>? sortedItems)
         {

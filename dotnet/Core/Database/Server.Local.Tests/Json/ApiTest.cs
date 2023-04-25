@@ -1,8 +1,11 @@
-﻿// <copyright file="DomainTest.cs" company="Allors bvba">
+// <copyright file="DomainTest.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 // <summary>Defines the DomainTest type.</summary>
+
+using Allors.Database.Security;
+using Allors.Database.Services;
 
 namespace Tests
 {
@@ -92,7 +95,7 @@ namespace Tests
             }
         }
 
-        protected User SetUser(string userName) => this.Transaction.Services.Get<IUserService>().User = new Users(this.Transaction).FindBy(this.M.User.UserName, userName);
+        protected IUser SetUser(string userName) => this.Transaction.Services.Get<IUserService>().User = new Users(this.Transaction).FindBy(this.M.User.UserName, userName);
 
         protected Stream GetResource(string name)
         {

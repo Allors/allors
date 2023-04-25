@@ -9,15 +9,15 @@ namespace Allors.Database.Domain
 
     public class VersionedIdByStrategy : IVersionedIdByStrategy
     {
-        private readonly ConcurrentDictionary<IStrategy, VersionedObjectId> versionedByStrategy;
+        private readonly ConcurrentDictionary<IStrategy, VersionedId> versionedByStrategy;
 
-        public VersionedIdByStrategy() => this.versionedByStrategy = new ConcurrentDictionary<IStrategy, VersionedObjectId>();
+        public VersionedIdByStrategy() => this.versionedByStrategy = new ConcurrentDictionary<IStrategy, VersionedId>();
 
-        public VersionedObjectId Get(IStrategy strategy)
+        public VersionedId Get(IStrategy strategy)
         {
-            if (!this.versionedByStrategy.TryGetValue(strategy, out var versionedId) || versionedId.ObjectVersion != strategy.ObjectVersion)
+            if (!this.versionedByStrategy.TryGetValue(strategy, out var versionedId) || versionedId.Version != strategy.ObjectVersion)
             {
-                versionedId = new VersionedObjectId(strategy.ObjectId, strategy.ObjectVersion);
+                versionedId = new VersionedId(strategy.ObjectId, strategy.ObjectVersion);
                 this.versionedByStrategy[strategy] = versionedId;
             }
 

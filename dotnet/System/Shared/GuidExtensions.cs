@@ -5,7 +5,7 @@ namespace Allors
     public static class GuidExtensions
     {
         /// <summary>
-        ///     Converts to a url friendly base64 encoded string
+        /// Converts to a url friendly base64 encoded string
         /// </summary>
         /// <param name="this"></param>
         /// <returns>tag</returns>

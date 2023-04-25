@@ -6,11 +6,12 @@
 namespace Allors.Server.Controllers
 {
     using System;
-    using Allors.Database;
-    using Allors.Database.Domain;
+    using Database;
+    using Database.Domain;
+    using Database.Services;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
-    using Allors.Services;
+    using Services;
 
     public class TestController : Controller
     {

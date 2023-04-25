@@ -5,6 +5,15 @@
 
 using System.Collections.Generic;
 using System.Diagnostics;
+using Allors.Workspace.Domain;
+using static DebuggerDisplayConstants;
 
 // General
 [assembly: DebuggerDisplay("[Key={Key}, Value={Value}]", Target = typeof(KeyValuePair<,>))]
+
+// Allors
+[assembly: DebuggerDisplay("{Name}" + id + session, Target = typeof(Organization))]
+[assembly: DebuggerDisplay("{FirstName}" + id + session, Target = typeof(Person))]
+
+[assembly: DebuggerDisplay("{Name}" + id + session, Target = typeof(C1))]
+[assembly: DebuggerDisplay("{Name}" + id + session, Target = typeof(C2))]

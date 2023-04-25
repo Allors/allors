@@ -1,4 +1,4 @@
-﻿// <copyright file="EmptySet.cs" company="Allors bvba">
+// <copyright file="EmptySet.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -54,5 +54,19 @@ namespace Allors.Collections
         public IEnumerator<T> GetEnumerator() => EmptyEnumerator<T>.Instance;
 
         IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
+
+        private class EmptyEnumerator<TEmpty> : IEnumerator<TEmpty>
+        {
+            public static readonly EmptyEnumerator<TEmpty> Instance = new EmptyEnumerator<TEmpty>();
+
+            public bool MoveNext() => false;
+
+            public void Reset() { }
+
+            TEmpty IEnumerator<TEmpty>.Current => throw new NotSupportedException("EmptySet has no elements.");
+            public object Current => throw new NotSupportedException("EmptySet has no elements.");
+
+            public void Dispose() { }
+        }
     }
 }

@@ -7,6 +7,6 @@ namespace Allors.Database.Domain
 {
     public interface IVersionedIdByStrategy
     {
-        VersionedObjectId Get(IStrategy strategy);
+        VersionedId Get(IStrategy strategy);
     }
 }

@@ -1,4 +1,4 @@
-﻿// <copyright file="MetaCache.cs" company="Allors bvba">
+// <copyright file="MetaCache.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -31,7 +31,7 @@ namespace Allors.Database.Configuration
 
         public MetaCache(IDatabase database)
         {
-            var metaPopulation = (MetaPopulation)database.MetaPopulation;
+            var metaPopulation = (M)database.MetaPopulation;
             var assembly = database.ObjectFactory.Assembly;
 
             this.supertypesByComposite = metaPopulation.Composites

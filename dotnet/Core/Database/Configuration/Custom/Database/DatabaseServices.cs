@@ -7,18 +7,16 @@
 namespace Allors.Database.Configuration
 {
     using System;
-    using Allors.Database.Data;
-    using Allors.Database.Derivations;
-    using Allors.Database.Configuration.Derivations.Default;
-    using Allors.Database.Domain;
-    using Allors.Database.Meta;
-    using Microsoft.AspNetCore.Http;
-    using Allors.Database.Services;
+    using Database;
+    using Data;
+    using Database.Derivations;
+    using Derivations.Default;
+    using Domain;
+    using Meta;
+    using Services;
 
     public abstract class DatabaseServices : IDatabaseServices
     {
-        private readonly IHttpContextAccessor httpContextAccessor;
-
         private IMetaCache metaCache;
 
         private ISecurity security;
@@ -47,11 +45,7 @@ namespace Allors.Database.Configuration
 
         private IWorkspaceMask workspaceMask;
 
-        protected DatabaseServices(Engine engine, IHttpContextAccessor httpContextAccessor = null)
-        {
-            this.Engine = engine;
-            this.httpContextAccessor = httpContextAccessor;
-        }
+        protected DatabaseServices(Engine engine) => this.Engine = engine;
 
         internal IDatabase Database { get; private set; }
 
@@ -64,7 +58,7 @@ namespace Allors.Database.Configuration
 
         public M M { get; private set; }
 
-        public ITransactionServices CreateTransactionServices() => new TransactionServices(this.httpContextAccessor);
+        public ITransactionServices CreateTransactionServices() => new TransactionServices();
 
         public T Get<T>() =>
             typeof(T) switch
@@ -86,7 +80,7 @@ namespace Allors.Database.Configuration
                 { } type when type == typeof(ICaches) => (T)(this.caches ??= new Caches()),
                 { } type when type == typeof(IPasswordHasher) => (T)(this.passwordHasher ??= this.CreatePasswordHasher()),
                 { } type when type == typeof(IWorkspaceMask) => (T)(this.workspaceMask ??= new WorkspaceMask(this.M)),
-                _ => throw new NotSupportedException($"Service {typeof(T)} not supported"),
+                _ => throw new NotSupportedException($"Service {typeof(T)} not supported")
             };
 
         protected abstract IPasswordHasher CreatePasswordHasher();

@@ -1,4 +1,4 @@
-﻿// <copyright file="Transaction.cs" company="Allors bvba">
+// <copyright file="Transaction.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -353,7 +353,7 @@ public class Transaction : ITransaction
 
     private IObject CreateWithoutOnBuild(IClass objectType)
     {
-        var strategy = new Strategy(this, objectType, ++this.currentId, ObjectVersion.DatabaseInitial);
+        var strategy = new Strategy(this, objectType, ++this.currentId, Allors.Version.DatabaseInitial);
         this.AddStrategy(strategy);
 
         this.ChangeLog.OnCreated(strategy);

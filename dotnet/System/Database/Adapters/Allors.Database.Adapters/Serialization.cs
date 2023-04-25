@@ -192,7 +192,7 @@ public static class Serialization
 
     public static long EnsureVersion(long version)
     {
-        var databaseInitial = (long)global::Allors.ObjectVersion.DatabaseInitial;
+        var databaseInitial = (long)global::Allors.Version.DatabaseInitial;
         return version < databaseInitial ? databaseInitial : version;
     }
 }

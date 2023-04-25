@@ -1,4 +1,4 @@
-﻿// <copyright file="IOperator.cs" company="Allors bvba">
+// <copyright file="IOperator.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -42,6 +42,13 @@ namespace Allors.Shared.Ranges
         }
 
         public bool Contains(T item) => this.items != null && Array.BinarySearch(this.items, item) >= 0;
+
+        public static RefRange<T> Ensure(object range) =>
+            range switch
+            {
+                null => Empty,
+                _ => (RefRange<T>)range
+            };
 
         public static RefRange<T> Load(IEnumerable<T>? sortedItems)
         {
@@ -301,59 +308,59 @@ namespace Allors.Shared.Ranges
                     };
 
                 default:
+                {
+                    switch (other.items)
                     {
-                        switch (other.items)
+                        case var otherItems when otherItems.Length == 1:
+                            return this.Remove(otherItems[0]);
+                        default:
                         {
-                            case var otherItems when otherItems.Length == 1:
-                                return this.Remove(otherItems[0]);
-                            default:
+                            var otherItems = other.items;
+
+                            var itemsLength = this.items.Length;
+                            var otherArrayLength = otherItems.Length;
+
+                            var result = new T[itemsLength];
+                            var i = 0;
+                            var j = 0;
+                            var k = 0;
+
+                            while (i < itemsLength && j < otherArrayLength)
+                            {
+                                var value = this.items[i];
+                                var otherValue = otherItems[j];
+
+                                if (value.CompareTo(otherValue) < 0)
                                 {
-                                    var otherItems = other.items;
-
-                                    var itemsLength = this.items.Length;
-                                    var otherArrayLength = otherItems.Length;
-
-                                    var result = new T[itemsLength];
-                                    var i = 0;
-                                    var j = 0;
-                                    var k = 0;
-
-                                    while (i < itemsLength && j < otherArrayLength)
-                                    {
-                                        var value = this.items[i];
-                                        var otherValue = otherItems[j];
-
-                                        if (value.CompareTo(otherValue) < 0)
-                                        {
-                                            result[k++] = value;
-                                            i++;
-                                        }
-                                        else if (value.CompareTo(otherValue) > 0)
-                                        {
-                                            j++;
-                                        }
-                                        else
-                                        {
-                                            i++;
-                                        }
-                                    }
-
-                                    if (i < itemsLength)
-                                    {
-                                        var rest = itemsLength - i;
-                                        Array.Copy(this.items, i, result, k, rest);
-                                        k += rest;
-                                    }
-
-                                    if (k < result.Length)
-                                    {
-                                        Array.Resize(ref result, k);
-                                    }
-
-                                    return result.Length != 0 ? new RefRange<T>(result) : Empty;
+                                    result[k++] = value;
+                                    i++;
                                 }
+                                else if (value.CompareTo(otherValue) > 0)
+                                {
+                                    j++;
+                                }
+                                else
+                                {
+                                    i++;
+                                }
+                            }
+
+                            if (i < itemsLength)
+                            {
+                                var rest = itemsLength - i;
+                                Array.Copy(this.items, i, result, k, rest);
+                                k += rest;
+                            }
+
+                            if (k < result.Length)
+                            {
+                                Array.Resize(ref result, k);
+                            }
+
+                            return result.Length != 0 ? new RefRange<T>(result) : Empty;
                         }
                     }
+                }
             }
         }
 
