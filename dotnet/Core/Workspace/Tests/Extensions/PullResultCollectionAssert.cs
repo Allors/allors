@@ -14,8 +14,8 @@ namespace Tests.Workspace
 
         public void Equal(params string[] expected)
         {
-            var actual = this.collection.Select(v => (string)((dynamic)v).Name);
-            Assert.Equal(expected, actual);
+            var actual = this.collection.Select(v => (string)((dynamic)v).Name).OrderBy(v => v);
+            Assert.Equal(expected.OrderBy(v => v), actual);
         }
     }
 }

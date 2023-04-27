@@ -1,4 +1,4 @@
-﻿// <copyright file="IInterface.cs" company="Allors bvba">
+// <copyright file="IInterface.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -41,14 +41,8 @@ namespace Allors.Workspace.Meta
 
         public override IReadOnlyList<IMethodType> ExclusiveMethodTypes { get; set; }
 
-        public override bool IsAssignableFrom(IComposite objectType)
-        {
-            throw new NotImplementedException();
-        }
+        public override bool IsAssignableFrom(IComposite objectType) => this.Equals(objectType) || this.Subtypes.Contains(objectType);
 
-        public override void Bind(Dictionary<string, Type> typeByName)
-        {
-            throw new NotImplementedException();
-        }
+        public override void Bind(Dictionary<string, Type> typeByName) => this.ClrType = typeByName[this.SingularName];
     }
 }
