@@ -24,9 +24,9 @@ namespace Tests.Workspace
 
             var session = this.Workspace.CreateSession();
 
-            var pull = new[] { new Pull { Extent = new Filter(this.M.Organisation) } };
+            var pull = new[] { new Pull { Extent = new Filter(this.M.Organization) } };
 
-            var organisation = (await session.PullAsync(pull)).GetCollection<Organisation>()[0];
+            var organisation = (await session.PullAsync(pull)).GetCollection<Organization>()[0];
 
             Assert.False(organisation.JustDidIt);
 
@@ -47,10 +47,10 @@ namespace Tests.Workspace
 
             var session = this.Workspace.CreateSession();
 
-            var pull = new[] { new Pull { Extent = new Filter(this.M.Organisation) } };
+            var pull = new[] { new Pull { Extent = new Filter(this.M.Organization) } };
 
-            var organisation1 = (await session.PullAsync(pull)).GetCollection<Organisation>()[0];
-            var organisation2 = (await session.PullAsync(pull)).GetCollection<Organisation>().Skip(1).First();
+            var organisation1 = (await session.PullAsync(pull)).GetCollection<Organization>()[0];
+            var organisation2 = (await session.PullAsync(pull)).GetCollection<Organization>().Skip(1).First();
 
             Assert.False(organisation1.JustDidIt);
 
@@ -74,10 +74,10 @@ namespace Tests.Workspace
 
             var session = this.Workspace.CreateSession();
 
-            var pull = new[] { new Pull { Extent = new Filter(this.M.Organisation) } };
+            var pull = new[] { new Pull { Extent = new Filter(this.M.Organization) } };
 
-            var organisation1 = (await session.PullAsync(pull)).GetCollection<Organisation>()[0];
-            var organisation2 = (await session.PullAsync(pull)).GetCollection<Organisation>().Skip(1).First();
+            var organisation1 = (await session.PullAsync(pull)).GetCollection<Organization>()[0];
+            var organisation2 = (await session.PullAsync(pull)).GetCollection<Organization>().Skip(1).First();
 
             Assert.False(organisation1.JustDidIt);
 

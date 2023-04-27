@@ -9,9 +9,7 @@
 namespace Tests.Workspace
 {
     using System.Linq;
-    using Allors.Workspace;
     using Allors.Workspace.Data;
-    using Allors.Workspace.Derivations;
     using Allors.Workspace.Domain;
     using Xunit;
 
@@ -33,14 +31,13 @@ namespace Tests.Workspace
             };
 
             var session = this.Workspace.CreateSession();
-            session.Activate(this.Workspace.Configuration.Rules);
             var result = await session.PullAsync(pull);
 
             var people = result.GetCollection<Person>();
 
             var person = people.First(v => "Jane".Equals(v.FirstName));
 
-            Assert.Equal($"Jane Doe", person.SessionFullName);
+            Assert.Equal($"Jane Doe", person.FullName);
         }
     }
 }

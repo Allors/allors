@@ -17,13 +17,13 @@ partial class Build
     private Target CiDotnetCoreDatabaseTest => _ => _
         .DependsOn(DotnetCoreDatabaseTest);
 
-    private Target CiDotnetCoreWorkspaceLocalTest => _ => _
+    private Target CiDotnetCoreWorkspaceDirectTest => _ => _
         .DependsOn(DotnetCoreWorkspaceDirectTest);
 
-    private Target CiDotnetCoreWorkspaceRemoteJsonSystemTextTest => _ => _
+    private Target CiDotnetCoreWorkspaceJsonSystemTextTest => _ => _
         .DependsOn(DotnetCoreWorkspaceJsonSystemTextHttpClientTest);
 
-    private Target CiDotnetCoreWorkspaceRemoteJsonRestSharpTest => _ => _
+    private Target CiDotnetCoreWorkspaceJsonNewtonsoftTest => _ => _
         .DependsOn(DotnetCoreWorkspaceJsonNewtonsoftWebClientTest);
 
     private Target CiTypescriptWorkspaceTest => _ => _

@@ -22,12 +22,12 @@ stages:
           target: 'CiDotnetSystemAdaptersTestNpgsql'
         dotnet_core_database:
           target: 'CiDotnetCoreDatabaseTest'
-        dotnet_core_workspace_local:
-          target: 'CiDotnetCoreWorkspaceLocalTest'
-        dotnet_core_workspace_remote_json_systemtext:
-          target: 'CiDotnetCoreWorkspaceRemoteJsonSystemTextTest'
-        dotnet_core_workspace_remote_json_restsharp:
-          target: 'CiDotnetCoreWorkspaceRemoteJsonRestSharpTest'
+        dotnet_core_workspace_direct:
+          target: 'CiDotnetCoreWorkspaceDirectTest'
+        dotnet_core_workspace_json_systemtext:
+          target: 'CiDotnetCoreWorkspaceJsonSystemTextTest'
+        dotnet_core_workspace_json_newtonsoft:
+          target: 'CiDotnetCoreWorkspaceJsonNewtonsoftTest'
         typescript_workspace:
           target: 'CiTypescriptWorkspaceTest'
         typescript_workspace_adapters_json:

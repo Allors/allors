@@ -4,6 +4,9 @@
 // </copyright>
 // <summary>Defines the DomainTest type.</summary>
 
+
+using Allors.Database.Meta.Configuration;
+
 namespace Tests.Workspace
 {
     using System;
@@ -22,7 +25,7 @@ namespace Tests.Workspace
             this.Engine = new Engine(rules);
         }
 
-        public MetaPopulation M { get; private set; }
+        public M M { get; private set; }
 
         public Engine Engine { get; }
 

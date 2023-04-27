@@ -104,8 +104,8 @@ partial class Build
 
             {
                 DotNetTest(s => s
-                    .SetProjectFile(Paths.DotnetCoreWorkspaceClientDirectTests)
-                    .AddLoggers("trx;LogFileName=DotnetCoreWorkspaceClientDirectTests.trx")
+                    .SetProjectFile(Paths.DotnetCoreWorkspaceAdaptersDirectTests)
+                    .AddLoggers("trx;LogFileName=DotnetCoreWorkspaceAdaptersDirectTests.trx")
                     .SetResultsDirectory(Paths.ArtifactsTests));
             }
         });
@@ -122,8 +122,8 @@ partial class Build
                 await server.Ready();
 
                 DotNetTest(s => s
-                    .SetProjectFile(Paths.DotnetCoreWorkspaceClientJsonNewtonsoftWebClientTests)
-                    .AddLoggers("trx;LogFileName=DotnetCoreWorkspaceClientJsonNewtonsoftWebClientTests.trx")
+                    .SetProjectFile(Paths.DotnetCoreWorkspaceAdaptersJsonNewtonsoftTests)
+                    .AddLoggers("trx;LogFileName=DotnetCoreWorkspaceAdaptersJsonNewtonsoftTests.trx")
                     .SetResultsDirectory(Paths.ArtifactsTests));
             }
         });
@@ -142,8 +142,8 @@ partial class Build
                 await server.Ready();
 
                 DotNetTest(s => s
-                    .SetProjectFile(Paths.DotnetCoreWorkspaceClientJsonSystemTextHttpClientTests)
-                    .AddLoggers("trx;LogFileName=DotnetCoreWorkspaceClientJsonSystemTextHttpClientTests.trx")
+                    .SetProjectFile(Paths.DotnetCoreWorkspaceAdaptersJsonSystemTextTests)
+                    .AddLoggers("trx;LogFileName=DotnetCoreWorkspaceAdaptersJsonSystemTextTests.trx")
                     .SetResultsDirectory(Paths.ArtifactsTests));
             }
 

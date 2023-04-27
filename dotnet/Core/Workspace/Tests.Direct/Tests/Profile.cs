@@ -3,6 +3,8 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+using Allors.Workspace.Meta.Static;
+
 namespace Tests.Workspace.Local
 {
     using System;
@@ -15,10 +17,7 @@ namespace Tests.Workspace.Local
     using Allors.Database.Services;
     using Allors.Workspace;
     using Allors.Workspace.Adapters;
-    using Allors.Workspace.Derivations;
-    using Allors.Workspace.Domain;
     using Allors.Workspace.Meta;
-    using Allors.Workspace.Meta.Lazy;
     using Configuration = Allors.Workspace.Adapters.Local.Configuration;
     using DatabaseConnection = Allors.Workspace.Adapters.Local.DatabaseConnection;
     using IWorkspaceServices = Allors.Workspace.IWorkspaceServices;
@@ -48,8 +47,7 @@ namespace Tests.Workspace.Local
 
             var metaPopulation = new MetaBuilder().Build();
             var objectFactory = new ReflectionObjectFactory(metaPopulation, typeof(Person));
-            var rules = new IRule[] { new PersonSessionFullNameRule(metaPopulation) };
-            this.configuration = new Configuration("Default", metaPopulation, objectFactory, rules);
+            this.configuration = new Configuration("Default", metaPopulation, objectFactory);
 
             this.Database = new Database(
                 new DefaultDatabaseServices(fixture.Engine),
@@ -65,7 +63,7 @@ namespace Tests.Workspace.Local
 
             using var transaction = this.Database.CreateTransaction();
 
-            var administrator = new PersonBuilder(transaction).WithUserName("administrator").Build();
+            var administrator = transaction.Build<Allors.Database.Domain.Person>(v => v.UserName = "administrator");
             new UserGroups(transaction).Administrators.AddMember(administrator);
             transaction.Services.Get<IUserService>().User = administrator;
 
