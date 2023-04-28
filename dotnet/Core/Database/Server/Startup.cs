@@ -3,8 +3,6 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-using Allors.Database.Meta.Configuration;
-
 namespace Allors.Server
 {
     using System.Collections.Generic;
@@ -14,18 +12,16 @@ namespace Allors.Server
     using Database.Configuration;
     using Database.Configuration.Derivations.Default;
     using Database.Domain;
-    using Database.Meta;
+    using Allors.Database.Meta.Configuration;
     using JSNLog;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Components.Server.Circuits;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.DependencyInjection.Extensions;
     using Microsoft.Extensions.Logging;
     using Microsoft.IdentityModel.Tokens;
     using Security;

@@ -6,11 +6,11 @@
 namespace Allors.Server.Controllers
 {
     using System.Threading;
-    using Allors.Database;
-    using Allors.Database.Domain;
-    using Allors.Database.Protocol.Json;
+    using Database;
+    using Database.Domain;
+    using Database.Protocol.Json;
     using Microsoft.AspNetCore.Mvc;
-    using Allors.Services;
+    using Services;
 
     public class TestNoTreeController : Controller
     {

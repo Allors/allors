@@ -7,13 +7,14 @@ namespace Allors.Server.Controllers
 {
     using System;
     using System.Threading;
-    using Allors.Database;
-    using Allors.Database.Data;
-    using Allors.Database.Domain;
-    using Allors.Database.Meta;
-    using Allors.Database.Protocol.Json;
+    using Database;
+    using Database.Data;
+    using Database.Domain;
+    using Database.Meta;
+    using Database.Protocol.Json;
     using Microsoft.AspNetCore.Mvc;
-    using Allors.Services;
+    using Services;
+    using User = Database.Domain.User;
 
     public class TestShareHoldersController : Controller
     {
@@ -42,7 +43,7 @@ namespace Allors.Server.Controllers
                 var organization = new Organizations(this.Transaction).FindBy(m.Organization.Owner, this.Transaction.Services.Get<User>());
                 response.AddObject("root", organization,
                     new[] {
-                                new Node(m.Organization.Shareholders),
+                                new Node(m.Organization.Shareholders)
                                 });
                 return this.Ok(response.Build());
             }

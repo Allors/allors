@@ -6,7 +6,7 @@
 namespace Allors.Services
 {
     using System;
-    using Allors.Database;
+    using Database;
 
     public interface IDatabaseService
     {

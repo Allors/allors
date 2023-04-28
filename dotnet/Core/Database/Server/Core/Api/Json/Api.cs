@@ -3,6 +3,8 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+using Allors.Protocol.Json.SystemText;
+
 namespace Allors.Database.Protocol.Json
 {
     using System;
@@ -14,13 +16,14 @@ namespace Allors.Database.Protocol.Json
     using Allors.Protocol.Json.Api.Security;
     using Allors.Protocol.Json.Api.Sync;
     using Allors.Protocol.Json.SystemText;
-    using Allors.Database.Data;
-    using Allors.Database.Derivations;
-    using Allors.Database.Domain;
-    using Allors.Database.Meta;
-    using Allors.Database.Security;
-    using Allors.Database.Services;
-    using Allors.Database.Tracing;
+    using Data;
+    using Derivations;
+    using Domain;
+    using Meta;
+    using Security;
+    using Services;
+    using Tracing;
+    using User = Domain.User;
 
     public class Api
     {
@@ -41,7 +44,6 @@ namespace Allors.Database.Protocol.Json
             this.AllowedClasses = metaCache.GetWorkspaceClasses(this.WorkspaceName);
             this.RoleTypesByClass = metaCache.GetWorkspaceRoleTypesByClass(this.WorkspaceName);
             this.M = databaseServices.Get<M>();
-            this.MetaPopulation = this.M;
             this.PreparedSelects = databaseServices.Get<IPreparedSelects>();
             this.PreparedExtents = databaseServices.Get<IPreparedExtents>();
             this.Build = @class => transaction.Build(@class);
@@ -73,8 +75,6 @@ namespace Allors.Database.Protocol.Json
         public IDictionary<IClass, IReadOnlySet<IRoleType>> RoleTypesByClass { get; }
 
         public M M { get; }
-
-        public IMetaPopulation MetaPopulation { get; }
 
         public IPreparedSelects PreparedSelects { get; }
 
@@ -125,7 +125,7 @@ namespace Allors.Database.Protocol.Json
             var @event = this.Sink?.OnPush(this.Transaction, pushRequest);
             this.Sink?.OnBefore(@event);
 
-            var pushResponseBuilder = new PushResponseBuilder(this.Transaction, this.Derive, this.MetaPopulation, this.AccessControl, this.AllowedClasses, this.Build, this.UnitConvert);
+            var pushResponseBuilder = new PushResponseBuilder(this.Transaction, this.Derive, this.M, this.AccessControl, this.AllowedClasses, this.Build, this.UnitConvert);
             var pushResponse = pushResponseBuilder.Build(pushRequest);
 
             if (@event != null)
@@ -168,6 +168,10 @@ namespace Allors.Database.Protocol.Json
         }
 
         // TODO: Delete
-        public PullResponseBuilder CreatePullResponseBuilder() => new PullResponseBuilder(this.Transaction, this.AccessControl, this.AllowedClasses, this.PreparedSelects, this.PreparedExtents, this.UnitConvert, this.PrefetchPolicyCache, this.CancellationToken);
+        public PullResponseBuilder CreatePullResponseBuilder(string dependencyId = null)
+        {
+            // TODO: Dependencies
+            return new PullResponseBuilder(this.Transaction, this.AccessControl, this.AllowedClasses, this.PreparedSelects, this.PreparedExtents, this.UnitConvert, this.PrefetchPolicyCache, this.CancellationToken);
+        }
     }
 }

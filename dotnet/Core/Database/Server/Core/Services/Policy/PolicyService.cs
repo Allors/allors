@@ -15,7 +15,7 @@ namespace Allors.Services
         {
             var defaultPolicy = Policy
                 .Handle<DbException>()
-                .WaitAndRetry(5, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
+                .WaitAndRetry(1, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
 
             this.PullPolicy = defaultPolicy;
             this.SyncPolicy = defaultPolicy;

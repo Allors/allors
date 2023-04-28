@@ -7,12 +7,12 @@ namespace Allors.Server.Controllers
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using Allors.Database;
-    using Allors.Database.Domain;
-    using Allors.Database.Protocol.Json;
+    using Database;
+    using Database.Domain;
+    using Database.Protocol.Json;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using Allors.Services;
+    using Services;
 
     public class PeopleController : Controller
     {

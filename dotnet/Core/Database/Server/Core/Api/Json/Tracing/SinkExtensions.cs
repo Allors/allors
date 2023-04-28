@@ -9,7 +9,7 @@ namespace Allors.Database.Protocol.Json
     using Allors.Protocol.Json.Api.Pull;
     using Allors.Protocol.Json.Api.Push;
     using Allors.Protocol.Json.Api.Sync;
-    using Allors.Database.Tracing;
+    using Tracing;
 
     public static class SinkExtensions
     {

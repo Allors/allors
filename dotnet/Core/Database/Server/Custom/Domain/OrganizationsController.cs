@@ -7,12 +7,12 @@ namespace Allors.Server.Controllers
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using Allors.Database;
-    using Allors.Database.Domain;
-    using Allors.Database.Protocol.Json;
+    using Database;
+    using Database.Domain;
+    using Database.Protocol.Json;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using Allors.Services;
+    using Services;
 
     public class OrganizationsController : Controller
     {
@@ -36,7 +36,7 @@ namespace Allors.Server.Controllers
             var api = new Api(this.Transaction, this.WorkspaceService.Name, cancellationToken);
             var response = api.CreatePullResponseBuilder();
             var organizations = new Organizations(this.Transaction);
-            response.AddCollection("organizations", organizations.ObjectType, organizations.Extent().ToArray());
+            response.AddCollection("organisations", organizations.ObjectType, organizations.Extent().ToArray());
             return this.Ok(response.Build());
         }
     }
