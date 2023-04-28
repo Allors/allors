@@ -2,35 +2,43 @@
 
 partial class Build
 {
-    private Target CiDotnetSystemTest => _ => _
-        .DependsOn(DotnetSystemTest);
+    private Target CiDotnetSystem => _ => _
+        .DependsOn(unknown => unknown
+            .DependsOn(DotnetSystemSharedTest)
+            .DependsOn(DotnetSystemRepositoryModelTest));
 
-    private Target CiDotnetSystemAdaptersTestMemory => _ => _
+    private Target CiDotnetSystemAdaptersMemory => _ => _
         .DependsOn(DotnetSystemAdaptersTestMemory);
 
-    private Target CiDotnetSystemAdaptersTestSqlClient => _ => _
+    private Target CiDotnetSystemAdaptersSqlClient => _ => _
         .DependsOn(DotnetSystemAdaptersTestSqlClient);
 
-    private Target CiDotnetSystemAdaptersTestNpgsql => _ => _
+    private Target CiDotnetSystemAdaptersNpgsql => _ => _
         .DependsOn(DotnetSystemAdaptersTestNpgsql);
 
-    private Target CiDotnetCoreDatabaseTest => _ => _
-        .DependsOn(DotnetCoreDatabaseTest);
+    private Target CiDotnetCoreDatabase => _ => _
+        .DependsOn(DotnetCoreDatabaseTestMeta)
+        .DependsOn(DotnetCoreDatabaseTestDomain)
+        .DependsOn(DotnetCoreDatabaseTestServerLocal)
+        .DependsOn(DotnetCoreDatabaseTestServerRemote);
 
-    private Target CiDotnetCoreWorkspaceDirectTest => _ => _
+    private Target CiDotnetCoreWorkspace => _ => _
+        .DependsOn(DotnetCoreWorkspaceMetaStaticTest);
+
+    private Target CiDotnetCoreWorkspaceDirect => _ => _
         .DependsOn(DotnetCoreWorkspaceDirectTest);
 
-    private Target CiDotnetCoreWorkspaceJsonSystemTextTest => _ => _
-        .DependsOn(DotnetCoreWorkspaceJsonSystemTextHttpClientTest);
-
-    private Target CiDotnetCoreWorkspaceJsonNewtonsoftTest => _ => _
+    private Target CiDotnetCoreWorkspaceJsonNewtonsoft => _ => _
         .DependsOn(DotnetCoreWorkspaceJsonNewtonsoftWebClientTest);
 
-    private Target CiTypescriptWorkspaceTest => _ => _
+    private Target CiDotnetCoreWorkspaceJsonSystemText => _ => _
+        .DependsOn(DotnetCoreWorkspaceJsonSystemTextHttpClientTest);
+
+    private Target CiTypescriptWorkspace => _ => _
         .DependsOn(TypescriptInstall)
         .DependsOn(TypescriptWorkspaceTest);
 
-    private Target CiTypescriptWorkspaceAdaptersJsonTest => _ => _
+    private Target CiTypescriptWorkspaceAdaptersJson => _ => _
         .DependsOn(TypescriptInstall)
         .DependsOn(TypescriptWorkspaceAdaptersJsonTest);
 }

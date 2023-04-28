@@ -25,7 +25,6 @@ public partial class Paths
 
     public AbsolutePath DotnetCoreWorkspace => DotnetCore / "Workspace";
     public AbsolutePath DotnetCoreWorkspaceMetaStaticTests => DotnetCoreWorkspace / "Meta.Static";
-
     public AbsolutePath DotnetCoreWorkspaceAdapters => DotnetCoreWorkspace / "Adapters";
     public AbsolutePath DotnetCoreWorkspaceAdaptersDirectTests => DotnetCoreWorkspaceAdapters / "Allors.Workspace.Adapters.Direct.Tests";
     public AbsolutePath DotnetCoreWorkspaceAdaptersJsonNewtonsoftTests => DotnetCoreWorkspaceAdapters / "Allors.Workspace.Adapters.Json.Newtonsoft.Tests";

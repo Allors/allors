@@ -165,23 +165,4 @@ partial class Build
             }
 
         });
-
-    private Target DotnetCoreDatabaseTest => _ => _
-        .DependsOn(DotnetCoreDatabaseTestMeta)
-        .DependsOn(DotnetCoreDatabaseTestDomain)
-        .DependsOn(DotnetCoreDatabaseTestServerLocal)
-        .DependsOn(DotnetCoreDatabaseTestServerRemote);
-
-    private Target DotnetCoreWorkspaceTest => _ => _
-        .DependsOn(DotnetCoreWorkspaceDirectTest)
-        .DependsOn(DotnetCoreWorkspaceJsonNewtonsoftWebClientTest)
-        .DependsOn(DotnetCoreWorkspaceJsonSystemTextHttpClientTest);
-
-    private Target DotnetCoreTest => _ => _
-        .DependsOn(DotnetCoreDatabaseTest)
-        .DependsOn(DotnetCoreWorkspaceTest);
-
-    private Target DotnetCore => _ => _
-        .DependsOn(Clean)
-        .DependsOn(DotnetCoreTest);
 }

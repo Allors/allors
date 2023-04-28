@@ -14,24 +14,28 @@ stages:
 
     strategy:
       matrix:
+        dotnet_system:
+          target: 'CiDotnetSystem'
         dotnet_system_adapters_memory:
-          target: 'CiDotnetSystemAdaptersTestMemory'
+          target: 'CiDotnetSystemAdaptersMemory'
         dotnet_system_adapters_sqlclient:
-          target: 'CiDotnetSystemAdaptersTestSqlClient'
+          target: 'CiDotnetSystemAdaptersSqlClient'
         dotnet_system_adapters_npgsql:
-          target: 'CiDotnetSystemAdaptersTestNpgsql'
+          target: 'CiDotnetSystemAdaptersNpgsql'
         dotnet_core_database:
-          target: 'CiDotnetCoreDatabaseTest'
+          target: 'CiDotnetCoreDatabase'
+        dotnet_core_workspace:
+          target: 'CiDotnetCoreWorkspace'
         dotnet_core_workspace_direct:
-          target: 'CiDotnetCoreWorkspaceDirectTest'
-        dotnet_core_workspace_json_systemtext:
-          target: 'CiDotnetCoreWorkspaceJsonSystemTextTest'
+          target: 'CiDotnetCoreWorkspaceDirect'
         dotnet_core_workspace_json_newtonsoft:
-          target: 'CiDotnetCoreWorkspaceJsonNewtonsoftTest'
+          target: 'CiDotnetCoreWorkspaceJsonNewtonsoft'
+        dotnet_core_workspace_json_systemtext:
+          target: 'CiDotnetCoreWorkspaceJsonSystemText'
         typescript_workspace:
-          target: 'CiTypescriptWorkspaceTest'
+          target: 'CiTypescriptWorkspace'
         typescript_workspace_adapters_json:
-          target: 'CiTypescriptWorkspaceAdaptersJsonTest'
+          target: 'CiTypescriptWorkspaceAdaptersJson'
 
     steps:
     - checkout: self

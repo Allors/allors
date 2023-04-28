@@ -69,15 +69,4 @@ partial class Build
                  .AddLoggers("trx;LogFileName=AdaptersNpgsql.trx")
                  .SetResultsDirectory(Paths.ArtifactsTests));
         });
-
-    private Target DotnetSystemAdaptersTest => _ => _
-        .DependsOn(Clean)
-        .DependsOn(DotnetSystemAdaptersTestMemory)
-        .DependsOn(DotnetSystemAdaptersTestSqlClient)
-        .DependsOn(DotnetSystemAdaptersTestNpgsql);
-
-    private Target DotnetSystemTest => _ => _
-        .DependsOn(Clean)
-        .DependsOn(DotnetSystemSharedTest)
-        .DependsOn(DotnetSystemRepositoryModelTest);
 }
