@@ -94,6 +94,23 @@ partial class Build
                 .SetResultsDirectory(Paths.ArtifactsTests));
         });
 
+    private Target DotnetCoreWorkspaceMetaStaticTest => _ => _
+        .DependsOn(DotnetCorePublishServer)
+        .DependsOn(DotnetCorePublishCommands)
+        .DependsOn(DotnetCoreResetDatabase)
+        .Executes(() =>
+        {
+            DotNet("Commands.dll Populate", Paths.ArtifactsCoreCommands);
+
+            {
+                DotNetTest(s => s
+                    .SetProjectFile(Paths.DotnetCoreWorkspaceMetaStaticTests)
+                    .AddLoggers("trx;LogFileName=DotnetCoreWorkspaceMetaStaticTests.trx")
+                    .SetResultsDirectory(Paths.ArtifactsTests));
+            }
+        });
+
+
     private Target DotnetCoreWorkspaceDirectTest => _ => _
         .DependsOn(DotnetCorePublishServer)
         .DependsOn(DotnetCorePublishCommands)

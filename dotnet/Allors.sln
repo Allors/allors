@@ -151,13 +151,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Workspace.Configuration", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Workspace.Domain", "Core\Workspace\Domain\Workspace.Domain.csproj", "{3EB9B5EB-B029-4D60-8DE9-7BD650911EDA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Workspace.Tests", "Core\Workspace\Tests\Workspace.Tests.csproj", "{4C69CF37-D734-4FA7-BBF6-E439F20609D6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Workspace.Adapters.Tests", "Core\Workspace\Tests\Allors.Workspace.Adapters.Tests.csproj", "{4C69CF37-D734-4FA7-BBF6-E439F20609D6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Workspace.Tests.Direct", "Core\Workspace\Tests.Direct\Workspace.Tests.Direct.csproj", "{EE922F4A-5E2F-4894-970E-ED78104DB711}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Workspace.Adapters.Direct.Tests", "Core\Workspace\Tests.Direct\Allors.Workspace.Adapters.Direct.Tests.csproj", "{EE922F4A-5E2F-4894-970E-ED78104DB711}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Workspace.Tests.Json.Newtonsoft", "Core\Workspace\Tests.Json.Newtonsoft\Workspace.Tests.Json.Newtonsoft.csproj", "{AE451C37-238F-4F64-8605-7A2F3DFD2C17}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Workspace.Adapters.Json.Newtonsoft.Tests", "Core\Workspace\Tests.Json.Newtonsoft\Allors.Workspace.Adapters.Json.Newtonsoft.Tests.csproj", "{AE451C37-238F-4F64-8605-7A2F3DFD2C17}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Workspace.Tests.Json.SystemText", "Core\Workspace\Tests.Json.SystemText\Workspace.Tests.Json.SystemText.csproj", "{87A0B88F-C42A-4E2D-84F4-0C8FE282F271}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Workspace.Adapters.Json.SystemText.Tests", "Core\Workspace\Tests.Json.SystemText\Allors.Workspace.Adapters.Json.SystemText.Tests.csproj", "{87A0B88F-C42A-4E2D-84F4-0C8FE282F271}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Adapters", "Adapters", "{E8D650A4-FDD6-4246-A0AD-E6FD7CE34192}"
 EndProject

@@ -15,7 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\System\Workspace\Adapters\Allors.Workspace.Adapters.Direct\Allors.Workspace.Adapters.Direct.csproj" />
     <ProjectReference Include="..\..\..\System\Workspace\Adapters\Allors.Workspace.Adapters\Allors.Workspace.Adapters.csproj" />
-    <ProjectReference Include="..\Tests\Workspace.Tests.csproj" />
+    <ProjectReference Include="..\Tests\Allors.Workspace.Adapters.Tests.csproj" />
   </ItemGroup>
 
 </Project>
