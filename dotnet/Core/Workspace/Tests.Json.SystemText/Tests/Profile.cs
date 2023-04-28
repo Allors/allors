@@ -3,9 +3,10 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+using Allors.Workspace.Adapters.Tests;
 using Allors.Workspace.Meta.Static;
 
-namespace Tests.Workspace.Remote
+namespace Allors.Workspace.Adapters.Json.SystemText.Tests
 {
     using System;
     using System.Net.Http;
@@ -14,8 +15,8 @@ namespace Tests.Workspace.Remote
     using Allors.Workspace.Adapters;
     using Allors.Workspace.Meta;
     using Xunit;
-    using Configuration = Allors.Workspace.Adapters.Remote.Configuration;
-    using DatabaseConnection = Allors.Workspace.Adapters.Remote.SystemText.DatabaseConnection;
+    using Configuration = Allors.Workspace.Adapters.Json.Configuration;
+    using DatabaseConnection = Allors.Workspace.Adapters.Json.SystemText.DatabaseConnection;
     using IWorkspaceServices = Allors.Workspace.IWorkspaceServices;
 
     public class Profile : IProfile

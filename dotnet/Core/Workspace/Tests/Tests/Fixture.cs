@@ -7,7 +7,7 @@
 
 using Allors.Database.Meta.Configuration;
 
-namespace Tests.Workspace
+namespace Allors.Workspace.Adapters.Tests
 {
     using System;
     using Allors.Database.Configuration.Derivations.Default;

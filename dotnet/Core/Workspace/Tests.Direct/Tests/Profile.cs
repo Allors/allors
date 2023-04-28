@@ -3,9 +3,10 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+using Allors.Workspace.Adapters.Tests;
 using Allors.Workspace.Meta.Static;
 
-namespace Tests.Workspace.Local
+namespace Allors.Workspace.Adapters.Direct.Tests
 {
     using System;
     using System.Linq;
@@ -18,8 +19,8 @@ namespace Tests.Workspace.Local
     using Allors.Workspace;
     using Allors.Workspace.Adapters;
     using Allors.Workspace.Meta;
-    using Configuration = Allors.Workspace.Adapters.Local.Configuration;
-    using DatabaseConnection = Allors.Workspace.Adapters.Local.DatabaseConnection;
+    using Configuration = Allors.Workspace.Adapters.Direct.Configuration;
+    using DatabaseConnection = Allors.Workspace.Adapters.Direct.DatabaseConnection;
     using IWorkspaceServices = Allors.Workspace.IWorkspaceServices;
     using Person = Allors.Workspace.Domain.Person;
     using User = Allors.Database.Domain.User;

@@ -5,7 +5,7 @@
 
 using Allors.Database.Meta.Extensions;
 
-namespace Allors.Workspace.Adapters.Local
+namespace Allors.Workspace.Adapters.Direct
 {
     using System;
     using System.Collections.Concurrent;

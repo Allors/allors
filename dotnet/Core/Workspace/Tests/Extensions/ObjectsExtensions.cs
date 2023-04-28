@@ -1,4 +1,4 @@
-namespace Tests.Workspace
+namespace Allors.Workspace.Adapters.Tests
 {
     using System.Collections.Generic;
     using Allors.Workspace;

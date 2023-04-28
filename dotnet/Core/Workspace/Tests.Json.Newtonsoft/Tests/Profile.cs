@@ -3,21 +3,22 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+using Allors.Workspace.Adapters.Tests;
 using Allors.Workspace.Meta.Static;
 
-namespace Tests.Workspace.Remote
+namespace Allors.Workspace.Adapters.Json.Newtonsoft.Tests
 {
     using System;
     using System.Threading.Tasks;
     using Allors.Workspace;
     using Allors.Workspace.Adapters;
-    using Allors.Workspace.Adapters.Remote.ResthSharp;
+    using Allors.Workspace.Adapters.Json.Newtonsoft;
     using Allors.Workspace.Meta;
     using RestSharp;
     using RestSharp.Serializers.NewtonsoftJson;
     using Xunit;
-    using Configuration = Allors.Workspace.Adapters.Remote.Configuration;
-    using DatabaseConnection = Allors.Workspace.Adapters.Remote.ResthSharp.DatabaseConnection;
+    using Configuration = Allors.Workspace.Adapters.Json.Configuration;
+    using DatabaseConnection = Allors.Workspace.Adapters.Json.Newtonsoft.DatabaseConnection;
 
     public class Profile : IProfile
     {

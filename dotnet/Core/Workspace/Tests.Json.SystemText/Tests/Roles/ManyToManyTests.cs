@@ -3,12 +3,13 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Tests.Workspace.DatabaseAssociation.DatabaseRelation.DatabaseRole.Local
+using Allors.Workspace.Adapters.Tests;
+
+namespace Allors.Workspace.Adapters.Json.SystemText.Tests
 {
-    using Workspace.Remote;
     using Xunit;
 
-    public class ManyToManyTests : DatabaseRole.ManyToManyTests, IClassFixture<Fixture>
+    public class ManyToManyTests : Adapters.Tests.ManyToManyTests, IClassFixture<Fixture>
     {
         public ManyToManyTests(Fixture fixture) : base(fixture) => this.Profile = new Profile();
 

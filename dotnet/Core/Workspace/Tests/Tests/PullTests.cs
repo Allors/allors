@@ -6,7 +6,7 @@
 //
 // </summary>
 
-namespace Tests.Workspace
+namespace Allors.Workspace.Adapters.Tests
 {
     using System;
     using System.Linq;

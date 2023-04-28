@@ -5,7 +5,7 @@
 
 using Allors.Protocol.Json.Newtonsoft;
 
-namespace Allors.Workspace.Adapters.Remote.ResthSharp
+namespace Allors.Workspace.Adapters.Json.Newtonsoft
 {
     using System;
     using System.Threading.Tasks;
@@ -17,7 +17,7 @@ namespace Allors.Workspace.Adapters.Remote.ResthSharp
     using Allors.Protocol.Json.Api.Sync;
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "RCS1090:Add call to 'ConfigureAwait' (or vice versa).", Justification = "<Pending>")]
-    public class DatabaseConnection : Remote.DatabaseConnection
+    public class DatabaseConnection : Json.DatabaseConnection
     {
         private readonly Client client;
 

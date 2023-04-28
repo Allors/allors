@@ -3,12 +3,13 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Tests.Workspace.DatabaseAssociation.DatabaseRelation.DatabaseRole.Local
+using Allors.Workspace.Adapters.Tests;
+
+namespace Allors.Workspace.Adapters.Json.SystemText.Tests
 {
-    using Workspace.Remote;
     using Xunit;
 
-    public class OneToOneTests : DatabaseRole.OneToOneTests, IClassFixture<Fixture>
+    public class OneToOneTests : Adapters.Tests.OneToOneTests, IClassFixture<Fixture>
     {
         public OneToOneTests(Fixture fixture) : base(fixture) => this.Profile = new Profile();
 

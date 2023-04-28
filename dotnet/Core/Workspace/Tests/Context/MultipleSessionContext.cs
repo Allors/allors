@@ -1,4 +1,4 @@
-namespace Tests.Workspace
+namespace Allors.Workspace.Adapters.Tests
 {
     public class MultipleSessionContext : Context
     {

@@ -4,7 +4,7 @@
 // </copyright>
 
 
-namespace Allors.Workspace.Adapters.Remote.SystemText
+namespace Allors.Workspace.Adapters.Json.SystemText
 {
     using System;
     using System.Net.Http;
@@ -23,7 +23,7 @@ namespace Allors.Workspace.Adapters.Remote.SystemText
     using Polly;
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "RCS1090:Add call to 'ConfigureAwait' (or vice versa).", Justification = "<Pending>")]
-    public class DatabaseConnection : Remote.DatabaseConnection
+    public class DatabaseConnection : Json.DatabaseConnection
     {
         private string userId;
 

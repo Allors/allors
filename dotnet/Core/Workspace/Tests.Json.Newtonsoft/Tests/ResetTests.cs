@@ -3,11 +3,13 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Tests.Workspace.Remote
+using Allors.Workspace.Adapters.Tests;
+
+namespace Allors.Workspace.Adapters.Json.Newtonsoft.Tests
 {
     using Xunit;
 
-    public class ResetTests : Workspace.WorkspaceResetTests, IClassFixture<Fixture>
+    public class ResetTests : WorkspaceResetTests, IClassFixture<Fixture>
     {
         public ResetTests(Fixture fixture) : base(fixture) => this.Profile = new Profile();
 

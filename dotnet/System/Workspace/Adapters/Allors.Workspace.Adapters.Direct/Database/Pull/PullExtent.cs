@@ -4,7 +4,7 @@
 // </copyright>
 // <summary>Defines the ISessionExtension type.</summary>
 
-namespace Allors.Workspace.Adapters.Local
+namespace Allors.Workspace.Adapters.Direct
 {
     using System;
     using System.Collections.Generic;

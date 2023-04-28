@@ -3,11 +3,13 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Tests.Workspace.Local
+using Allors.Workspace.Adapters.Tests;
+
+namespace Allors.Workspace.Adapters.Direct.Tests
 {
     using Xunit;
 
-    public class AssociationTests : Workspace.AssociationTests, IClassFixture<Fixture>
+    public class AssociationTests : Adapters.Tests.AssociationTests, IClassFixture<Fixture>
     {
         public AssociationTests(Fixture fixture) : base(fixture) => this.Profile = new Profile(fixture);
 
