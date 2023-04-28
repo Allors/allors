@@ -13,9 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\System\Workspace\Adapters\Allors.Workspace.Adapters.Json.SystemText\Allors.Workspace.Adapters.Json.SystemText.csproj" />
-    <ProjectReference Include="..\..\..\System\Workspace\Adapters\Allors.Workspace.Adapters\Allors.Workspace.Adapters.csproj" />
-    <ProjectReference Include="..\Tests\Allors.Workspace.Adapters.Tests.csproj" />
+    <ProjectReference Include="..\Allors.Workspace.Adapters.Json.SystemText\Allors.Workspace.Adapters.Json.SystemText.csproj" />
+    <ProjectReference Include="..\Allors.Workspace.Adapters.Tests\Allors.Workspace.Adapters.Tests.csproj" />
   </ItemGroup>
 
 </Project>

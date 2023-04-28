@@ -16,22 +16,22 @@ stages:
       matrix:
         dotnet_system:
           target: 'CiDotnetSystem'
-        dotnet_system_adapters_memory:
-          target: 'CiDotnetSystemAdaptersMemory'
-        dotnet_system_adapters_sqlclient:
-          target: 'CiDotnetSystemAdaptersSqlClient'
-        dotnet_system_adapters_npgsql:
-          target: 'CiDotnetSystemAdaptersNpgsql'
+        dotnet_system_database_adapters_memory:
+          target: 'CiDotnetSystemDatabaseAdaptersMemory'
+        dotnet_system_database_adapters_sqlclient:
+          target: 'CiDotnetSystemDatabaseAdaptersSqlClient'
+        dotnet_system_database_adapters_npgsql:
+          target: 'CiDotnetSystemDatabaseAdaptersNpgsql'
+        dotnet_system_workspace_adapters_direct:
+          target: 'CiDotnetSystemWorkspaceAdaptersDirect'
+        dotnet_system_workspace_adapters_json_newtonsoft:
+          target: 'CiDotnetSystemWorkspaceAdaptersJsonNewtonsoft'
+        dotnet_system_workspace_adapters_json_systemtext:
+          target: 'CiDotnetSystemWorkspaceAdaptersJsonSystemText'
         dotnet_core_database:
           target: 'CiDotnetCoreDatabase'
         dotnet_core_workspace:
           target: 'CiDotnetCoreWorkspace'
-        dotnet_core_workspace_adapters_direct:
-          target: 'CiDotnetCoreWorkspaceAdaptersDirect'
-        dotnet_core_workspace_adapters_json_newtonsoft:
-          target: 'CiDotnetCoreWorkspaceAdaptersJsonNewtonsoft'
-        dotnet_core_workspace_adapters_json_systemtext:
-          target: 'CiDotnetCoreWorkspaceAdaptersJsonSystemText'
         typescript_workspace:
           target: 'CiTypescriptWorkspace'
         typescript_workspace_adapters_json:

@@ -57,13 +57,13 @@ partial class Build
                 .SetCommand("system-workspace-adapters-json:test"));
         });
 
-    private Target TypescriptWorkspaceTest => _ => _
+    private Target TypescriptWorkspaceTests => _ => _
          .After(TypescriptInstall)
          .DependsOn(TypescriptSystemWorkspaceMeta)
          .DependsOn(TypescriptSystemWorkspaceMetaJson)
          .DependsOn(TypescriptSystemWorkspaceAdapters);
 
-    private Target TypescriptWorkspaceAdaptersJsonTest => _ => _
+    private Target TypescriptWorkspaceAdaptersJsonTests => _ => _
         .After(TypescriptInstall)
         .DependsOn(TypescriptSystemWorkspaceAdaptersJson);
 }

@@ -15,9 +15,8 @@ public partial class Paths
     public AbsolutePath DotnetCoreDatabaseMetaTests => DotnetCoreDatabase / "Meta.Tests/Meta.Tests.csproj";
     public AbsolutePath DotnetCoreDatabaseDomainTests => DotnetCoreDatabase / "Domain.Tests/Domain.Tests.csproj";
 
-    public AbsolutePath DotnetCoreDatabaseServerLocalTests => DotnetCoreDatabase / "Server.Local.Tests/Server.Local.Tests.csproj";
-
-    public AbsolutePath DotnetCoreDatabaseServerRemoteTests => DotnetCoreDatabase / "Server.Remote.Tests/Server.Remote.Tests.csproj";
+    public AbsolutePath DotnetCoreDatabaseServerDirectTests => DotnetCoreDatabase / "Server.Direct.Tests/Server.Direct.Tests.csproj";
+    public AbsolutePath DotnetCoreDatabaseServerJsonTests => DotnetCoreDatabase / "Server.Json.Tests/Server.Json.Tests.csproj";
 
     public AbsolutePath DotnetCoreDatabaseResources => DotnetCoreDatabase / "Resources";
     public AbsolutePath DotnetCoreDatabaseResourcesCore => DotnetCoreDatabaseResources / "Core";
@@ -25,8 +24,4 @@ public partial class Paths
 
     public AbsolutePath DotnetCoreWorkspace => DotnetCore / "Workspace";
     public AbsolutePath DotnetCoreWorkspaceMetaStaticTests => DotnetCoreWorkspace / "Meta.Static";
-    public AbsolutePath DotnetCoreWorkspaceAdapters => DotnetCoreWorkspace / "Adapters";
-    public AbsolutePath DotnetCoreWorkspaceAdaptersDirectTests => DotnetCoreWorkspaceAdapters / "Allors.Workspace.Adapters.Direct.Tests";
-    public AbsolutePath DotnetCoreWorkspaceAdaptersJsonNewtonsoftTests => DotnetCoreWorkspaceAdapters / "Allors.Workspace.Adapters.Json.Newtonsoft.Tests";
-    public AbsolutePath DotnetCoreWorkspaceAdaptersJsonSystemTextTests => DotnetCoreWorkspaceAdapters / "Allors.Workspace.Adapters.Json.SystemText.Tests";
 }

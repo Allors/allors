@@ -37,24 +37,24 @@ partial class Build
                 .SetProjectFile(Paths.DotnetCoreDatabaseGenerate));
         });
 
-    private Target DotnetCoreDatabaseTestMeta => _ => _
+    private Target DotnetCoreDatabaseMetaTests => _ => _
         .DependsOn(DotnetCoreGenerate)
         .Executes(() => DotNetTest(s => s
             .SetProjectFile(Paths.DotnetCoreDatabaseMetaTests)
             .AddLoggers("trx;LogFileName=CoreDatabaseMeta.trx")
             .SetResultsDirectory(Paths.ArtifactsTests)));
 
-    private Target DotnetCoreDatabaseTestDomain => _ => _
+    private Target DotnetCoreDatabaseDomainTests => _ => _
         .DependsOn(DotnetCoreGenerate)
         .Executes(() => DotNetTest(s => s
             .SetProjectFile(Paths.DotnetCoreDatabaseDomainTests)
             .AddLoggers("trx;LogFileName=CoreDatabaseDomain.trx")
             .SetResultsDirectory(Paths.ArtifactsTests)));
 
-    private Target DotnetCoreDatabaseTestServerLocal => _ => _
+    private Target DotnetCoreDatabaseServerDirectTests => _ => _
         .DependsOn(DotnetCoreGenerate)
         .Executes(() => DotNetTest(s => s
-            .SetProjectFile(Paths.DotnetCoreDatabaseServerLocalTests)
+            .SetProjectFile(Paths.DotnetCoreDatabaseServerDirectTests)
             .AddLoggers("trx;LogFileName=CoreDatabaseApi.trx")
             .SetResultsDirectory(Paths.ArtifactsTests)));
 
@@ -78,7 +78,7 @@ partial class Build
             DotNetPublish(dotNetPublishSettings);
         });
 
-    private Target DotnetCoreDatabaseTestServerRemote => _ => _
+    private Target DotnetCoreDatabaseServerJsonTests => _ => _
         .DependsOn(DotnetCoreGenerate)
         .DependsOn(DotnetCorePublishServer)
         .DependsOn(DotnetCorePublishCommands)
@@ -89,12 +89,12 @@ partial class Build
             using var server = new Server(Paths.ArtifactsCoreServer);
             await server.Ready();
             DotNetTest(s => s
-                .SetProjectFile(Paths.DotnetCoreDatabaseServerRemoteTests)
+                .SetProjectFile(Paths.DotnetCoreDatabaseServerJsonTests)
                 .AddLoggers("trx;LogFileName=CoreDatabaseServer.trx")
                 .SetResultsDirectory(Paths.ArtifactsTests));
         });
 
-    private Target DotnetCoreWorkspaceMetaStaticTest => _ => _
+    private Target DotnetCoreWorkspaceMetaStaticTests => _ => _
         .DependsOn(DotnetCorePublishServer)
         .DependsOn(DotnetCorePublishCommands)
         .DependsOn(DotnetCoreResetDatabase)
@@ -108,61 +108,5 @@ partial class Build
                     .AddLoggers("trx;LogFileName=DotnetCoreWorkspaceMetaStaticTests.trx")
                     .SetResultsDirectory(Paths.ArtifactsTests));
             }
-        });
-
-
-    private Target DotnetCoreWorkspaceAdaptersDirectTest => _ => _
-        .DependsOn(DotnetCorePublishServer)
-        .DependsOn(DotnetCorePublishCommands)
-        .DependsOn(DotnetCoreResetDatabase)
-        .Executes(() =>
-        {
-            DotNet("Commands.dll Populate", Paths.ArtifactsCoreCommands);
-
-            {
-                DotNetTest(s => s
-                    .SetProjectFile(Paths.DotnetCoreWorkspaceAdaptersDirectTests)
-                    .AddLoggers("trx;LogFileName=DotnetCoreWorkspaceAdaptersDirectTests.trx")
-                    .SetResultsDirectory(Paths.ArtifactsTests));
-            }
-        });
-
-    private Target DotnetCoreWorkspaceAdaptersJsonNewtonsoftTest => _ => _
-        .DependsOn(DotnetCorePublishServer)
-        .DependsOn(DotnetCorePublishCommands)
-        .DependsOn(DotnetCoreResetDatabase)
-        .Executes(async () =>
-        {
-            DotNet("Commands.dll Populate", Paths.ArtifactsCoreCommands);
-            {
-                using var server = new Server(Paths.ArtifactsCoreServer);
-                await server.Ready();
-
-                DotNetTest(s => s
-                    .SetProjectFile(Paths.DotnetCoreWorkspaceAdaptersJsonNewtonsoftTests)
-                    .AddLoggers("trx;LogFileName=DotnetCoreWorkspaceAdaptersJsonNewtonsoftTests.trx")
-                    .SetResultsDirectory(Paths.ArtifactsTests));
-            }
-        });
-
-    private Target DotnetCoreWorkspaceAdaptersJsonSystemTextTest => _ => _
-        .DependsOn(DotnetCorePublishServer)
-        .DependsOn(DotnetCorePublishCommands)
-        .DependsOn(DotnetCoreResetDatabase)
-        .Executes(async () =>
-        {
-            DotNet("Commands.dll Populate", Paths.ArtifactsCoreCommands);
-
-
-            {
-                using var server = new Server(Paths.ArtifactsCoreServer);
-                await server.Ready();
-
-                DotNetTest(s => s
-                    .SetProjectFile(Paths.DotnetCoreWorkspaceAdaptersJsonSystemTextTests)
-                    .AddLoggers("trx;LogFileName=DotnetCoreWorkspaceAdaptersJsonSystemTextTests.trx")
-                    .SetResultsDirectory(Paths.ArtifactsTests));
-            }
-
         });
 }
