@@ -9,15 +9,13 @@ partial class Build
     private Target DotnetSystemSharedTest => _ => _
         .Executes(() => DotNetTest(s => s
             .SetProjectFile(Paths.DotnetSystemSharedTests)
-            .SetFilter("FullyQualifiedName~Allors.Shared")
-            .AddLoggers("trx;LogFileName=Shared.trx")
+            .AddLoggers("trx;LogFileName=DotnetSystemSharedTests.trx")
             .SetResultsDirectory(Paths.ArtifactsTests)));
 
     private Target DotnetSystemRepositoryModelTest => _ => _
         .Executes(() => DotNetTest(s => s
             .SetProjectFile(Paths.DotnetSystemRepositoryModelTests)
-            .SetFilter("FullyQualifiedName~Allors.Repository.Model")
-            .AddLoggers("trx;LogFileName=RepositoryModel.trx")
+            .AddLoggers("trx;LogFileName=DotnetSystemRepositoryModelTests.trx")
             .SetResultsDirectory(Paths.ArtifactsTests)));
 
     private Target DotnetSystemAdaptersGenerate => _ => _
@@ -42,7 +40,7 @@ partial class Build
         .Executes(() => DotNetTest(s => s
             .SetProjectFile(Paths.DotnetSystemAdaptersStaticTests)
             .SetFilter("FullyQualifiedName~Allors.Database.Adapters.Memory")
-            .AddLoggers("trx;LogFileName=AdaptersMemory.trx")
+            .AddLoggers("trx;LogFileName=DotnetSystemAdaptersTestMemory.trx")
             .SetResultsDirectory(Paths.ArtifactsTests)));
 
     private Target DotnetSystemAdaptersTestSqlClient => _ => _
@@ -54,7 +52,7 @@ partial class Build
                 DotNetTest(s => s
                     .SetProjectFile(Paths.DotnetSystemAdaptersStaticTests)
                     .SetFilter("FullyQualifiedName~Allors.Database.Adapters.Sql.SqlClient")
-                    .AddLoggers("trx;LogFileName=AdaptersSqlClient.trx")
+                    .AddLoggers("trx;LogFileName=DotnetSystemAdaptersTestSqlClient.trx")
                     .SetResultsDirectory(Paths.ArtifactsTests));
             }
         });
@@ -66,7 +64,7 @@ partial class Build
             DotNetTest(s => s
                  .SetProjectFile(Paths.DotnetSystemAdaptersStaticTests)
                  .SetFilter("FullyQualifiedName~Allors.Database.Adapters.Sql.Npgsql")
-                 .AddLoggers("trx;LogFileName=AdaptersNpgsql.trx")
+                 .AddLoggers("trx;LogFileName=DotnetSystemAdaptersTestNpgsql.trx")
                  .SetResultsDirectory(Paths.ArtifactsTests));
         });
 }

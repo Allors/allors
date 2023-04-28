@@ -3,9 +3,8 @@
 partial class Build
 {
     private Target CiDotnetSystem => _ => _
-        .DependsOn(unknown => unknown
             .DependsOn(DotnetSystemSharedTest)
-            .DependsOn(DotnetSystemRepositoryModelTest));
+            .DependsOn(DotnetSystemRepositoryModelTest);
 
     private Target CiDotnetSystemAdaptersMemory => _ => _
         .DependsOn(DotnetSystemAdaptersTestMemory);

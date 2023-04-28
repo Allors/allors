@@ -4,7 +4,7 @@ public partial class Paths
 {
     public AbsolutePath DotnetSystem => Dotnet / "System";
 
-    public AbsolutePath DotnetSystemSharedTests => DotnetSystemRepository / "Shared.Tests";
+    public AbsolutePath DotnetSystemSharedTests => DotnetSystem / "Shared.Tests";
 
     public AbsolutePath DotnetSystemRepositoryModelTests => DotnetSystemRepository / "Allors.Repository.Model.Tests";
 
