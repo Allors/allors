@@ -111,7 +111,7 @@ partial class Build
         });
 
 
-    private Target DotnetCoreWorkspaceDirectTest => _ => _
+    private Target DotnetCoreWorkspaceAdaptersDirectTest => _ => _
         .DependsOn(DotnetCorePublishServer)
         .DependsOn(DotnetCorePublishCommands)
         .DependsOn(DotnetCoreResetDatabase)
@@ -127,7 +127,7 @@ partial class Build
             }
         });
 
-    private Target DotnetCoreWorkspaceJsonNewtonsoftWebClientTest => _ => _
+    private Target DotnetCoreWorkspaceAdaptersJsonNewtonsoftTest => _ => _
         .DependsOn(DotnetCorePublishServer)
         .DependsOn(DotnetCorePublishCommands)
         .DependsOn(DotnetCoreResetDatabase)
@@ -145,7 +145,7 @@ partial class Build
             }
         });
 
-    private Target DotnetCoreWorkspaceJsonSystemTextHttpClientTest => _ => _
+    private Target DotnetCoreWorkspaceAdaptersJsonSystemTextTest => _ => _
         .DependsOn(DotnetCorePublishServer)
         .DependsOn(DotnetCorePublishCommands)
         .DependsOn(DotnetCoreResetDatabase)

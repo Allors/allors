@@ -25,14 +25,14 @@ partial class Build
     private Target CiDotnetCoreWorkspace => _ => _
         .DependsOn(DotnetCoreWorkspaceMetaStaticTest);
 
-    private Target CiDotnetCoreWorkspaceDirect => _ => _
-        .DependsOn(DotnetCoreWorkspaceDirectTest);
+    private Target CiDotnetCoreWorkspaceAdaptersDirect => _ => _
+        .DependsOn(DotnetCoreWorkspaceAdaptersDirectTest);
 
-    private Target CiDotnetCoreWorkspaceJsonNewtonsoft => _ => _
-        .DependsOn(DotnetCoreWorkspaceJsonNewtonsoftWebClientTest);
+    private Target CiDotnetCoreWorkspaceAdaptersJsonNewtonsoft => _ => _
+        .DependsOn(DotnetCoreWorkspaceAdaptersJsonNewtonsoftTest);
 
-    private Target CiDotnetCoreWorkspaceJsonSystemText => _ => _
-        .DependsOn(DotnetCoreWorkspaceJsonSystemTextHttpClientTest);
+    private Target CiDotnetCoreWorkspaceAdaptersJsonSystemText => _ => _
+        .DependsOn(DotnetCoreWorkspaceAdaptersJsonSystemTextTest);
 
     private Target CiTypescriptWorkspace => _ => _
         .DependsOn(TypescriptInstall)

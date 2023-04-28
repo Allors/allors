@@ -26,12 +26,12 @@ stages:
           target: 'CiDotnetCoreDatabase'
         dotnet_core_workspace:
           target: 'CiDotnetCoreWorkspace'
-        dotnet_core_workspace_direct:
-          target: 'CiDotnetCoreWorkspaceDirect'
-        dotnet_core_workspace_json_newtonsoft:
-          target: 'CiDotnetCoreWorkspaceJsonNewtonsoft'
-        dotnet_core_workspace_json_systemtext:
-          target: 'CiDotnetCoreWorkspaceJsonSystemText'
+        dotnet_core_workspace_adapters_direct:
+          target: 'CiDotnetCoreWorkspaceAdaptersDirect'
+        dotnet_core_workspace_adapters_json_newtonsoft:
+          target: 'CiDotnetCoreWorkspaceAdaptersJsonNewtonsoft'
+        dotnet_core_workspace_adapters_json_systemtext:
+          target: 'CiDotnetCoreWorkspaceAdaptersJsonSystemText'
         typescript_workspace:
           target: 'CiTypescriptWorkspace'
         typescript_workspace_adapters_json:
