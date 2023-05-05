@@ -19,20 +19,20 @@ namespace Allors.Database.Domain.Tests
             this.Transaction.Derive();
             this.Transaction.Commit();
 
-            foreach (var session in new[] { this.Transaction })
+            foreach (var transaction in new[] { this.Transaction })
             {
-                session.Commit();
+                transaction.Commit();
 
-                var cachedOrganization = new Organizations(session).Cache[existingOrganization.UniqueId];
+                var cachedOrganization = new Organizations(transaction).Cache[existingOrganization.UniqueId];
                 Assert.Equal(existingOrganization.UniqueId, cachedOrganization.UniqueId);
-                Assert.Same(session, cachedOrganization.Strategy.Transaction);
+                Assert.Same(transaction, cachedOrganization.Strategy.Transaction);
 
                 var newOrganization = this.BuildOrganization("new organization");
-                cachedOrganization = new Organizations(session).Cache[newOrganization.UniqueId];
+                cachedOrganization = new Organizations(transaction).Cache[newOrganization.UniqueId];
                 Assert.Equal(newOrganization.UniqueId, cachedOrganization.UniqueId);
-                Assert.Same(session, cachedOrganization.Strategy.Transaction);
+                Assert.Same(transaction, cachedOrganization.Strategy.Transaction);
 
-                session.Rollback();
+                transaction.Rollback();
             }
         }
     }

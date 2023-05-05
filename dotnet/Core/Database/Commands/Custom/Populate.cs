@@ -27,12 +27,12 @@ namespace Commands
             var config = new Config { DataPath = this.Parent.DataPath };
             new Setup(database, config).Apply();
 
-            using (var session = database.CreateTransaction())
+            using (var transaction = database.CreateTransaction())
             {
-                new Allors.Database.Domain.Upgrade(session, this.Parent.DataPath).Execute();
+                new Allors.Database.Domain.Upgrade(transaction, this.Parent.DataPath).Execute();
 
-                session.Derive();
-                session.Commit();
+                transaction.Derive();
+                transaction.Commit();
             }
 
             this.Logger.Info("End");

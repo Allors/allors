@@ -84,13 +84,13 @@ namespace Allors.Workspace.Adapters
         }
 
         /// <summary>
-        /// Creates a new <see cref="SessionObject"/> given the <see cref="SessionObject"/>.
+        /// Creates a new <see cref="Object"/> given the <see cref="Object"/>.
         /// </summary>
         /// <param name="strategy">
         /// The strategy.
         /// </param>
         /// <returns>
-        /// The new <see cref="SessionObject"/>.
+        /// The new <see cref="Object"/>.
         /// </returns>
         public IObject Create(IStrategy strategy)
         {

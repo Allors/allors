@@ -23,11 +23,11 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
 
-            var newObject = session.Create<C1>();
+            var newObject = workspace.Create<C1>();
 
-            var result = await session.PushAsync();
+            var result = await workspace.PushAsync();
             Assert.False(result.HasErrors);
 
             foreach (var roleType in this.M.C1.RoleTypes)
@@ -56,14 +56,14 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
 
-            var newObject = session.Create<C1>();
+            var newObject = workspace.Create<C1>();
 
-            var result = await session.PushAsync();
+            var result = await workspace.PushAsync();
             Assert.False(result.HasErrors);
 
-            await session.PullAsync(new Pull { Object = newObject });
+            await workspace.PullAsync(new Pull { Object = newObject });
 
             foreach (var roleType in this.M.C1.RoleTypes)
             {
@@ -91,15 +91,15 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
 
-            var newObject = session.Create<C1>();
+            var newObject = workspace.Create<C1>();
             newObject.C1AllorsString = "A new object";
 
-            var result = await session.PushAsync();
+            var result = await workspace.PushAsync();
             Assert.False(result.HasErrors);
 
-            await session.PullAsync(new Pull { Object = newObject });
+            await workspace.PullAsync(new Pull { Object = newObject });
 
             Assert.Equal("A new object", newObject.C1AllorsString);
         }
@@ -109,7 +109,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
 
             var pull = new Pull
             {
@@ -119,15 +119,15 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
             var c1a = result.GetCollection<C1>()[0];
 
             c1a.C1AllorsString = "X";
 
             Assert.Equal("X", c1a.C1AllorsString);
 
-            await session.PushAsync();
-            await session.PullAsync(pull);
+            await workspace.PushAsync();
+            await workspace.PullAsync(pull);
 
             Assert.Equal("X", c1a.C1AllorsString);
         }
@@ -137,34 +137,32 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
 
             var pull = new Pull
             {
                 Extent = new Filter(this.M.C1)
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             var c1a = result.GetCollection<C1>().First(v => v.Name.Equals("c1A"));
 
             c1a.C1AllorsString = "X";
 
-            var changeSet = session.Checkpoint();
+            var changeSet = workspace.Checkpoint();
 
             Assert.Single(changeSet.AssociationsByRoleType);
 
-            await session.PushAsync();
+            await workspace.PushAsync();
 
-            var session2 = this.Workspace;
-
-            result = await session2.PullAsync(new Pull { Object = c1a });
+            result = await workspace.PullAsync(new Pull { Object = c1a });
 
             var c1aSession2 = result.GetObject<C1>();
 
             Assert.Equal("X", c1aSession2.C1AllorsString);
 
-            result = await session.PullAsync(new Pull { Object = c1a });
+            result = await workspace.PullAsync(new Pull { Object = c1a });
 
             var c1aSession1 = result.GetObject<C1>();
 
@@ -176,15 +174,15 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
 
-            var person = session.Create<Person>();
+            var person = workspace.Create<Person>();
             person.FirstName = "Johny";
             person.LastName = "Doey";
 
             Assert.True(person.Id < 0);
 
-            Assert.False((await session.PushAsync()).HasErrors);
+            Assert.False((await workspace.PushAsync()).HasErrors);
 
             Assert.True(person.Id > 0);
         }
@@ -194,15 +192,15 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
 
-            var person = session.Create<Person>();
+            var person = workspace.Create<Person>();
             person.FirstName = "Johny";
             person.LastName = "Doey";
 
             Assert.Equal(Version.WorkspaceInitial.Value, person.Strategy.Version);
 
-            Assert.False((await session.PushAsync()).HasErrors);
+            Assert.False((await workspace.PushAsync()).HasErrors);
 
             Assert.Equal(Version.WorkspaceInitial.Value, person.Strategy.Version);
         }
@@ -212,20 +210,20 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
 
-            var person = session.Create<Person>();
+            var person = workspace.Create<Person>();
             person.FirstName = "Johny";
             person.LastName = "Doey";
 
-            Assert.False((await session.PushAsync()).HasErrors);
+            Assert.False((await workspace.PushAsync()).HasErrors);
 
             var pull = new Pull
             {
                 Object = person
             };
 
-            Assert.False((await session.PullAsync(pull)).HasErrors);
+            Assert.False((await workspace.PullAsync(pull)).HasErrors);
 
             Assert.Equal("Johny Doey", person.DomainFullName);
         }
@@ -235,16 +233,16 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
 
-            var c1x = session.Create<C1>();
-            var c1y = session.Create<C1>();
+            var c1x = workspace.Create<C1>();
+            var c1y = workspace.Create<C1>();
             c1x.C1C1Many2One = c1y;
 
-            var pushResult = await session.PushAsync();
+            var pushResult = await workspace.PushAsync();
             Assert.False(pushResult.HasErrors);
 
-            pushResult = await session.PushAsync();
+            pushResult = await workspace.PushAsync();
             Assert.False(pushResult.HasErrors);
         }
     }

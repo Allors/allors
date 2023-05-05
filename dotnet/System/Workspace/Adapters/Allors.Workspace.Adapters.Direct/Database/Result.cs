@@ -18,27 +18,27 @@ namespace Allors.Workspace.Adapters.Direct
 
         private IList<IObject> mergeErrors;
 
-        protected Result(Workspace session)
+        protected Result(Workspace workspace)
         {
-            this.Session = session;
+            this.Workspace = workspace;
             this.accessErrorStrategies = new List<Strategy>();
             this.databaseMissingIds = new List<long>();
             this.versionErrors = new List<long>();
         }
 
-        protected Workspace Session { get; }
+        protected Workspace Workspace { get; }
 
         public string ErrorMessage { get; set; }
 
-        public IEnumerable<IObject> VersionErrors => this.versionErrors?.Select(v => this.Session.Instantiate<IObject>(v));
+        public IEnumerable<IObject> VersionErrors => this.versionErrors?.Select(v => this.Workspace.Instantiate<IObject>(v));
 
         public IEnumerable<IObject> AccessErrors => this.accessErrorStrategies?.Select(v => v.Object);
 
-        public IEnumerable<IObject> MissingErrors => this.Session.Instantiate<IObject>(this.databaseMissingIds);
+        public IEnumerable<IObject> MissingErrors => this.Workspace.Instantiate<IObject>(this.databaseMissingIds);
 
         public IEnumerable<IDerivationError> DerivationErrors => this.derivationErrors
             ?.Select<Database.Derivations.IDerivationError, IDerivationError>(v =>
-                new DerivationError(this.Session, v)).ToArray();
+                new DerivationError(this.Workspace, v)).ToArray();
 
         public IEnumerable<IObject> MergeErrors => this.mergeErrors ?? Array.Empty<IObject>();
 

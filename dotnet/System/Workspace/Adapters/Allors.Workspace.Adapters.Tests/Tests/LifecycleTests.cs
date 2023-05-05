@@ -27,16 +27,16 @@ namespace Allors.Workspace.Adapters.Tests
         [Fact]
         public async void PullSameSessionNotPushedException()
         {
-            var session = this.Workspace;
+            var workspace = this.Workspace;
 
-            var c1 = session.Create<C1>();
+            var c1 = workspace.Create<C1>();
             Assert.NotNull(c1);
 
             bool hasErrors;
 
             try
             {
-                var result = await session.PullAsync(new Pull { Object = c1 });
+                var result = await workspace.PullAsync(new Pull { Object = c1 });
                 hasErrors = false;
             }
             catch (Exception)
@@ -48,20 +48,18 @@ namespace Allors.Workspace.Adapters.Tests
         }
 
         [Fact]
-        public async void PullOtherSessionNotPushedException()
+        public async void PullNotPushedException()
         {
-            var session1 = this.Workspace;
+            var workspace = this.Workspace;
 
-            var c1 = session1.Create<C1>();
+            var c1 = workspace.Create<C1>();
             Assert.NotNull(c1);
-
-            var session2 = this.Workspace;
 
             bool hasErrors;
 
             try
             {
-                var result = await session2.PullAsync(new Pull { Object = c1 });
+                var result = await workspace.PullAsync(new Pull { Object = c1 });
                 hasErrors = false;
             }
             catch (Exception)

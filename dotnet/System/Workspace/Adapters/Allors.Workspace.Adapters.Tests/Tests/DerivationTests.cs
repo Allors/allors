@@ -30,8 +30,8 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var session = this.Workspace;
-            var result = await session.PullAsync(pull);
+            var workspace = this.Workspace;
+            var result = await workspace.PullAsync(pull);
 
             var people = result.GetCollection<Person>();
 

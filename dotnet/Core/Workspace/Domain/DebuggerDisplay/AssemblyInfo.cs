@@ -12,8 +12,8 @@ using static DebuggerDisplayConstants;
 [assembly: DebuggerDisplay("[Key={Key}, Value={Value}]", Target = typeof(KeyValuePair<,>))]
 
 // Allors
-[assembly: DebuggerDisplay("{Name}" + id + session, Target = typeof(Organization))]
-[assembly: DebuggerDisplay("{FirstName}" + id + session, Target = typeof(Person))]
+[assembly: DebuggerDisplay("{Name}" + id + workspace, Target = typeof(Organization))]
+[assembly: DebuggerDisplay("{FirstName}" + id + workspace, Target = typeof(Person))]
 
-[assembly: DebuggerDisplay("{Name}" + id + session, Target = typeof(C1))]
-[assembly: DebuggerDisplay("{Name}" + id + session, Target = typeof(C2))]
+[assembly: DebuggerDisplay("{Name}" + id + workspace, Target = typeof(C1))]
+[assembly: DebuggerDisplay("{Name}" + id + workspace, Target = typeof(C2))]

@@ -50,7 +50,7 @@ namespace Allors.Workspace.Adapters
 
         protected Dictionary<long, Strategy> StrategyByWorkspaceId { get; }
 
-        public override string ToString() => $"session: {base.ToString()}";
+        public override string ToString() => $"workspace: {base.ToString()}";
 
         internal static bool IsNewId(long id) => id < 0;
 

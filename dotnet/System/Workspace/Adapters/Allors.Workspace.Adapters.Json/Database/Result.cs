@@ -18,23 +18,23 @@ namespace Allors.Workspace.Adapters.Json
 
         private IList<IObject> mergeErrors;
 
-        protected Result(IWorkspace session, Response response)
+        protected Result(IWorkspace workspace, Response response)
         {
-            this.Session = session;
+            this.Workspace = workspace;
             this.response = response;
         }
 
-        public IWorkspace Session { get; }
+        public IWorkspace Workspace { get; }
 
         public bool HasErrors => this.response.HasErrors || this.mergeErrors?.Count > 0;
 
         public string ErrorMessage => this.response._e;
 
-        public IEnumerable<IObject> VersionErrors => this.response._v != null ? this.Session.Instantiate<IObject>(this.response._v) : Array.Empty<IObject>();
+        public IEnumerable<IObject> VersionErrors => this.response._v != null ? this.Workspace.Instantiate<IObject>(this.response._v) : Array.Empty<IObject>();
 
-        public IEnumerable<IObject> AccessErrors => this.response._a != null ? this.Session.Instantiate<IObject>(this.response._a) : Array.Empty<IObject>();
+        public IEnumerable<IObject> AccessErrors => this.response._a != null ? this.Workspace.Instantiate<IObject>(this.response._a) : Array.Empty<IObject>();
 
-        public IEnumerable<IObject> MissingErrors => this.response._m != null ? this.Session.Instantiate<IObject>(this.response._m) : Array.Empty<IObject>();
+        public IEnumerable<IObject> MissingErrors => this.response._m != null ? this.Workspace.Instantiate<IObject>(this.response._m) : Array.Empty<IObject>();
 
         public IEnumerable<IDerivationError> DerivationErrors
         {
@@ -48,7 +48,7 @@ namespace Allors.Workspace.Adapters.Json
                 if (this.response._d?.Length > 0)
                 {
                     return this.derivationErrors ??= this.response._d
-                        .Select(v => (IDerivationError)new DerivationError(this.Session, v)).ToArray();
+                        .Select(v => (IDerivationError)new DerivationError(this.Workspace, v)).ToArray();
                 }
 
                 return this.derivationErrors;

@@ -22,9 +22,9 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
 
-            var changeSet = session.Checkpoint();
+            var changeSet = workspace.Checkpoint();
 
             Assert.Empty(changeSet.Instantiated);
         }
@@ -34,12 +34,12 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
 
             var pull = new Pull { Extent = new Filter(this.M.C1) { Predicate = new Equals(this.M.C1.Name) { Value = "c1A" } } };
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
-            var changeSet = session.Checkpoint();
+            var changeSet = workspace.Checkpoint();
 
             Assert.Single(changeSet.Instantiated);
 
@@ -54,17 +54,17 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
 
             var pull = new Pull { Extent = new Filter(this.M.C1) { Predicate = new Equals(this.M.C1.Name) { Value = "c1A" } } };
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
             var c1a = result.GetCollection<C1>()[0];
 
             c1a.C1AllorsString = "X";
 
-            await session.PushAsync();
+            await workspace.PushAsync();
 
-            var changeSet = session.Checkpoint();
+            var changeSet = workspace.Checkpoint();
 
             Assert.Single(changeSet.AssociationsByRoleType);
         }
@@ -74,25 +74,25 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
 
             var pull = new Pull { Extent = new Filter(this.M.C1) { Predicate = new Equals(this.M.C1.Name) { Value = "c1A" } } };
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
             var c1a_1 = result.GetCollection<C1>()[0];
 
             c1a_1.C1AllorsString = "X";
 
-            await session.PushAsync();
+            await workspace.PushAsync();
 
-            var changeSet = session.Checkpoint();
+            var changeSet = workspace.Checkpoint();
             Assert.Single(changeSet.AssociationsByRoleType);
 
-            result = await session.PullAsync(pull);
+            result = await workspace.PullAsync(pull);
             var c1a_2 = result.GetCollection<C1>()[0];
 
             c1a_2.C1AllorsString = "Y";
 
-            changeSet = session.Checkpoint();
+            changeSet = workspace.Checkpoint();
 
             Assert.Single(changeSet.AssociationsByRoleType);
         }
@@ -102,27 +102,27 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
 
             var pull = new Pull { Extent = new Filter(this.M.C1) { Predicate = new Equals(this.M.C1.Name) { Value = "c1A" } } };
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
             var c1a_1 = result.GetCollection<C1>()[0];
 
             c1a_1.C1AllorsString = "X";
 
-            await session.PushAsync();
+            await workspace.PushAsync();
 
-            var changeSet = session.Checkpoint();
+            var changeSet = workspace.Checkpoint();
             Assert.Single(changeSet.AssociationsByRoleType);
 
-            result = await session.PullAsync(pull);
+            result = await workspace.PullAsync(pull);
             var c1a_2 = result.GetCollection<C1>()[0];
 
             c1a_2.C1AllorsString = "Y";
 
-            await session.PushAsync();
+            await workspace.PushAsync();
 
-            changeSet = session.Checkpoint();
+            changeSet = workspace.Checkpoint();
 
             Assert.Single(changeSet.AssociationsByRoleType);
         }
@@ -132,17 +132,17 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
 
-            var c1a = session.Create<C1>();
+            var c1a = workspace.Create<C1>();
 
-            await session.PushAsync();
-            var changeSet = session.Checkpoint();
+            await workspace.PushAsync();
+            var changeSet = workspace.Checkpoint();
 
             Assert.Single(changeSet.Created);
 
-            await session.PushAsync();
-            changeSet = session.Checkpoint();
+            await workspace.PushAsync();
+            changeSet = workspace.Checkpoint();
             Assert.Empty(changeSet.Created);
         }
 
@@ -151,19 +151,19 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
 
             var pull = new Pull { Extent = new Filter(this.M.C1) { Predicate = new Equals(this.M.C1.Name) { Value = "c1A" } } };
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
             var c1a = result.GetCollection<C1>()[0];
 
             c1a.C1AllorsString = "X";
 
-            await session.PushAsync();
+            await workspace.PushAsync();
 
-            await session.PullAsync(pull);
+            await workspace.PullAsync(pull);
 
-            var changeSet = session.Checkpoint();
+            var changeSet = workspace.Checkpoint();
 
             Assert.Single(changeSet.AssociationsByRoleType);
         }
@@ -173,22 +173,22 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
 
             var pull = new Pull { Extent = new Filter(this.M.C1) { Predicate = new Equals(this.M.C1.Name) { Value = "c1A" } } };
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
             var c1a = result.GetCollection<C1>()[0];
 
-            await session.PushAsync();
-            await session.PullAsync(pull);
+            await workspace.PushAsync();
+            await workspace.PullAsync(pull);
 
-            var changeSet = session.Checkpoint();
+            var changeSet = workspace.Checkpoint();
 
             Assert.Empty(changeSet.Created);
             Assert.Empty(changeSet.AssociationsByRoleType);
 
-            await session.PushAsync();
-            changeSet = session.Checkpoint();
+            await workspace.PushAsync();
+            changeSet = workspace.Checkpoint();
 
             Assert.Empty(changeSet.Created);
             Assert.Empty(changeSet.AssociationsByRoleType);
@@ -199,19 +199,19 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
 
             var pull = new Pull { Extent = new Filter(this.M.C1) { Predicate = new Equals(this.M.C1.Name) { Value = "c1A" } } };
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
             var c1a = result.GetCollection<C1>()[0];
-            var c1b = session.Create<C1>();
-            var c1c = session.Create<C1>();
+            var c1b = workspace.Create<C1>();
+            var c1c = workspace.Create<C1>();
 
-            session.Checkpoint();
+            workspace.Checkpoint();
 
             c1a.C1C1One2One = c1b;
 
-            var changeSet = session.Checkpoint();
+            var changeSet = workspace.Checkpoint();
 
             Assert.Empty(changeSet.Created);
             Assert.Single(changeSet.AssociationsByRoleType);
@@ -219,7 +219,7 @@ namespace Allors.Workspace.Adapters.Tests
 
             c1a.C1C1One2One = c1c;
 
-            changeSet = session.Checkpoint();
+            changeSet = workspace.Checkpoint();
 
             Assert.Empty(changeSet.Created);
             Assert.Single(changeSet.AssociationsByRoleType);
@@ -231,25 +231,25 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
 
             var pull = new Pull { Extent = new Filter(this.M.C1) { Predicate = new Equals(this.M.C1.Name) { Value = "c1A" } } };
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
             var c1a = result.GetCollection<C1>()[0];
-            var c1b = session.Create<C1>();
+            var c1b = workspace.Create<C1>();
 
             c1a.C1C1One2One = c1b;
 
-            await session.PushAsync();
+            await workspace.PushAsync();
 
-            var changeSet = session.Checkpoint();
+            var changeSet = workspace.Checkpoint();
 
             Assert.Single(changeSet.Created);
             Assert.Single(changeSet.AssociationsByRoleType);
             Assert.Single(changeSet.RolesByAssociationType);
 
-            await session.PushAsync();
-            changeSet = session.Checkpoint();
+            await workspace.PushAsync();
+            changeSet = workspace.Checkpoint();
 
             Assert.Empty(changeSet.Created);
             Assert.Empty(changeSet.AssociationsByRoleType);
@@ -261,24 +261,24 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
 
             var pull = new Pull { Extent = new Filter(this.M.C1) { Predicate = new Equals(this.M.C1.Name) { Value = "c1A" } } };
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
             var c1a = result.GetCollection<C1>().First();
-            var c1b = session.Create<C1>();
+            var c1b = workspace.Create<C1>();
 
             c1a.C1C1One2One = c1b;
 
-            await session.PushAsync();
-            await session.PullAsync(pull);
-            session.Checkpoint();
+            await workspace.PushAsync();
+            await workspace.PullAsync(pull);
+            workspace.Checkpoint();
 
             c1a.RemoveC1C1One2One();
 
-            await session.PushAsync();
+            await workspace.PushAsync();
 
-            var changeSet = session.Checkpoint();
+            var changeSet = workspace.Checkpoint();
 
             Assert.Single(changeSet.AssociationsByRoleType);
             Assert.Single(changeSet.RolesByAssociationType);
@@ -289,25 +289,25 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
 
             var pull = new Pull { Extent = new Filter(this.M.C1) { Predicate = new Equals(this.M.C1.Name) { Value = "c1A" } } };
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
             var c1a = result.GetCollection<C1>()[0];
-            var c1b = session.Create<C1>();
+            var c1b = workspace.Create<C1>();
 
             c1a.C1C1Many2One = c1b;
 
-            await session.PushAsync();
+            await workspace.PushAsync();
 
-            var changeSet = session.Checkpoint();
+            var changeSet = workspace.Checkpoint();
 
             Assert.Single(changeSet.Created);
             Assert.Single(changeSet.AssociationsByRoleType);
             Assert.Single(changeSet.RolesByAssociationType);
 
-            await session.PushAsync();
-            changeSet = session.Checkpoint();
+            await workspace.PushAsync();
+            changeSet = workspace.Checkpoint();
 
             Assert.Empty(changeSet.Created);
             Assert.Empty(changeSet.AssociationsByRoleType);
@@ -319,35 +319,35 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
 
             var pull = new Pull { Extent = new Filter(this.M.C1) { Predicate = new Equals(this.M.C1.Name) { Value = "c1A" } } };
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
             var c1a = result.GetCollection<C1>().First();
-            var c1b = session.Create<C1>();
+            var c1b = workspace.Create<C1>();
 
-            await session.PushAsync();
-            result = await session.PullAsync(new Pull { Object = c1b });
+            await workspace.PushAsync();
+            result = await workspace.PullAsync(new Pull { Object = c1b });
 
             c1b = result.GetObject<C1>();
 
             c1a.C1C1Many2One = c1b;
 
-            await session.PushAsync();
+            await workspace.PushAsync();
 
-            var changeSet = session.Checkpoint();
+            var changeSet = workspace.Checkpoint();
 
             Assert.Single(changeSet.Created);
             Assert.Single(changeSet.AssociationsByRoleType);
             Assert.Single(changeSet.RolesByAssociationType);
 
-            result = await session.PullAsync(pull);
+            result = await workspace.PullAsync(pull);
 
             c1a.RemoveC1C1Many2One();
 
-            await session.PushAsync();
+            await workspace.PushAsync();
 
-            changeSet = session.Checkpoint();
+            changeSet = workspace.Checkpoint();
 
             Assert.Single(changeSet.AssociationsByRoleType);
             Assert.Single(changeSet.RolesByAssociationType);
@@ -358,25 +358,25 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
 
             var pull = new Pull { Extent = new Filter(this.M.C1) { Predicate = new Equals(this.M.C1.Name) { Value = "c1A" } } };
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
             var c1a = result.GetCollection<C1>()[0];
-            var c1b = session.Create<C1>();
+            var c1b = workspace.Create<C1>();
 
             c1a.AddC1C1One2Many(c1b);
 
-            await session.PushAsync();
+            await workspace.PushAsync();
 
-            var changeSet = session.Checkpoint();
+            var changeSet = workspace.Checkpoint();
 
             Assert.Single(changeSet.Created);
             Assert.Single(changeSet.AssociationsByRoleType);
             Assert.Single(changeSet.RolesByAssociationType);
 
-            await session.PushAsync();
-            changeSet = session.Checkpoint();
+            await workspace.PushAsync();
+            changeSet = workspace.Checkpoint();
 
             Assert.Empty(changeSet.Created);
             Assert.Empty(changeSet.AssociationsByRoleType);
@@ -388,30 +388,30 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
 
             var pull = new Pull { Extent = new Filter(this.M.C1) { Predicate = new Equals(this.M.C1.Name) { Value = "c1A" } } };
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
             var c1a = result.GetCollection<C1>().First();
-            var c1b = session.Create<C1>();
+            var c1b = workspace.Create<C1>();
 
             c1a.AddC1C1One2Many(c1b);
 
-            await session.PushAsync();
+            await workspace.PushAsync();
 
-            var changeSet = session.Checkpoint();
+            var changeSet = workspace.Checkpoint();
 
             Assert.Single(changeSet.Created);
             Assert.Single(changeSet.AssociationsByRoleType);
             Assert.Single(changeSet.RolesByAssociationType);
 
-            result = await session.PullAsync(pull);
+            result = await workspace.PullAsync(pull);
 
             c1a.RemoveC1C1One2Manies();
 
-            await session.PushAsync();
+            await workspace.PushAsync();
 
-            changeSet = session.Checkpoint();
+            changeSet = workspace.Checkpoint();
 
             Assert.Single(changeSet.AssociationsByRoleType);
             Assert.Single(changeSet.RolesByAssociationType);
@@ -422,18 +422,18 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
 
             var pull = new Pull { Extent = new Filter(this.M.C1) { Predicate = new Equals(this.M.C1.Name) { Value = "c1A" } } };
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
             var c1a = result.GetCollection<C1>()[0];
-            var c1b = session.Create<C1>();
+            var c1b = workspace.Create<C1>();
 
-            session.Checkpoint();
+            workspace.Checkpoint();
 
             c1a.AddC1C1Many2Many(c1b);
 
-            var changeSet = session.Checkpoint();
+            var changeSet = workspace.Checkpoint();
 
             Assert.Empty(changeSet.Created);
             Assert.Single(changeSet.AssociationsByRoleType);
@@ -441,7 +441,7 @@ namespace Allors.Workspace.Adapters.Tests
 
             c1a.RemoveC1C1Many2Many(c1b);
 
-            changeSet = session.Checkpoint();
+            changeSet = workspace.Checkpoint();
 
             Assert.Empty(changeSet.Created);
             Assert.Single(changeSet.AssociationsByRoleType);
@@ -453,25 +453,25 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
 
             var pull = new Pull { Extent = new Filter(this.M.C1) { Predicate = new Equals(this.M.C1.Name) { Value = "c1A" } } };
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
             var c1a = result.GetCollection<C1>()[0];
-            var c1b = session.Create<C1>();
+            var c1b = workspace.Create<C1>();
 
             c1a.AddC1C1Many2Many(c1b);
 
-            await session.PushAsync();
+            await workspace.PushAsync();
 
-            var changeSet = session.Checkpoint();
+            var changeSet = workspace.Checkpoint();
 
             Assert.Single(changeSet.Created);
             Assert.Single(changeSet.AssociationsByRoleType);
             Assert.Single(changeSet.RolesByAssociationType);
 
-            await session.PushAsync();
-            changeSet = session.Checkpoint();
+            await workspace.PushAsync();
+            changeSet = workspace.Checkpoint();
 
             Assert.Empty(changeSet.Created);
             Assert.Empty(changeSet.AssociationsByRoleType);
@@ -483,38 +483,38 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
 
             var pull = new Pull { Extent = new Filter(this.M.C1) { Predicate = new Equals(this.M.C1.Name) { Value = "c1A" } } };
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
             var c1a = result.GetCollection<C1>().First();
-            var c1b = session.Create<C1>();
+            var c1b = workspace.Create<C1>();
 
             c1a.AddC1C1Many2Many(c1b);
 
-            await session.PushAsync();
+            await workspace.PushAsync();
 
-            var changeSet = session.Checkpoint();
+            var changeSet = workspace.Checkpoint();
 
             Assert.Single(changeSet.Created);
             Assert.Single(changeSet.AssociationsByRoleType);
             Assert.Single(changeSet.RolesByAssociationType);
 
-            await session.PushAsync();
-            changeSet = session.Checkpoint();
+            await workspace.PushAsync();
+            changeSet = workspace.Checkpoint();
 
             Assert.Empty(changeSet.Created);
             Assert.Empty(changeSet.AssociationsByRoleType);
             Assert.Empty(changeSet.RolesByAssociationType);
 
-            result = await session.PullAsync(pull);
+            result = await workspace.PullAsync(pull);
             Assert.False(result.HasErrors);
 
             c1a.RemoveC1C1Many2Manies();
 
-            await session.PushAsync();
+            await workspace.PushAsync();
 
-            changeSet = session.Checkpoint();
+            changeSet = workspace.Checkpoint();
 
             Assert.Single(changeSet.AssociationsByRoleType);
             Assert.Single(changeSet.RolesByAssociationType);
@@ -525,11 +525,11 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
 
-            await session.PullAsync();
+            await workspace.PullAsync();
 
-            var changeSet = session.Checkpoint();
+            var changeSet = workspace.Checkpoint();
             Assert.Empty(changeSet.AssociationsByRoleType);
             Assert.Empty(changeSet.RolesByAssociationType);
             Assert.Empty(changeSet.Instantiated);
@@ -541,31 +541,31 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
 
             var pull = new Pull { Extent = new Filter(this.M.C1) { Predicate = new Equals(this.M.C1.Name) { Value = "c1A" } } };
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
             var c1a_1 = result.GetCollection<C1>()[0];
 
-            session.Checkpoint();
+            workspace.Checkpoint();
 
             c1a_1.C1AllorsString = "X";
 
-            await session.PushAsync();
+            await workspace.PushAsync();
 
-            result = await session.PullAsync(pull);
+            result = await workspace.PullAsync(pull);
             Assert.False(result.HasErrors);
 
             var c1a_2 = result.GetCollection<C1>()[0];
 
             c1a_2.C1AllorsString = "Y";
 
-            await session.PushAsync();
+            await workspace.PushAsync();
 
             c1a_2.Strategy.Reset();
             c1a_2.Strategy.Reset();
 
-            var changeSet = session.Checkpoint();
+            var changeSet = workspace.Checkpoint();
 
             Assert.Empty(changeSet.Created);
             Assert.Empty(changeSet.Instantiated);
@@ -578,31 +578,31 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
 
             var pull = new Pull { Extent = new Filter(this.M.C1) { Predicate = new Equals(this.M.C1.Name) { Value = "c1A" } } };
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
             var c1a_1 = result.GetCollection<C1>()[0];
 
-            session.Checkpoint();
+            workspace.Checkpoint();
 
             c1a_1.C1AllorsString = "X";
 
-            await session.PushAsync();
+            await workspace.PushAsync();
 
-            result = await session.PullAsync(pull);
+            result = await workspace.PullAsync(pull);
             Assert.False(result.HasErrors);
 
             var c1a_2 = result.GetCollection<C1>()[0];
 
             c1a_2.C1AllorsString = "Y";
 
-            await session.PushAsync();
+            await workspace.PushAsync();
 
             c1a_2.Strategy.Reset();
             c1a_2.Strategy.Reset();
 
-            var changeSet = session.Checkpoint();
+            var changeSet = workspace.Checkpoint();
 
             Assert.Empty(changeSet.Created);
             Assert.Empty(changeSet.Instantiated);

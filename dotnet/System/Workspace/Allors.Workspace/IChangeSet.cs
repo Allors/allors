@@ -13,20 +13,20 @@ namespace Allors.Workspace
     /// <summary>
     /// A change set is created during a checkpoint
     /// and contains all changes that have
-    /// occurred in a session starting
-    /// from the beginning of the session or from a
+    /// occurred in a workspace starting
+    /// from the beginning of the workspace or from a
     /// previous checkpoint.
     /// A change set can span (multiple) pull request.,
     /// The change set includes the internal changes
-    /// that happened in the session and
+    /// that happened in the workspace and
     /// the changes that are pulled in from a pull request.
     /// </summary>
     public interface IChangeSet
     {
         /// <summary>
-        /// Gets the session.
+        /// Gets the workspace.
         /// </summary>
-        IWorkspace Session { get; }
+        IWorkspace Workspace { get; }
 
         /// <summary>
         /// Gets the created objects.

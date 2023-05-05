@@ -23,49 +23,47 @@ namespace Allors.Workspace.Adapters.Tests
         public string Name { get; }
 
 
-        public IWorkspace Session1 { get; protected set; }
+        public IWorkspace Workspace1 { get; protected set; }
 
 
-        public IWorkspace Session2 { get; protected set; }
+        public IWorkspace Workspace2 { get; protected set; }
 
 
-        public void Deconstruct(out IWorkspace session1, out IWorkspace session2)
+        public void Deconstruct(out IWorkspace workspace1, out IWorkspace workspace2)
         {
-            session1 = this.Session1;
-            session2 = this.Session2;
+            workspace1 = this.Workspace1;
+            workspace2 = this.Workspace2;
         }
 
-        public async Task<T> Create<T>(IWorkspace session, DatabaseMode mode) where T : class, IObject
+        public async Task<T> Create<T>(IWorkspace workspace, DatabaseMode mode) where T : class, IObject
         {
-            var @class = (IClass)session.Configuration.ObjectFactory.GetObjectType<T>();
-
             T result;
             switch (mode)
             {
                 case DatabaseMode.NoPush:
-                    result = session.Create<T>();
+                    result = workspace.Create<T>();
                     break;
                 case DatabaseMode.Push:
-                    var pushObject = session.Create<T>();
-                    await session.PushAsync();
+                    var pushObject = workspace.Create<T>();
+                    await workspace.PushAsync();
                     result = pushObject;
                     break;
                 case DatabaseMode.PushAndPull:
-                    result = session.Create<T>();
-                    var pushResult = await session.PushAsync();
+                    result = workspace.Create<T>();
+                    var pushResult = await workspace.PushAsync();
                     Assert.False(pushResult.HasErrors);
-                    await session.PullAsync(new Pull { Object = result });
+                    await workspace.PullAsync(new Pull { Object = result });
                     break;
                 case DatabaseMode.SharedDatabase:
-                    var sharedDatabaseObject = this.Session1.Create<T>();
-                    await this.Session1.PushAsync();
-                    var sharedResult = await session.PullAsync(new Pull { Object = sharedDatabaseObject });
+                    var sharedDatabaseObject = this.Workspace1.Create<T>();
+                    await this.Workspace1.PushAsync();
+                    var sharedResult = await workspace.PullAsync(new Pull { Object = sharedDatabaseObject });
                     result = (T)sharedResult.Objects.Values.First();
                     break;
                 case DatabaseMode.ExclusiveDatabase:
-                    var exclusiveDatabaseObject = this.Session2.Create<T>();
-                    await this.Session2.PushAsync();
-                    var exclusiveResult = await session.PullAsync(new Pull { Object = exclusiveDatabaseObject });
+                    var exclusiveDatabaseObject = this.Workspace2.Create<T>();
+                    await this.Workspace2.PushAsync();
+                    var exclusiveResult = await workspace.PullAsync(new Pull { Object = exclusiveDatabaseObject });
                     result = (T)exclusiveResult.Objects.Values.First();
                     break;
                 default:

@@ -20,13 +20,13 @@ namespace Allors.Database.Domain.Tests
             this.Transaction.Derive();
             this.Transaction.Commit();
 
-            foreach (var session in new[] { this.Transaction })
+            foreach (var transaction in new[] { this.Transaction })
             {
-                session.Commit();
+                transaction.Commit();
 
                 var guest = new Users(this.Transaction).FindBy(this.M.User.UserName, "guest@example.com");
                 var acls = new DatabaseAccessControl(this.Security, guest);
-                foreach (Object aco in (IObject[])session.Extent(this.M.Organization))
+                foreach (Object aco in (IObject[])transaction.Extent(this.M.Organization))
                 {
                     // When
                     var accessList = acls[aco];
@@ -35,7 +35,7 @@ namespace Allors.Database.Domain.Tests
                     Assert.False(accessList.CanExecute(this.M.Organization.JustDoIt));
                 }
 
-                session.Rollback();
+                transaction.Rollback();
             }
         }
 
@@ -50,16 +50,16 @@ namespace Allors.Database.Domain.Tests
             this.Transaction.Derive();
             this.Transaction.Commit();
 
-            foreach (var session in new[] { this.Transaction })
+            foreach (var transaction in new[] { this.Transaction })
             {
-                session.Commit();
+                transaction.Commit();
 
                 var organization = this.BuildOrganization("Organization");
 
                 var token = this.BuildSecurityToken();
                 organization.AddSecurityToken(token);
 
-                var accessControl = (Grant)session.Instantiate(role.GrantsWhereRole.First());
+                var accessControl = (Grant)transaction.Instantiate(role.GrantsWhereRole.First());
                 token.AddGrant(accessControl);
 
                 this.Transaction.Derive();
@@ -70,7 +70,7 @@ namespace Allors.Database.Domain.Tests
 
                 Assert.True(acl.CanRead(this.M.Organization.Name));
 
-                session.Rollback();
+                transaction.Rollback();
             }
         }
 
@@ -87,16 +87,16 @@ namespace Allors.Database.Domain.Tests
             this.Transaction.Derive();
             this.Transaction.Commit();
 
-            foreach (var session in new[] { this.Transaction })
+            foreach (var transaction in new[] { this.Transaction })
             {
-                session.Commit();
+                transaction.Commit();
 
                 var organization = this.BuildOrganization("Organization");
 
                 var token = this.BuildSecurityToken();
                 organization.AddSecurityToken(token);
 
-                var accessControl = (Grant)session.Instantiate(role.GrantsWhereRole.First());
+                var accessControl = (Grant)transaction.Instantiate(role.GrantsWhereRole.First());
                 token.AddGrant(accessControl);
 
                 Assert.False(this.Transaction.Derive(false).HasErrors);
@@ -105,7 +105,7 @@ namespace Allors.Database.Domain.Tests
 
                 Assert.True(acl.CanRead(this.M.Organization.Name));
 
-                session.Rollback();
+                transaction.Rollback();
             }
         }
 
@@ -126,17 +126,17 @@ namespace Allors.Database.Domain.Tests
             this.BuildGrant(anotherPerson, databaseRole);
             this.Transaction.Commit();
 
-            foreach (var session in new[] { this.Transaction })
+            foreach (var transaction in new[] { this.Transaction })
             {
-                session.Commit();
+                transaction.Commit();
 
                 var organization = this.BuildOrganization("Organization");
 
                 var token = this.BuildSecurityToken();
                 organization.AddSecurityToken(token);
 
-                var role = (Role)session.Instantiate(new Roles(this.Transaction).FindBy(this.M.Role.Name, "Role"));
-                var accessControl = (Grant)session.Instantiate(role.GrantsWhereRole.First());
+                var role = (Role)transaction.Instantiate(new Roles(this.Transaction).FindBy(this.M.Role.Name, "Role"));
+                var accessControl = (Grant)transaction.Instantiate(role.GrantsWhereRole.First());
                 token.AddGrant(accessControl);
 
                 Assert.False(this.Transaction.Derive(false).HasErrors);
@@ -145,7 +145,7 @@ namespace Allors.Database.Domain.Tests
 
                 Assert.False(acl.CanRead(this.M.Organization.Name));
 
-                session.Rollback();
+                transaction.Rollback();
             }
         }
 
@@ -166,17 +166,17 @@ namespace Allors.Database.Domain.Tests
 
             this.Transaction.Commit();
 
-            foreach (var session in new[] { this.Transaction })
+            foreach (var transaction in new[] { this.Transaction })
             {
-                session.Commit();
+                transaction.Commit();
 
                 var organization = this.BuildOrganization("Organization");
 
                 var token = this.BuildSecurityToken();
                 organization.AddSecurityToken(token);
 
-                var role = (Role)session.Instantiate(new Roles(this.Transaction).FindBy(this.M.Role.Name, "Role"));
-                var accessControl = (Grant)session.Instantiate(role.GrantsWhereRole.First());
+                var role = (Role)transaction.Instantiate(new Roles(this.Transaction).FindBy(this.M.Role.Name, "Role"));
+                var accessControl = (Grant)transaction.Instantiate(role.GrantsWhereRole.First());
                 token.AddGrant(accessControl);
 
                 Assert.False(this.Transaction.Derive(false).HasErrors);
@@ -185,7 +185,7 @@ namespace Allors.Database.Domain.Tests
 
                 Assert.False(acl.CanRead(this.M.Organization.Name));
 
-                session.Rollback();
+                transaction.Rollback();
             }
         }
 
@@ -201,16 +201,16 @@ namespace Allors.Database.Domain.Tests
             this.Transaction.Derive();
             this.Transaction.Commit();
 
-            foreach (var session in new[] { this.Transaction })
+            foreach (var transaction in new[] { this.Transaction })
             {
-                session.Commit();
+                transaction.Commit();
 
                 var organization = this.BuildOrganization("Organization");
 
                 var token = this.BuildSecurityToken();
                 organization.AddSecurityToken(token);
 
-                var accessControl = (Grant)session.Instantiate(role.GrantsWhereRole.First());
+                var accessControl = (Grant)transaction.Instantiate(role.GrantsWhereRole.First());
                 token.AddGrant(accessControl);
 
                 this.Transaction.Derive();
@@ -227,7 +227,7 @@ namespace Allors.Database.Domain.Tests
 
                 Assert.False(acl.CanRead(this.M.Organization.Name));
 
-                session.Rollback();
+                transaction.Rollback();
             }
         }
 
@@ -242,17 +242,17 @@ namespace Allors.Database.Domain.Tests
             this.Transaction.Derive();
             this.Transaction.Commit();
 
-            foreach (var session in new[] { this.Transaction })
+            foreach (var transaction in new[] { this.Transaction })
             {
-                session.Commit();
+                transaction.Commit();
 
                 var organization = this.BuildOrganization("Organization");
 
                 var token = this.BuildSecurityToken();
                 organization.AddSecurityToken(token);
 
-                var role = (Role)session.Instantiate(new Roles(this.Transaction).FindBy(this.M.Role.Name, "Role"));
-                var accessControl = (Grant)session.Instantiate(role.GrantsWhereRole.First());
+                var role = (Role)transaction.Instantiate(new Roles(this.Transaction).FindBy(this.M.Role.Name, "Role"));
+                var accessControl = (Grant)transaction.Instantiate(role.GrantsWhereRole.First());
                 token.AddGrant(accessControl);
 
                 Assert.False(this.Transaction.Derive(false).HasErrors);
@@ -269,10 +269,8 @@ namespace Allors.Database.Domain.Tests
 
                 Assert.False(acl.CanRead(this.M.Organization.Name));
 
-                session.Rollback();
+                transaction.Rollback();
             }
         }
-
-
     }
 }

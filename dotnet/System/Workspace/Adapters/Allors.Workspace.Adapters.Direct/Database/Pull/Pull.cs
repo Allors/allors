@@ -26,9 +26,9 @@ namespace Allors.Workspace.Adapters.Direct
         private IDictionary<string, IObject[]> collections;
         private IDictionary<string, IObject> objects;
 
-        public Pull(Workspace session) : base(session)
+        public Pull(Workspace workspace) : base(workspace)
         {
-            this.Workspace = session;
+            this.Workspace = workspace;
             this.Transaction = this.Workspace.DatabaseConnection.CreateTransaction();
 
             var databaseServices = this.Workspace.DatabaseConnection.DatabaseServices;
@@ -96,11 +96,11 @@ namespace Allors.Workspace.Adapters.Direct
 
         public IDictionary<string, IObject[]> Collections =>
             this.collections ??= this.DatabaseCollectionsByName.ToDictionary(v => v.Key,
-                v => v.Value.Select(w => this.Session.Instantiate<IObject>(w.Id)).ToArray());
+                v => v.Value.Select(w => base.Workspace.Instantiate<IObject>(w.Id)).ToArray());
 
         public IDictionary<string, IObject> Objects =>
             this.objects ??= this.DatabaseObjectByName.ToDictionary(v => v.Key,
-                v => this.Session.Instantiate<IObject>(v.Value.Id));
+                v => base.Workspace.Instantiate<IObject>(v.Value.Id));
 
         public IDictionary<string, object> Values => this.ValueByName;
 

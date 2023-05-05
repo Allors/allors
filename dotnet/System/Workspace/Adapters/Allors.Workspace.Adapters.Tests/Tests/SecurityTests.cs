@@ -28,14 +28,14 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
 
             var pull = new Pull
             {
                 Extent = new Filter(this.M.C1)
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             var c1s = result.GetCollection<C1>("C1s");
             foreach (var c1 in result.GetCollection<C1>())
@@ -53,14 +53,14 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("noacl");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
 
             var pull = new Pull
             {
                 Extent = new Filter(this.M.C1)
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             foreach (var c1 in result.GetCollection<C1>())
             {
@@ -77,14 +77,14 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("noperm");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
 
             var pull = new Pull
             {
                 Extent = new Filter(this.M.C1)
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             foreach (var c1 in result.GetCollection<C1>())
             {
@@ -99,9 +99,9 @@ namespace Allors.Workspace.Adapters.Tests
         [Fact]
         public async void DeniedPermissions()
         {
-            var session = this.Workspace;
+            var workspace = this.Workspace;
 
-            var result = await session.PullAsync(new Pull { Extent = new Filter(this.M.Denied) });
+            var result = await workspace.PullAsync(new Pull { Extent = new Filter(this.M.Denied) });
 
             foreach (var denied in result.GetCollection<Denied>())
             {

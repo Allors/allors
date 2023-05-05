@@ -26,9 +26,9 @@ namespace Allors.Workspace.Adapters.Tests
         [Fact]
         public void SetUnitRoleWrongObjectType()
         {
-            var session1 = this.Workspace;
+            var workspace = this.Workspace;
 
-            var c1 = session1.Create<C1>();
+            var c1 = workspace.Create<C1>();
             Assert.NotNull(c1);
 
             bool hasErrors;
@@ -49,10 +49,10 @@ namespace Allors.Workspace.Adapters.Tests
         [Fact]
         public void SetCompositeRoleWrongObjectType()
         {
-            var session1 = this.Workspace;
+            var workspace = this.Workspace;
 
-            var c1 = session1.Create<C1>();
-            var c2 = session1.Create<C2>();
+            var c1 = workspace.Create<C1>();
+            var c2 = workspace.Create<C2>();
             Assert.NotNull(c1);
             Assert.NotNull(c2);
 
@@ -74,10 +74,10 @@ namespace Allors.Workspace.Adapters.Tests
         [Fact]
         public void SetCompositeRoleWrongRoleType()
         {
-            var session1 = this.Workspace;
+            var workspace = this.Workspace;
 
-            var c1 = session1.Create<C1>();
-            var c2 = session1.Create<C2>();
+            var c1 = workspace.Create<C1>();
+            var c2 = workspace.Create<C2>();
             Assert.NotNull(c1);
             Assert.NotNull(c2);
 
@@ -101,10 +101,10 @@ namespace Allors.Workspace.Adapters.Tests
         [Fact]
         public void AddCompositesRoleWrongObjectType()
         {
-            var session1 = this.Workspace;
+            var workspace = this.Workspace;
 
-            var c1 = session1.Create<C1>();
-            var c2 = session1.Create<C2>();
+            var c1 = workspace.Create<C1>();
+            var c2 = workspace.Create<C2>();
 
             bool hasErrors;
             try
@@ -123,10 +123,10 @@ namespace Allors.Workspace.Adapters.Tests
         [Fact]
         public void AddCompositesRoleWrongRoleType()
         {
-            var session1 = this.Workspace;
+            var workspace = this.Workspace;
 
-            var c1 = session1.Create<C1>();
-            var c2 = session1.Create<C2>();
+            var c1 = workspace.Create<C1>();
+            var c2 = workspace.Create<C2>();
             Assert.NotNull(c1);
             Assert.NotNull(c2);
 

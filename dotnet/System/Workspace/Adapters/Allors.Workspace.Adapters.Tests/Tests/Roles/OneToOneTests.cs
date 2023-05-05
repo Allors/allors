@@ -47,13 +47,13 @@ namespace Allors.Workspace.Adapters.Tests
                     foreach (var contextFactory in this.contextFactories)
                     {
                         var ctx = contextFactory();
-                        var (session1, session2) = ctx;
+                        var (workspace1, workspace2) = ctx;
 
-                        var c1x_1 = await ctx.Create<C1>(session1, mode1);
-                        var c1y_2 = await ctx.Create<C1>(session2, mode2);
+                        var c1x_1 = await ctx.Create<C1>(workspace1, mode1);
+                        var c1y_2 = await ctx.Create<C1>(workspace2, mode2);
 
-                        await session2.PushAsync();
-                        var result = await session1.PullAsync(new Pull { Object = c1y_2 });
+                        await workspace2.PushAsync();
+                        var result = await workspace1.PullAsync(new Pull { Object = c1y_2 });
 
                         var c1y_1 = (C1)result.Objects.Values.First();
 
@@ -61,7 +61,7 @@ namespace Allors.Workspace.Adapters.Tests
 
                         if (!c1x_1.CanWriteC1C1One2One)
                         {
-                            await session1.PullAsync(new Pull { Object = c1x_1 });
+                            await workspace1.PullAsync(new Pull { Object = c1x_1 });
                         }
 
                         c1x_1.C1C1One2One = c1y_1;
@@ -83,13 +83,13 @@ namespace Allors.Workspace.Adapters.Tests
                     foreach (var contextFactory in this.contextFactories)
                     {
                         var ctx = contextFactory();
-                        var (session1, session2) = ctx;
+                        var (workspace1, workspace2) = ctx;
 
-                        var c1x_1 = await ctx.Create<C1>(session1, mode1);
-                        var c1y_2 = await ctx.Create<C1>(session2, mode2);
+                        var c1x_1 = await ctx.Create<C1>(workspace1, mode1);
+                        var c1y_2 = await ctx.Create<C1>(workspace2, mode2);
 
-                        await session2.PushAsync();
-                        var result = await session1.PullAsync(new Pull { Object = c1y_2 });
+                        await workspace2.PushAsync();
+                        var result = await workspace1.PullAsync(new Pull { Object = c1y_2 });
 
                         var c1y_1 = (C1)result.Objects.Values.First();
 
@@ -97,7 +97,7 @@ namespace Allors.Workspace.Adapters.Tests
 
                         if (!c1x_1.CanWriteC1C1One2One)
                         {
-                            await session1.PullAsync(new Pull { Object = c1x_1 });
+                            await workspace1.PullAsync(new Pull { Object = c1x_1 });
                         }
 
                         c1x_1.C1C1One2One = c1y_1;

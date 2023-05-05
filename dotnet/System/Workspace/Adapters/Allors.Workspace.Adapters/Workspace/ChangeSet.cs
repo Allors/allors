@@ -17,18 +17,18 @@ namespace Allors.Workspace.Adapters
 
     public sealed class ChangeSet : IChangeSet
     {
-        public ChangeSet(Workspace session, ISet<IStrategy> created, ISet<IStrategy> instantiated)
+        public ChangeSet(Workspace workspace, ISet<IStrategy> created, ISet<IStrategy> instantiated)
         {
-            this.Session = session;
+            this.Workspace = workspace;
             this.Created = created ?? EmptySet<IStrategy>.Instance;
             this.Instantiated = instantiated ?? EmptySet<IStrategy>.Instance;
             this.AssociationsByRoleType = new Dictionary<IRoleType, ISet<IStrategy>>();
             this.RolesByAssociationType = new Dictionary<IAssociationType, ISet<IStrategy>>();
         }
 
-        private Workspace Session { get; }
+        private Workspace Workspace { get; }
 
-        IWorkspace IChangeSet.Session => this.Session;
+        IWorkspace IChangeSet.Workspace => this.Workspace;
 
         public ISet<IStrategy> Created { get; }
 
@@ -75,7 +75,7 @@ namespace Allors.Workspace.Adapters
 
             if (previous != null)
             {
-                this.AddRole(relationType, this.Session.GetStrategy((long)previous));
+                this.AddRole(relationType, this.Workspace.GetStrategy((long)previous));
             }
 
             if (current != null)
@@ -95,12 +95,12 @@ namespace Allors.Workspace.Adapters
 
             if (previous != null)
             {
-                this.AddRole(relationType, this.Session.GetStrategy((long)previous));
+                this.AddRole(relationType, this.Workspace.GetStrategy((long)previous));
             }
 
             if (current != null)
             {
-                this.AddRole(relationType, this.Session.GetStrategy((long)current));
+                this.AddRole(relationType, this.Workspace.GetStrategy((long)current));
             }
 
             this.AddAssociation(relationType, association);
@@ -128,13 +128,13 @@ namespace Allors.Workspace.Adapters
 
         public void DiffComposites(Strategy association, IRelationType relationType, RefRange<Strategy> current, ValueRange<long> previousRange)
         {
-            var previous = RefRange<Strategy>.Load(ValueRange<long>.Ensure(previousRange).Select(v => this.Session.GetStrategy(v)));
+            var previous = RefRange<Strategy>.Load(ValueRange<long>.Ensure(previousRange).Select(v => this.Workspace.GetStrategy(v)));
             this.DiffComposites(association, relationType, current, previous);
         }
 
         public void DiffComposites(Strategy association, IRelationType relationType, ValueRange<long> currentRange, ValueRange<long> previous)
         {
-            var current = RefRange<Strategy>.Load(ValueRange<long>.Ensure(currentRange).Select(v => this.Session.GetStrategy(v)));
+            var current = RefRange<Strategy>.Load(ValueRange<long>.Ensure(currentRange).Select(v => this.Workspace.GetStrategy(v)));
             this.DiffComposites(association, relationType, current, previous);
         }
 

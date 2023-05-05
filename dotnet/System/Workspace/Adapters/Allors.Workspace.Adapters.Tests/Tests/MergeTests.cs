@@ -22,23 +22,23 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session1 = this.Workspace;
-            var session2 = this.Profile.CreateExclusiveWorkspace();
+            var workspace1 = this.Workspace;
+            var workspace2 = this.Profile.CreateExclusiveWorkspace();
 
             var pull = new Pull { Extent = new Filter(this.M.C1) { Predicate = new Equals(this.M.C1.Name) { Value = "c1A" } } };
 
-            var result = await session1.PullAsync(pull);
+            var result = await workspace1.PullAsync(pull);
             var c1a_1 = result.GetCollection<C1>()[0];
 
-            result = await session2.PullAsync(pull);
+            result = await workspace2.PullAsync(pull);
             var c1a_2 = result.GetCollection<C1>()[0];
 
             c1a_1.C1AllorsString = "X";
             c1a_2.C1AllorsString = "Y";
 
-            await session2.PushAsync();
+            await workspace2.PushAsync();
 
-            result = await session1.PullAsync(pull);
+            result = await workspace1.PullAsync(pull);
 
             Assert.True(result.HasErrors);
             Assert.Single(result.MergeErrors);

@@ -17,9 +17,9 @@ namespace Allors.Workspace.Adapters.Direct
 
     public class Push : Result, IPushResult
     {
-        internal Push(Workspace session) : base(session)
+        internal Push(Workspace workspace) : base(workspace)
         {
-            this.Workspace = session;
+            this.Workspace = workspace;
             this.Transaction = this.Workspace.DatabaseConnection.CreateTransaction();
 
             var metaCache = this.Transaction.Database.Services.Get<IMetaCache>();

@@ -21,7 +21,7 @@ namespace Allors.Workspace.Adapters.Tests
         public async void Database_GetOne2Many()
         {
             await this.Login("administrator");
-            var session = this.Workspace;
+            var workspace = this.Workspace;
 
             var pull = new[]
             {
@@ -44,7 +44,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             var c2s = result.GetCollection<C2>();
 
@@ -61,7 +61,7 @@ namespace Allors.Workspace.Adapters.Tests
         public async void Database_GetOne2One()
         {
             await this.Login("administrator");
-            var session = this.Workspace;
+            var workspace = this.Workspace;
 
             var pull = new[]
             {
@@ -84,7 +84,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             var c2s = result.GetCollection<C2>();
 

@@ -29,7 +29,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
             // Class
@@ -48,7 +48,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -72,7 +72,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            result = await session.PullAsync(pull);
+            result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -86,7 +86,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
             // Empty
@@ -104,7 +104,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Empty(result.Collections);
             Assert.Empty(result.Objects);
@@ -122,7 +122,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            result = await session.PullAsync(pull);
+            result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -145,7 +145,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            result = await session.PullAsync(pull);
+            result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -159,10 +159,10 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
-            var c1c = await session.PullObject<C1>(c1C);
+            var c1c = await workspace.PullObject<C1>(c1C);
 
             // Full
             var pull = new Pull
@@ -176,7 +176,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -190,7 +190,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
             // Full
@@ -202,7 +202,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -216,7 +216,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -233,7 +233,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -247,10 +247,10 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
-            var c1c = await session.PullObject<C1>(c1C);
+            var c1c = await workspace.PullObject<C1>(c1C);
 
             // Full
             var pull = new Pull
@@ -264,7 +264,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -278,7 +278,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -295,7 +295,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -309,11 +309,11 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
-            var c1b = await session.PullObject<C1>(c1B);
-            var c1c = await session.PullObject<C1>(c1C);
+            var c1b = await workspace.PullObject<C1>(c1B);
+            var c1c = await workspace.PullObject<C1>(c1C);
 
             var pull = new Pull
             {
@@ -326,7 +326,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -345,7 +345,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            result = await session.PullAsync(pull);
+            result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -359,7 +359,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
             // Class
@@ -371,7 +371,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -388,7 +388,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            result = await session.PullAsync(pull);
+            result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -402,7 +402,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -413,7 +413,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -427,7 +427,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -444,7 +444,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -458,11 +458,11 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
-            var c1b = await session.PullObject<C1>(c1B);
-            var c1c = await session.PullObject<C1>(c1C);
+            var c1b = await workspace.PullObject<C1>(c1B);
+            var c1c = await workspace.PullObject<C1>(c1C);
 
             var pull = new Pull
             {
@@ -475,7 +475,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -494,7 +494,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            result = await session.PullAsync(pull);
+            result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -508,7 +508,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
 
@@ -520,7 +520,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -536,7 +536,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            result = await session.PullAsync(pull);
+            result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -550,7 +550,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -561,7 +561,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -577,7 +577,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            result = await session.PullAsync(pull);
+            result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -591,10 +591,10 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
-            var c1c = await session.PullObject<C1>(c1C);
+            var c1c = await workspace.PullObject<C1>(c1C);
 
             var pull = new Pull
             {
@@ -604,7 +604,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -618,7 +618,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -626,7 +626,7 @@ namespace Allors.Workspace.Adapters.Tests
                 Extent = new Filter(m.I12)
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -640,7 +640,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -654,7 +654,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -668,10 +668,10 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
-            var c1c = await session.PullObject<C1>(c1C);
+            var c1c = await workspace.PullObject<C1>(c1C);
 
             var pull = new Pull
             {
@@ -684,7 +684,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -698,11 +698,11 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
-            var c1b = await session.PullObject<C1>(c1B);
-            var c1c = await session.PullObject<C1>(c1C);
+            var c1b = await workspace.PullObject<C1>(c1B);
+            var c1c = await workspace.PullObject<C1>(c1C);
 
             var pull = new Pull
             {
@@ -719,7 +719,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -733,7 +733,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -751,7 +751,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -765,7 +765,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -783,7 +783,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -797,7 +797,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -812,7 +812,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -826,7 +826,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -840,7 +840,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -854,7 +854,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -872,7 +872,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -886,7 +886,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -900,7 +900,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -914,7 +914,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -928,7 +928,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -942,7 +942,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -956,7 +956,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -970,7 +970,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -984,7 +984,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -998,7 +998,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1012,7 +1012,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -1026,7 +1026,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1040,7 +1040,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -1054,7 +1054,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1068,7 +1068,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -1082,7 +1082,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1096,7 +1096,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -1110,7 +1110,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1124,7 +1124,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -1138,7 +1138,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1152,7 +1152,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -1166,7 +1166,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1180,7 +1180,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -1194,7 +1194,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1208,7 +1208,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -1222,7 +1222,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1236,7 +1236,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -1250,7 +1250,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1264,7 +1264,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -1278,7 +1278,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1292,7 +1292,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -1306,7 +1306,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1320,7 +1320,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -1334,7 +1334,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1348,7 +1348,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -1362,7 +1362,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1376,7 +1376,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -1390,7 +1390,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1404,7 +1404,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -1418,7 +1418,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1432,7 +1432,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -1446,7 +1446,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1460,7 +1460,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -1474,7 +1474,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1488,7 +1488,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -1502,7 +1502,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1516,7 +1516,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -1530,7 +1530,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1544,7 +1544,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -1558,7 +1558,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1572,7 +1572,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -1586,7 +1586,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1600,7 +1600,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -1614,7 +1614,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1625,7 +1625,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -1639,7 +1639,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1653,7 +1653,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -1667,7 +1667,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1681,7 +1681,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -1695,7 +1695,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1709,7 +1709,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -1723,7 +1723,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1737,7 +1737,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -1751,7 +1751,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
             // Empty
@@ -1769,7 +1769,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Empty(result.Collections);
             Assert.Empty(result.Objects);
@@ -1787,7 +1787,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            result = await session.PullAsync(pull);
+            result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -1810,7 +1810,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            result = await session.PullAsync(pull);
+            result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -1824,10 +1824,10 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
-            var c2c = await session.PullObject<C2>(c2C);
+            var c2c = await workspace.PullObject<C2>(c2C);
 
             var pull = new Pull
             {
@@ -1840,7 +1840,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -1854,7 +1854,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1871,7 +1871,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -1885,10 +1885,10 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
-            var c2d = await session.PullObject<C2>(c2D);
+            var c2d = await workspace.PullObject<C2>(c2D);
 
             var pull = new Pull
             {
@@ -1901,7 +1901,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -1915,7 +1915,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1932,7 +1932,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -1946,7 +1946,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1963,7 +1963,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -1977,7 +1977,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1997,7 +1997,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             Assert.Single(result.Collections);
             Assert.Empty(result.Objects);
@@ -2011,9 +2011,9 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
             var pull1 = new Pull { Extent = new Filter(this.M.C1) { Predicate = new Equals(this.M.C1.Name) { Value = "c1A" } } };
-            var result = await session.PullAsync(pull1);
+            var result = await workspace.PullAsync(pull1);
             var c1a = result.GetCollection<C1>()[0];
 
             var pull2 = new Pull
@@ -2021,7 +2021,7 @@ namespace Allors.Workspace.Adapters.Tests
                 ObjectId = c1a.Id
             };
 
-            result = await session.PullAsync(pull2);
+            result = await workspace.PullAsync(pull2);
 
             Assert.Single(result.Objects);
             Assert.Empty(result.Collections);
@@ -2032,7 +2032,7 @@ namespace Allors.Workspace.Adapters.Tests
         public async void PullWithInclude()
         {
             await this.Login("administrator");
-            var session = this.Workspace;
+            var workspace = this.Workspace;
 
             var pull = new Pull
             {
@@ -2049,7 +2049,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             var c1s = result.GetCollection<C1>();
             var c1b = c1s.Single(v => v.Name == "c1B");
@@ -2067,14 +2067,14 @@ namespace Allors.Workspace.Adapters.Tests
         public async void SortDirectionDefault()
         {
             await this.Login("administrator");
-            var session = this.Workspace;
+            var workspace = this.Workspace;
 
             var pull = new Pull
             {
                 Extent = new Filter(this.M.I12) { Sorting = new[] { new Sort(this.M.I12.Order) } },
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             var i12s = result.GetCollection<I12>();
 
@@ -2092,14 +2092,14 @@ namespace Allors.Workspace.Adapters.Tests
         public async void SortDirectionAscending()
         {
             await this.Login("administrator");
-            var session = this.Workspace;
+            var workspace = this.Workspace;
 
             var pull = new Pull
             {
                 Extent = new Filter(this.M.I12) { Sorting = new[] { new Sort(this.M.I12.Order) { SortDirection = SortDirection.Ascending } } },
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             var i12s = result.GetCollection<I12>();
 
@@ -2112,20 +2112,19 @@ namespace Allors.Workspace.Adapters.Tests
             Assert.Equal("c1D", i12s[6].Name);
             Assert.Equal("c1C", i12s[7].Name);
         }
-
-
+        
         [Fact]
         public async void SortDirectionDescending()
         {
             await this.Login("administrator");
-            var session = this.Workspace;
+            var workspace = this.Workspace;
 
             var pull = new Pull
             {
                 Extent = new Filter(this.M.I12) { Sorting = new[] { new Sort(this.M.I12.Order) { SortDirection = SortDirection.Descending } } },
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             var i12s = result.GetCollection<I12>();
 

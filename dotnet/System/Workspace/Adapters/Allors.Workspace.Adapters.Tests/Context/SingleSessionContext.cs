@@ -4,8 +4,8 @@ namespace Allors.Workspace.Adapters.Tests
     {
         public SingleSessionContext(Test test, string name) : base(test, name)
         {
-            this.Session1 = this.Test.Profile.CreateWorkspace();
-            this.Session2 = this.Session1;
+            this.Workspace1 = this.Test.Profile.CreateWorkspace();
+            this.Workspace2 = this.Workspace1;
         }
     }
 }

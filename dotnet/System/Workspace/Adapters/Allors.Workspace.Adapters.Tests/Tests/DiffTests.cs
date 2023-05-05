@@ -23,17 +23,17 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
 
             var pull = new Pull { Extent = new Filter(this.M.C1) { Predicate = new Equals(this.M.C1.Name) { Value = "c1A" } } };
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
             var c1a_1 = result.GetCollection<C1>()[0];
 
             c1a_1.C1AllorsString = "X";
 
-            await session.PushAsync();
+            await workspace.PushAsync();
 
-            result = await session.PullAsync(pull);
+            result = await workspace.PullAsync(pull);
             var c1a_2 = result.GetCollection<C1>()[0];
 
             c1a_2.C1AllorsString = "Y";
@@ -52,17 +52,17 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
 
             var pull = new Pull { Extent = new Filter(this.M.C1) { Predicate = new Equals(this.M.C1.Name) { Value = "c1A" } } };
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
             var c1a_1 = result.GetCollection<C1>()[0];
 
             c1a_1.C1AllorsString = "X";
 
-            await session.PushAsync();
+            await workspace.PushAsync();
 
-            result = await session.PullAsync(pull);
+            result = await workspace.PullAsync(pull);
             var c1a_2 = result.GetCollection<C1>()[0];
 
             c1a_2.C1AllorsString = "Y";
@@ -78,17 +78,17 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
 
             var pull = new Pull { Extent = new Filter(this.M.C1) { Predicate = new Equals(this.M.C1.Name) { Value = "c1A" } } };
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
             var c1a = result.GetCollection<C1>()[0];
 
             c1a.C1AllorsString = "X";
 
-            await session.PushAsync();
+            await workspace.PushAsync();
 
-            result = await session.PullAsync(pull);
+            result = await workspace.PullAsync(pull);
             var c1b = result.GetCollection<C1>()[0];
 
             c1b.C1AllorsString = "Y";
@@ -107,18 +107,18 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
 
             var pull = new Pull { Extent = new Filter(this.M.C1) { Predicate = new Equals(this.M.C1.Name) { Value = "c1A" } } };
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
             var c1a = result.GetCollection<C1>()[0];
 
             c1a.C1AllorsString = "X";
             c1a.C1AllorsInteger = 1;
 
-            await session.PushAsync();
+            await workspace.PushAsync();
 
-            result = await session.PullAsync(pull);
+            result = await workspace.PullAsync(pull);
             var c1b = result.GetCollection<C1>()[0];
 
             c1b.C1AllorsString = "Y";

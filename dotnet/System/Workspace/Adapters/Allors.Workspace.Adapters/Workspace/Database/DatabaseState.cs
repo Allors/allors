@@ -533,7 +533,7 @@ namespace Allors.Workspace.Adapters
         {
             if (strategy == null)
             {
-                throw new Exception("Strategy is not in Session.");
+                throw new Exception("Strategy is not in Workspace.");
             }
         }
 
@@ -549,7 +549,7 @@ namespace Allors.Workspace.Adapters
 
         protected IClass Class => this.Strategy.Class;
 
-        protected Workspace Session => this.Strategy.Session;
+        protected Workspace Session => this.Strategy.Workspace;
 
         #endregion
     }

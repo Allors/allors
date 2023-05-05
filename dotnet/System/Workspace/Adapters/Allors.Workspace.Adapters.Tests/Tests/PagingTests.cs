@@ -24,7 +24,7 @@ namespace Allors.Workspace.Adapters.Tests
         public async void Take()
         {
             await this.Login("administrator");
-            var session = this.Workspace;
+            var workspace = this.Workspace;
 
             var pull = new Pull
             {
@@ -38,7 +38,7 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             };
 
-            var result = await session.PullAsync(pull);
+            var result = await workspace.PullAsync(pull);
 
             var i12s = result.GetCollection<I12>();
 

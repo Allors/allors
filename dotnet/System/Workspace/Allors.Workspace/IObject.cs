@@ -12,7 +12,7 @@ namespace Allors.Workspace
         /// The id is negative
         /// <ul>
         /// <li>a database object is new and has never been pushed</li>
-        /// <li>a workspace or session object</li>
+        /// <li>a workspace object</li>
         /// </ul>
         /// The id is positive for database objects that have been pulled
         /// </summary>

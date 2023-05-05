@@ -45,15 +45,15 @@ namespace Allors.Workspace.Adapters.Tests
                 foreach (var contextFactory in this.contextFactories)
                 {
                     var ctx = contextFactory();
-                    var (session1, _) = ctx;
+                    var (workspace1, _) = ctx;
 
-                    var c1 = await ctx.Create<C1>(session1, mode);
+                    var c1 = await ctx.Create<C1>(workspace1, mode);
 
                     Assert.NotNull(c1);
 
                     if (!c1.CanWriteC1C1One2One)
                     {
-                        await session1.PullAsync(new Pull { Object = c1 });
+                        await workspace1.PullAsync(new Pull { Object = c1 });
                     }
 
                     c1.C1AllorsBinary = new byte[] { 1, 2 };
@@ -76,7 +76,7 @@ namespace Allors.Workspace.Adapters.Tests
 
                     if (c1.Strategy.Id > 0)
                     {
-                        await session1.PullAsync(new Pull { Object = c1 });
+                        await workspace1.PullAsync(new Pull { Object = c1 });
                     }
 
                     Assert.Equal(new byte[] { 1, 2 }, c1.C1AllorsBinary);
@@ -99,15 +99,15 @@ namespace Allors.Workspace.Adapters.Tests
                 foreach (var contextFactory in this.contextFactories)
                 {
                     var ctx = contextFactory();
-                    var (session1, _) = ctx;
+                    var (workspace1, _) = ctx;
 
-                    var c1 = await ctx.Create<C1>(session1, mode);
+                    var c1 = await ctx.Create<C1>(workspace1, mode);
 
                     Assert.NotNull(c1);
 
                     if (!c1.CanWriteC1C1One2One)
                     {
-                        await session1.PullAsync(new Pull { Object = c1 });
+                        await workspace1.PullAsync(new Pull { Object = c1 });
                     }
 
                     c1.C1AllorsBinary = null;
@@ -139,7 +139,7 @@ namespace Allors.Workspace.Adapters.Tests
 
                     if (c1.Strategy.Id > 0)
                     {
-                        await session1.PullAsync(new Pull { Object = c1 });
+                        await workspace1.PullAsync(new Pull { Object = c1 });
                     }
 
                     Assert.False(c1.ExistC1AllorsBinary);
@@ -162,7 +162,7 @@ namespace Allors.Workspace.Adapters.Tests
 
                     if (!c1.CanWriteC1C1One2One)
                     {
-                        await session1.PullAsync(new Pull { Object = c1 });
+                        await workspace1.PullAsync(new Pull { Object = c1 });
                     }
 
                     c1.C1AllorsBinary = new byte[] { 1, 2 };
@@ -177,7 +177,7 @@ namespace Allors.Workspace.Adapters.Tests
 
                     if (!c1.CanWriteC1C1One2One)
                     {
-                        await session1.PullAsync(new Pull { Object = c1 });
+                        await workspace1.PullAsync(new Pull { Object = c1 });
                     }
 
                     c1.C1AllorsBinary = null;
@@ -209,7 +209,7 @@ namespace Allors.Workspace.Adapters.Tests
 
                     if (c1.Strategy.Id > 0)
                     {
-                        await session1.PullAsync(new Pull { Object = c1 });
+                        await workspace1.PullAsync(new Pull { Object = c1 });
                     }
 
                     Assert.False(c1.ExistC1AllorsBinary);
@@ -241,15 +241,15 @@ namespace Allors.Workspace.Adapters.Tests
                 foreach (var contextFactory in this.contextFactories)
                 {
                     var ctx = contextFactory();
-                    var (session1, _) = ctx;
+                    var (workspace1, _) = ctx;
 
-                    var c1 = await ctx.Create<C1>(session1, mode);
+                    var c1 = await ctx.Create<C1>(workspace1, mode);
 
                     Assert.NotNull(c1);
 
                     if (!c1.CanWriteC1C1One2One)
                     {
-                        await session1.PullAsync(new Pull { Object = c1 });
+                        await workspace1.PullAsync(new Pull { Object = c1 });
                     }
 
                     c1.RemoveC1AllorsBinary();
@@ -281,7 +281,7 @@ namespace Allors.Workspace.Adapters.Tests
 
                     if (c1.Strategy.Id > 0)
                     {
-                        await session1.PullAsync(new Pull { Object = c1 });
+                        await workspace1.PullAsync(new Pull { Object = c1 });
                     }
 
                     Assert.False(c1.ExistC1AllorsBinary);
@@ -304,7 +304,7 @@ namespace Allors.Workspace.Adapters.Tests
 
                     if (!c1.CanWriteC1C1One2One)
                     {
-                        await session1.PullAsync(new Pull { Object = c1 });
+                        await workspace1.PullAsync(new Pull { Object = c1 });
                     }
 
                     c1.C1AllorsBinary = new byte[] { 1, 2 };
@@ -318,7 +318,7 @@ namespace Allors.Workspace.Adapters.Tests
 
                     if (!c1.CanWriteC1C1One2One)
                     {
-                        await session1.PullAsync(new Pull { Object = c1 });
+                        await workspace1.PullAsync(new Pull { Object = c1 });
                     }
 
                     c1.RemoveC1AllorsBinary();
@@ -350,7 +350,7 @@ namespace Allors.Workspace.Adapters.Tests
 
                     if (c1.Strategy.Id > 0)
                     {
-                        await session1.PullAsync(new Pull { Object = c1 });
+                        await workspace1.PullAsync(new Pull { Object = c1 });
                     }
 
                     Assert.False(c1.ExistC1AllorsBinary);

@@ -22,19 +22,19 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
 
             var pull = new[] { new Pull { Extent = new Filter(this.M.Organization) } };
 
-            var organisation = (await session.PullAsync(pull)).GetCollection<Organization>()[0];
+            var organisation = (await workspace.PullAsync(pull)).GetCollection<Organization>()[0];
 
             Assert.False(organisation.JustDidIt);
 
-            var invokeResult = await session.InvokeAsync(organisation.JustDoIt);
+            var invokeResult = await workspace.InvokeAsync(organisation.JustDoIt);
 
             Assert.False(invokeResult.HasErrors);
 
-            await session.PullAsync(new Pull { Object = organisation });
+            await workspace.PullAsync(new Pull { Object = organisation });
 
             Assert.True(organisation.JustDidIt);
             Assert.True(organisation.JustDidItDerived);
@@ -45,20 +45,20 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
 
             var pull = new[] { new Pull { Extent = new Filter(this.M.Organization) } };
 
-            var organisation1 = (await session.PullAsync(pull)).GetCollection<Organization>()[0];
-            var organisation2 = (await session.PullAsync(pull)).GetCollection<Organization>().Skip(1).First();
+            var organisation1 = (await workspace.PullAsync(pull)).GetCollection<Organization>()[0];
+            var organisation2 = (await workspace.PullAsync(pull)).GetCollection<Organization>().Skip(1).First();
 
             Assert.False(organisation1.JustDidIt);
 
-            var invokeResult = await session.InvokeAsync(new[] { organisation1.JustDoIt, organisation2.JustDoIt });
+            var invokeResult = await workspace.InvokeAsync(new[] { organisation1.JustDoIt, organisation2.JustDoIt });
 
             Assert.False(invokeResult.HasErrors);
 
-            await session.PullAsync(pull);
+            await workspace.PullAsync(pull);
 
             Assert.True(organisation1.JustDidIt);
             Assert.True(organisation1.JustDidItDerived);
@@ -72,20 +72,20 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace;
+            var workspace = this.Workspace;
 
             var pull = new[] { new Pull { Extent = new Filter(this.M.Organization) } };
 
-            var organisation1 = (await session.PullAsync(pull)).GetCollection<Organization>()[0];
-            var organisation2 = (await session.PullAsync(pull)).GetCollection<Organization>().Skip(1).First();
+            var organisation1 = (await workspace.PullAsync(pull)).GetCollection<Organization>()[0];
+            var organisation2 = (await workspace.PullAsync(pull)).GetCollection<Organization>().Skip(1).First();
 
             Assert.False(organisation1.JustDidIt);
 
-            var invokeResult = await session.InvokeAsync(new[] { organisation1.JustDoIt, organisation2.JustDoIt }, new InvokeOptions { Isolated = true });
+            var invokeResult = await workspace.InvokeAsync(new[] { organisation1.JustDoIt, organisation2.JustDoIt }, new InvokeOptions { Isolated = true });
 
             Assert.False(invokeResult.HasErrors);
 
-            await session.PullAsync(pull);
+            await workspace.PullAsync(pull);
 
             Assert.True(organisation1.JustDidIt);
             Assert.True(organisation1.JustDidItDerived);
