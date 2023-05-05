@@ -17,9 +17,9 @@ namespace Allors.Workspace.Adapters.Direct
 
     public class Push : Result, IPushResult
     {
-        internal Push(Session session) : base(session)
+        internal Push(Workspace session) : base(session)
         {
-            this.Workspace = session.Workspace;
+            this.Workspace = session;
             this.Transaction = this.Workspace.DatabaseConnection.CreateTransaction();
 
             var metaCache = this.Transaction.Database.Services.Get<IMetaCache>();
@@ -110,7 +110,7 @@ namespace Allors.Workspace.Adapters.Direct
                     {
                         var strategy = (Strategy)state.Strategy;
                         var obj = this.Transaction.Instantiate(strategy.Id);
-                        if (!strategy.DatabaseOriginState.Version.Equals(obj.Strategy.ObjectVersion))
+                        if (!strategy.DatabaseState.Version.Equals(obj.Strategy.ObjectVersion))
                         {
                             this.AddVersionError(obj.Id);
                         }
@@ -140,7 +140,7 @@ namespace Allors.Workspace.Adapters.Direct
 
         private void PushRequestRoles(Strategy local, IObject obj)
         {
-            if (local.DatabaseOriginState.ChangedRoleByRelationType == null)
+            if (local.DatabaseState.ChangedRoleByRelationType == null)
             {
                 return;
             }
@@ -148,7 +148,7 @@ namespace Allors.Workspace.Adapters.Direct
             // TODO: Cache and filter for workspace
             var acl = this.AccessControl[obj];
 
-            foreach (var keyValuePair in local.DatabaseOriginState.ChangedRoleByRelationType)
+            foreach (var keyValuePair in local.DatabaseState.ChangedRoleByRelationType)
             {
                 var relationType = keyValuePair.Key;
                 var roleType = ((IRelationType)this.M.FindByTag(keyValuePair.Key.Tag)).RoleType;

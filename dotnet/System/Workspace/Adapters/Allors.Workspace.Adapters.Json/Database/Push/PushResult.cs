@@ -9,7 +9,7 @@ namespace Allors.Workspace.Adapters.Json
 
     public class PushResult : Result, IPushResult
     {
-        public PushResult(ISession session, Response response) : base(session, response)
+        public PushResult(IWorkspace session, Response response) : base(session, response)
         {
         }
     }

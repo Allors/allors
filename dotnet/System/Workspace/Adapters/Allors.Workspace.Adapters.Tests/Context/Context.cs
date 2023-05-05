@@ -15,37 +15,29 @@ namespace Allors.Workspace.Adapters.Tests
         {
             this.Test = test;
             this.Name = name;
-            this.SharedDatabaseWorkspace = this.Test.Profile.CreateWorkspace();
-            this.SharedDatabaseSession = this.SharedDatabaseWorkspace.CreateSession();
-            this.ExclusiveDatabaseWorkspace = this.Test.Profile.CreateExclusiveWorkspace();
-            this.ExclusiveDatabaseSession = this.ExclusiveDatabaseWorkspace.CreateSession();
+
         }
 
         public Test Test { get; }
 
         public string Name { get; }
 
-        public ISession Session1 { get; protected set; }
 
-        public ISession Session2 { get; protected set; }
+        public IWorkspace Session1 { get; protected set; }
 
-        public IWorkspace SharedDatabaseWorkspace { get; }
 
-        public ISession SharedDatabaseSession { get; }
+        public IWorkspace Session2 { get; protected set; }
 
-        public IWorkspace ExclusiveDatabaseWorkspace { get; }
 
-        public ISession ExclusiveDatabaseSession { get; }
-
-        public void Deconstruct(out ISession session1, out ISession session2)
+        public void Deconstruct(out IWorkspace session1, out IWorkspace session2)
         {
             session1 = this.Session1;
             session2 = this.Session2;
         }
 
-        public async Task<T> Create<T>(ISession session, DatabaseMode mode) where T : class, IObject
+        public async Task<T> Create<T>(IWorkspace session, DatabaseMode mode) where T : class, IObject
         {
-            var @class = (IClass)session.Workspace.Configuration.ObjectFactory.GetObjectType<T>();
+            var @class = (IClass)session.Configuration.ObjectFactory.GetObjectType<T>();
 
             T result;
             switch (mode)
@@ -65,14 +57,14 @@ namespace Allors.Workspace.Adapters.Tests
                     await session.PullAsync(new Pull { Object = result });
                     break;
                 case DatabaseMode.SharedDatabase:
-                    var sharedDatabaseObject = this.SharedDatabaseSession.Create<T>();
-                    await this.SharedDatabaseSession.PushAsync();
+                    var sharedDatabaseObject = this.Session1.Create<T>();
+                    await this.Session1.PushAsync();
                     var sharedResult = await session.PullAsync(new Pull { Object = sharedDatabaseObject });
                     result = (T)sharedResult.Objects.Values.First();
                     break;
                 case DatabaseMode.ExclusiveDatabase:
-                    var exclusiveDatabaseObject = this.ExclusiveDatabaseSession.Create<T>();
-                    await this.ExclusiveDatabaseSession.PushAsync();
+                    var exclusiveDatabaseObject = this.Session2.Create<T>();
+                    await this.Session2.PushAsync();
                     var exclusiveResult = await session.PullAsync(new Pull { Object = exclusiveDatabaseObject });
                     result = (T)exclusiveResult.Objects.Values.First();
                     break;
@@ -83,7 +75,7 @@ namespace Allors.Workspace.Adapters.Tests
             Assert.NotNull(result);
             return result;
         }
-        
+
         public override string ToString() => this.Name;
     }
 }

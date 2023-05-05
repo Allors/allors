@@ -9,10 +9,10 @@ namespace Allors.Workspace.Adapters.Json
 
     public sealed class Strategy : Adapters.Strategy
     {
-        internal Strategy(Adapters.Session session, IClass @class, long id) : base(session, @class, id) => this.DatabaseOriginState = new DatabaseOriginState(this, (DatabaseRecord)((DatabaseConnection)session.Workspace.DatabaseConnection).GetRecord(this.Id));
+        internal Strategy(Adapters.Workspace session, IClass @class, long id) : base(session, @class, id) => this.DatabaseState = new DatabaseState(this, (DatabaseRecord)((DatabaseConnection)session.DatabaseConnection).GetRecord(this.Id));
 
-        internal Strategy(Session session, DatabaseRecord databaseRecord) : base(session, databaseRecord) => this.DatabaseOriginState = new DatabaseOriginState(this, databaseRecord);
+        internal Strategy(Workspace session, DatabaseRecord databaseRecord) : base(session, databaseRecord) => this.DatabaseState = new DatabaseState(this, databaseRecord);
 
-        public new Session Session => (Session)base.Session;
+        public new Workspace Session => (Workspace)base.Session;
     }
 }

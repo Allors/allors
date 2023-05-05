@@ -26,7 +26,7 @@ namespace Allors.Workspace.Adapters.Tests
         [Fact]
         public void SetUnitRoleWrongObjectType()
         {
-            var session1 = this.Workspace.CreateSession();
+            var session1 = this.Workspace;
 
             var c1 = session1.Create<C1>();
             Assert.NotNull(c1);
@@ -49,7 +49,7 @@ namespace Allors.Workspace.Adapters.Tests
         [Fact]
         public void SetCompositeRoleWrongObjectType()
         {
-            var session1 = this.Workspace.CreateSession();
+            var session1 = this.Workspace;
 
             var c1 = session1.Create<C1>();
             var c2 = session1.Create<C2>();
@@ -74,7 +74,7 @@ namespace Allors.Workspace.Adapters.Tests
         [Fact]
         public void SetCompositeRoleWrongRoleType()
         {
-            var session1 = this.Workspace.CreateSession();
+            var session1 = this.Workspace;
 
             var c1 = session1.Create<C1>();
             var c2 = session1.Create<C2>();
@@ -101,7 +101,7 @@ namespace Allors.Workspace.Adapters.Tests
         [Fact]
         public void AddCompositesRoleWrongObjectType()
         {
-            var session1 = this.Workspace.CreateSession();
+            var session1 = this.Workspace;
 
             var c1 = session1.Create<C1>();
             var c2 = session1.Create<C2>();
@@ -123,7 +123,7 @@ namespace Allors.Workspace.Adapters.Tests
         [Fact]
         public void AddCompositesRoleWrongRoleType()
         {
-            var session1 = this.Workspace.CreateSession();
+            var session1 = this.Workspace;
 
             var c1 = session1.Create<C1>();
             var c2 = session1.Create<C2>();

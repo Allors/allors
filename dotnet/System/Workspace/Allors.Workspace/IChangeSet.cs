@@ -26,7 +26,7 @@ namespace Allors.Workspace
         /// <summary>
         /// Gets the session.
         /// </summary>
-        ISession Session { get; }
+        IWorkspace Session { get; }
 
         /// <summary>
         /// Gets the created objects.

@@ -19,9 +19,9 @@ namespace Allors.Workspace.Adapters.Json
 
         private readonly PullResponse pullResponse;
 
-        public PullResult(Adapters.Session session, PullResponse response) : base(session, response)
+        public PullResult(Adapters.Workspace session, PullResponse response) : base(session, response)
         {
-            this.Workspace = session.Workspace;
+            this.Workspace = session;
             this.pullResponse = response;
         }
 

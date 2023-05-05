@@ -22,8 +22,8 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session1 = this.Workspace.CreateSession();
-            var session2 = this.Workspace.CreateSession();
+            var session1 = this.Workspace;
+            var session2 = this.Profile.CreateExclusiveWorkspace();
 
             var pull = new Pull { Extent = new Filter(this.M.C1) { Predicate = new Equals(this.M.C1.Name) { Value = "c1A" } } };
 

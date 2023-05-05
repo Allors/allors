@@ -17,9 +17,9 @@ namespace Allors.Workspace.Adapters.Direct
 
     public class Invoke : Result
     {
-        internal Invoke(Session session) : base(session)
+        internal Invoke(Workspace session) : base(session)
         {
-            this.Workspace = session.Workspace;
+            this.Workspace = session;
             this.Transaction = this.Workspace.DatabaseConnection.CreateTransaction();
 
             var metaCache = this.Transaction.Database.Services.Get<IMetaCache>();
@@ -121,7 +121,7 @@ namespace Allors.Workspace.Adapters.Direct
                 throw new Exception("Method " + invocation.MethodType + " not found.");
             }
 
-            if (!localStrategy.DatabaseOriginState.Version.Equals(obj.Strategy.ObjectVersion))
+            if (!localStrategy.DatabaseState.Version.Equals(obj.Strategy.ObjectVersion))
             {
                 this.AddVersionError(localStrategy.Id);
                 return true;

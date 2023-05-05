@@ -14,15 +14,15 @@ namespace Allors.Workspace.Adapters
     {
         public ISet<Strategy> Created { get; set; }
 
-        public ISet<DatabaseOriginState> Changed { get; set; }
+        public ISet<DatabaseState> Changed { get; set; }
 
         public void OnCreated(Strategy strategy) => (this.Created ??= new HashSet<Strategy>()).Add(strategy);
 
-        public void OnChanged(DatabaseOriginState state)
+        public void OnChanged(DatabaseState state)
         {
             if (!state.Strategy.IsNew)
             {
-                (this.Changed ??= new HashSet<DatabaseOriginState>()).Add(state);
+                (this.Changed ??= new HashSet<DatabaseState>()).Add(state);
             }
         }
     }

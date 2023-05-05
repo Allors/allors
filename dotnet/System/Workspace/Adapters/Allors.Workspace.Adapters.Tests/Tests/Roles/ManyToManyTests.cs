@@ -44,7 +44,7 @@ namespace Allors.Workspace.Adapters.Tests
             // Single session
             #region No push before add
             {
-                var session = this.Workspace.CreateSession();
+                var session = this.Workspace;
 
                 var c1a = session.Create<C1>();
                 var c1b = session.Create<C1>();
@@ -70,7 +70,7 @@ namespace Allors.Workspace.Adapters.Tests
             }
 
             {
-                var session = this.Workspace.CreateSession();
+                var session = this.Workspace;
 
                 var c1a = session.Create<C1>();
                 var c1b = session.Create<C1>();
@@ -95,7 +95,7 @@ namespace Allors.Workspace.Adapters.Tests
             }
 
             {
-                var session = this.Workspace.CreateSession();
+                var session = this.Workspace;
 
                 var c1a = session.Create<C1>();
                 var c1b = session.Create<C1>();
@@ -122,7 +122,7 @@ namespace Allors.Workspace.Adapters.Tests
 
             #region Push c1a to database before add
             {
-                var session = this.Workspace.CreateSession();
+                var session = this.Workspace;
 
                 var c1a = session.Create<C1>();
 
@@ -145,7 +145,7 @@ namespace Allors.Workspace.Adapters.Tests
 
             #region Push/Pull c1a to database before add
             {
-                var session = this.Workspace.CreateSession();
+                var session = this.Workspace;
 
                 var c1a = session.Create<C1>();
 
@@ -170,7 +170,7 @@ namespace Allors.Workspace.Adapters.Tests
 
             #region Push c1b to database before add
             {
-                var session = this.Workspace.CreateSession();
+                var session = this.Workspace;
 
                 var c1b = session.Create<C1>();
 
@@ -194,7 +194,7 @@ namespace Allors.Workspace.Adapters.Tests
 
             #region Push c1a and c1b to database before add
             {
-                var session = this.Workspace.CreateSession();
+                var session = this.Workspace;
 
                 var c1a = session.Create<C1>();
                 var c1b = session.Create<C1>();
@@ -216,7 +216,7 @@ namespace Allors.Workspace.Adapters.Tests
 
             #region Push/Pull c1a and c1b to database before add
             {
-                var session = this.Workspace.CreateSession();
+                var session = this.Workspace;
 
                 var c1a = session.Create<C1>();
                 var c1b = session.Create<C1>();
@@ -241,8 +241,8 @@ namespace Allors.Workspace.Adapters.Tests
             // Multiple Sessions
             #region c1a in other session
             {
-                var session1 = this.Workspace.CreateSession();
-                var session2 = this.Workspace.CreateSession();
+                var session1 = this.Workspace;
+                var session2 = this.Workspace;
 
                 var c1a_2 = session2.Create<C1>();
                 var c1b_1 = session1.Create<C1>();
@@ -269,8 +269,8 @@ namespace Allors.Workspace.Adapters.Tests
             #endregion
             #region c1b in other session
             {
-                var session1 = this.Workspace.CreateSession();
-                var session2 = this.Workspace.CreateSession();
+                var session1 = this.Workspace;
+                var session2 = this.Profile.CreateExclusiveWorkspace();
 
                 var c1a_1 = session1.Create<C1>();
                 var c1b_2 = session2.Create<C1>();
@@ -297,8 +297,8 @@ namespace Allors.Workspace.Adapters.Tests
             #endregion
             #region c1a and c1b in other session
             {
-                var session1 = this.Workspace.CreateSession();
-                var session2 = this.Workspace.CreateSession();
+                var session1 = this.Workspace;
+                var session2 = this.Workspace;
 
                 var c1a_2 = session2.Create<C1>();
                 var c1b_2 = session2.Create<C1>();

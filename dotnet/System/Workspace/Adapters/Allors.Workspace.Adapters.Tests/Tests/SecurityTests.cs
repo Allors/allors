@@ -28,7 +28,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
 
             var pull = new Pull
             {
@@ -53,7 +53,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("noacl");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
 
             var pull = new Pull
             {
@@ -77,7 +77,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("noperm");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
 
             var pull = new Pull
             {
@@ -99,7 +99,7 @@ namespace Allors.Workspace.Adapters.Tests
         [Fact]
         public async void DeniedPermissions()
         {
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
 
             var result = await session.PullAsync(new Pull { Extent = new Filter(this.M.Denied) });
 

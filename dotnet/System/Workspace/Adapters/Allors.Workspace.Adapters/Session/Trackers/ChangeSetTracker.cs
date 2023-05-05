@@ -13,15 +13,15 @@ namespace Allors.Workspace.Adapters
 
     public sealed class ChangeSetTracker
     {
-        public ChangeSetTracker(Session session) => this.Session = session;
+        public ChangeSetTracker(Workspace session) => this.Session = session;
 
-        public Session Session { get; set; }
+        public Workspace Session { get; set; }
 
         public ISet<IStrategy> Created { get; set; }
 
         public ISet<IStrategy> Instantiated { get; set; }
 
-        public ISet<DatabaseOriginState> DatabaseOriginStates { get; set; }
+        public ISet<DatabaseState> DatabaseOriginStates { get; set; }
 
         public void OnCreated(Strategy strategy)
         {
@@ -35,9 +35,9 @@ namespace Allors.Workspace.Adapters
             this.Session.OnChanged(EventArgs.Empty);
         }
 
-        public void OnDatabaseChanged(DatabaseOriginState state)
+        public void OnDatabaseChanged(DatabaseState state)
         {
-            (this.DatabaseOriginStates ??= new HashSet<DatabaseOriginState>()).Add(state);
+            (this.DatabaseOriginStates ??= new HashSet<DatabaseState>()).Add(state);
             this.Session.OnChanged(EventArgs.Empty);
         }
     }

@@ -22,7 +22,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
 
             var changeSet = session.Checkpoint();
 
@@ -34,7 +34,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
 
             var pull = new Pull { Extent = new Filter(this.M.C1) { Predicate = new Equals(this.M.C1.Name) { Value = "c1A" } } };
             var result = await session.PullAsync(pull);
@@ -54,7 +54,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
 
             var pull = new Pull { Extent = new Filter(this.M.C1) { Predicate = new Equals(this.M.C1.Name) { Value = "c1A" } } };
             var result = await session.PullAsync(pull);
@@ -74,7 +74,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
 
             var pull = new Pull { Extent = new Filter(this.M.C1) { Predicate = new Equals(this.M.C1.Name) { Value = "c1A" } } };
             var result = await session.PullAsync(pull);
@@ -102,7 +102,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
 
             var pull = new Pull { Extent = new Filter(this.M.C1) { Predicate = new Equals(this.M.C1.Name) { Value = "c1A" } } };
             var result = await session.PullAsync(pull);
@@ -132,7 +132,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
 
             var c1a = session.Create<C1>();
 
@@ -151,7 +151,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
 
             var pull = new Pull { Extent = new Filter(this.M.C1) { Predicate = new Equals(this.M.C1.Name) { Value = "c1A" } } };
             var result = await session.PullAsync(pull);
@@ -173,7 +173,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
 
             var pull = new Pull { Extent = new Filter(this.M.C1) { Predicate = new Equals(this.M.C1.Name) { Value = "c1A" } } };
             var result = await session.PullAsync(pull);
@@ -199,7 +199,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
 
             var pull = new Pull { Extent = new Filter(this.M.C1) { Predicate = new Equals(this.M.C1.Name) { Value = "c1A" } } };
             var result = await session.PullAsync(pull);
@@ -231,7 +231,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
 
             var pull = new Pull { Extent = new Filter(this.M.C1) { Predicate = new Equals(this.M.C1.Name) { Value = "c1A" } } };
             var result = await session.PullAsync(pull);
@@ -261,7 +261,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
 
             var pull = new Pull { Extent = new Filter(this.M.C1) { Predicate = new Equals(this.M.C1.Name) { Value = "c1A" } } };
             var result = await session.PullAsync(pull);
@@ -289,7 +289,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
 
             var pull = new Pull { Extent = new Filter(this.M.C1) { Predicate = new Equals(this.M.C1.Name) { Value = "c1A" } } };
             var result = await session.PullAsync(pull);
@@ -319,7 +319,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
 
             var pull = new Pull { Extent = new Filter(this.M.C1) { Predicate = new Equals(this.M.C1.Name) { Value = "c1A" } } };
             var result = await session.PullAsync(pull);
@@ -358,7 +358,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
 
             var pull = new Pull { Extent = new Filter(this.M.C1) { Predicate = new Equals(this.M.C1.Name) { Value = "c1A" } } };
             var result = await session.PullAsync(pull);
@@ -388,7 +388,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
 
             var pull = new Pull { Extent = new Filter(this.M.C1) { Predicate = new Equals(this.M.C1.Name) { Value = "c1A" } } };
             var result = await session.PullAsync(pull);
@@ -422,7 +422,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
 
             var pull = new Pull { Extent = new Filter(this.M.C1) { Predicate = new Equals(this.M.C1.Name) { Value = "c1A" } } };
             var result = await session.PullAsync(pull);
@@ -453,7 +453,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
 
             var pull = new Pull { Extent = new Filter(this.M.C1) { Predicate = new Equals(this.M.C1.Name) { Value = "c1A" } } };
             var result = await session.PullAsync(pull);
@@ -483,7 +483,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
 
             var pull = new Pull { Extent = new Filter(this.M.C1) { Predicate = new Equals(this.M.C1.Name) { Value = "c1A" } } };
             var result = await session.PullAsync(pull);
@@ -525,7 +525,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
 
             await session.PullAsync();
 
@@ -541,7 +541,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
 
             var pull = new Pull { Extent = new Filter(this.M.C1) { Predicate = new Equals(this.M.C1.Name) { Value = "c1A" } } };
             var result = await session.PullAsync(pull);
@@ -578,7 +578,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
 
             var pull = new Pull { Extent = new Filter(this.M.C1) { Predicate = new Equals(this.M.C1.Name) { Value = "c1A" } } };
             var result = await session.PullAsync(pull);

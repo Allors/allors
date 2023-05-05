@@ -29,7 +29,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             // Class
@@ -86,7 +86,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             // Empty
@@ -159,7 +159,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             var c1c = await session.PullObject<C1>(c1C);
@@ -190,7 +190,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             // Full
@@ -216,7 +216,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -247,7 +247,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             var c1c = await session.PullObject<C1>(c1C);
@@ -278,7 +278,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -309,7 +309,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             var c1b = await session.PullObject<C1>(c1B);
@@ -359,7 +359,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             // Class
@@ -402,7 +402,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -427,7 +427,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -458,7 +458,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             var c1b = await session.PullObject<C1>(c1B);
@@ -508,7 +508,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
 
@@ -550,7 +550,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -591,7 +591,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             var c1c = await session.PullObject<C1>(c1C);
@@ -618,7 +618,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -640,7 +640,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -668,7 +668,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             var c1c = await session.PullObject<C1>(c1C);
@@ -698,7 +698,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             var c1b = await session.PullObject<C1>(c1B);
@@ -733,7 +733,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -765,7 +765,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -797,7 +797,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -826,7 +826,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -854,7 +854,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -886,7 +886,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -914,7 +914,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -942,7 +942,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -970,7 +970,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -998,7 +998,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1026,7 +1026,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1054,7 +1054,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1082,7 +1082,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1110,7 +1110,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1138,7 +1138,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1166,7 +1166,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1194,7 +1194,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1222,7 +1222,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1250,7 +1250,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1278,7 +1278,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1306,7 +1306,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1334,7 +1334,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1362,7 +1362,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1390,7 +1390,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1418,7 +1418,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1446,7 +1446,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1474,7 +1474,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1502,7 +1502,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1530,7 +1530,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1558,7 +1558,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1586,7 +1586,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1614,7 +1614,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1639,7 +1639,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1667,7 +1667,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1695,7 +1695,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1723,7 +1723,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1751,7 +1751,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             // Empty
@@ -1824,7 +1824,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             var c2c = await session.PullObject<C2>(c2C);
@@ -1854,7 +1854,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1885,7 +1885,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             var c2d = await session.PullObject<C2>(c2D);
@@ -1915,7 +1915,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1946,7 +1946,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -1977,7 +1977,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var m = this.M;
 
             var pull = new Pull
@@ -2011,7 +2011,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
             var pull1 = new Pull { Extent = new Filter(this.M.C1) { Predicate = new Equals(this.M.C1.Name) { Value = "c1A" } } };
             var result = await session.PullAsync(pull1);
             var c1a = result.GetCollection<C1>()[0];
@@ -2032,7 +2032,7 @@ namespace Allors.Workspace.Adapters.Tests
         public async void PullWithInclude()
         {
             await this.Login("administrator");
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
 
             var pull = new Pull
             {
@@ -2067,7 +2067,7 @@ namespace Allors.Workspace.Adapters.Tests
         public async void SortDirectionDefault()
         {
             await this.Login("administrator");
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
 
             var pull = new Pull
             {
@@ -2092,7 +2092,7 @@ namespace Allors.Workspace.Adapters.Tests
         public async void SortDirectionAscending()
         {
             await this.Login("administrator");
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
 
             var pull = new Pull
             {
@@ -2118,7 +2118,7 @@ namespace Allors.Workspace.Adapters.Tests
         public async void SortDirectionDescending()
         {
             await this.Login("administrator");
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
 
             var pull = new Pull
             {

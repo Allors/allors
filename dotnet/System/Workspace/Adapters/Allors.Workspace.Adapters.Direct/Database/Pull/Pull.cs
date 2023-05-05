@@ -26,9 +26,9 @@ namespace Allors.Workspace.Adapters.Direct
         private IDictionary<string, IObject[]> collections;
         private IDictionary<string, IObject> objects;
 
-        public Pull(Session session) : base(session)
+        public Pull(Workspace session) : base(session)
         {
-            this.Workspace = session.Workspace;
+            this.Workspace = session;
             this.Transaction = this.Workspace.DatabaseConnection.CreateTransaction();
 
             var databaseServices = this.Workspace.DatabaseConnection.DatabaseServices;

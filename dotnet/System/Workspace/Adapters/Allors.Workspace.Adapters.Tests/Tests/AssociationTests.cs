@@ -21,7 +21,7 @@ namespace Allors.Workspace.Adapters.Tests
         public async void Database_GetOne2Many()
         {
             await this.Login("administrator");
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
 
             var pull = new[]
             {
@@ -61,7 +61,7 @@ namespace Allors.Workspace.Adapters.Tests
         public async void Database_GetOne2One()
         {
             await this.Login("administrator");
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
 
             var pull = new[]
             {

@@ -11,8 +11,6 @@ namespace Allors.Workspace
     {
         void OnInit(IWorkspace workspace);
 
-        ISessionServices CreateSessionServices();
-
         T Get<T>();
     }
 }

@@ -10,7 +10,7 @@ namespace Allors.Workspace
 
     public interface IStrategy
     {
-        ISession Session { get; }
+        IWorkspace Session { get; }
 
         IObject Object { get; }
 

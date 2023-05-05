@@ -1,27 +1,123 @@
-// <copyright file="RecordBasedOriginState.cs" company="Allors bvba">
+// <copyright file="DatabaseState.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
+
+using System.Linq;
 
 namespace Allors.Workspace.Adapters
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
+    using Allors.Shared.Ranges;
     using Meta;
-    using Shared.Ranges;
 
-    public abstract class RecordBasedOriginState
+    public abstract class DatabaseState
     {
+        protected DatabaseState(DatabaseRecord record)
+        {
+            this.DatabaseRecord = record;
+            this.PreviousRecord = this.DatabaseRecord;
+            this.IsPushed = false;
+        }
+
+        public long Version => this.DatabaseRecord?.Version ?? Allors.Version.WorkspaceInitial;
+
+        public bool CanRead(IRoleType roleType)
+        {
+            if (!this.ExistRecord)
+            {
+                return true;
+            }
+
+            if (this.IsVersionInitial)
+            {
+                // TODO: Security
+                return true;
+            }
+
+            var permission = this.Session.DatabaseConnection.GetPermission(this.Class, roleType, Operations.Read);
+            return this.DatabaseRecord.IsPermitted(permission);
+        }
+
+        public bool CanWrite(IRoleType roleType)
+        {
+            if (this.IsVersionInitial)
+            {
+                return !this.IsPushed;
+            }
+
+            if (this.IsPushed)
+            {
+                return false;
+            }
+
+            if (!this.ExistRecord)
+            {
+                return true;
+            }
+
+            var permission = this.Session.DatabaseConnection.GetPermission(this.Class, roleType, Operations.Write);
+            return this.DatabaseRecord.IsPermitted(permission);
+        }
+
+        public bool CanExecute(IMethodType methodType)
+        {
+            if (!this.ExistRecord)
+            {
+                return true;
+            }
+
+            if (this.IsVersionInitial)
+            {
+                // TODO: Security
+                return true;
+            }
+
+            var permission = this.Session.DatabaseConnection.GetPermission(this.Class, methodType, Operations.Execute);
+            return this.DatabaseRecord.IsPermitted(permission);
+        }
+
+        private bool IsVersionInitial => this.Version == Allors.Version.WorkspaceInitial.Value;
+
+        protected IEnumerable<IRoleType> RoleTypes => this.Class.RoleTypes;
+
+        protected bool ExistRecord => this.Record != null;
+
+        protected DatabaseRecord Record => this.DatabaseRecord;
+
+        protected DatabaseRecord DatabaseRecord { get; private set; }
+
+        private bool IsPushed { get; set; }
+
         public abstract Strategy Strategy { get; }
 
         protected bool HasChanges => this.Record == null || this.ChangedRoleByRelationType?.Count > 0;
+        
+        protected DatabaseRecord PreviousRecord { get; set; }
 
-        protected abstract IEnumerable<IRoleType> RoleTypes { get; }
+        public void OnPushed() => this.IsPushed = true;
 
-        protected abstract IRecord Record { get; }
+        public void OnPulled(IPullResultInternals pull)
+        {
+            var newRecord = this.Session.DatabaseConnection.GetRecord(this.Id);
 
-        protected IRecord PreviousRecord { get; set; }
+            if (!this.IsPushed)
+            {
+                if (!this.CanMerge(newRecord))
+                {
+                    pull.AddMergeError(this.Strategy.Object);
+                    return;
+                }
+            }
+            else
+            {
+                this.Reset();
+                this.IsPushed = false;
+            }
+
+            this.DatabaseRecord = newRecord;
+        }
 
         public Dictionary<IRelationType, object> ChangedRoleByRelationType { get; private set; }
 
@@ -314,7 +410,7 @@ namespace Allors.Workspace.Adapters
             }
         }
 
-        public bool CanMerge(IRecord newRecord)
+        public bool CanMerge(DatabaseRecord newRecord)
         {
             if (this.ChangedRoleByRelationType == null)
             {
@@ -371,8 +467,6 @@ namespace Allors.Workspace.Adapters
         public bool HasChanged(IRoleType roleType) => this.ChangedRoleByRelationType?.ContainsKey(roleType.RelationType) ?? false;
 
         public void RestoreRole(IRoleType roleType) => this.ChangedRoleByRelationType?.Remove(roleType.RelationType);
-
-        protected abstract void OnChange();
 
         private void SetChangedRole(IRoleType roleType, object role)
         {
@@ -443,15 +537,19 @@ namespace Allors.Workspace.Adapters
             }
         }
 
+        protected void OnChange()
+        {
+            this.Session.ChangeSetTracker.OnDatabaseChanged(this);
+            this.Session.PushToDatabaseTracker.OnChanged(this);
+        }
+
         #region Proxy Properties
 
         protected long Id => this.Strategy.Id;
 
         protected IClass Class => this.Strategy.Class;
 
-        protected Session Session => this.Strategy.Session;
-
-        protected Workspace Workspace => this.Session.Workspace;
+        protected Workspace Session => this.Strategy.Session;
 
         #endregion
     }

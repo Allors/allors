@@ -25,8 +25,6 @@ namespace Allors.Workspace
         {
         }
 
-        public ISessionServices CreateSessionServices() => new SessionServices();
-
         public T Get<T>() =>
            typeof(T) switch
            {

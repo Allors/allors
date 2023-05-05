@@ -1,4 +1,4 @@
-// <copyright file="DatabaseOriginState.cs" company="Allors bvba">
+// <copyright file="DatabaseState.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -10,9 +10,9 @@ namespace Allors.Workspace.Adapters.Json
     using Allors.Protocol.Json.Api.Push;
     using Shared.Ranges;
 
-    internal sealed class DatabaseOriginState : Adapters.DatabaseOriginState
+    internal sealed class DatabaseState : Adapters.DatabaseState
     {
-        internal DatabaseOriginState(Strategy strategy, DatabaseRecord record) : base(record) => this.RemoteStrategy = strategy;
+        internal DatabaseState(Strategy strategy, DatabaseRecord record) : base(record) => this.RemoteStrategy = strategy;
 
         public override Adapters.Strategy Strategy => this.RemoteStrategy;
         private Strategy RemoteStrategy { get; }
@@ -35,7 +35,7 @@ namespace Allors.Workspace.Adapters.Json
         {
             if (this.ChangedRoleByRelationType?.Count > 0)
             {
-                var database = this.RemoteStrategy.Session.Workspace.DatabaseConnection;
+                var database = this.RemoteStrategy.Session.DatabaseConnection;
                 var roles = new List<PushRequestRole>();
 
                 foreach (var keyValuePair in this.ChangedRoleByRelationType)

@@ -7,7 +7,7 @@ namespace Allors.Workspace.Adapters
 {
     using Meta;
 
-    public abstract class DatabaseRecord : IRecord
+    public abstract class DatabaseRecord 
     {
         protected DatabaseRecord(IClass @class, long id, long version)
         {

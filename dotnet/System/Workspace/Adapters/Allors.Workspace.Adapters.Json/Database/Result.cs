@@ -18,13 +18,13 @@ namespace Allors.Workspace.Adapters.Json
 
         private IList<IObject> mergeErrors;
 
-        protected Result(ISession session, Response response)
+        protected Result(IWorkspace session, Response response)
         {
             this.Session = session;
             this.response = response;
         }
 
-        public ISession Session { get; }
+        public IWorkspace Session { get; }
 
         public bool HasErrors => this.response.HasErrors || this.mergeErrors?.Count > 0;
 

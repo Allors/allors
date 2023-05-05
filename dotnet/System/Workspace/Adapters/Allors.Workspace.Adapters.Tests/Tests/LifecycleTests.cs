@@ -27,7 +27,7 @@ namespace Allors.Workspace.Adapters.Tests
         [Fact]
         public async void PullSameSessionNotPushedException()
         {
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
 
             var c1 = session.Create<C1>();
             Assert.NotNull(c1);
@@ -50,12 +50,12 @@ namespace Allors.Workspace.Adapters.Tests
         [Fact]
         public async void PullOtherSessionNotPushedException()
         {
-            var session1 = this.Workspace.CreateSession();
+            var session1 = this.Workspace;
 
             var c1 = session1.Create<C1>();
             Assert.NotNull(c1);
 
-            var session2 = this.Workspace.CreateSession();
+            var session2 = this.Workspace;
 
             bool hasErrors;
 

@@ -24,7 +24,7 @@ namespace Allors.Workspace.Adapters.Tests
         public async void Take()
         {
             await this.Login("administrator");
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
 
             var pull = new Pull
             {

@@ -22,7 +22,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
 
             var pull = new[] { new Pull { Extent = new Filter(this.M.Organization) } };
 
@@ -45,7 +45,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
 
             var pull = new[] { new Pull { Extent = new Filter(this.M.Organization) } };
 
@@ -72,7 +72,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
 
             var pull = new[] { new Pull { Extent = new Filter(this.M.Organization) } };
 

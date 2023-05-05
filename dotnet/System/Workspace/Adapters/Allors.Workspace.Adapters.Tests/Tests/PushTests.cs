@@ -23,7 +23,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
 
             var newObject = session.Create<C1>();
 
@@ -56,7 +56,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
 
             var newObject = session.Create<C1>();
 
@@ -91,7 +91,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
 
             var newObject = session.Create<C1>();
             newObject.C1AllorsString = "A new object";
@@ -109,7 +109,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
 
             var pull = new Pull
             {
@@ -137,7 +137,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
 
             var pull = new Pull
             {
@@ -156,7 +156,7 @@ namespace Allors.Workspace.Adapters.Tests
 
             await session.PushAsync();
 
-            var session2 = this.Workspace.CreateSession();
+            var session2 = this.Workspace;
 
             result = await session2.PullAsync(new Pull { Object = c1a });
 
@@ -176,7 +176,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
 
             var person = session.Create<Person>();
             person.FirstName = "Johny";
@@ -194,7 +194,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
 
             var person = session.Create<Person>();
             person.FirstName = "Johny";
@@ -212,7 +212,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
 
             var person = session.Create<Person>();
             person.FirstName = "Johny";
@@ -235,7 +235,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await this.Login("administrator");
 
-            var session = this.Workspace.CreateSession();
+            var session = this.Workspace;
 
             var c1x = session.Create<C1>();
             var c1y = session.Create<C1>();

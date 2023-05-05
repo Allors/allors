@@ -18,7 +18,7 @@ namespace Allors.Workspace.Adapters.Direct
 
         private IList<IObject> mergeErrors;
 
-        protected Result(Session session)
+        protected Result(Workspace session)
         {
             this.Session = session;
             this.accessErrorStrategies = new List<Strategy>();
@@ -26,7 +26,7 @@ namespace Allors.Workspace.Adapters.Direct
             this.versionErrors = new List<long>();
         }
 
-        protected Session Session { get; }
+        protected Workspace Session { get; }
 
         public string ErrorMessage { get; set; }
 

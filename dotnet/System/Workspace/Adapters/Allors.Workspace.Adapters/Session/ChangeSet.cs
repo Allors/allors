@@ -17,7 +17,7 @@ namespace Allors.Workspace.Adapters
 
     public sealed class ChangeSet : IChangeSet
     {
-        public ChangeSet(Session session, ISet<IStrategy> created, ISet<IStrategy> instantiated)
+        public ChangeSet(Workspace session, ISet<IStrategy> created, ISet<IStrategy> instantiated)
         {
             this.Session = session;
             this.Created = created ?? EmptySet<IStrategy>.Instance;
@@ -26,9 +26,9 @@ namespace Allors.Workspace.Adapters
             this.RolesByAssociationType = new Dictionary<IAssociationType, ISet<IStrategy>>();
         }
 
-        private Session Session { get; }
+        private Workspace Session { get; }
 
-        ISession IChangeSet.Session => this.Session;
+        IWorkspace IChangeSet.Session => this.Session;
 
         public ISet<IStrategy> Created { get; }
 
