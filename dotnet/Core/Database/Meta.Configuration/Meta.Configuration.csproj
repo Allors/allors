@@ -3,7 +3,7 @@
     <TargetFramework>net7.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\System\Database\Allors.Database.Meta\Allors.Database.Meta.csproj" />
+    <ProjectReference Include="..\..\..\System\Database\Allors.Database.Meta.Static\Allors.Database.Meta.Static.csproj" />
     <ProjectReference Include="..\Meta\Meta.csproj" />
   </ItemGroup>
 

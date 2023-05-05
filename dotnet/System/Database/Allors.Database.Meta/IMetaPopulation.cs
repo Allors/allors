@@ -38,5 +38,5 @@ public interface IMetaPopulation
 
     IValidationLog Validate();
 
-    void Bind(Type[] types, Dictionary<Type, MethodInfo[]> extensionMethodsByInterface);
+    void Bind(Type[] types);
 }

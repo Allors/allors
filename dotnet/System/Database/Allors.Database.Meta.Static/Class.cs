@@ -1,4 +1,4 @@
-﻿// <copyright file="Class.cs" company="Allors bvba">
+// <copyright file="Class.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -41,15 +41,4 @@ public abstract class Class : Composite, IClass
 
     public override bool IsAssignableFrom(IComposite objectType) => this.Equals(objectType);
 
-    public Action<object, object>[] Actions(IMethodType methodType)
-    {
-        this.actionsByMethodType ??= new ConcurrentDictionary<IMethodType, Action<object, object>[]>();
-        if (!this.actionsByMethodType.TryGetValue(methodType, out var actions))
-        {
-            actions = this.MetaPopulation.MethodCompiler.Compile(this, methodType);
-            this.actionsByMethodType[methodType] = actions;
-        }
-
-        return actions;
-    }
 }

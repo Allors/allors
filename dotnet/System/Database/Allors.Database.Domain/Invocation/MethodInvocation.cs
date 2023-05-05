@@ -3,6 +3,8 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
+using Allors.Database.Services;
+
 namespace Allors.Database.Meta;
 
 using System;
@@ -29,7 +31,9 @@ public class MethodInvocation
 
         method.Executed = true;
 
-        foreach (var action in this.Class.Actions(this.MethodType))
+        var methodService = method.Object.Strategy.Transaction.Database.Services.Get<IMethodService>();
+
+        foreach (var action in methodService.Get(this.Class, this.MethodType))
         {
             // TODO: Add test for deletion
             if (!method.Object.Strategy.IsDeleted && !method.StopPropagation)

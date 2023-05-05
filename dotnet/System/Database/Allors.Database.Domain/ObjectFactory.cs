@@ -1,4 +1,4 @@
-﻿// <copyright file="ObjectFactory.cs" company="Allors bvba">
+// <copyright file="ObjectFactory.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -69,18 +69,7 @@ public class ObjectFactory : IObjectFactory
             throw new Exception(validationLog.ToString());
         }
 
-        var extensionMethodsByInterface = (from type in this.Assembly.ExportedTypes
-                                           where type.GetTypeInfo().IsSealed && !type.GetTypeInfo().IsGenericType && !type.IsNested
-                                           from method in type.GetTypeInfo().DeclaredMethods
-                                           let parameterType = method.GetParameters().FirstOrDefault()?.ParameterType
-                                           where method.IsStatic &&
-                                                 method.IsDefined(typeof(ExtensionAttribute), false) &&
-                                                 parameterType?.IsInterface == true
-                                           select new KeyValuePair<Type, MethodInfo>(parameterType, method))
-            .GroupBy(kvp => kvp.Key, kvp => kvp.Value)
-            .ToDictionary(v => v.Key, v => v.ToArray());
-
-        metaPopulation.Bind(types, extensionMethodsByInterface);
+        metaPopulation.Bind(types);
 
         this.typeByObjectType = new Dictionary<IObjectType, Type>();
         this.objectTypeByType = new Dictionary<Type, IObjectType>();

@@ -1,4 +1,4 @@
-﻿// <copyright file="RoleType.cs" company="Allors bvba">
+// <copyright file="RoleType.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -97,44 +97,6 @@ public abstract class RoleType : IRoleType, IComparable
     public string MediaType { get; set; }
 
     public int CompareTo(object other) => this.RelationType.Id.CompareTo((other as RoleType)?.RelationType.Id);
-
-    /// <summary>
-    ///     Get the value of the role on this object.
-    /// </summary>
-    /// <param name="strategy">
-    ///     The strategy.
-    /// </param>
-    /// <returns>
-    ///     The role value.
-    /// </returns>
-    public object Get(IStrategy strategy, IComposite ofType)
-    {
-        var role = strategy.GetRole(this);
-
-        if (ofType == null || role == null || !this.ObjectType.IsComposite)
-        {
-            return role;
-        }
-
-        if (this.IsOne)
-        {
-            return ofType.IsAssignableFrom(((IObject)role).Strategy.Class) ? role : null;
-        }
-
-        var extent = (IEnumerable<IObject>)role;
-        return extent.Where(v => ofType.IsAssignableFrom(v.Strategy.Class));
-    }
-
-    /// <summary>
-    ///     Set the value of the role on this object.
-    /// </summary>
-    /// <param name="strategy">
-    ///     The strategy.
-    /// </param>
-    /// <param name="value">
-    ///     The role value.
-    /// </param>
-    public void Set(IStrategy strategy, object value) => strategy.SetRole(this, value);
 
     public override bool Equals(object other) => this.RelationType.Id.Equals((other as RoleType)?.RelationType.Id);
 

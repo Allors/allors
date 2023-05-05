@@ -1,4 +1,4 @@
-﻿// <copyright file="AssociationType.cs" company="Allors bvba">
+// <copyright file="AssociationType.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -65,25 +65,6 @@ public abstract class AssociationType : IAssociationType, IComparable
     IRoleType IAssociationType.RoleType => this.RoleType;
 
     IRelationType IAssociationType.RelationType => this.RelationType;
-
-    // TODO: move to extension method
-    public object Get(IStrategy strategy, IComposite ofType)
-    {
-        var association = strategy.GetAssociation(this);
-
-        if (ofType == null || association == null)
-        {
-            return association;
-        }
-
-        if (this.IsMany)
-        {
-            var extent = (IEnumerable<IObject>)association;
-            return extent.Where(v => ofType.IsAssignableFrom(v.Strategy.Class));
-        }
-
-        return !ofType.IsAssignableFrom(((IObject)association).Strategy.Class) ? null : association;
-    }
 
     public int CompareTo(object other) => this.RelationType.Id.CompareTo((other as AssociationType)?.RelationType.Id);
 

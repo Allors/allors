@@ -36,8 +36,6 @@ public abstract class MetaPopulation : IMetaPopulation
 
     public bool IsBound { get; private set; }
 
-    public MethodCompiler MethodCompiler { get; private set; }
-
     public IReadOnlyList<string> WorkspaceNames => this.derivedWorkspaceNames;
 
     IReadOnlyList<IDomain> IMetaPopulation.Domains => this.Domains;
@@ -303,7 +301,7 @@ public abstract class MetaPopulation : IMetaPopulation
         this.compositeByLowercaseName = this.Composites.ToDictionary(v => v.Name.ToLowerInvariant());
     }
 
-    public void Bind(Type[] types, Dictionary<Type, MethodInfo[]> extensionMethodsByInterface)
+    public void Bind(Type[] types)
     {
         if (!this.IsBound)
         {
@@ -336,8 +334,6 @@ public abstract class MetaPopulation : IMetaPopulation
             {
                 @class.BoundType = typeByName[@class.Name];
             }
-
-            this.MethodCompiler = new MethodCompiler(this, extensionMethodsByInterface);
         }
     }
 

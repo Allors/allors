@@ -6,7 +6,7 @@
     <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Allors.Database\Allors.Database.csproj" />
+    <ProjectReference Include="..\..\Allors.Database.Domain\Allors.Database.Domain.csproj" />
     <ProjectReference Include="..\Allors.Database.Adapters.Sql\Allors.Database.Adapters.Sql.csproj" />
   </ItemGroup>
 </Project>

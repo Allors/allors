@@ -39,6 +39,8 @@ namespace Allors.Database.Configuration
 
         private ICaches caches;
 
+        private IMethodService methodService;
+
         private IPasswordHasher passwordHasher;
 
         private IDerivationService derivationService;
@@ -76,6 +78,7 @@ namespace Allors.Database.Configuration
                 { } type when type == typeof(IPreparedExtents) => (T)(this.preparedExtents ??= new PreparedExtents(this.M)),
                 { } type when type == typeof(ITreeCache) => (T)(this.treeCache ??= new TreeCache()),
                 { } type when type == typeof(IPermissions) => (T)(this.permissions ??= new Permissions()),
+                { } type when type == typeof(IMethodService) => (T)(this.methodService ??= new MethodService(this.M, this.Database.ObjectFactory.Assembly)),
                 { } type when type == typeof(ITime) => (T)(this.time ??= new Time()),
                 { } type when type == typeof(ICaches) => (T)(this.caches ??= new Caches()),
                 { } type when type == typeof(IPasswordHasher) => (T)(this.passwordHasher ??= this.CreatePasswordHasher()),

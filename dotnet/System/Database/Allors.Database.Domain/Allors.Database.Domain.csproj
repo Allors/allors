@@ -4,5 +4,6 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Shared\Allors.Shared.csproj" />
+    <ProjectReference Include="..\Allors.Database.Meta\Allors.Database.Meta.csproj" />
   </ItemGroup>
 </Project>
