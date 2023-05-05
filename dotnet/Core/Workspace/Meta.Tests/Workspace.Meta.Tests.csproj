@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Meta.Static\Workspace.Meta.Static.csproj" />
+    <ProjectReference Include="..\Meta.Configuration\Workspace.Meta.Configuration.csproj" />
   </ItemGroup>
 
 </Project>

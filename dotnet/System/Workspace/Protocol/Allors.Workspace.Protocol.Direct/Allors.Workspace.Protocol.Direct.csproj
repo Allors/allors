@@ -3,8 +3,8 @@
     <TargetFramework>net7.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Database\Allors.Database.Domain\Allors.Database.Domain.csproj" />
-    <ProjectReference Include="..\..\Allors.Workspace.Domain\Allors.Workspace.Domain.csproj" />
+    <ProjectReference Include="..\..\..\Database\Allors.Database\Allors.Database.csproj" />
+    <ProjectReference Include="..\..\Allors.Workspace\Allors.Workspace.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,10 +1,10 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\System\Workspace\Allors.Workspace.Meta.Static\Allors.Workspace.Meta.Static.csproj" />
-    <ProjectReference Include="..\Meta\Workspace.Meta.csproj" />
+    <ProjectReference Include="..\Meta.Domain\Workspace.Meta.Domain.csproj" />
   </ItemGroup>
 </Project>
