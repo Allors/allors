@@ -104,8 +104,8 @@ partial class Build
 
             {
                 DotNetTest(s => s
-                    .SetProjectFile(Paths.DotnetCoreWorkspaceMetaStaticTests)
-                    .AddLoggers("trx;LogFileName=DotnetCoreWorkspaceMetaStaticTests.trx")
+                    .SetProjectFile(Paths.DotnetCoreWorkspaceMetaTests)
+                    .AddLoggers("trx;LogFileName=DotnetCoreWorkspaceMetaTests.trx")
                     .SetResultsDirectory(Paths.ArtifactsTests));
             }
         });

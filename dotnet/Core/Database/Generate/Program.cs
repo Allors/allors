@@ -25,8 +25,8 @@ namespace Allors.Meta.Generation
             string[,] workspace =
             {
                 { "Workspace/Templates/uml.cs.stg", "Workspace/Diagrams/Generated" },
-                { "Workspace/Templates/meta.cs.stg", "Workspace/Meta/Generated" },
-                { "Workspace/Templates/meta.static.cs.stg", "Workspace/Meta.Static/Generated" },
+                { "Workspace/Templates/meta.cs.stg", "Workspace/Meta.Domain/Generated" },
+                { "Workspace/Templates/meta.static.cs.stg", "Workspace/Meta.Configuration/Generated" },
                 { "Workspace/Templates/domain.cs.stg", "Workspace/Domain/Generated" },
 
                 { "../../typescript/templates/workspace.meta.ts.stg", "../../typescript/libs/core/workspace/meta/src/lib/generated" },

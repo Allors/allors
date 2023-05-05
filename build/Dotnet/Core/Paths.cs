@@ -6,7 +6,7 @@ public partial class Paths
     public AbsolutePath DotnetCoreRepository => DotnetCore / "Repository/Repository.csproj";
 
     public AbsolutePath DotnetCoreDatabase => DotnetCore / "Database";
-    public AbsolutePath DotnetCoreDatabaseMetaGenerated => DotnetCoreDatabase / "Meta/Generated";
+    public AbsolutePath DotnetCoreDatabaseMetaGenerated => DotnetCoreDatabase / "Meta.Domain/Generated";
     public AbsolutePath DotnetCoreDatabaseMetaConfigurationGenerated => DotnetCoreDatabase / "Meta.Configuration/Generated";
     public AbsolutePath DotnetCoreDatabaseGenerate => DotnetCoreDatabase / "Generate/Generate.csproj";
     public AbsolutePath DotnetCoreDatabaseMerge => DotnetCoreDatabase / "Merge/Merge.csproj";
@@ -23,5 +23,5 @@ public partial class Paths
     public AbsolutePath DotnetCoreDatabaseResourcesCustom => DotnetCoreDatabaseResources / "Custom";
 
     public AbsolutePath DotnetCoreWorkspace => DotnetCore / "Workspace";
-    public AbsolutePath DotnetCoreWorkspaceMetaStaticTests => DotnetCoreWorkspace / "Meta.Static";
+    public AbsolutePath DotnetCoreWorkspaceMetaTests => DotnetCoreWorkspace / "Meta.Tests";
 }
