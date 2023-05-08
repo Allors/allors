@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Allors.Workspace.Adapters.Workspace">
+    <Position X="0.5" Y="1.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>gEAEAAIAAQAQBEEEAARAAAAAAQAgAEAQgAMAAAAUBQA=</HashCode>
+      <FileName>Workspace\Workspace.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="PushToDatabaseTracker" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="StrategyByWorkspaceId" />
+    </ShowAsCollectionAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Allors.Workspace.Adapters.Strategy">
+    <Position X="7.75" Y="1.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>IFBKBAUICABQBEBgMEYQAMRIAAAgAQAABEIQBAAJIAA=</HashCode>
+      <FileName>Workspace\Strategy.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="State" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Allors.Workspace.Adapters.PushToDatabaseTracker">
+    <Position X="5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAABAAAAAAAACAAAAQAAAAAAAAAAAA=</HashCode>
+      <FileName>Workspace\PushToDatabaseTracker.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Allors.Workspace.Adapters.State">
+    <Position X="12" Y="1.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>IBJCBIQAiQAABUBAMUYQEACAAAAAACAIBIAAgDAJbCQ=</HashCode>
+      <FileName>Workspace\State.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Record" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Allors.Workspace.Adapters.Record">
+    <Position X="16.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IACCAAEAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Database\Record.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
