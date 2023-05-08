@@ -12,7 +12,7 @@ namespace Allors.Workspace.Adapters.Json
 
     internal sealed class State : Adapters.State
     {
-        internal State(Strategy strategy, DatabaseRecord record) : base(record) => this.RemoteStrategy = strategy;
+        internal State(Strategy strategy, Adapters.Record record) : base(record) => this.RemoteStrategy = strategy;
 
         public override Adapters.Strategy Strategy => this.RemoteStrategy;
         private Strategy RemoteStrategy { get; }
@@ -35,7 +35,7 @@ namespace Allors.Workspace.Adapters.Json
         {
             if (this.ChangedRoleByRelationType?.Count > 0)
             {
-                var database = this.RemoteStrategy.Session.DatabaseConnection;
+                var database = this.RemoteStrategy.Session.Connection;
                 var roles = new List<PushRequestRole>();
 
                 foreach (var keyValuePair in this.ChangedRoleByRelationType)
@@ -64,7 +64,7 @@ namespace Allors.Workspace.Adapters.Json
                         }
                         else
                         {
-                            var databaseRole = ValueRange<long>.Ensure(this.DatabaseRecord.GetRole(relationType.RoleType));
+                            var databaseRole = ValueRange<long>.Ensure(this.Record.GetRole(relationType.RoleType));
                             if (databaseRole.IsEmpty)
                             {
                                 pushRequestRole.a = roleIds.Save();

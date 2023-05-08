@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Interface Name="Allors.Workspace.IWorkspace">
-    <Position X="0.5" Y="0.5" Width="2.5" />
+    <Position X="3.75" Y="0.5" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>gAAAAAIAAQAABkAAAARAAAAAAAAgAEAQgAAAAAAAAAA=</HashCode>
+      <HashCode>gAAAAAIAAQAABEAAAARAAAAAAAAgAEAQgAAAAAAAAAA=</HashCode>
       <FileName>IWorkspace.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -12,9 +12,9 @@
     </ShowAsAssociation>
   </Interface>
   <Interface Name="Allors.Workspace.IStrategy">
-    <Position X="8.5" Y="0.5" Width="2.5" />
+    <Position X="8.25" Y="0.5" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>IFBCBAUIAABQBEBgMEYQAAAAAAAAAAAABEAQAAgJIAA=</HashCode>
+      <HashCode>IFBCBAUIAABQBEBgMEYQAAAAAAAAAAAABEAQAAAJIAA=</HashCode>
       <FileName>IStrategy.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -33,14 +33,14 @@
     </ShowAsAssociation>
   </Interface>
   <Interface Name="Allors.Workspace.IObjectFactory">
-    <Position X="3.25" Y="5.25" Width="2.5" />
+    <Position X="3.75" Y="6.25" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAEEAAAAAAAAAAAA=</HashCode>
       <FileName>IObjectFactory.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Allors.Workspace.IConfiguration">
-    <Position X="0.5" Y="5.25" Width="1.5" />
+    <Position X="4.25" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAABAAAA=</HashCode>
       <FileName>IConfiguration.cs</FileName>
@@ -51,25 +51,15 @@
     </ShowAsAssociation>
   </Interface>
   <Interface Name="Allors.Workspace.Meta.IMetaPopulation">
-    <Position X="0.5" Y="7" Width="2.25" />
+    <Position X="0.5" Y="3.25" Width="2.25" />
     <TypeIdentifier />
   </Interface>
   <Interface Name="Allors.Workspace.IWorkspaceServices">
-    <Position X="4.25" Y="3.25" Width="1.75" />
+    <Position X="0.5" Y="0.5" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAABAAAAAAAAAAAAAAAQAAAAAAAAAAAA=</HashCode>
       <FileName>Services\IWorkspaceServices.cs</FileName>
     </TypeIdentifier>
-  </Interface>
-  <Interface Name="Allors.Workspace.IChangeSet">
-    <Position X="4.5" Y="1.25" Width="2" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAABAAgAAAAQAAAAAAAAAAAQAAAAAAAAAAAE=</HashCode>
-      <FileName>IChangeSet.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="Workspace" />
-    </ShowAsAssociation>
   </Interface>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

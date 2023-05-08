@@ -23,11 +23,11 @@ namespace Allors.Workspace.Adapters.Json.SystemText
     using Polly;
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "RCS1090:Add call to 'ConfigureAwait' (or vice versa).", Justification = "<Pending>")]
-    public class DatabaseConnection : Json.DatabaseConnection
+    public class Connection : Json.Connection
     {
         private string userId;
 
-        public DatabaseConnection(Configuration configuration, Func<IWorkspaceServices> servicesBuilder, HttpClient httpClient, IdGenerator idGenerator) : base(configuration, idGenerator, servicesBuilder)
+        public Connection(Configuration configuration, Func<IWorkspaceServices> servicesBuilder, HttpClient httpClient, IdGenerator idGenerator) : base(configuration, idGenerator, servicesBuilder)
         {
             this.HttpClient = httpClient;
             this.HttpClient.DefaultRequestHeaders.Accept.Clear();

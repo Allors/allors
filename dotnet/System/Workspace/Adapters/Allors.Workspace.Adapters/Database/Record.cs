@@ -1,4 +1,4 @@
-// <copyright file="DatabaseRecord.cs" company="Allors bvba">
+﻿// <copyright file="Record.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -7,9 +7,9 @@ namespace Allors.Workspace.Adapters
 {
     using Meta;
 
-    public abstract class DatabaseRecord 
+    public abstract class Record 
     {
-        protected DatabaseRecord(IClass @class, long id, long version)
+        protected Record(IClass @class, long id, long version)
         {
             this.Class = @class;
             this.Id = id;

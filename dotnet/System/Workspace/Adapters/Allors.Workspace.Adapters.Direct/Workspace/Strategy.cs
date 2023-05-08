@@ -9,8 +9,8 @@ namespace Allors.Workspace.Adapters.Direct
 
     public sealed class Strategy : Adapters.Strategy
     {
-        internal Strategy(Adapters.Workspace workspace, IClass @class, long id) : base(workspace, @class, id) => this.State = new State(this, workspace.DatabaseConnection.GetRecord(this.Id));
+        internal Strategy(Adapters.Workspace workspace, IClass @class, long id) : base(workspace, @class, id) => this.State = new State(this, workspace.Connection.GetRecord(this.Id));
 
-        internal Strategy(Adapters.Workspace workspace, Adapters.DatabaseRecord databaseRecord) : base(workspace, databaseRecord) => this.State = new State(this, databaseRecord);
+        internal Strategy(Adapters.Workspace workspace, Adapters.Record record) : base(workspace, record) => this.State = new State(this, record);
     }
 }

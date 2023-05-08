@@ -13,19 +13,19 @@ namespace Allors.Workspace.Adapters.Direct
 
     public class Workspace : Adapters.Workspace
     {
-        public Workspace(DatabaseConnection database, IWorkspaceServices services) : base(database, services)
+        public Workspace(Connection database, IWorkspaceServices services) : base(database, services)
         {
             this.Services.OnInit(this);
         }
 
-        public new DatabaseConnection DatabaseConnection => (DatabaseConnection)base.DatabaseConnection;
+        public new Connection Connection => (Connection)base.Connection;
 
-        public long UserId => this.DatabaseConnection.UserId;
+        public long UserId => this.Connection.UserId;
 
 
         public override T Create<T>(IClass @class)
         {
-            var workspaceId = this.DatabaseConnection.NextId();
+            var workspaceId = this.Connection.NextId();
             var strategy = new Strategy(this, @class, workspaceId);
             this.AddStrategy(strategy);
             this.PushToDatabaseTracker.OnCreated(strategy);
@@ -34,8 +34,8 @@ namespace Allors.Workspace.Adapters.Direct
 
         private void InstantiateDatabaseStrategy(long id)
         {
-            var databaseRecord = this.DatabaseConnection.GetRecord(id);
-            var strategy = new Strategy(this, (DatabaseRecord)databaseRecord);
+            var databaseRecord = this.Connection.GetRecord(id);
+            var strategy = new Strategy(this, (Adapters.Record)databaseRecord);
             this.AddStrategy(strategy);
         }
 
@@ -78,18 +78,16 @@ namespace Allors.Workspace.Adapters.Direct
 
         public override Task<IPushResult> PushAsync()
         {
-            var databaseTracker = this.PushToDatabaseTracker;
-
             var result = new Push(this);
 
-            result.Execute(databaseTracker);
+            result.Execute(this.PushToDatabaseTracker);
 
             if (result.HasErrors)
             {
                 return Task.FromResult<IPushResult>(result);
             }
 
-            databaseTracker.Changed = null;
+            this.PushToDatabaseTracker.Changed = null;
 
             if (result.ObjectByNewId?.Count > 0)
             {
@@ -102,7 +100,7 @@ namespace Allors.Workspace.Adapters.Direct
                 }
             }
 
-            databaseTracker.Created = null;
+            this.PushToDatabaseTracker.Created = null;
 
             foreach (var @object in result.Objects)
             {
@@ -115,8 +113,8 @@ namespace Allors.Workspace.Adapters.Direct
 
         internal void OnPulled(Pull pull)
         {
-            var syncObjects = this.DatabaseConnection.ObjectsToSync(pull);
-            this.DatabaseConnection.Sync(syncObjects, pull.AccessControl);
+            var syncObjects = this.Connection.ObjectsToSync(pull);
+            this.Connection.Sync(syncObjects, pull.AccessControl);
 
             foreach (var databaseObject in pull.DatabaseObjects)
             {

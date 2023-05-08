@@ -16,7 +16,7 @@ namespace Allors.Workspace.Adapters.Json.SystemText.Tests
     using Allors.Workspace.Meta;
     using Xunit;
     using Configuration = Allors.Workspace.Adapters.Json.Configuration;
-    using DatabaseConnection = Allors.Workspace.Adapters.Json.SystemText.DatabaseConnection;
+    using Connection = SystemText.Connection;
     using IWorkspaceServices = Allors.Workspace.IWorkspaceServices;
 
     public class Profile : IProfile
@@ -44,7 +44,7 @@ namespace Allors.Workspace.Adapters.Json.SystemText.Tests
 
         IWorkspace IProfile.Workspace => this.Workspace;
 
-        public DatabaseConnection DatabaseConnection { get; private set; }
+        public Connection Connection { get; private set; }
 
         public IWorkspace Workspace { get; private set; }
 
@@ -56,8 +56,8 @@ namespace Allors.Workspace.Adapters.Json.SystemText.Tests
             var response = await this.httpClient.GetAsync(SetupUrl);
             Assert.True(response.IsSuccessStatusCode);
 
-            this.DatabaseConnection = new DatabaseConnection(this.configuration, this.servicesBuilder, this.httpClient, this.idGenerator);
-            this.Workspace = this.DatabaseConnection.CreateWorkspace();
+            this.Connection = new Connection(this.configuration, this.servicesBuilder, this.httpClient, this.idGenerator);
+            this.Workspace = this.Connection.CreateWorkspace();
 
             await this.Login("administrator");
         }
@@ -66,16 +66,16 @@ namespace Allors.Workspace.Adapters.Json.SystemText.Tests
 
         public IWorkspace CreateExclusiveWorkspace()
         {
-            var database = new DatabaseConnection(this.configuration, this.servicesBuilder, this.httpClient, this.idGenerator);
+            var database = new Connection(this.configuration, this.servicesBuilder, this.httpClient, this.idGenerator);
             return database.CreateWorkspace();
         }
 
-        public IWorkspace CreateWorkspace() => this.DatabaseConnection.CreateWorkspace();
+        public IWorkspace CreateWorkspace() => this.Connection.CreateWorkspace();
 
         public async Task Login(string user)
         {
             var uri = new Uri(LoginUrl, UriKind.Relative);
-            var response = await this.DatabaseConnection.Login(uri, user, null);
+            var response = await this.Connection.Login(uri, user, null);
             Assert.True(response);
         }
     }

@@ -18,13 +18,13 @@ namespace Allors.Workspace.Adapters.Json
 
     public class Workspace : Adapters.Workspace
     {
-        public Workspace(DatabaseConnection database, IWorkspaceServices services) : base(database, services) => this.Services.OnInit(this);
+        public Workspace(Connection database, IWorkspaceServices services) : base(database, services) => this.Services.OnInit(this);
 
-        public new DatabaseConnection DatabaseConnection => (DatabaseConnection)base.DatabaseConnection;
+        public new Connection Connection => (Connection)base.Connection;
 
         public override T Create<T>(IClass @class)
         {
-            var workspaceId = base.DatabaseConnection.NextId();
+            var workspaceId = base.Connection.NextId();
             var strategy = new Strategy(this, @class, workspaceId);
             this.AddStrategy(strategy);
             this.PushToDatabaseTracker.OnCreated(strategy);
@@ -33,7 +33,7 @@ namespace Allors.Workspace.Adapters.Json
 
         private void InstantiateDatabaseStrategy(long id)
         {
-            var databaseRecord = (DatabaseRecord)this.DatabaseConnection.GetRecord(id);
+            var databaseRecord = (Adapters.Record)this.Connection.GetRecord(id);
             var strategy = new Strategy(this, databaseRecord);
             this.AddStrategy(strategy);
         }
@@ -47,10 +47,10 @@ namespace Allors.Workspace.Adapters.Json
                 return pullResult;
             }
 
-            var syncRequest = this.DatabaseConnection.OnPullResponse(pullResponse);
+            var syncRequest = this.Connection.OnPullResponse(pullResponse);
             if (syncRequest.o.Length > 0)
             {
-                var database = this.DatabaseConnection;
+                var database = this.Connection;
                 var syncResponse = await database.Sync(syncRequest);
                 var accessRequest = database.OnSyncResponse(syncResponse);
 
@@ -102,13 +102,13 @@ namespace Allors.Workspace.Adapters.Json
                     : null
             };
 
-            var invokeResponse = await this.DatabaseConnection.Invoke(invokeRequest);
+            var invokeResponse = await this.Connection.Invoke(invokeRequest);
             return new InvokeResult(this, invokeResponse);
         }
 
         public override async Task<IPullResult> CallAsync(object args, string name)
         {
-            var pullResponse = await this.DatabaseConnection.Pull(args, name);
+            var pullResponse = await this.Connection.Pull(args, name);
             return await this.OnPull(pullResponse);
         }
 
@@ -122,22 +122,20 @@ namespace Allors.Workspace.Adapters.Json
                 }
             }
 
-            var pullRequest = new PullRequest { l = pulls.Select(v => v.ToJson(this.DatabaseConnection.UnitConvert)).ToArray() };
+            var pullRequest = new PullRequest { l = pulls.Select(v => v.ToJson(this.Connection.UnitConvert)).ToArray() };
 
-            var pullResponse = await this.DatabaseConnection.Pull(pullRequest);
+            var pullResponse = await this.Connection.Pull(pullRequest);
             return await this.OnPull(pullResponse);
         }
 
         public override async Task<IPushResult> PushAsync()
         {
-            var databaseTracker = this.PushToDatabaseTracker;
-
             var pushRequest = new PushRequest
             {
-                n = databaseTracker.Created?.Select(v => ((State)v.State).PushNew()).ToArray(),
-                o = databaseTracker.Changed?.Select(v => ((State)v.Strategy.State).PushExisting()).ToArray()
+                n = this.PushToDatabaseTracker.Created?.Select(v => ((State)v.State).PushNew()).ToArray(),
+                o = this.PushToDatabaseTracker.Changed?.Select(v => ((State)v.Strategy.State).PushExisting()).ToArray()
             };
-            var pushResponse = await this.DatabaseConnection.Push(pushRequest);
+            var pushResponse = await this.Connection.Push(pushRequest);
 
             if (pushResponse.HasErrors)
             {
@@ -155,8 +153,8 @@ namespace Allors.Workspace.Adapters.Json
                 }
             }
 
-            databaseTracker.Created = null;
-            databaseTracker.Changed = null;
+            this.PushToDatabaseTracker.Created = null;
+            this.PushToDatabaseTracker.Changed = null;
 
             if (pushRequest.o != null)
             {

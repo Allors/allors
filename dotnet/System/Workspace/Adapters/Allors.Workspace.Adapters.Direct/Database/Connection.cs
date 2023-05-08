@@ -1,4 +1,4 @@
-// <copyright file="v.cs" company="Allors bvba">
+﻿// <copyright file="v.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -19,19 +19,19 @@ namespace Allors.Workspace.Adapters.Direct
     using AccessControl = AccessControl;
     using IRoleType = Database.Meta.IRoleType;
 
-    public class DatabaseConnection : Adapters.DatabaseConnection
+    public class Connection : Adapters.Connection
     {
         private readonly Dictionary<long, AccessControl> accessControlById;
-        private readonly ConcurrentDictionary<long, DatabaseRecord> recordsById;
+        private readonly ConcurrentDictionary<long, Adapters.Record> recordsById;
 
         private readonly Func<IWorkspaceServices> servicesBuilder;
 
-        public DatabaseConnection(Configuration configuration, IDatabase database, Func<IWorkspaceServices> servicesBuilder) : base(configuration, new IdGenerator())
+        public Connection(Configuration configuration, IDatabase database, Func<IWorkspaceServices> servicesBuilder) : base(configuration, new IdGenerator())
         {
             this.Database = database;
             this.servicesBuilder = servicesBuilder;
 
-            this.recordsById = new ConcurrentDictionary<long, DatabaseRecord>();
+            this.recordsById = new ConcurrentDictionary<long, Adapters.Record>();
             this.accessControlById = new Dictionary<long, AccessControl>();
         }
 
@@ -68,14 +68,14 @@ namespace Allors.Workspace.Adapters.Direct
 
                     var accessControls = acl.Grants?.Select(v => (IGrant)transaction.Instantiate(v.Id)).Select(this.GetAccessControl).ToArray() ?? Array.Empty<AccessControl>();
 
-                    this.recordsById[id] = new DatabaseRecord(workspaceClass, id, @object.Strategy.ObjectVersion, roleByRoleType, ValueRange<long>.Load(acl.Revocations.Select(v => v.Id)), accessControls);
+                    this.recordsById[id] = new Record(workspaceClass, id, @object.Strategy.ObjectVersion, roleByRoleType, ValueRange<long>.Load(acl.Revocations.Select(v => v.Id)), accessControls);
                 }
             }
         }
 
         public override IWorkspace CreateWorkspace() => new Workspace(this, this.servicesBuilder());
 
-        public override Adapters.DatabaseRecord GetRecord(long id)
+        public override Adapters.Record GetRecord(long id)
         {
             this.recordsById.TryGetValue(id, out var databaseObjects);
             return databaseObjects;

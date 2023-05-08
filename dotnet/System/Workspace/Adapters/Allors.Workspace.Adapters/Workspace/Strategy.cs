@@ -25,12 +25,12 @@ namespace Allors.Workspace.Adapters
             this.Class = @class;
         }
 
-        protected Strategy(Workspace workspace, DatabaseRecord databaseRecord)
+        protected Strategy(Workspace workspace, Record record)
         {
             this.Workspace = workspace;
-            this.Id = databaseRecord.Id;
+            this.Id = record.Id;
             this.rangeId = this.Id;
-            this.Class = databaseRecord.Class;
+            this.Class = record.Class;
         }
 
         public long Version => this.State.Version;
@@ -47,7 +47,7 @@ namespace Allors.Workspace.Adapters
 
         public bool IsNew => Workspace.IsNewId(this.Id);
 
-        public IObject Object => this.@object ??= this.Workspace.DatabaseConnection.Configuration.ObjectFactory.Create(this);
+        public IObject Object => this.@object ??= this.Workspace.Connection.Configuration.ObjectFactory.Create(this);
 
         public bool HasChanges => this.State.HashChanges();
 

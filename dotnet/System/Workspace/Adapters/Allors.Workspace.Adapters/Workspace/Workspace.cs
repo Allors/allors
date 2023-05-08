@@ -15,11 +15,10 @@ namespace Allors.Workspace.Adapters
     public abstract class Workspace : IWorkspace
     {
         private readonly Dictionary<IClass, ISet<Strategy>> strategiesByClass;
-
-
-        protected Workspace(DatabaseConnection database, IWorkspaceServices services)
+        
+        protected Workspace(Connection database, IWorkspaceServices services)
         {
-            this.DatabaseConnection = database;
+            this.Connection = database;
             this.Services = services;
 
             this.StrategyByWorkspaceId = new Dictionary<long, Strategy>();
@@ -30,9 +29,9 @@ namespace Allors.Workspace.Adapters
             this.Services.OnInit(this);
         }
 
-        public DatabaseConnection DatabaseConnection { get; }
+        public Connection Connection { get; }
 
-        public IConfiguration Configuration => this.DatabaseConnection.Configuration;
+        public IConfiguration Configuration => this.Connection.Configuration;
 
         public IWorkspaceServices Services { get; }
 
@@ -61,7 +60,7 @@ namespace Allors.Workspace.Adapters
 
         public abstract T Create<T>(IClass @class) where T : class, IObject;
 
-        public T Create<T>() where T : class, IObject => this.Create<T>((IClass)this.DatabaseConnection.Configuration.ObjectFactory.GetObjectType<T>());
+        public T Create<T>() where T : class, IObject => this.Create<T>((IClass)this.Connection.Configuration.ObjectFactory.GetObjectType<T>());
       
         #region Instantiate
         public T Instantiate<T>(IObject @object) where T : class, IObject => this.Instantiate<T>(@object.Id);
@@ -89,7 +88,7 @@ namespace Allors.Workspace.Adapters
 
         public IEnumerable<T> Instantiate<T>() where T : class, IObject
         {
-            var objectType = (IComposite)this.DatabaseConnection.Configuration.ObjectFactory.GetObjectType<T>();
+            var objectType = (IComposite)this.Connection.Configuration.ObjectFactory.GetObjectType<T>();
             return this.Instantiate<T>(objectType);
         }
 

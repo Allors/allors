@@ -1,4 +1,4 @@
-// <copyright file="DatabaseRecord.cs" company="Allors bvba">
+﻿// <copyright file="Record.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -10,19 +10,19 @@ namespace Allors.Workspace.Adapters.Direct
     using Meta;
     using Shared.Ranges;
 
-    public class DatabaseRecord : Adapters.DatabaseRecord
+    public class Record : Adapters.Record
     {
         private readonly AccessControl[] accessControls;
         private readonly ValueRange<long> deniedPermissionIds;
 
         private readonly Dictionary<IRoleType, object> roleByRoleType;
 
-        internal DatabaseRecord(IClass @class, long id)
+        internal Record(IClass @class, long id)
             : base(@class, id, 0)
         {
         }
 
-        internal DatabaseRecord(IClass @class, long id, long version, Dictionary<IRoleType, object> roleByRoleType, ValueRange<long> deniedPermissionIds, AccessControl[] accessControls)
+        internal Record(IClass @class, long id, long version, Dictionary<IRoleType, object> roleByRoleType, ValueRange<long> deniedPermissionIds, AccessControl[] accessControls)
             : base(@class, id, version)
         {
             this.roleByRoleType = roleByRoleType;

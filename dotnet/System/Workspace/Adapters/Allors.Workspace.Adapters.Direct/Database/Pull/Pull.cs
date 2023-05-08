@@ -29,17 +29,17 @@ namespace Allors.Workspace.Adapters.Direct
         public Pull(Workspace workspace) : base(workspace)
         {
             this.Workspace = workspace;
-            this.Transaction = this.Workspace.DatabaseConnection.CreateTransaction();
+            this.Transaction = this.Workspace.Connection.CreateTransaction();
 
-            var databaseServices = this.Workspace.DatabaseConnection.DatabaseServices;
+            var databaseServices = this.Workspace.Connection.DatabaseServices;
             this.AllowedClasses = databaseServices.Get<IMetaCache>()
-                .GetWorkspaceClasses(this.Workspace.DatabaseConnection.Configuration.Name);
+                .GetWorkspaceClasses(this.Workspace.Connection.Configuration.Name);
             this.PreparedSelects = databaseServices.Get<IPreparedSelects>();
             this.PreparedExtents = databaseServices.Get<IPreparedExtents>();
             this.PrefetchPolicyCache = databaseServices.Get<IPrefetchPolicyCache>();
 
             this.AccessControl = this.Transaction.Services.Get<IWorkspaceAclsService>()
-                .Create(this.Workspace.DatabaseConnection.Configuration.Name);
+                .Create(this.Workspace.Connection.Configuration.Name);
 
             this.DatabaseObjects = new HashSet<Database.IObject>();
         }
@@ -106,7 +106,7 @@ namespace Allors.Workspace.Adapters.Direct
 
         public T[] GetCollection<T>() where T : class, IObject
         {
-            var objectType = this.Workspace.DatabaseConnection.Configuration.ObjectFactory.GetObjectType<T>();
+            var objectType = this.Workspace.Connection.Configuration.ObjectFactory.GetObjectType<T>();
             var key = objectType.PluralName;
             return this.GetCollection<T>(key);
         }
@@ -117,7 +117,7 @@ namespace Allors.Workspace.Adapters.Direct
         public T GetObject<T>()
             where T : class, IObject
         {
-            var objectType = this.Workspace.DatabaseConnection.Configuration.ObjectFactory.GetObjectType<T>();
+            var objectType = this.Workspace.Connection.Configuration.ObjectFactory.GetObjectType<T>();
             var key = objectType.SingularName;
             return this.GetObject<T>(key);
         }

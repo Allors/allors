@@ -20,12 +20,12 @@ namespace Allors.Workspace.Adapters.Direct
         internal Push(Workspace workspace) : base(workspace)
         {
             this.Workspace = workspace;
-            this.Transaction = this.Workspace.DatabaseConnection.CreateTransaction();
+            this.Transaction = this.Workspace.Connection.CreateTransaction();
 
             var metaCache = this.Transaction.Database.Services.Get<IMetaCache>();
 
-            this.AccessControl = this.Transaction.Services.Get<IWorkspaceAclsService>().Create(this.Workspace.DatabaseConnection.Configuration.Name);
-            this.AllowedClasses = metaCache.GetWorkspaceClasses(this.Workspace.DatabaseConnection.Configuration.Name);
+            this.AccessControl = this.Transaction.Services.Get<IWorkspaceAclsService>().Create(this.Workspace.Connection.Configuration.Name);
+            this.AllowedClasses = metaCache.GetWorkspaceClasses(this.Workspace.Connection.Configuration.Name);
             this.M = this.Transaction.Database.MetaPopulation;
             this.Build = @class => this.Transaction.Services.Get<IObjectBuilderService>().Build(@class);
             this.Derive = () => this.Transaction.Database.Services.Get<IDerivationService>().CreateDerivation(this.Transaction).Derive();
@@ -53,7 +53,7 @@ namespace Allors.Workspace.Adapters.Direct
 
         internal void Execute(PushToDatabaseTracker tracker)
         {
-            var metaPopulation = this.Workspace.DatabaseConnection.MetaPopulation;
+            var metaPopulation = this.Workspace.Connection.MetaPopulation;
 
             if (tracker.Created != null)
             {

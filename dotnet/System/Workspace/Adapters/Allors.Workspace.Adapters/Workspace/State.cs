@@ -14,14 +14,14 @@ namespace Allors.Workspace.Adapters
 
     public abstract class State
     {
-        protected State(DatabaseRecord record)
+        protected State(Record record)
         {
-            this.DatabaseRecord = record;
-            this.PreviousRecord = this.DatabaseRecord;
+            this.Record = record;
+            this.PreviousRecord = this.Record;
             this.IsPushed = false;
         }
 
-        public long Version => this.DatabaseRecord?.Version ?? Allors.Version.WorkspaceInitial;
+        public long Version => this.Record?.Version ?? Allors.Version.WorkspaceInitial;
 
         public bool CanRead(IRoleType roleType)
         {
@@ -36,8 +36,8 @@ namespace Allors.Workspace.Adapters
                 return true;
             }
 
-            var permission = this.Session.DatabaseConnection.GetPermission(this.Class, roleType, Operations.Read);
-            return this.DatabaseRecord.IsPermitted(permission);
+            var permission = this.Session.Connection.GetPermission(this.Class, roleType, Operations.Read);
+            return this.Record.IsPermitted(permission);
         }
 
         public bool CanWrite(IRoleType roleType)
@@ -57,8 +57,8 @@ namespace Allors.Workspace.Adapters
                 return true;
             }
 
-            var permission = this.Session.DatabaseConnection.GetPermission(this.Class, roleType, Operations.Write);
-            return this.DatabaseRecord.IsPermitted(permission);
+            var permission = this.Session.Connection.GetPermission(this.Class, roleType, Operations.Write);
+            return this.Record.IsPermitted(permission);
         }
 
         public bool CanExecute(IMethodType methodType)
@@ -74,33 +74,31 @@ namespace Allors.Workspace.Adapters
                 return true;
             }
 
-            var permission = this.Session.DatabaseConnection.GetPermission(this.Class, methodType, Operations.Execute);
-            return this.DatabaseRecord.IsPermitted(permission);
+            var permission = this.Session.Connection.GetPermission(this.Class, methodType, Operations.Execute);
+            return this.Record.IsPermitted(permission);
         }
+
+        public abstract Strategy Strategy { get; }
 
         private bool IsVersionInitial => this.Version == Allors.Version.WorkspaceInitial.Value;
 
         protected IEnumerable<IRoleType> RoleTypes => this.Class.RoleTypes;
 
         protected bool ExistRecord => this.Record != null;
+        
+        protected Record Record { get; private set; }
 
-        protected DatabaseRecord Record => this.DatabaseRecord;
-
-        protected DatabaseRecord DatabaseRecord { get; private set; }
+        protected Record PreviousRecord { get; set; }
 
         private bool IsPushed { get; set; }
 
-        public abstract Strategy Strategy { get; }
-
         protected bool HasChanges => this.Record == null || this.ChangedRoleByRelationType?.Count > 0;
-        
-        protected DatabaseRecord PreviousRecord { get; set; }
 
         public void OnPushed() => this.IsPushed = true;
 
         public void OnPulled(IPullResultInternals pull)
         {
-            var newRecord = this.Session.DatabaseConnection.GetRecord(this.Id);
+            var newRecord = this.Session.Connection.GetRecord(this.Id);
 
             if (!this.IsPushed)
             {
@@ -116,12 +114,10 @@ namespace Allors.Workspace.Adapters
                 this.IsPushed = false;
             }
 
-            this.DatabaseRecord = newRecord;
+            this.Record = newRecord;
         }
 
         public Dictionary<IRelationType, object> ChangedRoleByRelationType { get; private set; }
-
-        private Dictionary<IRelationType, object> PreviousChangedRoleByRelationType { get; set; }
 
         public object GetUnitRole(IRoleType roleType)
         {
@@ -262,7 +258,7 @@ namespace Allors.Workspace.Adapters
             }
         }
         
-        public bool CanMerge(DatabaseRecord newRecord)
+        public bool CanMerge(Record newRecord)
         {
             if (this.ChangedRoleByRelationType == null)
             {
@@ -348,6 +344,7 @@ namespace Allors.Workspace.Adapters
             var role = ValueRange<long>.Ensure(this.Record?.GetRole(roleType));
             return role.IsEmpty ? RefRange<Strategy>.Empty : RefRange<Strategy>.Load(role.Select(this.Session.GetStrategy).Where(v => v != null));
         }
+
         private bool SameCompositeRole(IRoleType roleType, Strategy role)
         {
             if (this.ChangedRoleByRelationType != null && this.ChangedRoleByRelationType.TryGetValue(roleType.RelationType, out var changedRole))

@@ -10,9 +10,9 @@ namespace Allors.Workspace.Adapters.Json
 
     internal class ResponseContext
     {
-        private readonly DatabaseConnection database;
+        private readonly Connection database;
 
-        internal ResponseContext(DatabaseConnection database)
+        internal ResponseContext(Connection database)
         {
             this.database = database;
 

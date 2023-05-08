@@ -20,7 +20,7 @@ namespace Allors.Workspace.Adapters.Direct.Tests
     using Allors.Workspace.Adapters;
     using Allors.Workspace.Meta;
     using Configuration = Allors.Workspace.Adapters.Direct.Configuration;
-    using DatabaseConnection = Allors.Workspace.Adapters.Direct.DatabaseConnection;
+    using Connection = Direct.Connection;
     using IWorkspaceServices = Allors.Workspace.IWorkspaceServices;
     using Person = Allors.Workspace.Domain.Person;
     using User = Allors.Database.Domain.User;
@@ -34,7 +34,7 @@ namespace Allors.Workspace.Adapters.Direct.Tests
 
         public Database Database { get; }
 
-        public DatabaseConnection DatabaseConnection { get; private set; }
+        public Connection Connection { get; private set; }
 
         IWorkspace IProfile.Workspace => this.Workspace;
 
@@ -79,10 +79,10 @@ namespace Allors.Workspace.Adapters.Direct.Tests
 
         public IWorkspace CreateExclusiveWorkspace()
         {
-            var database = new DatabaseConnection(this.configuration, this.Database, this.servicesBuilder) { UserId = this.user.Id };
+            var database = new Connection(this.configuration, this.Database, this.servicesBuilder) { UserId = this.user.Id };
             return database.CreateWorkspace();
         }
-        public IWorkspace CreateWorkspace() => this.DatabaseConnection.CreateWorkspace();
+        public IWorkspace CreateWorkspace() => this.Connection.CreateWorkspace();
 
         public Task Login(string userName)
         {
@@ -90,9 +90,9 @@ namespace Allors.Workspace.Adapters.Direct.Tests
             this.user = new Users(transaction).Extent().ToArray().First(v => v.UserName.Equals(userName, StringComparison.InvariantCultureIgnoreCase));
             transaction.Services.Get<IUserService>().User = this.user;
 
-            this.DatabaseConnection = new DatabaseConnection(this.configuration, this.Database, this.servicesBuilder) { UserId = this.user.Id };
+            this.Connection = new Connection(this.configuration, this.Database, this.servicesBuilder) { UserId = this.user.Id };
 
-            this.Workspace = this.DatabaseConnection.CreateWorkspace();
+            this.Workspace = this.Connection.CreateWorkspace();
 
             return Task.CompletedTask;
         }

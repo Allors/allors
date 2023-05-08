@@ -7,7 +7,7 @@ namespace Allors.Workspace.Adapters.Direct
 {
     internal sealed class State : Adapters.State
     {
-        internal State(Strategy strategy, Adapters.DatabaseRecord record) : base(record) => this.Strategy = strategy;
+        internal State(Strategy strategy, Adapters.Record record) : base(record) => this.Strategy = strategy;
 
         public override Adapters.Strategy Strategy { get; }
     }

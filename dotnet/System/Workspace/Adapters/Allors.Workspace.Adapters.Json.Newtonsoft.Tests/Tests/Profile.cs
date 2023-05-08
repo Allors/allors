@@ -18,7 +18,7 @@ namespace Allors.Workspace.Adapters.Json.Newtonsoft.Tests
     using RestSharp.Serializers.NewtonsoftJson;
     using Xunit;
     using Configuration = Allors.Workspace.Adapters.Json.Configuration;
-    using DatabaseConnection = Allors.Workspace.Adapters.Json.Newtonsoft.DatabaseConnection;
+    using Connection = Newtonsoft.Connection;
 
     public class Profile : IProfile
     {
@@ -34,7 +34,7 @@ namespace Allors.Workspace.Adapters.Json.Newtonsoft.Tests
 
         IWorkspace IProfile.Workspace => this.Workspace;
 
-        public DatabaseConnection DatabaseConnection { get; private set; }
+        public Connection Connection { get; private set; }
 
         public IWorkspace Workspace { get; private set; }
 
@@ -56,8 +56,8 @@ namespace Allors.Workspace.Adapters.Json.Newtonsoft.Tests
             Assert.True(response.IsSuccessful);
 
             this.client = new Client(this.CreateRestClient);
-            this.DatabaseConnection = new DatabaseConnection(this.configuration, () => new WorkspaceServices(), this.client, this.idGenerator);
-            this.Workspace = this.DatabaseConnection.CreateWorkspace();
+            this.Connection = new Connection(this.configuration, () => new WorkspaceServices(), this.client, this.idGenerator);
+            this.Workspace = this.Connection.CreateWorkspace();
 
             await this.Login("administrator");
         }
@@ -66,11 +66,11 @@ namespace Allors.Workspace.Adapters.Json.Newtonsoft.Tests
 
         public IWorkspace CreateExclusiveWorkspace()
         {
-            var database = new DatabaseConnection(this.configuration, () => new WorkspaceServices(), this.client, this.idGenerator);
+            var database = new Connection(this.configuration, () => new WorkspaceServices(), this.client, this.idGenerator);
             return database.CreateWorkspace();
         }
 
-        public IWorkspace CreateWorkspace() => this.DatabaseConnection.CreateWorkspace();
+        public IWorkspace CreateWorkspace() => this.Connection.CreateWorkspace();
 
         public async Task Login(string user)
         {

@@ -1,4 +1,4 @@
-// <copyright file="RemoteDatabase.cs" company="Allors bvba">
+﻿// <copyright file="RemoteDatabase.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -18,9 +18,9 @@ namespace Allors.Workspace.Adapters.Json
     using Meta;
     using Shared.Ranges;
 
-    public abstract class DatabaseConnection : Adapters.DatabaseConnection
+    public abstract class Connection : Adapters.Connection
     {
-        private readonly Dictionary<long, DatabaseRecord> recordsById;
+        private readonly Dictionary<long, Record> recordsById;
 
         private readonly Func<IWorkspaceServices> servicesBuilder;
 
@@ -28,11 +28,11 @@ namespace Allors.Workspace.Adapters.Json
         private readonly Dictionary<IClass, Dictionary<IOperandType, long>> writePermissionByOperandTypeByClass;
         private readonly Dictionary<IClass, Dictionary<IOperandType, long>> executePermissionByOperandTypeByClass;
 
-        protected DatabaseConnection(Adapters.Configuration configuration, IdGenerator idGenerator, Func<IWorkspaceServices> servicesBuilder) : base(configuration, idGenerator)
+        protected Connection(Adapters.Configuration configuration, IdGenerator idGenerator, Func<IWorkspaceServices> servicesBuilder) : base(configuration, idGenerator)
         {
             this.servicesBuilder = servicesBuilder;
 
-            this.recordsById = new Dictionary<long, DatabaseRecord>();
+            this.recordsById = new Dictionary<long, Record>();
 
             this.AccessControlById = new Dictionary<long, AccessControl>();
             this.RevocationById = new Dictionary<long, Revocation>();
@@ -92,7 +92,7 @@ namespace Allors.Workspace.Adapters.Json
 
             foreach (var syncResponseObject in syncResponse.o)
             {
-                var databaseObjects = DatabaseRecord.FromResponse(this, ctx, syncResponseObject);
+                var databaseObjects = Record.FromResponse(this, ctx, syncResponseObject);
                 this.recordsById[databaseObjects.Id] = databaseObjects;
             }
 
@@ -256,7 +256,7 @@ namespace Allors.Workspace.Adapters.Json
             }
         }
 
-        public override Adapters.DatabaseRecord GetRecord(long id)
+        public override Adapters.Record GetRecord(long id)
         {
             this.recordsById.TryGetValue(id, out var databaseObjects);
             return databaseObjects;

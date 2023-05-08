@@ -17,11 +17,11 @@ namespace Allors.Workspace.Adapters.Json.Newtonsoft
     using Allors.Protocol.Json.Api.Sync;
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "RCS1090:Add call to 'ConfigureAwait' (or vice versa).", Justification = "<Pending>")]
-    public class DatabaseConnection : Json.DatabaseConnection
+    public class Connection : Json.Connection
     {
         private readonly Client client;
 
-        public DatabaseConnection(Configuration configuration, Func<IWorkspaceServices> servicesBuilder, Client client, IdGenerator idGenerator) : base(configuration, idGenerator, servicesBuilder)
+        public Connection(Configuration configuration, Func<IWorkspaceServices> servicesBuilder, Client client, IdGenerator idGenerator) : base(configuration, idGenerator, servicesBuilder)
         {
             this.client = client;
             this.UnitConvert = new UnitConvert();
