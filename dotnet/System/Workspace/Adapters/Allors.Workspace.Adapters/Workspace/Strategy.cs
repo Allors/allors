@@ -33,11 +33,11 @@ namespace Allors.Workspace.Adapters
             this.Class = databaseRecord.Class;
         }
 
-        public long Version => this.DatabaseState.Version;
+        public long Version => this.State.Version;
 
         public Workspace Workspace { get; }
 
-        public DatabaseState DatabaseState { get; protected set; }
+        public State State { get; protected set; }
 
         IWorkspace IStrategy.Workspace => this.Workspace;
 
@@ -48,16 +48,10 @@ namespace Allors.Workspace.Adapters
         public bool IsNew => Workspace.IsNewId(this.Id);
 
         public IObject Object => this.@object ??= this.Workspace.DatabaseConnection.Configuration.ObjectFactory.Create(this);
-        public IReadOnlyList<IDiff> Diff()
-        {
-            var diffs = new List<IDiff>();
-            this.DatabaseState.Diff(diffs);
-            return diffs.ToArray();
-        }
 
-        public bool HasChanges => this.DatabaseState.HashChanges();
+        public bool HasChanges => this.State.HashChanges();
 
-        public void Reset() => this.DatabaseState.Reset();
+        public void Reset() => this.State.Reset();
 
         public bool ExistRole(IRoleType roleType)
         {
@@ -74,13 +68,13 @@ namespace Allors.Workspace.Adapters
             return this.GetCompositesRole<IObject>(roleType).Any();
         }
 
-        public bool HasChanged(IRoleType roleType) => this.CanRead(roleType) && this.DatabaseState.HasChanged(roleType);
+        public bool HasChanged(IRoleType roleType) => this.CanRead(roleType) && this.State.HasChanged(roleType);
 
         public void RestoreRole(IRoleType roleType)
         {
             if (this.CanRead(roleType))
             {
-                this.DatabaseState.RestoreRole(roleType);
+                this.State.RestoreRole(roleType);
             }
         }
 
@@ -106,20 +100,20 @@ namespace Allors.Workspace.Adapters
 
         public object GetUnitRole(IRoleType roleType)
         {
-            return this.CanRead(roleType) ? this.DatabaseState.GetUnitRole(roleType) : null;
+            return this.CanRead(roleType) ? this.State.GetUnitRole(roleType) : null;
         }
 
         public T GetCompositeRole<T>(IRoleType roleType) where T : class, IObject
         {
             return this.CanRead(roleType)
-                    ? (T)this.DatabaseState.GetCompositeRole(roleType)?.Object
+                    ? (T)this.State.GetCompositeRole(roleType)?.Object
                     : null;
         }
 
         public IEnumerable<T> GetCompositesRole<T>(IRoleType roleType) where T : class, IObject
         {
             return this.CanRead(roleType)
-                    ? this.DatabaseState.GetCompositesRole(roleType).Select(v => (T)v.Object)
+                    ? this.State.GetCompositesRole(roleType).Select(v => (T)v.Object)
                     : Array.Empty<T>();
         }
 
@@ -145,7 +139,7 @@ namespace Allors.Workspace.Adapters
 
             if (this.CanWrite(roleType))
             {
-                this.DatabaseState.SetUnitRole(roleType, value);
+                this.State.SetUnitRole(roleType, value);
             }
         }
 
@@ -166,7 +160,7 @@ namespace Allors.Workspace.Adapters
 
             if (this.CanWrite(roleType))
             {
-                this.DatabaseState.SetCompositeRole(roleType, (Strategy)value?.Strategy);
+                this.State.SetCompositeRole(roleType, (Strategy)value?.Strategy);
             }
         }
 
@@ -178,7 +172,7 @@ namespace Allors.Workspace.Adapters
 
             if (this.CanWrite(roleType))
             {
-                this.DatabaseState.SetCompositesRole(roleType, roleStrategies);
+                this.State.SetCompositesRole(roleType, roleStrategies);
             }
         }
 
@@ -200,7 +194,7 @@ namespace Allors.Workspace.Adapters
 
             if (this.CanWrite(roleType))
             {
-                this.DatabaseState.AddCompositesRole(roleType, (Strategy)value.Strategy);
+                this.State.AddCompositesRole(roleType, (Strategy)value.Strategy);
             }
         }
 
@@ -215,7 +209,7 @@ namespace Allors.Workspace.Adapters
 
             if (this.CanWrite(roleType))
             {
-                this.DatabaseState.RemoveCompositesRole(roleType, (Strategy)value.Strategy);
+                this.State.RemoveCompositesRole(roleType, (Strategy)value.Strategy);
             }
         }
 
@@ -245,19 +239,19 @@ namespace Allors.Workspace.Adapters
             return this.Workspace.GetCompositesAssociation(this, associationType).Select(v => v.Object).Cast<T>();
         }
 
-        public bool CanRead(IRoleType roleType) => this.DatabaseState.CanRead(roleType);
+        public bool CanRead(IRoleType roleType) => this.State.CanRead(roleType);
 
-        public bool CanWrite(IRoleType roleType) => this.DatabaseState.CanWrite(roleType);
+        public bool CanWrite(IRoleType roleType) => this.State.CanWrite(roleType);
 
-        public bool CanExecute(IMethodType methodType) => this.DatabaseState.CanExecute(methodType);
+        public bool CanExecute(IMethodType methodType) => this.State.CanExecute(methodType);
 
-        public bool IsCompositeAssociationForRole(IRoleType roleType, Strategy forRole) => this.DatabaseState.IsAssociationForRole(roleType, forRole);
+        public bool IsCompositeAssociationForRole(IRoleType roleType, Strategy forRole) => this.State.IsAssociationForRole(roleType, forRole);
 
-        public bool IsCompositesAssociationForRole(IRoleType roleType, Strategy forRoleId) => this.DatabaseState.IsAssociationForRole(roleType, forRoleId);
+        public bool IsCompositesAssociationForRole(IRoleType roleType, Strategy forRoleId) => this.State.IsAssociationForRole(roleType, forRoleId);
 
         public void OnDatabasePushNewId(long newId) => this.Id = newId;
 
-        public void OnDatabasePushed() => this.DatabaseState.OnPushed();
+        public void OnDatabasePushed() => this.State.OnPushed();
 
         private void AssertSameType<T>(IRoleType roleType, T value) where T : class, IObject
         {

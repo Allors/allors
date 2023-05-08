@@ -121,7 +121,7 @@ namespace Allors.Workspace.Adapters.Direct
                 throw new Exception("Method " + invocation.MethodType + " not found.");
             }
 
-            if (!localStrategy.DatabaseState.Version.Equals(obj.Strategy.ObjectVersion))
+            if (!localStrategy.State.Version.Equals(obj.Strategy.ObjectVersion))
             {
                 this.AddVersionError(localStrategy.Id);
                 return true;

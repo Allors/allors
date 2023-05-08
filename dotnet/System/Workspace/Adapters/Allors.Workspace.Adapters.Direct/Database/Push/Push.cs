@@ -110,7 +110,7 @@ namespace Allors.Workspace.Adapters.Direct
                     {
                         var strategy = (Strategy)state.Strategy;
                         var obj = this.Transaction.Instantiate(strategy.Id);
-                        if (!strategy.DatabaseState.Version.Equals(obj.Strategy.ObjectVersion))
+                        if (!strategy.State.Version.Equals(obj.Strategy.ObjectVersion))
                         {
                             this.AddVersionError(obj.Id);
                         }
@@ -140,7 +140,7 @@ namespace Allors.Workspace.Adapters.Direct
 
         private void PushRequestRoles(Strategy local, IObject obj)
         {
-            if (local.DatabaseState.ChangedRoleByRelationType == null)
+            if (local.State.ChangedRoleByRelationType == null)
             {
                 return;
             }
@@ -148,7 +148,7 @@ namespace Allors.Workspace.Adapters.Direct
             // TODO: Cache and filter for workspace
             var acl = this.AccessControl[obj];
 
-            foreach (var keyValuePair in local.DatabaseState.ChangedRoleByRelationType)
+            foreach (var keyValuePair in local.State.ChangedRoleByRelationType)
             {
                 var relationType = keyValuePair.Key;
                 var roleType = ((IRelationType)this.M.FindByTag(keyValuePair.Key.Tag)).RoleType;

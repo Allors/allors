@@ -1,4 +1,4 @@
-// <copyright file="DatabaseState.cs" company="Allors bvba">
+﻿// <copyright file="State.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -10,9 +10,9 @@ namespace Allors.Workspace.Adapters.Json
     using Allors.Protocol.Json.Api.Push;
     using Shared.Ranges;
 
-    internal sealed class DatabaseState : Adapters.DatabaseState
+    internal sealed class State : Adapters.State
     {
-        internal DatabaseState(Strategy strategy, DatabaseRecord record) : base(record) => this.RemoteStrategy = strategy;
+        internal State(Strategy strategy, DatabaseRecord record) : base(record) => this.RemoteStrategy = strategy;
 
         public override Adapters.Strategy Strategy => this.RemoteStrategy;
         private Strategy RemoteStrategy { get; }

@@ -1,4 +1,4 @@
-// <copyright file="LocalWorkspace.cs" company="Allors bvba">
+﻿// <copyright file="LocalWorkspace.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -29,7 +29,6 @@ namespace Allors.Workspace.Adapters.Direct
             var strategy = new Strategy(this, @class, workspaceId);
             this.AddStrategy(strategy);
             this.PushToDatabaseTracker.OnCreated(strategy);
-            this.ChangeSetTracker.OnCreated(strategy);
             return (T)strategy.Object;
         }
 
@@ -38,8 +37,6 @@ namespace Allors.Workspace.Adapters.Direct
             var databaseRecord = this.DatabaseConnection.GetRecord(id);
             var strategy = new Strategy(this, (DatabaseRecord)databaseRecord);
             this.AddStrategy(strategy);
-
-            this.ChangeSetTracker.OnInstantiated(strategy);
         }
 
         public override Task<IInvokeResult> InvokeAsync(Method method, InvokeOptions options = null) =>
@@ -125,7 +122,7 @@ namespace Allors.Workspace.Adapters.Direct
             {
                 if (this.StrategyByWorkspaceId.TryGetValue(databaseObject.Id, out var strategy))
                 {
-                    strategy.DatabaseState.OnPulled(pull);
+                    strategy.State.OnPulled(pull);
                 }
                 else
                 {

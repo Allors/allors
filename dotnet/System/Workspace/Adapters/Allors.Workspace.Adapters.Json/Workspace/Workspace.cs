@@ -1,4 +1,4 @@
-// <copyright file="RemoteWorkspace.cs" company="Allors bvba">
+﻿// <copyright file="RemoteWorkspace.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -28,7 +28,6 @@ namespace Allors.Workspace.Adapters.Json
             var strategy = new Strategy(this, @class, workspaceId);
             this.AddStrategy(strategy);
             this.PushToDatabaseTracker.OnCreated(strategy);
-            this.ChangeSetTracker.OnCreated(strategy);
             return (T)strategy.Object;
         }
 
@@ -37,8 +36,6 @@ namespace Allors.Workspace.Adapters.Json
             var databaseRecord = (DatabaseRecord)this.DatabaseConnection.GetRecord(id);
             var strategy = new Strategy(this, databaseRecord);
             this.AddStrategy(strategy);
-
-            this.ChangeSetTracker.OnInstantiated(strategy);
         }
 
         internal async Task<IPullResult> OnPull(PullResponse pullResponse)
@@ -73,7 +70,7 @@ namespace Allors.Workspace.Adapters.Json
             {
                 if (this.StrategyByWorkspaceId.TryGetValue(v.i, out var strategy))
                 {
-                    strategy.DatabaseState.OnPulled(pullResult);
+                    strategy.State.OnPulled(pullResult);
                 }
                 else
                 {
@@ -93,7 +90,7 @@ namespace Allors.Workspace.Adapters.Json
                 l = methods.Select(v => new Invocation
                 {
                     i = v.Object.Id,
-                    v = ((Strategy)v.Object.Strategy).DatabaseState.Version,
+                    v = ((Strategy)v.Object.Strategy).State.Version,
                     m = v.MethodType.Tag
                 }).ToArray(),
                 o = options != null
@@ -137,8 +134,8 @@ namespace Allors.Workspace.Adapters.Json
 
             var pushRequest = new PushRequest
             {
-                n = databaseTracker.Created?.Select(v => ((DatabaseState)v.DatabaseState).PushNew()).ToArray(),
-                o = databaseTracker.Changed?.Select(v => ((DatabaseState)v.Strategy.DatabaseState).PushExisting()).ToArray()
+                n = databaseTracker.Created?.Select(v => ((State)v.State).PushNew()).ToArray(),
+                o = databaseTracker.Changed?.Select(v => ((State)v.Strategy.State).PushExisting()).ToArray()
             };
             var pushResponse = await this.DatabaseConnection.Push(pushRequest);
 

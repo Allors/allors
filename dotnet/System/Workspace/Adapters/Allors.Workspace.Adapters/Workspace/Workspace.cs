@@ -1,4 +1,4 @@
-// <copyright file="Workspace.cs" company="Allors bvba">
+﻿// <copyright file="Workspace.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -22,11 +22,9 @@ namespace Allors.Workspace.Adapters
             this.DatabaseConnection = database;
             this.Services = services;
 
-
             this.StrategyByWorkspaceId = new Dictionary<long, Strategy>();
             this.strategiesByClass = new Dictionary<IClass, ISet<Strategy>>();
 
-            this.ChangeSetTracker = new ChangeSetTracker(this);
             this.PushToDatabaseTracker = new PushToDatabaseTracker();
 
             this.Services.OnInit(this);
@@ -44,8 +42,6 @@ namespace Allors.Workspace.Adapters
 
         public virtual void OnChanged(EventArgs e) => this.OnChange?.Invoke(this, e);
 
-        public ChangeSetTracker ChangeSetTracker { get; }
-
         public PushToDatabaseTracker PushToDatabaseTracker { get; }
 
         protected Dictionary<long, Strategy> StrategyByWorkspaceId { get; }
@@ -56,22 +52,8 @@ namespace Allors.Workspace.Adapters
 
         public void Reset()
         {
-            var changeSet = this.Checkpoint();
-
-            var strategies = new HashSet<IStrategy>(changeSet.Created);
-
-            foreach (var roles in changeSet.RolesByAssociationType.Values)
-            {
-                strategies.UnionWith(roles);
-            }
-
-            foreach (var associations in changeSet.AssociationsByRoleType.Values)
-            {
-                strategies.UnionWith(associations);
-            }
-
-            //TODO: Koen, fix strategy = null
-            foreach (var strategy in strategies.Where(v => v != null))
+            // TODO: Optimize, only reset changed or created strategies
+            foreach (var strategy in this.StrategyByWorkspaceId.Values.ToArray())
             {
                 strategy.Reset();
             }
@@ -80,25 +62,7 @@ namespace Allors.Workspace.Adapters
         public abstract T Create<T>(IClass @class) where T : class, IObject;
 
         public T Create<T>() where T : class, IObject => this.Create<T>((IClass)this.DatabaseConnection.Configuration.ObjectFactory.GetObjectType<T>());
-        public IChangeSet Checkpoint()
-        {
-            var changeSet = new ChangeSet(this, this.ChangeSetTracker.Created, this.ChangeSetTracker.Instantiated);
-
-            if (this.ChangeSetTracker.DatabaseOriginStates != null)
-            {
-                foreach (var databaseOriginState in this.ChangeSetTracker.DatabaseOriginStates)
-                {
-                    databaseOriginState.Checkpoint(changeSet);
-                }
-            }
-
-            this.ChangeSetTracker.Created = null;
-            this.ChangeSetTracker.Instantiated = null;
-            this.ChangeSetTracker.DatabaseOriginStates = null;
-
-            return changeSet;
-        }
-
+      
         #region Instantiate
         public T Instantiate<T>(IObject @object) where T : class, IObject => this.Instantiate<T>(@object.Id);
 

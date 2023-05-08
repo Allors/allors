@@ -1,4 +1,4 @@
-// <copyright file="SaveTests.cs" company="Allors bvba">
+﻿// <copyright file="SaveTests.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -130,43 +130,6 @@ namespace Allors.Workspace.Adapters.Tests
             await workspace.PullAsync(pull);
 
             Assert.Equal("X", c1a.C1AllorsString);
-        }
-
-        [Fact]
-        public async void ChangesBeforeCheckpointShouldBePushed()
-        {
-            await this.Login("administrator");
-
-            var workspace = this.Workspace;
-
-            var pull = new Pull
-            {
-                Extent = new Filter(this.M.C1)
-            };
-
-            var result = await workspace.PullAsync(pull);
-
-            var c1a = result.GetCollection<C1>().First(v => v.Name.Equals("c1A"));
-
-            c1a.C1AllorsString = "X";
-
-            var changeSet = workspace.Checkpoint();
-
-            Assert.Single(changeSet.AssociationsByRoleType);
-
-            await workspace.PushAsync();
-
-            result = await workspace.PullAsync(new Pull { Object = c1a });
-
-            var c1aSession2 = result.GetObject<C1>();
-
-            Assert.Equal("X", c1aSession2.C1AllorsString);
-
-            result = await workspace.PullAsync(new Pull { Object = c1a });
-
-            var c1aSession1 = result.GetObject<C1>();
-
-            Assert.Equal("X", c1aSession1.C1AllorsString);
         }
 
         [Fact]
