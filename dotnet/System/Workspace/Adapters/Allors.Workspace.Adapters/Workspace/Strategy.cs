@@ -1,4 +1,4 @@
-// <copyright file="Object.cs" company="Allors bvba">
+﻿// <copyright file="Object.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -13,15 +13,12 @@ namespace Allors.Workspace.Adapters
 
     public abstract class Strategy : IStrategy, IComparable<Strategy>
     {
-        private readonly long rangeId;
-
         private IObject @object;
 
         protected Strategy(Workspace workspace, IClass @class, long id)
         {
             this.Workspace = workspace;
             this.Id = id;
-            this.rangeId = this.Id;
             this.Class = @class;
         }
 
@@ -29,7 +26,6 @@ namespace Allors.Workspace.Adapters
         {
             this.Workspace = workspace;
             this.Id = record.Id;
-            this.rangeId = this.Id;
             this.Class = record.Class;
         }
 
@@ -364,7 +360,7 @@ namespace Allors.Workspace.Adapters
                 return 0;
             }
 
-            return other is null ? 1 : this.rangeId.CompareTo(other.rangeId);
+            return other is null ? 1 : this.Id.CompareTo(other.Id);
         }
     }
 }
