@@ -105,7 +105,7 @@ namespace Allors.Workspace.Adapters.Direct
             foreach (var @object in result.Objects)
             {
                 var strategy = this.GetStrategy(@object.Id);
-                strategy.OnDatabasePushed();
+                strategy.OnPushed();
             }
 
             return Task.FromResult<IPushResult>(result);

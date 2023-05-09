@@ -175,9 +175,9 @@ namespace Allors.Workspace.Adapters
         {
             var strategy = this.StrategyByWorkspaceId[workspaceId];
             this.PushToDatabaseTracker.Created.Remove(strategy);
-            strategy.OnDatabasePushNewId(databaseId);
+            strategy.OnPushNewId(databaseId);
             this.AddStrategy(strategy);
-            strategy.OnDatabasePushed();
+            strategy.OnPushed();
         }
 
         private IEnumerable<Strategy> StrategiesForClass(IComposite objectType)

@@ -245,9 +245,9 @@ namespace Allors.Workspace.Adapters
 
         public bool IsCompositesAssociationForRole(IRoleType roleType, Strategy forRoleId) => this.State.IsAssociationForRole(roleType, forRoleId);
 
-        public void OnDatabasePushNewId(long newId) => this.Id = newId;
+        public void OnPushNewId(long newId) => this.Id = newId;
 
-        public void OnDatabasePushed() => this.State.OnPushed();
+        public void OnPushed() => this.State.OnPushed();
 
         private void AssertSameType<T>(IRoleType roleType, T value) where T : class, IObject
         {

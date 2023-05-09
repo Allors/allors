@@ -161,7 +161,7 @@ namespace Allors.Workspace.Adapters.Json
                 foreach (var id in pushRequest.o.Select(v => v.d))
                 {
                     var strategy = this.GetStrategy(id);
-                    strategy.OnDatabasePushed();
+                    strategy.OnPushed();
                 }
             }
 

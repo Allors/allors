@@ -17,7 +17,7 @@
   <Class Name="Allors.Workspace.Adapters.Strategy">
     <Position X="7.75" Y="1.5" Width="2.75" />
     <TypeIdentifier>
-      <HashCode>IFBKBAUICABQBEBgMEYQAMRIAAAgAQAABEIQBAAJIAA=</HashCode>
+      <HashCode>IFBCBAUICABQBEBgMEYQAERIAAAgAQAABEIQBAAJIAQ=</HashCode>
       <FileName>Workspace\Strategy.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -35,19 +35,26 @@
   <Class Name="Allors.Workspace.Adapters.State">
     <Position X="12" Y="1.5" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>IBJCBIQAiQAABUBAMUYQEACAAAAAACAIBIAAgDAJbCQ=</HashCode>
+      <HashCode>IBJCBIQAgQAABUBAMUYQEACAAAAAACAIBIAAgDAJbCQ=</HashCode>
       <FileName>Workspace\State.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="Record" />
+      <Property Name="ChangedRoleByRelationType" />
+      <Property Name="Strategy" />
     </ShowAsAssociation>
   </Class>
   <Class Name="Allors.Workspace.Adapters.Record">
-    <Position X="16.5" Y="1.5" Width="1.5" />
+    <Position X="16.75" Y="4.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>IACCAAEAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Database\Record.cs</FileName>
     </TypeIdentifier>
+  </Class>
+  <Class Name="System.Collections.Generic.Dictionary&lt;TKey, TValue&gt;" Collapsed="true">
+    <Position X="16.5" Y="2" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
   </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

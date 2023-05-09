@@ -22,7 +22,7 @@ namespace Allors.Workspace.Adapters.Direct
     public class Connection : Adapters.Connection
     {
         private readonly Dictionary<long, AccessControl> accessControlById;
-        private readonly ConcurrentDictionary<long, Adapters.Record> recordsById;
+        private readonly ConcurrentDictionary<long, Adapters.Record> recordById;
 
         private readonly Func<IWorkspaceServices> servicesBuilder;
 
@@ -31,7 +31,7 @@ namespace Allors.Workspace.Adapters.Direct
             this.Database = database;
             this.servicesBuilder = servicesBuilder;
 
-            this.recordsById = new ConcurrentDictionary<long, Adapters.Record>();
+            this.recordById = new ConcurrentDictionary<long, Adapters.Record>();
             this.accessControlById = new Dictionary<long, AccessControl>();
         }
 
@@ -68,7 +68,7 @@ namespace Allors.Workspace.Adapters.Direct
 
                     var accessControls = acl.Grants?.Select(v => (IGrant)transaction.Instantiate(v.Id)).Select(this.GetAccessControl).ToArray() ?? Array.Empty<AccessControl>();
 
-                    this.recordsById[id] = new Record(workspaceClass, id, @object.Strategy.ObjectVersion, roleByRoleType, ValueRange<long>.Load(acl.Revocations.Select(v => v.Id)), accessControls);
+                    this.recordById[id] = new Record(workspaceClass, id, @object.Strategy.ObjectVersion, roleByRoleType, ValueRange<long>.Load(acl.Revocations.Select(v => v.Id)), accessControls);
                 }
             }
         }
@@ -77,7 +77,7 @@ namespace Allors.Workspace.Adapters.Direct
 
         public override Adapters.Record GetRecord(long id)
         {
-            this.recordsById.TryGetValue(id, out var databaseObjects);
+            this.recordById.TryGetValue(id, out var databaseObjects);
             return databaseObjects;
         }
 
@@ -110,7 +110,7 @@ namespace Allors.Workspace.Adapters.Direct
         internal IEnumerable<IObject> ObjectsToSync(Pull pull) =>
             pull.DatabaseObjects.Where(v =>
             {
-                if (this.recordsById.TryGetValue(v.Id, out var databaseRoles))
+                if (this.recordById.TryGetValue(v.Id, out var databaseRoles))
                 {
                     return v.Strategy.ObjectVersion != databaseRoles.Version;
                 }

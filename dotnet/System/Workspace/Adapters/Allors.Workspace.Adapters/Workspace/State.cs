@@ -17,7 +17,6 @@ namespace Allors.Workspace.Adapters
         protected State(Record record)
         {
             this.Record = record;
-            this.PreviousRecord = this.Record;
             this.IsPushed = false;
         }
 
@@ -85,10 +84,8 @@ namespace Allors.Workspace.Adapters
         protected IEnumerable<IRoleType> RoleTypes => this.Class.RoleTypes;
 
         protected bool ExistRecord => this.Record != null;
-        
-        protected Record Record { get; private set; }
 
-        protected Record PreviousRecord { get; set; }
+        protected Record Record { get; private set; }
 
         private bool IsPushed { get; set; }
 
@@ -257,7 +254,7 @@ namespace Allors.Workspace.Adapters
                 previousAssociation?.SetRole(roleType, null);
             }
         }
-        
+
         public bool CanMerge(Record newRecord)
         {
             if (this.ChangedRoleByRelationType == null)

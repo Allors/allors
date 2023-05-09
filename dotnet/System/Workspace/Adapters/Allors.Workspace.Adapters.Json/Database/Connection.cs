@@ -20,7 +20,7 @@ namespace Allors.Workspace.Adapters.Json
 
     public abstract class Connection : Adapters.Connection
     {
-        private readonly Dictionary<long, Record> recordsById;
+        private readonly Dictionary<long, Record> recordById;
 
         private readonly Func<IWorkspaceServices> servicesBuilder;
 
@@ -32,7 +32,7 @@ namespace Allors.Workspace.Adapters.Json
         {
             this.servicesBuilder = servicesBuilder;
 
-            this.recordsById = new Dictionary<long, Record>();
+            this.recordById = new Dictionary<long, Record>();
 
             this.AccessControlById = new Dictionary<long, AccessControl>();
             this.RevocationById = new Dictionary<long, Revocation>();
@@ -61,7 +61,7 @@ namespace Allors.Workspace.Adapters.Json
                 o = response.p
                     .Where(v =>
                     {
-                        if (!this.recordsById.TryGetValue(v.i, out var @record))
+                        if (!this.recordById.TryGetValue(v.i, out var @record))
                         {
                             return true;
                         }
@@ -93,7 +93,7 @@ namespace Allors.Workspace.Adapters.Json
             foreach (var syncResponseObject in syncResponse.o)
             {
                 var databaseObjects = Record.FromResponse(this, ctx, syncResponseObject);
-                this.recordsById[databaseObjects.Id] = databaseObjects;
+                this.recordById[databaseObjects.Id] = databaseObjects;
             }
 
             if (ctx.MissingGrantIds.Count > 0 || ctx.MissingRevocationIds.Count > 0)
@@ -258,7 +258,7 @@ namespace Allors.Workspace.Adapters.Json
 
         public override Adapters.Record GetRecord(long id)
         {
-            this.recordsById.TryGetValue(id, out var databaseObjects);
+            this.recordById.TryGetValue(id, out var databaseObjects);
             return databaseObjects;
         }
 
