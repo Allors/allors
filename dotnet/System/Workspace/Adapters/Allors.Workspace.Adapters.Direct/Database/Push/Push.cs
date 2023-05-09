@@ -91,7 +91,7 @@ namespace Allors.Workspace.Adapters.Direct
             if (tracker.Changed != null)
             {
                 // bulk load all objects
-                var objectIds = tracker.Changed.Select(v => v.Strategy.Id).ToArray();
+                var objectIds = tracker.Changed.Select(v => v.Id).ToArray();
                 var objects = this.Transaction.Instantiate(objectIds);
                 this.Objects.UnionWith(objects);
 
@@ -108,9 +108,9 @@ namespace Allors.Workspace.Adapters.Direct
                 {
                     foreach (var state in tracker.Changed)
                     {
-                        var strategy = (Strategy)state.Strategy;
+                        var strategy = (Strategy)state;
                         var obj = this.Transaction.Instantiate(strategy.Id);
-                        if (!strategy.State.Version.Equals(obj.Strategy.ObjectVersion))
+                        if (!strategy._Version.Equals(obj.Strategy.ObjectVersion))
                         {
                             this.AddVersionError(obj.Id);
                         }
@@ -140,7 +140,7 @@ namespace Allors.Workspace.Adapters.Direct
 
         private void PushRequestRoles(Strategy local, IObject obj)
         {
-            if (local.State.ChangedRoleByRelationType == null)
+            if (local._ChangedRoleByRelationType == null)
             {
                 return;
             }
@@ -148,7 +148,7 @@ namespace Allors.Workspace.Adapters.Direct
             // TODO: Cache and filter for workspace
             var acl = this.AccessControl[obj];
 
-            foreach (var keyValuePair in local.State.ChangedRoleByRelationType)
+            foreach (var keyValuePair in local._ChangedRoleByRelationType)
             {
                 var relationType = keyValuePair.Key;
                 var roleType = ((IRelationType)this.M.FindByTag(keyValuePair.Key.Tag)).RoleType;

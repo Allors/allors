@@ -70,7 +70,7 @@ namespace Allors.Workspace.Adapters.Json
             {
                 if (this.StrategyByWorkspaceId.TryGetValue(v.i, out var strategy))
                 {
-                    strategy.State.OnPulled(pullResult);
+                    strategy._OnPulled(pullResult);
                 }
                 else
                 {
@@ -90,7 +90,7 @@ namespace Allors.Workspace.Adapters.Json
                 l = methods.Select(v => new Invocation
                 {
                     i = v.Object.Id,
-                    v = ((Strategy)v.Object.Strategy).State.Version,
+                    v = ((Strategy)v.Object.Strategy)._Version,
                     m = v.MethodType.Tag
                 }).ToArray(),
                 o = options != null
@@ -132,8 +132,8 @@ namespace Allors.Workspace.Adapters.Json
         {
             var pushRequest = new PushRequest
             {
-                n = this.PushToDatabaseTracker.Created?.Select(v => ((State)v.State).PushNew()).ToArray(),
-                o = this.PushToDatabaseTracker.Changed?.Select(v => ((State)v.Strategy.State).PushExisting()).ToArray()
+                n = this.PushToDatabaseTracker.Created?.Select(v => ((Strategy)v).PushNew()).ToArray(),
+                o = this.PushToDatabaseTracker.Changed?.Select(v => ((Strategy)v).PushExisting()).ToArray()
             };
             var pushResponse = await this.Connection.Push(pushRequest);
 
