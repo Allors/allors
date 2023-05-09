@@ -120,7 +120,7 @@ namespace Allors.Workspace.Adapters.Direct
             {
                 if (this.StrategyByWorkspaceId.TryGetValue(databaseObject.Id, out var strategy))
                 {
-                    strategy._OnPulled(pull);
+                    strategy.OnPulled(pull);
                 }
                 else
                 {

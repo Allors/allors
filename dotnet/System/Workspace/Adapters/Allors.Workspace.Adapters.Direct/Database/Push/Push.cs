@@ -1,4 +1,4 @@
-// <copyright file="LocalPullResult.cs" company="Allors bvba">
+﻿// <copyright file="LocalPullResult.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -110,7 +110,7 @@ namespace Allors.Workspace.Adapters.Direct
                     {
                         var strategy = (Strategy)state;
                         var obj = this.Transaction.Instantiate(strategy.Id);
-                        if (!strategy._Version.Equals(obj.Strategy.ObjectVersion))
+                        if (!strategy.Version.Equals(obj.Strategy.ObjectVersion))
                         {
                             this.AddVersionError(obj.Id);
                         }
@@ -140,7 +140,7 @@ namespace Allors.Workspace.Adapters.Direct
 
         private void PushRequestRoles(Strategy local, IObject obj)
         {
-            if (local._ChangedRoleByRelationType == null)
+            if (local.ChangedRoleByRelationType == null)
             {
                 return;
             }
@@ -148,7 +148,7 @@ namespace Allors.Workspace.Adapters.Direct
             // TODO: Cache and filter for workspace
             var acl = this.AccessControl[obj];
 
-            foreach (var keyValuePair in local._ChangedRoleByRelationType)
+            foreach (var keyValuePair in local.ChangedRoleByRelationType)
             {
                 var relationType = keyValuePair.Key;
                 var roleType = ((IRelationType)this.M.FindByTag(keyValuePair.Key.Tag)).RoleType;

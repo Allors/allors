@@ -70,7 +70,7 @@ namespace Allors.Workspace.Adapters.Json
             {
                 if (this.StrategyByWorkspaceId.TryGetValue(v.i, out var strategy))
                 {
-                    strategy._OnPulled(pullResult);
+                    strategy.OnPulled(pullResult);
                 }
                 else
                 {
@@ -90,7 +90,7 @@ namespace Allors.Workspace.Adapters.Json
                 l = methods.Select(v => new Invocation
                 {
                     i = v.Object.Id,
-                    v = ((Strategy)v.Object.Strategy)._Version,
+                    v = ((Strategy)v.Object.Strategy).Version,
                     m = v.MethodType.Tag
                 }).ToArray(),
                 o = options != null

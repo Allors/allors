@@ -129,7 +129,7 @@ namespace Allors.Workspace.Adapters
                     continue;
                 }
 
-                if (association.IsCompositeAssociationForRole(roleType, role))
+                if (association.IsAssociationForRole(roleType, role))
                 {
                     return association;
                 }
@@ -149,7 +149,7 @@ namespace Allors.Workspace.Adapters
                     continue;
                 }
 
-                if (association.IsCompositesAssociationForRole(roleType, role))
+                if (association.IsAssociationForRole(roleType, role))
                 {
                     yield return association;
                 }

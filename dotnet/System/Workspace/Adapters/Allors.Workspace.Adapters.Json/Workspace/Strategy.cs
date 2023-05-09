@@ -33,18 +33,18 @@ namespace Allors.Workspace.Adapters.Json
         internal PushRequestObject PushExisting() => new PushRequestObject
         {
             d = this.Id,
-            v = this._Version,
+            v = this.Version,
             r = this.PushRoles()
         };
 
         private PushRequestRole[] PushRoles()
         {
-            if (this._ChangedRoleByRelationType?.Count > 0)
+            if (this.ChangedRoleByRelationType?.Count > 0)
             {
                 var database = this.Workspace.Connection;
                 var roles = new List<PushRequestRole>();
 
-                foreach (var keyValuePair in this._ChangedRoleByRelationType)
+                foreach (var keyValuePair in this.ChangedRoleByRelationType)
                 {
                     var relationType = keyValuePair.Key;
                     var roleValue = keyValuePair.Value;
@@ -64,13 +64,13 @@ namespace Allors.Workspace.Adapters.Json
                         var roleStrategies = RefRange<Adapters.Strategy>.Ensure(roleValue);
                         var roleIds = ValueRange<long>.Load(roleStrategies.Select(v => v.Id));
 
-                        if (!this._ExistRecord)
+                        if (!this.ExistRecord)
                         {
                             pushRequestRole.a = roleIds.Save();
                         }
                         else
                         {
-                            var databaseRole = ValueRange<long>.Ensure(this._Record.GetRole(relationType.RoleType));
+                            var databaseRole = ValueRange<long>.Ensure(this.Record.GetRole(relationType.RoleType));
                             if (databaseRole.IsEmpty)
                             {
                                 pushRequestRole.a = roleIds.Save();

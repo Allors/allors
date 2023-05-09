@@ -1,4 +1,4 @@
-// <copyright file="LocalPullResult.cs" company="Allors bvba">
+﻿// <copyright file="LocalPullResult.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -121,7 +121,7 @@ namespace Allors.Workspace.Adapters.Direct
                 throw new Exception("Method " + invocation.MethodType + " not found.");
             }
 
-            if (!localStrategy._Version.Equals(obj.Strategy.ObjectVersion))
+            if (!localStrategy.Version.Equals(obj.Strategy.ObjectVersion))
             {
                 this.AddVersionError(localStrategy.Id);
                 return true;
