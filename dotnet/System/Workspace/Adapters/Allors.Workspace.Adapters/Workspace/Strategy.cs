@@ -7,6 +7,7 @@ namespace Allors.Workspace.Adapters
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.Linq;
     using Meta;
     using Shared.Ranges;
@@ -15,16 +16,22 @@ namespace Allors.Workspace.Adapters
     {
         private IObject @object;
 
+        private Dictionary<IAssociationType, Strategy> compositeAssociationByAssociationType;
+        private Dictionary<IAssociationType, RefRange<Strategy>> compositesAssociationByAssociationType;
+
         protected Strategy(Workspace workspace, IClass @class, long id)
         {
             this.Workspace = workspace;
             this.Id = id;
             this.Class = @class;
             this.IsPushed = false;
+
+            this.compositeAssociationByAssociationType = new Dictionary<IAssociationType, Strategy>();
+            this.compositesAssociationByAssociationType = new Dictionary<IAssociationType, RefRange<Strategy>>();
         }
 
         public long Version => this.Record?.Version ?? Allors.Version.WorkspaceInitial;
-        
+
         IWorkspace IStrategy.Workspace => this.Workspace;
 
         public IClass Class { get; }
@@ -46,7 +53,7 @@ namespace Allors.Workspace.Adapters
         protected Record Record { get; private set; }
 
         private bool IsPushed { get; set; }
-        
+
         int IComparable<Strategy>.CompareTo(Strategy other)
         {
             if (ReferenceEquals(this, other))
@@ -56,6 +63,7 @@ namespace Allors.Workspace.Adapters
 
             return other is null ? 1 : this.Id.CompareTo(other.Id);
         }
+
         public bool CanRead(IRoleType roleType)
         {
             if (!this.ExistRecord)
@@ -317,6 +325,46 @@ namespace Allors.Workspace.Adapters
         {
             var newRecord = this.Workspace.Connection.GetRecord(this.Id);
 
+            // Remove old associations
+            if (this.Record != null)
+            {
+                foreach (var roleType in this.Class.RoleTypes.Where(v => v.ObjectType.IsComposite))
+                {
+                    if (roleType.IsOne)
+                    {
+                        var roleRef = this.Record?.GetRole(roleType);
+
+                        if (roleRef == null)
+                        {
+                            continue;
+                        }
+
+                        var roleStrategy = this.Workspace.GetStrategy((long)roleRef);
+
+                        if (roleStrategy != null)
+                        {
+                            roleStrategy.OnPulledRemoveOldAssociation(roleType.AssociationType, this);
+                        }
+                    }
+                    else
+                    {
+                        var roleRefs = ValueRange<long>.Ensure(this.Record?.GetRole(roleType));
+
+                        if (roleRefs.IsEmpty)
+                        {
+                            continue;
+                        }
+
+                        var roleStrategies = RefRange<Strategy>.Load(roleRefs.Select(this.Workspace.GetStrategy).Where(v => v != null));
+
+                        foreach (var roleStrategy in roleStrategies)
+                        {
+                            roleStrategy.OnPulledRemoveOldAssociation(roleType.AssociationType, roleStrategy);
+                        }
+                    }
+                }
+            }
+
             if (!this.IsPushed)
             {
                 if (!this.CanMerge(newRecord))
@@ -329,6 +377,43 @@ namespace Allors.Workspace.Adapters
             {
                 this.Reset();
                 this.IsPushed = false;
+            }
+
+            // Update Associations
+            foreach (var roleType in this.Class.RoleTypes.Where(v => v.ObjectType.IsComposite))
+            {
+                if (roleType.IsOne)
+                {
+                    var roleRef = newRecord.GetRole(roleType);
+
+                    if (roleRef == null)
+                    {
+                        continue;
+                    }
+
+                    var roleStrategy = this.Workspace.GetStrategy((long)roleRef);
+
+                    if (roleStrategy != null)
+                    {
+                        roleStrategy.OnPulledAddAssociation(roleType.AssociationType, this);
+                    }
+                }
+                else
+                {
+                    var roleRefs = ValueRange<long>.Ensure(newRecord.GetRole(roleType));
+
+                    if (roleRefs.IsEmpty)
+                    {
+                        continue;
+                    }
+
+                    var roleStrategies = RefRange<Strategy>.Load(roleRefs.Select(this.Workspace.GetStrategy).Where(v => v != null));
+
+                    foreach (var roleStrategy in roleStrategies)
+                    {
+                        roleStrategy.OnPulledAddAssociation(roleType.AssociationType, roleStrategy);
+                    }
+                }
             }
 
             this.Record = newRecord;
@@ -502,6 +587,44 @@ namespace Allors.Workspace.Adapters
 
             var role = ValueRange<long>.Ensure(this.Record?.GetRole(roleType));
             return role.IsEmpty ? RefRange<Strategy>.Empty : RefRange<Strategy>.Load(role.Select(this.Workspace.GetStrategy).Where(v => v != null));
+        }
+
+        private void OnPulledRemoveOldAssociation(IAssociationType associationType, Strategy roleToRemove)
+        {
+            if (associationType.IsOne)
+            {
+                if (this.compositeAssociationByAssociationType.TryGetValue(associationType, out var role))
+                {
+                    if (role == roleToRemove)
+                    {
+                        this.compositeAssociationByAssociationType[associationType] = null;
+                    }
+                }
+            }
+            else
+            {
+                if (this.compositesAssociationByAssociationType.TryGetValue(associationType, out var role))
+                {
+                    var newRole = role.Remove(roleToRemove);
+                    this.compositesAssociationByAssociationType[associationType] = newRole;
+                }
+            }
+        }
+
+        private void OnPulledAddAssociation(IAssociationType associationType, Strategy roleToAdd)
+        {
+            if (associationType.IsOne)
+            {
+                this.compositeAssociationByAssociationType[associationType] = roleToAdd;
+            }
+            else
+            {
+                if (this.compositesAssociationByAssociationType.TryGetValue(associationType, out var role))
+                {
+                    var newRole = role.Add(roleToAdd);
+                    this.compositesAssociationByAssociationType[associationType] = newRole;
+                }
+            }
         }
 
         private bool SameRoleStrategy(IRoleType roleType, Strategy role)
