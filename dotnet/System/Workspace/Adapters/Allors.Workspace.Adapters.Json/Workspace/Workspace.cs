@@ -20,7 +20,7 @@ namespace Allors.Workspace.Adapters.Json
     {
         public Workspace(Connection database, IWorkspaceServices services) : base(database, services) => this.Services.OnInit(this);
 
-        public new Connection Connection => (Connection)base.Connection;
+        private new Connection Connection => (Connection)base.Connection;
 
         public override T Create<T>(IClass @class)
         {
@@ -36,49 +36,6 @@ namespace Allors.Workspace.Adapters.Json
             var databaseRecord = (Adapters.Record)this.Connection.GetRecord(id);
             var strategy = new Strategy(this, databaseRecord);
             this.AddStrategy(strategy);
-        }
-
-        internal async Task<IPullResult> OnPull(PullResponse pullResponse)
-        {
-            var pullResult = new PullResult(this, pullResponse);
-
-            if (pullResult.HasErrors)
-            {
-                return pullResult;
-            }
-
-            var syncRequest = this.Connection.OnPullResponse(pullResponse);
-            if (syncRequest.o.Length > 0)
-            {
-                var database = this.Connection;
-                var syncResponse = await database.Sync(syncRequest);
-                var accessRequest = database.OnSyncResponse(syncResponse);
-
-                if (accessRequest != null)
-                {
-                    var accessResponse = await database.Access(accessRequest);
-                    var permissionRequest = database.AccessResponse(accessResponse);
-                    if (permissionRequest != null)
-                    {
-                        var permissionResponse = await database.Permission(permissionRequest);
-                        database.PermissionResponse(permissionResponse);
-                    }
-                }
-            }
-
-            foreach (var v in pullResponse.p)
-            {
-                if (this.StrategyByWorkspaceId.TryGetValue(v.i, out var strategy))
-                {
-                    strategy.OnPulled(pullResult);
-                }
-                else
-                {
-                    this.InstantiateDatabaseStrategy(v.i);
-                }
-            }
-
-            return pullResult;
         }
 
         public override async Task<IInvokeResult> InvokeAsync(Method method, InvokeOptions options = null) => await this.InvokeAsync(new[] { method }, options);
@@ -106,12 +63,6 @@ namespace Allors.Workspace.Adapters.Json
             return new InvokeResult(this, invokeResponse);
         }
 
-        public override async Task<IPullResult> CallAsync(object args, string name)
-        {
-            var pullResponse = await this.Connection.Pull(args, name);
-            return await this.OnPull(pullResponse);
-        }
-
         public override async Task<IPullResult> PullAsync(params Pull[] pulls)
         {
             foreach (var pull in pulls)
@@ -125,7 +76,45 @@ namespace Allors.Workspace.Adapters.Json
             var pullRequest = new PullRequest { l = pulls.Select(v => v.ToJson(this.Connection.UnitConvert)).ToArray() };
 
             var pullResponse = await this.Connection.Pull(pullRequest);
-            return await this.OnPull(pullResponse);
+            var pullResult = new PullResult(this, pullResponse);
+
+            if (pullResult.HasErrors)
+            {
+                return pullResult;
+            }
+
+            var syncRequest = this.Connection.OnPullResponse(pullResponse);
+            if (syncRequest.o.Length > 0)
+            {
+                var database = this.Connection;
+                var syncResponse = await database.Sync(syncRequest);
+                var accessRequest = database.OnSyncResponse(syncResponse);
+
+                if (accessRequest != null)
+                {
+                    var accessResponse = await database.Access(accessRequest);
+                    var permissionRequest = database.AccessResponse(accessResponse);
+                    if (permissionRequest != null)
+                    {
+                        var permissionResponse = await database.Permission(permissionRequest);
+                        database.PermissionResponse(permissionResponse);
+                    }
+                }
+            }
+
+            foreach (var v1 in pullResponse.p)
+            {
+                if (this.StrategyByWorkspaceId.TryGetValue(v1.i, out var strategy))
+                {
+                    strategy.OnPulled(pullResult);
+                }
+                else
+                {
+                    this.InstantiateDatabaseStrategy(v1.i);
+                }
+            }
+
+            return pullResult;
         }
 
         public override async Task<IPushResult> PushAsync()

@@ -1,4 +1,4 @@
-// <copyright file="StaticObjectFactory.cs" company="Allors bvba">
+﻿// <copyright file="StaticObjectFactory.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -83,23 +83,6 @@ namespace Allors.Workspace.Adapters
             }
         }
 
-        /// <summary>
-        /// Creates a new <see cref="Object"/> given the <see cref="Object"/>.
-        /// </summary>
-        /// <param name="strategy">
-        /// The strategy.
-        /// </param>
-        /// <returns>
-        /// The new <see cref="Object"/>.
-        /// </returns>
-        public IObject Create(IStrategy strategy)
-        {
-            var constructor = this.contructorInfoByObjectType[strategy.Class];
-            object[] parameters = { strategy };
-
-            return (IObject)constructor.Invoke(parameters);
-        }
-
         IObject IObjectFactory.Create(IStrategy strategy) => this.Create(strategy);
 
         /// <summary>
@@ -126,6 +109,23 @@ namespace Allors.Workspace.Adapters
         {
             var typeName = typeof(T).Name;
             return this.GetObjectType(typeName);
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="Object"/> given the <see cref="Object"/>.
+        /// </summary>
+        /// <param name="strategy">
+        /// The strategy.
+        /// </param>
+        /// <returns>
+        /// The new <see cref="Object"/>.
+        /// </returns>
+        private IObject Create(IStrategy strategy)
+        {
+            var constructor = this.contructorInfoByObjectType[strategy.Class];
+            object[] parameters = { strategy };
+
+            return (IObject)constructor.Invoke(parameters);
         }
     }
 }

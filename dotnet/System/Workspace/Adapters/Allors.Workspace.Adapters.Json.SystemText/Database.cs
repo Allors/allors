@@ -1,4 +1,4 @@
-// <copyright file="RemoteDatabase.cs" company="Allors bvba">
+﻿// <copyright file="RemoteDatabase.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -68,14 +68,6 @@ namespace Allors.Workspace.Adapters.Json.SystemText
         {
             this.HttpClient.DefaultRequestHeaders.Authorization = null;
             this.userId = null;
-        }
-
-        public override async Task<PullResponse> Pull(object args, string name)
-        {
-            var uri = new Uri($"{name}/pull", UriKind.Relative);
-            var response = await this.PostAsJsonAsync(uri, args);
-            response.EnsureSuccessStatusCode();
-            return await this.ReadAsAsync<PullResponse>(response);
         }
 
         public override async Task<PullResponse> Pull(PullRequest pullRequest)

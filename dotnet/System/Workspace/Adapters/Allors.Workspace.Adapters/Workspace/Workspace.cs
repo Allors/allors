@@ -171,7 +171,7 @@ namespace Allors.Workspace.Adapters
             }
         }
 
-        public void OnDatabasePushResponseNew(long workspaceId, long databaseId)
+        protected void OnDatabasePushResponseNew(long workspaceId, long databaseId)
         {
             var strategy = this.StrategyByWorkspaceId[workspaceId];
             this.PushToDatabaseTracker.Created.Remove(strategy);
@@ -188,9 +188,11 @@ namespace Allors.Workspace.Adapters
         }
 
         public abstract Task<IInvokeResult> InvokeAsync(Method method, InvokeOptions options = null);
+
         public abstract Task<IInvokeResult> InvokeAsync(Method[] methods, InvokeOptions options = null);
-        public abstract Task<IPullResult> CallAsync(object args, string name);
+        
         public abstract Task<IPullResult> PullAsync(params Pull[] pull);
+        
         public abstract Task<IPushResult> PushAsync();
     }
 }

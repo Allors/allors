@@ -1,4 +1,4 @@
-// <copyright file="LocalPullResult.cs" company="Allors bvba">
+﻿// <copyright file="LocalPullResult.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -128,12 +128,6 @@ namespace Allors.Workspace.Adapters.Direct
         public object GetValue(string key) => this.Values[key];
 
         public T GetValue<T>(string key) => (T)this.GetValue(key);
-
-        public void Execute(object args, string name)
-        {
-            // TODO: Use a Service for raw procedures
-            throw new NotImplementedException();
-        }
 
         public void Execute(IEnumerable<Data.Pull> workspacePulls)
         {

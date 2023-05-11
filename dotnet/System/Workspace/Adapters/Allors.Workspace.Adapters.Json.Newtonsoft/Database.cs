@@ -1,4 +1,4 @@
-// <copyright file="RemoteDatabase.cs" company="Allors bvba">
+﻿// <copyright file="RemoteDatabase.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -48,12 +48,6 @@ namespace Allors.Workspace.Adapters.Json.Newtonsoft
             var uri = new Uri("push", UriKind.Relative);
             // TODO: Retry for network errors, but not for server errors
             return await this.client.PostOnce<PushResponse>(uri, pushRequest);
-        }
-
-        public override async Task<PullResponse> Pull(object args, string name)
-        {
-            var uri = new Uri($"{name}/pull", UriKind.Relative);
-            return await this.client.Post<PullResponse>(uri, args);
         }
 
         public override async Task<PullResponse> Pull(PullRequest pullRequest)

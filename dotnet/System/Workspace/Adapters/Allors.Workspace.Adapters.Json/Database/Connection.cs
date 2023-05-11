@@ -262,8 +262,6 @@ namespace Allors.Workspace.Adapters.Json
             return databaseObjects;
         }
 
-        public abstract Task<PullResponse> Pull(object args, string name);
-
         public abstract Task<PullResponse> Pull(PullRequest pullRequest);
 
         public abstract Task<SyncResponse> Sync(SyncRequest syncRequest);

@@ -21,8 +21,7 @@ namespace Allors.Workspace.Adapters.Direct
         public new Connection Connection => (Connection)base.Connection;
 
         public long UserId => this.Connection.UserId;
-
-
+        
         public override T Create<T>(IClass @class)
         {
             var workspaceId = this.Connection.NextId();
@@ -48,16 +47,7 @@ namespace Allors.Workspace.Adapters.Direct
             result.Execute(methods, options);
             return Task.FromResult<IInvokeResult>(result);
         }
-
-        public override Task<IPullResult> CallAsync(object args, string name)
-        {
-            var result = new Pull(this);
-
-            result.Execute(args, name);
-
-            return Task.FromResult<IPullResult>(result);
-        }
-
+        
         public override Task<IPullResult> PullAsync(params Data.Pull[] pulls)
         {
             foreach (var pull in pulls)
@@ -71,7 +61,20 @@ namespace Allors.Workspace.Adapters.Direct
             var result = new Pull(this);
             result.Execute(pulls);
 
-            this.OnPulled(result);
+            var syncObjects = this.Connection.ObjectsToSync(result);
+            this.Connection.Sync(syncObjects, result.AccessControl);
+
+            foreach (var databaseObject in result.DatabaseObjects)
+            {
+                if (this.StrategyByWorkspaceId.TryGetValue(databaseObject.Id, out var strategy))
+                {
+                    strategy.OnPulled(result);
+                }
+                else
+                {
+                    this.InstantiateDatabaseStrategy(databaseObject.Id);
+                }
+            }
 
             return Task.FromResult<IPullResult>(result);
         }
@@ -110,25 +113,5 @@ namespace Allors.Workspace.Adapters.Direct
 
             return Task.FromResult<IPushResult>(result);
         }
-
-        internal void OnPulled(Pull pull)
-        {
-            var syncObjects = this.Connection.ObjectsToSync(pull);
-            this.Connection.Sync(syncObjects, pull.AccessControl);
-
-            foreach (var databaseObject in pull.DatabaseObjects)
-            {
-                if (this.StrategyByWorkspaceId.TryGetValue(databaseObject.Id, out var strategy))
-                {
-                    strategy.OnPulled(pull);
-                }
-                else
-                {
-                    this.InstantiateDatabaseStrategy(databaseObject.Id);
-                }
-            }
-        }
-
-
     }
 }
