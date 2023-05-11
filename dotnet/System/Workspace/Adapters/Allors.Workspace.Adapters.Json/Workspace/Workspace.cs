@@ -31,13 +31,6 @@ namespace Allors.Workspace.Adapters.Json
             return (T)strategy.Object;
         }
 
-        private void InstantiateDatabaseStrategy(long id)
-        {
-            var databaseRecord = (Adapters.Record)this.Connection.GetRecord(id);
-            var strategy = new Strategy(this, databaseRecord);
-            this.AddStrategy(strategy);
-        }
-
         public override async Task<IInvokeResult> InvokeAsync(Method method, InvokeOptions options = null) => await this.InvokeAsync(new[] { method }, options);
 
         public override async Task<IInvokeResult> InvokeAsync(Method[] methods, InvokeOptions options = null)
@@ -102,16 +95,20 @@ namespace Allors.Workspace.Adapters.Json
                 }
             }
 
-            foreach (var v1 in pullResponse.p)
+            foreach (var p in pullResponse.p)
             {
-                if (this.StrategyByWorkspaceId.TryGetValue(v1.i, out var strategy))
+                if (!this.StrategyByWorkspaceId.TryGetValue(p.i, out var strategy))
                 {
-                    strategy.OnPulled(pullResult);
+                    var databaseRecord = (Adapters.Record)this.Connection.GetRecord(p.i);
+                    strategy = new Strategy(this, databaseRecord.Class, databaseRecord.Id);
+                    this.AddStrategy(strategy);
                 }
-                else
-                {
-                    this.InstantiateDatabaseStrategy(v1.i);
-                }
+            }
+
+            foreach (var p in pullResponse.p)
+            {
+                this.StrategyByWorkspaceId.TryGetValue(p.i, out var strategy);
+                strategy!.OnPulled(pullResult);
             }
 
             return pullResult;

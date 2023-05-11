@@ -20,16 +20,6 @@ namespace Allors.Workspace.Adapters
             this.Workspace = workspace;
             this.Id = id;
             this.Class = @class;
-            this.Record = workspace.Connection.GetRecord(this.Id);
-            this.IsPushed = false;
-        }
-
-        protected Strategy(Workspace workspace, Record record)
-        {
-            this.Workspace = workspace;
-            this.Id = record.Id;
-            this.Class = record.Class;
-            this.Record = record;
             this.IsPushed = false;
         }
 

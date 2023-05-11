@@ -17,12 +17,6 @@ namespace Allors.Workspace.Adapters.Json
         {
         }
 
-        internal Strategy(Workspace workspace, Adapters.Record record) : base(workspace, record)
-        {
-        }
-
-        public new Workspace Session => (Workspace)base.Workspace;
-
         internal PushRequestNewObject PushNew() => new PushRequestNewObject
         {
             w = this.Id,

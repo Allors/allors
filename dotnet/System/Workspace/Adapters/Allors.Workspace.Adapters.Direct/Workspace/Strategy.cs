@@ -10,7 +10,5 @@ namespace Allors.Workspace.Adapters.Direct
     public sealed class Strategy : Adapters.Strategy
     {
         internal Strategy(Adapters.Workspace workspace, IClass @class, long id) : base(workspace, @class, id) { }
-
-        internal Strategy(Adapters.Workspace workspace, Adapters.Record record) : base(workspace, record) { }
     }
 }

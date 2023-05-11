@@ -21,7 +21,7 @@ namespace Allors.Workspace.Adapters.Direct
         public new Connection Connection => (Connection)base.Connection;
 
         public long UserId => this.Connection.UserId;
-        
+
         public override T Create<T>(IClass @class)
         {
             var workspaceId = this.Connection.NextId();
@@ -29,13 +29,6 @@ namespace Allors.Workspace.Adapters.Direct
             this.AddStrategy(strategy);
             this.PushToDatabaseTracker.OnCreated(strategy);
             return (T)strategy.Object;
-        }
-
-        private void InstantiateDatabaseStrategy(long id)
-        {
-            var databaseRecord = this.Connection.GetRecord(id);
-            var strategy = new Strategy(this, (Adapters.Record)databaseRecord);
-            this.AddStrategy(strategy);
         }
 
         public override Task<IInvokeResult> InvokeAsync(Method method, InvokeOptions options = null) =>
@@ -47,7 +40,7 @@ namespace Allors.Workspace.Adapters.Direct
             result.Execute(methods, options);
             return Task.FromResult<IInvokeResult>(result);
         }
-        
+
         public override Task<IPullResult> PullAsync(params Data.Pull[] pulls)
         {
             foreach (var pull in pulls)
@@ -66,14 +59,18 @@ namespace Allors.Workspace.Adapters.Direct
 
             foreach (var databaseObject in result.DatabaseObjects)
             {
-                if (this.StrategyByWorkspaceId.TryGetValue(databaseObject.Id, out var strategy))
+                if (!this.StrategyByWorkspaceId.ContainsKey(databaseObject.Id))
                 {
-                    strategy.OnPulled(result);
+                    var databaseRecord = this.Connection.GetRecord(databaseObject.Id);
+                    var strategy = new Strategy(this, databaseRecord.Class, databaseRecord.Id);
+                    this.AddStrategy(strategy);
                 }
-                else
-                {
-                    this.InstantiateDatabaseStrategy(databaseObject.Id);
-                }
+            }
+
+            foreach (var databaseObject in result.DatabaseObjects)
+            {
+                this.StrategyByWorkspaceId.TryGetValue(databaseObject.Id, out var strategy);
+                strategy!.OnPulled(result);
             }
 
             return Task.FromResult<IPullResult>(result);

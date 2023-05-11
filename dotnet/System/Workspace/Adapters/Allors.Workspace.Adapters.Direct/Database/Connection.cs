@@ -77,8 +77,8 @@ namespace Allors.Workspace.Adapters.Direct
 
         public override Adapters.Record GetRecord(long id)
         {
-            this.recordById.TryGetValue(id, out var databaseObjects);
-            return databaseObjects;
+            this.recordById.TryGetValue(id, out var record);
+            return record;
         }
 
         public override long GetPermission(IClass workspaceClass, IOperandType operandType, Operations operation)
