@@ -1,4 +1,4 @@
-// <copyright file="Many2OneTests.cs" company="Allors bvba">
+﻿// <copyright file="Many2OneTests.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -87,7 +87,17 @@ namespace Allors.Workspace.Adapters.Tests
                 Assert.Single(c1b.C1sWhereC1C1Many2Many);
                 Assert.Contains(c1a, c1b.C1sWhereC1C1Many2Many);
 
-                await workspace.PullAsync(new Pull { Object = c1b });
+                await workspace.PullAsync(new Pull
+                {
+                    Object = c1b,
+                    Results = new[]
+                    {
+                        new Result
+                        {
+                            Include = new[]{ new Node(this.M.C1.C1C1Many2Manies.AssociationType)}
+                        }
+                    }
+                });
 
                 Assert.Single(c1a.C1C1Many2Manies);
                 Assert.Single(c1b.C1sWhereC1C1Many2Many);

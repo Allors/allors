@@ -7,7 +7,6 @@ namespace Allors.Workspace.Adapters
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
     using System.Linq;
     using Meta;
     using Shared.Ranges;
@@ -16,8 +15,10 @@ namespace Allors.Workspace.Adapters
     {
         private IObject @object;
 
-        private Dictionary<IAssociationType, Strategy> compositeAssociationByAssociationType;
-        private Dictionary<IAssociationType, RefRange<Strategy>> compositesAssociationByAssociationType;
+        private readonly Dictionary<IAssociationType, Strategy> databaseCompositeAssociationByAssociationType;
+        private readonly Dictionary<IAssociationType, RefRange<Strategy>> databaseCompositesAssociationByAssociationType;
+
+        private readonly Dictionary<IAssociationType, RefRange<Strategy>> changedAssociationByAssociationType;
 
         protected Strategy(Workspace workspace, IClass @class, long id)
         {
@@ -26,8 +27,10 @@ namespace Allors.Workspace.Adapters
             this.Class = @class;
             this.IsPushed = false;
 
-            this.compositeAssociationByAssociationType = new Dictionary<IAssociationType, Strategy>();
-            this.compositesAssociationByAssociationType = new Dictionary<IAssociationType, RefRange<Strategy>>();
+            this.databaseCompositeAssociationByAssociationType = new Dictionary<IAssociationType, Strategy>();
+            this.databaseCompositesAssociationByAssociationType = new Dictionary<IAssociationType, RefRange<Strategy>>();
+
+            this.changedAssociationByAssociationType = new Dictionary<IAssociationType, RefRange<Strategy>>();
         }
 
         public long Version => this.Record?.Version ?? Allors.Version.WorkspaceInitial;
@@ -118,8 +121,6 @@ namespace Allors.Workspace.Adapters
             var permission = this.Workspace.Connection.GetPermission(this.Class, methodType, Operations.Execute);
             return this.Record.IsPermitted(permission);
         }
-
-        public void Reset() => this.ChangedRoleByRelationType = null;
 
         public bool ExistRole(IRoleType roleType)
         {
@@ -309,12 +310,12 @@ namespace Allors.Workspace.Adapters
 
         public T GetCompositeAssociation<T>(IAssociationType associationType) where T : class, IObject
         {
-            return (T)this.Workspace.GetCompositeAssociation(this, associationType)?.Object;
+            return (T)this.GetCompositeAssociationStrategy(associationType)?.Object;
         }
 
         public IEnumerable<T> GetCompositesAssociation<T>(IAssociationType associationType) where T : class, IObject
         {
-            return this.Workspace.GetCompositesAssociation(this, associationType).Select(v => v.Object).Cast<T>();
+            return this.GetCompositesAssociationStrategies(this, associationType).Select(v => v.Object).Cast<T>();
         }
 
         public void OnPushNewId(long newId) => this.Id = newId;
@@ -326,7 +327,7 @@ namespace Allors.Workspace.Adapters
             var newRecord = this.Workspace.Connection.GetRecord(this.Id);
 
             // Remove old associations
-            if (this.Record != null)
+            if (this.Record != null && this.Record != newRecord)
             {
                 foreach (var roleType in this.Class.RoleTypes.Where(v => v.ObjectType.IsComposite))
                 {
@@ -380,46 +381,56 @@ namespace Allors.Workspace.Adapters
             }
 
             // Update Associations
-            foreach (var roleType in this.Class.RoleTypes.Where(v => v.ObjectType.IsComposite))
+            if (this.Record != newRecord)
             {
-                if (roleType.IsOne)
+                foreach (var roleType in this.Class.RoleTypes.Where(v => v.ObjectType.IsComposite))
                 {
-                    var roleRef = newRecord.GetRole(roleType);
-
-                    if (roleRef == null)
+                    if (roleType.IsOne)
                     {
-                        continue;
+                        var roleRef = newRecord.GetRole(roleType);
+
+                        if (roleRef == null)
+                        {
+                            continue;
+                        }
+
+                        var roleStrategy = this.Workspace.GetStrategy((long)roleRef);
+
+                        if (roleStrategy != null)
+                        {
+                            roleStrategy.OnPulledAddAssociation(roleType.AssociationType, this);
+                        }
                     }
-
-                    var roleStrategy = this.Workspace.GetStrategy((long)roleRef);
-
-                    if (roleStrategy != null)
+                    else
                     {
-                        roleStrategy.OnPulledAddAssociation(roleType.AssociationType, this);
-                    }
-                }
-                else
-                {
-                    var roleRefs = ValueRange<long>.Ensure(newRecord.GetRole(roleType));
+                        var roleRefs = ValueRange<long>.Ensure(newRecord.GetRole(roleType));
 
-                    if (roleRefs.IsEmpty)
-                    {
-                        continue;
-                    }
+                        if (roleRefs.IsEmpty)
+                        {
+                            continue;
+                        }
 
-                    var roleStrategies = RefRange<Strategy>.Load(roleRefs.Select(this.Workspace.GetStrategy).Where(v => v != null));
+                        var roleStrategies = RefRange<Strategy>.Load(roleRefs.Select(this.Workspace.GetStrategy).Where(v => v != null));
 
-                    foreach (var roleStrategy in roleStrategies)
-                    {
-                        roleStrategy.OnPulledAddAssociation(roleType.AssociationType, roleStrategy);
+                        foreach (var roleStrategy in roleStrategies)
+                        {
+                            roleStrategy.OnPulledAddAssociation(roleType.AssociationType, this);
+                        }
                     }
                 }
             }
 
             this.Record = newRecord;
         }
-        
+
         public Dictionary<IRelationType, object> ChangedRoleByRelationType { get; private set; }
+
+        internal void Reset()
+        {
+            this.ChangedRoleByRelationType = null;
+
+            this.changedAssociationByAssociationType.Clear();
+        }
 
         private Strategy GetRoleStrategy(IRoleType roleType)
         {
@@ -450,11 +461,16 @@ namespace Allors.Workspace.Adapters
             var associationType = roleType.AssociationType;
             if (associationType.IsOne && role != null)
             {
-                var previousAssociation = this.Workspace.GetCompositeAssociation(role, associationType);
+                Strategy previousAssociation = associationType.IsOne ? role.GetCompositeAssociationStrategy(associationType) : null;
+
                 this.SetChangedRole(roleType, role);
+
+                // OneToOne
                 if (associationType.IsOne && previousAssociation != null)
                 {
-                    // OneToOne
+                    var previousRole = previousAssociation.GetRoleStrategy(roleType);
+                    previousRole?.AddChangedAssociation(roleType.AssociationType, this);
+
                     previousAssociation.SetRole(roleType, null);
                 }
             }
@@ -462,6 +478,8 @@ namespace Allors.Workspace.Adapters
             {
                 this.SetChangedRole(roleType, role);
             }
+
+            role?.AddChangedAssociation(roleType.AssociationType, this);
         }
 
         private RefRange<Strategy> GetRoleStrategies(IRoleType roleType)
@@ -489,7 +507,7 @@ namespace Allors.Workspace.Adapters
         private void AddRoleStrategy(IRoleType roleType, Strategy roleToAdd)
         {
             var associationType = roleType.AssociationType;
-            var previousAssociation = this.Workspace.GetCompositeAssociation(roleToAdd, associationType);
+            var previousAssociation = associationType.IsOne ? roleToAdd.GetCompositeAssociationStrategy(associationType) : null;
 
             var role = this.GetRoleStrategies(roleType);
 
@@ -501,12 +519,24 @@ namespace Allors.Workspace.Adapters
             role = role.Add(roleToAdd);
             this.SetChangedRole(roleType, role);
 
+            roleToAdd?.AddChangedAssociation(roleType.AssociationType, this);
+
             if (associationType.IsMany)
             {
                 return;
             }
 
             // OneToMany
+            var previousRoleStrategies = previousAssociation?.GetRoleStrategies(roleType);
+            if (previousRoleStrategies != null)
+            {
+                foreach (var previousRoleStrategy in previousRoleStrategies)
+                {
+                    previousRoleStrategy?.AddChangedAssociation(roleType.AssociationType, this);
+
+                }
+            }
+
             previousAssociation?.SetRole(roleType, null);
         }
 
@@ -534,6 +564,13 @@ namespace Allors.Workspace.Adapters
 
             this.SetChangedRole(roleType, role);
 
+            RefRange<Strategy> addedRoles = role.Except(previousRole);
+
+            foreach (var addedRole in addedRoles)
+            {
+                addedRole?.AddChangedAssociation(roleType.AssociationType, this);
+            }
+
             var associationType = roleType.AssociationType;
             if (associationType.IsMany)
             {
@@ -541,9 +578,20 @@ namespace Allors.Workspace.Adapters
             }
 
             // OneToMany
-            foreach (var addedRole in role.Except(previousRole))
+            foreach (var addedRole in addedRoles)
             {
-                var previousAssociation = this.Workspace.GetCompositeAssociation(addedRole, associationType);
+                var previousAssociation = associationType.IsOne ? addedRole.GetCompositeAssociationStrategy(associationType) : null;
+
+                var previousRoleStrategies = previousAssociation?.GetRoleStrategies(roleType);
+                if (previousRoleStrategies != null)
+                {
+                    foreach (var previousRoleStrategy in previousRoleStrategies)
+                    {
+                        previousRoleStrategy?.AddChangedAssociation(roleType.AssociationType, this);
+
+                    }
+                }
+
                 previousAssociation?.SetRole(roleType, null);
             }
         }
@@ -552,10 +600,21 @@ namespace Allors.Workspace.Adapters
         {
             this.ChangedRoleByRelationType ??= new Dictionary<IRelationType, object>();
             this.ChangedRoleByRelationType[roleType.RelationType] = role;
+
             this.Workspace.PushToDatabaseTracker.OnChanged(this);
         }
 
-        public bool IsAssociationForRole(IRoleType roleType, Strategy forRole)
+        private void AddChangedAssociation(IAssociationType associationType, Strategy association)
+        {
+            this.changedAssociationByAssociationType.TryGetValue(associationType, out var associations);
+
+            var associationRefs = RefRange<Strategy>.Ensure(associations);
+            associationRefs = associationRefs.Add(association);
+
+            this.changedAssociationByAssociationType[associationType] = associationRefs;
+        }
+
+        private bool IsAssociationForRole(IRoleType roleType, Strategy forRole)
         {
             if (roleType.IsOne)
             {
@@ -565,6 +624,96 @@ namespace Allors.Workspace.Adapters
 
             var compositesRole = this.GetRoleStrategiesIfInstantiated(roleType);
             return compositesRole.Contains(forRole);
+        }
+
+        private Strategy GetCompositeAssociationStrategy(IAssociationType associationType)
+        {
+            var roleType = associationType.RelationType.RoleType;
+
+            if (this.changedAssociationByAssociationType.TryGetValue(associationType, out var changedAssociationRefs))
+            {
+                foreach (var changedAssociation in changedAssociationRefs)
+                {
+                    if (!changedAssociation.CanRead(roleType))
+                    {
+                        continue;
+                    }
+
+                    if (changedAssociation.IsAssociationForRole(roleType, this))
+                    {
+                        return changedAssociation;
+                    }
+                }
+            }
+
+            if (this.databaseCompositeAssociationByAssociationType.TryGetValue(associationType, out var association))
+            {
+                if (association?.CanRead(roleType) == true)
+                {
+                    if (association.IsAssociationForRole(roleType, this))
+                    {
+                        return association;
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        private IEnumerable<Strategy> GetCompositesAssociationStrategies(Strategy role, IAssociationType associationType)
+        {
+            var roleType = associationType.RelationType.RoleType;
+
+            var yielded = false;
+
+            var dedupe = new HashSet<Strategy>();
+
+            if (this.changedAssociationByAssociationType.TryGetValue(associationType, out var changedAssociationRefs))
+            {
+                foreach (var association in changedAssociationRefs)
+                {
+                    if (!association.CanRead(roleType))
+                    {
+                        continue;
+                    }
+
+                    if (association.IsAssociationForRole(roleType, role))
+                    {
+                        dedupe.Add(association);
+                        yielded = true;
+                        yield return association;
+                    }
+                }
+            }
+
+            if (associationType.IsOne && yielded)
+            {
+                yield break;
+            }
+
+            if (this.databaseCompositesAssociationByAssociationType.TryGetValue(associationType, out var associationStrategies))
+            {
+                foreach (var association in associationStrategies)
+                {
+                    if (association?.CanRead(roleType) == true)
+                    {
+                        if (association.IsAssociationForRole(roleType, this))
+                        {
+                            if (!dedupe.Contains(association))
+                            {
+                                if (associationType.IsOne && yielded)
+                                {
+                                    yield break;
+                                }
+
+                                dedupe.Add(association);
+                                yielded = true;
+                                yield return association;
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         private Strategy GetRoleStrategyIfInstantiated(IRoleType roleType)
@@ -589,40 +738,44 @@ namespace Allors.Workspace.Adapters
             return role.IsEmpty ? RefRange<Strategy>.Empty : RefRange<Strategy>.Load(role.Select(this.Workspace.GetStrategy).Where(v => v != null));
         }
 
-        private void OnPulledRemoveOldAssociation(IAssociationType associationType, Strategy roleToRemove)
+        private void OnPulledRemoveOldAssociation(IAssociationType associationType, Strategy associationToRemove)
         {
             if (associationType.IsOne)
             {
-                if (this.compositeAssociationByAssociationType.TryGetValue(associationType, out var role))
+                if (this.databaseCompositeAssociationByAssociationType.TryGetValue(associationType, out var association))
                 {
-                    if (role == roleToRemove)
+                    if (association == associationToRemove)
                     {
-                        this.compositeAssociationByAssociationType[associationType] = null;
+                        this.databaseCompositeAssociationByAssociationType[associationType] = null;
                     }
                 }
             }
             else
             {
-                if (this.compositesAssociationByAssociationType.TryGetValue(associationType, out var role))
+                if (this.databaseCompositesAssociationByAssociationType.TryGetValue(associationType, out var association))
                 {
-                    var newRole = role.Remove(roleToRemove);
-                    this.compositesAssociationByAssociationType[associationType] = newRole;
+                    association = association.Remove(associationToRemove);
+                    this.databaseCompositesAssociationByAssociationType[associationType] = association;
                 }
             }
         }
 
-        private void OnPulledAddAssociation(IAssociationType associationType, Strategy roleToAdd)
+        private void OnPulledAddAssociation(IAssociationType associationType, Strategy associationToAdd)
         {
             if (associationType.IsOne)
             {
-                this.compositeAssociationByAssociationType[associationType] = roleToAdd;
+                this.databaseCompositeAssociationByAssociationType[associationType] = associationToAdd;
             }
             else
             {
-                if (this.compositesAssociationByAssociationType.TryGetValue(associationType, out var role))
+                if (this.databaseCompositesAssociationByAssociationType.TryGetValue(associationType, out var association))
                 {
-                    var newRole = role.Add(roleToAdd);
-                    this.compositesAssociationByAssociationType[associationType] = newRole;
+                    association = association.Add(associationToAdd);
+                    this.databaseCompositesAssociationByAssociationType[associationType] = association;
+                }
+                else
+                {
+                    this.databaseCompositesAssociationByAssociationType[associationType] = RefRange<Strategy>.Load(associationToAdd);
                 }
             }
         }

@@ -24,8 +24,6 @@ namespace Allors.Workspace
 
         bool HasChanges { get; }
 
-        void Reset();
-
         bool CanRead(IRoleType roleType);
 
         bool CanWrite(IRoleType roleType);

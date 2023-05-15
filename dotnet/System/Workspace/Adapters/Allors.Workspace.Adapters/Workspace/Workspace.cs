@@ -117,45 +117,7 @@ namespace Allors.Workspace.Adapters
 
             return this.StrategyByWorkspaceId.TryGetValue(id, out var sessionStrategy) ? sessionStrategy : null;
         }
-
-        public Strategy GetCompositeAssociation(Strategy role, IAssociationType associationType)
-        {
-            var roleType = associationType.RelationType.RoleType;
-
-            foreach (var association in this.StrategiesForClass(associationType.ObjectType))
-            {
-                if (!association.CanRead(roleType))
-                {
-                    continue;
-                }
-
-                if (association.IsAssociationForRole(roleType, role))
-                {
-                    return association;
-                }
-            }
-
-            return null;
-        }
-
-        public IEnumerable<Strategy> GetCompositesAssociation(Strategy role, IAssociationType associationType)
-        {
-            var roleType = associationType.RelationType.RoleType;
-
-            foreach (var association in this.StrategiesForClass(associationType.ObjectType))
-            {
-                if (!association.CanRead(roleType))
-                {
-                    continue;
-                }
-
-                if (association.IsAssociationForRole(roleType, role))
-                {
-                    yield return association;
-                }
-            }
-        }
-
+        
         protected void AddStrategy(Strategy strategy)
         {
             this.StrategyByWorkspaceId.Add(strategy.Id, strategy);
