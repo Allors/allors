@@ -38,13 +38,13 @@ namespace Allors.Workspace
 
         object GetRole(IRoleType roleType);
 
-        void SetRole(IRoleType roleType, object value);
+        void SetRole(IRoleType roleType, object role);
 
         void RemoveRole(IRoleType roleType);
 
         object GetUnitRole(IRoleType roleType);
 
-        void SetUnitRole(IRoleType roleType, object value);
+        void SetUnitRole(IRoleType roleType, object role);
 
         T GetCompositeRole<T>(IRoleType roleType) where T : class, IObject;
 
