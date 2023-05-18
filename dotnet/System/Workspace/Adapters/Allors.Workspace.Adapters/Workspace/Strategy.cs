@@ -58,6 +58,8 @@ namespace Allors.Workspace.Adapters
 
         private bool IsPushed { get; set; }
 
+        public Dictionary<IRelationType, Change[]> ChangesByRelationType => this.changesByRelationType;
+
         int IComparable<Strategy>.CompareTo(Strategy other)
         {
             if (ReferenceEquals(this, other))

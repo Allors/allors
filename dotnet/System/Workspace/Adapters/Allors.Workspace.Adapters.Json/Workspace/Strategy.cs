@@ -33,46 +33,61 @@ namespace Allors.Workspace.Adapters.Json
 
         private PushRequestRole[] PushRoles()
         {
-            if (this.ChangedRoleByRelationType?.Count > 0)
+            if (this.ChangesByRelationType?.Count > 0)
             {
                 var database = this.Workspace.Connection;
                 var roles = new List<PushRequestRole>();
 
-                foreach (var keyValuePair in this.ChangedRoleByRelationType)
+                foreach (var keyValuePair in this.ChangesByRelationType)
                 {
                     var relationType = keyValuePair.Key;
-                    var roleValue = keyValuePair.Value;
+                    var changes = keyValuePair.Value;
 
                     var pushRequestRole = new PushRequestRole { t = relationType.Tag };
 
                     if (relationType.RoleType.ObjectType.IsUnit)
                     {
-                        pushRequestRole.u = ((Connection)database).UnitConvert.ToJson(roleValue);
+                        var setUnit = (SetUnitChange)changes[0];
+                        pushRequestRole.u = ((Connection)database).UnitConvert.ToJson(setUnit.Role);
                     }
                     else if (relationType.RoleType.IsOne)
                     {
-                        pushRequestRole.c = ((Adapters.Strategy)roleValue)?.Id;
+
+                        var setComposite = (SetCompositeChange)changes[0];
+                        if (!setComposite.IsDirect)
+                        {
+                            continue;
+                        }
+
+                        pushRequestRole.c = setComposite.Role?.Id;
                     }
                     else
                     {
-                        var roleStrategies = RefRange<Adapters.Strategy>.Ensure(roleValue);
-                        var roleIds = ValueRange<long>.Load(roleStrategies.Select(v => v.Id));
+                        var addIds = changes.OfType<AddCompositeChange>().Where(v => v.IsDirect).Select(v => v.Role.Id).ToArray();
+                        var removeIds = changes.OfType<RemoveCompositeChange>().Where(v => v.IsDirect).Select(v => v.Role.Id).ToArray();
+
+                        if (addIds.Length == 0 && removeIds.Length == 0)
+                        {
+                            continue;
+                        }
+
+                        var addRange = ValueRange<long>.Load(addIds);
 
                         if (!this.ExistRecord)
                         {
-                            pushRequestRole.a = roleIds.Save();
+                            pushRequestRole.a = addRange.Save();
                         }
                         else
                         {
-                            var databaseRole = ValueRange<long>.Ensure(this.Record.GetRole(relationType.RoleType));
-                            if (databaseRole.IsEmpty)
+                            if (!addRange.IsEmpty)
                             {
-                                pushRequestRole.a = roleIds.Save();
+                                pushRequestRole.a = addRange.Save();
                             }
-                            else
+
+                            var removeRange = ValueRange<long>.Load(addIds);
+                            if (!removeRange.IsEmpty)
                             {
-                                pushRequestRole.a = roleIds.Except(databaseRole).Save();
-                                pushRequestRole.r = databaseRole.Except(roleIds).Save();
+                                pushRequestRole.r = removeRange.Save();
                             }
                         }
                     }

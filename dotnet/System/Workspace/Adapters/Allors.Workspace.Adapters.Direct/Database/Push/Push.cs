@@ -8,6 +8,7 @@ namespace Allors.Workspace.Adapters.Direct
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Channels;
     using Database;
     using Database.Derivations;
     using Database.Meta;
@@ -140,7 +141,7 @@ namespace Allors.Workspace.Adapters.Direct
 
         private void PushRequestRoles(Strategy local, IObject obj)
         {
-            if (local.ChangedRoleByRelationType == null)
+            if (local.ChangesByRelationType == null)
             {
                 return;
             }
@@ -148,51 +149,35 @@ namespace Allors.Workspace.Adapters.Direct
             // TODO: Cache and filter for workspace
             var acl = this.AccessControl[obj];
 
-            foreach (var keyValuePair in local.ChangedRoleByRelationType)
+            foreach (var keyValuePair in local.ChangesByRelationType)
             {
                 var relationType = keyValuePair.Key;
-                var roleType = ((IRelationType)this.M.FindByTag(keyValuePair.Key.Tag)).RoleType;
+                var roleType = ((IRelationType)this.M.FindByTag(relationType.Tag)).RoleType;
 
                 if (acl.CanWrite(roleType))
                 {
-                    var roleValue = keyValuePair.Value;
+                    var changes = keyValuePair.Value;
 
-                    if (roleValue == null)
+                    foreach (var change in changes.Where(v => v.IsDirect))
                     {
-                        obj.Strategy.RemoveRole(roleType);
-                    }
-                    else if (roleType.ObjectType.IsUnit)
-                    {
-                        obj.Strategy.SetUnitRole(roleType, roleValue);
-                    }
-                    else if (relationType.RoleType.IsOne)
-                    {
-                        var workspaceRole = (Adapters.Strategy)roleValue;
-                        IObject role;
-
-                        if (workspaceRole.Id < 0)
+                        if (change is SetUnitChange setUnit)
                         {
-                            this.ObjectByNewId.TryGetValue(workspaceRole.Id, out role);
+                            obj.Strategy.SetUnitRole(roleType, setUnit.Role);
                         }
-                        else
+                        else if (change is SetCompositeChange setComposite)
                         {
-                            role = this.Transaction.Instantiate(workspaceRole.Id);
+                            var role = GetDatabaseRole(setComposite.Role);
+                            obj.Strategy.SetCompositeRole(roleType, role);
                         }
-
-                        obj.Strategy.SetCompositeRole(roleType, role);
-                    }
-                    else
-                    {
-                        var workspaceRole = RefRange<Adapters.Strategy>.Ensure(roleValue);
-
-                        if (this.ObjectByNewId != null)
+                        else if (change is AddCompositeChange addComposite)
                         {
-                            obj.Strategy.SetCompositesRole(roleType, this.GetRoles(workspaceRole));
+                            var role = GetDatabaseRole(addComposite.Role);
+                            obj.Strategy.AddCompositesRole(roleType, role);
                         }
-                        else
+                        else if (change is RemoveCompositeChange removeComposite)
                         {
-                            var role = this.Transaction.Instantiate(workspaceRole.Select(v => v.Id));
-                            obj.Strategy.SetCompositesRole(roleType, role);
+                            var role = GetDatabaseRole(removeComposite.Role);
+                            obj.Strategy.RemoveCompositesRole(roleType, role);
                         }
                     }
                 }
@@ -200,6 +185,18 @@ namespace Allors.Workspace.Adapters.Direct
                 {
                     this.AddAccessError(local);
                 }
+            }
+        }
+
+        private IObject GetDatabaseRole(Adapters.Strategy workspaceRole)
+        {
+            switch (workspaceRole.Id)
+            {
+            case < 0:
+                this.ObjectByNewId.TryGetValue(workspaceRole.Id, out var databaseRole);
+                return databaseRole;
+            default:
+                return this.Transaction.Instantiate(workspaceRole.Id);
             }
         }
 
