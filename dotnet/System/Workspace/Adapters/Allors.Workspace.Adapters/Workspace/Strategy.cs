@@ -1,4 +1,4 @@
-﻿// <copyright file="Object.cs" company="Allors bvba">
+﻿// <copyright file="Strategy.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -54,7 +54,7 @@ namespace Allors.Workspace.Adapters
 
         protected bool ExistRecord => this.Record != null;
 
-        protected Record Record { get; private set; }
+        private Record Record { get; set; }
 
         private bool IsPushed { get; set; }
 
@@ -510,7 +510,7 @@ namespace Allors.Workspace.Adapters
             return strategy;
         }
 
-        private void SetCompositeRoleStrategy(IRoleType roleType, Strategy role)
+        private void SetCompositeRoleStrategy(IRoleType roleType, Strategy role, bool isDirect = true)
         {
             if (this.SameRoleStrategy(roleType, role))
             {
@@ -539,7 +539,7 @@ namespace Allors.Workspace.Adapters
                     var previousRole = previousAssociation.GetCompositeRoleStrategy(roleType);
                     previousRole?.AddChangedAssociation(roleType.AssociationType, this);
 
-                    previousAssociation.SetRole(roleType, null);
+                    previousAssociation.SetCompositeRoleStrategy(roleType, null, false);
                 }
             }
 
@@ -581,7 +581,7 @@ namespace Allors.Workspace.Adapters
             return role;
         }
 
-        private void AddCompositesRoleStrategy(IRoleType roleType, Strategy roleToAdd)
+        private void AddCompositesRoleStrategy(IRoleType roleType, Strategy roleToAdd, bool isDirect = true)
         {
             var role = this.GetCompositesRoleStrategies(roleType);
             if (role.Contains(roleToAdd))
@@ -617,7 +617,7 @@ namespace Allors.Workspace.Adapters
                 }
                 else if (add == null)
                 {
-                    changes = changes.Append(new AddCompositeChange(roleToAdd, true)).ToArray();
+                    changes = changes.Append(new AddCompositeChange(roleToAdd, isDirect)).ToArray();
                 }
 
                 this.changesByRelationType[roleType.RelationType] = changes;
@@ -625,10 +625,10 @@ namespace Allors.Workspace.Adapters
             else
             {
                 this.changesByRelationType ??= new Dictionary<IRelationType, Change[]>();
-                this.changesByRelationType[roleType.RelationType] = new Change[] { new AddCompositeChange(roleToAdd, true) };
+                this.changesByRelationType[roleType.RelationType] = new Change[] { new AddCompositeChange(roleToAdd, isDirect) };
             }
 
-            roleToAdd?.AddChangedAssociation(roleType.AssociationType, this);
+            roleToAdd.AddChangedAssociation(roleType.AssociationType, this);
 
             // OneToMany
             if (associationType.IsOne)
@@ -643,13 +643,13 @@ namespace Allors.Workspace.Adapters
                     }
                 }
 
-                previousAssociation?.SetRole(roleType, null);
+                previousAssociation?.RemoveCompositesRoleStrategy(roleType, roleToAdd, false);
             }
 
             this.Workspace.PushToDatabaseTracker.OnChanged(this);
         }
 
-        private void RemoveCompositesRoleStrategy(IRoleType roleType, Strategy roleToRemove)
+        private void RemoveCompositesRoleStrategy(IRoleType roleType, Strategy roleToRemove, bool isDirect = true)
         {
             var role = this.GetCompositesRoleStrategies(roleType);
 
@@ -682,7 +682,7 @@ namespace Allors.Workspace.Adapters
                 }
                 else if (remove == null)
                 {
-                    changes = changes.Append(new RemoveCompositeChange(roleToRemove, true)).ToArray();
+                    changes = changes.Append(new RemoveCompositeChange(roleToRemove, isDirect)).ToArray();
                 }
 
                 this.changesByRelationType[roleType.RelationType] = changes;
@@ -690,7 +690,7 @@ namespace Allors.Workspace.Adapters
             else
             {
                 this.changesByRelationType ??= new Dictionary<IRelationType, Change[]>();
-                this.changesByRelationType[roleType.RelationType] = new Change[] { new RemoveCompositeChange(roleToRemove, true) };
+                this.changesByRelationType[roleType.RelationType] = new Change[] { new RemoveCompositeChange(roleToRemove, isDirect) };
             }
 
             this.Workspace.PushToDatabaseTracker.OnChanged(this);
@@ -758,7 +758,7 @@ namespace Allors.Workspace.Adapters
 
             var yielded = false;
 
-            var dedupe = new HashSet<Strategy>();
+            var deduplicate = new HashSet<Strategy>();
 
             if (this.changedAssociationByAssociationType.TryGetValue(associationType, out var changedAssociationRefs))
             {
@@ -771,7 +771,7 @@ namespace Allors.Workspace.Adapters
 
                     if (association.IsAssociationForRole(roleType, role))
                     {
-                        dedupe.Add(association);
+                        deduplicate.Add(association);
                         yielded = true;
                         yield return association;
                     }
@@ -791,14 +791,14 @@ namespace Allors.Workspace.Adapters
                     {
                         if (association.IsAssociationForRole(roleType, this))
                         {
-                            if (!dedupe.Contains(association))
+                            if (!deduplicate.Contains(association))
                             {
                                 if (associationType.IsOne && yielded)
                                 {
                                     yield break;
                                 }
 
-                                dedupe.Add(association);
+                                deduplicate.Add(association);
                                 yielded = true;
                                 yield return association;
                             }
@@ -923,7 +923,7 @@ namespace Allors.Workspace.Adapters
         {
             if (this.Workspace != value.Strategy.Workspace)
             {
-                throw new ArgumentException($"Workspace do not match");
+                throw new ArgumentException("Workspace do not match");
             }
         }
 
