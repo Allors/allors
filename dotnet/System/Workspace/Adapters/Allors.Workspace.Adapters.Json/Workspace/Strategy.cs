@@ -84,7 +84,7 @@ namespace Allors.Workspace.Adapters.Json
                                 pushRequestRole.a = addRange.Save();
                             }
 
-                            var removeRange = ValueRange<long>.Load(addIds);
+                            var removeRange = ValueRange<long>.Load(removeIds);
                             if (!removeRange.IsEmpty)
                             {
                                 pushRequestRole.r = removeRange.Save();

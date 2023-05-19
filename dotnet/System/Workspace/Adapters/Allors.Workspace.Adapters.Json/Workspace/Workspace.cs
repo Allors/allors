@@ -119,7 +119,7 @@ namespace Allors.Workspace.Adapters.Json
             var pushRequest = new PushRequest
             {
                 n = this.PushToDatabaseTracker.Created?.Select(v => ((Strategy)v).PushNew()).ToArray(),
-                o = this.PushToDatabaseTracker.Changed?.Select(v => ((Strategy)v).PushExisting()).ToArray()
+                o = this.PushToDatabaseTracker.Changed?.Select(v => ((Strategy)v).PushExisting()).Where(v => v.r != null).ToArray()
             };
             var pushResponse = await this.Connection.Push(pushRequest);
 

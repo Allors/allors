@@ -525,7 +525,7 @@ namespace Allors.Workspace.Adapters
                 this.changesByRelationType ??= new Dictionary<IRelationType, Change[]>();
                 this.changesByRelationType[roleType.RelationType] = new Change[]
                 {
-                    new SetCompositeChange(role)
+                    new SetCompositeChange(role, true)
                 };
             }
 
@@ -572,7 +572,7 @@ namespace Allors.Workspace.Adapters
                     role = change switch
                     {
                         AddCompositeChange add => role.Add(add.Role),
-                        RemoveCompositeChange remove => role.Add(remove.Role),
+                        RemoveCompositeChange remove => role.Remove(remove.Role),
                         _ => role
                     };
                 }
@@ -617,7 +617,7 @@ namespace Allors.Workspace.Adapters
                 }
                 else if (add == null)
                 {
-                    changes = changes.Append(new AddCompositeChange(roleToAdd)).ToArray();
+                    changes = changes.Append(new AddCompositeChange(roleToAdd, true)).ToArray();
                 }
 
                 this.changesByRelationType[roleType.RelationType] = changes;
@@ -625,7 +625,7 @@ namespace Allors.Workspace.Adapters
             else
             {
                 this.changesByRelationType ??= new Dictionary<IRelationType, Change[]>();
-                this.changesByRelationType[roleType.RelationType] = new Change[] { new AddCompositeChange(roleToAdd) };
+                this.changesByRelationType[roleType.RelationType] = new Change[] { new AddCompositeChange(roleToAdd, true) };
             }
 
             roleToAdd?.AddChangedAssociation(roleType.AssociationType, this);
@@ -678,11 +678,11 @@ namespace Allors.Workspace.Adapters
 
                 if (add != null)
                 {
-                    changes = changes.Where(v => v == add).ToArray();
+                    changes = changes.Where(v => v != add).ToArray();
                 }
                 else if (remove == null)
                 {
-                    changes = changes.Append(new RemoveCompositeChange(roleToRemove)).ToArray();
+                    changes = changes.Append(new RemoveCompositeChange(roleToRemove, true)).ToArray();
                 }
 
                 this.changesByRelationType[roleType.RelationType] = changes;
@@ -690,7 +690,7 @@ namespace Allors.Workspace.Adapters
             else
             {
                 this.changesByRelationType ??= new Dictionary<IRelationType, Change[]>();
-                this.changesByRelationType[roleType.RelationType] = new Change[] { new RemoveCompositeChange(roleToRemove) };
+                this.changesByRelationType[roleType.RelationType] = new Change[] { new RemoveCompositeChange(roleToRemove, true) };
             }
 
             this.Workspace.PushToDatabaseTracker.OnChanged(this);

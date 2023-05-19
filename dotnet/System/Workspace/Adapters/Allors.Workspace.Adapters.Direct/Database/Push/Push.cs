@@ -166,7 +166,7 @@ namespace Allors.Workspace.Adapters.Direct
                         }
                         else if (change is SetCompositeChange setComposite)
                         {
-                            var role = GetDatabaseRole(setComposite.Role);
+                            var role = setComposite.Role != null ? GetDatabaseRole(setComposite.Role) : null;
                             obj.Strategy.SetCompositeRole(roleType, role);
                         }
                         else if (change is AddCompositeChange addComposite)

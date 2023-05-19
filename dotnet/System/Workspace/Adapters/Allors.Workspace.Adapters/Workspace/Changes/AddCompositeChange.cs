@@ -7,9 +7,10 @@ namespace Allors.Workspace.Adapters
 {
     public class AddCompositeChange : Change
     {
-        public AddCompositeChange(Strategy role)
+        public AddCompositeChange(Strategy role, bool isDirect)
         {
             this.Role = role;
+            this.IsDirect = isDirect;
         }
 
         public Strategy Role { get; }
