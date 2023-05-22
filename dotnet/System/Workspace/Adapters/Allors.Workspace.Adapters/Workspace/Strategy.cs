@@ -156,7 +156,7 @@ namespace Allors.Workspace.Adapters
                 return;
             }
 
-            changes = changes.Where(v => !v.IsDirect).ToArray();
+            changes = changes.Where(v => v.Trigger == null).ToArray();
 
             if (changes.Length == 0)
             {
@@ -282,7 +282,7 @@ namespace Allors.Workspace.Adapters
 
             if (this.CanWrite(roleType))
             {
-                this.SetCompositeRoleStrategy(roleType, (Strategy)value?.Strategy);
+                this.SetCompositeRoleStrategy(roleType, (Strategy)value?.Strategy, null);
             }
         }
 
@@ -305,7 +305,7 @@ namespace Allors.Workspace.Adapters
 
                 foreach (var removeRoleStrategy in removeRoleStrategies)
                 {
-                    this.RemoveCompositesRoleStrategy(roleType, removeRoleStrategy);
+                    this.RemoveCompositesRoleStrategy(roleType, removeRoleStrategy, null);
                 }
             }
         }
@@ -343,7 +343,7 @@ namespace Allors.Workspace.Adapters
 
             if (this.CanWrite(roleType))
             {
-                this.RemoveCompositesRoleStrategy(roleType, (Strategy)value.Strategy);
+                this.RemoveCompositesRoleStrategy(roleType, (Strategy)value.Strategy, null);
             }
         }
 
@@ -510,7 +510,7 @@ namespace Allors.Workspace.Adapters
             return strategy;
         }
 
-        private void SetCompositeRoleStrategy(IRoleType roleType, Strategy role, bool isDirect = true)
+        private void SetCompositeRoleStrategy(IRoleType roleType, Strategy role, Strategy trigger)
         {
             if (this.SameRoleStrategy(roleType, role))
             {
@@ -525,7 +525,7 @@ namespace Allors.Workspace.Adapters
                 this.changesByRelationType ??= new Dictionary<IRelationType, Change[]>();
                 this.changesByRelationType[roleType.RelationType] = new Change[]
                 {
-                    new SetCompositeChange(role, true)
+                    new SetCompositeChange(role, null)
                 };
             }
 
@@ -539,7 +539,7 @@ namespace Allors.Workspace.Adapters
                     var previousRole = previousAssociation.GetCompositeRoleStrategy(roleType);
                     previousRole?.AddChangedAssociation(roleType.AssociationType, this);
 
-                    previousAssociation.SetCompositeRoleStrategy(roleType, null, false);
+                    previousAssociation.SetCompositeRoleStrategy(roleType, null, this);
                 }
             }
 
@@ -581,7 +581,7 @@ namespace Allors.Workspace.Adapters
             return role;
         }
 
-        private void AddCompositesRoleStrategy(IRoleType roleType, Strategy roleToAdd, bool isDirect = true)
+        private void AddCompositesRoleStrategy(IRoleType roleType, Strategy roleToAdd)
         {
             var role = this.GetCompositesRoleStrategies(roleType);
             if (role.Contains(roleToAdd))
@@ -617,7 +617,7 @@ namespace Allors.Workspace.Adapters
                 }
                 else if (add == null)
                 {
-                    changes = changes.Append(new AddCompositeChange(roleToAdd, isDirect)).ToArray();
+                    changes = changes.Append(new AddCompositeChange(roleToAdd, null)).ToArray();
                 }
 
                 this.changesByRelationType[roleType.RelationType] = changes;
@@ -625,7 +625,7 @@ namespace Allors.Workspace.Adapters
             else
             {
                 this.changesByRelationType ??= new Dictionary<IRelationType, Change[]>();
-                this.changesByRelationType[roleType.RelationType] = new Change[] { new AddCompositeChange(roleToAdd, isDirect) };
+                this.changesByRelationType[roleType.RelationType] = new Change[] { new AddCompositeChange(roleToAdd, null) };
             }
 
             roleToAdd.AddChangedAssociation(roleType.AssociationType, this);
@@ -643,13 +643,13 @@ namespace Allors.Workspace.Adapters
                     }
                 }
 
-                previousAssociation?.RemoveCompositesRoleStrategy(roleType, roleToAdd, false);
+                previousAssociation?.RemoveCompositesRoleStrategy(roleType, roleToAdd, this);
             }
 
             this.Workspace.PushToDatabaseTracker.OnChanged(this);
         }
 
-        private void RemoveCompositesRoleStrategy(IRoleType roleType, Strategy roleToRemove, bool isDirect = true)
+        private void RemoveCompositesRoleStrategy(IRoleType roleType, Strategy roleToRemove, Strategy trigger)
         {
             var role = this.GetCompositesRoleStrategies(roleType);
 
@@ -682,7 +682,7 @@ namespace Allors.Workspace.Adapters
                 }
                 else if (remove == null)
                 {
-                    changes = changes.Append(new RemoveCompositeChange(roleToRemove, isDirect)).ToArray();
+                    changes = changes.Append(new RemoveCompositeChange(roleToRemove, trigger)).ToArray();
                 }
 
                 this.changesByRelationType[roleType.RelationType] = changes;
@@ -690,7 +690,7 @@ namespace Allors.Workspace.Adapters
             else
             {
                 this.changesByRelationType ??= new Dictionary<IRelationType, Change[]>();
-                this.changesByRelationType[roleType.RelationType] = new Change[] { new RemoveCompositeChange(roleToRemove, isDirect) };
+                this.changesByRelationType[roleType.RelationType] = new Change[] { new RemoveCompositeChange(roleToRemove, trigger) };
             }
 
             this.Workspace.PushToDatabaseTracker.OnChanged(this);

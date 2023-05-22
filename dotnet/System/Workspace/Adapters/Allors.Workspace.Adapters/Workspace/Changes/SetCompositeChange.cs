@@ -7,10 +7,10 @@ namespace Allors.Workspace.Adapters
 {
     public class SetCompositeChange : Change
     {
-        public SetCompositeChange(Strategy role, bool isDirect)
+        public SetCompositeChange(Strategy role, Strategy trigger)
         {
             this.Role = role;
-            this.IsDirect = isDirect;
+            this.Trigger = trigger;
         }
 
         public Strategy Role { get; }

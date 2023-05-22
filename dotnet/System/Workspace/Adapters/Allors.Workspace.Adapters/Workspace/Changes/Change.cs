@@ -7,6 +7,6 @@ namespace Allors.Workspace.Adapters
 {
     public abstract class Change
     {
-        public bool IsDirect { get; set; }
+        public Strategy Trigger { get; set; }
     }
 }

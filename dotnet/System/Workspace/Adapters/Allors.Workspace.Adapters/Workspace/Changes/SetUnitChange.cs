@@ -7,11 +7,7 @@ namespace Allors.Workspace.Adapters
 {
     public class SetUnitChange : Change
     {
-        public SetUnitChange(object role)
-        {
-            this.Role = role;
-            this.IsDirect = true;
-        }
+        public SetUnitChange(object role) => this.Role = role;
 
         public object Role { get; }
     }

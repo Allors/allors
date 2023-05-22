@@ -54,7 +54,7 @@ namespace Allors.Workspace.Adapters.Json
                     {
 
                         var setComposite = (SetCompositeChange)changes[0];
-                        if (!setComposite.IsDirect)
+                        if (setComposite.Trigger != null)
                         {
                             continue;
                         }
@@ -63,8 +63,8 @@ namespace Allors.Workspace.Adapters.Json
                     }
                     else
                     {
-                        var addIds = changes.OfType<AddCompositeChange>().Where(v => v.IsDirect).Select(v => v.Role.Id).ToArray();
-                        var removeIds = changes.OfType<RemoveCompositeChange>().Where(v => v.IsDirect).Select(v => v.Role.Id).ToArray();
+                        var addIds = changes.OfType<AddCompositeChange>().Where(v => v.Trigger == null).Select(v => v.Role.Id).ToArray();
+                        var removeIds = changes.OfType<RemoveCompositeChange>().Where(v => v.Trigger == null).Select(v => v.Role.Id).ToArray();
 
                         if (addIds.Length == 0 && removeIds.Length == 0)
                         {
