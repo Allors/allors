@@ -19,6 +19,8 @@ namespace Allors.Workspace.Adapters
         private readonly Dictionary<IAssociationType, RefRange<Strategy>> databaseCompositesAssociationByAssociationType;
 
         private Dictionary<IRelationType, Change[]> changesByRelationType;
+        private Dictionary<IRelationType, RefRange<Strategy>> targetsByRelationType;
+
         private readonly Dictionary<IAssociationType, RefRange<Strategy>> changedAssociationByAssociationType;
 
         protected Strategy(Workspace workspace, IClass @class, long id)
@@ -156,7 +158,7 @@ namespace Allors.Workspace.Adapters
                 return;
             }
 
-            changes = changes.Where(v => v.Trigger == null).ToArray();
+            changes = changes.Where(v => v.Source == null).ToArray();
 
             if (changes.Length == 0)
             {
@@ -481,6 +483,7 @@ namespace Allors.Workspace.Adapters
         internal void Reset()
         {
             this.changesByRelationType = null;
+            this.targetsByRelationType = null;
 
             this.changedAssociationByAssociationType.Clear();
         }
@@ -510,7 +513,7 @@ namespace Allors.Workspace.Adapters
             return strategy;
         }
 
-        private void SetCompositeRoleStrategy(IRoleType roleType, Strategy role, Strategy trigger)
+        private void SetCompositeRoleStrategy(IRoleType roleType, Strategy role, Strategy source)
         {
             if (this.SameRoleStrategy(roleType, role))
             {
@@ -525,8 +528,10 @@ namespace Allors.Workspace.Adapters
                 this.changesByRelationType ??= new Dictionary<IRelationType, Change[]>();
                 this.changesByRelationType[roleType.RelationType] = new Change[]
                 {
-                    new SetCompositeChange(role, null)
+                    new SetCompositeChange(role, source)
                 };
+
+                source?.AddTarget(roleType, this);
             }
 
             // OneToOne
@@ -539,13 +544,29 @@ namespace Allors.Workspace.Adapters
                     var previousRole = previousAssociation.GetCompositeRoleStrategy(roleType);
                     previousRole?.AddChangedAssociation(roleType.AssociationType, this);
 
-                    previousAssociation.SetCompositeRoleStrategy(roleType, null, this);
+                    previousAssociation.SetCompositeRoleStrategy(roleType, null, source);
                 }
             }
 
             role?.AddChangedAssociation(roleType.AssociationType, this);
 
             this.Workspace.PushToDatabaseTracker.OnChanged(this);
+        }
+
+        private void AddTarget(IRoleType roleType, Strategy target)
+        {
+            this.targetsByRelationType ??= new Dictionary<IRelationType, RefRange<Strategy>>();
+            if (this.targetsByRelationType.TryGetValue(roleType.RelationType, out var targets))
+            {
+                targets = targets.Add(target);
+            }
+            else
+            {
+                targets = RefRange<Strategy>.Load(target);
+            }
+
+            this.targetsByRelationType[roleType.RelationType] = targets;
+
         }
 
         private RefRange<Strategy> GetCompositesRoleStrategies(IRoleType roleType, bool assertStrategy = true)
@@ -649,7 +670,7 @@ namespace Allors.Workspace.Adapters
             this.Workspace.PushToDatabaseTracker.OnChanged(this);
         }
 
-        private void RemoveCompositesRoleStrategy(IRoleType roleType, Strategy roleToRemove, Strategy trigger)
+        private void RemoveCompositesRoleStrategy(IRoleType roleType, Strategy roleToRemove, Strategy source)
         {
             var role = this.GetCompositesRoleStrategies(roleType);
 
@@ -682,7 +703,7 @@ namespace Allors.Workspace.Adapters
                 }
                 else if (remove == null)
                 {
-                    changes = changes.Append(new RemoveCompositeChange(roleToRemove, trigger)).ToArray();
+                    changes = changes.Append(new RemoveCompositeChange(roleToRemove, source)).ToArray();
                 }
 
                 this.changesByRelationType[roleType.RelationType] = changes;
@@ -690,8 +711,10 @@ namespace Allors.Workspace.Adapters
             else
             {
                 this.changesByRelationType ??= new Dictionary<IRelationType, Change[]>();
-                this.changesByRelationType[roleType.RelationType] = new Change[] { new RemoveCompositeChange(roleToRemove, trigger) };
+                this.changesByRelationType[roleType.RelationType] = new Change[] { new RemoveCompositeChange(roleToRemove, source) };
             }
+
+            source?.AddTarget(roleType, this);
 
             this.Workspace.PushToDatabaseTracker.OnChanged(this);
         }

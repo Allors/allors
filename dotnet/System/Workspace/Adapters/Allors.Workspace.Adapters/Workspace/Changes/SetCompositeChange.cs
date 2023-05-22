@@ -5,14 +5,10 @@
 
 namespace Allors.Workspace.Adapters
 {
-    public class SetCompositeChange : Change
+    public class SetCompositeChange : CompositeChange
     {
-        public SetCompositeChange(Strategy role, Strategy trigger)
+        public SetCompositeChange(Strategy role, Strategy source) : base(role, source)
         {
-            this.Role = role;
-            this.Trigger = trigger;
         }
-
-        public Strategy Role { get; }
     }
 }

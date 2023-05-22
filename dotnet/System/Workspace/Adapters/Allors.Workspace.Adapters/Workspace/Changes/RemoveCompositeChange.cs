@@ -5,14 +5,10 @@
 
 namespace Allors.Workspace.Adapters
 {
-    public class RemoveCompositeChange : Change
+    public class RemoveCompositeChange : CompositeChange
     {
-        public RemoveCompositeChange(Strategy role, Strategy trigger)
+        public RemoveCompositeChange(Strategy role, Strategy source) : base(role, source)
         {
-            this.Role = role;
-            this.Trigger = trigger;
         }
-
-        public Strategy Role { get; }
     }
 }

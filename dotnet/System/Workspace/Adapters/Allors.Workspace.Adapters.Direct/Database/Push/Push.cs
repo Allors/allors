@@ -158,7 +158,7 @@ namespace Allors.Workspace.Adapters.Direct
                 {
                     var changes = keyValuePair.Value;
 
-                    foreach (var change in changes.Where(v => v.Trigger == null))
+                    foreach (var change in changes.Where(v => v.Source == null))
                     {
                         if (change is SetUnitChange setUnit)
                         {

@@ -3,7 +3,7 @@
   <Class Name="Allors.Workspace.Adapters.Workspace">
     <Position X="0.5" Y="1.5" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>gEAEAAIAAQAQBEEEAARAAAAAAQAgAEAQgAMAAAAUBQA=</HashCode>
+      <HashCode>gAAEAAIAAQAABEEEAAQAAAAAAQAgAEAQgAMAAAAUBQA=</HashCode>
       <FileName>Workspace\Workspace.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -17,12 +17,11 @@
   <Class Name="Allors.Workspace.Adapters.Strategy">
     <Position X="7.75" Y="1.5" Width="2.75" />
     <TypeIdentifier>
-      <HashCode>MFBGBA0ICABRDENgMEaQBE5oxBAgCQAVBEIQgIApIEQ=</HashCode>
+      <HashCode>IHBCBAcIjABQREBoMUYQEETIAAEgAQBcBkAQgAAJbCQ=</HashCode>
       <FileName>Workspace\Strategy.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="_Record" />
-      <Property Name="_ChangedRoleByRelationType" />
+      <Property Name="Record" />
     </ShowAsAssociation>
     <Lollipop Position="0.2" />
   </Class>
