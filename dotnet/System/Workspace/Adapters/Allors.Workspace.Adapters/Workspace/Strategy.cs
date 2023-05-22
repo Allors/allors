@@ -425,10 +425,41 @@ namespace Allors.Workspace.Adapters
 
             if (!this.IsPushed)
             {
-                if (!this.CanMerge(newRecord))
+                if (this.changesByRelationType != null)
                 {
-                    pull.AddMergeError(this.Object);
-                    return;
+                    foreach (var kvp in this.changesByRelationType)
+                    {
+                        var relationType = kvp.Key;
+                        var roleType = relationType.RoleType;
+
+                        var databaseRole = this.Record?.GetRole(roleType);
+                        var newDatabaseRole = newRecord?.GetRole(roleType);
+
+                        if (roleType.ObjectType.IsUnit)
+                        {
+                            if (!Equals(databaseRole, newDatabaseRole))
+                            {
+                                var conflict = new Conflict(this, roleType, this.GetRole(roleType));
+                                pull.AddMergeError(conflict);
+                                this.RestoreRole(roleType);
+                            }
+                        }
+                        else if (roleType.IsOne)
+                        {
+                            if (!Equals(databaseRole, newDatabaseRole))
+                            {
+                                var conflict = new Conflict(this, roleType, this.GetRole(roleType));
+                                pull.AddMergeError(conflict);
+                                this.RestoreRole(roleType);
+                            }
+                        }
+                        else if (!ValueRange<long>.Ensure(databaseRole).Equals(ValueRange<long>.Ensure(newDatabaseRole)))
+                        {
+                            var conflict = new Conflict(this, roleType, this.GetRole(roleType));
+                            pull.AddMergeError(conflict);
+                            this.RestoreRole(roleType);
+                        }
+                    }
                 }
             }
             else
@@ -894,44 +925,6 @@ namespace Allors.Workspace.Adapters
             }
 
             return role.Id == (long)changedRoleId;
-        }
-
-        private bool CanMerge(Record newRecord)
-        {
-            if (this.changesByRelationType == null)
-            {
-                return true;
-            }
-
-            foreach (var kvp in this.changesByRelationType)
-            {
-                var relationType = kvp.Key;
-                var roleType = relationType.RoleType;
-
-                var original = this.Record?.GetRole(roleType);
-                var newOriginal = newRecord?.GetRole(roleType);
-
-                if (roleType.ObjectType.IsUnit)
-                {
-                    if (!Equals(original, newOriginal))
-                    {
-                        return false;
-                    }
-                }
-                else if (roleType.IsOne)
-                {
-                    if (!Equals(original, newOriginal))
-                    {
-                        return false;
-                    }
-                }
-                else if (!ValueRange<long>.Ensure(original).Equals(ValueRange<long>.Ensure(newOriginal)))
-                {
-                    return false;
-                }
-            }
-
-            return true;
         }
 
         private void AssertSameType<T>(IRoleType roleType, T value) where T : class, IObject

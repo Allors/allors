@@ -1,4 +1,4 @@
-// <copyright file="ChangeSetTests.cs" company="Allors bvba">
+﻿// <copyright file="ChangeSetTests.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -45,7 +45,7 @@ namespace Allors.Workspace.Adapters.Tests
 
             var mergeError = result.MergeErrors.First();
 
-            Assert.Equal(c1a_1.Strategy, mergeError.Strategy);
+            Assert.Equal(c1a_1, mergeError.Association);
         }
     }
 }

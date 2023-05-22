@@ -5,7 +5,6 @@
 
 namespace Allors.Workspace.Adapters.Direct
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Database;
@@ -13,13 +12,10 @@ namespace Allors.Workspace.Adapters.Direct
     using Database.Domain;
     using Database.Security;
     using Database.Services;
-    using Meta;
     using Protocol.Direct;
     using IClass = Database.Meta.IClass;
     using IComposite = Database.Meta.IComposite;
     using IObject = IObject;
-    using IRelationEndType = Database.Meta.IRelationEndType;
-    using IRelationType = Database.Meta.IRelationType;
 
     public class Pull : Result, IPullResultInternals
     {
@@ -56,7 +52,7 @@ namespace Allors.Workspace.Adapters.Direct
 
         private Dictionary<string, object> ValueByName { get; } = new Dictionary<string, object>();
 
-        private Workspace Workspace { get; }
+        private new Workspace Workspace { get; }
 
         private ITransaction Transaction { get; }
 

@@ -1,4 +1,4 @@
-// <copyright file="RemoteResult.cs" company="Allors bvba">
+﻿// <copyright file="RemoteResult.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -16,7 +16,7 @@ namespace Allors.Workspace.Adapters.Json
 
         private IDerivationError[] derivationErrors;
 
-        private IList<IObject> mergeErrors;
+        private IList<IConflict> mergeErrors;
 
         protected Result(IWorkspace workspace, Response response)
         {
@@ -55,12 +55,12 @@ namespace Allors.Workspace.Adapters.Json
             }
         }
 
-        public IEnumerable<IObject> MergeErrors => this.mergeErrors ?? Array.Empty<IObject>();
+        public IEnumerable<IConflict> MergeErrors => this.mergeErrors ?? Array.Empty<IConflict>();
 
-        public void AddMergeError(IObject @object)
+        public void AddMergeError(IConflict conflict)
         {
-            this.mergeErrors ??= new List<IObject>();
-            this.mergeErrors.Add(@object);
+            this.mergeErrors ??= new List<IConflict>();
+            this.mergeErrors.Add(conflict);
         }
     }
 }

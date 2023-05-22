@@ -15,7 +15,8 @@ namespace Allors.Workspace.Adapters
     public abstract class Workspace : IWorkspace
     {
         private readonly Dictionary<IClass, ISet<Strategy>> strategiesByClass;
-        
+        private readonly ISet<IConflict> conflicts;
+
         protected Workspace(Connection database, IWorkspaceServices services)
         {
             this.Connection = database;
@@ -23,6 +24,8 @@ namespace Allors.Workspace.Adapters
 
             this.StrategyByWorkspaceId = new Dictionary<long, Strategy>();
             this.strategiesByClass = new Dictionary<IClass, ISet<Strategy>>();
+
+            this.conflicts = new HashSet<IConflict>();
 
             this.PushToDatabaseTracker = new PushToDatabaseTracker();
 
@@ -61,7 +64,7 @@ namespace Allors.Workspace.Adapters
         public abstract T Create<T>(IClass @class) where T : class, IObject;
 
         public T Create<T>() where T : class, IObject => this.Create<T>((IClass)this.Connection.Configuration.ObjectFactory.GetObjectType<T>());
-      
+
         #region Instantiate
         public T Instantiate<T>(IObject @object) where T : class, IObject => this.Instantiate<T>(@object.Id);
 
@@ -117,7 +120,7 @@ namespace Allors.Workspace.Adapters
 
             return this.StrategyByWorkspaceId.TryGetValue(id, out var sessionStrategy) ? sessionStrategy : null;
         }
-        
+
         protected void AddStrategy(Strategy strategy)
         {
             this.StrategyByWorkspaceId.Add(strategy.Id, strategy);
@@ -152,9 +155,9 @@ namespace Allors.Workspace.Adapters
         public abstract Task<IInvokeResult> InvokeAsync(Method method, InvokeOptions options = null);
 
         public abstract Task<IInvokeResult> InvokeAsync(Method[] methods, InvokeOptions options = null);
-        
+
         public abstract Task<IPullResult> PullAsync(params Pull[] pull);
-        
+
         public abstract Task<IPushResult> PushAsync();
     }
 }

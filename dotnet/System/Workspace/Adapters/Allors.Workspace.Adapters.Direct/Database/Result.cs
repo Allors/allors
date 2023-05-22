@@ -1,4 +1,4 @@
-// <copyright file="LocalPullResult.cs" company="Allors bvba">
+﻿// <copyright file="LocalPullResult.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -16,7 +16,7 @@ namespace Allors.Workspace.Adapters.Direct
         private List<Database.Derivations.IDerivationError> derivationErrors;
         private readonly List<long> versionErrors;
 
-        private IList<IObject> mergeErrors;
+        private IList<IConflict> mergeErrors;
 
         protected Result(Workspace workspace)
         {
@@ -40,7 +40,7 @@ namespace Allors.Workspace.Adapters.Direct
             ?.Select<Database.Derivations.IDerivationError, IDerivationError>(v =>
                 new DerivationError(this.Workspace, v)).ToArray();
 
-        public IEnumerable<IObject> MergeErrors => this.mergeErrors ?? Array.Empty<IObject>();
+        public IEnumerable<IConflict> MergeErrors => this.mergeErrors ?? Array.Empty<IConflict>();
 
         public bool HasErrors => !string.IsNullOrWhiteSpace(this.ErrorMessage) ||
                                  this.accessErrorStrategies?.Count > 0 ||
@@ -49,10 +49,10 @@ namespace Allors.Workspace.Adapters.Direct
                                  this.derivationErrors?.Count > 0 ||
                                  this.mergeErrors?.Count > 0;
 
-        public void AddMergeError(IObject @object)
+        public void AddMergeError(IConflict conflict)
         {
-            this.mergeErrors ??= new List<IObject>();
-            this.mergeErrors.Add(@object);
+            this.mergeErrors ??= new List<IConflict>();
+            this.mergeErrors.Add(conflict);
         }
 
         internal void AddDerivationErrors(Database.Derivations.IDerivationError[] errors) =>
