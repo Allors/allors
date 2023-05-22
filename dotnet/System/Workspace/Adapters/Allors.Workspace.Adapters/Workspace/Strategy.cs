@@ -158,7 +158,7 @@ namespace Allors.Workspace.Adapters
                 return;
             }
 
-            changes = changes.Where(v => v.Source == null).ToArray();
+            changes = changes.Where(v => v.Source != null).ToArray();
 
             if (changes.Length == 0)
             {
@@ -167,6 +167,16 @@ namespace Allors.Workspace.Adapters
             else
             {
                 this.changesByRelationType[roleType.RelationType] = changes;
+            }
+
+            if (this.targetsByRelationType?.TryGetValue(roleType.RelationType, out var targets) == true)
+            {
+                foreach (var target in targets)
+                {
+                    target.RestoreTargetRole(roleType, this);
+                }
+
+                this.targetsByRelationType.Remove(roleType.RelationType);
             }
         }
 
@@ -517,6 +527,25 @@ namespace Allors.Workspace.Adapters
             this.targetsByRelationType = null;
 
             this.changedAssociationByAssociationType.Clear();
+        }
+
+        private void RestoreTargetRole(IRoleType roleType, Strategy source)
+        {
+            if (!this.changesByRelationType.TryGetValue(roleType.RelationType, out var changes))
+            {
+                return;
+            }
+
+            changes = changes.Where(v => v.Source != source).ToArray();
+
+            if (changes.Length == 0)
+            {
+                this.changesByRelationType.Remove(roleType.RelationType);
+            }
+            else
+            {
+                this.changesByRelationType[roleType.RelationType] = changes;
+            }
         }
 
         private Strategy GetCompositeRoleStrategy(IRoleType roleType, bool assertStrategy = true)

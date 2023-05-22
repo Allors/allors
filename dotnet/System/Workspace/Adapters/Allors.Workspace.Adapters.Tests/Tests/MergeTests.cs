@@ -38,7 +38,11 @@ namespace Allors.Workspace.Adapters.Tests
 
             await workspace2.PushAsync();
 
+            Assert.Equal("X", c1a_1.C1AllorsString);
+
             result = await workspace1.PullAsync(pull);
+
+            Assert.Equal("Y", c1a_1.C1AllorsString);
 
             Assert.True(result.HasErrors);
             Assert.Single(result.MergeErrors);
