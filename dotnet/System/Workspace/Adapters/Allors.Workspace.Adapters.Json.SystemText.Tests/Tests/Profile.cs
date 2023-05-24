@@ -70,7 +70,7 @@ namespace Allors.Workspace.Adapters.Json.SystemText.Tests
             return database.CreateWorkspace();
         }
 
-        public IWorkspace CreateWorkspace() => this.Connection.CreateWorkspace();
+        public IWorkspace CreateSharedWorkspace() => this.Connection.CreateWorkspace();
 
         public async Task Login(string user)
         {

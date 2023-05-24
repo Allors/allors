@@ -26,15 +26,15 @@ namespace Allors.Workspace.Adapters.Tests
             await base.InitializeAsync();
             await this.Login("administrator");
 
-            var singleSessionContext = new SingleSessionContext(this, "Single shared");
-            var multipleSessionContext = new MultipleSessionContext(this, "Multiple shared");
+            var singleSessionContext = new SingleWorkspaceContext(this, "Single shared");
+            var multipleSessionContext = new MultipleWorkspaceContext(this, "Multiple shared");
 
             this.contextFactories = new Func<Context>[]
             {
                 () => singleSessionContext,
                 //() => new SingleSessionContext(this, "Single"),
                 //() => multipleSessionContext,
-                () => new MultipleSessionContext(this, "Multiple"),
+                () => new MultipleWorkspaceContext(this, "Multiple"),
             };
         }
 

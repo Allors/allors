@@ -22,7 +22,11 @@ namespace Allors.Workspace
 
         bool IsNew { get; }
 
+        bool IsDeleted { get; }
+
         bool HasChanges { get; }
+
+        void Delete();
 
         bool CanRead(IRoleType roleType);
 

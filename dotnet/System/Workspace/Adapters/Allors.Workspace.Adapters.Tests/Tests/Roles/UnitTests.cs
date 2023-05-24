@@ -1,4 +1,4 @@
-// <copyright file="Many2OneTests.cs" company="Allors bvba">
+﻿// <copyright file="Many2OneTests.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -24,16 +24,16 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await base.InitializeAsync();
             await this.Login("administrator");
-
-            var singleSessionContext = new SingleSessionContext(this, "Single shared");
-            var multipleSessionContext = new MultipleSessionContext(this, "Multiple shared");
+            
+            var singleWorkspaceContext = new SingleWorkspaceContext(this, "Single Shared Workspace");
+            var multipleWorkspaceContext = new MultipleWorkspaceContext(this, "Multiple Shared Workspace");
 
             this.contextFactories = new Func<Context>[]
             {
-                () => singleSessionContext,
-                //() => new SingleSessionContext(this, "Single"),
-                //() => multipleSessionContext,
-                () => new MultipleSessionContext(this, "Multiple"),
+                () => singleWorkspaceContext,
+                () => new SingleWorkspaceContext(this, "Single Workspace"),
+                () => multipleWorkspaceContext,
+                () => new MultipleWorkspaceContext(this, "Multiple Workspace"),
             };
         }
 

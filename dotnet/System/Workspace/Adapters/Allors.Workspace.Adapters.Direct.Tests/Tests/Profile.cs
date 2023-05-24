@@ -1,4 +1,4 @@
-// <copyright file="Profile.cs" company="Allors bvba">
+﻿// <copyright file="Profile.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -82,7 +82,7 @@ namespace Allors.Workspace.Adapters.Direct.Tests
             var database = new Connection(this.configuration, this.Database, this.servicesBuilder) { UserId = this.user.Id };
             return database.CreateWorkspace();
         }
-        public IWorkspace CreateWorkspace() => this.Connection.CreateWorkspace();
+        public IWorkspace CreateSharedWorkspace() => this.Connection.CreateWorkspace();
 
         public Task Login(string userName)
         {

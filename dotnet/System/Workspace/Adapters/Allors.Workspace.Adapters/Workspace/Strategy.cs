@@ -46,6 +46,8 @@ namespace Allors.Workspace.Adapters
 
         public bool IsNew => Workspace.IsNewId(this.Id);
 
+        public bool IsDeleted => this.Id == 0;
+
         public IObject Object => this.@object ??= this.Workspace.Connection.Configuration.ObjectFactory.Create(this);
 
         public bool HasChanges => this.changesByRelationType != null;
@@ -70,6 +72,21 @@ namespace Allors.Workspace.Adapters
             }
 
             return other is null ? 1 : this.Id.CompareTo(other.Id);
+        }
+
+        public void Delete()
+        {
+            if (!this.IsNew)
+            {
+                throw new Exception("Existing database objects can not be deleted");
+            }
+
+            foreach (var roleType in this.Class.RoleTypes)
+            {
+                this.SetRole(roleType, null);
+            }
+
+            this.Id = 0;
         }
 
         public bool CanRead(IRoleType roleType)
@@ -527,6 +544,11 @@ namespace Allors.Workspace.Adapters
             this.targetsByRelationType = null;
 
             this.changedAssociationByAssociationType.Clear();
+
+            if (this.IsNew)
+            {
+                this.Id = 0;
+            }
         }
 
         private void RestoreTargetRole(IRoleType roleType, Strategy source)

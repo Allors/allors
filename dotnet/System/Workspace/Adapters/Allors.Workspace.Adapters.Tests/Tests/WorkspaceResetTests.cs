@@ -18,6 +18,20 @@ namespace Allors.Workspace.Adapters.Tests
         protected WorkspaceResetTests(Fixture fixture) : base(fixture) { }
 
         [Fact]
+        public async void ResetCreateWithoutPush()
+        {
+            await this.Login("administrator");
+
+            var workspace = this.Workspace;
+
+            var c1a = workspace.Create<C1>();
+            
+            this.Workspace.Reset();
+
+            Assert.True(c1a.Strategy.IsDeleted);
+        }
+
+        [Fact]
         public async void ResetUnitWithoutPush()
         {
             await this.Login("administrator");
