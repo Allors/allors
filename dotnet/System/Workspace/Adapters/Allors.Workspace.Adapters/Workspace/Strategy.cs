@@ -604,7 +604,7 @@ namespace Allors.Workspace.Adapters
                     var previousRole = previousAssociation.GetCompositeRoleStrategy(roleType);
                     previousRole?.AddChangedAssociation(roleType.AssociationType, this);
 
-                    previousAssociation.SetCompositeRoleStrategy(roleType, null, source);
+                    previousAssociation.SetCompositeRoleStrategy(roleType, null, this);
                 }
             }
 
