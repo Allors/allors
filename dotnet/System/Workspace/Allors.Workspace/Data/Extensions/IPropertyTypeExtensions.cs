@@ -1,4 +1,4 @@
-// <copyright file="IRelationEndTypeExtensions.cs" company="Allors bvba">
+﻿// <copyright file="IRelationEndTypeExtensions.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -27,25 +27,25 @@ namespace Allors.Workspace.Data
             {
                 if (roleType.IsOne)
                 {
-                    var association = strategy.GetCompositeRole<IObject>(roleType);
+                    var association = strategy.GetCompositeRole(roleType);
 
                     if (ofType == null || association == null)
                     {
                         return association;
                     }
 
-                    return !ofType.IsAssignableFrom(association.Strategy.Class) ? null : association;
+                    return !ofType.IsAssignableFrom(association.Class) ? null : association;
                 }
                 else
                 {
-                    var association = strategy.GetCompositesRole<IObject>(roleType);
+                    var association = strategy.GetCompositesRole(roleType);
 
                     if (ofType == null || association == null)
                     {
                         return association;
                     }
 
-                    return association.Where(v => ofType.IsAssignableFrom(v.Strategy.Class));
+                    return association.Where(v => ofType.IsAssignableFrom(v.Class));
                 }
             }
 
@@ -53,25 +53,25 @@ namespace Allors.Workspace.Data
             {
                 if (associationType.IsOne)
                 {
-                    var association = strategy.GetCompositeAssociation<IObject>(associationType);
+                    var association = strategy.GetCompositeAssociation(associationType);
 
                     if (ofType == null || association == null)
                     {
                         return association;
                     }
 
-                    return !ofType.IsAssignableFrom(association.Strategy.Class) ? null : association;
+                    return !ofType.IsAssignableFrom(association.Class) ? null : association;
                 }
                 else
                 {
-                    var association = strategy.GetCompositesAssociation<IObject>(associationType);
+                    var association = strategy.GetCompositesAssociation(associationType);
 
                     if (ofType == null || association == null)
                     {
                         return association;
                     }
 
-                    return association.Where(v => ofType.IsAssignableFrom(v.Strategy.Class));
+                    return association.Where(v => ofType.IsAssignableFrom(v.Class));
                 }
             }
 

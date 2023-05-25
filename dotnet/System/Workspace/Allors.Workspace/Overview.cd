@@ -3,7 +3,7 @@
   <Interface Name="Allors.Workspace.IWorkspace">
     <Position X="3.75" Y="0.5" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>gAAAAAIAAQAABEAAAARAAAAAAAAgAEAQgAAAAAAAAAA=</HashCode>
+      <HashCode>gAAAAAIAAQAABEAAAAQAAAAAAAAgAEAQgAAAAAAAAAA=</HashCode>
       <FileName>IWorkspace.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -14,40 +14,21 @@
   <Interface Name="Allors.Workspace.IStrategy">
     <Position X="8.25" Y="0.5" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>IFBCBAUIAABQBEBgMEYQAAAAAAAAAAAABEAQAAAJIAA=</HashCode>
+      <HashCode>IFBCBAUIAABQAEBAMEYQAAAAAAEAAAAABEAQAQAJIAA=</HashCode>
       <FileName>IStrategy.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="Workspace" />
-      <Property Name="Object" />
     </ShowAsAssociation>
-  </Interface>
-  <Interface Name="Allors.Workspace.IObject">
-    <Position X="12.5" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAA=</HashCode>
-      <FileName>IObject.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="Strategy" />
-    </ShowAsAssociation>
-  </Interface>
-  <Interface Name="Allors.Workspace.IObjectFactory">
-    <Position X="3.75" Y="6.25" Width="2.5" />
-    <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAEEAAAAAAAAAAAA=</HashCode>
-      <FileName>IObjectFactory.cs</FileName>
-    </TypeIdentifier>
   </Interface>
   <Interface Name="Allors.Workspace.IConfiguration">
     <Position X="4.25" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAABAAAA=</HashCode>
       <FileName>IConfiguration.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="MetaPopulation" />
-      <Property Name="ObjectFactory" />
     </ShowAsAssociation>
   </Interface>
   <Interface Name="Allors.Workspace.Meta.IMetaPopulation">

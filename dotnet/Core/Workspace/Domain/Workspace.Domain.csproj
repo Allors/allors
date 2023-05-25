@@ -12,4 +12,8 @@
     <ProjectReference Include="..\..\..\System\Workspace\Allors.Workspace\Allors.Workspace.csproj" />
     <ProjectReference Include="..\Meta.Domain\Workspace.Meta.Domain.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Custom\" />
+  </ItemGroup>
 </Project>

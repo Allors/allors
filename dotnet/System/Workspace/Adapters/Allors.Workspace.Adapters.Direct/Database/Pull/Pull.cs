@@ -15,12 +15,12 @@ namespace Allors.Workspace.Adapters.Direct
     using Protocol.Direct;
     using IClass = Database.Meta.IClass;
     using IComposite = Database.Meta.IComposite;
-    using IObject = IObject;
+    using IStrategy = IStrategy;
 
     public class Pull : Result, IPullResultInternals
     {
-        private IDictionary<string, IObject[]> collections;
-        private IDictionary<string, IObject> objects;
+        private IDictionary<string, IStrategy[]> collections;
+        private IDictionary<string, IStrategy> objects;
 
         public Pull(Workspace workspace) : base(workspace)
         {
@@ -68,12 +68,12 @@ namespace Allors.Workspace.Adapters.Direct
         {
             switch (collection)
             {
-                case ICollection<Database.IObject> list:
-                    this.AddCollectionInternal(name, list, tree);
-                    break;
-                default:
-                    this.AddCollectionInternal(name, collection.ToArray(), tree);
-                    break;
+            case ICollection<Database.IObject> list:
+                this.AddCollectionInternal(name, list, tree);
+                break;
+            default:
+                this.AddCollectionInternal(name, collection.ToArray(), tree);
+                break;
             }
         }
 
@@ -90,36 +90,33 @@ namespace Allors.Workspace.Adapters.Direct
             }
         }
 
-        public IDictionary<string, IObject[]> Collections =>
+        public IDictionary<string, IStrategy[]> Collections =>
             this.collections ??= this.DatabaseCollectionsByName.ToDictionary(v => v.Key,
-                v => v.Value.Select(w => base.Workspace.Instantiate<IObject>(w.Id)).ToArray());
+                v => v.Value.Select(w => base.Workspace.Instantiate(w.Id)).ToArray());
 
-        public IDictionary<string, IObject> Objects =>
+        public IDictionary<string, IStrategy> Objects =>
             this.objects ??= this.DatabaseObjectByName.ToDictionary(v => v.Key,
-                v => base.Workspace.Instantiate<IObject>(v.Value.Id));
+                v => base.Workspace.Instantiate(v.Value.Id));
 
         public IDictionary<string, object> Values => this.ValueByName;
 
-        public T[] GetCollection<T>() where T : class, IObject
+        public IStrategy[] GetCollection(Meta.IComposite objectType)
         {
-            var objectType = this.Workspace.Connection.Configuration.ObjectFactory.GetObjectType<T>();
             var key = objectType.PluralName;
-            return this.GetCollection<T>(key);
+            return this.GetCollection(key);
         }
 
-        public T[] GetCollection<T>(string key) where T : class, IObject =>
-            this.Collections.TryGetValue(key, out var collection) ? collection?.Cast<T>().ToArray() : null;
+        public IStrategy[] GetCollection(string key) =>
+            this.Collections.TryGetValue(key, out var collection) ? collection?.ToArray() : null;
 
-        public T GetObject<T>()
-            where T : class, IObject
+        public IStrategy GetObject(Meta.IComposite objectType)
         {
-            var objectType = this.Workspace.Connection.Configuration.ObjectFactory.GetObjectType<T>();
             var key = objectType.SingularName;
-            return this.GetObject<T>(key);
+            return this.GetObject(key);
         }
 
-        public T GetObject<T>(string key)
-            where T : class, IObject => this.Objects.TryGetValue(key, out var @object) ? (T)@object : null;
+        public IStrategy GetObject(string key)
+            => this.Objects.TryGetValue(key, out var @object) ? (IStrategy)@object : null;
 
         public object GetValue(string key) => this.Values[key];
 

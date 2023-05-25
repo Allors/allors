@@ -22,13 +22,13 @@ namespace Allors.Workspace.Adapters.Json
 
         private new Connection Connection => (Connection)base.Connection;
 
-        public override T Create<T>(IClass @class)
+        public override IStrategy Create(IClass @class)
         {
             var workspaceId = base.Connection.NextId();
             var strategy = new Strategy(this, @class, workspaceId);
             this.AddStrategy(strategy);
             this.PushToDatabaseTracker.OnCreated(strategy);
-            return (T)strategy.Object;
+            return strategy;
         }
 
         public override async Task<IInvokeResult> InvokeAsync(Method method, InvokeOptions options = null) => await this.InvokeAsync(new[] { method }, options);
@@ -40,7 +40,7 @@ namespace Allors.Workspace.Adapters.Json
                 l = methods.Select(v => new Invocation
                 {
                     i = v.Object.Id,
-                    v = ((Strategy)v.Object.Strategy).Version,
+                    v = ((Strategy)v.Object).Version,
                     m = v.MethodType.Tag
                 }).ToArray(),
                 o = options != null

@@ -44,11 +44,11 @@ namespace Allors.Workspace.Adapters.Direct.Tests
 
         public Profile(Fixture fixture)
         {
-            this.servicesBuilder = () => new WorkspaceServices();
-
             var metaPopulation = new MetaBuilder().Build();
             var objectFactory = new ReflectionObjectFactory(metaPopulation, typeof(Person));
-            this.configuration = new Configuration("Default", metaPopulation, objectFactory);
+
+            this.servicesBuilder = () => new WorkspaceServices(objectFactory, metaPopulation);
+            this.configuration = new Configuration("Default", metaPopulation);
 
             this.Database = new Database(
                 new DefaultDatabaseServices(fixture.Engine),
@@ -79,8 +79,8 @@ namespace Allors.Workspace.Adapters.Direct.Tests
 
         public IWorkspace CreateExclusiveWorkspace()
         {
-            var database = new Connection(this.configuration, this.Database, this.servicesBuilder) { UserId = this.user.Id };
-            return database.CreateWorkspace();
+            var connection = new Connection(this.configuration, this.Database, this.servicesBuilder) { UserId = this.user.Id };
+            return connection.CreateWorkspace();
         }
         public IWorkspace CreateSharedWorkspace() => this.Connection.CreateWorkspace();
 
@@ -93,7 +93,7 @@ namespace Allors.Workspace.Adapters.Direct.Tests
             this.Connection = new Connection(this.configuration, this.Database, this.servicesBuilder) { UserId = this.user.Id };
 
             this.Workspace = this.Connection.CreateWorkspace();
-
+            
             return Task.CompletedTask;
         }
     }

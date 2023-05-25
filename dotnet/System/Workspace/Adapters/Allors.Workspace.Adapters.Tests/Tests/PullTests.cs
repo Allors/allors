@@ -1,4 +1,4 @@
-// <copyright file="PullTests.cs" company="Allors bvba">
+﻿// <copyright file="PullTests.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -171,7 +171,7 @@ namespace Allors.Workspace.Adapters.Tests
                 {
                     Predicate = new Contains(m.C2.C1sWhereC1C2Many2Many)
                     {
-                        Object = c1c
+                        Object = c1c.Strategy
                     }
                 }
             };
@@ -259,7 +259,7 @@ namespace Allors.Workspace.Adapters.Tests
                 {
                     Predicate = new Contains(m.C2.C1sWhereC1C2Many2One)
                     {
-                        Object = c1c
+                        Object = c1c.Strategy
                     }
                 }
             };
@@ -321,7 +321,7 @@ namespace Allors.Workspace.Adapters.Tests
                 {
                     Predicate = new Equals(m.C2.C1WhereC1C2One2Many)
                     {
-                        Object = c1b
+                        Object = c1b.Strategy
                     }
                 }
             };
@@ -340,7 +340,7 @@ namespace Allors.Workspace.Adapters.Tests
                 {
                     Predicate = new Equals(m.C2.C1WhereC1C2One2Many)
                     {
-                        Object = c1c
+                        Object = c1c.Strategy
                     }
                 }
             };
@@ -470,7 +470,7 @@ namespace Allors.Workspace.Adapters.Tests
                 {
                     Predicate = new Equals(m.C2.C1WhereC1C2One2One)
                     {
-                        Object = c1b
+                        Object = c1b.Strategy
                     }
                 }
             };
@@ -489,7 +489,7 @@ namespace Allors.Workspace.Adapters.Tests
                 {
                     Predicate = new Equals(m.C2.C1WhereC1C2One2One)
                     {
-                        Object = c1c
+                        Object = c1c.Strategy
                     }
                 }
             };
@@ -600,7 +600,7 @@ namespace Allors.Workspace.Adapters.Tests
             {
                 Extent = new Filter(m.C1)
                 {
-                    Predicate = new Equals { Object = c1c }
+                    Predicate = new Equals { Object = c1c.Strategy }
                 }
             };
 
@@ -679,7 +679,7 @@ namespace Allors.Workspace.Adapters.Tests
                 {
                     Predicate = new Not
                     {
-                        Operand = new Equals { Object = c1c }
+                        Operand = new Equals { Object = c1c.Strategy }
                     }
                 }
             };
@@ -712,8 +712,8 @@ namespace Allors.Workspace.Adapters.Tests
                     {
                         Operands = new[]
                         {
-                            new Equals { Object = c1b },
-                            new Equals { Object = c1c }
+                            new Equals { Object = c1b.Strategy },
+                            new Equals { Object = c1c.Strategy }
                         }
                     }
                 }
@@ -1835,7 +1835,7 @@ namespace Allors.Workspace.Adapters.Tests
                 {
                     Predicate = new Contains(m.C1.C1C2Many2Manies)
                     {
-                        Object = c2c
+                        Object = c2c.Strategy
                     }
                 }
             };
@@ -1896,7 +1896,7 @@ namespace Allors.Workspace.Adapters.Tests
                 {
                     Predicate = new Contains(m.C1.C1C2One2Manies)
                     {
-                        Object = c2d
+                        Object = c2d.Strategy
                     }
                 }
             };

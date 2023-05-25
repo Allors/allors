@@ -11,9 +11,9 @@ namespace Allors.Workspace.Adapters.Json
 
     public class PullResult : Result, IPullResultInternals
     {
-        private IDictionary<string, IObject> objects;
+        private IDictionary<string, IStrategy> objects;
 
-        private IDictionary<string, IObject[]> collections;
+        private IDictionary<string, IStrategy[]> collections;
 
         private IDictionary<string, object> values;
 
@@ -27,29 +27,27 @@ namespace Allors.Workspace.Adapters.Json
 
         private IWorkspace Workspace { get; }
 
-        public IDictionary<string, IObject> Objects => this.objects ??= this.pullResponse.o.ToDictionary(pair => pair.Key.ToUpperInvariant(), pair => base.Workspace.Instantiate<IObject>(pair.Value));
+        public IDictionary<string, IStrategy> Objects => this.objects ??= this.pullResponse.o.ToDictionary(pair => pair.Key.ToUpperInvariant(), pair => base.Workspace.Instantiate(pair.Value));
 
-        public IDictionary<string, IObject[]> Collections => this.collections ??= this.pullResponse.c.ToDictionary(pair => pair.Key.ToUpperInvariant(), pair => pair.Value.Select(base.Workspace.Instantiate<IObject>).ToArray());
+        public IDictionary<string, IStrategy[]> Collections => this.collections ??= this.pullResponse.c.ToDictionary(pair => pair.Key.ToUpperInvariant(), pair => pair.Value.Select(base.Workspace.Instantiate).ToArray());
 
         public IDictionary<string, object> Values => this.values ??= this.pullResponse.v.ToDictionary(pair => pair.Key.ToUpperInvariant(), pair => pair.Value);
 
-        public T[] GetCollection<T>() where T : class, IObject
+        public IStrategy[] GetCollection(Meta.IComposite objectType)
         {
-            var objectType = this.Workspace.Configuration.ObjectFactory.GetObjectType<T>();
             var key = objectType.PluralName.ToUpperInvariant();
-            return this.GetCollection<T>(key);
+            return this.GetCollection(key);
         }
 
-        public T[] GetCollection<T>(string key) where T : class, IObject => this.Collections.TryGetValue(key.ToUpperInvariant(), out var collection) ? collection?.Cast<T>().ToArray() : null;
+        public IStrategy[] GetCollection(string key) => this.Collections.TryGetValue(key.ToUpperInvariant(), out var collection) ? collection?.ToArray() : null;
 
-        public T GetObject<T>() where T : class, IObject
+        public IStrategy GetObject(Meta.IComposite objectType)
         {
-            var objectType = this.Workspace.Configuration.ObjectFactory.GetObjectType<T>();
             var key = objectType.SingularName.ToUpperInvariant();
-            return this.GetObject<T>(key);
+            return this.GetObject(key);
         }
 
-        public T GetObject<T>(string key) where T : class, IObject => this.Objects.TryGetValue(key.ToUpperInvariant(), out var @object) ? (T)@object : null;
+        public IStrategy GetObject(string key) => this.Objects.TryGetValue(key.ToUpperInvariant(), out var @object) ? @object : null;
 
         public object GetValue(string key) => this.Values[key.ToUpperInvariant()];
 

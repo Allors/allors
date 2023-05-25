@@ -465,7 +465,7 @@ namespace Allors.Workspace.Adapters.Tests
             var c1b = workspace.Create<C1>();
 
             await workspace.PushAsync();
-            result = await workspace.PullAsync(new Pull { Object = c1b });
+            result = await workspace.PullAsync(new Pull { Object = c1b.Strategy });
             var c1b_2 = (C1)result.Objects.Values.First();
 
             c1a.AddC1C1Many2Many(c1b_2);

@@ -40,12 +40,12 @@ namespace Allors.Workspace.Adapters.Tests
             {
                 if (associationType.IsOne)
                 {
-                    var association = newObject.Strategy.GetCompositeAssociation<IObject>(associationType);
+                    var association = newObject.Strategy.GetCompositeAssociation(associationType);
                     Assert.Null(association);
                 }
                 else
                 {
-                    var association = newObject.Strategy.GetCompositesAssociation<IObject>(associationType);
+                    var association = newObject.Strategy.GetCompositesAssociation(associationType);
                     Assert.Empty(association);
                 }
             }
@@ -63,7 +63,7 @@ namespace Allors.Workspace.Adapters.Tests
             var result = await workspace.PushAsync();
             Assert.False(result.HasErrors);
 
-            await workspace.PullAsync(new Pull { Object = newObject });
+            await workspace.PullAsync(new Pull { Object = newObject.Strategy });
 
             foreach (var roleType in this.M.C1.RoleTypes)
             {
@@ -75,12 +75,12 @@ namespace Allors.Workspace.Adapters.Tests
             {
                 if (associationType.IsOne)
                 {
-                    var association = newObject.Strategy.GetCompositeAssociation<IObject>(associationType);
+                    var association = newObject.Strategy.GetCompositeAssociation(associationType);
                     Assert.Null(association);
                 }
                 else
                 {
-                    var association = newObject.Strategy.GetCompositesAssociation<IObject>(associationType);
+                    var association = newObject.Strategy.GetCompositesAssociation(associationType);
                     Assert.Empty(association);
                 }
             }
@@ -99,7 +99,7 @@ namespace Allors.Workspace.Adapters.Tests
             var result = await workspace.PushAsync();
             Assert.False(result.HasErrors);
 
-            await workspace.PullAsync(new Pull { Object = newObject });
+            await workspace.PullAsync(new Pull { Object = newObject.Strategy });
 
             Assert.Equal("A new object", newObject.C1AllorsString);
         }
@@ -183,7 +183,7 @@ namespace Allors.Workspace.Adapters.Tests
 
             var pull = new Pull
             {
-                Object = person
+                Object = person.Strategy
             };
 
             Assert.False((await workspace.PullAsync(pull)).HasErrors);

@@ -26,15 +26,17 @@ namespace Allors.Workspace.Adapters.Direct
             this.versionErrors = new List<long>();
         }
 
+        IWorkspace IResult.Workspace => this.Workspace;
+
         protected Workspace Workspace { get; }
 
         public string ErrorMessage { get; set; }
 
-        public IEnumerable<IObject> VersionErrors => this.versionErrors?.Select(v => this.Workspace.Instantiate<IObject>(v));
+        public IEnumerable<IStrategy> VersionErrors => this.versionErrors?.Select(v => this.Workspace.Instantiate(v));
 
-        public IEnumerable<IObject> AccessErrors => this.accessErrorStrategies?.Select(v => v.Object);
+        public IEnumerable<IStrategy> AccessErrors => this.accessErrorStrategies;
 
-        public IEnumerable<IObject> MissingErrors => this.Workspace.Instantiate<IObject>(this.databaseMissingIds);
+        public IEnumerable<IStrategy> MissingErrors => this.Workspace.Instantiate(this.databaseMissingIds);
 
         public IEnumerable<IDerivationError> DerivationErrors => this.derivationErrors
             ?.Select<Database.Derivations.IDerivationError, IDerivationError>(v =>

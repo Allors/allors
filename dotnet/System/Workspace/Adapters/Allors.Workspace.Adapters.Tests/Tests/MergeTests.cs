@@ -49,7 +49,7 @@ namespace Allors.Workspace.Adapters.Tests
 
             var mergeError = result.MergeErrors.First();
 
-            Assert.Equal(c1a_1, mergeError.Association);
+            Assert.Equal(c1a_1.Strategy, mergeError.Association);
         }
 
         [Fact]
@@ -104,7 +104,7 @@ namespace Allors.Workspace.Adapters.Tests
 
             var mergeError = result_1.MergeErrors.First();
 
-            Assert.Equal(c1b_1, mergeError.Association);
+            Assert.Equal(c1b_1.Strategy, mergeError.Association);
         }
 
         [Fact]
@@ -163,7 +163,7 @@ namespace Allors.Workspace.Adapters.Tests
 
             var mergeError = result_1.MergeErrors.First();
 
-            Assert.Equal(c1b_1, mergeError.Association);
+            Assert.Equal(c1b_1.Strategy, mergeError.Association);
         }
 
     }

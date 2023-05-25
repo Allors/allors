@@ -1,4 +1,4 @@
-// <copyright file="Many2OneTests.cs" company="Allors bvba">
+﻿// <copyright file="Many2OneTests.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -60,7 +60,7 @@ namespace Allors.Workspace.Adapters.Tests
 
             try
             {
-                c1.Strategy.SetCompositeRole(this.M.C1.C1C1One2One, c2);
+                c1.Strategy.SetCompositeRole(this.M.C1.C1C1One2One, c2.Strategy);
                 hasErrors = false;
             }
             catch (Exception)
@@ -83,11 +83,11 @@ namespace Allors.Workspace.Adapters.Tests
 
             bool hasErrors;
 
-            c1.Strategy.SetCompositesRole(this.M.C1.C1C2Many2Manies, new[] { c2 });
+            c1.Strategy.SetCompositesRole(this.M.C1.C1C2Many2Manies, new[] { c2.Strategy });
 
             try
             {
-                c1.Strategy.SetCompositeRole(this.M.C1.C1C2Many2Manies, c2);
+                c1.Strategy.SetCompositeRole(this.M.C1.C1C2Many2Manies, c2.Strategy);
                 hasErrors = false;
             }
             catch (Exception)
@@ -109,7 +109,7 @@ namespace Allors.Workspace.Adapters.Tests
             bool hasErrors;
             try
             {
-                c1.Strategy.AddCompositesRole(this.M.C1.C1C1Many2Manies, c2);
+                c1.Strategy.AddCompositesRole(this.M.C1.C1C1Many2Manies, c2.Strategy);
                 hasErrors = false;
             }
             catch (Exception)
@@ -134,7 +134,7 @@ namespace Allors.Workspace.Adapters.Tests
 
             try
             {
-                c1.Strategy.AddCompositesRole(this.M.C1.C1C2One2One, c2);
+                c1.Strategy.AddCompositesRole(this.M.C1.C1C2One2One, c2.Strategy);
                 hasErrors = false;
             }
             catch (Exception)

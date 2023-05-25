@@ -1,4 +1,4 @@
-// <copyright file="FromJsonVisitor.cs" company="Allors bvba">
+﻿// <copyright file="FromJsonVisitor.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -19,7 +19,7 @@ namespace Allors.Workspace.Protocol.Json
             return toJsonVisitor.Pull;
         }
         
-        public static string[][] ToJsonForCollectionByName(this IDictionary<string, IObject[]> collectionByName) =>
+        public static string[][] ToJsonForCollectionByName(this IDictionary<string, IStrategy[]> collectionByName) =>
             collectionByName?.Select(kvp =>
             {
                 var name = kvp.Key;
@@ -41,7 +41,7 @@ namespace Allors.Workspace.Protocol.Json
                 return jsonCollection;
             }).ToArray();
 
-        public static string[][] ToJsonForObjectByName(this IDictionary<string, IObject> objectByName) =>
+        public static string[][] ToJsonForObjectByName(this IDictionary<string, IStrategy> objectByName) =>
             objectByName?.Select(kvp =>
             {
                 var name = kvp.Key;
@@ -50,7 +50,7 @@ namespace Allors.Workspace.Protocol.Json
                 return @object == null ? new[] { name } : new[] { name, @object.Id.ToString() };
             }).ToArray();
 
-        public static string[][] ToJsonForVersionByObject(this IDictionary<IObject, long> versionByObject) =>
+        public static string[][] ToJsonForVersionByObject(this IDictionary<IStrategy, long> versionByObject) =>
             versionByObject?.Select(kvp => new[] { kvp.Key.Id.ToString(), kvp.Value.ToString() }).ToArray();
     }
 }

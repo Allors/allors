@@ -9,7 +9,7 @@ namespace Allors.Workspace
 
     public interface IConflict
     {
-        IObject Association { get; }
+        IStrategy Association { get; }
 
         IRoleType RoleType { get; }
 

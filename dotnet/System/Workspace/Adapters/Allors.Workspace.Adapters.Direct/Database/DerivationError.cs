@@ -1,4 +1,4 @@
-// <copyright file="RemoteDerivationError.cs" company="Allors bvba">
+﻿// <copyright file="RemoteDerivationError.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -23,7 +23,7 @@ namespace Allors.Workspace.Adapters.Direct
         public IEnumerable<Role> Roles => this.derivationError.Relations
             .Select(v =>
                 new Role(
-                    this.workspace.Instantiate<IObject>(v.Association.Id),
+                    this.workspace.Instantiate(v.Association.Id),
                     (IRelationType)this.workspace.Connection.Configuration.MetaPopulation.FindByTag(v.RelationType.Tag)));
 
         public string Message => this.derivationError.Message;

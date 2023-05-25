@@ -30,11 +30,11 @@ namespace Allors.Workspace.Adapters.Json
 
         public string ErrorMessage => this.response._e;
 
-        public IEnumerable<IObject> VersionErrors => this.response._v != null ? this.Workspace.Instantiate<IObject>(this.response._v) : Array.Empty<IObject>();
+        public IEnumerable<IStrategy> VersionErrors => this.response._v != null ? this.Workspace.Instantiate(this.response._v) : Array.Empty<IStrategy>();
 
-        public IEnumerable<IObject> AccessErrors => this.response._a != null ? this.Workspace.Instantiate<IObject>(this.response._a) : Array.Empty<IObject>();
+        public IEnumerable<IStrategy> AccessErrors => this.response._a != null ? this.Workspace.Instantiate(this.response._a) : Array.Empty<IStrategy>();
 
-        public IEnumerable<IObject> MissingErrors => this.response._m != null ? this.Workspace.Instantiate<IObject>(this.response._m) : Array.Empty<IObject>();
+        public IEnumerable<IStrategy> MissingErrors => this.response._m != null ? this.Workspace.Instantiate(this.response._m) : Array.Empty<IStrategy>();
 
         public IEnumerable<IDerivationError> DerivationErrors
         {

@@ -1,4 +1,4 @@
-// <copyright file="ServicesTests.cs" company="Allors bvba">
+﻿// <copyright file="ServicesTests.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -59,7 +59,7 @@ namespace Allors.Workspace.Adapters.Tests
                 var pushResult = await workspace2.PushAsync();
                 Assert.False(pushResult.HasErrors);
 
-                var result = await workspace1.PullAsync(new Pull { Object = c1y_2 });
+                var result = await workspace1.PullAsync(new Pull { Object = c1y_2.Strategy });
 
                 var c1y_1 = (C1)result.Objects.Values.First();
 
@@ -67,7 +67,7 @@ namespace Allors.Workspace.Adapters.Tests
 
                 if (!c1x_1.CanWriteC1C1Many2One)
                 {
-                    await workspace1.PullAsync(new Pull { Object = c1x_1 });
+                    await workspace1.PullAsync(new Pull { Object = c1x_1.Strategy });
                 }
 
                 c1x_1.C1C1Many2One = c1y_1;
@@ -98,7 +98,7 @@ namespace Allors.Workspace.Adapters.Tests
                 var pushResult = await workspace2.PushAsync();
                 Assert.False(pushResult.HasErrors);
 
-                var result = await workspace1.PullAsync(new Pull { Object = c1y_2 });
+                var result = await workspace1.PullAsync(new Pull { Object = c1y_2.Strategy });
 
                 var c1y_1 = (C1)result.Objects.Values.First();
 
@@ -106,7 +106,7 @@ namespace Allors.Workspace.Adapters.Tests
 
                 if (!c1x_1.CanWriteC1C1Many2One)
                 {
-                    await workspace1.PullAsync(new Pull { Object = c1x_1 });
+                    await workspace1.PullAsync(new Pull { Object = c1x_1.Strategy });
                 }
 
                 c1x_1.C1C1Many2One = c1y_1;

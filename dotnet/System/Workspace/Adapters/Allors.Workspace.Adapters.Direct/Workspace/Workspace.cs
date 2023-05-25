@@ -22,13 +22,13 @@ namespace Allors.Workspace.Adapters.Direct
 
         public long UserId => this.Connection.UserId;
 
-        public override T Create<T>(IClass @class)
+        public override IStrategy Create(IClass @class)
         {
             var workspaceId = this.Connection.NextId();
             var strategy = new Strategy(this, @class, workspaceId);
             this.AddStrategy(strategy);
             this.PushToDatabaseTracker.OnCreated(strategy);
-            return (T)strategy.Object;
+            return strategy;
         }
 
         public override Task<IInvokeResult> InvokeAsync(Method method, InvokeOptions options = null) =>

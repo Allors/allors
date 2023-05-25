@@ -83,8 +83,6 @@ namespace Allors.Workspace.Adapters
             }
         }
 
-        IObject IObjectFactory.Create(IStrategy strategy) => this.Create(strategy);
-
         /// <summary>
         /// Gets the .Net <see cref="Type"/> given the Allors <see cref="IObjectType"/>.
         /// </summary>
@@ -120,12 +118,30 @@ namespace Allors.Workspace.Adapters
         /// <returns>
         /// The new <see cref="Object"/>.
         /// </returns>
-        private IObject Create(IStrategy strategy)
+        public T Instantiate<T>(IStrategy strategy) where T : class, IObject
         {
+            if (strategy == null)
+            {
+                return null;
+            }
+
             var constructor = this.contructorInfoByObjectType[strategy.Class];
             object[] parameters = { strategy };
 
-            return (IObject)constructor.Invoke(parameters);
+            return (T)constructor.Invoke(parameters);
+        }
+
+        public IEnumerable<T> Instantiate<T>(IEnumerable<IStrategy> objects) where T : class, IObject
+        {
+            if (objects == null)
+            {
+                yield break;
+            }
+
+            foreach (var @object in objects)
+            {
+                yield return this.Instantiate<T>(@object);
+            }
         }
     }
 }

@@ -1,4 +1,4 @@
-// <copyright file="Tree.cs" company="Allors bvba">
+﻿// <copyright file="Tree.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -44,18 +44,18 @@ namespace Allors.Workspace.Data
             return this.Add(node);
         }
 
-        public IEnumerable<IObject> Resolve(IObject @object)
+        public IEnumerable<IStrategy> Resolve(IStrategy @object)
         {
             if (this.PropertyType.IsOne)
             {
-                var resolved = this.PropertyType.Get(@object.Strategy, this.OfType);
+                var resolved = this.PropertyType.Get(@object, this.OfType);
                 if (resolved != null)
                 {
                     if (this.Nodes.Length > 0)
                     {
                         foreach (var node in this.Nodes)
                         {
-                            foreach (var next in node.Resolve((IObject)resolved))
+                            foreach (var next in node.Resolve((IStrategy)resolved))
                             {
                                 yield return next;
                             }
@@ -63,13 +63,13 @@ namespace Allors.Workspace.Data
                     }
                     else
                     {
-                        yield return (IObject)resolved;
+                        yield return (IStrategy)resolved;
                     }
                 }
             }
             else
             {
-                var resolved = (IEnumerable)this.PropertyType.Get(@object.Strategy, this.OfType);
+                var resolved = (IEnumerable)this.PropertyType.Get(@object, this.OfType);
                 if (resolved != null)
                 {
                     if (this.Nodes.Length > 0)
@@ -78,7 +78,7 @@ namespace Allors.Workspace.Data
                         {
                             foreach (var node in this.Nodes)
                             {
-                                foreach (var next in node.Resolve((IObject)resolvedItem))
+                                foreach (var next in node.Resolve((IStrategy)resolvedItem))
                                 {
                                     yield return next;
                                 }
@@ -87,7 +87,7 @@ namespace Allors.Workspace.Data
                     }
                     else
                     {
-                        foreach (IObject child in resolved)
+                        foreach (IStrategy child in resolved)
                         {
                             yield return child;
                         }

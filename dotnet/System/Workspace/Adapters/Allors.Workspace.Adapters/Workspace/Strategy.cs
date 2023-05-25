@@ -13,7 +13,9 @@ namespace Allors.Workspace.Adapters
 
     public abstract class Strategy : IStrategy, IComparable<Strategy>
     {
-        private IObject @object;
+        protected readonly Workspace Workspace;
+
+        private long id;
 
         private readonly Dictionary<IAssociationType, Strategy> databaseCompositeAssociationByAssociationType;
         private readonly Dictionary<IAssociationType, RefRange<Strategy>> databaseCompositesAssociationByAssociationType;
@@ -26,7 +28,7 @@ namespace Allors.Workspace.Adapters
         protected Strategy(Workspace workspace, IClass @class, long id)
         {
             this.Workspace = workspace;
-            this.Id = id;
+            this.id = id;
             this.Class = @class;
             this.IsPushed = false;
 
@@ -38,23 +40,19 @@ namespace Allors.Workspace.Adapters
 
         public long Version => this.Record?.Version ?? Allors.Version.WorkspaceInitial;
 
-        IWorkspace IStrategy.Workspace => this.Workspace;
-
         public IClass Class { get; }
 
-        public long Id { get; private set; }
+        public long Id => this.id;
 
-        public bool IsNew => Workspace.IsNewId(this.Id);
+        public bool IsNew => Adapters.Workspace.IsNewId(this.Id);
 
         public bool IsDeleted => this.Id == 0;
-
-        public IObject Object => this.@object ??= this.Workspace.Connection.Configuration.ObjectFactory.Create(this);
 
         public bool HasChanges => this.changesByRelationType != null;
 
         private bool IsVersionInitial => this.Version == Allors.Version.WorkspaceInitial.Value;
 
-        protected Workspace Workspace { get; }
+        IWorkspace IStrategy.Workspace => this.Workspace;
 
         protected bool ExistRecord => this.Record != null;
 
@@ -86,7 +84,7 @@ namespace Allors.Workspace.Adapters
                 this.SetRole(roleType, null);
             }
 
-            this.Id = 0;
+            this.id = 0;
         }
 
         public bool CanRead(IRoleType roleType)
@@ -153,10 +151,10 @@ namespace Allors.Workspace.Adapters
 
             if (roleType.IsOne)
             {
-                return this.GetCompositeRole<IObject>(roleType) != null;
+                return this.GetCompositeRole(roleType) != null;
             }
 
-            return this.GetCompositesRole<IObject>(roleType).Any();
+            return this.GetCompositesRole(roleType).Any();
         }
 
         public bool HasChanged(IRoleType roleType) =>
@@ -211,10 +209,10 @@ namespace Allors.Workspace.Adapters
 
             if (roleType.IsOne)
             {
-                return this.GetCompositeRole<IObject>(roleType);
+                return this.GetCompositeRole(roleType);
             }
 
-            return this.GetCompositesRole<IObject>(roleType);
+            return this.GetCompositesRole(roleType);
         }
 
         public object GetUnitRole(IRoleType roleType)
@@ -233,18 +231,18 @@ namespace Allors.Workspace.Adapters
             return this.Record?.GetRole(roleType);
         }
 
-        public T GetCompositeRole<T>(IRoleType roleType) where T : class, IObject
+        public IStrategy GetCompositeRole(IRoleType roleType)
         {
             return this.CanRead(roleType)
-                    ? (T)this.GetCompositeRoleStrategy(roleType)?.Object
+                    ? this.GetCompositeRoleStrategy(roleType)
                     : null;
         }
 
-        public IEnumerable<T> GetCompositesRole<T>(IRoleType roleType) where T : class, IObject
+        public IEnumerable<IStrategy> GetCompositesRole(IRoleType roleType)
         {
             return this.CanRead(roleType)
-                    ? this.GetCompositesRoleStrategies(roleType).Select(v => (T)v.Object)
-                    : Array.Empty<T>();
+                    ? this.GetCompositesRoleStrategies(roleType).Select(v => v)
+                    : Array.Empty<IStrategy>();
         }
 
         public void SetRole(IRoleType roleType, object role)
@@ -255,11 +253,11 @@ namespace Allors.Workspace.Adapters
             }
             else if (roleType.IsOne)
             {
-                this.SetCompositeRole(roleType, (IObject)role);
+                this.SetCompositeRole(roleType, (IStrategy)role);
             }
             else
             {
-                this.SetCompositesRole(roleType, (IEnumerable<IObject>)role);
+                this.SetCompositesRole(roleType, (IEnumerable<IStrategy>)role);
             }
         }
 
@@ -294,7 +292,7 @@ namespace Allors.Workspace.Adapters
             this.Workspace.PushToDatabaseTracker.OnChanged(this);
         }
 
-        public void SetCompositeRole<T>(IRoleType roleType, T value) where T : class, IObject
+        public void SetCompositeRole(IRoleType roleType, IStrategy value) 
         {
             this.AssertComposite(value);
 
@@ -311,17 +309,17 @@ namespace Allors.Workspace.Adapters
 
             if (this.CanWrite(roleType))
             {
-                this.SetCompositeRoleStrategy(roleType, (Strategy)value?.Strategy, null);
+                this.SetCompositeRoleStrategy(roleType, (Strategy)value, null);
             }
         }
 
-        public void SetCompositesRole<T>(IRoleType roleType, in IEnumerable<T> role) where T : class, IObject
+        public void SetCompositesRole(IRoleType roleType, in IEnumerable<IStrategy> role)
         {
             this.AssertComposites(role);
 
             if (this.CanWrite(roleType))
             {
-                var newRoleStrategies = RefRange<Strategy>.Load(role?.Select(v => (Strategy)v.Strategy));
+                var newRoleStrategies = RefRange<Strategy>.Load(role?.Select(v => (Strategy)v));
                 var existingRoleStrategies = this.GetCompositesRoleStrategies(roleType);
 
                 var addRoleStrategies = newRoleStrategies.Except(existingRoleStrategies);
@@ -339,7 +337,7 @@ namespace Allors.Workspace.Adapters
             }
         }
 
-        public void AddCompositesRole<T>(IRoleType roleType, T value) where T : class, IObject
+        public void AddCompositesRole(IRoleType roleType, IStrategy value)
         {
             if (value == null)
             {
@@ -357,11 +355,11 @@ namespace Allors.Workspace.Adapters
 
             if (this.CanWrite(roleType))
             {
-                this.AddCompositesRoleStrategy(roleType, (Strategy)value.Strategy);
+                this.AddCompositesRoleStrategy(roleType, (Strategy)value);
             }
         }
 
-        public void RemoveCompositesRole<T>(IRoleType roleType, T value) where T : class, IObject
+        public void RemoveCompositesRole(IRoleType roleType, IStrategy value)
         {
             if (value == null)
             {
@@ -372,7 +370,7 @@ namespace Allors.Workspace.Adapters
 
             if (this.CanWrite(roleType))
             {
-                this.RemoveCompositesRoleStrategy(roleType, (Strategy)value.Strategy, null);
+                this.RemoveCompositesRoleStrategy(roleType, (Strategy)value, null);
             }
         }
 
@@ -384,25 +382,25 @@ namespace Allors.Workspace.Adapters
             }
             else if (roleType.IsOne)
             {
-                this.SetCompositeRole(roleType, (IObject)null);
+                this.SetCompositeRole(roleType, (IStrategy)null);
             }
             else
             {
-                this.SetCompositesRole(roleType, (IEnumerable<IObject>)null);
+                this.SetCompositesRole(roleType, null);
             }
         }
 
-        public T GetCompositeAssociation<T>(IAssociationType associationType) where T : class, IObject
+        public IStrategy GetCompositeAssociation(IAssociationType associationType) 
         {
-            return (T)this.GetCompositeAssociationStrategy(associationType)?.Object;
+            return this.GetCompositeAssociationStrategy(associationType);
         }
 
-        public IEnumerable<T> GetCompositesAssociation<T>(IAssociationType associationType) where T : class, IObject
+        public IEnumerable<IStrategy> GetCompositesAssociation(IAssociationType associationType) 
         {
-            return this.GetCompositesAssociationStrategies(this, associationType).Select(v => v.Object).Cast<T>();
+            return this.GetCompositesAssociationStrategies(this, associationType);
         }
 
-        public void OnPushNewId(long newId) => this.Id = newId;
+        public void OnPushNewId(long newId) => this.id = newId;
 
         public void OnPushed() => this.IsPushed = true;
 
@@ -547,7 +545,7 @@ namespace Allors.Workspace.Adapters
 
             if (this.IsNew)
             {
-                this.Id = 0;
+                this.id = 0;
             }
         }
 
@@ -978,17 +976,17 @@ namespace Allors.Workspace.Adapters
             return role.Id == (long)changedRoleId;
         }
 
-        private void AssertSameType<T>(IRoleType roleType, T value) where T : class, IObject
+        private void AssertSameType(IRoleType roleType, IStrategy value) 
         {
-            if (!((IComposite)roleType.ObjectType).IsAssignableFrom(value.Strategy.Class))
+            if (!((IComposite)roleType.ObjectType).IsAssignableFrom(value.Class))
             {
                 throw new ArgumentException($"Types do not match: {nameof(roleType)}: {roleType.ObjectType.ClrType} and {nameof(value)}: {value.GetType()}");
             }
         }
 
-        private void AssertSameSession(IObject value)
+        private void AssertSameSession(IStrategy value)
         {
-            if (this.Workspace != value.Strategy.Workspace)
+            if (this.Workspace != value.Workspace)
             {
                 throw new ArgumentException("Workspace do not match");
             }
@@ -1056,20 +1054,20 @@ namespace Allors.Workspace.Adapters
             }
         }
 
-        private void AssertComposite(IObject value)
+        private void AssertComposite(IStrategy value)
         {
             if (value == null)
             {
                 return;
             }
 
-            if (this.Workspace != value.Strategy.Workspace)
+            if (this.Workspace != value.Workspace)
             {
                 throw new ArgumentException("Strategy is from a different workspace");
             }
         }
 
-        private void AssertComposites(IEnumerable<IObject> inputs)
+        private void AssertComposites(IEnumerable<IStrategy> inputs)
         {
             if (inputs == null)
             {

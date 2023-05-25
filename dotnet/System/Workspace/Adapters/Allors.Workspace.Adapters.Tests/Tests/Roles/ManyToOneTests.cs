@@ -55,7 +55,7 @@ namespace Allors.Workspace.Adapters.Tests
                         var c1y_2 = await ctx.Create<C1>(workspace2, mode2);
 
                         await workspace2.PushAsync();
-                        var result = await workspace1.PullAsync(new Pull { Object = c1y_2 });
+                        var result = await workspace1.PullAsync(new Pull { Object = c1y_2.Strategy });
 
                         var c1y_1 = (C1)result.Objects.Values.First();
 
@@ -63,7 +63,7 @@ namespace Allors.Workspace.Adapters.Tests
 
                         if (!c1x_1.CanWriteC1C1Many2One)
                         {
-                            await workspace1.PullAsync(new Pull { Object = c1x_1 });
+                            await workspace1.PullAsync(new Pull { Object = c1x_1.Strategy });
                         }
 
                         c1x_1.C1C1Many2One = c1y_1;
@@ -94,7 +94,7 @@ namespace Allors.Workspace.Adapters.Tests
                         var c1y_2 = await ctx.Create<C1>(workspace2, mode2);
 
                         await workspace2.PushAsync();
-                        var result = await workspace1.PullAsync(new Pull { Object = c1y_2 });
+                        var result = await workspace1.PullAsync(new Pull { Object = c1y_2.Strategy });
 
                         var c1y_1 = (C1)result.Objects.Values.First();
 
@@ -102,7 +102,7 @@ namespace Allors.Workspace.Adapters.Tests
 
                         if (!c1x_1.CanWriteC1C1Many2One)
                         {
-                            await workspace1.PullAsync(new Pull { Object = c1x_1 });
+                            await workspace1.PullAsync(new Pull { Object = c1x_1.Strategy });
                         }
 
                         c1x_1.C1C1Many2One = c1y_1;

@@ -34,9 +34,9 @@ namespace Allors.Workspace.Adapters
 
         public Connection Connection { get; }
 
-        public IConfiguration Configuration => this.Connection.Configuration;
-
         public IWorkspaceServices Services { get; }
+
+        public IMetaPopulation MetaPopulation => this.Connection.Configuration.MetaPopulation;
 
         public bool HasChanges => this.StrategyByWorkspaceId.Any(kvp => kvp.Value.HasChanges);
 
@@ -61,41 +61,29 @@ namespace Allors.Workspace.Adapters
             }
         }
 
-        public abstract T Create<T>(IClass @class) where T : class, IObject;
-
-        public T Create<T>() where T : class, IObject => this.Create<T>((IClass)this.Connection.Configuration.ObjectFactory.GetObjectType<T>());
+        public abstract IStrategy Create(IClass @class);
 
         #region Instantiate
-        public T Instantiate<T>(IObject @object) where T : class, IObject => this.Instantiate<T>(@object.Id);
+        public IStrategy Instantiate(IStrategy @object) => this.Instantiate(@object.Id);
 
-        public T Instantiate<T>(T @object) where T : class, IObject => this.Instantiate<T>(@object.Id);
+        public IStrategy Instantiate(long? id) => id.HasValue ? this.Instantiate((long)id) : default;
 
-        public T Instantiate<T>(long? id) where T : class, IObject => id.HasValue ? this.Instantiate<T>((long)id) : default;
+        public IStrategy Instantiate(long id) => this.GetStrategy(id);
 
-        public T Instantiate<T>(long id) where T : class, IObject => (T)this.GetStrategy(id)?.Object;
+        public IStrategy Instantiate(string idAsString) => long.TryParse(idAsString, out var id) ? this.GetStrategy(id) : default;
 
-        public T Instantiate<T>(string idAsString) where T : class, IObject => long.TryParse(idAsString, out var id) ? (T)this.GetStrategy(id)?.Object : default;
+        public IEnumerable<IStrategy> Instantiate(IEnumerable<IStrategy> objects) => objects.Select(this.Instantiate);
 
-        public IEnumerable<T> Instantiate<T>(IEnumerable<IObject> objects) where T : class, IObject => objects.Select(this.Instantiate<T>);
+        public IEnumerable<IStrategy> Instantiate(IEnumerable<long> ids) => ids.Select(this.Instantiate);
 
-        public IEnumerable<T> Instantiate<T>(IEnumerable<T> objects) where T : class, IObject => objects.Select(this.Instantiate);
-
-        public IEnumerable<T> Instantiate<T>(IEnumerable<long> ids) where T : class, IObject => ids.Select(this.Instantiate<T>);
-
-        public IEnumerable<T> Instantiate<T>(IEnumerable<string> ids) where T : class, IObject => this.Instantiate<T>(ids.Select(
+        public IEnumerable<IStrategy> Instantiate(IEnumerable<string> ids) => this.Instantiate(ids.Select(
             v =>
             {
                 long.TryParse(v, out var id);
                 return id;
             }));
 
-        public IEnumerable<T> Instantiate<T>() where T : class, IObject
-        {
-            var objectType = (IComposite)this.Connection.Configuration.ObjectFactory.GetObjectType<T>();
-            return this.Instantiate<T>(objectType);
-        }
-
-        public IEnumerable<T> Instantiate<T>(IComposite objectType) where T : class, IObject
+        public IEnumerable<IStrategy> Instantiate(IComposite objectType)
         {
             foreach (var @class in objectType.Classes)
             {
@@ -103,7 +91,7 @@ namespace Allors.Workspace.Adapters
                 {
                     foreach (var strategy in strategies)
                     {
-                        yield return (T)strategy.Object;
+                        yield return strategy;
                     }
                 }
             }

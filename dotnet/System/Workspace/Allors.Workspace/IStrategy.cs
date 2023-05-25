@@ -12,8 +12,6 @@ namespace Allors.Workspace
     {
         IWorkspace Workspace { get; }
 
-        IObject Object { get; }
-
         IClass Class { get; }
 
         long Id { get; }
@@ -50,20 +48,20 @@ namespace Allors.Workspace
 
         void SetUnitRole(IRoleType roleType, object role);
 
-        T GetCompositeRole<T>(IRoleType roleType) where T : class, IObject;
+        IStrategy GetCompositeRole(IRoleType roleType);
 
-        void SetCompositeRole<T>(IRoleType roleType, T value) where T : class, IObject;
+        void SetCompositeRole(IRoleType roleType, IStrategy value);
 
-        IEnumerable<T> GetCompositesRole<T>(IRoleType roleType) where T : class, IObject;
+        IEnumerable<IStrategy> GetCompositesRole(IRoleType roleType);
 
-        void AddCompositesRole<T>(IRoleType roleType, T value) where T : class, IObject;
+        void AddCompositesRole(IRoleType roleType, IStrategy value);
 
-        void RemoveCompositesRole<T>(IRoleType roleType, T value) where T : class, IObject;
+        void RemoveCompositesRole(IRoleType roleType, IStrategy value);
 
-        void SetCompositesRole<T>(IRoleType roleType, in IEnumerable<T> role) where T : class, IObject;
+        void SetCompositesRole(IRoleType roleType, in IEnumerable<IStrategy> role);
 
-        T GetCompositeAssociation<T>(IAssociationType associationType) where T : class, IObject;
+        IStrategy GetCompositeAssociation(IAssociationType associationType);
 
-        IEnumerable<T> GetCompositesAssociation<T>(IAssociationType associationType) where T : class, IObject;
+        IEnumerable<IStrategy> GetCompositesAssociation(IAssociationType associationType);
     }
 }

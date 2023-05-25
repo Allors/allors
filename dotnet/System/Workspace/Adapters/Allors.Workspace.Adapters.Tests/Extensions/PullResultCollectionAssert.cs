@@ -1,8 +1,9 @@
-namespace Allors.Workspace.Adapters.Tests
+﻿namespace Allors.Workspace.Adapters.Tests
 {
     using System.Linq;
     using Allors.Workspace;
     using Xunit;
+    using Allors.Workspace.Domain;
 
     public class PullResultCollectionAssert<T> where T : class, IObject
     {

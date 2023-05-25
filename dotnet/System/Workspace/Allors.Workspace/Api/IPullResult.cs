@@ -6,24 +6,25 @@
 namespace Allors.Workspace
 {
     using System.Collections.Generic;
+    using Meta;
 
     public interface IPullResult : IResult
     {
         IEnumerable<IConflict> MergeErrors { get; }
 
-        IDictionary<string, IObject[]> Collections { get; }
+        IDictionary<string, IStrategy[]> Collections { get; }
 
-        IDictionary<string, IObject> Objects { get; }
+        IDictionary<string, IStrategy> Objects { get; }
 
         IDictionary<string, object> Values { get; }
 
-        T[] GetCollection<T>() where T : class, IObject;
+        IStrategy[] GetCollection(IComposite composite);
 
-        T[] GetCollection<T>(string key) where T : class, IObject;
+        IStrategy[] GetCollection(string key);
 
-        T GetObject<T>() where T : class, IObject;
+        IStrategy GetObject(IComposite composite);
 
-        T GetObject<T>(string key) where T : class, IObject;
+        IStrategy GetObject(string key);
 
         object GetValue(string key);
 

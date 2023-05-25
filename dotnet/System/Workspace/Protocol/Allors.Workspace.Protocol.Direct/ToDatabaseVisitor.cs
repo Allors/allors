@@ -1,4 +1,4 @@
-// <copyright file="ToJsonVisitor.cs" company="Allors bvba">
+﻿// <copyright file="ToJsonVisitor.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -166,7 +166,7 @@ namespace Allors.Workspace.Protocol.Direct
 
         private Database.Data.Union Visit(Union ws) => new Database.Data.Union(ws.Operands?.Select(this.Visit).ToArray()) { Sorting = this.Visit(ws.Sorting) };
 
-        private Database.IObject Visit(IObject ws) => ws != null ? this.transaction.Instantiate(ws.Id) : null;
+        private Database.IObject Visit(IStrategy ws) => ws != null ? this.transaction.Instantiate(ws.Id) : null;
 
         private Database.IObject Visit(long? id) => id != null ? this.transaction.Instantiate(id.Value) : null;
 
@@ -215,7 +215,7 @@ namespace Allors.Workspace.Protocol.Direct
 
         private Database.Meta.IRoleType[] Visit(IEnumerable<IRoleType> ws) => ws?.Select(v => ((IRelationType)this.metaPopulation.FindByTag(v.OperandTag)).RoleType).ToArray();
 
-        private Database.IObject[] Visit(IEnumerable<IObject> ws) => ws != null ? this.transaction.Instantiate(ws.Select(v => v.Id)) : null;
+        private Database.IObject[] Visit(IEnumerable<IStrategy> ws) => ws != null ? this.transaction.Instantiate(ws.Select(v => v.Id)) : null;
 
         private IArguments Visit(IDictionary<string, object> ws) => new Arguments(ws);
     }
