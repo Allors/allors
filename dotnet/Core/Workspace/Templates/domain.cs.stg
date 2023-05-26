@@ -273,12 +273,12 @@ $if(concreteRoleType.IsMany)$
 
 		virtual public void Add$concreteRoleType.SingularName$ ($concreteRoleType_ObjectType(concreteRoleType)$ value)
 		{
-			this.Strategy.AddCompositesRole(Meta.$concreteRoleType.Name$, value.Strategy);
+			this.Strategy.AddCompositesRole(Meta.$concreteRoleType.Name$, value?.Strategy);
 		}
 
 		virtual public void Remove$concreteRoleType.SingularName$ ($concreteRoleType_ObjectType(concreteRoleType)$ value)
 		{
-			this.Strategy.RemoveCompositesRole(Meta.$concreteRoleType.Name$, value.Strategy);
+			this.Strategy.RemoveCompositesRole(Meta.$concreteRoleType.Name$, value?.Strategy);
 		}
 
 		virtual public bool Exist$concreteRoleType.PluralName$
@@ -302,7 +302,7 @@ $else$
 			}
 			set
 			{
-				this.Strategy.SetCompositeRole(Meta.$concreteRoleType.Name$, value.Strategy);
+				this.Strategy.SetCompositeRole(Meta.$concreteRoleType.Name$, value?.Strategy);
 			}
 		}
 

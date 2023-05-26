@@ -6,6 +6,8 @@
 namespace Allors.Workspace
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using Meta;
 
     public static partial class IWorkspaceExtensions
@@ -21,7 +23,18 @@ namespace Allors.Workspace
         public static T Instantiate<T>(this IWorkspace workspace, IStrategy strategy) where T : class, IObject
         {
             var objectFactory = workspace.Services.Get<IObjectFactory>();
-            return objectFactory.Instantiate<T>(strategy);
+            return objectFactory.Instantiate<T>(workspace.Instantiate(strategy));
+        }
+
+        public static IEnumerable<T> Instantiate<T>(this IWorkspace workspace, IEnumerable<IStrategy> strategies) where T : class, IObject
+        {
+            if (strategies == null)
+            {
+                return Array.Empty<T>();
+            }
+
+            var objectFactory = workspace.Services.Get<IObjectFactory>();
+            return objectFactory.Instantiate<T>(strategies.Select(workspace.Instantiate));
         }
 
         public static DateTime Now(this IWorkspace workspace)

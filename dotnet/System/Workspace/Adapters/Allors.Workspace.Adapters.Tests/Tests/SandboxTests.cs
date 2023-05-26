@@ -61,7 +61,7 @@ namespace Allors.Workspace.Adapters.Tests
 
                 var result = await workspace1.PullAsync(new Pull { Object = c1y_2.Strategy });
 
-                var c1y_1 = (C1)result.Objects.Values.First();
+                var c1y_1 = result.Objects.Values.First().Cast<C1>();
 
                 c1y_1.ShouldNotBeNull(ctx, mode1, mode2);
 
@@ -100,7 +100,7 @@ namespace Allors.Workspace.Adapters.Tests
 
                 var result = await workspace1.PullAsync(new Pull { Object = c1y_2.Strategy });
 
-                var c1y_1 = (C1)result.Objects.Values.First();
+                var c1y_1 = result.Objects.Values.First().Cast<C1>();
 
                 c1y_1.ShouldNotBeNull(ctx, mode1, mode2);
 
