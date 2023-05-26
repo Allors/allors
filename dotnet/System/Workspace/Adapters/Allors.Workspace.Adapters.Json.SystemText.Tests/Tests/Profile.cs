@@ -1,4 +1,4 @@
-// <copyright file="Profile.cs" company="Allors bvba">
+﻿// <copyright file="Profile.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -34,12 +34,12 @@ namespace Allors.Workspace.Adapters.Json.SystemText.Tests
 
         public Profile()
         {
-            this.servicesBuilder = () => new WorkspaceServices();
-            this.idGenerator = new IdGenerator();
-
             var metaPopulation = new MetaBuilder().Build();
             var objectFactory = new ReflectionObjectFactory(metaPopulation, typeof(Allors.Workspace.Domain.Person));
-            this.configuration = new Configuration("Default", metaPopulation, objectFactory);
+            this.servicesBuilder = () => new WorkspaceServices(objectFactory, metaPopulation);
+
+            this.configuration = new Configuration("Default", metaPopulation);
+            this.idGenerator = new IdGenerator();
         }
 
         IWorkspace IProfile.Workspace => this.Workspace;

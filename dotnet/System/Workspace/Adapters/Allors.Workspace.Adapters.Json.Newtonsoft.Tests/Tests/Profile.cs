@@ -1,4 +1,4 @@
-// <copyright file="Profile.cs" company="Allors bvba">
+﻿// <copyright file="Profile.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -27,6 +27,7 @@ namespace Allors.Workspace.Adapters.Json.Newtonsoft.Tests
         public const string SetupUrl = "Test/Setup?population=full";
         public const string LoginUrl = "TestAuthentication/Token";
 
+        private readonly Func<IWorkspaceServices> serviceBuilder;
         private readonly Configuration configuration;
         private readonly IdGenerator idGenerator;
 
@@ -44,7 +45,9 @@ namespace Allors.Workspace.Adapters.Json.Newtonsoft.Tests
         {
             var metaPopulation = new MetaBuilder().Build();
             var objectFactory = new ReflectionObjectFactory(metaPopulation, typeof(Allors.Workspace.Domain.Person));
-            this.configuration = new Configuration("Default", metaPopulation, objectFactory);
+            this.serviceBuilder = () => new WorkspaceServices(objectFactory, metaPopulation);
+
+            this.configuration = new Configuration("Default", metaPopulation);
             this.idGenerator = new IdGenerator();
         }
 
@@ -56,7 +59,7 @@ namespace Allors.Workspace.Adapters.Json.Newtonsoft.Tests
             Assert.True(response.IsSuccessful);
 
             this.client = new Client(this.CreateRestClient);
-            this.Connection = new Connection(this.configuration, () => new WorkspaceServices(), this.client, this.idGenerator);
+            this.Connection = new Connection(this.configuration, this.serviceBuilder, this.client, this.idGenerator);
             this.Workspace = this.Connection.CreateWorkspace();
 
             await this.Login("administrator");
@@ -66,7 +69,7 @@ namespace Allors.Workspace.Adapters.Json.Newtonsoft.Tests
 
         public IWorkspace CreateExclusiveWorkspace()
         {
-            var database = new Connection(this.configuration, () => new WorkspaceServices(), this.client, this.idGenerator);
+            var database = new Connection(this.configuration, this.serviceBuilder, this.client, this.idGenerator);
             return database.CreateWorkspace();
         }
 
