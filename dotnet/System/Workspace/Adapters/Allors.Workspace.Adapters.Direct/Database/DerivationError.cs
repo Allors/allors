@@ -20,11 +20,13 @@ namespace Allors.Workspace.Adapters.Direct
             this.derivationError = derivationError;
         }
 
-        public IEnumerable<Role> Roles => this.derivationError.Relations
+        public IEnumerable<IRole> Roles => this.derivationError.Relations
             .Select(v =>
-                new Role(
-                    this.workspace.Instantiate(v.Association.Id),
-                    (IRelationType)this.workspace.Connection.Configuration.MetaPopulation.FindByTag(v.RelationType.Tag)));
+            {
+                var metaPopulation = this.workspace.MetaPopulation;
+                var relationType = (IRelationType)metaPopulation.FindByTag(v.RelationType.Tag);
+                return this.workspace.Instantiate(v.Association.Id).Role(relationType.RoleType);
+            });
 
         public string Message => this.derivationError.Message;
     }

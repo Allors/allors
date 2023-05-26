@@ -5,7 +5,22 @@
 
 namespace Allors.Workspace
 {
+    using Adapters;
+    using Meta;
+
     public class CompositeRole : ICompositeRole
     {
+        public IRelationType RelationType => this.RoleType.RelationType;
+
+        public IRoleType RoleType { get; }
+
+        public IStrategy Object { get; }
+
+
+        public CompositeRole(Strategy strategy, IRoleType roleType)
+        {
+            this.Object = strategy;
+            this.RoleType = roleType;
+        }
     }
 }

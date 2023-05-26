@@ -25,7 +25,8 @@ namespace Allors.Workspace.Adapters
 
         private readonly Dictionary<IAssociationType, RefRange<Strategy>> changedAssociationByAssociationType;
 
-        private IDictionary<IRoleType, IRole> roleByRoleType;
+        private readonly IDictionary<IRoleType, IRole> roleByRoleType;
+        private readonly IDictionary<IAssociationType, IAssociation> associationByAssociationType;
 
         protected Strategy(Workspace workspace, IClass @class, long id)
         {
@@ -36,6 +37,9 @@ namespace Allors.Workspace.Adapters
 
             this.databaseCompositeAssociationByAssociationType = new Dictionary<IAssociationType, Strategy>();
             this.databaseCompositesAssociationByAssociationType = new Dictionary<IAssociationType, RefRange<Strategy>>();
+
+            this.roleByRoleType = new Dictionary<IRoleType, IRole>();
+            this.associationByAssociationType = new Dictionary<IAssociationType, IAssociation>();
 
             this.changedAssociationByAssociationType = new Dictionary<IAssociationType, RefRange<Strategy>>();
         }
@@ -123,12 +127,26 @@ namespace Allors.Workspace.Adapters
 
         public ICompositeRole CompositeRole(IRoleType roleType)
         {
-            throw new NotImplementedException();
+            if (this.roleByRoleType.TryGetValue(roleType, out var role))
+            {
+                return (ICompositeRole)role;
+            }
+
+            role = new CompositeRole(this, roleType);
+            this.roleByRoleType[roleType] = role;
+            return (ICompositeRole)role;
         }
 
         public ICompositesRole CompositesRole(IRoleType roleType)
         {
-            throw new NotImplementedException();
+            if (this.roleByRoleType.TryGetValue(roleType, out var role))
+            {
+                return (ICompositesRole)role;
+            }
+
+            role = new CompositesRole(this, roleType);
+            this.roleByRoleType[roleType] = role;
+            return (ICompositesRole)role;
         }
 
         public IAssociation Association(IAssociationType associationType)
@@ -148,12 +166,26 @@ namespace Allors.Workspace.Adapters
 
         public ICompositeAssociation CompositeAssociation(IAssociationType associationType)
         {
-            throw new NotImplementedException();
+            if (this.associationByAssociationType.TryGetValue(associationType, out var association))
+            {
+                return (ICompositeAssociation)association;
+            }
+
+            association = new CompositeAssociation(this, associationType);
+            this.associationByAssociationType[associationType] = association;
+            return (ICompositeAssociation)association;
         }
 
         public ICompositesAssociation CompositesAssociation(IAssociationType associationType)
         {
-            throw new NotImplementedException();
+            if (this.associationByAssociationType.TryGetValue(associationType, out var association))
+            {
+                return (ICompositesAssociation)association;
+            }
+
+            association = new CompositeAssociation(this, associationType);
+            this.associationByAssociationType[associationType] = association;
+            return (ICompositesAssociation)association;
         }
 
         public bool CanRead(IRoleType roleType)

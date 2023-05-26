@@ -23,10 +23,10 @@ namespace Allors.Workspace.Adapters.Json
 
         public string Message => this.responseDerivationError.m;
 
-        public IEnumerable<Role> Roles =>
+        public IEnumerable<IRole> Roles =>
             from r in this.responseDerivationError.r
             let association = this.workspace.Instantiate(r.i)
             let relationType = (IRelationType)this.workspace.MetaPopulation.FindByTag(r.r)
-            select new Role(association, relationType);
+            select association.Role(relationType.RoleType);
     }
 }

@@ -9,5 +9,8 @@ namespace Allors.Workspace
 
     public interface IRelationEnd
     {
+        IStrategy Object { get; }
+
+        IRelationType RelationType { get; }
     }
 }

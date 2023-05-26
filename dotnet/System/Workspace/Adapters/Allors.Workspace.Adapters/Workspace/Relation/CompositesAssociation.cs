@@ -5,7 +5,21 @@
 
 namespace Allors.Workspace
 {
+    using Adapters;
+    using Meta;
+
     public class CompositesAssociation : ICompositesAssociation
     {
+        public IRelationType RelationType => this.AssociationType.RelationType;
+
+        public IAssociationType AssociationType { get; }
+
+        public IStrategy Object { get; }
+
+        public CompositesAssociation(Strategy @object, IAssociationType associationType)
+        {
+            this.Object = @object;
+            this.AssociationType = associationType;
+        }
     }
 }

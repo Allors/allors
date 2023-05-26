@@ -10,8 +10,17 @@ namespace Allors.Workspace
 
     public class UnitRole : IUnitRole
     {
+        public IRelationType RelationType => this.RoleType.RelationType;
+
+        public IRoleType RoleType { get; }
+
+        public IStrategy Object { get; }
+
+
         public UnitRole(Strategy strategy, IRoleType roleType)
         {
+            this.Object = strategy;
+            this.RoleType = roleType;
         }
     }
 }
