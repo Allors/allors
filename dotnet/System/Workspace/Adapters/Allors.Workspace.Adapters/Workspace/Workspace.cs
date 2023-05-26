@@ -72,16 +72,16 @@ namespace Allors.Workspace.Adapters
 
         public IStrategy Instantiate(string idAsString) => long.TryParse(idAsString, out var id) ? this.GetStrategy(id) : default;
 
-        public IEnumerable<IStrategy> Instantiate(IEnumerable<IStrategy> objects) => objects.Select(this.Instantiate);
+        public IEnumerable<IStrategy> Instantiate(IEnumerable<IStrategy> objects) => objects != null ? objects.Select(this.Instantiate) : Array.Empty<IStrategy>();
 
-        public IEnumerable<IStrategy> Instantiate(IEnumerable<long> ids) => ids.Select(this.Instantiate);
+        public IEnumerable<IStrategy> Instantiate(IEnumerable<long> ids) => ids != null ? ids.Select(this.Instantiate) : Array.Empty<IStrategy>();
 
-        public IEnumerable<IStrategy> Instantiate(IEnumerable<string> ids) => this.Instantiate(ids.Select(
+        public IEnumerable<IStrategy> Instantiate(IEnumerable<string> ids) => ids != null ? this.Instantiate(ids.Select(
             v =>
             {
                 long.TryParse(v, out var id);
                 return id;
-            }));
+            })) : Array.Empty<IStrategy>();
 
         public IEnumerable<IStrategy> Instantiate(IComposite objectType)
         {

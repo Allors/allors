@@ -26,6 +26,21 @@ namespace Allors.Workspace
 
         void Delete();
 
+        IRole Role(IRoleType roleType);
+
+        IUnitRole UnitRole(IRoleType roleType);
+
+        ICompositeRole CompositeRole(IRoleType roleType);
+
+        ICompositesRole CompositesRole(IRoleType roleType);
+
+        IAssociation Association(IAssociationType associationType);
+
+        ICompositeAssociation CompositeAssociation(IAssociationType associationType);
+
+        ICompositesAssociation CompositesAssociation(IAssociationType associationType);
+
+        #region Deprecated
         bool CanRead(IRoleType roleType);
 
         bool CanWrite(IRoleType roleType);
@@ -63,5 +78,6 @@ namespace Allors.Workspace
         IStrategy GetCompositeAssociation(IAssociationType associationType);
 
         IEnumerable<IStrategy> GetCompositesAssociation(IAssociationType associationType);
+        #endregion
     }
 }

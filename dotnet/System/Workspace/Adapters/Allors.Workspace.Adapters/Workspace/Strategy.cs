@@ -25,6 +25,8 @@ namespace Allors.Workspace.Adapters
 
         private readonly Dictionary<IAssociationType, RefRange<Strategy>> changedAssociationByAssociationType;
 
+        private IDictionary<IRoleType, IRole> roleByRoleType;
+
         protected Strategy(Workspace workspace, IClass @class, long id)
         {
             this.Workspace = workspace;
@@ -85,6 +87,73 @@ namespace Allors.Workspace.Adapters
             }
 
             this.id = 0;
+        }
+
+        public IRole Role(IRoleType roleType)
+        {
+            if (roleType == null)
+            {
+                throw new ArgumentNullException(nameof(roleType));
+            }
+
+            if (roleType.ObjectType.IsUnit)
+            {
+                return this.UnitRole(roleType);
+            }
+
+            if (roleType.IsOne)
+            {
+                return this.CompositeRole(roleType);
+            }
+
+            return this.CompositesRole(roleType);
+        }
+
+        public IUnitRole UnitRole(IRoleType roleType)
+        {
+            if (this.roleByRoleType.TryGetValue(roleType, out var role))
+            {
+                return (IUnitRole)role;
+            }
+
+            role = new UnitRole(this, roleType);
+            this.roleByRoleType[roleType] = role;
+            return (IUnitRole)role;
+        }
+
+        public ICompositeRole CompositeRole(IRoleType roleType)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ICompositesRole CompositesRole(IRoleType roleType)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IAssociation Association(IAssociationType associationType)
+        {
+            if (associationType == null)
+            {
+                throw new ArgumentNullException(nameof(associationType));
+            }
+
+            if (associationType.IsOne)
+            {
+                return this.CompositeAssociation(associationType);
+            }
+
+            return this.CompositesAssociation(associationType);
+        }
+
+        public ICompositeAssociation CompositeAssociation(IAssociationType associationType)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ICompositesAssociation CompositesAssociation(IAssociationType associationType)
+        {
+            throw new NotImplementedException();
         }
 
         public bool CanRead(IRoleType roleType)
@@ -292,12 +361,11 @@ namespace Allors.Workspace.Adapters
             this.Workspace.PushToDatabaseTracker.OnChanged(this);
         }
 
-        public void SetCompositeRole(IRoleType roleType, IStrategy value) 
+        public void SetCompositeRole(IRoleType roleType, IStrategy value)
         {
-            this.AssertComposite(value);
-
             if (value != null)
             {
+                this.AssertComposite(value);
                 this.AssertSameType(roleType, value);
                 this.AssertSameSession(value);
             }
@@ -345,7 +413,6 @@ namespace Allors.Workspace.Adapters
             }
 
             this.AssertComposite(value);
-
             this.AssertSameType(roleType, value);
 
             if (roleType.IsOne)
@@ -390,12 +457,12 @@ namespace Allors.Workspace.Adapters
             }
         }
 
-        public IStrategy GetCompositeAssociation(IAssociationType associationType) 
+        public IStrategy GetCompositeAssociation(IAssociationType associationType)
         {
             return this.GetCompositeAssociationStrategy(associationType);
         }
 
-        public IEnumerable<IStrategy> GetCompositesAssociation(IAssociationType associationType) 
+        public IEnumerable<IStrategy> GetCompositesAssociation(IAssociationType associationType)
         {
             return this.GetCompositesAssociationStrategies(this, associationType);
         }
@@ -976,22 +1043,6 @@ namespace Allors.Workspace.Adapters
             return role.Id == (long)changedRoleId;
         }
 
-        private void AssertSameType(IRoleType roleType, IStrategy value) 
-        {
-            if (!((IComposite)roleType.ObjectType).IsAssignableFrom(value.Class))
-            {
-                throw new ArgumentException($"Types do not match: {nameof(roleType)}: {roleType.ObjectType.ClrType} and {nameof(value)}: {value.GetType()}");
-            }
-        }
-
-        private void AssertSameSession(IStrategy value)
-        {
-            if (this.Workspace != value.Workspace)
-            {
-                throw new ArgumentException("Workspace do not match");
-            }
-        }
-
         private static void AssertUnit(IRoleType roleType, object value)
         {
             if (value == null)
@@ -1054,16 +1105,19 @@ namespace Allors.Workspace.Adapters
             }
         }
 
-        private void AssertComposite(IStrategy value)
+        private void AssertSameType(IRoleType roleType, IStrategy value)
         {
-            if (value == null)
+            if (!((IComposite)roleType.ObjectType).IsAssignableFrom(value.Class))
             {
-                return;
+                throw new ArgumentException($"Types do not match: {nameof(roleType)}: {roleType.ObjectType.ClrType} and {nameof(value)}: {value.GetType()}");
             }
+        }
 
+        private void AssertSameSession(IStrategy value)
+        {
             if (this.Workspace != value.Workspace)
             {
-                throw new ArgumentException("Strategy is from a different workspace");
+                throw new ArgumentException("Workspace do not match");
             }
         }
 
@@ -1077,6 +1131,14 @@ namespace Allors.Workspace.Adapters
             foreach (var input in inputs)
             {
                 this.AssertComposite(input);
+            }
+        }
+
+        private void AssertComposite(IStrategy value)
+        {
+            if (this.Workspace != value.Workspace)
+            {
+                throw new ArgumentException("Strategy is from a different workspace");
             }
         }
 
