@@ -1,7 +1,7 @@
-namespace Allors.Workspace.Domain
+﻿namespace Allors.Workspace.Domain
 {
     public partial class C1
     {
-        public override string ToString() => this.ExistName ? this.Name : $"{this.Strategy.Class.SingularName}:{this.Strategy.Id}";
+        public override string ToString() => this.Name.Exist? this.Name.Value : $"{this.Strategy.Class.SingularName}:{this.Strategy.Id}";
     }
 }

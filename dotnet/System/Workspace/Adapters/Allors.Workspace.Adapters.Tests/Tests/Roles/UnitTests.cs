@@ -56,37 +56,37 @@ namespace Allors.Workspace.Adapters.Tests
                         await workspace1.PullAsync(new Pull { Object = c1.Strategy });
                     }
 
-                    c1.C1AllorsBinary = new byte[] { 1, 2 };
-                    c1.C1AllorsBoolean = true;
-                    c1.C1AllorsDateTime = new DateTime(1973, 3, 27, 12, 1, 2, 3, DateTimeKind.Utc);
-                    c1.C1AllorsDecimal = 10.10m;
-                    c1.C1AllorsDouble = 11.11d;
-                    c1.C1AllorsInteger = 12;
-                    c1.C1AllorsString = "a string";
-                    c1.C1AllorsUnique = new Guid("0208BB9B-E87B-4CED-8DEC-516E6778CD66");
+                    c1.C1AllorsBinary.Value = new byte[] { 1, 2 };
+                    c1.C1AllorsBoolean.Value = true;
+                    c1.C1AllorsDateTime.Value = new DateTime(1973, 3, 27, 12, 1, 2, 3, DateTimeKind.Utc);
+                    c1.C1AllorsDecimal.Value = 10.10m;
+                    c1.C1AllorsDouble.Value = 11.11d;
+                    c1.C1AllorsInteger.Value = 12;
+                    c1.C1AllorsString.Value = "a string";
+                    c1.C1AllorsUnique.Value = new Guid("0208BB9B-E87B-4CED-8DEC-516E6778CD66");
 
-                    Assert.Equal(new byte[] { 1, 2 }, c1.C1AllorsBinary);
-                    Assert.True(c1.C1AllorsBoolean);
-                    Assert.Equal(new DateTime(1973, 3, 27, 12, 1, 2, 3, DateTimeKind.Utc), c1.C1AllorsDateTime);
-                    Assert.Equal(10.10m, c1.C1AllorsDecimal);
-                    Assert.Equal(11.11d, c1.C1AllorsDouble);
-                    Assert.Equal(12, c1.C1AllorsInteger);
-                    Assert.Equal("a string", c1.C1AllorsString);
-                    Assert.Equal(new Guid("0208BB9B-E87B-4CED-8DEC-516E6778CD66"), c1.C1AllorsUnique);
+                    Assert.Equal(new byte[] { 1, 2 }, c1.C1AllorsBinary.Value);
+                    Assert.True(c1.C1AllorsBoolean.Value);
+                    Assert.Equal(new DateTime(1973, 3, 27, 12, 1, 2, 3, DateTimeKind.Utc), c1.C1AllorsDateTime.Value);
+                    Assert.Equal(10.10m, c1.C1AllorsDecimal.Value);
+                    Assert.Equal(11.11d, c1.C1AllorsDouble.Value);
+                    Assert.Equal(12, c1.C1AllorsInteger.Value);
+                    Assert.Equal("a string", c1.C1AllorsString.Value);
+                    Assert.Equal(new Guid("0208BB9B-E87B-4CED-8DEC-516E6778CD66"), c1.C1AllorsUnique.Value);
 
                     if (c1.Strategy.Id > 0)
                     {
                         await workspace1.PullAsync(new Pull { Object = c1.Strategy });
                     }
 
-                    Assert.Equal(new byte[] { 1, 2 }, c1.C1AllorsBinary);
-                    Assert.True(c1.C1AllorsBoolean);
-                    Assert.Equal(new DateTime(1973, 3, 27, 12, 1, 2, 3, DateTimeKind.Utc), c1.C1AllorsDateTime);
-                    Assert.Equal(10.10m, c1.C1AllorsDecimal);
-                    Assert.Equal(11.11d, c1.C1AllorsDouble);
-                    Assert.Equal(12, c1.C1AllorsInteger);
-                    Assert.Equal("a string", c1.C1AllorsString);
-                    Assert.Equal(new Guid("0208BB9B-E87B-4CED-8DEC-516E6778CD66"), c1.C1AllorsUnique);
+                    Assert.Equal(new byte[] { 1, 2 }, c1.C1AllorsBinary.Value);
+                    Assert.True(c1.C1AllorsBoolean.Value);
+                    Assert.Equal(new DateTime(1973, 3, 27, 12, 1, 2, 3, DateTimeKind.Utc), c1.C1AllorsDateTime.Value);
+                    Assert.Equal(10.10m, c1.C1AllorsDecimal.Value);
+                    Assert.Equal(11.11d, c1.C1AllorsDouble.Value);
+                    Assert.Equal(12, c1.C1AllorsInteger.Value);
+                    Assert.Equal("a string", c1.C1AllorsString.Value);
+                    Assert.Equal(new Guid("0208BB9B-E87B-4CED-8DEC-516E6778CD66"), c1.C1AllorsUnique.Value);
                 }
             }
         }
@@ -110,125 +110,125 @@ namespace Allors.Workspace.Adapters.Tests
                         await workspace1.PullAsync(new Pull { Object = c1.Strategy });
                     }
 
-                    c1.C1AllorsBinary = null;
-                    c1.C1AllorsBoolean = null;
-                    c1.C1AllorsDateTime = null;
-                    c1.C1AllorsDecimal = null;
-                    c1.C1AllorsDouble = null;
-                    c1.C1AllorsInteger = null;
-                    c1.C1AllorsString = null;
-                    c1.C1AllorsUnique = null;
+                    c1.C1AllorsBinary.Value = null;
+                    c1.C1AllorsBoolean.Value = null;
+                    c1.C1AllorsDateTime.Value = null;
+                    c1.C1AllorsDecimal.Value = null;
+                    c1.C1AllorsDouble.Value = null;
+                    c1.C1AllorsInteger.Value = null;
+                    c1.C1AllorsString.Value = null;
+                    c1.C1AllorsUnique.Value = null;
 
-                    Assert.False(c1.ExistC1AllorsBinary);
-                    Assert.False(c1.ExistC1AllorsBoolean);
-                    Assert.False(c1.ExistC1AllorsDateTime);
-                    Assert.False(c1.ExistC1AllorsDecimal);
-                    Assert.False(c1.ExistC1AllorsDouble);
-                    Assert.False(c1.ExistC1AllorsInteger);
-                    Assert.False(c1.ExistC1AllorsString);
-                    Assert.False(c1.ExistC1AllorsUnique);
+                    Assert.False(c1.C1AllorsBinary.Exist);
+                    Assert.False(c1.C1AllorsBoolean.Exist);
+                    Assert.False(c1.C1AllorsDateTime.Exist);
+                    Assert.False(c1.C1AllorsDecimal.Exist);
+                    Assert.False(c1.C1AllorsDouble.Exist);
+                    Assert.False(c1.C1AllorsInteger.Exist);
+                    Assert.False(c1.C1AllorsString.Exist);
+                    Assert.False(c1.C1AllorsUnique.Exist);
 
-                    Assert.Null(c1.C1AllorsBinary);
-                    Assert.Null(c1.C1AllorsBoolean);
-                    Assert.Null(c1.C1AllorsDateTime);
-                    Assert.Null(c1.C1AllorsDecimal);
-                    Assert.Null(c1.C1AllorsDouble);
-                    Assert.Null(c1.C1AllorsInteger);
-                    Assert.Null(c1.C1AllorsString);
-                    Assert.Null(c1.C1AllorsUnique);
-
-                    if (c1.Strategy.Id > 0)
-                    {
-                        await workspace1.PullAsync(new Pull { Object = c1.Strategy });
-                    }
-
-                    Assert.False(c1.ExistC1AllorsBinary);
-                    Assert.False(c1.ExistC1AllorsBoolean);
-                    Assert.False(c1.ExistC1AllorsDateTime);
-                    Assert.False(c1.ExistC1AllorsDecimal);
-                    Assert.False(c1.ExistC1AllorsDouble);
-                    Assert.False(c1.ExistC1AllorsInteger);
-                    Assert.False(c1.ExistC1AllorsString);
-                    Assert.False(c1.ExistC1AllorsUnique);
-
-                    Assert.Null(c1.C1AllorsBinary);
-                    Assert.Null(c1.C1AllorsBoolean);
-                    Assert.Null(c1.C1AllorsDateTime);
-                    Assert.Null(c1.C1AllorsDecimal);
-                    Assert.Null(c1.C1AllorsDouble);
-                    Assert.Null(c1.C1AllorsInteger);
-                    Assert.Null(c1.C1AllorsString);
-                    Assert.Null(c1.C1AllorsUnique);
-
-                    if (!c1.CanWriteC1C1One2One)
-                    {
-                        await workspace1.PullAsync(new Pull { Object = c1.Strategy });
-                    }
-
-                    c1.C1AllorsBinary = new byte[] { 1, 2 };
-                    c1.C1AllorsBoolean = true;
-                    c1.C1AllorsDateTime = new DateTime(1973, 3, 27, 12, 1, 2, 3, DateTimeKind.Utc);
-                    c1.C1AllorsDecimal = 10.10m;
-                    c1.C1AllorsDouble = 11.11d;
-                    c1.C1AllorsInteger = 12;
-                    c1.C1AllorsString = "a string";
-                    c1.C1AllorsUnique = new Guid("0208BB9B-E87B-4CED-8DEC-516E6778CD66");
-
-
-                    if (!c1.CanWriteC1C1One2One)
-                    {
-                        await workspace1.PullAsync(new Pull { Object = c1.Strategy });
-                    }
-
-                    c1.C1AllorsBinary = null;
-                    c1.C1AllorsBoolean = null;
-                    c1.C1AllorsDateTime = null;
-                    c1.C1AllorsDecimal = null;
-                    c1.C1AllorsDouble = null;
-                    c1.C1AllorsInteger = null;
-                    c1.C1AllorsString = null;
-                    c1.C1AllorsUnique = null;
-
-                    Assert.False(c1.ExistC1AllorsBinary);
-                    Assert.False(c1.ExistC1AllorsBoolean);
-                    Assert.False(c1.ExistC1AllorsDateTime);
-                    Assert.False(c1.ExistC1AllorsDecimal);
-                    Assert.False(c1.ExistC1AllorsDouble);
-                    Assert.False(c1.ExistC1AllorsInteger);
-                    Assert.False(c1.ExistC1AllorsString);
-                    Assert.False(c1.ExistC1AllorsUnique);
-
-                    Assert.Null(c1.C1AllorsBinary);
-                    Assert.Null(c1.C1AllorsBoolean);
-                    Assert.Null(c1.C1AllorsDateTime);
-                    Assert.Null(c1.C1AllorsDecimal);
-                    Assert.Null(c1.C1AllorsDouble);
-                    Assert.Null(c1.C1AllorsInteger);
-                    Assert.Null(c1.C1AllorsString);
-                    Assert.Null(c1.C1AllorsUnique);
+                    Assert.Null(c1.C1AllorsBinary.Value);
+                    Assert.Null(c1.C1AllorsBoolean.Value);
+                    Assert.Null(c1.C1AllorsDateTime.Value);
+                    Assert.Null(c1.C1AllorsDecimal.Value);
+                    Assert.Null(c1.C1AllorsDouble.Value);
+                    Assert.Null(c1.C1AllorsInteger.Value);
+                    Assert.Null(c1.C1AllorsString.Value);
+                    Assert.Null(c1.C1AllorsUnique.Value);
 
                     if (c1.Strategy.Id > 0)
                     {
                         await workspace1.PullAsync(new Pull { Object = c1.Strategy });
                     }
 
-                    Assert.False(c1.ExistC1AllorsBinary);
-                    Assert.False(c1.ExistC1AllorsBoolean);
-                    Assert.False(c1.ExistC1AllorsDateTime);
-                    Assert.False(c1.ExistC1AllorsDecimal);
-                    Assert.False(c1.ExistC1AllorsDouble);
-                    Assert.False(c1.ExistC1AllorsInteger);
-                    Assert.False(c1.ExistC1AllorsString);
-                    Assert.False(c1.ExistC1AllorsUnique);
+                    Assert.False(c1.C1AllorsBinary.Exist);
+                    Assert.False(c1.C1AllorsBoolean.Exist);
+                    Assert.False(c1.C1AllorsDateTime.Exist);
+                    Assert.False(c1.C1AllorsDecimal.Exist);
+                    Assert.False(c1.C1AllorsDouble.Exist);
+                    Assert.False(c1.C1AllorsInteger.Exist);
+                    Assert.False(c1.C1AllorsString.Exist);
+                    Assert.False(c1.C1AllorsUnique.Exist);
 
-                    Assert.Null(c1.C1AllorsBinary);
-                    Assert.Null(c1.C1AllorsBoolean);
-                    Assert.Null(c1.C1AllorsDateTime);
-                    Assert.Null(c1.C1AllorsDecimal);
-                    Assert.Null(c1.C1AllorsDouble);
-                    Assert.Null(c1.C1AllorsInteger);
-                    Assert.Null(c1.C1AllorsString);
-                    Assert.Null(c1.C1AllorsUnique);
+                    Assert.Null(c1.C1AllorsBinary.Value);
+                    Assert.Null(c1.C1AllorsBoolean.Value);
+                    Assert.Null(c1.C1AllorsDateTime.Value);
+                    Assert.Null(c1.C1AllorsDecimal.Value);
+                    Assert.Null(c1.C1AllorsDouble.Value);
+                    Assert.Null(c1.C1AllorsInteger.Value);
+                    Assert.Null(c1.C1AllorsString.Value);
+                    Assert.Null(c1.C1AllorsUnique.Value);
+
+                    if (!c1.CanWriteC1C1One2One)
+                    {
+                        await workspace1.PullAsync(new Pull { Object = c1.Strategy });
+                    }
+
+                    c1.C1AllorsBinary.Value = new byte[] { 1, 2 };
+                    c1.C1AllorsBoolean.Value = true;
+                    c1.C1AllorsDateTime.Value = new DateTime(1973, 3, 27, 12, 1, 2, 3, DateTimeKind.Utc);
+                    c1.C1AllorsDecimal.Value = 10.10m;
+                    c1.C1AllorsDouble.Value = 11.11d;
+                    c1.C1AllorsInteger.Value = 12;
+                    c1.C1AllorsString.Value = "a string";
+                    c1.C1AllorsUnique.Value = new Guid("0208BB9B-E87B-4CED-8DEC-516E6778CD66");
+
+
+                    if (!c1.CanWriteC1C1One2One)
+                    {
+                        await workspace1.PullAsync(new Pull { Object = c1.Strategy });
+                    }
+
+                    c1.C1AllorsBinary.Value = null;
+                    c1.C1AllorsBoolean.Value = null;
+                    c1.C1AllorsDateTime.Value = null;
+                    c1.C1AllorsDecimal.Value = null;
+                    c1.C1AllorsDouble.Value = null;
+                    c1.C1AllorsInteger.Value = null;
+                    c1.C1AllorsString.Value = null;
+                    c1.C1AllorsUnique.Value = null;
+
+                    Assert.False(c1.C1AllorsBinary.Exist);
+                    Assert.False(c1.C1AllorsBoolean.Exist);
+                    Assert.False(c1.C1AllorsDateTime.Exist);
+                    Assert.False(c1.C1AllorsDecimal.Exist);
+                    Assert.False(c1.C1AllorsDouble.Exist);
+                    Assert.False(c1.C1AllorsInteger.Exist);
+                    Assert.False(c1.C1AllorsString.Exist);
+                    Assert.False(c1.C1AllorsUnique.Exist);
+
+                    Assert.Null(c1.C1AllorsBinary.Value);
+                    Assert.Null(c1.C1AllorsBoolean.Value);
+                    Assert.Null(c1.C1AllorsDateTime.Value);
+                    Assert.Null(c1.C1AllorsDecimal.Value);
+                    Assert.Null(c1.C1AllorsDouble.Value);
+                    Assert.Null(c1.C1AllorsInteger.Value);
+                    Assert.Null(c1.C1AllorsString.Value);
+                    Assert.Null(c1.C1AllorsUnique.Value);
+
+                    if (c1.Strategy.Id > 0)
+                    {
+                        await workspace1.PullAsync(new Pull { Object = c1.Strategy });
+                    }
+
+                    Assert.False(c1.C1AllorsBinary.Exist);
+                    Assert.False(c1.C1AllorsBoolean.Exist);
+                    Assert.False(c1.C1AllorsDateTime.Exist);
+                    Assert.False(c1.C1AllorsDecimal.Exist);
+                    Assert.False(c1.C1AllorsDouble.Exist);
+                    Assert.False(c1.C1AllorsInteger.Exist);
+                    Assert.False(c1.C1AllorsString.Exist);
+                    Assert.False(c1.C1AllorsUnique.Exist);
+
+                    Assert.Null(c1.C1AllorsBinary.Value);
+                    Assert.Null(c1.C1AllorsBoolean.Value);
+                    Assert.Null(c1.C1AllorsDateTime.Value);
+                    Assert.Null(c1.C1AllorsDecimal.Value);
+                    Assert.Null(c1.C1AllorsDouble.Value);
+                    Assert.Null(c1.C1AllorsInteger.Value);
+                    Assert.Null(c1.C1AllorsString.Value);
+                    Assert.Null(c1.C1AllorsUnique.Value);
                 }
             }
         }
@@ -252,124 +252,124 @@ namespace Allors.Workspace.Adapters.Tests
                         await workspace1.PullAsync(new Pull { Object = c1.Strategy });
                     }
 
-                    c1.RemoveC1AllorsBinary();
-                    c1.RemoveC1AllorsBoolean();
-                    c1.RemoveC1AllorsDateTime();
-                    c1.RemoveC1AllorsDecimal();
-                    c1.RemoveC1AllorsDouble();
-                    c1.RemoveC1AllorsInteger();
-                    c1.RemoveC1AllorsString();
-                    c1.RemoveC1AllorsUnique();
+                    c1.C1AllorsBinary.Value = null;
+                    c1.C1AllorsBoolean.Value = null;
+                    c1.C1AllorsDateTime.Value = null;
+                    c1.C1AllorsDecimal.Value = null;
+                    c1.C1AllorsDouble.Value = null;
+                    c1.C1AllorsInteger.Value = null;
+                    c1.C1AllorsString.Value = null;
+                    c1.C1AllorsUnique.Value = null;
 
-                    Assert.False(c1.ExistC1AllorsBinary);
-                    Assert.False(c1.ExistC1AllorsBoolean);
-                    Assert.False(c1.ExistC1AllorsDateTime);
-                    Assert.False(c1.ExistC1AllorsDecimal);
-                    Assert.False(c1.ExistC1AllorsDouble);
-                    Assert.False(c1.ExistC1AllorsInteger);
-                    Assert.False(c1.ExistC1AllorsString);
-                    Assert.False(c1.ExistC1AllorsUnique);
+                    Assert.False(c1.C1AllorsBinary.Exist);
+                    Assert.False(c1.C1AllorsBoolean.Exist);
+                    Assert.False(c1.C1AllorsDateTime.Exist);
+                    Assert.False(c1.C1AllorsDecimal.Exist);
+                    Assert.False(c1.C1AllorsDouble.Exist);
+                    Assert.False(c1.C1AllorsInteger.Exist);
+                    Assert.False(c1.C1AllorsString.Exist);
+                    Assert.False(c1.C1AllorsUnique.Exist);
 
-                    Assert.Null(c1.C1AllorsBinary);
-                    Assert.Null(c1.C1AllorsBoolean);
-                    Assert.Null(c1.C1AllorsDateTime);
-                    Assert.Null(c1.C1AllorsDecimal);
-                    Assert.Null(c1.C1AllorsDouble);
-                    Assert.Null(c1.C1AllorsInteger);
-                    Assert.Null(c1.C1AllorsString);
-                    Assert.Null(c1.C1AllorsUnique);
-
-                    if (c1.Strategy.Id > 0)
-                    {
-                        await workspace1.PullAsync(new Pull { Object = c1.Strategy });
-                    }
-
-                    Assert.False(c1.ExistC1AllorsBinary);
-                    Assert.False(c1.ExistC1AllorsBoolean);
-                    Assert.False(c1.ExistC1AllorsDateTime);
-                    Assert.False(c1.ExistC1AllorsDecimal);
-                    Assert.False(c1.ExistC1AllorsDouble);
-                    Assert.False(c1.ExistC1AllorsInteger);
-                    Assert.False(c1.ExistC1AllorsString);
-                    Assert.False(c1.ExistC1AllorsUnique);
-
-                    Assert.Null(c1.C1AllorsBinary);
-                    Assert.Null(c1.C1AllorsBoolean);
-                    Assert.Null(c1.C1AllorsDateTime);
-                    Assert.Null(c1.C1AllorsDecimal);
-                    Assert.Null(c1.C1AllorsDouble);
-                    Assert.Null(c1.C1AllorsInteger);
-                    Assert.Null(c1.C1AllorsString);
-                    Assert.Null(c1.C1AllorsUnique);
-
-                    if (!c1.CanWriteC1C1One2One)
-                    {
-                        await workspace1.PullAsync(new Pull { Object = c1.Strategy });
-                    }
-
-                    c1.C1AllorsBinary = new byte[] { 1, 2 };
-                    c1.C1AllorsBoolean = true;
-                    c1.C1AllorsDateTime = new DateTime(1973, 3, 27, 12, 1, 2, 3, DateTimeKind.Utc);
-                    c1.C1AllorsDecimal = 10.10m;
-                    c1.C1AllorsDouble = 11.11d;
-                    c1.C1AllorsInteger = 12;
-                    c1.C1AllorsString = "a string";
-                    c1.C1AllorsUnique = new Guid("0208BB9B-E87B-4CED-8DEC-516E6778CD66");
-
-                    if (!c1.CanWriteC1C1One2One)
-                    {
-                        await workspace1.PullAsync(new Pull { Object = c1.Strategy });
-                    }
-
-                    c1.RemoveC1AllorsBinary();
-                    c1.RemoveC1AllorsBoolean();
-                    c1.RemoveC1AllorsDateTime();
-                    c1.RemoveC1AllorsDecimal();
-                    c1.RemoveC1AllorsDouble();
-                    c1.RemoveC1AllorsInteger();
-                    c1.RemoveC1AllorsString();
-                    c1.RemoveC1AllorsUnique();
-
-                    Assert.False(c1.ExistC1AllorsBinary);
-                    Assert.False(c1.ExistC1AllorsBoolean);
-                    Assert.False(c1.ExistC1AllorsDateTime);
-                    Assert.False(c1.ExistC1AllorsDecimal);
-                    Assert.False(c1.ExistC1AllorsDouble);
-                    Assert.False(c1.ExistC1AllorsInteger);
-                    Assert.False(c1.ExistC1AllorsString);
-                    Assert.False(c1.ExistC1AllorsUnique);
-
-                    Assert.Null(c1.C1AllorsBinary);
-                    Assert.Null(c1.C1AllorsBoolean);
-                    Assert.Null(c1.C1AllorsDateTime);
-                    Assert.Null(c1.C1AllorsDecimal);
-                    Assert.Null(c1.C1AllorsDouble);
-                    Assert.Null(c1.C1AllorsInteger);
-                    Assert.Null(c1.C1AllorsString);
-                    Assert.Null(c1.C1AllorsUnique);
+                    Assert.Null(c1.C1AllorsBinary.Value);
+                    Assert.Null(c1.C1AllorsBoolean.Value);
+                    Assert.Null(c1.C1AllorsDateTime.Value);
+                    Assert.Null(c1.C1AllorsDecimal.Value);
+                    Assert.Null(c1.C1AllorsDouble.Value);
+                    Assert.Null(c1.C1AllorsInteger.Value);
+                    Assert.Null(c1.C1AllorsString.Value);
+                    Assert.Null(c1.C1AllorsUnique.Value);
 
                     if (c1.Strategy.Id > 0)
                     {
                         await workspace1.PullAsync(new Pull { Object = c1.Strategy });
                     }
 
-                    Assert.False(c1.ExistC1AllorsBinary);
-                    Assert.False(c1.ExistC1AllorsBoolean);
-                    Assert.False(c1.ExistC1AllorsDateTime);
-                    Assert.False(c1.ExistC1AllorsDecimal);
-                    Assert.False(c1.ExistC1AllorsDouble);
-                    Assert.False(c1.ExistC1AllorsInteger);
-                    Assert.False(c1.ExistC1AllorsString);
-                    Assert.False(c1.ExistC1AllorsUnique);
+                    Assert.False(c1.C1AllorsBinary.Exist);
+                    Assert.False(c1.C1AllorsBoolean.Exist);
+                    Assert.False(c1.C1AllorsDateTime.Exist);
+                    Assert.False(c1.C1AllorsDecimal.Exist);
+                    Assert.False(c1.C1AllorsDouble.Exist);
+                    Assert.False(c1.C1AllorsInteger.Exist);
+                    Assert.False(c1.C1AllorsString.Exist);
+                    Assert.False(c1.C1AllorsUnique.Exist);
 
-                    Assert.Null(c1.C1AllorsBinary);
-                    Assert.Null(c1.C1AllorsBoolean);
-                    Assert.Null(c1.C1AllorsDateTime);
-                    Assert.Null(c1.C1AllorsDecimal);
-                    Assert.Null(c1.C1AllorsDouble);
-                    Assert.Null(c1.C1AllorsInteger);
-                    Assert.Null(c1.C1AllorsString);
-                    Assert.Null(c1.C1AllorsUnique);
+                    Assert.Null(c1.C1AllorsBinary.Value);
+                    Assert.Null(c1.C1AllorsBoolean.Value);
+                    Assert.Null(c1.C1AllorsDateTime.Value);
+                    Assert.Null(c1.C1AllorsDecimal.Value);
+                    Assert.Null(c1.C1AllorsDouble.Value);
+                    Assert.Null(c1.C1AllorsInteger.Value);
+                    Assert.Null(c1.C1AllorsString.Value);
+                    Assert.Null(c1.C1AllorsUnique.Value);
+
+                    if (!c1.CanWriteC1C1One2One)
+                    {
+                        await workspace1.PullAsync(new Pull { Object = c1.Strategy });
+                    }
+
+                    c1.C1AllorsBinary.Value = new byte[] { 1, 2 };
+                    c1.C1AllorsBoolean.Value = true;
+                    c1.C1AllorsDateTime.Value = new DateTime(1973, 3, 27, 12, 1, 2, 3, DateTimeKind.Utc);
+                    c1.C1AllorsDecimal.Value = 10.10m;
+                    c1.C1AllorsDouble.Value = 11.11d;
+                    c1.C1AllorsInteger.Value = 12;
+                    c1.C1AllorsString.Value = "a string";
+                    c1.C1AllorsUnique.Value = new Guid("0208BB9B-E87B-4CED-8DEC-516E6778CD66");
+
+                    if (!c1.CanWriteC1C1One2One)
+                    {
+                        await workspace1.PullAsync(new Pull { Object = c1.Strategy });
+                    }
+
+                    c1.C1AllorsBinary.Value = null;
+                    c1.C1AllorsBoolean.Value = null;
+                    c1.C1AllorsDateTime.Value = null;
+                    c1.C1AllorsDecimal.Value = null;
+                    c1.C1AllorsDouble.Value = null;
+                    c1.C1AllorsInteger.Value = null;
+                    c1.C1AllorsString.Value = null;
+                    c1.C1AllorsUnique.Value = null;
+
+                    Assert.False(c1.C1AllorsBinary.Exist);
+                    Assert.False(c1.C1AllorsBoolean.Exist);
+                    Assert.False(c1.C1AllorsDateTime.Exist);
+                    Assert.False(c1.C1AllorsDecimal.Exist);
+                    Assert.False(c1.C1AllorsDouble.Exist);
+                    Assert.False(c1.C1AllorsInteger.Exist);
+                    Assert.False(c1.C1AllorsString.Exist);
+                    Assert.False(c1.C1AllorsUnique.Exist);
+
+                    Assert.Null(c1.C1AllorsBinary.Value);
+                    Assert.Null(c1.C1AllorsBoolean.Value);
+                    Assert.Null(c1.C1AllorsDateTime.Value);
+                    Assert.Null(c1.C1AllorsDecimal.Value);
+                    Assert.Null(c1.C1AllorsDouble.Value);
+                    Assert.Null(c1.C1AllorsInteger.Value);
+                    Assert.Null(c1.C1AllorsString.Value);
+                    Assert.Null(c1.C1AllorsUnique.Value);
+
+                    if (c1.Strategy.Id > 0)
+                    {
+                        await workspace1.PullAsync(new Pull { Object = c1.Strategy });
+                    }
+
+                    Assert.False(c1.C1AllorsBinary.Exist);
+                    Assert.False(c1.C1AllorsBoolean.Exist);
+                    Assert.False(c1.C1AllorsDateTime.Exist);
+                    Assert.False(c1.C1AllorsDecimal.Exist);
+                    Assert.False(c1.C1AllorsDouble.Exist);
+                    Assert.False(c1.C1AllorsInteger.Exist);
+                    Assert.False(c1.C1AllorsString.Exist);
+                    Assert.False(c1.C1AllorsUnique.Exist);
+
+                    Assert.Null(c1.C1AllorsBinary.Value);
+                    Assert.Null(c1.C1AllorsBoolean.Value);
+                    Assert.Null(c1.C1AllorsDateTime.Value);
+                    Assert.Null(c1.C1AllorsDecimal.Value);
+                    Assert.Null(c1.C1AllorsDouble.Value);
+                    Assert.Null(c1.C1AllorsInteger.Value);
+                    Assert.Null(c1.C1AllorsString.Value);
+                    Assert.Null(c1.C1AllorsUnique.Value);
                 }
             }
         }

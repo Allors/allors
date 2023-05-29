@@ -113,16 +113,114 @@ namespace Allors.Workspace.Adapters
             return this.CompositesRole(roleType);
         }
 
-        public IUnitRole UnitRole(IRoleType roleType)
+        public IUnitRole UnitRole(IRoleType roleType) =>
+            roleType.ObjectType.Tag switch
+            {
+                UnitTags.Binary => this.BinaryRole(roleType),
+                UnitTags.Boolean => this.BooleanRole(roleType),
+                UnitTags.DateTime => this.DateTimeRole(roleType),
+                UnitTags.Decimal => this.DecimalRole(roleType),
+                UnitTags.Float => this.FloatRole(roleType),
+                UnitTags.Integer => this.IntegerRole(roleType),
+                UnitTags.String => this.StringRole(roleType),
+                UnitTags.Unique => this.UniqueRole(roleType),
+                _ => throw new Exception("Unknown unit role")
+            };
+
+        public IBinaryRole BinaryRole(IRoleType roleType)
         {
             if (this.roleByRoleType.TryGetValue(roleType, out var role))
             {
-                return (IUnitRole)role;
+                return (IBinaryRole)role;
             }
 
-            role = new UnitRole(this, roleType);
+            role = new BinaryRole(this, roleType);
             this.roleByRoleType[roleType] = role;
-            return (IUnitRole)role;
+            return (IBinaryRole)role;
+        }
+
+        public IBooleanRole BooleanRole(IRoleType roleType)
+        {
+            if (this.roleByRoleType.TryGetValue(roleType, out var role))
+            {
+                return (IBooleanRole)role;
+            }
+
+            role = new BooleanRole(this, roleType);
+            this.roleByRoleType[roleType] = role;
+            return (IBooleanRole)role;
+        }
+
+        public IDateTimeRole DateTimeRole(IRoleType roleType)
+        {
+            if (this.roleByRoleType.TryGetValue(roleType, out var role))
+            {
+                return (IDateTimeRole)role;
+            }
+
+            role = new DateTimeRole(this, roleType);
+            this.roleByRoleType[roleType] = role;
+            return (IDateTimeRole)role;
+        }
+
+        public IDecimalRole DecimalRole(IRoleType roleType)
+        {
+            if (this.roleByRoleType.TryGetValue(roleType, out var role))
+            {
+                return (IDecimalRole)role;
+            }
+
+            role = new DecimalRole(this, roleType);
+            this.roleByRoleType[roleType] = role;
+            return (IDecimalRole)role;
+        }
+
+        public IFloatRole FloatRole(IRoleType roleType)
+        {
+            if (this.roleByRoleType.TryGetValue(roleType, out var role))
+            {
+                return (IFloatRole)role;
+            }
+
+            role = new FloatRole(this, roleType);
+            this.roleByRoleType[roleType] = role;
+            return (IFloatRole)role;
+        }
+
+        public IIntegerRole IntegerRole(IRoleType roleType)
+        {
+            if (this.roleByRoleType.TryGetValue(roleType, out var role))
+            {
+                return (IIntegerRole)role;
+            }
+
+            role = new IntegerRole(this, roleType);
+            this.roleByRoleType[roleType] = role;
+            return (IIntegerRole)role;
+        }
+
+        public IStringRole StringRole(IRoleType roleType)
+        {
+            if (this.roleByRoleType.TryGetValue(roleType, out var role))
+            {
+                return (IStringRole)role;
+            }
+
+            role = new StringRole(this, roleType);
+            this.roleByRoleType[roleType] = role;
+            return (IStringRole)role;
+        }
+
+        public IUniqueRole UniqueRole(IRoleType roleType)
+        {
+            if (this.roleByRoleType.TryGetValue(roleType, out var role))
+            {
+                return (IUniqueRole)role;
+            }
+
+            role = new UniqueRole(this, roleType);
+            this.roleByRoleType[roleType] = role;
+            return (IUniqueRole)role;
         }
 
         public ICompositeRole CompositeRole(IRoleType roleType)

@@ -42,7 +42,7 @@ namespace Allors.Workspace.Adapters.Tests
             var result = await workspace.PullAsync(pull);
             var c1a = result.GetCollection<C1>()[0];
 
-            c1a.C1AllorsString = "X";
+            c1a.C1AllorsString.Value = "X";
 
             await workspace.PushAsync();
             result = await workspace.PullAsync(pull);
@@ -67,15 +67,15 @@ namespace Allors.Workspace.Adapters.Tests
             var result = await workspace.PullAsync(pull);
             var c1a = result.GetCollection<C1>()[0];
 
-            c1a.C1AllorsString = "X";
+            c1a.C1AllorsString.Value = "X";
 
             await workspace.PushAsync();
 
-            Assert.Equal("X", c1a.C1AllorsString);
+            Assert.Equal("X", c1a.C1AllorsString.Value);
 
             this.Workspace.Reset();
 
-            Assert.Null(c1a.C1AllorsString);
+            Assert.Null(c1a.C1AllorsString.Value);
         }
 
         [Fact]
@@ -89,19 +89,19 @@ namespace Allors.Workspace.Adapters.Tests
             var result = await workspace.PullAsync(pull);
             var c1a = result.GetCollection<C1>()[0];
 
-            c1a.C1AllorsString = "X";
+            c1a.C1AllorsString.Value = "X";
 
             await workspace.PushAsync();
             result = await workspace.PullAsync(pull);
             var c2a = result.GetCollection<C1>()[0];
 
-            c2a.C1AllorsString = "Y";
+            c2a.C1AllorsString.Value = "Y";
 
             await workspace.PushAsync();
 
             this.Workspace.Reset();
 
-            Assert.Equal("X", c2a.C1AllorsString);
+            Assert.Equal("X", c2a.C1AllorsString.Value);
         }
 
         [Fact]

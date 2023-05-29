@@ -1,4 +1,4 @@
-// <copyright file="AssociationTests.cs" company="Allors bvba">
+﻿// <copyright file="AssociationTests.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -48,13 +48,13 @@ namespace Allors.Workspace.Adapters.Tests
 
             var c2s = result.GetCollection<C2>();
 
-            var c2C = c2s.First(v => v.Name == "c2C");
+            var c2C = c2s.First(v => v.Name.Value == "c2C");
 
             var c1WhereC1C2One2Many = c2C.C1WhereC1C2One2Many;
 
             // One to One
             Assert.NotNull(c1WhereC1C2One2Many);
-            Assert.Equal("c1C", c1WhereC1C2One2Many.Name);
+            Assert.Equal("c1C", c1WhereC1C2One2Many.Name.Value);
         }
 
         [Fact]
@@ -88,13 +88,13 @@ namespace Allors.Workspace.Adapters.Tests
 
             var c2s = result.GetCollection<C2>();
 
-            var c2C = c2s.First(v => v.Name == "c2C");
+            var c2C = c2s.First(v => v.Name.Value == "c2C");
 
             var c1WhereC1C2One2One = c2C.C1WhereC1C2One2One;
 
             // One to One
             Assert.NotNull(c1WhereC1C2One2One);
-            Assert.Equal("c1C", c1WhereC1C2One2One.Name);
+            Assert.Equal("c1C", c1WhereC1C2One2One.Name.Value);
         }
     }
 }

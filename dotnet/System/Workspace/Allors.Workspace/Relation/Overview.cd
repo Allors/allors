@@ -49,6 +49,13 @@
       <FileName>Relation\ICompositesRole.cs</FileName>
     </TypeIdentifier>
   </Interface>
+  <Interface Name="Allors.Workspace.IBinaryRole">
+    <Position X="0.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Relation\IBinaryRole.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
   <Interface Name="Allors.Workspace.IUnitRole">
     <Position X="0.5" Y="6.25" Width="1.5" />
     <TypeIdentifier>

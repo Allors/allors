@@ -86,10 +86,10 @@ namespace Allors.Workspace.Adapters.Tests
 
                 var result = await workspace.PullAsync(new Pull { Extent = new Filter(this.M.C1) });
                 var c1s = result.GetCollection<C1>();
-                var c1A = c1s.Single(v => v.Name == "c1A");
-                var c1B = c1s.Single(v => v.Name == "c1B");
-                var c1C = c1s.Single(v => v.Name == "c1C");
-                var c1D = c1s.Single(v => v.Name == "c1D");
+                var c1A = c1s.Single(v => v.Name.Value == "c1A");
+                var c1B = c1s.Single(v => v.Name.Value == "c1B");
+                var c1C = c1s.Single(v => v.Name.Value == "c1C");
+                var c1D = c1s.Single(v => v.Name.Value == "c1D");
 
                 // Role
                 Assert.Equal(c1B, c1A.C1C1One2One);

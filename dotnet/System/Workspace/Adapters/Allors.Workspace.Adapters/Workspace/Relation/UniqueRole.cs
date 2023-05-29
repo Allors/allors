@@ -5,12 +5,13 @@
 
 namespace Allors.Workspace
 {
+    using System;
     using Adapters;
     using Meta;
 
-    public class UnitRole : IUnitRole
+    public class UniqueRole : IUniqueRole
     {
-        public UnitRole(Strategy strategy, IRoleType roleType)
+        public UniqueRole(Strategy strategy, IRoleType roleType)
         {
             this.Object = strategy;
             this.RoleType = roleType;
@@ -21,10 +22,18 @@ namespace Allors.Workspace
         public IRelationType RelationType => this.RoleType.RelationType;
 
         public IRoleType RoleType { get; }
+        
+        object IRelationEnd.Value => this.Value;
 
-        public object Value
+        object IRole.Value
         {
-            get => this.Object.GetUnitRole(this.RoleType);
+            get => this.Value;
+            set => this.Value = (Guid?)value;
+        }
+
+        public Guid? Value
+        {
+            get => (Guid?)this.Object.GetUnitRole(this.RoleType);
             set => this.Object.SetUnitRole(this.RoleType, value);
         }
 

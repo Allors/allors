@@ -51,20 +51,10 @@ $interface.WorkspaceMethodTypesByWorkspaceName.(workspaceName):{methodType|$inte
 interfaceRoleType() ::= <<
 $\n$
 $if(roleType.ObjectType.IsUnit)$
-		$roleType_ObjectType(roleType)$ $roleType.SingularName$
+		I$roleType.ObjectType.SingularName$Role $roleType.SingularName$
 		{
 			get;
-$if(!roleType.RelationType.IsDerived)$
-			set;
-$endif$
 		}
-
-		bool Exist$roleType.SingularName${get;}
-
-$if(!roleType.RelationType.IsDerived)$
-		void Remove$roleType.SingularName$();
-$endif$
-
 $else$
 $if(roleType.IsMany)$
 		System.Collections.Generic.IEnumerable<$roleType_ObjectType(roleType)$> $roleType.PluralName$
@@ -217,6 +207,15 @@ classMethodType() ::= <<
 >>
 
 classConcreteRoleType_Class() ::= <<
+$if(concreteRoleType.ObjectType.IsUnit)$
+		virtual public I$concreteRoleType.ObjectType.SingularName$Role $concreteRoleType.SingularName$
+		{
+			get
+			{
+				return this.Strategy.$concreteRoleType.ObjectType.SingularName$Role(Meta.$concreteRoleType.Name$);
+			}
+		}
+$else$
 		public bool CanRead$concreteRoleType.Name$
 		{
 			get
@@ -233,31 +232,7 @@ classConcreteRoleType_Class() ::= <<
 			}
 		}
 $\n$
-$if(concreteRoleType.ObjectType.IsUnit)$
-		virtual public $concreteRoleType_ObjectType(concreteRoleType)$ $concreteRoleType.SingularName$
-		{
-			get
-			{
-				return ($concreteRoleType_ObjectType(concreteRoleType)$) this.Strategy.GetUnitRole(Meta.$concreteRoleType.Name$);
-			}
-			set
-			{
-				this.Strategy.SetUnitRole(Meta.$concreteRoleType.Name$, value);
-			}
-		}
 
-		virtual public bool Exist$concreteRoleType.SingularName${
-			get
-			{
-				return this.Strategy.ExistRole(Meta.$concreteRoleType.Name$);
-			}
-		}
-
-		virtual public void Remove$concreteRoleType.SingularName$()
-		{
-			this.Strategy.RemoveRole(Meta.$concreteRoleType.Name$);
-		}
-$else$
 $if(concreteRoleType.IsMany)$
 		virtual public System.Collections.Generic.IEnumerable<$concreteRoleType_ObjectType(concreteRoleType)$> $concreteRoleType.PluralName$
 		{

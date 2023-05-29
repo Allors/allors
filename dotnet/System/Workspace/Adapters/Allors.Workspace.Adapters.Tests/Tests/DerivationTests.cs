@@ -1,4 +1,4 @@
-// <copyright file="DerivationNodesTest.cs" company="Allors bvba">
+﻿// <copyright file="DerivationNodesTest.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -35,7 +35,7 @@ namespace Allors.Workspace.Adapters.Tests
 
             var people = result.GetCollection<Person>();
 
-            var person = people.First(v => "Jane".Equals(v.FirstName));
+            var person = people.First(v => "Jane" == v.FirstName.Value);
 
             Assert.Equal($"Jane Doe", person.FullName);
         }

@@ -94,14 +94,14 @@ namespace Allors.Workspace.Adapters.Tests
             var workspace = this.Workspace;
 
             var newObject = workspace.Create<C1>();
-            newObject.C1AllorsString = "A new object";
+            newObject.C1AllorsString.Value = "A new object";
 
             var result = await workspace.PushAsync();
             Assert.False(result.HasErrors);
 
             await workspace.PullAsync(new Pull { Object = newObject.Strategy });
 
-            Assert.Equal("A new object", newObject.C1AllorsString);
+            Assert.Equal("A new object", newObject.C1AllorsString.Value);
         }
 
         [Fact]
@@ -122,14 +122,14 @@ namespace Allors.Workspace.Adapters.Tests
             var result = await workspace.PullAsync(pull);
             var c1a = result.GetCollection<C1>()[0];
 
-            c1a.C1AllorsString = "X";
+            c1a.C1AllorsString.Value = "X";
 
-            Assert.Equal("X", c1a.C1AllorsString);
+            Assert.Equal("X", c1a.C1AllorsString.Value);
 
             await workspace.PushAsync();
             await workspace.PullAsync(pull);
 
-            Assert.Equal("X", c1a.C1AllorsString);
+            Assert.Equal("X", c1a.C1AllorsString.Value);
         }
 
         [Fact]
@@ -140,8 +140,8 @@ namespace Allors.Workspace.Adapters.Tests
             var workspace = this.Workspace;
 
             var person = workspace.Create<Person>();
-            person.FirstName = "Johny";
-            person.LastName = "Doey";
+            person.FirstName.Value = "Johny";
+            person.LastName.Value = "Doey";
 
             Assert.True(person.Id < 0);
 
@@ -158,8 +158,8 @@ namespace Allors.Workspace.Adapters.Tests
             var workspace = this.Workspace;
 
             var person = workspace.Create<Person>();
-            person.FirstName = "Johny";
-            person.LastName = "Doey";
+            person.FirstName.Value = "Johny";
+            person.LastName.Value = "Doey";
 
             Assert.Equal(Version.WorkspaceInitial.Value, person.Strategy.Version);
 
@@ -176,8 +176,8 @@ namespace Allors.Workspace.Adapters.Tests
             var workspace = this.Workspace;
 
             var person = workspace.Create<Person>();
-            person.FirstName = "Johny";
-            person.LastName = "Doey";
+            person.FirstName.Value = "Johny";
+            person.LastName.Value = "Doey";
 
             Assert.False((await workspace.PushAsync()).HasErrors);
 
@@ -188,7 +188,7 @@ namespace Allors.Workspace.Adapters.Tests
 
             Assert.False((await workspace.PullAsync(pull)).HasErrors);
 
-            Assert.Equal("Johny Doey", person.DomainFullName);
+            Assert.Equal("Johny Doey", person.DomainFullName.Value);
         }
 
         [Fact]

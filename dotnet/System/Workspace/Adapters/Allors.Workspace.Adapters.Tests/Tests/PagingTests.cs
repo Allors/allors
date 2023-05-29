@@ -1,4 +1,4 @@
-// <copyright file="PullTests.cs" company="Allors bvba">
+﻿// <copyright file="PullTests.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -44,7 +44,7 @@ namespace Allors.Workspace.Adapters.Tests
 
             Assert.Single(i12s);
 
-            Assert.Equal("c2D", i12s[0].Name);
+            Assert.Equal("c2D", i12s[0].Name.Value);
         }
     }
 }
