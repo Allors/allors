@@ -27,15 +27,15 @@ namespace Allors.Workspace.Adapters.Json
 
         private IWorkspace Workspace { get; }
 
-        public IDictionary<string, IStrategy> Objects => this.objects ??= this.pullResponse.o.ToDictionary(pair => pair.Key.ToUpperInvariant(), pair => base.Workspace.Instantiate(pair.Value));
+        public IDictionary<string, IStrategy> Objects => this.objects ??= this.pullResponse.o.ToDictionary(pair => pair.Key, pair => base.Workspace.Instantiate(pair.Value));
 
-        public IDictionary<string, IStrategy[]> Collections => this.collections ??= this.pullResponse.c.ToDictionary(pair => pair.Key.ToUpperInvariant(), pair => pair.Value.Select(base.Workspace.Instantiate).ToArray());
+        public IDictionary<string, IStrategy[]> Collections => this.collections ??= this.pullResponse.c.ToDictionary(pair => pair.Key, pair => pair.Value.Select(base.Workspace.Instantiate).ToArray());
 
-        public IDictionary<string, object> Values => this.values ??= this.pullResponse.v.ToDictionary(pair => pair.Key.ToUpperInvariant(), pair => pair.Value);
+        public IDictionary<string, object> Values => this.values ??= this.pullResponse.v.ToDictionary(pair => pair.Key, pair => pair.Value);
 
         public IStrategy[] GetCollection(Meta.IComposite objectType)
         {
-            var key = objectType.PluralName.ToUpperInvariant();
+            var key = objectType.PluralName;
             return this.GetCollection(key);
         }
 
@@ -43,7 +43,7 @@ namespace Allors.Workspace.Adapters.Json
 
         public IStrategy GetObject(Meta.IComposite objectType)
         {
-            var key = objectType.SingularName.ToUpperInvariant();
+            var key = objectType.SingularName;
             return this.GetObject(key);
         }
 
