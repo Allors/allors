@@ -9,5 +9,18 @@ namespace Allors.Workspace
 
     public interface IRole : IRelationEnd
     {
+        IRoleType RoleType { get; }
+
+        new object Value { get; set; }
+
+        bool CanRead { get; }
+
+        bool CanWrite { get; }
+
+        bool Exist { get; }
+
+        bool IsModified { get; }
+
+        void Restore();
     }
 }

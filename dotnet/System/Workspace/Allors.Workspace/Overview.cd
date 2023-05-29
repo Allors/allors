@@ -1,39 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Interface Name="Allors.Workspace.IWorkspace">
-    <Position X="3.75" Y="0.5" Width="2.5" />
+    <Position X="3.75" Y="0.5" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>gAAAAAIAAQAABEAAAAQAAAAAAAAgAEAQgAAAAAAAAAA=</HashCode>
+      <HashCode>gAAAAAIAAQAABEAAAAQAAAAAAAAgAEAQAAAAAABAAAA=</HashCode>
       <FileName>IWorkspace.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="Configuration" />
       <Property Name="Services" />
     </ShowAsAssociation>
   </Interface>
   <Interface Name="Allors.Workspace.IStrategy">
-    <Position X="8.25" Y="0.5" Width="2.5" />
+    <Position X="7.75" Y="0.5" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>IFBCBAUIAABQAEBAMEYQAAAAAAEAAAAABEAQAQAJIAA=</HashCode>
+      <HashCode>IFBCBAUIAABQAEBAMEYQAAQAAAEAAAAAREAQAQAJIQA=</HashCode>
       <FileName>IStrategy.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="Workspace" />
+      <Property Name="Class" />
     </ShowAsAssociation>
-  </Interface>
-  <Interface Name="Allors.Workspace.IConfiguration">
-    <Position X="4.25" Y="4.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAABAAAA=</HashCode>
-      <FileName>IConfiguration.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="MetaPopulation" />
-    </ShowAsAssociation>
-  </Interface>
-  <Interface Name="Allors.Workspace.Meta.IMetaPopulation">
-    <Position X="0.5" Y="3.25" Width="2.25" />
-    <TypeIdentifier />
   </Interface>
   <Interface Name="Allors.Workspace.IWorkspaceServices">
     <Position X="0.5" Y="0.5" Width="1.75" />
@@ -41,6 +27,10 @@
       <HashCode>AAAAAAAAAAAAAABAAAAAAAAAAAAAAAQAAAAAAAAAAAA=</HashCode>
       <FileName>Services\IWorkspaceServices.cs</FileName>
     </TypeIdentifier>
+  </Interface>
+  <Interface Name="Allors.Workspace.Meta.IClass" Collapsed="true">
+    <Position X="11.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier />
   </Interface>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

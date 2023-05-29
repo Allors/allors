@@ -49,7 +49,7 @@ namespace Allors.Workspace
 
         bool ExistRole(IRoleType roleType);
 
-        bool HasChanged(IRoleType roleType);
+        bool IsModified(IRoleType roleType);
 
         void RestoreRole(IRoleType roleType);
 

@@ -5,10 +5,8 @@
 
 namespace Allors.Workspace
 {
-    using Meta;
-
     public interface ICompositeAssociation : IAssociation
     {
-      
+        new IStrategy Value { get; }
     }
 }

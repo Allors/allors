@@ -7,5 +7,6 @@ namespace Allors.Workspace
 {
     public interface ICompositeRole : IRole
     {
+        new IStrategy Value { get; set; }
     }
 }

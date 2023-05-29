@@ -9,5 +9,6 @@ namespace Allors.Workspace
 
     public interface IAssociation : IRelationEnd
     {
+        IAssociationType AssociationType { get; }
     }
 }

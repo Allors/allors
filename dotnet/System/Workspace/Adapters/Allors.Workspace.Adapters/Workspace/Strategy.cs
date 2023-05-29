@@ -258,7 +258,7 @@ namespace Allors.Workspace.Adapters
             return this.GetCompositesRole(roleType).Any();
         }
 
-        public bool HasChanged(IRoleType roleType) =>
+        public bool IsModified(IRoleType roleType) =>
             this.CanRead(roleType) &&
             (this.changesByRelationType?.ContainsKey(roleType.RelationType) ?? false);
 

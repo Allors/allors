@@ -10,17 +10,44 @@ namespace Allors.Workspace
 
     public class CompositeRole : ICompositeRole
     {
-        public IRelationType RelationType => this.RoleType.RelationType;
-
-        public IRoleType RoleType { get; }
-
-        public IStrategy Object { get; }
-
-
         public CompositeRole(Strategy strategy, IRoleType roleType)
         {
             this.Object = strategy;
             this.RoleType = roleType;
+        }
+
+        public IStrategy Object { get; }
+
+        public IRelationType RelationType => this.RoleType.RelationType;
+
+
+        public IRoleType RoleType { get; }
+
+        object IRelationEnd.Value => this.Value;
+
+        object IRole.Value
+        {
+            get => this.Value;
+            set => this.Value = (IStrategy)value;
+        }
+
+        public IStrategy Value
+        {
+            get => this.Object.GetCompositeRole(this.RoleType);
+            set => this.Object.SetCompositeRole(this.RoleType, value);
+        }
+
+        public bool CanRead => this.Object.CanRead(this.RoleType);
+
+        public bool CanWrite => this.Object.CanWrite(this.RoleType);
+
+        public bool Exist => this.Object.ExistRole(this.RoleType);
+
+        public bool IsModified => this.Object.IsModified(this.RoleType);
+
+        public void Restore()
+        {
+            this.Object.RestoreRole(this.RoleType);
         }
     }
 }

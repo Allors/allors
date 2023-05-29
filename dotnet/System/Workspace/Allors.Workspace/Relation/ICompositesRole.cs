@@ -5,7 +5,10 @@
 
 namespace Allors.Workspace
 {
+    using System.Collections.Generic;
+
     public interface ICompositesRole : IRole
     {
+        new IEnumerable<IStrategy> Value { get; set; }
     }
 }

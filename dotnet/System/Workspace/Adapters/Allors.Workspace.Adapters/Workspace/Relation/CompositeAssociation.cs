@@ -10,16 +10,19 @@ namespace Allors.Workspace
 
     public class CompositeAssociation : ICompositeAssociation
     {
-        public IRelationType RelationType => this.AssociationType.RelationType;
-
-        public IAssociationType AssociationType { get; }
-
-        public IStrategy Object { get; }
-        
         public CompositeAssociation(Strategy @object, IAssociationType associationType)
         {
             this.Object = @object;
             this.AssociationType = associationType;
         }
+        public IStrategy Object { get; }
+
+        public IRelationType RelationType => this.AssociationType.RelationType;
+
+        public IAssociationType AssociationType { get; }
+
+        object IRelationEnd.Value => this.Value;
+
+        public IStrategy Value => this.Object.GetCompositeAssociation(this.AssociationType);
     }
 }

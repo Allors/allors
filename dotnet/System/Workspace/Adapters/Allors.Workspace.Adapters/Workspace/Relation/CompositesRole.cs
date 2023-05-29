@@ -5,22 +5,50 @@
 
 namespace Allors.Workspace
 {
+    using System.Collections.Generic;
     using Adapters;
     using Meta;
 
     public class CompositesRole : ICompositesRole
     {
-        public IRelationType RelationType => this.RoleType.RelationType;
-
-        public IRoleType RoleType { get; }
-
-        public IStrategy Object { get; }
-
-
         public CompositesRole(Strategy strategy, IRoleType roleType)
         {
             this.Object = strategy;
             this.RoleType = roleType;
+        }
+
+        public IStrategy Object { get; }
+
+        public IRelationType RelationType => this.RoleType.RelationType;
+
+
+        public IRoleType RoleType { get; }
+
+        object IRelationEnd.Value => this.Value;
+
+        object IRole.Value
+        {
+            get => this.Value;
+            set => this.Value = (IEnumerable<IStrategy>)value;
+        }
+
+        public IEnumerable<IStrategy> Value
+        {
+            get => this.Object.GetCompositesRole(this.RoleType);
+            set => this.Object.SetCompositesRole(this.RoleType, value);
+        }
+
+        public bool CanRead => this.Object.CanRead(this.RoleType);
+
+        public bool CanWrite => this.Object.CanWrite(this.RoleType);
+
+        public bool Exist => this.Object.ExistRole(this.RoleType);
+
+        public bool IsModified => this.Object.IsModified(this.RoleType);
+
+        public void Restore()
+        {
+            this.Object.RestoreRole(this.RoleType);
         }
     }
 }
