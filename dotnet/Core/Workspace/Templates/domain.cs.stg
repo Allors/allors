@@ -45,6 +45,11 @@ $interface.WorkspaceExclusiveAssociationTypesByWorkspaceName.(workspaceName):{as
 
 $interface.WorkspaceMethodTypesByWorkspaceName.(workspaceName):{methodType|$interfaceMethodType()$}; separator="\n"$
 	}
+
+	public partial interface $interface.name$Role : ICompositeRole$if(interface.WorkspaceDirectSupertypesByWorkspaceName.(workspaceName))$$interface.WorkspaceDirectSupertypesByWorkspaceName.(workspaceName):{directSupertype|, $directSupertype.SingularName$Role}$ $endif$
+	{
+		new $interface.name$ Value { get; set; }
+	}
 }
 >>
 
@@ -185,6 +190,17 @@ $class.WorkspaceAssociationTypesByWorkspaceName.(workspaceName):{associationType
 
 $class.WorkspaceMethodTypesByWorkspaceName.(workspaceName):{methodType|$classMethodType()$}; separator="\n"$
 	}
+
+	public partial class $class.name$Role : CompositeRole<$class.name$>$class.WorkspaceDirectSupertypesByWorkspaceName.(workspaceName):{directSupertype|, $directSupertype.SingularName$Role}$
+	{
+        public $class.name$Role(IStrategy strategy, Allors.Workspace.Meta.IRoleType roleType) : base(strategy, roleType)
+        {
+        }
+
+$class.WorkspaceSupertypesByWorkspaceName.(workspaceName):{supertype|$classRole_Interface()$}; separator="\n"$
+
+		new $class.name$ Value { get => ($class.name$)this.Object.GetCompositeRole(this.RoleType); set => this.Object.SetCompositeRole(this.RoleType, value.Strategy); }
+	}
 }
 >>
 
@@ -317,6 +333,11 @@ $else$
 		}
 $endif$
 >>
+
+classRole_Interface() ::= <<
+		$supertype.name$ $supertype.name$Role.Value { get => this.Value; set => this.Value = ($class.name$)value; }
+>>
+
 
 
 roleType_ObjectType(roleType) ::= <%
