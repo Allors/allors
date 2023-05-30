@@ -61,13 +61,13 @@
                 var sharedDatabaseObject = this.Workspace1.Create<T>();
                 await this.Workspace1.PushAsync();
                 var sharedResult = await workspace.PullAsync(new Pull { Object = sharedDatabaseObject.Strategy });
-                result = objectFactory.Instantiate<T>(sharedResult.Objects.Values.First());
+                result = objectFactory.Object<T>(sharedResult.Objects.Values.First());
                 break;
             case DatabaseMode.ExclusiveDatabase:
                 var exclusiveDatabaseObject = this.Workspace2.Create<T>();
                 await this.Workspace2.PushAsync();
                 var exclusiveResult = await workspace.PullAsync(new Pull { Object = exclusiveDatabaseObject.Strategy });
-                result = objectFactory.Instantiate<T>(exclusiveResult.Objects.Values.First());
+                result = objectFactory.Object<T>(exclusiveResult.Objects.Values.First());
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(mode), mode, $@"Mode [{string.Join(", ", Enum.GetNames(typeof(DatabaseMode)))}]");

@@ -15,15 +15,15 @@ namespace Allors.Workspace
         public static T Create<T>(this IWorkspace workspace) where T : class, IObject
         {
             var objectFactory = workspace.Services.Get<IObjectFactory>();
-            var @class = objectFactory.GetObjectType<T>();
+            var @class = objectFactory.GetObjectTypeForObject<T>();
             var strategy = workspace.Create((IClass)@class);
-            return objectFactory.Instantiate<T>(strategy);
+            return objectFactory.Object<T>(strategy);
         }
 
         public static T Instantiate<T>(this IWorkspace workspace, IStrategy strategy) where T : class, IObject
         {
             var objectFactory = workspace.Services.Get<IObjectFactory>();
-            return objectFactory.Instantiate<T>(workspace.Instantiate(strategy));
+            return objectFactory.Object<T>(workspace.Instantiate(strategy));
         }
 
         public static IEnumerable<T> Instantiate<T>(this IWorkspace workspace, IEnumerable<IStrategy> strategies) where T : class, IObject
@@ -34,7 +34,7 @@ namespace Allors.Workspace
             }
 
             var objectFactory = workspace.Services.Get<IObjectFactory>();
-            return objectFactory.Instantiate<T>(strategies.Select(workspace.Instantiate));
+            return objectFactory.Object<T>(strategies.Select(workspace.Instantiate));
         }
 
         public static DateTime Now(this IWorkspace workspace)

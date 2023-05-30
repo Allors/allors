@@ -2058,9 +2058,9 @@ namespace Allors.Workspace.Adapters.Tests
 
             var c2ByC1 = c1s.ToDictionary(v => v, v => v.C1C2One2One);
 
-            Assert.Equal("c2B", c2ByC1[c1b].Name.Value);
-            Assert.Equal("c2C", c2ByC1[c1c].Name.Value);
-            Assert.Equal("c2D", c2ByC1[c1d].Name.Value);
+            Assert.Equal("c2B", c2ByC1[c1b].Value.Name.Value);
+            Assert.Equal("c2C", c2ByC1[c1c].Value.Name.Value);
+            Assert.Equal("c2D", c2ByC1[c1d].Value.Name.Value);
         }
 
         [Fact]

@@ -17,24 +17,23 @@ namespace Allors.Workspace.Adapters
         /// <summary>
         /// <see cref="Type"/> by <see cref="IObjectType"/> cache.
         /// </summary>
-        private readonly Dictionary<IObjectType, Type> typeByObjectType;
+        private readonly Dictionary<IObjectType, Type> typeByObjectTypeForObject;
 
         /// <summary>
         /// <see cref="Type"/> by <see cref="IObjectType"/> id cache.
         /// </summary>
-        private readonly Dictionary<Type, IObjectType> objectTypeByType;
+        private readonly Dictionary<Type, IObjectType> objectTypeByTypeForObject;
 
-        private readonly Dictionary<string, IObjectType> objectTypeByName;
-
-        /// <summary>
-        /// <see cref="IObjectType"/> by <see cref="IObjectType"/> id cache.
-        /// </summary>
-        private readonly Dictionary<string, IObjectType> objectTypeByObjectTypeTag;
+        private readonly Dictionary<string, IObjectType> objectTypeByNameForObject;
 
         /// <summary>
         /// <see cref="ConstructorInfo"/> by <see cref="IObjectType"/> cache.
         /// </summary>
-        private readonly Dictionary<IObjectType, ConstructorInfo> contructorInfoByObjectType;
+        private readonly Dictionary<IObjectType, ConstructorInfo> contructorInfoByObjectTypeForObject;
+
+        private readonly Dictionary<IObjectType, Type> typeByObjectTypeForCompositeRole;
+
+        private readonly Dictionary<IObjectType, ConstructorInfo> contructorInfoByObjectTypeForCompositeRole;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ReflectionObjectFactory"/> class.
@@ -48,37 +47,60 @@ namespace Allors.Workspace.Adapters
         {
             var assembly = instance.GetTypeInfo().Assembly;
 
-            var types = assembly.GetTypes()
-                .Where(type => type.Namespace?.Equals(instance.Namespace) == true &&
-                               type.GetTypeInfo().ImplementedInterfaces.Contains(typeof(IObject)))
-                .ToArray();
-
-            metaPopulation.Bind(types);
-
-            this.typeByObjectType = new Dictionary<IObjectType, Type>();
-            this.objectTypeByType = new Dictionary<Type, IObjectType>();
-            this.objectTypeByName = new Dictionary<string, IObjectType>();
-            this.objectTypeByObjectTypeTag = new Dictionary<string, IObjectType>();
-            this.contructorInfoByObjectType = new Dictionary<IObjectType, ConstructorInfo>();
-
-            var typeByName = types.ToDictionary(type => type.Name, type => type);
-
-            foreach (var objectType in metaPopulation.Composites)
+            // For Object
             {
-                var type = typeByName[objectType.SingularName];
+                var typesForObject = assembly.GetTypes()
+                    .Where(type => type.Namespace?.Equals(instance.Namespace) == true &&
+                                   type.GetTypeInfo().ImplementedInterfaces.Contains(typeof(IObject)))
+                    .ToArray();
 
-                this.typeByObjectType[objectType] = type;
-                this.objectTypeByType[type] = objectType;
-                this.objectTypeByName[type.Name] = objectType;
-                this.objectTypeByObjectTypeTag[objectType.Tag] = objectType;
+                metaPopulation.Bind(typesForObject);
 
-                if (objectType is IClass)
+                this.typeByObjectTypeForObject = new Dictionary<IObjectType, Type>();
+                this.objectTypeByTypeForObject = new Dictionary<Type, IObjectType>();
+                this.objectTypeByNameForObject = new Dictionary<string, IObjectType>();
+                this.contructorInfoByObjectTypeForObject = new Dictionary<IObjectType, ConstructorInfo>();
+
+                var typeByName = typesForObject.ToDictionary(type => type.Name, type => type);
+
+                foreach (var objectType in metaPopulation.Composites)
                 {
-                    var parameterTypes = new[] { typeof(IStrategy) };
-                    var databaseParameterTypes = new[] { typeof(IStrategy) };
-                    this.contructorInfoByObjectType[objectType] = type.GetTypeInfo().GetConstructor(parameterTypes)
-                                                                  ?? type.GetTypeInfo().GetConstructor(databaseParameterTypes)
-                                                                  ?? throw new ArgumentException($"{objectType.SingularName} has no Allors constructor.");
+                    var type = typeByName[objectType.SingularName];
+
+                    this.typeByObjectTypeForObject[objectType] = type;
+                    this.objectTypeByTypeForObject[type] = objectType;
+                    this.objectTypeByNameForObject[type.Name] = objectType;
+
+                    if (objectType is IClass)
+                    {
+                        var parameterTypes = new[] { typeof(IStrategy) };
+                        this.contructorInfoByObjectTypeForObject[objectType] = type.GetTypeInfo().GetConstructor(parameterTypes)
+                                                                      ?? throw new ArgumentException($"{objectType.SingularName} has no Allors constructor.");
+                    }
+                }
+            }
+
+            // For CompositeRole
+            {
+                var typesForCompositeRole = assembly.GetTypes()
+                    .Where(type => type.Namespace?.Equals(instance.Namespace) == true &&
+                                   type.GetTypeInfo().ImplementedInterfaces.Contains(typeof(ICompositeRole)))
+                    .ToArray();
+
+                this.typeByObjectTypeForCompositeRole = new Dictionary<IObjectType, Type>();
+                this.contructorInfoByObjectTypeForCompositeRole = new Dictionary<IObjectType, ConstructorInfo>();
+
+                var typeByName = typesForCompositeRole.ToDictionary(type => type.Name, type => type);
+
+                foreach (var objectType in metaPopulation.Composites)
+                {
+                    var type = typeByName[objectType.SingularName + "Role"];
+
+                    this.typeByObjectTypeForCompositeRole[objectType] = type;
+
+                    var parameterTypes = new[] { typeof(IStrategy), typeof(IRoleType) };
+                    this.contructorInfoByObjectTypeForCompositeRole[objectType] =
+                        type.GetTypeInfo().GetConstructor(parameterTypes);
                 }
             }
         }
@@ -88,25 +110,25 @@ namespace Allors.Workspace.Adapters
         /// </summary>
         /// <param name="type">The .Net <see cref="Type"/>.</param>
         /// <returns>The Allors <see cref="IObjectType"/>.</returns>
-        public IObjectType GetObjectType(Type type) => !this.objectTypeByType.TryGetValue(type, out var objectType) ? null : objectType;
+        public IObjectType GetObjectTypeForObject(Type type) => !this.objectTypeByTypeForObject.TryGetValue(type, out var objectType) ? null : objectType;
 
-        public IObjectType GetObjectType(string name) => !this.objectTypeByName.TryGetValue(name, out var objectType) ? null : objectType;
+        public IObjectType GetObjectTypeForObject(string name) => !this.objectTypeByNameForObject.TryGetValue(name, out var objectType) ? null : objectType;
 
         /// <summary>
         /// Gets the .Net <see cref="Type"/> given the Allors <see cref="IObjectType"/>.
         /// </summary>
         /// <param name="objectType">The Allors <see cref="IObjectType"/>.</param>
         /// <returns>The .Net <see cref="Type"/>.</returns>
-        public Type GetType(IObjectType objectType)
+        public Type GetTypeForObject(IObjectType objectType)
         {
-            this.typeByObjectType.TryGetValue(objectType, out var type);
+            this.typeByObjectTypeForObject.TryGetValue(objectType, out var type);
             return type;
         }
 
-        public IObjectType GetObjectType<T>()
+        public IObjectType GetObjectTypeForObject<T>()
         {
             var typeName = typeof(T).Name;
-            return this.GetObjectType(typeName);
+            return this.GetObjectTypeForObject(typeName);
         }
 
         /// <summary>
@@ -118,20 +140,20 @@ namespace Allors.Workspace.Adapters
         /// <returns>
         /// The new <see cref="Object"/>.
         /// </returns>
-        public T Instantiate<T>(IStrategy strategy) where T : class, IObject
+        public T Object<T>(IStrategy strategy) where T : class, IObject
         {
             if (strategy == null)
             {
                 return null;
             }
 
-            var constructor = this.contructorInfoByObjectType[strategy.Class];
+            var constructor = this.contructorInfoByObjectTypeForObject[strategy.Class];
             object[] parameters = { strategy };
 
             return (T)constructor.Invoke(parameters);
         }
 
-        public IEnumerable<T> Instantiate<T>(IEnumerable<IStrategy> objects) where T : class, IObject
+        public IEnumerable<T> Object<T>(IEnumerable<IStrategy> objects) where T : class, IObject
         {
             if (objects == null)
             {
@@ -140,8 +162,16 @@ namespace Allors.Workspace.Adapters
 
             foreach (var @object in objects)
             {
-                yield return this.Instantiate<T>(@object);
+                yield return this.Object<T>(@object);
             }
+        }
+
+        public T CompositeRole<T>(IStrategy strategy, IRoleType roleType) where T : class, ICompositeRole
+        {
+            var constructor = this.contructorInfoByObjectTypeForCompositeRole[roleType.ObjectType];
+            object[] parameters = { strategy, roleType };
+
+            return (T)constructor.Invoke(parameters);
         }
     }
 }

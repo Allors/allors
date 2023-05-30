@@ -65,14 +65,14 @@ namespace Allors.Workspace.Adapters.Tests
 
                 c1y_1.ShouldNotBeNull(ctx, mode1, mode2);
 
-                if (!c1x_1.CanWriteC1C1Many2One)
+                if (!c1x_1.C1C1Many2One.CanWrite)
                 {
                     await workspace1.PullAsync(new Pull { Object = c1x_1.Strategy });
                 }
 
-                c1x_1.C1C1Many2One = c1y_1;
+                c1x_1.C1C1Many2One.Value = c1y_1;
 
-                c1x_1.C1C1Many2One.ShouldEqual(c1y_1, ctx, mode1, mode2);
+                c1x_1.C1C1Many2One.Value.ShouldEqual(c1y_1, ctx, mode1, mode2);
                 c1y_1.C1sWhereC1C1Many2One.ShouldContain(c1x_1, ctx, mode1, mode2);
 
                 pushResult = await workspace1.PushAsync();
@@ -104,14 +104,14 @@ namespace Allors.Workspace.Adapters.Tests
 
                 c1y_1.ShouldNotBeNull(ctx, mode1, mode2);
 
-                if (!c1x_1.CanWriteC1C1Many2One)
+                if (!c1x_1.C1C1Many2One.CanWrite)
                 {
                     await workspace1.PullAsync(new Pull { Object = c1x_1.Strategy });
                 }
 
-                c1x_1.C1C1Many2One = c1y_1;
+                c1x_1.C1C1Many2One.Value = c1y_1;
 
-                c1x_1.C1C1Many2One.ShouldEqual(c1y_1, ctx, mode1, mode2);
+                c1x_1.C1C1Many2One.Value.ShouldEqual(c1y_1, ctx, mode1, mode2);
                 c1y_1.C1sWhereC1C1Many2One.ShouldContain(c1x_1, ctx, mode1, mode2);
 
                 pushResult = await workspace1.PushAsync();

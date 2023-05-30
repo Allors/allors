@@ -123,13 +123,13 @@ namespace Allors.Workspace.Adapters.Tests
             var c1a = result.GetCollection<C1>()[0];
             var c1x = workspace.Create<C1>();
 
-            c1a.C1C1One2One = c1x;
+            c1a.C1C1One2One.Value = c1x;
 
             this.Workspace.Reset();
 
             Assert.NotNull(Record.Exception(() =>
             {
-                var x = c1a.C1C1One2One;
+                var x = c1a.C1C1One2One.Value;
             }));
 
             Assert.Null(c1x.C1WhereC1C1One2One);
@@ -159,14 +159,14 @@ namespace Allors.Workspace.Adapters.Tests
 
             var result = await workspace.PullAsync(pull);
             var c1a = result.GetCollection<C1>()[0];
-            var c1b = c1a.C1C1One2One;
+            var c1b = c1a.C1C1One2One.Value;
             var c1x = workspace.Create<C1>();
 
-            c1a.C1C1One2One = c1x;
+            c1a.C1C1One2One.Value = c1x;
 
             this.Workspace.Reset();
 
-            Assert.Equal(c1b, c1a.C1C1One2One);
+            Assert.Equal(c1b, c1a.C1C1One2One.Value);
             Assert.Null(c1x.C1WhereC1C1One2One);
         }
 
@@ -182,7 +182,7 @@ namespace Allors.Workspace.Adapters.Tests
             var c1a = result.GetCollection<C1>()[0];
             var c1b = workspace.Create<C1>();
 
-            c1a.C1C1One2One = c1b;
+            c1a.C1C1One2One.Value = c1b;
 
             await workspace.PushAsync();
 
@@ -190,7 +190,7 @@ namespace Allors.Workspace.Adapters.Tests
 
             Assert.NotNull(Record.Exception(() =>
             {
-                var x = c1a.C1C1One2One;
+                var x = c1a.C1C1One2One.Value;
             }));
 
             Assert.Null(c1b.C1WhereC1C1One2One);
@@ -220,16 +220,16 @@ namespace Allors.Workspace.Adapters.Tests
 
             var result = await workspace.PullAsync(pull);
             var c1a = result.GetCollection<C1>()[0];
-            var c1b = c1a.C1C1One2One;
+            var c1b = c1a.C1C1One2One.Value;
             var c1x = workspace.Create<C1>();
 
-            c1a.C1C1One2One = c1x;
+            c1a.C1C1One2One.Value = c1x;
 
             await workspace.PushAsync();
 
             this.Workspace.Reset();
 
-            Assert.Equal(c1b, c1a.C1C1One2One);
+            Assert.Equal(c1b, c1a.C1C1One2One.Value);
             Assert.Null(c1x.C1WhereC1C1One2One);
         }
 
@@ -245,22 +245,22 @@ namespace Allors.Workspace.Adapters.Tests
             var c1a = result.GetCollection<C1>()[0];
             var c1b = workspace.Create<C1>();
 
-            c1a.C1C1One2One = c1b;
+            c1a.C1C1One2One.Value = c1b;
 
-            Assert.Equal(c1b, c1a.C1C1One2One);
+            Assert.Equal(c1b, c1a.C1C1One2One.Value);
             Assert.Equal(c1a, c1b.C1WhereC1C1One2One);
 
             await workspace.PushAsync();
             result = await workspace.PullAsync(pull);
 
-            c1a.RemoveC1C1One2One();
+            c1a.C1C1One2One.Value = null;
 
-            Assert.Null(c1a.C1C1One2One);
+            Assert.Null(c1a.C1C1One2One.Value);
             Assert.Null(c1b.C1WhereC1C1One2One);
 
             this.Workspace.Reset();
 
-            Assert.Equal(c1b, c1a.C1C1One2One);
+            Assert.Equal(c1b, c1a.C1C1One2One.Value);
             Assert.Equal(c1a, c1b.C1WhereC1C1One2One);
         }
 
@@ -276,11 +276,11 @@ namespace Allors.Workspace.Adapters.Tests
             var c1a = result.GetCollection<C1>()[0];
             var c1b = workspace.Create<C1>();
 
-            c1a.C1C1Many2One = c1b;
+            c1a.C1C1Many2One.Value = c1b;
 
             this.Workspace.Reset();
 
-            Assert.Null(c1a.C1C1Many2One);
+            Assert.Null(c1a.C1C1Many2One.Value);
             Assert.Empty(c1b.C1sWhereC1C1Many2One);
         }
 
@@ -296,13 +296,13 @@ namespace Allors.Workspace.Adapters.Tests
             var c1a = result.GetCollection<C1>()[0];
             var c1b = workspace.Create<C1>();
 
-            c1a.C1C1Many2One = c1b;
+            c1a.C1C1Many2One.Value = c1b;
 
             await workspace.PushAsync();
 
             this.Workspace.Reset();
 
-            Assert.Null(c1a.C1C1Many2One);
+            Assert.Null(c1a.C1C1Many2One.Value);
             Assert.Empty(c1b.C1sWhereC1C1Many2One);
         }
 
@@ -318,25 +318,25 @@ namespace Allors.Workspace.Adapters.Tests
             var c1a = result.GetCollection<C1>()[0];
             var c1b = workspace.Create<C1>();
 
-            c1a.C1C1Many2One = c1b;
+            c1a.C1C1Many2One.Value = c1b;
 
-            Assert.Equal(c1b, c1a.C1C1Many2One);
+            Assert.Equal(c1b, c1a.C1C1Many2One.Value);
             Assert.Contains(c1a, c1b.C1sWhereC1C1Many2One);
 
             await workspace.PushAsync();
             result = await workspace.PullAsync(pull);
             
-            Assert.Equal(c1b, c1a.C1C1Many2One);
+            Assert.Equal(c1b, c1a.C1C1Many2One.Value);
             Assert.Contains(c1a, c1b.C1sWhereC1C1Many2One);
 
-            c1a.RemoveC1C1Many2One();
+            c1a.C1C1Many2One.Value = null;
 
-            Assert.Null(c1a.C1C1Many2One);
+            Assert.Null(c1a.C1C1Many2One.Value);
             Assert.Empty(c1b.C1sWhereC1C1Many2One);
 
             this.Workspace.Reset();
 
-            Assert.Equal(c1b, c1a.C1C1Many2One);
+            Assert.Equal(c1b, c1a.C1C1Many2One.Value);
             Assert.Contains(c1a, c1b.C1sWhereC1C1Many2One);
         }
 

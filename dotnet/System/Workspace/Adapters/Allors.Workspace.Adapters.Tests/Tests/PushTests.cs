@@ -200,7 +200,7 @@ namespace Allors.Workspace.Adapters.Tests
 
             var c1x = workspace.Create<C1>();
             var c1y = workspace.Create<C1>();
-            c1x.C1C1Many2One = c1y;
+            c1x.C1C1Many2One.Value = c1y;
 
             var pushResult = await workspace.PushAsync();
             Assert.False(pushResult.HasErrors);

@@ -12,7 +12,7 @@ namespace Allors.Workspace
         public static T[] GetCollection<T>(this IPullResult @this) where T : class, IObject
         {
             var objectFactory = @this.Workspace.Services.Get<IObjectFactory>();
-            var objectType = objectFactory.GetObjectType<T>();
+            var objectType = objectFactory.GetObjectTypeForObject<T>();
             var key = objectType.PluralName;
             return @this.GetCollection<T>(key);
         }
@@ -20,13 +20,13 @@ namespace Allors.Workspace
         public static T[] GetCollection<T>(this IPullResult @this, string key) where T : class, IObject
         {
             var objectFactory = @this.Workspace.Services.Get<IObjectFactory>();
-            return @this.Collections.TryGetValue(key, out var collection) ? objectFactory.Instantiate<T>(collection).ToArray() : null;
+            return @this.Collections.TryGetValue(key, out var collection) ? objectFactory.Object<T>(collection).ToArray() : null;
         }
 
         public static T GetObject<T>(this IPullResult @this) where T : class, IObject
         {
             var objectFactory = @this.Workspace.Services.Get<IObjectFactory>();
-            var objectType = objectFactory.GetObjectType<T>();
+            var objectType = objectFactory.GetObjectTypeForObject<T>();
             var key = objectType.SingularName;
             return @this.GetObject<T>(key);
         }
@@ -34,7 +34,7 @@ namespace Allors.Workspace
         public static T GetObject<T>(this IPullResult @this, string key) where T : class, IObject
         {
             var objectFactory = @this.Workspace.Services.Get<IObjectFactory>();
-            return @this.Objects.TryGetValue(key, out var @object) ? objectFactory.Instantiate<T>(@object) : null;
+            return @this.Objects.TryGetValue(key, out var @object) ? objectFactory.Object<T>(@object) : null;
         }
     }
 }

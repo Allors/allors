@@ -12,16 +12,18 @@ namespace Allors.Workspace
 
     public interface IObjectFactory
     {
-        IObjectType GetObjectType<T>();
+        IObjectType GetObjectTypeForObject<T>();
 
-        IObjectType GetObjectType(Type type);
+        IObjectType GetObjectTypeForObject(Type type);
 
-        IObjectType GetObjectType(string name);
+        IObjectType GetObjectTypeForObject(string name);
 
-        Type GetType(IObjectType objectType);
+        Type GetTypeForObject(IObjectType objectType);
 
-        T Instantiate<T>(IStrategy objects) where T : class, IObject;
+        T Object<T>(IStrategy objects) where T : class, IObject;
 
-        IEnumerable<T> Instantiate<T>(IEnumerable<IStrategy> objects) where T : class, IObject;
+        IEnumerable<T> Object<T>(IEnumerable<IStrategy> objects) where T : class, IObject;
+
+        T CompositeRole<T>(IStrategy strategy, IRoleType roleType) where T : class, ICompositeRole;
     }
 }

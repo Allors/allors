@@ -75,7 +75,7 @@ namespace Allors.Workspace.Adapters.Tests
             var c1c_1 = c1_1.First(v => v.Name.Value == "c1C");
             var c1d_1 = c1_1.First(v => v.Name.Value == "c1D");
 
-            c1b_1.C1C1One2One = c1d_1;
+            c1b_1.C1C1One2One.Value = c1d_1;
 
             var result_2 = await workspace2.PullAsync(pull);
             var c1_2 = result_2.GetCollection<C1>();
@@ -85,7 +85,7 @@ namespace Allors.Workspace.Adapters.Tests
             var c1c_2 = c1_2.First(v => v.Name.Value == "c1C");
             var c1d_2 = c1_2.First(v => v.Name.Value == "c1D");
 
-            c1b_2.C1C1One2One = c1a_2;
+            c1b_2.C1C1One2One.Value = c1a_2;
 
             await workspace2.PushAsync();
 
@@ -96,8 +96,8 @@ namespace Allors.Workspace.Adapters.Tests
             c1c_1 = c1_1.First(v => v.Name.Value == "c1C");
             c1d_1 = c1_1.First(v => v.Name.Value == "c1D");
 
-            Assert.Equal(c1a_1, c1b_1.C1C1One2One);
-            Assert.Equal(c1d_1, c1c_1.C1C1One2One);
+            Assert.Equal(c1a_1, c1b_1.C1C1One2One.Value);
+            Assert.Equal(c1d_1, c1c_1.C1C1One2One.Value);
 
             Assert.True(result_1.HasErrors);
             Assert.Single(result_1.MergeErrors);

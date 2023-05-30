@@ -10,7 +10,7 @@ namespace Allors.Workspace
         public static T Cast<T>(this IStrategy @this) where T : class, IObject
         {
             var objectFactory = @this?.Workspace.Services.Get<IObjectFactory>();
-            return objectFactory?.Instantiate<T>(@this);
+            return objectFactory?.Object<T>(@this);
         }
     }
 }

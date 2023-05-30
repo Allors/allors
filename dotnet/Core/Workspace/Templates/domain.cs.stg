@@ -83,22 +83,10 @@ $endif$
 
 		void Remove$roleType.PluralName$();
 $else$
-		$roleType_ObjectType(roleType)$ $roleType.SingularName$
-		{
-			get;
-$if(!roleType.RelationType.IsDerived)$
-			set;
-$endif$
-		}
-
-		bool Exist$roleType.SingularName$
+		$roleType.ObjectType.SingularName$Role $roleType.SingularName$
 		{
 			get;
 		}
-
-$if(!roleType.RelationType.IsDerived)$
-		void Remove$roleType.SingularName$();
-$endif$
 $endif$
 $endif$
 >>
@@ -146,7 +134,7 @@ namespace Allors.Workspace.Domain
             this.Strategy = strategy;
 			this.M = (Allors.Workspace.Meta.M)strategy.Workspace.MetaPopulation;
   			this.O = strategy.Workspace.Services.Get<IObjectFactory>();
-          }
+        }
 
         IStrategy IObject.Strategy => this.Strategy;
 
@@ -193,13 +181,16 @@ $class.WorkspaceMethodTypesByWorkspaceName.(workspaceName):{methodType|$classMet
 
 	public partial class $class.name$Role : CompositeRole<$class.name$>$class.WorkspaceDirectSupertypesByWorkspaceName.(workspaceName):{directSupertype|, $directSupertype.SingularName$Role}$
 	{
+		public IObjectFactory O { get; }
+
         public $class.name$Role(IStrategy strategy, Allors.Workspace.Meta.IRoleType roleType) : base(strategy, roleType)
         {
+  			this.O = strategy.Workspace.Services.Get<IObjectFactory>();
         }
 
 $class.WorkspaceSupertypesByWorkspaceName.(workspaceName):{supertype|$classRole_Interface()$}; separator="\n"$
 
-		new $class.name$ Value { get => ($class.name$)this.Object.GetCompositeRole(this.RoleType); set => this.Object.SetCompositeRole(this.RoleType, value.Strategy); }
+		public new $class.name$ Value { get => this.O.Object<$class.name$>(this.Object.GetCompositeRole(this.RoleType)); set => this.Object.SetCompositeRole(this.RoleType, value?.Strategy); }
 	}
 }
 >>
@@ -232,6 +223,7 @@ $if(concreteRoleType.ObjectType.IsUnit)$
 			}
 		}
 $else$
+$if(concreteRoleType.IsMany)$
 		public bool CanRead$concreteRoleType.Name$
 		{
 			get
@@ -247,14 +239,12 @@ $else$
 				return this.Strategy.CanWrite(this.Meta.$concreteRoleType.Name$);
 			}
 		}
-$\n$
 
-$if(concreteRoleType.IsMany)$
 		virtual public System.Collections.Generic.IEnumerable<$concreteRoleType_ObjectType(concreteRoleType)$> $concreteRoleType.PluralName$
 		{
 			get
 			{
-				return this.O.Instantiate<$concreteRoleType_ObjectType(concreteRoleType)$>(this.Strategy.GetCompositesRole(Meta.$concreteRoleType.Name$));
+				return this.O.Object<$concreteRoleType_ObjectType(concreteRoleType)$>(this.Strategy.GetCompositesRole(Meta.$concreteRoleType.Name$));
 			}
 			set
 			{
@@ -285,29 +275,12 @@ $if(concreteRoleType.IsMany)$
 			this.Strategy.RemoveRole(Meta.$concreteRoleType.Name$);
 		}
 $else$
-		virtual public $concreteRoleType_ObjectType(concreteRoleType)$ $concreteRoleType.SingularName$
+		virtual public $concreteRoleType.ObjectType.SingularName$Role $concreteRoleType.SingularName$
 		{
 			get
 			{
-				return this.O.Instantiate<$concreteRoleType_ObjectType(concreteRoleType)$>(this.Strategy.GetCompositeRole(Meta.$concreteRoleType.Name$));
+			    return this.O.CompositeRole<$concreteRoleType.ObjectType.SingularName$Role>(this.Strategy, Meta.$concreteRoleType.Name$);
 			}
-			set
-			{
-				this.Strategy.SetCompositeRole(Meta.$concreteRoleType.Name$, value?.Strategy);
-			}
-		}
-
-		virtual public bool Exist$concreteRoleType.SingularName$
-		{
-			get
-			{
-				return this.Strategy.ExistRole(Meta.$concreteRoleType.Name$);
-			}
-		}
-
-		virtual public void Remove$concreteRoleType.SingularName$()
-		{
-			this.Strategy.RemoveRole(Meta.$concreteRoleType.Name$);
 		}
 $endif$
 $endif$
@@ -320,7 +293,7 @@ $if(associationType.IsOne)$
 		{
             get
             {
-                return this.O.Instantiate<$objectType_Name(associationType.ObjectType)$>(this.Strategy.GetCompositeAssociation(Meta.$associationType.Name$));
+                return this.O.Object<$objectType_Name(associationType.ObjectType)$>(this.Strategy.GetCompositeAssociation(Meta.$associationType.Name$));
             }
 		}
 $else$
@@ -328,7 +301,7 @@ $else$
 		{
             get
             {
-                return this.O.Instantiate<$objectType_Name(associationType.ObjectType)$>(this.Strategy.GetCompositesAssociation(Meta.$associationType.Name$)).ToArray();
+                return this.O.Object<$objectType_Name(associationType.ObjectType)$>(this.Strategy.GetCompositesAssociation(Meta.$associationType.Name$)).ToArray();
             }
 		}
 $endif$

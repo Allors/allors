@@ -51,7 +51,7 @@ namespace Allors.Workspace.Adapters.Tests
 
                     Assert.NotNull(c1);
 
-                    if (!c1.CanWriteC1C1One2One)
+                    if (!c1.C1C1One2One.CanWrite)
                     {
                         await workspace1.PullAsync(new Pull { Object = c1.Strategy });
                     }
@@ -105,7 +105,7 @@ namespace Allors.Workspace.Adapters.Tests
 
                     Assert.NotNull(c1);
 
-                    if (!c1.CanWriteC1C1One2One)
+                    if (!c1.C1C1One2One.CanWrite)
                     {
                         await workspace1.PullAsync(new Pull { Object = c1.Strategy });
                     }
@@ -160,7 +160,7 @@ namespace Allors.Workspace.Adapters.Tests
                     Assert.Null(c1.C1AllorsString.Value);
                     Assert.Null(c1.C1AllorsUnique.Value);
 
-                    if (!c1.CanWriteC1C1One2One)
+                    if (!c1.C1C1One2One.CanWrite)
                     {
                         await workspace1.PullAsync(new Pull { Object = c1.Strategy });
                     }
@@ -175,7 +175,7 @@ namespace Allors.Workspace.Adapters.Tests
                     c1.C1AllorsUnique.Value = new Guid("0208BB9B-E87B-4CED-8DEC-516E6778CD66");
 
 
-                    if (!c1.CanWriteC1C1One2One)
+                    if (!c1.C1C1One2One.CanWrite)
                     {
                         await workspace1.PullAsync(new Pull { Object = c1.Strategy });
                     }
@@ -247,7 +247,7 @@ namespace Allors.Workspace.Adapters.Tests
 
                     Assert.NotNull(c1);
 
-                    if (!c1.CanWriteC1C1One2One)
+                    if (!c1.C1C1One2One.CanWrite)
                     {
                         await workspace1.PullAsync(new Pull { Object = c1.Strategy });
                     }
@@ -302,7 +302,7 @@ namespace Allors.Workspace.Adapters.Tests
                     Assert.Null(c1.C1AllorsString.Value);
                     Assert.Null(c1.C1AllorsUnique.Value);
 
-                    if (!c1.CanWriteC1C1One2One)
+                    if (!c1.C1C1One2One.CanWrite)
                     {
                         await workspace1.PullAsync(new Pull { Object = c1.Strategy });
                     }
@@ -316,7 +316,7 @@ namespace Allors.Workspace.Adapters.Tests
                     c1.C1AllorsString.Value = "a string";
                     c1.C1AllorsUnique.Value = new Guid("0208BB9B-E87B-4CED-8DEC-516E6778CD66");
 
-                    if (!c1.CanWriteC1C1One2One)
+                    if (!c1.C1C1One2One.CanWrite)
                     {
                         await workspace1.PullAsync(new Pull { Object = c1.Strategy });
                     }
