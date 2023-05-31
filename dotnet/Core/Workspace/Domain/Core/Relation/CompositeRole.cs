@@ -35,7 +35,7 @@ namespace Allors.Workspace
             set => this.Object.SetCompositeRole(this.RoleType, value);
         }
 
-        T Value
+        public T Value
         {
             get => (T)this.Object.GetCompositeRole(this.RoleType);
             set => this.Object.SetCompositeRole(this.RoleType, value.Strategy);

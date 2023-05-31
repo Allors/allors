@@ -9,6 +9,10 @@ namespace Allors.Workspace
 
     public interface ICompositesRole : IRole
     {
+        void Add(IStrategy strategy);
+
+        void Remove(IStrategy strategy);
+
         new IEnumerable<IStrategy> Value { get; set; }
     }
 }

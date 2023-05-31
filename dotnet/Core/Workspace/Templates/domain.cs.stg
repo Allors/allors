@@ -46,9 +46,18 @@ $interface.WorkspaceExclusiveAssociationTypesByWorkspaceName.(workspaceName):{as
 $interface.WorkspaceMethodTypesByWorkspaceName.(workspaceName):{methodType|$interfaceMethodType()$}; separator="\n"$
 	}
 
-	public partial interface $interface.name$Role : ICompositeRole$if(interface.WorkspaceDirectSupertypesByWorkspaceName.(workspaceName))$$interface.WorkspaceDirectSupertypesByWorkspaceName.(workspaceName):{directSupertype|, $directSupertype.SingularName$Role}$ $endif$
+	public partial interface $interface.singularName$Role : ICompositeRole$if(interface.WorkspaceDirectSupertypesByWorkspaceName.(workspaceName))$$interface.WorkspaceDirectSupertypesByWorkspaceName.(workspaceName):{directSupertype|, $directSupertype.SingularName$Role}$ $endif$
 	{
-		new $interface.name$ Value { get; set; }
+		new $interface.singularName$ Value { get; set; }
+	}
+
+	public partial interface $interface.pluralName$Role : ICompositesRole$if(interface.WorkspaceDirectSupertypesByWorkspaceName.(workspaceName))$$interface.WorkspaceDirectSupertypesByWorkspaceName.(workspaceName):{directSupertype|, $directSupertype.PluralName$Role}$ $endif$
+	{
+		void Add($interface.singularName$ value);
+
+		void Remove($interface.singularName$ value);
+
+		new System.Collections.Generic.IEnumerable<$interface.singularName$> Value { get; set; }
 	}
 }
 >>
@@ -62,26 +71,10 @@ $if(roleType.ObjectType.IsUnit)$
 		}
 $else$
 $if(roleType.IsMany)$
-		System.Collections.Generic.IEnumerable<$roleType_ObjectType(roleType)$> $roleType.PluralName$
-		{
-			get;
-$if(!roleType.RelationType.IsDerived)$
-			set;
-$endif$
-		}
-
-$if(!roleType.RelationType.IsDerived)$
-		void Add$roleType.SingularName$ ($roleType_ObjectType(roleType)$ value);
-
-		void Remove$roleType.SingularName$ ($roleType_ObjectType(roleType)$ value);
-$endif$
-
-		bool Exist$roleType.PluralName$
+		$roleType.ObjectType.PluralName$Role $roleType.PluralName$
 		{
 			get;
 		}
-
-		void Remove$roleType.PluralName$();
 $else$
 		$roleType.ObjectType.SingularName$Role $roleType.SingularName$
 		{
@@ -179,18 +172,28 @@ $class.WorkspaceAssociationTypesByWorkspaceName.(workspaceName):{associationType
 $class.WorkspaceMethodTypesByWorkspaceName.(workspaceName):{methodType|$classMethodType()$}; separator="\n"$
 	}
 
-	public partial class $class.name$Role : CompositeRole<$class.name$>$class.WorkspaceDirectSupertypesByWorkspaceName.(workspaceName):{directSupertype|, $directSupertype.SingularName$Role}$
+	public partial class $class.SingularName$Role : CompositeRole<$class.SingularName$>$class.WorkspaceDirectSupertypesByWorkspaceName.(workspaceName):{directSupertype|, $directSupertype.SingularName$Role}$
 	{
 		public IObjectFactory O { get; }
 
-        public $class.name$Role(IStrategy strategy, Allors.Workspace.Meta.IRoleType roleType) : base(strategy, roleType)
+        public $class.SingularName$Role(IStrategy strategy, Allors.Workspace.Meta.IRoleType roleType) : base(strategy, roleType)
         {
   			this.O = strategy.Workspace.Services.Get<IObjectFactory>();
         }
 
-$class.WorkspaceSupertypesByWorkspaceName.(workspaceName):{supertype|$classRole_Interface()$}; separator="\n"$
+$class.WorkspaceSupertypesByWorkspaceName.(workspaceName):{supertype|$classCompositeRole_Interface()$}; separator="\n"$
+	}
 
-		public new $class.name$ Value { get => this.O.Object<$class.name$>(this.Object.GetCompositeRole(this.RoleType)); set => this.Object.SetCompositeRole(this.RoleType, value?.Strategy); }
+	public partial class $class.PluralName$Role : CompositesRole<$class.SingularName$>$class.WorkspaceDirectSupertypesByWorkspaceName.(workspaceName):{directSupertype|, $directSupertype.PluralName$Role}$
+	{
+		public IObjectFactory O { get; }
+
+        public $class.PluralName$Role(IStrategy strategy, Allors.Workspace.Meta.IRoleType roleType) : base(strategy, roleType)
+        {
+  			this.O = strategy.Workspace.Services.Get<IObjectFactory>();
+        }
+
+$class.WorkspaceSupertypesByWorkspaceName.(workspaceName):{supertype|$classCompositesRole_Interface()$}; separator="\n"$
 	}
 }
 >>
@@ -224,55 +227,12 @@ $if(concreteRoleType.ObjectType.IsUnit)$
 		}
 $else$
 $if(concreteRoleType.IsMany)$
-		public bool CanRead$concreteRoleType.Name$
+		virtual public $concreteRoleType.ObjectType.PluralName$Role $concreteRoleType.PluralName$
 		{
 			get
 			{
-				return this.Strategy.CanRead(this.Meta.$concreteRoleType.Name$);
+			    return this.O.CompositesRole<$concreteRoleType.ObjectType.PluralName$Role>(this.Strategy, Meta.$concreteRoleType.Name$);
 			}
-		}
-
-		public bool CanWrite$concreteRoleType.Name$
-		{
-			get
-			{
-				return this.Strategy.CanWrite(this.Meta.$concreteRoleType.Name$);
-			}
-		}
-
-		virtual public System.Collections.Generic.IEnumerable<$concreteRoleType_ObjectType(concreteRoleType)$> $concreteRoleType.PluralName$
-		{
-			get
-			{
-				return this.O.Object<$concreteRoleType_ObjectType(concreteRoleType)$>(this.Strategy.GetCompositesRole(Meta.$concreteRoleType.Name$));
-			}
-			set
-			{
-				this.Strategy.SetCompositesRole(Meta.$concreteRoleType.Name$, value != null ? value.Select(v=>v.Strategy) : null);
-			}
-		}
-
-		virtual public void Add$concreteRoleType.SingularName$ ($concreteRoleType_ObjectType(concreteRoleType)$ value)
-		{
-			this.Strategy.AddCompositesRole(Meta.$concreteRoleType.Name$, value?.Strategy);
-		}
-
-		virtual public void Remove$concreteRoleType.SingularName$ ($concreteRoleType_ObjectType(concreteRoleType)$ value)
-		{
-			this.Strategy.RemoveCompositesRole(Meta.$concreteRoleType.Name$, value?.Strategy);
-		}
-
-		virtual public bool Exist$concreteRoleType.PluralName$
-		{
-			get
-			{
-				return this.Strategy.ExistRole(Meta.$concreteRoleType.Name$);
-			}
-		}
-
-		virtual public void Remove$concreteRoleType.PluralName$()
-		{
-			this.Strategy.RemoveRole(Meta.$concreteRoleType.Name$);
 		}
 $else$
 		virtual public $concreteRoleType.ObjectType.SingularName$Role $concreteRoleType.SingularName$
@@ -307,10 +267,17 @@ $else$
 $endif$
 >>
 
-classRole_Interface() ::= <<
-		$supertype.name$ $supertype.name$Role.Value { get => this.Value; set => this.Value = ($class.name$)value; }
+classCompositeRole_Interface() ::= <<
+		$supertype.SingularName$ $supertype.SingularName$Role.Value { get => this.Value; set => this.Value = ($class.SingularName$)value; }
 >>
 
+classCompositesRole_Interface() ::= <<
+		void $supertype.PluralName$Role.Add($supertype.SingularName$ value) { this.Add(value); }
+
+		void $supertype.PluralName$Role.Remove($supertype.SingularName$ value) { this.Remove(value); }
+
+		System.Collections.Generic.IEnumerable<$supertype.SingularName$> $supertype.PluralName$Role.Value { get => (System.Collections.Generic.IEnumerable<$supertype.SingularName$>)this.Value; set => this.Value = (System.Collections.Generic.IEnumerable<$class.SingularName$>)value; }
+>>
 
 
 roleType_ObjectType(roleType) ::= <%

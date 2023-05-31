@@ -25,5 +25,7 @@ namespace Allors.Workspace
         IEnumerable<T> Object<T>(IEnumerable<IStrategy> objects) where T : class, IObject;
 
         T CompositeRole<T>(IStrategy strategy, IRoleType roleType) where T : class, ICompositeRole;
+
+        T CompositesRole<T>(IStrategy strategy, IRoleType roleType) where T : class, ICompositesRole;
     }
 }

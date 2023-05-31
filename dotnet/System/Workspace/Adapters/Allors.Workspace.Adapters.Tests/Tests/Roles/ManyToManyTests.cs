@@ -49,7 +49,7 @@ namespace Allors.Workspace.Adapters.Tests
                 var c1a = workspace.Create<C1>();
                 var c1b = workspace.Create<C1>();
 
-                c1a.AddC1C1Many2Many(c1b);
+                c1a.C1C1Many2Manies.Add(c1b);
 
                 Assert.Single(c1a.C1C1Many2Manies);
                 Assert.Contains(c1a, c1b.C1sWhereC1C1Many2Many);
