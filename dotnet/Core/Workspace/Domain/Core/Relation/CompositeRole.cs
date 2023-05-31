@@ -7,12 +7,13 @@ namespace Allors.Workspace
 {
     using Meta;
 
-    public class CompositeRole<T> : ICompositeRole where T : class, IObject
+    public abstract class CompositeRole<T> : ICompositeRole where T : class, IObject
     {
-        public CompositeRole(IStrategy strategy, IRoleType roleType)
+        protected CompositeRole(IStrategy strategy, IRoleType roleType)
         {
             this.Object = strategy;
             this.RoleType = roleType;
+            this.O = strategy.Workspace.Services.Get<IObjectFactory>();
         }
 
         public IStrategy Object { get; }
@@ -20,6 +21,8 @@ namespace Allors.Workspace
         public IRelationType RelationType => this.RoleType.RelationType;
 
         public IRoleType RoleType { get; }
+
+        private IObjectFactory O { get; set; }
 
         object IRelationEnd.Value => this.Value;
 
@@ -37,10 +40,10 @@ namespace Allors.Workspace
 
         public T Value
         {
-            get => (T)this.Object.GetCompositeRole(this.RoleType);
-            set => this.Object.SetCompositeRole(this.RoleType, value.Strategy);
+            get => this.O.Object<T>(this.Object.GetCompositeRole(this.RoleType));
+            set => this.Object.SetCompositeRole(this.RoleType, value?.Strategy);
         }
-        
+
         public bool CanRead => this.Object.CanRead(this.RoleType);
 
         public bool CanWrite => this.Object.CanWrite(this.RoleType);

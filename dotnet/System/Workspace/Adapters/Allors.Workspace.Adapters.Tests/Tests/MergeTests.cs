@@ -130,7 +130,7 @@ namespace Allors.Workspace.Adapters.Tests
             var c1c_1 = c1_1.First(v => v.Name.Value == "c1C");
             var c1d_1 = c1_1.First(v => v.Name.Value == "c1D");
 
-            c1b_1.AddC1C1One2Many(c1d_1);
+            c1b_1.C1C1One2Manies.Add(c1d_1);
 
             var result_2 = await workspace2.PullAsync(pull);
             var c1_2 = result_2.GetCollection<C1>();
@@ -140,7 +140,7 @@ namespace Allors.Workspace.Adapters.Tests
             var c1c_2 = c1_2.First(v => v.Name.Value == "c1C");
             var c1d_2 = c1_2.First(v => v.Name.Value == "c1D");
 
-            c1b_2.AddC1C1One2Many(c1c_2);
+            c1b_2.C1C1One2Manies.Add(c1c_2);
 
             await workspace2.PushAsync();
 
@@ -151,12 +151,12 @@ namespace Allors.Workspace.Adapters.Tests
             c1c_1 = c1_1.First(v => v.Name.Value == "c1C");
             c1d_1 = c1_1.First(v => v.Name.Value == "c1D");
 
-            Assert.Equal(2, c1b_1.C1C1One2Manies.Count());
-            Assert.Contains(c1b_1, c1b_1.C1C1One2Manies);
-            Assert.Contains(c1c_1, c1b_1.C1C1One2Manies);
+            Assert.Equal(2, c1b_1.C1C1One2Manies.Value.Count());
+            Assert.Contains(c1b_1, c1b_1.C1C1One2Manies.Value);
+            Assert.Contains(c1c_1, c1b_1.C1C1One2Manies.Value);
 
-            Assert.Equal(1, c1c_1.C1C1One2Manies.Count());
-            Assert.Contains(c1d_1, c1c_1.C1C1One2Manies);
+            Assert.Equal(1, c1c_1.C1C1One2Manies.Value.Count());
+            Assert.Contains(c1d_1, c1c_1.C1C1One2Manies.Value);
 
             Assert.True(result_1.HasErrors);
             Assert.Single(result_1.MergeErrors);

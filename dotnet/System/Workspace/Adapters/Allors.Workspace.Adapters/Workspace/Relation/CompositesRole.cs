@@ -26,12 +26,22 @@ namespace Allors.Workspace
 
         object IRelationEnd.Value => this.Value;
 
+        void ICompositesRole.Add(IStrategy value)
+        {
+            this.Object.AddCompositesRole(this.RoleType, value);
+        }
+
+        void ICompositesRole.Remove(IStrategy value)
+        {
+            this.Object.RemoveCompositesRole(this.RoleType, value);
+        }
+
         object IRole.Value
         {
             get => this.Value;
             set => this.Value = (IEnumerable<IStrategy>)value;
         }
-
+        
         public IEnumerable<IStrategy> Value
         {
             get => this.Object.GetCompositesRole(this.RoleType);

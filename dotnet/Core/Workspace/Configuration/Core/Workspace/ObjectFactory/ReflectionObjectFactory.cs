@@ -35,6 +35,10 @@ namespace Allors.Workspace.Adapters
 
         private readonly Dictionary<IObjectType, ConstructorInfo> contructorInfoByObjectTypeForCompositeRole;
 
+        private readonly Dictionary<IObjectType, Type> typeByObjectTypeForCompositesRole;
+
+        private readonly Dictionary<IObjectType, ConstructorInfo> contructorInfoByObjectTypeForCompositesRole;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ReflectionObjectFactory"/> class.
         /// </summary>
@@ -100,6 +104,30 @@ namespace Allors.Workspace.Adapters
 
                     var parameterTypes = new[] { typeof(IStrategy), typeof(IRoleType) };
                     this.contructorInfoByObjectTypeForCompositeRole[objectType] =
+                        type.GetTypeInfo().GetConstructor(parameterTypes);
+                }
+            }
+
+            // For CompositesRole
+            {
+                var typesForCompositesRole = assembly.GetTypes()
+                    .Where(type => type.Namespace?.Equals(instance.Namespace) == true &&
+                                   type.GetTypeInfo().ImplementedInterfaces.Contains(typeof(ICompositesRole)))
+                    .ToArray();
+
+                this.typeByObjectTypeForCompositesRole = new Dictionary<IObjectType, Type>();
+                this.contructorInfoByObjectTypeForCompositesRole = new Dictionary<IObjectType, ConstructorInfo>();
+
+                var typeByName = typesForCompositesRole.ToDictionary(type => type.Name, type => type);
+
+                foreach (var objectType in metaPopulation.Composites)
+                {
+                    var type = typeByName[objectType.PluralName + "Role"];
+
+                    this.typeByObjectTypeForCompositesRole[objectType] = type;
+
+                    var parameterTypes = new[] { typeof(IStrategy), typeof(IRoleType) };
+                    this.contructorInfoByObjectTypeForCompositesRole[objectType] =
                         type.GetTypeInfo().GetConstructor(parameterTypes);
                 }
             }
@@ -169,6 +197,14 @@ namespace Allors.Workspace.Adapters
         public T CompositeRole<T>(IStrategy strategy, IRoleType roleType) where T : class, ICompositeRole
         {
             var constructor = this.contructorInfoByObjectTypeForCompositeRole[roleType.ObjectType];
+            object[] parameters = { strategy, roleType };
+
+            return (T)constructor.Invoke(parameters);
+        }
+
+        public T CompositesRole<T>(IStrategy strategy, IRoleType roleType) where T : class, ICompositesRole
+        {
+            var constructor = this.contructorInfoByObjectTypeForCompositesRole[roleType.ObjectType];
             object[] parameters = { strategy, roleType };
 
             return (T)constructor.Invoke(parameters);

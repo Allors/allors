@@ -352,11 +352,11 @@ namespace Allors.Workspace.Adapters.Tests
             var c1a = result.GetCollection<C1>()[0];
             var c1b = workspace.Create<C1>();
 
-            c1a.AddC1C1One2Many(c1b);
+            c1a.C1C1One2Manies.Add(c1b);
 
             this.Workspace.Reset();
 
-            Assert.Empty(c1a.C1C1One2Manies);
+            Assert.Empty(c1a.C1C1One2Manies.Value);
             Assert.Null(c1b.C1WhereC1C1One2Many);
         }
 
@@ -372,13 +372,13 @@ namespace Allors.Workspace.Adapters.Tests
             var c1a = result.GetCollection<C1>()[0];
             var c1b = workspace.Create<C1>();
 
-            c1a.AddC1C1One2Many(c1b);
+            c1a.C1C1One2Manies.Add(c1b);
 
             await workspace.PushAsync();
 
             this.Workspace.Reset();
 
-            Assert.Empty(c1a.C1C1One2Manies);
+            Assert.Empty(c1a.C1C1One2Manies.Value);
             Assert.Null(c1b.C1WhereC1C1One2Many);
         }
 
@@ -397,16 +397,16 @@ namespace Allors.Workspace.Adapters.Tests
             await workspace.PushAsync();
             result = await workspace.PullAsync(new Pull { Extent = new Filter(M.C1) });
 
-            c1a.AddC1C1One2Many(c1b);
+            c1a.C1C1One2Manies.Add(c1b);
 
             await workspace.PushAsync();
             await workspace.PullAsync(pull);
 
-            c1a.RemoveC1C1One2Many(c1b);
+            c1a.C1C1One2Manies.Remove(c1b);
 
             this.Workspace.Reset();
 
-            Assert.Contains(c1b, c1a.C1C1One2Manies);
+            Assert.Contains(c1b, c1a.C1C1One2Manies.Value);
             Assert.Equal(c1a, c1b.C1WhereC1C1One2Many);
         }
 
@@ -422,11 +422,11 @@ namespace Allors.Workspace.Adapters.Tests
             var c1a = result.GetCollection<C1>()[0];
             var c1b = workspace.Create<C1>();
 
-            c1a.AddC1C1Many2Many(c1b);
+            c1a.C1C1Many2Manies.Add(c1b);
 
             this.Workspace.Reset();
 
-            Assert.Empty(c1a.C1C1Many2Manies);
+            Assert.Empty(c1a.C1C1Many2Manies.Value);
             Assert.Empty(c1b.C1sWhereC1C1Many2Many);
         }
 
@@ -442,13 +442,13 @@ namespace Allors.Workspace.Adapters.Tests
             var c1a = result.GetCollection<C1>()[0];
             var c1b = workspace.Create<C1>();
 
-            c1a.AddC1C1Many2Many(c1b);
+            c1a.C1C1Many2Manies.Add(c1b);
 
             await workspace.PushAsync();
 
             this.Workspace.Reset();
 
-            Assert.Empty(c1a.C1C1Many2Manies);
+            Assert.Empty(c1a.C1C1Many2Manies.Value);
             Assert.Empty(c1b.C1sWhereC1C1Many2Many);
         }
 
@@ -468,23 +468,23 @@ namespace Allors.Workspace.Adapters.Tests
             result = await workspace.PullAsync(new Pull { Object = c1b.Strategy });
             var c1b_2 = result.Objects.Values.First().Cast<C1>();
 
-            c1a.AddC1C1Many2Many(c1b_2);
+            c1a.C1C1Many2Manies.Add(c1b_2);
 
-            Assert.Contains(c1b_2, c1a.C1C1Many2Manies);
+            Assert.Contains(c1b_2, c1a.C1C1Many2Manies.Value);
             Assert.Contains(c1a, c1b_2.C1sWhereC1C1Many2Many);
 
             await workspace.PushAsync();
             result = await workspace.PullAsync(pull);
             c1a = result.GetCollection<C1>()[0];
 
-            c1a.RemoveC1C1Many2Many(c1b_2);
+            c1a.C1C1Many2Manies.Remove(c1b_2);
 
-            Assert.Empty(c1a.C1C1Many2Manies);
+            Assert.Empty(c1a.C1C1Many2Manies.Value);
             Assert.Empty(c1b_2.C1sWhereC1C1Many2Many);
 
             this.Workspace.Reset();
 
-            Assert.Contains(c1b, c1a.C1C1Many2Manies);
+            Assert.Contains(c1b, c1a.C1C1Many2Manies.Value);
             Assert.Contains(c1a, c1b.C1sWhereC1C1Many2Many);
         }
     }

@@ -46,12 +46,12 @@ $interface.WorkspaceExclusiveAssociationTypesByWorkspaceName.(workspaceName):{as
 $interface.WorkspaceMethodTypesByWorkspaceName.(workspaceName):{methodType|$interfaceMethodType()$}; separator="\n"$
 	}
 
-	public partial interface $interface.singularName$Role : ICompositeRole$if(interface.WorkspaceDirectSupertypesByWorkspaceName.(workspaceName))$$interface.WorkspaceDirectSupertypesByWorkspaceName.(workspaceName):{directSupertype|, $directSupertype.SingularName$Role}$ $endif$
+	public partial interface $interface.singularName$Role : ICompositeRole
 	{
 		new $interface.singularName$ Value { get; set; }
 	}
 
-	public partial interface $interface.pluralName$Role : ICompositesRole$if(interface.WorkspaceDirectSupertypesByWorkspaceName.(workspaceName))$$interface.WorkspaceDirectSupertypesByWorkspaceName.(workspaceName):{directSupertype|, $directSupertype.PluralName$Role}$ $endif$
+	public partial interface $interface.pluralName$Role : ICompositesRole
 	{
 		void Add($interface.singularName$ value);
 
@@ -172,7 +172,7 @@ $class.WorkspaceAssociationTypesByWorkspaceName.(workspaceName):{associationType
 $class.WorkspaceMethodTypesByWorkspaceName.(workspaceName):{methodType|$classMethodType()$}; separator="\n"$
 	}
 
-	public partial class $class.SingularName$Role : CompositeRole<$class.SingularName$>$class.WorkspaceDirectSupertypesByWorkspaceName.(workspaceName):{directSupertype|, $directSupertype.SingularName$Role}$
+	public partial class $class.SingularName$Role : CompositeRole<$class.SingularName$>
 	{
 		public IObjectFactory O { get; }
 
@@ -180,11 +180,9 @@ $class.WorkspaceMethodTypesByWorkspaceName.(workspaceName):{methodType|$classMet
         {
   			this.O = strategy.Workspace.Services.Get<IObjectFactory>();
         }
-
-$class.WorkspaceSupertypesByWorkspaceName.(workspaceName):{supertype|$classCompositeRole_Interface()$}; separator="\n"$
 	}
 
-	public partial class $class.PluralName$Role : CompositesRole<$class.SingularName$>$class.WorkspaceDirectSupertypesByWorkspaceName.(workspaceName):{directSupertype|, $directSupertype.PluralName$Role}$
+	public partial class $class.PluralName$Role : CompositesRole<$class.SingularName$>
 	{
 		public IObjectFactory O { get; }
 
@@ -192,8 +190,6 @@ $class.WorkspaceSupertypesByWorkspaceName.(workspaceName):{supertype|$classCompo
         {
   			this.O = strategy.Workspace.Services.Get<IObjectFactory>();
         }
-
-$class.WorkspaceSupertypesByWorkspaceName.(workspaceName):{supertype|$classCompositesRole_Interface()$}; separator="\n"$
 	}
 }
 >>
@@ -266,19 +262,6 @@ $else$
 		}
 $endif$
 >>
-
-classCompositeRole_Interface() ::= <<
-		$supertype.SingularName$ $supertype.SingularName$Role.Value { get => this.Value; set => this.Value = ($class.SingularName$)value; }
->>
-
-classCompositesRole_Interface() ::= <<
-		void $supertype.PluralName$Role.Add($supertype.SingularName$ value) { this.Add(value); }
-
-		void $supertype.PluralName$Role.Remove($supertype.SingularName$ value) { this.Remove(value); }
-
-		System.Collections.Generic.IEnumerable<$supertype.SingularName$> $supertype.PluralName$Role.Value { get => (System.Collections.Generic.IEnumerable<$supertype.SingularName$>)this.Value; set => this.Value = (System.Collections.Generic.IEnumerable<$class.SingularName$>)value; }
->>
-
 
 roleType_ObjectType(roleType) ::= <%
 $if(roleType.IsRequired)$

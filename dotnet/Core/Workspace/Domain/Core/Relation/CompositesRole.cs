@@ -9,9 +9,9 @@ namespace Allors.Workspace
     using System.Linq;
     using Meta;
 
-    public class CompositesRole<T> : ICompositesRole where T : class, IObject
+    public abstract class CompositesRole<T> : ICompositesRole where T : class, IObject
     {
-        public CompositesRole(IStrategy strategy, IRoleType roleType)
+        protected CompositesRole(IStrategy strategy, IRoleType roleType)
         {
             this.Object = strategy;
             this.RoleType = roleType;
@@ -52,12 +52,12 @@ namespace Allors.Workspace
 
         public void Add(T value)
         {
-            this.Object.AddCompositesRole(this.RoleType, value.Strategy);
+            this.Object.AddCompositesRole(this.RoleType, value?.Strategy);
         }
 
         public void Remove(T value)
         {
-            this.Object.RemoveCompositesRole(this.RoleType, value.Strategy);
+            this.Object.RemoveCompositesRole(this.RoleType, value?.Strategy);
         }
 
         public IEnumerable<T> Value
