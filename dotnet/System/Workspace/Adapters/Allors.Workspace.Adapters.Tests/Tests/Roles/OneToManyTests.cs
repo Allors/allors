@@ -70,7 +70,7 @@ namespace Allors.Workspace.Adapters.Tests
                         c1x_1.C1C1One2Manies.Add(c1y_1);
 
                         c1x_1.C1C1One2Manies.Value.ShouldContain(c1y_1, ctx, mode1, mode2);
-                        c1y_1.C1WhereC1C1One2Many.ShouldEqual(c1x_1, ctx, mode1, mode2);
+                        c1y_1.C1WhereC1C1One2Many.Value.ShouldEqual(c1x_1, ctx, mode1, mode2);
                     }
                 }
             }
@@ -106,7 +106,7 @@ namespace Allors.Workspace.Adapters.Tests
                         c1x_1.C1C1One2Manies.Add(null);
 
                         Assert.Empty(c1x_1.C1C1One2Manies.Value);
-                        c1y_1.C1WhereC1C1One2Many.ShouldEqual(null, ctx, mode1, mode2);
+                        c1y_1.C1WhereC1C1One2Many.Value.ShouldEqual(null, ctx, mode1, mode2);
 
                         if (!c1x_1.C1C1One2Manies.CanWrite)
                         {
@@ -116,7 +116,7 @@ namespace Allors.Workspace.Adapters.Tests
                         c1x_1.C1C1One2Manies.Add(c1y_1);
 
                         c1x_1.C1C1One2Manies.Value.ShouldContain(c1y_1, ctx, mode1, mode2);
-                        c1y_1.C1WhereC1C1One2Many.ShouldEqual(c1x_1, ctx, mode1, mode2);
+                        c1y_1.C1WhereC1C1One2Many.Value.ShouldEqual(c1x_1, ctx, mode1, mode2);
                     }
                 }
             }
@@ -152,12 +152,12 @@ namespace Allors.Workspace.Adapters.Tests
                         c1x_1.C1C1One2Manies.Add(c1y_1);
 
                         c1x_1.C1C1One2Manies.Value.ShouldContain(c1y_1, ctx, mode1, mode2);
-                        c1y_1.C1WhereC1C1One2Many.ShouldEqual(c1x_1, ctx, mode1, mode2);
+                        c1y_1.C1WhereC1C1One2Many.Value.ShouldEqual(c1x_1, ctx, mode1, mode2);
 
                         c1x_1.C1C1One2Manies.Remove(c1y_1);
 
                         c1x_1.C1C1One2Manies.Value.ShouldNotContain(c1y_1, ctx, mode1, mode2);
-                        c1y_1.C1WhereC1C1One2Many.ShouldNotEqual(c1x_1, ctx, mode1, mode2);
+                        c1y_1.C1WhereC1C1One2Many.Value.ShouldNotEqual(c1x_1, ctx, mode1, mode2);
                     }
                 }
             }
@@ -200,10 +200,10 @@ namespace Allors.Workspace.Adapters.Tests
                         c1x_1.C1C1One2Manies.Remove(null);
 
                         c1x_1.C1C1One2Manies.Value.ShouldContain(c1y_1, ctx, mode1, mode2);
-                        c1y_1.C1WhereC1C1One2Many.ShouldEqual(c1x_1, ctx, mode1, mode2);
+                        c1y_1.C1WhereC1C1One2Many.Value.ShouldEqual(c1x_1, ctx, mode1, mode2);
 
                         c1x_1.C1C1One2Manies.Value.ShouldContain(c1y_1, ctx, mode1, mode2);
-                        c1y_1.C1WhereC1C1One2Many.ShouldEqual(c1x_1, ctx, mode1, mode2);
+                        c1y_1.C1WhereC1C1One2Many.Value.ShouldEqual(c1x_1, ctx, mode1, mode2);
 
                         if (!c1x_1.C1C1One2Manies.CanWrite)
                         {
@@ -213,7 +213,7 @@ namespace Allors.Workspace.Adapters.Tests
                         c1x_1.C1C1One2Manies.Remove(c1y_1);
 
                         c1x_1.C1C1One2Manies.Value.ShouldNotContain(c1y_1, ctx, mode1, mode2);
-                        c1y_1.C1WhereC1C1One2Many.ShouldNotEqual(c1x_1, ctx, mode1, mode2);
+                        c1y_1.C1WhereC1C1One2Many.Value.ShouldNotEqual(c1x_1, ctx, mode1, mode2);
                     }
                 }
             }

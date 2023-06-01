@@ -132,7 +132,7 @@ namespace Allors.Workspace.Adapters.Tests
                 var x = c1a.C1C1One2One.Value;
             }));
 
-            Assert.Null(c1x.C1WhereC1C1One2One);
+            Assert.Null(c1x.C1WhereC1C1One2One.Value);
         }
 
         [Fact]
@@ -167,7 +167,7 @@ namespace Allors.Workspace.Adapters.Tests
             this.Workspace.Reset();
 
             Assert.Equal(c1b, c1a.C1C1One2One.Value);
-            Assert.Null(c1x.C1WhereC1C1One2One);
+            Assert.Null(c1x.C1WhereC1C1One2One.Value);
         }
 
         [Fact]
@@ -193,7 +193,7 @@ namespace Allors.Workspace.Adapters.Tests
                 var x = c1a.C1C1One2One.Value;
             }));
 
-            Assert.Null(c1b.C1WhereC1C1One2One);
+            Assert.Null(c1b.C1WhereC1C1One2One.Value);
         }
 
         [Fact]
@@ -230,7 +230,7 @@ namespace Allors.Workspace.Adapters.Tests
             this.Workspace.Reset();
 
             Assert.Equal(c1b, c1a.C1C1One2One.Value);
-            Assert.Null(c1x.C1WhereC1C1One2One);
+            Assert.Null(c1x.C1WhereC1C1One2One.Value);
         }
 
         [Fact]
@@ -248,7 +248,7 @@ namespace Allors.Workspace.Adapters.Tests
             c1a.C1C1One2One.Value = c1b;
 
             Assert.Equal(c1b, c1a.C1C1One2One.Value);
-            Assert.Equal(c1a, c1b.C1WhereC1C1One2One);
+            Assert.Equal(c1a, c1b.C1WhereC1C1One2One.Value);
 
             await workspace.PushAsync();
             result = await workspace.PullAsync(pull);
@@ -256,12 +256,12 @@ namespace Allors.Workspace.Adapters.Tests
             c1a.C1C1One2One.Value = null;
 
             Assert.Null(c1a.C1C1One2One.Value);
-            Assert.Null(c1b.C1WhereC1C1One2One);
+            Assert.Null(c1b.C1WhereC1C1One2One.Value);
 
             this.Workspace.Reset();
 
             Assert.Equal(c1b, c1a.C1C1One2One.Value);
-            Assert.Equal(c1a, c1b.C1WhereC1C1One2One);
+            Assert.Equal(c1a, c1b.C1WhereC1C1One2One.Value);
         }
 
         [Fact]
@@ -357,7 +357,7 @@ namespace Allors.Workspace.Adapters.Tests
             this.Workspace.Reset();
 
             Assert.Empty(c1a.C1C1One2Manies.Value);
-            Assert.Null(c1b.C1WhereC1C1One2Many);
+            Assert.Null(c1b.C1WhereC1C1One2Many.Value);
         }
 
         [Fact]
@@ -379,7 +379,7 @@ namespace Allors.Workspace.Adapters.Tests
             this.Workspace.Reset();
 
             Assert.Empty(c1a.C1C1One2Manies.Value);
-            Assert.Null(c1b.C1WhereC1C1One2Many);
+            Assert.Null(c1b.C1WhereC1C1One2Many.Value);
         }
 
         [Fact]
@@ -407,7 +407,7 @@ namespace Allors.Workspace.Adapters.Tests
             this.Workspace.Reset();
 
             Assert.Contains(c1b, c1a.C1C1One2Manies.Value);
-            Assert.Equal(c1a, c1b.C1WhereC1C1One2Many);
+            Assert.Equal(c1a, c1b.C1WhereC1C1One2Many.Value);
         }
 
         [Fact]

@@ -47,10 +47,10 @@ namespace Allors.Workspace.Adapters.Tests
                 Assert.Null(c1D.C1C1One2One.Value);
 
                 // Association
-                Assert.Null(c1A.C1WhereC1C1One2One);
-                Assert.Equal(c1A, c1B.C1WhereC1C1One2One);
-                Assert.Equal(c1B, c1C.C1WhereC1C1One2One);
-                Assert.Equal(c1C, c1D.C1WhereC1C1One2One);
+                Assert.Null(c1A.C1WhereC1C1One2One.Value);
+                Assert.Equal(c1A, c1B.C1WhereC1C1One2One.Value);
+                Assert.Equal(c1B, c1C.C1WhereC1C1One2One.Value);
+                Assert.Equal(c1C, c1D.C1WhereC1C1One2One.Value);
 
                 c1B.C1C1One2One.Value = c1B;
 
@@ -61,10 +61,10 @@ namespace Allors.Workspace.Adapters.Tests
                 Assert.Null(c1D.C1C1One2One.Value);
 
                 // Association
-                Assert.Null(c1A.C1WhereC1C1One2One);
-                Assert.Equal(c1B, c1B.C1WhereC1C1One2One);
-                Assert.Null(c1C.C1WhereC1C1One2One);
-                Assert.Equal(c1C, c1D.C1WhereC1C1One2One);
+                Assert.Null(c1A.C1WhereC1C1One2One.Value);
+                Assert.Equal(c1B, c1B.C1WhereC1C1One2One.Value);
+                Assert.Null(c1C.C1WhereC1C1One2One.Value);
+                Assert.Equal(c1C, c1D.C1WhereC1C1One2One.Value);
 
                 workspace.Reset();
 
@@ -75,10 +75,10 @@ namespace Allors.Workspace.Adapters.Tests
                 Assert.Null(c1D.C1C1One2One.Value);
 
                 // Association
-                Assert.Null(c1A.C1WhereC1C1One2One);
-                Assert.Null(c1B.C1WhereC1C1One2One);
-                Assert.Null(c1C.C1WhereC1C1One2One);
-                Assert.Null(c1D.C1WhereC1C1One2One);
+                Assert.Null(c1A.C1WhereC1C1One2One.Value);
+                Assert.Null(c1B.C1WhereC1C1One2One.Value);
+                Assert.Null(c1C.C1WhereC1C1One2One.Value);
+                Assert.Null(c1D.C1WhereC1C1One2One.Value);
             }
 
             {
@@ -98,10 +98,10 @@ namespace Allors.Workspace.Adapters.Tests
                 Assert.Null(c1D.C1C1One2One.Value);
 
                 // Association
-                Assert.Null(c1A.C1WhereC1C1One2One);
-                Assert.Equal(c1A, c1B.C1WhereC1C1One2One);
-                Assert.Equal(c1B, c1C.C1WhereC1C1One2One);
-                Assert.Equal(c1C, c1D.C1WhereC1C1One2One);
+                Assert.Null(c1A.C1WhereC1C1One2One.Value);
+                Assert.Equal(c1A, c1B.C1WhereC1C1One2One.Value);
+                Assert.Equal(c1B, c1C.C1WhereC1C1One2One.Value);
+                Assert.Equal(c1C, c1D.C1WhereC1C1One2One.Value);
 
                 c1B.C1C1One2One.Value = c1B;
 
@@ -112,10 +112,10 @@ namespace Allors.Workspace.Adapters.Tests
                 Assert.Null(c1D.C1C1One2One.Value);
 
                 // Association
-                Assert.Null(c1A.C1WhereC1C1One2One);
-                Assert.Equal(c1B, c1B.C1WhereC1C1One2One);
-                Assert.Null(c1C.C1WhereC1C1One2One);
-                Assert.Equal(c1C, c1D.C1WhereC1C1One2One);
+                Assert.Null(c1A.C1WhereC1C1One2One.Value);
+                Assert.Equal(c1B, c1B.C1WhereC1C1One2One.Value);
+                Assert.Null(c1C.C1WhereC1C1One2One.Value);
+                Assert.Equal(c1C, c1D.C1WhereC1C1One2One.Value);
 
                 workspace.Reset();
 
@@ -126,10 +126,10 @@ namespace Allors.Workspace.Adapters.Tests
                 Assert.Null(c1D.C1C1One2One.Value);
 
                 // Association
-                Assert.Null(c1A.C1WhereC1C1One2One);
-                Assert.Equal(c1A, c1B.C1WhereC1C1One2One);
-                Assert.Equal(c1B, c1C.C1WhereC1C1One2One);
-                Assert.Equal(c1C, c1D.C1WhereC1C1One2One);
+                Assert.Null(c1A.C1WhereC1C1One2One.Value);
+                Assert.Equal(c1A, c1B.C1WhereC1C1One2One.Value);
+                Assert.Equal(c1B, c1C.C1WhereC1C1One2One.Value);
+                Assert.Equal(c1C, c1D.C1WhereC1C1One2One.Value);
             }
         }
 

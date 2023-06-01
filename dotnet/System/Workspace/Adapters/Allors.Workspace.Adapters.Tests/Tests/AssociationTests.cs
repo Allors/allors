@@ -54,7 +54,7 @@ namespace Allors.Workspace.Adapters.Tests
 
             // One to One
             Assert.NotNull(c1WhereC1C2One2Many);
-            Assert.Equal("c1C", c1WhereC1C2One2Many.Name.Value);
+            Assert.Equal("c1C", c1WhereC1C2One2Many.Value.Name.Value);
         }
 
         [Fact]
@@ -94,7 +94,7 @@ namespace Allors.Workspace.Adapters.Tests
 
             // One to One
             Assert.NotNull(c1WhereC1C2One2One);
-            Assert.Equal("c1C", c1WhereC1C2One2One.Name.Value);
+            Assert.Equal("c1C", c1WhereC1C2One2One.Value.Name.Value);
         }
     }
 }

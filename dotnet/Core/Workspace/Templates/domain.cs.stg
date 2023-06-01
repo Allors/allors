@@ -45,19 +45,35 @@ $interface.WorkspaceExclusiveAssociationTypesByWorkspaceName.(workspaceName):{as
 
 $interface.WorkspaceMethodTypesByWorkspaceName.(workspaceName):{methodType|$interfaceMethodType()$}; separator="\n"$
 	}
-
-	public partial interface $interface.singularName$Role : ICompositeRole
+	
+	public partial class $interface.SingularName$Role : CompositeRole<$interface.SingularName$>
 	{
-		new $interface.singularName$ Value { get; set; }
+		public IObjectFactory O { get; }
+
+        public $interface.SingularName$Role(IStrategy strategy, Allors.Workspace.Meta.IRoleType roleType) : base(strategy, roleType)
+        {
+  			this.O = strategy.Workspace.Services.Get<IObjectFactory>();
+        }
 	}
 
-	public partial interface $interface.pluralName$Role : ICompositesRole
+	public partial class $interface.PluralName$Role : CompositesRole<$interface.SingularName$>
 	{
-		void Add($interface.singularName$ value);
+		public IObjectFactory O { get; }
 
-		void Remove($interface.singularName$ value);
+        public $interface.PluralName$Role(IStrategy strategy, Allors.Workspace.Meta.IRoleType roleType) : base(strategy, roleType)
+        {
+  			this.O = strategy.Workspace.Services.Get<IObjectFactory>();
+        }
+	}
 
-		new System.Collections.Generic.IEnumerable<$interface.singularName$> Value { get; set; }
+	public partial class $interface.SingularName$Association : CompositeAssociation<$interface.SingularName$>
+	{
+		public IObjectFactory O { get; }
+
+        public $interface.SingularName$Association(IStrategy strategy, Allors.Workspace.Meta.IAssociationType associationType) : base(strategy, associationType)
+        {
+  			this.O = strategy.Workspace.Services.Get<IObjectFactory>();
+        }
 	}
 }
 >>
@@ -87,7 +103,7 @@ $endif$
 interfaceAssociationType() ::= <<
 
 $if(associationType.IsOne)$
-		$objectType_Name(associationType.ObjectType)$ $associationType.SingularName$
+		$associationType.ObjectType.SingularName$Association $associationType.SingularName$
 		{
 			get;
 		}
@@ -191,6 +207,16 @@ $class.WorkspaceMethodTypesByWorkspaceName.(workspaceName):{methodType|$classMet
   			this.O = strategy.Workspace.Services.Get<IObjectFactory>();
         }
 	}
+
+	public partial class $class.SingularName$Association : CompositeAssociation<$class.SingularName$>
+	{
+		public IObjectFactory O { get; }
+
+        public $class.SingularName$Association(IStrategy strategy, Allors.Workspace.Meta.IAssociationType associationType) : base(strategy, associationType)
+        {
+  			this.O = strategy.Workspace.Services.Get<IObjectFactory>();
+        }
+	}
 }
 >>
 
@@ -245,11 +271,11 @@ $endif$
 classAssociationType() ::= <<
 
 $if(associationType.IsOne)$
-		public $objectType_Name(associationType.ObjectType)$ $associationType.SingularName$
+		public $associationType.ObjectType.SingularName$Association $associationType.SingularName$
 		{
             get
             {
-                return this.O.Object<$objectType_Name(associationType.ObjectType)$>(this.Strategy.GetCompositeAssociation(Meta.$associationType.Name$));
+                return this.O.CompositeAssociation<$associationType.ObjectType.SingularName$Association>(this.Strategy, Meta.$associationType.Name$);
             }
 		}
 $else$
