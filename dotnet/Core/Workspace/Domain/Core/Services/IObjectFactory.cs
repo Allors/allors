@@ -8,7 +8,6 @@ namespace Allors.Workspace
 {
     using System;
     using System.Collections.Generic;
-    using Domain;
     using Meta;
 
     public interface IObjectFactory
@@ -30,5 +29,7 @@ namespace Allors.Workspace
         T CompositesRole<T>(IStrategy strategy, IRoleType roleType) where T : class, ICompositesRole;
 
         T CompositeAssociation<T>(IStrategy strategy, IAssociationType associationType) where T : class, ICompositeAssociation;
+
+        T CompositesAssociation<T>(IStrategy strategy, IAssociationType associationType) where T : class, ICompositesAssociation;
     }
 }

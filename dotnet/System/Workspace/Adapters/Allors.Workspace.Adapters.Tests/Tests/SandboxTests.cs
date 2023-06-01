@@ -73,7 +73,7 @@ namespace Allors.Workspace.Adapters.Tests
                 c1x_1.C1C1Many2One.Value = c1y_1;
 
                 c1x_1.C1C1Many2One.Value.ShouldEqual(c1y_1, ctx, mode1, mode2);
-                c1y_1.C1sWhereC1C1Many2One.ShouldContain(c1x_1, ctx, mode1, mode2);
+                c1y_1.C1sWhereC1C1Many2One.Value.ShouldContain(c1x_1, ctx, mode1, mode2);
 
                 pushResult = await workspace1.PushAsync();
                 Assert.False(pushResult.HasErrors);
@@ -112,7 +112,7 @@ namespace Allors.Workspace.Adapters.Tests
                 c1x_1.C1C1Many2One.Value = c1y_1;
 
                 c1x_1.C1C1Many2One.Value.ShouldEqual(c1y_1, ctx, mode1, mode2);
-                c1y_1.C1sWhereC1C1Many2One.ShouldContain(c1x_1, ctx, mode1, mode2);
+                c1y_1.C1sWhereC1C1Many2One.Value.ShouldContain(c1x_1, ctx, mode1, mode2);
 
                 pushResult = await workspace1.PushAsync();
                 Assert.False(pushResult.HasErrors);

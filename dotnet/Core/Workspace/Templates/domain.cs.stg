@@ -75,6 +75,16 @@ $interface.WorkspaceMethodTypesByWorkspaceName.(workspaceName):{methodType|$inte
   			this.O = strategy.Workspace.Services.Get<IObjectFactory>();
         }
 	}
+
+	public partial class $interface.PluralName$Association : CompositesAssociation<$interface.SingularName$>
+	{
+		public IObjectFactory O { get; }
+
+        public $interface.PluralName$Association(IStrategy strategy, Allors.Workspace.Meta.IAssociationType associationType) : base(strategy, associationType)
+        {
+  			this.O = strategy.Workspace.Services.Get<IObjectFactory>();
+        }
+	}
 }
 >>
 
@@ -86,16 +96,16 @@ $if(roleType.ObjectType.IsUnit)$
 			get;
 		}
 $else$
-$if(roleType.IsMany)$
-		$roleType.ObjectType.PluralName$Role $roleType.PluralName$
-		{
-			get;
-		}
+$if(roleType.IsOne)$
+	$roleType.ObjectType.SingularName$Role $roleType.SingularName$
+	{
+		get;
+	}
 $else$
-		$roleType.ObjectType.SingularName$Role $roleType.SingularName$
-		{
-			get;
-		}
+	$roleType.ObjectType.PluralName$Role $roleType.PluralName$
+	{
+		get;
+	}
 $endif$
 $endif$
 >>
@@ -108,7 +118,7 @@ $if(associationType.IsOne)$
 			get;
 		}
 $else$
-		$objectType_Name(associationType.ObjectType)$[] $associationType.PluralName$
+		$associationType.ObjectType.PluralName$Association $associationType.PluralName$
 		{
 			get;
 		}
@@ -217,6 +227,16 @@ $class.WorkspaceMethodTypesByWorkspaceName.(workspaceName):{methodType|$classMet
   			this.O = strategy.Workspace.Services.Get<IObjectFactory>();
         }
 	}
+
+	public partial class $class.PluralName$Association : CompositesAssociation<$class.SingularName$>
+	{
+		public IObjectFactory O { get; }
+
+        public $class.PluralName$Association(IStrategy strategy, Allors.Workspace.Meta.IAssociationType associationType) : base(strategy, associationType)
+        {
+  			this.O = strategy.Workspace.Services.Get<IObjectFactory>();
+        }
+	}
 }
 >>
 
@@ -279,11 +299,11 @@ $if(associationType.IsOne)$
             }
 		}
 $else$
-		public $objectType_Name(associationType.ObjectType)$[] $associationType.PluralName$
+		public $associationType.ObjectType.PluralName$Association $associationType.PluralName$
 		{
             get
             {
-                return this.O.Object<$objectType_Name(associationType.ObjectType)$>(this.Strategy.GetCompositesAssociation(Meta.$associationType.Name$)).ToArray();
+                return this.O.CompositesAssociation<$associationType.ObjectType.PluralName$Association>(this.Strategy, Meta.$associationType.Name$);
             }
 		}
 $endif$

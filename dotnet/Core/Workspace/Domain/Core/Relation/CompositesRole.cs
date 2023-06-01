@@ -62,7 +62,7 @@ namespace Allors.Workspace
 
         public IEnumerable<T> Value
         {
-            get => this.Object.GetCompositesRole(this.RoleType).Select(v => this.O.Object<T>(v));
+            get => this.O.Object<T>(this.Object.GetCompositesRole(this.RoleType));
             set => this.Object.SetCompositesRole(this.RoleType, value.Select(v => v?.Strategy));
         }
 
