@@ -11,20 +11,21 @@ namespace Allors.Workspace
 
     public abstract class CompositesRole<T> : ICompositesRole where T : class, IObject
     {
+        private readonly ICompositesRole role;
+
         protected CompositesRole(IStrategy strategy, IRoleType roleType)
         {
-            this.Object = strategy;
-            this.RoleType = roleType;
+            this.role = strategy.CompositesRole(roleType);
             this.O = strategy.Workspace.Services.Get<IObjectFactory>();
         }
 
-        public IStrategy Object { get; }
+        public IStrategy Object => this.role.Object;
 
         public IRelationType RelationType => this.RoleType.RelationType;
 
-        public IRoleType RoleType { get; }
+        public IRoleType RoleType => this.role.RoleType;
 
-        private IObjectFactory O { get; set; }
+        private IObjectFactory O { get; }
 
         object IRelationEnd.Value => this.Value;
 
@@ -36,47 +37,47 @@ namespace Allors.Workspace
 
         void ICompositesRole.Add(IStrategy strategy)
         {
-            this.Object.AddCompositesRole(this.RoleType, strategy);
+            this.role.Add(strategy);
         }
 
         void ICompositesRole.Remove(IStrategy strategy)
         {
-            this.Object.RemoveCompositesRole(this.RoleType, strategy);
+            this.role.Remove(strategy);
         }
 
         IEnumerable<IStrategy> ICompositesRole.Value
         {
-            get => this.Object.GetCompositesRole(this.RoleType);
-            set => this.Object.SetCompositesRole(this.RoleType, value);
+            get => this.role.Value;
+            set => this.role.Value = value;
         }
 
         public void Add(T value)
         {
-            this.Object.AddCompositesRole(this.RoleType, value?.Strategy);
+            this.role.Add(value?.Strategy);
         }
 
         public void Remove(T value)
         {
-            this.Object.RemoveCompositesRole(this.RoleType, value?.Strategy);
+            this.role.Remove(value?.Strategy);
         }
 
         public IEnumerable<T> Value
         {
-            get => this.O.Object<T>(this.Object.GetCompositesRole(this.RoleType));
-            set => this.Object.SetCompositesRole(this.RoleType, value.Select(v => v?.Strategy));
+            get => this.O.Object<T>(this.role.Value);
+            set => this.role.Value = value.Select(v => v?.Strategy);
         }
 
-        public bool CanRead => this.Object.CanRead(this.RoleType);
+        public bool CanRead => this.role.CanRead;
 
-        public bool CanWrite => this.Object.CanWrite(this.RoleType);
+        public bool CanWrite => this.role.CanWrite;
 
-        public bool Exist => this.Object.ExistRole(this.RoleType);
+        public bool Exist => this.role.Exist;
 
-        public bool IsModified => this.Object.IsModified(this.RoleType);
+        public bool IsModified => this.role.IsModified;
 
         public void Restore()
         {
-            this.Object.RestoreRole(this.RoleType);
+            this.role.Restore();
         }
     }
 }

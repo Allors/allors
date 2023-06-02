@@ -10,31 +10,32 @@ namespace Allors.Workspace
 
     public abstract class CompositesAssociation<T> : ICompositesAssociation where T : class, IObject
     {
-        protected CompositesAssociation(IStrategy strategy, IAssociationType roleType)
+        private readonly ICompositesAssociation association;
+
+        protected CompositesAssociation(IStrategy strategy, IAssociationType associationType)
         {
-            this.Object = strategy;
-            this.AssociationType = roleType;
+            this.association = strategy.CompositesAssociation(associationType);
             this.O = strategy.Workspace.Services.Get<IObjectFactory>();
         }
 
-        public IStrategy Object { get; }
+        public IStrategy Object => this.association.Object;
 
         public IRelationType RelationType => this.AssociationType.RelationType;
 
-        public IAssociationType AssociationType { get; }
+        public IAssociationType AssociationType => this.association.AssociationType;
 
-        private IObjectFactory O { get; set; }
+        private IObjectFactory O { get; }
 
         object IRelationEnd.Value => this.Value;
 
         IEnumerable<IStrategy> ICompositesAssociation.Value
         {
-            get => this.Object.GetCompositesAssociation(this.AssociationType);
+            get => this.association.Value;
         }
 
         public IEnumerable<T> Value
         {
-            get => this.O.Object<T>(this.Object.GetCompositesAssociation(this.AssociationType));
+            get => this.O.Object<T>(this.association.Value);
         }
     }
 }

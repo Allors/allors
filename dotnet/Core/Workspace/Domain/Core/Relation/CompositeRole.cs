@@ -9,20 +9,21 @@ namespace Allors.Workspace
 
     public abstract class CompositeRole<T> : ICompositeRole where T : class, IObject
     {
+        private readonly ICompositeRole role;
+
         protected CompositeRole(IStrategy strategy, IRoleType roleType)
         {
-            this.Object = strategy;
-            this.RoleType = roleType;
+            this.role = strategy.CompositeRole(roleType);
             this.O = strategy.Workspace.Services.Get<IObjectFactory>();
         }
 
-        public IStrategy Object { get; }
+        public IStrategy Object => this.role.Object;
 
         public IRelationType RelationType => this.RoleType.RelationType;
 
-        public IRoleType RoleType { get; }
+        public IRoleType RoleType => this.role.RoleType;
 
-        private IObjectFactory O { get; set; }
+        private IObjectFactory O { get; }
 
         object IRelationEnd.Value => this.Value;
 
@@ -34,27 +35,27 @@ namespace Allors.Workspace
 
         IStrategy ICompositeRole.Value
         {
-            get => this.Object.GetCompositeRole(this.RoleType);
-            set => this.Object.SetCompositeRole(this.RoleType, value);
+            get => this.role.Value;
+            set => this.role.Value = value;
         }
 
         public T Value
         {
-            get => this.O.Object<T>(this.Object.GetCompositeRole(this.RoleType));
-            set => this.Object.SetCompositeRole(this.RoleType, value?.Strategy);
+            get => this.O.Object<T>(this.role.Value);
+            set => this.role.Value = value?.Strategy;
         }
 
-        public bool CanRead => this.Object.CanRead(this.RoleType);
+        public bool CanRead => this.role.CanRead;
 
-        public bool CanWrite => this.Object.CanWrite(this.RoleType);
+        public bool CanWrite => this.role.CanWrite;
 
-        public bool Exist => this.Object.ExistRole(this.RoleType);
+        public bool Exist => this.role.Exist;
 
-        public bool IsModified => this.Object.IsModified(this.RoleType);
+        public bool IsModified => this.role.IsModified;
 
         public void Restore()
         {
-            this.Object.RestoreRole(this.RoleType);
+            this.role.Restore();
         }
     }
 }

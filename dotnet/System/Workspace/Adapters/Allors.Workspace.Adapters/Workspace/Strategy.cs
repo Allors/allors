@@ -283,7 +283,7 @@ namespace Allors.Workspace.Adapters
                 return (ICompositesAssociation)association;
             }
 
-            association = new CompositeAssociation(this, associationType);
+            association = new CompositesAssociation(this, associationType);
             this.associationByAssociationType[associationType] = association;
             return (ICompositesAssociation)association;
         }
