@@ -17,14 +17,10 @@ namespace Allors.Workspace.Meta
 
         public IComposite ObjectType { get; set; }
 
-        private string Name { get; set; }
+        public string Name { get; set; }
 
         public string OperandTag => this.Tag;
 
-        public IRecordType Input { get; }
-
-        public IRecordType Output { get; }
-
-        public override string ToString() => this.Name;
+      public override string ToString() => this.Name;
     }
 }

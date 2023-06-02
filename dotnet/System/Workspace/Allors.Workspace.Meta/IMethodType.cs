@@ -10,8 +10,7 @@ namespace Allors.Workspace.Meta
     {
         IComposite ObjectType { get; }
 
-        IRecordType Input { get; }
+        string Name { get; }
 
-        IRecordType Output { get; }
     }
 }

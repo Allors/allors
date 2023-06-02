@@ -31,5 +31,7 @@ namespace Allors.Workspace
         T CompositeAssociation<T>(IStrategy strategy, IAssociationType associationType) where T : class, ICompositeAssociation;
 
         T CompositesAssociation<T>(IStrategy strategy, IAssociationType associationType) where T : class, ICompositesAssociation;
+
+        T Method<T>(IStrategy strategy, IMethodType methodType) where T : class, IMethod;
     }
 }

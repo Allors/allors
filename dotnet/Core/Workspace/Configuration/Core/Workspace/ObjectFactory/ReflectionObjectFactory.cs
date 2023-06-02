@@ -39,6 +39,8 @@ namespace Allors.Workspace.Adapters
 
         private readonly Dictionary<IObjectType, ConstructorInfo> constructorInfoByObjectTypeForCompositesAssociation;
 
+        private readonly Dictionary<IMethodType, ConstructorInfo> constructorInfoByMethodTypeForMethod;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ReflectionObjectFactory"/> class.
         /// </summary>
@@ -163,6 +165,26 @@ namespace Allors.Workspace.Adapters
                         type.GetTypeInfo().GetConstructor(parameterTypes);
                 }
             }
+            
+            // For Method
+            {
+                var typesForMethod = assembly.GetTypes()
+                    .Where(type => type.Namespace?.Equals(instance.Namespace) == true &&
+                                   type.GetTypeInfo().ImplementedInterfaces.Contains(typeof(IMethod)))
+                    .ToArray();
+
+                this.constructorInfoByMethodTypeForMethod = new Dictionary<IMethodType, ConstructorInfo>();
+
+                var typeByName = typesForMethod.ToDictionary(type => type.Name, type => type);
+
+                foreach (var methodType in metaPopulation.MethodTypes)
+                {
+                    var type = typeByName[methodType.ObjectType.SingularName +methodType.Name + "Method"];
+                    var parameterTypes = new[] { typeof(IStrategy), typeof(IMethodType) };
+                    this.constructorInfoByMethodTypeForMethod[methodType] =
+                        type.GetTypeInfo().GetConstructor(parameterTypes);
+                }
+            }
         }
 
         /// <summary>
@@ -249,8 +271,7 @@ namespace Allors.Workspace.Adapters
 
             return (T)constructor.Invoke(parameters);
         }
-
-
+        
         public T CompositesAssociation<T>(IStrategy strategy, IAssociationType associationType) where T : class, ICompositesAssociation
         {
             var constructor = this.constructorInfoByObjectTypeForCompositesAssociation[associationType.ObjectType];
@@ -259,5 +280,12 @@ namespace Allors.Workspace.Adapters
             return (T)constructor.Invoke(parameters);
         }
 
+        public T Method<T>(IStrategy strategy, IMethodType methodType) where T : class, IMethod
+        {
+            var constructor = this.constructorInfoByMethodTypeForMethod[methodType];
+            object[] parameters = { strategy, methodType };
+
+            return (T)constructor.Invoke(parameters);
+        }
     }
 }

@@ -260,7 +260,7 @@ classMethodType() ::= <<
 			{
 				get
 				{
-					return new $methodType.ObjectType.SingularName$$methodType.Name$Method(this.Strategy, this.Meta.$methodType.Name$);
+					return this.O.Method<$methodType.ObjectType.SingularName$$methodType.Name$Method>(this.Strategy, Meta.$methodType.Name$);
 				}
 			}
 >>
