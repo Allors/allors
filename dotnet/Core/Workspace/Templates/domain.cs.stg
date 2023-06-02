@@ -319,12 +319,9 @@ $endif$
 classMethodTypeObject() ::= <<
 	public partial class $methodType.ObjectType.SingularName$$methodType.Name$Method : Method
 	{
-		public IObjectFactory O { get; }
-
-        public $methodType.ObjectType.SingularName$$methodType.Name$Method(IStrategy strategy, Allors.Workspace.Meta.IMethodType methodType) : base(strategy, methodType)
-        {
-  			this.O = strategy.Workspace.Services.Get<IObjectFactory>();
-        }
+        public $methodType.ObjectType.SingularName$$methodType.Name$Method(IStrategy strategy, Allors.Workspace.Meta.IMethodType methodType) : base(strategy, methodType) 
+		{
+		}
 	}
 >>
 

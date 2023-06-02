@@ -9,14 +9,15 @@ namespace Allors.Workspace
 
     public abstract class Method : IMethod
     {
+        private readonly IMethod method;
+
         protected Method(IStrategy strategy, IMethodType methodType)
         {
-            this.Object = strategy;
-            this.MethodType = methodType;
+            this.method = strategy.Method(methodType);
         }
 
-        public IStrategy Object { get; }
+        public IStrategy Object => this.method.Object;
 
-        public IMethodType MethodType { get; }
+        public IMethodType MethodType => this.method.MethodType;
     }
 }

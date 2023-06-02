@@ -56,6 +56,8 @@ namespace Allors.Workspace
 
         ICompositesAssociation CompositesAssociation(IAssociationType associationType);
 
+        IMethod Method(IMethodType methodType);
+
         #region Deprecated
         bool CanRead(IRoleType roleType);
 

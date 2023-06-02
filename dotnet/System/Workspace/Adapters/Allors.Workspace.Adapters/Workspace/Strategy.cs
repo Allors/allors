@@ -27,6 +27,7 @@ namespace Allors.Workspace.Adapters
 
         private readonly IDictionary<IRoleType, IRole> roleByRoleType;
         private readonly IDictionary<IAssociationType, IAssociation> associationByAssociationType;
+        private readonly IDictionary<IMethodType, IMethod> methodByMethodType;
 
         protected Strategy(Workspace workspace, IClass @class, long id)
         {
@@ -40,6 +41,7 @@ namespace Allors.Workspace.Adapters
 
             this.roleByRoleType = new Dictionary<IRoleType, IRole>();
             this.associationByAssociationType = new Dictionary<IAssociationType, IAssociation>();
+            this.methodByMethodType = new Dictionary<IMethodType, IMethod>();
 
             this.changedAssociationByAssociationType = new Dictionary<IAssociationType, RefRange<Strategy>>();
         }
@@ -284,6 +286,18 @@ namespace Allors.Workspace.Adapters
             association = new CompositeAssociation(this, associationType);
             this.associationByAssociationType[associationType] = association;
             return (ICompositesAssociation)association;
+        }
+
+        public IMethod Method(IMethodType methodType)
+        {
+            if (this.methodByMethodType.TryGetValue(methodType, out var method))
+            {
+                return (IMethod)method;
+            }
+
+            method = new Method(this, methodType);
+            this.methodByMethodType[methodType] = method;
+            return (IMethod)method;
         }
 
         public bool CanRead(IRoleType roleType)
