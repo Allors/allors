@@ -43,9 +43,9 @@ namespace Allors.Workspace
         IEnumerable<IStrategy> Instantiate(IComposite objectType);
         #endregion
 
-        Task<IInvokeResult> InvokeAsync(Method method, InvokeOptions options = null);
+        Task<IInvokeResult> InvokeAsync(IMethod method, InvokeOptions options = null);
 
-        Task<IInvokeResult> InvokeAsync(Method[] methods, InvokeOptions options = null);
+        Task<IInvokeResult> InvokeAsync(IMethod[] methods, InvokeOptions options = null);
 
         Task<IPullResult> PullAsync(params Pull[] pull);
 

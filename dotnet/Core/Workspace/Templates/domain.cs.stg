@@ -43,7 +43,7 @@ $interface.WorkspaceExclusiveRoleTypesByWorkspaceName.(workspaceName):{roleType|
 
 $interface.WorkspaceExclusiveAssociationTypesByWorkspaceName.(workspaceName):{associationType|$interfaceAssociationType()$}; separator="\n"$
 
-$interface.WorkspaceMethodTypesByWorkspaceName.(workspaceName):{methodType|$interfaceMethodType()$}; separator="\n"$
+$interface.WorkspaceExclusiveMethodTypesByWorkspaceName.(workspaceName):{methodType|$interfaceMethodType()$}; separator="\n"$
 	}
 	
 	public partial class $interface.SingularName$Role : CompositeRole<$interface.SingularName$>
@@ -85,6 +85,8 @@ $interface.WorkspaceMethodTypesByWorkspaceName.(workspaceName):{methodType|$inte
   			this.O = strategy.Workspace.Services.Get<IObjectFactory>();
         }
 	}
+
+$interface.WorkspaceExclusiveMethodTypesByWorkspaceName.(workspaceName):{methodType|$interfaceMethodTypeObject()$}; separator="\n"$
 }
 >>
 
@@ -126,10 +128,21 @@ $endif$
 >>
 
 interfaceMethodType() ::= <<
-        bool CanExecute$methodType.Name$ { get; }
-
-        Method $methodType.Name$ { get; }
+        $interface.SingularName$$methodType.Name$Method $methodType.Name$ { get; }
 >>
+
+interfaceMethodTypeObject() ::= <<
+	public partial class $interface.SingularName$$methodType.Name$Method : Method
+	{
+		public IObjectFactory O { get; }
+
+        public $interface.SingularName$$methodType.Name$Method(IStrategy strategy, Allors.Workspace.Meta.IMethodType methodType) : base(strategy, methodType)
+        {
+  			this.O = strategy.Workspace.Services.Get<IObjectFactory>();
+        }
+	}
+>>
+
 
 castClass(meta, objectType, workspaceName) ::= <<
 $class(meta,objectType)$
@@ -237,23 +250,17 @@ $class.WorkspaceMethodTypesByWorkspaceName.(workspaceName):{methodType|$classMet
   			this.O = strategy.Workspace.Services.Get<IObjectFactory>();
         }
 	}
+
+$class.WorkspaceExclusiveMethodTypesByWorkspaceName.(workspaceName):{methodType|$classMethodTypeObject()$}; separator="\n"$	
 }
 >>
 
 classMethodType() ::= <<
-			public bool CanExecute$methodType.Name$
+			public $methodType.ObjectType.SingularName$$methodType.Name$Method $methodType.Name$
 			{
 				get
 				{
-					return this.Strategy.CanExecute(this.Meta.$methodType.Name$);
-				}
-			}
-
-			public Method $methodType.Name$
-			{
-				get
-				{
-					return new Method(this.Strategy, this.Meta.$methodType.Name$);
+					return new $methodType.ObjectType.SingularName$$methodType.Name$Method(this.Strategy, this.Meta.$methodType.Name$);
 				}
 			}
 >>
@@ -307,6 +314,18 @@ $else$
             }
 		}
 $endif$
+>>
+
+classMethodTypeObject() ::= <<
+	public partial class $methodType.ObjectType.SingularName$$methodType.Name$Method : Method
+	{
+		public IObjectFactory O { get; }
+
+        public $methodType.ObjectType.SingularName$$methodType.Name$Method(IStrategy strategy, Allors.Workspace.Meta.IMethodType methodType) : base(strategy, methodType)
+        {
+  			this.O = strategy.Workspace.Services.Get<IObjectFactory>();
+        }
+	}
 >>
 
 roleType_ObjectType(roleType) ::= <%

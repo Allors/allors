@@ -13,7 +13,6 @@ namespace Allors.Workspace.Adapters.Direct
     using Database.Meta;
     using Database.Security;
     using Database.Services;
-    using Method = Method;
 
     public class Invoke : Result
     {
@@ -39,7 +38,7 @@ namespace Allors.Workspace.Adapters.Direct
 
         private Func<IValidation> Derive { get; }
 
-        internal void Execute(Method[] methods, InvokeOptions options)
+        internal void Execute(IMethod[] methods, InvokeOptions options)
         {
             var isolated = options?.Isolated ?? false;
             var continueOnError = options?.ContinueOnError ?? false;
@@ -93,7 +92,7 @@ namespace Allors.Workspace.Adapters.Direct
             }
         }
 
-        private bool Execute(Method invocation)
+        private bool Execute(IMethod invocation)
         {
             var obj = this.Transaction.Instantiate(invocation.Object.Id);
             if (obj == null)

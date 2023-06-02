@@ -140,9 +140,9 @@ namespace Allors.Workspace.Adapters
             return this.StrategyByWorkspaceId.Where(v => classes.Contains(v.Value.Class)).Select(v => v.Value).Distinct();
         }
 
-        public abstract Task<IInvokeResult> InvokeAsync(Method method, InvokeOptions options = null);
+        public abstract Task<IInvokeResult> InvokeAsync(IMethod method, InvokeOptions options = null);
 
-        public abstract Task<IInvokeResult> InvokeAsync(Method[] methods, InvokeOptions options = null);
+        public abstract Task<IInvokeResult> InvokeAsync(IMethod[] methods, InvokeOptions options = null);
 
         public abstract Task<IPullResult> PullAsync(params Pull[] pull);
 

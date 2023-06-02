@@ -31,10 +31,10 @@ namespace Allors.Workspace.Adapters.Direct
             return strategy;
         }
 
-        public override Task<IInvokeResult> InvokeAsync(Method method, InvokeOptions options = null) =>
+        public override Task<IInvokeResult> InvokeAsync(IMethod method, InvokeOptions options = null) =>
                this.InvokeAsync(new[] { method }, options);
 
-        public override Task<IInvokeResult> InvokeAsync(Method[] methods, InvokeOptions options = null)
+        public override Task<IInvokeResult> InvokeAsync(IMethod[] methods, InvokeOptions options = null)
         {
             var result = new Invoke(this);
             result.Execute(methods, options);
