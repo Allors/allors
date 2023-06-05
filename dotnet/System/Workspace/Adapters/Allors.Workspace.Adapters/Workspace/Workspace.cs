@@ -16,6 +16,10 @@ namespace Allors.Workspace.Adapters
     {
         private readonly Dictionary<IClass, ISet<Strategy>> strategiesByClass;
 
+        private readonly IDictionary<IRoleType, IDictionary<IStrategy, IRole>> roleByStrategyByRoleType;
+        private readonly IDictionary<IAssociationType, IDictionary<IStrategy, IAssociation>> associationByStrategyByAssociationType;
+        private readonly IDictionary<IMethodType, IDictionary<IStrategy, IMethod>> methodByStrategyByMethodType;
+
         protected Workspace(Connection connection, IWorkspaceServices services)
         {
             this.Connection = connection;
@@ -25,6 +29,10 @@ namespace Allors.Workspace.Adapters
 
             this.StrategyById = new Dictionary<long, Strategy>();
             this.strategiesByClass = new Dictionary<IClass, ISet<Strategy>>();
+
+            this.roleByStrategyByRoleType = new Dictionary<IRoleType, IDictionary<IStrategy, IRole>>();
+            this.associationByStrategyByAssociationType = new Dictionary<IAssociationType, IDictionary<IStrategy, IAssociation>>();
+            this.methodByStrategyByMethodType = new Dictionary<IMethodType, IDictionary<IStrategy, IMethod>>();
 
             this.PushToDatabaseTracker = new PushToDatabaseTracker();
 
@@ -143,5 +151,223 @@ namespace Allors.Workspace.Adapters
         public abstract Task<IPullResult> PullAsync(params Pull[] pull);
 
         public abstract Task<IPushResult> PushAsync();
+
+        public IBinaryRole BinaryRole(Strategy strategy, IRoleType roleType)
+        {
+            var roleByStrategy = this.GetRoleByStrategy(roleType);
+
+            if (roleByStrategy.TryGetValue(strategy, out var role))
+            {
+                return (IBinaryRole)role;
+            }
+
+            role = new BinaryRole(strategy, roleType);
+            roleByStrategy[strategy] = role;
+            return (IBinaryRole)role;
+        }
+
+        public IBooleanRole BooleanRole(Strategy strategy, IRoleType roleType)
+        {
+            var roleByStrategy = this.GetRoleByStrategy(roleType);
+
+            if (roleByStrategy.TryGetValue(strategy, out var role))
+            {
+                return (IBooleanRole)role;
+            }
+
+            role = new BooleanRole(strategy, roleType);
+            roleByStrategy[strategy] = role;
+            return (IBooleanRole)role;
+        }
+
+        public IDateTimeRole DateTimeRole(Strategy strategy, IRoleType roleType)
+        {
+            var roleByStrategy = this.GetRoleByStrategy(roleType);
+
+            if (roleByStrategy.TryGetValue(strategy, out var role))
+            {
+                return (IDateTimeRole)role;
+            }
+
+            role = new DateTimeRole(strategy, roleType);
+            roleByStrategy[strategy] = role;
+            return (IDateTimeRole)role;
+        }
+
+        public IDecimalRole DecimalRole(Strategy strategy, IRoleType roleType)
+        {
+            var roleByStrategy = this.GetRoleByStrategy(roleType);
+
+            if (roleByStrategy.TryGetValue(strategy, out var role))
+            {
+                return (IDecimalRole)role;
+            }
+
+            role = new DecimalRole(strategy, roleType);
+            roleByStrategy[strategy] = role;
+            return (IDecimalRole)role;
+        }
+
+        public IFloatRole FloatRole(Strategy strategy, IRoleType roleType)
+        {
+            var roleByStrategy = this.GetRoleByStrategy(roleType);
+
+            if (roleByStrategy.TryGetValue(strategy, out var role))
+            {
+                return (IFloatRole)role;
+            }
+
+            role = new FloatRole(strategy, roleType);
+            roleByStrategy[strategy] = role;
+            return (IFloatRole)role;
+        }
+
+        public IIntegerRole IntegerRole(Strategy strategy, IRoleType roleType)
+        {
+            var roleByStrategy = this.GetRoleByStrategy(roleType);
+
+            if (roleByStrategy.TryGetValue(strategy, out var role))
+            {
+                return (IIntegerRole)role;
+            }
+
+            role = new IntegerRole(strategy, roleType);
+            roleByStrategy[strategy] = role;
+            return (IIntegerRole)role;
+        }
+
+        public IStringRole StringRole(Strategy strategy, IRoleType roleType)
+        {
+            var roleByStrategy = this.GetRoleByStrategy(roleType);
+
+            if (roleByStrategy.TryGetValue(strategy, out var role))
+            {
+                return (IStringRole)role;
+            }
+
+            role = new StringRole(strategy, roleType);
+            roleByStrategy[strategy] = role;
+            return (IStringRole)role;
+        }
+
+        public IUniqueRole UniqueRole(Strategy strategy, IRoleType roleType)
+        {
+            var roleByStrategy = this.GetRoleByStrategy(roleType);
+
+            if (roleByStrategy.TryGetValue(strategy, out var role))
+            {
+                return (IUniqueRole)role;
+            }
+
+            role = new UniqueRole(strategy, roleType);
+            roleByStrategy[strategy] = role;
+            return (IUniqueRole)role;
+        }
+
+        public ICompositeRole CompositeRole(Strategy strategy, IRoleType roleType)
+        {
+            var roleByStrategy = this.GetRoleByStrategy(roleType);
+
+            if (roleByStrategy.TryGetValue(strategy, out var role))
+            {
+                return (ICompositeRole)role;
+            }
+
+            role = new CompositeRole(strategy, roleType);
+            roleByStrategy[strategy] = role;
+            return (ICompositeRole)role;
+        }
+
+        public ICompositesRole CompositesRole(Strategy strategy, IRoleType roleType)
+        {
+            var roleByStrategy = this.GetRoleByStrategy(roleType);
+
+            if (roleByStrategy.TryGetValue(strategy, out var role))
+            {
+                return (ICompositesRole)role;
+            }
+
+            role = new CompositesRole(strategy, roleType);
+            roleByStrategy[strategy] = role;
+            return (ICompositesRole)role;
+        }
+
+        public ICompositeAssociation CompositeAssociation(Strategy strategy, IAssociationType associationType)
+        {
+            var associationByStrategy = this.GetAssociationByStrategy(associationType);
+
+            if (associationByStrategy.TryGetValue(strategy, out var association))
+            {
+                return (ICompositeAssociation)association;
+            }
+
+            association = new CompositeAssociation(strategy, associationType);
+            associationByStrategy[strategy] = association;
+            return (ICompositeAssociation)association;
+        }
+
+        public ICompositesAssociation CompositesAssociation(Strategy strategy, IAssociationType associationType)
+        {
+            var associationByStrategy = this.GetAssociationByStrategy(associationType);
+
+            if (associationByStrategy.TryGetValue(strategy, out var association))
+            {
+                return (ICompositesAssociation)association;
+            }
+
+            association = new CompositesAssociation(strategy, associationType);
+            associationByStrategy[strategy] = association;
+            return (ICompositesAssociation)association;
+        }
+
+        public IMethod Method(Strategy strategy, IMethodType methodType)
+        {
+            var methodByStrategy = this.GetMethodByStrategy(methodType);
+
+            if (methodByStrategy.TryGetValue(strategy, out var method))
+            {
+                return method;
+            }
+
+            method = new Method(strategy, methodType);
+            methodByStrategy[strategy] = method;
+            return method;
+        }
+
+        private IDictionary<IStrategy, IRole> GetRoleByStrategy(IRoleType roleType)
+        {
+            if (this.roleByStrategyByRoleType.TryGetValue(roleType, out var roleByStrategy))
+            {
+                return roleByStrategy;
+            }
+
+            roleByStrategy = new Dictionary<IStrategy, IRole>();
+            this.roleByStrategyByRoleType.Add(roleType, roleByStrategy);
+            return roleByStrategy;
+        }
+
+        private IDictionary<IStrategy, IAssociation> GetAssociationByStrategy(IAssociationType associationType)
+        {
+            if (this.associationByStrategyByAssociationType.TryGetValue(associationType, out var associationByStrategy))
+            {
+                return associationByStrategy;
+            }
+
+            associationByStrategy = new Dictionary<IStrategy, IAssociation>();
+            this.associationByStrategyByAssociationType.Add(associationType, associationByStrategy);
+            return associationByStrategy;
+        }
+
+        private IDictionary<IStrategy, IMethod> GetMethodByStrategy(IMethodType methodType)
+        {
+            if (this.methodByStrategyByMethodType.TryGetValue(methodType, out var methodByStrategy))
+            {
+                return methodByStrategy;
+            }
+
+            methodByStrategy = new Dictionary<IStrategy, IMethod>();
+            this.methodByStrategyByMethodType.Add(methodType, methodByStrategy);
+            return methodByStrategy;
+        }
     }
 }
