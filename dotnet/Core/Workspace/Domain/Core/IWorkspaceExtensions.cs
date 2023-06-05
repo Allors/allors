@@ -20,11 +20,29 @@ namespace Allors.Workspace
             return objectFactory.Object<T>(strategy);
         }
 
+        public static T Instantiate<T>(this IWorkspace workspace, long id) where T : class, IObject
+        {
+            var objectFactory = workspace.Services.Get<IObjectFactory>();
+            return objectFactory.Object<T>(workspace.Instantiate(id));
+        }
+
         public static T Instantiate<T>(this IWorkspace workspace, IStrategy strategy) where T : class, IObject
         {
             var objectFactory = workspace.Services.Get<IObjectFactory>();
             return objectFactory.Object<T>(workspace.Instantiate(strategy));
         }
+
+        public static IEnumerable<T> Instantiate<T>(this IWorkspace workspace, IEnumerable<long> ids) where T : class, IObject
+        {
+            if (ids == null)
+            {
+                return Array.Empty<T>();
+            }
+
+            var objectFactory = workspace.Services.Get<IObjectFactory>();
+            return objectFactory.Object<T>(ids.Select(workspace.Instantiate));
+        }
+
 
         public static IEnumerable<T> Instantiate<T>(this IWorkspace workspace, IEnumerable<IStrategy> strategies) where T : class, IObject
         {

@@ -15,17 +15,16 @@ namespace Allors.Workspace.Adapters
     public abstract class Workspace : IWorkspace
     {
         private readonly Dictionary<IClass, ISet<Strategy>> strategiesByClass;
-        private readonly ISet<IConflict> conflicts;
 
-        protected Workspace(Connection database, IWorkspaceServices services)
+        protected Workspace(Connection connection, IWorkspaceServices services)
         {
-            this.Connection = database;
+            this.Connection = connection;
             this.Services = services;
 
-            this.StrategyByWorkspaceId = new Dictionary<long, Strategy>();
-            this.strategiesByClass = new Dictionary<IClass, ISet<Strategy>>();
+            this.MetaPopulation = this.Connection.Configuration.MetaPopulation;
 
-            this.conflicts = new HashSet<IConflict>();
+            this.StrategyById = new Dictionary<long, Strategy>();
+            this.strategiesByClass = new Dictionary<IClass, ISet<Strategy>>();
 
             this.PushToDatabaseTracker = new PushToDatabaseTracker();
 
@@ -36,17 +35,14 @@ namespace Allors.Workspace.Adapters
 
         public IWorkspaceServices Services { get; }
 
-        public IMetaPopulation MetaPopulation => this.Connection.Configuration.MetaPopulation;
+        public IMetaPopulation MetaPopulation { get; }
 
-        public bool HasChanges => this.StrategyByWorkspaceId.Any(kvp => kvp.Value.HasChanges);
-
-        public event EventHandler OnChange;
-
-        public virtual void OnChanged(EventArgs e) => this.OnChange?.Invoke(this, e);
+        // TODO: Cache
+        public bool HasChanges => this.StrategyById.Any(kvp => kvp.Value.HasChanges);
 
         public PushToDatabaseTracker PushToDatabaseTracker { get; }
 
-        protected Dictionary<long, Strategy> StrategyByWorkspaceId { get; }
+        protected Dictionary<long, Strategy> StrategyById { get; }
 
         public override string ToString() => $"workspace: {base.ToString()}";
 
@@ -55,7 +51,7 @@ namespace Allors.Workspace.Adapters
         public void Reset()
         {
             // TODO: Optimize, only reset changed or created strategies
-            foreach (var strategy in this.StrategyByWorkspaceId.Values.ToArray())
+            foreach (var strategy in this.StrategyById.Values.ToArray())
             {
                 strategy.Reset();
             }
@@ -106,12 +102,12 @@ namespace Allors.Workspace.Adapters
                 return null;
             }
 
-            return this.StrategyByWorkspaceId.TryGetValue(id, out var sessionStrategy) ? sessionStrategy : null;
+            return this.StrategyById.TryGetValue(id, out var strategy) ? strategy : null;
         }
 
         protected void AddStrategy(Strategy strategy)
         {
-            this.StrategyByWorkspaceId.Add(strategy.Id, strategy);
+            this.StrategyById.Add(strategy.Id, strategy);
 
             var @class = strategy.Class;
             if (!this.strategiesByClass.TryGetValue(@class, out var strategies))
@@ -126,7 +122,7 @@ namespace Allors.Workspace.Adapters
 
         protected void OnDatabasePushResponseNew(long workspaceId, long databaseId)
         {
-            var strategy = this.StrategyByWorkspaceId[workspaceId];
+            var strategy = this.StrategyById[workspaceId];
             this.PushToDatabaseTracker.Created.Remove(strategy);
             strategy.OnPushNewId(databaseId);
             this.AddStrategy(strategy);
@@ -137,7 +133,7 @@ namespace Allors.Workspace.Adapters
         {
             // TODO: Optimize
             var classes = new HashSet<IClass>(objectType.Classes);
-            return this.StrategyByWorkspaceId.Where(v => classes.Contains(v.Value.Class)).Select(v => v.Value).Distinct();
+            return this.StrategyById.Where(v => classes.Contains(v.Value.Class)).Select(v => v.Value).Distinct();
         }
 
         public abstract Task<IInvokeResult> InvokeAsync(IMethod method, InvokeOptions options = null);

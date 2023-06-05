@@ -143,11 +143,33 @@ namespace Allors.Workspace.Adapters.Tests
             person.FirstName.Value = "Johny";
             person.LastName.Value = "Doey";
 
-            Assert.True(person.Id < 0);
+            var originalId = person.Id;
+
+            Assert.True(originalId < 0);
 
             Assert.False((await workspace.PushAsync()).HasErrors);
 
             Assert.True(person.Id > 0);
+        }
+
+        [Fact]
+        public async void PushShouldAlsoKeepOriginalId()
+        {
+            await this.Login("administrator");
+
+            var workspace = this.Workspace;
+
+            var person = workspace.Create<Person>();
+            person.FirstName.Value = "Johny";
+            person.LastName.Value = "Doey";
+
+            var originalId = person.Id;
+
+            Assert.False((await workspace.PushAsync()).HasErrors);
+
+            var personWithOriginalId = workspace.Instantiate<Person>(originalId);
+
+            Assert.NotNull(personWithOriginalId);
         }
 
         [Fact]

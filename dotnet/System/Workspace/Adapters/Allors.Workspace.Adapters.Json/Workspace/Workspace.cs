@@ -97,7 +97,7 @@ namespace Allors.Workspace.Adapters.Json
 
             foreach (var p in pullResponse.p)
             {
-                if (!this.StrategyByWorkspaceId.TryGetValue(p.i, out var strategy))
+                if (!this.StrategyById.TryGetValue(p.i, out var strategy))
                 {
                     var databaseRecord = (Adapters.Record)this.Connection.GetRecord(p.i);
                     strategy = new Strategy(this, databaseRecord.Class, databaseRecord.Id);
@@ -107,7 +107,7 @@ namespace Allors.Workspace.Adapters.Json
 
             foreach (var p in pullResponse.p)
             {
-                this.StrategyByWorkspaceId.TryGetValue(p.i, out var strategy);
+                this.StrategyById.TryGetValue(p.i, out var strategy);
                 strategy!.OnPulled(pullResult);
             }
 

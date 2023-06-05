@@ -17,8 +17,6 @@ namespace Allors.Workspace
 
         IMetaPopulation MetaPopulation { get; }
 
-        event EventHandler OnChange;
-
         bool HasChanges { get; }
 
         void Reset();

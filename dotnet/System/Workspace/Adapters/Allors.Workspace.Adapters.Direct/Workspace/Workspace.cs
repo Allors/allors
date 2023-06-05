@@ -13,7 +13,7 @@ namespace Allors.Workspace.Adapters.Direct
 
     public class Workspace : Adapters.Workspace
     {
-        public Workspace(Connection database, IWorkspaceServices services) : base(database, services)
+        public Workspace(Connection connection, IWorkspaceServices services) : base(connection, services)
         {
             this.Services.OnInit(this);
         }
@@ -59,7 +59,7 @@ namespace Allors.Workspace.Adapters.Direct
 
             foreach (var databaseObject in result.DatabaseObjects)
             {
-                if (!this.StrategyByWorkspaceId.ContainsKey(databaseObject.Id))
+                if (!this.StrategyById.ContainsKey(databaseObject.Id))
                 {
                     var databaseRecord = this.Connection.GetRecord(databaseObject.Id);
                     var strategy = new Strategy(this, databaseRecord.Class, databaseRecord.Id);
@@ -69,7 +69,7 @@ namespace Allors.Workspace.Adapters.Direct
 
             foreach (var databaseObject in result.DatabaseObjects)
             {
-                this.StrategyByWorkspaceId.TryGetValue(databaseObject.Id, out var strategy);
+                this.StrategyById.TryGetValue(databaseObject.Id, out var strategy);
                 strategy!.OnPulled(result);
             }
 
