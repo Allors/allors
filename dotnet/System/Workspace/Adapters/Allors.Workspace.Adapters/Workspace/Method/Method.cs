@@ -16,8 +16,10 @@ namespace Allors.Workspace
             this.MethodType = methodType;
         }
 
-        public IStrategy Object { get; }
-        
+        IStrategy IMethod.Object => this.Object;
+
+        public Strategy Object { get; }
+
         public IMethodType MethodType { get; }
 
         public bool CanExecute => this.Object.CanExecute(this.MethodType);

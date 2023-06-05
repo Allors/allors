@@ -35,7 +35,7 @@ namespace Allors.Workspace.Adapters.Tests
 
             try
             {
-                c1.Strategy.SetUnitRole(this.M.C1.C1AllorsInteger, "Not an integer");
+                c1.Strategy.UnitRole(this.M.C1.C1AllorsInteger).Value = "Not an integer";
                 hasErrors = false;
             }
             catch (Exception)
@@ -60,7 +60,7 @@ namespace Allors.Workspace.Adapters.Tests
 
             try
             {
-                c1.Strategy.SetCompositeRole(this.M.C1.C1C1One2One, c2.Strategy);
+                c1.Strategy.CompositeRole(this.M.C1.C1C1One2One).Value = c2.Strategy;
                 hasErrors = false;
             }
             catch (Exception)
@@ -83,11 +83,11 @@ namespace Allors.Workspace.Adapters.Tests
 
             bool hasErrors;
 
-            c1.Strategy.SetCompositesRole(this.M.C1.C1C2Many2Manies, new[] { c2.Strategy });
+            c1.Strategy.CompositesRole(this.M.C1.C1C2Many2Manies).Value = new[] { c2.Strategy };
 
             try
             {
-                c1.Strategy.SetCompositeRole(this.M.C1.C1C2Many2Manies, c2.Strategy);
+                c1.Strategy.CompositeRole(this.M.C1.C1C2Many2Manies).Value = c2.Strategy;
                 hasErrors = false;
             }
             catch (Exception)
@@ -109,7 +109,7 @@ namespace Allors.Workspace.Adapters.Tests
             bool hasErrors;
             try
             {
-                c1.Strategy.AddCompositesRole(this.M.C1.C1C1Many2Manies, c2.Strategy);
+                c1.Strategy.CompositesRole(this.M.C1.C1C1Many2Manies).Add(c2.Strategy);
                 hasErrors = false;
             }
             catch (Exception)
@@ -134,7 +134,7 @@ namespace Allors.Workspace.Adapters.Tests
 
             try
             {
-                c1.Strategy.AddCompositesRole(this.M.C1.C1C2One2One, c2.Strategy);
+                c1.Strategy.CompositesRole(this.M.C1.C1C2One2One).Add(c2.Strategy);
                 hasErrors = false;
             }
             catch (Exception)

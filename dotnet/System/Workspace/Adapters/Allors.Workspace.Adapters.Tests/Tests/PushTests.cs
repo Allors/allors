@@ -32,20 +32,21 @@ namespace Allors.Workspace.Adapters.Tests
 
             foreach (var roleType in this.M.C1.RoleTypes)
             {
-                Assert.True(newObject.Strategy.CanRead(roleType));
-                Assert.False(newObject.Strategy.ExistRole(roleType));
+                var role = newObject.Strategy.Role(roleType);
+                Assert.True(role.CanRead);
+                Assert.False(role.Exist);
             }
 
             foreach (var associationType in this.M.C1.AssociationTypes)
             {
                 if (associationType.IsOne)
                 {
-                    var association = newObject.Strategy.GetCompositeAssociation(associationType);
+                    var association = newObject.Strategy.CompositeAssociation(associationType).Value;
                     Assert.Null(association);
                 }
                 else
                 {
-                    var association = newObject.Strategy.GetCompositesAssociation(associationType);
+                    var association = newObject.Strategy.CompositesAssociation(associationType).Value;
                     Assert.Empty(association);
                 }
             }
@@ -67,20 +68,20 @@ namespace Allors.Workspace.Adapters.Tests
 
             foreach (var roleType in this.M.C1.RoleTypes)
             {
-                Assert.True(newObject.Strategy.CanRead(roleType));
-                Assert.False(newObject.Strategy.ExistRole(roleType));
+                Assert.True(newObject.Strategy.Role(roleType).CanRead);
+                Assert.False(newObject.Strategy.Role(roleType).Exist);
             }
 
             foreach (var associationType in this.M.C1.AssociationTypes)
             {
                 if (associationType.IsOne)
                 {
-                    var association = newObject.Strategy.GetCompositeAssociation(associationType);
+                    var association = newObject.Strategy.CompositeAssociation(associationType).Value;
                     Assert.Null(association);
                 }
                 else
                 {
-                    var association = newObject.Strategy.GetCompositesAssociation(associationType);
+                    var association = newObject.Strategy.CompositesAssociation(associationType).Value;
                     Assert.Empty(association);
                 }
             }

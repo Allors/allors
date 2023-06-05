@@ -27,7 +27,7 @@ namespace Allors.Workspace.Data
             {
                 if (roleType.IsOne)
                 {
-                    var association = strategy.GetCompositeRole(roleType);
+                    var association = strategy.CompositeRole(roleType)?.Value;
 
                     if (ofType == null || association == null)
                     {
@@ -38,7 +38,7 @@ namespace Allors.Workspace.Data
                 }
                 else
                 {
-                    var association = strategy.GetCompositesRole(roleType);
+                    var association = strategy.CompositesRole(roleType).Value;
 
                     if (ofType == null || association == null)
                     {
@@ -53,7 +53,7 @@ namespace Allors.Workspace.Data
             {
                 if (associationType.IsOne)
                 {
-                    var association = strategy.GetCompositeAssociation(associationType);
+                    var association = strategy.CompositeAssociation(associationType).Value;
 
                     if (ofType == null || association == null)
                     {
@@ -64,7 +64,7 @@ namespace Allors.Workspace.Data
                 }
                 else
                 {
-                    var association = strategy.GetCompositesAssociation(associationType);
+                    var association = strategy.CompositesAssociation(associationType).Value;
 
                     if (ofType == null || association == null)
                     {

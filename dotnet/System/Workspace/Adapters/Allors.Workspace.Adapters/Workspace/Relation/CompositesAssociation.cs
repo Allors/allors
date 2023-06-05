@@ -16,7 +16,10 @@ namespace Allors.Workspace
             this.Object = @object;
             this.AssociationType = associationType;
         }
-        public IStrategy Object { get; }
+        IStrategy IRelationEnd.Object => this.Object;
+
+        public Strategy Object { get; }
+
 
         public IRelationType RelationType => this.AssociationType.RelationType;
 

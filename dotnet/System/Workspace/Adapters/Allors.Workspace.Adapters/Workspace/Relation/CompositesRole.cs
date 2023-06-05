@@ -17,7 +17,10 @@ namespace Allors.Workspace
             this.RoleType = roleType;
         }
 
-        public IStrategy Object { get; }
+        IStrategy IRelationEnd.Object => this.Object;
+
+        public Strategy Object { get; }
+
 
         public IRelationType RelationType => this.RoleType.RelationType;
 
