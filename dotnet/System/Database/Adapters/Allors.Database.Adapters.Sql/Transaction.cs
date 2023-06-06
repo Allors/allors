@@ -1,4 +1,4 @@
-// <copyright file="Transaction.cs" company="Allors bvba">
+﻿// <copyright file="Transaction.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -225,6 +225,40 @@ public sealed class Transaction : ITransaction
             var newObject = reference.Strategy.GetObject();
             newObject.OnPostBuild();
             domainObjects[i] = newObject;
+        }
+
+        return domainObjects;
+    }
+
+    public TObject[] Build<TObject, TArgument>(IEnumerable<TArgument> args, Action<TObject, TArgument> builder) where TObject : IObject
+    {
+        var objectType = this.Database.ObjectFactory.GetObjectType(typeof(TObject));
+
+        if (!(objectType is IClass @class))
+        {
+            throw new Exception("IObjectType should be a class");
+        }
+
+        var materializedArgs = args as IReadOnlyCollection<TArgument> ?? args.ToArray();
+
+        var count = materializedArgs.Count;
+
+        var references = this.Commands.CreateObjects(@class, count);
+
+        var domainObjects = new TObject[count];
+
+        var i = 0;
+        foreach (var arg in materializedArgs)
+        {
+            var reference = references[i];
+            this.State.ReferenceByObjectId[reference.ObjectId] = reference;
+            this.State.ChangeLog.OnCreated(reference.Strategy);
+
+            var newObject = (TObject)reference.Strategy.GetObject();
+            builder?.Invoke(newObject, arg);
+            newObject.OnPostBuild();
+            domainObjects[i] = newObject;
+            i++;
         }
 
         return domainObjects;

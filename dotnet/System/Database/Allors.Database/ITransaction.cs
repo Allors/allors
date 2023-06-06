@@ -1,4 +1,4 @@
-// <copyright file="ITransaction.cs" company="Allors bvba">
+﻿// <copyright file="ITransaction.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -132,6 +132,13 @@ public interface ITransaction : IDisposable
     /// <param name="count">The count.</param>
     /// <returns>The created objects.</returns>
     IObject[] Build(IClass objectType, int count);
+
+    /// <summary>
+    ///     Creates a specified amount of AllorsObjects.
+    /// </summary>
+    /// <returns>The created objects.</returns>
+    TObject[] Build<TObject, TArgument>(IEnumerable<TArgument> args, Action<TObject, TArgument> builder)
+        where TObject : IObject;
 
     /// <summary>
     ///     Instantiates an Allors Object.

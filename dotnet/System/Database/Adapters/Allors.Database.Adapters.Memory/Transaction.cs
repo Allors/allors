@@ -1,4 +1,4 @@
-// <copyright file="Transaction.cs" company="Allors bvba">
+﻿// <copyright file="Transaction.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -258,6 +258,32 @@ public class Transaction : ITransaction
         return allorsObjects;
     }
 
+    public TObject[] Build<TObject, TArgument>(IEnumerable<TArgument> args, Action<TObject, TArgument> builder) where TObject : IObject
+    {
+        var objectType = this.Database.ObjectFactory.GetObjectType(typeof(TObject));
+
+        if (!(objectType is IClass @class))
+        {
+            throw new Exception("IObjectType should be a class");
+        }
+
+        var materializedArgs = args as IReadOnlyCollection<TArgument> ?? args.ToArray();
+
+        var newObjects = new TObject[materializedArgs.Count];
+
+        var index = 0;
+        foreach (var arg in materializedArgs)
+        {
+            var newObject = (TObject)this.CreateWithoutOnBuild(@class);
+            builder?.Invoke(newObject, arg);
+            newObject.OnPostBuild();
+            newObjects[index++] = newObject;
+        }
+
+        return newObjects;
+    }
+
+
     public IObject Instantiate(string objectIdString) => long.TryParse(objectIdString, out var id) ? this.Instantiate(id) : null;
 
     public IObject Instantiate(IObject obj)
@@ -447,34 +473,34 @@ public class Transaction : ITransaction
 
         switch (concreteClasses.Length)
         {
-            case 0:
-                return EmptyStrategies;
+        case 0:
+            return EmptyStrategies;
 
-            case 1:
+        case 1:
+            {
+                var objectType = concreteClasses[0];
+                if (this.strategiesByObjectType.TryGetValue(objectType, out var strategies))
                 {
-                    var objectType = concreteClasses[0];
-                    if (this.strategiesByObjectType.TryGetValue(objectType, out var strategies))
-                    {
-                        return strategies;
-                    }
-
-                    return EmptyStrategies;
-                }
-
-            default:
-                {
-                    var strategies = new HashSet<Strategy>();
-
-                    foreach (var objectType in concreteClasses)
-                    {
-                        if (this.strategiesByObjectType.TryGetValue(objectType, out var objectTypeStrategies))
-                        {
-                            strategies.UnionWith(objectTypeStrategies);
-                        }
-                    }
-
                     return strategies;
                 }
+
+                return EmptyStrategies;
+            }
+
+        default:
+            {
+                var strategies = new HashSet<Strategy>();
+
+                foreach (var objectType in concreteClasses)
+                {
+                    if (this.strategiesByObjectType.TryGetValue(objectType, out var objectTypeStrategies))
+                    {
+                        strategies.UnionWith(objectTypeStrategies);
+                    }
+                }
+
+                return strategies;
+            }
         }
     }
 
