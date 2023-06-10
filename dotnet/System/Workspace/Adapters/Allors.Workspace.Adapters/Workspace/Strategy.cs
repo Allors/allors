@@ -13,7 +13,7 @@ namespace Allors.Workspace.Adapters
 
     public abstract class Strategy : IStrategy, IComparable<Strategy>
     {
-        protected readonly Workspace Workspace;
+        public readonly Workspace Workspace;
 
         private long id;
         private bool isPushed;
@@ -366,6 +366,8 @@ namespace Allors.Workspace.Adapters
             };
 
             this.Workspace.PushToDatabaseTracker.OnChanged(this);
+
+            this.Workspace.Reaction(this, roleType);
         }
 
         public void SetCompositeRole(IRoleType roleType, IStrategy value)

@@ -20,6 +20,8 @@ namespace Allors.Workspace.Adapters
         private readonly IDictionary<IAssociationType, IDictionary<IStrategy, IAssociation>> associationByStrategyByAssociationType;
         private readonly IDictionary<IMethodType, IDictionary<IStrategy, IMethod>> methodByStrategyByMethodType;
 
+        private IDictionary<StringRole, StringRoleReaction> reactionsByRole;
+
         protected Workspace(Connection connection, IWorkspaceServices services)
         {
             this.Connection = connection;
@@ -33,6 +35,8 @@ namespace Allors.Workspace.Adapters
             this.roleByStrategyByRoleType = new Dictionary<IRoleType, IDictionary<IStrategy, IRole>>();
             this.associationByStrategyByAssociationType = new Dictionary<IAssociationType, IDictionary<IStrategy, IAssociation>>();
             this.methodByStrategyByMethodType = new Dictionary<IMethodType, IDictionary<IStrategy, IMethod>>();
+
+            this.reactionsByRole = new Dictionary<StringRole, StringRoleReaction>();
 
             this.PushToDatabaseTracker = new PushToDatabaseTracker();
 
@@ -334,6 +338,34 @@ namespace Allors.Workspace.Adapters
             return method;
         }
 
+        public void RegisterReaction(StringRoleReaction reaction)
+        {
+            this.reactionsByRole.Add(reaction.Role, reaction);
+        }
+
+        public void DeregisterReaction(StringRoleReaction reaction)
+        {
+            this.reactionsByRole.Remove(reaction.Role);
+        }
+
+        public void Reaction(Strategy strategy, IRoleType roleType)
+        {
+            if (this.roleByStrategyByRoleType.TryGetValue(roleType, out var roleByStrategy))
+            {
+                if (roleByStrategy.TryGetValue(strategy, out var role))
+                {
+                    if (role is StringRole stringRole)
+                    {
+                        if (this.reactionsByRole.TryGetValue(stringRole, out var reaction))
+                        {
+                            reaction.React();
+                        }
+                    }
+                }
+            }
+        }
+
+        #region role, association and method
         private IDictionary<IStrategy, IRole> GetRoleByStrategy(IRoleType roleType)
         {
             if (this.roleByStrategyByRoleType.TryGetValue(roleType, out var roleByStrategy))
@@ -369,5 +401,7 @@ namespace Allors.Workspace.Adapters
             this.methodByStrategyByMethodType.Add(methodType, methodByStrategy);
             return methodByStrategy;
         }
+
+        #endregion
     }
 }

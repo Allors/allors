@@ -5,11 +5,16 @@
 
 namespace Allors.Workspace
 {
+    using System;
+    using System.ComponentModel;
     using Adapters;
     using Meta;
 
     public class StringRole : IStringRole
     {
+        private Object lockObject = new();
+        private StringRoleReaction reaction;
+
         public StringRole(Strategy strategy, IRoleType roleType)
         {
             this.Object = strategy;
@@ -23,7 +28,7 @@ namespace Allors.Workspace
         public IRelationType RelationType => this.RoleType.RelationType;
 
         public IRoleType RoleType { get; }
-        
+
         object IRelationEnd.Value => this.Value;
 
         object IRole.Value
@@ -49,6 +54,37 @@ namespace Allors.Workspace
         public void Restore()
         {
             this.Object.RestoreRole(this.RoleType);
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged
+        {
+            add
+            {
+                lock (this.lockObject)
+                {
+                    if (this.reaction == null)
+                    {
+                        this.reaction = new StringRoleReaction(this);
+                        this.reaction.Register();
+                    }
+
+                    this.reaction.PropertyChanged += value;
+                }
+            }
+
+            remove
+            {
+                lock (this.lockObject)
+                {
+                    this.reaction.PropertyChanged -= value;
+
+                    if (!this.reaction.HasEventHandlers)
+                    {
+                        this.reaction.Deregister();
+                        this.reaction = null;
+                    }
+                }
+            }
         }
     }
 }
