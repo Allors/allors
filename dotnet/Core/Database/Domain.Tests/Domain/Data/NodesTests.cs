@@ -1,4 +1,4 @@
-// <copyright file="FilterTests.cs" company="Allors bvba">
+﻿// <copyright file="FilterTests.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -32,7 +32,7 @@ namespace Allors.Database.Data.Tests
         {
             var m = this.M;
 
-            var node = m.UserGroup.Members.Node(v => v.User.UniqueId.Node());
+            var node = m.UserGroup.Members.Node(v => v.ObjectType.UniqueId.Node());
 
             Assert.Equal(m.UserGroup.Members, node.RelationEndType);
             Assert.Single(node.Nodes);
@@ -50,8 +50,8 @@ namespace Allors.Database.Data.Tests
 
             var node = m.UserGroup.Members.Node(v => new[]
             {
-                v.User.UniqueId.Node(),
-                v.User.SecurityTokens.Node(),
+                v.ObjectType.UniqueId.Node(),
+                v.ObjectType.SecurityTokens.Node(),
             });
 
             Assert.Equal(m.UserGroup.Members, node.RelationEndType);
@@ -75,8 +75,8 @@ namespace Allors.Database.Data.Tests
             var m = this.M;
 
             var node = m.UserGroup.Members.Node(
-                v => v.User.UniqueId.Node(),
-                v => v.User.SecurityTokens.Node());
+                v => v.ObjectType.UniqueId.Node(),
+                v => v.ObjectType.SecurityTokens.Node());
 
             Assert.Equal(m.UserGroup.Members, node.RelationEndType);
             Assert.Equal(2, node.Nodes.Length);

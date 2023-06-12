@@ -9,7 +9,7 @@ namespace Allors.Workspace.Adapters.Direct.Tests
 {
     using Xunit;
 
-    public class ReactiveTests : Adapters.Tests.PushTests, IClassFixture<Fixture>
+    public class ReactiveTests : Adapters.Tests.ReactiveTests, IClassFixture<Fixture>
     {
         public ReactiveTests(Fixture fixture) : base(fixture) => this.Profile = new Profile(fixture);
 

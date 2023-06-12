@@ -1,4 +1,4 @@
-// <copyright file="BuilderTest.cs" company="Allors bvba">
+﻿// <copyright file="BuilderTest.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -87,7 +87,7 @@ namespace Allors.Database.Domain.Tests
 
             var c1A = this.BuildC1("c1A", v => v.C1C2One2One = c2A);
 
-            var deepClone = this.M.C1.Node(v => v.C1C2One2One.Node(w => w.C2.C2C2One2One.Node()));
+            var deepClone = this.M.C1.Node(v => v.C1C2One2One.Node(w => w.ObjectType.C2C2One2One.Node()));
 
             var cloned1A = c1A.Clone(deepClone);
             var cloned = cloned1A.C1C2One2One;

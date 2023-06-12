@@ -1,4 +1,4 @@
-// <copyright file="Domain.cs" company="Allors bvba">
+﻿// <copyright file="Domain.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -17,8 +17,8 @@ namespace Allors.Database.Domain
         public RoleMany2OneRule(M m) : base(m, new Guid("cbebe35e-9931-4701-8b05-8ed61b266bb2")) =>
             this.Patterns = new[]
             {
-                m.CC.RolePattern(v=>v.Assigned, v=>v.BBsWhereMany2One.BB.AAsWhereMany2One),
-                m.CC.RolePattern(v=>v.Assigned, v=>v.BBsWhereUnusedMany2One.BB.AAsWhereUnusedMany2One),
+                m.CC.RolePattern(v=>v.Assigned, v=>v.BBsWhereMany2One.ObjectType.AAsWhereMany2One),
+                m.CC.RolePattern(v=>v.Assigned, v=>v.BBsWhereUnusedMany2One.ObjectType.AAsWhereUnusedMany2One),
             };
 
         public override void Derive(ICycle cycle, IEnumerable<IObject> matches)

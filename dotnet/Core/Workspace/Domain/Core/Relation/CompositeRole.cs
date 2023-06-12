@@ -5,6 +5,7 @@
 
 namespace Allors.Workspace
 {
+    using System.ComponentModel;
     using Meta;
 
     public abstract class CompositeRole<T> : ICompositeRole where T : class, IObject
@@ -52,6 +53,19 @@ namespace Allors.Workspace
         public bool Exist => this.role.Exist;
 
         public bool IsModified => this.role.IsModified;
+
+        public event PropertyChangedEventHandler PropertyChanged
+        {
+            add
+            {
+                this.role.PropertyChanged += value;
+            }
+
+            remove
+            {
+                this.role.PropertyChanged -= value;
+            }
+        }
 
         public void Restore()
         {

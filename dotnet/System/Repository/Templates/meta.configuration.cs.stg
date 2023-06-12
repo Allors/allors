@@ -307,13 +307,13 @@ define_associationType(property) ::= <<
     {
         public Meta$property.AssociationName$(MetaPopulation m) : base(m.$property.DefiningType.SingularName$)
         {
-            this.$property.DefiningType.SingularName$ = m.$property.DefiningType.SingularName$;
+            this.ObjectType = m.$property.DefiningType.SingularName$;
         }
 
-        public Meta$property.DefiningType.SingularName$ $property.DefiningType.SingularName$;
+        new public Meta$property.DefiningType.SingularName$ ObjectType;
 
         #region Interface implementations
-        IMeta$property.DefiningType.SingularName$ IMeta$property.AssociationName$.$property.DefiningType.SingularName$ => this.$property.DefiningType.SingularName$;
+        IMeta$property.DefiningType.SingularName$ IMeta$property.AssociationName$.ObjectType => this.ObjectType;
         #endregion
     }
 
@@ -336,7 +336,7 @@ define_roleType(property) ::= <<
         public Meta$property.DefiningType.SingularName$$property.RoleName$(MetaPopulation meta) : base(meta.$property.ObjectType.SingularName$, $if(property.AssignedRoleSingularName)$"$property.RoleSingularName$"$else$null$endif$, $if(property.AssignedRolePluralName)$"$property.RolePluralName$"$else$null$endif$)
         {
 $if(property.ObjectType.IsComposite)$
-            this.$property.ObjectType.SingularName$ = meta.$property.ObjectType.SingularName$;
+            this.ObjectType = meta.$property.ObjectType.SingularName$;
 $endif$
 $if(property.AttributeByName.Size)$             Size = $property.AttributeByName.Size.Value$;$endif$
 $if(property.AttributeByName.Precision)$                Precision = $property.AttributeByName.Precision.Value$;$endif$
@@ -344,10 +344,10 @@ $if(property.AttributeByName.Scale)$                Scale = $property.AttributeB
         }
 $if(property.ObjectType.IsComposite)$
 
-        public Meta$property.ObjectType.SingularName$ $property.ObjectType.SingularName$;
+        new public Meta$property.ObjectType.SingularName$ ObjectType;
 
         #region Interface implementations
-        IMeta$property.ObjectType.SingularName$ IMeta$property.DefiningType.SingularName$$property.RoleName$.$property.ObjectType.SingularName$ => this.$property.ObjectType.SingularName$;
+        IMeta$property.ObjectType.SingularName$ IMeta$property.DefiningType.SingularName$$property.RoleName$.ObjectType => this.ObjectType;
         #endregion
 $endif$
     }

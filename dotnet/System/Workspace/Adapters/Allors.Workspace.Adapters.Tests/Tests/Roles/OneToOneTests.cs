@@ -66,6 +66,20 @@ namespace Allors.Workspace.Adapters.Tests
                 Assert.Null(c1C.C1WhereC1C1One2One.Value);
                 Assert.Equal(c1C, c1D.C1WhereC1C1One2One.Value);
 
+                c1B.C1C1One2One.Value = c1B;
+
+                // Role
+                Assert.Null(c1A.C1C1One2One.Value);
+                Assert.Equal(c1B, c1B.C1C1One2One.Value);
+                Assert.Equal(c1D, c1C.C1C1One2One.Value);
+                Assert.Null(c1D.C1C1One2One.Value);
+
+                // Association
+                Assert.Null(c1A.C1WhereC1C1One2One.Value);
+                Assert.Equal(c1B, c1B.C1WhereC1C1One2One.Value);
+                Assert.Null(c1C.C1WhereC1C1One2One.Value);
+                Assert.Equal(c1C, c1D.C1WhereC1C1One2One.Value);
+
                 workspace.Reset();
 
                 // Role
@@ -101,6 +115,20 @@ namespace Allors.Workspace.Adapters.Tests
                 Assert.Null(c1A.C1WhereC1C1One2One.Value);
                 Assert.Equal(c1A, c1B.C1WhereC1C1One2One.Value);
                 Assert.Equal(c1B, c1C.C1WhereC1C1One2One.Value);
+                Assert.Equal(c1C, c1D.C1WhereC1C1One2One.Value);
+
+                c1B.C1C1One2One.Value = c1B;
+
+                // Role
+                Assert.Null(c1A.C1C1One2One.Value);
+                Assert.Equal(c1B, c1B.C1C1One2One.Value);
+                Assert.Equal(c1D, c1C.C1C1One2One.Value);
+                Assert.Null(c1D.C1C1One2One.Value);
+
+                // Association
+                Assert.Null(c1A.C1WhereC1C1One2One.Value);
+                Assert.Equal(c1B, c1B.C1WhereC1C1One2One.Value);
+                Assert.Null(c1C.C1WhereC1C1One2One.Value);
                 Assert.Equal(c1C, c1D.C1WhereC1C1One2One.Value);
 
                 c1B.C1C1One2One.Value = c1B;

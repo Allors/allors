@@ -9,7 +9,7 @@ namespace Allors.Workspace.Adapters.Json.SystemText.Tests
 {
     using Xunit;
 
-    public class ReactiveTests : Adapters.Tests.SandboxTests, IClassFixture<Fixture>
+    public class ReactiveTests : Adapters.Tests.ReactiveTests, IClassFixture<Fixture>
     {
         public ReactiveTests(Fixture fixture) : base(fixture) => this.Profile = new Profile();
 

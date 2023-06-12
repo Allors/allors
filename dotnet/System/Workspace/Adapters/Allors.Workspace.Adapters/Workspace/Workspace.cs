@@ -344,6 +344,11 @@ namespace Allors.Workspace.Adapters
                     {
                         stringRole.Reaction?.React();
                     }
+
+                    if (role is CompositeRole compositeRole)
+                    {
+                        compositeRole.Reaction?.React();
+                    }
                 }
             }
         }

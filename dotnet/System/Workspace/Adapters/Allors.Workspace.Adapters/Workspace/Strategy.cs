@@ -654,22 +654,16 @@ namespace Allors.Workspace.Adapters
         {
             if (this.SameRoleStrategy(roleType, role))
             {
-                this.changesByRelationType?.Remove(roleType.RelationType);
-                if (this.changesByRelationType?.Count == 0)
-                {
-                    this.changesByRelationType = null;
-                }
+                return;
             }
-            else
-            {
-                this.changesByRelationType ??= new Dictionary<IRelationType, Change[]>();
-                this.changesByRelationType[roleType.RelationType] = new Change[]
-                {
-                    new SetCompositeChange(role, source)
-                };
 
-                source?.AddTarget(roleType, this);
-            }
+            this.changesByRelationType ??= new Dictionary<IRelationType, Change[]>();
+            this.changesByRelationType[roleType.RelationType] = new Change[]
+            {
+                new SetCompositeChange(role, source)
+            };
+
+            source?.AddTarget(roleType, this);
 
             // OneToOne
             var associationType = roleType.AssociationType;
@@ -688,6 +682,8 @@ namespace Allors.Workspace.Adapters
             role?.AddChangedAssociation(roleType.AssociationType, this);
 
             this.Workspace.PushToDatabaseTracker.OnChanged(this);
+
+            this.Workspace.Reaction(this, roleType);
         }
 
         private void AddTarget(IRoleType roleType, Strategy target)

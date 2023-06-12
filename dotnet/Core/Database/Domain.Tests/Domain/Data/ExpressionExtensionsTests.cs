@@ -44,7 +44,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void ClassAssociationClassRole()
         {
-            Expression<Func<IMetaPerson, IRelationEndType>> expression = v => v.OrganizationWhereEmployee.Organization.Information;
+            Expression<Func<IMetaPerson, IRelationEndType>> expression = v => v.OrganizationWhereEmployee.ObjectType.Information;
 
             var path = expression.Node(this.M);
 
@@ -70,7 +70,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void ClassRoleOfType()
         {
-            Expression<Func<IMetaUserGroup, IComposite>> expression = v => v.Members.User.AsPerson;
+            Expression<Func<IMetaUserGroup, IComposite>> expression = v => v.Members.ObjectType.AsPerson;
 
             var path = expression.Node(this.M);
 
@@ -82,7 +82,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void ClassRoleClassRole()
         {
-            Expression<Func<IMetaOrganization, IRelationEndType>> expression = v => v.Employees.Person.FirstName;
+            Expression<Func<IMetaOrganization, IRelationEndType>> expression = v => v.Employees.ObjectType.FirstName;
 
             var path = expression.Node(this.M);
 
@@ -98,7 +98,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void ClassRoleInterfaceAsClassRole()
         {
-            Expression<Func<IMetaUserGroup, IRelationEndType>> expression = v => v.Members.User.AsPerson.FirstName;
+            Expression<Func<IMetaUserGroup, IRelationEndType>> expression = v => v.Members.ObjectType.AsPerson.FirstName;
 
             var path = expression.Node(this.M);
 

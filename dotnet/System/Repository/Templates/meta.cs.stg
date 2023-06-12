@@ -151,7 +151,7 @@ $composite.DefinedProperties:{property|$define_associationType(property)$}; sepa
 define_associationType(property) ::= <<
     public interface IMeta$property.AssociationName$ : IAssociationType
     {
-        IMeta$property.DefiningType.SingularName$ $property.DefiningType.SingularName$ { get; }
+        new IMeta$property.DefiningType.SingularName$ ObjectType { get; }
     }
 
 >>
@@ -171,7 +171,7 @@ define_roleType(property) ::= <<
     public interface IMeta$property.DefiningType.SingularName$$property.RoleName$ : IRoleType
     {
 $if(property.ObjectType.IsComposite)$
-        IMeta$property.ObjectType.SingularName$ $property.ObjectType.SingularName$ { get; }
+        new IMeta$property.ObjectType.SingularName$ ObjectType { get; }
 $endif$
     }
 

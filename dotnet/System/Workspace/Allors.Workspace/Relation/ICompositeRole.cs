@@ -5,7 +5,9 @@
 
 namespace Allors.Workspace
 {
-    public interface ICompositeRole : IRole
+    using System.ComponentModel;
+
+    public interface ICompositeRole : IRole, INotifyPropertyChanged
     {
         new IStrategy Value { get; set; }
     }

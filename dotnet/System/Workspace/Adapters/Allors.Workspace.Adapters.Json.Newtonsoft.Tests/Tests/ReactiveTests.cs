@@ -9,7 +9,7 @@ namespace Allors.Workspace.Adapters.Json.Newtonsoft.Tests
 {
     using Xunit;
 
-    public class ReactiveTests : WorkspaceResetTests, IClassFixture<Fixture>
+    public class ReactiveTests : Adapters.Tests.ReactiveTests, IClassFixture<Fixture>
     {
         public ReactiveTests(Fixture fixture) : base(fixture) => this.Profile = new Profile();
 

@@ -49,17 +49,14 @@ namespace Allors.Workspace.Adapters.Tests
                     var (workspace1, _) = ctx;
 
                     var c1 = await ctx.Create<C1>(workspace1, mode);
-                    if (!c1.C1C1One2One.CanWrite)
+                    if (!c1.C1AllorsString.CanWrite)
                     {
                         await workspace1.PullAsync(new Pull { Object = c1.Strategy });
                     }
 
-
-                    var role = c1.C1AllorsString;
-
                     var propertyChanges = new List<string>();
 
-                    role.PropertyChanged += (sender, args) =>
+                    c1.C1AllorsString.PropertyChanged += (sender, args) =>
                     {
                         propertyChanges.Add(args.PropertyName);
                     };
@@ -75,6 +72,53 @@ namespace Allors.Workspace.Adapters.Tests
                     c1.C1AllorsString.Value = "Hello world!";
 
                     Assert.Equal(3, propertyChanges.Count);
+                    Assert.Contains("Value", propertyChanges);
+                    Assert.Contains("Exist", propertyChanges);
+                    Assert.Contains("IsModified", propertyChanges);
+                }
+            }
+        }
+
+        [Fact]
+        public async void OneToOneRole()
+        {
+            foreach (DatabaseMode mode in Enum.GetValues(typeof(DatabaseMode)))
+            {
+                foreach (var contextFactory in this.contextFactories)
+                {
+                    var ctx = contextFactory();
+                    var (workspace1, _) = ctx;
+
+                    var c1a = await ctx.Create<C1>(workspace1, mode);
+                    var c1b = await ctx.Create<C1>(workspace1, mode);
+                    var c1c = await ctx.Create<C1>(workspace1, mode);
+
+                    if (!c1a.C1C1One2One.CanWrite || !c1b.C1C1One2One.CanWrite)
+                    {
+                        await workspace1.PullAsync(new Pull { Object = c1a.Strategy }, new Pull { Object = c1b.Strategy });
+                    }
+
+                    c1a.C1C1One2One.Value = c1b;
+                    c1b.C1C1One2One.Value = c1c;
+
+                    var propertyChanges = new List<string>();
+
+                    c1b.C1C1One2One.PropertyChanged += (sender, args) =>
+                    {
+                        propertyChanges.Add(args.PropertyName);
+                    };
+
+                    c1b.C1C1One2One.Value = c1c;
+
+                    Assert.Empty(propertyChanges);
+
+                    c1b.C1C1One2One.Value = c1c;
+
+                    Assert.Empty(propertyChanges);
+
+                    c1b.C1C1One2One.Value = c1b;
+
+                    Assert.Equal(6, propertyChanges.Count);
                     Assert.Contains("Value", propertyChanges);
                     Assert.Contains("Exist", propertyChanges);
                     Assert.Contains("IsModified", propertyChanges);
