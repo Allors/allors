@@ -1,0 +1,85 @@
+﻿// <copyright file="Many2OneTests.cs" company="Allors bvba">
+// Copyright (c) Allors bvba. All rights reserved.
+// Licensed under the LGPL license. See LICENSE file in the project root for full license information.
+// </copyright>
+
+namespace Allors.Workspace.Adapters.Tests
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using Allors.Workspace.Domain;
+    using Xunit;
+    using Allors.Workspace.Data;
+    using Allors.Workspace;
+
+    public abstract class ReactiveTests : Test
+    {
+        private Func<Context>[] contextFactories;
+
+        protected ReactiveTests(Fixture fixture) : base(fixture)
+        {
+        }
+
+        public override async Task InitializeAsync()
+        {
+            await base.InitializeAsync();
+            await this.Login("administrator");
+
+            var singleWorkspaceContext = new SingleWorkspaceContext(this, "Single Shared Workspace");
+            var multipleWorkspaceContext = new MultipleWorkspaceContext(this, "Multiple Shared Workspace");
+
+            this.contextFactories = new Func<Context>[]
+            {
+                () => singleWorkspaceContext,
+                () => new SingleWorkspaceContext(this, "Single Workspace"),
+                () => multipleWorkspaceContext,
+                () => new MultipleWorkspaceContext(this, "Multiple Workspace"),
+            };
+        }
+
+        [Fact]
+        public async void StringRole()
+        {
+            foreach (DatabaseMode mode in Enum.GetValues(typeof(DatabaseMode)))
+            {
+                foreach (var contextFactory in this.contextFactories)
+                {
+                    var ctx = contextFactory();
+                    var (workspace1, _) = ctx;
+
+                    var c1 = await ctx.Create<C1>(workspace1, mode);
+                    if (!c1.C1C1One2One.CanWrite)
+                    {
+                        await workspace1.PullAsync(new Pull { Object = c1.Strategy });
+                    }
+
+
+                    var role = c1.C1AllorsString;
+
+                    var propertyChanges = new List<string>();
+
+                    role.PropertyChanged += (sender, args) =>
+                    {
+                        propertyChanges.Add(args.PropertyName);
+                    };
+
+                    c1.C1AllorsString.Value = null;
+
+                    Assert.Empty(propertyChanges);
+
+                    c1.C1AllorsString.Value = null;
+
+                    Assert.Empty(propertyChanges);
+
+                    c1.C1AllorsString.Value = "Hello world!";
+
+                    Assert.Equal(3, propertyChanges.Count);
+                    Assert.Contains("Value", propertyChanges);
+                    Assert.Contains("Exist", propertyChanges);
+                    Assert.Contains("IsModified", propertyChanges);
+                }
+            }
+        }
+    }
+}

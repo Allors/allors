@@ -374,51 +374,5 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             }
         }
-
-        [Fact]
-        public async void Reaction()
-        {
-            foreach (DatabaseMode mode in Enum.GetValues(typeof(DatabaseMode)))
-            {
-                foreach (var contextFactory in this.contextFactories)
-                {
-                    var ctx = contextFactory();
-                    var (workspace1, _) = ctx;
-
-                    var c1 = await ctx.Create<C1>(workspace1, mode);
-                    if (!c1.C1C1One2One.CanWrite)
-                    {
-                        await workspace1.PullAsync(new Pull { Object = c1.Strategy });
-                    }
-
-
-                    var role = c1.C1AllorsString;
-
-                    var propertyChanges = new List<string>();
-
-                    role.PropertyChanged += (sender, args) =>
-                    {
-                        propertyChanges.Add(args.PropertyName);
-                    };
-
-                    c1.C1AllorsString.Value = null;
-
-                    Assert.Empty(propertyChanges);
-
-                    c1.C1AllorsString.Value = null;
-
-                    Assert.Empty(propertyChanges);
-
-                    c1.C1AllorsString.Value = "Hello world!";
-
-                    Assert.Equal(2, propertyChanges.Count);
-                    Assert.Contains("Value", propertyChanges);
-                    Assert.Contains("IsModified", propertyChanges);
-                }
-            }
-        }
-
-
-
     }
 }

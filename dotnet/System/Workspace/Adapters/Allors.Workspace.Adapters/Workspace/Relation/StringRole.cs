@@ -12,8 +12,7 @@ namespace Allors.Workspace
 
     public class StringRole : IStringRole
     {
-        private Object lockObject = new();
-        private StringRoleReaction reaction;
+        private readonly Object lockObject = new();
 
         public StringRole(Strategy strategy, IRoleType roleType)
         {
@@ -51,6 +50,8 @@ namespace Allors.Workspace
 
         public bool IsModified => this.Object.IsModified(this.RoleType);
 
+        internal StringRoleReaction Reaction { get; private set; }
+
         public void Restore()
         {
             this.Object.RestoreRole(this.RoleType);
@@ -62,13 +63,13 @@ namespace Allors.Workspace
             {
                 lock (this.lockObject)
                 {
-                    if (this.reaction == null)
+                    if (this.Reaction == null)
                     {
-                        this.reaction = new StringRoleReaction(this);
-                        this.reaction.Register();
+                        this.Reaction = new StringRoleReaction(this);
+                        //this.Reaction.Register();
                     }
 
-                    this.reaction.PropertyChanged += value;
+                    this.Reaction.PropertyChanged += value;
                 }
             }
 
@@ -76,12 +77,12 @@ namespace Allors.Workspace
             {
                 lock (this.lockObject)
                 {
-                    this.reaction.PropertyChanged -= value;
+                    this.Reaction.PropertyChanged -= value;
 
-                    if (!this.reaction.HasEventHandlers)
+                    if (!this.Reaction.HasEventHandlers)
                     {
-                        this.reaction.Deregister();
-                        this.reaction = null;
+                        //this.Reaction.Deregister();
+                        this.Reaction = null;
                     }
                 }
             }

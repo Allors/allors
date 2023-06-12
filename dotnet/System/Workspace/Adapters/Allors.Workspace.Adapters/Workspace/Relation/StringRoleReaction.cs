@@ -11,6 +11,7 @@ namespace Allors.Workspace
     public class StringRoleReaction
     {
         private string value;
+        private bool exist;
         private bool canRead;
         private bool canWrite;
         private bool isModified;
@@ -26,17 +27,7 @@ namespace Allors.Workspace
         public event PropertyChangedEventHandler PropertyChanged;
 
         public bool HasEventHandlers => this.PropertyChanged?.GetInvocationList().Any() == true;
-
-        public void Register()
-        {
-            this.Role.Object.Workspace.RegisterReaction(this);
-        }
-
-        public void Deregister()
-        {
-            this.Role.Object.Workspace.DeregisterReaction(this);
-        }
-
+        
         public void React()
         {
             var propertyChanged = this.PropertyChanged;
@@ -46,6 +37,11 @@ namespace Allors.Workspace
                 if (!Equals(this.Role.Value, this.value))
                 {
                     propertyChanged(this.Role, new PropertyChangedEventArgs("Value"));
+                }
+
+                if (!Equals(this.Role.Exist, this.exist))
+                {
+                    propertyChanged(this.Role, new PropertyChangedEventArgs("Exist"));
                 }
 
                 if (!Equals(this.Role.CanRead, this.canRead))
@@ -62,8 +58,6 @@ namespace Allors.Workspace
                 {
                     propertyChanged(this.Role, new PropertyChangedEventArgs("IsModified"));
                 }
-
-                // TODO: Exists
             }
 
             this.TakeSnapshot();
@@ -72,6 +66,7 @@ namespace Allors.Workspace
         private void TakeSnapshot()
         {
             this.value = this.Role.Value;
+            this.exist = this.Role.Exist;
             this.canRead = this.Role.CanRead;
             this.canWrite = this.Role.CanWrite;
             this.isModified = this.Role.IsModified;
