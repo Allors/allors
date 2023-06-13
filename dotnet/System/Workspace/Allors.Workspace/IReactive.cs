@@ -7,8 +7,7 @@ namespace Allors.Workspace
 {
     using System.ComponentModel;
 
-    public interface IStringRole : IUnitRole
+    public interface IReactive : INotifyPropertyChanged
     {
-        new string Value { get; set; }
     }
 }

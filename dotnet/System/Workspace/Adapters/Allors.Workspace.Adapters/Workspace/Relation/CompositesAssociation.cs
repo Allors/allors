@@ -5,12 +5,16 @@
 
 namespace Allors.Workspace
 {
+    using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using Adapters;
     using Meta;
 
-    public class CompositesAssociation : ICompositesAssociation
+    public class CompositesAssociation : ICompositesAssociation, IAssociationInternals
     {
+        private readonly Object lockObject = new();
+
         public CompositesAssociation(Strategy @object, IAssociationType associationType)
         {
             this.Object = @object;
@@ -28,5 +32,40 @@ namespace Allors.Workspace
         object IRelationEnd.Value => this.Value;
 
         public IEnumerable<IStrategy> Value => this.Object.GetCompositesAssociation(this.AssociationType);
+
+        IReaction IReactiveInternals.Reaction => this.Reaction;
+
+        public CompositesAssociationReaction Reaction { get; private set; }
+
+        public event PropertyChangedEventHandler PropertyChanged
+        {
+            add
+            {
+                lock (this.lockObject)
+                {
+                    if (this.Reaction == null)
+                    {
+                        this.Reaction = new CompositesAssociationReaction(this);
+                        //this.Reaction.Register();
+                    }
+
+                    this.Reaction.PropertyChanged += value;
+                }
+            }
+
+            remove
+            {
+                lock (this.lockObject)
+                {
+                    this.Reaction.PropertyChanged -= value;
+
+                    if (!this.Reaction.HasEventHandlers)
+                    {
+                        //this.Reaction.Deregister();
+                        this.Reaction = null;
+                    }
+                }
+            }
+        }
     }
 }

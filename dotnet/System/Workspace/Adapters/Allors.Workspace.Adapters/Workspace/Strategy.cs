@@ -471,7 +471,7 @@ namespace Allors.Workspace.Adapters
             return this.GetCompositeAssociationStrategy(associationType);
         }
 
-        public IEnumerable<IStrategy> GetCompositesAssociation(IAssociationType associationType)
+        public IEnumerable<Strategy> GetCompositesAssociation(IAssociationType associationType)
         {
             return this.GetCompositesAssociationStrategies(this, associationType);
         }

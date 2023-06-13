@@ -5,6 +5,7 @@
 
 namespace Allors.Workspace
 {
+    using System.ComponentModel;
     using Meta;
 
     public abstract class Method : IMethod
@@ -19,5 +20,18 @@ namespace Allors.Workspace
         public IStrategy Object => this.method.Object;
 
         public IMethodType MethodType => this.method.MethodType;
+
+        public event PropertyChangedEventHandler PropertyChanged
+        {
+            add
+            {
+                this.method.PropertyChanged += value;
+            }
+
+            remove
+            {
+                this.method.PropertyChanged -= value;
+            }
+        }
     }
 }

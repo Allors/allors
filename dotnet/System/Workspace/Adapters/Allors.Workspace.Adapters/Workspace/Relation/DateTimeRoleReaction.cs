@@ -5,25 +5,26 @@
 
 namespace Allors.Workspace
 {
+    using System;
     using System.ComponentModel;
     using System.Linq;
     using Adapters;
 
-    public class StringRoleReaction : IReaction
+    public class DateTimeRoleReaction : IReaction
     {
-        private string value;
+        private DateTime? value;
         private bool exist;
         private bool canRead;
         private bool canWrite;
         private bool isModified;
 
-        public StringRoleReaction(StringRole role)
+        public DateTimeRoleReaction(DateTimeRole role)
         {
             this.Role = role;
             this.TakeSnapshot();
         }
 
-        public StringRole Role { get; }
+        public DateTimeRole Role { get; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

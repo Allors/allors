@@ -10,7 +10,7 @@ namespace Allors.Workspace
     using Adapters;
     using Meta;
 
-    public class CompositeRole : ICompositeRole
+    public class CompositeRole : ICompositeRole, IRoleInternals
     {
         private readonly Object lockObject = new();
 
@@ -51,7 +51,9 @@ namespace Allors.Workspace
 
         public bool IsModified => this.Object.IsModified(this.RoleType);
 
-        internal CompositeRoleReaction Reaction { get; private set; }
+        IReaction IReactiveInternals.Reaction => this.Reaction;
+
+        public CompositeRoleReaction Reaction { get; private set; }
 
         public void Restore()
         {

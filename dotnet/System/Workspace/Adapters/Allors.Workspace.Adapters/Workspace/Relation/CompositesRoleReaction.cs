@@ -9,21 +9,21 @@ namespace Allors.Workspace
     using System.Linq;
     using Adapters;
 
-    public class StringRoleReaction : IReaction
+    public class CompositesRoleReaction : IReaction
     {
-        private string value;
+        private IStrategy[] value;
         private bool exist;
         private bool canRead;
         private bool canWrite;
         private bool isModified;
 
-        public StringRoleReaction(StringRole role)
+        public CompositesRoleReaction(CompositesRole role)
         {
             this.Role = role;
             this.TakeSnapshot();
         }
 
-        public StringRole Role { get; }
+        public CompositesRole Role { get; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -35,6 +35,7 @@ namespace Allors.Workspace
 
             if (propertyChanged != null)
             {
+                //TODO: Should be RefRanges
                 if (!Equals(this.Role.Value, this.value))
                 {
                     propertyChanged(this.Role, new PropertyChangedEventArgs("Value"));
@@ -66,7 +67,7 @@ namespace Allors.Workspace
 
         private void TakeSnapshot()
         {
-            this.value = this.Role.Value;
+            this.value = this.Role.Value.ToArray();
             this.exist = this.Role.Exist;
             this.canRead = this.Role.CanRead;
             this.canWrite = this.Role.CanWrite;

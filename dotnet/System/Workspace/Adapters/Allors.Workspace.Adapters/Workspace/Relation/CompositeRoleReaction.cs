@@ -7,8 +7,9 @@ namespace Allors.Workspace
 {
     using System.ComponentModel;
     using System.Linq;
+    using Adapters;
 
-    public class CompositeRoleReaction
+    public class CompositeRoleReaction : IReaction
     {
         private IStrategy value;
         private bool exist;

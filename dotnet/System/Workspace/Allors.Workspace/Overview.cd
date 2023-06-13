@@ -3,23 +3,20 @@
   <Interface Name="Allors.Workspace.IWorkspace">
     <Position X="3.75" Y="0.5" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>gAAAAAIAAQAABEAAAAQAAAAAAAAgAEAQAAAAAABAAAA=</HashCode>
+      <HashCode>gAAAAAIAAAAABEAAAAQAAAAAAAAgAEAQAAAAAABAAAA=</HashCode>
       <FileName>IWorkspace.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="Services" />
     </ShowAsAssociation>
   </Interface>
-  <Interface Name="Allors.Workspace.IStrategy">
+  <Interface Name="Allors.Workspace.IReactive">
     <Position X="7.75" Y="0.5" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>IFBCBAUIAABQAEBAMEYQAAQAAAEAAAAAREAQAQAJIQA=</HashCode>
-      <FileName>IStrategy.cs</FileName>
+      <HashCode>JBACQAQAAAFAAECAEAIgIAQAAAEABAAAQEgQAQAAAQQ=</HashCode>
+      <FileName>IReactive.cs</FileName>
+      <NewMemberFileName>IStrategy.cs</NewMemberFileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="Workspace" />
-      <Property Name="Class" />
-    </ShowAsAssociation>
   </Interface>
   <Interface Name="Allors.Workspace.IWorkspaceServices">
     <Position X="0.5" Y="0.5" Width="1.75" />

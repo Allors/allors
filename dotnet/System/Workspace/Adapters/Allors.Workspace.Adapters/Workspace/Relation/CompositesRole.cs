@@ -5,12 +5,16 @@
 
 namespace Allors.Workspace
 {
+    using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using Adapters;
     using Meta;
 
-    public class CompositesRole : ICompositesRole
+    public class CompositesRole : ICompositesRole, IRoleInternals
     {
+        private readonly Object lockObject = new();
+
         public CompositesRole(Strategy strategy, IRoleType roleType)
         {
             this.Object = strategy;
@@ -59,9 +63,44 @@ namespace Allors.Workspace
 
         public bool IsModified => this.Object.IsModified(this.RoleType);
 
+        IReaction IReactiveInternals.Reaction => this.Reaction;
+
+        public CompositesRoleReaction Reaction { get; private set; }
+
         public void Restore()
         {
             this.Object.RestoreRole(this.RoleType);
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged
+        {
+            add
+            {
+                lock (this.lockObject)
+                {
+                    if (this.Reaction == null)
+                    {
+                        this.Reaction = new CompositesRoleReaction(this);
+                        //this.Reaction.Register();
+                    }
+
+                    this.Reaction.PropertyChanged += value;
+                }
+            }
+
+            remove
+            {
+                lock (this.lockObject)
+                {
+                    this.Reaction.PropertyChanged -= value;
+
+                    if (!this.Reaction.HasEventHandlers)
+                    {
+                        //this.Reaction.Deregister();
+                        this.Reaction = null;
+                    }
+                }
+            }
         }
     }
 }

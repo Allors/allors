@@ -10,7 +10,7 @@ namespace Allors.Workspace
     using Adapters;
     using Meta;
 
-    public class StringRole : IStringRole
+    public class StringRole : IStringRole, IRoleInternals
     {
         private readonly Object lockObject = new();
 
@@ -50,7 +50,9 @@ namespace Allors.Workspace
 
         public bool IsModified => this.Object.IsModified(this.RoleType);
 
-        internal StringRoleReaction Reaction { get; private set; }
+        IReaction IReactiveInternals.Reaction => this.Reaction;
+
+        public StringRoleReaction Reaction { get; private set; }
 
         public void Restore()
         {

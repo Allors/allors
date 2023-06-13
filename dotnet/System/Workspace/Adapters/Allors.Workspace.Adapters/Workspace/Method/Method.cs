@@ -5,11 +5,15 @@
 
 namespace Allors.Workspace
 {
+    using System;
+    using System.ComponentModel;
     using Adapters;
     using Meta;
 
-    public class Method : IMethod
+    public class Method : IMethod, IMethodInternals
     {
+        private readonly Object lockObject = new();
+
         public Method(Strategy strategy, IMethodType methodType)
         {
             this.Object = strategy;
@@ -23,5 +27,40 @@ namespace Allors.Workspace
         public IMethodType MethodType { get; }
 
         public bool CanExecute => this.Object.CanExecute(this.MethodType);
+
+        IReaction IReactiveInternals.Reaction => this.Reaction;
+
+        public MethodReaction Reaction { get; private set; }
+
+        public event PropertyChangedEventHandler PropertyChanged
+        {
+            add
+            {
+                lock (this.lockObject)
+                {
+                    if (this.Reaction == null)
+                    {
+                        this.Reaction = new MethodReaction(this);
+                        //this.Reaction.Register();
+                    }
+
+                    this.Reaction.PropertyChanged += value;
+                }
+            }
+
+            remove
+            {
+                lock (this.lockObject)
+                {
+                    this.Reaction.PropertyChanged -= value;
+
+                    if (!this.Reaction.HasEventHandlers)
+                    {
+                        //this.Reaction.Deregister();
+                        this.Reaction = null;
+                    }
+                }
+            }
+        }
     }
 }

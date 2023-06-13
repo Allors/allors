@@ -9,21 +9,21 @@ namespace Allors.Workspace
     using System.Linq;
     using Adapters;
 
-    public class StringRoleReaction : IReaction
+    public class DecimalRoleReaction : IReaction
     {
-        private string value;
+        private decimal? value;
         private bool exist;
         private bool canRead;
         private bool canWrite;
         private bool isModified;
 
-        public StringRoleReaction(StringRole role)
+        public DecimalRoleReaction(DecimalRole role)
         {
             this.Role = role;
             this.TakeSnapshot();
         }
 
-        public StringRole Role { get; }
+        public DecimalRole Role { get; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

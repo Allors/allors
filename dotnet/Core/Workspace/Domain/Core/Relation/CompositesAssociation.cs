@@ -6,6 +6,7 @@
 namespace Allors.Workspace
 {
     using System.Collections.Generic;
+    using System.ComponentModel;
     using Meta;
 
     public abstract class CompositesAssociation<T> : ICompositesAssociation where T : class, IObject
@@ -36,6 +37,19 @@ namespace Allors.Workspace
         public IEnumerable<T> Value
         {
             get => this.O.Object<T>(this.association.Value);
+        }
+        
+        public event PropertyChangedEventHandler PropertyChanged
+        {
+            add
+            {
+                this.association.PropertyChanged += value;
+            }
+
+            remove
+            {
+                this.association.PropertyChanged -= value;
+            }
         }
     }
 }

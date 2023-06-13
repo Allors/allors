@@ -9,21 +9,21 @@ namespace Allors.Workspace
     using System.Linq;
     using Adapters;
 
-    public class StringRoleReaction : IReaction
+    public class BooleanRoleReaction : IReaction
     {
-        private string value;
+        private bool? value;
         private bool exist;
         private bool canRead;
         private bool canWrite;
         private bool isModified;
 
-        public StringRoleReaction(StringRole role)
+        public BooleanRoleReaction(BooleanRole role)
         {
             this.Role = role;
             this.TakeSnapshot();
         }
 
-        public StringRole Role { get; }
+        public BooleanRole Role { get; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
