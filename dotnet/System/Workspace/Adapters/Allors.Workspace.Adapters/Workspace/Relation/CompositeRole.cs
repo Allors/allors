@@ -60,6 +60,11 @@ namespace Allors.Workspace
             this.Object.RestoreRole(this.RoleType);
         }
 
+        public override string ToString()
+        {
+            return $"[{Value?.Id}]";
+        }
+
         public event PropertyChangedEventHandler PropertyChanged
         {
             add

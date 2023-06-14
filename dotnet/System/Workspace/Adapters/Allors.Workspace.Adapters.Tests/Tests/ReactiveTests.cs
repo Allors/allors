@@ -104,6 +104,9 @@ namespace Allors.Workspace.Adapters.Tests
                     var c1aPropertyChanges = new List<string>();
                     var c1bPropertyChanges = new List<string>();
 
+                    var c1bAssociationPropertyChanges = new List<string>();
+                    var c1cAssociationPropertyChanges = new List<string>();
+
                     c1a.C1C1One2One.PropertyChanged += (sender, args) =>
                     {
                         c1aPropertyChanges.Add(args.PropertyName);
@@ -114,13 +117,29 @@ namespace Allors.Workspace.Adapters.Tests
                         c1bPropertyChanges.Add(args.PropertyName);
                     };
 
+                    c1b.C1WhereC1C1One2One.PropertyChanged += (sender, args) =>
+                    {
+                        c1bAssociationPropertyChanges.Add(args.PropertyName);
+                    };
+
+                    c1c.C1WhereC1C1One2One.PropertyChanged += (sender, args) =>
+                    {
+                        c1cAssociationPropertyChanges.Add(args.PropertyName);
+                    };
+
                     c1b.C1C1One2One.Value = c1c;
 
                     Assert.Empty(c1bPropertyChanges);
 
+                    Assert.Empty(c1bAssociationPropertyChanges);
+                    Assert.Empty(c1cAssociationPropertyChanges);
+
                     c1b.C1C1One2One.Value = c1c;
 
                     Assert.Empty(c1bPropertyChanges);
+
+                    Assert.Empty(c1bAssociationPropertyChanges);
+                    Assert.Empty(c1cAssociationPropertyChanges);
 
                     c1b.C1C1One2One.Value = c1b;
 
@@ -129,6 +148,11 @@ namespace Allors.Workspace.Adapters.Tests
                     Assert.Contains("Exist", c1aPropertyChanges);
                     Assert.Single(c1bPropertyChanges);
                     Assert.Contains("Value", c1bPropertyChanges);
+
+                    Assert.Single(c1bAssociationPropertyChanges);
+                    Assert.Contains("Value", c1bAssociationPropertyChanges);
+                    Assert.Equal(1, c1cAssociationPropertyChanges.Count);
+                    Assert.Contains("Value", c1cAssociationPropertyChanges);
                 }
             }
         }
@@ -180,16 +204,18 @@ namespace Allors.Workspace.Adapters.Tests
                     {
                         c1cAssociationPropertyChanges.Add(args.PropertyName);
                     };
-                    
+
                     c1b.C1C1Many2One.Value = c1c;
 
                     Assert.Empty(c1bRolePropertyChanges);
+
                     Assert.Empty(c1bAssociationPropertyChanges);
                     Assert.Empty(c1cAssociationPropertyChanges);
 
                     c1b.C1C1Many2One.Value = c1c;
 
                     Assert.Empty(c1bRolePropertyChanges);
+
                     Assert.Empty(c1bAssociationPropertyChanges);
                     Assert.Empty(c1cAssociationPropertyChanges);
 
@@ -198,6 +224,7 @@ namespace Allors.Workspace.Adapters.Tests
                     Assert.Empty(c1aRolePropertyChanges);
                     Assert.Single(c1bRolePropertyChanges);
                     Assert.Contains("Value", c1bRolePropertyChanges);
+
                     Assert.Single(c1bAssociationPropertyChanges);
                     Assert.Contains("Value", c1bAssociationPropertyChanges);
                     Assert.Empty(c1cAssociationPropertyChanges);

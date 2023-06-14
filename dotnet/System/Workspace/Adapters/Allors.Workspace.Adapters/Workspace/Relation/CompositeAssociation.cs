@@ -23,7 +23,7 @@ namespace Allors.Workspace
         IStrategy IRelationEnd.Object => this.Object;
 
         public Strategy Object { get; }
-        
+
         public IRelationType RelationType => this.AssociationType.RelationType;
 
         public IAssociationType AssociationType { get; }
@@ -35,6 +35,11 @@ namespace Allors.Workspace
         IReaction IReactiveInternals.Reaction => this.Reaction;
 
         public CompositeAssociationReaction Reaction { get; private set; }
+
+        public override string ToString()
+        {
+            return $"[{Value?.Id}]";
+        }
 
         public event PropertyChangedEventHandler PropertyChanged
         {

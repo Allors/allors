@@ -8,6 +8,7 @@ namespace Allors.Workspace
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
+    using System.Linq;
     using Adapters;
     using Meta;
 
@@ -36,6 +37,11 @@ namespace Allors.Workspace
         IReaction IReactiveInternals.Reaction => this.Reaction;
 
         public CompositesAssociationReaction Reaction { get; private set; }
+
+        public override string ToString()
+        {
+            return this.Value != null ? $"[{string.Join(", ", this.Value.Select(v => v.Id))}]" : "[]";
+        }
 
         public event PropertyChangedEventHandler PropertyChanged
         {

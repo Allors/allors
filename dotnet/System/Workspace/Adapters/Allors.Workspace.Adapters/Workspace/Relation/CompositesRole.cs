@@ -8,6 +8,7 @@ namespace Allors.Workspace
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
+    using System.Linq;
     using Adapters;
     using Meta;
 
@@ -70,6 +71,11 @@ namespace Allors.Workspace
         public void Restore()
         {
             this.Object.RestoreRole(this.RoleType);
+        }
+        
+        public override string ToString()
+        {
+            return this.Value != null ? $"[{string.Join(", ", this.Value.Select(v => v.Id))}]" : "[]";
         }
 
         public event PropertyChangedEventHandler PropertyChanged

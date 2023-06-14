@@ -20,6 +20,8 @@ namespace Allors.Workspace.Adapters
         private readonly IDictionary<IAssociationType, IDictionary<IStrategy, IAssociationInternals>> associationByStrategyByAssociationType;
         private readonly IDictionary<IMethodType, IDictionary<IStrategy, IMethod>> methodByStrategyByMethodType;
 
+        private readonly Queue<IReactiveInternals> reactives;
+
         protected Workspace(Connection connection, IWorkspaceServices services)
         {
             this.Connection = connection;
@@ -33,6 +35,8 @@ namespace Allors.Workspace.Adapters
             this.roleByStrategyByRoleType = new Dictionary<IRoleType, IDictionary<IStrategy, IRoleInternals>>();
             this.associationByStrategyByAssociationType = new Dictionary<IAssociationType, IDictionary<IStrategy, IAssociationInternals>>();
             this.methodByStrategyByMethodType = new Dictionary<IMethodType, IDictionary<IStrategy, IMethod>>();
+
+            this.reactives = new Queue<IReactiveInternals>();
 
             this.PushToDatabaseTracker = new PushToDatabaseTracker();
 
@@ -135,13 +139,6 @@ namespace Allors.Workspace.Adapters
             strategy.OnPushNewId(databaseId);
             this.AddStrategy(strategy);
             strategy.OnPushed();
-        }
-
-        private IEnumerable<Strategy> StrategiesForClass(IComposite objectType)
-        {
-            // TODO: Optimize
-            var classes = new HashSet<IClass>(objectType.Classes);
-            return this.StrategyById.Where(v => classes.Contains(v.Value.Class)).Select(v => v.Value).Distinct();
         }
 
         public abstract Task<IInvokeResult> InvokeAsync(IMethod method, InvokeOptions options = null);
@@ -334,24 +331,33 @@ namespace Allors.Workspace.Adapters
             return method;
         }
 
-        internal void RoleReaction(Strategy association, IRoleType roleType)
+        internal void HandleReactions()
+        {
+            while (this.reactives.Count >0)
+            {
+                var reactive = this.reactives.Dequeue();
+                reactive.Reaction?.React();
+            }
+        }
+
+        internal void RegisterReaction(Strategy association, IRoleType roleType)
         {
             if (this.roleByStrategyByRoleType.TryGetValue(roleType, out var roleByStrategy))
             {
                 if (roleByStrategy.TryGetValue(association, out var role))
                 {
-                    role.Reaction?.React();
+                    this.reactives.Enqueue(role);
                 }
             }
         }
 
-        public void AssociationReaction(Strategy role, IAssociationType associationType)
+        internal void RegisterReaction(Strategy role, IAssociationType associationType)
         {
             if (this.associationByStrategyByAssociationType.TryGetValue(associationType, out var associationByStrategy))
             {
                 if (associationByStrategy.TryGetValue(role, out var association))
                 {
-                    association.Reaction?.React();
+                    this.reactives.Enqueue(association);
                 }
             }
         }
