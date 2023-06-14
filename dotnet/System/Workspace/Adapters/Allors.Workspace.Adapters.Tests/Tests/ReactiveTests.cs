@@ -101,27 +101,34 @@ namespace Allors.Workspace.Adapters.Tests
                     c1a.C1C1One2One.Value = c1b;
                     c1b.C1C1One2One.Value = c1c;
 
-                    var propertyChanges = new List<string>();
+                    var c1aPropertyChanges = new List<string>();
+                    var c1bPropertyChanges = new List<string>();
+
+                    c1a.C1C1One2One.PropertyChanged += (sender, args) =>
+                    {
+                        c1aPropertyChanges.Add(args.PropertyName);
+                    };
 
                     c1b.C1C1One2One.PropertyChanged += (sender, args) =>
                     {
-                        propertyChanges.Add(args.PropertyName);
+                        c1bPropertyChanges.Add(args.PropertyName);
                     };
 
                     c1b.C1C1One2One.Value = c1c;
 
-                    Assert.Empty(propertyChanges);
+                    Assert.Empty(c1bPropertyChanges);
 
                     c1b.C1C1One2One.Value = c1c;
 
-                    Assert.Empty(propertyChanges);
+                    Assert.Empty(c1bPropertyChanges);
 
                     c1b.C1C1One2One.Value = c1b;
 
-                    Assert.Equal(6, propertyChanges.Count);
-                    Assert.Contains("Value", propertyChanges);
-                    Assert.Contains("Exist", propertyChanges);
-                    Assert.Contains("IsModified", propertyChanges);
+                    Assert.Equal(2, c1aPropertyChanges.Count);
+                    Assert.Contains("Value", c1aPropertyChanges);
+                    Assert.Contains("Exist", c1aPropertyChanges);
+                    Assert.Single(c1bPropertyChanges);
+                    Assert.Contains("Value", c1bPropertyChanges);
                 }
             }
         }

@@ -7,5 +7,6 @@ namespace Allors.Workspace.Adapters
 {
     public interface IReaction
     {
+        void React();
     }
 }

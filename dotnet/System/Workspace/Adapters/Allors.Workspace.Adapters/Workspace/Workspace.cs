@@ -16,7 +16,7 @@ namespace Allors.Workspace.Adapters
     {
         private readonly Dictionary<IClass, ISet<Strategy>> strategiesByClass;
 
-        private readonly IDictionary<IRoleType, IDictionary<IStrategy, IRole>> roleByStrategyByRoleType;
+        private readonly IDictionary<IRoleType, IDictionary<IStrategy, IRoleInternals>> roleByStrategyByRoleType;
         private readonly IDictionary<IAssociationType, IDictionary<IStrategy, IAssociation>> associationByStrategyByAssociationType;
         private readonly IDictionary<IMethodType, IDictionary<IStrategy, IMethod>> methodByStrategyByMethodType;
 
@@ -30,7 +30,7 @@ namespace Allors.Workspace.Adapters
             this.StrategyById = new Dictionary<long, Strategy>();
             this.strategiesByClass = new Dictionary<IClass, ISet<Strategy>>();
 
-            this.roleByStrategyByRoleType = new Dictionary<IRoleType, IDictionary<IStrategy, IRole>>();
+            this.roleByStrategyByRoleType = new Dictionary<IRoleType, IDictionary<IStrategy, IRoleInternals>>();
             this.associationByStrategyByAssociationType = new Dictionary<IAssociationType, IDictionary<IStrategy, IAssociation>>();
             this.methodByStrategyByMethodType = new Dictionary<IMethodType, IDictionary<IStrategy, IMethod>>();
 
@@ -340,28 +340,20 @@ namespace Allors.Workspace.Adapters
             {
                 if (roleByStrategy.TryGetValue(strategy, out var role))
                 {
-                    if (role is StringRole stringRole)
-                    {
-                        stringRole.Reaction?.React();
-                    }
-
-                    if (role is CompositeRole compositeRole)
-                    {
-                        compositeRole.Reaction?.React();
-                    }
+                    role.Reaction?.React();
                 }
             }
         }
 
         #region role, association and method
-        private IDictionary<IStrategy, IRole> GetRoleByStrategy(IRoleType roleType)
+        private IDictionary<IStrategy, IRoleInternals> GetRoleByStrategy(IRoleType roleType)
         {
             if (this.roleByStrategyByRoleType.TryGetValue(roleType, out var roleByStrategy))
             {
                 return roleByStrategy;
             }
 
-            roleByStrategy = new Dictionary<IStrategy, IRole>();
+            roleByStrategy = new Dictionary<IStrategy, IRoleInternals>();
             this.roleByStrategyByRoleType.Add(roleType, roleByStrategy);
             return roleByStrategy;
         }
