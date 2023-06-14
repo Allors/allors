@@ -17,7 +17,7 @@ namespace Allors.Workspace.Adapters
         private readonly Dictionary<IClass, ISet<Strategy>> strategiesByClass;
 
         private readonly IDictionary<IRoleType, IDictionary<IStrategy, IRoleInternals>> roleByStrategyByRoleType;
-        private readonly IDictionary<IAssociationType, IDictionary<IStrategy, IAssociation>> associationByStrategyByAssociationType;
+        private readonly IDictionary<IAssociationType, IDictionary<IStrategy, IAssociationInternals>> associationByStrategyByAssociationType;
         private readonly IDictionary<IMethodType, IDictionary<IStrategy, IMethod>> methodByStrategyByMethodType;
 
         protected Workspace(Connection connection, IWorkspaceServices services)
@@ -31,7 +31,7 @@ namespace Allors.Workspace.Adapters
             this.strategiesByClass = new Dictionary<IClass, ISet<Strategy>>();
 
             this.roleByStrategyByRoleType = new Dictionary<IRoleType, IDictionary<IStrategy, IRoleInternals>>();
-            this.associationByStrategyByAssociationType = new Dictionary<IAssociationType, IDictionary<IStrategy, IAssociation>>();
+            this.associationByStrategyByAssociationType = new Dictionary<IAssociationType, IDictionary<IStrategy, IAssociationInternals>>();
             this.methodByStrategyByMethodType = new Dictionary<IMethodType, IDictionary<IStrategy, IMethod>>();
 
             this.PushToDatabaseTracker = new PushToDatabaseTracker();
@@ -334,13 +334,24 @@ namespace Allors.Workspace.Adapters
             return method;
         }
 
-        public void Reaction(Strategy strategy, IRoleType roleType)
+        internal void RoleReaction(Strategy association, IRoleType roleType)
         {
             if (this.roleByStrategyByRoleType.TryGetValue(roleType, out var roleByStrategy))
             {
-                if (roleByStrategy.TryGetValue(strategy, out var role))
+                if (roleByStrategy.TryGetValue(association, out var role))
                 {
                     role.Reaction?.React();
+                }
+            }
+        }
+
+        public void AssociationReaction(Strategy role, IAssociationType associationType)
+        {
+            if (this.associationByStrategyByAssociationType.TryGetValue(associationType, out var associationByStrategy))
+            {
+                if (associationByStrategy.TryGetValue(role, out var association))
+                {
+                    association.Reaction?.React();
                 }
             }
         }
@@ -358,14 +369,14 @@ namespace Allors.Workspace.Adapters
             return roleByStrategy;
         }
 
-        private IDictionary<IStrategy, IAssociation> GetAssociationByStrategy(IAssociationType associationType)
+        private IDictionary<IStrategy, IAssociationInternals> GetAssociationByStrategy(IAssociationType associationType)
         {
             if (this.associationByStrategyByAssociationType.TryGetValue(associationType, out var associationByStrategy))
             {
                 return associationByStrategy;
             }
 
-            associationByStrategy = new Dictionary<IStrategy, IAssociation>();
+            associationByStrategy = new Dictionary<IStrategy, IAssociationInternals>();
             this.associationByStrategyByAssociationType.Add(associationType, associationByStrategy);
             return associationByStrategy;
         }

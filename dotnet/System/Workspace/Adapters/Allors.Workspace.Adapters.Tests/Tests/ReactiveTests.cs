@@ -132,5 +132,77 @@ namespace Allors.Workspace.Adapters.Tests
                 }
             }
         }
+
+        [Fact]
+        public async void ManyToOneRole()
+        {
+            foreach (DatabaseMode mode in Enum.GetValues(typeof(DatabaseMode)))
+            {
+                foreach (var contextFactory in this.contextFactories)
+                {
+                    var ctx = contextFactory();
+                    var (workspace1, _) = ctx;
+
+                    var c1a = await ctx.Create<C1>(workspace1, mode);
+                    var c1b = await ctx.Create<C1>(workspace1, mode);
+                    var c1c = await ctx.Create<C1>(workspace1, mode);
+
+                    if (!c1a.C1C1Many2One.CanWrite || !c1b.C1C1Many2One.CanWrite)
+                    {
+                        await workspace1.PullAsync(new Pull { Object = c1a.Strategy }, new Pull { Object = c1b.Strategy });
+                    }
+
+                    c1a.C1C1Many2One.Value = c1b;
+                    c1b.C1C1Many2One.Value = c1c;
+
+                    var c1aRolePropertyChanges = new List<string>();
+                    var c1bRolePropertyChanges = new List<string>();
+
+                    var c1bAssociationPropertyChanges = new List<string>();
+                    var c1cAssociationPropertyChanges = new List<string>();
+
+                    c1a.C1C1Many2One.PropertyChanged += (sender, args) =>
+                    {
+                        c1aRolePropertyChanges.Add(args.PropertyName);
+                    };
+
+                    c1b.C1C1Many2One.PropertyChanged += (sender, args) =>
+                    {
+                        c1bRolePropertyChanges.Add(args.PropertyName);
+                    };
+
+                    c1b.C1sWhereC1C1Many2One.PropertyChanged += (sender, args) =>
+                    {
+                        c1bAssociationPropertyChanges.Add(args.PropertyName);
+                    };
+
+                    c1c.C1sWhereC1C1Many2One.PropertyChanged += (sender, args) =>
+                    {
+                        c1cAssociationPropertyChanges.Add(args.PropertyName);
+                    };
+                    
+                    c1b.C1C1Many2One.Value = c1c;
+
+                    Assert.Empty(c1bRolePropertyChanges);
+                    Assert.Empty(c1bAssociationPropertyChanges);
+                    Assert.Empty(c1cAssociationPropertyChanges);
+
+                    c1b.C1C1Many2One.Value = c1c;
+
+                    Assert.Empty(c1bRolePropertyChanges);
+                    Assert.Empty(c1bAssociationPropertyChanges);
+                    Assert.Empty(c1cAssociationPropertyChanges);
+
+                    c1b.C1C1Many2One.Value = c1b;
+
+                    Assert.Empty(c1aRolePropertyChanges);
+                    Assert.Single(c1bRolePropertyChanges);
+                    Assert.Contains("Value", c1bRolePropertyChanges);
+                    Assert.Single(c1bAssociationPropertyChanges);
+                    Assert.Contains("Value", c1bAssociationPropertyChanges);
+                    Assert.Empty(c1cAssociationPropertyChanges);
+                }
+            }
+        }
     }
 }
