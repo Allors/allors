@@ -669,7 +669,7 @@ namespace Allors.Workspace.Adapters
             }
 
             Strategy rolePreviousAssociation = role?.GetCompositeAssociationStrategy(roleType.AssociationType);
-            Strategy previousRole = this.GetCompositeRoleStrategy(roleType);
+            Strategy previousRole = this.GetCompositeRoleStrategy(roleType, false);
 
             this.RegisterReaction(roleType);
             
