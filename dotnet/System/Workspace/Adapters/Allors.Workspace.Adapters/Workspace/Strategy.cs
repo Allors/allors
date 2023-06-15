@@ -390,7 +390,7 @@ namespace Allors.Workspace.Adapters
             {
                 if (roleType.AssociationType.IsOne)
                 {
-                    this.SetCompositeRoleOneToOne(roleType, (Strategy)value, null);
+                    this.SetSourceCompositeRoleOneToOne(roleType, (Strategy)value);
                 }
                 else
                 {
@@ -661,7 +661,7 @@ namespace Allors.Workspace.Adapters
             return strategy;
         }
 
-        private void SetCompositeRoleOneToOne(IRoleType roleType, Strategy role, Strategy source)
+        private void SetSourceCompositeRoleOneToOne(IRoleType roleType, Strategy role)
         {
             if (this.SameRoleStrategy(roleType, role))
             {
@@ -672,22 +672,31 @@ namespace Allors.Workspace.Adapters
             Strategy previousRole = this.GetCompositeRoleStrategy(roleType, false);
 
             this.RegisterReaction(roleType);
-            
+
             previousRole?.RegisterReaction(roleType.AssociationType);
             role?.RegisterReaction(roleType.AssociationType);
 
-            source?.AddTarget(roleType, this);
+            this.SetCompositeChange(roleType, new SetCompositeChange(role, null));
 
-            this.changesByRelationType ??= new Dictionary<IRelationType, Change[]>();
-            this.changesByRelationType[roleType.RelationType] = new Change[]
-            {
-                new SetCompositeChange(role, source)
-            };
-
-            rolePreviousAssociation?.SetCompositeRoleOneToOne(roleType, null, this);
+            rolePreviousAssociation?.SetTargetCompositeRoleOneToOne(roleType, this);
 
             previousRole?.AddChangedAssociation(roleType.AssociationType, this);
             role?.AddChangedAssociation(roleType.AssociationType, this);
+
+            this.Workspace.PushToDatabaseTracker.OnChanged(this);
+        }
+        
+        private void SetTargetCompositeRoleOneToOne(IRoleType roleType, Strategy source)
+        {
+            Strategy previousRole = this.GetCompositeRoleStrategy(roleType, false);
+
+            this.RegisterReaction(roleType);
+
+            source.AddTarget(roleType, this);
+
+            this.SetCompositeChange(roleType, new SetCompositeChange(null, source));
+
+            previousRole.AddChangedAssociation(roleType.AssociationType, this);
 
             this.Workspace.PushToDatabaseTracker.OnChanged(this);
         }
@@ -704,7 +713,7 @@ namespace Allors.Workspace.Adapters
             {
                 new SetCompositeChange(role, null)
             };
-           
+
             role?.AddChangedAssociation(roleType.AssociationType, this);
 
             this.Workspace.PushToDatabaseTracker.OnChanged(this);
@@ -1088,7 +1097,15 @@ namespace Allors.Workspace.Adapters
             this.Workspace.RegisterReaction(this, associationType);
         }
 
-
+        private void SetCompositeChange(IRoleType roleType, SetCompositeChange setCompositeChange)
+        {
+            this.changesByRelationType ??= new Dictionary<IRelationType, Change[]>();
+            this.changesByRelationType[roleType.RelationType] = new Change[]
+            {
+                setCompositeChange
+            };
+        }
+        
         private static void AssertUnit(IRoleType roleType, object value)
         {
             if (value == null)
