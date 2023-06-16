@@ -7,7 +7,7 @@ namespace Allors.Workspace.Adapters
 {
     public class SetCompositeChange : CompositeChange
     {
-        public SetCompositeChange(Strategy role, Strategy source) : base(role, source)
+        public SetCompositeChange(Strategy role, Strategy dependee) : base(role, dependee)
         {
         }
     }

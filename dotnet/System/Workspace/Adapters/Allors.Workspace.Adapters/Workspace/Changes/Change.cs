@@ -7,6 +7,6 @@ namespace Allors.Workspace.Adapters
 {
     public abstract class Change
     {
-        public Strategy Source { get; set; }
+        public Strategy Dependee { get; set; }
     }
 }

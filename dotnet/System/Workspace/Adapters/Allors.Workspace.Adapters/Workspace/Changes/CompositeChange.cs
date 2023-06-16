@@ -7,10 +7,10 @@ namespace Allors.Workspace.Adapters
 {
     public abstract class CompositeChange : Change
     {
-        protected CompositeChange(Strategy role, Strategy source)
+        protected CompositeChange(Strategy role, Strategy dependee)
         {
             this.Role = role;
-            this.Source = source;
+            this.Dependee = dependee;
         }
 
         public Strategy Role { get; }
