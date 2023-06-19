@@ -749,10 +749,11 @@ namespace Allors.Workspace.Adapters
                 return;
             }
 
+            Strategy previousRole = this.GetCompositeRoleStrategy(roleType, false);
+
             // A --x-- PR
-
-            // TODO:
-
+            previousRole?.RegisterReaction(roleType.AssociationType);
+            
             // A ----> R
             this.SetCompositeChange(roleType, new SetCompositeChange(role, null));
             this.RegisterReaction(roleType);
