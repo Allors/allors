@@ -724,8 +724,7 @@ namespace Allors.Workspace.Adapters
             // A --x-- PR
             previousRole?.AddInvolvedAssociation(roleType.AssociationType, this);
             previousRole?.RegisterReaction(roleType.AssociationType);
-
-
+            
             // A ----> R
             this.SetCompositeChange(roleType, new SetCompositeChange(role, null));
             this.RegisterReaction(roleType);
@@ -750,21 +749,18 @@ namespace Allors.Workspace.Adapters
                 return;
             }
 
-            this.changesByRelationType ??= new Dictionary<IRelationType, Change[]>();
-            this.changesByRelationType[roleType.RelationType] = new Change[]
-            {
-                new SetCompositeChange(role, null)
-            };
+            // A --x-- PR
 
-            role?.AddInvolvedAssociation(roleType.AssociationType, this);
+            // TODO:
 
+            // A ----> R
+            this.SetCompositeChange(roleType, new SetCompositeChange(role, null));
+            this.RegisterReaction(roleType);
             this.Workspace.PushToDatabaseTracker.OnChanged(this);
 
-            this.Workspace.RegisterReaction(this, roleType);
-            if (role != null)
-            {
-                this.Workspace.RegisterReaction(role, roleType.AssociationType);
-            }
+            // A <---- R
+            role?.AddInvolvedAssociation(roleType.AssociationType, this);
+            role?.RegisterReaction(roleType.AssociationType);
         }
 
         private RefRange<Strategy> GetCompositesRoleStrategies(IRoleType roleType, bool assertStrategy = true)

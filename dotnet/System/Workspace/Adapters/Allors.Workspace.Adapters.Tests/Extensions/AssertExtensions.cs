@@ -1,5 +1,6 @@
-namespace Allors.Workspace.Adapters.Tests
+﻿namespace Allors.Workspace.Adapters.Tests
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Allors.Workspace;
@@ -68,5 +69,25 @@ namespace Allors.Workspace.Adapters.Tests
                 => Assert.True(!collection.Contains(expected), $"{collection.Dump()} should not contain {expected} on context {context} with mode& {mode1} and mode2 {mode2}");
 
         #endregion
+
+        public static void ShouldContainSingle(this IEnumerable<IObject> @this, IObject expected)
+        {
+            var objects = @this.ToArray();
+
+            Assert.Single(objects);
+            Assert.Contains(expected, objects);
+        }
+
+        public static void ShouldHaveSameElements<T>(this IEnumerable<T> actual, IEnumerable<T> expected)
+        {
+            T[] expectedObjects = expected as T[] ?? expected?.ToArray() ?? Array.Empty<T>();
+            T[] actualObjects = actual as T[] ?? actual?.ToArray() ?? Array.Empty<T>();
+
+            Assert.Equal(expectedObjects.Length, actualObjects.Length);
+            foreach (var actualObject in actualObjects)
+            {
+                Assert.Contains(actualObject, expectedObjects);
+            }
+        }
     }
 }
