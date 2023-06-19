@@ -752,6 +752,7 @@ namespace Allors.Workspace.Adapters
             Strategy previousRole = this.GetCompositeRoleStrategy(roleType, false);
 
             // A --x-- PR
+            previousRole?.AddInvolvedAssociation(roleType.AssociationType, this);
             previousRole?.RegisterReaction(roleType.AssociationType);
             
             // A ----> R
