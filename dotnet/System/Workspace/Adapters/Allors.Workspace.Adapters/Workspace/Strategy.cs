@@ -438,6 +438,8 @@ namespace Allors.Workspace.Adapters
                         this.RemoveCompositesRoleStrategyManyToMany(roleType, removeRoleStrategy, null);
                     }
                 }
+
+                this.Workspace.HandleReactions();
             }
         }
 
@@ -468,6 +470,8 @@ namespace Allors.Workspace.Adapters
                 {
                     this.AddCompositesRoleStrategyManyToMany(roleType, (Strategy)value);
                 }
+
+                this.Workspace.HandleReactions();
             }
         }
 
@@ -492,25 +496,10 @@ namespace Allors.Workspace.Adapters
                 {
                     this.RemoveCompositesRoleStrategyManyToMany(roleType, (Strategy)value, null);
                 }
+
+                this.Workspace.HandleReactions();
             }
         }
-
-        public void RemoveRole(IRoleType roleType)
-        {
-            if (roleType.ObjectType.IsUnit)
-            {
-                this.SetUnitRole(roleType, null);
-            }
-            else if (roleType.IsOne)
-            {
-                this.SetCompositeRole(roleType, (IStrategy)null);
-            }
-            else
-            {
-                this.SetCompositesRole(roleType, null);
-            }
-        }
-
         public IStrategy GetCompositeAssociation(IAssociationType associationType)
         {
             return this.GetCompositeAssociationStrategy(associationType);
@@ -798,80 +787,38 @@ namespace Allors.Workspace.Adapters
             return role;
         }
 
-        private void AddCompositesRoleStrategyOneToMany(IRoleType roleType, Strategy roleToAdd)
+        private void AddCompositesRoleStrategyOneToMany(IRoleType roleType, Strategy role)
         {
             /*  [if exist]        [then remove]        set
             *
-            *  RA ----- R         RA       R       RA    -- R       RA ----- R
+            *  RA ----- R         RA --x-- R       RA    -- R       RA    -- R
             *                ->                +        -        =       -
-            *   A ----- PR         A --x-- PR       A --    PR       A --    PR
+            *   A ----- PR         A       PR       A --    PR       A ----- PR
             */
 
-            var role = this.GetCompositesRoleStrategies(roleType);
-            if (role.Contains(roleToAdd))
+            var previousRole = this.GetCompositesRoleStrategies(roleType);
+
+            // R in PR
+            if (previousRole.Contains(role))
             {
                 return;
             }
 
-            var associationType = roleType.AssociationType;
+            var roleAssociation = role.GetCompositeAssociationStrategy(roleType.AssociationType);
 
-            var previousAssociation = associationType.IsOne ? roleToAdd.GetCompositeAssociationStrategy(associationType) : null;
-
-            if (this.changesByRelationType?.TryGetValue(roleType.RelationType, out var changes) == true)
-            {
-                AddCompositeChange add = null;
-                RemoveCompositeChange remove = null;
-
-                foreach (var change in changes)
-                {
-                    switch (change)
-                    {
-                    case AddCompositeChange addCompositeChange when addCompositeChange.Role == roleToAdd:
-                        add = addCompositeChange;
-                        break;
-                    case RemoveCompositeChange removeCompositeChange when removeCompositeChange.Role == roleToAdd:
-                        remove = removeCompositeChange;
-                        break;
-                    }
-                }
-
-                if (remove != null)
-                {
-                    changes = changes.Where(v => v == remove).ToArray();
-                }
-                else if (add == null)
-                {
-                    changes = changes.Append(new AddCompositeChange(roleToAdd, null)).ToArray();
-                }
-
-                this.changesByRelationType[roleType.RelationType] = changes;
-            }
-            else
-            {
-                this.changesByRelationType ??= new Dictionary<IRelationType, Change[]>();
-                this.changesByRelationType[roleType.RelationType] = new Change[] { new AddCompositeChange(roleToAdd, null) };
-            }
-
-            roleToAdd.AddInvolvedAssociation(roleType.AssociationType, this);
-
-            // OneToMany
-            if (associationType.IsOne)
-            {
-                var previousRoleStrategies = previousAssociation?.GetCompositesRoleStrategies(roleType);
-                if (previousRoleStrategies != null)
-                {
-                    foreach (var previousRoleStrategy in previousRoleStrategies)
-                    {
-                        previousRoleStrategy?.AddInvolvedAssociation(roleType.AssociationType, this);
-
-                    }
-                }
-
-                previousAssociation?.RemoveCompositesRoleStrategyOneToMany(roleType, roleToAdd, this);
-            }
-
+            // RA --x-- R
+            roleAssociation?.RemoveCompositesRoleStrategyOneToMany(roleType, role, this);
+            roleAssociation?.RegisterReaction(roleType);
+            
+            // A ----> R
+            this.AddCompositesRoleStrategyChange(roleType, role);
+            this.RegisterReaction(roleType);
             this.Workspace.PushToDatabaseTracker.OnChanged(this);
-        }
+
+            // A <---- R
+            role.AddInvolvedAssociation(roleType.AssociationType, this);
+            role.RegisterReaction(roleType.AssociationType);
+       }
 
         private void AddCompositesRoleStrategyManyToMany(IRoleType roleType, Strategy roleToAdd)
         {
@@ -888,10 +835,15 @@ namespace Allors.Workspace.Adapters
                 return;
             }
 
-            var associationType = roleType.AssociationType;
+            this.AddCompositesRoleStrategyChange(roleType, roleToAdd);
 
-            var previousAssociation = associationType.IsOne ? roleToAdd.GetCompositeAssociationStrategy(associationType) : null;
+            roleToAdd.AddInvolvedAssociation(roleType.AssociationType, this);
+            
+            this.Workspace.PushToDatabaseTracker.OnChanged(this);
+        }
 
+        private void AddCompositesRoleStrategyChange(IRoleType roleType, Strategy roleToAdd)
+        {
             if (this.changesByRelationType?.TryGetValue(roleType.RelationType, out var changes) == true)
             {
                 AddCompositeChange add = null;
@@ -926,12 +878,8 @@ namespace Allors.Workspace.Adapters
                 this.changesByRelationType ??= new Dictionary<IRelationType, Change[]>();
                 this.changesByRelationType[roleType.RelationType] = new Change[] { new AddCompositeChange(roleToAdd, null) };
             }
-
-            roleToAdd.AddInvolvedAssociation(roleType.AssociationType, this);
-            
-            this.Workspace.PushToDatabaseTracker.OnChanged(this);
         }
-
+        
         private void RemoveCompositesRoleStrategyOneToMany(IRoleType roleType, Strategy roleToRemove, Strategy dependee)
         {
             var role = this.GetCompositesRoleStrategies(roleType);

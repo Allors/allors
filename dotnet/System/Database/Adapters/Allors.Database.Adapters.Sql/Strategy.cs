@@ -1,4 +1,4 @@
-// <copyright file="Strategy.cs" company="Allors bvba">
+﻿// <copyright file="Strategy.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -759,9 +759,9 @@ public class Strategy : IStrategy
     {
         /*  [if exist]        [then remove]        set
          *
-         *  RA ----- R         RA       R       RA    -- R       RA ----- R
+         *  RA ----- R         RA --x-- R       RA    -- R       RA    -- R
          *                ->                +        -        =       -
-         *   A ----- PR         A --x-- PR       A --    PR       A --    PR
+         *   A ----- PR         A       PR       A --    PR       A ----- PR
          */
         var previousRoleIds = this.GetCompositesRole(roleType);
 
@@ -771,9 +771,9 @@ public class Strategy : IStrategy
             return;
         }
 
-        // A --x-- PR
-        var previousAssociation = (Strategy)role.GetCompositeAssociation(roleType.AssociationType)?.Strategy;
-        previousAssociation?.RemoveCompositesRole(roleType, role.GetObject());
+        // RA --x-- R
+        var roleAssociation = (Strategy)role.GetCompositeAssociation(roleType.AssociationType)?.Strategy;
+        roleAssociation?.RemoveCompositesRole(roleType, role.GetObject());
 
         // A <---- R
         this.OnChangingCompositesRoleAdd(roleType, role.ObjectId);
@@ -781,7 +781,7 @@ public class Strategy : IStrategy
         associationByRole[role.Reference] = this.Reference;
 
         // A ----> R
-        role.OnChangingCompositeAssociation(roleType.AssociationType, previousAssociation?.ObjectId);
+        role.OnChangingCompositeAssociation(roleType.AssociationType, roleAssociation?.ObjectId);
         var compositesRole = this.GetOrCreateModifiedCompositeRoles(roleType);
         compositesRole.Add(role.ObjectId);
         this.RequireFlush(roleType);
