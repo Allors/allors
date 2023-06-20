@@ -203,6 +203,171 @@ namespace Allors.Workspace.Adapters.Tests
             }
         }
 
+        [Fact]
+        public async void RemoveRole()
+        {
+            /*   [Before]           [Remove]           [After]
+            *
+            *  c1A        c1A     c1A        c1A     c1A        c1A
+            *                           /
+            *                          |                   
+            *  c1B ------ c1B     c1B  |      c1B     c1B ------ c1B
+            *       / /                |                   / / 
+            *      / /                /                   / /    
+            *  c1C |----- c1C     c1C         c1C     c1C |----- c1C
+            *      | /                                   | /      
+            *     / /                                   / /    
+            *  c1D ------ c1D     c1D        c1D     c1D ------ c1D
+            */
+            {
+                var workspace = this.Profile.Workspace;
+
+                var c1A = workspace.Create<C1>();
+                var c1B = workspace.Create<C1>();
+                var c1C = workspace.Create<C1>();
+                var c1D = workspace.Create<C1>();
+
+                c1B.C1C1Many2Manies.Add(c1B);
+                c1C.C1C1Many2Manies.Add(c1B);
+                c1D.C1C1Many2Manies.Add(c1B);
+                c1C.C1C1Many2Manies.Add(c1C);
+                c1D.C1C1Many2Manies.Add(c1C);
+                c1D.C1C1Many2Manies.Add(c1D);
+
+                // Role
+                Assert.Empty(c1A.C1C1Many2Manies.Value);
+                c1B.C1C1Many2Manies.Value.ShouldContainSingle(c1B);
+                c1C.C1C1Many2Manies.Value.ShouldHaveSameElements(new[] { c1B, c1C });
+                c1D.C1C1Many2Manies.Value.ShouldHaveSameElements(new[] { c1B, c1C, c1D });
+
+                // Association
+                Assert.Empty(c1A.C1sWhereC1C1Many2Many.Value);
+                c1B.C1sWhereC1C1Many2Many.Value.ShouldHaveSameElements(new[] { c1B, c1C, c1D });
+                c1C.C1sWhereC1C1Many2Many.Value.ShouldHaveSameElements(new[] { c1C, c1D });
+                c1D.C1sWhereC1C1Many2Many.Value.ShouldContainSingle(c1D);
+
+                c1C.C1C1Many2Manies.Remove(c1A);
+
+                // Role
+                Assert.Empty(c1A.C1C1Many2Manies.Value);
+                c1B.C1C1Many2Manies.Value.ShouldContainSingle(c1B);
+                c1C.C1C1Many2Manies.Value.ShouldHaveSameElements(new[] { c1B, c1C });
+                c1D.C1C1Many2Manies.Value.ShouldHaveSameElements(new[] { c1B, c1C, c1D });
+
+                // Association
+                Assert.Empty(c1A.C1sWhereC1C1Many2Many.Value);
+                c1B.C1sWhereC1C1Many2Many.Value.ShouldHaveSameElements(new[] { c1B, c1C, c1D });
+                c1C.C1sWhereC1C1Many2Many.Value.ShouldHaveSameElements(new[] { c1C, c1D });
+                c1D.C1sWhereC1C1Many2Many.Value.ShouldContainSingle(c1D);
+
+                c1C.C1C1Many2Manies.Remove(c1A);
+
+                // Role
+                Assert.Empty(c1A.C1C1Many2Manies.Value);
+                c1B.C1C1Many2Manies.Value.ShouldContainSingle(c1B);
+                c1C.C1C1Many2Manies.Value.ShouldHaveSameElements(new[] { c1B, c1C });
+                c1D.C1C1Many2Manies.Value.ShouldHaveSameElements(new[] { c1B, c1C, c1D });
+
+                // Association
+                Assert.Empty(c1A.C1sWhereC1C1Many2Many.Value);
+                c1B.C1sWhereC1C1Many2Many.Value.ShouldHaveSameElements(new[] { c1B, c1C, c1D });
+                c1C.C1sWhereC1C1Many2Many.Value.ShouldHaveSameElements(new[] { c1C, c1D });
+                c1D.C1sWhereC1C1Many2Many.Value.ShouldContainSingle(c1D);
+
+                workspace.Reset();
+
+                // Role
+                Assert.Empty(c1A.C1C1Many2Manies.Value);
+                Assert.Empty(c1B.C1C1Many2Manies.Value);
+                Assert.Empty(c1C.C1C1Many2Manies.Value);
+                Assert.Empty(c1D.C1C1Many2Manies.Value);
+
+                // Association
+                Assert.Empty(c1A.C1sWhereC1C1Many2Many.Value);
+                Assert.Empty(c1B.C1sWhereC1C1Many2Many.Value);
+                Assert.Empty(c1C.C1sWhereC1C1Many2Many.Value);
+                Assert.Empty(c1D.C1sWhereC1C1Many2Many.Value);
+            }
+
+            /*   [Before]           [Remove]          [After]
+            *
+            *  c1A        c1A     c1A        c1A     c1A        c1A
+            *
+            *                                             
+            *  c1B ------ c1B     c1B        c1B     c1B ------ c1B
+            *       / /                                   / / 
+            *      / /                                   / /    
+            *  c1C |----- c1C     c1C ------ c1C     c1C |      c1C
+            *      | /                                   | /\     
+            *     / /                                  / /  \ 
+            *  c1D ------ c1D     c1D        c1D     c1D ------ c1D
+            */
+            {
+                var workspace = this.Profile.Workspace;
+
+                var result = await workspace.PullAsync(new Pull { Extent = new Filter(this.M.C1) });
+                var c1s = result.GetCollection<C1>();
+                var c1A = c1s.Single(v => v.Name.Value == "c1A");
+                var c1B = c1s.Single(v => v.Name.Value == "c1B");
+                var c1C = c1s.Single(v => v.Name.Value == "c1C");
+                var c1D = c1s.Single(v => v.Name.Value == "c1D");
+
+                // Role
+                Assert.Empty(c1A.C1C1Many2Manies.Value);
+                c1B.C1C1Many2Manies.Value.ShouldContainSingle(c1B);
+                c1C.C1C1Many2Manies.Value.ShouldHaveSameElements(new[] { c1B, c1C });
+                c1D.C1C1Many2Manies.Value.ShouldHaveSameElements(new[] { c1B, c1C, c1D });
+
+                // Association
+                Assert.Empty(c1A.C1sWhereC1C1Many2Many.Value);
+                c1B.C1sWhereC1C1Many2Many.Value.ShouldHaveSameElements(new[] { c1B, c1C, c1D });
+                c1C.C1sWhereC1C1Many2Many.Value.ShouldHaveSameElements(new[] { c1C, c1D });
+                c1D.C1sWhereC1C1Many2Many.Value.ShouldContainSingle(c1D);
+
+                c1C.C1C1Many2Manies.Remove(c1C);
+
+                // Role
+                Assert.Empty(c1A.C1C1Many2Manies.Value);
+                c1B.C1C1Many2Manies.Value.ShouldContainSingle(c1B);
+                c1C.C1C1Many2Manies.Value.ShouldContainSingle(c1B);
+                c1D.C1C1Many2Manies.Value.ShouldHaveSameElements(new[] { c1B, c1C, c1D });
+
+                // Association
+                Assert.Empty(c1A.C1sWhereC1C1Many2Many.Value);
+                c1B.C1sWhereC1C1Many2Many.Value.ShouldHaveSameElements(new[] { c1B, c1C, c1D });
+                c1C.C1sWhereC1C1Many2Many.Value.ShouldContainSingle(c1D);
+                c1D.C1sWhereC1C1Many2Many.Value.ShouldContainSingle(c1D);
+
+                c1C.C1C1Many2Manies.Remove(c1C);
+
+                // Role
+                Assert.Empty(c1A.C1C1Many2Manies.Value);
+                c1B.C1C1Many2Manies.Value.ShouldContainSingle(c1B);
+                c1C.C1C1Many2Manies.Value.ShouldContainSingle(c1B);
+                c1D.C1C1Many2Manies.Value.ShouldHaveSameElements(new[] { c1B, c1C, c1D });
+
+                // Association
+                Assert.Empty(c1A.C1sWhereC1C1Many2Many.Value);
+                c1B.C1sWhereC1C1Many2Many.Value.ShouldHaveSameElements(new[] { c1B, c1C, c1D });
+                c1C.C1sWhereC1C1Many2Many.Value.ShouldContainSingle(c1D);
+                c1D.C1sWhereC1C1Many2Many.Value.ShouldContainSingle(c1D);
+
+                workspace.Reset();
+
+                // Role
+                Assert.Empty(c1A.C1C1Many2Manies.Value);
+                c1B.C1C1Many2Manies.Value.ShouldContainSingle(c1B);
+                c1C.C1C1Many2Manies.Value.ShouldHaveSameElements(new[] { c1B, c1C });
+                c1D.C1C1Many2Manies.Value.ShouldHaveSameElements(new[] { c1B, c1C, c1D });
+
+                // Association
+                Assert.Empty(c1A.C1sWhereC1C1Many2Many.Value);
+                c1B.C1sWhereC1C1Many2Many.Value.ShouldHaveSameElements(new[] { c1B, c1C, c1D });
+                c1C.C1sWhereC1C1Many2Many.Value.ShouldHaveSameElements(new[] { c1C, c1D });
+                c1D.C1sWhereC1C1Many2Many.Value.ShouldContainSingle(c1D);
+            }
+        }
+
         //[Fact]
         //public async void SetRoleOld()
         //{

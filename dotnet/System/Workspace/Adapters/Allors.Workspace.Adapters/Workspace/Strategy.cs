@@ -947,6 +947,7 @@ namespace Allors.Workspace.Adapters
                 return;
             }
 
+            // A ----> R
             if (this.changesByRelationType?.TryGetValue(roleType.RelationType, out var changes) == true)
             {
                 AddCompositeChange add = null;
@@ -983,8 +984,11 @@ namespace Allors.Workspace.Adapters
             }
 
             dependee?.AddDependent(roleType, this);
-
+            this.RegisterReaction(roleType);
             this.Workspace.PushToDatabaseTracker.OnChanged(this);
+
+            // A <---- R
+            role.RegisterReaction(roleType.AssociationType);
         }
 
         private void AddInvolvedAssociation(IAssociationType associationType, Strategy association)
