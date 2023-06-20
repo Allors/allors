@@ -40,7 +40,7 @@ namespace Allors.Workspace.Adapters.Tests
         }
 
         [Fact]
-        public async void SetRole()
+        public async void AddRole()
         {
             /*   [Before]           [Add]           [After]
             *
@@ -200,7 +200,6 @@ namespace Allors.Workspace.Adapters.Tests
                 Assert.Equal(c1C, c1D.C1WhereC1C1One2Many.Value);
             }
         }
-
 
         //[Fact]
         //public async void SetRoleToNull()
