@@ -425,6 +425,136 @@ namespace Allors.Workspace.Adapters.Tests
         }
 
         [Fact]
+        public async void RemoveOneToMany()
+        {
+            foreach (DatabaseMode mode in Enum.GetValues(typeof(DatabaseMode)))
+            {
+                foreach (var contextFactory in this.contextFactories)
+                {
+                    var ctx = contextFactory();
+                    var (workspace1, _) = ctx;
+
+                    var c1A = await ctx.Create<C1>(workspace1, mode);
+                    var c1B = await ctx.Create<C1>(workspace1, mode);
+                    var c1C = await ctx.Create<C1>(workspace1, mode);
+                    var c1D = await ctx.Create<C1>(workspace1, mode);
+
+                    if (!c1A.C1C1Many2One.CanWrite || !c1B.C1C1Many2One.CanWrite || !c1C.C1C1Many2One.CanWrite)
+                    {
+                        var pull = new[] { c1A, c1B, c1C };
+                        await workspace1.PullAsync(pull.Select(v => new Pull { Object = v.Strategy }).ToArray());
+                    }
+
+                    c1B.C1C1One2Manies.Add(c1B);
+                    c1C.C1C1One2Manies.Add(c1C);
+                    c1C.C1C1One2Manies.Add(c1D);
+
+                    var c1aRolePropertyChanges = new List<string>();
+                    var c1bRolePropertyChanges = new List<string>();
+                    var c1cRolePropertyChanges = new List<string>();
+                    var c1dRolePropertyChanges = new List<string>();
+
+                    var c1aAssociationPropertyChanges = new List<string>();
+                    var c1bAssociationPropertyChanges = new List<string>();
+                    var c1cAssociationPropertyChanges = new List<string>();
+                    var c1dAssociationPropertyChanges = new List<string>();
+
+                    c1A.C1C1One2Manies.PropertyChanged += (sender, args) =>
+                    {
+                        c1aRolePropertyChanges.Add(args.PropertyName);
+                    };
+
+                    c1B.C1C1One2Manies.PropertyChanged += (sender, args) =>
+                    {
+                        c1bRolePropertyChanges.Add(args.PropertyName);
+                    };
+
+                    c1C.C1C1One2Manies.PropertyChanged += (sender, args) =>
+                    {
+                        c1cRolePropertyChanges.Add(args.PropertyName);
+                    };
+
+                    c1D.C1C1One2Manies.PropertyChanged += (sender, args) =>
+                    {
+                        c1dRolePropertyChanges.Add(args.PropertyName);
+                    };
+
+                    c1A.C1WhereC1C1One2Many.PropertyChanged += (sender, args) =>
+                    {
+                        c1aAssociationPropertyChanges.Add(args.PropertyName);
+                    };
+
+                    c1B.C1WhereC1C1One2Many.PropertyChanged += (sender, args) =>
+                    {
+                        c1bAssociationPropertyChanges.Add(args.PropertyName);
+                    };
+
+                    c1C.C1WhereC1C1One2Many.PropertyChanged += (sender, args) =>
+                    {
+                        c1cAssociationPropertyChanges.Add(args.PropertyName);
+                    };
+
+                    c1D.C1WhereC1C1One2Many.PropertyChanged += (sender, args) =>
+                    {
+                        c1dAssociationPropertyChanges.Add(args.PropertyName);
+                    };
+
+                    c1C.C1C1One2Manies.Remove(c1B);
+
+                    Assert.Empty(c1aRolePropertyChanges);
+                    Assert.Empty(c1bRolePropertyChanges);
+                    Assert.Empty(c1cRolePropertyChanges);
+                    Assert.Empty(c1dRolePropertyChanges);
+
+                    Assert.Empty(c1aAssociationPropertyChanges);
+                    Assert.Empty(c1bAssociationPropertyChanges);
+                    Assert.Empty(c1cAssociationPropertyChanges);
+                    Assert.Empty(c1dAssociationPropertyChanges);
+
+                    c1C.C1C1One2Manies.Remove(c1B);
+
+                    Assert.Empty(c1aRolePropertyChanges);
+                    Assert.Empty(c1bRolePropertyChanges);
+                    Assert.Empty(c1cRolePropertyChanges);
+                    Assert.Empty(c1dRolePropertyChanges);
+
+                    Assert.Empty(c1aAssociationPropertyChanges);
+                    Assert.Empty(c1bAssociationPropertyChanges);
+                    Assert.Empty(c1cAssociationPropertyChanges);
+                    Assert.Empty(c1dAssociationPropertyChanges);
+
+                    c1C.C1C1One2Manies.Remove(c1C);
+
+                    Assert.Empty(c1aRolePropertyChanges);
+                    Assert.Empty(c1bRolePropertyChanges);
+                    Assert.Single(c1cRolePropertyChanges);
+                    Assert.Contains("Value", c1cRolePropertyChanges);
+                    Assert.Empty(c1dRolePropertyChanges);
+
+                    Assert.Empty(c1aAssociationPropertyChanges);
+                    Assert.Empty(c1bAssociationPropertyChanges);
+                    Assert.Single(c1cAssociationPropertyChanges);
+                    Assert.Contains("Value", c1cAssociationPropertyChanges);
+                    Assert.Empty(c1dAssociationPropertyChanges);
+
+                    c1C.C1C1One2Manies.Remove(c1C);
+
+                    Assert.Empty(c1aRolePropertyChanges);
+                    Assert.Empty(c1bRolePropertyChanges);
+                    Assert.Single(c1cRolePropertyChanges);
+                    Assert.Contains("Value", c1cRolePropertyChanges);
+                    Assert.Empty(c1dRolePropertyChanges);
+
+                    Assert.Empty(c1aAssociationPropertyChanges);
+                    Assert.Empty(c1bAssociationPropertyChanges);
+                    Assert.Single(c1cAssociationPropertyChanges);
+                    Assert.Contains("Value", c1cAssociationPropertyChanges);
+                    Assert.Empty(c1dAssociationPropertyChanges);
+                }
+            }
+        }
+
+        [Fact]
         public async void AddManyToMany()
         {
             foreach (DatabaseMode mode in Enum.GetValues(typeof(DatabaseMode)))

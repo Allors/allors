@@ -201,6 +201,169 @@ namespace Allors.Workspace.Adapters.Tests
             }
         }
 
+        [Fact]
+        public async void RemoveRole()
+        {
+            /*   [Before]         [Remove]           [After]
+            *
+            *  c1A      c1A     c1A      c1A     c1A      c1A
+            *
+            *                                             
+            *  c1B ---- c1B     c1B      c1B     c1B ---- c1B
+            *                         x
+            *                        /   
+            *  c1C ---- c1C     c1C      c1C     c1C ---- c1C
+            *       \                                 \   
+            *        \                                 \
+            *  c1D      c1D     c1D      c1D     c1D      c1D
+            */
+            {
+                var workspace = this.Profile.Workspace;
+
+                var c1A = workspace.Create<C1>();
+                var c1B = workspace.Create<C1>();
+                var c1C = workspace.Create<C1>();
+                var c1D = workspace.Create<C1>();
+
+                c1B.C1C1One2Manies.Add(c1B);
+                c1C.C1C1One2Manies.Add(c1C);
+                c1C.C1C1One2Manies.Add(c1D);
+
+                // Role
+                Assert.Empty(c1A.C1C1One2Manies.Value);
+                c1B.C1C1One2Manies.Value.ShouldContainSingle(c1B);
+                c1C.C1C1One2Manies.Value.ShouldHaveSameElements(new[] { c1C, c1D });
+                Assert.Empty(c1D.C1C1One2Manies.Value);
+
+                // Association
+                Assert.Null(c1A.C1WhereC1C1One2Many.Value);
+                Assert.Equal(c1B, c1B.C1WhereC1C1One2Many.Value);
+                Assert.Equal(c1C, c1C.C1WhereC1C1One2Many.Value);
+                Assert.Equal(c1C, c1D.C1WhereC1C1One2Many.Value);
+
+                c1C.C1C1One2Manies.Remove(c1B);
+
+                // Role
+                Assert.Empty(c1A.C1C1One2Manies.Value);
+                c1B.C1C1One2Manies.Value.ShouldContainSingle(c1B);
+                c1C.C1C1One2Manies.Value.ShouldHaveSameElements(new[] { c1C, c1D });
+                Assert.Empty(c1D.C1C1One2Manies.Value);
+
+                // Association
+                Assert.Null(c1A.C1WhereC1C1One2Many.Value);
+                Assert.Equal(c1B, c1B.C1WhereC1C1One2Many.Value);
+                Assert.Equal(c1C, c1C.C1WhereC1C1One2Many.Value);
+                Assert.Equal(c1C, c1D.C1WhereC1C1One2Many.Value);
+
+                c1C.C1C1One2Manies.Remove(c1B);
+
+                // Role
+                Assert.Empty(c1A.C1C1One2Manies.Value);
+                c1B.C1C1One2Manies.Value.ShouldContainSingle(c1B);
+                c1C.C1C1One2Manies.Value.ShouldHaveSameElements(new[] { c1C, c1D });
+                Assert.Empty(c1D.C1C1One2Manies.Value);
+
+                // Association
+                Assert.Null(c1A.C1WhereC1C1One2Many.Value);
+                Assert.Equal(c1B, c1B.C1WhereC1C1One2Many.Value);
+                Assert.Equal(c1C, c1C.C1WhereC1C1One2Many.Value);
+                Assert.Equal(c1C, c1D.C1WhereC1C1One2Many.Value);
+
+                workspace.Reset();
+
+                // Role
+                Assert.Empty(c1A.C1C1One2Manies.Value);
+                Assert.Empty(c1B.C1C1One2Manies.Value);
+                Assert.Empty(c1C.C1C1One2Manies.Value);
+                Assert.Empty(c1D.C1C1One2Manies.Value);
+
+                // Association
+                Assert.Null(c1A.C1WhereC1C1One2Many.Value);
+                Assert.Null(c1B.C1WhereC1C1One2Many.Value);
+                Assert.Null(c1C.C1WhereC1C1One2Many.Value);
+                Assert.Null(c1D.C1WhereC1C1One2Many.Value);
+            }
+
+            /*   [Before]          [Remove]           [After]
+            *
+            *  c1A      c1A     c1A      c1A     c1A      c1A
+            *
+            *                                             
+            *  c1B ---- c1B     c1B      c1B     c1B ---- c1B
+            *                        
+            *                        
+            *  c1C ---- c1C     c1C -x-- c1C     c1C      c1C
+            *       \                                 \   
+            *        \                                 \
+            *  c1D      c1D     c1D      c1D     c1D      c1D
+            */
+            {
+                var workspace = this.Profile.Workspace;
+
+                var result = await workspace.PullAsync(new Pull { Extent = new Filter(this.M.C1) });
+                var c1s = result.GetCollection<C1>();
+                var c1A = c1s.Single(v => v.Name.Value == "c1A");
+                var c1B = c1s.Single(v => v.Name.Value == "c1B");
+                var c1C = c1s.Single(v => v.Name.Value == "c1C");
+                var c1D = c1s.Single(v => v.Name.Value == "c1D");
+
+                // Role
+                Assert.Empty(c1A.C1C1One2Manies.Value);
+                c1B.C1C1One2Manies.Value.ShouldContainSingle(c1B);
+                c1C.C1C1One2Manies.Value.ShouldHaveSameElements(new[] { c1C, c1D });
+                Assert.Empty(c1D.C1C1One2Manies.Value);
+
+                // Association
+                Assert.Null(c1A.C1WhereC1C1One2Many.Value);
+                Assert.Equal(c1B, c1B.C1WhereC1C1One2Many.Value);
+                Assert.Equal(c1C, c1C.C1WhereC1C1One2Many.Value);
+                Assert.Equal(c1C, c1D.C1WhereC1C1One2Many.Value);
+
+                c1C.C1C1One2Manies.Remove(c1C);
+
+                // Role
+                Assert.Empty(c1A.C1C1One2Manies.Value);
+                c1B.C1C1One2Manies.Value.ShouldContainSingle(c1B);
+                c1C.C1C1One2Manies.Value.ShouldContainSingle(c1D);
+                Assert.Empty(c1D.C1C1One2Manies.Value);
+
+                // Association
+                Assert.Null(c1A.C1WhereC1C1One2Many.Value);
+                Assert.Equal(c1B, c1B.C1WhereC1C1One2Many.Value);
+                Assert.Null(c1C.C1WhereC1C1One2Many.Value);
+                Assert.Equal(c1C, c1D.C1WhereC1C1One2Many.Value);
+
+                c1C.C1C1One2Manies.Remove(c1C);
+
+                // Role
+                Assert.Empty(c1A.C1C1One2Manies.Value);
+                c1B.C1C1One2Manies.Value.ShouldContainSingle(c1B);
+                c1C.C1C1One2Manies.Value.ShouldContainSingle(c1D);
+                Assert.Empty(c1D.C1C1One2Manies.Value);
+
+                // Association
+                Assert.Null(c1A.C1WhereC1C1One2Many.Value);
+                Assert.Equal(c1B, c1B.C1WhereC1C1One2Many.Value);
+                Assert.Null(c1C.C1WhereC1C1One2Many.Value);
+                Assert.Equal(c1C, c1D.C1WhereC1C1One2Many.Value);
+
+                workspace.Reset();
+
+                // Role
+                Assert.Empty(c1A.C1C1One2Manies.Value);
+                c1B.C1C1One2Manies.Value.ShouldContainSingle(c1B);
+                c1C.C1C1One2Manies.Value.ShouldHaveSameElements(new[] { c1C, c1D });
+                Assert.Empty(c1D.C1C1One2Manies.Value);
+
+                // Association
+                Assert.Null(c1A.C1WhereC1C1One2Many.Value);
+                Assert.Equal(c1B, c1B.C1WhereC1C1One2Many.Value);
+                Assert.Equal(c1C, c1C.C1WhereC1C1One2Many.Value);
+                Assert.Equal(c1C, c1D.C1WhereC1C1One2Many.Value);
+            }
+        }
+
+
         //[Fact]
         //public async void SetRoleToNull()
         //{

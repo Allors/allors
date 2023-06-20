@@ -809,7 +809,6 @@ namespace Allors.Workspace.Adapters
 
             // RA --x-- R
             roleAssociation?.RemoveCompositesRoleStrategyOneToMany(roleType, role, this);
-            roleAssociation?.RegisterReaction(roleType);
 
             // A ----> R
             this.AddCompositesRoleStrategyChange(roleType, role);
@@ -884,15 +883,17 @@ namespace Allors.Workspace.Adapters
             }
         }
 
-        private void RemoveCompositesRoleStrategyOneToMany(IRoleType roleType, Strategy roleToRemove, Strategy dependee)
+        private void RemoveCompositesRoleStrategyOneToMany(IRoleType roleType, Strategy role, Strategy dependee)
         {
-            var role = this.GetCompositesRoleStrategies(roleType);
+            var previousRole = this.GetCompositesRoleStrategies(roleType);
 
-            if (!role.Contains(roleToRemove))
+            // R not in PR
+            if (!previousRole.Contains(role))
             {
                 return;
             }
 
+            // A ----> R
             if (this.changesByRelationType?.TryGetValue(roleType.RelationType, out var changes) == true)
             {
                 AddCompositeChange add = null;
@@ -902,10 +903,10 @@ namespace Allors.Workspace.Adapters
                 {
                     switch (change)
                     {
-                    case AddCompositeChange addCompositeChange when addCompositeChange.Role == roleToRemove:
+                    case AddCompositeChange addCompositeChange when addCompositeChange.Role == role:
                         add = addCompositeChange;
                         break;
-                    case RemoveCompositeChange removeCompositeChange when removeCompositeChange.Role == roleToRemove:
+                    case RemoveCompositeChange removeCompositeChange when removeCompositeChange.Role == role:
                         remove = removeCompositeChange;
                         break;
                     }
@@ -917,7 +918,7 @@ namespace Allors.Workspace.Adapters
                 }
                 else if (remove == null)
                 {
-                    changes = changes.Append(new RemoveCompositeChange(roleToRemove, dependee)).ToArray();
+                    changes = changes.Append(new RemoveCompositeChange(role, dependee)).ToArray();
                 }
 
                 this.changesByRelationType[roleType.RelationType] = changes;
@@ -925,19 +926,23 @@ namespace Allors.Workspace.Adapters
             else
             {
                 this.changesByRelationType ??= new Dictionary<IRelationType, Change[]>();
-                this.changesByRelationType[roleType.RelationType] = new Change[] { new RemoveCompositeChange(roleToRemove, dependee) };
+                this.changesByRelationType[roleType.RelationType] = new Change[] { new RemoveCompositeChange(role, dependee) };
             }
 
             dependee?.AddDependent(roleType, this);
-
+            this.RegisterReaction(roleType);
             this.Workspace.PushToDatabaseTracker.OnChanged(this);
+
+            // A <---- R
+            role.RegisterReaction(roleType.AssociationType);
         }
 
-        private void RemoveCompositesRoleStrategyManyToMany(IRoleType roleType, Strategy roleToRemove, Strategy dependee)
+        private void RemoveCompositesRoleStrategyManyToMany(IRoleType roleType, Strategy role, Strategy dependee)
         {
-            var role = this.GetCompositesRoleStrategies(roleType);
+            var previousRole = this.GetCompositesRoleStrategies(roleType);
 
-            if (!role.Contains(roleToRemove))
+            // R not in PR
+            if (!previousRole.Contains(role))
             {
                 return;
             }
@@ -951,10 +956,10 @@ namespace Allors.Workspace.Adapters
                 {
                     switch (change)
                     {
-                    case AddCompositeChange addCompositeChange when addCompositeChange.Role == roleToRemove:
+                    case AddCompositeChange addCompositeChange when addCompositeChange.Role == role:
                         add = addCompositeChange;
                         break;
-                    case RemoveCompositeChange removeCompositeChange when removeCompositeChange.Role == roleToRemove:
+                    case RemoveCompositeChange removeCompositeChange when removeCompositeChange.Role == role:
                         remove = removeCompositeChange;
                         break;
                     }
@@ -966,7 +971,7 @@ namespace Allors.Workspace.Adapters
                 }
                 else if (remove == null)
                 {
-                    changes = changes.Append(new RemoveCompositeChange(roleToRemove, dependee)).ToArray();
+                    changes = changes.Append(new RemoveCompositeChange(role, dependee)).ToArray();
                 }
 
                 this.changesByRelationType[roleType.RelationType] = changes;
@@ -974,7 +979,7 @@ namespace Allors.Workspace.Adapters
             else
             {
                 this.changesByRelationType ??= new Dictionary<IRelationType, Change[]>();
-                this.changesByRelationType[roleType.RelationType] = new Change[] { new RemoveCompositeChange(roleToRemove, dependee) };
+                this.changesByRelationType[roleType.RelationType] = new Change[] { new RemoveCompositeChange(role, dependee) };
             }
 
             dependee?.AddDependent(roleType, this);
