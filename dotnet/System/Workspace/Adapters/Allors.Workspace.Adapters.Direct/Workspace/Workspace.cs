@@ -73,6 +73,8 @@ namespace Allors.Workspace.Adapters.Direct
                 strategy!.OnPulled(result);
             }
 
+            this.HandleReactions();
+
             return Task.FromResult<IPullResult>(result);
         }
 

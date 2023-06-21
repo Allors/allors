@@ -331,9 +331,9 @@ namespace Allors.Workspace.Adapters
             return method;
         }
 
-        internal void HandleReactions()
+        public void HandleReactions()
         {
-            while (this.reactives.Count >0)
+            while (this.reactives.Count > 0)
             {
                 var reactive = this.reactives.Dequeue();
                 reactive.Reaction?.React();

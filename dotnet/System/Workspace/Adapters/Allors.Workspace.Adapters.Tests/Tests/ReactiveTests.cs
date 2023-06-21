@@ -405,7 +405,7 @@ namespace Allors.Workspace.Adapters.Tests
                     Assert.Single(c1cAssociationPropertyChanges);
                     Assert.Contains("Value", c1cAssociationPropertyChanges);
                     Assert.Empty(c1dAssociationPropertyChanges);
-                    
+
                     c1B.C1C1One2Manies.Add(c1C);
 
                     Assert.Empty(c1aRolePropertyChanges);
@@ -818,6 +818,46 @@ namespace Allors.Workspace.Adapters.Tests
                     Assert.Empty(c1dAssociationPropertyChanges);
                 }
             }
+        }
+
+        [Fact]
+        public async void PullString()
+        {
+            var workspaceX = this.Profile.CreateSharedWorkspace();
+            var workspaceY = this.Profile.CreateExclusiveWorkspace();
+
+            var pull = new Pull
+            {
+                Extent = new Filter(this.M.C1)
+                {
+                    Predicate = new Equals { PropertyType = this.M.C1.Name, Value = "c1A" }
+                }
+            };
+
+            var xResult = await workspaceX.PullAsync(pull);
+            var xC1A = xResult.GetCollection<C1>().First();
+
+            var propertyChanges = new List<string>();
+
+            xC1A.C1AllorsString.PropertyChanged += (sender, args) =>
+            {
+                propertyChanges.Add(args.PropertyName);
+            };
+            
+            var yResult = await workspaceY.PullAsync(pull);
+            var yC1A = yResult.GetCollection<C1>().First();
+
+            yC1A.C1AllorsString.Value = "New New New";
+
+            await workspaceY.PushAsync();
+
+            await workspaceX.PullAsync(pull);
+
+            Assert.Equal("New New New", yC1A.C1AllorsString.Value);
+
+            Assert.Equal(2, propertyChanges.Count);
+            Assert.Contains("Value", propertyChanges);
+            Assert.Contains("Exist", propertyChanges);
         }
     }
 }

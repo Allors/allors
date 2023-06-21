@@ -644,6 +644,11 @@ namespace Allors.Workspace.Adapters
                 }
             }
 
+            foreach (var roleType in this.Class.RoleTypes)
+            {
+                this.Workspace.RegisterReaction(this, roleType);
+            }
+
             this.record = newRecord;
         }
 
