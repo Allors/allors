@@ -6,6 +6,7 @@
 namespace Allors.Workspace.Adapters.Json
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
     using Allors.Protocol.Json.Api.Invoke;
@@ -105,11 +106,22 @@ namespace Allors.Workspace.Adapters.Json
                 }
             }
 
+            var classes = new HashSet<IClass>();
+
             foreach (var p in pullResponse.p)
             {
-                this.StrategyById.TryGetValue(p.i, out var strategy);
-                strategy!.OnPulled(pullResult);
+                if (this.StrategyById.TryGetValue(p.i, out var strategy))
+                {
+                    strategy.OnPulled(pullResult);
+                    classes.Add(strategy.Class);
+                }
             }
+
+            var associationTypes = classes.SelectMany(v => v.AssociationTypes).Distinct();
+
+            this.RegisterReactions(associationTypes);
+
+            this.HandleReactions();
 
             return pullResult;
         }
