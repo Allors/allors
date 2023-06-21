@@ -9,6 +9,8 @@ namespace Allors.Workspace.Adapters.Direct
 {
     using System.Threading.Tasks;
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using Shared.Ranges;
 
     public class Workspace : Adapters.Workspace
@@ -67,11 +69,20 @@ namespace Allors.Workspace.Adapters.Direct
                 }
             }
 
+            var classes = new HashSet<IClass>();
+
             foreach (var databaseObject in result.DatabaseObjects)
             {
-                this.StrategyById.TryGetValue(databaseObject.Id, out var strategy);
-                strategy!.OnPulled(result);
+                if (this.StrategyById.TryGetValue(databaseObject.Id, out var strategy))
+                {
+                    strategy.OnPulled(result);
+                    classes.Add(strategy.Class);
+                }
             }
+
+            var associationTypes = classes.SelectMany(v => v.AssociationTypes).Distinct();
+            
+            this.RegisterReactions(associationTypes);
 
             this.HandleReactions();
 

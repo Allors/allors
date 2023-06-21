@@ -843,7 +843,7 @@ namespace Allors.Workspace.Adapters.Tests
             {
                 propertyChanges.Add(args.PropertyName);
             };
-            
+
             var yResult = await workspaceY.PullAsync(pull);
             var yC1A = yResult.GetCollection<C1>().First();
 
@@ -858,6 +858,73 @@ namespace Allors.Workspace.Adapters.Tests
             Assert.Equal(2, propertyChanges.Count);
             Assert.Contains("Value", propertyChanges);
             Assert.Contains("Exist", propertyChanges);
+        }
+
+        [Fact]
+        public async void PullOneToOne()
+        {
+            var workspaceX = this.Profile.CreateSharedWorkspace();
+            var workspaceY = this.Profile.CreateExclusiveWorkspace();
+
+            var pull = new Pull
+            {
+                Extent = new Filter(this.M.C1)
+            };
+
+            var xResult = await workspaceX.PullAsync(pull);
+            var xC1A = xResult.GetCollection<C1>().First(v => v.Name.Value == "c1A");
+            var xC1B = xResult.GetCollection<C1>().First(v => v.Name.Value == "c1B");
+
+            var c1ARolePropertyChanges = new List<string>();
+            var c1BRolePropertyChanges = new List<string>();
+
+            var c1AAssociationPropertyChanges = new List<string>();
+            var c1BAssociationPropertyChanges = new List<string>();
+
+            xC1A.C1C1One2One.PropertyChanged += (sender, args) =>
+            {
+                c1ARolePropertyChanges.Add(args.PropertyName);
+            };
+
+            xC1B.C1C1One2One.PropertyChanged += (sender, args) =>
+            {
+                c1BRolePropertyChanges.Add(args.PropertyName);
+            };
+
+            xC1A.C1WhereC1C1One2One.PropertyChanged += (sender, args) =>
+            {
+                c1AAssociationPropertyChanges.Add(args.PropertyName);
+            };
+
+            xC1B.C1WhereC1C1One2One.PropertyChanged += (sender, args) =>
+            {
+                c1BAssociationPropertyChanges.Add(args.PropertyName);
+            };
+
+            var yResult = await workspaceY.PullAsync(pull);
+            var yC1A = yResult.GetCollection<C1>().First(v => v.Name.Value == "c1A");
+            var yC1B = yResult.GetCollection<C1>().First(v => v.Name.Value == "c1B");
+
+            yC1B.C1C1One2One.Value = yC1B;
+
+            await workspaceY.PushAsync();
+
+            await workspaceX.PullAsync(pull);
+
+            Assert.Null(xC1A.C1C1One2One.Value);
+            Assert.Equal(xC1B, xC1B.C1C1One2One.Value);
+
+            Assert.Equal(2, c1ARolePropertyChanges.Count);
+            Assert.Contains("Value", c1ARolePropertyChanges);
+            Assert.Contains("Exist", c1ARolePropertyChanges);
+
+            Assert.Single(c1BRolePropertyChanges);
+            Assert.Contains("Value", c1BRolePropertyChanges);
+
+            Assert.Empty(c1AAssociationPropertyChanges);
+
+            Assert.Single(c1BAssociationPropertyChanges);
+            Assert.Contains("Value", c1BAssociationPropertyChanges);
         }
     }
 }

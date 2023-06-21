@@ -340,7 +340,22 @@ namespace Allors.Workspace.Adapters
             }
         }
 
-        internal void RegisterReaction(Strategy association, IRoleType roleType)
+        public void RegisterReactions(IEnumerable<IAssociationType> associationTypes)
+        {
+            foreach (var associationType in associationTypes)
+            {
+                if (this.associationByStrategyByAssociationType.TryGetValue(associationType, out var associationByStrategy))
+                {
+                    foreach (var kvp in associationByStrategy)
+                    {
+                        var association = kvp.Value;
+                        this.reactives.Enqueue(association);
+                    }
+                }
+            }
+        }
+
+        public void RegisterReaction(Strategy association, IRoleType roleType)
         {
             if (this.roleByStrategyByRoleType.TryGetValue(roleType, out var roleByStrategy))
             {
@@ -351,7 +366,7 @@ namespace Allors.Workspace.Adapters
             }
         }
 
-        internal void RegisterReaction(Strategy role, IAssociationType associationType)
+        public void RegisterReaction(Strategy role, IAssociationType associationType)
         {
             if (this.associationByStrategyByAssociationType.TryGetValue(associationType, out var associationByStrategy))
             {
