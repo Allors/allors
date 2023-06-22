@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Title>Allors EmbeddedEmbedded</Title>
+    <Authors>allors</Authors>
+    <Company>Allors bvba</Company>
+    <Copyright>(c) Allors bvba</Copyright>
+    <Description>EmbeddedEmbedded implementation of Allors.</Description>
+    <PackageProjectUrl>https://github.com/Allors/EmbeddedEmbedded</PackageProjectUrl>
+    <PackageDescription>EmbeddedEmbedded reactive domain implementation.</PackageDescription>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
+    <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
+    <PackageTags>dynamic;dlr;reactive;domain</PackageTags>
+    <RepositoryUrl>https://github.com/Allors/EmbeddedEmbedded.git</RepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+</Project>
