@@ -12,9 +12,15 @@
             this.Population = new EmbeddedPopulation(
                 v =>
                 {
-                    v.AddUnit<Organisation, string>(nameof(Organisation.Name));
-                    v.AddUnit<Organisation, Person>(nameof(Organisation.Owner));
-                    v.AddUnit<Person, string>(nameof(Person.Name));
+                    v.AddUnit<INamed, string>(nameof(INamed.Name));
+                    v.AddOneToOne<Organization, INamed>(nameof(Organization.Named));
+                    v.AddOneToOne<Organization, Person>(nameof(Organization.Owner));
+                    v.AddManyToMany<Organization, Person>("Employee");
+                    v.AddUnit<Person, string>(nameof(Person.FirstName));
+                    v.AddUnit<Person, string>(nameof(Person.LastName));
+                    v.AddUnit<Person, string>(nameof(Person.FullName));
+                    v.AddUnit<Person, DateTime>(nameof(Person.DerivedAt));
+                    v.AddUnit<Person, string>(nameof(Person.Greeting));
                     // Special
                     v.AddUnit<C1, string>(nameof(C1.Same));
                     v.AddUnit<C2, string>(nameof(C2.Same));

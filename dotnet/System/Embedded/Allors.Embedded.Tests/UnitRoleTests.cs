@@ -7,10 +7,17 @@
         [Test]
         public void String()
         {
-            var c1a = this.Population.New<C1>();
-            c1a.Same = "a string";
+            var john = this.Population.New<Person>();
+            var jane = this.Population.New<Person>();
+            
+            john.Name = "John";
+            jane.Name = "Jane";
 
-            Assert.AreEqual("a string", c1a.Same);
+            Assert.Multiple(() =>
+            {
+                Assert.That(john.Name, Is.EqualTo("John"));
+                Assert.That(jane.Name, Is.EqualTo("Jane"));
+            });
         }
     }
 }

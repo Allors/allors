@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Allors.Embedded.Reflection\Allors.Embedded.Reflection.csproj" />
+    <ProjectReference Include="..\Allors.Embedded\Allors.Embedded.csproj" />
   </ItemGroup>
 
 </Project>

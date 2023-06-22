@@ -4,6 +4,8 @@
     using System.Collections.Generic;
     using Meta;
 
+    public delegate T New<T>(params Action<T>[] builders);
+
     public class EmbeddedPopulation
     {
         private readonly EmbeddedDatabase database;
