@@ -5,7 +5,9 @@ VisualStudioVersion = 17.6.33815.320
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Embedded", "Allors.Embedded\Allors.Embedded.csproj", "{923AFBDA-1E5A-47FF-AE0D-C4DCFCA66590}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Allors.Embedded.Tests", "Allors.Embedded.Tests\Allors.Embedded.Tests.csproj", "{E716287B-939A-488E-B4AD-AD8BFB9468DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Embedded.Tests", "Allors.Embedded.Tests\Allors.Embedded.Tests.csproj", "{E716287B-939A-488E-B4AD-AD8BFB9468DC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Embedded.Reflection", "Allors.Embedded.Reflection\Allors.Embedded.Reflection.csproj", "{2A5B0281-7D96-4426-A7F4-57900D34A08E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{E716287B-939A-488E-B4AD-AD8BFB9468DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E716287B-939A-488E-B4AD-AD8BFB9468DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E716287B-939A-488E-B4AD-AD8BFB9468DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A5B0281-7D96-4426-A7F4-57900D34A08E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A5B0281-7D96-4426-A7F4-57900D34A08E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A5B0281-7D96-4426-A7F4-57900D34A08E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A5B0281-7D96-4426-A7F4-57900D34A08E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
