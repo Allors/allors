@@ -14,7 +14,7 @@
 
         internal static string PluralNameForAssociation(this IEmbeddedRoleType @this, EmbeddedObjectType objectType)
         {
-            return $"{@this.ObjectType.Meta.Pluralizer.Pluralize(objectType.Type.Name)}Where{@this.SingularName}";
+            return $"{@this.ObjectType.Meta.Pluralize(objectType.Type.Name)}Where{@this.SingularName}";
         }
 
         internal static object NormalizeToOne(this IEmbeddedRoleType @this, object value)

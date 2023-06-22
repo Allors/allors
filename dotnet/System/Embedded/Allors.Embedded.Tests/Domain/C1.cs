@@ -9,6 +9,10 @@
         {
         }
 
-        public StringRole String { get; set; }
+        public string String
+        {
+            get { return (string)this.GetRole("String"); }
+            set { this.SetRole("String", value); }
+        }
     }
 }

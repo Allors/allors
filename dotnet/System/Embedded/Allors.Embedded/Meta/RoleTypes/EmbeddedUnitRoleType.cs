@@ -6,11 +6,11 @@
     {
         public EmbeddedUnitRoleType(EmbeddedObjectType objectType, string singularName)
         {
-            var pluralizer = objectType.Meta.Pluralizer;
+            var meta = objectType.Meta;
 
             this.ObjectType = objectType;
             this.SingularName = singularName ?? objectType.Type.Name;
-            this.PluralName = pluralizer.Pluralize(this.SingularName);
+            this.PluralName = meta.Pluralize(this.SingularName);
         }
 
         public EmbeddedObjectType ObjectType { get; }

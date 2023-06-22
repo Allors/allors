@@ -5,15 +5,56 @@
 
     public class EmbeddedMeta
     {
-        public EmbeddedMeta(IPluralizer pluralizer)
+        internal EmbeddedMeta()
         {
-            this.Pluralizer = pluralizer;
             this.ObjectTypeByType = new Dictionary<Type, EmbeddedObjectType>();
         }
 
-        public IPluralizer Pluralizer { get; }
-
         public IDictionary<Type, EmbeddedObjectType> ObjectTypeByType { get; }
+
+        public string Pluralize(string singular)
+        {
+            static bool EndsWith(string word, string ending) => word.EndsWith(ending, StringComparison.InvariantCultureIgnoreCase);
+
+            if (EndsWith(singular, "y") &&
+                !EndsWith(singular, "ay") &&
+                !EndsWith(singular, "ey") &&
+                !EndsWith(singular, "iy") &&
+                !EndsWith(singular, "oy") &&
+                !EndsWith(singular, "uy"))
+            {
+                return singular.Substring(0, singular.Length - 1) + "ies";
+            }
+
+            if (EndsWith(singular, "us"))
+            {
+                return singular + "es";
+            }
+
+            if (EndsWith(singular, "ss"))
+            {
+                return singular + "es";
+            }
+
+            if (EndsWith(singular, "x") ||
+                EndsWith(singular, "ch") ||
+                EndsWith(singular, "sh"))
+            {
+                return singular + "es";
+            }
+
+            if (EndsWith(singular, "f") && singular.Length > 1)
+            {
+                return singular.Substring(0, singular.Length - 1) + "ves";
+            }
+
+            if (EndsWith(singular, "fe") && singular.Length > 2)
+            {
+                return singular.Substring(0, singular.Length - 2) + "ves";
+            }
+
+            return singular + "s";
+        }
 
         public EmbeddedUnitRoleType AddUnit<TAssociation, TRole>(string roleName) => this.GetOrAddObjectType(typeof(TAssociation)).AddUnit(this.GetOrAddObjectType(typeof(TRole)), roleName);
 
