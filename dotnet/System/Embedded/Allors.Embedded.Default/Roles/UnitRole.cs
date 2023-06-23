@@ -2,7 +2,7 @@
 {
     using Meta;
 
-    public class UnitRole<T> : Role
+    public class UnitRole<T> : Role, IUnitRole<T>
     {
         public UnitRole(IEmbeddedObject @object, IEmbeddedRoleType roleType) : base(@object, roleType)
         {

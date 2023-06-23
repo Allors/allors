@@ -4,9 +4,7 @@
     using System.Collections.Generic;
     using Meta;
 
-    public delegate T New<out T>(params Action<T>[] builders);
-
-    public class EmbeddedPopulation
+    public class EmbeddedPopulation : IEmbeddedPopulation
     {
         private readonly EmbeddedDatabase database;
 
@@ -22,15 +20,17 @@
             }
         }
 
+        IEmbeddedMeta IEmbeddedPopulation.Meta => this.Meta;
+
         public EmbeddedMeta Meta { get; }
 
         public Dictionary<string, IEmbeddedDerivation> DerivationById { get; }
 
         public IEnumerable<IEmbeddedObject> Objects => this.database.Objects;
 
-        public EmbeddedObject New(Type t, params Action<EmbeddedObject>[] builders)
+        public IEmbeddedObject New(Type t, params Action<IEmbeddedObject>[] builders)
         {
-            var @new = (EmbeddedObject)Activator.CreateInstance(t, new object[] { this, this.Meta.GetOrAddObjectType(t) });
+            var @new = (IEmbeddedObject)Activator.CreateInstance(t, new object[] { this, this.Meta.GetOrAddObjectType(t) });
             this.database.AddObject(@new);
 
             foreach (var builder in builders)
@@ -42,7 +42,7 @@
         }
 
         public T New<T>(params Action<T>[] builders)
-              where T : EmbeddedObject
+              where T : IEmbeddedObject
         {
             var @new = (T)Activator.CreateInstance(typeof(T), new object[] { this, this.Meta.GetOrAddObjectType(typeof(T)) });
             this.database.AddObject(@new);
@@ -55,7 +55,7 @@
             return @new;
         }
 
-        public EmbeddedChangeSet Snapshot()
+        public IEmbeddedChangeSet Snapshot()
         {
             return this.database.Snapshot();
         }
@@ -76,17 +76,17 @@
             }
         }
 
-        public UnitRole<T> GetUnitRole<T>(IEmbeddedObject obj, IEmbeddedRoleType roleType)
+        public IUnitRole<T> GetUnitRole<T>(IEmbeddedObject obj, IEmbeddedRoleType roleType)
         {
             return new UnitRole<T>(obj, roleType);
         }
 
-        public CompositeRole<T> GetCompositeRole<T>(IEmbeddedObject obj, IEmbeddedRoleType roleType) where T : IEmbeddedObject
+        public ICompositeRole<T> GetCompositeRole<T>(IEmbeddedObject obj, IEmbeddedRoleType roleType) where T : IEmbeddedObject
         {
             return new CompositeRole<T>(obj, roleType);
         }
 
-        public CompositesRole<T> GetCompositesRole<T>(IEmbeddedObject obj, IEmbeddedRoleType roleType) where T : IEmbeddedObject
+        public ICompositesRole<T> GetCompositesRole<T>(IEmbeddedObject obj, IEmbeddedRoleType roleType) where T : IEmbeddedObject
         {
             return new CompositesRole<T>(obj, roleType);
         }

@@ -2,7 +2,7 @@
 {
     public interface INamed : IEmbeddedObject
     {
-        UnitRole<string> Name { get;  }
+        IUnitRole<string> Name { get;  }
 
         CompositeAssociation<Organization> OrganizationWhereNamed { get; }
     }

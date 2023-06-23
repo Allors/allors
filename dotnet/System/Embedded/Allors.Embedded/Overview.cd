@@ -1,17 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="Allors.Embedded.EmbeddedObject">
-    <Position X="0.5" Y="1.75" Width="2.5" />
-    <TypeIdentifier>
-      <HashCode>AEBAAAAAAAAQAAAIAAQQAAAAAAAAAAAAAIAAAAAAAAA=</HashCode>
-      <FileName>EmbeddedObject.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="Population" />
-      <Property Name="ObjectType" />
-    </ShowAsAssociation>
-    <Lollipop Position="0.2" />
-  </Class>
   <Class Name="Allors.Embedded.EmbeddedPopulation">
     <Position X="4.5" Y="2.5" Width="2.5" />
     <TypeIdentifier>
@@ -31,7 +19,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Allors.Embedded.EmbeddedDatabase">
-    <Position X="9" Y="2.75" Width="3.25" />
+    <Position X="8.75" Y="2.75" Width="3.25" />
     <TypeIdentifier>
       <HashCode>EAAgACQACAAgAAEAAAAAAAADhAABAgEAIAAAAAAIAAA=</HashCode>
       <FileName>EmbeddedDatabase.cs</FileName>
@@ -48,9 +36,9 @@
     </TypeIdentifier>
   </Class>
   <Interface Name="Allors.Embedded.IEmbeddedObject">
-    <Position X="14" Y="2.75" Width="2.5" />
+    <Position X="13.75" Y="2.75" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AEBAAAAAAAAQAAAIAAQQAAAAAAAAAAAAAIAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAIAAAAAAAAA=</HashCode>
       <FileName>IEmbeddedObject.cs</FileName>
     </TypeIdentifier>
   </Interface>

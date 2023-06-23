@@ -2,7 +2,7 @@
 {
     using Meta;
 
-    public class CompositeRole<TRole> : Role where TRole : IEmbeddedObject
+    public class CompositeRole<TRole> : Role, ICompositeRole<TRole> where TRole : IEmbeddedObject
     {
         public CompositeRole(IEmbeddedObject @object, IEmbeddedRoleType roleType) : base(@object, roleType)
         {

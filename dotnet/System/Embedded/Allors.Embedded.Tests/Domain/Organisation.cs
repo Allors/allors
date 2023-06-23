@@ -15,13 +15,13 @@
             this.OrganizationWhereNamed = GetCompositeAssociation<Organization>("OrganizationWhereNamed");
         }
 
-        public UnitRole<string> Name { get; }
+        public IUnitRole<string> Name { get; }
 
-        public CompositeRole<INamed> Named { get; }
+        public ICompositeRole<INamed> Named { get; }
 
-        public CompositeRole<Person> Owner { get; }
+        public ICompositeRole<Person> Owner { get; }
 
-        public CompositesRole<Person> Employees { get; }
+        public ICompositesRole<Person> Employees { get; }
 
         public CompositeAssociation<Organization> OrganizationWhereNamed { get; }
     }

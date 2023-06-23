@@ -14,7 +14,7 @@
 
         private IDictionary<string, IEmbeddedRoleType> derivedRoleTypeByName;
 
-        internal EmbeddedObjectType(EmbeddedMeta meta, Type type)
+        public EmbeddedObjectType(IEmbeddedMeta meta, Type type)
         {
             this.Meta = meta;
             this.Type = type;
@@ -47,7 +47,7 @@
             }
         }
 
-        public EmbeddedMeta Meta { get; }
+        public IEmbeddedMeta Meta { get; }
 
         public Type Type { get; }
 
@@ -156,7 +156,7 @@
             return roleType;
         }
 
-        internal void ResetDerivations()
+        public void ResetDerivations()
         {
             this.derivedAssociationTypeByName = null;
             this.derivedRoleTypeByName = null;

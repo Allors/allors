@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
 
-    public class EmbeddedMeta
+    public class EmbeddedMeta : IEmbeddedMeta
     {
         internal EmbeddedMeta()
         {
@@ -66,7 +66,7 @@
 
         public EmbeddedManyToManyRoleType AddManyToMany<TAssociation, TRole>(string roleName) => this.GetOrAddObjectType(typeof(TAssociation)).AddManyToMany(this.GetOrAddObjectType(typeof(TRole)), roleName);
 
-        internal EmbeddedObjectType GetOrAddObjectType(Type type)
+        public EmbeddedObjectType GetOrAddObjectType(Type type)
         {
             if (!this.ObjectTypeByType.TryGetValue(type, out var objectType))
             {
@@ -77,7 +77,7 @@
             return objectType;
         }
 
-        internal void ResetDerivations()
+        public void ResetDerivations()
         {
             foreach (var kvp in this.ObjectTypeByType)
             {

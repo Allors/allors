@@ -19,17 +19,17 @@
             this.OrganizationWhereNamed = GetCompositeAssociation<Organization>("OrganizationWhereNamed");
         }
 
-        public UnitRole<string> Name { get; }
+        public IUnitRole<string> Name { get; }
 
-        public UnitRole<string> FirstName { get; }
+        public IUnitRole<string> FirstName { get; }
 
-        public UnitRole<string> LastName { get; }
+        public IUnitRole<string> LastName { get; }
 
-        public UnitRole<string> FullName { get; }
+        public IUnitRole<string> FullName { get; }
 
-        public UnitRole<DateTime> DerivedAt { get; }
+        public IUnitRole<DateTime> DerivedAt { get; }
 
-        public UnitRole<string> Greeting { get; }
+        public IUnitRole<string> Greeting { get; }
         
         public CompositeAssociation<Organization> OrganizationWhereOwner { get; }
 

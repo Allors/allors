@@ -4,7 +4,7 @@
     using System.Linq;
     using Meta;
 
-    public class CompositesRole<TRole> : Role where TRole : IEmbeddedObject
+    public class CompositesRole<TRole> : Role, ICompositesRole<TRole> where TRole : IEmbeddedObject
     {
         public CompositesRole(IEmbeddedObject @object, IEmbeddedRoleType roleType) : base(@object, roleType)
         {

@@ -5,21 +5,21 @@
     using System.Linq;
     using Meta;
 
-    public class EmbeddedChangeSet
+    public class EmbeddedChangeSet : IEmbeddedChangeSet
     {
         private static readonly IReadOnlyDictionary<IEmbeddedObject, object> Empty = new ReadOnlyDictionary<IEmbeddedObject, object>(new Dictionary<IEmbeddedObject, object>());
 
         private readonly IReadOnlyDictionary<IEmbeddedRoleType, Dictionary<IEmbeddedObject, object>> roleByAssociationByRoleType;
         private readonly IReadOnlyDictionary<IEmbeddedAssociationType, Dictionary<IEmbeddedObject, object>> associationByRoleByRoleType;
 
-        public EmbeddedChangeSet(EmbeddedMeta meta, IReadOnlyDictionary<IEmbeddedRoleType, Dictionary<IEmbeddedObject, object>> roleByAssociationByRoleType, IReadOnlyDictionary<IEmbeddedAssociationType, Dictionary<IEmbeddedObject, object>> associationByRoleByAssociationType)
+        public EmbeddedChangeSet(IEmbeddedMeta meta, IReadOnlyDictionary<IEmbeddedRoleType, Dictionary<IEmbeddedObject, object>> roleByAssociationByRoleType, IReadOnlyDictionary<IEmbeddedAssociationType, Dictionary<IEmbeddedObject, object>> associationByRoleByAssociationType)
         {
             this.Meta = meta;
             this.roleByAssociationByRoleType = roleByAssociationByRoleType;
             this.associationByRoleByRoleType = associationByRoleByAssociationType;
         }
 
-        public EmbeddedMeta Meta { get; }
+        public IEmbeddedMeta Meta { get; }
 
         public bool HasChanges =>
             this.roleByAssociationByRoleType.Any(v => v.Value.Count > 0) ||

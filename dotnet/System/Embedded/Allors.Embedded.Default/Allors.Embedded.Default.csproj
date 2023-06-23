@@ -2,18 +2,18 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Title>Allors EmbeddedEmbedded</Title>
+    <Title>Allors Embedded</Title>
     <Authors>allors</Authors>
     <Company>Allors bvba</Company>
     <Copyright>(c) Allors bvba</Copyright>
-    <Description>EmbeddedEmbedded implementation of Allors.</Description>
-    <PackageProjectUrl>https://github.com/Allors/EmbeddedEmbedded</PackageProjectUrl>
-    <PackageDescription>EmbeddedEmbedded reactive domain implementation.</PackageDescription>
+    <Description>Embedded implementation of Allors.</Description>
+    <PackageProjectUrl>https://github.com/Allors/Embedded</PackageProjectUrl>
+    <PackageDescription>Embedded reactive domain implementation.</PackageDescription>
     <PackageIcon>icon.png</PackageIcon>
     <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
     <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
-    <PackageTags>dynamic;dlr;reactive;domain</PackageTags>
-    <RepositoryUrl>https://github.com/Allors/EmbeddedEmbedded.git</RepositoryUrl>
+    <PackageTags>embedded;dlr;reactive;domain</PackageTags>
+    <RepositoryUrl>https://github.com/Allors/Embedded.git</RepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
@@ -25,6 +25,10 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Allors.Embedded\Allors.Embedded.csproj" />
   </ItemGroup>
 
 </Project>

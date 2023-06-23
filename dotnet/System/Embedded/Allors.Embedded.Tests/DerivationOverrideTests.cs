@@ -23,7 +23,7 @@
 
         public class FullNameDerivation : IEmbeddedDerivation
         {
-            public void Derive(EmbeddedChangeSet changeSet)
+            public void Derive(IEmbeddedChangeSet changeSet)
             {
                 var firstNames = changeSet.ChangedRoles<Person>("FirstName");
                 var lastNames = changeSet.ChangedRoles<Person>("LastName");
@@ -48,7 +48,7 @@
 
         public class GreetingDerivation : IEmbeddedDerivation
         {
-            public void Derive(EmbeddedChangeSet changeSet)
+            public void Derive(IEmbeddedChangeSet changeSet)
             {
                 var fullNames = changeSet.ChangedRoles<Person>("FullName");
 

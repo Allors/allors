@@ -10,6 +10,6 @@
             this.Same = GetUnitRole<string>("Same");
         }
 
-        public UnitRole<string> Same { get; }
+        public IUnitRole<string> Same { get; }
     }
 }
