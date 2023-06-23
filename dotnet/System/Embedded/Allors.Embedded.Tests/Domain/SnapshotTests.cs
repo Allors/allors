@@ -53,9 +53,9 @@ namespace Allors.Embedded.Tests
             jane.FirstName = "Jane";
             jane.LastName = "Doe";
 
-            dynamic acme = this.Population.New<Organization>();
+            var acme = this.Population.New<Organization>();
 
-            acme.Name = "Acme";
+            acme.Name.Value = "Acme";
 
             acme.Employees = new[] { john, jane };
 

@@ -1,8 +1,8 @@
 ﻿namespace Allors.Embedded.Tests.Domain
 {
-    public interface INamed 
+    public interface INamed
     {
-        string Name { get; set; }
+        StringRole Name { get;  }
 
         Organization OrganizationWhereNamed { get; }
     }

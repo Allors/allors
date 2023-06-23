@@ -13,7 +13,7 @@
 
             this.Population.DerivationById["FullName"] = new FullNameDerivation();
 
-            dynamic john = this.Population.New<Person>();
+            var john = this.Population.New<Person>();
             john.FirstName = "John";
             john.LastName = "Doe";
 
@@ -39,11 +39,11 @@
                 var firstNames = changeSet.ChangedRoles<Person>("FirstName");
                 var lastNames = changeSet.ChangedRoles<Person>("LastName");
 
-                if (firstNames?.Any() == true || lastNames?.Any() == true)
+                if (firstNames.Any() || lastNames.Any())
                 {
                     var people = firstNames.Union(lastNames).Select(v => v.Key).Distinct();
 
-                    foreach (dynamic person in people)
+                    foreach (var person in people.Cast<Person>())
                     {
                         // Dummy updates ...
                         person.FirstName = person.FirstName;
@@ -77,7 +77,7 @@
                 {
                     var people = firstNames.Union(lastNames).Select(v => v.Key).Distinct();
 
-                    foreach (dynamic person in people)
+                    foreach (var person in people.Cast<Person>())
                     {
                         person.FullName = $"{person.FullName} Chained";
                     }

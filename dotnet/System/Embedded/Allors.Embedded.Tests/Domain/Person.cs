@@ -7,54 +7,52 @@
         public Person(EmbeddedPopulation population, EmbeddedObjectType objectType)
            : base(population, objectType)
         {
+            this.Name = GetStringRole("Name");
         }
 
-        public string Name
-        {
-            get { return (string)this.GetRole(nameof(Name)); }
-            set { this.SetRole(nameof(Name), value); }
-        }
+        public StringRole Name { get; }
 
+      
         public Organization Named
         {
-            get { return (Organization)this.GetRole(nameof(Named)); }
-            set { this.SetRole(nameof(Named), value); }
+            get { return (Organization)this.GetRoleValue(nameof(Named)); }
+            set { this.SetRoleValue(nameof(Named), value); }
         }
 
         public string FirstName
         {
-            get { return (string)this.GetRole(nameof(FirstName)); }
-            set { this.SetRole(nameof(FirstName), value); }
+            get { return (string)this.GetRoleValue(nameof(FirstName)); }
+            set { this.SetRoleValue(nameof(FirstName), value); }
         }
 
         public string LastName
         {
-            get { return (string)this.GetRole(nameof(LastName)); }
-            set { this.SetRole(nameof(LastName), value); }
+            get { return (string)this.GetRoleValue(nameof(LastName)); }
+            set { this.SetRoleValue(nameof(LastName), value); }
         }
 
         public string FullName
         {
-            get { return (string)this.GetRole(nameof(FullName)); }
-            set { this.SetRole(nameof(FullName), value); }
+            get { return (string)this.GetRoleValue(nameof(FullName)); }
+            set { this.SetRoleValue(nameof(FullName), value); }
         }
 
         public DateTime DerivedAt
         {
-            get { return (DateTime)this.GetRole(nameof(DerivedAt)); }
-            set { this.SetRole(nameof(DerivedAt), value); }
+            get { return (DateTime)this.GetRoleValue(nameof(DerivedAt)); }
+            set { this.SetRoleValue(nameof(DerivedAt), value); }
         }
 
         public string Greeting
         {
-            get { return (string)this.GetRole(nameof(Greeting)); }
-            set { this.SetRole(nameof(Greeting), value); }
+            get { return (string)this.GetRoleValue(nameof(Greeting)); }
+            set { this.SetRoleValue(nameof(Greeting), value); }
         }
 
-        public Organization OrganizationWhereOwner => (Organization)this.GetAssociation(nameof(OrganizationWhereOwner));
+        public Organization OrganizationWhereOwner => (Organization)this.GetAssociationValue(nameof(OrganizationWhereOwner));
 
-        public Organization[] OrganizationsWhereEmployee => ((EmbeddedObject[])this.GetAssociation(nameof(OrganizationsWhereEmployee)))?.Cast<Organization>().ToArray() ?? Array.Empty<Organization>();
+        public Organization[] OrganizationsWhereEmployee => ((EmbeddedObject[])this.GetAssociationValue(nameof(OrganizationsWhereEmployee)))?.Cast<Organization>().ToArray() ?? Array.Empty<Organization>();
 
-        public Organization OrganizationWhereNamed => (Organization)this.GetAssociation(nameof(OrganizationWhereNamed));
+        public Organization OrganizationWhereNamed => (Organization)this.GetAssociationValue(nameof(OrganizationWhereNamed));
     }
 }

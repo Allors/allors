@@ -8,42 +8,39 @@
         public Organization(EmbeddedPopulation population, EmbeddedObjectType objectType)
            : base(population, objectType)
         {
+            this.Name = GetStringRole("Name");
         }
 
-        public string Name
-        {
-            get { return (string)this.GetRole(nameof(Name)); }
-            set { this.SetRole(nameof(Name), value); }
-        }
+        public StringRole Name { get; }
 
         public INamed Named
         {
-            get { return (INamed)this.GetRole(nameof(Named)); }
-            set { this.SetRole(nameof(Named), value); }
+            get { return (INamed)this.GetRoleValue(nameof(Named)); }
+            set { this.SetRoleValue(nameof(Named), value); }
         }
 
         public Person Owner
         {
-            get { return (Person)this.GetRole(nameof(Owner)); }
-            set { this.SetRole(nameof(Owner), value); }
+            get { return (Person)this.GetRoleValue(nameof(Owner)); }
+            set { this.SetRoleValue(nameof(Owner), value); }
         }
 
         public Person[] Employees
         {
-            get { return ((EmbeddedObject[])this.GetRole(nameof(Employees)))?.Cast<Person>().ToArray() ?? Array.Empty<Person>(); }
-            set { this.SetRole(nameof(Employees), value); }
+            get { return ((EmbeddedObject[])this.GetRoleValue(nameof(Employees)))?.Cast<Person>().ToArray() ?? Array.Empty<Person>(); }
+            set { this.SetRoleValue(nameof(Employees), value); }
         }
 
         public void AddEmployee(Person value)
         {
-            this.AddRole(nameof(Employees), value);
+            this.AddRoleValue(nameof(Employees), value);
         }
 
         public void RemoveEmployee(Person value)
         {
-            this.RemoveRole(nameof(Employees), value);
+            this.RemoveRoleValue(nameof(Employees), value);
         }
 
-        public Organization OrganizationWhereNamed => (Organization)this.GetAssociation(nameof(OrganizationWhereNamed));
+        public Organization OrganizationWhereNamed => (Organization)this.GetAssociationValue(nameof(OrganizationWhereNamed));
     }
 }

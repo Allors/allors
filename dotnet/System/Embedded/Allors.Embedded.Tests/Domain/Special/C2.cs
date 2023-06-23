@@ -11,8 +11,8 @@
 
         public string Same
         {
-            get { return (string)this.GetRole(nameof(Same)); }
-            set { this.SetRole(nameof(Same), value); }
+            get { return (string)this.GetRoleValue(nameof(Same)); }
+            set { this.SetRoleValue(nameof(Same), value); }
         }
     }
 }

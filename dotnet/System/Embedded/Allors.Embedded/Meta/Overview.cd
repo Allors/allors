@@ -1,4 +1,41 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Allors.Embedded.Meta.EmbeddedMeta">
+    <Position X="3" Y="1.75" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAAAAAAAAAAAACYAABAgAAAAAAQACACA=</HashCode>
+      <FileName>Meta\EmbeddedMeta.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="ObjectTypeByType" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Allors.Embedded.Meta.EmbeddedObjectType">
+    <Position X="8" Y="1.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>QAQEAAAAAAAQAARAAGAIABAQAYAARIgAAQAAgAAAACA=</HashCode>
+      <FileName>Meta\EmbeddedObjectType.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="assignedAssociationTypeByName" />
+      <Field Name="assignedRoleTypeByName" />
+      <Field Name="derivedAssociationTypeByName" />
+      <Field Name="derivedRoleTypeByName" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Interface Name="Allors.Embedded.Meta.IEmbeddedAssociationType">
+    <Position X="15.5" Y="4" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAIAiAAAAAAAAAIAAAAAAAQAAAAAAAACAIAAAAAAAAA=</HashCode>
+      <FileName>Meta\IEmbeddedAssociationType.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Allors.Embedded.Meta.IEmbeddedRoleType">
+    <Position X="12.5" Y="1.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAiAAAAAAAAAIAEAAAAAQAgCAAAAACAIAAAAAAAAA=</HashCode>
+      <FileName>Meta\IEmbeddedRoleType.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

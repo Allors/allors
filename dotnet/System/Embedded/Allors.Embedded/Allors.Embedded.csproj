@@ -12,7 +12,7 @@
     <PackageIcon>icon.png</PackageIcon>
     <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
     <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
-    <PackageTags>dynamic;dlr;reactive;domain</PackageTags>
+    <PackageTags>embedded;dlr;reactive;domain</PackageTags>
     <RepositoryUrl>https://github.com/Allors/Embedded.git</RepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <IncludeSymbols>true</IncludeSymbols>

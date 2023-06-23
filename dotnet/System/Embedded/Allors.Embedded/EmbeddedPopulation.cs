@@ -28,9 +28,9 @@
 
         public IEnumerable<EmbeddedObject> Objects => this.database.Objects;
 
-        public EmbeddedObject New(Type t, params Action<dynamic>[] builders)
+        public EmbeddedObject New(Type t, params Action<EmbeddedObject>[] builders)
         {
-            dynamic @new = Activator.CreateInstance(t, new object[] { this, this.Meta.GetOrAddObjectType(t) });
+            var @new = (EmbeddedObject)Activator.CreateInstance(t, new object[] { this, this.Meta.GetOrAddObjectType(t) });
             this.database.AddObject(@new);
 
             foreach (var builder in builders)
@@ -76,31 +76,36 @@
             }
         }
 
-        public object GetRole(EmbeddedObject obj, IEmbeddedRoleType roleType)
+        public object GetRoleValue(EmbeddedObject obj, IEmbeddedRoleType roleType)
         {
-            this.database.GetRole(obj, roleType, out var result);
+            this.database.GetRoleValue(obj, roleType, out var result);
             return result;
         }
 
-        public void SetRole(EmbeddedObject obj, IEmbeddedRoleType roleType, object value)
+        public void SetRoleValue(EmbeddedObject obj, IEmbeddedRoleType roleType, object value)
         {
-            this.database.SetRole(obj, roleType, value);
+            this.database.SetRoleValue(obj, roleType, value);
         }
 
-        public void AddRole(EmbeddedObject obj, IEmbeddedRoleType roleType, EmbeddedObject role)
+        public void AddRoleValue(EmbeddedObject obj, IEmbeddedRoleType roleType, EmbeddedObject role)
         {
-            this.database.AddRole(obj, roleType, (EmbeddedObject)role);
+            this.database.AddRoleValue(obj, roleType, (EmbeddedObject)role);
         }
 
-        public void RemoveRole(EmbeddedObject obj, IEmbeddedRoleType roleType, EmbeddedObject role)
+        public void RemoveRoleValue(EmbeddedObject obj, IEmbeddedRoleType roleType, EmbeddedObject role)
         {
-            this.database.RemoveRole(obj, roleType, (EmbeddedObject)role);
+            this.database.RemoveRoleValue(obj, roleType, (EmbeddedObject)role);
         }
 
-        public object GetAssociation(EmbeddedObject obj, IEmbeddedAssociationType associationType)
+        public object GetAssociationValue(EmbeddedObject obj, IEmbeddedAssociationType associationType)
         {
-            this.database.GetAssociation(obj, associationType, out var result);
+            this.database.GetAssociationValue(obj, associationType, out var result);
             return result;
+        }
+
+        public StringRole GetStringRole(EmbeddedObject obj, IEmbeddedRoleType roleType)
+        {
+            return new StringRole(obj, roleType);
         }
     }
 }

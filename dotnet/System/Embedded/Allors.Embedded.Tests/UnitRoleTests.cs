@@ -10,13 +10,13 @@
             var john = this.Population.New<Person>();
             var jane = this.Population.New<Person>();
             
-            john.Name = "John";
-            jane.Name = "Jane";
+            john.Name.Value = "John";
+            jane.Name.Value = "Jane";
 
             Assert.Multiple(() =>
             {
-                Assert.That(john.Name, Is.EqualTo("John"));
-                Assert.That(jane.Name, Is.EqualTo("Jane"));
+                Assert.That(john.Name.Value, Is.EqualTo("John"));
+                Assert.That(jane.Name.Value, Is.EqualTo("Jane"));
             });
         }
     }

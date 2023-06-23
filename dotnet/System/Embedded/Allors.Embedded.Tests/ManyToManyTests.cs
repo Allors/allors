@@ -8,8 +8,8 @@
         [Test]
         public void AddSingleActiveLink()
         {
-            var acme = this.Population.New<Organization>(v => v.Name = "Acme");
-            var hooli = this.Population.New<Organization>(v => v.Name = "Hooli");
+            var acme = this.Population.New<Organization>(v => v.Name.Value = "Acme");
+            var hooli = this.Population.New<Organization>(v => v.Name.Value = "Hooli");
 
             var jane = this.Population.New<Person>();
             var john = this.Population.New<Person>();
@@ -39,8 +39,8 @@
         [Test]
         public void SetSingleActiveLink()
         {
-            var acme = this.Population.New<Organization>(v => v.Name = "Acme");
-            var hooli = this.Population.New<Organization>(v => v.Name = "Hooli");
+            var acme = this.Population.New<Organization>(v => v.Name.Value = "Acme");
+            var hooli = this.Population.New<Organization>(v => v.Name.Value = "Hooli");
 
             var jane = this.Population.New<Person>();
             var john = this.Population.New<Person>();
@@ -107,8 +107,8 @@
         [Test]
         public void RemoveSingleActiveLink()
         {
-            var acme = this.Population.New<Organization>(v => v.Name = "Acme");
-            var hooli = this.Population.New<Organization>(v => v.Name = "Hooli");
+            var acme = this.Population.New<Organization>(v => v.Name.Value = "Acme");
+            var hooli = this.Population.New<Organization>(v => v.Name.Value = "Hooli");
 
             var jane = this.Population.New<Person>();
             var john = this.Population.New<Person>();
@@ -159,12 +159,12 @@
         [Test]
         public void MultipeleActiveLinks()
         {
-            dynamic acme = this.Population.New<Organization>(v => v.Name = "Acme");
-            dynamic hooli = this.Population.New<Organization>(v => v.Name = "Hooli");
+            var acme = this.Population.New<Organization>(v => v.Name.Value = "Acme");
+            var hooli = this.Population.New<Organization>(v => v.Name.Value = "Hooli");
 
-            dynamic jane = this.Population.New<Person>();
-            dynamic john = this.Population.New<Person>();
-            dynamic jenny = this.Population.New<Person>();
+            var jane = this.Population.New<Person>();
+            var john = this.Population.New<Person>();
+            var jenny = this.Population.New<Person>();
 
             acme.AddEmployee(jane);
             acme.AddEmployee(john);

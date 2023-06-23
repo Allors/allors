@@ -46,9 +46,9 @@
             throw new ArgumentException($"{value.GetType()} is not a collection Type");
         }
 
-        private static IEnumerable<dynamic> NormalizeToMany(this IEmbeddedRoleType @this, ICollection role)
+        private static IEnumerable<EmbeddedObject> NormalizeToMany(this IEmbeddedRoleType @this, ICollection role)
         {
-            foreach (var @object in role)
+            foreach (EmbeddedObject @object in role)
             {
                 if (@object != null)
                 {

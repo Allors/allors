@@ -25,9 +25,9 @@
             this.roleByAssociationByRoleType.Any(v => v.Value.Count > 0) ||
             this.associationByRoleByRoleType.Any(v => v.Value.Count > 0);
 
-        public IReadOnlyDictionary<EmbeddedObject, object> ChangedRoles<TRole>(string name)
+        public IReadOnlyDictionary<EmbeddedObject, object> ChangedRoles<T>(string name)
         {
-            var objectType = this.Meta.ObjectTypeByType[typeof(TRole)];
+            var objectType = this.Meta.ObjectTypeByType[typeof(T)];
             var roleType = objectType.RoleTypeByName[name];
             return this.ChangedRoles(roleType) ?? Empty;
         }

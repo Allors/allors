@@ -13,14 +13,14 @@
 
             var acme = newOrganization(v =>
             {
-                v.Name = "Acme";
-                v.Owner = newPerson(v => v.Name = "Jane");
+                v.Name.Value = "Acme";
+                v.Owner = newPerson(v => v.Name.Value = "Jane");
             });
 
             var jane = acme.Owner;
 
-            Assert.AreEqual("Acme", acme.Name);
-            Assert.AreEqual("Jane", jane.Name);
+            Assert.AreEqual("Acme", acme.Name.Value);
+            Assert.AreEqual("Jane", jane.Name.Value);
 
             Assert.AreEqual(acme, jane.OrganizationWhereOwner);
         }
