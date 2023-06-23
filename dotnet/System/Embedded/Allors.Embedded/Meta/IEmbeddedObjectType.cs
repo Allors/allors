@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
 
     public interface IEmbeddedObjectType
     {
@@ -31,9 +30,5 @@
         void ResetDerivations();
 
         void AddAssociationType(IEmbeddedAssociationType associationType);
-
-        void AddRoleType(IEmbeddedRoleType roleType);
-
-        void CheckNames(string singularName, string pluralName);
     }
 }
