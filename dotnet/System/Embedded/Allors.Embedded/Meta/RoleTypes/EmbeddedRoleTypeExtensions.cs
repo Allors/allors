@@ -54,7 +54,7 @@
                 {
                     var type = @this.ObjectType.Type;
 
-                    if (!type.IsAssignableFrom(@object.GetType()))
+                    if (!type.IsInstanceOfType(@object))
                     {
                         throw new ArgumentException($"{@this.Name} should be a {type.Name} but was a {@object.GetType()}");
                     }

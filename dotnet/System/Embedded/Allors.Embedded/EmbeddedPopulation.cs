@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using Meta;
 
-    public delegate T New<T>(params Action<T>[] builders);
+    public delegate T New<out T>(params Action<T>[] builders);
 
     public class EmbeddedPopulation
     {
@@ -76,6 +76,31 @@
             }
         }
 
+        public UnitRole<T> GetUnitRole<T>(IEmbeddedObject obj, IEmbeddedRoleType roleType)
+        {
+            return new UnitRole<T>(obj, roleType);
+        }
+
+        public CompositeRole<T> GetCompositeRole<T>(IEmbeddedObject obj, IEmbeddedRoleType roleType) where T : IEmbeddedObject
+        {
+            return new CompositeRole<T>(obj, roleType);
+        }
+
+        public CompositesRole<T> GetCompositesRole<T>(IEmbeddedObject obj, IEmbeddedRoleType roleType) where T : IEmbeddedObject
+        {
+            return new CompositesRole<T>(obj, roleType);
+        }
+
+        public CompositeAssociation<T> GetCompositeAssociation<T>(IEmbeddedObject obj, IEmbeddedAssociationType associationType) where T : IEmbeddedObject
+        {
+            return new CompositeAssociation<T>(obj, associationType);
+        }
+        
+        public CompositesAssociation<T> GetCompositesAssociation<T>(IEmbeddedObject obj, IEmbeddedAssociationType associationType) where T : IEmbeddedObject
+        {
+            return new CompositesAssociation<T>(obj, associationType);
+        }
+
         public object GetRoleValue(IEmbeddedObject obj, IEmbeddedRoleType roleType)
         {
             this.database.GetRoleValue(obj, roleType, out var result);
@@ -101,31 +126,6 @@
         {
             this.database.GetAssociationValue(obj, associationType, out var result);
             return result;
-        }
-
-        public UnitRole<T> GetUnitRole<T>(IEmbeddedObject obj, IEmbeddedRoleType roleType)
-        {
-            return new UnitRole<T>(obj, roleType);
-        }
-
-        public CompositeRole<T> GetCompositeRole<T>(IEmbeddedObject obj, IEmbeddedRoleType roleType) where T : IEmbeddedObject
-        {
-            return new CompositeRole<T>(obj, roleType);
-        }
-
-        public CompositesRole<T> GetCompositesRole<T>(IEmbeddedObject obj, IEmbeddedRoleType roleType) where T : IEmbeddedObject
-        {
-            return new CompositesRole<T>(obj, roleType);
-        }
-
-        public CompositeAssociation<T> GetCompositeAssociation<T>(IEmbeddedObject obj, IEmbeddedAssociationType associationType) where T : IEmbeddedObject
-        {
-            return new CompositeAssociation<T>(obj, associationType);
-        }
-
-        public CompositesAssociation<T> GetCompositesAssociation<T>(IEmbeddedObject obj, IEmbeddedAssociationType associationType) where T : IEmbeddedObject
-        {
-            return new CompositesAssociation<T>(obj, associationType);
         }
     }
 }
