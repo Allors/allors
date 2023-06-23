@@ -13,16 +13,16 @@
 
             var c1 = newC1(v =>
             {
-                v.Same = "c1";
+                v.Same.Value = "c1";
             });
 
             var c2 = newC2(v =>
             {
-                v.Same = "c2";
+                v.Same.Value = "c2";
             });
 
-            Assert.AreEqual("c1", c1.Same);
-            Assert.AreEqual("c2", c2.Same);
+            Assert.AreEqual("c1", c1.Same.Value);
+            Assert.AreEqual("c2", c2.Same.Value);
         }
     }
 }

@@ -15,20 +15,20 @@
             var jane = this.Population.New<Person>();
             var john = this.Population.New<Person>();
 
-            acme.Owner = jane;
+            acme.Owner.Value = jane;
 
-            Assert.AreEqual(jane, acme.Owner);
+            Assert.AreEqual(jane, acme.Owner.Value);
             Assert.AreEqual(acme, jane.OrganizationWhereOwner);
 
-            Assert.Null(gizmo.Owner);
+            Assert.Null(gizmo.Owner.Value);
             Assert.Null(john.OrganizationWhereOwner);
 
-            acme.Named = jane;
+            acme.Named.Value = jane;
 
-            Assert.AreEqual(jane, acme.Named);
+            Assert.AreEqual(jane, acme.Named.Value);
             Assert.AreEqual(acme, jane.OrganizationWhereNamed);
 
-            Assert.Null(gizmo.Named);
+            Assert.Null(gizmo.Named.Value);
             Assert.Null(john.OrganizationWhereNamed);
         }
 

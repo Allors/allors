@@ -14,22 +14,22 @@
             this.Population.DerivationById["FullName"] = new FullNameDerivation();
 
             var john = this.Population.New<Person>();
-            john.FirstName = "John";
-            john.LastName = "Doe";
+            john.FirstName.Value = "John";
+            john.LastName.Value = "Doe";
 
             this.Population.Derive();
 
-            Assert.AreEqual("John Doe", john.FullName);
+            Assert.AreEqual("John Doe", john.FullName.Value);
 
             this.Population.DerivationById["FullName"] = new GreetingDerivation(this.Population.DerivationById["FullName"]);
 
             var jane = this.Population.New<Person>();
-            jane.FirstName = "Jane";
-            jane.LastName = "Doe";
+            jane.FirstName.Value = "Jane";
+            jane.LastName.Value = "Doe";
 
             this.Population.Derive();
 
-            Assert.AreEqual("Jane Doe Chained", jane.FullName);
+            Assert.AreEqual("Jane Doe Chained", jane.FullName.Value);
         }
 
         public class FullNameDerivation : IEmbeddedDerivation
@@ -46,12 +46,12 @@
                     foreach (var person in people.Cast<Person>())
                     {
                         // Dummy updates ...
-                        person.FirstName = person.FirstName;
-                        person.LastName = person.LastName;
+                        person.FirstName.Value = person.FirstName.Value;
+                        person.LastName.Value = person.LastName.Value;
 
-                        person.DerivedAt = DateTime.Now;
+                        person.DerivedAt.Value = DateTime.Now;
 
-                        person.FullName = $"{person.FirstName} {person.LastName}";
+                        person.FullName.Value = $"{person.FirstName.Value} {person.LastName.Value}";
                     }
                 }
             }
@@ -79,7 +79,7 @@
 
                     foreach (var person in people.Cast<Person>())
                     {
-                        person.FullName = $"{person.FullName} Chained";
+                        person.FullName.Value = $"{person.FullName.Value} Chained";
                     }
                 }
             }

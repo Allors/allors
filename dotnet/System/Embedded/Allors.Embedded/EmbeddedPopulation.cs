@@ -87,12 +87,12 @@
             this.database.SetRoleValue(obj, roleType, value);
         }
 
-        public void AddRoleValue(EmbeddedObject obj, IEmbeddedRoleType roleType, EmbeddedObject role)
+        public void AddRoleValue(EmbeddedObject obj, IEmbeddedRoleType roleType, IEmbeddedObject role)
         {
             this.database.AddRoleValue(obj, roleType, (EmbeddedObject)role);
         }
 
-        public void RemoveRoleValue(EmbeddedObject obj, IEmbeddedRoleType roleType, EmbeddedObject role)
+        public void RemoveRoleValue(EmbeddedObject obj, IEmbeddedRoleType roleType, IEmbeddedObject role)
         {
             this.database.RemoveRoleValue(obj, roleType, (EmbeddedObject)role);
         }
@@ -103,9 +103,18 @@
             return result;
         }
 
-        public StringRole GetStringRole(EmbeddedObject obj, IEmbeddedRoleType roleType)
+        public UnitRole<T> GetUnitRole<T>(EmbeddedObject obj, IEmbeddedRoleType roleType)
         {
-            return new StringRole(obj, roleType);
+            return new UnitRole<T>(obj, roleType);
+        }
+
+        public CompositeRole<T> GetCompositeRole<T>(EmbeddedObject obj, IEmbeddedRoleType roleType) where T : IEmbeddedObject
+        {
+            return new CompositeRole<T>(obj, roleType);
+        }
+        public CompositesRole<T> GetCompositesRole<T>(EmbeddedObject obj, IEmbeddedRoleType roleType) where T : IEmbeddedObject
+        {
+            return new CompositesRole<T>(obj, roleType);
         }
     }
 }

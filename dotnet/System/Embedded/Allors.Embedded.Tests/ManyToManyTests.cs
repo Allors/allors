@@ -15,9 +15,9 @@
             var john = this.Population.New<Person>();
             var jenny = this.Population.New<Person>();
 
-            acme.AddEmployee(jane);
-            acme.AddEmployee(john);
-            acme.AddEmployee(jenny);
+            acme.Employees.Add(jane);
+            acme.Employees.Add(john);
+            acme.Employees.Add(jenny);
 
             Assert.AreEqual(1, jane.OrganizationsWhereEmployee.Length);
             Assert.Contains(acme, jane.OrganizationsWhereEmployee);
@@ -28,12 +28,12 @@
             Assert.AreEqual(1, jenny.OrganizationsWhereEmployee.Length);
             Assert.Contains(acme, jenny.OrganizationsWhereEmployee);
 
-            Assert.AreEqual(3, acme.Employees.Length);
-            Assert.Contains(jane, acme.Employees);
-            Assert.Contains(john, acme.Employees);
-            Assert.Contains(jenny, acme.Employees);
+            Assert.AreEqual(3, acme.Employees.Value.Length);
+            Assert.Contains(jane, acme.Employees.Value);
+            Assert.Contains(john, acme.Employees.Value);
+            Assert.Contains(jenny, acme.Employees.Value);
 
-            Assert.IsEmpty(hooli.Employees);
+            Assert.IsEmpty(hooli.Employees.Value);
         }
 
         [Test]
@@ -46,7 +46,7 @@
             var john = this.Population.New<Person>();
             var jenny = this.Population.New<Person>();
 
-            acme.Employees = new[] { jane };
+            acme.Employees.Value = new[] { jane };
 
             Assert.AreEqual(1, jane.OrganizationsWhereEmployee.Length);
             Assert.Contains(acme, jane.OrganizationsWhereEmployee);
@@ -55,12 +55,12 @@
 
             Assert.IsEmpty(jenny.OrganizationsWhereEmployee);
 
-            Assert.AreEqual(1, acme.Employees.Length);
-            Assert.Contains(jane, acme.Employees);
+            Assert.AreEqual(1, acme.Employees.Value.Length);
+            Assert.Contains(jane, acme.Employees.Value);
 
-            Assert.IsEmpty(hooli.Employees);
+            Assert.IsEmpty(hooli.Employees.Value);
 
-            acme.Employees = new[] { jane, john };
+            acme.Employees.Value = new[] { jane, john };
 
             Assert.AreEqual(1, jane.OrganizationsWhereEmployee.Length);
             Assert.Contains(acme, jane.OrganizationsWhereEmployee);
@@ -70,13 +70,13 @@
 
             Assert.IsEmpty(jenny.OrganizationsWhereEmployee);
 
-            Assert.AreEqual(2, acme.Employees.Length);
-            Assert.Contains(jane, acme.Employees);
-            Assert.Contains(john, acme.Employees);
+            Assert.AreEqual(2, acme.Employees.Value.Length);
+            Assert.Contains(jane, acme.Employees.Value);
+            Assert.Contains(john, acme.Employees.Value);
 
-            Assert.IsEmpty(hooli.Employees);
+            Assert.IsEmpty(hooli.Employees.Value);
 
-            acme.Employees = new[] { jane, john, jenny };
+            acme.Employees.Value = new[] { jane, john, jenny };
 
             Assert.AreEqual(1, jane.OrganizationsWhereEmployee.Length);
             Assert.Contains(acme, jane.OrganizationsWhereEmployee);
@@ -87,21 +87,21 @@
             Assert.AreEqual(1, jenny.OrganizationsWhereEmployee.Length);
             Assert.Contains(acme, jenny.OrganizationsWhereEmployee);
 
-            Assert.AreEqual(3, acme.Employees.Length);
-            Assert.Contains(jane, acme.Employees);
-            Assert.Contains(john, acme.Employees);
-            Assert.Contains(jenny, acme.Employees);
+            Assert.AreEqual(3, acme.Employees.Value.Length);
+            Assert.Contains(jane, acme.Employees.Value);
+            Assert.Contains(john, acme.Employees.Value);
+            Assert.Contains(jenny, acme.Employees.Value);
 
-            Assert.IsEmpty(hooli.Employees);
+            Assert.IsEmpty(hooli.Employees.Value);
 
-            acme.Employees = new Person[] { };
+            acme.Employees.Value = new Person[] { };
 
             Assert.IsEmpty(jane.OrganizationsWhereEmployee);
             Assert.IsEmpty(john.OrganizationsWhereEmployee);
             Assert.IsEmpty(jenny.OrganizationsWhereEmployee);
 
-            Assert.IsEmpty(acme.Employees);
-            Assert.IsEmpty(hooli.Employees);
+            Assert.IsEmpty(acme.Employees.Value);
+            Assert.IsEmpty(hooli.Employees.Value);
         }
 
         [Test]
@@ -114,9 +114,9 @@
             var john = this.Population.New<Person>();
             var jenny = this.Population.New<Person>();
 
-            acme.Employees = new[] { jane, john, jenny };
+            acme.Employees.Value = new[] { jane, john, jenny };
 
-            acme.RemoveEmployee(jenny);
+            acme.Employees.Remove(jenny);
 
             Assert.AreEqual(1, jane.OrganizationsWhereEmployee.Length);
             Assert.Contains(acme, jane.OrganizationsWhereEmployee);
@@ -126,13 +126,13 @@
 
             Assert.IsEmpty(jenny.OrganizationsWhereEmployee);
 
-            Assert.AreEqual(2, acme.Employees.Length);
-            Assert.Contains(jane, acme.Employees);
-            Assert.Contains(john, acme.Employees);
+            Assert.AreEqual(2, acme.Employees.Value.Length);
+            Assert.Contains(jane, acme.Employees.Value);
+            Assert.Contains(john, acme.Employees.Value);
 
-            Assert.IsEmpty(hooli.Employees);
+            Assert.IsEmpty(hooli.Employees.Value);
 
-            acme.RemoveEmployee(john);
+            acme.Employees.Remove(john);
 
             Assert.AreEqual(1, jane.OrganizationsWhereEmployee.Length);
             Assert.Contains(acme, jane.OrganizationsWhereEmployee);
@@ -141,19 +141,19 @@
 
             Assert.IsEmpty(jenny.OrganizationsWhereEmployee);
 
-            Assert.AreEqual(1, acme.Employees.Length);
-            Assert.Contains(jane, acme.Employees);
+            Assert.AreEqual(1, acme.Employees.Value.Length);
+            Assert.Contains(jane, acme.Employees.Value);
 
-            Assert.IsEmpty(hooli.Employees);
+            Assert.IsEmpty(hooli.Employees.Value);
 
-            acme.RemoveEmployee(jane);
+            acme.Employees.Remove(jane);
 
             Assert.IsEmpty(jane.OrganizationsWhereEmployee);
             Assert.IsEmpty(john.OrganizationsWhereEmployee);
             Assert.IsEmpty(jenny.OrganizationsWhereEmployee);
 
-            Assert.IsEmpty(acme.Employees);
-            Assert.IsEmpty(hooli.Employees);
+            Assert.IsEmpty(acme.Employees.Value);
+            Assert.IsEmpty(hooli.Employees.Value);
         }
 
         [Test]
@@ -166,11 +166,11 @@
             var john = this.Population.New<Person>();
             var jenny = this.Population.New<Person>();
 
-            acme.AddEmployee(jane);
-            acme.AddEmployee(john);
-            acme.AddEmployee(jenny);
+            acme.Employees.Add(jane);
+            acme.Employees.Add(john);
+            acme.Employees.Add(jenny);
 
-            hooli.AddEmployee(jane);
+            hooli.Employees.Add(jane);
 
             Assert.AreEqual(2, jane.OrganizationsWhereEmployee.Length);
             Assert.Contains(acme, jane.OrganizationsWhereEmployee);
@@ -182,15 +182,15 @@
             Assert.AreEqual(1, jenny.OrganizationsWhereEmployee.Length);
             Assert.Contains(acme, jenny.OrganizationsWhereEmployee);
 
-            Assert.AreEqual(3, acme.Employees.Length);
-            Assert.Contains(jane, acme.Employees);
-            Assert.Contains(john, acme.Employees);
-            Assert.Contains(jenny, acme.Employees);
+            Assert.AreEqual(3, acme.Employees.Value.Length);
+            Assert.Contains(jane, acme.Employees.Value);
+            Assert.Contains(john, acme.Employees.Value);
+            Assert.Contains(jenny, acme.Employees.Value);
 
-            Assert.AreEqual(1, hooli.Employees.Length);
-            Assert.Contains(jane, hooli.Employees);
+            Assert.AreEqual(1, hooli.Employees.Value.Length);
+            Assert.Contains(jane, hooli.Employees.Value);
 
-            hooli.AddEmployee(john);
+            hooli.Employees.Add(john);
 
             Assert.AreEqual(2, jane.OrganizationsWhereEmployee.Length);
             Assert.Contains(acme, jane.OrganizationsWhereEmployee);
@@ -203,16 +203,16 @@
             Assert.AreEqual(1, jenny.OrganizationsWhereEmployee.Length);
             Assert.Contains(acme, jenny.OrganizationsWhereEmployee);
 
-            Assert.AreEqual(3, acme.Employees.Length);
-            Assert.Contains(jane, acme.Employees);
-            Assert.Contains(john, acme.Employees);
-            Assert.Contains(jenny, acme.Employees);
+            Assert.AreEqual(3, acme.Employees.Value.Length);
+            Assert.Contains(jane, acme.Employees.Value);
+            Assert.Contains(john, acme.Employees.Value);
+            Assert.Contains(jenny, acme.Employees.Value);
 
-            Assert.AreEqual(2, hooli.Employees.Length);
-            Assert.Contains(jane, hooli.Employees);
-            Assert.Contains(john, hooli.Employees);
+            Assert.AreEqual(2, hooli.Employees.Value.Length);
+            Assert.Contains(jane, hooli.Employees.Value);
+            Assert.Contains(john, hooli.Employees.Value);
 
-            hooli.AddEmployee(jenny);
+            hooli.Employees.Add(jenny);
 
             Assert.AreEqual(2, jane.OrganizationsWhereEmployee.Length);
             Assert.Contains(acme, jane.OrganizationsWhereEmployee);
@@ -226,15 +226,15 @@
             Assert.Contains(acme, jenny.OrganizationsWhereEmployee);
             Assert.Contains(hooli, jenny.OrganizationsWhereEmployee);
 
-            Assert.AreEqual(3, acme.Employees.Length);
-            Assert.Contains(jane, acme.Employees);
-            Assert.Contains(john, acme.Employees);
-            Assert.Contains(jenny, acme.Employees);
+            Assert.AreEqual(3, acme.Employees.Value.Length);
+            Assert.Contains(jane, acme.Employees.Value);
+            Assert.Contains(john, acme.Employees.Value);
+            Assert.Contains(jenny, acme.Employees.Value);
 
-            Assert.AreEqual(3, hooli.Employees.Length);
-            Assert.Contains(jane, hooli.Employees);
-            Assert.Contains(john, hooli.Employees);
-            Assert.Contains(jenny, hooli.Employees);
+            Assert.AreEqual(3, hooli.Employees.Value.Length);
+            Assert.Contains(jane, hooli.Employees.Value);
+            Assert.Contains(john, hooli.Employees.Value);
+            Assert.Contains(jenny, hooli.Employees.Value);
         }
     }
 }

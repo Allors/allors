@@ -4,7 +4,7 @@
     using System.Linq;
     using Meta;
 
-    public class EmbeddedObject
+    public class EmbeddedObject : IEmbeddedObject
     {
         protected EmbeddedObject(EmbeddedPopulation population, EmbeddedObjectType objectType)
         {
@@ -26,6 +26,10 @@
 
         public object GetAssociationValue(string name) => this.Population.GetAssociationValue(this, this.ObjectType.AssociationTypeByName[name]);
 
-        public StringRole GetStringRole(string name) => this.Population.GetStringRole(this, this.ObjectType.RoleTypeByName[name]);
+        public UnitRole<T> GetUnitRole<T>(string name) => this.Population.GetUnitRole<T>(this, this.ObjectType.RoleTypeByName[name]);
+
+        public CompositeRole<T> GetCompositeRole<T>(string name) where T : IEmbeddedObject => this.Population.GetCompositeRole<T>(this, this.ObjectType.RoleTypeByName[name]);
+
+        public CompositesRole<T> GetCompositesRole<T>(string name) where T : IEmbeddedObject => this.Population.GetCompositesRole<T>(this, this.ObjectType.RoleTypeByName[name]);
     }
 }

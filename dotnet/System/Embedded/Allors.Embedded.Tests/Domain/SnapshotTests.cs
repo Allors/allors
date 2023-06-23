@@ -13,13 +13,13 @@ namespace Allors.Embedded.Tests
             var john = this.Population.New<Person>();
             var jane = this.Population.New<Person>();
 
-            john.FirstName = "John";
-            john.LastName = "Doe";
+            john.FirstName.Value = "John";
+            john.LastName.Value = "Doe";
 
             var snapshot1 = this.Population.Snapshot();
 
-            jane.FirstName = "Jane";
-            jane.LastName = "Doe";
+            jane.FirstName.Value = "Jane";
+            jane.LastName.Value = "Doe";
 
             var changedFirstNames = snapshot1.ChangedRoles<Person>("FirstName");
             var changedLastNames = snapshot1.ChangedRoles<Person>("LastName");
@@ -47,33 +47,33 @@ namespace Allors.Embedded.Tests
             var john = this.Population.New<Person>();
             var jane = this.Population.New<Person>();
 
-            john.FirstName = "John";
-            john.LastName = "Doe";
+            john.FirstName.Value = "John";
+            john.LastName.Value = "Doe";
 
-            jane.FirstName = "Jane";
-            jane.LastName = "Doe";
+            jane.FirstName.Value = "Jane";
+            jane.LastName.Value = "Doe";
 
             var acme = this.Population.New<Organization>();
 
             acme.Name.Value = "Acme";
 
-            acme.Employees = new[] { john, jane };
+            acme.Employees.Value = new[] { john, jane };
 
             var snapshot = this.Population.Snapshot();
             var changedEmployees = snapshot.ChangedRoles<Organization>("Employees");
             Assert.AreEqual(1, changedEmployees.Count);
 
-            acme.Employees = new[] { jane, john };
+            acme.Employees.Value = new[] { jane, john };
 
             snapshot = this.Population.Snapshot();
             changedEmployees = snapshot.ChangedRoles<Organization>("Employees");
             Assert.IsEmpty(changedEmployees);
 
-            acme.Employees = Array.Empty<Person>();
+            acme.Employees.Value = Array.Empty<Person>();
 
             var x = acme.Employees;
 
-            acme.Employees = new[] { jane, john };
+            acme.Employees.Value = new[] { jane, john };
 
             snapshot = this.Population.Snapshot();
             changedEmployees = snapshot.ChangedRoles<Organization>("Employees");
