@@ -32,7 +32,7 @@
             return this.ChangedRoles(roleType) ?? Empty;
         }
 
-        public IReadOnlyDictionary<IEmbeddedObject, object> ChangedRoles(EmbeddedObjectType objectType, string name)
+        public IReadOnlyDictionary<IEmbeddedObject, object> ChangedRoles(IEmbeddedObjectType objectType, string name)
         {
             var roleType = objectType.RoleTypeByName[name];
             return this.ChangedRoles(roleType) ?? Empty;

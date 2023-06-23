@@ -7,10 +7,10 @@
     {
         internal EmbeddedMeta()
         {
-            this.ObjectTypeByType = new Dictionary<Type, EmbeddedObjectType>();
+            this.ObjectTypeByType = new Dictionary<Type, IEmbeddedObjectType>();
         }
 
-        public IDictionary<Type, EmbeddedObjectType> ObjectTypeByType { get; }
+        public IDictionary<Type, IEmbeddedObjectType> ObjectTypeByType { get; }
 
         public string Pluralize(string singular)
         {
@@ -56,17 +56,17 @@
             return singular + "s";
         }
 
-        public EmbeddedUnitRoleType AddUnit<TAssociation, TRole>(string roleName) => this.GetOrAddObjectType(typeof(TAssociation)).AddUnit(this.GetOrAddObjectType(typeof(TRole)), roleName);
+        public IEmbeddedRoleType AddUnit<TAssociation, TRole>(string roleName) => this.GetOrAddObjectType(typeof(TAssociation)).AddUnit(this.GetOrAddObjectType(typeof(TRole)), roleName);
 
-        public EmbeddedOneToOneRoleType AddOneToOne<TAssociation, TRole>(string roleName) => this.GetOrAddObjectType(typeof(TAssociation)).AddOneToOne(this.GetOrAddObjectType(typeof(TRole)), roleName);
+        public IEmbeddedRoleType AddOneToOne<TAssociation, TRole>(string roleName) => this.GetOrAddObjectType(typeof(TAssociation)).AddOneToOne(this.GetOrAddObjectType(typeof(TRole)), roleName);
 
-        public EmbeddedManyToOneRoleType AddManyToOne<TAssociation, TRole>(string roleName) => this.GetOrAddObjectType(typeof(TAssociation)).AddManyToOne(this.GetOrAddObjectType(typeof(TRole)), roleName);
+        public IEmbeddedRoleType AddManyToOne<TAssociation, TRole>(string roleName) => this.GetOrAddObjectType(typeof(TAssociation)).AddManyToOne(this.GetOrAddObjectType(typeof(TRole)), roleName);
 
-        public EmbeddedOneToManyRoleType AddOneToMany<TAssociation, TRole>(string roleName) => this.GetOrAddObjectType(typeof(TAssociation)).AddOneToMany(this.GetOrAddObjectType(typeof(TRole)), roleName);
+        public IEmbeddedRoleType AddOneToMany<TAssociation, TRole>(string roleName) => this.GetOrAddObjectType(typeof(TAssociation)).AddOneToMany(this.GetOrAddObjectType(typeof(TRole)), roleName);
 
-        public EmbeddedManyToManyRoleType AddManyToMany<TAssociation, TRole>(string roleName) => this.GetOrAddObjectType(typeof(TAssociation)).AddManyToMany(this.GetOrAddObjectType(typeof(TRole)), roleName);
+        public IEmbeddedRoleType AddManyToMany<TAssociation, TRole>(string roleName) => this.GetOrAddObjectType(typeof(TAssociation)).AddManyToMany(this.GetOrAddObjectType(typeof(TRole)), roleName);
 
-        public EmbeddedObjectType GetOrAddObjectType(Type type)
+        public IEmbeddedObjectType GetOrAddObjectType(Type type)
         {
             if (!this.ObjectTypeByType.TryGetValue(type, out var objectType))
             {

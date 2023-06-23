@@ -4,6 +4,6 @@
     {
         IUnitRole<string> Name { get;  }
 
-        CompositeAssociation<Organization> OrganizationWhereNamed { get; }
+        ICompositeAssociation<Organization> OrganizationWhereNamed { get; }
     }
 }

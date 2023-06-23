@@ -12,7 +12,7 @@
 
         public IEmbeddedPopulation Population { get; }
 
-        public EmbeddedObjectType ObjectType { get; }
+        public IEmbeddedObjectType ObjectType { get; }
 
         public IUnitRole<T> GetUnitRole<T>(string name) => this.GetUnitRole<T>(this.ObjectType.RoleTypeByName[name]);
 
@@ -26,12 +26,12 @@
 
         public ICompositesRole<T> GetCompositesRole<T>(IEmbeddedRoleType roleType) where T : IEmbeddedObject => this.Population.GetCompositesRole<T>(this, roleType);
 
-        public CompositeAssociation<T> GetCompositeAssociation<T>(string name) where T : IEmbeddedObject => this.GetCompositeAssociation<T>(this.ObjectType.AssociationTypeByName[name]);
+        public ICompositeAssociation<T> GetCompositeAssociation<T>(string name) where T : IEmbeddedObject => this.GetCompositeAssociation<T>(this.ObjectType.AssociationTypeByName[name]);
 
-        public CompositeAssociation<T> GetCompositeAssociation<T>(IEmbeddedAssociationType associationType) where T : IEmbeddedObject => this.Population.GetCompositeAssociation<T>(this, associationType);
+        public ICompositeAssociation<T> GetCompositeAssociation<T>(IEmbeddedAssociationType associationType) where T : IEmbeddedObject => this.Population.GetCompositeAssociation<T>(this, associationType);
 
-        public CompositesAssociation<T> GetCompositesAssociation<T>(string name) where T : IEmbeddedObject => this.GetCompositesAssociation<T>(this.ObjectType.AssociationTypeByName[name]);
+        public ICompositesAssociation<T> GetCompositesAssociation<T>(string name) where T : IEmbeddedObject => this.GetCompositesAssociation<T>(this.ObjectType.AssociationTypeByName[name]);
 
-        public CompositesAssociation<T> GetCompositesAssociation<T>(IEmbeddedAssociationType associationType) where T : IEmbeddedObject => this.Population.GetCompositesAssociation<T>(this, associationType);
+        public ICompositesAssociation<T> GetCompositesAssociation<T>(IEmbeddedAssociationType associationType) where T : IEmbeddedObject => this.Population.GetCompositesAssociation<T>(this, associationType);
     }
 }

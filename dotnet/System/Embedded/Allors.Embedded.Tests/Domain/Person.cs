@@ -31,10 +31,10 @@
 
         public IUnitRole<string> Greeting { get; }
         
-        public CompositeAssociation<Organization> OrganizationWhereOwner { get; }
+        public ICompositeAssociation<Organization> OrganizationWhereOwner { get; }
 
-        public CompositesAssociation<Organization> OrganizationsWhereEmployee { get; }
+        public ICompositesAssociation<Organization> OrganizationsWhereEmployee { get; }
 
-        public CompositeAssociation<Organization> OrganizationWhereNamed { get; }
+        public ICompositeAssociation<Organization> OrganizationWhereNamed { get; }
     }
 }

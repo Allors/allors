@@ -1,8 +1,8 @@
 ﻿namespace Allors.Embedded.Meta
 {
-    public class EmbeddedOneToManyRoleType : IEmbeddedToManyRoleType
+    public class EmbeddedManyToOneRoleType : IEmbeddedToOneRoleType
     {
-        public EmbeddedOneToManyRoleType(EmbeddedObjectType objectType, string singularName)
+        public EmbeddedManyToOneRoleType(IEmbeddedObjectType objectType, string singularName)
         {
             var meta = objectType.Meta;
 
@@ -11,21 +11,21 @@
             this.PluralName = meta.Pluralize(this.SingularName);
         }
 
-        public EmbeddedObjectType ObjectType { get; }
+        public IEmbeddedObjectType ObjectType { get; }
 
         IEmbeddedAssociationType IEmbeddedRoleType.AssociationType => this.AssociationType;
 
-        public EmbeddedOneToManyAssociationType AssociationType { get; internal set; }
+        public EmbeddedManyToOneAssociationType AssociationType { get; internal set; }
 
-        public string Name => this.PluralName;
+        public string Name => this.SingularName;
 
         public string SingularName { get; }
 
         public string PluralName { get; }
 
-        public bool IsOne => false;
+        public bool IsOne => true;
 
-        public bool IsMany => true;
+        public bool IsMany => false;
 
         public bool IsUnit => false;
 
@@ -35,12 +35,12 @@
             return this.Name;
         }
 
-        public void Deconstruct(out EmbeddedOneToManyAssociationType associationType, out EmbeddedOneToManyRoleType roleType)
+        public void Deconstruct(out EmbeddedManyToOneAssociationType associationType, out EmbeddedManyToOneRoleType roleType)
         {
             associationType = this.AssociationType;
             roleType = this;
         }
 
-        public object Normalize(object value) => this.NormalizeToMany(value);
+        public object Normalize(object value) => this.NormalizeToOne(value);
     }
 }

@@ -13,7 +13,7 @@
 
         IReadOnlyDictionary<IEmbeddedObject, object> ChangedRoles<T>(string name);
 
-        IReadOnlyDictionary<IEmbeddedObject, object> ChangedRoles(EmbeddedObjectType objectType, string name);
+        IReadOnlyDictionary<IEmbeddedObject, object> ChangedRoles(IEmbeddedObjectType objectType, string name);
 
         IReadOnlyDictionary<IEmbeddedObject, object> ChangedRoles(IEmbeddedRoleType roleType);
     }

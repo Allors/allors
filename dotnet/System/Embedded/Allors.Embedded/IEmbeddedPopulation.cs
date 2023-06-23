@@ -31,10 +31,10 @@
         ICompositesRole<T> GetCompositesRole<T>(IEmbeddedObject obj, IEmbeddedRoleType roleType)
             where T : IEmbeddedObject;
 
-        CompositeAssociation<T> GetCompositeAssociation<T>(IEmbeddedObject obj, IEmbeddedAssociationType associationType) 
+        ICompositeAssociation<T> GetCompositeAssociation<T>(IEmbeddedObject obj, IEmbeddedAssociationType associationType) 
             where T : IEmbeddedObject;
 
-        CompositesAssociation<T> GetCompositesAssociation<T>(IEmbeddedObject obj, IEmbeddedAssociationType associationType)
+        ICompositesAssociation<T> GetCompositesAssociation<T>(IEmbeddedObject obj, IEmbeddedAssociationType associationType)
             where T : IEmbeddedObject;
 
         object GetRoleValue(IEmbeddedObject obj, IEmbeddedRoleType roleType);

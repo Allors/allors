@@ -5,21 +5,21 @@
 
     public interface IEmbeddedMeta
     {
-        IDictionary<Type, EmbeddedObjectType> ObjectTypeByType { get; }
+        IDictionary<Type, IEmbeddedObjectType> ObjectTypeByType { get; }
 
         string Pluralize(string singular);
 
-        EmbeddedUnitRoleType AddUnit<TAssociation, TRole>(string roleName);
+        IEmbeddedRoleType AddUnit<TAssociation, TRole>(string roleName);
 
-        EmbeddedOneToOneRoleType AddOneToOne<TAssociation, TRole>(string roleName);
+        IEmbeddedRoleType AddOneToOne<TAssociation, TRole>(string roleName);
 
-        EmbeddedManyToOneRoleType AddManyToOne<TAssociation, TRole>(string roleName);
+        IEmbeddedRoleType AddManyToOne<TAssociation, TRole>(string roleName);
 
-        EmbeddedOneToManyRoleType AddOneToMany<TAssociation, TRole>(string roleName);
+        IEmbeddedRoleType AddOneToMany<TAssociation, TRole>(string roleName);
 
-        EmbeddedManyToManyRoleType AddManyToMany<TAssociation, TRole>(string roleName);
+        IEmbeddedRoleType AddManyToMany<TAssociation, TRole>(string roleName);
 
-        EmbeddedObjectType GetOrAddObjectType(Type type);
+        IEmbeddedObjectType GetOrAddObjectType(Type type);
 
         void ResetDerivations();
     }

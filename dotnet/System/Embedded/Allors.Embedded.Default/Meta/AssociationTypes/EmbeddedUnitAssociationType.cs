@@ -11,7 +11,7 @@
             this.PluralName = roleType.PluralNameForAssociation(objectType);
         }
 
-        public EmbeddedObjectType ObjectType { get; }
+        public IEmbeddedObjectType ObjectType { get; }
 
         IEmbeddedRoleType IEmbeddedAssociationType.RoleType => this.RoleType;
 

@@ -23,6 +23,6 @@
 
         public ICompositesRole<Person> Employees { get; }
 
-        public CompositeAssociation<Organization> OrganizationWhereNamed { get; }
+        public ICompositeAssociation<Organization> OrganizationWhereNamed { get; }
     }
 }

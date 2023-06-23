@@ -2,7 +2,7 @@
 {
     using Meta;
 
-    public class CompositeAssociation<TAssociation> : Association where TAssociation : IEmbeddedObject
+    public class CompositeAssociation<TAssociation> : Association, ICompositeAssociation<TAssociation> where TAssociation : IEmbeddedObject
     {
         public CompositeAssociation(IEmbeddedObject @object, IEmbeddedAssociationType associationType) : base(@object, associationType)
         {

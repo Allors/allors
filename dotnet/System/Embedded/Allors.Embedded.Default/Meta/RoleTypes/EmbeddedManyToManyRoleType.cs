@@ -2,7 +2,7 @@
 {
     public class EmbeddedManyToManyRoleType : IEmbeddedToManyRoleType
     {
-        public EmbeddedManyToManyRoleType(EmbeddedObjectType objectType, string singularName)
+        public EmbeddedManyToManyRoleType(IEmbeddedObjectType objectType, string singularName)
         {
             var meta = objectType.Meta;
 
@@ -11,7 +11,7 @@
             this.PluralName = meta.Pluralize(this.SingularName);
         }
 
-        public EmbeddedObjectType ObjectType { get; }
+        public IEmbeddedObjectType ObjectType { get; }
 
         IEmbeddedAssociationType IEmbeddedRoleType.AssociationType => this.AssociationType;
 

@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    public class EmbeddedObjectType
+    public class EmbeddedObjectType : IEmbeddedObjectType
     {
         private readonly IDictionary<string, IEmbeddedAssociationType> assignedAssociationTypeByName;
 
@@ -19,7 +19,7 @@
             this.Meta = meta;
             this.Type = type;
             this.TypeCode = Type.GetTypeCode(type);
-            this.SuperTypes = new HashSet<EmbeddedObjectType>();
+            this.SuperTypes = new HashSet<IEmbeddedObjectType>();
             this.assignedAssociationTypeByName = new Dictionary<string, IEmbeddedAssociationType>();
             this.assignedRoleTypeByName = new Dictionary<string, IEmbeddedRoleType>();
 
@@ -53,7 +53,7 @@
 
         public TypeCode TypeCode { get; }
 
-        public ISet<EmbeddedObjectType> SuperTypes { get; }
+        public ISet<IEmbeddedObjectType> SuperTypes { get; }
 
         public IDictionary<string, IEmbeddedAssociationType> AssociationTypeByName
         {
@@ -62,7 +62,8 @@
                 if (this.derivedAssociationTypeByName == null)
                 {
                     this.derivedAssociationTypeByName = new Dictionary<string, IEmbeddedAssociationType>(this.assignedAssociationTypeByName);
-                    foreach (var item in this.SuperTypes.SelectMany(v => v.assignedAssociationTypeByName))
+                    // TODO: Remove cast
+                    foreach (var item in this.SuperTypes.SelectMany(v => ((EmbeddedObjectType)v).assignedAssociationTypeByName))
                     {
                         this.derivedAssociationTypeByName[item.Key] = item.Value;
                     }
@@ -79,7 +80,8 @@
                 if (this.derivedRoleTypeByName == null)
                 {
                     this.derivedRoleTypeByName = new Dictionary<string, IEmbeddedRoleType>(this.assignedRoleTypeByName);
-                    foreach (var item in this.SuperTypes.SelectMany(v => v.assignedRoleTypeByName))
+                    // TODO: Remove cast
+                    foreach (var item in this.SuperTypes.SelectMany(v => ((EmbeddedObjectType)v).assignedRoleTypeByName))
                     {
                         this.derivedRoleTypeByName[item.Key] = item.Value;
                     }
@@ -91,7 +93,7 @@
 
         internal object EmptyArray { get; }
 
-        public EmbeddedUnitRoleType AddUnit(EmbeddedObjectType roleObjectType, string roleName)
+        public IEmbeddedRoleType AddUnit(IEmbeddedObjectType roleObjectType, string roleName)
         {
             var roleType = new EmbeddedUnitRoleType(roleObjectType, roleName);
             this.AddRoleType(roleType);
@@ -104,7 +106,7 @@
             return roleType;
         }
 
-        public EmbeddedOneToOneRoleType AddOneToOne(EmbeddedObjectType roleObjectType, string roleName)
+        public IEmbeddedRoleType AddOneToOne(IEmbeddedObjectType roleObjectType, string roleName)
         {
             var roleType = new EmbeddedOneToOneRoleType(roleObjectType, roleName);
             this.AddRoleType(roleType);
@@ -117,7 +119,7 @@
             return roleType;
         }
 
-        public EmbeddedManyToOneRoleType AddManyToOne(EmbeddedObjectType roleObjectType, string roleName)
+        public IEmbeddedRoleType AddManyToOne(IEmbeddedObjectType roleObjectType, string roleName)
         {
             var roleType = new EmbeddedManyToOneRoleType(roleObjectType, roleName);
             this.AddRoleType(roleType);
@@ -130,7 +132,7 @@
             return roleType;
         }
 
-        public EmbeddedOneToManyRoleType AddOneToMany(EmbeddedObjectType roleObjectType, string roleName)
+        public IEmbeddedRoleType AddOneToMany(IEmbeddedObjectType roleObjectType, string roleName)
         {
             var roleType = new EmbeddedOneToManyRoleType(roleObjectType, roleName);
             this.AddRoleType(roleType);
@@ -143,7 +145,7 @@
             return roleType;
         }
 
-        public EmbeddedManyToManyRoleType AddManyToMany(EmbeddedObjectType roleObjectType, string roleName)
+        public IEmbeddedRoleType AddManyToMany(IEmbeddedObjectType roleObjectType, string roleName)
         {
             var roleType = new EmbeddedManyToManyRoleType(roleObjectType, roleName);
             this.AddRoleType(roleType);
@@ -162,7 +164,7 @@
             this.derivedRoleTypeByName = null;
         }
 
-        private void AddAssociationType(IEmbeddedAssociationType associationType)
+        public void AddAssociationType(IEmbeddedAssociationType associationType)
         {
             this.CheckNames(associationType.SingularName, associationType.PluralName);
 
@@ -170,7 +172,7 @@
             this.assignedAssociationTypeByName.Add(associationType.PluralName, associationType);
         }
 
-        private void AddRoleType(IEmbeddedRoleType roleType)
+        public void AddRoleType(IEmbeddedRoleType roleType)
         {
             this.CheckNames(roleType.SingularName, roleType.PluralName);
 
@@ -178,7 +180,7 @@
             this.assignedRoleTypeByName.Add(roleType.PluralName, roleType);
         }
 
-        private void CheckNames(string singularName, string pluralName)
+        public void CheckNames(string singularName, string pluralName)
         {
             if (this.RoleTypeByName.ContainsKey(singularName) ||
                 this.AssociationTypeByName.ContainsKey(singularName))
