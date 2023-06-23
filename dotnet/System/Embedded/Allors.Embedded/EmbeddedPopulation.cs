@@ -26,7 +26,7 @@
 
         public Dictionary<string, IEmbeddedDerivation> DerivationById { get; }
 
-        public IEnumerable<EmbeddedObject> Objects => this.database.Objects;
+        public IEnumerable<IEmbeddedObject> Objects => this.database.Objects;
 
         public EmbeddedObject New(Type t, params Action<EmbeddedObject>[] builders)
         {
@@ -76,54 +76,54 @@
             }
         }
 
-        public object GetRoleValue(EmbeddedObject obj, IEmbeddedRoleType roleType)
+        public object GetRoleValue(IEmbeddedObject obj, IEmbeddedRoleType roleType)
         {
             this.database.GetRoleValue(obj, roleType, out var result);
             return result;
         }
 
-        public void SetRoleValue(EmbeddedObject obj, IEmbeddedRoleType roleType, object value)
+        public void SetRoleValue(IEmbeddedObject obj, IEmbeddedRoleType roleType, object value)
         {
             this.database.SetRoleValue(obj, roleType, value);
         }
 
-        public void AddRoleValue(EmbeddedObject obj, IEmbeddedRoleType roleType, IEmbeddedObject role)
+        public void AddRoleValue(IEmbeddedObject obj, IEmbeddedRoleType roleType, IEmbeddedObject role)
         {
-            this.database.AddRoleValue(obj, roleType, (EmbeddedObject)role);
+            this.database.AddRoleValue(obj, roleType, (IEmbeddedObject)role);
         }
 
-        public void RemoveRoleValue(EmbeddedObject obj, IEmbeddedRoleType roleType, IEmbeddedObject role)
+        public void RemoveRoleValue(IEmbeddedObject obj, IEmbeddedRoleType roleType, IEmbeddedObject role)
         {
-            this.database.RemoveRoleValue(obj, roleType, (EmbeddedObject)role);
+            this.database.RemoveRoleValue(obj, roleType, (IEmbeddedObject)role);
         }
 
-        public object GetAssociationValue(EmbeddedObject obj, IEmbeddedAssociationType associationType)
+        public object GetAssociationValue(IEmbeddedObject obj, IEmbeddedAssociationType associationType)
         {
             this.database.GetAssociationValue(obj, associationType, out var result);
             return result;
         }
 
-        public UnitRole<T> GetUnitRole<T>(EmbeddedObject obj, IEmbeddedRoleType roleType)
+        public UnitRole<T> GetUnitRole<T>(IEmbeddedObject obj, IEmbeddedRoleType roleType)
         {
             return new UnitRole<T>(obj, roleType);
         }
 
-        public CompositeRole<T> GetCompositeRole<T>(EmbeddedObject obj, IEmbeddedRoleType roleType) where T : IEmbeddedObject
+        public CompositeRole<T> GetCompositeRole<T>(IEmbeddedObject obj, IEmbeddedRoleType roleType) where T : IEmbeddedObject
         {
             return new CompositeRole<T>(obj, roleType);
         }
 
-        public CompositesRole<T> GetCompositesRole<T>(EmbeddedObject obj, IEmbeddedRoleType roleType) where T : IEmbeddedObject
+        public CompositesRole<T> GetCompositesRole<T>(IEmbeddedObject obj, IEmbeddedRoleType roleType) where T : IEmbeddedObject
         {
             return new CompositesRole<T>(obj, roleType);
         }
 
-        public CompositeAssociation<T> GetCompositeAssociation<T>(EmbeddedObject obj, IEmbeddedAssociationType associationType) where T : IEmbeddedObject
+        public CompositeAssociation<T> GetCompositeAssociation<T>(IEmbeddedObject obj, IEmbeddedAssociationType associationType) where T : IEmbeddedObject
         {
             return new CompositeAssociation<T>(obj, associationType);
         }
 
-        public CompositesAssociation<T> GetCompositesAssociation<T>(EmbeddedObject obj, IEmbeddedAssociationType associationType) where T : IEmbeddedObject
+        public CompositesAssociation<T> GetCompositesAssociation<T>(IEmbeddedObject obj, IEmbeddedAssociationType associationType) where T : IEmbeddedObject
         {
             return new CompositesAssociation<T>(obj, associationType);
         }

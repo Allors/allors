@@ -4,13 +4,13 @@
 
     public abstract class Role : IRole
     {
-        protected Role(EmbeddedObject @object, IEmbeddedRoleType roleType)
+        protected Role(IEmbeddedObject @object, IEmbeddedRoleType roleType)
         {
             this.Object = @object;
             this.RoleType = roleType;
         }
 
-        public EmbeddedObject Object { get; }
+        public IEmbeddedObject Object { get; }
 
         public IEmbeddedRoleType RoleType { get; }
     }

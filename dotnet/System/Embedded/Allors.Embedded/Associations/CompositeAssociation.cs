@@ -4,7 +4,7 @@
 
     public class CompositeAssociation<TAssociation> : Association where TAssociation : IEmbeddedObject
     {
-        public CompositeAssociation(EmbeddedObject @object, IEmbeddedAssociationType associationType) : base(@object, associationType)
+        public CompositeAssociation(IEmbeddedObject @object, IEmbeddedAssociationType associationType) : base(@object, associationType)
         {
         }
 

@@ -6,7 +6,7 @@
 
     public class CompositesRole<TRole> : Role where TRole : IEmbeddedObject
     {
-        public CompositesRole(EmbeddedObject @object, IEmbeddedRoleType roleType) : base(@object, roleType)
+        public CompositesRole(IEmbeddedObject @object, IEmbeddedRoleType roleType) : base(@object, roleType)
         {
         }
 
@@ -14,7 +14,7 @@
         {
             get
             {
-                return ((EmbeddedObject[])this.Object.Population.GetRoleValue(this.Object, this.RoleType))?.Cast<TRole>().ToArray() ?? Array.Empty<TRole>();
+                return ((IEmbeddedObject[])this.Object.Population.GetRoleValue(this.Object, this.RoleType))?.Cast<TRole>().ToArray() ?? Array.Empty<TRole>();
             }
             set
             {

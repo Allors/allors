@@ -4,9 +4,9 @@
 
     internal static class NullableArraySet
     {
-        internal static EmbeddedObject[] Add(object set, EmbeddedObject item)
+        internal static IEmbeddedObject[] Add(object set, IEmbeddedObject item)
         {
-            var sourceArray = (EmbeddedObject[])set;
+            var sourceArray = (IEmbeddedObject[])set;
 
             if (item == null)
             {
@@ -23,7 +23,7 @@
                 return sourceArray;
             }
 
-            var destinationArray = new EmbeddedObject[sourceArray.Length + 1];
+            var destinationArray = new IEmbeddedObject[sourceArray.Length + 1];
 
             Array.Copy(sourceArray, destinationArray, sourceArray.Length);
             destinationArray[destinationArray.Length - 1] = item;
@@ -31,10 +31,10 @@
             return destinationArray;
         }
 
-        internal static EmbeddedObject[] Remove(object set, EmbeddedObject item)
+        internal static IEmbeddedObject[] Remove(object set, IEmbeddedObject item)
         {
 
-            var sourceArray = (EmbeddedObject[])set;
+            var sourceArray = (IEmbeddedObject[])set;
 
             if (sourceArray == null)
             {
@@ -53,7 +53,7 @@
                 return null;
             }
 
-            var destinationArray = new EmbeddedObject[sourceArray.Length - 1];
+            var destinationArray = new IEmbeddedObject[sourceArray.Length - 1];
 
             if (index > 0)
             {
@@ -80,8 +80,8 @@
                 return false;
             }
 
-            var sourceArray = (EmbeddedObject[])source;
-            var destinationArray = (EmbeddedObject[])source;
+            var sourceArray = (IEmbeddedObject[])source;
+            var destinationArray = (IEmbeddedObject[])source;
 
             if (sourceArray.Length != destinationArray.Length)
             {

@@ -6,7 +6,7 @@
 
     public class CompositesAssociation<TAssociation> : Association where TAssociation : IEmbeddedObject
     {
-        public CompositesAssociation(EmbeddedObject @object, IEmbeddedAssociationType associationType) : base(@object, associationType)
+        public CompositesAssociation(IEmbeddedObject @object, IEmbeddedAssociationType associationType) : base(@object, associationType)
         {
         }
 
@@ -14,7 +14,7 @@
         {
             get
             {
-                return ((EmbeddedObject[])this.Object.Population.GetAssociationValue(this.Object, this.AssociationType))?.Cast<TAssociation>().ToArray() ?? Array.Empty<TAssociation>();
+                return ((IEmbeddedObject[])this.Object.Population.GetAssociationValue(this.Object, this.AssociationType))?.Cast<TAssociation>().ToArray() ?? Array.Empty<TAssociation>();
             }
         }
     }

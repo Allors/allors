@@ -4,13 +4,13 @@
 
     public abstract class Association : IAssociation
     {
-        protected Association(EmbeddedObject @object, IEmbeddedAssociationType associationType)
+        protected Association(IEmbeddedObject @object, IEmbeddedAssociationType associationType)
         {
             this.Object = @object;
             this.AssociationType = associationType;
         }
 
-        public EmbeddedObject Object { get; }
+        public IEmbeddedObject Object { get; }
 
         public IEmbeddedAssociationType AssociationType { get; }
     }
