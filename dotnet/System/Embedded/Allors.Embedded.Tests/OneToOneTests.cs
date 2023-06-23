@@ -18,18 +18,18 @@
             acme.Owner.Value = jane;
 
             Assert.AreEqual(jane, acme.Owner.Value);
-            Assert.AreEqual(acme, jane.OrganizationWhereOwner);
+            Assert.AreEqual(acme, jane.OrganizationWhereOwner.Value);
 
             Assert.Null(gizmo.Owner.Value);
-            Assert.Null(john.OrganizationWhereOwner);
+            Assert.Null(john.OrganizationWhereOwner.Value);
 
             acme.Named.Value = jane;
 
             Assert.AreEqual(jane, acme.Named.Value);
-            Assert.AreEqual(acme, jane.OrganizationWhereNamed);
+            Assert.AreEqual(acme, jane.OrganizationWhereNamed.Value);
 
             Assert.Null(gizmo.Named.Value);
-            Assert.Null(john.OrganizationWhereNamed);
+            Assert.Null(john.OrganizationWhereNamed.Value);
         }
 
         //[Test]

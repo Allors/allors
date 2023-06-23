@@ -112,9 +112,20 @@
         {
             return new CompositeRole<T>(obj, roleType);
         }
+
         public CompositesRole<T> GetCompositesRole<T>(EmbeddedObject obj, IEmbeddedRoleType roleType) where T : IEmbeddedObject
         {
             return new CompositesRole<T>(obj, roleType);
+        }
+
+        public CompositeAssociation<T> GetCompositeAssociation<T>(EmbeddedObject obj, IEmbeddedAssociationType associationType) where T : IEmbeddedObject
+        {
+            return new CompositeAssociation<T>(obj, associationType);
+        }
+
+        public CompositesAssociation<T> GetCompositesAssociation<T>(EmbeddedObject obj, IEmbeddedAssociationType associationType) where T : IEmbeddedObject
+        {
+            return new CompositesAssociation<T>(obj, associationType);
         }
     }
 }

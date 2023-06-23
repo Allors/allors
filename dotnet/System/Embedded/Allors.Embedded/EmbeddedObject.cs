@@ -31,5 +31,9 @@
         public CompositeRole<T> GetCompositeRole<T>(string name) where T : IEmbeddedObject => this.Population.GetCompositeRole<T>(this, this.ObjectType.RoleTypeByName[name]);
 
         public CompositesRole<T> GetCompositesRole<T>(string name) where T : IEmbeddedObject => this.Population.GetCompositesRole<T>(this, this.ObjectType.RoleTypeByName[name]);
+
+        public CompositeAssociation<T> GetCompositeAssociation<T>(string name) where T : IEmbeddedObject => this.Population.GetCompositeAssociation<T>(this, this.ObjectType.AssociationTypeByName[name]);
+
+        public CompositesAssociation<T> GetCompositesAssociation<T>(string name) where T : IEmbeddedObject => this.Population.GetCompositesAssociation<T>(this, this.ObjectType.AssociationTypeByName[name]);
     }
 }

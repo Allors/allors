@@ -12,6 +12,8 @@
             this.Named = GetCompositeRole<INamed>("Named");
             this.Owner = GetCompositeRole<Person>("Owner");
             this.Employees = GetCompositesRole<Person>("Employee");
+
+            this.OrganizationWhereNamed = GetCompositeAssociation<Organization>("OrganizationWhereNamed");
         }
 
         public UnitRole<string> Name { get; }
@@ -22,6 +24,6 @@
 
         public CompositesRole<Person> Employees { get; }
 
-        public Organization OrganizationWhereNamed => (Organization)this.GetAssociationValue(nameof(OrganizationWhereNamed));
+        public CompositeAssociation<Organization> OrganizationWhereNamed { get; }
     }
 }

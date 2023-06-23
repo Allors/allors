@@ -22,7 +22,7 @@
             Assert.AreEqual("Acme", acme.Name.Value);
             Assert.AreEqual("Jane", jane.Value.Name.Value);
 
-            Assert.AreEqual(acme, jane.Value.OrganizationWhereOwner);
+            Assert.AreEqual(acme, jane.Value.OrganizationWhereOwner.Value);
         }
     }
 }

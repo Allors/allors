@@ -13,6 +13,10 @@
             this.FullName = GetUnitRole<string>("FullName");
             this.DerivedAt = GetUnitRole<DateTime>("DerivedAt");
             this.Greeting = GetUnitRole<string>("Greeting");
+
+            this.OrganizationWhereOwner = GetCompositeAssociation<Organization>("OrganizationWhereOwner");
+            this.OrganizationsWhereEmployee = GetCompositesAssociation<Organization>("OrganizationsWhereEmployee");
+            this.OrganizationWhereNamed = GetCompositeAssociation<Organization>("OrganizationWhereNamed");
         }
 
         public UnitRole<string> Name { get; }
@@ -27,10 +31,10 @@
 
         public UnitRole<string> Greeting { get; }
         
-        public Organization OrganizationWhereOwner => (Organization)this.GetAssociationValue(nameof(OrganizationWhereOwner));
+        public CompositeAssociation<Organization> OrganizationWhereOwner { get; }
 
-        public Organization[] OrganizationsWhereEmployee => ((EmbeddedObject[])this.GetAssociationValue(nameof(OrganizationsWhereEmployee)))?.Cast<Organization>().ToArray() ?? Array.Empty<Organization>();
+        public CompositesAssociation<Organization> OrganizationsWhereEmployee { get; }
 
-        public Organization OrganizationWhereNamed => (Organization)this.GetAssociationValue(nameof(OrganizationWhereNamed));
+        public CompositeAssociation<Organization> OrganizationWhereNamed { get; }
     }
 }

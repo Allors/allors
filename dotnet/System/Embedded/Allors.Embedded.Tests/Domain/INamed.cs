@@ -4,6 +4,6 @@
     {
         UnitRole<string> Name { get;  }
 
-        Organization OrganizationWhereNamed { get; }
+        CompositeAssociation<Organization> OrganizationWhereNamed { get; }
     }
 }
