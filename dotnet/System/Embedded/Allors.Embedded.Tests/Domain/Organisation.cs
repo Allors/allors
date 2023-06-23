@@ -1,7 +1,6 @@
 ﻿namespace Allors.Embedded.Tests.Domain
 {
     using Allors.Embedded.Meta;
-    using Newtonsoft.Json.Linq;
 
     public class Organization : EmbeddedObject, INamed
     {

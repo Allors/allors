@@ -1,7 +1,5 @@
 ﻿namespace Allors.Embedded.Meta
 {
-    using System;
-
     public interface IEmbeddedRoleType
     {
         EmbeddedObjectType ObjectType { get; }

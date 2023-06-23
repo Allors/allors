@@ -2,7 +2,6 @@
 {
     using System;
     using System.Linq;
-    using Allors.Embedded.Meta;
     using Allors.Embedded.Tests.Domain;
 
     public class DerivationTests : Tests
@@ -19,7 +18,7 @@
 
             this.Population.Derive();
 
-            Assert.AreEqual("John Doe", john.FullName.Value);
+            Assert.That(john.FullName.Value, Is.EqualTo("John Doe"));
 
             this.Population.DerivationById["FullName"] = new GreetingDerivation(this.Population.DerivationById["FullName"]);
 
@@ -29,7 +28,7 @@
 
             this.Population.Derive();
 
-            Assert.AreEqual("Jane Doe Chained", jane.FullName.Value);
+            Assert.That(jane.FullName.Value, Is.EqualTo("Jane Doe Chained"));
         }
 
         public class FullNameDerivation : IEmbeddedDerivation

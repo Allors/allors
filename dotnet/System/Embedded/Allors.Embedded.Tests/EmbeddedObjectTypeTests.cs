@@ -1,6 +1,5 @@
 ﻿namespace Allors.Embedded.Tests
 {
-    using Allors.Embedded.Meta;
     using Allors.Embedded.Tests.Domain;
 
     public class EmbeddedObjectTypeTests : Tests
@@ -21,8 +20,8 @@
                 v.Same.Value = "c2";
             });
 
-            Assert.AreEqual("c1", c1.Same.Value);
-            Assert.AreEqual("c2", c2.Same.Value);
+            Assert.That(c1.Same.Value, Is.EqualTo("c1"));
+            Assert.That(c2.Same.Value, Is.EqualTo("c2"));
         }
     }
 }

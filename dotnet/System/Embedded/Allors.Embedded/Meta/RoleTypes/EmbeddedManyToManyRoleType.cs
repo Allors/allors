@@ -1,7 +1,5 @@
 ﻿namespace Allors.Embedded.Meta
 {
-    using System;
-
     public class EmbeddedManyToManyRoleType : IEmbeddedToManyRoleType
     {
         public EmbeddedManyToManyRoleType(EmbeddedObjectType objectType, string singularName)

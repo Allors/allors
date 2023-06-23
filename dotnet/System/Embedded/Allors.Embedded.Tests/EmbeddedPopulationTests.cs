@@ -1,6 +1,5 @@
 ﻿namespace Allors.Embedded.Tests
 {
-    using Allors.Embedded.Meta;
     using Allors.Embedded.Tests.Domain;
 
     public class EmbeddedPopulationTests : Tests
@@ -19,10 +18,10 @@
 
             var jane = acme.Owner;
 
-            Assert.AreEqual("Acme", acme.Name.Value);
-            Assert.AreEqual("Jane", jane.Value.Name.Value);
+            Assert.That(acme.Name.Value, Is.EqualTo("Acme"));
+            Assert.That(jane.Value.Name.Value, Is.EqualTo("Jane"));
 
-            Assert.AreEqual(acme, jane.Value.OrganizationWhereOwner.Value);
+            Assert.That(jane.Value.OrganizationWhereOwner.Value, Is.EqualTo(acme));
         }
     }
 }

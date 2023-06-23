@@ -1,8 +1,5 @@
-﻿using System;
-
-namespace Allors.Embedded.Tests
+﻿namespace Allors.Embedded.Tests
 {
-    using Allors.Embedded.Meta;
     using Allors.Embedded.Tests.Domain;
 
     public class SnapshotTests : Tests
@@ -24,8 +21,8 @@ namespace Allors.Embedded.Tests
             var changedFirstNames = snapshot1.ChangedRoles<Person>("FirstName");
             var changedLastNames = snapshot1.ChangedRoles<Person>("LastName");
 
-            Assert.AreEqual(1, changedFirstNames.Keys.Count());
-            Assert.AreEqual(1, changedLastNames.Keys.Count());
+            Assert.That(changedFirstNames.Keys.Count(), Is.EqualTo(1));
+            Assert.That(changedLastNames.Keys.Count(), Is.EqualTo(1));
             Assert.Contains(john, changedFirstNames.Keys.ToArray());
             Assert.Contains(john, changedLastNames.Keys.ToArray());
 
@@ -34,8 +31,8 @@ namespace Allors.Embedded.Tests
             changedFirstNames = snapshot2.ChangedRoles<Person>("FirstName");
             changedLastNames = snapshot2.ChangedRoles<Person>("LastName");
 
-            Assert.AreEqual(1, changedFirstNames.Keys.Count());
-            Assert.AreEqual(1, changedLastNames.Keys.Count());
+            Assert.That(changedFirstNames.Keys.Count(), Is.EqualTo(1));
+            Assert.That(changedLastNames.Keys.Count(), Is.EqualTo(1));
             Assert.Contains(jane, changedFirstNames.Keys.ToArray());
             Assert.Contains(jane, changedLastNames.Keys.ToArray());
         }
@@ -61,7 +58,7 @@ namespace Allors.Embedded.Tests
 
             var snapshot = this.Population.Snapshot();
             var changedEmployees = snapshot.ChangedRoles<Organization>("Employees");
-            Assert.AreEqual(1, changedEmployees.Count);
+            Assert.That(changedEmployees.Count, Is.EqualTo(1));
 
             acme.Employees.Value = new[] { jane, john };
 

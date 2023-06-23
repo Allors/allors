@@ -2,7 +2,6 @@
 {
     using System;
     using System.Linq;
-    using Allors.Embedded.Meta;
     using Allors.Embedded.Tests.Domain;
 
     public class ObjectsTests : Tests
@@ -37,7 +36,7 @@
 
             var lastNameDoe = this.Population.Objects.OfType<Person>().Where(v => v.LastName.Value == "Doe").ToArray();
 
-            Assert.AreEqual(3, lastNameDoe.Length);
+            Assert.That(lastNameDoe.Length, Is.EqualTo(3));
             Assert.Contains(jane, lastNameDoe);
             Assert.Contains(john, lastNameDoe);
             Assert.Contains(jenny, lastNameDoe);
@@ -48,12 +47,12 @@
 
             var fourLetterFirstNames = this.Population.Objects.OfType<Person>().Where(v => v.FirstName.Value.Length == 4).ToArray();
 
-            Assert.AreEqual(2, fourLetterFirstNames.Length);
+            Assert.That(fourLetterFirstNames.Length, Is.EqualTo(2));
             Assert.Contains(jane, fourLetterFirstNames);
             Assert.Contains(john, fourLetterFirstNames);
 
             var fiveLetterFirstNames = this.Population.Objects.OfType<Person>().Where(v => v.FirstName.Value.Length == 5).ToArray();
-            Assert.AreEqual(1, fiveLetterFirstNames.Length);
+            Assert.That(fiveLetterFirstNames.Length, Is.EqualTo(1));
             Assert.Contains(jenny, fiveLetterFirstNames);
         }
     }

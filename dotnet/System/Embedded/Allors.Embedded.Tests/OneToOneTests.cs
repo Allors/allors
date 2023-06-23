@@ -1,7 +1,5 @@
 ﻿namespace Allors.Embedded.Tests
 {
-    using System;
-    using Allors.Embedded.Meta;
     using Allors.Embedded.Tests.Domain;
 
     public class OneToOneTests : Tests
@@ -17,16 +15,16 @@
 
             acme.Owner.Value = jane;
 
-            Assert.AreEqual(jane, acme.Owner.Value);
-            Assert.AreEqual(acme, jane.OrganizationWhereOwner.Value);
+            Assert.That(acme.Owner.Value, Is.EqualTo(jane));
+            Assert.That(jane.OrganizationWhereOwner.Value, Is.EqualTo(acme));
 
             Assert.Null(gizmo.Owner.Value);
             Assert.Null(john.OrganizationWhereOwner.Value);
 
             acme.Named.Value = jane;
 
-            Assert.AreEqual(jane, acme.Named.Value);
-            Assert.AreEqual(acme, jane.OrganizationWhereNamed.Value);
+            Assert.That(acme.Named.Value, Is.EqualTo(jane));
+            Assert.That(jane.OrganizationWhereNamed.Value, Is.EqualTo(acme));
 
             Assert.Null(gizmo.Named.Value);
             Assert.Null(john.OrganizationWhereNamed.Value);

@@ -18,7 +18,7 @@
 
             this.Population.Derive();
 
-            Assert.AreEqual("Hello John Doe!", john.Greeting.Value);
+            Assert.That(john.Greeting.Value, Is.EqualTo("Hello John Doe!"));
         }
 
         public class FullNameDerivation : IEmbeddedDerivation

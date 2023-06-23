@@ -1,9 +1,5 @@
 ﻿namespace Allors.Embedded.Tests
 {
-    using System.Linq;
-    using Allors.Embedded.Meta;
-    using Allors.Embedded.Tests.Domain;
-
     public class OneToManyTests : Tests
     {
         //[Test]
