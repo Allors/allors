@@ -20,7 +20,5 @@
         IEmbeddedRoleType AddManyToMany<TAssociation, TRole>(string roleName);
 
         IEmbeddedObjectType GetOrAddObjectType(Type type);
-
-        void ResetDerivations();
     }
 }

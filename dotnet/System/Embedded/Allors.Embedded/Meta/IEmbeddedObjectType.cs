@@ -27,8 +27,6 @@
 
         IEmbeddedRoleType AddManyToMany(IEmbeddedObjectType roleObjectType, string roleName);
 
-        void ResetDerivations();
-
         void AddAssociationType(IEmbeddedAssociationType associationType);
     }
 }

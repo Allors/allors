@@ -82,7 +82,8 @@
             foreach (var kvp in this.ObjectTypeByType)
             {
                 var objectType = kvp.Value;
-                objectType.ResetDerivations();
+                // TODO: Remove cast
+                ((EmbeddedObjectType)objectType).ResetDerivations();
             }
         }
     }
