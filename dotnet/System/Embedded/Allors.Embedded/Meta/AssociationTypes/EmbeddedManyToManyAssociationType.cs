@@ -1,6 +1,6 @@
 ﻿namespace Allors.Embedded.Meta
 {
-    public class EmbeddedManyToManyAssociationType : IEmbeddedManyToAssociationType
+    public class EmbeddedManyToManyAssociationType : IEmbeddedAssociationType
     {
         public EmbeddedManyToManyAssociationType(EmbeddedObjectType objectType, EmbeddedManyToManyRoleType roleType)
         {

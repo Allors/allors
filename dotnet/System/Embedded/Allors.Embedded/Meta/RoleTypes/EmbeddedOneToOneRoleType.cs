@@ -1,6 +1,6 @@
 ﻿namespace Allors.Embedded.Meta
 {
-    public class EmbeddedOneToOneRoleType : IEmbeddedToOneRoleType
+    public class EmbeddedOneToOneRoleType : IEmbeddedRoleType
     {
         public EmbeddedOneToOneRoleType(EmbeddedObjectType objectType, string singularName)
         {
