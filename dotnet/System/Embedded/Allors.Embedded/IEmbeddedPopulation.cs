@@ -8,7 +8,7 @@
 
     public interface IEmbeddedPopulation
     {
-        IEmbeddedMeta Meta { get; }
+        EmbeddedMeta Meta { get; }
 
         Dictionary<string, IEmbeddedDerivation> DerivationById { get; }
 

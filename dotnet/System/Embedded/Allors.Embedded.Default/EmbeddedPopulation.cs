@@ -20,7 +20,7 @@
             }
         }
 
-        IEmbeddedMeta IEmbeddedPopulation.Meta => this.Meta;
+        EmbeddedMeta IEmbeddedPopulation.Meta => this.Meta;
 
         public EmbeddedMeta Meta { get; }
 

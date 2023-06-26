@@ -2,10 +2,6 @@
 {
     public interface IEmbeddedAssociationType
     {
-        IEmbeddedObjectType ObjectType { get; }
-
-        IEmbeddedRoleType RoleType { get; }
-
         string Name { get; }
 
         string SingularName { get; }

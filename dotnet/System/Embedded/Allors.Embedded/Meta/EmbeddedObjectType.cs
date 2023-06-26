@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    public class EmbeddedObjectType : IEmbeddedObjectType
+    public class EmbeddedObjectType 
     {
         private readonly IDictionary<string, IEmbeddedAssociationType> assignedAssociationTypeByName;
 
@@ -19,7 +19,7 @@
             this.Meta = meta;
             this.Type = type;
             this.TypeCode = Type.GetTypeCode(type);
-            this.SuperTypes = new HashSet<IEmbeddedObjectType>();
+            this.SuperTypes = new HashSet<EmbeddedObjectType>();
             this.assignedAssociationTypeByName = new Dictionary<string, IEmbeddedAssociationType>();
             this.assignedRoleTypeByName = new Dictionary<string, IEmbeddedRoleType>();
 
@@ -47,15 +47,13 @@
             }
         }
 
-        IEmbeddedMeta IEmbeddedObjectType.Meta => this.Meta;
-
         public EmbeddedMeta Meta { get; }
 
         public Type Type { get; }
 
         public TypeCode TypeCode { get; }
 
-        public ISet<IEmbeddedObjectType> SuperTypes { get; }
+        public ISet<EmbeddedObjectType> SuperTypes { get; }
 
         public IDictionary<string, IEmbeddedAssociationType> AssociationTypeByName
         {
@@ -95,7 +93,7 @@
 
         internal object EmptyArray { get; }
 
-        public IEmbeddedRoleType AddUnit(IEmbeddedObjectType roleObjectType, string roleName)
+        public IEmbeddedRoleType AddUnit(EmbeddedObjectType roleObjectType, string roleName)
         {
             var roleType = new EmbeddedUnitRoleType(roleObjectType, roleName);
             this.AddRoleType(roleType);
@@ -108,7 +106,7 @@
             return roleType;
         }
 
-        public IEmbeddedRoleType AddOneToOne(IEmbeddedObjectType roleObjectType, string roleName)
+        public IEmbeddedRoleType AddOneToOne(EmbeddedObjectType roleObjectType, string roleName)
         {
             var roleType = new EmbeddedOneToOneRoleType(roleObjectType, roleName);
             this.AddRoleType(roleType);
@@ -121,7 +119,7 @@
             return roleType;
         }
 
-        public IEmbeddedRoleType AddManyToOne(IEmbeddedObjectType roleObjectType, string roleName)
+        public IEmbeddedRoleType AddManyToOne(EmbeddedObjectType roleObjectType, string roleName)
         {
             var roleType = new EmbeddedManyToOneRoleType(roleObjectType, roleName);
             this.AddRoleType(roleType);
@@ -134,7 +132,7 @@
             return roleType;
         }
 
-        public IEmbeddedRoleType AddOneToMany(IEmbeddedObjectType roleObjectType, string roleName)
+        public IEmbeddedRoleType AddOneToMany(EmbeddedObjectType roleObjectType, string roleName)
         {
             var roleType = new EmbeddedOneToManyRoleType(roleObjectType, roleName);
             this.AddRoleType(roleType);
@@ -147,7 +145,7 @@
             return roleType;
         }
 
-        public IEmbeddedRoleType AddManyToMany(IEmbeddedObjectType roleObjectType, string roleName)
+        public IEmbeddedRoleType AddManyToMany(EmbeddedObjectType roleObjectType, string roleName)
         {
             var roleType = new EmbeddedManyToManyRoleType(roleObjectType, roleName);
             this.AddRoleType(roleType);
@@ -160,13 +158,13 @@
             return roleType;
         }
 
-        public void ResetDerivations()
+        internal void ResetDerivations()
         {
             this.derivedAssociationTypeByName = null;
             this.derivedRoleTypeByName = null;
         }
 
-        public void AddAssociationType(IEmbeddedAssociationType associationType)
+        internal void AddAssociationType(IEmbeddedAssociationType associationType)
         {
             this.CheckNames(associationType.SingularName, associationType.PluralName);
 
@@ -174,7 +172,7 @@
             this.assignedAssociationTypeByName.Add(associationType.PluralName, associationType);
         }
 
-        public void AddRoleType(IEmbeddedRoleType roleType)
+        internal void AddRoleType(IEmbeddedRoleType roleType)
         {
             this.CheckNames(roleType.SingularName, roleType.PluralName);
 
@@ -182,7 +180,7 @@
             this.assignedRoleTypeByName.Add(roleType.PluralName, roleType);
         }
 
-        public void CheckNames(string singularName, string pluralName)
+        internal void CheckNames(string singularName, string pluralName)
         {
             if (this.RoleTypeByName.ContainsKey(singularName) ||
                 this.AssociationTypeByName.ContainsKey(singularName))

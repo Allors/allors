@@ -12,14 +12,14 @@
         private readonly IReadOnlyDictionary<IEmbeddedRoleType, Dictionary<IEmbeddedObject, object>> roleByAssociationByRoleType;
         private readonly IReadOnlyDictionary<IEmbeddedAssociationType, Dictionary<IEmbeddedObject, object>> associationByRoleByRoleType;
 
-        public EmbeddedChangeSet(IEmbeddedMeta meta, IReadOnlyDictionary<IEmbeddedRoleType, Dictionary<IEmbeddedObject, object>> roleByAssociationByRoleType, IReadOnlyDictionary<IEmbeddedAssociationType, Dictionary<IEmbeddedObject, object>> associationByRoleByAssociationType)
+        public EmbeddedChangeSet(EmbeddedMeta meta, IReadOnlyDictionary<IEmbeddedRoleType, Dictionary<IEmbeddedObject, object>> roleByAssociationByRoleType, IReadOnlyDictionary<IEmbeddedAssociationType, Dictionary<IEmbeddedObject, object>> associationByRoleByAssociationType)
         {
             this.Meta = meta;
             this.roleByAssociationByRoleType = roleByAssociationByRoleType;
             this.associationByRoleByRoleType = associationByRoleByAssociationType;
         }
 
-        public IEmbeddedMeta Meta { get; }
+        public EmbeddedMeta Meta { get; }
 
         public bool HasChanges =>
             this.roleByAssociationByRoleType.Any(v => v.Value.Count > 0) ||
@@ -32,7 +32,7 @@
             return this.ChangedRoles(roleType) ?? Empty;
         }
 
-        public IReadOnlyDictionary<IEmbeddedObject, object> ChangedRoles(IEmbeddedObjectType objectType, string name)
+        public IReadOnlyDictionary<IEmbeddedObject, object> ChangedRoles(EmbeddedObjectType objectType, string name)
         {
             var roleType = objectType.RoleTypeByName[name];
             return this.ChangedRoles(roleType) ?? Empty;

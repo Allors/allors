@@ -1,8 +1,8 @@
 ﻿namespace Allors.Embedded.Meta
 {
-    public class EmbeddedUnitAssociationType : IEmbeddedOneToAssociationType
+    public class EmbeddedManyToOneAssociationType : IEmbeddedManyToAssociationType
     {
-        public EmbeddedUnitAssociationType(EmbeddedObjectType objectType, EmbeddedUnitRoleType roleType)
+        public EmbeddedManyToOneAssociationType(EmbeddedObjectType objectType, EmbeddedManyToOneRoleType roleType)
         {
             this.ObjectType = objectType;
             roleType.AssociationType = this;
@@ -11,21 +11,19 @@
             this.PluralName = roleType.PluralNameForAssociation(objectType);
         }
 
-        public IEmbeddedObjectType ObjectType { get; }
+        public EmbeddedObjectType ObjectType { get; }
 
-        IEmbeddedRoleType IEmbeddedAssociationType.RoleType => this.RoleType;
+        public EmbeddedManyToOneRoleType RoleType { get; }
 
-        public EmbeddedUnitRoleType RoleType { get; }
-
-        public string Name => this.SingularName;
+        public string Name => this.PluralName;
 
         public string SingularName { get; }
 
         public string PluralName { get; }
 
-        public bool IsOne => true;
+        public bool IsOne => false;
 
-        public bool IsMany => false;
+        public bool IsMany => true;
 
         /// <inheritdoc/>
         public override string ToString()

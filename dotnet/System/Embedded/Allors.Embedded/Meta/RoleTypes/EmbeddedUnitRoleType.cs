@@ -4,7 +4,7 @@
 
     public class EmbeddedUnitRoleType : IEmbeddedRoleType
     {
-        public EmbeddedUnitRoleType(IEmbeddedObjectType objectType, string singularName)
+        public EmbeddedUnitRoleType(EmbeddedObjectType objectType, string singularName)
         {
             var meta = objectType.Meta;
 
@@ -13,7 +13,7 @@
             this.PluralName = meta.Pluralize(this.SingularName);
         }
 
-        public IEmbeddedObjectType ObjectType { get; }
+        public EmbeddedObjectType ObjectType { get; }
 
         public IEmbeddedAssociationType AssociationType { get; internal set; }
 

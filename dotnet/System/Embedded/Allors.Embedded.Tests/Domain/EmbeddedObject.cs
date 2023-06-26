@@ -12,7 +12,7 @@
 
         public IEmbeddedPopulation Population { get; }
 
-        public IEmbeddedObjectType ObjectType { get; }
+        public EmbeddedObjectType ObjectType { get; }
 
         public IUnitRole<T> GetUnitRole<T>(string name) => this.GetUnitRole<T>(this.ObjectType.RoleTypeByName[name]);
 

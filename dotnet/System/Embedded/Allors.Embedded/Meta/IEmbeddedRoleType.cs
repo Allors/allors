@@ -2,7 +2,7 @@
 {
     public interface IEmbeddedRoleType
     {
-        IEmbeddedObjectType ObjectType { get; }
+        EmbeddedObjectType ObjectType { get; }
 
         IEmbeddedAssociationType AssociationType { get; }
 

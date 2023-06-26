@@ -6,6 +6,6 @@
     {
         IEmbeddedPopulation Population { get; }
 
-        IEmbeddedObjectType ObjectType { get; }
+        EmbeddedObjectType ObjectType { get; }
     }
 }

@@ -3,14 +3,14 @@
     using System;
     using System.Collections.Generic;
 
-    public class EmbeddedMeta : IEmbeddedMeta
+    public class EmbeddedMeta 
     {
-        internal EmbeddedMeta()
+        public EmbeddedMeta()
         {
-            this.ObjectTypeByType = new Dictionary<Type, IEmbeddedObjectType>();
+            this.ObjectTypeByType = new Dictionary<Type, EmbeddedObjectType>();
         }
 
-        public IDictionary<Type, IEmbeddedObjectType> ObjectTypeByType { get; }
+        public IDictionary<Type, EmbeddedObjectType> ObjectTypeByType { get; }
 
         public string Pluralize(string singular)
         {
@@ -66,7 +66,7 @@
 
         public IEmbeddedRoleType AddManyToMany<TAssociation, TRole>(string roleName) => this.GetOrAddObjectType(typeof(TAssociation)).AddManyToMany(this.GetOrAddObjectType(typeof(TRole)), roleName);
 
-        public IEmbeddedObjectType GetOrAddObjectType(Type type)
+        public EmbeddedObjectType GetOrAddObjectType(Type type)
         {
             if (!this.ObjectTypeByType.TryGetValue(type, out var objectType))
             {
@@ -77,7 +77,7 @@
             return objectType;
         }
 
-        public void ResetDerivations()
+        internal void ResetDerivations()
         {
             foreach (var kvp in this.ObjectTypeByType)
             {
