@@ -22,7 +22,9 @@
         public bool IsMany { get; internal set; }
 
         public bool IsUnit { get; internal set; }
-        
+
+        internal EmbeddedRoleType() { }
+
         public override string ToString()
         {
             return this.Name;

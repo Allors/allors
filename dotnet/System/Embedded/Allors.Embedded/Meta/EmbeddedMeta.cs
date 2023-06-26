@@ -2,17 +2,41 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
 
-    public class EmbeddedMeta 
+    public class EmbeddedMeta
     {
+        private readonly IDictionary<Type, EmbeddedObjectType> objectTypeByType;
+
         public EmbeddedMeta()
         {
-            this.ObjectTypeByType = new Dictionary<Type, EmbeddedObjectType>();
+            this.objectTypeByType = new Dictionary<Type, EmbeddedObjectType>();
         }
 
-        public IDictionary<Type, EmbeddedObjectType> ObjectTypeByType { get; }
+        public IReadOnlyDictionary<Type, EmbeddedObjectType> ObjectTypeByType => new ReadOnlyDictionary<Type, EmbeddedObjectType>(this.objectTypeByType);
 
-        public string Pluralize(string singular)
+        public EmbeddedRoleType AddUnit<TAssociation, TRole>(string roleName) => this.GetOrAddObjectType(typeof(TAssociation)).AddUnit(this.GetOrAddObjectType(typeof(TRole)), roleName);
+
+        public EmbeddedRoleType AddOneToOne<TAssociation, TRole>(string roleName) => this.GetOrAddObjectType(typeof(TAssociation)).AddOneToOne(this.GetOrAddObjectType(typeof(TRole)), roleName);
+
+        public EmbeddedRoleType AddManyToOne<TAssociation, TRole>(string roleName) => this.GetOrAddObjectType(typeof(TAssociation)).AddManyToOne(this.GetOrAddObjectType(typeof(TRole)), roleName);
+
+        public EmbeddedRoleType AddOneToMany<TAssociation, TRole>(string roleName) => this.GetOrAddObjectType(typeof(TAssociation)).AddOneToMany(this.GetOrAddObjectType(typeof(TRole)), roleName);
+
+        public EmbeddedRoleType AddManyToMany<TAssociation, TRole>(string roleName) => this.GetOrAddObjectType(typeof(TAssociation)).AddManyToMany(this.GetOrAddObjectType(typeof(TRole)), roleName);
+
+        public EmbeddedObjectType GetOrAddObjectType(Type type)
+        {
+            if (!this.ObjectTypeByType.TryGetValue(type, out var objectType))
+            {
+                objectType = new EmbeddedObjectType(this, type);
+                this.objectTypeByType.Add(type, objectType);
+            }
+
+            return objectType;
+        }
+
+        internal string Pluralize(string singular)
         {
             static bool EndsWith(string word, string ending) => word.EndsWith(ending, StringComparison.InvariantCultureIgnoreCase);
 
@@ -54,27 +78,6 @@
             }
 
             return singular + "s";
-        }
-
-        public EmbeddedRoleType AddUnit<TAssociation, TRole>(string roleName) => this.GetOrAddObjectType(typeof(TAssociation)).AddUnit(this.GetOrAddObjectType(typeof(TRole)), roleName);
-
-        public EmbeddedRoleType AddOneToOne<TAssociation, TRole>(string roleName) => this.GetOrAddObjectType(typeof(TAssociation)).AddOneToOne(this.GetOrAddObjectType(typeof(TRole)), roleName);
-
-        public EmbeddedRoleType AddManyToOne<TAssociation, TRole>(string roleName) => this.GetOrAddObjectType(typeof(TAssociation)).AddManyToOne(this.GetOrAddObjectType(typeof(TRole)), roleName);
-
-        public EmbeddedRoleType AddOneToMany<TAssociation, TRole>(string roleName) => this.GetOrAddObjectType(typeof(TAssociation)).AddOneToMany(this.GetOrAddObjectType(typeof(TRole)), roleName);
-
-        public EmbeddedRoleType AddManyToMany<TAssociation, TRole>(string roleName) => this.GetOrAddObjectType(typeof(TAssociation)).AddManyToMany(this.GetOrAddObjectType(typeof(TRole)), roleName);
-
-        public EmbeddedObjectType GetOrAddObjectType(Type type)
-        {
-            if (!this.ObjectTypeByType.TryGetValue(type, out var objectType))
-            {
-                objectType = new EmbeddedObjectType(this, type);
-                this.ObjectTypeByType.Add(type, objectType);
-            }
-
-            return objectType;
         }
 
         internal void ResetDerivations()

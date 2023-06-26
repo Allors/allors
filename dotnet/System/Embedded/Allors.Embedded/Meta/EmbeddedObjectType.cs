@@ -14,7 +14,7 @@
 
         private IDictionary<string, EmbeddedRoleType> derivedRoleTypeByName;
 
-        public EmbeddedObjectType(EmbeddedMeta meta, Type type)
+        internal EmbeddedObjectType(EmbeddedMeta meta, Type type)
         {
             this.Meta = meta;
             this.Type = type;
