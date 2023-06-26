@@ -23,28 +23,28 @@
 
         void Derive();
 
-        IUnitRole<T> GetUnitRole<T>(IEmbeddedObject obj, IEmbeddedRoleType roleType);
+        IUnitRole<T> GetUnitRole<T>(IEmbeddedObject obj, EmbeddedRoleType roleType);
 
-        ICompositeRole<T> GetCompositeRole<T>(IEmbeddedObject obj, IEmbeddedRoleType roleType)
+        ICompositeRole<T> GetCompositeRole<T>(IEmbeddedObject obj, EmbeddedRoleType roleType)
             where T : IEmbeddedObject;
 
-        ICompositesRole<T> GetCompositesRole<T>(IEmbeddedObject obj, IEmbeddedRoleType roleType)
+        ICompositesRole<T> GetCompositesRole<T>(IEmbeddedObject obj, EmbeddedRoleType roleType)
             where T : IEmbeddedObject;
 
-        ICompositeAssociation<T> GetCompositeAssociation<T>(IEmbeddedObject obj, IEmbeddedAssociationType associationType) 
+        ICompositeAssociation<T> GetCompositeAssociation<T>(IEmbeddedObject obj, EmbeddedAssociationType associationType) 
             where T : IEmbeddedObject;
 
-        ICompositesAssociation<T> GetCompositesAssociation<T>(IEmbeddedObject obj, IEmbeddedAssociationType associationType)
+        ICompositesAssociation<T> GetCompositesAssociation<T>(IEmbeddedObject obj, EmbeddedAssociationType associationType)
             where T : IEmbeddedObject;
 
-        object GetRoleValue(IEmbeddedObject obj, IEmbeddedRoleType roleType);
+        object GetRoleValue(IEmbeddedObject obj, EmbeddedRoleType roleType);
 
-        void SetRoleValue(IEmbeddedObject obj, IEmbeddedRoleType roleType, object value);
+        void SetRoleValue(IEmbeddedObject obj, EmbeddedRoleType roleType, object value);
 
-        void AddRoleValue(IEmbeddedObject obj, IEmbeddedRoleType roleType, IEmbeddedObject role);
+        void AddRoleValue(IEmbeddedObject obj, EmbeddedRoleType roleType, IEmbeddedObject role);
 
-        void RemoveRoleValue(IEmbeddedObject obj, IEmbeddedRoleType roleType, IEmbeddedObject role);
+        void RemoveRoleValue(IEmbeddedObject obj, EmbeddedRoleType roleType, IEmbeddedObject role);
 
-        object GetAssociationValue(IEmbeddedObject obj, IEmbeddedAssociationType associationType);
+        object GetAssociationValue(IEmbeddedObject obj, EmbeddedAssociationType associationType);
     }
 }

@@ -4,7 +4,7 @@
 
     public abstract class Association : IAssociation
     {
-        protected Association(IEmbeddedObject @object, IEmbeddedAssociationType associationType)
+        protected Association(IEmbeddedObject @object, EmbeddedAssociationType associationType)
         {
             this.Object = @object;
             this.AssociationType = associationType;
@@ -12,6 +12,6 @@
 
         public IEmbeddedObject Object { get; }
 
-        public IEmbeddedAssociationType AssociationType { get; }
+        public EmbeddedAssociationType AssociationType { get; }
     }
 }

@@ -9,10 +9,10 @@
     {
         private static readonly IReadOnlyDictionary<IEmbeddedObject, object> Empty = new ReadOnlyDictionary<IEmbeddedObject, object>(new Dictionary<IEmbeddedObject, object>());
 
-        private readonly IReadOnlyDictionary<IEmbeddedRoleType, Dictionary<IEmbeddedObject, object>> roleByAssociationByRoleType;
-        private readonly IReadOnlyDictionary<IEmbeddedAssociationType, Dictionary<IEmbeddedObject, object>> associationByRoleByRoleType;
+        private readonly IReadOnlyDictionary<EmbeddedRoleType, Dictionary<IEmbeddedObject, object>> roleByAssociationByRoleType;
+        private readonly IReadOnlyDictionary<EmbeddedAssociationType, Dictionary<IEmbeddedObject, object>> associationByRoleByRoleType;
 
-        public EmbeddedChangeSet(EmbeddedMeta meta, IReadOnlyDictionary<IEmbeddedRoleType, Dictionary<IEmbeddedObject, object>> roleByAssociationByRoleType, IReadOnlyDictionary<IEmbeddedAssociationType, Dictionary<IEmbeddedObject, object>> associationByRoleByAssociationType)
+        public EmbeddedChangeSet(EmbeddedMeta meta, IReadOnlyDictionary<EmbeddedRoleType, Dictionary<IEmbeddedObject, object>> roleByAssociationByRoleType, IReadOnlyDictionary<EmbeddedAssociationType, Dictionary<IEmbeddedObject, object>> associationByRoleByAssociationType)
         {
             this.Meta = meta;
             this.roleByAssociationByRoleType = roleByAssociationByRoleType;
@@ -38,7 +38,7 @@
             return this.ChangedRoles(roleType) ?? Empty;
         }
 
-        public IReadOnlyDictionary<IEmbeddedObject, object> ChangedRoles(IEmbeddedRoleType roleType)
+        public IReadOnlyDictionary<IEmbeddedObject, object> ChangedRoles(EmbeddedRoleType roleType)
         {
             this.roleByAssociationByRoleType.TryGetValue(roleType, out var changedRelations);
             return changedRelations ?? Empty;

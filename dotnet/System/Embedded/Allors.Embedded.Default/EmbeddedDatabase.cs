@@ -10,23 +10,23 @@
     {
         private readonly EmbeddedMeta meta;
 
-        private readonly Dictionary<IEmbeddedRoleType, Dictionary<IEmbeddedObject, object>> roleByAssociationByRoleType;
-        private readonly Dictionary<IEmbeddedAssociationType, Dictionary<IEmbeddedObject, object>> associationByRoleByAssociationType;
+        private readonly Dictionary<EmbeddedRoleType, Dictionary<IEmbeddedObject, object>> roleByAssociationByRoleType;
+        private readonly Dictionary<EmbeddedAssociationType, Dictionary<IEmbeddedObject, object>> associationByRoleByAssociationType;
 
-        private Dictionary<IEmbeddedRoleType, Dictionary<IEmbeddedObject, object>> changedRoleByAssociationByRoleType;
-        private Dictionary<IEmbeddedAssociationType, Dictionary<IEmbeddedObject, object>> changedAssociationByRoleByAssociationType;
+        private Dictionary<EmbeddedRoleType, Dictionary<IEmbeddedObject, object>> changedRoleByAssociationByRoleType;
+        private Dictionary<EmbeddedAssociationType, Dictionary<IEmbeddedObject, object>> changedAssociationByRoleByAssociationType;
 
         internal EmbeddedDatabase(EmbeddedMeta meta)
         {
             this.meta = meta;
 
-            this.roleByAssociationByRoleType = new Dictionary<IEmbeddedRoleType, Dictionary<IEmbeddedObject, object>>();
-            this.associationByRoleByAssociationType = new Dictionary<IEmbeddedAssociationType, Dictionary<IEmbeddedObject, object>>();
+            this.roleByAssociationByRoleType = new Dictionary<EmbeddedRoleType, Dictionary<IEmbeddedObject, object>>();
+            this.associationByRoleByAssociationType = new Dictionary<EmbeddedAssociationType, Dictionary<IEmbeddedObject, object>>();
 
             this.changedRoleByAssociationByRoleType =
-                new Dictionary<IEmbeddedRoleType, Dictionary<IEmbeddedObject, object>>();
+                new Dictionary<EmbeddedRoleType, Dictionary<IEmbeddedObject, object>>();
             this.changedAssociationByRoleByAssociationType =
-                new Dictionary<IEmbeddedAssociationType, Dictionary<IEmbeddedObject, object>>();
+                new Dictionary<EmbeddedAssociationType, Dictionary<IEmbeddedObject, object>>();
         }
 
         internal IEmbeddedObject[] Objects { get; private set; }
@@ -123,8 +123,8 @@
                 }
             }
 
-            this.changedRoleByAssociationByRoleType = new Dictionary<IEmbeddedRoleType, Dictionary<IEmbeddedObject, object>>();
-            this.changedAssociationByRoleByAssociationType = new Dictionary<IEmbeddedAssociationType, Dictionary<IEmbeddedObject, object>>();
+            this.changedRoleByAssociationByRoleType = new Dictionary<EmbeddedRoleType, Dictionary<IEmbeddedObject, object>>();
+            this.changedAssociationByRoleByAssociationType = new Dictionary<EmbeddedAssociationType, Dictionary<IEmbeddedObject, object>>();
 
             return snapshot;
         }
@@ -134,7 +134,7 @@
             this.Objects = NullableArraySet.Add(this.Objects, newObject);
         }
 
-        internal void GetRoleValue(IEmbeddedObject association, IEmbeddedRoleType roleType, out object role)
+        internal void GetRoleValue(IEmbeddedObject association, EmbeddedRoleType roleType, out object role)
         {
             if (this.changedRoleByAssociationByRoleType.TryGetValue(roleType, out var changedRoleByAssociation) &&
                 changedRoleByAssociation.TryGetValue(association, out role))
@@ -145,7 +145,7 @@
             this.RoleByAssociation(roleType).TryGetValue(association, out role);
         }
 
-        internal void SetRoleValue(IEmbeddedObject association, IEmbeddedRoleType roleType, object role)
+        internal void SetRoleValue(IEmbeddedObject association, EmbeddedRoleType roleType, object role)
         {
             if (role == null)
             {
@@ -219,7 +219,7 @@
             }
         }
 
-        internal void AddRoleValue(IEmbeddedObject association, IEmbeddedRoleType roleType, IEmbeddedObject role)
+        internal void AddRoleValue(IEmbeddedObject association, EmbeddedRoleType roleType, IEmbeddedObject role)
         {
             var associationType = roleType.AssociationType;
             this.GetAssociationValue(role, associationType, out var previousAssociation);
@@ -252,7 +252,7 @@
             }
         }
 
-        internal void RemoveRoleValue(IEmbeddedObject association, IEmbeddedRoleType roleType, IEmbeddedObject role)
+        internal void RemoveRoleValue(IEmbeddedObject association, EmbeddedRoleType roleType, IEmbeddedObject role)
         {
             var associationType = roleType.AssociationType;
             this.GetAssociationValue(role, associationType, out var previousAssociation);
@@ -279,12 +279,12 @@
             }
         }
 
-        internal void RemoveRoleValue(IEmbeddedObject association, IEmbeddedRoleType roleType)
+        internal void RemoveRoleValue(IEmbeddedObject association, EmbeddedRoleType roleType)
         {
             throw new NotImplementedException();
         }
 
-        internal void GetAssociationValue(IEmbeddedObject role, IEmbeddedAssociationType associationType, out object association)
+        internal void GetAssociationValue(IEmbeddedObject role, EmbeddedAssociationType associationType, out object association)
         {
             if (this.changedAssociationByRoleByAssociationType.TryGetValue(associationType, out var changedAssociationByRole) &&
                 changedAssociationByRole.TryGetValue(role, out association))
@@ -295,7 +295,7 @@
             this.AssociationByRole(associationType).TryGetValue(role, out association);
         }
 
-        private Dictionary<IEmbeddedObject, object> AssociationByRole(IEmbeddedAssociationType asscociationType)
+        private Dictionary<IEmbeddedObject, object> AssociationByRole(EmbeddedAssociationType asscociationType)
         {
             if (!this.associationByRoleByAssociationType.TryGetValue(asscociationType, out var associationByRole))
             {
@@ -306,7 +306,7 @@
             return associationByRole;
         }
 
-        private Dictionary<IEmbeddedObject, object> RoleByAssociation(IEmbeddedRoleType roleType)
+        private Dictionary<IEmbeddedObject, object> RoleByAssociation(EmbeddedRoleType roleType)
         {
             if (!this.roleByAssociationByRoleType.TryGetValue(roleType, out var roleByAssociation))
             {
@@ -317,7 +317,7 @@
             return roleByAssociation;
         }
 
-        private Dictionary<IEmbeddedObject, object> ChangedAssociationByRole(IEmbeddedAssociationType associationType)
+        private Dictionary<IEmbeddedObject, object> ChangedAssociationByRole(EmbeddedAssociationType associationType)
         {
             if (!this.changedAssociationByRoleByAssociationType.TryGetValue(associationType, out var changedAssociationByRole))
             {
@@ -328,7 +328,7 @@
             return changedAssociationByRole;
         }
 
-        private Dictionary<IEmbeddedObject, object> ChangedRoleByAssociation(IEmbeddedRoleType roleType)
+        private Dictionary<IEmbeddedObject, object> ChangedRoleByAssociation(EmbeddedRoleType roleType)
         {
             if (!this.changedRoleByAssociationByRoleType.TryGetValue(roleType, out var changedRoleByAssociation))
             {

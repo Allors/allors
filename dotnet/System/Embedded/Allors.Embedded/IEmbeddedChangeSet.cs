@@ -15,6 +15,6 @@
 
         IReadOnlyDictionary<IEmbeddedObject, object> ChangedRoles(EmbeddedObjectType objectType, string name);
 
-        IReadOnlyDictionary<IEmbeddedObject, object> ChangedRoles(IEmbeddedRoleType roleType);
+        IReadOnlyDictionary<IEmbeddedObject, object> ChangedRoles(EmbeddedRoleType roleType);
     }
 }

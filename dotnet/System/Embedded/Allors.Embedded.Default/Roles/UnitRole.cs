@@ -4,7 +4,7 @@
 
     public class UnitRole<T> : Role, IUnitRole<T>
     {
-        public UnitRole(IEmbeddedObject @object, IEmbeddedRoleType roleType) : base(@object, roleType)
+        public UnitRole(IEmbeddedObject @object, EmbeddedRoleType roleType) : base(@object, roleType)
         {
         }
 

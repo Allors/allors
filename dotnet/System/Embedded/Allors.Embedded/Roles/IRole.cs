@@ -6,6 +6,6 @@
     {
         IEmbeddedObject Object { get; }
 
-        IEmbeddedRoleType RoleType { get; }
+        EmbeddedRoleType RoleType { get; }
     }
 }

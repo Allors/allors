@@ -6,6 +6,6 @@
     {
         IEmbeddedObject Object { get; }
 
-        IEmbeddedAssociationType AssociationType { get; }
+        EmbeddedAssociationType AssociationType { get; }
     }
 }

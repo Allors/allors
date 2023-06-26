@@ -4,7 +4,7 @@
 
     public class CompositeRole<TRole> : Role, ICompositeRole<TRole> where TRole : IEmbeddedObject
     {
-        public CompositeRole(IEmbeddedObject @object, IEmbeddedRoleType roleType) : base(@object, roleType)
+        public CompositeRole(IEmbeddedObject @object, EmbeddedRoleType roleType) : base(@object, roleType)
         {
         }
 
