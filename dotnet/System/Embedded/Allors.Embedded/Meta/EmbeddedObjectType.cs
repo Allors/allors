@@ -49,11 +49,11 @@
 
         public EmbeddedMeta Meta { get; }
 
+        public ISet<EmbeddedObjectType> SuperTypes { get; }
+
         public Type Type { get; }
 
-        public TypeCode TypeCode { get; }
-
-        public ISet<EmbeddedObjectType> SuperTypes { get; }
+        internal TypeCode TypeCode { get; }
 
         public IDictionary<string, EmbeddedAssociationType> AssociationTypeByName
         {
