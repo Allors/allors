@@ -19,8 +19,6 @@
         T New<T>(params Action<T>[] builders)
             where T : IEmbeddedObject;
 
-        IEmbeddedChangeSet Snapshot();
-
         void Derive();
 
         IUnitRole<T> GetUnitRole<T>(IEmbeddedObject obj, EmbeddedRoleType roleType);
@@ -31,7 +29,7 @@
         ICompositesRole<T> GetCompositesRole<T>(IEmbeddedObject obj, EmbeddedRoleType roleType)
             where T : IEmbeddedObject;
 
-        ICompositeAssociation<T> GetCompositeAssociation<T>(IEmbeddedObject obj, EmbeddedAssociationType associationType) 
+        ICompositeAssociation<T> GetCompositeAssociation<T>(IEmbeddedObject obj, EmbeddedAssociationType associationType)
             where T : IEmbeddedObject;
 
         ICompositesAssociation<T> GetCompositesAssociation<T>(IEmbeddedObject obj, EmbeddedAssociationType associationType)

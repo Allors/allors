@@ -8,6 +8,7 @@
            : base(population, objectType)
         {
             this.Name = GetUnitRole<string>("Name");
+            this.UppercasedName = GetUnitRole<string>("UppercasedName");
             this.FirstName = GetUnitRole<string>("FirstName");
             this.LastName = GetUnitRole<string>("LastName");
             this.FullName = GetUnitRole<string>("FullName");
@@ -20,6 +21,8 @@
         }
 
         public IUnitRole<string> Name { get; }
+        
+        public IUnitRole<string> UppercasedName { get; }
 
         public IUnitRole<string> FirstName { get; }
 

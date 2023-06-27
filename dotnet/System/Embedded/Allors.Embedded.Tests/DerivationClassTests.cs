@@ -4,12 +4,11 @@
     using System.Linq;
     using Allors.Embedded.Tests.Domain;
 
-    public class DerivationTests : Tests
+    public class DerivationClassTests : Tests
     {
         [Test]
         public void Derivation()
         {
-
             this.Population.DerivationById["FullName"] = new FullNameDerivation();
 
             var john = this.Population.New<Person>();
@@ -28,6 +27,7 @@
 
             this.Population.Derive();
 
+            Assert.That(john.FullName.Value, Is.EqualTo("John Doe"));
             Assert.That(jane.FullName.Value, Is.EqualTo("Jane Doe Chained"));
         }
 

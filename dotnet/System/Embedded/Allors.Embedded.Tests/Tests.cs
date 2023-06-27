@@ -13,6 +13,7 @@
                 v =>
                 {
                     v.AddUnit<INamed, string>(nameof(INamed.Name));
+                    v.AddUnit<INamed, string>(nameof(INamed.UppercasedName));
                     v.AddOneToOne<Organization, INamed>(nameof(Organization.Named));
                     v.AddOneToOne<Organization, Person>(nameof(Organization.Owner));
                     v.AddManyToMany<Organization, Person>("Employee");

@@ -9,6 +9,7 @@
         {
             this.Name = GetUnitRole<string>("Name");
             this.Named = GetCompositeRole<INamed>("Named");
+            this.UppercasedName = GetUnitRole<string>("UppercasedName");
             this.Owner = GetCompositeRole<Person>("Owner");
             this.Employees = GetCompositesRole<Person>("Employee");
 
@@ -17,6 +18,8 @@
 
         public IUnitRole<string> Name { get; }
 
+        public IUnitRole<string> UppercasedName { get; }
+        
         public ICompositeRole<INamed> Named { get; }
 
         public ICompositeRole<Person> Owner { get; }

@@ -28,9 +28,9 @@
 
         public IEnumerable<IEmbeddedObject> Objects => this.database.Objects;
 
-        public IEmbeddedObject New(Type t, params Action<IEmbeddedObject>[] builders)
+        public IEmbeddedObject New(Type type, params Action<IEmbeddedObject>[] builders)
         {
-            var @new = (IEmbeddedObject)Activator.CreateInstance(t, new object[] { this, this.Meta.GetOrAddObjectType(t) });
+            var @new = (IEmbeddedObject)Activator.CreateInstance(type, new object[] { this, this.Meta.GetOrAddObjectType(type) });
             this.database.AddObject(@new);
 
             foreach (var builder in builders)
