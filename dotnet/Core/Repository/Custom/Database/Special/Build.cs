@@ -1,4 +1,4 @@
-// <copyright file="Build.cs" company="Allors bv">
+﻿// <copyright file="Build.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // </copyright>
 
@@ -12,7 +12,6 @@ using Allors.Repository.Attributes;
 [Id("FFFCC7BD-252E-4EE7-B825-99CCBE2D5F49")]
 
 #endregion
-
 public class Build : Object
 {
     #region Allors
@@ -20,7 +19,7 @@ public class Build : Object
     [Id("A3DED776-B516-4C38-9B5F-5DEBFAFD15CB")]
 
     #endregion
-
+    [Required]
     public Guid Guid { get; set; }
 
     #region Allors
@@ -28,7 +27,6 @@ public class Build : Object
     [Id("19112701-B610-49FC-82B8-FB786EEBCDB4")]
 
     #endregion
-
     public string String { get; set; }
 
     #region inherited
@@ -38,6 +36,11 @@ public class Build : Object
 
 
     public SecurityToken[] SecurityTokens { get; set; }
+
+    public void OnBuild()
+    {
+        
+    }
 
     public void OnPostBuild()
     {

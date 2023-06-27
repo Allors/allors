@@ -1,4 +1,4 @@
-// <copyright file="ExecutePermission.cs" company="Allors bv">
+﻿// <copyright file="ExecutePermission.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // </copyright>
 
@@ -33,6 +33,11 @@ public partial class ExecutePermission : Permission
 
     public Guid ClassPointer { get; set; }
 
+
+    public void OnBuild()
+    {
+        
+    }
 
     public void OnPostBuild() { }
 

@@ -1,4 +1,4 @@
-// <copyright file="AccessClass.cs" company="Allors bv">
+﻿// <copyright file="AccessClass.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // </copyright>
 
@@ -38,6 +38,11 @@ public class AccessClass : AccessInterface
 
     public Revocation[] Revocations { get; set; }
 
+
+    public void OnBuild()
+    {
+        throw new System.NotImplementedException();
+    }
 
     public void OnPostBuild()
     {

@@ -1,4 +1,4 @@
-// <copyright file="UnitSample.cs" company="Allors bv">
+﻿// <copyright file="UnitSample.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // </copyright>
 
@@ -161,6 +161,11 @@ public class UnitSample : Object
 
 
     public SecurityToken[] SecurityTokens { get; set; }
+    public void OnBuild()
+    {
+        
+    }
+
     public void OnPostBuild() { }
 
     public void OnInit()

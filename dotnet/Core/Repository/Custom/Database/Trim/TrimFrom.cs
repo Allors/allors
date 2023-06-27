@@ -1,4 +1,4 @@
-// <copyright file="TrimFrom.cs" company="Allors bv">
+﻿// <copyright file="TrimFrom.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // </copyright>
 
@@ -48,6 +48,11 @@ public class TrimFrom : Object
 
 
     public SecurityToken[] SecurityTokens { get; set; }
+
+    public void OnBuild()
+    {
+        throw new System.NotImplementedException();
+    }
 
     public void OnPostBuild() { }
 

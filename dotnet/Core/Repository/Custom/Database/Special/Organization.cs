@@ -1,4 +1,4 @@
-// <copyright file="Organization.cs" company="Allors bv">
+﻿// <copyright file="Organization.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // </copyright>
 
@@ -201,6 +201,11 @@ public class Organization : Deletable, UniquelyIdentifiable
 
 
     public SecurityToken[] SecurityTokens { get; set; }
+
+    public void OnBuild()
+    {
+        
+    }
 
     public void OnPostBuild() { }
 

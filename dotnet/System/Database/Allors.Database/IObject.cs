@@ -34,5 +34,11 @@ public interface IObject : IDataObject
     ///     OnPostBuild
     /// </summary>
     /// <value>The object id.</value>
+    void OnBuild();
+
+    /// <summary>
+    ///     OnPostBuild
+    /// </summary>
+    /// <value>The object id.</value>
     void OnPostBuild();
 }

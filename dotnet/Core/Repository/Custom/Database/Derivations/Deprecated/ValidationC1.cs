@@ -1,4 +1,4 @@
-// <copyright file="ValidationC1.cs" company="Allors bv">
+﻿// <copyright file="ValidationC1.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // </copyright>
 
@@ -24,6 +24,11 @@ public class ValidationC1 : Object, ValidationI12
 
 
     public SecurityToken[] SecurityTokens { get; set; }
+
+    public void OnBuild()
+    {
+        
+    }
 
     public void OnPostBuild() { }
 

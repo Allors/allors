@@ -1,4 +1,4 @@
-// <copyright file="Person.cs" company="Allors bv">
+﻿// <copyright file="Person.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // </copyright>
 
@@ -233,6 +233,11 @@ public class Person : User
     public int UserAccessFailedCount { get; set; }
 
     public Login[] Logins { get; set; }
+
+    public void OnBuild()
+    {
+        
+    }
 
     public void OnPostBuild() { }
 

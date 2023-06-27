@@ -1,4 +1,4 @@
-// <copyright file="TraceZ.cs" company="Allors bv">
+﻿// <copyright file="TraceZ.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // </copyright>
 
@@ -95,6 +95,11 @@ public class TraceZ : Object
 
 
     public SecurityToken[] SecurityTokens { get; set; }
+
+    public void OnBuild()
+    {
+        
+    }
 
     public void OnPostBuild() { }
 

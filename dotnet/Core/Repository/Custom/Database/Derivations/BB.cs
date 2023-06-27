@@ -1,4 +1,4 @@
-// <copyright file="BB.cs" company="Allors bv">
+﻿// <copyright file="BB.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // </copyright>
 
@@ -113,6 +113,11 @@ public class BB : Object
 
 
     public SecurityToken[] SecurityTokens { get; set; }
+
+    public void OnBuild()
+    {
+        throw new System.NotImplementedException();
+    }
 
     public void OnPostBuild() { }
 

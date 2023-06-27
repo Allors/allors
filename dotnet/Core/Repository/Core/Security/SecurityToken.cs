@@ -1,4 +1,4 @@
-// <copyright file="SecurityToken.cs" company="Allors bv">
+﻿// <copyright file="SecurityToken.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // </copyright>
 
@@ -33,6 +33,11 @@ public partial class SecurityToken : UniquelyIdentifiable, Deletable
     public SecurityToken[] SecurityTokens { get; set; }
 
     public Guid UniqueId { get; set; }
+
+    public void OnBuild()
+    {
+        
+    }
 
     public void OnPostBuild() { }
 

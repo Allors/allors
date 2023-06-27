@@ -1,4 +1,4 @@
-// <copyright file="CC.cs" company="Allors bv">
+﻿// <copyright file="CC.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // </copyright>
 
@@ -40,6 +40,11 @@ public class CC : Object
 
 
     public SecurityToken[] SecurityTokens { get; set; }
+
+    public void OnBuild()
+    {
+        throw new System.NotImplementedException();
+    }
 
     public void OnPostBuild() { }
 

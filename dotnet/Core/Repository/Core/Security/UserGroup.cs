@@ -1,4 +1,4 @@
-// <copyright file="UserGroup.cs" company="Allors bv">
+﻿// <copyright file="UserGroup.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // </copyright>
 
@@ -36,6 +36,11 @@ public partial class UserGroup : UniquelyIdentifiable
 
 
     public SecurityToken[] SecurityTokens { get; set; }
+
+    public void OnBuild()
+    {
+        
+    }
 
     public void OnPostBuild() { }
 

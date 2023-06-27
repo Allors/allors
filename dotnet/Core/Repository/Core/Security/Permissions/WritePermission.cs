@@ -1,4 +1,4 @@
-// <copyright file="WritePermission.cs" company="Allors bv">
+﻿// <copyright file="WritePermission.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // </copyright>
 
@@ -29,6 +29,11 @@ public partial class WritePermission : Permission
     public SecurityToken[] SecurityTokens { get; set; }
 
     public Guid ClassPointer { get; set; }
+
+    public void OnBuild()
+    {
+        
+    }
 
     public void OnPostBuild() { }
 

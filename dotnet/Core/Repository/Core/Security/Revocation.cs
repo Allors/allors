@@ -1,4 +1,4 @@
-// <copyright file="Revocation.cs" company="Allors bv">
+﻿// <copyright file="Revocation.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // </copyright>
 
@@ -28,6 +28,11 @@ public partial class Revocation : UniquelyIdentifiable, Deletable
 
 
     public SecurityToken[] SecurityTokens { get; set; }
+
+    public void OnBuild()
+    {
+        
+    }
 
     public void OnPostBuild() { }
 

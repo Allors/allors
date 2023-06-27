@@ -1,4 +1,4 @@
-// <copyright file="OverrideClass.cs" company="Allors bv">
+﻿// <copyright file="OverrideClass.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // </copyright>
 
@@ -24,6 +24,11 @@ public class OverrideClass : OverrideInterface
 
 
     public SecurityToken[] SecurityTokens { get; set; }
+
+    public void OnBuild()
+    {
+        throw new System.NotImplementedException();
+    }
 
     public void OnPostBuild() { }
 

@@ -129,12 +129,13 @@ public class Transaction : ITransaction
     {
         var objectType = this.Database.ObjectFactory.GetObjectType(typeof(T));
 
-        if (!(objectType is IClass @class))
+        if (objectType is not IClass @class)
         {
-            throw new Exception("IObjectType should be a class");
+            throw new ArgumentException("IObjectType should be a class");
         }
 
         var newObject = (T)this.CreateWithoutOnBuild(@class);
+        newObject.OnBuild();
         newObject.OnPostBuild();
 
         return newObject;
@@ -144,15 +145,16 @@ public class Transaction : ITransaction
     {
         var objectType = this.Database.ObjectFactory.GetObjectType(typeof(T));
 
-        if (!(objectType is IClass @class))
+        if (objectType is not IClass @class)
         {
-            throw new Exception("IObjectType should be a class");
+            throw new ArgumentException("IObjectType should be a class");
         }
 
         var newObject = (T)this.CreateWithoutOnBuild(@class);
 
         builder?.Invoke(newObject);
 
+        newObject.OnBuild();
         newObject.OnPostBuild();
 
         return newObject;
@@ -162,9 +164,9 @@ public class Transaction : ITransaction
     {
         var objectType = this.Database.ObjectFactory.GetObjectType(typeof(T));
 
-        if (!(objectType is IClass @class))
+        if (objectType is not IClass @class)
         {
-            throw new Exception("IObjectType should be a class");
+            throw new ArgumentException("IObjectType should be a class");
         }
 
         var newObject = (T)this.CreateWithoutOnBuild(@class);
@@ -177,6 +179,7 @@ public class Transaction : ITransaction
             }
         }
 
+        newObject.OnBuild();
         newObject.OnPostBuild();
 
         return newObject;
@@ -186,9 +189,9 @@ public class Transaction : ITransaction
     {
         var objectType = this.Database.ObjectFactory.GetObjectType(typeof(T));
 
-        if (!(objectType is IClass @class))
+        if (objectType is not IClass @class)
         {
-            throw new Exception("IObjectType should be a class");
+            throw new ArgumentException("IObjectType should be a class");
         }
 
         var newObject = (T)this.CreateWithoutOnBuild(@class);
@@ -203,6 +206,7 @@ public class Transaction : ITransaction
 
         extraBuilder?.Invoke(newObject);
 
+        newObject.OnBuild();
         newObject.OnPostBuild();
 
         return newObject;
@@ -212,9 +216,9 @@ public class Transaction : ITransaction
     {
         var objectType = this.Database.ObjectFactory.GetObjectType(typeof(T));
 
-        if (!(objectType is IClass @class))
+        if (objectType is not IClass @class)
         {
-            throw new Exception("IObjectType should be a class");
+            throw new ArgumentException("IObjectType should be a class");
         }
 
         var newObject = (T)this.CreateWithoutOnBuild(@class);
@@ -232,6 +236,7 @@ public class Transaction : ITransaction
             extraBuilder?.Invoke(newObject);
         }
 
+        newObject.OnBuild();
         newObject.OnPostBuild();
 
         return newObject;
@@ -240,6 +245,7 @@ public class Transaction : ITransaction
     public virtual IObject Build(IClass objectType)
     {
         var newObject = this.CreateWithoutOnBuild(objectType);
+        newObject.OnBuild();
         newObject.OnPostBuild();
         return newObject;
     }
@@ -251,6 +257,7 @@ public class Transaction : ITransaction
         for (var i = 0; i < count; i++)
         {
             var newObject = this.CreateWithoutOnBuild(objectType);
+            newObject.OnBuild();
             newObject.OnPostBuild();
             allorsObjects[i] = newObject;
         }
@@ -262,9 +269,9 @@ public class Transaction : ITransaction
     {
         var objectType = this.Database.ObjectFactory.GetObjectType(typeof(TObject));
 
-        if (!(objectType is IClass @class))
+        if (objectType is not IClass @class)
         {
-            throw new Exception("IObjectType should be a class");
+            throw new ArgumentException("IObjectType should be a class");
         }
 
         var materializedArgs = args as IReadOnlyCollection<TArgument> ?? args.ToArray();
@@ -276,13 +283,13 @@ public class Transaction : ITransaction
         {
             var newObject = (TObject)this.CreateWithoutOnBuild(@class);
             builder?.Invoke(newObject, arg);
+            newObject.OnBuild();
             newObject.OnPostBuild();
             newObjects[index++] = newObject;
         }
 
         return newObjects;
     }
-
 
     public IObject Instantiate(string objectIdString) => long.TryParse(objectIdString, out var id) ? this.Instantiate(id) : null;
 

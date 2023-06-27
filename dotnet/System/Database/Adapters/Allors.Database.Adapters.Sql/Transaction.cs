@@ -89,12 +89,13 @@ public sealed class Transaction : ITransaction
     {
         var objectType = this.Database.ObjectFactory.GetObjectType(typeof(T));
 
-        if (!(objectType is IClass @class))
+        if (objectType is not IClass @class)
         {
-            throw new Exception("IObjectType should be a class");
+            throw new ArgumentException("IObjectType should be a class");
         }
 
         var newObject = (T)this.CreateWithoutOnBuild(@class);
+        newObject.OnBuild();
         newObject.OnPostBuild();
 
         return newObject;
@@ -104,15 +105,16 @@ public sealed class Transaction : ITransaction
     {
         var objectType = this.Database.ObjectFactory.GetObjectType(typeof(T));
 
-        if (!(objectType is IClass @class))
+        if (objectType is not IClass @class)
         {
-            throw new Exception("IObjectType should be a class");
+            throw new ArgumentException("IObjectType should be a class");
         }
 
         var newObject = (T)this.CreateWithoutOnBuild(@class);
 
         builder?.Invoke(newObject);
 
+        newObject.OnBuild(); 
         newObject.OnPostBuild();
 
         return newObject;
@@ -122,9 +124,9 @@ public sealed class Transaction : ITransaction
     {
         var objectType = this.Database.ObjectFactory.GetObjectType(typeof(T));
 
-        if (!(objectType is IClass @class))
+        if (objectType is not IClass @class)
         {
-            throw new Exception("IObjectType should be a class");
+            throw new ArgumentException("IObjectType should be a class");
         }
 
         var newObject = (T)this.CreateWithoutOnBuild(@class);
@@ -137,6 +139,7 @@ public sealed class Transaction : ITransaction
             }
         }
 
+        newObject.OnBuild(); 
         newObject.OnPostBuild();
 
         return newObject;
@@ -146,9 +149,9 @@ public sealed class Transaction : ITransaction
     {
         var objectType = this.Database.ObjectFactory.GetObjectType(typeof(T));
 
-        if (!(objectType is IClass @class))
+        if (objectType is not IClass @class)
         {
-            throw new Exception("IObjectType should be a class");
+            throw new ArgumentException("IObjectType should be a class");
         }
 
         var newObject = (T)this.CreateWithoutOnBuild(@class);
@@ -162,7 +165,8 @@ public sealed class Transaction : ITransaction
         }
 
         extraBuilder?.Invoke(newObject);
-
+        
+        newObject.OnBuild(); 
         newObject.OnPostBuild();
 
         return newObject;
@@ -172,9 +176,9 @@ public sealed class Transaction : ITransaction
     {
         var objectType = this.Database.ObjectFactory.GetObjectType(typeof(T));
 
-        if (!(objectType is IClass @class))
+        if (objectType is not IClass @class)
         {
-            throw new Exception("IObjectType should be a class");
+            throw new ArgumentException("IObjectType should be a class");
         }
 
         var newObject = (T)this.CreateWithoutOnBuild(@class);
@@ -192,6 +196,7 @@ public sealed class Transaction : ITransaction
             extraBuilder?.Invoke(newObject);
         }
 
+        newObject.OnBuild(); 
         newObject.OnPostBuild();
 
         return newObject;
@@ -200,6 +205,7 @@ public sealed class Transaction : ITransaction
     public IObject Build(IClass objectType)
     {
         var newObject = this.CreateWithoutOnBuild(objectType);
+        newObject.OnBuild(); 
         newObject.OnPostBuild();
         return newObject;
     }
@@ -223,6 +229,7 @@ public sealed class Transaction : ITransaction
             this.State.ChangeLog.OnCreated(reference.Strategy);
 
             var newObject = reference.Strategy.GetObject();
+            newObject.OnBuild(); 
             newObject.OnPostBuild();
             domainObjects[i] = newObject;
         }
@@ -234,9 +241,9 @@ public sealed class Transaction : ITransaction
     {
         var objectType = this.Database.ObjectFactory.GetObjectType(typeof(TObject));
 
-        if (!(objectType is IClass @class))
+        if (objectType is not IClass @class)
         {
-            throw new Exception("IObjectType should be a class");
+            throw new ArgumentException("IObjectType should be a class");
         }
 
         var materializedArgs = args as IReadOnlyCollection<TArgument> ?? args.ToArray();
@@ -256,6 +263,7 @@ public sealed class Transaction : ITransaction
 
             var newObject = (TObject)reference.Strategy.GetObject();
             builder?.Invoke(newObject, arg);
+            newObject.OnBuild(); 
             newObject.OnPostBuild();
             domainObjects[i] = newObject;
             i++;

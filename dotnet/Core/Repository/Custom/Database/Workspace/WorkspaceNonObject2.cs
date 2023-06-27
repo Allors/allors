@@ -1,4 +1,4 @@
-// <copyright file="WorkspaceNonObject2.cs" company="Allors bv">
+﻿// <copyright file="WorkspaceNonObject2.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // </copyright>
 
@@ -21,6 +21,11 @@ public class WorkspaceNonObject2 : Object
 
 
     public SecurityToken[] SecurityTokens { get; set; }
+
+    public void OnBuild()
+    {
+        throw new System.NotImplementedException();
+    }
 
     public void OnPostBuild() { }
 

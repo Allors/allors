@@ -1,4 +1,4 @@
-// <copyright file="C1.cs" company="Allors bv">
+﻿// <copyright file="C1.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // </copyright>
 
@@ -573,6 +573,11 @@ public class C1 : I1, DerivationCounted, Object
     public bool ChangedRolePongI1 { get; set; }
     public bool ChangedRolePingC1 { get; set; }
     public bool ChangedRolePongC1 { get; set; }
+
+    public void OnBuild()
+    {
+        
+    }
 
     public void OnPostBuild() { }
 

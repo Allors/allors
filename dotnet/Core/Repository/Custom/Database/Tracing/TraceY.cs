@@ -1,4 +1,4 @@
-// <copyright file="TraceY.cs" company="Allors bv">
+﻿// <copyright file="TraceY.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // </copyright>
 
@@ -137,6 +137,11 @@ public class TraceY : Object
 
 
     public SecurityToken[] SecurityTokens { get; set; }
+
+    public void OnBuild()
+    {
+        
+    }
 
     public void OnPostBuild() { }
 

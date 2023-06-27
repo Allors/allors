@@ -22,6 +22,11 @@ public class WorkspaceYObject2 : Object
 
     public SecurityToken[] SecurityTokens { get; set; }
 
+    public void OnBuild()
+    {
+        throw new System.NotImplementedException();
+    }
+
     public void OnPostBuild() { }
 
     public void OnInit()

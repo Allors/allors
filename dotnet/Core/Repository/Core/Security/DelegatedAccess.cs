@@ -1,4 +1,4 @@
-// <copyright file="DelegatedAccess.cs" company="Allors bv">
+﻿// <copyright file="DelegatedAccess.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // </copyright>
 
@@ -35,6 +35,11 @@ public partial class DelegatedAccess : UniquelyIdentifiable, Deletable
 
 
     public Guid UniqueId { get; set; }
+
+    public void OnBuild()
+    {
+        
+    }
 
     public void OnPostBuild() { }
 

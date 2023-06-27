@@ -1,4 +1,4 @@
-// <copyright file="Grant.cs" company="Allors bv">
+﻿// <copyright file="Grant.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // </copyright>
 
@@ -55,6 +55,11 @@ public partial class Grant : UniquelyIdentifiable, Deletable
     public Revocation[] Revocations { get; set; }
 
     public SecurityToken[] SecurityTokens { get; set; }
+
+    public void OnBuild()
+    {
+        
+    }
 
     public void OnPostBuild() { }
 

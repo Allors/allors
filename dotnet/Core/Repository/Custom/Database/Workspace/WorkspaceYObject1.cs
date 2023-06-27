@@ -1,4 +1,4 @@
-// <copyright file="WorkspaceYObject1.cs" company="Allors bv">
+﻿// <copyright file="WorkspaceYObject1.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // </copyright>
 
@@ -197,6 +197,11 @@ public class WorkspaceYObject1 : Object
 
 
     public SecurityToken[] SecurityTokens { get; set; }
+
+    public void OnBuild()
+    {
+        throw new System.NotImplementedException();
+    }
 
     public void OnPostBuild() { }
 

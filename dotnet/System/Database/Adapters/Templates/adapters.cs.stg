@@ -182,6 +182,9 @@ namespace Allors.Database.Domain
             get { return this.strategy; }
         }
 
+        public bool onBuild = false;
+        void IObject.OnBuild() => this.onBuild = true;
+
         public bool onPostBuild = false;
         void IObject.OnPostBuild() => this.onPostBuild = true;
 
