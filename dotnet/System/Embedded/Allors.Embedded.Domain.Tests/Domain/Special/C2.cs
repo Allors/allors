@@ -7,7 +7,7 @@
         public C2(IEmbeddedPopulation population, EmbeddedObjectType objectType)
            : base(population, objectType)
         {
-            this.Same = GetUnitRole<string>("Same");
+            this.Same = GetUnitRole<string>(nameof(Same));
         }
 
         public IUnitRole<string> Same { get; }

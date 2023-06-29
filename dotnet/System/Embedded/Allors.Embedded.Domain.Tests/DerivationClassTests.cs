@@ -7,7 +7,7 @@
     public abstract class DerivationClassTests : Tests
     {
         [Test]
-        public void Derivation()
+        public void String()
         {
             this.Population.DerivationById["FullName"] = new FullNameDerivation();
 
@@ -30,6 +30,34 @@
             Assert.That(john.FullName.Value, Is.EqualTo("John Doe"));
             Assert.That(jane.FullName.Value, Is.EqualTo("Jane Doe Chained"));
         }
+
+
+        [Test]
+        public void ArrayOfString()
+        {
+            this.Population.DerivationById["Aliases"] = new AliasesDerivation();
+
+            var acme = this.Population.New<Organization>();
+
+            // TODO: Create derivation rule
+
+            //this.Population.Derive();
+
+            //Assert.That(acme.DisplayAliases.Value, Is.EqualTo("Nada"));
+
+            acme.Aliases.Value = new string[] { "Bim", "Bam", "Bom" };
+            
+            this.Population.Derive();
+
+            Assert.That(acme.DisplayAliases.Value, Is.EqualTo("Bim, Bam, Bom"));
+
+            acme.Aliases.Value = null;
+
+            this.Population.Derive();
+
+            Assert.That(acme.DisplayAliases.Value, Is.EqualTo("Nada"));
+        }
+
 
         public class FullNameDerivation : IEmbeddedDerivation
         {
@@ -79,6 +107,27 @@
                     foreach (var person in people.Cast<Person>())
                     {
                         person.FullName.Value = $"{person.FullName.Value} Chained";
+                    }
+                }
+            }
+        }
+
+        public class AliasesDerivation : IEmbeddedDerivation
+        {
+            public void Derive(IEmbeddedChangeSet changeSet)
+            {
+                var aliases = changeSet.ChangedRoles<Organization>("Aliases");
+
+                if (aliases.Any())
+                {
+                    var organizations = aliases.Select(v => v.Key).Distinct();
+
+                    foreach (var organization in organizations.Cast<Organization>())
+                    {
+                        // Dummy updates ...
+                        organization.Aliases.Value = organization.Aliases.Value;
+
+                        organization.DisplayAliases.Value = organization.Aliases.Value?.Length > 0 ? string.Join(", ", organization.Aliases.Value) : "Nada";
                     }
                 }
             }

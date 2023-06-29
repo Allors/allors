@@ -134,7 +134,7 @@
             this.Objects = NullableArraySet.Add(this.Objects, newObject);
         }
 
-        internal void GetRoleValue(IEmbeddedObject association, EmbeddedRoleType roleType, out object role)
+        internal void GetRoleValue(IEmbeddedObject association, EmbeddedRoleType roleType, out object? role)
         {
             if (this.changedRoleByAssociationByRoleType.TryGetValue(roleType, out var changedRoleByAssociation) &&
                 changedRoleByAssociation.TryGetValue(association, out role))
@@ -145,7 +145,7 @@
             this.RoleByAssociation(roleType).TryGetValue(association, out role);
         }
 
-        internal void SetRoleValue(IEmbeddedObject association, EmbeddedRoleType roleType, object role)
+        internal void SetRoleValue(IEmbeddedObject association, EmbeddedRoleType roleType, object? role)
         {
             if (role == null)
             {
@@ -281,7 +281,26 @@
 
         internal void RemoveRoleValue(IEmbeddedObject association, EmbeddedRoleType roleType)
         {
-            throw new NotImplementedException();
+            if (roleType.IsUnit || roleType.IsOne)
+            {
+                // Role
+                this.ChangedRoleByAssociation(roleType)[association] = null;
+            }
+            else
+            {
+                var associationType = roleType.AssociationType;
+                this.GetRoleValue(association, roleType, out object previousRole);
+
+                var previousRoles = (IEmbeddedObject[])previousRole;
+
+                if (previousRoles != null)
+                {
+                    foreach (var removeRole in previousRoles)
+                    {
+                        this.RemoveRoleValue(association, roleType, removeRole);
+                    }
+                }
+            }
         }
 
         internal void GetAssociationValue(IEmbeddedObject role, EmbeddedAssociationType associationType, out object association)

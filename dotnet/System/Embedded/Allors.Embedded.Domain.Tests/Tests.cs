@@ -13,7 +13,8 @@
             meta.AddUnit<INamed, string>(nameof(INamed.Name));
             meta.AddUnit<INamed, string>(nameof(INamed.UppercasedName));
             meta.AddOneToOne<Organization, INamed>(nameof(Organization.Named));
-            meta.AddOneToOne<Organization, string[]>(nameof(Organization.Aliases));
+            meta.AddUnit<Organization, string[]>(nameof(Organization.Aliases));
+            meta.AddUnit<INamed, string>(nameof(Organization.DisplayAliases));
             meta.AddOneToOne<Organization, Person>(nameof(Organization.Owner));
             meta.AddManyToMany<Organization, Person>("Employee");
             meta.AddUnit<Person, string>(nameof(Person.FirstName));

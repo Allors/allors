@@ -7,14 +7,15 @@
         public Organization(IEmbeddedPopulation population, EmbeddedObjectType objectType)
            : base(population, objectType)
         {
-            this.Name = GetUnitRole<string>("Name");
-            this.Named = GetCompositeRole<INamed>("Named");
-            this.UppercasedName = GetUnitRole<string>("UppercasedName");
-            this.Aliases = GetUnitRole<string[]>("Aliases");
-            this.Owner = GetCompositeRole<Person>("Owner");
-            this.Employees = GetCompositesRole<Person>("Employee");
+            this.Name = GetUnitRole<string>(nameof(Name));
+            this.Named = GetCompositeRole<INamed>(nameof(Named));
+            this.UppercasedName = GetUnitRole<string>(nameof(UppercasedName));
+            this.Aliases = GetUnitRole<string[]>(nameof(Aliases));
+            this.DisplayAliases = GetUnitRole<string>(nameof(DisplayAliases));
+            this.Owner = GetCompositeRole<Person>(nameof(Owner));
+            this.Employees = GetCompositesRole<Person>(nameof(Employees));
 
-            this.OrganizationWhereNamed = GetCompositeAssociation<Organization>("OrganizationWhereNamed");
+            this.OrganizationWhereNamed = GetCompositeAssociation<Organization>(nameof(OrganizationWhereNamed));
         }
        
         public IUnitRole<string> Name { get; }
@@ -24,6 +25,8 @@
         public ICompositeRole<INamed> Named { get; }
 
         public IUnitRole<string[]> Aliases { get; }
+
+        public IUnitRole<string> DisplayAliases { get; }
 
         public ICompositeRole<Person> Owner { get; }
 

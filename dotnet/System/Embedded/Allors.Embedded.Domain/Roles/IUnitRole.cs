@@ -2,7 +2,7 @@
 {
     public interface IUnitRole<T> : IRole
     {
-        T Value
+        T? Value
         {
             get;
             set;
