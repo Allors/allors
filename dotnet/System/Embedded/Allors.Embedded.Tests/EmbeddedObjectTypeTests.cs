@@ -2,7 +2,7 @@
 {
     using Allors.Embedded.Tests.Domain;
 
-    public class EmbeddedObjectTypeTests : Tests
+    public abstract class EmbeddedObjectTypeTests : Tests
     {
         [Test]
         public void SameUnitTypeName()

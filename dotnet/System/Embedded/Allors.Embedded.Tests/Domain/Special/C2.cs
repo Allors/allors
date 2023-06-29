@@ -4,7 +4,7 @@
 
     public class C2 : EmbeddedObject
     {
-        public C2(EmbeddedPopulation population, EmbeddedObjectType objectType)
+        public C2(IEmbeddedPopulation population, EmbeddedObjectType objectType)
            : base(population, objectType)
         {
             this.Same = GetUnitRole<string>("Same");

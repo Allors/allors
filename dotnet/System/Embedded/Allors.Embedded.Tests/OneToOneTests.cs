@@ -2,7 +2,7 @@
 {
     using Allors.Embedded.Tests.Domain;
 
-    public class OneToOneTests : Tests
+    public abstract class OneToOneTests : Tests
     {
         [Test]
         public void StaticPropertySet()

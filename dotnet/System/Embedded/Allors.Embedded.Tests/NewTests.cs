@@ -2,7 +2,7 @@
 {
     using Allors.Embedded.Tests.Domain;
 
-    public class EmbeddedPopulationTests : Tests
+    public abstract class NewTests : Tests
     {
         [Test]
         public void New()

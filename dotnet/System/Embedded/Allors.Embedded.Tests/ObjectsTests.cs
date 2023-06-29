@@ -4,7 +4,7 @@
     using System.Linq;
     using Allors.Embedded.Tests.Domain;
 
-    public class ObjectsTests : Tests
+    public abstract class ObjectsTests : Tests
     {
         [Test]
         public void Filter()

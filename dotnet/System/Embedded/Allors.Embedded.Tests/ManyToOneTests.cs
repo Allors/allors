@@ -1,6 +1,6 @@
 ﻿namespace Allors.Embedded.Tests
 {
-    public class ManyToOneTests : Tests
+    public abstract class ManyToOneTests : Tests
     {
     }
 }

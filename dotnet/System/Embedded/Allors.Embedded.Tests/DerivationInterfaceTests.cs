@@ -3,7 +3,7 @@
     using System.Linq;
     using Allors.Embedded.Tests.Domain;
 
-    public class DerivationInterfaceTests : Tests
+    public abstract class DerivationInterfaceTests : Tests
     {
         [Test]
         public void Derivation()

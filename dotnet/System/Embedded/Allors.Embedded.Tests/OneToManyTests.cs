@@ -1,6 +1,6 @@
 ﻿namespace Allors.Embedded.Tests
 {
-    public class OneToManyTests : Tests
+    public abstract class OneToManyTests : Tests
     {
         //[Test]
         //public void AddSameAssociation()

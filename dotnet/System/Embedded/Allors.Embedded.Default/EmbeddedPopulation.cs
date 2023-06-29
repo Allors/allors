@@ -8,16 +8,11 @@
     {
         private readonly EmbeddedDatabase database;
 
-        public EmbeddedPopulation(params Action<EmbeddedMeta>[] builders)
+        public EmbeddedPopulation()
         {
             this.Meta = new EmbeddedMeta();
             this.DerivationById = new Dictionary<string, IEmbeddedDerivation>();
             this.database = new EmbeddedDatabase(this.Meta);
-
-            foreach (var builder in builders)
-            {
-                builder?.Invoke(this.Meta);
-            }
         }
 
         EmbeddedMeta IEmbeddedPopulation.Meta => this.Meta;

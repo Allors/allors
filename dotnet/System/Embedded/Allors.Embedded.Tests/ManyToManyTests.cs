@@ -2,7 +2,7 @@
 {
     using Allors.Embedded.Tests.Domain;
 
-    public class ManyToManyTests : Tests
+    public abstract class ManyToManyTests : Tests
     {
         [Test]
         public void AddSingleActiveLink()

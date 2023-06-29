@@ -2,7 +2,7 @@
 {
     using Domain;
 
-    public class UnitRoleTests : Tests
+    public abstract class UnitRoleTests : Tests
     {
         [Test]
         public void String()

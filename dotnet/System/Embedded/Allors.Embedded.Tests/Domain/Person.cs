@@ -4,7 +4,7 @@
 
     public class Person : EmbeddedObject, INamed
     {
-        public Person(EmbeddedPopulation population, EmbeddedObjectType objectType)
+        public Person(IEmbeddedPopulation population, EmbeddedObjectType objectType)
            : base(population, objectType)
         {
             this.Name = GetUnitRole<string>("Name");

@@ -4,7 +4,7 @@
     using System.Linq;
     using Allors.Embedded.Tests.Domain;
 
-    public class DerivationClassTests : Tests
+    public abstract class DerivationClassTests : Tests
     {
         [Test]
         public void Derivation()

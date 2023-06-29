@@ -4,28 +4,26 @@
 
     public abstract class Tests
     {
-        public EmbeddedPopulation Population { get; private set; }
+        public abstract IEmbeddedPopulation Population { get; }
 
-        [SetUp]
-        public void Setup()
+        public virtual void SetUp()
         {
-            this.Population = new EmbeddedPopulation(
-                v =>
-                {
-                    v.AddUnit<INamed, string>(nameof(INamed.Name));
-                    v.AddUnit<INamed, string>(nameof(INamed.UppercasedName));
-                    v.AddOneToOne<Organization, INamed>(nameof(Organization.Named));
-                    v.AddOneToOne<Organization, Person>(nameof(Organization.Owner));
-                    v.AddManyToMany<Organization, Person>("Employee");
-                    v.AddUnit<Person, string>(nameof(Person.FirstName));
-                    v.AddUnit<Person, string>(nameof(Person.LastName));
-                    v.AddUnit<Person, string>(nameof(Person.FullName));
-                    v.AddUnit<Person, DateTime>(nameof(Person.DerivedAt));
-                    v.AddUnit<Person, string>(nameof(Person.Greeting));
-                    // Special
-                    v.AddUnit<C1, string>(nameof(C1.Same));
-                    v.AddUnit<C2, string>(nameof(C2.Same));
-                });
+            var meta = this.Population.Meta;
+
+            meta.AddUnit<INamed, string>(nameof(INamed.Name));
+            meta.AddUnit<INamed, string>(nameof(INamed.UppercasedName));
+            meta.AddOneToOne<Organization, INamed>(nameof(Organization.Named));
+            meta.AddOneToOne<Organization, string[]>(nameof(Organization.Aliases));
+            meta.AddOneToOne<Organization, Person>(nameof(Organization.Owner));
+            meta.AddManyToMany<Organization, Person>("Employee");
+            meta.AddUnit<Person, string>(nameof(Person.FirstName));
+            meta.AddUnit<Person, string>(nameof(Person.LastName));
+            meta.AddUnit<Person, string>(nameof(Person.FullName));
+            meta.AddUnit<Person, DateTime>(nameof(Person.DerivedAt));
+            meta.AddUnit<Person, string>(nameof(Person.Greeting));
+            // Special
+            meta.AddUnit<C1, string>(nameof(C1.Same));
+            meta.AddUnit<C2, string>(nameof(C2.Same));
         }
     }
 }

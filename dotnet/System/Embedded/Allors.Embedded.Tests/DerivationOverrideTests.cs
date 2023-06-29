@@ -4,7 +4,7 @@
     using System.Linq;
     using Domain;
 
-    public class DerivationOverrideTests : Tests
+    public abstract class DerivationOverrideTests : Tests
     {
         [Test]
         public void Derivation()
