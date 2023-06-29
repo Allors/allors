@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Allors.Embedded.Meta.EmbeddedMeta">
+    <Position X="2.75" Y="0.5" Width="3" />
+    <Members>
+      <Field Name="objectTypeByType" Hidden="true" />
+      <Method Name="Pluralize" Hidden="true" />
+      <Method Name="ResetDerivations" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAAQAAAAAAAAAAAACYAABAgAAAAAAQACACA=</HashCode>
+      <FileName>Meta\EmbeddedMeta.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="ObjectTypeByType" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Allors.Embedded.Meta.EmbeddedObjectType">
+    <Position X="7.75" Y="0.5" Width="1.75" />
+    <Members>
+      <Method Name="AddAssociationType" Hidden="true" />
+      <Method Name="AddManyToMany" Hidden="true" />
+      <Method Name="AddManyToOne" Hidden="true" />
+      <Method Name="AddOneToMany" Hidden="true" />
+      <Method Name="AddOneToOne" Hidden="true" />
+      <Method Name="AddRoleType" Hidden="true" />
+      <Method Name="AddUnit" Hidden="true" />
+      <Field Name="assignedAssociationTypeByName" Hidden="true" />
+      <Field Name="assignedRoleTypeByName" Hidden="true" />
+      <Method Name="CheckNames" Hidden="true" />
+      <Field Name="derivedAssociationTypeByName" Hidden="true" />
+      <Field Name="derivedRoleTypeByName" Hidden="true" />
+      <Method Name="EmbeddedObjectType" Hidden="true" />
+      <Property Name="EmptyArray" Hidden="true" />
+      <Method Name="ResetDerivations" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>QAQEAAAAAAAQAARAAGAIABAQAYAARIgAAQAAgAAAACA=</HashCode>
+      <FileName>Meta\EmbeddedObjectType.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="AssociationTypeByName" />
+      <Property Name="RoleTypeByName" />
+      <Property Name="SuperTypes" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Allors.Embedded.Meta.EmbeddedAssociationType">
+    <Position X="11.5" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAIAiAAAAAAAAAIAAAAAAAQAAAAAAAACAIAAAAAAAAA=</HashCode>
+      <FileName>Meta\EmbeddedAssociationType.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Allors.Embedded.Meta.EmbeddedRoleType">
+    <Position X="15.25" Y="2.5" Width="2.5" />
+    <Members>
+      <Method Name="NormalizeToMany" Hidden="true" />
+      <Method Name="NormalizeToOne" Hidden="true" />
+      <Method Name="PluralNameForAssociation" Hidden="true" />
+      <Method Name="SingularNameForAssociation" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAAiAAAAAAABAIEEAAAAQQAgDAAAAAGAIAAAAAAAAA=</HashCode>
+      <FileName>Meta\EmbeddedRoleType.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="AssociationType" />
+    </ShowAsAssociation>
+  </Class>
+  <Interface Name="Allors.Embedded.IEmbeddedPopulation">
+    <Position X="2.75" Y="3.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>EEBgACAAAAAwACAAAAQQAAACAAABAIEAAAQAAAAAAAE=</HashCode>
+      <FileName>IEmbeddedPopulation.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Meta" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="DerivationById" />
+      <Property Name="Objects" />
+    </ShowAsCollectionAssociation>
+  </Interface>
+  <Interface Name="Allors.Embedded.IEmbeddedObject">
+    <Position X="7.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>IEmbeddedObject.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Allors.Embedded.IEmbeddedDerivation">
+    <Position X="5.5" Y="7.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAA=</HashCode>
+      <FileName>IEmbeddedDerivation.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
