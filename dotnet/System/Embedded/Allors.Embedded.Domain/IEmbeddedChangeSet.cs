@@ -9,6 +9,8 @@
 
         bool HasChanges { get; }
 
+        ISet<IEmbeddedObject> NewObjects { get; }
+
         IReadOnlyDictionary<IEmbeddedObject, object> ChangedRoles<T>(string name);
 
         IReadOnlyDictionary<IEmbeddedObject, object> ChangedRoles(EmbeddedObjectType objectType, string name);

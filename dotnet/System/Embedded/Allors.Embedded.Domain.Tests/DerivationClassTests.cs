@@ -39,14 +39,12 @@
 
             var acme = this.Population.New<Organization>();
 
-            // TODO: Create derivation rule
+            this.Population.Derive();
 
-            //this.Population.Derive();
-
-            //Assert.That(acme.DisplayAliases.Value, Is.EqualTo("Nada"));
+            Assert.That(acme.DisplayAliases.Value, Is.EqualTo("Nada"));
 
             acme.Aliases.Value = new string[] { "Bim", "Bam", "Bom" };
-            
+
             this.Population.Derive();
 
             Assert.That(acme.DisplayAliases.Value, Is.EqualTo("Bim, Bam, Bom"));
@@ -116,19 +114,15 @@
         {
             public void Derive(IEmbeddedChangeSet changeSet)
             {
-                var aliases = changeSet.ChangedRoles<Organization>("Aliases");
+                var created = changeSet.NewObjects.OfType<Organization>();
+                var changed = changeSet.ChangedRoles<Organization>("Aliases").Select(v => v.Key).Distinct().Cast<Organization>();
 
-                if (aliases.Any())
+                foreach (var organization in created.Union(changed))
                 {
-                    var organizations = aliases.Select(v => v.Key).Distinct();
+                    // Dummy updates ...
+                    organization.Aliases.Value = organization.Aliases.Value;
 
-                    foreach (var organization in organizations.Cast<Organization>())
-                    {
-                        // Dummy updates ...
-                        organization.Aliases.Value = organization.Aliases.Value;
-
-                        organization.DisplayAliases.Value = organization.Aliases.Value?.Length > 0 ? string.Join(", ", organization.Aliases.Value) : "Nada";
-                    }
+                    organization.DisplayAliases.Value = organization.Aliases.Value?.Length > 0 ? string.Join(", ", organization.Aliases.Value) : "Nada";
                 }
             }
         }
