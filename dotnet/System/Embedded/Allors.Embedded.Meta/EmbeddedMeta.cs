@@ -15,15 +15,15 @@
 
         public IReadOnlyDictionary<Type, EmbeddedObjectType> ObjectTypeByType => new ReadOnlyDictionary<Type, EmbeddedObjectType>(this.objectTypeByType);
 
-        public EmbeddedRoleType AddUnit<TAssociation, TRole>(string roleName) => this.GetOrAddObjectType(typeof(TAssociation)).AddUnit(this.GetOrAddObjectType(typeof(TRole)), roleName);
+        public EmbeddedRoleType AddUnit<TAssociation, TRole>(string roleName, string? associationName = null) => this.GetOrAddObjectType(typeof(TAssociation)).AddUnit(this.GetOrAddObjectType(typeof(TRole)), roleName, associationName);
 
-        public EmbeddedRoleType AddOneToOne<TAssociation, TRole>(string roleName) => this.GetOrAddObjectType(typeof(TAssociation)).AddOneToOne(this.GetOrAddObjectType(typeof(TRole)), roleName);
+        public EmbeddedRoleType AddOneToOne<TAssociation, TRole>(string roleName, string? associationName = null) => this.GetOrAddObjectType(typeof(TAssociation)).AddOneToOne(this.GetOrAddObjectType(typeof(TRole)), roleName, associationName);
 
-        public EmbeddedRoleType AddManyToOne<TAssociation, TRole>(string roleName) => this.GetOrAddObjectType(typeof(TAssociation)).AddManyToOne(this.GetOrAddObjectType(typeof(TRole)), roleName);
+        public EmbeddedRoleType AddManyToOne<TAssociation, TRole>(string roleName, string? associationName = null) => this.GetOrAddObjectType(typeof(TAssociation)).AddManyToOne(this.GetOrAddObjectType(typeof(TRole)), roleName, associationName);
 
-        public EmbeddedRoleType AddOneToMany<TAssociation, TRole>(string roleName) => this.GetOrAddObjectType(typeof(TAssociation)).AddOneToMany(this.GetOrAddObjectType(typeof(TRole)), roleName);
+        public EmbeddedRoleType AddOneToMany<TAssociation, TRole>(string roleName, string? associationName = null) => this.GetOrAddObjectType(typeof(TAssociation)).AddOneToMany(this.GetOrAddObjectType(typeof(TRole)), roleName, associationName);
 
-        public EmbeddedRoleType AddManyToMany<TAssociation, TRole>(string roleName) => this.GetOrAddObjectType(typeof(TAssociation)).AddManyToMany(this.GetOrAddObjectType(typeof(TRole)), roleName);
+        public EmbeddedRoleType AddManyToMany<TAssociation, TRole>(string roleName, string? associationName = null) => this.GetOrAddObjectType(typeof(TAssociation)).AddManyToMany(this.GetOrAddObjectType(typeof(TRole)), roleName, associationName);
 
         public EmbeddedObjectType GetOrAddObjectType(Type type)
         {

@@ -84,9 +84,9 @@
             }
         }
 
-        internal EmbeddedRoleType AddUnit(EmbeddedObjectType objectType, string? name)
+        internal EmbeddedRoleType AddUnit(EmbeddedObjectType objectType, string? roleSingularName, string? associationSingularName)
         {
-            var roleSingularName = name ?? objectType.Type.Name;
+            roleSingularName ??= objectType.Type.Name;
             string rolePluralName = this.Meta.Pluralize(roleSingularName);
 
             var roleType = new EmbeddedRoleType
@@ -100,8 +100,16 @@
                 true
             );
 
-            var associationSingularName = roleType.SingularNameForAssociation(this);
-            var associationPluralName = roleType.PluralNameForAssociation(this);
+            string associationPluralName;
+            if (associationSingularName != null)
+            {
+                associationPluralName = this.Meta.Pluralize(associationSingularName);
+            }
+            else
+            {
+                associationSingularName = roleType.SingularNameForAssociation(this);
+                associationPluralName = roleType.PluralNameForAssociation(this);
+            }
 
             roleType.AssociationType = new EmbeddedAssociationType(
                 this,
@@ -121,9 +129,9 @@
             return roleType;
         }
 
-        internal EmbeddedRoleType AddOneToOne(EmbeddedObjectType objectType, string? name)
+        internal EmbeddedRoleType AddOneToOne(EmbeddedObjectType objectType, string? roleSingularName, string? associationSingularName)
         {
-            var roleSingularName = name ?? objectType.Type.Name;
+            roleSingularName ??= objectType.Type.Name;
             string rolePluralName = this.Meta.Pluralize(roleSingularName);
 
             var roleType = new EmbeddedRoleType
@@ -137,8 +145,16 @@
                 false
             );
 
-            var associationSingularName = roleType.SingularNameForAssociation(this);
-            var associationPluralName = roleType.PluralNameForAssociation(this);
+            string associationPluralName;
+            if (associationSingularName != null)
+            {
+                associationPluralName = this.Meta.Pluralize(associationSingularName);
+            }
+            else
+            {
+                associationSingularName = roleType.SingularNameForAssociation(this);
+                associationPluralName = roleType.PluralNameForAssociation(this);
+            }
 
             roleType.AssociationType = new EmbeddedAssociationType(
                 this,
@@ -158,9 +174,9 @@
             return roleType;
         }
 
-        internal EmbeddedRoleType AddManyToOne(EmbeddedObjectType objectType, string? name)
+        internal EmbeddedRoleType AddManyToOne(EmbeddedObjectType objectType, string? roleSingularName, string? associationSingularName)
         {
-            var roleSingularName = name ?? objectType.Type.Name;
+            roleSingularName ??= objectType.Type.Name;
             string rolePluralName = this.Meta.Pluralize(roleSingularName);
 
             var roleType = new EmbeddedRoleType
@@ -174,8 +190,16 @@
                 false
             );
 
-            var associationSingularName = roleType.SingularNameForAssociation(this);
-            var associationPluralName = roleType.PluralNameForAssociation(this);
+            string associationPluralName;
+            if (associationSingularName != null)
+            {
+                associationPluralName = this.Meta.Pluralize(associationSingularName);
+            }
+            else
+            {
+                associationSingularName = roleType.SingularNameForAssociation(this);
+                associationPluralName = roleType.PluralNameForAssociation(this);
+            }
 
             roleType.AssociationType = new EmbeddedAssociationType
             (
@@ -196,9 +220,9 @@
             return roleType;
         }
 
-        internal EmbeddedRoleType AddOneToMany(EmbeddedObjectType objectType, string? name)
+        internal EmbeddedRoleType AddOneToMany(EmbeddedObjectType objectType, string? roleSingularName, string? associationSingularName)
         {
-            var roleSingularName = name ?? objectType.Type.Name;
+            roleSingularName ??= objectType.Type.Name;
             string rolePluralName = this.Meta.Pluralize(roleSingularName);
 
             var roleType = new EmbeddedRoleType
@@ -212,8 +236,16 @@
                 false
             );
 
-            var associationSingularName = roleType.SingularNameForAssociation(this);
-            var associationPluralName = roleType.PluralNameForAssociation(this);
+            string associationPluralName;
+            if (associationSingularName != null)
+            {
+                associationPluralName = this.Meta.Pluralize(associationSingularName);
+            }
+            else
+            {
+                associationSingularName = roleType.SingularNameForAssociation(this);
+                associationPluralName = roleType.PluralNameForAssociation(this);
+            }
 
             roleType.AssociationType = new EmbeddedAssociationType(
                 this,
@@ -233,9 +265,9 @@
             return roleType;
         }
 
-        internal EmbeddedRoleType AddManyToMany(EmbeddedObjectType objectType, string? name)
+        internal EmbeddedRoleType AddManyToMany(EmbeddedObjectType objectType, string? roleSingularName, string? associationSingularName)
         {
-            var roleSingularName = name ?? objectType.Type.Name;
+            roleSingularName ??= objectType.Type.Name;
             string rolePluralName = this.Meta.Pluralize(roleSingularName);
 
             var roleType = new EmbeddedRoleType(
@@ -247,9 +279,17 @@
                 true,
                 false
             );
-
-            var associationSingularName = roleType.SingularNameForAssociation(this);
-            var associationPluralName = roleType.PluralNameForAssociation(this);
+            
+            string associationPluralName;
+            if (associationSingularName != null)
+            {
+                associationPluralName = this.Meta.Pluralize(associationSingularName);
+            }
+            else
+            {
+                associationSingularName = roleType.SingularNameForAssociation(this);
+                associationPluralName = roleType.PluralNameForAssociation(this);
+            }
 
             roleType.AssociationType = new EmbeddedAssociationType
             (

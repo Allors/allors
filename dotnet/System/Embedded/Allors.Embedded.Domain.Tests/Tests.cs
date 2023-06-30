@@ -23,6 +23,7 @@
             meta.AddUnit<Person, DateTime>(nameof(Person.DerivedAt));
             meta.AddUnit<Person, string>(nameof(Person.Greeting));
             // Special
+            meta.AddManyToMany<I1, I2>("ManyToMany", "Back");
             meta.AddUnit<C1, string>(nameof(C1.Same));
             meta.AddUnit<C2, string>(nameof(C2.Same));
         }

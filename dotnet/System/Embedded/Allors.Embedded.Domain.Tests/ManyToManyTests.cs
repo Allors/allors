@@ -5,7 +5,22 @@
     public abstract class ManyToManyTests : Tests
     {
         [Test]
-        public void AddSingleActiveLink()
+        public void AddInterface()
+        {
+            var c1 = this.Population.New<C1>();
+            var c2 = this.Population.New<C2>();
+            
+            c1.ManyToMany.Add(c2);
+
+            Assert.That(c1.ManyToMany.Value.Length, Is.EqualTo(1));
+            Assert.Contains(c2, c1.ManyToMany.Value);
+
+            Assert.That(c2.Backs.Value.Length, Is.EqualTo(1));
+            Assert.Contains(c1, c2.Backs.Value);
+        }
+
+        [Test]
+        public void Add()
         {
             var acme = this.Population.New<Organization>(v => v.Name.Value = "Acme");
             var hooli = this.Population.New<Organization>(v => v.Name.Value = "Hooli");
@@ -36,7 +51,7 @@
         }
 
         [Test]
-        public void SetSingleActiveLink()
+        public void Set()
         {
             var acme = this.Population.New<Organization>(v => v.Name.Value = "Acme");
             var hooli = this.Population.New<Organization>(v => v.Name.Value = "Hooli");
@@ -104,7 +119,7 @@
         }
 
         [Test]
-        public void RemoveSingleActiveLink()
+        public void Remove()
         {
             var acme = this.Population.New<Organization>(v => v.Name.Value = "Acme");
             var hooli = this.Population.New<Organization>(v => v.Name.Value = "Hooli");
@@ -156,7 +171,7 @@
         }
 
         [Test]
-        public void MultipeleActiveLinks()
+        public void Multipele()
         {
             var acme = this.Population.New<Organization>(v => v.Name.Value = "Acme");
             var hooli = this.Population.New<Organization>(v => v.Name.Value = "Hooli");
