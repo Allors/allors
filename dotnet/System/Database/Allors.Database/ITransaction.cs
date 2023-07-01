@@ -95,21 +95,7 @@ public interface ITransaction : IDisposable
     /// </summary>
     /// <typeparam name="T">The IObjectType.</typeparam>
     /// <returns>a new <see cref="IObject" />.</returns>
-    T Build<T>(Action<T> builder) where T : IObject;
-
-    /// <summary>
-    ///     Creates an Allors Object and execute builders.
-    /// </summary>
-    /// <typeparam name="T">The IObjectType.</typeparam>
-    /// <returns>a new <see cref="IObject" />.</returns>
     T Build<T>(params Action<T>[] builders) where T : IObject;
-
-    /// <summary>
-    ///     Creates an Allors Object and execute builders.
-    /// </summary>
-    /// <typeparam name="T">The IObjectType.</typeparam>
-    /// <returns>a new <see cref="IObject" />.</returns>
-    T Build<T>(IEnumerable<Action<T>> builders, Action<T> extraBuilder) where T : IObject;
 
     /// <summary>
     ///     Creates an Allors Object and execute builders.

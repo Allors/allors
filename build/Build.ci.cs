@@ -33,6 +33,9 @@ partial class Build
     private Target CiDotnetCoreWorkspace => _ => _
         .DependsOn(DotnetCoreWorkspaceMetaStaticTests);
 
+    private Target CiDotnetBaseDatabaseTest => _ => _
+        .DependsOn(DotnetBaseDatabaseDomainTests);
+
     private Target CiTypescriptWorkspace => _ => _
         .DependsOn(TypescriptInstall)
         .DependsOn(TypescriptWorkspaceTests);

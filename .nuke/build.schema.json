@@ -83,6 +83,7 @@
           "items": {
             "type": "string",
             "enum": [
+              "CiDotnetBaseDatabaseTest",
               "CiDotnetCoreDatabase",
               "CiDotnetCoreWorkspace",
               "CiDotnetSystem",
@@ -96,6 +97,11 @@
               "CiTypescriptWorkspaceAdaptersJson",
               "Clean",
               "Default",
+              "DotnetBaseDatabaseDomainTests",
+              "DotnetBaseGenerate",
+              "DotnetBaseMerge",
+              "DotnetBaseResetDatabase",
+              "DotnetBaseWorkspaceTypescriptSession",
               "DotnetCoreDatabaseDomainTests",
               "DotnetCoreDatabaseMetaTests",
               "DotnetCoreDatabaseServerDirectTests",
@@ -135,6 +141,7 @@
           "items": {
             "type": "string",
             "enum": [
+              "CiDotnetBaseDatabaseTest",
               "CiDotnetCoreDatabase",
               "CiDotnetCoreWorkspace",
               "CiDotnetSystem",
@@ -148,6 +155,11 @@
               "CiTypescriptWorkspaceAdaptersJson",
               "Clean",
               "Default",
+              "DotnetBaseDatabaseDomainTests",
+              "DotnetBaseGenerate",
+              "DotnetBaseMerge",
+              "DotnetBaseResetDatabase",
+              "DotnetBaseWorkspaceTypescriptSession",
               "DotnetCoreDatabaseDomainTests",
               "DotnetCoreDatabaseMetaTests",
               "DotnetCoreDatabaseServerDirectTests",

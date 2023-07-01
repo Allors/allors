@@ -141,25 +141,6 @@ public class Transaction : ITransaction
         return newObject;
     }
 
-    public T Build<T>(Action<T> builder) where T : IObject
-    {
-        var objectType = this.Database.ObjectFactory.GetObjectType(typeof(T));
-
-        if (objectType is not IClass @class)
-        {
-            throw new ArgumentException("IObjectType should be a class");
-        }
-
-        var newObject = (T)this.CreateWithoutOnBuild(@class);
-
-        builder?.Invoke(newObject);
-
-        newObject.OnBuild();
-        newObject.OnPostBuild();
-
-        return newObject;
-    }
-
     public T Build<T>(params Action<T>[] builders) where T : IObject
     {
         var objectType = this.Database.ObjectFactory.GetObjectType(typeof(T));
@@ -178,33 +159,6 @@ public class Transaction : ITransaction
                 builder?.Invoke(newObject);
             }
         }
-
-        newObject.OnBuild();
-        newObject.OnPostBuild();
-
-        return newObject;
-    }
-
-    public T Build<T>(IEnumerable<Action<T>> builders, Action<T> extraBuilder) where T : IObject
-    {
-        var objectType = this.Database.ObjectFactory.GetObjectType(typeof(T));
-
-        if (objectType is not IClass @class)
-        {
-            throw new ArgumentException("IObjectType should be a class");
-        }
-
-        var newObject = (T)this.CreateWithoutOnBuild(@class);
-
-        if (builders != null)
-        {
-            foreach (var builder in builders)
-            {
-                builder?.Invoke(newObject);
-            }
-        }
-
-        extraBuilder?.Invoke(newObject);
 
         newObject.OnBuild();
         newObject.OnPostBuild();

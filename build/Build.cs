@@ -40,7 +40,6 @@ partial class Build : NukeBuild
             DeleteDirectory(Paths.Artifacts);
         });
 
-
     private Target Install => _ => _
         .DependsOn(TypescriptInstall);
 
@@ -49,7 +48,8 @@ partial class Build : NukeBuild
 
     private Target Generate => _ => _
         .DependsOn(DotnetSystemAdaptersGenerate)
-        .DependsOn(DotnetCoreGenerate);
+        .DependsOn(DotnetCoreGenerate)
+        .DependsOn(DotnetBaseGenerate);
 
     private Target Default => _ => _
         .DependsOn(Install)

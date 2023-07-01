@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\System\Database\Allors.Database.Meta.Static\Allors.Database.Meta.Static.csproj" />
+    <ProjectReference Include="..\Meta.Domain\Meta.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\..\Core\Database\Meta.Configuration\Core*\**\*.cs" />
+  </ItemGroup>
+
+</Project>
