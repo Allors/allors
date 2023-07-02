@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Workspace.ViewModels\Workspace.ViewModels.csproj" />
+    <ProjectReference Include="..\ViewModels\Workspace.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>

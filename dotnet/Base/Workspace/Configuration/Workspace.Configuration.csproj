@@ -2,9 +2,12 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\..\Core\Workspace\Configuration\Core*\**\*.cs" />
+  </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\Domain\Workspace.Domain.csproj" />
   </ItemGroup>
-
-
 </Project>

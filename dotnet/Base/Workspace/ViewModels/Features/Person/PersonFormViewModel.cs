@@ -1,4 +1,4 @@
-namespace Workspace.ViewModels.Features;
+﻿namespace Workspace.ViewModels.Features;
 
 using System.Collections.ObjectModel;
 using Allors.Workspace;
@@ -14,13 +14,13 @@ public partial class PersonFormViewModel : ObservableObject
 {
     private PersonViewModel selected;
 
-    public PersonFormViewModel(ISession session, IMessageService messageService)
+    public PersonFormViewModel(IWorkspace workspace, IMessageService messageService)
     {
-        this.Session = session;
+        this.Workspace = workspace;
         this.MessageService = messageService;
     }
 
-    public ISession Session { get; set; }
+    public IWorkspace Workspace { get; set; }
 
     public IMessageService MessageService { get; }
 
@@ -48,14 +48,14 @@ public partial class PersonFormViewModel : ObservableObject
     [RelayCommand]
     private async Task LoadAsync()
     {
-        var m = this.Session.Workspace.Services.Get<M>();
+        var m = this.Workspace.Services.Get<M>();
 
         var pull = new Pull
         {
             Extent = new Filter(m.Person),
         };
 
-        var result = await this.Session.PullAsync(pull);
+        var result = await this.Workspace.PullAsync(pull);
         var people = result.GetCollection<Person>();
 
         this.People.Clear();
@@ -70,7 +70,7 @@ public partial class PersonFormViewModel : ObservableObject
     [RelayCommand]
     private async Task SaveAsync()
     {
-        var result = await this.Session.PushAsync();
+        var result = await this.Workspace.PushAsync();
 
         if (result.HasErrors)
         {
@@ -78,7 +78,7 @@ public partial class PersonFormViewModel : ObservableObject
             return;
         }
 
-        this.Session.Reset();
+        this.Workspace.Reset();
 
         await this.LoadAsync();
     }

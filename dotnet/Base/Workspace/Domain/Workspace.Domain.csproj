@@ -5,10 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\System\Workspace\Allors.Workspace.Domain\Allors.Workspace.Domain.csproj" />
+    <Compile Include="..\..\..\Core\Workspace\Domain\Core*\**\*.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="..\..\..\Core\Workspace\Domain\Core*\**\*.cs" />
+    <ProjectReference Include="..\..\..\System\Workspace\Allors.Workspace\Allors.Workspace.csproj" />
+    <ProjectReference Include="..\Meta.Domain\Workspace.Meta.Domain.csproj" />
   </ItemGroup>
 </Project>

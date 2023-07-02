@@ -1,6 +1,6 @@
-namespace Workspace.ViewModels.WinForms
+﻿namespace Workspace.ViewModels.WinForms
 {
-    using Allors.Workspace.Adapters.Remote.SystemText;
+    using Allors.Workspace.Adapters.Json.SystemText;
     using Forms;
     using Microsoft.Extensions.DependencyInjection;
 
@@ -15,7 +15,7 @@ namespace Workspace.ViewModels.WinForms
             ServiceProvider = host.Services;
 
             // TODO: Login Form
-            var databaseConnection = ServiceProvider.GetRequiredService<DatabaseConnection>();
+            var databaseConnection = ServiceProvider.GetRequiredService<Connection>();
             await databaseConnection.Login(new Uri("http://localhost:5000/allors/TestAuthentication/Token"), "jane@example.com", "jane");
 
             Application.Run(ServiceProvider.GetRequiredService<MainForm>());
