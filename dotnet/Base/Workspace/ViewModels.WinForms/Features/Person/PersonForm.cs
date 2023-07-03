@@ -1,4 +1,4 @@
-namespace Workspace.ViewModels.WinForms.Forms
+﻿namespace Workspace.ViewModels.WinForms.Forms
 {
     using System.Windows.Forms;
     using Features;

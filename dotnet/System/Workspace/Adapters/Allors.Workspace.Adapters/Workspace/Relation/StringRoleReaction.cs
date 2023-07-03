@@ -37,27 +37,27 @@ namespace Allors.Workspace
             {
                 if (!Equals(this.Role.Value, this.value))
                 {
-                    propertyChanged(this.Role, new PropertyChangedEventArgs("Value"));
+                    propertyChanged.Invoke(this.Role, new PropertyChangedEventArgs("Value"));
                 }
 
                 if (!Equals(this.Role.Exist, this.exist))
                 {
-                    propertyChanged(this.Role, new PropertyChangedEventArgs("Exist"));
+                    propertyChanged.Invoke(this.Role, new PropertyChangedEventArgs("Exist"));
                 }
 
                 if (!Equals(this.Role.CanRead, this.canRead))
                 {
-                    propertyChanged(this.Role, new PropertyChangedEventArgs("CanRead"));
+                    propertyChanged.Invoke(this.Role, new PropertyChangedEventArgs("CanRead"));
                 }
 
                 if (!Equals(this.Role.CanWrite, this.canWrite))
                 {
-                    propertyChanged(this.Role, new PropertyChangedEventArgs("CanWrite"));
+                    propertyChanged.Invoke(this.Role, new PropertyChangedEventArgs("CanWrite"));
                 }
 
                 if (!Equals(this.Role.IsModified, this.isModified))
                 {
-                    propertyChanged(this.Role, new PropertyChangedEventArgs("IsModified"));
+                    propertyChanged.Invoke(this.Role, new PropertyChangedEventArgs("IsModified"));
                 }
             }
 

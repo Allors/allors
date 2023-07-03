@@ -31,10 +31,7 @@ public partial class PersonFormViewModel : ObservableObject
         get => this.selected;
         set
         {
-            if (value?.FirstName != "Jenny")
-            {
-                this.SetProperty(ref this.selected, value);
-            }
+            this.SetProperty(ref this.selected, value);
         }
     }
 
