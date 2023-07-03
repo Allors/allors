@@ -1,27 +1,22 @@
 ﻿namespace Workspace.ViewModels.Features;
 
 using System.ComponentModel;
+using System.Reflection.Emit;
 using Allors.Workspace.Domain;
 using CommunityToolkit.Mvvm.ComponentModel;
+using MugenMvvmToolkit.Binding;
+using MugenMvvmToolkit.Binding.Builders;
 
 public partial class PersonViewModel : ObservableObject, IDisposable
 {
     private readonly Person person;
 
-    private readonly Action unregisterEventHandlers;
+    private void personFirstName_PropertyChanged(object? sender, PropertyChangedEventArgs e) => this.OnPropertyChanged(nameof(this.FirstName));
 
     public PersonViewModel(Person person)
     {
         this.person = person;
-
-        PropertyChangedEventHandler firstNameOnPropertyChanged = (_, _) => this.OnPropertyChanged(nameof(this.FirstName));
-
-        this.person.FirstName.PropertyChanged += firstNameOnPropertyChanged;
-
-        this.unregisterEventHandlers = () =>
-        {
-            this.person.FirstName.PropertyChanged -= firstNameOnPropertyChanged;
-        };
+        this.person.FirstName.PropertyChanged += this.personFirstName_PropertyChanged;
     }
 
     public string FirstName
@@ -32,6 +27,7 @@ public partial class PersonViewModel : ObservableObject, IDisposable
 
     public void Dispose()
     {
-        this.unregisterEventHandlers();
+        GC.SuppressFinalize(this);
+        this.person.FirstName.PropertyChanged += this.personFirstName_PropertyChanged;
     }
 }

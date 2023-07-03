@@ -37,12 +37,17 @@
             showDialogToolStripButton = new ToolStripButton();
             splitContainer1 = new SplitContainer();
             dataGridView1 = new DataGridView();
+            FirstName = new DataGridViewTextBoxColumn();
             peopleBindingSource = new BindingSource(this.components);
             textBox2 = new TextBox();
             label2 = new Label();
             textBox1 = new TextBox();
             label1 = new Label();
-            FirstName = new DataGridViewTextBoxColumn();
+            firstNameDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            textBox3 = new TextBox();
+            label3 = new Label();
+            textBox4 = new TextBox();
+            label4 = new Label();
             ((System.ComponentModel.ISupportInitialize)personFormControllerBindingSource).BeginInit();
             toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
@@ -109,6 +114,10 @@
             // 
             // splitContainer1.Panel2
             // 
+            splitContainer1.Panel2.Controls.Add(textBox3);
+            splitContainer1.Panel2.Controls.Add(label3);
+            splitContainer1.Panel2.Controls.Add(textBox4);
+            splitContainer1.Panel2.Controls.Add(label4);
             splitContainer1.Panel2.Controls.Add(textBox2);
             splitContainer1.Panel2.Controls.Add(label2);
             splitContainer1.Panel2.Controls.Add(textBox1);
@@ -121,7 +130,7 @@
             // 
             dataGridView1.AutoGenerateColumns = false;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { FirstName });
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { FirstName, firstNameDataGridViewTextBoxColumn });
             dataGridView1.DataSource = peopleBindingSource;
             dataGridView1.Dock = DockStyle.Fill;
             dataGridView1.Location = new Point(0, 0);
@@ -130,6 +139,14 @@
             dataGridView1.RowTemplate.Height = 29;
             dataGridView1.Size = new Size(347, 474);
             dataGridView1.TabIndex = 0;
+            // 
+            // FirstName
+            // 
+            FirstName.DataPropertyName = "FirstName";
+            FirstName.HeaderText = "FirstName";
+            FirstName.MinimumWidth = 6;
+            FirstName.Name = "FirstName";
+            FirstName.Width = 125;
             // 
             // peopleBindingSource
             // 
@@ -140,7 +157,7 @@
             // textBox2
             // 
             textBox2.DataBindings.Add(new Binding("Text", peopleBindingSource, "FirstName", true));
-            textBox2.Location = new Point(307, 143);
+            textBox2.Location = new Point(347, 143);
             textBox2.Name = "textBox2";
             textBox2.Size = new Size(125, 27);
             textBox2.TabIndex = 3;
@@ -157,7 +174,7 @@
             // textBox1
             // 
             textBox1.DataBindings.Add(new Binding("Text", personFormControllerBindingSource, "Selected.FirstName", true));
-            textBox1.Location = new Point(307, 88);
+            textBox1.Location = new Point(347, 88);
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(125, 27);
             textBox1.TabIndex = 1;
@@ -171,13 +188,47 @@
             label1.TabIndex = 0;
             label1.Text = "First Name (View)";
             // 
-            // FirstName
+            // firstNameDataGridViewTextBoxColumn
             // 
-            FirstName.DataPropertyName = "FirstName";
-            FirstName.HeaderText = "FirstName";
-            FirstName.MinimumWidth = 6;
-            FirstName.Name = "FirstName";
-            FirstName.Width = 125;
+            firstNameDataGridViewTextBoxColumn.DataPropertyName = "FirstName";
+            firstNameDataGridViewTextBoxColumn.HeaderText = "FirstName";
+            firstNameDataGridViewTextBoxColumn.MinimumWidth = 6;
+            firstNameDataGridViewTextBoxColumn.Name = "firstNameDataGridViewTextBoxColumn";
+            firstNameDataGridViewTextBoxColumn.Width = 125;
+            // 
+            // textBox3
+            // 
+            textBox3.DataBindings.Add(new Binding("Text", peopleBindingSource, "FirstName", true));
+            textBox3.Location = new Point(347, 259);
+            textBox3.Name = "textBox3";
+            textBox3.Size = new Size(125, 27);
+            textBox3.TabIndex = 7;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(123, 262);
+            label3.Name = "label3";
+            label3.Size = new Size(211, 20);
+            label3.TabIndex = 6;
+            label3.Text = "First Name (ViewModel EBind)";
+            // 
+            // textBox4
+            // 
+            textBox4.DataBindings.Add(new Binding("Text", personFormControllerBindingSource, "Selected.FirstName", true));
+            textBox4.Location = new Point(347, 204);
+            textBox4.Name = "textBox4";
+            textBox4.Size = new Size(125, 27);
+            textBox4.TabIndex = 5;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(123, 207);
+            label4.Name = "label4";
+            label4.Size = new Size(168, 20);
+            label4.TabIndex = 4;
+            label4.Text = "First Name (View EBind)";
             // 
             // PersonForm
             // 
@@ -219,5 +270,10 @@
         private TextBox textBox2;
         private Label label2;
         private DataGridViewTextBoxColumn FirstName;
+        private DataGridViewTextBoxColumn firstNameDataGridViewTextBoxColumn;
+        private TextBox textBox3;
+        private Label label3;
+        private TextBox textBox4;
+        private Label label4;
     }
 }

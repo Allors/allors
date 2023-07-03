@@ -17,7 +17,7 @@
         }
 
         [Test]
-        public async Task SetFirstName()
+        public async Task FirstName()
         {
             var workspace = this.connection.CreateWorkspace();
 
@@ -26,10 +26,14 @@
             var personViewModel = new PersonViewModel(person);
 
             Assert.That(personViewModel.FirstName, Is.Null);
-            
+
             person.FirstName.Value = "John";
 
             Assert.That(personViewModel.FirstName, Is.EqualTo("John"));
+
+            personViewModel.FirstName = "Jane";
+
+            Assert.That(person.FirstName.Value, Is.EqualTo("Jane"));
         }
     }
 }
