@@ -40,6 +40,10 @@
             FirstName = new DataGridViewTextBoxColumn();
             firstNameDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             peopleBindingSource = new BindingSource(this.components);
+            textBox4 = new TextBox();
+            label4 = new Label();
+            textBox3 = new TextBox();
+            label3 = new Label();
             textBox2 = new TextBox();
             label2 = new Label();
             textBox1 = new TextBox();
@@ -110,6 +114,10 @@
             // 
             // splitContainer1.Panel2
             // 
+            splitContainer1.Panel2.Controls.Add(textBox4);
+            splitContainer1.Panel2.Controls.Add(label4);
+            splitContainer1.Panel2.Controls.Add(textBox3);
+            splitContainer1.Panel2.Controls.Add(label3);
             splitContainer1.Panel2.Controls.Add(textBox2);
             splitContainer1.Panel2.Controls.Add(label2);
             splitContainer1.Panel2.Controls.Add(textBox1);
@@ -154,12 +162,46 @@
             peopleBindingSource.DataSource = personFormControllerBindingSource;
             peopleBindingSource.CurrentChanged += this.peopleBindingSource_CurrentChanged;
             // 
+            // textBox4
+            // 
+            textBox4.DataBindings.Add(new Binding("Text", peopleBindingSource, "Greeting", true));
+            textBox4.Location = new Point(347, 257);
+            textBox4.Name = "textBox4";
+            textBox4.Size = new Size(251, 27);
+            textBox4.TabIndex = 7;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(123, 260);
+            label4.Name = "label4";
+            label4.Size = new Size(66, 20);
+            label4.TabIndex = 6;
+            label4.Text = "Greeting";
+            // 
+            // textBox3
+            // 
+            textBox3.DataBindings.Add(new Binding("Text", peopleBindingSource, "FullName", true));
+            textBox3.Location = new Point(347, 202);
+            textBox3.Name = "textBox3";
+            textBox3.Size = new Size(251, 27);
+            textBox3.TabIndex = 5;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(123, 205);
+            label3.Name = "label3";
+            label3.Size = new Size(76, 20);
+            label3.TabIndex = 4;
+            label3.Text = "Full Name";
+            // 
             // textBox2
             // 
             textBox2.DataBindings.Add(new Binding("Text", peopleBindingSource, "FirstName", true));
             textBox2.Location = new Point(347, 143);
             textBox2.Name = "textBox2";
-            textBox2.Size = new Size(125, 27);
+            textBox2.Size = new Size(251, 27);
             textBox2.TabIndex = 3;
             // 
             // label2
@@ -176,7 +218,7 @@
             textBox1.DataBindings.Add(new Binding("Text", personFormControllerBindingSource, "Selected.FirstName", true));
             textBox1.Location = new Point(347, 88);
             textBox1.Name = "textBox1";
-            textBox1.Size = new Size(125, 27);
+            textBox1.Size = new Size(251, 27);
             textBox1.TabIndex = 1;
             // 
             // label1
@@ -229,5 +271,9 @@
         private Label label2;
         private DataGridViewTextBoxColumn FirstName;
         private DataGridViewTextBoxColumn firstNameDataGridViewTextBoxColumn;
+        private TextBox textBox3;
+        private Label label3;
+        private TextBox textBox4;
+        private Label label4;
     }
 }

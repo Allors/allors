@@ -10,6 +10,7 @@ public class StringRoleAtom : IDisposable
     {
         this.Role = role;
         this.ChangeNotification = new WeakReference<IPropertyChange>(propertyChange);
+
         this.Role.PropertyChanged += this.Role_PropertyChanged;
     }
 
