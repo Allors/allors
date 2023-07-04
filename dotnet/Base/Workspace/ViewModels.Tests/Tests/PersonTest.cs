@@ -35,5 +35,23 @@
 
             Assert.That(person.FirstName.Value, Is.EqualTo("Jane"));
         }
+
+        [Test]
+        public async Task Greeting()
+        {
+            var workspace = this.connection.CreateWorkspace();
+
+            var person = workspace.Create<Person>();
+
+            person.FirstName.Value = "John";
+
+            var personViewModel = new PersonViewModel(person);
+
+            Assert.That(personViewModel.Greeting, Is.EqualTo("Hello John"));
+
+            personViewModel.FirstName = "Jane";
+
+            Assert.That(personViewModel.Greeting, Is.EqualTo("Hello Jane"));
+        }
     }
 }
