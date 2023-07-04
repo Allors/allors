@@ -1,33 +1,26 @@
 ﻿namespace Workspace.ViewModels.Features;
 
 using System.ComponentModel;
-using System.Reflection.Emit;
 using Allors.Workspace.Domain;
 using CommunityToolkit.Mvvm.ComponentModel;
-using MugenMvvmToolkit.Binding;
-using MugenMvvmToolkit.Binding.Builders;
 
-public partial class PersonViewModel : ObservableObject, IDisposable
+public partial class PersonViewModel : ObservableObject, IPropertyChange
 {
-    private readonly Person person;
-
-    private void personFirstName_PropertyChanged(object? sender, PropertyChangedEventArgs e) => this.OnPropertyChanged(nameof(this.FirstName));
+    private readonly StringRoleAtom firstName;
 
     public PersonViewModel(Person person)
     {
-        this.person = person;
-        this.person.FirstName.PropertyChanged += this.personFirstName_PropertyChanged;
+        this.firstName = new StringRoleAtom(person.FirstName, this);
     }
 
     public string FirstName
     {
-        get => this.person.FirstName.Value;
-        set => this.person.FirstName.Value = value;
+        get => this.firstName.Value;
+        set => this.firstName.Value = value;
     }
 
-    public void Dispose()
+    void IPropertyChange.OnPropertyChanged(PropertyChangedEventArgs e)
     {
-        GC.SuppressFinalize(this);
-        this.person.FirstName.PropertyChanged += this.personFirstName_PropertyChanged;
+        this.OnPropertyChanged(e);
     }
 }
