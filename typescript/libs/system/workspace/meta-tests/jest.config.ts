@@ -8,4 +8,14 @@ export default {
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
   coverageDirectory: '../../../../coverage/libs/system/workspace/meta-tests',
+  // Allors
+  reporters: [
+    'default',
+    [
+      'jest-trx-results-processor',
+      {
+        outputFile: '../artifacts/tests/typscript.system-workspace-meta.trx',
+      },
+    ],
+  ],
 };

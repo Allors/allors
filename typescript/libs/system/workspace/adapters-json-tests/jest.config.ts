@@ -9,4 +9,17 @@ export default {
   moduleFileExtensions: ['ts', 'js', 'html'],
   coverageDirectory:
     '../../../../coverage/libs/system/workspace/adapters-json-tests',
+  // Allors
+  reporters: [
+    'default',
+    [
+      'jest-trx-results-processor',
+      {
+        outputFile:
+          '../artifacts/tests/typscript.workspace-adapters-json-system.trx',
+      },
+    ],
+  ],
+  maxWorkers: 1,
+  testTimeout: 60000 * 10,
 };
