@@ -27,10 +27,9 @@ export class LazySelectBuilder {
             default:
               current.relationEndType =
                 composite.relationEndTypeByPropertyName.get(key);
-              current.next = this[current.relationEndType.objectType.singularName](
-                value,
-                current
-              );
+              current.next = this[
+                current.relationEndType.objectType.singularName
+              ](value, current);
               break;
           }
         }

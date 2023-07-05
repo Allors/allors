@@ -1,4 +1,4 @@
-import {Class } from '@allors/system/workspace/meta';
+import { Class } from '@allors/system/workspace/meta';
 import { LazyMetaPopulation } from '@allors/system/workspace/meta-json';
 
 describe('Class in MetaPopulation', () => {

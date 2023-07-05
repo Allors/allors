@@ -57,7 +57,7 @@ export interface MetaData {
    * IsRequired
    */
   r?: string[];
- 
+
   /**
    * MediaType
    */

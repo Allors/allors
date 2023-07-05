@@ -22,7 +22,12 @@ export class RelationEndByObjectByRelationEndType {
   }
 
   public get(object: IObject, relationEndType: RelationEndType): unknown {
-    if (this.changedRelationEndByObjectByRelationEndType.has(relationEndType, object)) {
+    if (
+      this.changedRelationEndByObjectByRelationEndType.has(
+        relationEndType,
+        object
+      )
+    ) {
       return this.changedRelationEndByObjectByRelationEndType.get(
         relationEndType,
         object
@@ -32,7 +37,11 @@ export class RelationEndByObjectByRelationEndType {
     return this.propertyByObjectByRelationEndType.get(relationEndType, object);
   }
 
-  public set(object: IObject, relationEndType: RelationEndType, newValue: unknown) {
+  public set(
+    object: IObject,
+    relationEndType: RelationEndType,
+    newValue: unknown
+  ) {
     const originalValue = this.propertyByObjectByRelationEndType.get(
       relationEndType,
       object
@@ -43,7 +52,10 @@ export class RelationEndByObjectByRelationEndType {
         ? newValue === originalValue
         : this.ranges.equals(newValue as IObject[], originalValue)
     ) {
-      this.changedRelationEndByObjectByRelationEndType.remove(relationEndType, object);
+      this.changedRelationEndByObjectByRelationEndType.remove(
+        relationEndType,
+        object
+      );
     } else {
       this.changedRelationEndByObjectByRelationEndType.set(
         relationEndType,

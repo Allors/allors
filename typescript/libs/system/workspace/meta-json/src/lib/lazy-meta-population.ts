@@ -53,9 +53,7 @@ export class LazyMetaPopulation implements InternalMetaPopulation {
     this.interfaces = new Set(
       data.i?.map((v) => new LazyInterface(this, v)) ?? []
     );
-    this.classes = new Set(
-      data.c?.map((v) => new LazyClass(this, v)) ?? []
-    );
+    this.classes = new Set(data.c?.map((v) => new LazyClass(this, v)) ?? []);
     this.relationTypes = new Set();
     this.methodTypes = new Set();
 

@@ -12,7 +12,8 @@ export class LazyPathBuilder {
         }
 
         const [key, value] = entry;
-        const relationEndType = composite.relationEndTypeByPropertyName.get(key);
+        const relationEndType =
+          composite.relationEndTypeByPropertyName.get(key);
         const builder = this[relationEndType.objectType.singularName];
 
         const path: Path = {

@@ -42,9 +42,14 @@ export class ChangeSet implements IChangeSet {
           strategies
         );
       } else if (relationEndType.isRoleType) {
-        this.associationsByRoleType.set(relationEndType as RoleType, strategies);
+        this.associationsByRoleType.set(
+          relationEndType as RoleType,
+          strategies
+        );
       } else {
-        throw new Error(`RelationEndType ${relationEndType.name} is not supported`);
+        throw new Error(
+          `RelationEndType ${relationEndType.name} is not supported`
+        );
       }
     }
   }
