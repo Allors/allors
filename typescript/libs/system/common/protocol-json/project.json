@@ -1,21 +1,14 @@
 {
-  "root": "libs/system/common/protocol-json",
+  "name": "system-common-protocol-json",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/system/common/protocol-json/src",
   "projectType": "library",
   "targets": {
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["libs/system/common/protocol-json/**/*.ts"]
-      }
-    },
-    "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/system/common/protocol-json"],
-      "options": {
-        "jestConfig": "libs/system/common/protocol-json/jest.config.js",
-        "passWithNoTests": true
       }
     }
   },

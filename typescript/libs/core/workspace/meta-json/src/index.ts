@@ -1,1 +1,1 @@
-export * from './lib/generated';
+export * from './lib/core-workspace-meta-json';
