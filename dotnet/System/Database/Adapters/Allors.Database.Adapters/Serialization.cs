@@ -1,4 +1,4 @@
-// <copyright file="Serialization.cs" company="Allors bvba">
+﻿// <copyright file="Serialization.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -159,7 +159,7 @@ public static class Serialization
     public static object ReadString(string value, string tag) =>
         tag switch
         {
-            UnitTags.String => value,
+            UnitTags.String => value != null ? System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(value)) : null,
             UnitTags.Integer => XmlConvert.ToInt32(value),
             UnitTags.Decimal => XmlConvert.ToDecimal(value),
             UnitTags.Float => XmlConvert.ToDouble(value),
@@ -179,7 +179,7 @@ public static class Serialization
     public static string WriteString(string tag, object unit) =>
         tag switch
         {
-            UnitTags.String => (string)unit,
+            UnitTags.String => unit != null ? Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes((string)unit)) : null,
             UnitTags.Integer => XmlConvert.ToString((int)unit),
             UnitTags.Decimal => XmlConvert.ToString((decimal)unit),
             UnitTags.Float => XmlConvert.ToString((double)unit),

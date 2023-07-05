@@ -1,4 +1,4 @@
-// <copyright file="SerializationTest.cs" company="Allors bvba">
+﻿// <copyright file="SerializationTest.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -800,10 +800,10 @@ public abstract class ObsoleteSerializationTest : IDisposable
     <relations>
       <database>
         <rtu i=""207138608abd4d718ccc2b4d1b88bce3"">
-          <r a=""1"">A String</r>
+          <r a=""1"">QSBTdHJpbmc=</r>
         </rtu>
         <rtu i=""40000000000000000000000000000000"">
-          <r a=""2"">Oops</r>
+          <r a=""2"">T29wcw==</r>
         </rtu>
         <rtu i=""b4ee673fbba04e249cda3cf993c79a0a"">
           <r a=""3"">true</r>
@@ -830,7 +830,7 @@ public abstract class ObsoleteSerializationTest : IDisposable
             var notLoadedEventArg = notLoadedEventArgs.First();
             Assert.Equal(2, notLoadedEventArg.AssociationId);
             Assert.Equal(new Guid("40000000000000000000000000000000"), notLoadedEventArg.RelationTypeId);
-            Assert.Equal("Oops", notLoadedEventArg.RoleContents);
+            Assert.Equal("T29wcw==", notLoadedEventArg.RoleContents);
 
             using (var transaction = this.Population.CreateTransaction())
             {
@@ -865,7 +865,7 @@ public abstract class ObsoleteSerializationTest : IDisposable
     <relations>
       <database>
         <rtu i=""207138608abd4d718ccc2b4d1b88bce3"">
-            <r a=""1"">A String</r>
+            <r a=""1"">QSBTdHJpbmc=</r>
         </rtu>
         <rtu i=""87eb0d1973a74aaeaeed66dc9163233c"">
             <r a=""99"">1.1</r>
