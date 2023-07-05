@@ -1,6 +1,6 @@
 cd ..
 
-npx create-nx-workspace@latest allors --preset=empty --cli=nx --nx-cloud=false
+npx create-nx-workspace@latest allors --preset=empty --nxCloud=false
 
 cd allors
 
@@ -21,30 +21,30 @@ npm install luxon
 
 // Base
 npx nx g @nx/angular:application base/workspace/angular/foundation-app --routing=true --standalone=false --style=css --e2eTestRunner=none
-npx nx g @nx/angular:application base/workspace/angular-material/application-app --routing=falsels --standalone=false --style=scss --e2eTestRunner=none
-npx nx g @nx/js:lib base/workspace/angular/foundation --bundler=tsc --unitTestRunner=jest
-npx nx g @nx/js:lib base/workspace/angular/application --bundler=tsc --unitTestRunner=jest
-npx nx g @nx/js:lib base/workspace/angular-material/foundation --bundler=tsc --unitTestRunner=jest
-npx nx g @nx/js:lib base/workspace/angular-material/application --bundler=tsc --unitTestRunner=jest
-npx nx g @nx/js:lib base/workspace/domain --bundler=tsc --unitTestRunner=jest
-npx nx g @nx/js:lib base/workspace/meta --bundler=tsc --unitTestRunner=jest
-npx nx g @nx/js:lib base/workspace/meta-json --bundler=tsc --unitTestRunner=jest
+npx nx g @nx/angular:application base/workspace/angular-material/application-app --routing=false --standalone=false --style=scss --e2eTestRunner=none
+npx nx g @nx/js:lib base/workspace/angular/foundation --bundler=none --unitTestRunner=jest -minimal=true
+npx nx g @nx/js:lib base/workspace/angular/application --bundler=none --unitTestRunner=jest -minimal=true
+npx nx g @nx/js:lib base/workspace/angular-material/foundation --bundler=none --unitTestRunner=jest -minimal=true
+npx nx g @nx/js:lib base/workspace/angular-material/application --bundler=none --unitTestRunner=jest -minimal=true
+npx nx g @nx/js:lib base/workspace/domain --bundler=none --unitTestRunner=jest -minimal=true
+npx nx g @nx/js:lib base/workspace/meta --bundler=none --unitTestRunner=jest -minimal=true
+npx nx g @nx/js:lib base/workspace/meta-json --bundler=none --unitTestRunner=jest -minimal=true
 
 // Core
-npx nx g @nx/js:lib core/workspace/domain --bundler=tsc --unitTestRunner=jest
-npx nx g @nx/js:lib core/workspace/meta --bundler=tsc --unitTestRunner=jest
-npx nx g @nx/js:lib core/workspace/meta-json --bundler=tsc --unitTestRunner=jest
+npx nx g @nx/js:lib core/workspace/domain --bundler=none --unitTestRunner=jest -minimal=true
+npx nx g @nx/js:lib core/workspace/meta --bundler=none --unitTestRunner=jest -minimal=true
+npx nx g @nx/js:lib core/workspace/meta-json --bundler=none --unitTestRunner=jest -minimal=true
 
 // System
-npx nx g @nx/js:lib system/common/protocol-json --bundler=tsc --unitTestRunner=jest
+npx nx g @nx/js:lib system/common/protocol-json --bundler=none --unitTestRunner=jest -minimal=true
 
-npx nx g @nx/js:lib system/workspace/adapters --bundler=tsc --unitTestRunner=jest
-npx nx g @nx/js:lib system/workspace/adapters-tests --bundler=tsc --unitTestRunner=jest
-npx nx g @nx/js:lib system/workspace/adapters-json --bundler=tsc --unitTestRunner=jest
-npx nx g @nx/js:lib system/workspace/adapters-json-tests --bundler=tsc --unitTestRunner=jest
+npx nx g @nx/js:lib system/workspace/adapters --bundler=none --unitTestRunner=jest -minimal=true
+npx nx g @nx/js:lib system/workspace/adapters-tests --bundler=none --unitTestRunner=jest -minimal=true
+npx nx g @nx/js:lib system/workspace/adapters-json --bundler=none --unitTestRunner=jest -minimal=true
+npx nx g @nx/js:lib system/workspace/adapters-json-tests --bundler=none --unitTestRunner=jest -minimal=true
 
-npx nx g @nx/js:lib system/workspace/domain --bundler=tsc --unitTestRunner=jest
-npx nx g @nx/js:lib system/workspace/meta --bundler=tsc --unitTestRunner=jest
-npx nx g @nx/js:lib system/workspace/meta-tests --bundler=tsc --unitTestRunner=jest
-npx nx g @nx/js:lib system/workspace/meta-json --bundler=tsc --unitTestRunner=jest
-npx nx g @nx/js:lib system/workspace/meta-json-tests --bundler=tsc --unitTestRunner=jest 
+npx nx g @nx/js:lib system/workspace/domain --bundler=none --unitTestRunner=jest -minimal=true
+npx nx g @nx/js:lib system/workspace/meta --bundler=none --unitTestRunner=jest -minimal=true
+npx nx g @nx/js:lib system/workspace/meta-tests --bundler=none --unitTestRunner=jest -minimal=true
+npx nx g @nx/js:lib system/workspace/meta-json --bundler=none --unitTestRunner=jest -minimal=true
+npx nx g @nx/js:lib system/workspace/meta-json-tests --bundler=none --unitTestRunner=jest -minimal=true 
