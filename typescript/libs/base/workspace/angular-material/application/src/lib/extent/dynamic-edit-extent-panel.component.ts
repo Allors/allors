@@ -65,7 +65,7 @@ export class AllorsMaterialDynamicEditExtentPanelComponent
   }
 
   get initializer(): Initializer {
-    return { propertyType: this.init, id: this.scoped.id };
+    return { relationEndType: this.init, id: this.scoped.id };
   }
 
   get hasPeriod(): boolean {
@@ -166,7 +166,7 @@ export class AllorsMaterialDynamicEditExtentPanelComponent
         ?.filter((v) => v.objectType.isComposite)
         .map((v) => {
           return {
-            propertyType: v,
+            relationEndType: v,
           };
         });
 
@@ -174,14 +174,14 @@ export class AllorsMaterialDynamicEditExtentPanelComponent
 
       if (this.include) {
         include = include.concat({
-          propertyType: this.include,
+          relationEndType: this.include,
           nodes:
             this.includeDisplay?.length > 0
               ? this.includeDisplay
                   .filter((v) => v.objectType.isComposite)
                   .map((v) => {
                     return {
-                      propertyType: v,
+                      relationEndType: v,
                     };
                   })
               : null,

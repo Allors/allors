@@ -24,7 +24,6 @@ import { QueryComponent } from './query/query.component';
 import { FetchComponent } from './fetch/fetch.component';
 import { CoreContext } from '../allors/core-context';
 import { Configuration } from '@allors/system/workspace/domain';
-import { ruleBuilder } from '@allors/base/workspace/derivations-custom';
 
 export function appInitFactory(
   workspaceService: WorkspaceService,
@@ -46,7 +45,6 @@ export function appInitFactory(
       name: 'Default',
       metaPopulation,
       objectFactory: new PrototypeObjectFactory(metaPopulation),
-      rules: ruleBuilder(m),
       idGenerator: () => nextId--,
     };
 

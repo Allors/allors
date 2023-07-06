@@ -18,6 +18,7 @@ import {
 } from '@allors/base/workspace/angular/foundation';
 
 @Component({
+  selector: 'a-mat-dynamic-create',
   templateUrl: 'dynamic-create.component.html',
 })
 export class AllorsMaterialDynamicCreateComponent implements OnInit, OnDestroy {

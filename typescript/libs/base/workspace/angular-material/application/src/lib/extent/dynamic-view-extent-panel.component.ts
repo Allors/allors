@@ -94,7 +94,7 @@ export class AllorsMaterialDynamicViewExtentPanelComponent
         ?.filter((v) => v.objectType.isComposite)
         .map((v) => {
           return {
-            propertyType: v,
+            relationEndType: v,
           };
         });
 
@@ -102,14 +102,14 @@ export class AllorsMaterialDynamicViewExtentPanelComponent
 
       if (this.include) {
         include = include.concat({
-          propertyType: this.include,
+          relationEndType: this.include,
           nodes:
             this.includeDisplay?.length > 0
               ? this.includeDisplay
                   .filter((v) => v.objectType.isComposite)
                   .map((v) => {
                     return {
-                      propertyType: v,
+                      relationEndType: v,
                     };
                   })
               : null,
@@ -142,7 +142,7 @@ export class AllorsMaterialDynamicViewExtentPanelComponent
     this.updateFilter();
 
     const itemName = humanize(
-      this.metaService.pluralName(this.propertyType)
+      this.metaService.pluralName(this.relationEndType)
     ).toLocaleLowerCase();
 
     if (this.hasPeriod) {

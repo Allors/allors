@@ -144,16 +144,16 @@ export abstract class AllorsFormComponent<T extends IObject>
     const initializer = this.createRequest?.initializer;
     if (initializer) {
       const initializerObject = pullResult.object<IObject>('_initializer');
-      const propertyType = initializer.propertyType;
-      if (propertyType.isAssociationType) {
-        const associationType = propertyType as AssociationType;
+      const relationEndType = initializer.relationEndType;
+      if (relationEndType.isAssociationType) {
+        const associationType = relationEndType as AssociationType;
         this.initialize(
           initializerObject,
           associationType.roleType,
           this.object
         );
       } else {
-        const roleType = propertyType as RoleType;
+        const roleType = relationEndType as RoleType;
         this.initialize(this.object, roleType, initializerObject);
       }
     }

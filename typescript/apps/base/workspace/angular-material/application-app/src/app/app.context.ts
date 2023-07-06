@@ -11,7 +11,6 @@ import {
   IObject,
   IPullResult,
   IResult,
-  IRule,
   ISession,
   IWorkspace,
   Method,
@@ -24,10 +23,6 @@ export class AppContext implements Context {
     this.workspace = this.workspaceService.workspace;
     this.configuration = this.workspace.configuration;
     this.session = this.workspace.createSession();
-
-    // Auto activate
-    const rules = this.workspace.configuration.rules;
-    this.session.activate(rules);
   }
 
   workspace: IWorkspace;
@@ -42,10 +37,6 @@ export class AppContext implements Context {
 
   set name(value: string) {
     this.session.context = value;
-  }
-
-  activate(rules: IRule<IObject>[]) {
-    this.session.activate(rules);
   }
 
   create<T extends IObject>(cls: Class): T {

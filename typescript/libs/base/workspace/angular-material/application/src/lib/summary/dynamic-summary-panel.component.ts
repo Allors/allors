@@ -114,7 +114,7 @@ export class AllorsMaterialDynamicSummaryPanelComponent
         return linkType.paths
           .map((path) => {
             const leaf = pathLeaf(path);
-            const leafObjectType = leaf.propertyType.objectType as Composite;
+            const leafObjectType = leaf.relationEndType.objectType as Composite;
             const targets = [...pathResolve(this.object, path)];
             return targets.map((target) => {
               const icon = this.iconService.icon(leafObjectType);

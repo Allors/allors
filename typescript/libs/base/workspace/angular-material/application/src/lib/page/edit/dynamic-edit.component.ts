@@ -18,6 +18,7 @@ import { Composite, humanize } from '@allors/system/workspace/meta';
 import { Subscription, tap } from 'rxjs';
 
 @Component({
+  selector: 'a-mat-dynamic-edit',
   templateUrl: 'dynamic-edit.component.html',
 })
 export class AllorsMaterialDynamicEditComponent implements OnInit, OnDestroy {
