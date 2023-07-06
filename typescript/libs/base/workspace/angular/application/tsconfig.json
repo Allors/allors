@@ -1,20 +1,7 @@
 {
   "extends": "../../../../../tsconfig.base.json",
-  "files": [],
-  "include": [],
-  "references": [
-    {
-      "path": "./tsconfig.lib.json"
-    },
-    {
-      "path": "./tsconfig.spec.json"
-    }
-  ],
   "compilerOptions": {
-    "forceConsistentCasingInFileNames": true,
-    // "strict": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
+    "module": "commonjs",
     "paths": {
       // System
       "@allors/system/common/protocol-json": [
@@ -55,11 +42,13 @@
       "@allors/default/workspace/meta-json": [
         "libs/base/workspace/meta/json/src/index.ts"
       ]
-    },
-    "angularCompilerOptions": {
-      "strictInjectionParameters": true,
-      "strictInputAccessModifiers": true,
-      "strictTemplates": true
     }
-  }
+  },
+  "files": [],
+  "include": [],
+  "references": [
+    {
+      "path": "./tsconfig.lib.json"
+    }
+  ]
 }

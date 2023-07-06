@@ -20,15 +20,15 @@ npm install jsnlog
 npm install luxon
 
 # Base
-# npx nx g @nx/angular:application base/workspace/angular/foundation-app --routing=true --standalone=false --style=css --e2eTestRunner=none --minimal=true --strict=false
-# npx nx g @nx/angular:application base/workspace/angular-material/application-app --routing=false --standalone=false --style=scss --e2eTestRunner=none --minimal=true --strict=false
-# npx nx g @nx/js:lib base/workspace/angular/foundation --bundler=none --unitTestRunner=none --minimal=true --strict=false
-# npx nx g @nx/js:lib base/workspace/angular/application --bundler=none --unitTestRunner=none --minimal=true --strict=false
-# npx nx g @nx/js:lib base/workspace/angular-material/foundation --bundler=none --unitTestRunner=none --minimal=true --strict=false
-# npx nx g @nx/js:lib base/workspace/angular-material/application --bundler=none --unitTestRunner=none --minimal=true --strict=false
-# npx nx g @nx/js:lib base/workspace/domain --bundler=none --unitTestRunner=none --minimal=true --strict=false
-# npx nx g @nx/js:lib base/workspace/meta --bundler=none --unitTestRunner=none --minimal=true --strict=false
-# npx nx g @nx/js:lib base/workspace/meta-json --bundler=none --unitTestRunner=none --minimal=true --strict=false
+npx nx g @nx/angular:application base/workspace/angular/foundation-app --routing=true --standalone=false --style=scss --skipTests=true --e2eTestRunner=none --minimal=true --strict=false
+npx nx g @nx/angular:application base/workspace/angular-material/application-app --routing=false --standalone=false --style=scss --skipTests=true --e2eTestRunner=none --minimal=true --strict=false
+npx nx g @nx/js:lib base/workspace/angular/foundation --bundler=none --unitTestRunner=none --minimal=true --strict=false
+npx nx g @nx/js:lib base/workspace/angular/application --bundler=none --unitTestRunner=none --minimal=true --strict=false
+npx nx g @nx/js:lib base/workspace/angular-material/foundation --bundler=none --unitTestRunner=none --minimal=true --strict=false
+npx nx g @nx/js:lib base/workspace/angular-material/application --bundler=none --unitTestRunner=none --minimal=true --strict=false
+npx nx g @nx/js:lib base/workspace/domain --bundler=none --unitTestRunner=none --minimal=true --strict=false
+npx nx g @nx/js:lib base/workspace/meta --bundler=none --unitTestRunner=none --minimal=true --strict=false
+npx nx g @nx/js:lib base/workspace/meta-json --bundler=none --unitTestRunner=none --minimal=true --strict=false
 
 # Core
 npx nx g @nx/js:lib core/workspace/domain --bundler=none --unitTestRunner=none --minimal=true --strict=false

@@ -5,18 +5,10 @@
   "projectType": "library",
   "targets": {
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["libs/base/workspace/domain/**/*.ts"]
-      }
-    },
-    "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/base/workspace/domain"],
-      "options": {
-        "jestConfig": "libs/base/workspace/domain/jest.config.ts",
-        "passWithNoTests": true
       }
     }
   },
