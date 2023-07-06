@@ -18,19 +18,10 @@ public partial class Build
 
     public static int Main() => Execute<Build>(x => x.Default);
 
-    protected override void OnBuildInitialized()
-    {
-        base.OnBuildInitialized();
-        TaskKill();
-    }
+    private Target Reset => _ => _
+        .Executes(KillProcesses);
 
-    protected override void OnBuildFinished()
-    {
-        base.OnBuildFinished();
-        TaskKill();
-    }
-
-    public void TaskKill()
+    static void KillProcesses()
     {
         static void TaskKill(string imageName)
         {
