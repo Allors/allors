@@ -1,4 +1,4 @@
-// <copyright file="MethodInterface.cs" company="Allors bvba">
+﻿// <copyright file="MethodInterface.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -18,6 +18,7 @@ public sealed class MethodType : MetaIdentifiableObject, IMethodType, IComparabl
     {
         this.ObjectType = objectType;
         this.Name = name;
+        this.AssignedWorkspaceNames = Array.Empty<string>();
 
         this.CompositeMethodType = new CompositeMethodType(objectType, this);
 
