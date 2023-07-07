@@ -13,7 +13,7 @@ partial class Build
 
     private Target TypescriptSystemWorkspaceMeta => _ => _
     .After(TypescriptInstall)
-    .DependsOn(DotnetCoreGenerate)
+    .DependsOn(AllorsDotnetCoreGenerate)
     .DependsOn(EnsureDirectories)
     .Executes(() => NpmRun(s => s
         .AddProcessEnvironmentVariable("npm_config_loglevel", "error")
@@ -23,7 +23,7 @@ partial class Build
 
     private Target TypescriptSystemWorkspaceMetaJson => _ => _
         .After(TypescriptInstall)
-        .DependsOn(DotnetCoreGenerate)
+        .DependsOn(AllorsDotnetCoreGenerate)
         .DependsOn(EnsureDirectories)
         .Executes(() => NpmRun(s => s
             .AddProcessEnvironmentVariable("npm_config_loglevel", "error")
@@ -32,7 +32,7 @@ partial class Build
 
     private Target TypescriptSystemWorkspaceAdapters => _ => _
         .After(TypescriptInstall)
-        .DependsOn(DotnetCoreGenerate)
+        .DependsOn(AllorsDotnetCoreGenerate)
         .DependsOn(EnsureDirectories)
         .Executes(() => NpmRun(s => s
             .AddProcessEnvironmentVariable("npm_config_loglevel", "error")
@@ -42,10 +42,10 @@ partial class Build
     private Target TypescriptSystemWorkspaceAdaptersJson => _ => _
         .After(TypescriptInstall)
         .DependsOn(EnsureDirectories)
-        .DependsOn(DotnetCoreGenerate)
-        .DependsOn(DotnetCorePublishServer)
-        .DependsOn(DotnetCorePublishCommands)
-        .DependsOn(DotnetCoreResetDatabase)
+        .DependsOn(AllorsDotnetCoreGenerate)
+        .DependsOn(AllorsDotnetCorePublishServer)
+        .DependsOn(AllorsDotnetCorePublishCommands)
+        .DependsOn(AllorsDotnetCoreResetDatabase)
         .Executes(async () =>
         {
             DotNet("Commands.dll Populate", Paths.ArtifactsCoreCommands);
