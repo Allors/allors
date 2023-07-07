@@ -8,7 +8,7 @@ namespace Allors.Meta.Generation
     using System;
     using System.IO;
     using Allors.Database.Meta.Configuration;
-    using Allors.Meta.Generation.Model;
+    using MetaModel = Model.MetaModel;
 
     internal class Program
     {
