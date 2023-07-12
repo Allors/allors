@@ -67,7 +67,16 @@ namespace Allors.Database.Domain
         /// </summary>
         /// <param name="dependent"></param>
         /// <param name="dependee"></param>
-        public void AddDependency(IObjectType dependent, IObjectType dependee) => this.objectsGraph.AddDependency(this.objectsByObjectType[dependent], this.objectsByObjectType[dependee]);
+        public void AddDependency(IComposite dependent, IComposite dependee)
+        {
+            foreach (var dependentClass in dependent.Classes)
+            {
+                foreach (var dependeeClass in dependee.Classes)
+                {
+                    this.objectsGraph.AddDependency(this.objectsByObjectType[dependentClass], this.objectsByObjectType[dependeeClass]);
+                }
+            }
+        }
 
         private void CoreOnPrePrepare()
         {
