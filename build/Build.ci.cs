@@ -3,44 +3,56 @@
 partial class Build
 {
     private Target CiDotnetSystem => _ => _
-            .DependsOn(DotnetSystemSharedTests)
-            .DependsOn(DotnetSystemRepositoryModelTests);
+        .DependsOn(Reset)
+        .DependsOn(AllorsDotnetSystemSharedTests)
+        .DependsOn(AllorsDotnetSystemRepositoryModelTests);
 
     private Target CiDotnetSystemDatabaseAdaptersMemory => _ => _
-        .DependsOn(DotnetSystemDatabaseAdaptersTestMemory);
+        .DependsOn(Reset)
+        .DependsOn(AllorsDotnetSystemDatabaseAdaptersTestMemory);
 
     private Target CiDotnetSystemDatabaseAdaptersSqlClient => _ => _
-        .DependsOn(DotnetSystemDatabaseAdaptersSqlClientTests);
+        .DependsOn(Reset)
+        .DependsOn(AllorsDotnetSystemDatabaseAdaptersSqlClientTests);
 
     private Target CiDotnetSystemDatabaseAdaptersNpgsql => _ => _
-        .DependsOn(DotnetSystemDatabaseAdaptersNpgsqlTests);
+        .DependsOn(Reset)
+        .DependsOn(AllorsDotnetSystemDatabaseAdaptersNpgsqlTests);
 
     private Target CiDotnetSystemWorkspaceAdaptersDirect => _ => _
-        .DependsOn(DotnetSystemWorkspaceAdaptersDirectTests);
+        .DependsOn(Reset)
+        .DependsOn(AllorsDotnetSystemWorkspaceAdaptersDirectTests);
 
     private Target CiDotnetSystemWorkspaceAdaptersJsonNewtonsoft => _ => _
-        .DependsOn(DotnetSystemWorkspaceAdaptersJsonNewtonsoftTests);
+        .DependsOn(Reset)
+        .DependsOn(AllorsDotnetSystemWorkspaceAdaptersJsonNewtonsoftTests);
 
     private Target CiDotnetSystemWorkspaceAdaptersJsonSystemText => _ => _
-        .DependsOn(DotnetSystemWorkspaceAdaptersJsonSystemTextTests);
+        .DependsOn(Reset)
+        .DependsOn(AllorsDotnetSystemWorkspaceAdaptersJsonSystemTextTests);
 
     private Target CiDotnetCoreDatabase => _ => _
-        .DependsOn(DotnetCoreDatabaseMetaTests)
-        .DependsOn(DotnetCoreDatabaseDomainTests)
-        .DependsOn(DotnetCoreDatabaseServerDirectTests)
-        .DependsOn(DotnetCoreDatabaseServerJsonTests);
+        .DependsOn(Reset)
+        .DependsOn(AllorsDotnetCoreDatabaseMetaTests)
+        .DependsOn(AllorsDotnetCoreDatabaseDomainTests)
+        .DependsOn(AllorsDotnetCoreDatabaseServerDirectTests)
+        .DependsOn(AllorsDotnetCoreDatabaseServerJsonTests);
 
     private Target CiDotnetCoreWorkspace => _ => _
-        .DependsOn(DotnetCoreWorkspaceMetaStaticTests);
+        .DependsOn(Reset)
+        .DependsOn(AllorsDotnetCoreWorkspaceMetaStaticTests);
 
     private Target CiDotnetBaseDatabaseTest => _ => _
-        .DependsOn(DotnetBaseDatabaseDomainTests);
+        .DependsOn(Reset)
+        .DependsOn(AllorsDotnetBaseDatabaseDomainTests);
 
     private Target CiTypescriptWorkspace => _ => _
+        .DependsOn(Reset)
         .DependsOn(TypescriptInstall)
         .DependsOn(TypescriptWorkspaceTests);
 
     private Target CiTypescriptWorkspaceAdaptersJson => _ => _
+        .DependsOn(Reset)
         .DependsOn(TypescriptInstall)
         .DependsOn(TypescriptWorkspaceAdaptersJsonTests);
 }

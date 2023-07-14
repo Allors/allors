@@ -1,10 +1,13 @@
 ﻿using System.IO;
 using System.Linq;
 using Nuke.Common;
+using Nuke.Common.Tools.DotNet;
 using static Nuke.Common.IO.FileSystemTasks;
 
 partial class Build : NukeBuild
 {
+    [Parameter("DotNet Verbosity")] private readonly DotNetVerbosity DotNetVerbosity = DotNetVerbosity.Quiet;
+
     [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")]
     private readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
 
@@ -29,7 +32,7 @@ partial class Build : NukeBuild
                 }
             }
 
-            foreach (var path in new[] { Paths.DotnetSystem, Paths.DotnetCore })
+            foreach (var path in new[] { Paths.AllorsDotnetSystem, Paths.AllorsDotnetCore })
             {
                 foreach (var child in new DirectoryInfo(path).GetDirectories().Where(v => !v.Name.Equals("build")))
                 {
@@ -44,12 +47,12 @@ partial class Build : NukeBuild
         .DependsOn(TypescriptInstall);
 
     private Target Merge => _ => _
-       .DependsOn(DotnetCoreMerge);
+       .DependsOn(AllorsDotnetCoreMerge);
 
     private Target Generate => _ => _
-        .DependsOn(DotnetSystemAdaptersGenerate)
-        .DependsOn(DotnetCoreGenerate)
-        .DependsOn(DotnetBaseGenerate);
+        .DependsOn(AllorsDotnetSystemAdaptersGenerate)
+        .DependsOn(AllorsDotnetCoreGenerate)
+        .DependsOn(AllorsDotnetBaseGenerate);
 
     private Target Default => _ => _
         .DependsOn(Install)

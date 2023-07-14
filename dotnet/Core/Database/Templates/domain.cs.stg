@@ -364,7 +364,7 @@ objectType_Plural() ::= <<
 			}
 		}
 
-		public override Allors.Database.Meta.IComposite ObjectType
+		public override Allors.Database.Meta.$if(objectType.IsClass)$IClass$else$IInterface$endif$ ObjectType
 		{
 			get
 			{

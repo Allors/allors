@@ -24,6 +24,7 @@ public sealed class RelationType : MetaIdentifiableObject, IRelationType
     {
         this.IsDerived = isDerived;
         this.Multiplicity = roleType.ObjectType.IsUnit ? Multiplicity.OneToOne : assignedMultiplicity ?? Multiplicity.ManyToOne;
+        this.AssignedWorkspaceNames = Array.Empty<string>();
 
         this.AssociationType = associationType;
         this.AssociationType.RelationType = this;

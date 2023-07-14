@@ -12,4 +12,8 @@
     <ProjectReference Include="..\Meta.Configuration\Meta.Configuration.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Include="..\..\..\Core\Database\Generate\Core*\**\*.cs" />
+  </ItemGroup>
+
 </Project>

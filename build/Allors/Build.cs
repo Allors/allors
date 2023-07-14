@@ -5,12 +5,6 @@ using static Nuke.Common.IO.FileSystemTasks;
 
 public partial class Build
 {
-    [Parameter("DotNet Verbosity")] private readonly DotNetVerbosity DotNetVerbosity = DotNetVerbosity.Quiet;
-
-    //[Solution] private readonly Solution Solution;
-    //[GitRepository] private readonly GitRepository GitRepository;
-    //[GitVersion] private readonly GitVersion GitVersion;
-
     private readonly Paths Paths = new Paths(RootDirectory);
 
     public Target EnsureDirectories => _ => _
@@ -18,19 +12,10 @@ public partial class Build
 
     public static int Main() => Execute<Build>(x => x.Default);
 
-    protected override void OnBuildInitialized()
-    {
-        base.OnBuildInitialized();
-        TaskKill();
-    }
+    private Target Reset => _ => _
+        .Executes(KillProcesses);
 
-    protected override void OnBuildFinished()
-    {
-        base.OnBuildFinished();
-        TaskKill();
-    }
-
-    public void TaskKill()
+    static void KillProcesses()
     {
         static void TaskKill(string imageName)
         {
