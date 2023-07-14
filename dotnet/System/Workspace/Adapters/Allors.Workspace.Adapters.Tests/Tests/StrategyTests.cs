@@ -35,7 +35,7 @@ namespace Allors.Workspace.Adapters.Tests
 
             try
             {
-                c1.Strategy.UnitRole(this.M.C1.C1AllorsInteger).Value = "Not an integer";
+                c1.Strategy.UnitRole<string>(this.M.C1.C1AllorsInteger).Value = "Not an integer";
                 hasErrors = false;
             }
             catch (Exception)
