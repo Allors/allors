@@ -10,7 +10,7 @@ namespace Allors.Workspace
     using Adapters;
     using Meta;
 
-    public class DecimalRole : IDecimalRole, IRoleInternals
+    public class DecimalRole : IUnitRole<decimal?>, IRoleInternals
     {
         private readonly Object lockObject = new();
 

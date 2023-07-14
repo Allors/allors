@@ -81,7 +81,7 @@ $interface.WorkspaceExclusiveMethodTypesByWorkspaceName.(workspaceName):{methodT
 interfaceRoleType() ::= <<
 $\n$
 $if(roleType.ObjectType.IsUnit)$
-		I$roleType.ObjectType.SingularName$Role $roleType.SingularName$
+		IUnitRole<$objectType_NullableName(roleType.objectType)$> $roleType.SingularName$
 		{
 			get;
 		}
@@ -240,11 +240,11 @@ classMethodType() ::= <<
 
 classConcreteRoleType_Class() ::= <<
 $if(concreteRoleType.ObjectType.IsUnit)$
-		virtual public I$concreteRoleType.ObjectType.SingularName$Role $concreteRoleType.SingularName$
+		virtual public IUnitRole<$objectType_NullableName(concreteRoleType.objectType)$> $concreteRoleType.SingularName$
 		{
 			get
 			{
-				return this.Strategy.$concreteRoleType.ObjectType.SingularName$Role(Meta.$concreteRoleType.Name$);
+				return this.Strategy.UnitRole<$objectType_NullableName(concreteRoleType.objectType)$>(Meta.$concreteRoleType.Name$);
 			}
 		}
 $else$
@@ -297,48 +297,6 @@ classMethodTypeObject() ::= <<
 		}
 	}
 >>
-
-roleType_ObjectType(roleType) ::= <%
-$if(roleType.IsRequired)$
-$objectType_Name(roleType.ObjectType)$
-$else$
-$objectType_NullableName(roleType.ObjectType)$
-$endif$
-%>
-
-concreteRoleType_ObjectType(roleType) ::= <%
-$if(concreteRoleType.IsRequired)$
-$objectType_Name(concreteRoleType.ObjectType)$
-$else$
-$objectType_NullableName(concreteRoleType.ObjectType)$
-$endif$
-%>
-
-objectType_Name(objectType) ::= <%
-$if(objectType.IsUnit)$
-$if(objectType.IsBinary)$
-	global::System.Byte[]
-$elseif(objectType.IsBoolean)$
-	global::System.Boolean
-$elseif(objectType.IsDecimal)$
-	global::System.Decimal
-$elseif(objectType.IsDateTime)$
-	global::System.DateTime
-$elseif(objectType.IsFloat)$
-	global::System.Double
-$elseif(objectType.IsInteger)$
-	global::System.Int32
-$elseif(objectType.IsString)$
-	global::System.String
-$elseif(objectType.IsUnique)$
-	global::System.Guid
-$else$
-not found ...
-$endif$
-$else$
-	$objectType.SingularName$
-$endif$
-%>
 
 objectType_NullableName(objectType) ::= <%
 $if(objectType.IsUnit)$

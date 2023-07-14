@@ -10,7 +10,7 @@ namespace Allors.Workspace
     using Adapters;
     using Meta;
 
-    public class BooleanRole : IBooleanRole, IRoleInternals
+    public class BooleanRole : IUnitRole<bool?>, IRoleInternals
     {
         private readonly Object lockObject = new();
 

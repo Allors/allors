@@ -10,7 +10,7 @@ namespace Allors.Workspace
     using Adapters;
     using Meta;
 
-    public class UniqueRole : IUniqueRole, IRoleInternals
+    public class UniqueRole : IUnitRole<Guid?>, IRoleInternals
     {
         private readonly Object lockObject = new();
 

@@ -2,23 +2,22 @@
 
 using System.ComponentModel;
 using Allors.Workspace;
-using CommunityToolkit.Mvvm.ComponentModel;
 
-public class StringRoleAtom : IDisposable
+public class RoleAdapter<T> : IDisposable
 {
-    public StringRoleAtom(IStringRole role, IPropertyChange propertyChange)
+    public RoleAdapter(IPropertyChange viewModel, IUnitRole<T> role)
     {
         this.Role = role;
-        this.ChangeNotification = new WeakReference<IPropertyChange>(propertyChange);
+        this.ChangeNotification = new WeakReference<IPropertyChange>(viewModel);
 
         this.Role.PropertyChanged += this.Role_PropertyChanged;
     }
 
-    public IStringRole Role { get; private set; }
+    public IUnitRole<T> Role { get; }
 
-    public WeakReference<IPropertyChange> ChangeNotification { get; private set; }
+    public WeakReference<IPropertyChange> ChangeNotification { get; }
 
-    public String Value
+    public T Value
     {
         get => this.Role.Value;
         set => this.Role.Value = value;
@@ -30,7 +29,7 @@ public class StringRoleAtom : IDisposable
         this.Role.PropertyChanged -= this.Role_PropertyChanged;
     }
 
-    private void Role_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+    private void Role_PropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
         if (!this.ChangeNotification.TryGetTarget(out var changeNotification))
         {

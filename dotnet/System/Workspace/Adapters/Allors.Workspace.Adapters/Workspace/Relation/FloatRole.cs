@@ -10,7 +10,7 @@ namespace Allors.Workspace
     using Adapters;
     using Meta;
 
-    public class FloatRole : IFloatRole, IRoleInternals
+    public class FloatRole : IUnitRole<double?>, IRoleInternals
     {
         private readonly Object lockObject = new();
 

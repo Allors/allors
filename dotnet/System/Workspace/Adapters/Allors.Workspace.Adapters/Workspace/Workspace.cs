@@ -149,116 +149,116 @@ namespace Allors.Workspace.Adapters
 
         public abstract Task<IPushResult> PushAsync();
 
-        public IBinaryRole BinaryRole(Strategy strategy, IRoleType roleType)
+        public IUnitRole<byte[]> BinaryRole(Strategy strategy, IRoleType roleType)
         {
             var roleByStrategy = this.GetRoleByStrategy(roleType);
 
             if (roleByStrategy.TryGetValue(strategy, out var role))
             {
-                return (IBinaryRole)role;
+                return (IUnitRole<byte[]>)role;
             }
 
             role = new BinaryRole(strategy, roleType);
             roleByStrategy[strategy] = role;
-            return (IBinaryRole)role;
+            return (IUnitRole<byte[]>)role;
         }
 
-        public IBooleanRole BooleanRole(Strategy strategy, IRoleType roleType)
+        public IUnitRole<bool?> BooleanRole(Strategy strategy, IRoleType roleType)
         {
             var roleByStrategy = this.GetRoleByStrategy(roleType);
 
             if (roleByStrategy.TryGetValue(strategy, out var role))
             {
-                return (IBooleanRole)role;
+                return (IUnitRole<bool?>)role;
             }
 
             role = new BooleanRole(strategy, roleType);
             roleByStrategy[strategy] = role;
-            return (IBooleanRole)role;
+            return (IUnitRole<bool?>)role;
         }
 
-        public IDateTimeRole DateTimeRole(Strategy strategy, IRoleType roleType)
+        public IUnitRole<DateTime?> DateTimeRole(Strategy strategy, IRoleType roleType)
         {
             var roleByStrategy = this.GetRoleByStrategy(roleType);
 
             if (roleByStrategy.TryGetValue(strategy, out var role))
             {
-                return (IDateTimeRole)role;
+                return (IUnitRole<DateTime?>)role;
             }
 
             role = new DateTimeRole(strategy, roleType);
             roleByStrategy[strategy] = role;
-            return (IDateTimeRole)role;
+            return (IUnitRole<DateTime?>)role;
         }
 
-        public IDecimalRole DecimalRole(Strategy strategy, IRoleType roleType)
+        public IUnitRole<decimal?> DecimalRole(Strategy strategy, IRoleType roleType)
         {
             var roleByStrategy = this.GetRoleByStrategy(roleType);
 
             if (roleByStrategy.TryGetValue(strategy, out var role))
             {
-                return (IDecimalRole)role;
+                return (IUnitRole<decimal?>)role;
             }
 
             role = new DecimalRole(strategy, roleType);
             roleByStrategy[strategy] = role;
-            return (IDecimalRole)role;
+            return (IUnitRole<decimal?>)role;
         }
 
-        public IFloatRole FloatRole(Strategy strategy, IRoleType roleType)
+        public IUnitRole<double?> FloatRole(Strategy strategy, IRoleType roleType)
         {
             var roleByStrategy = this.GetRoleByStrategy(roleType);
 
             if (roleByStrategy.TryGetValue(strategy, out var role))
             {
-                return (IFloatRole)role;
+                return (IUnitRole<double?>)role;
             }
 
             role = new FloatRole(strategy, roleType);
             roleByStrategy[strategy] = role;
-            return (IFloatRole)role;
+            return (IUnitRole<double?>)role;
         }
 
-        public IIntegerRole IntegerRole(Strategy strategy, IRoleType roleType)
+        public IUnitRole<int?> IntegerRole(Strategy strategy, IRoleType roleType)
         {
             var roleByStrategy = this.GetRoleByStrategy(roleType);
 
             if (roleByStrategy.TryGetValue(strategy, out var role))
             {
-                return (IIntegerRole)role;
+                return (IUnitRole<int?>)role;
             }
 
             role = new IntegerRole(strategy, roleType);
             roleByStrategy[strategy] = role;
-            return (IIntegerRole)role;
+            return (IUnitRole<int?>)role;
         }
 
-        public IStringRole StringRole(Strategy strategy, IRoleType roleType)
+        public IUnitRole<string> StringRole(Strategy strategy, IRoleType roleType)
         {
             var roleByStrategy = this.GetRoleByStrategy(roleType);
 
             if (roleByStrategy.TryGetValue(strategy, out var role))
             {
-                return (IStringRole)role;
+                return (IUnitRole<string>)role;
             }
 
             role = new StringRole(strategy, roleType);
             roleByStrategy[strategy] = role;
-            return (IStringRole)role;
+            return (IUnitRole<string>)role;
         }
 
-        public IUniqueRole UniqueRole(Strategy strategy, IRoleType roleType)
+        public IUnitRole<Guid?> UniqueRole(Strategy strategy, IRoleType roleType)
         {
             var roleByStrategy = this.GetRoleByStrategy(roleType);
 
             if (roleByStrategy.TryGetValue(strategy, out var role))
             {
-                return (IUniqueRole)role;
+                return (IUnitRole<Guid?>)role;
             }
 
             role = new UniqueRole(strategy, roleType);
             roleByStrategy[strategy] = role;
-            return (IUniqueRole)role;
+            return (IUnitRole<Guid?>)role;
         }
 
         public ICompositeRole CompositeRole(Strategy strategy, IRoleType roleType)

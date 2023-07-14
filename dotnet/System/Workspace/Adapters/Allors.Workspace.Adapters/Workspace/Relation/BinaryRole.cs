@@ -10,7 +10,7 @@ namespace Allors.Workspace
     using Adapters;
     using Meta;
 
-    public class BinaryRole : IBinaryRole, IRoleInternals
+    public class BinaryRole : IUnitRole<byte[]>, IRoleInternals
     {
         private readonly Object lockObject = new();
 

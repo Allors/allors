@@ -2,17 +2,14 @@
 
 using System.ComponentModel;
 using Allors.Workspace;
-using Allors.Workspace.Domain;
-
-public class GreetingAtom : IDisposable
+public class ExpressionAdapter<T> : IDisposable
 {
-    public GreetingAtom(Person person, IPropertyChange propertyChange, string propertyName = "Greeting")
+    public ExpressionAdapter(IPropertyChange viewModel, IRole[] roles, Func<T> expression, string propertyName)
     {
-        this.Person = person;
-        this.ChangeNotification = new WeakReference<IPropertyChange>(propertyChange);
+        this.Roles = roles;
+        this.Expression = expression;
         this.PropertyName = propertyName;
-
-        this.Roles = new IRole[] { this.Person.FirstName, this.Person.LastName, };
+        this.ChangeNotification = new WeakReference<IPropertyChange>(viewModel);
 
         foreach (var role in this.Roles)
         {
@@ -22,15 +19,15 @@ public class GreetingAtom : IDisposable
         this.Calculate();
     }
 
-    public Person Person { get; }
-
     public IRole[] Roles { get; private set; }
 
-    public WeakReference<IPropertyChange> ChangeNotification { get; private set; }
+    public Func<T> Expression { get; }
 
     public string PropertyName { get; }
 
-    public string Value
+    public WeakReference<IPropertyChange> ChangeNotification { get; private set; }
+
+    public T Value
     {
         get;
         private set;
@@ -47,9 +44,9 @@ public class GreetingAtom : IDisposable
 
     private void Calculate()
     {
-        this.Value = $"Hello {this.Person.FirstName.Value}";
+        this.Value = this.Expression();
     }
-
+    
     private void Role_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
     {
         if (!this.ChangeNotification.TryGetTarget(out var changeNotification))

@@ -5,7 +5,8 @@
 
 namespace Allors.Workspace
 {
-    public interface IUnitRole : IRole
+    public interface IUnitRole<T> : IRole
     {
+        new T Value { get; set; }
     }
 }

@@ -3,27 +3,24 @@
 using System.ComponentModel;
 using Allors.Workspace;
 using Allors.Workspace.Domain;
-using CommunityToolkit.Mvvm.ComponentModel;
+using Controllers;
 
-public partial class PersonViewModel : ObservableObject, IPropertyChange
+public partial class PersonViewModel : ViewModel
 {
-    private readonly StringRoleAtom firstName;
-    private readonly ExpressionAtom<string> fullName;
-    private readonly GreetingAtom greeting;
+    private readonly RoleAdapter<string> firstName;
+    private readonly ExpressionAdapter<string> fullName;
+    private readonly GreetingAdapter greeting;
 
     public PersonViewModel(Person person)
     {
-        this.firstName = new StringRoleAtom(person.FirstName, this);
-        this.fullName = new ExpressionAtom<string>(
+        this.firstName = new RoleAdapter<string>(this, person.FirstName);
+        this.fullName = new ExpressionAdapter<string>(this,
             new IRole[]
             {
                 person.FirstName,
                 person.LastName
-            },
-            () => person.FirstName.Value + " " + person.LastName,
-            this,
-            "FullName");
-        this.greeting = new GreetingAtom(person, this);
+            }, () => person.FirstName.Value + " " + person.LastName, "FullName");
+        this.greeting = new GreetingAdapter(person, this);
     }
 
     public string FirstName
@@ -35,11 +32,4 @@ public partial class PersonViewModel : ObservableObject, IPropertyChange
     public string FullName => this.fullName.Value;
 
     public string Greeting => this.greeting.Value;
-
-    #region OnPropertyChanged
-    void IPropertyChange.OnPropertyChanged(PropertyChangedEventArgs e)
-    {
-        this.OnPropertyChanged(e);
-    }
-    #endregion
 }

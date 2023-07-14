@@ -10,7 +10,7 @@ namespace Allors.Workspace
     using Adapters;
     using Meta;
 
-    public class DateTimeRole : IDateTimeRole, IRoleInternals
+    public class DateTimeRole : IUnitRole<DateTime?>, IRoleInternals
     {
         private readonly Object lockObject = new();
 

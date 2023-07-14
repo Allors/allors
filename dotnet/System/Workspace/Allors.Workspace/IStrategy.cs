@@ -28,23 +28,7 @@ namespace Allors.Workspace
 
         IRole Role(IRoleType roleType);
 
-        IUnitRole UnitRole(IRoleType roleType);
-
-        IBinaryRole BinaryRole(IRoleType roleType);
-
-        IBooleanRole BooleanRole(IRoleType roleType);
-
-        IDateTimeRole DateTimeRole(IRoleType roleType);
-
-        IDecimalRole DecimalRole(IRoleType roleType);
-
-        IFloatRole FloatRole(IRoleType roleType);
-
-        IIntegerRole IntegerRole(IRoleType roleType);
-
-        IStringRole StringRole(IRoleType roleType);
-
-        IUniqueRole UniqueRole(IRoleType roleType);
+        IUnitRole<T> UnitRole<T>(IRoleType roleType);
 
         ICompositeRole CompositeRole(IRoleType roleType);
 

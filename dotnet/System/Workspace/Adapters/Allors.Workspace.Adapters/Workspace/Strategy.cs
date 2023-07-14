@@ -97,7 +97,18 @@ namespace Allors.Workspace.Adapters
 
             if (roleType.ObjectType.IsUnit)
             {
-                return this.UnitRole(roleType);
+                return roleType.ObjectType.Tag switch
+                {
+                    UnitTags.Binary => this.Workspace.BinaryRole(this, roleType),
+                    UnitTags.Boolean => this.Workspace.BooleanRole(this, roleType),
+                    UnitTags.DateTime => this.Workspace.DateTimeRole(this, roleType),
+                    UnitTags.Decimal => this.Workspace.DecimalRole(this, roleType),
+                    UnitTags.Float => this.Workspace.FloatRole(this, roleType),
+                    UnitTags.Integer => this.Workspace.IntegerRole(this, roleType),
+                    UnitTags.String => this.Workspace.StringRole(this, roleType),
+                    UnitTags.Unique => this.Workspace.UniqueRole(this, roleType),
+                    _ => throw new Exception("Unknown unit role")
+                };
             }
 
             if (roleType.IsOne)
@@ -108,35 +119,19 @@ namespace Allors.Workspace.Adapters
             return this.CompositesRole(roleType);
         }
 
-        public IUnitRole UnitRole(IRoleType roleType) =>
+        public IUnitRole<T> UnitRole<T>(IRoleType roleType) =>
             roleType.ObjectType.Tag switch
             {
-                UnitTags.Binary => this.BinaryRole(roleType),
-                UnitTags.Boolean => this.BooleanRole(roleType),
-                UnitTags.DateTime => this.DateTimeRole(roleType),
-                UnitTags.Decimal => this.DecimalRole(roleType),
-                UnitTags.Float => this.FloatRole(roleType),
-                UnitTags.Integer => this.IntegerRole(roleType),
-                UnitTags.String => this.StringRole(roleType),
-                UnitTags.Unique => this.UniqueRole(roleType),
+                UnitTags.Binary => (IUnitRole<T>)this.Workspace.BinaryRole(this, roleType),
+                UnitTags.Boolean => (IUnitRole<T>)this.Workspace.BooleanRole(this, roleType),
+                UnitTags.DateTime => (IUnitRole<T>)this.Workspace.DateTimeRole(this, roleType),
+                UnitTags.Decimal => (IUnitRole<T>)this.Workspace.DecimalRole(this, roleType),
+                UnitTags.Float => (IUnitRole<T>)this.Workspace.FloatRole(this, roleType),
+                UnitTags.Integer => (IUnitRole<T>)this.Workspace.IntegerRole(this, roleType),
+                UnitTags.String => (IUnitRole<T>)this.Workspace.StringRole(this, roleType),
+                UnitTags.Unique => (IUnitRole<T>)this.Workspace.UniqueRole(this, roleType),
                 _ => throw new Exception("Unknown unit role")
             };
-
-        public IBinaryRole BinaryRole(IRoleType roleType) => this.Workspace.BinaryRole(this, roleType);
-
-        public IBooleanRole BooleanRole(IRoleType roleType) => this.Workspace.BooleanRole(this, roleType);
-
-        public IDateTimeRole DateTimeRole(IRoleType roleType) => this.Workspace.DateTimeRole(this, roleType);
-
-        public IDecimalRole DecimalRole(IRoleType roleType) => this.Workspace.DecimalRole(this, roleType);
-
-        public IFloatRole FloatRole(IRoleType roleType) => this.Workspace.FloatRole(this, roleType);
-
-        public IIntegerRole IntegerRole(IRoleType roleType) => this.Workspace.IntegerRole(this, roleType);
-
-        public IStringRole StringRole(IRoleType roleType) => this.Workspace.StringRole(this, roleType);
-
-        public IUniqueRole UniqueRole(IRoleType roleType) => this.Workspace.UniqueRole(this, roleType);
 
         public ICompositeRole CompositeRole(IRoleType roleType) => this.Workspace.CompositeRole(this, roleType);
 

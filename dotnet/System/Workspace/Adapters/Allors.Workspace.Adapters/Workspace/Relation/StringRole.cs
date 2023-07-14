@@ -10,7 +10,7 @@ namespace Allors.Workspace
     using Adapters;
     using Meta;
 
-    public class StringRole : IStringRole, IRoleInternals
+    public class StringRole : IUnitRole<string>, IRoleInternals
     {
         private readonly Object lockObject = new();
 
