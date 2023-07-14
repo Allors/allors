@@ -95,6 +95,8 @@ namespace Allors.Database.Meta.Configuration
             AddWorkspace(relationTypes.PersonMiddleName, new[] { "Default" });
             AddWorkspace(relationTypes.PersonLastName, new[] { "Default" });
 
+            AddWorkspace(relationTypes.PersonMailboxAddress, new[] { "Default" });
+
             AddWorkspace(relationTypes.PersonBirthDate, new[] { "Default" });
             AddWorkspace(relationTypes.PersonFullName, new[] { "Default" });
             AddWorkspace(relationTypes.PersonDomainFullName, new[] { "Default" });
@@ -293,6 +295,7 @@ namespace Allors.Database.Meta.Configuration
             // Left;
 
             // MailboxAddress;
+            AddWorkspace(relationTypes.MailboxAddressPoBox, new[] { "Default" });
 
             // MediaTyped;
             AddWorkspace(relationTypes.MediaTypedMarkdown, new[] { "Default" });
@@ -702,6 +705,7 @@ namespace Allors.Database.Meta.Configuration
             AddWorkspace(meta.Person, new[] { "Default" });
             AddWorkspace(meta.TaskAssignment, new[] { "Default" });
             AddWorkspace(meta.Employment, new[] { "Default" });
+            AddWorkspace(meta.MailboxAddress, new[] { "Default" });
             AddWorkspace(meta.Organisation, new[] { "Default" });
             AddWorkspace(meta.C1, new[] { "Default" });
             AddWorkspace(meta.C2, new[] { "Default" });

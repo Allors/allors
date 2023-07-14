@@ -77,9 +77,9 @@ namespace Allors.Repository
 
         #region Allors
         [Id("6340de2a-c3b1-4893-a7f3-cb924b82fa0e")]
-        [Multiplicity(Multiplicity.ManyToOne)]
         [Indexed]
         #endregion
+        [Multiplicity(Multiplicity.ManyToOne)]
         public MailboxAddress MailboxAddress { get; set; }
 
         #region Allors

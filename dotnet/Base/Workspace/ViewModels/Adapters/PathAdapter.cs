@@ -2,15 +2,17 @@
 
 using System.ComponentModel;
 using Allors.Workspace;
+using Controllers;
 
-public class RoleAdapter<TRoleValue> : IDisposable
+public class PathAdapter<TRoleValue> : IDisposable 
 {
-    public RoleAdapter(IPropertyChange viewModel, IUnitRole<TRoleValue> role)
+ 
+    public PathAdapter(IViewModel<IObject> viewModel)
     {
-        this.Role = role;
-        this.ChangeNotification = new WeakReference<IPropertyChange>(viewModel);
+        //this.Role = role;
+        //this.ChangeNotification = new WeakReference<IPropertyChange>(viewModel);
 
-        this.Role.PropertyChanged += this.Role_PropertyChanged;
+        //this.Role.PropertyChanged += this.Role_PropertyChanged;
     }
 
     public IUnitRole<TRoleValue> Role { get; }

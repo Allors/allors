@@ -51,6 +51,16 @@ namespace Allors.Database.Domain
 
             var genders = new Genders(this.transaction);
 
+            var mailboxAdress = this.transaction.Build<MailboxAddress>(v =>
+            {
+                v.Place = this.transaction.Build<Place>(w =>
+                {
+                    w.City = "De Haan";
+                    w.Country = new Countries(this.transaction).CountryByIsoCode["BE"];
+                });
+                v.PoBox = "P.O. Box 20";
+            });
+
             var jane = this.transaction.Build<Person>(v =>
             {
                 v.MainAddress = address;
@@ -59,6 +69,7 @@ namespace Allors.Database.Domain
                 v.UserName = "jane@example.com";
                 v.Photo = avatar;
                 v.Gender = genders.Female;
+                v.MailboxAddress = mailboxAdress;
             });
 
             var john = this.transaction.Build<Person>(v =>
@@ -68,6 +79,7 @@ namespace Allors.Database.Domain
                 v.UserName = "john@example.com";
                 v.Photo = avatar;
                 v.Gender = genders.Male;
+                v.MailboxAddress = mailboxAdress;
             });
 
             var jenny = this.transaction.Build<Person>(v =>
@@ -77,6 +89,7 @@ namespace Allors.Database.Domain
                 v.UserName = "jenny@example.com";
                 v.Photo = avatar;
                 v.Gender = genders.Other;
+                v.MailboxAddress = mailboxAdress;
             });
 
             jane.SetPassword("jane");

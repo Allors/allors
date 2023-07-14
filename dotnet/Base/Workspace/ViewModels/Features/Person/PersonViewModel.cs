@@ -1,27 +1,31 @@
 ﻿namespace Workspace.ViewModels.Features;
 
-using System.ComponentModel;
 using Allors.Workspace;
 using Allors.Workspace.Domain;
 using Controllers;
 
-public partial class PersonViewModel : ViewModel
+public partial class PersonViewModel : ViewModel<Person>
 {
     private readonly RoleAdapter<string> firstName;
+    private readonly PathAdapter<string> poBox;
     private readonly ExpressionAdapter<string> fullName;
     private readonly GreetingAdapter greeting;
 
-    public PersonViewModel(Person person)
+    public PersonViewModel(Person model)
     {
-        this.firstName = new RoleAdapter<string>(this, person.FirstName);
+        this.Model = model;
+        this.firstName = new RoleAdapter<string>(this, model.FirstName);
         this.fullName = new ExpressionAdapter<string>(this,
             new IRole[]
             {
-                person.FirstName,
-                person.LastName
-            }, () => person.FirstName.Value + " " + person.LastName, "FullName");
-        this.greeting = new GreetingAdapter(person, this);
+                model.FirstName,
+                model.LastName
+            }, () => model.FirstName.Value + " " + model.LastName, "FullName");
+        this.greeting = new GreetingAdapter(model, this);
+        //this.poBox = model.Meta.PathAdapter(this, v => v.MailboxAddress.ObjectType.PoBox);
     }
+
+    public override Person Model { get; }
 
     public string FirstName
     {
@@ -32,4 +36,10 @@ public partial class PersonViewModel : ViewModel
     public string FullName => this.fullName.Value;
 
     public string Greeting => this.greeting.Value;
+
+    public string PoBox
+    {
+        get => this.poBox.Value;
+        set => this.poBox.Value = value;
+    }
 }
