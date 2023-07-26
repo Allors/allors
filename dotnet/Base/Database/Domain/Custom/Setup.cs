@@ -56,6 +56,7 @@ namespace Allors.Database.Domain
                 v.Place = this.transaction.Build<Place>(w =>
                 {
                     w.City = "De Haan";
+                    w.PostalCode = "8420";
                     w.Country = new Countries(this.transaction).CountryByIsoCode["BE"];
                 });
                 v.PoBox = "P.O. Box 20";
