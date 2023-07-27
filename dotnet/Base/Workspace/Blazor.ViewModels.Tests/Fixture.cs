@@ -7,7 +7,7 @@
 
 using Allors.Database.Meta.Configuration;
 
-namespace Allors.Workspace.Adapters.Tests
+namespace Workspace.Blazor.ViewModels.Tests
 {
     using System;
     using Allors.Database.Configuration.Derivations.Default;

@@ -1,4 +1,4 @@
-﻿namespace Workspace.ViewModels.Controllers;
+﻿namespace Workspace.Blazor.ViewModels.Controllers;
 
 using Allors.Workspace;
 using Features;
