@@ -1,4 +1,4 @@
-﻿namespace Workspace.Blazor.ViewModels.Features.Person.Edit;
+﻿namespace Workspace.Blazor.ViewModels.Features.Person.Overview;
 
 using Allors.Workspace;
 using Allors.Workspace.Data;
@@ -12,7 +12,6 @@ using ViewModels.Services;
 public partial class PageViewModel : ObservableObject, INavigateable
 {
     private PersonViewModel selected;
-    private IPushResult result;
 
     public PageViewModel(IWorkspace workspace, IMessageService messageService)
     {
@@ -32,12 +31,6 @@ public partial class PageViewModel : ObservableObject, INavigateable
         {
             this.SetProperty(ref this.selected, value);
         }
-    }
-
-    public IPushResult Result
-    {
-        get => this.result;
-        private set => this.SetProperty(ref this.result, value);
     }
 
     [RelayCommand]
@@ -76,11 +69,11 @@ public partial class PageViewModel : ObservableObject, INavigateable
     [RelayCommand]
     private async Task SaveAsync()
     {
-        this.Result = await this.Workspace.PushAsync();
+        var result = await this.Workspace.PushAsync();
 
-        if (this.Result.HasErrors)
+        if (result.HasErrors)
         {
-            this.Result.HandleErrors(this.MessageService);
+            this.MessageService.Show(result.ErrorMessage, "Error");
             return;
         }
 

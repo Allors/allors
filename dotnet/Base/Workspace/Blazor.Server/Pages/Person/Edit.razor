@@ -1,0 +1,44 @@
+﻿@page "/person/edit/{Id}"
+@using Workspace.Blazor.ViewModels.Features.Person.Edit
+@inject PageViewModel ViewModel
+@inject NavigationManager NavigationManager
+
+<PageTitle>People</PageTitle>
+
+@if (this.ViewModel.LoadCommand.IsRunning)
+{
+    <div class="spinner-border text-primary" role="status">
+        <span class="sr-only"></span>
+    </div>
+}
+else
+{
+    <EditForm Model="@ViewModel.Selected" OnValidSubmit=@ValidFormSubmitted>
+        <div class="form-group">
+            <label for="FirstName">First Name</label>
+            <InputText @bind-Value=ViewModel.Selected.FirstName class="form-control" id="FirstName" />
+        </div>
+        <input type="submit" class="btn btn-primary" value="Save" />
+    </EditForm>
+}
+
+@code {
+
+    [Parameter]
+    public string Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await this.ViewModel.LoadCommand.ExecuteAsync(long.Parse(this.Id));
+    }
+
+    async Task ValidFormSubmitted(EditContext editContext)
+    {
+        await this.ViewModel.SaveCommand.ExecuteAsync(null);
+
+        if (!this.ViewModel.Result.HasErrors)
+        {
+            this.NavigationManager.NavigateTo($"/person/overview/{Id}");
+        }
+    }
+}

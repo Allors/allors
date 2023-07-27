@@ -1,4 +1,4 @@
-﻿@page "/person/edit/{Id}"
+﻿@page "/person/overview/{Id}"
 @using Workspace.Blazor.ViewModels.Features.Person.Edit
 @inject PageViewModel ViewModel
 
@@ -13,6 +13,10 @@
 else
 {
     @ViewModel.Selected.FirstName
+
+    <div>
+        <NavLink href="@Edit()">edit</NavLink>
+    </div>
 }
 
 @code {
@@ -24,4 +28,6 @@ else
     {
         await this.ViewModel.LoadCommand.ExecuteAsync(long.Parse(this.Id));
     }
+
+    private object Edit() => $"/person/edit/{Id}";
 }

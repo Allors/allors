@@ -1,4 +1,4 @@
-﻿@page "/people"
+﻿@page "/person/list"
 @using Workspace.Blazor.ViewModels.Features.Person.List
 @inject PageViewModel ViewModel
 
@@ -29,7 +29,7 @@ else
                     <td>@person.Greeting</td>
                     <td>@*@person.PoBox*@</td>
                     <td>
-                        <NavLink href="@GetLink(person)">edit</NavLink>
+                        <NavLink href="@Overview(person)">view</NavLink>
                     </td>
                 </tr>
             }
@@ -44,5 +44,5 @@ else
         await this.ViewModel.LoadCommand.ExecuteAsync(null);
     }
 
-    private object GetLink(PersonViewModel person) => $"/person/edit/{@person.Id}";
+    private object Overview(PersonViewModel person) => $"/person/overview/{@person.Id}";
 }
