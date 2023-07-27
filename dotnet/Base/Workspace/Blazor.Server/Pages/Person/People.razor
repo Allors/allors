@@ -1,10 +1,10 @@
 ﻿@page "/people"
 @using Workspace.Blazor.ViewModels.Features.Person.List
-@inject PageViewModel Page
+@inject PageViewModel ViewModel
 
 <PageTitle>People</PageTitle>
 
-@if (this.Page.LoadCommand.IsRunning)
+@if (this.ViewModel.LoadCommand.IsRunning)
 {
     <div class="spinner-border text-primary" role="status">
         <span class="sr-only"></span>
@@ -22,13 +22,15 @@ else
             </tr>
         </thead>
         <tbody>
-            @foreach (var person in Page.People)
+            @foreach (var person in ViewModel.People)
             {
                 <tr>
                     <td>@person.FirstName</td>
                     <td>@person.Greeting</td>
                     <td>@*@person.PoBox*@</td>
-                    <td><button type="button" class="btn btn-primary">Edit</button></td>
+                    <td>
+                        <NavLink href="@GetLink(person)">edit</NavLink>
+                    </td>
                 </tr>
             }
         </tbody>
@@ -39,6 +41,8 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        await this.Page.LoadCommand.ExecuteAsync(null);
+        await this.ViewModel.LoadCommand.ExecuteAsync(null);
     }
+
+    private object GetLink(PersonViewModel person) => $"/person/edit/{@person.Id}";
 }

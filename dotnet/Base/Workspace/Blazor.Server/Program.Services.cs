@@ -16,6 +16,7 @@ public static class Program
         services.AddScoped<IMessageService, MessageService>();
 
         // ViewModels
+        services.AddScoped<ViewModels.Features.Person.Edit.PageViewModel>();
         services.AddScoped<ViewModels.Features.Person.List.PageViewModel>();
 
         return services;

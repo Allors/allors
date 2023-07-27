@@ -1,0 +1,27 @@
+﻿@page "/person/edit/{Id}"
+@using Workspace.Blazor.ViewModels.Features.Person.Edit
+@inject PageViewModel ViewModel
+
+<PageTitle>People</PageTitle>
+
+@if (this.ViewModel.LoadCommand.IsRunning)
+{
+    <div class="spinner-border text-primary" role="status">
+        <span class="sr-only"></span>
+    </div>
+}
+else
+{
+    @ViewModel.Selected.FirstName
+}
+
+@code {
+
+    [Parameter]
+    public string Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await this.ViewModel.LoadCommand.ExecuteAsync(long.Parse(this.Id));
+    }
+}

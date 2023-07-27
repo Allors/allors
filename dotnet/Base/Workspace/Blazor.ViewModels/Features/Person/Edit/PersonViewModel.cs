@@ -1,11 +1,10 @@
-﻿namespace Workspace.Blazor.ViewModels.Features.Person.List;
-
+﻿namespace Workspace.Blazor.ViewModels.Features.Person.Edit;
 using Allors.Workspace;
 using ViewModels.Controllers;
 using ViewModels.Features;
 using Person = Allors.Workspace.Domain.Person;
 
-public partial class PersonViewModel : ViewModel<Person>, INavigateable
+public partial class PersonViewModel : ViewModel<Person>
 {
     private readonly RoleAdapter<string> firstName;
     private readonly PathAdapter<string> poBox;
@@ -27,8 +26,6 @@ public partial class PersonViewModel : ViewModel<Person>, INavigateable
     }
 
     public override Person Model { get; }
-
-    public long Id => this.Model.Id;
 
     public string FirstName
     {
