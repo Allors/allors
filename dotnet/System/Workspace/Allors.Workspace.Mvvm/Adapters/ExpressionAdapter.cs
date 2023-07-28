@@ -1,5 +1,6 @@
-﻿namespace Workspace.WinForms.ViewModels.Features;
+﻿namespace Allors.Workspace.Mvvm.Adapters;
 
+using System;
 using System.ComponentModel;
 using Allors.Workspace;
 public class ExpressionAdapter<T> : IDisposable

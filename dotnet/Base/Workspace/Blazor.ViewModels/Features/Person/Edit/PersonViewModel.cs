@@ -1,6 +1,7 @@
 ﻿namespace Workspace.Blazor.ViewModels.Features.Person.Edit;
 using Allors.Workspace;
-using ViewModels.Controllers;
+using Allors.Workspace.Mvvm;
+using Allors.Workspace.Mvvm.Adapters;
 using ViewModels.Features;
 using Person = Allors.Workspace.Domain.Person;
 

@@ -2,6 +2,7 @@
 {
     using Allors.Workspace;
     using Allors.Workspace.Adapters;
+    using Allors.Workspace.Mvvm.Services;
     using ViewModels.Services;
 
     public class DatabaseService : IDatabaseService

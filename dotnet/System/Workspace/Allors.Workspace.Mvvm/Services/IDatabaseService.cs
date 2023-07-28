@@ -1,4 +1,4 @@
-﻿namespace Workspace.WinForms.ViewModels.Services
+﻿namespace Allors.Workspace.Mvvm.Services
 {
     using Allors.Workspace;
 

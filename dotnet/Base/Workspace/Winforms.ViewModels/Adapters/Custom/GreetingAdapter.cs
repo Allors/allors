@@ -3,6 +3,7 @@
 using System.ComponentModel;
 using Allors.Workspace;
 using Allors.Workspace.Domain;
+using Allors.Workspace.Mvvm.Adapters;
 
 public class GreetingAdapter : IDisposable
 {

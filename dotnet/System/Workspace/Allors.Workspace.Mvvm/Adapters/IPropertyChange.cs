@@ -1,4 +1,4 @@
-﻿namespace Workspace.WinForms.ViewModels.Features;
+﻿namespace Allors.Workspace.Mvvm.Adapters;
 
 using System.ComponentModel;
 

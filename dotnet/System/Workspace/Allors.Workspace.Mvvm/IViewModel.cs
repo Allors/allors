@@ -1,7 +1,7 @@
-﻿namespace Workspace.WinForms.ViewModels.Controllers;
+﻿namespace Allors.Workspace.Mvvm;
 
+using Adapters;
 using Allors.Workspace;
-using Features;
 
 public partial interface IViewModel<T> : IPropertyChange where T : IObject
 {

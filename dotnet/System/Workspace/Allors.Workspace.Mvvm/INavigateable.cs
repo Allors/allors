@@ -1,4 +1,4 @@
-﻿namespace Workspace.Blazor.ViewModels.Features;
+﻿namespace Allors.Workspace.Mvvm;
 
 public interface INavigateable
 {

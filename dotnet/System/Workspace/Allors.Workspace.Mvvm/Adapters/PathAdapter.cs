@@ -1,8 +1,8 @@
-﻿namespace Workspace.WinForms.ViewModels.Features;
+﻿namespace Allors.Workspace.Mvvm.Adapters;
 
+using System;
 using System.ComponentModel;
 using Allors.Workspace;
-using Controllers;
 
 public class PathAdapter<TRoleValue> : IDisposable 
 {

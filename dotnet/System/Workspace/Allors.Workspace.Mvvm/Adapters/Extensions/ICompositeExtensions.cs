@@ -1,11 +1,12 @@
-﻿namespace Workspace.WinForms.ViewModels.Features;
+﻿namespace Allors.Workspace.Mvvm.Adapters;
 
+using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq.Expressions;
 using Allors.Workspace;
 using Allors.Workspace.Data;
 using Allors.Workspace.Meta;
-using Controllers;
 
 public static class ICompositeExtensions
 {

@@ -7,6 +7,7 @@
     using Allors.Workspace.Adapters;
     using Allors.Workspace.Meta;
     using Allors.Workspace.Meta.Static;
+    using Allors.Workspace.Mvvm.Services;
     using Forms;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;

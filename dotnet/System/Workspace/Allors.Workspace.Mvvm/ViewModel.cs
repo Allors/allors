@@ -1,9 +1,8 @@
-﻿namespace Workspace.WinForms.ViewModels.Controllers;
+﻿namespace Allors.Workspace.Mvvm;
 
 using System.ComponentModel;
 using Allors.Workspace;
 using CommunityToolkit.Mvvm.ComponentModel;
-using Features;
 
 public abstract partial class ViewModel<T> : ObservableObject, IViewModel<T> where T : IObject
 {

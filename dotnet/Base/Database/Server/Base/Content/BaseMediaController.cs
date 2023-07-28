@@ -48,7 +48,8 @@ namespace Allors.Database.Server.Controllers
                 }
 
 
-                return this.RedirectToAction(nameof(this.Get), new { idString = media.UniqueId.ToString("N"), revisionString = media.Revision?.ToString("N"), name });
+                string actionName = nameof(this.Get);
+                return this.RedirectToAction(actionName, new { idString = media.UniqueId.ToString("N"), revisionString = media.Revision?.ToString("N"), name });
             }
 
             return this.NotFound("Printable with id " + idString + " not found.");
@@ -67,7 +68,8 @@ namespace Allors.Database.Server.Controllers
                 var media = new Medias(this.Transaction).FindBy(m.Media.UniqueId, id);
                 if (media != null)
                 {
-                    return this.RedirectToAction(nameof(this.Get), new { idString = media.UniqueId.ToString("N"), revisionString = media.Revision?.ToString("N") });
+                    string actionName = nameof(this.Get);
+                    return this.RedirectToAction(actionName, new { idString = media.UniqueId.ToString("N"), revisionString = media.Revision?.ToString("N") });
                 }
             }
 
@@ -92,16 +94,17 @@ namespace Allors.Database.Server.Controllers
                         return this.NoContent();
                     }
 
+                    string actionName = nameof(this.RedirectOrNotFound);
                     if (Guid.TryParse(revisionString, out var revision))
                     {
                         if (media.Revision != revision)
                         {
-                            return this.RedirectToAction(nameof(this.RedirectOrNotFound), new { idString, name });
+                            return this.RedirectToAction(actionName, new { idString, name });
                         }
                     }
                     else
                     {
-                        return this.RedirectToAction(nameof(this.RedirectOrNotFound), new { idString, name });
+                        return this.RedirectToAction(actionName, new { idString, name });
                     }
 
                     // Use Etags

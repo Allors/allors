@@ -2,7 +2,8 @@
 
 using Allors.Workspace;
 using Allors.Workspace.Domain;
-using Controllers;
+using Allors.Workspace.Mvvm;
+using Allors.Workspace.Mvvm.Adapters;
 
 public partial class PersonViewModel : ViewModel<Person>
 {

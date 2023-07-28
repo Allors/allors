@@ -7,6 +7,7 @@ using CommunityToolkit.Mvvm.Input;
 using Allors.Workspace.Domain;
 using Task = Task;
 using Allors.Workspace.Meta;
+using Allors.Workspace.Mvvm;
 using ViewModels.Services;
 
 public partial class PageViewModel : ObservableObject, INavigateable
