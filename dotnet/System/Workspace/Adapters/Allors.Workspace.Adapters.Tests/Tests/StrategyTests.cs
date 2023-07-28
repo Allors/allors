@@ -14,7 +14,6 @@ namespace Allors.Workspace.Adapters.Tests
     {
         protected StrategyTests(Fixture fixture) : base(fixture)
         {
-
         }
 
         public override async Task InitializeAsync()
