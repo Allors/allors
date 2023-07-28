@@ -20,7 +20,7 @@ namespace Allors.Workspace
 
         Type GetTypeForObject(IObjectType objectType);
 
-        T Object<T>(IStrategy objects) where T : class, IObject;
+        T Object<T>(IStrategy @object) where T : class, IObject;
 
         IEnumerable<T> Object<T>(IEnumerable<IStrategy> objects) where T : class, IObject;
 

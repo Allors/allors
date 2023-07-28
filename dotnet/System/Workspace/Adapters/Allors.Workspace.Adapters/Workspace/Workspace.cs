@@ -50,7 +50,7 @@ namespace Allors.Workspace.Adapters
         public IMetaPopulation MetaPopulation { get; }
 
         // TODO: Cache
-        public bool HasChanges => this.StrategyById.Any(kvp => kvp.Value.HasChanges);
+        public bool HasModifications => this.StrategyById.Any(kvp => kvp.Value.HasChanges);
 
         public PushToDatabaseTracker PushToDatabaseTracker { get; }
 

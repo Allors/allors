@@ -216,21 +216,21 @@ namespace Allors.Workspace.Adapters
         /// <summary>
         /// Creates a new <see cref="Object"/> given the <see cref="Object"/>.
         /// </summary>
-        /// <param name="strategy">
+        /// <param name="object">
         /// The strategy.
         /// </param>
         /// <returns>
         /// The new <see cref="Object"/>.
         /// </returns>
-        public T Object<T>(IStrategy strategy) where T : class, IObject
+        public T Object<T>(IStrategy @object) where T : class, IObject
         {
-            if (strategy == null)
+            if (@object == null)
             {
                 return null;
             }
 
-            var constructor = this.constructorInfoByObjectTypeForObject[strategy.Class];
-            object[] parameters = { strategy };
+            var constructor = this.constructorInfoByObjectTypeForObject[@object.Class];
+            object[] parameters = { @object };
 
             return (T)constructor.Invoke(parameters);
         }

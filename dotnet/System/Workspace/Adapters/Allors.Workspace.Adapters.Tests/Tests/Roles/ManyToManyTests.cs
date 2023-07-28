@@ -15,8 +15,6 @@ namespace Allors.Workspace.Adapters.Tests
 
     public abstract class ManyToManyTests : Test
     {
-        private Func<Context>[] contextFactories;
-
         protected ManyToManyTests(Fixture fixture) : base(fixture)
         {
         }
@@ -25,17 +23,6 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await base.InitializeAsync();
             await this.Login("administrator");
-
-            var singleWorkspaceContext = new SingleWorkspaceContext(this, "Single Shared Workspace");
-            var multipleWorkspaceContext = new MultipleWorkspaceContext(this, "Multiple Shared Workspace");
-
-            this.contextFactories = new Func<Context>[]
-            {
-                () => singleWorkspaceContext,
-                () => new SingleWorkspaceContext(this, "Single Workspace"),
-                () => multipleWorkspaceContext,
-                () => new MultipleWorkspaceContext(this, "Multiple Workspace"),
-            };
         }
 
         [Fact]
@@ -174,7 +161,7 @@ namespace Allors.Workspace.Adapters.Tests
                 c1D.C1sWhereC1C1Many2Many.Value.ShouldHaveSameElements(new[] { c1C, c1D });
 
                 c1C.C1C1Many2Manies.Add(c1D);
-                
+
                 // Role
                 Assert.Empty(c1A.C1C1Many2Manies.Value);
                 c1B.C1C1Many2Manies.Value.ShouldContainSingle(c1B);

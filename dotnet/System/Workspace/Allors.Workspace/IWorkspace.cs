@@ -6,7 +6,6 @@
 using Allors.Workspace.Meta;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System;
 using Allors.Workspace.Data;
 
 namespace Allors.Workspace
@@ -17,7 +16,7 @@ namespace Allors.Workspace
 
         IMetaPopulation MetaPopulation { get; }
 
-        bool HasChanges { get; }
+        bool HasModifications { get; }
 
         void Reset();
 

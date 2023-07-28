@@ -15,8 +15,6 @@ namespace Allors.Workspace.Adapters.Tests
 
     public abstract class ManyToOneTests : Test
     {
-        private Func<Context>[] contextFactories;
-
         protected ManyToOneTests(Fixture fixture) : base(fixture)
         {
 
@@ -26,17 +24,6 @@ namespace Allors.Workspace.Adapters.Tests
         {
             await base.InitializeAsync();
             await this.Login("administrator");
-
-            var singleWorkspaceContext = new SingleWorkspaceContext(this, "Single Shared Workspace");
-            var multipleWorkspaceContext = new MultipleWorkspaceContext(this, "Multiple Shared Workspace");
-
-            this.contextFactories = new Func<Context>[]
-            {
-                () => singleWorkspaceContext,
-                () => new SingleWorkspaceContext(this, "Single Workspace"),
-                () => multipleWorkspaceContext,
-                () => new MultipleWorkspaceContext(this, "Multiple Workspace"),
-            };
         }
 
         [Fact]
