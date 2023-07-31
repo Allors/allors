@@ -3,42 +3,47 @@
 using System;
 using System.ComponentModel;
 using Allors.Workspace;
+using Data;
+using Meta;
 
-public class PathAdapter<TRoleValue> : IDisposable 
+public class PathAdapter<T> : IDisposable
 {
- 
-    public PathAdapter(IViewModel<IObject> viewModel)
+    public PathAdapter(IObject @object, Node path, WeakReference<IPropertyChange> propertyChange, string propertyName)
     {
-        //this.Role = role;
-        //this.ChangeNotification = new WeakReference<IPropertyChange>(viewModel);
-
-        //this.Role.PropertyChanged += this.Role_PropertyChanged;
+        this.Object = @object;
+        this.Path = path;
+        this.PropertyChange = propertyChange;
+        this.PropertyName = propertyName;
     }
 
-    public IUnitRole<TRoleValue> Role { get; }
+    public IObject Object { get; }
 
-    public WeakReference<IPropertyChange> ChangeNotification { get; }
+    public Node Path { get; }
 
-    public TRoleValue Value
+    public WeakReference<IPropertyChange> PropertyChange { get; }
+
+    public string PropertyName { get; }
+    
+    public T Value
     {
-        get => this.Role.Value;
-        set => this.Role.Value = value;
+        get => (T)this.Object.Strategy.Role((IRoleType)this.Path.Nodes[0].PropertyType).Value;
+        set => this.Object.Strategy.Role((IRoleType)this.Path.Nodes[0].PropertyType).Value = value;
     }
 
     public void Dispose()
     {
         GC.SuppressFinalize(this);
-        this.Role.PropertyChanged -= this.Role_PropertyChanged;
+        //this.Role.PropertyChanged -= this.Role_PropertyChanged;
     }
 
     private void Role_PropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
-        if (!this.ChangeNotification.TryGetTarget(out var changeNotification))
-        {
-            this.Dispose();
-            return;
-        }
+        //if (!this.ChangeNotification.TryGetTarget(out var changeNotification))
+        //{
+        //    this.Dispose();
+        //    return;
+        //}
 
-        changeNotification.OnPropertyChanged(new PropertyChangedEventArgs(this.Role.RoleType.Name));
+        //changeNotification.OnPropertyChanged(new PropertyChangedEventArgs(this.Role.RoleType.Name));
     }
 }

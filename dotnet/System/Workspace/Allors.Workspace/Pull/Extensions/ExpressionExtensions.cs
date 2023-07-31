@@ -1,4 +1,4 @@
-// <copyright file="ChangedRoles.cs" company="Allors bvba">
+﻿// <copyright file="ChangedRoles.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -66,15 +66,17 @@ namespace Allors.Workspace.Data
             }
 
             var root = visitor.MemberExpressions[0].Member.DeclaringType;
-            var composite = metaPopulation.FindByName(root.Name);
+            string rootName = root.Name.Substring(5); // remove I from IMeta[Name]
+            var composite = metaPopulation.FindByName(rootName);
 
             foreach (var memberExpression in visitor.MemberExpressions)
             {
                 if (memberExpression.Type.GetInterfaces().Contains(typeof(IComposite)))
                 {
-                    var propertyInfo = (PropertyInfo) memberExpression.Member;
+                    var propertyInfo = (PropertyInfo)memberExpression.Member;
                     var propertyType = propertyInfo.PropertyType;
-                    composite = metaPopulation.FindByName(propertyType.Name);
+                    string propertyTypeName = propertyType.Name.Substring(5); // remove I from IMeta[Name]
+                    composite = metaPopulation.FindByName(propertyTypeName);
 
                     if (currentPath != null && !currentPath.PropertyType.ObjectType.Equals(composite))
                     {
