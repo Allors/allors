@@ -185,7 +185,7 @@ namespace Allors.Workspace.Protocol.Direct
 
         private Node[] Visit(IEnumerable<Data.Node> ws) => ws?.Select(this.Visit).ToArray();
 
-        private Node Visit(Data.Node ws) => ws != null ? new Node(this.Visit(ws.PropertyType), ws.Nodes?.Select(this.Visit).ToArray()) : null;
+        private Node Visit(Data.Node ws) => ws != null ? new Node(this.Visit(ws.RelationEndType), ws.Nodes?.Select(this.Visit).ToArray()) : null;
 
         private Sort[] Visit(Data.Sort[] ws) => ws?.Select(v =>
         {

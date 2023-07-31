@@ -78,7 +78,7 @@ namespace Allors.Workspace.Data
                     string propertyTypeName = propertyType.Name.Substring(5); // remove I from IMeta[Name]
                     composite = metaPopulation.FindByName(propertyTypeName);
 
-                    if (currentPath != null && !currentPath.PropertyType.ObjectType.Equals(composite))
+                    if (currentPath != null && !currentPath.RelationEndType.ObjectType.Equals(composite))
                     {
                         currentPath.OfType = composite;
                     }

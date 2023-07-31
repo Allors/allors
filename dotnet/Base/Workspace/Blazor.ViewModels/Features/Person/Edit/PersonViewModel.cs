@@ -1,5 +1,9 @@
 ﻿namespace Workspace.Blazor.ViewModels.Features.Person.Edit;
+
+using System.Linq.Expressions;
 using Allors.Workspace;
+using Allors.Workspace.Data;
+using Allors.Workspace.Meta;
 using Allors.Workspace.Mvvm;
 using Allors.Workspace.Mvvm.Adapters;
 using ViewModels.Features;
@@ -15,6 +19,9 @@ public partial class PersonViewModel : ViewModel<Person>
     public PersonViewModel(Person model)
     {
         this.Model = model;
+
+        var myWeakReference = new WeakReference<IPropertyChange>(this);
+
         this.firstName = new RoleAdapter<string>(this, model.FirstName);
         this.fullName = new ExpressionAdapter<string>(this,
             new IRole[]
@@ -23,7 +30,7 @@ public partial class PersonViewModel : ViewModel<Person>
                 model.LastName
             }, () => model.FirstName.Value + " " + model.LastName, "FullName");
         this.greeting = new GreetingAdapter(model, this);
-        //this.poBox = model.Meta.PathAdapter(this, v => v.MailboxAddress.ObjectType.PoBox);
+        this.poBox = model.PathAdapter<string, IMetaPerson>(v => v.MailboxAddress.ObjectType.PoBox, this, nameof(this.poBox));
     }
 
     public override Person Model { get; }

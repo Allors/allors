@@ -24,7 +24,6 @@ public partial class PersonViewModel : ViewModel<Person>, INavigateable
                 model.LastName
             }, () => model.FirstName.Value + " " + model.LastName, "FullName");
         this.greeting = new GreetingAdapter(model, this);
-        //this.poBox = model.Meta.PathAdapter(this, v => v.MailboxAddress.ObjectType.PoBox);
     }
 
     public override Person Model { get; }
@@ -40,10 +39,4 @@ public partial class PersonViewModel : ViewModel<Person>, INavigateable
     public string FullName => this.fullName.Value;
 
     public string Greeting => this.greeting.Value;
-
-    public string PoBox
-    {
-        get => this.poBox.Value;
-        set => this.poBox.Value = value;
-    }
 }

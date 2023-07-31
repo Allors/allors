@@ -45,41 +45,31 @@ namespace Allors.Workspace.Adapters.Tests
 
             c1a.C1C1One2One.Value = c1b;
             c1b.C1AllorsString.Value = "Hello";
-            
+
             var propertyChange = new PropertyChange();
             var weakReference = new WeakReference<IPropertyChange>(propertyChange);
 
             Expression<Func<IMetaC1, IRelationEndType>> expression = v => v.C1C1One2One.ObjectType.C1AllorsString;
             var path = expression.Node(this.M);
-            var pathAdapters = new PathAdapter<string>(c1a, path, weakReference, "String");
+            var adapter = new PathAdapter<string>(c1a.Strategy, path, weakReference, "String");
 
-            var result = pathAdapters.Value;
+            Assert.Equal("Hello", adapter.Value);
+            Assert.Empty(propertyChange.Events);
 
-            Assert.Equal("Hello", result);
+            c1b.C1AllorsString.Value = "Hello Again";
 
-            //var c1bPropertyChanges = new List<string>();
+            Assert.Equal(1, propertyChange.Events.Count);
+            Assert.Equal("Hello Again", adapter.Value);
 
-            //c1a.C1C1One2One.PropertyChanged += (sender, args) =>
-            //{
-            //    c1bPropertyChanges.Add(args.PropertyName);
-            //};
+            c1c.C1AllorsString.Value = "Another Hello";
 
-            //c1b.C1C1One2One.Value = c1c;
+            Assert.Equal(1, propertyChange.Events.Count);
+            Assert.Equal("Hello Again", adapter.Value);
 
-            //Assert.Empty(c1bPropertyChanges);
+            c1a.C1C1One2One.Value = c1c;
 
-
-            //c1b.C1C1One2One.Value = c1c;
-
-            //Assert.Empty(c1bPropertyChanges);
-
-            //c1b.C1C1One2One.Value = c1b;
-
-            //Assert.Equal(2, c1bPropertyChanges.Count);
-            //Assert.Contains("Value", c1bPropertyChanges);
-            //Assert.Contains("Exist", c1bPropertyChanges);
-            //Assert.Single(c1bPropertyChanges);
-            //Assert.Contains("Value", c1bPropertyChanges);
+            Assert.Equal(2, propertyChange.Events.Count);
+            Assert.Equal("Another Hello", adapter.Value);
         }
 
         private class PropertyChange : IPropertyChange

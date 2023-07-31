@@ -6,7 +6,6 @@
 namespace Allors.Workspace.Data
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
@@ -14,13 +13,13 @@ namespace Allors.Workspace.Data
 
     public class Node : IVisitable
     {
-        public Node(IRelationEndType propertyType = null, IEnumerable<Node> nodes = null)
+        public Node(IRelationEndType relationEndType = null, IEnumerable<Node> nodes = null)
         {
-            this.PropertyType = propertyType;
+            this.RelationEndType = relationEndType;
             this.Nodes = nodes?.ToArray() ?? Array.Empty<Node>();
         }
 
-        public IRelationEndType PropertyType { get; }
+        public IRelationEndType RelationEndType { get; }
 
         public IComposite OfType { get; set; }
 
@@ -44,64 +43,10 @@ namespace Allors.Workspace.Data
             return this.Add(node);
         }
 
-        public IEnumerable<IStrategy> Resolve(IStrategy @object)
-        {
-            if (this.PropertyType.IsOne)
-            {
-                var resolved = this.PropertyType.Get(@object, this.OfType);
-                if (resolved != null)
-                {
-                    if (this.Nodes.Length > 0)
-                    {
-                        foreach (var node in this.Nodes)
-                        {
-                            foreach (var next in node.Resolve((IStrategy)resolved))
-                            {
-                                yield return next;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        yield return (IStrategy)resolved;
-                    }
-                }
-            }
-            else
-            {
-                var resolved = (IEnumerable)this.PropertyType.Get(@object, this.OfType);
-                if (resolved != null)
-                {
-                    if (this.Nodes.Length > 0)
-                    {
-                        foreach (var resolvedItem in resolved)
-                        {
-                            foreach (var node in this.Nodes)
-                            {
-                                foreach (var next in node.Resolve((IStrategy)resolvedItem))
-                                {
-                                    yield return next;
-                                }
-                            }
-                        }
-                    }
-                    else
-                    {
-                        foreach (IStrategy child in resolved)
-                        {
-                            yield return child;
-                        }
-                    }
-                }
-            }
-        }
-
-
-
         public override string ToString()
         {
             var toString = new StringBuilder();
-            toString.Append(this.PropertyType.Name + "\n");
+            toString.Append(this.RelationEndType.Name + "\n");
             this.ToString(toString, this.Nodes, 1);
             return toString.ToString();
         }
@@ -111,7 +56,7 @@ namespace Allors.Workspace.Data
             foreach (var node in nodes)
             {
                 var indent = new string(' ', level * 2);
-                toString.Append(indent + "- " + node.PropertyType + "\n");
+                toString.Append(indent + "- " + node.RelationEndType + "\n");
                 this.ToString(toString, node.Nodes, level + 1);
             }
         }

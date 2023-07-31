@@ -325,8 +325,8 @@ namespace Allors.Workspace.Protocol.Json
         {
             var node = new Node
             {
-                a = (visited.PropertyType as IAssociationType)?.RelationType.Tag,
-                r = (visited.PropertyType as IRoleType)?.RelationType.Tag,
+                a = (visited.RelationEndType as IAssociationType)?.RelationType.Tag,
+                r = (visited.RelationEndType as IRoleType)?.RelationType.Tag,
             };
 
             this.nodes.Push(node);
