@@ -7,10 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>
+    
+    <ProjectReference Include="..\..\..\System\Workspace\Allors.Workspace.Mvvm.SourceGenerators\Allors.Workspace.Mvvm.SourceGenerators.csproj" OutputItemType="Analyzer" />
+    
     <ProjectReference Include="..\..\..\System\Workspace\Allors.Workspace.Mvvm\Allors.Workspace.Mvvm.csproj" />
     <ProjectReference Include="..\Domain\Workspace.Domain.csproj" />
   </ItemGroup>
