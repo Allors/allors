@@ -37,9 +37,13 @@ public class ViewModelGenerator : ISourceGenerator
 
                 var namespaceName = (fieldDeclaration.Parent?.Parent as NamespaceDeclarationSyntax)?.Name?.ToString()
                    ?? (fieldDeclaration.Parent?.Parent as FileScopedNamespaceDeclarationSyntax)?.Name?.ToString();
-                
+
                 var propertyName = fieldDeclaration.Declaration.Variables.First().Identifier.ValueText;
-                var generatedPropertyCode = GeneratePropertyCode(propertyName);
+
+                var fieldTypeSymbol = fieldDeclaration.Declaration.Type as GenericNameSyntax;
+                var dataType = fieldTypeSymbol.TypeArgumentList.Arguments.First().ToString();
+
+                var generatedPropertyCode = GeneratePropertyCode(propertyName, dataType);
                 if (!propertyCodeBuilder.ContainsKey(className))
                 {
                     propertyCodeBuilder[className] = (namespaceName, new StringBuilder());
@@ -72,12 +76,12 @@ public partial class {className}
         }
     }
 
-    private string GeneratePropertyCode(string propertyName)
+    private string GeneratePropertyCode(string propertyName, string dataType)
     {
         var generatedPropertyName = propertyName.TrimStart().Substring(0, 1).ToUpperInvariant() + propertyName.Substring(1);
 
         return $@"
-    public string {generatedPropertyName}
+    public {dataType} {generatedPropertyName}
     {{
         get => this.{propertyName}.Value;
         set => this.{propertyName}.Value = value;
