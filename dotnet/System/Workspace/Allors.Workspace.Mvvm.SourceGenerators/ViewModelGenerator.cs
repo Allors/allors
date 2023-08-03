@@ -49,7 +49,7 @@ public class ViewModelGenerator : ISourceGenerator
                     propertyCodeBuilder[className] = (namespaceName, new StringBuilder());
                 }
 
-                propertyCodeBuilder[className].Code.AppendLine(generatedPropertyCode);
+                propertyCodeBuilder[className].Code.Append(generatedPropertyCode);
             }
         }
 
@@ -59,8 +59,8 @@ public class ViewModelGenerator : ISourceGenerator
             var namespaceName = kvp.Value.Namespace;
             var generatedProperties = kvp.Value.Code.ToString();
 
-            var generatedCode = $@"
-using System;
+            var generatedCode =
+$@"using System;
 
 namespace {namespaceName};
 
@@ -68,7 +68,6 @@ public partial class {className}
 {{
 {generatedProperties}
 }}
-
 ";
 
             var fileName = className + ".g.cs";
@@ -80,12 +79,10 @@ public partial class {className}
     {
         var generatedPropertyName = propertyName.TrimStart().Substring(0, 1).ToUpperInvariant() + propertyName.Substring(1);
 
-        return $@"
-    public {dataType} {generatedPropertyName}
+        return $@"    public {dataType} {generatedPropertyName}
     {{
         get => this.{propertyName}.Value;
         set => this.{propertyName}.Value = value;
-    }}
-";
+    }}";
     }
 }

@@ -1,54 +1,31 @@
 ﻿namespace Allors.Workspace.Mvvm.SourceGenerators.Tests
 {
+    using System.Diagnostics;
     using System.Reflection;
+    using Adapters;
     using Generator;
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
 
-    public class ViewModelGeneratorTests
+    public class Test
     {
+        /// <summary>
+        /// This will trigger the activation of the Assembly that contains the parent class ViewModel<T>
+        /// </summary>
+        private MyViewModel myViewModel;
 
-        [Test]
-        public void GenerateBasicViewModelTest()
+        private class MyViewModel : ViewModel<IObject>
         {
-            var source = $@"
-using System;
-using Allors.Workspace.Mvvm;
-
-namespace Test;
-
-public partial class TestClass
-{{
-    [AdapterProperty] private readonly RoleAdapter<string> testAdapter;
-
-}}
-
-";
-            var expected = $@"
-using System;
-
-namespace Test;
-
-public partial class TestClass
-{{
-    public string TestAdapter
-    {{
-        get => this.testAdapter.Value;
-        set => this.testAdapter.Value = value;
-    }}
-
-}}
-
-";
-
-            string output = GetGeneratedOutput(source);
-
-            Assert.NotNull(output);
-
-            Assert.AreEqual(expected, output.Trim());
+            public override IObject Model { get; }
         }
 
-        private string GetGeneratedOutput(string source)
+        [SetUp]
+        public void TestSetup()
+        {
+            this.myViewModel = new MyViewModel();
+        }
+
+        protected string GetGeneratedOutput(string source)
         {
             var syntaxTree = CSharpSyntaxTree.ParseText(source);
 
