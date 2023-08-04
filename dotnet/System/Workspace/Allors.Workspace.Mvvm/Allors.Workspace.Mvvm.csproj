@@ -8,7 +8,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Core\Workspace\Domain\Workspace.Domain.csproj" />
     <ProjectReference Include="..\Allors.Workspace\Allors.Workspace.csproj" />
   </ItemGroup>
 </Project>

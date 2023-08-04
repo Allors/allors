@@ -1,9 +1,6 @@
 ﻿namespace Allors.Workspace.Mvvm.Adapters;
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
 using System.Linq.Expressions;
 using Allors.Workspace;
 using Allors.Workspace.Data;
