@@ -8,15 +8,19 @@ namespace Allors.Workspace.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Workspace;
 using Workspace.Meta;
 
 public static class NodeExtensions
 {
-    public static void Flatten(this Node @this, IStrategy @object, IList<IRelationEnd> relationEnds)
+    public static void Flatten(this Node @this, IStrategy @object, IList<IRelationEnd> relationEnds, out bool complete)
     {
+        complete = true;
+
         if (@object == null)
         {
+            complete = false;
             return;
         }
 
@@ -42,9 +46,15 @@ public static class NodeExtensions
                 var compositeRole = @object.CompositeRole(roleType);
                 relationEnds.Add(compositeRole);
 
-                if (@this.Nodes.Any() && compositeRole.Exist)
+                if (@this.Nodes.Any())
                 {
-                    @this.Nodes[0].Flatten(compositeRole.Value, relationEnds);
+                    if (!compositeRole.Exist)
+                    {
+                        complete = false;
+                        return;
+                    }
+
+                    @this.Nodes[0].Flatten(compositeRole.Value, relationEnds, out complete);
                 }
             }
         }
@@ -63,9 +73,15 @@ public static class NodeExtensions
             var compositeAssociation = @object.CompositeAssociation(associationType);
             relationEnds.Add(compositeAssociation);
 
-            if (@this.Nodes.Any() && compositeAssociation.Value != null)
+            if (@this.Nodes.Any())
             {
-                @this.Nodes[0].Flatten(compositeAssociation.Value, relationEnds);
+                if (compositeAssociation.Value == null)
+                {
+                    complete = false;
+                    return;
+                }
+
+                @this.Nodes[0].Flatten(compositeAssociation.Value, relationEnds, out complete);
             }
         }
     }

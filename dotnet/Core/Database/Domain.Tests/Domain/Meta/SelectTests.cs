@@ -28,7 +28,7 @@ namespace Allors.Database.Domain.Tests
             var path = new Select(this.M.C1.C1C2One2Manies, this.M.C2.C2AllorsString);
 
             var result = (ISet<object>)path.Get(c1A, this.AclsMock.Object);
-            Assert.Equal(1, result.Count);
+            Assert.Single(result);
             Assert.True(result.Contains("c2A"));
 
             result = (ISet<object>)path.Get(c1B, this.AclsMock.Object);
@@ -52,7 +52,7 @@ namespace Allors.Database.Domain.Tests
             var path = new Select(this.M.C1.C1C2One2Manies, this.M.C2.C2AllorsString);
 
             var result = (ISet<object>)path.Get(c1A, this.AclsMock.Object);
-            Assert.Equal(1, result.Count);
+            Assert.Single(result);
             Assert.True(result.Contains("c2A"));
 
             result = (ISet<object>)path.Get(c1B, this.AclsMock.Object);

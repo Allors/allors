@@ -155,7 +155,7 @@ namespace Allors.Workspace.Adapters.Tests
             Assert.Contains(c1b_1, c1b_1.C1C1One2Manies.Value);
             Assert.Contains(c1c_1, c1b_1.C1C1One2Manies.Value);
 
-            Assert.Equal(1, c1c_1.C1C1One2Manies.Value.Count());
+            Assert.Single(c1c_1.C1C1One2Manies.Value);
             Assert.Contains(c1d_1, c1c_1.C1C1One2Manies.Value);
 
             Assert.True(result_1.HasErrors);

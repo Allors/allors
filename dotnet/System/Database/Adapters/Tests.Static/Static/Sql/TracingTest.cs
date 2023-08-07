@@ -59,7 +59,7 @@ public abstract class TracingTest : IDisposable
 
         var transactionSink = sink.TreeByTransaction[transaction];
 
-        Assert.Equal(1, transactionSink.Nodes.Count);
+        Assert.Single(transactionSink.Nodes);
         Assert.Equal(typeof(SqlInstantiateObjectEvent), transactionSink.Nodes[0].Event.GetType());
         Assert.Empty(transactionSink.Nodes[0].Nodes);
     }

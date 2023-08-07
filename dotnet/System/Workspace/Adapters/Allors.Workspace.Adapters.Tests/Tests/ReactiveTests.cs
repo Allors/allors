@@ -127,7 +127,7 @@ namespace Allors.Workspace.Adapters.Tests
 
             Assert.Single(c1bAssociationPropertyChanges);
             Assert.Contains("Value", c1bAssociationPropertyChanges);
-            Assert.Equal(1, c1cAssociationPropertyChanges.Count);
+            Assert.Single(c1cAssociationPropertyChanges);
             Assert.Contains("Value", c1cAssociationPropertyChanges);
         }
 

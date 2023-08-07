@@ -558,7 +558,7 @@ public abstract class ChangesTest : IDisposable
             associations = changeSet.Associations;
             roles = changeSet.Roles;
 
-            Assert.Equal(0, associations.Count());
+            Assert.Empty(associations);
             Assert.Empty(changeSet.GetRoleTypes(a));
             Assert.Empty(changeSet.GetRoleTypes(b));
 
@@ -601,7 +601,7 @@ public abstract class ChangesTest : IDisposable
             associations = changeSet.Associations;
             roles = changeSet.Roles;
 
-            Assert.Equal(0, associations.Count());
+            Assert.Empty(associations);
             Assert.Empty(changeSet.GetRoleTypes(a));
             Assert.Empty(changeSet.GetRoleTypes(b));
 
@@ -619,7 +619,7 @@ public abstract class ChangesTest : IDisposable
             associations = changeSet.Associations;
             roles = changeSet.Roles;
 
-            Assert.Equal(0, associations.Count());
+            Assert.Empty(associations);
             Assert.Empty(changeSet.GetRoleTypes(a));
             Assert.Empty(changeSet.GetRoleTypes(b));
 
@@ -639,7 +639,7 @@ public abstract class ChangesTest : IDisposable
             associations = changeSet.Associations;
             roles = changeSet.Roles;
 
-            Assert.Equal(0, associations.Count());
+            Assert.Empty(associations);
             Assert.Empty(changeSet.GetRoleTypes(a));
             Assert.Empty(changeSet.GetRoleTypes(b));
 
@@ -660,7 +660,7 @@ public abstract class ChangesTest : IDisposable
             associations = changeSet.Associations;
             roles = changeSet.Roles;
 
-            Assert.Equal(0, associations.Count());
+            Assert.Empty(associations);
             Assert.Empty(changeSet.GetRoleTypes(a));
             Assert.Empty(changeSet.GetRoleTypes(b));
 
@@ -771,7 +771,7 @@ public abstract class ChangesTest : IDisposable
             associations = changeSet.Associations;
             roles = changeSet.Roles;
 
-            Assert.Equal(0, associations.Count());
+            Assert.Empty(associations);
             Assert.Empty(changeSet.GetRoleTypes(a));
             Assert.Empty(changeSet.GetRoleTypes(b));
 
@@ -814,7 +814,7 @@ public abstract class ChangesTest : IDisposable
             associations = changeSet.Associations;
             roles = changeSet.Roles;
 
-            Assert.Equal(0, associations.Count());
+            Assert.Empty(associations);
             Assert.Empty(changeSet.GetRoleTypes(a));
             Assert.Empty(changeSet.GetRoleTypes(b));
 
@@ -832,7 +832,7 @@ public abstract class ChangesTest : IDisposable
             associations = changeSet.Associations;
             roles = changeSet.Roles;
 
-            Assert.Equal(0, associations.Count());
+            Assert.Empty(associations);
             Assert.Empty(changeSet.GetRoleTypes(a));
             Assert.Empty(changeSet.GetRoleTypes(b));
 
@@ -852,7 +852,7 @@ public abstract class ChangesTest : IDisposable
             associations = changeSet.Associations;
             roles = changeSet.Roles;
 
-            Assert.Equal(0, associations.Count());
+            Assert.Empty(associations);
             Assert.Empty(changeSet.GetRoleTypes(a));
             Assert.Empty(changeSet.GetRoleTypes(b));
 

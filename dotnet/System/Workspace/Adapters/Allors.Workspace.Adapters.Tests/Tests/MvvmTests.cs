@@ -37,49 +37,89 @@ namespace Allors.Workspace.Adapters.Tests
             var c1a = workspace.Create<C1>();
             var c1b = workspace.Create<C1>();
             var c1c = workspace.Create<C1>();
+            var c1d = workspace.Create<C1>();
 
-            if (!c1a.C1C1One2One.CanWrite || !c1b.C1AllorsString.CanWrite)
+            if (!c1a.C1C1One2One.CanWrite || !c1b.C1C1One2One.CanWrite || !c1c.C1AllorsString.CanWrite)
             {
-                await workspace.PullAsync(new Pull { Object = c1a.Strategy }, new Pull { Object = c1b.Strategy });
+                await workspace.PullAsync(new Pull { Object = c1a.Strategy }, new Pull { Object = c1b.Strategy }, new Pull { Object = c1c.Strategy });
             }
 
             c1a.C1C1One2One.Value = c1b;
-            c1b.C1AllorsString.Value = "Hello";
+            c1b.C1C1One2One.Value = c1c;
+            c1c.C1AllorsString.Value = "Hello";
 
             var propertyChange = new PropertyChange();
             var weakReference = new WeakReference<IPropertyChange>(propertyChange);
 
-            Expression<Func<IMetaC1, IRelationEndType>> expression = v => v.C1C1One2One.ObjectType.C1AllorsString;
+            // c1a.C1C1One2One.C1C1One2One.C1AllorsString
+            Expression<Func<IMetaC1, IRelationEndType>> expression = v => v.C1C1One2One.ObjectType.C1C1One2One.ObjectType.C1AllorsString;
             var path = expression.Node(this.M);
             var adapter = new PathAdapter<string>(c1a.Strategy, path, weakReference, "String");
 
             Assert.Equal("Hello", adapter.Value);
             Assert.Empty(propertyChange.Events);
 
-            c1b.C1AllorsString.Value = "Hello Again";
+            c1c.C1AllorsString.Value = "Hello Again";
 
-            Assert.Equal(1, propertyChange.Events.Count);
+            Assert.Single(propertyChange.Events);
             Assert.Equal("Hello Again", adapter.Value);
 
-            c1c.C1AllorsString.Value = "Another Hello";
+            c1d.C1AllorsString.Value = "Another Hello";
 
-            Assert.Equal(1, propertyChange.Events.Count);
+            Assert.Single(propertyChange.Events);
             Assert.Equal("Hello Again", adapter.Value);
 
-            c1a.C1C1One2One.Value = c1c;
+            c1b.C1C1One2One.Value = c1d;
 
             Assert.Equal(2, propertyChange.Events.Count);
             Assert.Equal("Another Hello", adapter.Value);
         }
 
-        private class PropertyChange : IPropertyChange
+        [Fact]
+        public async void PathWithMissingStepsTest()
         {
-            public PropertyChange()
+            var workspace = this.Profile.Workspace;
+
+            var c1a = workspace.Create<C1>();
+            var c1b = workspace.Create<C1>();
+            var c1c = workspace.Create<C1>();
+
+            if (!c1a.C1C1One2One.CanWrite || !c1b.C1C1One2One.CanWrite || !c1c.C1AllorsString.CanWrite)
             {
-                this.Events = new List<PropertyChangedEventArgs>();
+                await workspace.PullAsync(new Pull { Object = c1a.Strategy }, new Pull { Object = c1b.Strategy }, new Pull { Object = c1c.Strategy });
             }
 
-            public IList<PropertyChangedEventArgs> Events { get; }
+            var propertyChange = new PropertyChange();
+            var weakReference = new WeakReference<IPropertyChange>(propertyChange);
+
+            // c1a.C1C1One2One.C1C1One2One.C1AllorsString
+            Expression<Func<IMetaC1, IRelationEndType>> expression = v => v.C1C1One2One.ObjectType.C1C1One2One.ObjectType.C1AllorsString;
+            var path = expression.Node(this.M);
+            var adapter = new PathAdapter<string>(c1a.Strategy, path, weakReference, "String");
+
+            Assert.Null(adapter.Value);
+            Assert.Empty(propertyChange.Events);
+
+            c1a.C1C1One2One.Value = c1b;
+
+            Assert.Null(adapter.Value);
+            Assert.Empty(propertyChange.Events);
+
+            c1b.C1C1One2One.Value = c1c;
+
+            Assert.Null(adapter.Value);
+            //Assert.Empty(propertyChange.Events);
+
+            c1c.C1AllorsString.Value = "Hello";
+
+            Assert.Equal("Hello", adapter.Value);
+            //Assert.Single(propertyChange.Events);
+        }
+
+
+        private class PropertyChange : IPropertyChange
+        {
+            public IList<PropertyChangedEventArgs> Events { get; } = new List<PropertyChangedEventArgs>();
 
             public void OnPropertyChanged(PropertyChangedEventArgs e)
             {

@@ -37,10 +37,19 @@ public class PathAdapter<T> : IDisposable
         }
     }
 
+    public bool Complete { get; private set; }
+
     public T Value
     {
         get
         {
+            this.Bind();
+
+            if (!this.Complete)
+            {
+                return default;
+            }
+
             if (this.RelationEnd is IRole role)
             {
                 return (T)role.Value;
@@ -52,7 +61,11 @@ public class PathAdapter<T> : IDisposable
 
         set
         {
-            if (this.RelationEnd is not IRole role) return;
+            if (!this.Complete || this.RelationEnd is not IRole role)
+            {
+                return;
+            }
+
             role.Value = value;
         }
     }
@@ -68,7 +81,9 @@ public class PathAdapter<T> : IDisposable
         if (this.Bindings == null)
         {
             var bindings = new List<IRelationEnd>();
-            this.Path.Flatten(this.Strategy, bindings);
+            this.Path.Flatten(this.Strategy, bindings, out var complete);
+
+            this.Complete = complete;
 
             // TODO: check that last binding not IsMany
 
@@ -78,7 +93,7 @@ public class PathAdapter<T> : IDisposable
             {
                 var binding = this.Bindings[i];
 
-                if (i != this.Bindings.Length - 1)
+                if (!this.Complete || i != this.Bindings.Length - 1)
                 {
                     binding.PropertyChanged += this.RebindAndNotifyOnPropertyChanged;
                 }
@@ -116,6 +131,7 @@ public class PathAdapter<T> : IDisposable
     {
         this.Unbind();
         this.Bind();
+
         this.NotifyOnPropertyChanged(sender, e);
     }
 
@@ -127,6 +143,9 @@ public class PathAdapter<T> : IDisposable
             return;
         }
 
-        propertyChange.OnPropertyChanged(new PropertyChangedEventArgs(this.PropertyName));
+        if (this.Complete)
+        {
+            propertyChange.OnPropertyChanged(new PropertyChangedEventArgs(this.PropertyName));
+        }
     }
 }
