@@ -4,7 +4,7 @@
 // </copyright>
 // <summary>Defines the ObjectBase type.</summary>
 
-namespace Allors.Workspace.Adapters
+namespace Allors.Workspace.Configuration
 {
     using System;
     using System.Collections.Generic;

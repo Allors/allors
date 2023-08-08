@@ -18,6 +18,7 @@ namespace Allors.Workspace.Adapters.Direct.Tests
     using Allors.Database.Services;
     using Allors.Workspace;
     using Allors.Workspace.Adapters;
+    using Allors.Workspace.Configuration;
     using Allors.Workspace.Meta;
     using Configuration = Allors.Workspace.Adapters.Direct.Configuration;
     using Connection = Direct.Connection;

@@ -15,11 +15,14 @@ namespace Allors.Workspace
         {
             this.ObjectFactory = objectFactory;
             this.M = m;
+            this.ReactiveExpressionBuilder = new ReactiveExpressionBuilder();
         }
 
         public IObjectFactory ObjectFactory { get; }
 
         public M M { get; private set; }
+
+        public IReactiveExpressionBuilder ReactiveExpressionBuilder { get; }
 
         public ITime Time { get; private set; }
 
@@ -33,13 +36,14 @@ namespace Allors.Workspace
         }
 
         public T Get<T>() =>
-           typeof(T) switch
-           {
-               // Core
-               { } type when type == typeof(M) => (T)this.M,
-               { } type when type == typeof(IObjectFactory) => (T)this.ObjectFactory,
-               { } type when type == typeof(ITime) => (T)this.Time,
-               _ => throw new NotSupportedException($"Service {typeof(T)} not supported")
-           };
+            typeof(T) switch
+            {
+                // Core
+                { } type when type == typeof(M) => (T)this.M,
+                { } type when type == typeof(IObjectFactory) => (T)this.ObjectFactory,
+                { } type when type == typeof(IReactiveExpressionBuilder) => (T)this.ReactiveExpressionBuilder,
+                { } type when type == typeof(ITime) => (T)this.Time,
+                _ => throw new NotSupportedException($"Service {typeof(T)} not supported")
+            };
     }
 }
