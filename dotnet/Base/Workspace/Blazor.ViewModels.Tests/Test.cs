@@ -7,6 +7,7 @@
     using Allors.Database.Services;
     using Allors.Workspace;
     using Allors.Workspace.Adapters;
+    using Allors.Workspace.Configuration;
     using Allors.Workspace.Meta.Static;
     using Configuration = Allors.Workspace.Adapters.Direct.Configuration;
     using Connection = Allors.Workspace.Adapters.Direct.Connection;

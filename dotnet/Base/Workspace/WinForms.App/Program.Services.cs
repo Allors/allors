@@ -5,6 +5,7 @@
     using System.Threading.Tasks;
     using Allors.Workspace;
     using Allors.Workspace.Adapters;
+    using Allors.Workspace.Configuration;
     using Allors.Workspace.Meta;
     using Allors.Workspace.Meta.Static;
     using Allors.Workspace.Mvvm.Services;

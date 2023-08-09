@@ -16,12 +16,12 @@ namespace Allors.Workspace.Configuration
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public ReactiveExpression(Expression<Func<TObject, TValue>> expression, TObject @object)
+        public ReactiveExpression(LambdaExpression expression, TObject @object)
         {
             this.@object = @object;
-            this.expression = expression.Compile();
+            this.expression = (Func<TObject, TValue>)expression.Compile();
         }
-        
+
         public TValue Value
         {
             get

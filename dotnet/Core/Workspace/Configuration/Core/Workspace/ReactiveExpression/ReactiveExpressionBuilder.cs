@@ -12,7 +12,9 @@ namespace Allors.Workspace.Configuration
     {
         public IReactiveExpression<TValue> Build<TObject, TValue>(Expression<Func<TObject, TValue>> expression, TObject @object)
         {
-            return new ReactiveExpression<TObject, TValue>(expression, @object);
+            var reactiveVisitor = new ReactiveVisitor();
+            var reactiveExpression = (LambdaExpression)reactiveVisitor.Visit(expression);
+            return new ReactiveExpression<TObject, TValue>(reactiveExpression, @object);
         }
     }
 }

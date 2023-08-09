@@ -13,6 +13,7 @@ namespace Allors.Workspace.Adapters.Json.Newtonsoft.Tests
     using Allors.Workspace;
     using Allors.Workspace.Adapters;
     using Allors.Workspace.Adapters.Json.Newtonsoft;
+    using Allors.Workspace.Configuration;
     using Allors.Workspace.Meta;
     using RestSharp;
     using RestSharp.Serializers.NewtonsoftJson;

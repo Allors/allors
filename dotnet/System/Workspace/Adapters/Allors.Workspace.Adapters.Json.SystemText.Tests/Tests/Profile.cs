@@ -13,6 +13,7 @@ namespace Allors.Workspace.Adapters.Json.SystemText.Tests
     using System.Threading.Tasks;
     using Allors.Workspace;
     using Allors.Workspace.Adapters;
+    using Allors.Workspace.Configuration;
     using Allors.Workspace.Meta;
     using Xunit;
     using Configuration = Allors.Workspace.Adapters.Json.Configuration;
