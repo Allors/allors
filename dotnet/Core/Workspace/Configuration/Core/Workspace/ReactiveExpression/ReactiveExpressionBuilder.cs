@@ -7,6 +7,7 @@ namespace Allors.Workspace.Configuration
 {
     using System;
     using System.Linq.Expressions;
+    using ExpressionTreeToString;
 
     public class ReactiveExpressionBuilder : IReactiveExpressionBuilder
     {
@@ -14,6 +15,9 @@ namespace Allors.Workspace.Configuration
         {
             var reactiveVisitor = new ReactiveVisitor();
             var reactiveExpression = (LambdaExpression)reactiveVisitor.Visit(expression);
+
+            var code = reactiveExpression.ToString("C#");
+
             return new ReactiveExpression<TObject, TValue>(reactiveExpression, @object);
         }
     }

@@ -6,16 +6,15 @@
 namespace Allors.Workspace.Configuration
 {
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel;
     using System.Linq.Expressions;
 
     public class ReactiveExpression<TObject, TValue> : IReactiveExpression<TValue>
     {
-        private readonly Func<TObject, HashSet<INotifyPropertyChanged>, TValue> expression;
+        private readonly Func<TObject, IDependencyTracker, TValue> expression;
         private readonly TObject @object;
 
-        private HashSet<INotifyPropertyChanged> dependencies;
+        private DependencyTracker tracker;
         private TValue value;
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -23,19 +22,19 @@ namespace Allors.Workspace.Configuration
         public ReactiveExpression(LambdaExpression expression, TObject @object)
         {
             this.@object = @object;
-            this.expression = (Func<TObject, HashSet<INotifyPropertyChanged>, TValue>)expression.Compile();
+            this.expression = (Func<TObject, IDependencyTracker, TValue>)expression.Compile();
         }
 
         public TValue Value
         {
             get
             {
-                if (this.dependencies == null)
+                if (this.tracker == null)
                 {
-                    this.dependencies = new HashSet<INotifyPropertyChanged>();
-                    this.value = this.expression(this.@object, this.dependencies);
+                    this.tracker = new DependencyTracker();
+                    this.value = this.expression(this.@object, this.tracker);
 
-                    foreach (var dependency in this.dependencies)
+                    foreach (var dependency in this.tracker.Dependencies)
                     {
                         dependency.PropertyChanged += this.Dependency_PropertyChanged;
                     }
@@ -47,14 +46,14 @@ namespace Allors.Workspace.Configuration
 
         private void Dependency_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (this.dependencies != null)
+            if (this.tracker != null)
             {
-                foreach (var source in this.dependencies)
+                foreach (var source in this.tracker.Dependencies)
                 {
                     source.PropertyChanged -= this.Dependency_PropertyChanged;
                 }
 
-                this.dependencies = null;
+                this.tracker = null;
             }
         }
     }

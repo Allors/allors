@@ -8,8 +8,10 @@ namespace Allors.Workspace.Configuration
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
+    using System.Diagnostics;
     using System.Linq;
     using System.Linq.Expressions;
+    using System.Reflection;
 
     public class ReactiveVisitor : ExpressionVisitor
     {
@@ -17,7 +19,7 @@ namespace Allors.Workspace.Configuration
 
         protected override Expression VisitLambda<T>(Expression<T> node)
         {
-            this.dependencies = Expression.Parameter(typeof(HashSet<INotifyPropertyChanged>), "_dependencies_");
+            this.dependencies = Expression.Parameter(typeof(IDependencyTracker), "_tracker_");
             var body = this.Visit(node.Body);
             return Expression.Lambda(body, node.Name, node.Parameters.Append(this.dependencies));
         }
@@ -25,11 +27,27 @@ namespace Allors.Workspace.Configuration
         protected override Expression VisitMember(MemberExpression node)
         {
             var member = node.Member;
-            var declaringType = member.DeclaringType;
 
-            if (declaringType.GetInterfaces().Contains(typeof(INotifyPropertyChanged)))
+            if (member is EventInfo eventInfo)
             {
-                Console.WriteLine(0);
+
+            }
+            else if (member is FieldInfo fieldInfo)
+            {
+
+            }
+            else if (member is MethodInfo methodInfo)
+            {
+                var x = member.ToString();
+            }
+            else if (member is PropertyInfo propertyInfo)
+            {
+                var propertyType = propertyInfo.PropertyType;
+
+                if (propertyType.GetInterfaces().Contains(typeof(INotifyPropertyChanged)))
+                {
+                    Console.Write(0);
+                }
             }
 
             return base.VisitMember(node);

@@ -14,6 +14,7 @@ namespace Allors.Workspace.Adapters.Tests
     using Domain;
     using Meta;
     using Meta.Static;
+    using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel;
     using Mvvm.Adapters;
     using Xunit;
 
@@ -139,6 +140,7 @@ namespace Allors.Workspace.Adapters.Tests
             var propertyChange = new PropertyChange();
 
             Expression<Func<C1, string>> expression = v => v.C1C1One2One.Value.C1C1One2One.Value.C1AllorsString.Value;
+            //Expression<Func<C1, string>> expression = v => v.C1C1One2One.Value.C1AllorsString.Value;
 
             var reactiveExpression = reactiveExpressionBuilder.Build(expression, c1a);
 
@@ -160,7 +162,6 @@ namespace Allors.Workspace.Adapters.Tests
             //Assert.Equal(2, propertyChange.Events.Count);
             //Assert.Equal("Another Hello", reactiveExpression.Value);
         }
-
 
         private class PropertyChange : IPropertyChange
         {
