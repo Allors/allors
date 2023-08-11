@@ -5,10 +5,7 @@
 
 namespace Allors.Workspace.Configuration
 {
-    using System;
-    using System.Collections.Generic;
     using System.ComponentModel;
-    using System.Diagnostics;
     using System.Linq;
     using System.Linq.Expressions;
     using System.Reflection;
@@ -19,7 +16,7 @@ namespace Allors.Workspace.Configuration
 
         protected override Expression VisitLambda<T>(Expression<T> node)
         {
-            this.dependencies = Expression.Parameter(typeof(IDependencyTracker), "_tracker_");
+            this.dependencies = Expression.Parameter(typeof(DependencyTracker), "_tracker_");
             var body = this.Visit(node.Body);
             return Expression.Lambda(body, node.Name, node.Parameters.Append(this.dependencies));
         }
@@ -46,11 +43,16 @@ namespace Allors.Workspace.Configuration
 
                 if (propertyType.GetInterfaces().Contains(typeof(INotifyPropertyChanged)))
                 {
-                    Console.Write(0);
+                    var trackMethodInfo = typeof(INotifyPropertyChangedExtensions).GetMethod("Track").MakeGenericMethod(node.Type);
+
+                    var methodCallExpression = Expression.Call(null, trackMethodInfo, base.VisitMember(node), this.dependencies);
+
+                    return methodCallExpression;
                 }
             }
 
             return base.VisitMember(node);
         }
+
     }
 }

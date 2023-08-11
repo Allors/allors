@@ -8,8 +8,8 @@ namespace Allors.Workspace
     using System;
     using System.Linq.Expressions;
 
-    public interface IReactiveExpressionBuilder
+    public interface IReactiveFuncBuilder
     {
-        IReactiveExpression<TValue> Build<TObject, TValue>(Expression<Func<TObject, TValue>> expression, TObject @object);
+        Func<TObject, DependencyTracker, TValue> Build<TObject, TValue>(Expression<Func<TObject, TValue>> expression);
     }
 }

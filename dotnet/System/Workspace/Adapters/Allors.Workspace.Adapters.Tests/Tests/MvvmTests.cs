@@ -13,8 +13,6 @@ namespace Allors.Workspace.Adapters.Tests
     using Data;
     using Domain;
     using Meta;
-    using Meta.Static;
-    using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel;
     using Mvvm.Adapters;
     using Xunit;
 
@@ -121,7 +119,7 @@ namespace Allors.Workspace.Adapters.Tests
         public async void ReactiveExpressionTest()
         {
             var workspace = this.Profile.Workspace;
-            var reactiveExpressionBuilder = workspace.Services.Get<IReactiveExpressionBuilder>();
+            var reactiveFuncBuilder = workspace.Services.Get<IReactiveFuncBuilder>();
 
             var c1a = workspace.Create<C1>();
             var c1b = workspace.Create<C1>();
@@ -137,30 +135,100 @@ namespace Allors.Workspace.Adapters.Tests
             c1b.C1C1One2One.Value = c1c;
             c1c.C1AllorsString.Value = "Hello";
 
-            var propertyChange = new PropertyChange();
+            var events = new List<PropertyChangedEventArgs>();
+
+            static string ReactiveFunc(C1 v, DependencyTracker tracker) => v.C1C1One2One.Track(tracker).Value.C1C1One2One.Track(tracker).Value.C1AllorsString.Track(tracker).Value;
+
+            var reactiveExpression = new ReactiveExpression<C1, string>(c1a, ReactiveFunc);
+
+            reactiveExpression.PropertyChanged += (_, e) => events.Add(e);
+
+            Assert.Empty(events);
+            Assert.Equal("Hello", reactiveExpression.Value);
+            Assert.Single(events);
+
+            events.Clear();
+
+            c1c.C1AllorsString.Value = "Hello Again";
+
+            Assert.Single(events);
+            Assert.Equal("Hello Again", reactiveExpression.Value);
+            Assert.Single(events);
+
+            events.Clear();
+
+            c1d.C1AllorsString.Value = "Another Hello";
+
+            Assert.Empty(events);
+            Assert.Equal("Hello Again", reactiveExpression.Value);
+            Assert.Empty(events);
+
+            events.Clear();
+
+            c1b.C1C1One2One.Value = c1d;
+
+            Assert.Single(events);
+            Assert.Equal("Another Hello", reactiveExpression.Value);
+        }
+
+        [Fact]
+        public async void ReactiveFuncBuilderTest()
+        {
+            var workspace = this.Profile.Workspace;
+            var reactiveFuncBuilder = workspace.Services.Get<IReactiveFuncBuilder>();
+
+            var c1a = workspace.Create<C1>();
+            var c1b = workspace.Create<C1>();
+            var c1c = workspace.Create<C1>();
+            var c1d = workspace.Create<C1>();
+
+            if (!c1a.C1C1One2One.CanWrite || !c1b.C1C1One2One.CanWrite || !c1c.C1AllorsString.CanWrite)
+            {
+                await workspace.PullAsync(new Pull { Object = c1a.Strategy }, new Pull { Object = c1b.Strategy }, new Pull { Object = c1c.Strategy });
+            }
+
+            c1a.C1C1One2One.Value = c1b;
+            c1b.C1C1One2One.Value = c1c;
+            c1c.C1AllorsString.Value = "Hello";
+
+            var events = new List<PropertyChangedEventArgs>();
+
+            Expression<Func<C1, DependencyTracker, string>> x = (v,tracker) => v.C1C1One2One.Track(tracker).Value.C1C1One2One.Track(tracker).Value.C1AllorsString.Track(tracker).Value;
 
             Expression<Func<C1, string>> expression = v => v.C1C1One2One.Value.C1C1One2One.Value.C1AllorsString.Value;
-            //Expression<Func<C1, string>> expression = v => v.C1C1One2One.Value.C1AllorsString.Value;
 
-            var reactiveExpression = reactiveExpressionBuilder.Build(expression, c1a);
+            var reactiveFunc = reactiveFuncBuilder.Build(expression);
 
+            var reactiveExpression = new ReactiveExpression<C1, string>(c1a, reactiveFunc);
+
+            reactiveExpression.PropertyChanged += (_, e) => events.Add(e);
+
+            Assert.Empty(events);
             Assert.Equal("Hello", reactiveExpression.Value);
-            //Assert.Empty(propertyChange.Events);
+            Assert.Single(events);
 
-            //c1c.C1AllorsString.Value = "Hello Again";
+            events.Clear();
 
-            //Assert.Single(propertyChange.Events);
-            //Assert.Equal("Hello Again", reactiveExpression.Value);
+            c1c.C1AllorsString.Value = "Hello Again";
 
-            //c1d.C1AllorsString.Value = "Another Hello";
+            Assert.Single(events);
+            Assert.Equal("Hello Again", reactiveExpression.Value);
+            Assert.Single(events);
 
-            //Assert.Single(propertyChange.Events);
-            //Assert.Equal("Hello Again", reactiveExpression.Value);
+            events.Clear();
 
-            //c1b.C1C1One2One.Value = c1d;
+            c1d.C1AllorsString.Value = "Another Hello";
 
-            //Assert.Equal(2, propertyChange.Events.Count);
-            //Assert.Equal("Another Hello", reactiveExpression.Value);
+            Assert.Empty(events);
+            Assert.Equal("Hello Again", reactiveExpression.Value);
+            Assert.Empty(events);
+
+            events.Clear();
+
+            c1b.C1C1One2One.Value = c1d;
+
+            Assert.Single(events);
+            Assert.Equal("Another Hello", reactiveExpression.Value);
         }
 
         private class PropertyChange : IPropertyChange

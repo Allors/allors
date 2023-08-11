@@ -3,15 +3,14 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Workspace.Configuration
+namespace Allors.Workspace
 {
     using System.Collections.Generic;
     using System.ComponentModel;
 
-    public class DependencyTracker : IDependencyTracker
+    public class DependencyTracker
     {
         public ISet<INotifyPropertyChanged> Dependencies { get; } = new HashSet<INotifyPropertyChanged>();
-
 
         public void Track(INotifyPropertyChanged dependency)
         {

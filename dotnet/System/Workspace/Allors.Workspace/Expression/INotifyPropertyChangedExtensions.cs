@@ -9,7 +9,7 @@ namespace Allors.Workspace
 
     public static class INotifyPropertyChangedExtensions
     {
-        public static T Track<T>(this T @this, IDependencyTracker tracker) where T : INotifyPropertyChanged
+        public static T Track<T>(this T @this, DependencyTracker tracker) where T : INotifyPropertyChanged
         {
             tracker.Track(@this);
             return @this;
