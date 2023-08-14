@@ -3,52 +3,37 @@
 using System;
 using System.ComponentModel;
 using Allors.Workspace;
-public class ExpressionAdapter<T> : IDisposable
+
+public class ExpressionAdapter<TObject, TValue> : IDisposable
+    where TObject : IObject
 {
-    public ExpressionAdapter(IPropertyChange viewModel, IRole[] roles, Func<T> expression, string propertyName)
+    public ExpressionAdapter(IPropertyChange viewModel, IExpression<TObject, TValue> expression, string name)
     {
-        this.Roles = roles;
         this.Expression = expression;
-        this.PropertyName = propertyName;
+        this.Name = name;
         this.ChangeNotification = new WeakReference<IPropertyChange>(viewModel);
 
-        foreach (var role in this.Roles)
-        {
-            role.PropertyChanged += this.Role_PropertyChanged;
-        }
-
-        this.Calculate();
+        this.Expression.PropertyChanged += this.Expression_PropertyChanged;
     }
 
-    public IRole[] Roles { get; private set; }
+    public IExpression<TObject, TValue> Expression { get; }
 
-    public Func<T> Expression { get; }
+    public string Name { get; }
 
-    public string PropertyName { get; }
+    public WeakReference<IPropertyChange> ChangeNotification { get; }
 
-    public WeakReference<IPropertyChange> ChangeNotification { get; private set; }
-
-    public T Value
+    public TValue Value
     {
-        get;
-        private set;
+        get => this.Expression.Value;
     }
 
     public void Dispose()
     {
         GC.SuppressFinalize(this);
-        foreach (var role in this.Roles)
-        {
-            role.PropertyChanged -= this.Role_PropertyChanged;
-        }
+        this.Expression.PropertyChanged -= this.Expression_PropertyChanged;
     }
 
-    private void Calculate()
-    {
-        this.Value = this.Expression();
-    }
-    
-    private void Role_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+    private void Expression_PropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
         if (!this.ChangeNotification.TryGetTarget(out var changeNotification))
         {
@@ -56,8 +41,6 @@ public class ExpressionAdapter<T> : IDisposable
             return;
         }
 
-        this.Calculate();
-        changeNotification.OnPropertyChanged(new PropertyChangedEventArgs(this.PropertyName));
+        changeNotification.OnPropertyChanged(new PropertyChangedEventArgs(this.Name));
     }
-
 }

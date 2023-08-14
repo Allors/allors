@@ -40,8 +40,8 @@
                     // Allors
                     services.AddSingleton(connection);
                     services.AddSingleton<Connection>(connection);
-                    services.AddSingleton<IDatabaseService, DatabaseService>();
-                    services.AddScoped(v => v.GetService<IDatabaseService>().CreateWorkspace());
+                    services.AddSingleton<IWorkspaceFactoryService, WorkspaceFactoryService>();
+                    services.AddScoped(v => v.GetService<IWorkspaceFactoryService>().CreateWorkspace());
 
                     // Services
                     services.AddSingleton<IMdiService, MdiService>();

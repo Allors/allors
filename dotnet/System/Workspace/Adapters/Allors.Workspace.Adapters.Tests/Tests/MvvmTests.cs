@@ -29,97 +29,9 @@ namespace Allors.Workspace.Adapters.Tests
         }
 
         [Fact]
-        public async void PathTest()
-        {
-            var workspace = this.Profile.Workspace;
-
-            var c1a = workspace.Create<C1>();
-            var c1b = workspace.Create<C1>();
-            var c1c = workspace.Create<C1>();
-            var c1d = workspace.Create<C1>();
-
-            if (!c1a.C1C1One2One.CanWrite || !c1b.C1C1One2One.CanWrite || !c1c.C1AllorsString.CanWrite)
-            {
-                await workspace.PullAsync(new Pull { Object = c1a.Strategy }, new Pull { Object = c1b.Strategy }, new Pull { Object = c1c.Strategy });
-            }
-
-            c1a.C1C1One2One.Value = c1b;
-            c1b.C1C1One2One.Value = c1c;
-            c1c.C1AllorsString.Value = "Hello";
-
-            var propertyChange = new PropertyChange();
-            var weakReference = new WeakReference<IPropertyChange>(propertyChange);
-
-            // c1a.C1C1One2One.C1C1One2One.C1AllorsString
-            Expression<Func<IMetaC1, IRelationEndType>> expression = v => v.C1C1One2One.ObjectType.C1C1One2One.ObjectType.C1AllorsString;
-            var path = expression.Node(this.M);
-            var adapter = new PathAdapter<string>(c1a.Strategy, path, weakReference, "String");
-
-            Assert.Equal("Hello", adapter.Value);
-            Assert.Empty(propertyChange.Events);
-
-            c1c.C1AllorsString.Value = "Hello Again";
-
-            Assert.Single(propertyChange.Events);
-            Assert.Equal("Hello Again", adapter.Value);
-
-            c1d.C1AllorsString.Value = "Another Hello";
-
-            Assert.Single(propertyChange.Events);
-            Assert.Equal("Hello Again", adapter.Value);
-
-            c1b.C1C1One2One.Value = c1d;
-
-            Assert.Equal(2, propertyChange.Events.Count);
-            Assert.Equal("Another Hello", adapter.Value);
-        }
-
-        [Fact]
-        public async void PathWithMissingStepsTest()
-        {
-            var workspace = this.Profile.Workspace;
-
-            var c1a = workspace.Create<C1>();
-            var c1b = workspace.Create<C1>();
-            var c1c = workspace.Create<C1>();
-
-            if (!c1a.C1C1One2One.CanWrite || !c1b.C1C1One2One.CanWrite || !c1c.C1AllorsString.CanWrite)
-            {
-                await workspace.PullAsync(new Pull { Object = c1a.Strategy }, new Pull { Object = c1b.Strategy }, new Pull { Object = c1c.Strategy });
-            }
-
-            var propertyChange = new PropertyChange();
-            var weakReference = new WeakReference<IPropertyChange>(propertyChange);
-
-            // c1a.C1C1One2One.C1C1One2One.C1AllorsString
-            Expression<Func<IMetaC1, IRelationEndType>> expression = v => v.C1C1One2One.ObjectType.C1C1One2One.ObjectType.C1AllorsString;
-            var path = expression.Node(this.M);
-            var adapter = new PathAdapter<string>(c1a.Strategy, path, weakReference, "String");
-
-            Assert.Null(adapter.Value);
-            Assert.Empty(propertyChange.Events);
-
-            c1a.C1C1One2One.Value = c1b;
-
-            Assert.Null(adapter.Value);
-            Assert.Empty(propertyChange.Events);
-
-            c1b.C1C1One2One.Value = c1c;
-
-            Assert.Null(adapter.Value);
-            //Assert.Empty(propertyChange.Events);
-
-            c1c.C1AllorsString.Value = "Hello";
-
-            Assert.Equal("Hello", adapter.Value);
-            //Assert.Single(propertyChange.Events);
-        }
-
-        [Fact]
         public async void ReactiveExpressionTest()
         {
             var workspace = this.Profile.Workspace;
-            var reactiveFuncBuilder = workspace.Services.Get<IReactiveFuncBuilder>();
 
             var c1a = workspace.Create<C1>();
             var c1b = workspace.Create<C1>();
@@ -135,40 +47,36 @@ namespace Allors.Workspace.Adapters.Tests
             c1b.C1C1One2One.Value = c1c;
             c1c.C1AllorsString.Value = "Hello";
 
-            var events = new List<PropertyChangedEventArgs>();
+            var propertyChange = new PropertyChange();
 
             static string ReactiveFunc(C1 v, IDependencyTracker tracker) => v.C1C1One2One.Track(tracker).Value.C1C1One2One.Track(tracker).Value.C1AllorsString.Track(tracker).Value;
-
             var reactiveExpression = new ReactiveExpression<C1, string>(c1a, ReactiveFunc);
 
-            reactiveExpression.PropertyChanged += (_, e) => events.Add(e);
+            var adapter = new ExpressionAdapter<C1, String>(propertyChange, reactiveExpression, "String");
 
-            Assert.Empty(events);
-            Assert.Equal("Hello", reactiveExpression.Value);
-            Assert.Single(events);
+            Assert.Equal("Hello", adapter.Value);
+            Assert.Single(propertyChange.Events);
 
-            events.Clear();
+            propertyChange.Events.Clear();
 
             c1c.C1AllorsString.Value = "Hello Again";
 
-            Assert.Single(events);
-            Assert.Equal("Hello Again", reactiveExpression.Value);
-            Assert.Single(events);
+            Assert.Single(propertyChange.Events);
+            Assert.Equal("Hello Again", adapter.Value);
 
-            events.Clear();
+            propertyChange.Events.Clear();
 
             c1d.C1AllorsString.Value = "Another Hello";
 
-            Assert.Empty(events);
-            Assert.Equal("Hello Again", reactiveExpression.Value);
-            Assert.Empty(events);
+            Assert.Empty(propertyChange.Events);
+            Assert.Equal("Hello Again", adapter.Value);
 
-            events.Clear();
+            propertyChange.Events.Clear();
 
             c1b.C1C1One2One.Value = c1d;
 
-            Assert.Single(events);
-            Assert.Equal("Another Hello", reactiveExpression.Value);
+            Assert.Single(propertyChange.Events);
+            Assert.Equal("Another Hello", adapter.Value);
         }
 
         [Fact]
@@ -194,7 +102,7 @@ namespace Allors.Workspace.Adapters.Tests
 
             var events = new List<PropertyChangedEventArgs>();
 
-            Expression<Func<C1, IDependencyTracker, string>> x = (v,tracker) => v.C1C1One2One.Track(tracker).Value.C1C1One2One.Track(tracker).Value.C1AllorsString.Track(tracker).Value;
+            Expression<Func<C1, IDependencyTracker, string>> x = (v, tracker) => v.C1C1One2One.Track(tracker).Value.C1C1One2One.Track(tracker).Value.C1AllorsString.Track(tracker).Value;
 
             Expression<Func<C1, string>> expression = v => v.C1C1One2One.Value.C1C1One2One.Value.C1AllorsString.Value;
 

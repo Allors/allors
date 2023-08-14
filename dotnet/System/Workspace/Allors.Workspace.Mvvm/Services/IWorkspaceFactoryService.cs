@@ -2,7 +2,7 @@
 {
     using Allors.Workspace;
 
-    public interface IDatabaseService
+    public interface IWorkspaceFactoryService
     {
         IWorkspace CreateWorkspace();
     }

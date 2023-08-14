@@ -5,9 +5,9 @@
     using Allors.Workspace.Mvvm.Services;
     using ViewModels.Services;
 
-    public class DatabaseService : IDatabaseService
+    public class WorkspaceFactoryService : IWorkspaceFactoryService
     {
-        public DatabaseService(Connection connection) => this.Connection = connection;
+        public WorkspaceFactoryService(Connection connection) => this.Connection = connection;
 
         public Connection Connection { get; }
 
