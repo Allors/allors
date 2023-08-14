@@ -5,16 +5,15 @@
 
 namespace Allors.Workspace
 {
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel;
 
-    public class DependencyTracker
+    public interface IExpression<out TObject, out TValue> : IReactive
+        where TObject : IObject
     {
-        public ISet<INotifyPropertyChanged> Dependencies { get; } = new HashSet<INotifyPropertyChanged>();
+        TObject Object { get; }
 
-        public void Track(INotifyPropertyChanged dependency)
-        {
-            this.Dependencies.Add(dependency);
-        }
+        TValue Value { get; }
     }
 }

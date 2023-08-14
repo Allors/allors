@@ -137,7 +137,7 @@ namespace Allors.Workspace.Adapters.Tests
 
             var events = new List<PropertyChangedEventArgs>();
 
-            static string ReactiveFunc(C1 v, DependencyTracker tracker) => v.C1C1One2One.Track(tracker).Value.C1C1One2One.Track(tracker).Value.C1AllorsString.Track(tracker).Value;
+            static string ReactiveFunc(C1 v, IDependencyTracker tracker) => v.C1C1One2One.Track(tracker).Value.C1C1One2One.Track(tracker).Value.C1AllorsString.Track(tracker).Value;
 
             var reactiveExpression = new ReactiveExpression<C1, string>(c1a, ReactiveFunc);
 
@@ -176,6 +176,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
             var workspace = this.Profile.Workspace;
             var reactiveFuncBuilder = workspace.Services.Get<IReactiveFuncBuilder>();
+            var reactiveExpressionBuilder = workspace.Services.Get<IReactiveExpressionBuilder>();
 
             var c1a = workspace.Create<C1>();
             var c1b = workspace.Create<C1>();
@@ -193,13 +194,13 @@ namespace Allors.Workspace.Adapters.Tests
 
             var events = new List<PropertyChangedEventArgs>();
 
-            Expression<Func<C1, DependencyTracker, string>> x = (v,tracker) => v.C1C1One2One.Track(tracker).Value.C1C1One2One.Track(tracker).Value.C1AllorsString.Track(tracker).Value;
+            Expression<Func<C1, IDependencyTracker, string>> x = (v,tracker) => v.C1C1One2One.Track(tracker).Value.C1C1One2One.Track(tracker).Value.C1AllorsString.Track(tracker).Value;
 
             Expression<Func<C1, string>> expression = v => v.C1C1One2One.Value.C1C1One2One.Value.C1AllorsString.Value;
 
             var reactiveFunc = reactiveFuncBuilder.Build(expression);
 
-            var reactiveExpression = new ReactiveExpression<C1, string>(c1a, reactiveFunc);
+            var reactiveExpression = reactiveExpressionBuilder.Build(c1a, reactiveFunc);
 
             reactiveExpression.PropertyChanged += (_, e) => events.Add(e);
 

@@ -5,6 +5,8 @@
 
 namespace Allors.Workspace
 {
+    using System;
+
     public interface IObject
     {
         /// <summary>

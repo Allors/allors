@@ -6,10 +6,10 @@
 namespace Allors.Workspace
 {
     using System;
-    using System.Linq.Expressions;
 
-    public interface IReactiveFuncBuilder
+    public interface IReactiveExpressionBuilder
     {
-        Func<TObject, DependencyTracker, TValue> Build<TObject, TValue>(Expression<Func<TObject, TValue>> expression);
+        IExpression<TObject, TValue> Build<TObject, TValue>(TObject @object, Func<TObject, IDependencyTracker, TValue> reactiveFunc)
+            where TObject : IObject;
     }
 }

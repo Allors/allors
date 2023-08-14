@@ -8,13 +8,12 @@ namespace Allors.Workspace.Configuration
     using System;
     using System.Linq.Expressions;
 
-    public class ReactiveExpressionBuilder : IReactiveFuncBuilder
+    public class ReactiveExpressionBuilder : IReactiveExpressionBuilder
     {
-        public Func<TObject, DependencyTracker, TValue> Build<TObject, TValue>(Expression<Func<TObject, TValue>> expression)
+        public IExpression<TObject, TValue> Build<TObject, TValue>(TObject @object, Func<TObject, IDependencyTracker, TValue> reactiveFunc)
+            where TObject : IObject
         {
-            var reactiveVisitor = new ReactiveVisitor();
-            var reactiveExpression = (LambdaExpression)reactiveVisitor.Visit(expression);
-            return (Func<TObject, DependencyTracker, TValue>)reactiveExpression.Compile();
+            return new ReactiveExpression<TObject, TValue>(@object, reactiveFunc);
         }
     }
 }

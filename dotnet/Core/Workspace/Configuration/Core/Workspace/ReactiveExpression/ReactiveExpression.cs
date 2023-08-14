@@ -6,24 +6,27 @@
 namespace Allors.Workspace
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel;
-    
-    public class ReactiveExpression<TObject, TValue> : IReactive
-    {
-        private readonly Func<TObject, DependencyTracker, TValue> expression;
-        private readonly TObject @object;
 
-        private DependencyTracker tracker;
-        private TValue previousValue;
+    public class ReactiveExpression<TObject, TValue> : IExpression<TObject, TValue>, IDependencyTracker
+        where TObject : IObject
+    {
+        private readonly Func<TObject, IDependencyTracker, TValue> expression;
+
+        private ISet<INotifyPropertyChanged> dependencies;
+
         private TValue value;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public ReactiveExpression(TObject @object, Func<TObject, DependencyTracker, TValue> expression)
+        public ReactiveExpression(TObject @object, Func<TObject, IDependencyTracker, TValue> expression)
         {
-            this.@object = @object;
+            this.Object = @object;
             this.expression = expression;
         }
+
+        public TObject Object { get; }
 
         public TValue Value
         {
@@ -34,16 +37,22 @@ namespace Allors.Workspace
             }
         }
 
+        public void Track(INotifyPropertyChanged dependency)
+        {
+            this.dependencies ??= new HashSet<INotifyPropertyChanged>();
+            this.dependencies.Add(dependency);
+        }
+
         private void Dependency_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (this.tracker != null)
+            if (this.dependencies != null)
             {
-                foreach (var source in this.tracker.Dependencies)
+                foreach (var source in this.dependencies)
                 {
                     source.PropertyChanged -= this.Dependency_PropertyChanged;
                 }
 
-                this.tracker = null;
+                this.dependencies = null;
             }
 
             this.TrackAndEvaluate();
@@ -51,25 +60,24 @@ namespace Allors.Workspace
 
         private void TrackAndEvaluate()
         {
-            if (this.tracker == null)
+            if (this.dependencies == null)
             {
-                this.tracker = new DependencyTracker();
-
-                var newValue = this.expression(this.@object, this.tracker);
+                var newValue = this.expression(this.Object, this);
                 if (!Equals(this.value, newValue))
                 {
-                    this.previousValue = this.value;
                     this.value = newValue;
 
                     this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Value"));
                 }
 
-                foreach (var dependency in this.tracker.Dependencies)
+                if (this.dependencies != null)
                 {
-                    dependency.PropertyChanged += this.Dependency_PropertyChanged;
+                    foreach (var dependency in this.dependencies)
+                    {
+                        dependency.PropertyChanged += this.Dependency_PropertyChanged;
+                    }
                 }
             }
         }
-
     }
 }

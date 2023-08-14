@@ -10,13 +10,13 @@ namespace Allors.Workspace.Configuration
     using System.Linq.Expressions;
     using System.Reflection;
 
-    public class ReactiveVisitor : ExpressionVisitor
+    public class ReactiveFuncVisitor : ExpressionVisitor
     {
         private ParameterExpression dependencies;
 
         protected override Expression VisitLambda<T>(Expression<T> node)
         {
-            this.dependencies = Expression.Parameter(typeof(DependencyTracker), "_tracker_");
+            this.dependencies = Expression.Parameter(typeof(IDependencyTracker), "_tracker_");
             var body = this.Visit(node.Body);
             return Expression.Lambda(body, node.Name, node.Parameters.Append(this.dependencies));
         }
