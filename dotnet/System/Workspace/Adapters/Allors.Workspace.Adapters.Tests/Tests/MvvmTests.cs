@@ -12,7 +12,6 @@ namespace Allors.Workspace.Adapters.Tests
     using System.Threading.Tasks;
     using Data;
     using Domain;
-    using Meta;
     using Mvvm.Adapters;
     using Xunit;
 
@@ -29,7 +28,7 @@ namespace Allors.Workspace.Adapters.Tests
         }
 
         [Fact]
-        public async void ReactiveExpressionTest()
+        public async void ExpressionAdapterTest()
         {
             var workspace = this.Profile.Workspace;
 
@@ -80,7 +79,7 @@ namespace Allors.Workspace.Adapters.Tests
         }
 
         [Fact]
-        public async void ReactiveFuncBuilderTest()
+        public async void ExpressionAdapterWithReactiveFuncBuilderTest()
         {
             var workspace = this.Profile.Workspace;
             var reactiveFuncBuilder = workspace.Services.Get<IReactiveFuncBuilder>();
@@ -101,8 +100,6 @@ namespace Allors.Workspace.Adapters.Tests
             c1c.C1AllorsString.Value = "Hello";
 
             var events = new List<PropertyChangedEventArgs>();
-
-            Expression<Func<C1, IDependencyTracker, string>> x = (v, tracker) => v.C1C1One2One.Track(tracker).Value.C1C1One2One.Track(tracker).Value.C1AllorsString.Track(tracker).Value;
 
             Expression<Func<C1, string>> expression = v => v.C1C1One2One.Value.C1C1One2One.Value.C1AllorsString.Value;
 
@@ -138,6 +135,77 @@ namespace Allors.Workspace.Adapters.Tests
 
             Assert.Single(events);
             Assert.Equal("Another Hello", reactiveExpression.Value);
+        }
+
+        [Fact]
+        public async void RoleExpressionAdapterTest()
+        {
+            var workspace = this.Profile.Workspace;
+            var reactiveFuncBuilder = workspace.Services.Get<IReactiveFuncBuilder>();
+            var reactiveExpressionBuilder = workspace.Services.Get<IReactiveExpressionBuilder>();
+
+            var c1a = workspace.Create<C1>();
+            var c1b = workspace.Create<C1>();
+            var c1c = workspace.Create<C1>();
+            var c1d = workspace.Create<C1>();
+
+            if (!c1a.C1C1One2One.CanWrite || !c1b.C1C1One2One.CanWrite || !c1c.C1AllorsString.CanWrite)
+            {
+                await workspace.PullAsync(new Pull { Object = c1a.Strategy }, new Pull { Object = c1b.Strategy }, new Pull { Object = c1c.Strategy });
+            }
+
+            c1a.C1C1One2One.Value = c1b;
+            c1b.C1C1One2One.Value = c1c;
+            c1c.C1AllorsString.Value = "Hello";
+
+            var propertyChange = new PropertyChange();
+
+            Expression<Func<C1, IUnitRole<string>>> expression = v => v.C1C1One2One.Value.C1C1One2One.Value.C1AllorsString;
+            var reactiveFunc = reactiveFuncBuilder.Build(expression);
+            var reactiveExpression = reactiveExpressionBuilder.Build(c1a, reactiveFunc);
+
+            var adapter = new RoleExpressionAdapter<C1, String>(propertyChange, reactiveExpression);
+
+            // Value Get
+            Assert.Equal("Hello", adapter.Value);
+            Assert.Single(propertyChange.Events);
+
+            propertyChange.Events.Clear();
+
+            c1c.C1AllorsString.Value = "Hello Again";
+
+            Assert.Single(propertyChange.Events);
+            Assert.Equal("Hello Again", adapter.Value);
+
+            propertyChange.Events.Clear();
+
+            c1d.C1AllorsString.Value = "Another Hello";
+
+            Assert.Empty(propertyChange.Events);
+            Assert.Equal("Hello Again", adapter.Value);
+
+            propertyChange.Events.Clear();
+
+            c1b.C1C1One2One.Value = c1d;
+
+            Assert.Single(propertyChange.Events);
+            Assert.Equal("Another Hello", adapter.Value);
+
+            // Value Set
+            propertyChange.Events.Clear();
+
+            adapter.Value = "Hello from Value Set";
+
+            Assert.Single(propertyChange.Events);
+            Assert.Equal("Hello from Value Set", adapter.Value);
+
+            propertyChange.Events.Clear();
+
+            c1d.C1AllorsString.Value = "Hello from Value Set";
+
+            Assert.Empty(propertyChange.Events);
+            Assert.Equal("Hello from Value Set", adapter.Value);
+            Assert.Empty(propertyChange.Events);
         }
 
         private class PropertyChange : IPropertyChange
