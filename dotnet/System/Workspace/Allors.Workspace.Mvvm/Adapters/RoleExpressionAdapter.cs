@@ -7,18 +7,24 @@ using Allors.Workspace;
 public class RoleExpressionAdapter<TObject, TValue> : IDisposable
     where TObject : IObject
 {
+    private bool firstTime;
+    private readonly IExpression<TObject, IUnitRole<TValue>> expression;
+    private readonly string name;
     private IUnitRole<TValue> role;
     private TValue value;
 
-    public RoleExpressionAdapter(IPropertyChange viewModel, IExpression<TObject, IUnitRole<TValue>> expression)
+    public RoleExpressionAdapter(IPropertyChange viewModel, IExpression<TObject, IUnitRole<TValue>> expression, string name)
     {
-        this.Expression = expression;
+        this.expression = expression;
+        this.name = name;
         this.ChangeNotification = new WeakReference<IPropertyChange>(viewModel);
 
-        this.Expression.PropertyChanged += this.Expression_PropertyChanged;
+        this.firstTime = true;
+
+        this.expression.PropertyChanged += this.Expression_PropertyChanged;
     }
 
-    public IExpression<TObject, IUnitRole<TValue>> Expression { get; }
+    public WeakReference<IPropertyChange> ChangeNotification { get; }
 
     public IUnitRole<TValue> Role
     {
@@ -26,22 +32,37 @@ public class RoleExpressionAdapter<TObject, TValue> : IDisposable
         {
             if (this.role == null)
             {
-                this.role = this.Expression.Value;
-                if (role != null)
+                this.role = this.expression.Value;
+                if (this.role != null)
                 {
-                    this.role.PropertyChanged += Role_PropertyChanged;
+                    this.role.PropertyChanged += this.Role_PropertyChanged;
                 }
             }
 
-            return role;
+            return this.role;
         }
     }
 
-    public WeakReference<IPropertyChange> ChangeNotification { get; }
-
     public TValue Value
     {
-        get => this.Role != null ? this.Role.Value : default;
+        get
+        {
+            if (this.firstTime)
+            {
+                this.firstTime = false;
+
+                if (this.Role != null)
+                {
+                    this.value = this.Role.Value;
+                }
+            }
+            else
+            {
+                this.Evaluate();
+            }
+
+            return this.value;
+        }
         set
         {
             if (this.Role != null)
@@ -55,7 +76,7 @@ public class RoleExpressionAdapter<TObject, TValue> : IDisposable
     {
         GC.SuppressFinalize(this);
 
-        this.Expression.PropertyChanged += this.Expression_PropertyChanged;
+        this.expression.PropertyChanged += this.Expression_PropertyChanged;
         if (this.role != null)
         {
             this.role.PropertyChanged -= this.Role_PropertyChanged;
@@ -64,22 +85,31 @@ public class RoleExpressionAdapter<TObject, TValue> : IDisposable
 
     private void Expression_PropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
-        if (!this.ChangeNotification.TryGetTarget(out var changeNotification))
+        var newRole = this.expression.Value;
+        if (!Equals(newRole, role))
         {
-            this.Dispose();
-            return;
-        }
+            if (this.role != null)
+            {
+                this.role.PropertyChanged -= this.Role_PropertyChanged;
+            }
 
-        if (this.role != null)
-        {
-            this.role.PropertyChanged -= this.Role_PropertyChanged;
-            this.role = null;
-        }
+            this.role = newRole;
 
-        changeNotification.OnPropertyChanged(new PropertyChangedEventArgs(this.Role.RoleType.Name));
+            if (this.role != null)
+            {
+                this.role.PropertyChanged += this.Role_PropertyChanged;
+            }
+
+            this.Evaluate();
+        }
     }
 
     private void Role_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        this.Evaluate();
+    }
+
+    private void Evaluate()
     {
         if (!this.ChangeNotification.TryGetTarget(out var changeNotification))
         {
@@ -87,6 +117,21 @@ public class RoleExpressionAdapter<TObject, TValue> : IDisposable
             return;
         }
 
-        changeNotification.OnPropertyChanged(new PropertyChangedEventArgs(this.Role.RoleType.Name));
+        if (this.role == null)
+        {
+            if (!Equals(this.value, default(TValue)))
+            {
+                this.value = default;
+                changeNotification.OnPropertyChanged(new PropertyChangedEventArgs(this.name));
+            }
+        }
+        else
+        {
+            if (!Equals(this.value, this.role.Value))
+            {
+                this.value = this.role.Value;
+                changeNotification.OnPropertyChanged(new PropertyChangedEventArgs(this.name));
+            }
+        }
     }
 }

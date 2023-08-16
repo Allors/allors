@@ -14,6 +14,8 @@ namespace Allors.Workspace
     {
         private readonly Func<TObject, IDependencyTracker, TValue> expression;
 
+        private bool firstTime;
+
         private ISet<INotifyPropertyChanged> dependencies;
 
         private TValue value;
@@ -24,6 +26,8 @@ namespace Allors.Workspace
         {
             this.Object = @object;
             this.expression = expression;
+
+            this.firstTime = true;
         }
 
         public TObject Object { get; }
@@ -32,7 +36,15 @@ namespace Allors.Workspace
         {
             get
             {
-                this.TrackAndEvaluate();
+                var notify = !this.firstTime;
+
+                if (this.firstTime)
+                {
+                    this.firstTime = false;
+                }
+
+                this.TrackAndEvaluate(notify);
+               
                 return this.value;
             }
         }
@@ -55,10 +67,10 @@ namespace Allors.Workspace
                 this.dependencies = null;
             }
 
-            this.TrackAndEvaluate();
+            this.TrackAndEvaluate(true);
         }
 
-        private void TrackAndEvaluate()
+        private void TrackAndEvaluate(bool notify)
         {
             if (this.dependencies == null)
             {
@@ -67,7 +79,10 @@ namespace Allors.Workspace
                 {
                     this.value = newValue;
 
-                    this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Value"));
+                    if (notify)
+                    {
+                        this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Value"));
+                    }
                 }
 
                 if (this.dependencies != null)

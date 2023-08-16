@@ -54,7 +54,7 @@ namespace Allors.Workspace.Adapters.Tests
             var adapter = new ExpressionAdapter<C1, String>(propertyChange, reactiveExpression, "String");
 
             Assert.Equal("Hello", adapter.Value);
-            Assert.Single(propertyChange.Events);
+            Assert.Empty(propertyChange.Events);
 
             propertyChange.Events.Clear();
 
@@ -109,9 +109,8 @@ namespace Allors.Workspace.Adapters.Tests
 
             reactiveExpression.PropertyChanged += (_, e) => events.Add(e);
 
-            Assert.Empty(events);
             Assert.Equal("Hello", reactiveExpression.Value);
-            Assert.Single(events);
+            Assert.Empty(events);
 
             events.Clear();
 
@@ -164,11 +163,11 @@ namespace Allors.Workspace.Adapters.Tests
             var reactiveFunc = reactiveFuncBuilder.Build(expression);
             var reactiveExpression = reactiveExpressionBuilder.Build(c1a, reactiveFunc);
 
-            var adapter = new RoleExpressionAdapter<C1, String>(propertyChange, reactiveExpression);
+            var adapter = new RoleExpressionAdapter<C1, String>(propertyChange, reactiveExpression, "String");
 
             // Value Get
             Assert.Equal("Hello", adapter.Value);
-            Assert.Single(propertyChange.Events);
+            Assert.Empty(propertyChange.Events);
 
             propertyChange.Events.Clear();
 
