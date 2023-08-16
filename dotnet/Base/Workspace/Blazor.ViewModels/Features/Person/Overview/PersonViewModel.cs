@@ -7,7 +7,7 @@ using Person = Allors.Workspace.Domain.Person;
 
 public partial class PersonViewModel : ViewModel<Person>
 {
-    private readonly RoleAdapter<string> firstName;
+    private readonly UnitRoleAdapter<string> firstName;
     private readonly PathAdapter<string> poBox;
     private readonly ExpressionAdapter<string> fullName;
     private readonly GreetingAdapter greeting;
@@ -15,7 +15,7 @@ public partial class PersonViewModel : ViewModel<Person>
     public PersonViewModel(Person model)
     {
         this.Model = model;
-        this.firstName = new RoleAdapter<string>(this, model.FirstName);
+        this.firstName = new UnitRoleAdapter<string>(this, model.FirstName);
         this.fullName = new ExpressionAdapter<string>(this,
             new IRole[]
             {

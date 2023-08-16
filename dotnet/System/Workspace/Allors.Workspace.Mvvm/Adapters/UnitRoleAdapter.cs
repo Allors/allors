@@ -4,9 +4,9 @@ using System;
 using System.ComponentModel;
 using Allors.Workspace;
 
-public class RoleAdapter<TValue> : IDisposable
+public class UnitRoleAdapter<TValue> : IDisposable
 {
-    public RoleAdapter(IPropertyChange viewModel, IUnitRole<TValue> role)
+    public UnitRoleAdapter(IPropertyChange viewModel, IUnitRole<TValue> role)
     {
         this.Role = role;
         this.ChangeNotification = new WeakReference<IPropertyChange>(viewModel);

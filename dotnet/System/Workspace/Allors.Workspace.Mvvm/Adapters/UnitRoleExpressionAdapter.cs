@@ -4,7 +4,7 @@ using System;
 using System.ComponentModel;
 using Allors.Workspace;
 
-public class RoleExpressionAdapter<TObject, TValue> : IDisposable
+public class UnitRoleExpressionAdapter<TObject, TValue> : IDisposable
     where TObject : IObject
 {
     private bool firstTime;
@@ -13,7 +13,7 @@ public class RoleExpressionAdapter<TObject, TValue> : IDisposable
     private IUnitRole<TValue> role;
     private TValue value;
 
-    public RoleExpressionAdapter(IPropertyChange viewModel, IExpression<TObject, IUnitRole<TValue>> expression, string name)
+    public UnitRoleExpressionAdapter(IPropertyChange viewModel, IExpression<TObject, IUnitRole<TValue>> expression, string name)
     {
         this.expression = expression;
         this.name = name;

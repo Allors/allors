@@ -137,7 +137,7 @@ namespace Allors.Workspace.Adapters.Tests
         }
 
         [Fact]
-        public async void RoleExpressionAdapterTest()
+        public async void UnitRoleExpressionAdapterTest()
         {
             var workspace = this.Profile.Workspace;
             var reactiveFuncBuilder = workspace.Services.Get<IReactiveFuncBuilder>();
@@ -163,7 +163,7 @@ namespace Allors.Workspace.Adapters.Tests
             var reactiveFunc = reactiveFuncBuilder.Build(expression);
             var reactiveExpression = reactiveExpressionBuilder.Build(c1a, reactiveFunc);
 
-            var adapter = new RoleExpressionAdapter<C1, String>(propertyChange, reactiveExpression, "String");
+            var adapter = new UnitRoleExpressionAdapter<C1, String>(propertyChange, reactiveExpression, "String");
 
             // Value Get
             Assert.Equal("Hello", adapter.Value);

@@ -14,7 +14,7 @@ namespace Test;
 
 public partial class TestClass
 {
-    [AdapterProperty] private readonly RoleAdapter<string> testAdapter;
+    [AdapterProperty] private readonly UnitRoleAdapter<string> testAdapter;
 
 }
 ";

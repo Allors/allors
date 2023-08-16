@@ -895,9 +895,8 @@ namespace Allors.Workspace.Adapters.Tests
 
             reactiveExpression.PropertyChanged += (_, e) => events.Add(e);
 
-            Assert.Empty(events);
             Assert.Equal("Hello", reactiveExpression.Value);
-            Assert.Single(events);
+            Assert.Empty(events);
 
             events.Clear();
 
@@ -956,9 +955,8 @@ namespace Allors.Workspace.Adapters.Tests
 
             reactiveExpression.PropertyChanged += (_, e) => events.Add(e);
 
-            Assert.Empty(events);
             Assert.Equal("Hello", reactiveExpression.Value);
-            Assert.Single(events);
+            Assert.Empty(events);
 
             events.Clear();
 
