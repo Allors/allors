@@ -7,10 +7,10 @@ using Allors.Workspace.Mvvm.Adapters;
 
 public class GreetingAdapter : IDisposable
 {
-    public GreetingAdapter(Allors.Workspace.Domain.Person person, IPropertyChange propertyChange, string propertyName = "Greeting")
+    public GreetingAdapter(Allors.Workspace.Domain.Person person, IViewModel viewModel, string propertyName = "Greeting")
     {
         this.Person = person;
-        this.ChangeNotification = new WeakReference<IPropertyChange>(propertyChange);
+        this.ChangeNotification = new WeakReference<IViewModel>(viewModel);
         this.PropertyName = propertyName;
 
         this.Roles = new IRole[] { this.Person.FirstName, this.Person.LastName, };
@@ -27,7 +27,7 @@ public class GreetingAdapter : IDisposable
 
     public IRole[] Roles { get; private set; }
 
-    public WeakReference<IPropertyChange> ChangeNotification { get; private set; }
+    public WeakReference<IViewModel> ChangeNotification { get; private set; }
 
     public string PropertyName { get; }
 

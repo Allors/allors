@@ -46,7 +46,7 @@ namespace Allors.Workspace.Adapters.Tests
             c1b.C1C1One2One.Value = c1c;
             c1c.C1AllorsString.Value = "Hello";
 
-            var propertyChange = new PropertyChange();
+            var propertyChange = new ViewModel();
 
             static string ReactiveFunc(C1 v, IDependencyTracker tracker) => v.C1C1One2One.Track(tracker).Value.C1C1One2One.Track(tracker).Value.C1AllorsString.Track(tracker).Value;
             var reactiveExpression = new ReactiveExpression<C1, string>(c1a, ReactiveFunc);
@@ -157,7 +157,7 @@ namespace Allors.Workspace.Adapters.Tests
             c1b.C1C1One2One.Value = c1c;
             c1c.C1AllorsString.Value = "Hello";
 
-            var propertyChange = new PropertyChange();
+            var propertyChange = new ViewModel();
 
             Expression<Func<C1, IUnitRole<string>>> expression = v => v.C1C1One2One.Value.C1C1One2One.Value.C1AllorsString;
             var reactiveFunc = reactiveFuncBuilder.Build(expression);
@@ -207,7 +207,7 @@ namespace Allors.Workspace.Adapters.Tests
             Assert.Empty(propertyChange.Events);
         }
 
-        private class PropertyChange : IPropertyChange
+        private class ViewModel : IViewModel
         {
             public IList<PropertyChangedEventArgs> Events { get; } = new List<PropertyChangedEventArgs>();
 

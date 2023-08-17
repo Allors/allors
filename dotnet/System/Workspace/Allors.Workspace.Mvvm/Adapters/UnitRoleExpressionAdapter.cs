@@ -7,24 +7,23 @@ using Allors.Workspace;
 public class UnitRoleExpressionAdapter<TObject, TValue> : IDisposable
     where TObject : IObject
 {
-    private bool firstTime;
+    private readonly WeakReference<IViewModel> weakViewModel;
     private readonly IExpression<TObject, IUnitRole<TValue>> expression;
     private readonly string name;
+
+    private bool firstTime;
     private IUnitRole<TValue> role;
     private TValue value;
 
-    public UnitRoleExpressionAdapter(IPropertyChange viewModel, IExpression<TObject, IUnitRole<TValue>> expression, string name)
+    public UnitRoleExpressionAdapter(IViewModel viewModel, IExpression<TObject, IUnitRole<TValue>> expression, string name)
     {
+        this.weakViewModel = new WeakReference<IViewModel>(viewModel);
         this.expression = expression;
         this.name = name;
-        this.ChangeNotification = new WeakReference<IPropertyChange>(viewModel);
 
         this.firstTime = true;
-
         this.expression.PropertyChanged += this.Expression_PropertyChanged;
     }
-
-    public WeakReference<IPropertyChange> ChangeNotification { get; }
 
     public IUnitRole<TValue> Role
     {
@@ -111,7 +110,7 @@ public class UnitRoleExpressionAdapter<TObject, TValue> : IDisposable
 
     private void Evaluate()
     {
-        if (!this.ChangeNotification.TryGetTarget(out var changeNotification))
+        if (!this.weakViewModel.TryGetTarget(out var changeNotification))
         {
             this.Dispose();
             return;

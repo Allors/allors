@@ -1,9 +1,8 @@
-﻿namespace Allors.Workspace.Mvvm;
+﻿namespace Allors.Workspace.Mvvm.Adapters;
 
-using Adapters;
-using Allors.Workspace;
+using System.ComponentModel;
 
-public partial interface IViewModel<T> : IPropertyChange where T : IObject
+public interface IViewModel
 {
-    T Model { get; }
+    void OnPropertyChanged(PropertyChangedEventArgs e);
 }

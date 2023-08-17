@@ -11,7 +11,7 @@ using Person = Allors.Workspace.Domain.Person;
 public partial class PersonViewModel : ViewModel<Person>
 {
     [AdapterProperty] private readonly UnitRoleAdapter<string> firstName;
-    [AdapterProperty] private readonly PathAdapter<string> poBox;
+    [AdapterProperty] private readonly UnitRoleExpressionAdapter<string> poBox;
     private readonly ExpressionAdapter<string> fullName;
     private readonly GreetingAdapter greeting;
 
@@ -19,7 +19,7 @@ public partial class PersonViewModel : ViewModel<Person>
     {
         this.Model = model;
 
-        var myWeakReference = new WeakReference<IPropertyChange>(this);
+        var myWeakReference = new WeakReference<IViewModel>(this);
 
         this.firstName = new UnitRoleAdapter<string>(this, model.FirstName);
         this.fullName = new ExpressionAdapter<string>(this,
