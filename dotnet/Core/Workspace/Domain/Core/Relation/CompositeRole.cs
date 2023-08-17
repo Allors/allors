@@ -8,11 +8,11 @@ namespace Allors.Workspace
     using System.ComponentModel;
     using Meta;
 
-    public abstract class CompositeRole<T> : ICompositeRole<T> where T : class, IObject
+    public class CompositeRole<T> : ICompositeRole<T> where T : class, IObject
     {
         private readonly ICompositeRole role;
 
-        protected CompositeRole(IStrategy strategy, IRoleType roleType)
+        public CompositeRole(IStrategy strategy, IRoleType roleType)
         {
             this.role = strategy.CompositeRole(roleType);
             this.ObjectFactory = strategy.Workspace.Services.Get<IObjectFactory>();

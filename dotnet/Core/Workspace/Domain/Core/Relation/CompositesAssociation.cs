@@ -9,11 +9,11 @@ namespace Allors.Workspace
     using System.ComponentModel;
     using Meta;
 
-    public abstract class CompositesAssociation<T> : ICompositesAssociation<T> where T : class, IObject
+    public class CompositesAssociation<T> : ICompositesAssociation<T> where T : class, IObject
     {
         private readonly ICompositesAssociation association;
 
-        protected CompositesAssociation(IStrategy strategy, IAssociationType associationType)
+        public CompositesAssociation(IStrategy strategy, IAssociationType associationType)
         {
             this.association = strategy.CompositesAssociation(associationType);
             this.ObjectFactory = strategy.Workspace.Services.Get<IObjectFactory>();

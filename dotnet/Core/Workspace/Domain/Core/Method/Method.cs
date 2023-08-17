@@ -8,11 +8,11 @@ namespace Allors.Workspace
     using System.ComponentModel;
     using Meta;
 
-    public abstract class Method : IMethod
+    public class Method : IMethod
     {
         private readonly IMethod method;
 
-        protected Method(IStrategy strategy, IMethodType methodType)
+        public Method(IStrategy strategy, IMethodType methodType)
         {
             this.method = strategy.Method(methodType);
         }

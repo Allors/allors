@@ -30,16 +30,6 @@ namespace Allors.Workspace.Configuration
         /// <see cref="ConstructorInfo"/> by <see cref="IObjectType"/> cache.
         /// </summary>
         private readonly Dictionary<IObjectType, ConstructorInfo> constructorInfoByObjectTypeForObject;
-        
-        private readonly Dictionary<IObjectType, ConstructorInfo> constructorInfoByObjectTypeForCompositeRole;
-
-        private readonly Dictionary<IObjectType, ConstructorInfo> constructorInfoByObjectTypeForCompositesRole;
-
-        private readonly Dictionary<IObjectType, ConstructorInfo> constructorInfoByObjectTypeForCompositeAssociation;
-
-        private readonly Dictionary<IObjectType, ConstructorInfo> constructorInfoByObjectTypeForCompositesAssociation;
-
-        private readonly Dictionary<IMethodType, ConstructorInfo> constructorInfoByMethodTypeForMethod;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ReflectionObjectFactory"/> class.
@@ -83,106 +73,6 @@ namespace Allors.Workspace.Configuration
                         this.constructorInfoByObjectTypeForObject[objectType] = type.GetTypeInfo().GetConstructor(parameterTypes)
                                                                       ?? throw new ArgumentException($"{objectType.SingularName} has no Allors constructor.");
                     }
-                }
-            }
-
-            // For CompositeRole
-            {
-                var typesForCompositeRole = assembly.GetTypes()
-                    .Where(type => type.Namespace?.Equals(instance.Namespace) == true &&
-                                   type.GetTypeInfo().ImplementedInterfaces.Contains(typeof(ICompositeRole)))
-                    .ToArray();
-
-                this.constructorInfoByObjectTypeForCompositeRole = new Dictionary<IObjectType, ConstructorInfo>();
-
-                var typeByName = typesForCompositeRole.ToDictionary(type => type.Name, type => type);
-
-                foreach (var objectType in metaPopulation.Composites)
-                {
-                    var type = typeByName[objectType.SingularName + "Role"];
-                    var parameterTypes = new[] { typeof(IStrategy), typeof(IRoleType) };
-                    this.constructorInfoByObjectTypeForCompositeRole[objectType] =
-                        type.GetTypeInfo().GetConstructor(parameterTypes);
-                }
-            }
-
-            // For CompositesRole
-            {
-                var typesForCompositesRole = assembly.GetTypes()
-                    .Where(type => type.Namespace?.Equals(instance.Namespace) == true &&
-                                   type.GetTypeInfo().ImplementedInterfaces.Contains(typeof(ICompositesRole)))
-                    .ToArray();
-
-                this.constructorInfoByObjectTypeForCompositesRole = new Dictionary<IObjectType, ConstructorInfo>();
-
-                var typeByName = typesForCompositesRole.ToDictionary(type => type.Name, type => type);
-
-                foreach (var objectType in metaPopulation.Composites)
-                {
-                    var type = typeByName[objectType.PluralName + "Role"];
-                    var parameterTypes = new[] { typeof(IStrategy), typeof(IRoleType) };
-                    this.constructorInfoByObjectTypeForCompositesRole[objectType] =
-                        type.GetTypeInfo().GetConstructor(parameterTypes);
-                }
-            }
-
-            // For CompositeAssociation
-            {
-                var typesForCompositeAssociation = assembly.GetTypes()
-                    .Where(type => type.Namespace?.Equals(instance.Namespace) == true &&
-                                   type.GetTypeInfo().ImplementedInterfaces.Contains(typeof(ICompositeAssociation)))
-                    .ToArray();
-
-                this.constructorInfoByObjectTypeForCompositeAssociation = new Dictionary<IObjectType, ConstructorInfo>();
-
-                var typeByName = typesForCompositeAssociation.ToDictionary(type => type.Name, type => type);
-
-                foreach (var objectType in metaPopulation.Composites)
-                {
-                    var type = typeByName[objectType.SingularName + "Association"];
-                    var parameterTypes = new[] { typeof(IStrategy), typeof(IAssociationType) };
-                    this.constructorInfoByObjectTypeForCompositeAssociation[objectType] =
-                        type.GetTypeInfo().GetConstructor(parameterTypes);
-                }
-            }
-
-            // For CompositesAssociation
-            {
-                var typesForCompositesAssociation = assembly.GetTypes()
-                    .Where(type => type.Namespace?.Equals(instance.Namespace) == true &&
-                                   type.GetTypeInfo().ImplementedInterfaces.Contains(typeof(ICompositesAssociation)))
-                    .ToArray();
-
-                this.constructorInfoByObjectTypeForCompositesAssociation = new Dictionary<IObjectType, ConstructorInfo>();
-
-                var typeByName = typesForCompositesAssociation.ToDictionary(type => type.Name, type => type);
-
-                foreach (var objectType in metaPopulation.Composites)
-                {
-                    var type = typeByName[objectType.PluralName + "Association"];
-                    var parameterTypes = new[] { typeof(IStrategy), typeof(IAssociationType) };
-                    this.constructorInfoByObjectTypeForCompositesAssociation[objectType] =
-                        type.GetTypeInfo().GetConstructor(parameterTypes);
-                }
-            }
-            
-            // For Method
-            {
-                var typesForMethod = assembly.GetTypes()
-                    .Where(type => type.Namespace?.Equals(instance.Namespace) == true &&
-                                   type.GetTypeInfo().ImplementedInterfaces.Contains(typeof(IMethod)))
-                    .ToArray();
-
-                this.constructorInfoByMethodTypeForMethod = new Dictionary<IMethodType, ConstructorInfo>();
-
-                var typeByName = typesForMethod.ToDictionary(type => type.Name, type => type);
-
-                foreach (var methodType in metaPopulation.MethodTypes)
-                {
-                    var type = typeByName[methodType.ObjectType.SingularName +methodType.Name + "Method"];
-                    var parameterTypes = new[] { typeof(IStrategy), typeof(IMethodType) };
-                    this.constructorInfoByMethodTypeForMethod[methodType] =
-                        type.GetTypeInfo().GetConstructor(parameterTypes);
                 }
             }
         }
@@ -250,42 +140,22 @@ namespace Allors.Workspace.Configuration
 
         public ICompositeRole<T> CompositeRole<T>(IStrategy strategy, IRoleType roleType) where T : class, IObject
         {
-            var constructor = this.constructorInfoByObjectTypeForCompositeRole[roleType.ObjectType];
-            object[] parameters = { strategy, roleType };
-
-            return (ICompositeRole<T>)constructor.Invoke(parameters);
+            return new CompositeRole<T>(strategy, roleType);
         }
 
         public ICompositesRole<T> CompositesRole<T>(IStrategy strategy, IRoleType roleType) where T : class, IObject
         {
-            var constructor = this.constructorInfoByObjectTypeForCompositesRole[roleType.ObjectType];
-            object[] parameters = { strategy, roleType };
-
-            return (ICompositesRole<T>)constructor.Invoke(parameters);
+            return new CompositesRole<T>(strategy, roleType);
         }
 
         public ICompositeAssociation<T> CompositeAssociation<T>(IStrategy strategy, IAssociationType associationType) where T : class, IObject
         {
-            var constructor = this.constructorInfoByObjectTypeForCompositeAssociation[associationType.ObjectType];
-            object[] parameters = { strategy, associationType };
-
-            return (ICompositeAssociation<T>)constructor.Invoke(parameters);
+            return new CompositeAssociation<T>(strategy, associationType);
         }
-        
+
         public ICompositesAssociation<T> CompositesAssociation<T>(IStrategy strategy, IAssociationType associationType) where T : class, IObject
         {
-            var constructor = this.constructorInfoByObjectTypeForCompositesAssociation[associationType.ObjectType];
-            object[] parameters = { strategy, associationType };
-
-            return (ICompositesAssociation<T>)constructor.Invoke(parameters);
-        }
-
-        public T Method<T>(IStrategy strategy, IMethodType methodType) where T : class, IMethod
-        {
-            var constructor = this.constructorInfoByMethodTypeForMethod[methodType];
-            object[] parameters = { strategy, methodType };
-
-            return (T)constructor.Invoke(parameters);
+            return new CompositesAssociation<T>(strategy, associationType);
         }
     }
 }
