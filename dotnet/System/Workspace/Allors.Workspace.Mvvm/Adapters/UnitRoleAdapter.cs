@@ -18,8 +18,7 @@ public class UnitRoleAdapter<TUnit> : IDisposable
 
         this.role.PropertyChanged += this.Role_PropertyChanged;
     }
-
-
+    
     public TUnit Value
     {
         get => this.role.Value;

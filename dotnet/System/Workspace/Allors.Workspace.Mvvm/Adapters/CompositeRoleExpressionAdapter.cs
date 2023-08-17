@@ -4,18 +4,19 @@ using System;
 using System.ComponentModel;
 using Allors.Workspace;
 
-public class UnitRoleExpressionAdapter<TObject, TUnit> : IDisposable
+public class CompositeRoleExpressionAdapter<TObject, TComposite> : IDisposable
     where TObject : class, IObject
+    where TComposite : class, IObject
 {
     private readonly WeakReference<IViewModel> weakViewModel;
-    private readonly IExpression<TObject, IUnitRole<TUnit>> expression;
+    private readonly IExpression<TObject, ICompositeRole<TComposite>> expression;
     private readonly string name;
 
     private bool firstTime;
-    private IUnitRole<TUnit> role;
-    private TUnit value;
+    private ICompositeRole<TComposite> role;
+    private TComposite value;
 
-    public UnitRoleExpressionAdapter(IViewModel viewModel, IExpression<TObject, IUnitRole<TUnit>> expression, string name)
+    public CompositeRoleExpressionAdapter(IViewModel viewModel, IExpression<TObject, ICompositeRole<TComposite>> expression, string name)
     {
         this.weakViewModel = new WeakReference<IViewModel>(viewModel);
         this.expression = expression;
@@ -25,7 +26,7 @@ public class UnitRoleExpressionAdapter<TObject, TUnit> : IDisposable
         this.expression.PropertyChanged += this.Expression_PropertyChanged;
     }
 
-    public IUnitRole<TUnit> Role
+    public ICompositeRole<TComposite> Role
     {
         get
         {
@@ -42,7 +43,7 @@ public class UnitRoleExpressionAdapter<TObject, TUnit> : IDisposable
         }
     }
 
-    public TUnit Value
+    public TComposite Value
     {
         get
         {
@@ -118,7 +119,7 @@ public class UnitRoleExpressionAdapter<TObject, TUnit> : IDisposable
 
         if (this.role == null)
         {
-            if (!Equals(this.value, default(TUnit)))
+            if (!Equals(this.value, default(TComposite)))
             {
                 this.value = default;
                 changeNotification.OnPropertyChanged(new PropertyChangedEventArgs(this.name));

@@ -5,7 +5,7 @@ using System.ComponentModel;
 using Allors.Workspace;
 
 public class ExpressionAdapter<TObject, TValue> : IDisposable
-    where TObject : IObject
+    where TObject : class, IObject
 {
     private readonly WeakReference<IViewModel> weakViewModel;
     private readonly IExpression<TObject, TValue> expression;

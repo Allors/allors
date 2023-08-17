@@ -4,26 +4,31 @@ using System;
 using System.ComponentModel;
 using Allors.Workspace;
 
-public class CompositeRoleAdapter<TComposite> : IDisposable
+public class CompositeViewModelRoleAdapter<TComposite, TViewModel> : IDisposable
     where TComposite : class, IObject
+    where TViewModel : class, ICompositeViewModel<TComposite>
 {
     private readonly WeakReference<IViewModel> weakViewModel;
+    private readonly ICompositeViewModelResolver resolver;
     private readonly ICompositeRole<TComposite> role;
     private readonly string name;
 
-    public CompositeRoleAdapter(IViewModel viewModel, ICompositeRole<TComposite> role, string name = null)
+    private TViewModel cache;
+
+    public CompositeViewModelRoleAdapter(IViewModel viewModel, ICompositeViewModelResolver resolver, ICompositeRole<TComposite> role, string name = null)
     {
         this.weakViewModel = new WeakReference<IViewModel>(viewModel);
+        this.resolver = resolver;
         this.role = role;
         this.name = name;
 
         this.role.PropertyChanged += this.Role_PropertyChanged;
     }
-    
-    public TComposite Value
+
+    public TViewModel Value
     {
-        get => this.role.Value;
-        set => this.role.Value = value;
+        get => cache ??= (TViewModel)this.resolver.Resolve(typeof(TViewModel), this.role.Value);
+        set => this.role.Value = value.Model;
     }
 
     private string Name => this.name ?? this.role.RoleType.Name;
@@ -41,6 +46,8 @@ public class CompositeRoleAdapter<TComposite> : IDisposable
             this.Dispose();
             return;
         }
+
+        this.cache = null;
 
         changeNotification.OnPropertyChanged(new PropertyChangedEventArgs(this.Name));
     }
