@@ -15,4 +15,14 @@ namespace Allors.Workspace
 
         new IEnumerable<IStrategy> Value { get; set; }
     }
+
+    public interface ICompositesRole<T> : ICompositesRole
+        where T : class, IObject
+    {
+        void Add(T strategy);
+
+        void Remove(T strategy);
+
+        new IEnumerable<T> Value { get; set; }
+    }
 }

@@ -248,36 +248,36 @@ namespace Allors.Workspace.Configuration
             }
         }
 
-        public T CompositeRole<T>(IStrategy strategy, IRoleType roleType) where T : class, ICompositeRole
+        public ICompositeRole<T> CompositeRole<T>(IStrategy strategy, IRoleType roleType) where T : class, IObject
         {
             var constructor = this.constructorInfoByObjectTypeForCompositeRole[roleType.ObjectType];
             object[] parameters = { strategy, roleType };
 
-            return (T)constructor.Invoke(parameters);
+            return (ICompositeRole<T>)constructor.Invoke(parameters);
         }
 
-        public T CompositesRole<T>(IStrategy strategy, IRoleType roleType) where T : class, ICompositesRole
+        public ICompositesRole<T> CompositesRole<T>(IStrategy strategy, IRoleType roleType) where T : class, IObject
         {
             var constructor = this.constructorInfoByObjectTypeForCompositesRole[roleType.ObjectType];
             object[] parameters = { strategy, roleType };
 
-            return (T)constructor.Invoke(parameters);
+            return (ICompositesRole<T>)constructor.Invoke(parameters);
         }
 
-        public T CompositeAssociation<T>(IStrategy strategy, IAssociationType associationType) where T : class, ICompositeAssociation
+        public ICompositeAssociation<T> CompositeAssociation<T>(IStrategy strategy, IAssociationType associationType) where T : class, IObject
         {
             var constructor = this.constructorInfoByObjectTypeForCompositeAssociation[associationType.ObjectType];
             object[] parameters = { strategy, associationType };
 
-            return (T)constructor.Invoke(parameters);
+            return (ICompositeAssociation<T>)constructor.Invoke(parameters);
         }
         
-        public T CompositesAssociation<T>(IStrategy strategy, IAssociationType associationType) where T : class, ICompositesAssociation
+        public ICompositesAssociation<T> CompositesAssociation<T>(IStrategy strategy, IAssociationType associationType) where T : class, IObject
         {
             var constructor = this.constructorInfoByObjectTypeForCompositesAssociation[associationType.ObjectType];
             object[] parameters = { strategy, associationType };
 
-            return (T)constructor.Invoke(parameters);
+            return (ICompositesAssociation<T>)constructor.Invoke(parameters);
         }
 
         public T Method<T>(IStrategy strategy, IMethodType methodType) where T : class, IMethod

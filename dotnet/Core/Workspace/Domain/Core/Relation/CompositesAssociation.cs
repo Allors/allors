@@ -9,14 +9,14 @@ namespace Allors.Workspace
     using System.ComponentModel;
     using Meta;
 
-    public abstract class CompositesAssociation<T> : ICompositesAssociation where T : class, IObject
+    public abstract class CompositesAssociation<T> : ICompositesAssociation<T> where T : class, IObject
     {
         private readonly ICompositesAssociation association;
 
         protected CompositesAssociation(IStrategy strategy, IAssociationType associationType)
         {
             this.association = strategy.CompositesAssociation(associationType);
-            this.O = strategy.Workspace.Services.Get<IObjectFactory>();
+            this.ObjectFactory = strategy.Workspace.Services.Get<IObjectFactory>();
         }
 
         public IStrategy Object => this.association.Object;
@@ -25,20 +25,17 @@ namespace Allors.Workspace
 
         public IAssociationType AssociationType => this.association.AssociationType;
 
-        private IObjectFactory O { get; }
+        private IObjectFactory ObjectFactory { get; }
 
         object IRelationEnd.Value => this.Value;
 
-        IEnumerable<IStrategy> ICompositesAssociation.Value
-        {
-            get => this.association.Value;
-        }
+        IEnumerable<IStrategy> ICompositesAssociation.Value => this.association.Value;
 
         public IEnumerable<T> Value
         {
-            get => this.O.Object<T>(this.association.Value);
+            get => this.ObjectFactory.Object<T>(this.association.Value);
         }
-        
+
         public event PropertyChangedEventHandler PropertyChanged
         {
             add

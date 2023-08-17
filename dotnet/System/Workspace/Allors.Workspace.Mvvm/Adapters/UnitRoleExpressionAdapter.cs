@@ -4,18 +4,18 @@ using System;
 using System.ComponentModel;
 using Allors.Workspace;
 
-public class UnitRoleExpressionAdapter<TObject, TValue> : IDisposable
+public class UnitRoleExpressionAdapter<TObject, TUnit> : IDisposable
     where TObject : IObject
 {
     private readonly WeakReference<IViewModel> weakViewModel;
-    private readonly IExpression<TObject, IUnitRole<TValue>> expression;
+    private readonly IExpression<TObject, IUnitRole<TUnit>> expression;
     private readonly string name;
 
     private bool firstTime;
-    private IUnitRole<TValue> role;
-    private TValue value;
+    private IUnitRole<TUnit> role;
+    private TUnit value;
 
-    public UnitRoleExpressionAdapter(IViewModel viewModel, IExpression<TObject, IUnitRole<TValue>> expression, string name)
+    public UnitRoleExpressionAdapter(IViewModel viewModel, IExpression<TObject, IUnitRole<TUnit>> expression, string name)
     {
         this.weakViewModel = new WeakReference<IViewModel>(viewModel);
         this.expression = expression;
@@ -25,7 +25,7 @@ public class UnitRoleExpressionAdapter<TObject, TValue> : IDisposable
         this.expression.PropertyChanged += this.Expression_PropertyChanged;
     }
 
-    public IUnitRole<TValue> Role
+    public IUnitRole<TUnit> Role
     {
         get
         {
@@ -42,7 +42,7 @@ public class UnitRoleExpressionAdapter<TObject, TValue> : IDisposable
         }
     }
 
-    public TValue Value
+    public TUnit Value
     {
         get
         {
@@ -118,7 +118,7 @@ public class UnitRoleExpressionAdapter<TObject, TValue> : IDisposable
 
         if (this.role == null)
         {
-            if (!Equals(this.value, default(TValue)))
+            if (!Equals(this.value, default(TUnit)))
             {
                 this.value = default;
                 changeNotification.OnPropertyChanged(new PropertyChangedEventArgs(this.name));

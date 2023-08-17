@@ -4,13 +4,14 @@ using System;
 using System.ComponentModel;
 using Allors.Workspace;
 
-public class UnitRoleAdapter<TUnit> : IDisposable
+public class CompositeRoleAdapter<TComposite> : IDisposable
+    where TComposite : class, IObject
 {
     private readonly WeakReference<IViewModel> weakViewModel;
-    private readonly IUnitRole<TUnit> role;
+    private readonly ICompositeRole<TComposite> role;
     private readonly string name;
 
-    public UnitRoleAdapter(IViewModel viewModel, IUnitRole<TUnit> role, string name = null)
+    public CompositeRoleAdapter(IViewModel viewModel, ICompositeRole<TComposite> role, string name = null)
     {
         this.weakViewModel = new WeakReference<IViewModel>(viewModel);
         this.role = role;
@@ -20,7 +21,7 @@ public class UnitRoleAdapter<TUnit> : IDisposable
     }
 
 
-    public TUnit Value
+    public TComposite Value
     {
         get => this.role.Value;
         set => this.role.Value = value;

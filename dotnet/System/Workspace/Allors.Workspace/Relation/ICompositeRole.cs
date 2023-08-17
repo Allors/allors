@@ -5,10 +5,14 @@
 
 namespace Allors.Workspace
 {
-    using System.ComponentModel;
-
-    public interface ICompositeRole : IRole, INotifyPropertyChanged
+    public interface ICompositeRole : IRole
     {
         new IStrategy Value { get; set; }
+    }
+
+    public interface ICompositeRole<T> : ICompositeRole
+        where T : class, IObject
+    {
+        new T Value { get; set; }
     }
 }

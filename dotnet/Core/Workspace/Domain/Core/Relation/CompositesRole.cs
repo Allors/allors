@@ -10,14 +10,14 @@ namespace Allors.Workspace
     using System.Linq;
     using Meta;
 
-    public abstract class CompositesRole<T> : ICompositesRole where T : class, IObject
+    public abstract class CompositesRole<T> : ICompositesRole<T> where T : class, IObject
     {
         private readonly ICompositesRole role;
 
         protected CompositesRole(IStrategy strategy, IRoleType roleType)
         {
             this.role = strategy.CompositesRole(roleType);
-            this.O = strategy.Workspace.Services.Get<IObjectFactory>();
+            this.ObjectFactory = strategy.Workspace.Services.Get<IObjectFactory>();
         }
 
         public IStrategy Object => this.role.Object;
@@ -26,7 +26,7 @@ namespace Allors.Workspace
 
         public IRoleType RoleType => this.role.RoleType;
 
-        private IObjectFactory O { get; }
+        private IObjectFactory ObjectFactory { get; }
 
         object IRelationEnd.Value => this.Value;
 
@@ -41,20 +41,14 @@ namespace Allors.Workspace
             this.role.Add(strategy);
         }
 
-        void ICompositesRole.Remove(IStrategy strategy)
-        {
-            this.role.Remove(strategy);
-        }
-
-        IEnumerable<IStrategy> ICompositesRole.Value
-        {
-            get => this.role.Value;
-            set => this.role.Value = value;
-        }
-
         public void Add(T value)
         {
             this.role.Add(value?.Strategy);
+        }
+
+        void ICompositesRole.Remove(IStrategy strategy)
+        {
+            this.role.Remove(strategy);
         }
 
         public void Remove(T value)
@@ -64,7 +58,7 @@ namespace Allors.Workspace
 
         public IEnumerable<T> Value
         {
-            get => this.O.Object<T>(this.role.Value);
+            get => this.ObjectFactory.Object<T>(this.role.Value);
             set => this.role.Value = value.Select(v => v?.Strategy);
         }
 
@@ -75,6 +69,8 @@ namespace Allors.Workspace
         public bool Exist => this.role.Exist;
 
         public bool IsModified => this.role.IsModified;
+
+        IEnumerable<IStrategy> ICompositesRole.Value { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged
         {

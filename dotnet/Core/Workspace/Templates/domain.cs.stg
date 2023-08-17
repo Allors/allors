@@ -87,12 +87,12 @@ $if(roleType.ObjectType.IsUnit)$
 		}
 $else$
 $if(roleType.IsOne)$
-	$roleType.ObjectType.SingularName$Role $roleType.SingularName$
+	ICompositeRole<$roleType.ObjectType.SingularName$> $roleType.SingularName$
 	{
 		get;
 	}
 $else$
-	$roleType.ObjectType.PluralName$Role $roleType.PluralName$
+	ICompositesRole<$roleType.ObjectType.SingularName$> $roleType.PluralName$
 	{
 		get;
 	}
@@ -103,12 +103,12 @@ $endif$
 interfaceAssociationType() ::= <<
 
 $if(associationType.IsOne)$
-		$associationType.ObjectType.SingularName$Association $associationType.SingularName$
+		ICompositeAssociation<$associationType.ObjectType.SingularName$> $associationType.SingularName$
 		{
 			get;
 		}
 $else$
-		$associationType.ObjectType.PluralName$Association $associationType.PluralName$
+		ICompositesAssociation<$associationType.ObjectType.SingularName$> $associationType.PluralName$
 		{
 			get;
 		}
@@ -248,20 +248,20 @@ $if(concreteRoleType.ObjectType.IsUnit)$
 			}
 		}
 $else$
-$if(concreteRoleType.IsMany)$
-		virtual public $concreteRoleType.ObjectType.PluralName$Role $concreteRoleType.PluralName$
+$if(concreteRoleType.IsOne)$
+		virtual public ICompositeRole<$concreteRoleType.ObjectType.SingularName$> $concreteRoleType.SingularName$
 		{
 			get
 			{
-			    return this.O.CompositesRole<$concreteRoleType.ObjectType.PluralName$Role>(this.Strategy, Meta.$concreteRoleType.Name$);
+			    return this.O.CompositeRole<$concreteRoleType.ObjectType.SingularName$>(this.Strategy, Meta.$concreteRoleType.Name$);
 			}
 		}
 $else$
-		virtual public $concreteRoleType.ObjectType.SingularName$Role $concreteRoleType.SingularName$
+		virtual public ICompositesRole<$concreteRoleType.ObjectType.SingularName$> $concreteRoleType.PluralName$
 		{
 			get
 			{
-			    return this.O.CompositeRole<$concreteRoleType.ObjectType.SingularName$Role>(this.Strategy, Meta.$concreteRoleType.Name$);
+			    return this.O.CompositesRole<$concreteRoleType.ObjectType.SingularName$>(this.Strategy, Meta.$concreteRoleType.Name$);
 			}
 		}
 $endif$
@@ -271,19 +271,19 @@ $endif$
 classAssociationType() ::= <<
 
 $if(associationType.IsOne)$
-		public $associationType.ObjectType.SingularName$Association $associationType.SingularName$
+		public ICompositeAssociation<$associationType.ObjectType.SingularName$> $associationType.SingularName$
 		{
             get
             {
-                return this.O.CompositeAssociation<$associationType.ObjectType.SingularName$Association>(this.Strategy, Meta.$associationType.Name$);
+                return this.O.CompositeAssociation<$associationType.ObjectType.SingularName$>(this.Strategy, Meta.$associationType.Name$);
             }
 		}
 $else$
-		public $associationType.ObjectType.PluralName$Association $associationType.PluralName$
+		public ICompositesAssociation<$associationType.ObjectType.SingularName$> $associationType.PluralName$
 		{
             get
             {
-                return this.O.CompositesAssociation<$associationType.ObjectType.PluralName$Association>(this.Strategy, Meta.$associationType.Name$);
+                return this.O.CompositesAssociation<$associationType.ObjectType.SingularName$>(this.Strategy, Meta.$associationType.Name$);
             }
 		}
 $endif$
