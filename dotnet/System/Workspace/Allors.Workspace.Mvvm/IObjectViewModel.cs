@@ -3,7 +3,7 @@
 using Adapters;
 using Allors.Workspace;
 
-public partial interface ICompositeViewModel<out T> : IViewModel where T : IObject
+public partial interface IObjectViewModel<out T> : IViewModel where T : IObject
 {
     T Model { get; }
 }

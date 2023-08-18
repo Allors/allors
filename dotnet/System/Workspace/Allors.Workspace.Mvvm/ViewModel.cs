@@ -4,7 +4,7 @@ using System.ComponentModel;
 using Allors.Workspace;
 using CommunityToolkit.Mvvm.ComponentModel;
 
-public abstract partial class ViewModel<T> : ObservableObject, ICompositeViewModel<T> where T : IObject
+public abstract partial class ViewModel<T> : ObservableObject, IObjectViewModel<T> where T : IObject
 {
     public abstract T Model { get; }
 

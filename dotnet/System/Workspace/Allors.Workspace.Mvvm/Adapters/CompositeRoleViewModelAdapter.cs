@@ -4,18 +4,18 @@ using System;
 using System.ComponentModel;
 using Allors.Workspace;
 
-public class CompositeViewModelRoleAdapter<TComposite, TViewModel> : IDisposable
-    where TComposite : class, IObject
-    where TViewModel : class, ICompositeViewModel<TComposite>
+public class CompositeRoleViewModelAdapter<TObject, TViewModel> : IDisposable
+    where TObject : class, IObject
+    where TViewModel : class, IObjectViewModel<TObject>
 {
     private readonly WeakReference<IViewModel> weakViewModel;
-    private readonly ICompositeViewModelResolver resolver;
-    private readonly ICompositeRole<TComposite> role;
+    private readonly IViewModelResolver resolver;
+    private readonly ICompositeRole<TObject> role;
     private readonly string name;
 
     private TViewModel cache;
 
-    public CompositeViewModelRoleAdapter(IViewModel viewModel, ICompositeViewModelResolver resolver, ICompositeRole<TComposite> role, string name = null)
+    public CompositeRoleViewModelAdapter(IViewModel viewModel, IViewModelResolver resolver, ICompositeRole<TObject> role, string name = null)
     {
         this.weakViewModel = new WeakReference<IViewModel>(viewModel);
         this.resolver = resolver;
@@ -27,7 +27,7 @@ public class CompositeViewModelRoleAdapter<TComposite, TViewModel> : IDisposable
 
     public TViewModel Value
     {
-        get => cache ??= (TViewModel)this.resolver.Resolve(typeof(TViewModel), this.role.Value);
+        get => cache ??= (TViewModel)this.resolver.Resolve( this.role.Value);
         set => this.role.Value = value.Model;
     }
 
