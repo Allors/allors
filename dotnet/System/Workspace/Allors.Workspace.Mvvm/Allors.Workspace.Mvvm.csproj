@@ -8,6 +8,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Allors.Workspace.Signals\Allors.Workspace.Signals.csproj" />
     <ProjectReference Include="..\Allors.Workspace\Allors.Workspace.csproj" />
   </ItemGroup>
 </Project>

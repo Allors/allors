@@ -6,6 +6,7 @@
     <PackageReference Include="ExpressionTreeToString" Version="3.4.71" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\System\Workspace\Allors.Workspace.Signals\Allors.Workspace.Signals.csproj" />
     <ProjectReference Include="..\Domain\Workspace.Domain.csproj" />
   </ItemGroup>
 
