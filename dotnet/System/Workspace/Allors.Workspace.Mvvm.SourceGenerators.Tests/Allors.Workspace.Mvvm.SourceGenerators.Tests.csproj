@@ -23,8 +23,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\System\Workspace\Allors.Workspace.Mvvm.SourceGenerators\Allors.Workspace.Mvvm.SourceGenerators.csproj" />
-    <ProjectReference Include="..\System\Workspace\Allors.Workspace.Mvvm\Allors.Workspace.Mvvm.csproj" />
+    <ProjectReference Include="..\Allors.Workspace.Mvvm.SourceGenerators\Allors.Workspace.Mvvm.SourceGenerators.csproj" />
+    <ProjectReference Include="..\Allors.Workspace.Mvvm\Allors.Workspace.Mvvm.csproj" />
   </ItemGroup>
 
 </Project>

@@ -124,5 +124,25 @@ partial class Build
             }
 
         });
-    
+
+    private Target AllorsDotnetSystemWorkspaceSignalsTests => _ => _
+        .DependsOn(AllorsDotnetCoreGenerate)
+        .Executes(() =>
+        {
+            DotNetTest(s => s
+                .SetProjectFile(Paths.AllorsDotnetSystemWorkspaceSignalsTests)
+                .AddLoggers("trx;LogFileName=AllorsDotnetSystemWorkspaceSignalsTests.trx")
+                .SetResultsDirectory(Paths.ArtifactsTests));
+        });
+
+
+    private Target AllorsDotnetSystemWorkspaceMvvmTests => _ => _
+        .DependsOn(AllorsDotnetCoreGenerate)
+        .Executes(() =>
+        {
+            DotNetTest(s => s
+                .SetProjectFile(Paths.AllorsDotnetSystemWorkspaceMvvmTests)
+                .AddLoggers("trx;LogFileName=AllorsDotnetSystemWorkspaceMvvmTests.trx")
+                .SetResultsDirectory(Paths.ArtifactsTests));
+        });
 }

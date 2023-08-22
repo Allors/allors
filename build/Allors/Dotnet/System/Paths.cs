@@ -22,6 +22,8 @@ public partial class Paths
     public AbsolutePath AllorsDotnetSystemAdaptersStaticTests => AllorsDotnetSystemAdapters / "Tests.Static/Tests.Static.csproj";
 
     public AbsolutePath AllorsDotnetSystemWorkspace => AllorsDotnetSystem / "Workspace";
+    public AbsolutePath AllorsDotnetSystemWorkspaceSignalsTests => AllorsDotnetSystemWorkspaceAdapters / "Allors.Workspace.Signals.Tests";
+    public AbsolutePath AllorsDotnetSystemWorkspaceMvvmTests => AllorsDotnetSystemWorkspaceAdapters / "Allors.Workspace.Mvvm.Tests";
     public AbsolutePath AllorsDotnetSystemWorkspaceAdapters => AllorsDotnetSystemWorkspace / "Adapters";
     public AbsolutePath AllorsDotnetSystemWorkspaceAdaptersDirectTests => AllorsDotnetSystemWorkspaceAdapters / "Allors.Workspace.Adapters.Direct.Tests";
     public AbsolutePath AllorsDotnetSystemWorkspaceAdaptersJsonNewtonsoftTests => AllorsDotnetSystemWorkspaceAdapters / "Allors.Workspace.Adapters.Json.Newtonsoft.Tests";

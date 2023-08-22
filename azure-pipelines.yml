@@ -22,6 +22,8 @@ stages:
           target: 'CiDotnetSystemDatabaseAdaptersSqlClient'
         dotnet_system_database_adapters_npgsql:
           target: 'CiDotnetSystemDatabaseAdaptersNpgsql'
+        dotnet_system_workspace:
+          target: 'CiDotnetSystemWorkspace'
         dotnet_system_workspace_adapters_direct:
           target: 'CiDotnetSystemWorkspaceAdaptersDirect'
         dotnet_system_workspace_adapters_json_newtonsoft:

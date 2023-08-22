@@ -19,6 +19,11 @@ partial class Build
         .DependsOn(Reset)
         .DependsOn(AllorsDotnetSystemDatabaseAdaptersNpgsqlTests);
 
+    private Target CiDotnetSystemWorkspace => _ => _
+        .DependsOn(Reset)
+        .DependsOn(AllorsDotnetSystemWorkspaceSignalsTests)
+        .DependsOn(AllorsDotnetSystemWorkspaceMvvmTests);
+
     private Target CiDotnetSystemWorkspaceAdaptersDirect => _ => _
         .DependsOn(Reset)
         .DependsOn(AllorsDotnetSystemWorkspaceAdaptersDirectTests);
