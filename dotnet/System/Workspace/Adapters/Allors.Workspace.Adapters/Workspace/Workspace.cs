@@ -43,7 +43,7 @@ namespace Allors.Workspace.Adapters
             this.Services.OnInit(this);
         }
 
-        public event ChangedEventHandler PropertyChanged;
+        public event ChangedEventHandler Changed;
 
         public Connection Connection { get; }
 
@@ -338,7 +338,7 @@ namespace Allors.Workspace.Adapters
             var operands = this.changedOperands;
             this.changedOperands = new HashSet<IOperand>();
 
-            this.PropertyChanged?.Invoke(this, new ChangedEventArgs(operands));
+            this.Changed?.Invoke(this, new ChangedEventArgs(operands));
         }
 
         public void RegisterReactions(IEnumerable<IAssociationType> associationTypes)

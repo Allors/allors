@@ -6,7 +6,6 @@
 namespace Allors.Workspace
 {
     using System.Collections.Generic;
-    using System.ComponentModel;
     using Meta;
 
     public class CompositesAssociation<T> : ICompositesAssociation<T> where T : class, IObject

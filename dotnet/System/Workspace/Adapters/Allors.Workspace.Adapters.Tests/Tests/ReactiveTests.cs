@@ -28,110 +28,76 @@ namespace Allors.Workspace.Adapters.Tests
             await this.Login("administrator");
         }
 
-        //[Fact]
-        //public async void SetString()
-        //{
-        //    var workspace = this.Profile.Workspace;
+        [Fact]
+        public async void SetString()
+        {
+            var workspace = this.Profile.Workspace;
 
-        //    var c1 = workspace.Create<C1>();
-        //    if (!c1.C1AllorsString.CanWrite)
-        //    {
-        //        await workspace.PullAsync(new Pull { Object = c1.Strategy });
-        //    }
+            var c1 = workspace.Create<C1>();
+            if (!c1.C1AllorsString.CanWrite)
+            {
+                await workspace.PullAsync(new Pull { Object = c1.Strategy });
+            }
 
-        //    var propertyChanges = new List<string>();
+            var changes = new HashSet<IOperand>();
 
-        //    c1.C1AllorsString.PropertyChanged += (sender, args) =>
-        //    {
-        //        propertyChanges.Add(args.PropertyName);
-        //    };
+            workspace.Changed += (sender, args) =>
+            {
+                changes.UnionWith(args.Operands);
+            };
 
-        //    c1.C1AllorsString.Value = null;
+            c1.C1AllorsString.Value = null;
 
-        //    Assert.Empty(propertyChanges);
+            Assert.Empty(changes);
 
-        //    c1.C1AllorsString.Value = null;
+            c1.C1AllorsString.Value = null;
 
-        //    Assert.Empty(propertyChanges);
+            Assert.Empty(changes);
 
-        //    c1.C1AllorsString.Value = "Hello world!";
+            c1.C1AllorsString.Value = "Hello world!";
 
-        //    Assert.Equal(3, propertyChanges.Count);
-        //    Assert.Contains("Value", propertyChanges);
-        //    Assert.Contains("Exist", propertyChanges);
-        //    Assert.Contains("IsModified", propertyChanges);
-        //}
+            Assert.Single(changes);
+            Assert.Contains(c1.C1AllorsString, changes);
+        }
 
-        //[Fact]
-        //public async void SetOneToOne()
-        //{
-        //    var workspace1 = this.Profile.Workspace;
+        [Fact]
+        public async void SetOneToOne()
+        {
+            var workspace = this.Profile.Workspace;
 
-        //    var c1a = workspace1.Create<C1>();
-        //    var c1b = workspace1.Create<C1>();
-        //    var c1c = workspace1.Create<C1>();
+            var c1a = workspace.Create<C1>();
+            var c1b = workspace.Create<C1>();
+            var c1c = workspace.Create<C1>();
 
-        //    if (!c1a.C1C1One2One.CanWrite || !c1b.C1C1One2One.CanWrite)
-        //    {
-        //        await workspace1.PullAsync(new Pull { Object = c1a.Strategy }, new Pull { Object = c1b.Strategy });
-        //    }
+            if (!c1a.C1C1One2One.CanWrite || !c1b.C1C1One2One.CanWrite)
+            {
+                await workspace.PullAsync(new Pull { Object = c1a.Strategy }, new Pull { Object = c1b.Strategy });
+            }
 
-        //    c1a.C1C1One2One.Value = c1b;
-        //    c1b.C1C1One2One.Value = c1c;
+            c1a.C1C1One2One.Value = c1b;
+            c1b.C1C1One2One.Value = c1c;
 
-        //    var c1aPropertyChanges = new List<string>();
-        //    var c1bPropertyChanges = new List<string>();
+            var changes = new HashSet<IOperand>();
 
-        //    var c1bAssociationPropertyChanges = new List<string>();
-        //    var c1cAssociationPropertyChanges = new List<string>();
+            workspace.Changed += (sender, args) =>
+            {
+                changes.UnionWith(args.Operands);
+            };
 
-        //    c1a.C1C1One2One.PropertyChanged += (sender, args) =>
-        //    {
-        //        c1aPropertyChanges.Add(args.PropertyName);
-        //    };
+            c1b.C1C1One2One.Value = c1c;
 
-        //    c1b.C1C1One2One.PropertyChanged += (sender, args) =>
-        //    {
-        //        c1bPropertyChanges.Add(args.PropertyName);
-        //    };
+            Assert.Empty(changes);
 
-        //    c1b.C1WhereC1C1One2One.PropertyChanged += (sender, args) =>
-        //    {
-        //        c1bAssociationPropertyChanges.Add(args.PropertyName);
-        //    };
+            c1b.C1C1One2One.Value = c1c;
 
-        //    c1c.C1WhereC1C1One2One.PropertyChanged += (sender, args) =>
-        //    {
-        //        c1cAssociationPropertyChanges.Add(args.PropertyName);
-        //    };
+            Assert.Empty(changes);
 
-        //    c1b.C1C1One2One.Value = c1c;
+            c1b.C1C1One2One.Value = c1b;
 
-        //    Assert.Empty(c1bPropertyChanges);
-
-        //    Assert.Empty(c1bAssociationPropertyChanges);
-        //    Assert.Empty(c1cAssociationPropertyChanges);
-
-        //    c1b.C1C1One2One.Value = c1c;
-
-        //    Assert.Empty(c1bPropertyChanges);
-
-        //    Assert.Empty(c1bAssociationPropertyChanges);
-        //    Assert.Empty(c1cAssociationPropertyChanges);
-
-        //    c1b.C1C1One2One.Value = c1b;
-
-        //    Assert.Equal(2, c1aPropertyChanges.Count);
-        //    Assert.Contains("Value", c1aPropertyChanges);
-        //    Assert.Contains("Exist", c1aPropertyChanges);
-        //    Assert.Single(c1bPropertyChanges);
-        //    Assert.Contains("Value", c1bPropertyChanges);
-
-        //    Assert.Single(c1bAssociationPropertyChanges);
-        //    Assert.Contains("Value", c1bAssociationPropertyChanges);
-        //    Assert.Single(c1cAssociationPropertyChanges);
-        //    Assert.Contains("Value", c1cAssociationPropertyChanges);
-        //}
+            Assert.Equal(2, changes.Count);
+            Assert.Contains(c1b.C1C1One2One, changes);
+            Assert.Contains(c1b.C1WhereC1C1One2One, changes);
+        }
 
         //[Fact]
         //public async void SetManyToOne()

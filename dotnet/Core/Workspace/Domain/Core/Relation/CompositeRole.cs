@@ -5,7 +5,6 @@
 
 namespace Allors.Workspace
 {
-    using System.ComponentModel;
     using Meta;
 
     public class CompositeRole<T> : ICompositeRole<T> where T : class, IObject

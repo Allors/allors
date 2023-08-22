@@ -7,6 +7,6 @@ namespace Allors.Workspace
 {
     public interface INotifyChanged
     {
-        event ChangedEventHandler PropertyChanged;
+        event ChangedEventHandler Changed;
     }
 }

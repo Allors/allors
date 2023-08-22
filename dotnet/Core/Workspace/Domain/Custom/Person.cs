@@ -5,8 +5,6 @@
 
 namespace Allors.Workspace.Domain
 {
-    using Meta;
-
     public partial class Person
     {
         public string FullName
