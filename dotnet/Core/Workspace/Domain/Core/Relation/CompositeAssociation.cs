@@ -34,18 +34,5 @@ namespace Allors.Workspace
         {
             get => this.ObjectFactory.Object<T>(this.association.Value);
         }
-
-        public event PropertyChangedEventHandler PropertyChanged
-        {
-            add
-            {
-                this.association.PropertyChanged += value;
-            }
-
-            remove
-            {
-                this.association.PropertyChanged -= value;
-            }
-        }
     }
 }

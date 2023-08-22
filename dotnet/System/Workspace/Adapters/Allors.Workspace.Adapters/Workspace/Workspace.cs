@@ -16,11 +16,11 @@ namespace Allors.Workspace.Adapters
     {
         private readonly Dictionary<IClass, ISet<Strategy>> strategiesByClass;
 
-        private readonly IDictionary<IRoleType, IDictionary<IStrategy, IRoleInternals>> roleByStrategyByRoleType;
-        private readonly IDictionary<IAssociationType, IDictionary<IStrategy, IAssociationInternals>> associationByStrategyByAssociationType;
+        private readonly IDictionary<IRoleType, IDictionary<IStrategy, IRole>> roleByStrategyByRoleType;
+        private readonly IDictionary<IAssociationType, IDictionary<IStrategy, IAssociation>> associationByStrategyByAssociationType;
         private readonly IDictionary<IMethodType, IDictionary<IStrategy, IMethod>> methodByStrategyByMethodType;
 
-        private readonly Queue<IReactiveInternals> reactives;
+        private ISet<IOperand> changedOperands;
 
         protected Workspace(Connection connection, IWorkspaceServices services)
         {
@@ -32,16 +32,18 @@ namespace Allors.Workspace.Adapters
             this.StrategyById = new Dictionary<long, Strategy>();
             this.strategiesByClass = new Dictionary<IClass, ISet<Strategy>>();
 
-            this.roleByStrategyByRoleType = new Dictionary<IRoleType, IDictionary<IStrategy, IRoleInternals>>();
-            this.associationByStrategyByAssociationType = new Dictionary<IAssociationType, IDictionary<IStrategy, IAssociationInternals>>();
+            this.roleByStrategyByRoleType = new Dictionary<IRoleType, IDictionary<IStrategy, IRole>>();
+            this.associationByStrategyByAssociationType = new Dictionary<IAssociationType, IDictionary<IStrategy, IAssociation>>();
             this.methodByStrategyByMethodType = new Dictionary<IMethodType, IDictionary<IStrategy, IMethod>>();
-
-            this.reactives = new Queue<IReactiveInternals>();
 
             this.PushToDatabaseTracker = new PushToDatabaseTracker();
 
+            this.changedOperands = new HashSet<IOperand>();
+
             this.Services.OnInit(this);
         }
+
+        public event ChangedEventHandler PropertyChanged;
 
         public Connection Connection { get; }
 
@@ -333,11 +335,10 @@ namespace Allors.Workspace.Adapters
 
         public void HandleReactions()
         {
-            while (this.reactives.Count > 0)
-            {
-                var reactive = this.reactives.Dequeue();
-                reactive.Reaction?.React();
-            }
+            var operands = this.changedOperands;
+            this.changedOperands = new HashSet<IOperand>();
+
+            this.PropertyChanged?.Invoke(this, new ChangedEventArgs(operands));
         }
 
         public void RegisterReactions(IEnumerable<IAssociationType> associationTypes)
@@ -349,7 +350,7 @@ namespace Allors.Workspace.Adapters
                     foreach (var kvp in associationByStrategy)
                     {
                         var association = kvp.Value;
-                        this.reactives.Enqueue(association);
+                        this.changedOperands.Add(association);
                     }
                 }
             }
@@ -361,7 +362,7 @@ namespace Allors.Workspace.Adapters
             {
                 if (roleByStrategy.TryGetValue(association, out var role))
                 {
-                    this.reactives.Enqueue(role);
+                    this.changedOperands.Add(role);
                 }
             }
         }
@@ -372,32 +373,32 @@ namespace Allors.Workspace.Adapters
             {
                 if (associationByStrategy.TryGetValue(role, out var association))
                 {
-                    this.reactives.Enqueue(association);
+                    this.changedOperands.Add(association);
                 }
             }
         }
 
         #region role, association and method
-        private IDictionary<IStrategy, IRoleInternals> GetRoleByStrategy(IRoleType roleType)
+        private IDictionary<IStrategy, IRole> GetRoleByStrategy(IRoleType roleType)
         {
             if (this.roleByStrategyByRoleType.TryGetValue(roleType, out var roleByStrategy))
             {
                 return roleByStrategy;
             }
 
-            roleByStrategy = new Dictionary<IStrategy, IRoleInternals>();
+            roleByStrategy = new Dictionary<IStrategy, IRole>();
             this.roleByStrategyByRoleType.Add(roleType, roleByStrategy);
             return roleByStrategy;
         }
 
-        private IDictionary<IStrategy, IAssociationInternals> GetAssociationByStrategy(IAssociationType associationType)
+        private IDictionary<IStrategy, IAssociation> GetAssociationByStrategy(IAssociationType associationType)
         {
             if (this.associationByStrategyByAssociationType.TryGetValue(associationType, out var associationByStrategy))
             {
                 return associationByStrategy;
             }
 
-            associationByStrategy = new Dictionary<IStrategy, IAssociationInternals>();
+            associationByStrategy = new Dictionary<IStrategy, IAssociation>();
             this.associationByStrategyByAssociationType.Add(associationType, associationByStrategy);
             return associationByStrategy;
         }

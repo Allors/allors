@@ -5,15 +5,11 @@
 
 namespace Allors.Workspace
 {
-    using System;
-    using System.ComponentModel;
     using Adapters;
     using Meta;
 
-    public class FloatRole : IUnitRole<double?>, IRoleInternals
+    public class FloatRole : IUnitRole<double?>
     {
-        private readonly Object lockObject = new();
-
         public FloatRole(Strategy strategy, IRoleType roleType)
         {
             this.Object = strategy;
@@ -50,10 +46,6 @@ namespace Allors.Workspace
 
         public bool IsModified => this.Object.IsModified(this.RoleType);
 
-        IReaction IReactiveInternals.Reaction => this.Reaction;
-
-        public FloatRoleReaction Reaction { get; private set; }
-
         public void Restore()
         {
             this.Object.RestoreRole(this.RoleType);
@@ -62,37 +54,6 @@ namespace Allors.Workspace
         public override string ToString()
         {
             return $"{Value}";
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged
-        {
-            add
-            {
-                lock (this.lockObject)
-                {
-                    if (this.Reaction == null)
-                    {
-                        this.Reaction = new FloatRoleReaction(this);
-                        //this.Reaction.Register();
-                    }
-
-                    this.Reaction.PropertyChanged += value;
-                }
-            }
-
-            remove
-            {
-                lock (this.lockObject)
-                {
-                    this.Reaction.PropertyChanged -= value;
-
-                    if (!this.Reaction.HasEventHandlers)
-                    {
-                        //this.Reaction.Deregister();
-                        this.Reaction = null;
-                    }
-                }
-            }
         }
     }
 }

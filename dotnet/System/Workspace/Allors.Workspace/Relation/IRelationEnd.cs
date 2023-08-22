@@ -7,7 +7,7 @@ namespace Allors.Workspace
 {
     using Meta;
 
-    public interface IRelationEnd : IReactive
+    public interface IRelationEnd : IOperand
     {
         IStrategy Object { get; }
 

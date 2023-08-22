@@ -15,8 +15,8 @@ namespace Allors.Workspace
         {
             this.ObjectFactory = objectFactory;
             this.M = m;
-            this.ReactiveExpressionBuilder = new ReactiveExpressionBuilder();
-            this.ReactiveFuncBuilder = new ReactiveFuncBuilder();
+            //this.ReactiveExpressionBuilder = new ReactiveExpressionBuilder();
+            //this.ReactiveFuncBuilder = new ReactiveFuncBuilder();
         }
 
         public IObjectFactory ObjectFactory { get; }

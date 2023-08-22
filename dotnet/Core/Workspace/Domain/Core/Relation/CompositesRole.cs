@@ -72,18 +72,6 @@ namespace Allors.Workspace
 
         IEnumerable<IStrategy> ICompositesRole.Value { get; set; }
 
-        public event PropertyChangedEventHandler PropertyChanged
-        {
-            add
-            {
-                this.role.PropertyChanged += value;
-            }
-
-            remove
-            {
-                this.role.PropertyChanged -= value;
-            }
-        }
         public void Restore()
         {
             this.role.Restore();

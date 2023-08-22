@@ -54,19 +54,6 @@ namespace Allors.Workspace
 
         public bool IsModified => this.role.IsModified;
 
-        public event PropertyChangedEventHandler PropertyChanged
-        {
-            add
-            {
-                this.role.PropertyChanged += value;
-            }
-
-            remove
-            {
-                this.role.PropertyChanged -= value;
-            }
-        }
-
         public void Restore()
         {
             this.role.Restore();
