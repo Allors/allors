@@ -10,7 +10,8 @@ namespace Allors.Workspace
     using Adapters;
     using Meta;
 
-    public class CompositesRole : ICompositesRole
+    public class CompositesRole<T> : ICompositesRole<T>
+        where T : class, IObject
     {
         public CompositesRole(Strategy strategy, IRoleType roleType)
         {
@@ -22,20 +23,34 @@ namespace Allors.Workspace
 
         public Strategy Object { get; }
 
-
         public IRelationType RelationType => this.RoleType.RelationType;
-
 
         public IRoleType RoleType { get; }
 
+        void ICompositesRole<T>.Add(T @object)
+        {
+            this.Add(@object?.Strategy);
+        }
+
+        void ICompositesRole<T>.Remove(T @object)
+        {
+            this.Remove(@object.Strategy);
+        }
+
+        IEnumerable<T> ICompositesRole<T>.Value
+        {
+            get => this.Value.Select(this.Object.Workspace.ObjectFactory.Object<T>);
+            set => this.Value = value.Select(v => v.Strategy);
+        }
+
         object IRelationEnd.Value => this.Value;
 
-        void ICompositesRole.Add(IStrategy value)
+        public void Add(IStrategy value)
         {
             this.Object.AddCompositesRole(this.RoleType, value);
         }
 
-        void ICompositesRole.Remove(IStrategy value)
+        public void Remove(IStrategy value)
         {
             this.Object.RemoveCompositesRole(this.RoleType, value);
         }
@@ -45,7 +60,7 @@ namespace Allors.Workspace
             get => this.Value;
             set => this.Value = (IEnumerable<IStrategy>)value;
         }
-        
+
         public IEnumerable<IStrategy> Value
         {
             get => this.Object.GetCompositesRole(this.RoleType);
@@ -64,7 +79,7 @@ namespace Allors.Workspace
         {
             this.Object.RestoreRole(this.RoleType);
         }
-        
+
         public override string ToString()
         {
             return this.Value != null ? $"[{string.Join(", ", this.Value.Select(v => v.Id))}]" : "[]";

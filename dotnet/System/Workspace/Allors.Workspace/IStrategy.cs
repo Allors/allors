@@ -32,13 +32,21 @@ namespace Allors.Workspace
 
         ICompositeRole CompositeRole(IRoleType roleType);
 
+        ICompositeRole<T> CompositeRole<T>(IRoleType roleType) where T : class, IObject;
+
         ICompositesRole CompositesRole(IRoleType roleType);
+
+        ICompositesRole<T> CompositesRole<T>(IRoleType roleType) where T : class, IObject;
 
         IAssociation Association(IAssociationType associationType);
 
         ICompositeAssociation CompositeAssociation(IAssociationType associationType);
 
+        ICompositeAssociation<T> CompositeAssociation<T>(IAssociationType associationType) where T : class, IObject;
+
         ICompositesAssociation CompositesAssociation(IAssociationType associationType);
+
+        ICompositesAssociation<T> CompositesAssociation<T>(IAssociationType associationType) where T : class, IObject;
 
         IMethod Method(IMethodType methodType);
     }

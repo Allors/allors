@@ -24,12 +24,12 @@ namespace Allors.Workspace
 
         IEnumerable<T> Object<T>(IEnumerable<IStrategy> objects) where T : class, IObject;
 
-        ICompositeRole<T> CompositeRole<T>(IStrategy strategy, IRoleType roleType) where T : class, IObject;
+        ICompositeRole CompositeRole(IStrategy strategy, IRoleType roleType);
 
-        ICompositesRole<T> CompositesRole<T>(IStrategy strategy, IRoleType roleType) where T : class, IObject;
+        ICompositesRole CompositesRole(IStrategy strategy, IRoleType roleType);
 
-        ICompositeAssociation<T> CompositeAssociation<T>(IStrategy strategy, IAssociationType associationType) where T : class, IObject;
+        ICompositeAssociation CompositeAssociation(IStrategy strategy, IAssociationType associationType);
 
-        ICompositesAssociation<T> CompositesAssociation<T>(IStrategy strategy, IAssociationType associationType) where T : class, IObject;
+        ICompositesAssociation CompositesAssociation(IStrategy strategy, IAssociationType associationType);
     }
 }

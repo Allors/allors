@@ -19,9 +19,9 @@ namespace Allors.Workspace
     public interface ICompositesRole<T> : ICompositesRole
         where T : class, IObject
     {
-        void Add(T strategy);
+        void Add(T @object);
 
-        void Remove(T strategy);
+        void Remove(T @object);
 
         new IEnumerable<T> Value { get; set; }
     }

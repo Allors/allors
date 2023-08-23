@@ -10,7 +10,8 @@ namespace Allors.Workspace
     using Adapters;
     using Meta;
 
-    public class CompositesAssociation : ICompositesAssociation
+    public class CompositesAssociation<T> : ICompositesAssociation<T>
+        where T : class, IObject
     {
         public CompositesAssociation(Strategy @object, IAssociationType associationType)
         {
@@ -23,6 +24,8 @@ namespace Allors.Workspace
 
 
         public IRelationType RelationType => this.AssociationType.RelationType;
+
+        IEnumerable<T> ICompositesAssociation<T>.Value => this.Value.Select(this.Object.Workspace.ObjectFactory.Object<T>);
 
         public IAssociationType AssociationType { get; }
 

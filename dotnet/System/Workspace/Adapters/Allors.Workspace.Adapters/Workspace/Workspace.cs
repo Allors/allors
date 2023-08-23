@@ -41,9 +41,13 @@ namespace Allors.Workspace.Adapters
             this.changedOperands = new HashSet<IOperand>();
 
             this.Services.OnInit(this);
+
+            this.ObjectFactory = this.Services.Get<IObjectFactory>();
         }
 
         public event ChangedEventHandler Changed;
+
+        public IObjectFactory ObjectFactory { get; set; }
 
         public Connection Connection { get; }
 
@@ -272,9 +276,15 @@ namespace Allors.Workspace.Adapters
                 return (ICompositeRole)role;
             }
 
-            role = new CompositeRole(strategy, roleType);
+            role = this.ObjectFactory.CompositeRole(strategy, roleType);
             roleByStrategy[strategy] = role;
             return (ICompositeRole)role;
+        }
+
+        public ICompositeRole<T> CompositeRole<T>(Strategy strategy, IRoleType roleType)
+            where T : class, IObject
+        {
+            return (ICompositeRole<T>)this.CompositeRole(strategy, roleType);
         }
 
         public ICompositesRole CompositesRole(Strategy strategy, IRoleType roleType)
@@ -286,9 +296,15 @@ namespace Allors.Workspace.Adapters
                 return (ICompositesRole)role;
             }
 
-            role = new CompositesRole(strategy, roleType);
+            role = this.ObjectFactory.CompositesRole(strategy, roleType);
             roleByStrategy[strategy] = role;
             return (ICompositesRole)role;
+        }
+
+        public ICompositesRole<T> CompositesRole<T>(Strategy strategy, IRoleType roleType)
+            where T : class, IObject
+        {
+            return (ICompositesRole<T>)this.CompositesRole(strategy, roleType);
         }
 
         public ICompositeAssociation CompositeAssociation(Strategy strategy, IAssociationType associationType)
@@ -300,9 +316,15 @@ namespace Allors.Workspace.Adapters
                 return (ICompositeAssociation)association;
             }
 
-            association = new CompositeAssociation(strategy, associationType);
+            association = this.ObjectFactory.CompositeAssociation(strategy, associationType);
             associationByStrategy[strategy] = association;
             return (ICompositeAssociation)association;
+        }
+
+        public ICompositeAssociation<T> CompositeAssociation<T>(Strategy strategy, IAssociationType associationType)
+            where T : class, IObject
+        {
+            return (ICompositeAssociation<T>)this.CompositeAssociation(strategy, associationType);
         }
 
         public ICompositesAssociation CompositesAssociation(Strategy strategy, IAssociationType associationType)
@@ -314,11 +336,16 @@ namespace Allors.Workspace.Adapters
                 return (ICompositesAssociation)association;
             }
 
-            association = new CompositesAssociation(strategy, associationType);
+            association = this.ObjectFactory.CompositesAssociation(strategy, associationType);
             associationByStrategy[strategy] = association;
             return (ICompositesAssociation)association;
         }
 
+        public ICompositesAssociation<T> CompositesAssociation<T>(Strategy strategy, IAssociationType associationType)
+            where T : class, IObject
+        {
+            return (ICompositesAssociation<T>)this.CompositesAssociation(strategy, associationType);
+        }
         public IMethod Method(Strategy strategy, IMethodType methodType)
         {
             var methodByStrategy = this.GetMethodByStrategy(methodType);

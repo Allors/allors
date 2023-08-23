@@ -8,7 +8,8 @@ namespace Allors.Workspace
     using Adapters;
     using Meta;
 
-    public class CompositeRole : ICompositeRole
+    public class CompositeRole<T> : ICompositeRole<T>
+        where T : class, IObject
     {
         public CompositeRole(Strategy strategy, IRoleType roleType)
         {
@@ -22,7 +23,12 @@ namespace Allors.Workspace
 
         public IRelationType RelationType => this.RoleType.RelationType;
 
-
+        T ICompositeRole<T>.Value
+        {
+            get => this.Object.Workspace.ObjectFactory.Object<T>(this.Value);
+            set => this.Value = value?.Strategy;
+        }
+        
         public IRoleType RoleType { get; }
 
         object IRelationEnd.Value => this.Value;

@@ -138,22 +138,22 @@ namespace Allors.Workspace.Configuration
             }
         }
 
-        public ICompositeRole<T> CompositeRole<T>(IStrategy strategy, IRoleType roleType) where T : class, IObject
+        public ICompositeRole CompositeRole(IStrategy strategy, IRoleType roleType) 
         {
             return new CompositeRole<T>(strategy, roleType);
         }
 
-        public ICompositesRole<T> CompositesRole<T>(IStrategy strategy, IRoleType roleType) where T : class, IObject
+        public ICompositesRole CompositesRole(IStrategy strategy, IRoleType roleType) 
         {
             return new CompositesRole<T>(strategy, roleType);
         }
 
-        public ICompositeAssociation<T> CompositeAssociation<T>(IStrategy strategy, IAssociationType associationType) where T : class, IObject
+        public ICompositeAssociation CompositeAssociation(IStrategy strategy, IAssociationType associationType) 
         {
             return new CompositeAssociation<T>(strategy, associationType);
         }
 
-        public ICompositesAssociation<T> CompositesAssociation<T>(IStrategy strategy, IAssociationType associationType) where T : class, IObject
+        public ICompositesAssociation CompositesAssociation(IStrategy strategy, IAssociationType associationType) 
         {
             return new CompositesAssociation<T>(strategy, associationType);
         }

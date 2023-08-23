@@ -135,7 +135,11 @@ namespace Allors.Workspace.Adapters
 
         public ICompositeRole CompositeRole(IRoleType roleType) => this.Workspace.CompositeRole(this, roleType);
 
+        public ICompositeRole<T> CompositeRole<T>(IRoleType roleType) where T : class, IObject => this.Workspace.CompositeRole<T>(this, roleType) ;
+
         public ICompositesRole CompositesRole(IRoleType roleType) => this.Workspace.CompositesRole(this, roleType);
+
+        public ICompositesRole<T> CompositesRole<T>(IRoleType roleType) where T : class, IObject => this.Workspace.CompositesRole<T>(this, roleType);
 
         public IAssociation Association(IAssociationType associationType)
         {
@@ -154,7 +158,11 @@ namespace Allors.Workspace.Adapters
 
         public ICompositeAssociation CompositeAssociation(IAssociationType associationType) => this.Workspace.CompositeAssociation(this, associationType);
 
+        public ICompositeAssociation<T> CompositeAssociation<T>(IAssociationType associationType) where T : class, IObject => this.Workspace.CompositeAssociation<T>(this, associationType) ;
+
         public ICompositesAssociation CompositesAssociation(IAssociationType associationType) => this.Workspace.CompositesAssociation(this, associationType);
+
+        public ICompositesAssociation<T> CompositesAssociation<T>(IAssociationType associationType) where T : class, IObject => this.Workspace.CompositesAssociation<T>(this, associationType);
 
         public IMethod Method(IMethodType methodType) => this.Workspace.Method(this, methodType);
 
