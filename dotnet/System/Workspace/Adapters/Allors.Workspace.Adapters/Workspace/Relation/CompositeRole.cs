@@ -28,7 +28,7 @@ namespace Allors.Workspace
             get => this.Object.Workspace.ObjectFactory.Object<T>(this.Value);
             set => this.Value = value?.Strategy;
         }
-        
+
         public IRoleType RoleType { get; }
 
         object IRelationEnd.Value => this.Value;
@@ -60,7 +60,7 @@ namespace Allors.Workspace
 
         public override string ToString()
         {
-            return $"[{Value?.Id}]";
+            return $"{this.RelationType.AssociationType.ObjectType.SingularName}[{this.Object.Id}].{this.RoleType.Name} = [{Value?.Id}]";
         }
     }
 }

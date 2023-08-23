@@ -31,6 +31,14 @@ namespace Allors.Workspace.Configuration
         /// </summary>
         private readonly Dictionary<IObjectType, ConstructorInfo> constructorInfoByObjectTypeForObject;
 
+        private readonly Dictionary<IRoleType, Type> constructedTypeByCompositeRoleType;
+
+        private readonly Dictionary<IRoleType, Type> constructedTypeByCompositesRoleType;
+
+        private readonly Dictionary<IAssociationType, Type> constructedTypeByCompositeAssociationType;
+
+        private readonly Dictionary<IAssociationType, Type> constructedTypeByCompositesAssociationType;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ReflectionObjectFactory"/> class.
         /// </summary>
@@ -74,6 +82,11 @@ namespace Allors.Workspace.Configuration
                                                                       ?? throw new ArgumentException($"{objectType.SingularName} has no Allors constructor.");
                     }
                 }
+
+                this.constructedTypeByCompositeRoleType = new Dictionary<IRoleType, Type>();
+                this.constructedTypeByCompositesRoleType = new Dictionary<IRoleType, Type>();
+                this.constructedTypeByCompositeAssociationType = new Dictionary<IAssociationType, Type>();
+                this.constructedTypeByCompositesAssociationType = new Dictionary<IAssociationType, Type>();
             }
         }
 
@@ -138,24 +151,56 @@ namespace Allors.Workspace.Configuration
             }
         }
 
-        public ICompositeRole CompositeRole(IStrategy strategy, IRoleType roleType) 
+        public ICompositeRole CompositeRole(IStrategy strategy, IRoleType roleType)
         {
-            return new CompositeRole<T>(strategy, roleType);
+            if (!this.constructedTypeByCompositeRoleType.TryGetValue(roleType, out var constructedType))
+            {
+                Type type = typeof(CompositeRole<>);
+                Type[] typeArgs = { roleType.ObjectType.ClrType };
+                constructedType = type.MakeGenericType(typeArgs);
+                this.constructedTypeByCompositeRoleType.Add(roleType, constructedType);
+            }
+
+            return (ICompositeRole)Activator.CreateInstance(constructedType, new Object[] { strategy, roleType });
         }
 
-        public ICompositesRole CompositesRole(IStrategy strategy, IRoleType roleType) 
+        public ICompositesRole CompositesRole(IStrategy strategy, IRoleType roleType)
         {
-            return new CompositesRole<T>(strategy, roleType);
+            if (!this.constructedTypeByCompositesRoleType.TryGetValue(roleType, out var constructedType))
+            {
+                Type type = typeof(CompositesRole<>);
+                Type[] typeArgs = { roleType.ObjectType.ClrType };
+                constructedType = type.MakeGenericType(typeArgs);
+                this.constructedTypeByCompositesRoleType.Add(roleType, constructedType);
+            }
+
+            return (ICompositesRole)Activator.CreateInstance(constructedType, new Object[] { strategy, roleType });
         }
 
-        public ICompositeAssociation CompositeAssociation(IStrategy strategy, IAssociationType associationType) 
+        public ICompositeAssociation CompositeAssociation(IStrategy strategy, IAssociationType associationType)
         {
-            return new CompositeAssociation<T>(strategy, associationType);
+            if (!this.constructedTypeByCompositeAssociationType.TryGetValue(associationType, out var constructedType))
+            {
+                Type type = typeof(CompositeAssociation<>);
+                Type[] typeArgs = { associationType.ObjectType.ClrType };
+                constructedType = type.MakeGenericType(typeArgs);
+                this.constructedTypeByCompositeAssociationType.Add(associationType, constructedType);
+            }
+
+            return (ICompositeAssociation)Activator.CreateInstance(constructedType, new Object[] { strategy, associationType });
         }
 
-        public ICompositesAssociation CompositesAssociation(IStrategy strategy, IAssociationType associationType) 
+        public ICompositesAssociation CompositesAssociation(IStrategy strategy, IAssociationType associationType)
         {
-            return new CompositesAssociation<T>(strategy, associationType);
+            if (!this.constructedTypeByCompositesAssociationType.TryGetValue(associationType, out var constructedType))
+            {
+                Type type = typeof(CompositesAssociation<>);
+                Type[] typeArgs = { associationType.ObjectType.ClrType };
+                constructedType = type.MakeGenericType(typeArgs);
+                this.constructedTypeByCompositesAssociationType.Add(associationType, constructedType);
+            }
+
+            return (ICompositesAssociation)Activator.CreateInstance(constructedType, new Object[] { strategy, associationType });
         }
     }
 }

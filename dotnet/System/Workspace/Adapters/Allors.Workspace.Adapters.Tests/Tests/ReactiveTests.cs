@@ -94,9 +94,10 @@ namespace Allors.Workspace.Adapters.Tests
 
             c1b.C1C1One2One.Value = c1b;
 
-            Assert.Equal(2, changes.Count);
+            Assert.Equal(3, changes.Count);
             Assert.Contains(c1b.C1C1One2One, changes);
             Assert.Contains(c1b.C1WhereC1C1One2One, changes);
+            Assert.Contains(c1a.C1C1One2One, changes);
         }
 
         //[Fact]
