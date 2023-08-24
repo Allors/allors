@@ -713,9 +713,9 @@ namespace Allors.Workspace.Adapters
             // RA --x-- R
             if (roleAssociation != null)
             {
+                roleAssociation.RegisterReaction(roleType);
                 this.AddDependent(roleType, roleAssociation);
                 roleAssociation.SetCompositeChange(roleType, new SetCompositeChange(null, this));
-                roleAssociation.RegisterReaction(roleType);
                 roleAssociation.Workspace.PushToDatabaseTracker.OnChanged(roleAssociation);
             }
 

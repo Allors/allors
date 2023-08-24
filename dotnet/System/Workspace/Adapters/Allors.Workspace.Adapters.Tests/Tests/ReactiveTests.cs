@@ -68,14 +68,15 @@ namespace Allors.Workspace.Adapters.Tests
             var c1a = workspace.Create<C1>();
             var c1b = workspace.Create<C1>();
             var c1c = workspace.Create<C1>();
+            var c1d = workspace.Create<C1>();
 
-            if (!c1a.C1C1One2One.CanWrite || !c1b.C1C1One2One.CanWrite)
+            if (!c1a.C1C1One2One.CanWrite || !c1b.C1C1One2One.CanWrite || !c1c.C1C1One2One.CanWrite)
             {
-                await workspace.PullAsync(new Pull { Object = c1a.Strategy }, new Pull { Object = c1b.Strategy });
+                await workspace.PullAsync(new Pull { Object = c1a.Strategy }, new Pull { Object = c1b.Strategy }, new Pull { Object = c1c.Strategy });
             }
 
             c1a.C1C1One2One.Value = c1b;
-            c1b.C1C1One2One.Value = c1c;
+            c1c.C1C1One2One.Value = c1d;
 
             var changes = new HashSet<IOperand>();
 
@@ -84,20 +85,28 @@ namespace Allors.Workspace.Adapters.Tests
                 changes.UnionWith(args.Operands);
             };
 
-            c1b.C1C1One2One.Value = c1c;
+            c1a.C1C1One2One.Value = c1b;
 
             Assert.Empty(changes);
 
-            c1b.C1C1One2One.Value = c1c;
+            c1c.C1C1One2One.Value = c1d;
 
             Assert.Empty(changes);
 
-            c1b.C1C1One2One.Value = c1b;
+            /*  [given]              [when set]            [then changed]       [
+             *
+             *  c1a ------ c1b       c1a     --- c1b       c1a *   --* c1b
+             *                   +          -          =          -
+             *  c1c ------ c1d       c1b ---    c1d        c1c *--   * c1d
+             */
 
-            Assert.Equal(3, changes.Count);
-            Assert.Contains(c1b.C1C1One2One, changes);
-            Assert.Contains(c1b.C1WhereC1C1One2One, changes);
+            c1c.C1C1One2One.Value = c1b;
+
+            Assert.Equal(4, changes.Count);
             Assert.Contains(c1a.C1C1One2One, changes);
+            Assert.Contains(c1b.C1WhereC1C1One2One, changes);
+            Assert.Contains(c1c.C1C1One2One, changes);
+            Assert.Contains(c1d.C1WhereC1C1One2One, changes);
         }
 
         //[Fact]

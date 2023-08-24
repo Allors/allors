@@ -385,24 +385,14 @@ namespace Allors.Workspace.Adapters
 
         public void RegisterReaction(Strategy association, IRoleType roleType)
         {
-            if (this.roleByStrategyByRoleType.TryGetValue(roleType, out var roleByStrategy))
-            {
-                if (roleByStrategy.TryGetValue(association, out var role))
-                {
-                    this.changedOperands.Add(role);
-                }
-            }
+            var role = this.CompositeRole(association, roleType);
+            this.changedOperands.Add(role);
         }
 
         public void RegisterReaction(Strategy role, IAssociationType associationType)
         {
-            if (this.associationByStrategyByAssociationType.TryGetValue(associationType, out var associationByStrategy))
-            {
-                if (associationByStrategy.TryGetValue(role, out var association))
-                {
-                    this.changedOperands.Add(association);
-                }
-            }
+            var association = this.CompositeAssociation(role, associationType);
+            this.changedOperands.Add(association);
         }
 
         #region role, association and method
