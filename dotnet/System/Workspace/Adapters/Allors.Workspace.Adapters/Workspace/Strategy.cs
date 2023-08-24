@@ -370,9 +370,9 @@ namespace Allors.Workspace.Adapters
 
             this.Workspace.PushToDatabaseTracker.OnChanged(this);
 
-            this.Workspace.RegisterReaction(this, roleType);
+            this.Workspace.RegisterWorkspaceReaction(this, roleType);
 
-            this.Workspace.HandleReactions();
+            this.Workspace.HandleWorkspaceReactions();
         }
 
         public void SetCompositeRole(IRoleType roleType, IStrategy value)
@@ -400,7 +400,7 @@ namespace Allors.Workspace.Adapters
                     this.SetCompositeRoleManyToOne(roleType, (Strategy)value);
                 }
 
-                this.Workspace.HandleReactions();
+                this.Workspace.HandleWorkspaceReactions();
             }
         }
 
@@ -442,7 +442,7 @@ namespace Allors.Workspace.Adapters
                     }
                 }
 
-                this.Workspace.HandleReactions();
+                this.Workspace.HandleWorkspaceReactions();
             }
         }
 
@@ -474,7 +474,7 @@ namespace Allors.Workspace.Adapters
                     this.AddCompositesRoleStrategyManyToMany(roleType, (Strategy)value);
                 }
 
-                this.Workspace.HandleReactions();
+                this.Workspace.HandleWorkspaceReactions();
             }
         }
 
@@ -500,7 +500,7 @@ namespace Allors.Workspace.Adapters
                     this.RemoveCompositesRoleStrategyManyToMany(roleType, (Strategy)value, null);
                 }
 
-                this.Workspace.HandleReactions();
+                this.Workspace.HandleWorkspaceReactions();
             }
         }
 
@@ -646,12 +646,7 @@ namespace Allors.Workspace.Adapters
                     }
                 }
             }
-
-            foreach (var roleType in this.Class.RoleTypes)
-            {
-                this.Workspace.RegisterReaction(this, roleType);
-            }
-
+            
             this.record = newRecord;
         }
 
@@ -713,7 +708,7 @@ namespace Allors.Workspace.Adapters
             // RA --x-- R
             if (roleAssociation != null)
             {
-                roleAssociation.RegisterReaction(roleType);
+                roleAssociation.Workspace.RegisterWorkspaceReaction(roleAssociation, roleType);
                 this.AddDependent(roleType, roleAssociation);
                 roleAssociation.SetCompositeChange(roleType, new SetCompositeChange(null, this));
                 roleAssociation.Workspace.PushToDatabaseTracker.OnChanged(roleAssociation);
@@ -721,16 +716,24 @@ namespace Allors.Workspace.Adapters
 
             // A --x-- PR
             previousRole?.AddInvolvedAssociation(roleType.AssociationType, this);
-            previousRole?.RegisterReaction(roleType.AssociationType);
+            Strategy tempQualifier = previousRole;
+            if (tempQualifier != null)
+            {
+                tempQualifier.Workspace.RegisterWorkspaceReaction(tempQualifier, roleType.AssociationType);
+            }
 
             // A ----> R
             this.SetCompositeChange(roleType, new SetCompositeChange(role, null));
-            this.RegisterReaction(roleType);
+            this.Workspace.RegisterWorkspaceReaction(this, roleType);
             this.Workspace.PushToDatabaseTracker.OnChanged(this);
 
             // A <---- R
             role?.AddInvolvedAssociation(roleType.AssociationType, this);
-            role?.RegisterReaction(roleType.AssociationType);
+            Strategy tempQualifier1 = role;
+            if (tempQualifier1 != null)
+            {
+                tempQualifier1.Workspace.RegisterWorkspaceReaction(tempQualifier1, roleType.AssociationType);
+            }
         }
 
         private void SetCompositeRoleManyToOne(IRoleType roleType, Strategy role)
@@ -751,16 +754,24 @@ namespace Allors.Workspace.Adapters
 
             // A --x-- PR
             previousRole?.AddInvolvedAssociation(roleType.AssociationType, this);
-            previousRole?.RegisterReaction(roleType.AssociationType);
+            Strategy tempQualifier = previousRole;
+            if (tempQualifier != null)
+            {
+                tempQualifier.Workspace.RegisterWorkspaceReaction(tempQualifier, roleType.AssociationType);
+            }
 
             // A ----> R
             this.SetCompositeChange(roleType, new SetCompositeChange(role, null));
-            this.RegisterReaction(roleType);
+            this.Workspace.RegisterWorkspaceReaction(this, roleType);
             this.Workspace.PushToDatabaseTracker.OnChanged(this);
 
             // A <---- R
             role?.AddInvolvedAssociation(roleType.AssociationType, this);
-            role?.RegisterReaction(roleType.AssociationType);
+            Strategy tempQualifier1 = role;
+            if (tempQualifier1 != null)
+            {
+                tempQualifier1.Workspace.RegisterWorkspaceReaction(tempQualifier1, roleType.AssociationType);
+            }
         }
 
         private RefRange<Strategy> GetCompositesRoleStrategies(IRoleType roleType, bool assertStrategy = true)
@@ -820,12 +831,12 @@ namespace Allors.Workspace.Adapters
 
             // A ----> R
             this.AddCompositesRoleStrategyChange(roleType, role);
-            this.RegisterReaction(roleType);
+            this.Workspace.RegisterWorkspaceReaction(this, roleType);
             this.Workspace.PushToDatabaseTracker.OnChanged(this);
 
             // A <---- R
             role.AddInvolvedAssociation(roleType.AssociationType, this);
-            role.RegisterReaction(roleType.AssociationType);
+            role.Workspace.RegisterWorkspaceReaction(role, roleType.AssociationType);
         }
 
         private void AddCompositesRoleStrategyManyToMany(IRoleType roleType, Strategy role)
@@ -845,12 +856,12 @@ namespace Allors.Workspace.Adapters
 
             // A ----> R
             this.AddCompositesRoleStrategyChange(roleType, role);
-            this.RegisterReaction(roleType);
+            this.Workspace.RegisterWorkspaceReaction(this, roleType);
             this.Workspace.PushToDatabaseTracker.OnChanged(this);
 
             // A <---- R
             role.AddInvolvedAssociation(roleType.AssociationType, this);
-            role.RegisterReaction(roleType.AssociationType);
+            role.Workspace.RegisterWorkspaceReaction(role, roleType.AssociationType);
         }
 
         private void AddCompositesRoleStrategyChange(IRoleType roleType, Strategy roleToAdd)
@@ -938,11 +949,11 @@ namespace Allors.Workspace.Adapters
             }
 
             dependee?.AddDependent(roleType, this);
-            this.RegisterReaction(roleType);
+            this.Workspace.RegisterWorkspaceReaction(this, roleType);
             this.Workspace.PushToDatabaseTracker.OnChanged(this);
 
             // A <---- R
-            role.RegisterReaction(roleType.AssociationType);
+            role.Workspace.RegisterWorkspaceReaction(role, roleType.AssociationType);
         }
 
         private void RemoveCompositesRoleStrategyManyToMany(IRoleType roleType, Strategy role, Strategy dependee)
@@ -992,11 +1003,11 @@ namespace Allors.Workspace.Adapters
             }
 
             dependee?.AddDependent(roleType, this);
-            this.RegisterReaction(roleType);
+            this.Workspace.RegisterWorkspaceReaction(this, roleType);
             this.Workspace.PushToDatabaseTracker.OnChanged(this);
 
             // A <---- R
-            role.RegisterReaction(roleType.AssociationType);
+            role.Workspace.RegisterWorkspaceReaction(role, roleType.AssociationType);
         }
 
         private void AddInvolvedAssociation(IAssociationType associationType, Strategy association)
@@ -1209,16 +1220,6 @@ namespace Allors.Workspace.Adapters
             }
 
             return role.Id == (long)recordRoleId;
-        }
-
-        private void RegisterReaction(IRoleType roleType)
-        {
-            this.Workspace.RegisterReaction(this, roleType);
-        }
-
-        private void RegisterReaction(IAssociationType associationType)
-        {
-            this.Workspace.RegisterReaction(this, associationType);
         }
 
         private void SetCompositeChange(IRoleType roleType, SetCompositeChange setCompositeChange)

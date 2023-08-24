@@ -41,7 +41,7 @@ namespace Allors.Workspace.Adapters.Tests
 
             var changes = new HashSet<IOperand>();
 
-            workspace.Changed += (sender, args) =>
+            workspace.WorkspaceChanged += (sender, args) =>
             {
                 changes.UnionWith(args.Operands);
             };
@@ -80,7 +80,7 @@ namespace Allors.Workspace.Adapters.Tests
 
             var changes = new HashSet<IOperand>();
 
-            workspace.Changed += (sender, args) =>
+            workspace.WorkspaceChanged += (sender, args) =>
             {
                 changes.UnionWith(args.Operands);
             };

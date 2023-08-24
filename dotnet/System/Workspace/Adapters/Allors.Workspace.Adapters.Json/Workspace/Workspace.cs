@@ -117,11 +117,7 @@ namespace Allors.Workspace.Adapters.Json
                 }
             }
 
-            var associationTypes = classes.SelectMany(v => v.AssociationTypes).Distinct();
-
-            this.RegisterReactions(associationTypes);
-
-            this.HandleReactions();
+            this.HandleDatabaseReactions();
 
             return pullResult;
         }

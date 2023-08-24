@@ -45,7 +45,9 @@ namespace Allors.Workspace.Adapters
             this.ObjectFactory = this.Services.Get<IObjectFactory>();
         }
 
-        public event ChangedEventHandler Changed;
+        public event DatabaseChangedEventHandler DatabaseChanged;
+
+        public event WorkspaceChangedEventHandler WorkspaceChanged;
 
         public IObjectFactory ObjectFactory { get; set; }
 
@@ -360,42 +362,70 @@ namespace Allors.Workspace.Adapters
             return method;
         }
 
-        public void HandleReactions()
+        public void HandleDatabaseReactions()
+        {
+            this.DatabaseChanged?.Invoke(this, new DatabaseChangedEventArgs());
+        }
+
+        public void HandleWorkspaceReactions()
         {
             var operands = this.changedOperands;
             this.changedOperands = new HashSet<IOperand>();
 
-            this.Changed?.Invoke(this, new ChangedEventArgs(operands));
+            this.WorkspaceChanged?.Invoke(this, new WorkspaceChangedEventArgs(operands));
         }
 
-        public void RegisterReactions(IEnumerable<IAssociationType> associationTypes)
+        public void RegisterWorkspaceReaction(Strategy association, IRoleType roleType)
         {
-            foreach (var associationType in associationTypes)
-            {
-                if (this.associationByStrategyByAssociationType.TryGetValue(associationType, out var associationByStrategy))
-                {
-                    foreach (var kvp in associationByStrategy)
-                    {
-                        var association = kvp.Value;
-                        this.changedOperands.Add(association);
-                    }
-                }
-            }
-        }
-
-        public void RegisterReaction(Strategy association, IRoleType roleType)
-        {
-            var role = this.CompositeRole(association, roleType);
+            var role = this.Role(association, roleType);
             this.changedOperands.Add(role);
         }
 
-        public void RegisterReaction(Strategy role, IAssociationType associationType)
+        public void RegisterWorkspaceReaction(Strategy role, IAssociationType associationType)
         {
-            var association = this.CompositeAssociation(role, associationType);
+            var association = this.Association(role, associationType);
             this.changedOperands.Add(association);
         }
 
         #region role, association and method
+        private IOperand Role(Strategy association, IRoleType roleType)
+        {
+            var objectType = roleType.ObjectType;
+
+            if (objectType.IsUnit)
+            {
+                return roleType.ObjectType.Tag switch
+                {
+                    UnitTags.Binary => this.BinaryRole(association, roleType),
+                    UnitTags.Boolean => this.BooleanRole(association, roleType),
+                    UnitTags.DateTime => this.DateTimeRole(association, roleType),
+                    UnitTags.Decimal => this.DecimalRole(association, roleType),
+                    UnitTags.Float => this.FloatRole(association, roleType),
+                    UnitTags.Integer => this.IntegerRole(association, roleType),
+                    UnitTags.String => this.StringRole(association, roleType),
+                    UnitTags.Unique => this.UniqueRole(association, roleType),
+                    _ => throw new Exception("Unknown unit role")
+                };
+            }
+
+            if (roleType.IsOne)
+            {
+                return CompositeRole(association, roleType);
+            }
+
+            return CompositesRole(association, roleType);
+        }
+
+        private IOperand Association(Strategy role, IAssociationType associationType)
+        {
+            if (associationType.IsOne)
+            {
+                return this.CompositeAssociation(role, associationType);
+            }
+
+            return this.CompositesAssociation(role, associationType);
+        }
+
         private IDictionary<IStrategy, IRole> GetRoleByStrategy(IRoleType roleType)
         {
             if (this.roleByStrategyByRoleType.TryGetValue(roleType, out var roleByStrategy))

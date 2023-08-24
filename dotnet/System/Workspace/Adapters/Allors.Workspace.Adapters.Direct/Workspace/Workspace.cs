@@ -78,12 +78,8 @@ namespace Allors.Workspace.Adapters.Direct
                     classes.Add(strategy.Class);
                 }
             }
-
-            var associationTypes = classes.SelectMany(v => v.AssociationTypes).Distinct();
-            
-            this.RegisterReactions(associationTypes);
-
-            this.HandleReactions();
+           
+            this.HandleDatabaseReactions();
 
             return Task.FromResult<IPullResult>(result);
         }
