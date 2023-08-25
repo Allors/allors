@@ -7,9 +7,9 @@ namespace Allors.Workspace
 {
     using System.ComponentModel;
 
-    public static class INotifyPropertyChangedExtensions
+    public static class ISignalExtensions
     {
-        public static T Track<T>(this T @this, IDependencyTracker tracker) where T : INotifyPropertyChanged
+        public static T Track<T>(this T @this, IDependencyTracker tracker) where T : ISignal
         {
             tracker.Track(@this);
             return @this;

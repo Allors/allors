@@ -19,7 +19,6 @@
     <ProjectReference Include="..\..\..\..\Core\Workspace\Meta.Configuration\Workspace.Meta.Configuration.csproj" />
     <ProjectReference Include="..\..\..\Database\Adapters\Allors.Database.Adapters.Memory\Allors.Database.Adapters.Memory.csproj" />
     <ProjectReference Include="..\..\..\Database\Adapters\Allors.Database.Adapters.Sql.SqlClient\Allors.Database.Adapters.Sql.SqlClient.csproj" />
-    <ProjectReference Include="..\..\Allors.Workspace.Mvvm\Allors.Workspace.Mvvm.csproj" />
   </ItemGroup>
 
 

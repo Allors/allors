@@ -6,14 +6,8 @@
 namespace Allors.Workspace
 {
     using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
 
-    public interface IExpression<out TObject, out TValue> : IReactive
-        where TObject : IObject
+    public interface IEffect : ISignalContainer, IDisposable
     {
-        TObject Object { get; }
-
-        TValue Value { get; }
     }
 }

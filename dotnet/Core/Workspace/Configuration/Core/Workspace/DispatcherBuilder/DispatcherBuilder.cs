@@ -8,12 +8,11 @@ namespace Allors.Workspace.Configuration
     using System;
     using System.Linq.Expressions;
 
-    public class ReactiveExpressionBuilder : IReactiveExpressionBuilder
+    public class DispatcherBuilder : IDispatcherBuilder
     {
-        public IExpression<TObject, TValue> Build<TObject, TValue>(TObject @object, Func<TObject, IDependencyTracker, TValue> reactiveFunc)
-            where TObject : IObject
+        public IDispatcher Build(IWorkspace workspace)
         {
-            return new ReactiveExpression<TObject, TValue>(@object, reactiveFunc);
+            return null;
         }
     }
 }

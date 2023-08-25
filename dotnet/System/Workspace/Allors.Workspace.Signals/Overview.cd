@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Interface Name="Allors.Workspace.ISignalContainer" Collapsed="true">
+    <Position X="12" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ISignalContainer.cs</FileName>
+      <NewMemberFileName>ISignal.cs</NewMemberFileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Signals" />
+    </ShowAsCollectionAssociation>
+  </Interface>
+  <Interface Name="Allors.Workspace.IOperandSignal&lt;T&gt;" Collapsed="true">
+    <Position X="4.5" Y="3.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IOperandSignal.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Allors.Workspace.ICompositesAssociationSignal&lt;T&gt;" Collapsed="true">
+    <Position X="3.5" Y="6.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ICompositesAssociationSignal.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Allors.Workspace.IMethodSignal&lt;T&gt;" Collapsed="true">
+    <Position X="11.75" Y="5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IMethodSignal.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Allors.Workspace.IRoleSignal&lt;T&gt;" Collapsed="true">
+    <Position X="9.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IRoleSignal.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Allors.Workspace.ICalculatedSignal&lt;T&gt;" Collapsed="true">
+    <Position X="10.5" Y="3.5" Width="1.75" />
+    <InheritanceLine Type="Allors.Workspace.ISignalContainer" ManuallyRouted="true">
+      <Path>
+        <Point X="12.75" Y="1.062" />
+        <Point X="12.75" Y="1.625" />
+        <Point X="11.667" Y="1.625" />
+        <Point X="11.667" Y="3.5" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ICalculatedSignal.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Allors.Workspace.IEffect" Collapsed="true">
+    <Position X="13" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IEffect.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Allors.Workspace.ISignal&lt;T&gt;" Collapsed="true">
+    <Position X="5.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>ISignal.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Allors.Workspace.ISignal" Collapsed="true">
+    <Position X="5.75" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>ISignal.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Allors.Workspace.IAssociationSignal&lt;T&gt;" Collapsed="true">
+    <Position X="2.75" Y="5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IAssociationSignal.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Allors.Workspace.ICompositesRoleSignal&lt;T&gt;" Collapsed="true">
+    <Position X="11.25" Y="6.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ICompositesRoleSignal.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Allors.Workspace.IUnitRoleSignal&lt;T&gt;" Collapsed="true">
+    <Position X="6.75" Y="6.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IUnitRoleSignal.cs</FileName>
+      <NewMemberFileName>ICompositeRoleSignal.cs</NewMemberFileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Allors.Workspace.ICompositeAssociationSignal&lt;T&gt;" Collapsed="true">
+    <Position X="0.5" Y="6.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ICompositeAssociationSignal.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Allors.Workspace.IDispatcher">
+    <Position X="0.5" Y="0.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAAAAAgCACEAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IDispatcher.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Allors.Workspace.ICompositeRoleSignal&lt;T&gt;" Collapsed="true">
+    <Position X="8.75" Y="6.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ICompositeRoleSignal.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

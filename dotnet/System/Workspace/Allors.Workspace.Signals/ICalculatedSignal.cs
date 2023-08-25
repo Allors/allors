@@ -5,10 +5,7 @@
 
 namespace Allors.Workspace
 {
-    using System.ComponentModel;
-
-    public interface IDependencyTracker
+    public interface ICalculatedSignal<out T> : ISignal<T>, ISignalContainer
     {
-        void Track(INotifyPropertyChanged dependency);
     }
 }

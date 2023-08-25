@@ -10,11 +10,11 @@ namespace Allors.Workspace.Configuration
 
     public class ReactiveFuncBuilder : IReactiveFuncBuilder
     {
-        public Func<TObject, IDependencyTracker, TValue> Build<TObject, TValue>(Expression<Func<TObject, TValue>> expression)
+        public Func<IDependencyTracker, TValue> Build<TObject, TValue>(Expression<Func<TValue>> expression)
         {
             var reactiveVisitor = new ReactiveFuncVisitor();
             var reactiveExpression = (LambdaExpression)reactiveVisitor.Visit(expression);
-            return (Func<TObject, IDependencyTracker, TValue>)reactiveExpression.Compile();
+            return (Func<IDependencyTracker, TValue>)reactiveExpression.Compile();
         }
     }
 }

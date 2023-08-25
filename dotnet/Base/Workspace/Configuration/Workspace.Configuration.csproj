@@ -4,15 +4,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\..\..\Core\Workspace\Configuration\Core*\**\*.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="ExpressionTreeToString" Version="3.4.71" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\..\..\System\Workspace\Adapters\Allors.Workspace.Adapters\Allors.Workspace.Adapters.csproj" />
     <ProjectReference Include="..\..\..\System\Workspace\Allors.Workspace.Signals\Allors.Workspace.Signals.csproj" />
     <ProjectReference Include="..\Domain\Workspace.Domain.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\..\Core\Workspace\Configuration\Core*\**\*.cs" />
+  </ItemGroup>
+
 </Project>

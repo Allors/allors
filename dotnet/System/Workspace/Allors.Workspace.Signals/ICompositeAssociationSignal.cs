@@ -5,10 +5,8 @@
 
 namespace Allors.Workspace
 {
-    using System.ComponentModel;
-
-    public interface IRoleSignal<out T> : IOperandSignal<T>
-        where T : IRole
+    public interface ICompositeAssociationSignal<out T> : IAssociationSignal<ICompositeAssociation<T>>
+        where T : class, IObject
     {
     }
 }

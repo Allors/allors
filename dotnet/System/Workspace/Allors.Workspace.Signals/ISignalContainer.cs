@@ -5,10 +5,10 @@
 
 namespace Allors.Workspace
 {
-    using System.ComponentModel;
+    using System.Collections.Generic;
 
-    public interface IRoleSignal<out T> : IOperandSignal<T>
-        where T : IRole
+    public interface ISignalContainer
     {
+        IEnumerable<ISignal> Signals { get; }
     }
 }

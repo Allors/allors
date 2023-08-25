@@ -43,7 +43,7 @@ namespace Allors.Workspace.Configuration
 
                 if (propertyType.GetInterfaces().Contains(typeof(INotifyPropertyChanged)))
                 {
-                    var trackMethodInfo = typeof(INotifyPropertyChangedExtensions).GetMethod("Track").MakeGenericMethod(node.Type);
+                    var trackMethodInfo = typeof(ISignalExtensions).GetMethod("Track").MakeGenericMethod(node.Type);
 
                     var methodCallExpression = Expression.Call(null, trackMethodInfo, base.VisitMember(node), this.dependencies);
 
@@ -53,6 +53,5 @@ namespace Allors.Workspace.Configuration
 
             return base.VisitMember(node);
         }
-
     }
 }

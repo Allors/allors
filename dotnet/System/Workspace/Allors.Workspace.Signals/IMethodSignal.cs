@@ -7,8 +7,8 @@ namespace Allors.Workspace
 {
     using System.ComponentModel;
 
-    public interface IRoleSignal<out T> : IOperandSignal<T>
-        where T : IRole
+    public interface IMethodSignal<out T> : IOperandSignal<T>
+        where T : IMethod
     {
     }
 }

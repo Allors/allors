@@ -5,11 +5,8 @@
 
 namespace Allors.Workspace
 {
-    using System;
-
-    public interface IReactiveExpressionBuilder
+    public interface IDispatcherBuilder
     {
-        IExpression<TObject, TValue> Build<TObject, TValue>(TObject @object, Func<TObject, IDependencyTracker, TValue> reactiveFunc)
-            where TObject : IObject;
+        IDispatcher Build(IWorkspace workspace);
     }
 }

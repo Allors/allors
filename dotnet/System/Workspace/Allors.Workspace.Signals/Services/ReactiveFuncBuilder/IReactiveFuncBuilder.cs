@@ -10,6 +10,6 @@ namespace Allors.Workspace
 
     public interface IReactiveFuncBuilder
     {
-        Func<TObject, IDependencyTracker, TValue> Build<TObject, TValue>(Expression<Func<TObject, TValue>> expression);
+        Func<IDependencyTracker, TValue> Build<TObject, TValue>(Expression<Func<TValue>> expression);
     }
 }

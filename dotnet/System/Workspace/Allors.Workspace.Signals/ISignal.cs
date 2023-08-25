@@ -7,5 +7,11 @@ namespace Allors.Workspace
 {
     public interface ISignal
     {
+        object Value { get; }
+    }
+
+    public interface ISignal<out T> : ISignal
+    {
+        new T Value { get; }
     }
 }
