@@ -23,5 +23,9 @@ namespace Allors.Workspace
         ICalculatedSignal<T> CreateCalculatedSignal<T>(Func<IDependencyTracker, T> expression);
 
         IEffect CreateEffect(IEnumerable<ISignal> dependencies, Action action);
+
+        void Pause();
+
+        void Resume();
     }
 }
