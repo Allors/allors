@@ -5,14 +5,13 @@
 
 namespace Allors.Workspace.Configuration
 {
-    using System;
-    using System.Linq.Expressions;
+    using Signals.Default;
 
-    public class DispatcherBuilder : IDispatcherBuilder
+    public class DefaultDispatcherBuilder : IDispatcherBuilder
     {
         public IDispatcher Build(IWorkspace workspace)
         {
-            return null;
+            return new Dispatcher();
         }
     }
 }
