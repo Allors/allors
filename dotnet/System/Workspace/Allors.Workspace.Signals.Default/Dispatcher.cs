@@ -10,41 +10,21 @@ namespace Allors.Workspace.Signals.Default
 
     public class Dispatcher : IDispatcher
     {
-        public IUnitRoleSignal<T> CreateUnitRoleSignal<T>(IUnitRole<T> role)
+        public IValueSignal<T> CreateValueSignal<T>(T value)
         {
             throw new NotImplementedException();
         }
 
-        public ICompositeRoleSignal<T> CreateCompositeRoleSignal<T>(ICompositeRole<T> role) where T : class, IObject
+        public ICalculatedSignal<T> CreateCalculatedSignal<T>(Func<IDependencyTracker, T> calculation)
+        {
+            return new CalculatedSignal<T>(calculation);
+        }
+
+        public IEffect CreateEffect<T>(T context, Action<T, IDependencyTracker> dependencies, Action<T> action)
         {
             throw new NotImplementedException();
         }
-
-        public ICompositesRoleSignal<T> CreateCompositesRoleSignal<T>(ICompositesRole<T> role) where T : class, IObject
-        {
-            throw new NotImplementedException();
-        }
-
-        public ICompositeAssociationSignal<T> CreateCompositeAssociationSignal<T>(ICompositeAssociation<T> role) where T : class, IObject
-        {
-            throw new NotImplementedException();
-        }
-
-        public ICompositesAssociationSignal<T> CreateCompositesAssociationSignal<T>(ICompositesAssociation<T> role) where T : class, IObject
-        {
-            throw new NotImplementedException();
-        }
-
-        public ICalculatedSignal<T> CreateCalculatedSignal<T>(Func<IDependencyTracker, T> expression)
-        {
-            return new CalculatedSignal<T>(expression);
-        }
-
-        public IEffect CreateEffect(IEnumerable<ISignal> dependencies, Action action)
-        {
-            throw new NotImplementedException();
-        }
-
+        
         public void Pause()
         {
             throw new NotImplementedException();

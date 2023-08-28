@@ -5,7 +5,7 @@
 
 namespace Allors.Workspace
 {
-    public interface ICalculatedSignal<out T> : ISignal<T>, ISignalContainer
+    public interface ICalculatedSignal<out T> : ISignal<T>
     {
     }
 }

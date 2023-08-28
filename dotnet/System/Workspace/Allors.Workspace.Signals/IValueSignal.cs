@@ -5,8 +5,9 @@
 
 namespace Allors.Workspace
 {
-    public interface ICompositesRoleSignal<T> : IRoleSignal<ICompositesRole<T>>
-        where T : class, IObject
+    using System.ComponentModel;
+
+    public interface IValueSignal<out T> : ISignal<T>
     {
     }
 }

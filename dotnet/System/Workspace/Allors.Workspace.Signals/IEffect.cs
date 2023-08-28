@@ -7,7 +7,13 @@ namespace Allors.Workspace
 {
     using System;
 
-    public interface IEffect : ISignalContainer, IDisposable
+    public interface IEffect : IDisposable
     {
+        Object Context { get; }
+    }
+
+    public interface IEffect<out T> : IEffect
+    {
+        new T Context { get; }
     }
 }

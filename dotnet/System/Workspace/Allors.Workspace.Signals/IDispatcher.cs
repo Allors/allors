@@ -6,23 +6,14 @@
 namespace Allors.Workspace
 {
     using System;
-    using System.Collections.Generic;
 
     public interface IDispatcher
     {
-        IUnitRoleSignal<T> CreateUnitRoleSignal<T>(IUnitRole<T> role);
+        IValueSignal<T> CreateValueSignal<T>(T value);
 
-        ICompositeRoleSignal<T> CreateCompositeRoleSignal<T>(ICompositeRole<T> role) where T : class, IObject;
+        ICalculatedSignal<T> CreateCalculatedSignal<T>(Func<IDependencyTracker, T> calculation);
 
-        ICompositesRoleSignal<T> CreateCompositesRoleSignal<T>(ICompositesRole<T> role) where T : class, IObject;
-
-        ICompositeAssociationSignal<T> CreateCompositeAssociationSignal<T>(ICompositeAssociation<T> role) where T : class, IObject;
-
-        ICompositesAssociationSignal<T> CreateCompositesAssociationSignal<T>(ICompositesAssociation<T> role) where T : class, IObject;
-
-        ICalculatedSignal<T> CreateCalculatedSignal<T>(Func<IDependencyTracker, T> expression);
-
-        IEffect CreateEffect(IEnumerable<ISignal> dependencies, Action action);
+        IEffect CreateEffect<T>(T context, Action<T, IDependencyTracker> dependencies, Action<T> action);
 
         void Pause();
 
