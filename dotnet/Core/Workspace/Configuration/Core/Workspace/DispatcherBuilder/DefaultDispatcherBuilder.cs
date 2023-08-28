@@ -11,7 +11,7 @@ namespace Allors.Workspace.Configuration
     {
         public IDispatcher Build(IWorkspace workspace)
         {
-            return new Dispatcher();
+            return new Dispatcher(workspace);
         }
     }
 }

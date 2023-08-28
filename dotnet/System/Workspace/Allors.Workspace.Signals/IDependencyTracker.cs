@@ -8,7 +8,5 @@ namespace Allors.Workspace
     public interface IDependencyTracker
     {
         void Track(IOperand operand);
-
-        void Track(ISignal signal);
-    }
+  }
 }

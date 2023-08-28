@@ -30,7 +30,9 @@ namespace Allors.Workspace
         object IRelationEnd.Value => this.Value;
 
         public IStrategy Value => this.Object.GetCompositeAssociation(this.AssociationType);
-        
+
+        public long WorkspaceVersion => this.Object.WorkspaceVersion(this.AssociationType);
+
         public override string ToString()
         {
             return $"[{Value?.Id}]";

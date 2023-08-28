@@ -1,9 +1,13 @@
 ﻿namespace Allors.Workspace.Signals.Default;
 
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
-public class Effect : IEffect, IConsumer
+public class Effect : IEffect
 {
+    private IDictionary<ISignal, object> valueBySignal;
+
     public Effect(Action<IDependencyTracker> dependencies, Action action)
     {
         this.Dependencies = dependencies;
@@ -16,5 +20,11 @@ public class Effect : IEffect, IConsumer
 
     public void Dispose()
     {
+    }
+
+    public void Raise()
+    {
+        
+
     }
 }

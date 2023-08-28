@@ -23,5 +23,7 @@ namespace Allors.Workspace
         public IMethodType MethodType { get; }
 
         public bool CanExecute => this.Object.CanExecute(this.MethodType);
+
+        public long WorkspaceVersion => this.Object.WorkspaceVersion(this.MethodType);
     }
 }

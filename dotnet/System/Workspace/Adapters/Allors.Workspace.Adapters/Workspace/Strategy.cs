@@ -135,7 +135,7 @@ namespace Allors.Workspace.Adapters
 
         public ICompositeRole CompositeRole(IRoleType roleType) => this.Workspace.CompositeRole(this, roleType);
 
-        public ICompositeRole<T> CompositeRole<T>(IRoleType roleType) where T : class, IObject => this.Workspace.CompositeRole<T>(this, roleType) ;
+        public ICompositeRole<T> CompositeRole<T>(IRoleType roleType) where T : class, IObject => this.Workspace.CompositeRole<T>(this, roleType);
 
         public ICompositesRole CompositesRole(IRoleType roleType) => this.Workspace.CompositesRole(this, roleType);
 
@@ -158,7 +158,7 @@ namespace Allors.Workspace.Adapters
 
         public ICompositeAssociation CompositeAssociation(IAssociationType associationType) => this.Workspace.CompositeAssociation(this, associationType);
 
-        public ICompositeAssociation<T> CompositeAssociation<T>(IAssociationType associationType) where T : class, IObject => this.Workspace.CompositeAssociation<T>(this, associationType) ;
+        public ICompositeAssociation<T> CompositeAssociation<T>(IAssociationType associationType) where T : class, IObject => this.Workspace.CompositeAssociation<T>(this, associationType);
 
         public ICompositesAssociation CompositesAssociation(IAssociationType associationType) => this.Workspace.CompositesAssociation(this, associationType);
 
@@ -646,7 +646,7 @@ namespace Allors.Workspace.Adapters
                     }
                 }
             }
-            
+
             this.record = newRecord;
         }
 
@@ -1336,6 +1336,23 @@ namespace Allors.Workspace.Adapters
             {
                 throw new Exception("Strategy is not in Workspace.");
             }
+        }
+
+        public long WorkspaceVersion(IAssociationType associationType)
+        {
+            // TODO: Signals
+            return 0;
+        }
+
+        public long WorkspaceVersion(IRoleType roleType)
+        {
+            // TODO: Signals
+            return 0;
+        }
+
+        public long WorkspaceVersion(IMethodType methodType)
+        {
+            return this.CanExecute(methodType) ? 1 : 0;
         }
     }
 }

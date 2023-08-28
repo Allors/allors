@@ -75,6 +75,8 @@ namespace Allors.Workspace
 
         public bool IsModified => this.Object.IsModified(this.RoleType);
 
+        public long WorkspaceVersion => this.Object.WorkspaceVersion(this.RoleType);
+
         public void Restore()
         {
             this.Object.RestoreRole(this.RoleType);

@@ -33,6 +33,8 @@ namespace Allors.Workspace
 
         public IEnumerable<IStrategy> Value => this.Object.GetCompositesAssociation(this.AssociationType);
 
+        public long WorkspaceVersion => this.Object.WorkspaceVersion(this.AssociationType);
+
         public override string ToString()
         {
             return this.Value != null ? $"[{string.Join(", ", this.Value.Select(v => v.Id))}]" : "[]";

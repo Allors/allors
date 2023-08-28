@@ -7,5 +7,6 @@ namespace Allors.Workspace
 {
     public interface IOperand
     {
+        long WorkspaceVersion { get; }
     }
 }

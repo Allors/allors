@@ -5,7 +5,7 @@
 
 namespace Allors.Workspace
 {
-    public interface ISignal
+    public interface ISignal : IOperand
     {
         object Value { get; }
     }
