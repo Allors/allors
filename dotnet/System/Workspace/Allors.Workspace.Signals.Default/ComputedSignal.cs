@@ -1,13 +1,12 @@
 ﻿namespace Allors.Workspace.Signals.Default;
 
 using System;
-using System.Collections.Generic;
 
-public class CalculatedSignal<T> : ICalculatedSignal<T>, IDependencyTracker
+public class ComputedSignal<T> : IComputedSignal<T>, IDependencyTracker, IProducer, IConsumer
 {
     private readonly Func<IDependencyTracker, T> expression;
     
-    public CalculatedSignal(Func<IDependencyTracker, T> expression)
+    public ComputedSignal(Func<IDependencyTracker, T> expression)
     {
         this.expression = expression;
     }
@@ -16,8 +15,6 @@ public class CalculatedSignal<T> : ICalculatedSignal<T>, IDependencyTracker
 
     public T Value => this.expression(this);
     
-    public IEnumerable<ISignal> Signals { get; }
-
     public void Track(IOperand operand)
     {
     }

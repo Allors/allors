@@ -4,7 +4,7 @@
     using Data;
     using Domain;
 
-    public class CalculatedSignalTest : Test
+    public class ComputedSignalTest : Test
     {
         [Test]
         public async Task ReactiveFuncBuilder()

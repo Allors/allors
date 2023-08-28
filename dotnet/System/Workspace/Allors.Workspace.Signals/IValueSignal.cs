@@ -5,9 +5,13 @@
 
 namespace Allors.Workspace
 {
-    using System.ComponentModel;
-
-    public interface IValueSignal<out T> : ISignal<T>
+    public interface IValueSignal : ISignal
     {
+        new object Value { get; set; }
+    }
+
+    public interface IValueSignal<T> : ISignal<T>, IValueSignal
+    {
+        new T Value { get; set; }
     }
 }

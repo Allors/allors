@@ -9,11 +9,5 @@ namespace Allors.Workspace
 
     public interface IEffect : IDisposable
     {
-        Object Context { get; }
-    }
-
-    public interface IEffect<out T> : IEffect
-    {
-        new T Context { get; }
     }
 }

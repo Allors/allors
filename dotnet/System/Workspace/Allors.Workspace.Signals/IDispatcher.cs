@@ -11,9 +11,9 @@ namespace Allors.Workspace
     {
         IValueSignal<T> CreateValueSignal<T>(T value);
 
-        ICalculatedSignal<T> CreateCalculatedSignal<T>(Func<IDependencyTracker, T> calculation);
+        IComputedSignal<T> CreateCalculatedSignal<T>(Func<IDependencyTracker, T> calculation);
 
-        IEffect CreateEffect<T>(T context, Action<T, IDependencyTracker> dependencies, Action<T> action);
+        IEffect CreateEffect(Action<IDependencyTracker> dependencies, Action action);
 
         void Pause();
 

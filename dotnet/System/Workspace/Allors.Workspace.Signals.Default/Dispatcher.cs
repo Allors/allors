@@ -12,17 +12,17 @@ namespace Allors.Workspace.Signals.Default
     {
         public IValueSignal<T> CreateValueSignal<T>(T value)
         {
-            throw new NotImplementedException();
+            return new ValueSignal<T>(value);
         }
 
-        public ICalculatedSignal<T> CreateCalculatedSignal<T>(Func<IDependencyTracker, T> calculation)
+        public IComputedSignal<T> CreateCalculatedSignal<T>(Func<IDependencyTracker, T> calculation)
         {
-            return new CalculatedSignal<T>(calculation);
+            return new ComputedSignal<T>(calculation);
         }
 
-        public IEffect CreateEffect<T>(T context, Action<T, IDependencyTracker> dependencies, Action<T> action)
+        public IEffect CreateEffect(Action<IDependencyTracker> dependencies, Action action)
         {
-            throw new NotImplementedException();
+            return new Effect(dependencies, action);
         }
         
         public void Pause()
