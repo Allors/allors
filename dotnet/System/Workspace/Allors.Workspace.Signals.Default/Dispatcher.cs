@@ -36,7 +36,12 @@ namespace Allors.Workspace.Signals.Default
 
         public IEffect CreateEffect(Action<IDependencyTracker> dependencies, Action action)
         {
-            return new Effect(dependencies, action);
+            var effect = new Effect(dependencies, action);
+            this.effects.Add(effect);
+
+            effect.Raise();
+            
+            return effect;
         }
         
         public void Pause()

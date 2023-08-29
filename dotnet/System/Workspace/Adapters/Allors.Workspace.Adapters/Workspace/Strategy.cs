@@ -358,17 +358,17 @@ namespace Allors.Workspace.Adapters
                 {
                     this.changesByRelationType = null;
                 }
-
-                return;
             }
-
-            this.changesByRelationType ??= new Dictionary<IRelationType, Change[]>();
-            this.changesByRelationType[roleType.RelationType] = new Change[]
+            else
             {
-                new SetUnitChange(role)
-            };
+                this.changesByRelationType ??= new Dictionary<IRelationType, Change[]>();
+                this.changesByRelationType[roleType.RelationType] = new Change[]
+                {
+                    new SetUnitChange(role)
+                };
 
-            this.Workspace.PushToDatabaseTracker.OnChanged(this);
+                this.Workspace.PushToDatabaseTracker.OnChanged(this);
+            }
 
             this.Workspace.RegisterWorkspaceReaction(this, roleType);
 
