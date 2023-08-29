@@ -8,9 +8,12 @@ namespace Allors.Workspace
     using Adapters;
     using Meta;
 
-    public class CompositeRole<T> : ICompositeRole<T>
+    public class CompositeRole<T> : ICompositeRole<T>, IOperandInternal
         where T : class, IObject
     {
+        private long databaseVersion;
+        private long workspaceVersion;
+
         public CompositeRole(Strategy strategy, IRoleType roleType)
         {
             this.Object = strategy;
@@ -53,7 +56,24 @@ namespace Allors.Workspace
 
         public bool IsModified => this.Object.IsModified(this.RoleType);
 
-        public long WorkspaceVersion => this.Object.WorkspaceVersion(this.RoleType);
+        public long WorkspaceVersion
+        {
+            get
+            {
+                if (this.databaseVersion != this.Object.Workspace.DatabaseVersion)
+                {
+                    this.databaseVersion = this.Object.Workspace.DatabaseVersion;
+                    ++this.workspaceVersion;
+                }
+
+                return workspaceVersion;
+            }
+        }
+
+        public void BumpWorkspaceVersion()
+        {
+            ++this.workspaceVersion;
+        }
 
         public void Restore()
         {

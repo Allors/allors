@@ -8,9 +8,12 @@ namespace Allors.Workspace
     using Adapters;
     using Meta;
 
-    public class CompositeAssociation<T> : ICompositeAssociation<T>
+    public class CompositeAssociation<T> : ICompositeAssociation<T>, IOperandInternal
         where T : class, IObject
     {
+        private long databaseVersion;
+        private long workspaceVersion;
+
         public CompositeAssociation(Strategy @object, IAssociationType associationType)
         {
             this.Object = @object;
@@ -31,7 +34,24 @@ namespace Allors.Workspace
 
         public IStrategy Value => this.Object.GetCompositeAssociation(this.AssociationType);
 
-        public long WorkspaceVersion => this.Object.WorkspaceVersion(this.AssociationType);
+        public long WorkspaceVersion
+        {
+            get
+            {
+                if (this.databaseVersion != this.Object.Workspace.DatabaseVersion)
+                {
+                    this.databaseVersion = this.Object.Workspace.DatabaseVersion;
+                    ++this.workspaceVersion;
+                }
+
+                return workspaceVersion;
+            }
+        }
+
+        public void BumpWorkspaceVersion()
+        {
+            ++this.workspaceVersion;
+        }
 
         public override string ToString()
         {

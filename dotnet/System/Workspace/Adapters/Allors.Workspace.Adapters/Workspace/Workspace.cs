@@ -60,6 +60,8 @@ namespace Allors.Workspace.Adapters
         // TODO: Cache
         public bool HasModifications => this.StrategyById.Any(kvp => kvp.Value.HasChanges);
 
+        public long DatabaseVersion { get; private set; }
+
         public PushToDatabaseTracker PushToDatabaseTracker { get; }
 
         protected Dictionary<long, Strategy> StrategyById { get; }
@@ -283,10 +285,10 @@ namespace Allors.Workspace.Adapters
             return (ICompositeRole)role;
         }
 
-        public ICompositeRole<T> CompositeRole<T>(Strategy strategy, IRoleType roleType)
+        public CompositeRole<T> CompositeRole<T>(Strategy strategy, IRoleType roleType)
             where T : class, IObject
         {
-            return (ICompositeRole<T>)this.CompositeRole(strategy, roleType);
+            return (CompositeRole<T>)this.CompositeRole(strategy, roleType);
         }
 
         public ICompositesRole CompositesRole(Strategy strategy, IRoleType roleType)
@@ -303,10 +305,10 @@ namespace Allors.Workspace.Adapters
             return (ICompositesRole)role;
         }
 
-        public ICompositesRole<T> CompositesRole<T>(Strategy strategy, IRoleType roleType)
+        public CompositesRole<T> CompositesRole<T>(Strategy strategy, IRoleType roleType)
             where T : class, IObject
         {
-            return (ICompositesRole<T>)this.CompositesRole(strategy, roleType);
+            return (CompositesRole<T>)this.CompositesRole(strategy, roleType);
         }
 
         public ICompositeAssociation CompositeAssociation(Strategy strategy, IAssociationType associationType)
@@ -323,10 +325,10 @@ namespace Allors.Workspace.Adapters
             return (ICompositeAssociation)association;
         }
 
-        public ICompositeAssociation<T> CompositeAssociation<T>(Strategy strategy, IAssociationType associationType)
+        public CompositeAssociation<T> CompositeAssociation<T>(Strategy strategy, IAssociationType associationType)
             where T : class, IObject
         {
-            return (ICompositeAssociation<T>)this.CompositeAssociation(strategy, associationType);
+            return (CompositeAssociation<T>)this.CompositeAssociation(strategy, associationType);
         }
 
         public ICompositesAssociation CompositesAssociation(Strategy strategy, IAssociationType associationType)
@@ -343,11 +345,12 @@ namespace Allors.Workspace.Adapters
             return (ICompositesAssociation)association;
         }
 
-        public ICompositesAssociation<T> CompositesAssociation<T>(Strategy strategy, IAssociationType associationType)
+        public CompositesAssociation<T> CompositesAssociation<T>(Strategy strategy, IAssociationType associationType)
             where T : class, IObject
         {
-            return (ICompositesAssociation<T>)this.CompositesAssociation(strategy, associationType);
+            return (CompositesAssociation<T>)this.CompositesAssociation(strategy, associationType);
         }
+
         public IMethod Method(Strategy strategy, IMethodType methodType)
         {
             var methodByStrategy = this.GetMethodByStrategy(methodType);
@@ -364,6 +367,7 @@ namespace Allors.Workspace.Adapters
 
         public void HandleDatabaseReactions()
         {
+            ++this.DatabaseVersion;
             this.DatabaseChanged?.Invoke(this, new DatabaseChangedEventArgs());
         }
 
@@ -371,6 +375,11 @@ namespace Allors.Workspace.Adapters
         {
             var operands = this.changedOperands;
             this.changedOperands = new HashSet<IOperand>();
+
+            foreach (var operand in operands)
+            {
+                ((IOperandInternal)operand).BumpWorkspaceVersion();
+            }
 
             this.WorkspaceChanged?.Invoke(this, new WorkspaceChangedEventArgs(operands));
         }

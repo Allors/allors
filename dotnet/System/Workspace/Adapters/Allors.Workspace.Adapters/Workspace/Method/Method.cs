@@ -10,6 +10,9 @@ namespace Allors.Workspace
 
     public class Method : IMethod
     {
+        private bool previousCanExecute;
+        private long workspaceVersion;
+
         public Method(Strategy strategy, IMethodType methodType)
         {
             this.Object = strategy;
@@ -24,6 +27,17 @@ namespace Allors.Workspace
 
         public bool CanExecute => this.Object.CanExecute(this.MethodType);
 
-        public long WorkspaceVersion => this.Object.WorkspaceVersion(this.MethodType);
+        public long WorkspaceVersion
+        {
+            get
+            {
+                if (this.previousCanExecute != this.CanExecute)
+                {
+                    ++this.workspaceVersion;
+                }
+                
+                return this.workspaceVersion;
+            }
+        }
     }
 }

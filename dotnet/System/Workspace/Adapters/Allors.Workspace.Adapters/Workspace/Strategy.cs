@@ -1337,22 +1337,5 @@ namespace Allors.Workspace.Adapters
                 throw new Exception("Strategy is not in Workspace.");
             }
         }
-
-        public long WorkspaceVersion(IAssociationType associationType)
-        {
-            // TODO: Signals
-            return 0;
-        }
-
-        public long WorkspaceVersion(IRoleType roleType)
-        {
-            // TODO: Signals
-            return 0;
-        }
-
-        public long WorkspaceVersion(IMethodType methodType)
-        {
-            return this.CanExecute(methodType) ? 1 : 0;
-        }
     }
 }
