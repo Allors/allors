@@ -8,12 +8,12 @@ namespace Allors.Workspace
     using Adapters;
     using Meta;
 
-    public class FloatRole : IUnitRole<double?>, IOperandInternal
+    public class UnitRole<T> : IUnitRole<T>, IOperandInternal
     {
         private long databaseVersion;
         private long workspaceVersion;
 
-        public FloatRole(Strategy strategy, IRoleType roleType)
+        public UnitRole(Strategy strategy, IRoleType roleType)
         {
             this.Object = strategy;
             this.RoleType = roleType;
@@ -26,18 +26,18 @@ namespace Allors.Workspace
         public IRelationType RelationType => this.RoleType.RelationType;
 
         public IRoleType RoleType { get; }
-        
+
         object IRelationEnd.Value => this.Value;
 
         object IRole.Value
         {
             get => this.Value;
-            set => this.Value = (double?)value;
+            set => this.Value = (T)value;
         }
 
-        public double? Value
+        public T Value
         {
-            get => (double?)this.Object.GetUnitRole(this.RoleType);
+            get => (T)this.Object.GetUnitRole(this.RoleType);
             set => this.Object.SetUnitRole(this.RoleType, value);
         }
 

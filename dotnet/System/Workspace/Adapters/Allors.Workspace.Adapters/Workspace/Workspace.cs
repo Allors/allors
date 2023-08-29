@@ -168,7 +168,7 @@ namespace Allors.Workspace.Adapters
                 return (IUnitRole<byte[]>)role;
             }
 
-            role = new BinaryRole(strategy, roleType);
+            role = new UnitRole<byte[]>(strategy, roleType);
             roleByStrategy[strategy] = role;
             return (IUnitRole<byte[]>)role;
         }
@@ -182,7 +182,7 @@ namespace Allors.Workspace.Adapters
                 return (IUnitRole<bool?>)role;
             }
 
-            role = new BooleanRole(strategy, roleType);
+            role = new UnitRole<bool?>(strategy, roleType);
             roleByStrategy[strategy] = role;
             return (IUnitRole<bool?>)role;
         }
@@ -196,7 +196,7 @@ namespace Allors.Workspace.Adapters
                 return (IUnitRole<DateTime?>)role;
             }
 
-            role = new DateTimeRole(strategy, roleType);
+            role = new UnitRole<DateTime?>(strategy, roleType);
             roleByStrategy[strategy] = role;
             return (IUnitRole<DateTime?>)role;
         }
@@ -210,7 +210,7 @@ namespace Allors.Workspace.Adapters
                 return (IUnitRole<decimal?>)role;
             }
 
-            role = new DecimalRole(strategy, roleType);
+            role = new UnitRole<decimal?>(strategy, roleType);
             roleByStrategy[strategy] = role;
             return (IUnitRole<decimal?>)role;
         }
@@ -224,7 +224,7 @@ namespace Allors.Workspace.Adapters
                 return (IUnitRole<double?>)role;
             }
 
-            role = new FloatRole(strategy, roleType);
+            role = new UnitRole<double?>(strategy, roleType);
             roleByStrategy[strategy] = role;
             return (IUnitRole<double?>)role;
         }
@@ -238,7 +238,7 @@ namespace Allors.Workspace.Adapters
                 return (IUnitRole<int?>)role;
             }
 
-            role = new IntegerRole(strategy, roleType);
+            role = new UnitRole<int?>(strategy, roleType);
             roleByStrategy[strategy] = role;
             return (IUnitRole<int?>)role;
         }
@@ -252,7 +252,7 @@ namespace Allors.Workspace.Adapters
                 return (IUnitRole<string>)role;
             }
 
-            role = new StringRole(strategy, roleType);
+            role = new UnitRole<string>(strategy, roleType);
             roleByStrategy[strategy] = role;
             return (IUnitRole<string>)role;
         }
@@ -266,7 +266,7 @@ namespace Allors.Workspace.Adapters
                 return (IUnitRole<Guid?>)role;
             }
 
-            role = new UniqueRole(strategy, roleType);
+            role = new UnitRole<Guid?>(strategy, roleType);
             roleByStrategy[strategy] = role;
             return (IUnitRole<Guid?>)role;
         }
