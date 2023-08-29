@@ -36,7 +36,7 @@ namespace Allors.Workspace.Signals.Default
 
         public IEffect CreateEffect(Action<IDependencyTracker> dependencies, Action action)
         {
-            var effect = new Effect(dependencies, action);
+            var effect = new Effect(this, dependencies, action);
             this.effects.Add(effect);
 
             effect.Raise();
@@ -52,6 +52,11 @@ namespace Allors.Workspace.Signals.Default
         public void Resume()
         {
             throw new NotImplementedException();
+        }
+
+        public void RemoveEffect(Effect effect)
+        {
+            this.effects.Remove(effect);
         }
 
         private void WorkspaceOnDatabaseChanged(object sender, DatabaseChangedEventArgs e)

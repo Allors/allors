@@ -6,15 +6,18 @@ using System.Collections.ObjectModel;
 
 public class Effect : IEffect, IDependencyTracker
 {
-    private static IDictionary<IOperand, long> EmptyDictionary = new Dictionary<IOperand, long>();
+    private static readonly IDictionary<IOperand, long> EmptyDictionary = new Dictionary<IOperand, long>();
+
+    private readonly Dispatcher dispatcher;
 
     private IDictionary<IOperand, long> workspaceVersionByOperand;
     private IDictionary<IOperand, long> trackingWorkspaceVersionByOperand;
 
     private bool shouldRaise;
 
-    public Effect(Action<IDependencyTracker> dependencies, Action action)
+    public Effect(Dispatcher dispatcher, Action<IDependencyTracker> dependencies, Action action)
     {
+        this.dispatcher = dispatcher;
         this.Dependencies = dependencies;
         this.Action = action;
 
@@ -27,6 +30,7 @@ public class Effect : IEffect, IDependencyTracker
 
     public void Dispose()
     {
+        this.dispatcher.RemoveEffect(this);
     }
 
     public void Raise()

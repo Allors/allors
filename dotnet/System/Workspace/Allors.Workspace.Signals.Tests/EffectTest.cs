@@ -57,5 +57,40 @@
 
             Assert.That(counter, Is.EqualTo(4));
         }
+
+        [Test]
+        public async Task Dispose()
+        {
+            await this.Login("jane@example.com");
+
+            var workspace = this.Workspace;
+
+            var dispatcherBuilder = workspace.Services.Get<IDispatcherBuilder>();
+            var dispatcher = dispatcherBuilder.Build(workspace);
+
+            var c1a = workspace.Create<C1>();
+
+            var counter = 0;
+
+            var effect = dispatcher.CreateEffect(v =>
+            {
+                v.Track(c1a.C1AllorsString);
+            }, () =>
+            {
+                ++counter;
+            });
+
+            Assert.That(counter, Is.EqualTo(1));
+
+            c1a.C1AllorsString.Value = "Hello A!";
+
+            Assert.That(counter, Is.EqualTo(2));
+
+            effect.Dispose();
+
+            c1a.C1AllorsString.Value = "Hello again A!";
+
+            Assert.That(counter, Is.EqualTo(2));
+        }
     }
 }
