@@ -1,10 +1,16 @@
 ﻿@page "/person/overview/{Id}"
-@using Workspace.Blazor.ViewModels.Features.Person.Edit
-@inject PageViewModel ViewModel
+@using Allors.Workspace
+@using Allors.Workspace.Data
+@using Allors.Workspace.Domain
+@using Allors.Workspace.Meta
+@using Task = System.Threading.Tasks.Task
+@implements IDisposable
+@inject IWorkspace Workspace
+
 
 <PageTitle>People</PageTitle>
 
-@if (this.ViewModel.LoadCommand.IsRunning)
+@if (this.Person.Value == null)
 {
     <div class="spinner-border text-primary" role="status">
         <span class="sr-only"></span>
@@ -12,7 +18,7 @@
 }
 else
 {
-    @ViewModel.Selected.FirstName
+    @this.Person.Value?.FirstName.Value
 
     <div>
         <NavLink href="@Edit()">edit</NavLink>
@@ -24,9 +30,41 @@ else
     [Parameter]
     public string Id { get; set; }
 
+    public IValueSignal<Person> Person { get; private set; }
+
+    public IEffect Effect { get; private set; }
+
     protected override async Task OnInitializedAsync()
     {
-        await this.ViewModel.LoadCommand.ExecuteAsync(long.Parse(this.Id));
+        var m = this.Workspace.Services.Get<M>();
+        var dispatcher = this.Workspace.Services.Get<IDispatcherBuilder>().Build(this.Workspace);
+
+        this.Person = dispatcher.CreateValueSignal<Person>(null);
+        this.Effect = dispatcher.CreateEffect(v => v.Track(this.Person), this.StateHasChanged);
+
+        var result = await this.Workspace.PullAsync(new Pull
+            {
+                ObjectId = long.Parse(this.Id),
+                Results = new[]
+                                        {
+                    new Result
+                    {
+                        Select = new Select
+                        {
+                            Include = m.MailboxAddress.Nodes()
+                        }
+                    }
+                }
+            });
+
+        // await Task.Delay(1000);
+
+        this.Person.Value = result.GetObject<Person>();
+    }
+
+    public void Dispose()
+    {
+        Effect.Dispose();
     }
 
     private object Edit() => $"/person/edit/{Id}";

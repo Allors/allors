@@ -3,8 +3,6 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-using Allors.Protocol.Json.SystemText;
-
 namespace Allors.Database.Protocol.Json
 {
     using System;
@@ -23,7 +21,6 @@ namespace Allors.Database.Protocol.Json
     using Security;
     using Services;
     using Tracing;
-    using User = Domain.User;
 
     public class Api
     {

@@ -59,6 +59,11 @@ namespace Allors.Workspace.Signals.Coarse
             this.effects.Remove(effect);
         }
 
+        public void ValueSignalOnChangedValue()
+        {
+            this.OnChange();
+        }
+
         private void WorkspaceOnDatabaseChanged(object sender, DatabaseChangedEventArgs e)
         {
             this.OnChange();

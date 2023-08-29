@@ -23,7 +23,7 @@
             var workspaceServices = (WorkspaceServices)workspace.Services;
             workspaceServices.DispatcherBuilder = implementation switch
             {
-                Implementations.Coarse => new CourseDispatcherBuilder(),
+                Implementations.Coarse => new CoarseDispatcherBuilder(),
                 Implementations.Fine => new FineDispatcherBuilder(),
                 _ => workspaceServices.DispatcherBuilder
             };

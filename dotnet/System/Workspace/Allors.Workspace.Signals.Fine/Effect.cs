@@ -50,7 +50,7 @@ public class Effect : IEffect, IDependencyTracker
 
     public void Track(IOperand operand)
     {
-        if (this.trackingWorkspaceVersionByOperand.ContainsKey(operand))
+        if (operand == null || this.trackingWorkspaceVersionByOperand.ContainsKey(operand))
         {
             return;
         }

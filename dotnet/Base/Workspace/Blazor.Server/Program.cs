@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Server.Circuits;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Workspace.Blazor.Server;
 using Workspace.Blazor.Server.Areas.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -32,8 +31,6 @@ builder.Services.AddAuthorization(options =>
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
-
-builder.Services.AddViewModelsServices();
 
 var app = builder.Build();
 

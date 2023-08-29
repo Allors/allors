@@ -1,10 +1,15 @@
 ﻿@page "/person/list"
-@using Workspace.Blazor.ViewModels.Features.Person.List
-@inject PageViewModel ViewModel
+@using Allors.Workspace
+@using Allors.Workspace.Data
+@using Allors.Workspace.Domain
+@using Allors.Workspace.Meta
+@using Task = System.Threading.Tasks.Task
+@implements IDisposable
+@inject IWorkspace Workspace
 
 <PageTitle>People</PageTitle>
 
-@if (this.ViewModel.LoadCommand.IsRunning)
+@if (this.People.Value?.Length == 0)
 {
     <div class="spinner-border text-primary" role="status">
         <span class="sr-only"></span>
@@ -22,12 +27,11 @@ else
             </tr>
         </thead>
         <tbody>
-            @foreach (var person in ViewModel.People)
+            @foreach (var person in People.Value)
             {
                 <tr>
                     <td>@person.FirstName</td>
-                    <td>@person.Greeting</td>
-                    <td>@*@person.PoBox*@</td>
+                    <td>@person.DomainGreeting</td>
                     <td>
                         <NavLink href="@Overview(person)">view</NavLink>
                     </td>
@@ -38,11 +42,35 @@ else
 }
 
 @code {
+    public IValueSignal<Person[]> People { get; private set; }
+
+    public IEffect Effect { get; private set; }
 
     protected override async Task OnInitializedAsync()
     {
-        await this.ViewModel.LoadCommand.ExecuteAsync(null);
+        var m = this.Workspace.Services.Get<M>();
+        var dispatcher = this.Workspace.Services.Get<IDispatcherBuilder>().Build(this.Workspace);
+
+        this.People = dispatcher.CreateValueSignal(Array.Empty<Person>());
+        this.Effect = dispatcher.CreateEffect(v => v.Track(this.People), this.StateHasChanged);
+
+        var pull = new Pull
+            {
+                Extent = new Filter(m.Person),
+            };
+
+        var result = await this.Workspace.PullAsync(pull);
+        var people = result.GetCollection<Person>();
+
+        // await Task.Delay(1000);
+
+        this.People.Value = people;
     }
 
-    private object Overview(PersonViewModel person) => $"/person/overview/{@person.Id}";
+    public void Dispose()
+    {
+        Effect.Dispose();
+    }
+
+    private object Overview(Person person) => $"/person/overview/{@person.Id}";
 }

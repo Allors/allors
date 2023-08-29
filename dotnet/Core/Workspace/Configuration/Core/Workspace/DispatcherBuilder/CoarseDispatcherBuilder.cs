@@ -7,7 +7,7 @@ namespace Allors.Workspace.Configuration
 {
     using Signals.Coarse;
 
-    public class CourseDispatcherBuilder : IDispatcherBuilder
+    public class CoarseDispatcherBuilder : IDispatcherBuilder
     {
         public IDispatcher Build(IWorkspace workspace)
         {

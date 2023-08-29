@@ -2,11 +2,13 @@
 
 public class ValueSignal<T> : IValueSignal<T>
 {
+    private readonly Dispatcher dispatcher;
     private long workspaceVersion;
     private T value;
 
     public ValueSignal(Dispatcher dispatcher, T value)
     {
+        this.dispatcher = dispatcher;
         this.Value = value;
     }
     
@@ -21,6 +23,7 @@ public class ValueSignal<T> : IValueSignal<T>
             {
                 this.value = value;
                 ++this.workspaceVersion;
+                this.dispatcher.ValueSignalOnChangedValue();
             }
         }
     }

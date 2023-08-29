@@ -16,10 +16,10 @@
     <ProjectReference Include="..\..\..\System\Database\Adapters\Allors.Database.Builder\Allors.Database.Builder.csproj" />
     <ProjectReference Include="..\..\..\System\Workspace\Adapters\Allors.Workspace.Adapters.Direct\Allors.Workspace.Adapters.Direct.csproj" />
     <ProjectReference Include="..\..\..\System\Workspace\Adapters\Allors.Workspace.Adapters\Allors.Workspace.Adapters.csproj" />
+    <ProjectReference Include="..\..\..\System\Workspace\Allors.Workspace.Signals.Fine\Allors.Workspace.Signals.Fine.csproj" />
     <ProjectReference Include="..\..\Database\Configuration\Configuration.csproj" />
     <ProjectReference Include="..\..\Database\Meta.Configuration\Meta.Configuration.csproj" />
     <ProjectReference Include="..\..\Database\Resources\Resources.csproj" />
-    <ProjectReference Include="..\Blazor.ViewModels\Workspace.Blazor.ViewModels.csproj" />
     <ProjectReference Include="..\Configuration\Workspace.Configuration.csproj" />
     <ProjectReference Include="..\Domain\Workspace.Domain.csproj" />
     <ProjectReference Include="..\Meta.Configuration\Workspace.Meta.Configuration.csproj" />
@@ -28,10 +28,6 @@
   <ItemGroup>
     <Compile Include="..\..\..\Core\Database\Server\Core*\**\*.cs" />
     <Compile Include="..\..\..\Base\Database\Server\Base*\**\*.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>

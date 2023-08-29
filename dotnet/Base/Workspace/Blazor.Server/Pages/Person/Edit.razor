@@ -1,11 +1,23 @@
 ﻿@page "/person/edit/{Id}"
-@using Workspace.Blazor.ViewModels.Features.Person.Edit
-@inject PageViewModel ViewModel
+@using Allors.Workspace.Data
+@using Allors.Workspace
+@using Allors.Workspace.Domain
+@using Allors.Workspace.Meta
+@using Task = System.Threading.Tasks.Task
+@implements IDisposable
+@inject IWorkspace Workspace
 @inject NavigationManager NavigationManager
 
 <PageTitle>People</PageTitle>
 
-@if (this.ViewModel.LoadCommand.IsRunning)
+@if (this.Result?.HasErrors == true)
+{
+    <div class="text-error" role="error">
+        Error!
+    </div>
+}
+
+@if (this.Person == null)
 {
     <div class="spinner-border text-primary" role="status">
         <span class="sr-only"></span>
@@ -13,17 +25,17 @@
 }
 else
 {
-    <EditForm Model="@ViewModel.Selected" OnValidSubmit=@ValidFormSubmitted>
+    <EditForm Model="@this.Person" OnValidSubmit=@ValidFormSubmitted>
         <div class="form-group">
             <label for="FirstName">First Name</label>
-            <InputText @bind-Value=ViewModel.Selected.FirstName class="form-control" id="FirstName" />
+            <InputText @bind-Value=this.Person.FirstName.Value class="form-control" id="FirstName" />
         </div>
 
         <div class="form-group">
             <label for="PoBox">P.O. Box</label>
-            <InputText @bind-Value=ViewModel.Selected.PoBox class="form-control" id="PoBox" />
+            <InputText @bind-Value=this.Person.MailboxAddress.Value.PoBox.Value class="form-control" id="PoBox" />
         </div>
-        
+
         <input type="submit" class="btn btn-primary" value="Save" />
     </EditForm>
 }
@@ -33,18 +45,67 @@ else
     [Parameter]
     public string Id { get; set; }
 
+    public IPushResult Result { get; set; }
+
+    public Person Person { get; private set; }
+
+    public IEffect Effect { get; private set; }
+
     protected override async Task OnInitializedAsync()
     {
-        await this.ViewModel.LoadCommand.ExecuteAsync(long.Parse(this.Id));
+        var dispatcher = this.Workspace.Services.Get<IDispatcherBuilder>().Build(this.Workspace);
+
+        this.Effect = dispatcher.CreateEffect(v =>
+        {
+            v.Track(this.Person?.FirstName);
+            v.Track(this.Person?.MailboxAddress.Value?.PoBox);
+        }, () =>
+        {
+            this.StateHasChanged();
+        });
+
+        await LoadAsync();
+
+        await Task.Delay(5000);
+
+        this.Person.FirstName.Value = "New Name!";
+    }
+
+    public void Dispose()
+    {
+        Effect.Dispose();
     }
 
     async Task ValidFormSubmitted(EditContext editContext)
     {
-        await this.ViewModel.SaveCommand.ExecuteAsync(null);
+        this.Result = await this.Workspace.PushAsync();
 
-        if (!this.ViewModel.Result.HasErrors)
+        if (!this.Result.HasErrors)
         {
             this.NavigationManager.NavigateTo($"/person/overview/{Id}");
         }
+
+        this.Workspace.Reset();
+        await this.LoadAsync();
+    }
+
+    private async Task LoadAsync()
+    {
+        var m = this.Workspace.Services.Get<M>();
+
+        var result = await this.Workspace.PullAsync(new Pull
+            {
+                ObjectId = long.Parse(this.Id),
+                Results = new[]
+                    {
+                    new Result
+                    {
+                        Include = m.Person.Nodes(v=>v.MailboxAddress.Node())
+                    }
+                }
+            });
+
+
+        this.Person = result.GetObject<Person>();
     }
 }
