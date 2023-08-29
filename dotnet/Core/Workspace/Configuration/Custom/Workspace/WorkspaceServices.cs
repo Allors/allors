@@ -15,7 +15,7 @@ namespace Allors.Workspace
         {
             this.ObjectFactory = objectFactory;
             this.M = m;
-            this.DispatcherBuilder = new DefaultDispatcherBuilder();
+            this.DispatcherBuilder = new FineDispatcherBuilder();
             this.ReactiveFuncBuilder = new ReactiveFuncBuilder();
         }
 
@@ -23,7 +23,7 @@ namespace Allors.Workspace
 
         public M M { get; private set; }
 
-        public IDispatcherBuilder DispatcherBuilder { get; }
+        public IDispatcherBuilder DispatcherBuilder { get; set; }
 
         public IReactiveFuncBuilder ReactiveFuncBuilder { get; }
 

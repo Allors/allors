@@ -1,4 +1,4 @@
-﻿namespace Allors.Workspace.Signals.Default;
+﻿namespace Allors.Workspace.Signals.Coarse;
 
 public class ValueSignal<T> : IValueSignal<T>
 {

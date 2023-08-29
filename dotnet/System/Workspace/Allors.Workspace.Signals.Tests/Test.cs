@@ -1,6 +1,7 @@
 ﻿namespace Allors.Workspace.Signals.Tests
 {
     using Adapters.Direct;
+    using Configuration;
     using Database;
     using Database.Adapters.Memory;
     using Database.Configuration;
@@ -9,6 +10,25 @@
 
     public class Test
     {
+        public static IEnumerable<TestCaseData> TestImplementations()
+        {
+            yield return new TestCaseData(Implementations.Fine).
+                SetName("Fine");
+            yield return new TestCaseData(Implementations.Fine).
+                SetName("Coarse");
+        }
+
+        public static void SelectImplementation(IWorkspace workspace, Implementations implementation)
+        {
+            var workspaceServices = (WorkspaceServices)workspace.Services;
+            workspaceServices.DispatcherBuilder = implementation switch
+            {
+                Implementations.Coarse => new CourseDispatcherBuilder(),
+                Implementations.Fine => new FineDispatcherBuilder(),
+                _ => workspaceServices.DispatcherBuilder
+            };
+        }
+
         private Database database;
 
         public Adapters.Direct.Configuration configuration;

@@ -1,4 +1,4 @@
-﻿namespace Allors.Workspace.Signals.Default;
+﻿namespace Allors.Workspace.Signals.Coarse;
 
 using System;
 using System.Collections.Generic;

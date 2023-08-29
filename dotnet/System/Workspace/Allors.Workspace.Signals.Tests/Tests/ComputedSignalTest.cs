@@ -1,17 +1,19 @@
 ﻿namespace Allors.Workspace.Signals.Tests
 {
     using System.Linq.Expressions;
+    using Configuration;
     using Data;
     using Domain;
 
     public class ComputedSignalTest : Test
     {
         [Test]
-        public async Task ReactiveFuncBuilder()
+        [TestCaseSource(nameof(TestImplementations))]
+        public async Task ReactiveFuncBuilder(Implementations implementation)
         {
             await this.Login("jane@example.com");
-
             var workspace = this.Workspace;
+            SelectImplementation(workspace, implementation);
 
             var reactiveFuncBuilder = workspace.Services.Get<IReactiveFuncBuilder>();
             var dispatcherBuilder = workspace.Services.Get<IDispatcherBuilder>();
@@ -37,19 +39,19 @@
 
             var calculatedSignal = dispatcher.CreateCalculatedSignal(reactiveFunc);
 
-            Assert.AreEqual("Hello", calculatedSignal.Value);
+            Assert.That(calculatedSignal.Value, Is.EqualTo("Hello"));
 
             c1c.C1AllorsString.Value = "Hello Again";
 
-            Assert.AreEqual("Hello Again", calculatedSignal.Value);
+            Assert.That(calculatedSignal.Value, Is.EqualTo("Hello Again"));
 
             c1d.C1AllorsString.Value = "Another Hello";
 
-            Assert.AreEqual("Hello Again", calculatedSignal.Value);
+            Assert.That(calculatedSignal.Value, Is.EqualTo("Hello Again"));
 
             c1b.C1C1One2One.Value = c1d;
 
-            Assert.AreEqual("Another Hello", calculatedSignal.Value);
+            Assert.That(calculatedSignal.Value, Is.EqualTo("Another Hello"));
         }
     }
 }
