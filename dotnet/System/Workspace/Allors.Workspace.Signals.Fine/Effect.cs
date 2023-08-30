@@ -13,6 +13,7 @@ public class Effect : IEffect, IDependencyTracker
     private IDictionary<IOperand, long> workspaceVersionByOperand;
     private IDictionary<IOperand, long> trackingWorkspaceVersionByOperand;
 
+    private bool nullOperand;
     private bool shouldRaise;
 
     public Effect(Dispatcher dispatcher, Action<IDependencyTracker> dependencies, Action action)
@@ -38,9 +39,10 @@ public class Effect : IEffect, IDependencyTracker
         this.trackingWorkspaceVersionByOperand = new Dictionary<IOperand, long>();
         this.Dependencies(this);
 
-        if (this.shouldRaise)
+        if (this.shouldRaise || this.nullOperand)
         {
             this.shouldRaise = false;
+            this.nullOperand = false;
             this.Action();
         }
 
@@ -52,6 +54,7 @@ public class Effect : IEffect, IDependencyTracker
     {
         if (operand == null || this.trackingWorkspaceVersionByOperand.ContainsKey(operand))
         {
+            this.nullOperand = true;
             return;
         }
 

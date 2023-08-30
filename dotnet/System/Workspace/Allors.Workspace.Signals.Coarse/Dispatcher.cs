@@ -54,6 +54,11 @@ namespace Allors.Workspace.Signals.Coarse
             throw new NotImplementedException();
         }
 
+        public void Schedule()
+        {
+            this.OnChange();
+        }
+
         public void RemoveEffect(Effect effect)
         {
             this.effects.Remove(effect);

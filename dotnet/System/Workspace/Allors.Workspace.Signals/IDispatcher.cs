@@ -18,5 +18,7 @@ namespace Allors.Workspace
         void Pause();
 
         void Resume();
+
+        void Schedule();
     }
 }
