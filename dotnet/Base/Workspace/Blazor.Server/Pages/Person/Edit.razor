@@ -4,6 +4,7 @@
 @using Allors.Workspace.Domain
 @using Allors.Workspace.Meta
 @using Task = System.Threading.Tasks.Task
+@using System.Linq.Expressions
 @implements IDisposable
 @inject IWorkspace Workspace
 @inject NavigationManager NavigationManager
@@ -28,12 +29,19 @@ else
     <EditForm Model="@this.Person" OnValidSubmit=@ValidFormSubmitted>
         <div class="form-group">
             <label for="FirstName">First Name</label>
-            <InputText @bind-Value=this.Person.FirstName.Value class="form-control" id="FirstName" />
+            <InputText @bind-Value=this.FirstName.Value.Value class="form-control" id="FirstName" />
         </div>
 
         <div class="form-group">
             <label for="PoBox">P.O. Box</label>
-            <InputText @bind-Value=this.Person.MailboxAddress.Value.PoBox.Value class="form-control" id="PoBox" />
+            @if (this.PoBox.Value != null)
+            {
+                <InputText @bind-Value=this.PoBox.Value.Value class="form-control" id="PoBox" />
+            }
+            else
+            {
+                <input readonly class="form-control" id="PoBox" value="not defined">
+            }
         </div>
 
         <input type="submit" class="btn btn-primary" value="Save" />
@@ -41,13 +49,16 @@ else
 }
 
 @code {
-
     [Parameter]
     public string Id { get; set; }
 
     public IPushResult Result { get; set; }
 
-    public Person Person { get; private set; }
+    public IValueSignal<Person?> Person { get; private set; }
+
+    public IComputedSignal<IUnitRole<string>?> FirstName { get; private set; }
+
+    public IComputedSignal<IUnitRole<string>?> PoBox { get; private set; }
 
     public IEffect Effect { get; private set; }
 
@@ -55,20 +66,17 @@ else
     {
         var dispatcher = this.Workspace.Services.Get<IDispatcherBuilder>().Build(this.Workspace);
 
+        this.Person = dispatcher.CreateValueSignal<Person?>(null);
+        this.FirstName = dispatcher.CreateComputedSignal(tracker => this.Person.Track(tracker).Value?.FirstName.Track(tracker));
+        this.PoBox = dispatcher.CreateComputedSignal(tracker => this.Person.Track(tracker).Value?.MailboxAddress.Track(tracker).Value?.PoBox.Track(tracker));
+
         this.Effect = dispatcher.CreateEffect(v =>
         {
-            v.Track(this.Person?.FirstName);
-            v.Track(this.Person?.MailboxAddress.Value?.PoBox);
-        }, () =>
-        {
-            this.StateHasChanged();
-        });
+            // v.Track(this.FirstName);
+            // v.Track(this.PoBox);
+        }, this.StateHasChanged);
 
         await LoadAsync();
-
-        await Task.Delay(5000);
-
-        this.Person.FirstName.Value = "New Name!";
     }
 
     public void Dispose()
@@ -97,7 +105,7 @@ else
             {
                 ObjectId = long.Parse(this.Id),
                 Results = new[]
-                    {
+                                                                                {
                     new Result
                     {
                         Include = m.Person.Nodes(v=>v.MailboxAddress.Node())
@@ -106,6 +114,6 @@ else
             });
 
 
-        this.Person = result.GetObject<Person>();
+        this.Person.Value = result.GetObject<Person>();
     }
 }

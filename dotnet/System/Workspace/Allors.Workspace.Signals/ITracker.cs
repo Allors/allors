@@ -5,7 +5,7 @@
 
 namespace Allors.Workspace
 {
-    public interface IDependency
+    public interface ITracker
     {
         void Track(IOperand operand);
   }

@@ -23,6 +23,7 @@ public class ValueSignal<T> : IValueSignal<T>
             {
                 this.value = value;
                 ++this.workspaceVersion;
+                this.dispatcher.ValueSignalOnChangedValue();
             }
         }
     }

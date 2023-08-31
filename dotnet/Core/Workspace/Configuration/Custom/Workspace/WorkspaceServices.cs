@@ -16,7 +16,6 @@ namespace Allors.Workspace
             this.ObjectFactory = objectFactory;
             this.M = m;
             this.DispatcherBuilder = new CoarseDispatcherBuilder();
-            this.TrackableFuncBuilder = new TrackableFuncBuilder();
         }
 
         public IObjectFactory ObjectFactory { get; }
@@ -24,8 +23,6 @@ namespace Allors.Workspace
         public M M { get; private set; }
 
         public IDispatcherBuilder DispatcherBuilder { get; set; }
-
-        public ITrackableFuncBuilder TrackableFuncBuilder { get; }
 
         public ITime Time { get; private set; }
 
@@ -45,7 +42,6 @@ namespace Allors.Workspace
                 { } type when type == typeof(M) => (T)this.M,
                 { } type when type == typeof(IObjectFactory) => (T)this.ObjectFactory,
                 { } type when type == typeof(IDispatcherBuilder) => (T)this.DispatcherBuilder,
-                { } type when type == typeof(ITrackableFuncBuilder) => (T)this.TrackableFuncBuilder,
                 { } type when type == typeof(ITime) => (T)this.Time,
                 _ => throw new NotSupportedException($"Service {typeof(T)} not supported")
             };

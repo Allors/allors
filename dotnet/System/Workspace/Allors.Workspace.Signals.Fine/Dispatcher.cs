@@ -12,7 +12,7 @@ namespace Allors.Workspace.Signals.Fine
     {
         private readonly IList<ICacheable> cacheables;
         private readonly IList<Effect> effects;
-       
+
         public Dispatcher(IWorkspace workspace)
         {
             this.cacheables = new List<ICacheable>();
@@ -27,23 +27,23 @@ namespace Allors.Workspace.Signals.Fine
             return new ValueSignal<T>(this, value);
         }
 
-        public IComputedSignal<T> CreateCalculatedSignal<T>(Func<IDependency, T> calculation)
+        public IComputedSignal<T> CreateComputedSignal<T>(Func<ITracker, T> calculation)
         {
-            var computedSignal =  new ComputedSignal<T>(calculation);
+            var computedSignal = new ComputedSignal<T>(calculation);
             this.cacheables.Add(computedSignal);
             return computedSignal;
         }
 
-        public IEffect CreateEffect(Action<IDependency> dependencies, Action action)
+        public IEffect CreateEffect(Action<ITracker> dependencies, Action action)
         {
             var effect = new Effect(this, dependencies, action);
             this.effects.Add(effect);
 
             effect.Raise();
-            
+
             return effect;
         }
-        
+
         public void Pause()
         {
             throw new NotImplementedException();
@@ -62,6 +62,11 @@ namespace Allors.Workspace.Signals.Fine
         public void RemoveEffect(Effect effect)
         {
             this.effects.Remove(effect);
+        }
+
+        public void ValueSignalOnChangedValue()
+        {
+            this.OnChange();
         }
 
         private void WorkspaceOnDatabaseChanged(object sender, DatabaseChangedEventArgs e)

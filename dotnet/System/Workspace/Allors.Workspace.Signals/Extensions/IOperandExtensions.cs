@@ -9,7 +9,7 @@ namespace Allors.Workspace
 
     public static class IOperandExtensions
     {
-        public static T Track<T>(this T @this, IDependency tracker) where T : IOperand
+        public static T Track<T>(this T @this, ITracker tracker) where T : IOperand
         {
             tracker.Track(@this);
             return @this;
