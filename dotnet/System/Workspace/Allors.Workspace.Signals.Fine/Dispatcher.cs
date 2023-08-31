@@ -27,14 +27,14 @@ namespace Allors.Workspace.Signals.Fine
             return new ValueSignal<T>(this, value);
         }
 
-        public IComputedSignal<T> CreateCalculatedSignal<T>(Func<IDependencyTracker, T> calculation)
+        public IComputedSignal<T> CreateCalculatedSignal<T>(Func<IDependency, T> calculation)
         {
             var computedSignal =  new ComputedSignal<T>(calculation);
             this.cacheables.Add(computedSignal);
             return computedSignal;
         }
 
-        public IEffect CreateEffect(Action<IDependencyTracker> dependencies, Action action)
+        public IEffect CreateEffect(Action<IDependency> dependencies, Action action)
         {
             var effect = new Effect(this, dependencies, action);
             this.effects.Add(effect);

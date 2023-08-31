@@ -8,8 +8,8 @@ namespace Allors.Workspace
     using System;
     using System.Linq.Expressions;
 
-    public interface IReactiveFuncBuilder
+    public interface ITrackableFuncBuilder
     {
-        Func<IDependencyTracker, TValue> Build<TValue>(Expression<Func<TValue>> expression);
+        Func<IDependency, TValue> Build<TValue>(Expression<Func<TValue>> funcExpression);
     }
 }

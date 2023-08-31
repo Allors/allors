@@ -5,18 +5,19 @@
 
 namespace Allors.Workspace.Configuration
 {
-    using System.ComponentModel;
     using System.Linq;
     using System.Linq.Expressions;
     using System.Reflection;
 
-    public class ReactiveFuncVisitor : ExpressionVisitor
+    public class TrackableFuncVisitor : ExpressionVisitor
     {
+        private static readonly MethodInfo TrackMethodInfo = typeof(IOperandExtensions).GetMethod("Track");
+
         private ParameterExpression dependencies;
 
         protected override Expression VisitLambda<T>(Expression<T> node)
         {
-            this.dependencies = Expression.Parameter(typeof(IDependencyTracker), "_tracker_");
+            this.dependencies = Expression.Parameter(typeof(IDependency), "_tracker_");
             var body = this.Visit(node.Body);
             return Expression.Lambda(body, node.Name, node.Parameters.Append(this.dependencies));
         }
@@ -25,30 +26,31 @@ namespace Allors.Workspace.Configuration
         {
             var member = node.Member;
 
-            if (member is EventInfo eventInfo)
+            if (member is FieldInfo fieldInfo)
             {
+                var fieldType = fieldInfo.FieldType;
 
-            }
-            else if (member is FieldInfo fieldInfo)
-            {
-
-            }
-            else if (member is MethodInfo methodInfo)
-            {
-                var x = member.ToString();
+                if (fieldType.GetInterfaces().Contains(typeof(IOperand)))
+                {
+                    var trackMethodInfo = TrackMethodInfo.MakeGenericMethod(node.Type);
+                    var methodCallExpression = Expression.Call(null, trackMethodInfo, base.VisitMember(node), this.dependencies);
+                    return methodCallExpression;
+                }
             }
             else if (member is PropertyInfo propertyInfo)
             {
                 var propertyType = propertyInfo.PropertyType;
 
-                if (propertyType.GetInterfaces().Contains(typeof(INotifyPropertyChanged)))
+                if (propertyType.GetInterfaces().Contains(typeof(IOperand)))
                 {
-                    var trackMethodInfo = typeof(ISignalExtensions).GetMethod("Track").MakeGenericMethod(node.Type);
-
+                    var trackMethodInfo = TrackMethodInfo.MakeGenericMethod(node.Type);
                     var methodCallExpression = Expression.Call(null, trackMethodInfo, base.VisitMember(node), this.dependencies);
-
                     return methodCallExpression;
                 }
+            }
+            else if (member is MethodInfo methodInfo)
+            {
+                var x = member.ToString();
             }
 
             return base.VisitMember(node);

@@ -2,15 +2,15 @@
 
 using System;
 
-public class ComputedSignal<T> : IComputedSignal<T>, IDependencyTracker, ICacheable
+public class ComputedSignal<T> : IComputedSignal<T>, IDependency, ICacheable
 {
-    private readonly Func<IDependencyTracker, T> expression;
+    private readonly Func<IDependency, T> expression;
 
     private T value;
     private bool isCached;
     private long workspaceVersion;
 
-    public ComputedSignal(Func<IDependencyTracker, T> expression)
+    public ComputedSignal(Func<IDependency, T> expression)
     {
         this.expression = expression;
         this.isCached = false;

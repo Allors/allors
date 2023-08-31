@@ -15,8 +15,8 @@ namespace Allors.Workspace
         {
             this.ObjectFactory = objectFactory;
             this.M = m;
-            this.DispatcherBuilder = new FineDispatcherBuilder();
-            this.ReactiveFuncBuilder = new ReactiveFuncBuilder();
+            this.DispatcherBuilder = new CoarseDispatcherBuilder();
+            this.TrackableFuncBuilder = new TrackableFuncBuilder();
         }
 
         public IObjectFactory ObjectFactory { get; }
@@ -25,7 +25,7 @@ namespace Allors.Workspace
 
         public IDispatcherBuilder DispatcherBuilder { get; set; }
 
-        public IReactiveFuncBuilder ReactiveFuncBuilder { get; }
+        public ITrackableFuncBuilder TrackableFuncBuilder { get; }
 
         public ITime Time { get; private set; }
 
@@ -39,15 +39,15 @@ namespace Allors.Workspace
         }
 
         public T Get<T>() =>
-           typeof(T) switch
-           {
-               // Core
-               { } type when type == typeof(M) => (T)this.M,
-               { } type when type == typeof(IObjectFactory) => (T)this.ObjectFactory,
-               { } type when type == typeof(IDispatcherBuilder) => (T)this.DispatcherBuilder,
-               { } type when type == typeof(IReactiveFuncBuilder) => (T)this.ReactiveFuncBuilder,
-               { } type when type == typeof(ITime) => (T)this.Time,
-               _ => throw new NotSupportedException($"Service {typeof(T)} not supported")
-           };
+            typeof(T) switch
+            {
+                // Core
+                { } type when type == typeof(M) => (T)this.M,
+                { } type when type == typeof(IObjectFactory) => (T)this.ObjectFactory,
+                { } type when type == typeof(IDispatcherBuilder) => (T)this.DispatcherBuilder,
+                { } type when type == typeof(ITrackableFuncBuilder) => (T)this.TrackableFuncBuilder,
+                { } type when type == typeof(ITime) => (T)this.Time,
+                _ => throw new NotSupportedException($"Service {typeof(T)} not supported")
+            };
     }
 }

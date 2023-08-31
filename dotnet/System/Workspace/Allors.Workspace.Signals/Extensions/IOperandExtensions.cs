@@ -5,8 +5,14 @@
 
 namespace Allors.Workspace
 {
-    public interface IDependencyTracker
+    using System.ComponentModel;
+
+    public static class IOperandExtensions
     {
-        void Track(IOperand operand);
-  }
+        public static T Track<T>(this T @this, IDependency tracker) where T : IOperand
+        {
+            tracker.Track(@this);
+            return @this;
+        }
+    }
 }

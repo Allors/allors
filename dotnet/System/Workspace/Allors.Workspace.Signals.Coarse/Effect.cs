@@ -2,9 +2,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
-public class Effect : IEffect, IDependencyTracker
+public class Effect : IEffect, IDependency
 {
     private static readonly IDictionary<IOperand, long> EmptyDictionary = new Dictionary<IOperand, long>();
 
@@ -15,7 +14,7 @@ public class Effect : IEffect, IDependencyTracker
 
     private bool shouldRaise;
 
-    public Effect(Dispatcher dispatcher, Action<IDependencyTracker> dependencies, Action action)
+    public Effect(Dispatcher dispatcher, Action<IDependency> dependencies, Action action)
     {
         this.dispatcher = dispatcher;
         this.Dependencies = dependencies;
@@ -24,7 +23,7 @@ public class Effect : IEffect, IDependencyTracker
         this.workspaceVersionByOperand = EmptyDictionary;
     }
 
-    public Action<IDependencyTracker> Dependencies { get; }
+    public Action<IDependency> Dependencies { get; }
 
     public Action Action { get; }
 

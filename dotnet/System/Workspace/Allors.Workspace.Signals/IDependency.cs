@@ -5,14 +5,8 @@
 
 namespace Allors.Workspace
 {
-    using System.ComponentModel;
-
-    public static class ISignalExtensions
+    public interface IDependency
     {
-        public static T Track<T>(this T @this, IDependencyTracker tracker) where T : ISignal
-        {
-            tracker.Track(@this);
-            return @this;
-        }
-    }
+        void Track(IOperand operand);
+  }
 }

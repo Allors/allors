@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Interface Name="Allors.Workspace.IValueSignal&lt;T&gt;" Collapsed="true">
-    <Position X="3.5" Y="4.5" Width="1.5" />
+    <Position X="5" Y="4.5" Width="1.5" />
     <InheritanceLine Type="Allors.Workspace.ISignal&lt;T&gt;" FixedToPoint="true">
       <Path>
-        <Point X="6.25" Y="3.691" />
-        <Point X="6.25" Y="4.125" />
-        <Point X="4.625" Y="4.125" />
-        <Point X="4.625" Y="4.5" />
+        <Point X="7.75" Y="3.691" />
+        <Point X="7.75" Y="4.125" />
+        <Point X="6.125" Y="4.125" />
+        <Point X="6.125" Y="4.5" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
@@ -16,7 +16,7 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="Allors.Workspace.ISignal" Collapsed="true">
-    <Position X="4.5" Y="1.75" Width="1.5" />
+    <Position X="6" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
       <FileName>ISignal.cs</FileName>
@@ -30,36 +30,43 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="Allors.Workspace.IEffect" Collapsed="true">
-    <Position X="7.75" Y="0.5" Width="1.5" />
+    <Position X="8" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>IEffect.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Allors.Workspace.ISignal&lt;T&gt;" Collapsed="true">
-    <Position X="5.5" Y="3" Width="1.5" />
+    <Position X="7" Y="3" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
       <FileName>ISignal.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Allors.Workspace.IValueSignal" Collapsed="true">
-    <Position X="3.5" Y="3" Width="1.5" />
+    <Position X="5" Y="3" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
       <FileName>IValueSignal.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Allors.Workspace.IComputedSignal&lt;T&gt;" Collapsed="true">
-    <Position X="5.5" Y="4.5" Width="1.75" />
+    <Position X="7" Y="4.5" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>IComputedSignal.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Allors.Workspace.IOperand" Collapsed="true">
-    <Position X="4.5" Y="0.5" Width="1.5" />
+    <Position X="6" Y="0.5" Width="1.5" />
     <TypeIdentifier />
+  </Interface>
+  <Interface Name="Allors.Workspace.IDependencyTracker">
+    <Position X="3.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IDependency.cs</FileName>
+    </TypeIdentifier>
   </Interface>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

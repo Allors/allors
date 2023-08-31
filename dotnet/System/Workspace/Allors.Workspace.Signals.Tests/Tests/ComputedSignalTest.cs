@@ -9,13 +9,13 @@
     {
         [Test]
         [TestCaseSource(nameof(TestImplementations))]
-        public async Task ReactiveFuncBuilder(Implementations implementation)
+        public async Task TrackableFuncBuilder(Implementations implementation)
         {
             await this.Login("jane@example.com");
             var workspace = this.Workspace;
             SelectImplementation(workspace, implementation);
 
-            var reactiveFuncBuilder = workspace.Services.Get<IReactiveFuncBuilder>();
+            var reactiveFuncBuilder = workspace.Services.Get<ITrackableFuncBuilder>();
             var dispatcherBuilder = workspace.Services.Get<IDispatcherBuilder>();
             var dispatcher = dispatcherBuilder.Build(workspace);
 

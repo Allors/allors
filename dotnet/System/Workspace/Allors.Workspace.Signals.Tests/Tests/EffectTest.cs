@@ -1,7 +1,5 @@
 ﻿namespace Allors.Workspace.Signals.Tests
 {
-    using System.Linq.Expressions;
-    using Data;
     using Domain;
 
     public class EffectTest : Test
