@@ -33,10 +33,10 @@ namespace Allors.Workspace.Configuration
                 return new Adapters.Direct.Connection(configuration, database, servicesBuilder) { UserId = userId };
             });
 
-            services.AddScoped(serviceProvider =>
+            services.AddScoped<IWorkspaceFactory>(serviceProvider =>
             {
                 var databaseConnection = serviceProvider.GetRequiredService<Connection>();
-                return databaseConnection.CreateWorkspace();
+                return new FuncWorkspaceFactory(() => databaseConnection.CreateWorkspace());
             });
         }
     }

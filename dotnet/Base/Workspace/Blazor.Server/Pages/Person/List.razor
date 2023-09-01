@@ -5,7 +5,7 @@
 @using Allors.Workspace.Meta
 @using Task = System.Threading.Tasks.Task
 @implements IDisposable
-@inject IWorkspace Workspace
+@inject IWorkspaceFactory WorkspaceFactory
 
 <PageTitle>People</PageTitle>
 
@@ -43,12 +43,15 @@ else
 }
 
 @code {
+    public IWorkspace Workspace = null!;
+
     public IValueSignal<Person[]> People { get; private set; }
 
     public IEffect Effect { get; private set; }
 
     protected override async Task OnInitializedAsync()
     {
+        this.Workspace = this.WorkspaceFactory.CreateWorkspace();
         var m = this.Workspace.Services.Get<M>();
         var dispatcher = this.Workspace.Services.Get<IDispatcherBuilder>().Build(this.Workspace);
 

@@ -5,8 +5,7 @@
 @using Allors.Workspace.Meta
 @using Task = System.Threading.Tasks.Task
 @implements IDisposable
-@inject IWorkspace Workspace
-
+@inject IWorkspaceFactory WorkspaceFactory
 
 <PageTitle>People</PageTitle>
 
@@ -28,25 +27,28 @@ else
 @code {
 
     [Parameter]
-    public string Id { get; set; }
+    public string Id { get; set; } = null!;
 
-    public IValueSignal<Person> Person { get; private set; }
+    public IWorkspace Workspace = null!;
 
-    public IEffect Effect { get; private set; }
+    public IValueSignal<Person?> Person { get; private set; } = null!;
+
+    public IEffect Effect { get; private set; } = null!;
 
     protected override async Task OnInitializedAsync()
     {
+        this.Workspace = this.WorkspaceFactory.CreateWorkspace();
         var m = this.Workspace.Services.Get<M>();
         var dispatcher = this.Workspace.Services.Get<IDispatcherBuilder>().Build(this.Workspace);
 
-        this.Person = dispatcher.CreateValueSignal<Person>(null);
+        this.Person = dispatcher.CreateValueSignal<Person?>(null);
         this.Effect = dispatcher.CreateEffect(v => v.Track(this.Person), this.StateHasChanged);
 
         var result = await this.Workspace.PullAsync(new Pull
             {
                 ObjectId = long.Parse(this.Id),
                 Results = new[]
-                                        {
+                                            {
                     new Result
                     {
                         Select = new Select
