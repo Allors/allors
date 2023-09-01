@@ -4,7 +4,6 @@
 @using Allors.Workspace.Domain
 @using Allors.Workspace.Meta
 @using Task = System.Threading.Tasks.Task
-@using System.Linq.Expressions
 @implements IDisposable
 @inject IWorkspace Workspace
 @inject NavigationManager NavigationManager
@@ -18,7 +17,7 @@
     </div>
 }
 
-@if (this.Person == null)
+@if (this.Person.Value == null)
 {
     <div class="spinner-border text-primary" role="status">
         <span class="sr-only"></span>
@@ -29,18 +28,18 @@ else
     <EditForm Model="@this.Person" OnValidSubmit=@ValidFormSubmitted>
         <div class="form-group">
             <label for="FirstName">First Name</label>
-            <InputText @bind-Value=this.FirstName.Value.Value class="form-control" id="FirstName" />
+            <InputText @bind-Value=this.FirstName.Value!.Value class="form-control" id="FirstName" />
         </div>
 
         <div class="form-group">
             <label for="PoBox">P.O. Box</label>
-            @if (this.PoBox.Value != null)
+            @if (this.PoBox.Value == null)
             {
-                <InputText @bind-Value=this.PoBox.Value.Value class="form-control" id="PoBox" />
+                <input readonly class="form-control" id="PoBox" value="not defined">
             }
             else
             {
-                <input readonly class="form-control" id="PoBox" value="not defined">
+                <InputText @bind-Value=this.PoBox.Value.Value class="form-control" id="PoBox" />
             }
         </div>
 
@@ -50,30 +49,33 @@ else
 
 @code {
     [Parameter]
-    public string Id { get; set; }
+    public string Id { get; set; } = null!;
 
-    public IPushResult Result { get; set; }
+    public IPushResult? Result { get; set; } 
 
-    public IValueSignal<Person?> Person { get; private set; }
+    public IValueSignal<Person?> Person { get; private set; } = null!;
 
-    public IComputedSignal<IUnitRole<string>?> FirstName { get; private set; }
+    public IComputedSignal<IUnitRole<string>?> FirstName { get; private set; } = null!;
 
-    public IComputedSignal<IUnitRole<string>?> PoBox { get; private set; }
+    public IComputedSignal<ICompositeRole<MailboxAddress>?> MailboxAddress { get; private set; } = null!;
 
-    public IEffect Effect { get; private set; }
+    public IComputedSignal<IUnitRole<string>?> PoBox { get; private set; } = null!;
+
+    public IEffect Effect { get; private set; } = null!;
 
     protected override async Task OnInitializedAsync()
     {
         var dispatcher = this.Workspace.Services.Get<IDispatcherBuilder>().Build(this.Workspace);
 
         this.Person = dispatcher.CreateValueSignal<Person?>(null);
-        this.FirstName = dispatcher.CreateComputedSignal(tracker => this.Person.Track(tracker).Value?.FirstName.Track(tracker));
-        this.PoBox = dispatcher.CreateComputedSignal(tracker => this.Person.Track(tracker).Value?.MailboxAddress.Track(tracker).Value?.PoBox.Track(tracker));
+        this.FirstName = dispatcher.CreateComputedSignal(tracker => this.Person.TrackedValue(tracker)?.FirstName.Track(tracker));
+        this.MailboxAddress = dispatcher.CreateComputedSignal(tracker => this.Person.TrackedValue(tracker)?.MailboxAddress.Track(tracker));
+        this.PoBox = dispatcher.CreateComputedSignal(tracker => this.MailboxAddress.TrackedValue(tracker).TrackedValue(tracker)?.PoBox.Track(tracker));
 
         this.Effect = dispatcher.CreateEffect(v =>
         {
-            // v.Track(this.FirstName);
-            // v.Track(this.PoBox);
+            v.Track(this.FirstName);
+            v.Track(this.PoBox);
         }, this.StateHasChanged);
 
         await LoadAsync();
@@ -105,7 +107,7 @@ else
             {
                 ObjectId = long.Parse(this.Id),
                 Results = new[]
-                                                                                {
+                                                                                                    {
                     new Result
                     {
                         Include = m.Person.Nodes(v=>v.MailboxAddress.Node())

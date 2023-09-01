@@ -32,6 +32,7 @@ else
                 <tr>
                     <td>@person.FirstName</td>
                     <td>@person.DomainGreeting</td>
+                    <td>@person.MailboxAddress.Value?.PoBox</td>
                     <td>
                         <NavLink href="@Overview(person)">view</NavLink>
                     </td>
@@ -57,6 +58,13 @@ else
         var pull = new Pull
             {
                 Extent = new Filter(m.Person),
+                Results = new[]
+                {
+                    new Result
+                    {
+                        Include = m.Person.Nodes(v=>v.MailboxAddress.Node())
+                    }
+                }
             };
 
         var result = await this.Workspace.PullAsync(pull);
