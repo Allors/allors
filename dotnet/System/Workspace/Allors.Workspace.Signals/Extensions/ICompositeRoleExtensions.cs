@@ -5,9 +5,10 @@
 
 namespace Allors.Workspace
 {
-    public static class IUnitRoleExtensions
+    public static class ICompositeRoleExtensions
     {
-        public static T TrackedValue<T>(this IUnitRole<T> @this, ITracker tracker)
+        public static T TrackedValue<T>(this ICompositeRole<T> @this, ITracker tracker)
+            where T : class, IObject
         {
             tracker.Track(@this);
             return @this.Value;

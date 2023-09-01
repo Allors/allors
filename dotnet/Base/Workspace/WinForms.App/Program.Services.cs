@@ -8,7 +8,6 @@
     using Allors.Workspace.Configuration;
     using Allors.Workspace.Meta;
     using Allors.Workspace.Meta.Static;
-    using Allors.Workspace.Mvvm.Services;
     using Forms;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
@@ -40,8 +39,8 @@
                     // Allors
                     services.AddSingleton(connection);
                     services.AddSingleton<Connection>(connection);
-                    services.AddSingleton<IWorkspaceFactoryService, WorkspaceFactoryService>();
-                    services.AddScoped(v => v.GetService<IWorkspaceFactoryService>().CreateWorkspace());
+                    services.AddSingleton<IWorkspaceFactory, WorkspaceFactory>();
+                    services.AddScoped(v => v.GetService<IWorkspaceFactory>().CreateWorkspace());
 
                     // Services
                     services.AddSingleton<IMdiService, MdiService>();

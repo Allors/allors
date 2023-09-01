@@ -47,11 +47,11 @@
 
             var personViewModel = new PersonViewModel(person);
 
-            Assert.That(personViewModel.Greeting, Is.EqualTo("Hello John"));
+            Assert.That(personViewModel.Greeting, Is.EqualTo("Hello John!"));
 
             personViewModel.FirstName = "Jane";
 
-            Assert.That(personViewModel.Greeting, Is.EqualTo("Hello Jane"));
+            Assert.That(personViewModel.Greeting, Is.EqualTo("Hello Jane!"));
         }
     }
 }

@@ -3,37 +3,50 @@
 using System.Linq.Expressions;
 using Allors.Workspace;
 using Allors.Workspace.Domain;
-using Allors.Workspace.Mvvm;
-using Allors.Workspace.Mvvm.Adapters;
+using CommunityToolkit.Mvvm.ComponentModel;
 
-public partial class PersonViewModel : ViewModel<Person>
+public partial class PersonViewModel : ObservableObject
 {
-    private readonly UnitRoleAdapter<string> firstName;
-    private readonly ExpressionAdapter<Person, string> poBox;
-    private readonly ExpressionAdapter<Person, string> fullName;
-    private readonly GreetingAdapter greeting;
+    private readonly IValueSignal<Person> model;
+
+    private readonly IComputedSignal<IUnitRole<string>> firstName;
+    private readonly IComputedSignal<string> fullName;
+    private readonly IComputedSignal<string> greeting;
+
+    private readonly IComputedSignal<ICompositeRole<MailboxAddress>> mailboxAddress;
+    private readonly IComputedSignal<IUnitRole<string>?> poBox;
 
     public PersonViewModel(Person model)
     {
         var workspace = model.Strategy.Workspace;
-        var reactiveFuncBuilder = workspace.Services.Get<IReactiveFuncBuilder>();
-        var reactiveExpressionBuilder = workspace.Services.Get<IReactiveExpressionBuilder>();
+        var dispatcher = workspace.Services.Get<IDispatcherBuilder>().Build(workspace);
 
-        this.Model = model;
-        this.firstName = new UnitRoleAdapter<string>(this, model.FirstName);
+        this.model = dispatcher.CreateValueSignal(model);
 
-        Expression<Func<Person, string>> expression = (v => v.FirstName.Value + " " + v.LastName.Value);
-        this.fullName = new(this, reactiveExpressionBuilder.Build(model, reactiveFuncBuilder.Build(expression)), "FullName");
+        this.firstName = dispatcher.CreateComputedSignal(tracker => this.model.TrackedValue(tracker).FirstName.Track(tracker));
+        this.fullName = dispatcher.CreateComputedSignal(tracker =>
+        {
+            var personValue = this.model.TrackedValue(tracker);
+            string firstNameValue = personValue.FirstName.TrackedValue(tracker);
+            string lastNameValue = personValue.LastName.TrackedValue(tracker);
+            return $"{firstNameValue} {lastNameValue}".Trim();
+        });
+        this.greeting = dispatcher.CreateComputedSignal(tracker =>
+        {
+            var fullNameValue = this.fullName.TrackedValue(tracker);
+            return $"Hello {fullNameValue}!";
+        });
 
-        this.greeting = new GreetingAdapter(model, this);
+        this.mailboxAddress = dispatcher.CreateComputedSignal(tracker => this.model.TrackedValue(tracker).MailboxAddress.Track(tracker));
+        this.poBox = dispatcher.CreateComputedSignal(tracker => this.mailboxAddress.TrackedValue(tracker)?.TrackedValue(tracker)?.PoBox.Track(tracker));
     }
 
-    public override Person Model { get; }
+    public Person Model { get => this.model.Value; }
 
     public string FirstName
     {
-        get => this.firstName.Value;
-        set => this.firstName.Value = value;
+        get => this.firstName.Value.Value;
+        set => this.firstName.Value.Value = value;
     }
 
     public string FullName => this.fullName.Value;

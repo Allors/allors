@@ -2,12 +2,10 @@
 {
     using Allors.Workspace;
     using Allors.Workspace.Adapters;
-    using Allors.Workspace.Mvvm.Services;
-    using ViewModels.Services;
 
-    public class WorkspaceFactoryService : IWorkspaceFactoryService
+    public class WorkspaceFactory : IWorkspaceFactory
     {
-        public WorkspaceFactoryService(Connection connection) => this.Connection = connection;
+        public WorkspaceFactory(Connection connection) => this.Connection = connection;
 
         public Connection Connection { get; }
 

@@ -1,8 +1,6 @@
 ﻿namespace Allors.Workspace.Mvvm.SourceGenerators.Tests
 {
-    using System.Diagnostics;
     using System.Reflection;
-    using Adapters;
     using Generator;
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
@@ -14,9 +12,9 @@
         /// </summary>
         private MyViewModel myViewModel;
 
-        private class MyViewModel : ViewModel<IObject>
+        private class MyViewModel
         {
-            public override IObject Model { get; }
+            public IObject Model { get; }
         }
 
         [SetUp]
