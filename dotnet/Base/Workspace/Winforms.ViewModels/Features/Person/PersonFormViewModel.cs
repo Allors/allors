@@ -10,14 +10,21 @@ using Services;
 using Person = Allors.Workspace.Domain.Person;
 using Task = Task;
 
-public partial class PersonFormViewModel : ObservableObject
+public partial class PersonFormViewModel : ObservableObject, IDisposable
 {
-    private PersonViewModel selected;
+    private readonly IValueSignal<PersonViewModel?> selected;
+
+    private readonly IEffect selectedChanged;
 
     public PersonFormViewModel(IWorkspace workspace, IMessageService messageService)
     {
         this.Workspace = workspace;
         this.MessageService = messageService;
+        var dispatcher = workspace.Services.Get<IDispatcherBuilder>().Build(workspace);
+
+        this.selected = dispatcher.CreateValueSignal<PersonViewModel>(null);
+
+        this.selectedChanged = dispatcher.CreateEffect(tracker => this.selected.Track(tracker), () => this.OnPropertyChanged(nameof(Selected)));
     }
 
     public IWorkspace Workspace { get; set; }
@@ -26,12 +33,12 @@ public partial class PersonFormViewModel : ObservableObject
 
     public ObservableCollection<PersonViewModel> People { get; } = new();
 
-    public PersonViewModel Selected
+    public PersonViewModel? Selected
     {
-        get => this.selected;
+        get => this.selected.Value;
         set
         {
-            this.SetProperty(ref this.selected, value);
+            this.selected.Value = value;
         }
     }
 
@@ -50,6 +57,13 @@ public partial class PersonFormViewModel : ObservableObject
         var pull = new Pull
         {
             Extent = new Filter(m.Person),
+            Results = new[]
+            {
+                new Result
+                {
+                    Include = m.Person.Nodes(v=>v.MailboxAddress.Node())
+                }
+            }
         };
 
         var result = await this.Workspace.PullAsync(pull);
@@ -78,5 +92,10 @@ public partial class PersonFormViewModel : ObservableObject
         this.Workspace.Reset();
 
         await this.LoadAsync();
+    }
+
+    public void Dispose()
+    {
+        this.selectedChanged.Dispose();
     }
 }

@@ -32,226 +32,238 @@
         {
             this.components = new System.ComponentModel.Container();
             var resources = new System.ComponentModel.ComponentResourceManager(typeof(PersonForm));
-            personFormControllerBindingSource = new BindingSource(this.components);
-            toolStrip1 = new ToolStrip();
-            loadToolStripButton = new ToolStripButton();
-            saveToolStripButton = new ToolStripButton();
-            showDialogToolStripButton = new ToolStripButton();
-            splitContainer1 = new SplitContainer();
-            dataGridView1 = new DataGridView();
-            FirstName = new DataGridViewTextBoxColumn();
-            firstNameDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            peopleBindingSource = new BindingSource(this.components);
-            textBox4 = new TextBox();
-            label4 = new Label();
-            textBox3 = new TextBox();
-            label3 = new Label();
-            textBox2 = new TextBox();
-            label2 = new Label();
-            textBox1 = new TextBox();
-            label1 = new Label();
-            ((System.ComponentModel.ISupportInitialize)personFormControllerBindingSource).BeginInit();
-            toolStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
-            splitContainer1.Panel1.SuspendLayout();
-            splitContainer1.Panel2.SuspendLayout();
-            splitContainer1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)peopleBindingSource).BeginInit();
+            this.personFormControllerBindingSource = new BindingSource(this.components);
+            this.toolStrip1 = new ToolStrip();
+            this.loadToolStripButton = new ToolStripButton();
+            this.saveToolStripButton = new ToolStripButton();
+            this.showDialogToolStripButton = new ToolStripButton();
+            this.splitContainer1 = new SplitContainer();
+            this.dataGridView1 = new DataGridView();
+            this.FirstName = new DataGridViewTextBoxColumn();
+            this.firstNameDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            this.peopleBindingSource = new BindingSource(this.components);
+            this.textBox4 = new TextBox();
+            this.label4 = new Label();
+            this.textBox3 = new TextBox();
+            this.label3 = new Label();
+            this.textBox2 = new TextBox();
+            this.label2 = new Label();
+            this.textBox1 = new TextBox();
+            this.label1 = new Label();
+            this.changeFirstNameButton = new Button();
+            ((System.ComponentModel.ISupportInitialize)this.personFormControllerBindingSource).BeginInit();
+            this.toolStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)this.splitContainer1).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)this.dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)this.peopleBindingSource).BeginInit();
             this.SuspendLayout();
             // 
             // personFormControllerBindingSource
             // 
-            personFormControllerBindingSource.DataSource = typeof(PersonFormViewModel);
+            this.personFormControllerBindingSource.DataSource = typeof(PersonFormViewModel);
             // 
             // toolStrip1
             // 
-            toolStrip1.ImageScalingSize = new Size(20, 20);
-            toolStrip1.Items.AddRange(new ToolStripItem[] { loadToolStripButton, saveToolStripButton, showDialogToolStripButton });
-            toolStrip1.Location = new Point(0, 0);
-            toolStrip1.Name = "toolStrip1";
-            toolStrip1.Size = new Size(1041, 27);
-            toolStrip1.TabIndex = 1;
-            toolStrip1.Text = "toolStrip1";
+            this.toolStrip1.ImageScalingSize = new Size(20, 20);
+            this.toolStrip1.Items.AddRange(new ToolStripItem[] { this.loadToolStripButton, this.saveToolStripButton, this.showDialogToolStripButton });
+            this.toolStrip1.Location = new Point(0, 0);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new Size(1041, 27);
+            this.toolStrip1.TabIndex = 1;
+            this.toolStrip1.Text = "toolStrip1";
             // 
             // loadToolStripButton
             // 
-            loadToolStripButton.DataBindings.Add(new Binding("Command", personFormControllerBindingSource, "LoadCommand", true));
-            loadToolStripButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            loadToolStripButton.Image = (Image)resources.GetObject("loadToolStripButton.Image");
-            loadToolStripButton.ImageTransparentColor = Color.Magenta;
-            loadToolStripButton.Name = "loadToolStripButton";
-            loadToolStripButton.Size = new Size(46, 24);
-            loadToolStripButton.Text = "Load";
+            this.loadToolStripButton.DataBindings.Add(new Binding("Command", this.personFormControllerBindingSource, "LoadCommand", true));
+            this.loadToolStripButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            this.loadToolStripButton.Image = (Image)resources.GetObject("loadToolStripButton.Image");
+            this.loadToolStripButton.ImageTransparentColor = Color.Magenta;
+            this.loadToolStripButton.Name = "loadToolStripButton";
+            this.loadToolStripButton.Size = new Size(46, 24);
+            this.loadToolStripButton.Text = "Load";
             // 
             // saveToolStripButton
             // 
-            saveToolStripButton.DataBindings.Add(new Binding("Command", personFormControllerBindingSource, "SaveCommand", true));
-            saveToolStripButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            saveToolStripButton.Image = (Image)resources.GetObject("saveToolStripButton.Image");
-            saveToolStripButton.ImageTransparentColor = Color.Magenta;
-            saveToolStripButton.Name = "saveToolStripButton";
-            saveToolStripButton.Size = new Size(44, 24);
-            saveToolStripButton.Text = "Save";
+            this.saveToolStripButton.DataBindings.Add(new Binding("Command", this.personFormControllerBindingSource, "SaveCommand", true));
+            this.saveToolStripButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            this.saveToolStripButton.Image = (Image)resources.GetObject("saveToolStripButton.Image");
+            this.saveToolStripButton.ImageTransparentColor = Color.Magenta;
+            this.saveToolStripButton.Name = "saveToolStripButton";
+            this.saveToolStripButton.Size = new Size(44, 24);
+            this.saveToolStripButton.Text = "Save";
             // 
             // showDialogToolStripButton
             // 
-            showDialogToolStripButton.DataBindings.Add(new Binding("Command", personFormControllerBindingSource, "ShowDialogCommand", true));
-            showDialogToolStripButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            showDialogToolStripButton.Image = (Image)resources.GetObject("showDialogToolStripButton.Image");
-            showDialogToolStripButton.ImageTransparentColor = Color.Magenta;
-            showDialogToolStripButton.Name = "showDialogToolStripButton";
-            showDialogToolStripButton.Size = new Size(98, 24);
-            showDialogToolStripButton.Text = "Show Dialog";
+            this.showDialogToolStripButton.DataBindings.Add(new Binding("Command", this.personFormControllerBindingSource, "ShowDialogCommand", true));
+            this.showDialogToolStripButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            this.showDialogToolStripButton.Image = (Image)resources.GetObject("showDialogToolStripButton.Image");
+            this.showDialogToolStripButton.ImageTransparentColor = Color.Magenta;
+            this.showDialogToolStripButton.Name = "showDialogToolStripButton";
+            this.showDialogToolStripButton.Size = new Size(98, 24);
+            this.showDialogToolStripButton.Text = "Show Dialog";
             // 
             // splitContainer1
             // 
-            splitContainer1.Dock = DockStyle.Fill;
-            splitContainer1.Location = new Point(0, 27);
-            splitContainer1.Name = "splitContainer1";
+            this.splitContainer1.Dock = DockStyle.Fill;
+            this.splitContainer1.Location = new Point(0, 27);
+            this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
             // 
-            splitContainer1.Panel1.Controls.Add(dataGridView1);
+            this.splitContainer1.Panel1.Controls.Add(this.dataGridView1);
             // 
             // splitContainer1.Panel2
             // 
-            splitContainer1.Panel2.Controls.Add(textBox4);
-            splitContainer1.Panel2.Controls.Add(label4);
-            splitContainer1.Panel2.Controls.Add(textBox3);
-            splitContainer1.Panel2.Controls.Add(label3);
-            splitContainer1.Panel2.Controls.Add(textBox2);
-            splitContainer1.Panel2.Controls.Add(label2);
-            splitContainer1.Panel2.Controls.Add(textBox1);
-            splitContainer1.Panel2.Controls.Add(label1);
-            splitContainer1.Size = new Size(1041, 474);
-            splitContainer1.SplitterDistance = 347;
-            splitContainer1.TabIndex = 2;
+            this.splitContainer1.Panel2.Controls.Add(this.changeFirstNameButton);
+            this.splitContainer1.Panel2.Controls.Add(this.textBox4);
+            this.splitContainer1.Panel2.Controls.Add(this.label4);
+            this.splitContainer1.Panel2.Controls.Add(this.textBox3);
+            this.splitContainer1.Panel2.Controls.Add(this.label3);
+            this.splitContainer1.Panel2.Controls.Add(this.textBox2);
+            this.splitContainer1.Panel2.Controls.Add(this.label2);
+            this.splitContainer1.Panel2.Controls.Add(this.textBox1);
+            this.splitContainer1.Panel2.Controls.Add(this.label1);
+            this.splitContainer1.Size = new Size(1041, 474);
+            this.splitContainer1.SplitterDistance = 347;
+            this.splitContainer1.TabIndex = 2;
             // 
             // dataGridView1
             // 
-            dataGridView1.AutoGenerateColumns = false;
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { FirstName, firstNameDataGridViewTextBoxColumn });
-            dataGridView1.DataSource = peopleBindingSource;
-            dataGridView1.Dock = DockStyle.Fill;
-            dataGridView1.Location = new Point(0, 0);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.RowTemplate.Height = 29;
-            dataGridView1.Size = new Size(347, 474);
-            dataGridView1.TabIndex = 0;
+            this.dataGridView1.AutoGenerateColumns = false;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new DataGridViewColumn[] { this.FirstName, this.firstNameDataGridViewTextBoxColumn });
+            this.dataGridView1.DataSource = this.peopleBindingSource;
+            this.dataGridView1.Dock = DockStyle.Fill;
+            this.dataGridView1.Location = new Point(0, 0);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersWidth = 51;
+            this.dataGridView1.RowTemplate.Height = 29;
+            this.dataGridView1.Size = new Size(347, 474);
+            this.dataGridView1.TabIndex = 0;
             // 
             // FirstName
             // 
-            FirstName.DataPropertyName = "FirstName";
-            FirstName.HeaderText = "FirstName";
-            FirstName.MinimumWidth = 6;
-            FirstName.Name = "FirstName";
-            FirstName.Width = 125;
+            this.FirstName.DataPropertyName = "FirstName";
+            this.FirstName.HeaderText = "FirstName";
+            this.FirstName.MinimumWidth = 6;
+            this.FirstName.Name = "FirstName";
+            this.FirstName.Width = 125;
             // 
             // firstNameDataGridViewTextBoxColumn
             // 
-            firstNameDataGridViewTextBoxColumn.DataPropertyName = "FirstName";
-            firstNameDataGridViewTextBoxColumn.HeaderText = "FirstName";
-            firstNameDataGridViewTextBoxColumn.MinimumWidth = 6;
-            firstNameDataGridViewTextBoxColumn.Name = "firstNameDataGridViewTextBoxColumn";
-            firstNameDataGridViewTextBoxColumn.Width = 125;
+            this.firstNameDataGridViewTextBoxColumn.DataPropertyName = "FirstName";
+            this.firstNameDataGridViewTextBoxColumn.HeaderText = "FirstName";
+            this.firstNameDataGridViewTextBoxColumn.MinimumWidth = 6;
+            this.firstNameDataGridViewTextBoxColumn.Name = "firstNameDataGridViewTextBoxColumn";
+            this.firstNameDataGridViewTextBoxColumn.Width = 125;
             // 
             // peopleBindingSource
             // 
-            peopleBindingSource.DataMember = "People";
-            peopleBindingSource.DataSource = personFormControllerBindingSource;
-            peopleBindingSource.CurrentChanged += this.peopleBindingSource_CurrentChanged;
+            this.peopleBindingSource.DataMember = "People";
+            this.peopleBindingSource.DataSource = this.personFormControllerBindingSource;
+            this.peopleBindingSource.CurrentChanged += this.peopleBindingSource_CurrentChanged;
             // 
             // textBox4
             // 
-            textBox4.DataBindings.Add(new Binding("Text", peopleBindingSource, "Greeting", true));
-            textBox4.Location = new Point(347, 257);
-            textBox4.Name = "textBox4";
-            textBox4.Size = new Size(251, 27);
-            textBox4.TabIndex = 7;
+            this.textBox4.DataBindings.Add(new Binding("Text", this.peopleBindingSource, "Greeting", true));
+            this.textBox4.Location = new Point(347, 257);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new Size(251, 27);
+            this.textBox4.TabIndex = 7;
             // 
             // label4
             // 
-            label4.AutoSize = true;
-            label4.Location = new Point(123, 260);
-            label4.Name = "label4";
-            label4.Size = new Size(66, 20);
-            label4.TabIndex = 6;
-            label4.Text = "Greeting";
+            this.label4.AutoSize = true;
+            this.label4.Location = new Point(123, 260);
+            this.label4.Name = "label4";
+            this.label4.Size = new Size(66, 20);
+            this.label4.TabIndex = 6;
+            this.label4.Text = "Greeting";
             // 
             // textBox3
             // 
-            textBox3.DataBindings.Add(new Binding("Text", peopleBindingSource, "FullName", true));
-            textBox3.Location = new Point(347, 202);
-            textBox3.Name = "textBox3";
-            textBox3.Size = new Size(251, 27);
-            textBox3.TabIndex = 5;
+            this.textBox3.DataBindings.Add(new Binding("Text", this.peopleBindingSource, "FullName", true));
+            this.textBox3.Location = new Point(347, 202);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new Size(251, 27);
+            this.textBox3.TabIndex = 5;
             // 
             // label3
             // 
-            label3.AutoSize = true;
-            label3.Location = new Point(123, 205);
-            label3.Name = "label3";
-            label3.Size = new Size(76, 20);
-            label3.TabIndex = 4;
-            label3.Text = "Full Name";
+            this.label3.AutoSize = true;
+            this.label3.Location = new Point(123, 205);
+            this.label3.Name = "label3";
+            this.label3.Size = new Size(76, 20);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "Full Name";
             // 
             // textBox2
             // 
-            textBox2.DataBindings.Add(new Binding("Text", peopleBindingSource, "FirstName", true));
-            textBox2.Location = new Point(347, 143);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(251, 27);
-            textBox2.TabIndex = 3;
+            this.textBox2.DataBindings.Add(new Binding("Text", this.peopleBindingSource, "FirstName", true));
+            this.textBox2.Location = new Point(347, 143);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new Size(251, 27);
+            this.textBox2.TabIndex = 3;
             // 
             // label2
             // 
-            label2.AutoSize = true;
-            label2.Location = new Point(123, 146);
-            label2.Name = "label2";
-            label2.Size = new Size(169, 20);
-            label2.TabIndex = 2;
-            label2.Text = "First Name (ViewModel)";
+            this.label2.AutoSize = true;
+            this.label2.Location = new Point(123, 146);
+            this.label2.Name = "label2";
+            this.label2.Size = new Size(169, 20);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "First Name (ViewModel)";
             // 
             // textBox1
             // 
-            textBox1.DataBindings.Add(new Binding("Text", personFormControllerBindingSource, "Selected.FirstName", true));
-            textBox1.Location = new Point(347, 88);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(251, 27);
-            textBox1.TabIndex = 1;
+            this.textBox1.DataBindings.Add(new Binding("Text", this.personFormControllerBindingSource, "Selected.FirstName", true));
+            this.textBox1.Location = new Point(347, 88);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new Size(251, 27);
+            this.textBox1.TabIndex = 1;
             // 
             // label1
             // 
-            label1.AutoSize = true;
-            label1.Location = new Point(123, 91);
-            label1.Name = "label1";
-            label1.Size = new Size(126, 20);
-            label1.TabIndex = 0;
-            label1.Text = "First Name (View)";
+            this.label1.AutoSize = true;
+            this.label1.Location = new Point(123, 91);
+            this.label1.Name = "label1";
+            this.label1.Size = new Size(126, 20);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "First Name (View)";
+            // 
+            // changeFirstNameButton
+            // 
+            this.changeFirstNameButton.Location = new Point(347, 357);
+            this.changeFirstNameButton.Name = "changeFirstNameButton";
+            this.changeFirstNameButton.Size = new Size(251, 29);
+            this.changeFirstNameButton.TabIndex = 8;
+            this.changeFirstNameButton.Text = "Change First Name";
+            this.changeFirstNameButton.UseVisualStyleBackColor = true;
+            this.changeFirstNameButton.Click += this.changeFirstNameButton_Click;
             // 
             // PersonForm
             // 
             this.AutoScaleDimensions = new SizeF(8F, 20F);
             this.AutoScaleMode = AutoScaleMode.Font;
             this.ClientSize = new Size(1041, 501);
-            this.Controls.Add(splitContainer1);
-            this.Controls.Add(toolStrip1);
+            this.Controls.Add(this.splitContainer1);
+            this.Controls.Add(this.toolStrip1);
             this.Name = "PersonForm";
             this.Text = "PersonForm";
             this.DataContextChanged += this.PersonForm_DataContextChanged;
-            ((System.ComponentModel.ISupportInitialize)personFormControllerBindingSource).EndInit();
-            toolStrip1.ResumeLayout(false);
-            toolStrip1.PerformLayout();
-            splitContainer1.Panel1.ResumeLayout(false);
-            splitContainer1.Panel2.ResumeLayout(false);
-            splitContainer1.Panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
-            splitContainer1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)peopleBindingSource).EndInit();
+            ((System.ComponentModel.ISupportInitialize)this.personFormControllerBindingSource).EndInit();
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            this.splitContainer1.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)this.splitContainer1).EndInit();
+            this.splitContainer1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)this.dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)this.peopleBindingSource).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
         }
@@ -277,5 +289,6 @@
         private Label label3;
         private TextBox textBox4;
         private Label label4;
+        private Button changeFirstNameButton;
     }
 }

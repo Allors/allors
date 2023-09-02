@@ -34,5 +34,13 @@
                 }
             }
         }
+
+        private void changeFirstNameButton_Click(object sender, EventArgs e)
+        {
+            if (this.ViewModel.Selected != null)
+            {
+                this.ViewModel.Selected.FirstName += "!";
+            }
+        }
     }
 }

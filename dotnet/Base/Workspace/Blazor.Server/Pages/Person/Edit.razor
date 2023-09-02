@@ -71,9 +71,9 @@ else
         var dispatcher = this.Workspace.Services.Get<IDispatcherBuilder>().Build(this.Workspace);
 
         this.Person = dispatcher.CreateValueSignal<Person?>(null);
-        this.FirstName = dispatcher.CreateComputedSignal(tracker => this.Person.TrackedValue(tracker)?.FirstName.Track(tracker));
-        this.MailboxAddress = dispatcher.CreateComputedSignal(tracker => this.Person.TrackedValue(tracker)?.MailboxAddress.Track(tracker));
-        this.PoBox = dispatcher.CreateComputedSignal(tracker => this.MailboxAddress.TrackedValue(tracker).TrackedValue(tracker)?.PoBox.Track(tracker));
+        this.FirstName = dispatcher.CreateComputedSignal(tracker => this.Person.Track(tracker).Value?.FirstName.Track(tracker));
+        this.MailboxAddress = dispatcher.CreateComputedSignal(tracker => this.Person.Track(tracker).Value?.MailboxAddress.Track(tracker));
+        this.PoBox = dispatcher.CreateComputedSignal(tracker => this.MailboxAddress.Track(tracker).Value.Track(tracker).Value?.PoBox.Track(tracker));
 
         this.Effect = dispatcher.CreateEffect(v =>
         {
