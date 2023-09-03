@@ -1,26 +1,23 @@
 ﻿namespace Allors.Workspace.Mvvm.SourceGenerators.Tests
 {
+    using System.Diagnostics;
     using System.Reflection;
     using Generator;
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
+    using Signals;
 
     public class Test
     {
-        /// <summary>
-        /// This will trigger the activation of the Assembly that contains the parent class ViewModel<T>
-        /// </summary>
-        private MyViewModel myViewModel;
 
-        private class MyViewModel
-        {
-            public IObject Model { get; }
-        }
+        private IValueSignal<string>? mySignal;
 
         [SetUp]
         public void TestSetup()
         {
-            this.myViewModel = new MyViewModel();
+            // trigger the activation of the signal Assembly
+            IDispatcher dispatcher = null;
+            this.mySignal = dispatcher?.CreateValueSignal<string>("Hello");
         }
 
         protected string GetGeneratedOutput(string source)
@@ -39,18 +36,18 @@
 
             var compilation = CSharpCompilation.Create("foo", new SyntaxTree[] { syntaxTree }, references, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 
-            // TODO: Uncomment this line if you want to fail tests when the injected program isn't valid _before_ running generators
+            // fail if the injected program isn't valid before running generators
             var compileDiagnostics = compilation.GetDiagnostics();
             Assert.False(compileDiagnostics.Any(d => d.Severity == DiagnosticSeverity.Error), "Failed: " + compileDiagnostics.FirstOrDefault()?.GetMessage());
 
-            ISourceGenerator generator = new ViewModelGenerator();
-
+            ISourceGenerator generator = new SignalPropertyGenerator();
             var driver = CSharpGeneratorDriver.Create(generator);
             driver.RunGeneratorsAndUpdateCompilation(compilation, out var outputCompilation, out var generateDiagnostics);
+
+            // fail if the generation had errors
             Assert.False(generateDiagnostics.Any(d => d.Severity == DiagnosticSeverity.Error), "Failed: " + generateDiagnostics.FirstOrDefault()?.GetMessage());
 
             string output = outputCompilation.SyntaxTrees.Last().ToString();
-
             return output;
         }
     }

@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using Allors.Workspace;
 using Allors.Workspace.Data;
 using Allors.Workspace.Meta;
+using Allors.Workspace.Signals;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Services;

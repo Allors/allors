@@ -5,6 +5,7 @@
 
 namespace Allors.Workspace.Configuration
 {
+    using Signals;
     using Signals.Fine;
 
     public class FineDispatcherBuilder : IDispatcherBuilder

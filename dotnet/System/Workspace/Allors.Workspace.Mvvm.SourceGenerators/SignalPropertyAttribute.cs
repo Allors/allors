@@ -3,4 +3,4 @@
 using System;
 
 [AttributeUsage(AttributeTargets.Field, Inherited = false, AllowMultiple = false)]
-public sealed class AdapterPropertyAttribute : Attribute { }
+public sealed class SignalPropertyAttribute : Attribute { }

@@ -8,13 +8,13 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
 
 [Generator]
-public class ViewModelGenerator : ISourceGenerator
+public class SignalPropertyGenerator : ISourceGenerator
 {
     public void Initialize(GeneratorInitializationContext context) { }
 
     public void Execute(GeneratorExecutionContext context)
     {
-        var attributeSymbol = context.Compilation.GetTypeByMetadataName("Allors.Workspace.Mvvm.Generator.AdapterPropertyAttribute");
+        var attributeSymbol = context.Compilation.GetTypeByMetadataName("Allors.Workspace.Mvvm.Generator.SignalPropertyAttribute");
         var propertyCodeBuilder = new Dictionary<string, (string Namespace, StringBuilder Code)>();
 
         foreach (var syntaxTree in context.Compilation.SyntaxTrees)

@@ -3,6 +3,7 @@
 using System.Linq.Expressions;
 using Allors.Workspace;
 using Allors.Workspace.Domain;
+using Allors.Workspace.Signals;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 public partial class PersonViewModel : ObservableObject, IDisposable

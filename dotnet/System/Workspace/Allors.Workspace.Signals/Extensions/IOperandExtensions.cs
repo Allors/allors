@@ -3,10 +3,8 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Workspace
+namespace Allors.Workspace.Signals
 {
-    using System.ComponentModel;
-
     public static class IOperandExtensions
     {
         public static T Track<T>(this T @this, ITracker tracker) where T : IOperand
