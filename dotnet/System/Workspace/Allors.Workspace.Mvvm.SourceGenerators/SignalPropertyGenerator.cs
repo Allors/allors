@@ -14,12 +14,19 @@ public class SignalPropertyGenerator : ISourceGenerator
 
     public void Execute(GeneratorExecutionContext context)
     {
-        var attributeSymbol = context.Compilation.GetTypeByMetadataName("Allors.Workspace.Mvvm.Generator.SignalPropertyAttribute");
+        var project = new Project(context);
+        project.Build();
+        project.Generate();
+
+        return;
+
+        Compilation compilation = context.Compilation;
+        var attributeSymbol = compilation.GetTypeByMetadataName("Allors.Workspace.Mvvm.Generator.SignalPropertyAttribute");
         var propertyCodeBuilder = new Dictionary<string, (string Namespace, StringBuilder Code)>();
 
-        foreach (var syntaxTree in context.Compilation.SyntaxTrees)
+        foreach (var syntaxTree in compilation.SyntaxTrees)
         {
-            var model = context.Compilation.GetSemanticModel(syntaxTree);
+            var model = compilation.GetSemanticModel(syntaxTree);
 
             var fieldDeclarations = syntaxTree.GetRoot().DescendantNodes()
                 .OfType<FieldDeclarationSyntax>()

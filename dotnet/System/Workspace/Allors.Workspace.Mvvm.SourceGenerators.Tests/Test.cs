@@ -10,14 +10,14 @@
     public class Test
     {
 
-        private IValueSignal<string>? mySignal;
+        [SignalProperty] private IComputedSignal<IUnitRole<string?>> fullName;
 
         [SetUp]
         public void TestSetup()
         {
             // trigger the activation of the signal Assembly
             IDispatcher dispatcher = null;
-            this.mySignal = dispatcher?.CreateValueSignal<string>("Hello");
+            this.fullName = dispatcher?.CreateComputedSignal<IUnitRole<string?>>((tracker) => null);
         }
 
         protected string GetGeneratedOutput(string source)
