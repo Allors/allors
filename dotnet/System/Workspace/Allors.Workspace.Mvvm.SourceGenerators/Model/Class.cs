@@ -31,6 +31,8 @@ public class Class
 
     public INamespaceSymbol NamespaceSymbol { get; }
 
+    public string NamespaceFullyQualifiedName => this.NamespaceSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
+
     public string Name { get; }
 
     public IEnumerable<Field> Fields { get; private set; }
@@ -54,12 +56,12 @@ public class Class
 
         var fileName = this.Name + ".g.cs";
 
-        var generatedProperties = string.Join("\n", this.SignalFields.Select(v=>v.Generate()));
+        var generatedProperties = string.Join("\n", this.SignalFields.Select(v => v.Generate()));
 
         var code =
             $@"using System;
 
-namespace {this.NamespaceSymbol.Name};
+namespace {this.NamespaceFullyQualifiedName};
 
 public partial class {this.Name}
 {{

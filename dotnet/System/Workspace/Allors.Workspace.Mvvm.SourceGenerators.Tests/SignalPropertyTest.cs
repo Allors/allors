@@ -11,7 +11,7 @@ using Allors.Workspace;
 using Allors.Workspace.Signals;
 using Allors.Workspace.Mvvm.Generator;
 
-namespace Test;
+namespace Signal.Test;
 
 public partial class TestClass
 {
@@ -23,7 +23,7 @@ public partial class TestClass
             var expected =
                 @"using System;
 
-namespace Test;
+namespace global::Signal.Test;
 
 public partial class TestClass
 {
@@ -51,7 +51,7 @@ using Allors.Workspace;
 using Allors.Workspace.Signals;
 using Allors.Workspace.Mvvm.Generator;
 
-namespace Test;
+namespace Signal.Test;
 
 public partial class TestClass
 {
@@ -63,7 +63,7 @@ public partial class TestClass
             var expected =
                 @"using System;
 
-namespace Test;
+namespace global::Signal.Test;
 
 public partial class TestClass
 {
