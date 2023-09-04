@@ -16,8 +16,6 @@ public partial class PersonGeneratorFormViewModel : ObservableObject, IDisposabl
 {
     [SignalProperty] private readonly IValueSignal<PersonGeneratorViewModel?> selected;
 
-    private readonly IEffect selectedChanged;
-
     public PersonGeneratorFormViewModel(IWorkspace workspace, IMessageService messageService)
     {
         this.Workspace = workspace;
@@ -26,7 +24,7 @@ public partial class PersonGeneratorFormViewModel : ObservableObject, IDisposabl
 
         this.selected = dispatcher.CreateValueSignal<PersonGeneratorViewModel>(null);
 
-        this.selectedChanged = dispatcher.CreateEffect(tracker => this.selected.Track(tracker), () => this.OnPropertyChanged(nameof(Selected)));
+        this.OnInitEffects(dispatcher);
     }
 
     public IWorkspace Workspace { get; set; }
@@ -89,6 +87,6 @@ public partial class PersonGeneratorFormViewModel : ObservableObject, IDisposabl
 
     public void Dispose()
     {
-        this.selectedChanged.Dispose();
+        this.OnDisposeEffects();
     }
 }

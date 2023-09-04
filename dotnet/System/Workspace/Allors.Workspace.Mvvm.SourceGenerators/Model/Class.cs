@@ -56,16 +56,32 @@ public class Class
 
         var fileName = this.Name + ".g.cs";
 
-        var generatedProperties = string.Join("\n", this.SignalFields.Select(v => v.Generate()));
+        var effects = string.Join("\n", this.SignalFields.Select(v => v.GenerateEffects()));
+        var properties = string.Join("\n", this.SignalFields.Select(v => v.GenerateProperties()));
+        var initEffects = string.Join("\n", this.SignalFields.Select(v => v.GenerateInitEffects()));
+        var disposeEffects = string.Join("\n", this.SignalFields.Select(v => v.GenerateDisposeEffects()));
 
         var code =
             $@"using System;
+using Allors.Workspace.Signals;
 
 namespace {this.NamespaceFullyQualifiedName};
 
 public partial class {this.Name}
 {{
-{generatedProperties}
+{effects}
+
+{properties}
+
+    private void OnInitEffects(IDispatcher dispatcher)
+    {{
+{initEffects}
+    }}
+
+    private void OnDisposeEffects()
+    {{
+{disposeEffects}
+    }}
 }}
 ";
 

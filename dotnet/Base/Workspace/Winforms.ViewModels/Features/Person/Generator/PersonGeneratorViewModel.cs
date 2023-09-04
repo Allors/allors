@@ -17,11 +17,6 @@ public partial class PersonGeneratorViewModel : ObservableObject, IDisposable
     private readonly IComputedSignal<ICompositeRole<MailboxAddress>> mailboxAddress;
     [SignalProperty] private readonly IComputedSignal<IUnitRole<string?>> poBox;
 
-    private readonly IEffect firstNameChanged;
-    private readonly IEffect fullNameChanged;
-    private readonly IEffect greetingChanged;
-    private readonly IEffect poBoxChanged;
-
     public PersonGeneratorViewModel(Person model)
     {
         var workspace = model.Strategy.Workspace;
@@ -46,19 +41,13 @@ public partial class PersonGeneratorViewModel : ObservableObject, IDisposable
         this.mailboxAddress = dispatcher.CreateComputedSignal(tracker => this.model.Track(tracker).Value.MailboxAddress.Track(tracker));
         this.poBox = dispatcher.CreateComputedSignal(tracker => this.mailboxAddress.Track(tracker).Value?.Track(tracker).Value?.PoBox.Track(tracker));
 
-        this.firstNameChanged = dispatcher.CreateEffect(tracker => this.firstName.Track(tracker).Value?.Track(tracker), () => this.OnPropertyChanged(nameof(FirstName)));
-        this.fullNameChanged = dispatcher.CreateEffect(tracker => this.fullName.Track(tracker), () => this.OnPropertyChanged(nameof(FullName)));
-        this.greetingChanged = dispatcher.CreateEffect(tracker => this.greeting.Track(tracker), () => this.OnPropertyChanged(nameof(Greeting)));
-        this.poBoxChanged = dispatcher.CreateEffect(tracker => this.poBox.Track(tracker).Value?.Track(tracker), () => this.OnPropertyChanged(nameof(Greeting)));
+        this.OnInitEffects(dispatcher);
     }
 
     public Person Model { get => this.model.Value; }
     
     public void Dispose()
     {
-        this.firstNameChanged.Dispose();
-        this.fullNameChanged.Dispose();
-        this.greetingChanged.Dispose();
-        this.poBoxChanged.Dispose();
+        this.OnDisposeEffects();
     }
 }

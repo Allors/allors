@@ -1,6 +1,5 @@
 ﻿namespace Allors.Workspace.Mvvm.Generator;
 
-using System;
 using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -45,7 +44,7 @@ public class Field
         }
     }
 
-    public string Generate()
+    public string GenerateProperties()
     {
         var typeName = this.FieldType.GenericTypeInfo.Type.Name;
 
@@ -54,7 +53,7 @@ public class Field
 
         if (nestedFieldType == null)
         {
-            if(typeName == "IValueSignal")
+            if (typeName == "IValueSignal")
             {
                 return $@"    public {fieldType.Name} {this.PropertyName}
     {{
@@ -79,6 +78,30 @@ public class Field
     }}";
 
         }
+    }
 
+    public string GenerateEffects()
+    {
+        return $@"    private IEffect {this.Name}Changed;";
+    }
+
+    public string GenerateInitEffects()
+    {
+        var fieldType = this.FieldType.NestedFieldType;
+        var nestedFieldType = fieldType.NestedFieldType;
+
+        if (nestedFieldType == null)
+        {
+            return $@"        this.{this.Name}Changed = dispatcher.CreateEffect(tracker => this.{this.Name}.Track(tracker), () => this.OnPropertyChanged(nameof({this.PropertyName})));";
+        }
+        else
+        {
+            return $@"        this.{this.Name}Changed = dispatcher.CreateEffect(tracker => this.{this.Name}.Track(tracker).Value?.Track(tracker), () => this.OnPropertyChanged(nameof({this.PropertyName})));";
+        }
+    }
+
+    public string GenerateDisposeEffects()
+    {
+        return $@"        this.{this.Name}Changed?.Dispose();";
     }
 }
