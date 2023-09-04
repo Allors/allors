@@ -70,7 +70,6 @@ public partial class TestClass
     public string? FullName
     {
         get => this.fullName.Value;
-        set => this.fullName.Value = value;
     }
 }
 ".ReplaceLineEndings("\n");

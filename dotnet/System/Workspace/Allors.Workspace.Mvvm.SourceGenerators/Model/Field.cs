@@ -55,7 +55,6 @@ public class Field
             return $@"    public {fieldType.Name} {this.PropertyName}
     {{
         get => this.{this.Name}.Value;
-        set => this.{this.Name}.Value = value;
     }}";
 
         }
