@@ -3,6 +3,46 @@
     public class SignalPropertyTest : Test
     {
         [Test]
+        public void ValueSignal()
+        {
+            var source = @"
+using System;
+using Allors.Workspace;
+using Allors.Workspace.Signals;
+using Allors.Workspace.Mvvm.Generator;
+
+namespace Signal.Test;
+
+public partial class TestClass
+{
+    [SignalProperty] private readonly IValueSignal<string> article;
+
+}
+";
+
+            var expected =
+                @"using System;
+
+namespace Signal.Test;
+
+public partial class TestClass
+{
+    public string Article
+    {
+        get => this.article.Value;
+        set => this.article.Value = value;
+    }
+}
+".ReplaceLineEndings("\n");
+
+            string output = GetGeneratedOutput(source).ReplaceLineEndings("\n");
+
+            Assert.NotNull(output);
+
+            Assert.AreEqual(expected, output);
+        }
+
+        [Test]
         public void ComputedUnitRole()
         {
             var source = @"

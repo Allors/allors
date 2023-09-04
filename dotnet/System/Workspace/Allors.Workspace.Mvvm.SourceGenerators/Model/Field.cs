@@ -47,16 +47,28 @@ public class Field
 
     public string Generate()
     {
+        var typeName = this.FieldType.GenericTypeInfo.Type.Name;
+
         var fieldType = this.FieldType.NestedFieldType;
         var nestedFieldType = fieldType.NestedFieldType;
 
         if (nestedFieldType == null)
         {
-            return $@"    public {fieldType.Name} {this.PropertyName}
+            if(typeName == "IValueSignal")
+            {
+                return $@"    public {fieldType.Name} {this.PropertyName}
+    {{
+        get => this.{this.Name}.Value;
+        set => this.{this.Name}.Value = value;
+    }}";
+            }
+            else
+            {
+                return $@"    public {fieldType.Name} {this.PropertyName}
     {{
         get => this.{this.Name}.Value;
     }}";
-
+            }
         }
         else
         {

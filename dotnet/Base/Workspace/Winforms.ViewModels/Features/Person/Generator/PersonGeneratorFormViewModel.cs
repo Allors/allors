@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using Allors.Workspace;
 using Allors.Workspace.Data;
 using Allors.Workspace.Meta;
+using Allors.Workspace.Mvvm.Generator;
 using Allors.Workspace.Signals;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -13,7 +14,7 @@ using Task = Task;
 
 public partial class PersonGeneratorFormViewModel : ObservableObject, IDisposable
 {
-    private readonly IValueSignal<PersonGeneratorViewModel?> selected;
+    [SignalProperty] private readonly IValueSignal<PersonGeneratorViewModel?> selected;
 
     private readonly IEffect selectedChanged;
 
@@ -33,15 +34,6 @@ public partial class PersonGeneratorFormViewModel : ObservableObject, IDisposabl
     public IMessageService MessageService { get; }
 
     public ObservableCollection<PersonGeneratorViewModel> People { get; } = new();
-
-    public PersonGeneratorViewModel? Selected
-    {
-        get => this.selected.Value;
-        set
-        {
-            this.selected.Value = value;
-        }
-    }
 
     [RelayCommand]
     private void ShowDialog()
