@@ -3,6 +3,7 @@
 using System.Linq.Expressions;
 using Allors.Workspace;
 using Allors.Workspace.Domain;
+using Allors.Workspace.Mvvm.Generator;
 using Allors.Workspace.Signals;
 using CommunityToolkit.Mvvm.ComponentModel;
 
@@ -10,12 +11,12 @@ public partial class PersonGeneratorViewModel : ObservableObject, IDisposable
 {
     private readonly IValueSignal<Person> model;
 
-    private readonly IComputedSignal<IUnitRole<string>> firstName;
-    private readonly IComputedSignal<string?> fullName;
-    private readonly IComputedSignal<string?> greeting;
+    [SignalProperty] private readonly IComputedSignal<IUnitRole<string>> firstName;
+    [SignalProperty] private readonly IComputedSignal<string?> fullName;
+    [SignalProperty] private readonly IComputedSignal<string?> greeting;
 
     private readonly IComputedSignal<ICompositeRole<MailboxAddress>> mailboxAddress;
-    private readonly IComputedSignal<IUnitRole<string?>?> poBox;
+    [SignalProperty] private readonly IComputedSignal<IUnitRole<string?>> poBox;
 
     private readonly IEffect firstNameChanged;
     private readonly IEffect fullNameChanged;
@@ -53,29 +54,7 @@ public partial class PersonGeneratorViewModel : ObservableObject, IDisposable
     }
 
     public Person Model { get => this.model.Value; }
-
-    public string FirstName
-    {
-        get => this.firstName.Value.Value;
-        set => this.firstName.Value.Value = value;
-    }
-
-    public string? PoBox
-    {
-        get => this.poBox.Value?.Value;
-        set
-        {
-            if (this.poBox.Value != null)
-            {
-                this.poBox.Value.Value = value;
-            }
-        }
-    }
-
-    public string FullName => this.fullName.Value;
-
-    public string Greeting => this.greeting.Value;
-
+    
     public void Dispose()
     {
         this.firstNameChanged.Dispose();
