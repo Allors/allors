@@ -30,7 +30,7 @@ public partial class TestClass
     public string? FirstName
     {
         get => this.firstName.Value?.Value;
-        set => if(this.firstName.Value != null) this.firstName.Value.Value = value;
+        set { if(this.firstName.Value != null) this.firstName.Value.Value = value; }
     }
 }
 ".ReplaceLineEndings("\n");
