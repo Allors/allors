@@ -48,11 +48,13 @@
 
                     // Controllers
                     services.AddScoped<MainFormViewModel>();
-                    services.AddScoped<PersonFormViewModel>();
+                    services.AddScoped<PersonManualFormViewModel>();
+                    services.AddScoped<PersonGeneratorFormViewModel>();
 
                     // Forms
                     services.AddSingleton<MainForm>();
-                    services.AddTransient<PersonForm>();
+                    services.AddTransient<PersonManualForm>();
+                    services.AddTransient<PersonGeneratorForm>();
                 });
         }
     }

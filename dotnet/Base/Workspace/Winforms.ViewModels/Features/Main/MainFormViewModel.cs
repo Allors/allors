@@ -1,4 +1,4 @@
-namespace Workspace.WinForms.ViewModels.Features;
+﻿namespace Workspace.WinForms.ViewModels.Features;
 
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -11,5 +11,8 @@ public partial class MainFormViewModel : ObservableObject
     public IMdiService MdiService { get; }
 
     [RelayCommand]
-    private void ShowPerson() => this.MdiService.Open(typeof(PersonFormViewModel));
+    private void ShowPersonManual() => this.MdiService.Open(typeof(PersonManualFormViewModel));
+
+    [RelayCommand]
+    private void ShowPersonGenerator() => this.MdiService.Open(typeof(PersonGeneratorFormViewModel));
 }

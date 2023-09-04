@@ -32,8 +32,9 @@ namespace Workspace.WinForms.App.Forms
         {
             this.components = new System.ComponentModel.Container();
             this.menuStrip1 = new MenuStrip();
-            this.peopleToolStripMenuItem = new ToolStripMenuItem();
+            this.peopleManualToolStripMenuItem = new ToolStripMenuItem();
             this.mainFormControllerBindingSource = new BindingSource(this.components);
+            this.peopleGeneratorToolStripMenuItem = new ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)this.mainFormControllerBindingSource).BeginInit();
             this.SuspendLayout();
@@ -41,32 +42,41 @@ namespace Workspace.WinForms.App.Forms
             // menuStrip1
             // 
             this.menuStrip1.ImageScalingSize = new Size(20, 20);
-            this.menuStrip1.Items.AddRange(new ToolStripItem[] { this.peopleToolStripMenuItem });
+            this.menuStrip1.Items.AddRange(new ToolStripItem[] { this.peopleManualToolStripMenuItem, this.peopleGeneratorToolStripMenuItem });
             this.menuStrip1.Location = new Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new Size(1523, 28);
+            this.menuStrip1.Padding = new Padding(8, 2, 0, 2);
+            this.menuStrip1.Size = new Size(1904, 33);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
-            // peopleToolStripMenuItem
+            // peopleManualToolStripMenuItem
             // 
-            this.peopleToolStripMenuItem.DataBindings.Add(new Binding("Command", this.mainFormControllerBindingSource, "ShowPersonCommand", true));
-            this.peopleToolStripMenuItem.Name = "peopleToolStripMenuItem";
-            this.peopleToolStripMenuItem.Size = new Size(68, 24);
-            this.peopleToolStripMenuItem.Text = "People";
+            this.peopleManualToolStripMenuItem.DataBindings.Add(new Binding("Command", this.mainFormControllerBindingSource, "ShowPersonManualCommand", true));
+            this.peopleManualToolStripMenuItem.Name = "peopleManualToolStripMenuItem";
+            this.peopleManualToolStripMenuItem.Size = new Size(154, 29);
+            this.peopleManualToolStripMenuItem.Text = "People (Manual)";
             // 
             // mainFormControllerBindingSource
             // 
             this.mainFormControllerBindingSource.DataSource = typeof(MainFormViewModel);
             // 
+            // peopleGeneratorToolStripMenuItem
+            // 
+            this.peopleGeneratorToolStripMenuItem.DataBindings.Add(new Binding("Command", this.mainFormControllerBindingSource, "ShowPersonGeneratorCommand", true));
+            this.peopleGeneratorToolStripMenuItem.Name = "peopleGeneratorToolStripMenuItem";
+            this.peopleGeneratorToolStripMenuItem.Size = new Size(174, 29);
+            this.peopleGeneratorToolStripMenuItem.Text = "People (Generator)";
+            // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new SizeF(8F, 20F);
+            this.AutoScaleDimensions = new SizeF(10F, 25F);
             this.AutoScaleMode = AutoScaleMode.Font;
-            this.ClientSize = new Size(1523, 881);
+            this.ClientSize = new Size(1904, 1101);
             this.Controls.Add(this.menuStrip1);
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip1;
+            this.Margin = new Padding(4);
             this.Name = "MainForm";
             this.Text = "Allors";
             this.DataContextChanged += this.MainForm_DataContextChanged;
@@ -80,7 +90,8 @@ namespace Workspace.WinForms.App.Forms
         #endregion
 
         private MenuStrip menuStrip1;
-        private ToolStripMenuItem peopleToolStripMenuItem;
+        private ToolStripMenuItem peopleManualToolStripMenuItem;
         private BindingSource mainFormControllerBindingSource;
+        private ToolStripMenuItem peopleGeneratorToolStripMenuItem;
     }
 }

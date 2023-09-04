@@ -2,7 +2,7 @@
 {
     using ViewModels.Features;
 
-    partial class PersonForm
+    partial class PersonManualForm
     {
         /// <summary>
         /// Required designer variable.
@@ -31,7 +31,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            var resources = new System.ComponentModel.ComponentResourceManager(typeof(PersonForm));
+            var resources = new System.ComponentModel.ComponentResourceManager(typeof(PersonManualForm));
             this.personFormControllerBindingSource = new BindingSource(this.components);
             this.toolStrip1 = new ToolStrip();
             this.loadToolStripButton = new ToolStripButton();
@@ -63,7 +63,7 @@
             // 
             // personFormControllerBindingSource
             // 
-            this.personFormControllerBindingSource.DataSource = typeof(PersonFormViewModel);
+            this.personFormControllerBindingSource.DataSource = typeof(PersonManualFormViewModel);
             // 
             // toolStrip1
             // 
@@ -244,15 +244,15 @@
             this.changeFirstNameButton.UseVisualStyleBackColor = true;
             this.changeFirstNameButton.Click += this.changeFirstNameButton_Click;
             // 
-            // PersonForm
+            // PersonManualForm
             // 
             this.AutoScaleDimensions = new SizeF(8F, 20F);
             this.AutoScaleMode = AutoScaleMode.Font;
             this.ClientSize = new Size(1041, 501);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.toolStrip1);
-            this.Name = "PersonForm";
-            this.Text = "PersonForm";
+            this.Name = "PersonManualForm";
+            this.Text = "PersonManualForm";
             this.DataContextChanged += this.PersonForm_DataContextChanged;
             ((System.ComponentModel.ISupportInitialize)this.personFormControllerBindingSource).EndInit();
             this.toolStrip1.ResumeLayout(false);

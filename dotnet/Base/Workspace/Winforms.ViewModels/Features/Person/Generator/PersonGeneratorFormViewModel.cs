@@ -11,19 +11,19 @@ using Services;
 using Person = Allors.Workspace.Domain.Person;
 using Task = Task;
 
-public partial class PersonFormViewModel : ObservableObject, IDisposable
+public partial class PersonGeneratorFormViewModel : ObservableObject, IDisposable
 {
-    private readonly IValueSignal<PersonViewModel?> selected;
+    private readonly IValueSignal<PersonGeneratorViewModel?> selected;
 
     private readonly IEffect selectedChanged;
 
-    public PersonFormViewModel(IWorkspace workspace, IMessageService messageService)
+    public PersonGeneratorFormViewModel(IWorkspace workspace, IMessageService messageService)
     {
         this.Workspace = workspace;
         this.MessageService = messageService;
         var dispatcher = workspace.Services.Get<IDispatcherBuilder>().Build(workspace);
 
-        this.selected = dispatcher.CreateValueSignal<PersonViewModel>(null);
+        this.selected = dispatcher.CreateValueSignal<PersonGeneratorViewModel>(null);
 
         this.selectedChanged = dispatcher.CreateEffect(tracker => this.selected.Track(tracker), () => this.OnPropertyChanged(nameof(Selected)));
     }
@@ -32,9 +32,9 @@ public partial class PersonFormViewModel : ObservableObject, IDisposable
 
     public IMessageService MessageService { get; }
 
-    public ObservableCollection<PersonViewModel> People { get; } = new();
+    public ObservableCollection<PersonGeneratorViewModel> People { get; } = new();
 
-    public PersonViewModel? Selected
+    public PersonGeneratorViewModel? Selected
     {
         get => this.selected.Value;
         set
@@ -73,7 +73,7 @@ public partial class PersonFormViewModel : ObservableObject, IDisposable
         this.People.Clear();
         foreach (var person in people)
         {
-            this.People.Add(new PersonViewModel(person));
+            this.People.Add(new PersonGeneratorViewModel(person));
         }
 
         this.OnPropertyChanged(nameof(People));

@@ -3,23 +3,23 @@
     using System.Windows.Forms;
     using ViewModels.Features;
 
-    public partial class PersonForm : Form
+    public partial class PersonGeneratorForm : Form
     {
-        public PersonForm(PersonFormViewModel viewModel)
+        public PersonGeneratorForm(PersonGeneratorFormViewModel viewModel)
         {
             InitializeComponent();
             this.ViewModel = viewModel;
             this.DataContext = this.ViewModel;
         }
 
-        public PersonFormViewModel ViewModel { get; set; }
+        public PersonGeneratorFormViewModel ViewModel { get; set; }
 
         private void PersonForm_DataContextChanged(object sender, EventArgs e)
             => this.personFormControllerBindingSource.DataSource = this.DataContext;
 
         private void peopleBindingSource_CurrentChanged(object sender, EventArgs e)
         {
-            var current = (PersonViewModel)this.peopleBindingSource.Current;
+            var current = (PersonGeneratorViewModel)this.peopleBindingSource.Current;
 
             this.ViewModel.Selected = current;
 

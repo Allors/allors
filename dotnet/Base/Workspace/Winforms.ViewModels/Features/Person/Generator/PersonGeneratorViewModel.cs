@@ -6,7 +6,7 @@ using Allors.Workspace.Domain;
 using Allors.Workspace.Signals;
 using CommunityToolkit.Mvvm.ComponentModel;
 
-public partial class PersonViewModel : ObservableObject, IDisposable
+public partial class PersonGeneratorViewModel : ObservableObject, IDisposable
 {
     private readonly IValueSignal<Person> model;
 
@@ -22,7 +22,7 @@ public partial class PersonViewModel : ObservableObject, IDisposable
     private readonly IEffect greetingChanged;
     private readonly IEffect poBoxChanged;
 
-    public PersonViewModel(Person model)
+    public PersonGeneratorViewModel(Person model)
     {
         var workspace = model.Strategy.Workspace;
         var dispatcher = workspace.Services.Get<IDispatcherBuilder>().Build(workspace);
