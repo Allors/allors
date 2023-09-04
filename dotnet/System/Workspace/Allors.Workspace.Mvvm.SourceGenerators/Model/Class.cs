@@ -31,7 +31,7 @@ public class Class
 
     public INamespaceSymbol NamespaceSymbol { get; }
 
-    public string NamespaceFullyQualifiedName => this.NamespaceSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
+    public string NamespaceFullyQualifiedName => this.NamespaceSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat).Replace("global::", "");
 
     public string Name { get; }
 

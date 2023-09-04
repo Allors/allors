@@ -23,7 +23,7 @@ public partial class TestClass
             var expected =
                 @"using System;
 
-namespace global::Signal.Test;
+namespace Signal.Test;
 
 public partial class TestClass
 {
@@ -63,7 +63,7 @@ public partial class TestClass
             var expected =
                 @"using System;
 
-namespace global::Signal.Test;
+namespace Signal.Test;
 
 public partial class TestClass
 {
