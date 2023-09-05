@@ -9,8 +9,10 @@ namespace Allors.Workspace
 
     public interface IMethod : IOperand
     {
-        public IStrategy Object { get; }
+        IStrategy Object { get; }
 
-        public IMethodType MethodType { get; }
+        IMethodType MethodType { get; }
+
+        bool CanExecute { get; }
     }
 }
