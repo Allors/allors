@@ -64,6 +64,7 @@ public class Class
         var code =
             $@"using System;
 using Allors.Workspace.Signals;
+using Allors.Workspace;
 
 namespace {this.NamespaceFullyQualifiedName};
 

@@ -23,6 +23,7 @@ public partial class TestClass
             var expected =
                 @"using System;
 using Allors.Workspace.Signals;
+using Allors.Workspace;
 
 namespace Signal.Test;
 
@@ -76,6 +77,7 @@ public partial class TestClass
             var expected =
                 @"using System;
 using Allors.Workspace.Signals;
+using Allors.Workspace;
 
 namespace Signal.Test;
 
@@ -129,6 +131,7 @@ public partial class TestClass
             var expected =
                 @"using System;
 using Allors.Workspace.Signals;
+using Allors.Workspace;
 
 namespace Signal.Test;
 
