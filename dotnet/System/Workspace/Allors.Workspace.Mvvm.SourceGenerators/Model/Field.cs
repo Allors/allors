@@ -62,7 +62,7 @@ public class Field
             var constructorArgument = attribute.AttributeData.ConstructorArguments[0];
             if (!constructorArgument.IsNull)
             {
-                return $@"    [DisplayName(""{constructorArgument.Value}"")]";
+                return $@"    [System.ComponentModel.DisplayName(""{constructorArgument.Value}"")]";
             }
         }
 
@@ -91,11 +91,23 @@ public class Field
             {
                 if (argumentType.IsUnitRole)
                 {
-                    return $@"    public {argumentType.FullName} {this.PropertyName}
+                    if (argumentType.NestedArgumentType?.IsNullable == true)
+                    {
+                        return $@"    public {argumentType.FullName} {this.PropertyName}
+    {{
+        get => this.{this.Name}.Value?.Value?.Value;
+        set {{ if(this.{this.Name}.Value?.Value != null) this.{this.Name}.Value.Value.Value = value; }}
+    }}";
+                    }
+                    else
+                    {
+                        return $@"    public {argumentType.FullName} {this.PropertyName}
     {{
         get => this.{this.Name}.Value?.Value;
         set {{ if(this.{this.Name}.Value != null) this.{this.Name}.Value.Value = value; }}
     }}";
+
+                    }
                 }
                 else
                 {
