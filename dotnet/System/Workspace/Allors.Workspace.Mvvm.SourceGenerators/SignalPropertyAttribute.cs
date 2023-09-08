@@ -3,4 +3,10 @@
 using System;
 
 [AttributeUsage(AttributeTargets.Field, Inherited = false, AllowMultiple = false)]
-public sealed class SignalPropertyAttribute : Attribute { }
+public sealed class SignalPropertyAttribute : Attribute
+{
+    public SignalPropertyAttribute(string displayName = null)
+    {
+
+    }
+}

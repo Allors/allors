@@ -29,34 +29,48 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="Allors.Workspace.Mvvm.Generator.Field">
-    <Position X="9.5" Y="0.5" Width="2" />
+    <Position X="9.75" Y="0.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAABAAAAAAAAAAAIAAAQAAAgAgAAAAAAABEBACAA=</HashCode>
+      <HashCode>AAgAAAEAAAAAgAAAACIAAAQAAAgAgAAAAAAABABBCAA=</HashCode>
       <FileName>Model\Field.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="FieldType" />
+      <Property Name="SignalType" />
     </ShowAsAssociation>
     <ShowAsCollectionAssociation>
       <Property Name="AttributeInstances" />
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="Allors.Workspace.Mvvm.Generator.Class">
-    <Position X="6.25" Y="0.5" Width="2" />
+    <Position X="6.25" Y="0.5" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAgAAAAAAAAQAAARAAAAAgBAAAAAAAEABiAA=</HashCode>
+      <HashCode>AAAAAAAAIgAAAAAAAAQAAARAAAAAgBAAAAAAAEABiAA=</HashCode>
       <FileName>Model\Class.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
       <Property Name="Fields" />
     </ShowAsCollectionAssociation>
   </Class>
-  <Class Name="Allors.Workspace.Mvvm.Generator.FieldType">
-    <Position X="13" Y="3" Width="2" />
+  <Class Name="Allors.Workspace.Mvvm.Generator.ArgumentType">
+    <Position X="16.75" Y="3.25" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAABAAAAAAAAAAAAAAABAAIAAAAAIAAAAAAAA=</HashCode>
-      <FileName>Model\FieldType.cs</FileName>
+      <HashCode>AAAAAAAAABAAAAAAAgAAAAQAAAAAIAAAIAJAAAAAAAA=</HashCode>
+      <FileName>Model\ArgumentType.cs</FileName>
+      <NewMemberFileName>Model\FieldType.cs</NewMemberFileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Argument" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Allors.Workspace.Mvvm.Generator.SignalType">
+    <Position X="13.25" Y="3.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAABAAAAAAAAAAAAQACAAAAAAAIAIAAAAAAAA=</HashCode>
+      <FileName>Model\SignalType.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Argument" />
+    </ShowAsAssociation>
   </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

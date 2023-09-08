@@ -1,5 +1,6 @@
 ﻿namespace Allors.Workspace.Mvvm.Generator;
 
+using System;
 using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -19,7 +20,7 @@ public class Field
         this.Symbol = (IFieldSymbol)semanticModel.GetDeclaredSymbol(fieldDeclarationSyntax.Declaration.Variables.FirstOrDefault()!);
         this.Name = this.Symbol.Name;
 
-        this.FieldType = new FieldType(semanticModel, this.FieldDeclarationSyntax);
+        this.SignalType = new SignalType(semanticModel, this.FieldDeclarationSyntax);
     }
 
     public IFieldSymbol Symbol { get; }
@@ -28,7 +29,7 @@ public class Field
 
     public string PropertyName => string.Concat(this.Name[0].ToString().ToUpper(), this.Name.Substring(1));
 
-    public FieldType FieldType { get; set; }
+    public SignalType SignalType { get; set; }
 
     public AttributeInstance[] AttributeInstances { get; private set; }
 
@@ -44,40 +45,78 @@ public class Field
         }
     }
 
-    public string GenerateProperties()
+    public string GeneratePropertyWithAttributes()
     {
-        var typeName = this.FieldType.GenericTypeInfo.Type.Name;
+        var attributes = this.GenerateAttributes();
+        var property = this.GenerateProperty();
 
-        var fieldType = this.FieldType.NestedFieldType;
-        var nestedFieldType = fieldType.NestedFieldType;
+        return string.IsNullOrWhiteSpace(attributes) ? property : string.Join("\n", attributes, property); ;
+    }
 
-        if (nestedFieldType == null)
+    public string GenerateAttributes()
+    {
+        var attribute = AttributeInstances.FirstOrDefault(v => v.Name.Equals("SignalPropertyAttribute"));
+
+        if (attribute?.AttributeData.ConstructorArguments.Length > 0)
         {
-            if (typeName == "IValueSignal")
+            var constructorArgument = attribute.AttributeData.ConstructorArguments[0];
+            if (!constructorArgument.IsNull)
             {
-                return $@"    public {fieldType.Name} {this.PropertyName}
+                return $@"    [DisplayName(""{constructorArgument.Value}"")]";
+            }
+        }
+
+        return string.Empty;
+    }
+
+    public string GenerateProperty()
+    {
+        var argumentType = this.SignalType.ArgumentType;
+
+        if (this.SignalType.IsValueSignal)
+        {
+            return $@"    public {argumentType.FullName} {this.PropertyName}
     {{
         get => this.{this.Name}.Value;
         set => this.{this.Name}.Value = value;
     }}";
-            }
-            else
-            {
-                return $@"    public {fieldType.Name} {this.PropertyName}
-    {{
-        get => this.{this.Name}.Value;
-    }}";
-            }
+
         }
-        else
+
+        if (this.SignalType.IsComputedSignal)
         {
-            return $@"    public {nestedFieldType.Name} {this.PropertyName}
+            var nestedArgumentType = argumentType.NestedArgumentType;
+
+            if (nestedArgumentType == null)
+            {
+                if (argumentType.IsUnitRole)
+                {
+                    return $@"    public {argumentType.FullName} {this.PropertyName}
     {{
         get => this.{this.Name}.Value?.Value;
         set {{ if(this.{this.Name}.Value != null) this.{this.Name}.Value.Value = value; }}
     }}";
+                }
+                else
+                {
+                    return $@"    public {argumentType.FullName} {this.PropertyName}
+    {{
+        get => this.{this.Name}.Value;
+    }}";
+                }
+            }
+            else
+            {
+                return $@"    public {nestedArgumentType.FullName} {this.PropertyName}
+    {{
+        get => this.{this.Name}.Value?.Value;
+        set {{ if(this.{this.Name}.Value != null) this.{this.Name}.Value.Value = value; }}
+    }}";
+            }
 
         }
+
+        throw new Exception("Unknown signal type");
     }
 
     public string GenerateEffects()
@@ -87,17 +126,15 @@ public class Field
 
     public string GenerateInitEffects()
     {
-        var fieldType = this.FieldType.NestedFieldType;
-        var nestedFieldType = fieldType.NestedFieldType;
+        var argumentType = this.SignalType.ArgumentType;
+        var nestedArgumentType = argumentType.NestedArgumentType;
 
-        if (nestedFieldType == null)
-        {
-            return $@"        this.{this.Name}Changed = dispatcher.CreateEffect(tracker => this.{this.Name}.Track(tracker), () => this.OnPropertyChanged(nameof({this.PropertyName})));";
-        }
-        else
+        if (nestedArgumentType != null || argumentType.IsUnitRole)
         {
             return $@"        this.{this.Name}Changed = dispatcher.CreateEffect(tracker => this.{this.Name}.Track(tracker).Value?.Track(tracker), () => this.OnPropertyChanged(nameof({this.PropertyName})));";
         }
+
+        return $@"        this.{this.Name}Changed = dispatcher.CreateEffect(tracker => this.{this.Name}.Track(tracker), () => this.OnPropertyChanged(nameof({this.PropertyName})));";
     }
 
     public string GenerateDisposeEffects()
