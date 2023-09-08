@@ -148,7 +148,7 @@ public partial class TestClass
 {
     private IEffect firstNameChanged;
 
-    public IUnitRole<string>? FirstName
+    public string FirstName
     {
         get => this.firstName.Value?.Value;
         set { if(this.firstName.Value != null) this.firstName.Value.Value = value; }
@@ -205,7 +205,7 @@ public partial class TestClass
 {
     private IEffect numberChanged;
 
-    public IUnitRole<int?>? Number
+    public int? Number
     {
         get => this.number.Value?.Value?.Value;
         set { if(this.number.Value?.Value != null) this.number.Value.Value.Value = value; }
