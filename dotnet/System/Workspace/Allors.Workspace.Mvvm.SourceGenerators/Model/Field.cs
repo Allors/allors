@@ -124,8 +124,8 @@ public class Field
                         {
                             return $@"    public {nestedArgumentType.FullName} {this.PropertyName}
     {{
-        get => this.{this.Name}.Value?.Value?.Value;
-        set {{ if(this.{this.Name}.Value?.Value != null) this.{this.Name}.Value.Value.Value = value; }}
+        get => this.{this.Name}.Value?.Value;
+        set {{ if(this.{this.Name}.Value != null) this.{this.Name}.Value.Value = value; }}
     }}";
                         }
                         else
