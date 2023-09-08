@@ -110,7 +110,7 @@ public class Field
                         }
                         else
                         {
-                            return $@"    public {nestedArgumentType.FullName} {this.PropertyName}
+                            return $@"    public {nestedArgumentType.FullName}? {this.PropertyName}
     {{
         get => this.{this.Name}.Value?.Value;
         set {{ if(this.{this.Name}.Value != null) this.{this.Name}.Value.Value = value; }}
