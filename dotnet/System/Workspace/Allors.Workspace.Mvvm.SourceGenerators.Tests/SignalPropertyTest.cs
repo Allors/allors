@@ -264,8 +264,8 @@ public partial class TestClass
 
     public int? Number
     {
-        get => this.number.Value?.Value?.Value;
-        set { if(this.number.Value?.Value != null) this.number.Value.Value.Value = value; }
+        get => this.number.Value?.Value;
+        set { if(this.number.Value != null) this.number.Value.Value = value; }
     }
 
     private void OnInitEffects(IDispatcher dispatcher)
