@@ -72,7 +72,7 @@ namespace Signal.Test;
 
 public partial class TestClass
 {
-    [SignalProperty] private readonly IComputedSignal<IUnitRole<string?>> firstName;
+    [SignalProperty] private readonly IComputedSignal<IUnitRole<string>> firstName;
 
 }
 ";
@@ -91,7 +91,7 @@ public partial class TestClass
 {
     private IEffect firstNameChanged;
 
-    public string? FirstName
+    public string FirstName
     {
         get => this.firstName.Value?.Value;
         set { if(this.firstName.Value != null) this.firstName.Value.Value = value; }
@@ -186,7 +186,7 @@ namespace Signal.Test;
 
 public partial class TestClass
 {
-    [SignalProperty] private readonly IComputedSignal<IUnitRole<int?>?> Number;
+    [SignalProperty] private readonly IComputedSignal<IUnitRole<int?>?> number;
 
 }
 ";
@@ -205,7 +205,7 @@ public partial class TestClass
 {
     private IEffect numberChanged;
 
-    public IUnitRole<int>? Number
+    public IUnitRole<int?>? Number
     {
         get => this.number.Value?.Value?.Value;
         set { if(this.number.Value?.Value != null) this.number.Value.Value.Value = value; }
@@ -243,7 +243,7 @@ namespace Signal.Test;
 
 public partial class TestClass
 {
-    [SignalProperty(""Test Name"")] private readonly IComputedSignal<IUnitRole<string?>> firstName;
+    [SignalProperty(""Test Name"")] private readonly IComputedSignal<IUnitRole<string>> firstName;
 
 }
 ";
@@ -263,7 +263,7 @@ public partial class TestClass
     private IEffect firstNameChanged;
 
     [System.ComponentModel.DisplayName(""Test Name"")]
-    public string? FirstName
+    public string FirstName
     {
         get => this.firstName.Value?.Value;
         set { if(this.firstName.Value != null) this.firstName.Value.Value = value; }

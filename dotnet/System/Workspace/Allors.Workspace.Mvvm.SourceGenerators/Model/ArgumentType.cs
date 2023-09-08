@@ -16,7 +16,7 @@ public class ArgumentType
 
         this.NormalizedTypeSyntax = nullableTypeElementType ?? this.TypeSyntax;
 
-        if (this.TypeSyntax is GenericNameSyntax genericNameSyntax)
+        if (this.NormalizedTypeSyntax is GenericNameSyntax genericNameSyntax)
         {
             var argument = genericNameSyntax.TypeArgumentList.Arguments.First();
             this.NestedArgumentType = new ArgumentType(semanticModel, argument);
