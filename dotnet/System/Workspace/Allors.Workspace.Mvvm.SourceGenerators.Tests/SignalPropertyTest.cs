@@ -431,22 +431,21 @@ namespace Signal.Test;
 
 public partial class TestClass
 {
-    private IEffect fullNameChanged;
+    private IEffect personChanged;
 
-    public PersonViewModel? Person
+    public Allors.Workspace.Mvvm.SourceGenerators.Tests.PersonViewModel? Person
     {
         get => this.person.Value;
-        set => this.person.Value = value;
     }
 
     private void OnInitEffects(IDispatcher dispatcher)
     {
-        this.fullNameChanged = dispatcher.CreateEffect(tracker => this.fullName.Track(tracker), () => this.OnPropertyChanged(nameof(FullName)));
+        this.personChanged = dispatcher.CreateEffect(tracker => this.person.Track(tracker), () => this.OnPropertyChanged(nameof(Person)));
     }
 
     private void OnDisposeEffects()
     {
-        this.fullNameChanged?.Dispose();
+        this.personChanged?.Dispose();
     }
 }
 ".ReplaceLineEndings("\n");
