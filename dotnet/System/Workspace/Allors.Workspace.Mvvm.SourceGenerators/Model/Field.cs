@@ -161,14 +161,6 @@ public class Field
 
     public string GenerateInitEffects()
     {
-        var argumentType = this.SignalType.ArgumentType;
-        var nestedArgumentType = argumentType.NestedArgumentType;
-
-        if (nestedArgumentType != null || argumentType.IsUnitRole)
-        {
-            return $@"        this.{this.Name}Changed = dispatcher.CreateEffect(tracker => this.{this.Name}.Track(tracker).Value?.Track(tracker), () => this.OnPropertyChanged(nameof({this.PropertyName})));";
-        }
-
         return $@"        this.{this.Name}Changed = dispatcher.CreateEffect(tracker => this.{this.Name}.Track(tracker), () => this.OnPropertyChanged(nameof({this.PropertyName})));";
     }
 
