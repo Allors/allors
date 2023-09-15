@@ -98,7 +98,7 @@ $endif$
 methodType() ::= <<
 		public static IMethod? $methodType.Name$(this $objectType.SingularName$? @this, ITracker tracker)
 		{
-			var method = @this.$methodType.Name$;
+			var method = @this?.$methodType.Name$;
 			tracker.Track(method);
 			return method;
 		}
