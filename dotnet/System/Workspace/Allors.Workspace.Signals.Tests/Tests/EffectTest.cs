@@ -93,7 +93,6 @@
             Assert.That(counter, Is.EqualTo(2));
         }
 
-
         [Test]
         [TestCaseSource(nameof(TestImplementations))]
         public async Task NullRoleDependencies(Implementations implementation)
@@ -125,5 +124,40 @@
 
             Assert.That(counter, Is.EqualTo(2));
         }
+
+        [Test]
+        [TestCaseSource(nameof(TestImplementations))]
+        public async Task CombinedDependencies(Implementations implementation)
+        {
+            await this.Login("jane@example.com");
+            var workspace = this.Workspace;
+            SelectImplementation(workspace, implementation);
+
+            var dispatcherBuilder = workspace.Services.Get<IDispatcherBuilder>();
+            var dispatcher = dispatcherBuilder.Build(workspace);
+
+            var person = workspace.Create<Person>();
+
+            var counter = 0;
+
+            IValueSignal<Person> model = dispatcher.CreateValueSignal(person);
+            IComputedSignal<IUnitRole<string>?> firstName = dispatcher.CreateComputedSignal(tracker => model.Track(tracker).Value.FirstName.Track(tracker));
+            IEffect firstNameChanged = dispatcher.CreateEffect(tracker => firstName.Track(tracker), () => ++counter);
+
+            Assert.That(counter, Is.EqualTo(1));
+
+            person.FirstName.Value += "!";
+
+            Assert.That(counter, Is.EqualTo(2));
+
+            person.FirstName.Value += "!";
+
+            Assert.That(counter, Is.EqualTo(3));
+            
+            person.FirstName.Value += "!";
+
+            Assert.That(counter, Is.EqualTo(4));
+        }
+
     }
 }

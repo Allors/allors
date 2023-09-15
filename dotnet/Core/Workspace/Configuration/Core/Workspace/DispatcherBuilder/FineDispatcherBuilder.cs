@@ -6,7 +6,9 @@
 namespace Allors.Workspace.Configuration
 {
     using Signals;
-    using Signals.Fine;
+    // TODO: Create fine grained signal implementation
+    //using Signals.Fine;
+    using Signals.Coarse;
 
     public class FineDispatcherBuilder : IDispatcherBuilder
     {

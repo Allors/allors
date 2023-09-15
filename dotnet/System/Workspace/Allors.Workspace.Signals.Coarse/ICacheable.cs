@@ -3,4 +3,6 @@
 public interface ICacheable
 {
     void InvalidateCache();
+
+    void Cache();
 }

@@ -49,6 +49,8 @@ public class Effect : IEffect, ITracker
 
     public void Track(IOperand operand)
     {
+        (operand as ICacheable)?.Cache();
+
         if (operand == null || this.trackingWorkspaceVersionByOperand.ContainsKey(operand))
         {
             return;
