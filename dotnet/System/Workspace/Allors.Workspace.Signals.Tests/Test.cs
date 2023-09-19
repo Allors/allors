@@ -73,6 +73,12 @@
             }
         }
 
+        [TearDown]
+        public void TestTearDown()
+        {
+            this.Transaction.Dispose();
+        }
+
         public IWorkspace CreateExclusiveWorkspace()
         {
             var connection = new Connection(this.configuration, this.database, this.servicesBuilder) { UserId = this.user.Id };

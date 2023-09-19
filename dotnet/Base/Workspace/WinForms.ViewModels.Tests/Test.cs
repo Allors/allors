@@ -29,6 +29,12 @@
             this.fixture = new Fixture();
         }
 
+        [OneTimeTearDown]
+        public void OneTimeTearDown()
+        {
+            this.fixture?.Dispose();
+        }
+
         [SetUp]
         public void TestSetup()
         {
