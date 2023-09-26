@@ -5,6 +5,7 @@
 
 namespace Allors.Workspace
 {
+    using System;
     using System.Linq;
 
     public static partial class IPullResultExtensions
@@ -20,7 +21,7 @@ namespace Allors.Workspace
         public static T[] GetCollection<T>(this IPullResult @this, string key) where T : class, IObject
         {
             var objectFactory = @this.Workspace.Services.Get<IObjectFactory>();
-            return @this.Collections.TryGetValue(key, out var collection) ? objectFactory.Object<T>(collection).ToArray() : null;
+            return @this.Collections.TryGetValue(key, out var collection) ? objectFactory.Object<T>(collection).ToArray() : Array.Empty<T>();
         }
 
         public static T GetObject<T>(this IPullResult @this) where T : class, IObject
