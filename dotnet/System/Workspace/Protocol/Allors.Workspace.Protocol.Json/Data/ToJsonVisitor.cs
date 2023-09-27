@@ -1,4 +1,4 @@
-// <copyright file="ToJsonVisitor.cs" company="Allors bvba">
+﻿// <copyright file="ToJsonVisitor.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -124,7 +124,7 @@ namespace Allors.Workspace.Protocol.Json
                 k = PredicateKind.Equals,
                 a = (visited.PropertyType as IAssociationType)?.RelationType.Tag,
                 r = (visited.PropertyType as IRoleType)?.RelationType.Tag,
-                ob = visited.Object?.Id,
+                ob = visited.Object?.Id ?? visited.ObjectId,
                 v = this.unitConvert.ToJson(visited.Value),
                 pa = visited.Path?.RelationType.Tag,
                 p = visited.Parameter,

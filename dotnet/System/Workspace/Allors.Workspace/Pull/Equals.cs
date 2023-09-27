@@ -19,6 +19,8 @@ namespace Allors.Workspace.Data
 
         public IStrategy Object { get; set; }
 
+        public long? ObjectId { get; set; }
+
         public object Value { get; set; }
 
         public IRoleType Path { get; set; }

@@ -120,7 +120,7 @@ namespace Allors.Workspace.Protocol.Direct
         private IPredicate Visit(Equals ws) => new Database.Data.Equals(this.Visit(ws.PropertyType))
         {
             Parameter = ws.Parameter,
-            Object = this.Visit(ws.Object),
+            Object = this.Visit(ws.Object) ?? this.Visit(ws.ObjectId),
             Value = ws.Value,
             Path = this.Visit(ws.Path),
         };
