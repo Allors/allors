@@ -31,7 +31,7 @@
   <Class Name="Allors.Workspace.Mvvm.Generator.Field">
     <Position X="9.75" Y="0.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAgAAAEAAAAAgAAAACIAAAQAAAgAgAAAAAAABABBCAA=</HashCode>
+      <HashCode>AAgAAAEAAAAAgAAAACIAAAQAAAgAgAAAAEAABABACAA=</HashCode>
       <FileName>Model\Field.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -54,22 +54,22 @@
   <Class Name="Allors.Workspace.Mvvm.Generator.ArgumentType">
     <Position X="16.75" Y="3.25" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAABAAAAAAAgAAAAQAAAAAIAAAIAJAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAYIAAAAAAABAAAAAAAAAAAIAACAAIAA=</HashCode>
       <FileName>Model\ArgumentType.cs</FileName>
       <NewMemberFileName>Model\FieldType.cs</NewMemberFileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="Argument" />
+      <Property Name="NestedArgumentType" />
     </ShowAsAssociation>
   </Class>
   <Class Name="Allors.Workspace.Mvvm.Generator.SignalType">
     <Position X="13.25" Y="3.25" Width="2" />
     <TypeIdentifier>
-      <HashCode>QAAAAAAAABAAAAAAAAAAAAQACAAAAAAAIAIAAAAAAAA=</HashCode>
+      <HashCode>QAAAAAAAAAAAAAAAAAAAAAQACAAQAAAAAAIAAAAAAAA=</HashCode>
       <FileName>Model\SignalType.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="Argument" />
+      <Property Name="ArgumentType" />
     </ShowAsAssociation>
   </Class>
   <Font Name="Segoe UI" Size="9" />

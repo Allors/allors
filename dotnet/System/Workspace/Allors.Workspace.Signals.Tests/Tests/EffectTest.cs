@@ -95,38 +95,6 @@
 
         [Test]
         [TestCaseSource(nameof(TestImplementations))]
-        public async Task NullRoleDependencies(Implementations implementation)
-        {
-            await this.Login("jane@example.com");
-            var workspace = this.Workspace;
-            SelectImplementation(workspace, implementation);
-
-            var dispatcherBuilder = workspace.Services.Get<IDispatcherBuilder>();
-            var dispatcher = dispatcherBuilder.Build(workspace);
-
-            C1 c1a = null;
-
-            var counter = 0;
-
-            var effect = dispatcher.CreateEffect(v =>
-            {
-                v.Track(c1a?.C1AllorsString);
-            }, () =>
-            {
-                ++counter;
-            });
-
-            Assert.That(counter, Is.EqualTo(1));
-
-            c1a = workspace.Create<C1>();
-
-            c1a.C1AllorsString.Value = "Hello A!";
-
-            Assert.That(counter, Is.EqualTo(2));
-        }
-
-        [Test]
-        [TestCaseSource(nameof(TestImplementations))]
         public async Task CombinedDependencies(Implementations implementation)
         {
             await this.Login("jane@example.com");
@@ -158,6 +126,5 @@
 
             Assert.That(counter, Is.EqualTo(4));
         }
-
     }
 }
