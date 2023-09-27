@@ -85,6 +85,28 @@ public class Field
 
         if (this.SignalType.IsComputedSignal)
         {
+            var compositeRoleWrapper = argumentType.ImplementedTypes.FirstOrDefault(v => v.IsCompositeRoleWrapper);
+            if (compositeRoleWrapper != null)
+            {
+                return $@"    public {compositeRoleWrapper.ArgumentTypes[0].FullName} {this.PropertyName}
+    {{
+        get => this.{this.Name}.Value?.Value;
+        set {{ if(this.{this.Name}.Value != null) this.{this.Name}.Value.Value = value; }}
+    }}";
+
+            }
+
+            var compositesRoleWrapper = argumentType.ImplementedTypes.FirstOrDefault(v => v.IsCompositesRoleWrapper);
+            if (compositesRoleWrapper != null)
+            {
+                return $@"    public System.Collections.Generic.IEnumerable<{compositesRoleWrapper.ArgumentTypes[0].FullName}> {this.PropertyName}
+    {{
+        get => this.{this.Name}.Value?.Value;
+        set {{ if(this.{this.Name}.Value != null) this.{this.Name}.Value.Value = value; }}
+    }}";
+
+            }
+
             var nestedArgumentType = argumentType.NestedArgumentType;
 
             if (nestedArgumentType == null)
@@ -94,52 +116,28 @@ public class Field
         get => this.{this.Name}.Value;
     }}";
             }
-            else
+
+            if (argumentType.IsUnitRole)
             {
-                if (argumentType.IsUnitRole)
+                if (argumentType.IsNullable)
                 {
-                    if (argumentType.IsNullable)
+                    if (nestedArgumentType.IsNullable)
                     {
-                        if (nestedArgumentType.IsNullable)
-                        {
-                            return $@"    public {nestedArgumentType.FullName} {this.PropertyName}
+                        return $@"    public {nestedArgumentType.FullName} {this.PropertyName}
     {{
         get => this.{this.Name}.Value?.Value;
         set {{ if(this.{this.Name}.Value != null) this.{this.Name}.Value.Value = value; }}
     }}";
-                        }
-                        else
-                        {
-                            return $@"    public {nestedArgumentType.FullName}? {this.PropertyName}
-    {{
-        get => this.{this.Name}.Value?.Value;
-        set {{ if(this.{this.Name}.Value != null) this.{this.Name}.Value.Value = value; }}
-    }}";
-
-                        }
                     }
-                    else
-                    {
-                        if (nestedArgumentType.IsNullable)
-                        {
-                            return $@"    public {nestedArgumentType.FullName} {this.PropertyName}
-    {{
-        get => this.{this.Name}.Value?.Value;
-        set {{ if(this.{this.Name}.Value != null) this.{this.Name}.Value.Value = value; }}
-    }}";
-                        }
-                        else
-                        {
-                            return $@"    public {nestedArgumentType.FullName} {this.PropertyName}
-    {{
-        get => this.{this.Name}.Value?.Value;
-        set {{ if(this.{this.Name}.Value != null) this.{this.Name}.Value.Value = value; }}
-    }}";
 
-                        }
-                    }
+                    return $@"    public {nestedArgumentType.FullName}? {this.PropertyName}
+    {{
+        get => this.{this.Name}.Value?.Value;
+        set {{ if(this.{this.Name}.Value != null) this.{this.Name}.Value.Value = value; }}
+    }}";
                 }
-                else
+
+                if (nestedArgumentType.IsNullable)
                 {
                     return $@"    public {nestedArgumentType.FullName} {this.PropertyName}
     {{
@@ -147,7 +145,19 @@ public class Field
         set {{ if(this.{this.Name}.Value != null) this.{this.Name}.Value.Value = value; }}
     }}";
                 }
+
+                return $@"    public {nestedArgumentType.FullName} {this.PropertyName}
+    {{
+        get => this.{this.Name}.Value?.Value;
+        set {{ if(this.{this.Name}.Value != null) this.{this.Name}.Value.Value = value; }}
+    }}";
             }
+
+            return $@"    public {nestedArgumentType.FullName} {this.PropertyName}
+    {{
+        get => this.{this.Name}.Value?.Value;
+        set {{ if(this.{this.Name}.Value != null) this.{this.Name}.Value.Value = value; }}
+    }}";
 
         }
 

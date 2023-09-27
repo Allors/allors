@@ -11,7 +11,7 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="Allors.Workspace.Mvvm.Generator.AttributeInstance">
-    <Position X="13.25" Y="0.5" Width="1.5" />
+    <Position X="14" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAIAgAAAAAAAAAAAgAA=</HashCode>
       <FileName>Model\AttributeInstance.cs</FileName>
@@ -29,7 +29,7 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="Allors.Workspace.Mvvm.Generator.Field">
-    <Position X="9.75" Y="0.5" Width="2" />
+    <Position X="9.75" Y="0.5" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAgAAAEAAAAAgAAAACIAAAQAAAgAgAAAAEAABABACAA=</HashCode>
       <FileName>Model\Field.cs</FileName>
@@ -52,18 +52,21 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="Allors.Workspace.Mvvm.Generator.ArgumentType">
-    <Position X="16.75" Y="3.25" Width="2.25" />
+    <Position X="17" Y="3.25" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAYIAAAAAAABAAAAAAAAAAAIAACAAIAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAYIAAAAAIABAAAAAAAAAAAIAACAAIAA=</HashCode>
       <FileName>Model\ArgumentType.cs</FileName>
-      <NewMemberFileName>Model\FieldType.cs</NewMemberFileName>
+      <NewMemberFileName>ImplementedType.cs</NewMemberFileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="NestedArgumentType" />
     </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="ImplementedTypes" />
+    </ShowAsCollectionAssociation>
   </Class>
   <Class Name="Allors.Workspace.Mvvm.Generator.SignalType">
-    <Position X="13.25" Y="3.25" Width="2" />
+    <Position X="13.75" Y="3.25" Width="1.75" />
     <TypeIdentifier>
       <HashCode>QAAAAAAAAAAAAAAAAAAAAAQACAAQAAAAAAIAAAAAAAA=</HashCode>
       <FileName>Model\SignalType.cs</FileName>
@@ -71,6 +74,24 @@
     <ShowAsAssociation>
       <Property Name="ArgumentType" />
     </ShowAsAssociation>
+  </Class>
+  <Class Name="Allors.Workspace.Mvvm.Generator.ImplementedArgumentType">
+    <Position X="24" Y="3.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAAAAAAAAQAAAAAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>Model\ImplementedArgumentType.cs</FileName>
+      <NewMemberFileName>Model\ImplementedType.cs</NewMemberFileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Allors.Workspace.Mvvm.Generator.ImplementedType">
+    <Position X="20.5" Y="3.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEAAAAAAAAAAAAQIAgAAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>Model\ImplementedType.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="ArgumentTypes" />
+    </ShowAsCollectionAssociation>
   </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

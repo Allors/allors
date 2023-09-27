@@ -6,4 +6,5 @@
   <ItemGroup>
     <ProjectReference Include="..\Allors.Workspace\Allors.Workspace.csproj" />
   </ItemGroup>
+  
 </Project>
