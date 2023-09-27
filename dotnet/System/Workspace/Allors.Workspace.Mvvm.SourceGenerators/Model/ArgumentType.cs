@@ -1,5 +1,6 @@
 ﻿namespace Allors.Workspace.Mvvm.Generator;
 
+using System;
 using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -23,8 +24,8 @@ public class ArgumentType
             this.NestedArgumentType = new ArgumentType(semanticModel, argument);
         }
 
-        var typeSymbol = (INamedTypeSymbol)semanticModel.GetSymbolInfo(this.NormalizedTypeSyntax).Symbol;
-        this.ImplementedTypes = typeSymbol.AllInterfaces.Prepend(typeSymbol).ToArray().Select(v => new ImplementedType(v)).ToArray();
+        var typeSymbol = semanticModel.GetSymbolInfo(this.NormalizedTypeSyntax).Symbol as INamedTypeSymbol;
+        this.ImplementedTypes = typeSymbol?.AllInterfaces.Prepend(typeSymbol).ToArray().Select(v => new ImplementedType(v)).ToArray() ?? Array.Empty<ImplementedType>();
     }
 
     public TypeSyntax TypeSyntax { get; }
