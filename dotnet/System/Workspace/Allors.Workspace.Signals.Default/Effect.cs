@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 
-public class Effect : IEffect, ITracker
+public class Effect : IEffect, IUpstream
 {
     private static readonly IDictionary<IOperand, long> EmptyDictionary = new Dictionary<IOperand, long>();
 
@@ -71,4 +71,6 @@ public class Effect : IEffect, ITracker
 
         this.trackingWorkspaceVersionByOperand[operand] = trackingWorkspaceVersion;
     }
+
+    public IDownstream Downstreams { get; set; }
 }

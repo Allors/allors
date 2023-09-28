@@ -2,7 +2,7 @@
 
 using System;
 
-public class ComputedSignal<T> : IComputedSignal<T>, ITracker, ICacheable
+public class ComputedSignal<T> : IComputedSignal<T>, IUpstream, IDownstream, ICacheable
 {
     private readonly Func<ITracker, T> expression;
 
@@ -70,4 +70,8 @@ public class ComputedSignal<T> : IComputedSignal<T>, ITracker, ICacheable
             this.isCached = true;
         }
     }
+
+    public IDownstream Downstreams { get; set; }
+
+    public WeakReference<IUpstream> Upstreams { get; set; }
 }

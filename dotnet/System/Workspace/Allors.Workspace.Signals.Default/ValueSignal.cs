@@ -1,6 +1,8 @@
 ﻿namespace Allors.Workspace.Signals.Default;
 
-public class ValueSignal<T> : IValueSignal<T>
+using System;
+
+public class ValueSignal<T> : IValueSignal<T>, IDownstream
 {
     private readonly Dispatcher dispatcher;
     private long workspaceVersion;
@@ -31,4 +33,6 @@ public class ValueSignal<T> : IValueSignal<T>
     object IValueSignal.Value { get; set; }
 
     public long WorkspaceVersion => this.workspaceVersion;
+
+    public WeakReference<IUpstream> Upstreams { get; set; }
 }
