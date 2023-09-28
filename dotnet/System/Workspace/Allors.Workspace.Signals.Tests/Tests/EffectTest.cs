@@ -5,12 +5,12 @@
     public class EffectTest : Test
     {
         [Test]
-        [TestCaseSource(nameof(TestImplementations))]
-        public async Task UnitRoles(Implementations implementation)
+        
+        public async Task UnitRoles()
         {
             await this.Login("jane@example.com");
             var workspace = this.Workspace;
-            SelectImplementation(workspace, implementation);
+            
 
             var dispatcherBuilder = workspace.Services.Get<IDispatcherBuilder>();
             var dispatcher = dispatcherBuilder.Build(workspace);
@@ -58,12 +58,12 @@
         }
 
         [Test]
-        [TestCaseSource(nameof(TestImplementations))]
-        public async Task Dispose(Implementations implementation)
+        
+        public async Task Dispose()
         {
             await this.Login("jane@example.com");
             var workspace = this.Workspace;
-            SelectImplementation(workspace, implementation);
+            
 
             var dispatcherBuilder = workspace.Services.Get<IDispatcherBuilder>();
             var dispatcher = dispatcherBuilder.Build(workspace);
@@ -94,12 +94,12 @@
         }
 
         [Test]
-        [TestCaseSource(nameof(TestImplementations))]
-        public async Task CombinedDependencies(Implementations implementation)
+        
+        public async Task CombinedDependencies()
         {
             await this.Login("jane@example.com");
             var workspace = this.Workspace;
-            SelectImplementation(workspace, implementation);
+            
 
             var dispatcherBuilder = workspace.Services.Get<IDispatcherBuilder>();
             var dispatcher = dispatcherBuilder.Build(workspace);

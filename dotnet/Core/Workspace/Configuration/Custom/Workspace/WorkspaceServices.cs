@@ -16,7 +16,7 @@ namespace Allors.Workspace
         {
             this.ObjectFactory = objectFactory;
             this.M = m;
-            this.DispatcherBuilder = new CoarseDispatcherBuilder();
+            this.DispatcherBuilder = new DefaultDispatcherBuilder();
         }
 
         public IObjectFactory ObjectFactory { get; }

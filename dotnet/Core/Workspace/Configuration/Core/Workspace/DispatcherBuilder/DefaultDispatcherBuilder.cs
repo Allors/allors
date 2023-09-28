@@ -6,9 +6,9 @@
 namespace Allors.Workspace.Configuration
 {
     using Signals;
-    using Signals.Coarse;
+    using Signals.Default;
 
-    public class CoarseDispatcherBuilder : IDispatcherBuilder
+    public class DefaultDispatcherBuilder : IDispatcherBuilder
     {
         public IDispatcher Build(IWorkspace workspace)
         {

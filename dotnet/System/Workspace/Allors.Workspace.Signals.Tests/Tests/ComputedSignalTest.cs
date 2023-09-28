@@ -8,12 +8,11 @@
     public class ComputedSignalTest : Test
     {
         [Test]
-        [TestCaseSource(nameof(TestImplementations))]
-        public async Task Roles(Implementations implementation)
+        
+        public async Task Roles()
         {
             await this.Login("jane@example.com");
             var workspace = this.Workspace;
-            SelectImplementation(workspace, implementation);
 
             var dispatcherBuilder = workspace.Services.Get<IDispatcherBuilder>();
             var dispatcher = dispatcherBuilder.Build(workspace);
@@ -48,12 +47,12 @@
         }
 
         [Test]
-        [TestCaseSource(nameof(TestImplementations))]
-        public async Task ValueSignalWithRoles(Implementations implementation)
+        
+        public async Task ValueSignalWithRoles()
         {
             await this.Login("jane@example.com");
             var workspace = this.Workspace;
-            SelectImplementation(workspace, implementation);
+            
 
             var dispatcherBuilder = workspace.Services.Get<IDispatcherBuilder>();
             var dispatcher = dispatcherBuilder.Build(workspace);
