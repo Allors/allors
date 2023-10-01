@@ -3,7 +3,7 @@
   <Class Name="Allors.Workspace.Signals.Default.Dispatcher">
     <Position X="0.5" Y="1.25" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AQAgAAAAAQBAAIAAAAAgAAAEAEAAAAAggAEACAgAAAA=</HashCode>
+      <HashCode>QAAgAAAAAABAAIAQAAAAAAAEAQAAAAAggAEACAgAAAA=</HashCode>
       <FileName>Dispatcher.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -11,16 +11,15 @@
   <Class Name="Allors.Workspace.Signals.Default.ValueSignal&lt;T&gt;">
     <Position X="6" Y="3.75" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAACACAAAAAAAAAAAAAIAAAIABACAAAgAgAAAAAAA=</HashCode>
+      <HashCode>AAAAACACAQAAAAAAAAAAAAAAAIABECAAAgAgAAAAAAA=</HashCode>
       <FileName>ValueSignal.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
   </Class>
-  <Class Name="Allors.Workspace.Signals.Default.Operand">
+  <Class Name="Allors.Workspace.Signals.Default.OperandSignal">
     <Position X="4.25" Y="3.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AQAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Operand.cs</FileName>
+      <HashCode>AQAAAAACAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>OperandSignal.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
@@ -35,7 +34,7 @@
   <Class Name="Allors.Workspace.Signals.Default.ComputedSignal&lt;T&gt;">
     <Position X="8" Y="3.75" Width="2.75" />
     <TypeIdentifier>
-      <HashCode>AAABACAiAEAAAAAAIAAAAAAAAJAAACAgAgAgBAAAAAA=</HashCode>
+      <HashCode>AAAACCAGAECAAAAAIAAAAIAAAJAAFCAAAgAgAAAAAAA=</HashCode>
       <FileName>ComputedSignal.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -43,15 +42,15 @@
   <Interface Name="Allors.Workspace.Signals.Default.IUpstream">
     <Position X="9.75" Y="1" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAEAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>IUpstream.cs</FileName>
-      <NewMemberFileName>IDownstream.cs</NewMemberFileName>
+      <NewMemberFileName>Extensions\WeakReferenceUpstream.cs</NewMemberFileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Allors.Workspace.Signals.Default.IDownstream">
     <Position X="6" Y="1" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAACAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAA=</HashCode>
       <FileName>IDownstream.cs</FileName>
     </TypeIdentifier>
   </Interface>

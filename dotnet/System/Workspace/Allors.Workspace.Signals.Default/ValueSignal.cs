@@ -4,16 +4,14 @@ using System;
 
 public class ValueSignal<T> : IValueSignal<T>, IDownstream
 {
-    private readonly Dispatcher dispatcher;
     private long workspaceVersion;
     private T value;
 
-    public ValueSignal(Dispatcher dispatcher, T value)
+    public ValueSignal(T value)
     {
-        this.dispatcher = dispatcher;
         this.Value = value;
     }
-    
+
     object ISignal.Value => this.Value;
 
     public T Value
@@ -25,7 +23,7 @@ public class ValueSignal<T> : IValueSignal<T>, IDownstream
             {
                 this.value = value;
                 ++this.workspaceVersion;
-                this.dispatcher.ValueSignalOnChangedValue();
+                this.OnChanged();
             }
         }
     }
@@ -34,5 +32,20 @@ public class ValueSignal<T> : IValueSignal<T>, IDownstream
 
     public long WorkspaceVersion => this.workspaceVersion;
 
-    public WeakReference<IUpstream> Upstreams { get; set; }
+    public WeakReference<IUpstream>[] Upstreams { get; set; }
+
+    public void TrackedBy(IUpstream newUpstream)
+    {
+        this.Upstreams = this.Upstreams.Update(newUpstream);
+    }
+
+    private void OnChanged()
+    {
+        var upstreams = this.Upstreams;
+        foreach (var weakReference in upstreams)
+        {
+            weakReference.TryGetTarget(out var upstream);
+            upstream?.Invalidate();
+        }
+    }
 }

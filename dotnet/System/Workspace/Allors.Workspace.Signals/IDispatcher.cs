@@ -18,7 +18,5 @@ namespace Allors.Workspace.Signals
         void Pause();
 
         void Resume();
-
-        void Schedule();
     }
 }

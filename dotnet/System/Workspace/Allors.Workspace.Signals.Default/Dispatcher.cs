@@ -7,30 +7,42 @@ namespace Allors.Workspace.Signals.Default
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     public class Dispatcher : IDispatcher
     {
-        private readonly IList<ICacheable> cacheables;
+        private readonly Dictionary<IOperand, OperandSignal> operandSignalByOperand;
         private readonly IList<Effect> effects;
-       
+        private readonly ISet<Effect> scheduledEffects;
+
         public Dispatcher(IWorkspace workspace)
         {
-            this.cacheables = new List<ICacheable>();
             this.effects = new List<Effect>();
+            this.scheduledEffects = new HashSet<Effect>();
 
             workspace.DatabaseChanged += this.WorkspaceOnDatabaseChanged;
             workspace.WorkspaceChanged += WorkspaceOnWorkspaceChanged;
         }
 
+        public OperandSignal GetOrCreateOperandSignal(IOperand operand)
+        {
+            if (!this.operandSignalByOperand.TryGetValue(operand, out var operandSignal))
+            {
+                operandSignal = new OperandSignal(operand);
+                this.operandSignalByOperand.Add(operand, operandSignal);
+            }
+
+            return operandSignal;
+        }
+
         public IValueSignal<T> CreateValueSignal<T>(T value)
         {
-            return new ValueSignal<T>(this, value);
+            return new ValueSignal<T>(value);
         }
 
         public IComputedSignal<T> CreateComputedSignal<T>(Func<ITracker, T> calculation)
         {
             var computedSignal =  new ComputedSignal<T>(calculation);
-            this.cacheables.Add(computedSignal);
             return computedSignal;
         }
 
@@ -54,42 +66,43 @@ namespace Allors.Workspace.Signals.Default
             throw new NotImplementedException();
         }
 
-        public void Schedule()
-        {
-            this.OnChange();
-        }
-
         public void RemoveEffect(Effect effect)
         {
             this.effects.Remove(effect);
         }
 
-        public void ValueSignalOnChangedValue()
-        {
-            this.OnChange();
-        }
-
         private void WorkspaceOnDatabaseChanged(object sender, DatabaseChangedEventArgs e)
         {
-            this.OnChange();
+            foreach (var operandSignal in this.operandSignalByOperand.Select(kvp => kvp.Value))
+            {
+                operandSignal.OnChanged();
+            }
+        }
+
+        internal void UpdateTracked(IUpstream upstream, ISet<IOperand> trackedOperands)
+        {
+            foreach (var trackedOperand in trackedOperands)
+            {
+                var downstream = trackedOperand as IDownstream ?? this.GetOrCreateOperandSignal(trackedOperand);
+                downstream.TrackedBy(upstream);
+            }
         }
 
         private void WorkspaceOnWorkspaceChanged(object sender, WorkspaceChangedEventArgs e)
         {
-            this.OnChange();
+            var operands = e.Operands;
+            foreach (var operand in operands)
+            {
+                if (this.operandSignalByOperand.TryGetValue(operand, out var operandSignal))
+                {
+                    operandSignal.OnChanged();
+                }
+            }
         }
 
-        private void OnChange()
+        public void Schedule(Effect effect)
         {
-            foreach (var cacheable in this.cacheables)
-            {
-                cacheable.InvalidateCache();
-            }
-
-            foreach (var effect in this.effects)
-            {
-                effect.Raise();
-            }
+            this.scheduledEffects.Add(effect);
         }
     }
 }

@@ -4,5 +4,7 @@ using System;
 
 public interface IDownstream
 {
-    WeakReference<IUpstream> Upstreams { get; set; }
+    WeakReference<IUpstream>[] Upstreams { get; set; }
+
+    void TrackedBy(IUpstream newUpstream);
 }
