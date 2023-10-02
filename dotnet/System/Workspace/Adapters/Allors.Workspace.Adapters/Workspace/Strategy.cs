@@ -368,9 +368,9 @@ namespace Allors.Workspace.Adapters
                 };
 
                 this.Workspace.PushToDatabaseTracker.OnChanged(this);
-            }
 
-            this.Workspace.RegisterWorkspaceReaction(this, roleType);
+                this.Workspace.RegisterWorkspaceReaction(this, roleType);
+            }
 
             this.Workspace.HandleWorkspaceReactions();
         }

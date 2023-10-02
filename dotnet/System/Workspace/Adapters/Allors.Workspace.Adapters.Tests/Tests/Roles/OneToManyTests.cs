@@ -12,6 +12,7 @@ namespace Allors.Workspace.Adapters.Tests
     using Allors.Workspace.Data;
     using System;
     using System.Linq;
+    using Microsoft.IdentityModel.Tokens;
 
     public abstract class OneToManyTests : Test
     {
@@ -186,6 +187,33 @@ namespace Allors.Workspace.Adapters.Tests
                 Assert.Equal(c1C, c1C.C1WhereC1C1One2Many.Value);
                 Assert.Equal(c1C, c1D.C1WhereC1C1One2Many.Value);
             }
+        }
+
+        [Fact]
+        public async void AddRoleWithNulls()
+        {
+            var workspace = this.Profile.Workspace;
+
+            var c1A = workspace.Create<C1>();
+            var c1B = workspace.Create<C1>();
+            var c1C = workspace.Create<C1>();
+            var c1D = workspace.Create<C1>();
+
+            c1A.C1C1One2Manies.Add(null);
+
+            Assert.Empty(c1A.C1C1One2Manies.Value);
+
+            c1A.C1C1One2Manies.Value = new[]{c1B, null};
+
+            c1A.C1C1One2Manies.Value.ShouldContainSingle(c1B);
+
+            c1A.C1C1One2Manies.Value = new[] { null , c1C};
+
+            c1A.C1C1One2Manies.Value.ShouldContainSingle(c1C);
+
+            c1A.C1C1One2Manies.Value = new C1[] { null, null};
+
+            Assert.Empty(c1A.C1C1One2Manies.Value);
         }
 
         [Fact]
