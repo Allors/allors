@@ -7,7 +7,7 @@ namespace Allors.Workspace.Signals
 {
     using System;
 
-    public interface IDispatcher
+    public interface IDispatcher : IDisposable
     {
         IValueSignal<T> CreateValueSignal<T>(T value);
 

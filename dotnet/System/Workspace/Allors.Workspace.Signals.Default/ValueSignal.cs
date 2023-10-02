@@ -4,11 +4,13 @@ using System;
 
 public class ValueSignal<T> : IValueSignal<T>, IDownstream
 {
+    private readonly Dispatcher dispatcher;
     private long workspaceVersion;
     private T value;
 
-    public ValueSignal(T value)
+    public ValueSignal(Dispatcher dispatcher, T value)
     {
+        this.dispatcher = dispatcher;
         this.Value = value;
     }
 
@@ -39,13 +41,8 @@ public class ValueSignal<T> : IValueSignal<T>, IDownstream
         this.Upstreams = this.Upstreams.Update(newUpstream);
     }
 
-    private void OnChanged()
+    public void OnChanged()
     {
-        var upstreams = this.Upstreams;
-        foreach (var weakReference in upstreams)
-        {
-            weakReference.TryGetTarget(out var upstream);
-            upstream?.Invalidate();
-        }
+        this.Upstreams.Invalidate();
     }
 }

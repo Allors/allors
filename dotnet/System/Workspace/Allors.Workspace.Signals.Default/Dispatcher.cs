@@ -11,38 +11,26 @@ namespace Allors.Workspace.Signals.Default
 
     public class Dispatcher : IDispatcher
     {
-        private readonly Dictionary<IOperand, OperandSignal> operandSignalByOperand;
+        private readonly Dictionary<IOperand, WeakReference<IUpstream>[]> upstreamsByNonSignalOperand;
         private readonly IList<Effect> effects;
-        private readonly ISet<Effect> scheduledEffects;
 
         public Dispatcher(IWorkspace workspace)
         {
+            this.upstreamsByNonSignalOperand = new Dictionary<IOperand, WeakReference<IUpstream>[]>();
             this.effects = new List<Effect>();
-            this.scheduledEffects = new HashSet<Effect>();
 
             workspace.DatabaseChanged += this.WorkspaceOnDatabaseChanged;
             workspace.WorkspaceChanged += WorkspaceOnWorkspaceChanged;
         }
 
-        public OperandSignal GetOrCreateOperandSignal(IOperand operand)
-        {
-            if (!this.operandSignalByOperand.TryGetValue(operand, out var operandSignal))
-            {
-                operandSignal = new OperandSignal(operand);
-                this.operandSignalByOperand.Add(operand, operandSignal);
-            }
-
-            return operandSignal;
-        }
-
         public IValueSignal<T> CreateValueSignal<T>(T value)
         {
-            return new ValueSignal<T>(value);
+            return new ValueSignal<T>(this, value);
         }
 
         public IComputedSignal<T> CreateComputedSignal<T>(Func<ITracker, T> calculation)
         {
-            var computedSignal =  new ComputedSignal<T>(calculation);
+            var computedSignal = new ComputedSignal<T>(this, calculation);
             return computedSignal;
         }
 
@@ -51,11 +39,11 @@ namespace Allors.Workspace.Signals.Default
             var effect = new Effect(this, dependencies, action);
             this.effects.Add(effect);
 
-            effect.Raise();
-            
+            effect.Handle();
+
             return effect;
         }
-        
+
         public void Pause()
         {
             throw new NotImplementedException();
@@ -71,21 +59,39 @@ namespace Allors.Workspace.Signals.Default
             this.effects.Remove(effect);
         }
 
-        private void WorkspaceOnDatabaseChanged(object sender, DatabaseChangedEventArgs e)
-        {
-            foreach (var operandSignal in this.operandSignalByOperand.Select(kvp => kvp.Value))
-            {
-                operandSignal.OnChanged();
-            }
-        }
-
-        internal void UpdateTracked(IUpstream upstream, ISet<IOperand> trackedOperands)
+        internal void UpdateTracked(IUpstream upstream, IEnumerable<IOperand> trackedOperands)
         {
             foreach (var trackedOperand in trackedOperands)
             {
-                var downstream = trackedOperand as IDownstream ?? this.GetOrCreateOperandSignal(trackedOperand);
-                downstream.TrackedBy(upstream);
+                if (trackedOperand is IDownstream downstream)
+                {
+                    downstream.TrackedBy(upstream);
+                }
+                else
+                {
+                    this.upstreamsByNonSignalOperand.TryGetValue(trackedOperand, out var upstreams);
+                    upstreams = upstreams.Update(upstream);
+                    this.upstreamsByNonSignalOperand[trackedOperand] = upstreams;
+                }
             }
+        }
+
+        internal void HandleEffects()
+        {
+            foreach (var effect in this.effects)
+            {
+                effect.Handle();
+            }
+        }
+
+        private void WorkspaceOnDatabaseChanged(object sender, DatabaseChangedEventArgs e)
+        {
+            foreach (var weakOperandSignal in this.upstreamsByNonSignalOperand.Select(kvp => kvp.Value))
+            {
+                weakOperandSignal.Invalidate();
+            }
+
+            this.HandleEffects();
         }
 
         private void WorkspaceOnWorkspaceChanged(object sender, WorkspaceChangedEventArgs e)
@@ -93,16 +99,23 @@ namespace Allors.Workspace.Signals.Default
             var operands = e.Operands;
             foreach (var operand in operands)
             {
-                if (this.operandSignalByOperand.TryGetValue(operand, out var operandSignal))
+                if (this.upstreamsByNonSignalOperand.TryGetValue(operand, out var operandSignal))
                 {
-                    operandSignal.OnChanged();
+                    operandSignal.Invalidate();
                 }
             }
+
+            this.HandleEffects();
         }
 
-        public void Schedule(Effect effect)
+        public void Dispose()
         {
-            this.scheduledEffects.Add(effect);
+            foreach (var effect in this.effects)
+            {
+                effect.Dispose();
+            }
+
+            this.effects.Clear();
         }
     }
 }

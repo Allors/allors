@@ -23,7 +23,7 @@
 
             var counter = 0;
 
-            var effect = dispatcher.CreateEffect(v =>
+            using var effect = dispatcher.CreateEffect(v =>
             {
                 v.Track(c1a.C1AllorsString);
                 if (multiple)
@@ -72,7 +72,7 @@
 
             var counter = 0;
 
-            var effect = dispatcher.CreateEffect(v =>
+            using var effect = dispatcher.CreateEffect(v =>
             {
                 v.Track(c1a.C1AllorsString);
             }, () =>
@@ -109,8 +109,14 @@
             var counter = 0;
 
             IValueSignal<Person> model = dispatcher.CreateValueSignal(person);
-            IComputedSignal<IUnitRole<string>?> firstName = dispatcher.CreateComputedSignal(tracker => model.Track(tracker).Value.FirstName.Track(tracker));
-            IEffect firstNameChanged = dispatcher.CreateEffect(tracker => firstName.Track(tracker), () => ++counter);
+            IComputedSignal<IUnitRole<string>?> combinedModel = dispatcher.CreateComputedSignal(tracker => model.Track(tracker).Value.FirstName.Track(tracker));
+            IEffect combinedModelChanged = dispatcher.CreateEffect(tracker => 
+                
+                
+                combinedModel.Track(tracker)
+                
+                
+                , () => ++counter);
 
             Assert.That(counter, Is.EqualTo(1));
 

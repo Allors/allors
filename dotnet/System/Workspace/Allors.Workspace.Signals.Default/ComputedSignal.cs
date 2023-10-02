@@ -12,6 +12,8 @@ public class ComputedSignal<T> : IComputedSignal<T>, IUpstream, IDownstream
     private long workspaceVersion;
     private bool isInvalid;
 
+    private long operandValuePreviousWorkspaceVersion;
+
     private ISet<IOperand> trackedOperands;
 
     public ComputedSignal(Dispatcher dispatcher, Func<ITracker, T> expression)
@@ -64,13 +66,7 @@ public class ComputedSignal<T> : IComputedSignal<T>, IUpstream, IDownstream
     public void Invalidate()
     {
         this.isInvalid = true;
-
-        var upstreams = this.Upstreams;
-        foreach (var weakReference in upstreams)
-        {
-            weakReference.TryGetTarget(out var upstream);
-            upstream?.Invalidate();
-        }
+        this.Upstreams.Invalidate();
     }
 
     private void Validate()
@@ -83,6 +79,22 @@ public class ComputedSignal<T> : IComputedSignal<T>, IUpstream, IDownstream
         {
             this.value = newValue;
             ++this.workspaceVersion;
+        }
+        else
+        {
+            if (newValue is IOperand operand)
+            {
+                if (!Equals(operand.WorkspaceVersion, this.operandValuePreviousWorkspaceVersion))
+                {
+                    this.value = newValue;
+                    ++this.workspaceVersion;
+                    this.operandValuePreviousWorkspaceVersion = operand.WorkspaceVersion;
+                }
+            }
+            else
+            {
+                this.operandValuePreviousWorkspaceVersion = 0;
+            }
         }
 
         this.dispatcher.UpdateTracked(this, this.trackedOperands);

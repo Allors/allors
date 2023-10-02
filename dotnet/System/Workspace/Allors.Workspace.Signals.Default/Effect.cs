@@ -14,7 +14,7 @@ public class Effect : IEffect, IUpstream
     private IDictionary<IOperand, long> trackingWorkspaceVersionByOperand;
 
     private bool shouldRaise;
-
+    
     public Effect(Dispatcher dispatcher, Action<ITracker> dependencies, Action action)
     {
         this.dispatcher = dispatcher;
@@ -31,7 +31,12 @@ public class Effect : IEffect, IUpstream
         this.dispatcher.RemoveEffect(this);
     }
 
-    public void Raise()
+    public void Invalidate()
+    {
+        // TODO:
+    }
+    
+    public void Handle()
     {
         this.trackingWorkspaceVersionByOperand = new Dictionary<IOperand, long>();
         this.dependencies(this);
@@ -44,6 +49,8 @@ public class Effect : IEffect, IUpstream
 
         this.workspaceVersionByOperand = this.trackingWorkspaceVersionByOperand;
         this.trackingWorkspaceVersionByOperand = null;
+        
+        this.dispatcher.UpdateTracked(this, this.workspaceVersionByOperand.Keys);
     }
 
     public void Track(IOperand operand)
@@ -52,7 +59,7 @@ public class Effect : IEffect, IUpstream
         {
             return;
         }
-
+        
         var trackingWorkspaceVersion = operand.WorkspaceVersion;
         if (this.workspaceVersionByOperand.TryGetValue(operand, out var workspaceVersion))
         {
@@ -67,10 +74,5 @@ public class Effect : IEffect, IUpstream
         }
 
         this.trackingWorkspaceVersionByOperand[operand] = trackingWorkspaceVersion;
-    }
-
-    public void Invalidate()
-    {
-        this.dispatcher.Schedule(this);
     }
 }

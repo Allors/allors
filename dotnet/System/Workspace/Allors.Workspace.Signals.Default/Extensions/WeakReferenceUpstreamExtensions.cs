@@ -8,6 +8,11 @@ public static class WeakReferenceUpstreamExtensions
 {
     public static WeakReference<IUpstream>[] Update(this WeakReference<IUpstream>[] @this, IUpstream newUpstream)
     {
+        if (@this == null)
+        {
+            return new[] { new WeakReference<IUpstream>(newUpstream) };
+        }
+
         bool hasMissingTargets = false;
         bool hasUpstream = false;
 
@@ -43,5 +48,19 @@ public static class WeakReferenceUpstreamExtensions
         }
 
         return result.ToArray();
+    }
+
+    public static void Invalidate(this WeakReference<IUpstream>[] @this)
+    {
+        if (@this == null)
+        {
+            return;
+        }
+
+        foreach (var weakReference in @this)
+        {
+            weakReference.TryGetTarget(out var upstream);
+            upstream?.Invalidate();
+        }
     }
 }
