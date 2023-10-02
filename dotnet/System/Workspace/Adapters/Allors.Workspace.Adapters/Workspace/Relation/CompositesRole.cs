@@ -42,7 +42,7 @@ namespace Allors.Workspace
         IEnumerable<T> ICompositesRole<T>.Value
         {
             get => this.Value.Select(this.Object.Workspace.ObjectFactory.Object<T>);
-            set => this.Value = value.Select(v => v.Strategy);
+            set => this.Value = value.Where(v => v != null).Select(v => v.Strategy);
         }
 
         object IRelationEnd.Value => this.Value;

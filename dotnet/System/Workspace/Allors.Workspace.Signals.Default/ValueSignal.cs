@@ -44,5 +44,7 @@ public class ValueSignal<T> : IValueSignal<T>, IDownstream
     public void OnChanged()
     {
         this.Upstreams.Invalidate();
+
+        this.dispatcher.HandleEffects();
     }
 }

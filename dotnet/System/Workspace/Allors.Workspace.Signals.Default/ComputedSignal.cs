@@ -12,7 +12,8 @@ public class ComputedSignal<T> : IComputedSignal<T>, IUpstream, IDownstream
     private long workspaceVersion;
     private bool isInvalid;
 
-    private long operandValuePreviousWorkspaceVersion;
+    private object previousValue;
+    private long previousValueVersion;
 
     private ISet<IOperand> trackedOperands;
 
@@ -55,6 +56,11 @@ public class ComputedSignal<T> : IComputedSignal<T>, IUpstream, IDownstream
 
     public void Track(IOperand operand)
     {
+        if (operand == null)
+        {
+            return;
+        }
+
         this.trackedOperands.Add(operand);
     }
 
@@ -74,6 +80,10 @@ public class ComputedSignal<T> : IComputedSignal<T>, IUpstream, IDownstream
         this.trackedOperands = new HashSet<IOperand>();
 
         var newValue = this.expression(this);
+        var newValueVersion = (newValue as IOperand)?.WorkspaceVersion ??
+                              (newValue as IObject)?.Strategy.Version ??
+                              (newValue as IStrategy)?.Version ??
+                              0;
 
         if (!Equals(newValue, this.value))
         {
@@ -82,20 +92,14 @@ public class ComputedSignal<T> : IComputedSignal<T>, IUpstream, IDownstream
         }
         else
         {
-            if (newValue is IOperand operand)
+            if (newValueVersion != this.previousValueVersion)
             {
-                if (!Equals(operand.WorkspaceVersion, this.operandValuePreviousWorkspaceVersion))
-                {
-                    this.value = newValue;
-                    ++this.workspaceVersion;
-                    this.operandValuePreviousWorkspaceVersion = operand.WorkspaceVersion;
-                }
-            }
-            else
-            {
-                this.operandValuePreviousWorkspaceVersion = 0;
+                ++this.workspaceVersion;
             }
         }
+        
+        this.previousValue = newValue;
+        this.previousValueVersion = newValueVersion;
 
         this.dispatcher.UpdateTracked(this, this.trackedOperands);
 
