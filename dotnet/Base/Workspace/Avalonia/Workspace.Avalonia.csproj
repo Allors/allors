@@ -21,4 +21,10 @@
   <ItemGroup>
     <ProjectReference Include="..\Avalonia.ViewModels\Workspace.Avalonia.ViewModels.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\FirstView.axaml.cs">
+      <DependentUpon>FirstView.axaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
 </Project>

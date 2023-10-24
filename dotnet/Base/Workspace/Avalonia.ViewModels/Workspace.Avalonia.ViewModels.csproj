@@ -10,4 +10,8 @@
     <PackageReference Include="Avalonia.ReactiveUI" Version="$(AvaloniaVersion)" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Signals\Workspace.Signals.csproj" />
+  </ItemGroup>
+
 </Project>
