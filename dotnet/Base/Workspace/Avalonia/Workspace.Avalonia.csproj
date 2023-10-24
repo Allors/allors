@@ -11,20 +11,27 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)" />
-    <PackageReference Include="Avalonia.Themes.Fluent" Version="$(AvaloniaVersion)" />
-    <PackageReference Include="Avalonia.Fonts.Inter" Version="$(AvaloniaVersion)" />
-    <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
-    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="$(AvaloniaVersion)" />
+    <PackageReference Include="Avalonia" Version="11.0.5" />
+    <PackageReference Include="Avalonia.Controls.DataGrid" Version="11.0.5" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.5" />
+    <PackageReference Include="Avalonia.Fonts.Inter" Version="11.0.5" />
+    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.5" />
+    <PackageReference Include="MessageBox.Avalonia" Version="3.1.5.1" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\System\Workspace\Adapters\Allors.Workspace.Adapters.Json.SystemText\Allors.Workspace.Adapters.Json.SystemText.csproj" />
     <ProjectReference Include="..\Avalonia.ViewModels\Workspace.Avalonia.ViewModels.csproj" />
+    <ProjectReference Include="..\Configuration\Workspace.Configuration.csproj" />
+    <ProjectReference Include="..\Meta.Configuration\Workspace.Meta.Configuration.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Views\FirstView.axaml.cs">
-      <DependentUpon>FirstView.axaml</DependentUpon>
+    <Compile Update="Views\Home.axaml.cs">
+      <DependentUpon>Home.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\PersonControl.axaml.cs">
+      <DependentUpon>PersonControl.axaml</DependentUpon>
     </Compile>
   </ItemGroup>
 </Project>

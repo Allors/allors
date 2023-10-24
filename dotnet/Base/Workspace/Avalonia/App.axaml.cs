@@ -1,5 +1,4 @@
-﻿using Avalonia;
-using Avalonia.Controls.ApplicationLifetimes;
+﻿using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Avalonia.ViewModels;
 using Avalonia.Views;
@@ -19,10 +18,10 @@ public partial class App : Application
         {
             desktop.MainWindow = new MainWindow
             {
-                DataContext = new MainWindowViewModel()
+                DataContext = new MainWindowViewModel(new WorkspaceFactory(), new MessageService(), new AutoLoginService())
             };
         }
-        
+
         base.OnFrameworkInitializationCompleted();
     }
 }

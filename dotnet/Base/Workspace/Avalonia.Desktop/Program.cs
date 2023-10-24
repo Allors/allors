@@ -1,9 +1,9 @@
 ﻿using System;
-
-using Avalonia;
 using Avalonia.ReactiveUI;
 
 namespace Avalonia.Desktop;
+
+using Views;
 
 class Program
 {
@@ -17,8 +17,9 @@ class Program
     // Avalonia configuration, don't remove; also used by visual designer.
     public static AppBuilder BuildAvaloniaApp()
         => AppBuilder.Configure<App>()
+            .UseAllors()
             .UsePlatformDetect()
             .WithInterFont()
-            .LogToTrace()
-            .UseReactiveUI();
+            .UseReactiveUI()
+            .LogToTrace();
 }
