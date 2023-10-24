@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\System\Workspace\Allors.Workspace.Signals\Allors.Workspace.Signals.csproj" />
+    <ProjectReference Include="..\Domain\Workspace.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

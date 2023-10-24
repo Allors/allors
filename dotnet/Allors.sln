@@ -227,6 +227,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Workspace.Mvvm.Sourc
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Workspace.Signals.Default", "System\Workspace\Allors.Workspace.Signals.Default\Allors.Workspace.Signals.Default.csproj", "{4AF14739-09FA-4F2E-8723-EB49630E8492}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Workspace.Signals", "Base\Workspace\Signals\Workspace.Signals.csproj", "{E9B3AD4C-F4E3-4E68-9927-D5842AFD2312}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -593,6 +595,10 @@ Global
 		{4AF14739-09FA-4F2E-8723-EB49630E8492}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4AF14739-09FA-4F2E-8723-EB49630E8492}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4AF14739-09FA-4F2E-8723-EB49630E8492}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9B3AD4C-F4E3-4E68-9927-D5842AFD2312}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9B3AD4C-F4E3-4E68-9927-D5842AFD2312}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9B3AD4C-F4E3-4E68-9927-D5842AFD2312}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9B3AD4C-F4E3-4E68-9927-D5842AFD2312}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -705,6 +711,7 @@ Global
 		{653BD54E-668A-42C7-B7CA-73D698AF8D0D} = {4E1AA48C-1B0B-481F-A004-0ABE1CF958F1}
 		{152EF923-2F64-4092-9C68-C3ABAF7F1DEF} = {4E1AA48C-1B0B-481F-A004-0ABE1CF958F1}
 		{4AF14739-09FA-4F2E-8723-EB49630E8492} = {4A6C9D75-071A-4DF2-8F80-B2DFF13889FD}
+		{E9B3AD4C-F4E3-4E68-9927-D5842AFD2312} = {EE6D614D-1CE1-49F7-A976-4AF276FC86B7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {00D78C3D-8536-4549-B1EE-C19BD0C50387}
