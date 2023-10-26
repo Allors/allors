@@ -30,8 +30,8 @@
     <Compile Update="Views\Home.axaml.cs">
       <DependentUpon>Home.axaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\PersonControl.axaml.cs">
-      <DependentUpon>PersonControl.axaml</DependentUpon>
+    <Compile Update="Views\PersonManualControl.axaml.cs">
+      <DependentUpon>PersonManualControl.axaml</DependentUpon>
     </Compile>
   </ItemGroup>
 </Project>

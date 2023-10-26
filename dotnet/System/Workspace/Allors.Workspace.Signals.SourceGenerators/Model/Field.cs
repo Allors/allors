@@ -33,6 +33,8 @@ public class Field
 
     public AttributeInstance[] AttributeInstances { get; private set; }
 
+    public string OnEffect => this.Class.Source.Project.Configuration.OnEffect;
+
     public void Build()
     {
         this.AttributeInstances = this.Symbol.GetAttributes()
@@ -171,7 +173,7 @@ public class Field
 
     public string GenerateInitEffects()
     {
-        return $@"        this.{this.Name}Changed = dispatcher.CreateEffect(tracker => this.{this.Name}.Track(tracker), () => this.OnPropertyChanged(nameof({this.PropertyName})));";
+        return $@"        this.{this.Name}Changed = dispatcher.CreateEffect(tracker => this.{this.Name}.Track(tracker), () => this.{this.OnEffect}(nameof({this.PropertyName})));";
     }
 
     public string GenerateDisposeEffects()

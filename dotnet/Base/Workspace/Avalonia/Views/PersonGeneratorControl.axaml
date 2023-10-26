@@ -4,8 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:Avalonia.ViewModels;assembly=Workspace.Avalonia.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="Avalonia.Views.PersonControl"
-             x:DataType="viewModels:PersonManualControlViewModel"
+             x:Class="Avalonia.Views.PersonGeneratorControl"
+             x:DataType="viewModels:PersonGeneratorControlViewModel"
              x:CompileBindings="True">
 	<Grid>
 		<Grid.RowDefinitions>

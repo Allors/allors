@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\System\Workspace\Allors.Workspace.Signals.SourceGenerators\Allors.Workspace.Signals.SourceGenerators.csproj" OutputItemType="Analyzer" />
     <ProjectReference Include="..\Signals\Workspace.Signals.csproj" />
   </ItemGroup>
 

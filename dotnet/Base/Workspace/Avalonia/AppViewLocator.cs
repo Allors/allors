@@ -9,7 +9,8 @@ public class AppViewLocator : IViewLocator
     public IViewFor ResolveView<T>(T viewModel, string contract = null) => viewModel switch
     {
         HomeControlViewModel context => new HomeControl { DataContext = context },
-        PersonManualControlViewModel context => new PersonControl { DataContext = context },
+        PersonGeneratorControlViewModel context => new PersonGeneratorControl { DataContext = context },
+        PersonManualControlViewModel context => new PersonManualControl { DataContext = context },
         _ => throw new ArgumentOutOfRangeException(nameof(viewModel))
     };
 }

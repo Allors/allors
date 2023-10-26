@@ -5,9 +5,9 @@ using Markup.Xaml;
 using ReactiveUI;
 using ViewModels;
 
-public partial class PersonControl : ReactiveUserControl<PersonManualControlViewModel>
+public partial class PersonManualControl : ReactiveUserControl<PersonManualControlViewModel>
 {
-    public PersonControl()
+    public PersonManualControl()
     {
         this.WhenActivated(disposables => { });
         AvaloniaXamlLoader.Load(this);

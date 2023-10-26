@@ -4,44 +4,44 @@ using System.Collections.ObjectModel;
 using System.Reactive;
 using Allors.Workspace;
 using Allors.Workspace.Data;
-using Allors.Workspace.Domain;
 using Allors.Workspace.Meta;
+using Allors.Workspace.Mvvm.Generator;
 using Allors.Workspace.Signals;
 using global::ReactiveUI;
-using Task = System.Threading.Tasks.Task;
+using Person = Allors.Workspace.Domain.Person;
+using Task = Task;
 
-public class PersonManualControlViewModel : ViewModel, IRoutableViewModel
+public partial class PersonGeneratorControlViewModel : ViewModel, IRoutableViewModel, IDisposable
 {
-    private readonly IValueSignal<PersonManualViewModel?> selected;
+    [SignalProperty] private readonly IValueSignal<PersonGeneratorViewModel?> selected;
 
-    private readonly IEffect selectedChanged;
+    private IEffect hasSelectedChanged;
 
-    public PersonManualControlViewModel(IWorkspace workspace, IMessageService messageService, IScreen screen)
+    public PersonGeneratorControlViewModel(IWorkspace workspace, IMessageService messageService, IScreen screen)
     {
         this.Workspace = workspace;
         this.MessageService = messageService;
         this.HostScreen = screen;
 
         var dispatcher = workspace.Services.Get<IDispatcherBuilder>().Build(workspace);
-        this.selected = dispatcher.CreateValueSignal<PersonManualViewModel>(null);
 
-        this.selectedChanged = dispatcher.CreateEffect(tracker => this.selected.Track(tracker), () =>
-        {
-            this.RaisePropertyChanged(nameof(this.Selected));
-            this.RaisePropertyChanged(nameof(this.HasSelected));
-        });
+        this.selected = dispatcher.CreateValueSignal<PersonGeneratorViewModel>(null);
 
         this.Load = ReactiveCommand.CreateFromTask(this.SaveAsync);
         this.Save = ReactiveCommand.CreateFromTask(this.LoadAsync);
+
+        this.hasSelectedChanged = dispatcher.CreateEffect(tracker => this.selected.Track(tracker), () => this.OnEffect(nameof(HasSelected)));
+        
+        this.OnInitEffects(dispatcher);
     }
 
-    public IWorkspace Workspace { get; }
+    public IWorkspace Workspace { get; set; }
 
     public IMessageService MessageService { get; }
 
+    public string UrlPathSegment { get; } = "PersonGenerator";
+    
     public IScreen HostScreen { get; }
-
-    public string UrlPathSegment { get; } = "PersonManual";
 
     public ReactiveCommand<Unit, Unit> Load { get; }
 
@@ -49,19 +49,10 @@ public class PersonManualControlViewModel : ViewModel, IRoutableViewModel
 
     public bool PeopleHasRows => this.People.Count > 0;
 
-    public ObservableCollection<PersonManualViewModel> People { get; } = new();
+    public ObservableCollection<PersonGeneratorViewModel> People { get; } = new();
 
     public bool HasSelected => this.Selected != null;
-
-    public PersonManualViewModel? Selected
-    {
-        get => this.selected.Value;
-        set
-        {
-            this.selected.Value = value;
-        }
-    }
-
+    
     private async Task LoadAsync()
     {
         var m = this.Workspace.Services.Get<M>();
@@ -84,7 +75,7 @@ public class PersonManualControlViewModel : ViewModel, IRoutableViewModel
         this.People.Clear();
         foreach (var person in people)
         {
-            this.People.Add(new PersonManualViewModel(person));
+            this.People.Add(new PersonGeneratorViewModel(person));
         }
 
         this.RaisePropertyChanged(nameof(People));
@@ -108,6 +99,8 @@ public class PersonManualControlViewModel : ViewModel, IRoutableViewModel
 
     public void Dispose()
     {
-        this.selectedChanged.Dispose();
+        this.OnDisposeEffects();
+
+        this.hasSelectedChanged?.Dispose();
     }
 }

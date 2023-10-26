@@ -42,7 +42,7 @@ public partial class TestClass
 
     private void OnInitEffects(IDispatcher dispatcher)
     {
-        this.articleChanged = dispatcher.CreateEffect(tracker => this.article.Track(tracker), () => this.OnPropertyChanged(nameof(Article)));
+        this.articleChanged = dispatcher.CreateEffect(tracker => this.article.Track(tracker), () => this.OnEffect(nameof(Article)));
     }
 
     private void OnDisposeEffects()
@@ -99,7 +99,7 @@ public partial class TestClass
 
     private void OnInitEffects(IDispatcher dispatcher)
     {
-        this.firstNameChanged = dispatcher.CreateEffect(tracker => this.firstName.Track(tracker), () => this.OnPropertyChanged(nameof(FirstName)));
+        this.firstNameChanged = dispatcher.CreateEffect(tracker => this.firstName.Track(tracker), () => this.OnEffect(nameof(FirstName)));
     }
 
     private void OnDisposeEffects()
@@ -156,7 +156,7 @@ public partial class TestClass
 
     private void OnInitEffects(IDispatcher dispatcher)
     {
-        this.numberChanged = dispatcher.CreateEffect(tracker => this.number.Track(tracker), () => this.OnPropertyChanged(nameof(Number)));
+        this.numberChanged = dispatcher.CreateEffect(tracker => this.number.Track(tracker), () => this.OnEffect(nameof(Number)));
     }
 
     private void OnDisposeEffects()
@@ -213,7 +213,7 @@ public partial class TestClass
 
     private void OnInitEffects(IDispatcher dispatcher)
     {
-        this.firstNameChanged = dispatcher.CreateEffect(tracker => this.firstName.Track(tracker), () => this.OnPropertyChanged(nameof(FirstName)));
+        this.firstNameChanged = dispatcher.CreateEffect(tracker => this.firstName.Track(tracker), () => this.OnEffect(nameof(FirstName)));
     }
 
     private void OnDisposeEffects()
@@ -270,7 +270,7 @@ public partial class TestClass
 
     private void OnInitEffects(IDispatcher dispatcher)
     {
-        this.numberChanged = dispatcher.CreateEffect(tracker => this.number.Track(tracker), () => this.OnPropertyChanged(nameof(Number)));
+        this.numberChanged = dispatcher.CreateEffect(tracker => this.number.Track(tracker), () => this.OnEffect(nameof(Number)));
     }
 
     private void OnDisposeEffects()
@@ -328,7 +328,7 @@ public partial class TestClass
 
     private void OnInitEffects(IDispatcher dispatcher)
     {
-        this.firstNameChanged = dispatcher.CreateEffect(tracker => this.firstName.Track(tracker), () => this.OnPropertyChanged(nameof(FirstName)));
+        this.firstNameChanged = dispatcher.CreateEffect(tracker => this.firstName.Track(tracker), () => this.OnEffect(nameof(FirstName)));
     }
 
     private void OnDisposeEffects()
@@ -384,7 +384,7 @@ public partial class TestClass
 
     private void OnInitEffects(IDispatcher dispatcher)
     {
-        this.fullNameChanged = dispatcher.CreateEffect(tracker => this.fullName.Track(tracker), () => this.OnPropertyChanged(nameof(FullName)));
+        this.fullNameChanged = dispatcher.CreateEffect(tracker => this.fullName.Track(tracker), () => this.OnEffect(nameof(FullName)));
     }
 
     private void OnDisposeEffects()
@@ -440,7 +440,7 @@ public partial class TestClass
 
     private void OnInitEffects(IDispatcher dispatcher)
     {
-        this.personChanged = dispatcher.CreateEffect(tracker => this.person.Track(tracker), () => this.OnPropertyChanged(nameof(Person)));
+        this.personChanged = dispatcher.CreateEffect(tracker => this.person.Track(tracker), () => this.OnEffect(nameof(Person)));
     }
 
     private void OnDisposeEffects()
@@ -497,7 +497,7 @@ public partial class TestClass
 
     private void OnInitEffects(IDispatcher dispatcher)
     {
-        this.personChanged = dispatcher.CreateEffect(tracker => this.person.Track(tracker), () => this.OnPropertyChanged(nameof(Person)));
+        this.personChanged = dispatcher.CreateEffect(tracker => this.person.Track(tracker), () => this.OnEffect(nameof(Person)));
     }
 
     private void OnDisposeEffects()
@@ -554,7 +554,7 @@ public partial class TestClass
 
     private void OnInitEffects(IDispatcher dispatcher)
     {
-        this.personChanged = dispatcher.CreateEffect(tracker => this.person.Track(tracker), () => this.OnPropertyChanged(nameof(Person)));
+        this.personChanged = dispatcher.CreateEffect(tracker => this.person.Track(tracker), () => this.OnEffect(nameof(Person)));
     }
 
     private void OnDisposeEffects()
@@ -611,7 +611,7 @@ public partial class TestClass
 
     private void OnInitEffects(IDispatcher dispatcher)
     {
-        this.peopleChanged = dispatcher.CreateEffect(tracker => this.people.Track(tracker), () => this.OnPropertyChanged(nameof(People)));
+        this.peopleChanged = dispatcher.CreateEffect(tracker => this.people.Track(tracker), () => this.OnEffect(nameof(People)));
     }
 
     private void OnDisposeEffects()
@@ -668,7 +668,7 @@ public partial class TestClass
 
     private void OnInitEffects(IDispatcher dispatcher)
     {
-        this.peopleChanged = dispatcher.CreateEffect(tracker => this.people.Track(tracker), () => this.OnPropertyChanged(nameof(People)));
+        this.peopleChanged = dispatcher.CreateEffect(tracker => this.people.Track(tracker), () => this.OnEffect(nameof(People)));
     }
 
     private void OnDisposeEffects()

@@ -40,7 +40,7 @@
             var compileDiagnostics = compilation.GetDiagnostics();
             Assert.False(compileDiagnostics.Any(d => d.Severity == DiagnosticSeverity.Error), "Failed: " + compileDiagnostics.FirstOrDefault()?.GetMessage());
 
-            ISourceGenerator generator = new SignalPropertyGenerator();
+            IIncrementalGenerator generator = new SignalPropertyGenerator();
             var driver = CSharpGeneratorDriver.Create(generator);
             driver.RunGeneratorsAndUpdateCompilation(compilation, out var outputCompilation, out var generateDiagnostics);
 

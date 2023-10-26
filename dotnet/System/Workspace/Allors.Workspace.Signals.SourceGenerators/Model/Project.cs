@@ -8,18 +8,21 @@ public class Project
 {
     private const string AttributeName = "Allors.Workspace.Mvvm.Generator.SignalPropertyAttribute";
 
-    public Project(GeneratorExecutionContext context)
+    public Project(SourceProductionContext sourceProductionContext, Compilation compilation, Configuration configuration)
     {
-        this.Context = context;
-        this.Compilation = context.Compilation;
+        this.Context = sourceProductionContext;
+        this.Compilation = compilation;
+        this.Configuration = configuration;
         this.AttributeNamedTypeSymbol = this.Compilation.GetTypeByMetadataName(AttributeName);
     }
 
-    public GeneratorExecutionContext Context { get; }
+    public SourceProductionContext Context { get; }
 
     public Compilation Compilation { get; }
 
     public INamedTypeSymbol AttributeNamedTypeSymbol { get; }
+
+    public Configuration Configuration { get; set; }
 
     public Source[] Sources { get; private set; }
 
