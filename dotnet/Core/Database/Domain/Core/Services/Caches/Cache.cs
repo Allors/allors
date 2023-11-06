@@ -74,17 +74,22 @@ namespace Allors.Database.Domain
                 this.roleType = this.cache.RoleType;
             }
 
-            public Func<TKey, Action<TObject>, TObject> Action() =>
-                (id, action) =>
-                {
-                    var @object = this.cache[id] ?? (TObject)this.transaction.Build(this.@class);
-                    @object.Strategy.SetUnitRole(this.roleType, id);
+            public Func<TKey, Action<TObject>, TObject> Function() =>
+                (id, action) => this.Merge(id, action);
 
-                    this.defaults?.Invoke(@object);
-                    action(@object);
+            public Action<TKey, Action<TObject>> Action() =>
+                (id, action) => this.Merge(id, action);
 
-                    return @object;
-                };
+            public TObject Merge(TKey id, Action<TObject> action)
+            {
+                var @object = this.cache[id] ?? (TObject)this.transaction.Build(this.@class);
+                @object.Strategy.SetUnitRole(this.roleType, id);
+
+                this.defaults?.Invoke(@object);
+                action(@object);
+
+                return @object;
+            }
         }
     }
 }
