@@ -47,9 +47,9 @@ stages:
     - task: UseDotNet@2
       inputs:
         packageType: sdk
-        version: 7.0.x
+        version: 8.0.x
         installationPath: $(Agent.ToolsDirectory)/dotnet
-      displayName: 'Use .NET 7.0 sdk'
+      displayName: 'Use .NET 8.0 sdk'
     - powershell: |
         ls $env:PGBIN
         Set-Service postgresql-x64-14 -StartupType manual
