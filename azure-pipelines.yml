@@ -47,7 +47,7 @@ stages:
     - task: UseDotNet@2
       inputs:
         packageType: sdk
-        version: 8.0.x
+        version: 8.0.0-rc.2
         installationPath: $(Agent.ToolsDirectory)/dotnet
       displayName: 'Use .NET 8.0 sdk'
     - powershell: |
