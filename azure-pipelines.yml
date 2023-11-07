@@ -49,7 +49,6 @@ stages:
         packageType: sdk
         version: 8.0.x
         includePreviewVersions: true
-        installationPath: $(Agent.ToolsDirectory)/dotnet
       displayName: 'Use .NET 8.0 sdk'
     - powershell: |
         ls $env:PGBIN
