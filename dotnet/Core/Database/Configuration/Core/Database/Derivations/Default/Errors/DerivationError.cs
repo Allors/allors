@@ -1,4 +1,4 @@
-// <copyright file="DerivationError.cs" company="Allors bvba">
+﻿// <copyright file="DerivationError.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -11,38 +11,18 @@ namespace Allors.Database.Configuration.Derivations.Default
 
     public abstract class DerivationError : IDerivationError
     {
-        private readonly string message;
-
-        protected DerivationError(IValidation validation, IDerivationRelation[] relations, string errorMessage)
-            : this(validation, relations, errorMessage, new object[] { DerivationRelation.ToString(relations) })
-        {
-        }
-
-        protected DerivationError(IValidation validation, IDerivationRelation[] relations, string errorMessage, object[] errorMessageParameters)
+        protected DerivationError(IValidation validation, IDerivationRelation[] relations, string errorCode)
         {
             this.Validation = validation;
             this.Relations = relations;
-
-            try
-            {
-                if (errorMessageParameters != null && errorMessageParameters.Length > 0)
-                {
-                    this.message = string.Format(errorMessage, errorMessageParameters);
-                }
-                else
-                {
-                    this.message = string.Format(errorMessage, new object[] { DerivationRelation.ToString(relations) });
-                }
-            }
-            catch
-            {
-                this.message = this.GetType().Name + ": " + DerivationRelation.ToString(this.Relations);
-            }
+            this.ErrorCode = errorCode;
         }
 
         public IValidation Validation { get; }
 
         public IDerivationRelation[] Relations { get; }
+
+        public string ErrorCode { get; }
 
         public IRoleType[] RoleTypes
         {
@@ -61,9 +41,5 @@ namespace Allors.Database.Configuration.Derivations.Default
                 return roleTypes.ToArray();
             }
         }
-
-        public virtual string Message => this.message;
-
-        public override string ToString() => this.message;
     }
 }

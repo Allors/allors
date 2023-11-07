@@ -28,6 +28,6 @@ namespace Allors.Workspace.Adapters.Direct
                 return this.workspace.Instantiate(v.Association.Id).Role(relationType.RoleType);
             });
 
-        public string Message => this.derivationError.Message;
+        public string Message => this.derivationError.ErrorCode;
     }
 }

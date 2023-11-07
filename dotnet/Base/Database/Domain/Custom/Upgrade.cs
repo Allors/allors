@@ -34,7 +34,7 @@ namespace Allors.Database.Domain
             //{
             //    foreach (var error in validation.Errors)
             //    {
-            //        Console.WriteLine(error.Message);
+            //        Console.WriteLine(error.ErrorCode);
             //    }
 
             //    throw new Exception("Derivation Error");

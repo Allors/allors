@@ -14,7 +14,6 @@
     <ProjectReference Include="..\..\..\System\Database\Allors.Database.Workspace.Json\Allors.Database.Workspace.Json.csproj" />
     <ProjectReference Include="..\..\..\System\Protocol\Allors.Protocol.Json.SystemText\Allors.Protocol.Json.SystemText.csproj" />
     <ProjectReference Include="..\Meta.Domain\Meta.Domain.csproj" />
-    <ProjectReference Include="..\Resources\Resources.csproj" />
   </ItemGroup>
 
   <ItemGroup>

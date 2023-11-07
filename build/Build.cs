@@ -46,9 +46,6 @@ partial class Build : NukeBuild
     private Target Install => _ => _
         .DependsOn(TypescriptInstall);
 
-    private Target Merge => _ => _
-       .DependsOn(AllorsDotnetCoreMerge);
-
     private Target Generate => _ => _
         .DependsOn(AllorsDotnetSystemAdaptersGenerate)
         .DependsOn(AllorsDotnetCoreGenerate)

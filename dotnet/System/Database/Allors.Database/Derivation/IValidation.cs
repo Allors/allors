@@ -16,11 +16,11 @@ public interface IValidation
 
     void AddError(IDerivationError derivationError);
 
-    void AddError(IObject association, IRoleType roleType, string errorMessage, params object[] messageParam);
+    void AddError(IObject association, IRoleType roleType, string errorCode);
 
-    void AddError(IObject role, IAssociationType associationType, string errorMessage, params object[] messageParam);
+    void AddError(IObject role, IAssociationType associationType, string errorCode);
 
-    void AddError(string error);
+    void AddError(string errorCode);
 
     void AssertExists(IObject association, IRoleType roleType);
 

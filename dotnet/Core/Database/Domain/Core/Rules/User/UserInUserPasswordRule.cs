@@ -1,4 +1,4 @@
-// <copyright file="Domain.cs" company="Allors bvba">
+﻿// <copyright file="Domain.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -11,7 +11,6 @@ namespace Allors.Database.Domain
     using Allors.Database.Derivations;
     using Allors.Database.Domain.Derivations.Rules;
     using Allors.Database.Meta;
-    using Resources;
 
     public class UserInUserPasswordRule : Rule
     {
@@ -33,13 +32,13 @@ namespace Allors.Database.Domain
                 {
                     if (!string.IsNullOrWhiteSpace(@this.InExistingUserPassword) && !passwordHasher.VerifyHashedPassword(@this.UserName, @this.UserPasswordHash, @this.InExistingUserPassword))
                     {
-                        cycle.Validation.AddError(@this, m.User.InExistingUserPassword, DomainErrors.InvalidPassword);
+                        cycle.Validation.AddError(@this, m.User.InExistingUserPassword, ErrorCodes.InvalidPassword);
                         continue;
                     }
 
                     if (@this.ExistInUserPassword && !passwordHasher.CheckStrength(@this.InUserPassword))
                     {
-                        cycle.Validation.AddError(@this, m.User.InUserPassword, DomainErrors.InvalidNewPassword);
+                        cycle.Validation.AddError(@this, m.User.InUserPassword, ErrorCodes.InvalidNewPassword);
                         continue;
                     }
 

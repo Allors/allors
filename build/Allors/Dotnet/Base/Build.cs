@@ -15,15 +15,8 @@ partial class Build
             sqlLocalDb.Init(database);
         });
 
-    private Target AllorsDotnetBaseMerge => _ => _
-        .Executes(() => DotNetRun(s => s
-            .SetProjectFile(Paths.AllorsDotnetCoreDatabaseMerge)
-            .SetApplicationArguments(
-                $"{Paths.AllorsDotnetCoreDatabaseResourcesCore} {Paths.AllorsDotnetBaseDatabaseResourcesBase} {Paths.AllorsDotnetBaseDatabaseResources}")));
-    
     private Target AllorsDotnetBaseGenerate => _ => _
         .After(Clean)
-        .DependsOn(AllorsDotnetBaseMerge)
         .Executes(() =>
         {
             DotNetRun(s => s

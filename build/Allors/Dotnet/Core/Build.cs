@@ -13,15 +13,8 @@ partial class Build
             sqlLocalDb.Init(database);
         });
 
-    private Target AllorsDotnetCoreMerge => _ => _
-        .Executes(() => DotNetRun(s => s
-            .SetProjectFile(Paths.AllorsDotnetCoreDatabaseMerge)
-            .SetApplicationArguments(
-                $"{Paths.AllorsDotnetCoreDatabaseResourcesCore} {Paths.AllorsDotnetCoreDatabaseResourcesCustom} {Paths.AllorsDotnetCoreDatabaseResources}")));
-
     private Target AllorsDotnetCoreGenerate => _ => _
         .After(Clean)
-        .DependsOn(AllorsDotnetCoreMerge)
         .Executes(() =>
         {
             DotNetRun(s => s

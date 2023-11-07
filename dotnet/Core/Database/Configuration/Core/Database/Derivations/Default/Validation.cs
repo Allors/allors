@@ -21,19 +21,19 @@ namespace Allors.Database.Configuration.Derivations.Default
 
         public IDerivationError[] Errors => this.errors.ToArray();
 
-        public void AddError(string error) => this.AddError(new DerivationErrorGeneric(this, relation: null, error));
+        public void AddError(string errorCode) => this.AddError(new DerivationErrorGeneric(this, relation: null, errorCode));
 
         public void AddError(IDerivationError derivationError) => this.errors.Add(derivationError);
 
-        public void AddError(IObject association, IRoleType roleType, string errorMessage, params object[] messageParam)
+        public void AddError(IObject association, IRoleType roleType, string errorCode)
         {
-            var error = new DerivationErrorGeneric(this, new DerivationRelation(association, roleType), errorMessage, messageParam);
+            var error = new DerivationErrorGeneric(this, new DerivationRelation(association, roleType), errorCode);
             this.AddError(error);
         }
 
-        public void AddError(IObject role, IAssociationType associationType, string errorMessage, params object[] messageParam)
+        public void AddError(IObject role, IAssociationType associationType, string errorCode)
         {
-            var error = new DerivationErrorGeneric(this, new DerivationRelation(role, associationType), errorMessage, messageParam);
+            var error = new DerivationErrorGeneric(this, new DerivationRelation(role, associationType), errorCode);
             this.AddError(error);
         }
 

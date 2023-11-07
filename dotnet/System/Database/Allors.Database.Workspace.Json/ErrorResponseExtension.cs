@@ -18,7 +18,7 @@ public static class ResponseExtensions
         {
             var derivationErrorResponse = new ResponseDerivationError
             {
-                m = derivationError.Message,
+                m = derivationError.ErrorCode,
                 r = derivationError.Relations.Select(x =>
                 {
                     // TODO: Koen (Associations)

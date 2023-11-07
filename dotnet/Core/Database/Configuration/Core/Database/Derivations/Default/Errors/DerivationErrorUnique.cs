@@ -8,12 +8,12 @@ namespace Allors.Database.Configuration.Derivations.Default
     using System.Linq;
     using Database.Derivations;
     using Meta;
-    using Resources;
+    using Domain;
 
     public class DerivationErrorUnique : DerivationError, IDerivationErrorUnique
     {
         public DerivationErrorUnique(IValidation validation, IDerivationRelation[] relations)
-            : base(validation, relations, DomainErrors.DerivationErrorUnique)
+            : base(validation, relations, ErrorCodes.DerivationErrorUnique)
         {
         }
 

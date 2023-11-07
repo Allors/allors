@@ -20,7 +20,6 @@
     <ProjectReference Include="..\..\..\System\Database\Adapters\Allors.Database.Adapters.Sql.SqlClient\Allors.Database.Adapters.Sql.SqlClient.csproj" />
     <ProjectReference Include="..\Configuration.Tests\Configuration.Tests.csproj" />
     <ProjectReference Include="..\Meta.Configuration\Meta.Configuration.csproj" />
-    <ProjectReference Include="..\Resources\Resources.csproj" />
   </ItemGroup>
 
 </Project>

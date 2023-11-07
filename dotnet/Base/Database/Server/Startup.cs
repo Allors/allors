@@ -124,8 +124,8 @@ namespace Allors.Server
             {
                 corsAllowedOriginsRegex = ".*",
                 serverSideMessageFormat = env.IsDevelopment() ?
-                                            "%requestId | %url | %message" :
-                                            "%requestId | %url | %userHostAddress | %userAgent | %message",
+                                            "%requestId | %url | %errorCode" :
+                                            "%requestId | %url | %userHostAddress | %userAgent | %errorCode",
             };
 
             app.UseJSNLog(new LoggingAdapter(loggerFactory), jsnlogConfiguration);

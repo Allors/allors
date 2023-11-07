@@ -26,7 +26,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\System\Database\Allors.Database.Workspace\Allors.Database.Workspace.csproj" />
     <ProjectReference Include="..\Meta.Domain\Meta.Domain.csproj" />
-    <ProjectReference Include="..\Resources\Resources.csproj" />
   </ItemGroup>
 
 </Project>

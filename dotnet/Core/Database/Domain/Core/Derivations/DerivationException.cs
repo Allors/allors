@@ -29,7 +29,7 @@ namespace Allors.Database.Domain.Derivations
                 var message = new StringBuilder($"{this.Errors.Length} derivation error(s):\n");
                 foreach (var error in this.Errors)
                 {
-                    message.Append($" - {error.Message}\n");
+                    message.Append($" - {error.ErrorCode}\n");
                 }
 
                 return message.ToString();
