@@ -23,7 +23,7 @@ public partial class Paths
 
     public AbsolutePath AllorsDotnetSystemWorkspace => AllorsDotnetSystem / "Workspace";
     public AbsolutePath AllorsDotnetSystemWorkspaceSignalsTests => AllorsDotnetSystemWorkspace / "Allors.Workspace.Signals.Tests";
-    public AbsolutePath AllorsDotnetSystemWorkspaceMvvmTests => AllorsDotnetSystemWorkspace / "Allors.Workspace.Mvvm.Tests";
+    public AbsolutePath AllorsDotnetSystemWorkspaceSignalsSourceGeneratorsTests => AllorsDotnetSystemWorkspace / "Allors.Workspace.Signals.SourceGenerators.Tests";
     public AbsolutePath AllorsDotnetSystemWorkspaceAdapters => AllorsDotnetSystemWorkspace / "Adapters";
     public AbsolutePath AllorsDotnetSystemWorkspaceAdaptersDirectTests => AllorsDotnetSystemWorkspaceAdapters / "Allors.Workspace.Adapters.Direct.Tests";
     public AbsolutePath AllorsDotnetSystemWorkspaceAdaptersJsonNewtonsoftTests => AllorsDotnetSystemWorkspaceAdapters / "Allors.Workspace.Adapters.Json.Newtonsoft.Tests";

@@ -136,13 +136,13 @@ partial class Build
         });
 
 
-    private Target AllorsDotnetSystemWorkspaceMvvmTests => _ => _
+    private Target AllorsDotnetSystemWorkspaceSignalsSourceGeneratorsTests => _ => _
         .DependsOn(AllorsDotnetCoreGenerate)
         .Executes(() =>
         {
             DotNetTest(s => s
-                .SetProjectFile(Paths.AllorsDotnetSystemWorkspaceMvvmTests)
-                .AddLoggers("trx;LogFileName=AllorsDotnetSystemWorkspaceMvvmTests.trx")
+                .SetProjectFile(Paths.AllorsDotnetSystemWorkspaceSignalsSourceGeneratorsTests)
+                .AddLoggers("trx;LogFileName=AllorsDotnetSystemWorkspaceSignalsSourceGeneratorsTests.trx")
                 .SetResultsDirectory(Paths.ArtifactsTests));
         });
 }
