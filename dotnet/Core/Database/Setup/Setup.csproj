@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>Allors.Setup</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\about.md" />
+    <None Remove="Resources\avatar.png" />
+    <None Remove="Resources\madeliefje.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\about.md" />
+    <EmbeddedResource Include="Resources\avatar.png" />
+    <EmbeddedResource Include="Resources\madeliefje.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Allors.Documents" Version="1.0.4" />
+    <PackageReference Include="DataUtils.DataUrl" Version="1.0.2" />
+    <PackageReference Include="MimeTypesMap" Version="1.0.8" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Domain\Domain.csproj" />
+  </ItemGroup>
+
+</Project>

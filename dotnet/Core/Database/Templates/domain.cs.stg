@@ -2,7 +2,7 @@
 
 TemplateId() ::= <<17ED40F8-BDF8-4A7C-9AE9-1C4D2AD6BA2B>>
 TemplateName() ::= <<Allors C# Domain>>
-TemplateVersion() ::= <<3.0.2>>
+TemplateVersion() ::= <<3.0.3>>
 TemplateAllors() ::= <<1.0>>
 TemplateConfiguration(meta) ::= <<
 $!
@@ -44,9 +44,6 @@ $interface.ExclusiveRoleTypes:{roleType|$interfaceExclusiveRoleType_Interface()$
 $interface.ExclusiveAssociationTypes:{associationType|$interfaceExclusiveAssociationType_Interface()$}$
 $interface.ExclusiveMethodTypes:{methodType|$interfaceExclusiveMethodType_Interface()$}$
 	}
-
-$objectType_Plural()$
-
 }
 >>
 
@@ -190,9 +187,6 @@ $class.CompositeRoleTypes:{compositeRoleType|$classCompositeRoleType_Class()$}$
 $class.AssociationTypes:{associationType|$classAssociationType_Class()$}$
 $class.MethodTypes:{methodType|$classMethodType_Method()$}$
 	}
-
-$objectType_Plural()$
-
 }
 >>
 
@@ -347,31 +341,6 @@ $\n$
             method.Execute();
             return method;
 		}
->>
-
-objectType_Plural() ::= <<
-	public partial class $objectType.pluralName$ : global::Allors.Database.Domain.ObjectsBase<$objectType.singularName$>
-	{
-		public $objectType.pluralName$(Allors.Database.ITransaction transaction) : base(transaction)
-		{
-		}
-
-		public Allors.Database.Meta.IMeta$objectType.SingularName$ Meta
-		{
-			get
-			{
-				return this.M.$objectType.SingularName$;
-			}
-		}
-
-		public override Allors.Database.Meta.$if(objectType.IsClass)$IClass$else$IInterface$endif$ ObjectType
-		{
-			get
-			{
-				return Meta;
-			}
-		}
-	}
 >>
 
 methodType(meta, methodType) ::= <<

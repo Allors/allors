@@ -1,4 +1,4 @@
-// <copyright file="Organization.cs" company="Allors bvba">
+﻿// <copyright file="Organization.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -6,6 +6,8 @@
 
 namespace Allors.Database.Domain
 {
+    using System;
+
     public partial class Organization
     {
         public void CustomOnPostDerive(ObjectOnPostDerive _) => this.PostDeriveTrigger = true;
@@ -18,7 +20,8 @@ namespace Allors.Database.Domain
             }
             else
             {
-                var toggleRevocation = new Revocations(this.strategy.Transaction).ToggleRevocation;
+                var cache = new UniquelyIdentifiableCache<Revocation>(this.Transaction());
+                var toggleRevocation = cache[Revocation.ToggleRevocationId];
                 this.AddRevocation(toggleRevocation);
             }
         }

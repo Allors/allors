@@ -5,10 +5,10 @@
 
 namespace Allors.Database.Domain
 {
-    using Allors.Database.Security;
+    using System;
 
-    public partial interface User : IUser
+    public partial class Revocation
     {
-        internal static string Normalize(string value) => value?.Normalize().ToUpperInvariant();
+        public static readonly Guid ToggleRevocationId = new Guid("68BB6EC4-CF15-47D1-8F87-D817419C9482");
     }
 }

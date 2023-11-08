@@ -193,9 +193,9 @@ namespace Allors.Database.Domain
             }
         }
 
-        public void GrantAdministrator(IObjectType objectType, params Operations[] operations) => this.Grant(Roles.AdministratorId, objectType, operations);
+        public void GrantAdministrator(IObjectType objectType, params Operations[] operations) => this.Grant(Role.AdministratorId, objectType, operations);
 
-        public void GrantCreator(IObjectType objectType, params Operations[] operations) => this.Grant(Roles.CreatorId, objectType, operations);
+        public void GrantCreator(IObjectType objectType, params Operations[] operations) => this.Grant(Role.CreatorId, objectType, operations);
 
         public void GrantExcept(Guid roleId, IObjectType objectType, ICollection<IOperandType> excepts, params Operations[] operations)
         {
@@ -233,11 +233,11 @@ namespace Allors.Database.Domain
             }
         }
 
-        public void GrantGuest(IObjectType objectType, params Operations[] operations) => this.Grant(Roles.GuestId, objectType, operations);
+        public void GrantGuest(IObjectType objectType, params Operations[] operations) => this.Grant(Role.GuestId, objectType, operations);
 
-        public void GrantGuestCreator(IObjectType objectType, params Operations[] operations) => this.Grant(Roles.GuestCreatorId, objectType, operations);
+        public void GrantGuestCreator(IObjectType objectType, params Operations[] operations) => this.Grant(Role.GuestCreatorId, objectType, operations);
 
-        public void GrantOwner(IObjectType objectType, params Operations[] operations) => this.Grant(Roles.OwnerId, objectType, operations);
+        public void GrantOwner(IObjectType objectType, params Operations[] operations) => this.Grant(Role.OwnerId, objectType, operations);
 
         private void CoreOnPreSetup()
         {

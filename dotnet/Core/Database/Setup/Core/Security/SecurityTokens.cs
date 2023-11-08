@@ -1,4 +1,4 @@
-// <copyright file="Singletons.cs" company="Allors bvba">
+﻿// <copyright file="Singletons.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -9,17 +9,14 @@ namespace Allors.Database.Domain
 
     public partial class SecurityTokens
     {
-        public static readonly Guid InitialSecurityTokenId = new Guid("BE3404FF-1FF1-4C26-935F-777DC0AF983C");
-        public static readonly Guid DefaultSecurityTokenId = new Guid("EF20E782-0BFB-4C59-B9EB-DC502C2256CA");
-        public static readonly Guid AdministratorSecurityTokenId = new Guid("8C7FE74E-A769-49FC-BF69-549DBABD55D8");
-
+  
         private UniquelyIdentifiableCache<SecurityToken> cache;
 
-        public SecurityToken InitialSecurityToken => this.Cache[InitialSecurityTokenId];
+        public SecurityToken InitialSecurityToken => this.Cache[SecurityToken.InitialSecurityTokenId];
 
-        public SecurityToken DefaultSecurityToken => this.Cache[DefaultSecurityTokenId];
+        public SecurityToken DefaultSecurityToken => this.Cache[SecurityToken.DefaultSecurityTokenId];
 
-        public SecurityToken AdministratorSecurityToken => this.Cache[AdministratorSecurityTokenId];
+        public SecurityToken AdministratorSecurityToken => this.Cache[SecurityToken.AdministratorSecurityTokenId];
 
         private UniquelyIdentifiableCache<SecurityToken> Cache => this.cache ??= new UniquelyIdentifiableCache<SecurityToken>(this.Transaction);
 
@@ -31,7 +28,7 @@ namespace Allors.Database.Domain
 
             var grants = new Grants(this.Transaction);
 
-            merge(InitialSecurityTokenId, v =>
+            merge(SecurityToken.InitialSecurityTokenId, v =>
               {
                   if (setup.Config.SetupSecurity)
                   {
@@ -41,7 +38,7 @@ namespace Allors.Database.Domain
                   }
               });
 
-            merge(DefaultSecurityTokenId, v =>
+            merge(SecurityToken.DefaultSecurityTokenId, v =>
               {
                   if (setup.Config.SetupSecurity)
                   {
@@ -50,7 +47,7 @@ namespace Allors.Database.Domain
                   }
               });
 
-            merge(AdministratorSecurityTokenId, v =>
+            merge(SecurityToken.AdministratorSecurityTokenId, v =>
               {
                   if (setup.Config.SetupSecurity)
                   {

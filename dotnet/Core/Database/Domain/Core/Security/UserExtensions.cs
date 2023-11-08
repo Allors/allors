@@ -1,4 +1,4 @@
-// <copyright file="UserExtensions.cs" company="Allors bvba">
+﻿// <copyright file="UserExtensions.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -12,7 +12,8 @@ namespace Allors.Database.Domain
     {
         public static bool IsAdministrator(this User @this)
         {
-            var administrators = new UserGroups(@this.Transaction()).Administrators;
+            var cache = new UniquelyIdentifiableCache<UserGroup>(@this.Transaction());
+            var administrators = cache[UserGroup.AdministratorsId];
             return administrators.Members.Contains(@this);
         }
 
@@ -47,7 +48,8 @@ namespace Allors.Database.Domain
         {
             if (!@this.ExistOwnerGrant)
             {
-                var ownerRole = new Roles(@this.Strategy.Transaction).Owner;
+                var cache = new UniquelyIdentifiableCache<Role>(@this.Transaction());
+                var ownerRole = cache[Role.OwnerId];
                 @this.OwnerGrant = @this.Transaction().Build<Grant>(grant =>
                 {
                     grant.Role = ownerRole;
