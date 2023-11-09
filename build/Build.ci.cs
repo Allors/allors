@@ -51,6 +51,10 @@ partial class Build
         .DependsOn(Reset)
         .DependsOn(AllorsDotnetBaseDatabaseDomainTests);
 
+    // TODO:
+    private Target CiDotnetBaseWorkspace => _ => _
+        .DependsOn(Reset);
+    
     private Target CiTypescriptWorkspace => _ => _
         .DependsOn(Reset)
         .DependsOn(TypescriptInstall)

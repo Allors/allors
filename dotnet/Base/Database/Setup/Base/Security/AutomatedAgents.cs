@@ -6,20 +6,17 @@
 namespace Allors.Database.Domain
 {
     using System;
-   
+
 
     public partial class AutomatedAgents
     {
-        public static readonly Guid GuestId = new Guid("1261CB56-67F2-4725-AF7D-604A117ABBEC");
-        public static readonly Guid SystemId = new Guid("037C4B36-5950-4D32-BA95-85CCED5668DD");
-
         private UniquelyIdentifiableCache<AutomatedAgent> cache;
 
         public UniquelyIdentifiableCache<AutomatedAgent> Cache => this.cache ??= new UniquelyIdentifiableCache<AutomatedAgent>(this.Transaction);
 
-        public AutomatedAgent Guest => this.Cache[GuestId];
+        public AutomatedAgent Guest => this.Cache[AutomatedAgent.GuestId];
 
-        public AutomatedAgent System => this.Cache[SystemId];
+        public AutomatedAgent System => this.Cache[AutomatedAgent.SystemId];
 
         protected override void CorePrepare(Setup setup)
         {
@@ -31,8 +28,8 @@ namespace Allors.Database.Domain
         {
             var merge = this.Cache.Merger().Function();
 
-            var guest = merge(GuestId, v => v.UserName = "Guest");
-            merge(SystemId, v => v.UserName = "System");
+            var guest = merge(AutomatedAgent.GuestId, v => v.UserName = "Guest");
+            merge(AutomatedAgent.SystemId, v => v.UserName = "System");
 
             var userGroups = new UserGroups(this.Transaction);
             userGroups.Guests.AddMember(guest);

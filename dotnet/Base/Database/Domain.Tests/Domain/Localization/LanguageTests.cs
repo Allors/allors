@@ -19,18 +19,29 @@ namespace Allors.Database.Domain.Tests
 
             Assert.True(this.Transaction.Derive(false).HasErrors);
 
+            this.Transaction.Rollback();
+
             this.Transaction.Build<Language>(v => v.IsoCode = "XX");
 
             Assert.True(this.Transaction.Derive(false).HasErrors);
 
+            this.Transaction.Rollback();
+
             this.Transaction.Build<Language>(v =>
             {
                 v.IsoCode = "XX";
-                v.AddLocalisedName(this.Transaction.Build<LocalisedText>(w =>
-                {
-                    w.Locale = new Locales(this.Transaction).LocaleByName["en"];
-                    w.Text = "XXX";
-                }));
+                v.Name = "XXX";
+            });
+
+            Assert.True(this.Transaction.Derive(false).HasErrors);
+
+            this.Transaction.Rollback();
+
+            this.Transaction.Build<Language>(v =>
+            {
+                v.IsoCode = "XX";
+                v.Name = "XXX";
+                v.NativeName = "XXXX";
             });
 
             Assert.False(this.Transaction.Derive(false).HasErrors);

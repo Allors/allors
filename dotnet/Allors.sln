@@ -231,6 +231,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Workspace.Signals.So
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Setup", "Core\Database\Setup\Setup.csproj", "{76E6C516-B03B-48F0-B261-3CC7F049C96A}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Setup", "Base\Database\Setup\Setup.csproj", "{CA212615-A8C1-45D7-9505-563096B3A7E0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -605,6 +607,10 @@ Global
 		{76E6C516-B03B-48F0-B261-3CC7F049C96A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{76E6C516-B03B-48F0-B261-3CC7F049C96A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{76E6C516-B03B-48F0-B261-3CC7F049C96A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA212615-A8C1-45D7-9505-563096B3A7E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA212615-A8C1-45D7-9505-563096B3A7E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA212615-A8C1-45D7-9505-563096B3A7E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA212615-A8C1-45D7-9505-563096B3A7E0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -719,6 +725,7 @@ Global
 		{CDE89D21-787D-4A29-BD14-D45E372EC5B2} = {4A6C9D75-071A-4DF2-8F80-B2DFF13889FD}
 		{A29C4A29-282F-4E7C-A04A-9F3B8BDC549A} = {4A6C9D75-071A-4DF2-8F80-B2DFF13889FD}
 		{76E6C516-B03B-48F0-B261-3CC7F049C96A} = {583954BC-1E23-4E62-B539-131CF3FBC96E}
+		{CA212615-A8C1-45D7-9505-563096B3A7E0} = {CB13DE60-A40E-432C-913B-985F19CB2655}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {00D78C3D-8536-4549-B1EE-C19BD0C50387}

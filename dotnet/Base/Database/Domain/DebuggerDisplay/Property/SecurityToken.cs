@@ -1,4 +1,4 @@
-// <copyright file="SecurityToken.cs" company="Allors bvba">
+﻿// <copyright file="SecurityToken.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -13,17 +13,17 @@ namespace Allors.Database.Domain
         {
             get
             {
-                if (this.UniqueId == Domain.SecurityTokens.DefaultSecurityTokenId)
+                if (this.UniqueId == DefaultSecurityTokenId)
                 {
                     return "Default";
                 }
 
-                if (this.UniqueId == Domain.SecurityTokens.InitialSecurityTokenId)
+                if (this.UniqueId == InitialSecurityTokenId)
                 {
                     return "Initial";
                 }
 
-                if (this.UniqueId == Domain.SecurityTokens.AdministratorSecurityTokenId)
+                if (this.UniqueId == AdministratorSecurityTokenId)
                 {
                     return "Administrator";
                 }

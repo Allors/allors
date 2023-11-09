@@ -21,6 +21,7 @@
     <ProjectReference Include="..\..\..\System\Workspace\Allors.Workspace\Allors.Workspace.csproj" />
     <ProjectReference Include="..\Configuration\Configuration.csproj" />
     <ProjectReference Include="..\Meta.Configuration\Meta.Configuration.csproj" />
+    <ProjectReference Include="..\Setup\Setup.csproj" />
   </ItemGroup>
 
   <ItemGroup>

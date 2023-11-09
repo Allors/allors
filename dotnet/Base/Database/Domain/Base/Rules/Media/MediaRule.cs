@@ -48,7 +48,7 @@ namespace Allors.Database.Domain
                 if (media.ExistInData)
                 {
                     media.MediaContent.Data = media.InData;
-                    media.MediaContent.Type = media.InType ?? MediaContents.Sniff(media.InData, media.InFileName);
+                    media.MediaContent.Type = media.InType ?? MediaContent.Sniff(media.InData, media.InFileName);
 
                     media.RemoveInType();
                     media.RemoveInData();
@@ -59,7 +59,7 @@ namespace Allors.Database.Domain
                     var dataUrl = new DataUrl(media.InDataUri);
 
                     media.MediaContent.Data = Convert.FromBase64String(dataUrl.ReadAsBase64EncodedString());
-                    media.MediaContent.Type = MediaContents.Sniff(media.MediaContent.Data, media.InFileName);
+                    media.MediaContent.Type = MediaContent.Sniff(media.MediaContent.Data, media.InFileName);
 
                     media.RemoveInDataUri();
                 }
@@ -73,7 +73,7 @@ namespace Allors.Database.Domain
                 media.Type = media.MediaContent?.Type;
 
                 var name = !string.IsNullOrWhiteSpace(media.Name) ? media.Name : media.UniqueId.ToString();
-                var fileName = $"{name}.{MediaContents.GetExtension(media.Type)}";
+                var fileName = $"{name}.{MediaContent.GetExtension(media.Type)}";
                 var safeFileName = new string(fileName.Where(ch => !InvalidFileNameChars.Contains(ch)).ToArray());
 
                 var uppercaseSafeFileName = safeFileName.ToUpperInvariant();

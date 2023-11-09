@@ -18,6 +18,7 @@
     <ProjectReference Include="..\..\..\System\Workspace\Adapters\Allors.Workspace.Adapters\Allors.Workspace.Adapters.csproj" />
     <ProjectReference Include="..\..\Database\Configuration\Configuration.csproj" />
     <ProjectReference Include="..\..\Database\Meta.Configuration\Meta.Configuration.csproj" />
+    <ProjectReference Include="..\..\Database\Setup\Setup.csproj" />
     <ProjectReference Include="..\Configuration\Workspace.Configuration.csproj" />
     <ProjectReference Include="..\Domain\Workspace.Domain.csproj" />
     <ProjectReference Include="..\Meta.Configuration\Workspace.Meta.Configuration.csproj" />

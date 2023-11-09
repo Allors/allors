@@ -34,6 +34,10 @@ stages:
           target: 'CiDotnetCoreDatabase'
         dotnet_core_workspace:
           target: 'CiDotnetCoreWorkspace'
+        dotnet_base_database:
+          target: 'CiDotnetBaseDatabase'
+        dotnet_base_workspace:
+          target: 'CiDotnetBaseWorkspace'
         typescript_workspace:
           target: 'CiTypescriptWorkspace'
         typescript_workspace_adapters_json:

@@ -20,6 +20,8 @@ namespace Allors.Database.Domain.Tests
 
             Assert.True(this.Transaction.Derive(false).HasErrors);
 
+            this.Transaction.Rollback();
+
             this.Transaction.Build<Currency>(v =>
             {
                 v.IsoCode = "BND";
@@ -27,17 +29,13 @@ namespace Allors.Database.Domain.Tests
 
             Assert.True(this.Transaction.Derive(false).HasErrors);
 
-            var locale = new Locales(this.Transaction).FindBy(this.M.Locale.Name, "en");
+            this.Transaction.Rollback();
 
             this.Transaction.Build<Currency>(v =>
-            {
-                v.IsoCode = "BND";
-                v.AddLocalisedName(this.Transaction.Build<LocalisedText>(w =>
                 {
-                    w.Locale = locale;
-                    w.Text = "Brunei Dollar";
-                }));
-            });
+                    v.IsoCode = "BND";
+                    v.Name = "Brunei Dollar";
+                });
 
             Assert.False(this.Transaction.Derive(false).HasErrors);
         }

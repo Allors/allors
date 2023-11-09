@@ -1,4 +1,4 @@
-// <copyright file="Four.cs" company="Allors bvba">
+﻿// <copyright file="Four.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -27,10 +27,9 @@ namespace Allors.Database.Domain
 
         public void CustomOnPostDerive(ObjectOnPostDerive method)
         {
-            var singleton = this.strategy.Transaction.GetSingleton();
-
-            var people = new People(this.strategy.Transaction);
-            var john = people.FindBy(people.Meta.FirstName, "John");
+            var people = this.strategy.Transaction.Extent<Person>();
+            people.Filter.AddEquals(this.m.Person.FirstName, "John");
+            var john = people.First;
 
             this.AutocompleteDerivedFilter ??= john;
             this.AutocompleteDerivedOptions ??= john;
