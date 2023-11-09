@@ -13,4 +13,7 @@ public partial class Paths
     public AbsolutePath AllorsDotnetBaseDatabaseCommands => AllorsDotnetBaseDatabase / "Commands";
     public AbsolutePath AllorsDotnetBaseDatabaseServer => AllorsDotnetBaseDatabase / "Server";
     public AbsolutePath AllorsDotnetBaseDatabaseDomainTests => AllorsDotnetBaseDatabase / "Domain.Tests/Domain.Tests.csproj";
- }
+
+    public AbsolutePath AllorsDotnetBaseWorkspace => AllorsDotnetBase / "Workspace";
+    public AbsolutePath AllorsDotnetBaseWorkspaceWinformsViewModelsTests => AllorsDotnetBaseWorkspace / "WinForms.ViewModels.Tests";
+}

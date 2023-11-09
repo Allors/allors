@@ -38,4 +38,15 @@ partial class Build
             .SetProjectFile(Paths.AllorsDotnetBaseDatabaseDomainTests)
             .AddLoggers("trx;LogFileName=BaseDatabaseDomain.trx")
             .SetResultsDirectory(Paths.ArtifactsTests)));
+
+    private Target AllorsDotnetBaseWorkspaceWinformsViewModelsTests => _ => _
+        .DependsOn(AllorsDotnetBaseGenerate)
+        .Executes(() =>
+        {
+            DotNetTest(s => s
+                .SetProjectFile(Paths.AllorsDotnetBaseWorkspaceWinformsViewModelsTests)
+                .AddLoggers("trx;LogFileName=AllorsDotnetBaseWorkspaceWinformsViewModelsTests.trx")
+                .SetResultsDirectory(Paths.ArtifactsTests));
+        });
+
 }

@@ -47,13 +47,14 @@ partial class Build
         .DependsOn(Reset)
         .DependsOn(AllorsDotnetCoreWorkspaceMetaStaticTests);
 
-    private Target CiDotnetBaseDatabaseTest => _ => _
+    private Target CiDotnetBaseDatabase => _ => _
         .DependsOn(Reset)
         .DependsOn(AllorsDotnetBaseDatabaseDomainTests);
 
     // TODO:
     private Target CiDotnetBaseWorkspace => _ => _
-        .DependsOn(Reset);
+        .DependsOn(Reset)
+        .DependsOn(AllorsDotnetBaseWorkspaceWinformsViewModelsTests);
     
     private Target CiTypescriptWorkspace => _ => _
         .DependsOn(Reset)
