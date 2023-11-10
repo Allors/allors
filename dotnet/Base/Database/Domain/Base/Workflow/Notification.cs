@@ -34,7 +34,7 @@ namespace Allors.Database.Domain
                 {
                     var user = this.NotificationListWhereNotification.UserWhereNotificationList;
 
-                    var cache = new UniquelyIdentifiableCache<SecurityToken>(this.Transaction());
+                    var cache = this.Transaction().Caches().SecurityTokenByUniqueId();
                     var defaultSecurityToken = cache[SecurityToken.DefaultSecurityTokenId];
 
                     this.SecurityTokens = new[] { user.OwnerSecurityToken, defaultSecurityToken };

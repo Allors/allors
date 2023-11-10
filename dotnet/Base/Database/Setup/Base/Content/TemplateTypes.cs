@@ -10,9 +10,9 @@ namespace Allors.Database.Domain
 
     public partial class TemplateTypes
     {
-        private UniquelyIdentifiableCache<TemplateType> cache;
+        private ICache<Guid, TemplateType> cache;
 
-        public Cache<Guid, TemplateType> Cache => this.cache ??= new UniquelyIdentifiableCache<TemplateType>(this.Transaction);
+        public ICache<Guid, TemplateType> Cache => this.cache ??= this.Transaction.Caches().TemplateTypeByUniqueId();
 
         public TemplateType OpenDocumentType => this.Cache[TemplateType.OpenDocumentTypeId];
 

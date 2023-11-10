@@ -1,4 +1,4 @@
-// <copyright file="PaymentStates.cs" company="Allors bvba">
+﻿// <copyright file="PaymentStates.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -15,9 +15,9 @@ namespace Allors.Database.Domain
         private static readonly Guid PartiallyPaidId = new Guid("1801737F-2760-4600-9243-7E6BDD8A224D");
         private static readonly Guid PaidId = new Guid("04FAD96A-2B0F-4F07-ABB7-57657A34E422");
 
-        private UniquelyIdentifiableCache<PaymentState> cache;
+        private ICache<Guid, PaymentState> cache;
 
-        public Cache<Guid, PaymentState> Cache => this.cache ??= new UniquelyIdentifiableCache<PaymentState>(this.Transaction);
+        public ICache<Guid, PaymentState> Cache => this.cache ??= this.Transaction.Caches().PaymentStateByUniqueId();
 
         public PaymentState Unpaid => this.Cache[UnpaidId];
 

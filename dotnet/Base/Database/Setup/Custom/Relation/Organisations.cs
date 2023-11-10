@@ -1,4 +1,4 @@
-// <copyright file="Organisation.cs" company="Allors bvba">
+﻿// <copyright file="Organisation.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -6,13 +6,13 @@
 
 namespace Allors.Database.Domain
 {
-
-
+    using System;
+    
     public partial class Organisations
     {
-        private UniquelyIdentifiableCache<Organisation> cache;
+        private ICache<Guid, Organisation> cache;
 
-        public UniquelyIdentifiableCache<Organisation> Cache => this.cache ??= new UniquelyIdentifiableCache<Organisation>(this.Transaction);
+        public ICache<Guid, Organisation> Cache => this.cache ??= this.Transaction.Caches().OrganisationByUniqueId();
 
         protected override void CustomPrepare(Security security) => security.AddDependency(this.ObjectType, this.M.Revocation);
 

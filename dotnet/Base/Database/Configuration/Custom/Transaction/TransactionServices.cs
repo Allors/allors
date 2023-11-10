@@ -1,4 +1,4 @@
-// <copyright file="DefaultDomainTransactionServices.cs" company="Allors bvba">
+﻿// <copyright file="DefaultDomainTransactionServices.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -13,6 +13,7 @@ namespace Allors.Database.Configuration
 
     public class TransactionServices : ITransactionServices
     {
+        private readonly ICaches caches;
         private readonly UserService userService;
 
         private IDatabaseAclsService databaseAclsService;
@@ -38,6 +39,7 @@ namespace Allors.Database.Configuration
                 // System
                 { } type when type == typeof(IObjectBuilderService) => (T)(this.objectBuilderService ??= new ObjectBuilderService(this.Transaction)),
                 // Core
+                { } type when type == typeof(ICaches) => (T)this.caches,
                 { } type when type == typeof(IUserService) => (T)(IUserService)this.userService,
                 { } type when type == typeof(IDatabaseAclsService) => (T)(this.databaseAclsService ??= new DatabaseAclsService(this.userService.User, this.DatabaseServices.Get<ISecurity>())),
                 { } type when type == typeof(IWorkspaceAclsService) => (T)(this.workspaceAclsService ??= new WorkspaceAclsService(this.DatabaseServices.Get<ISecurity>(), this.DatabaseServices.Get<IWorkspaceMask>(), this.userService.User)),

@@ -1,4 +1,4 @@
-namespace Allors.Database.Domain
+﻿namespace Allors.Database.Domain
 {
     using System;
     using Allors.Database.Derivations;
@@ -6,10 +6,12 @@ namespace Allors.Database.Domain
 
     public static class ITransactionExtensions
     {
-        public static IValidation Derive(this ITransaction transaction, bool throwExceptionOnError = true, bool continueOnError = false)
+        public static ICaches Caches(this ITransaction @this) => @this.Services.Get<ICaches>();
+
+        public static IValidation Derive(this ITransaction @this, bool throwExceptionOnError = true, bool continueOnError = false)
         {
-            var derivationFactory = transaction.Database.Services.Get<IDerivationService>();
-            var derivation = derivationFactory.CreateDerivation(transaction, continueOnError);
+            var derivationFactory = @this.Database.Services.Get<IDerivationService>();
+            var derivation = derivationFactory.CreateDerivation(@this, continueOnError);
             var validation = derivation.Derive();
             if (throwExceptionOnError && validation.HasErrors)
             {
@@ -19,11 +21,11 @@ namespace Allors.Database.Domain
             return validation;
         }
 
-        public static DateTime Now(this ITransaction transaction)
+        public static DateTime Now(this ITransaction @this)
         {
             var now = DateTime.UtcNow;
 
-            var time = transaction.Database.Services.Get<ITime>();
+            var time = @this.Database.Services.Get<ITime>();
             var timeShift = time.Shift;
             if (timeShift != null)
             {

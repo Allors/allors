@@ -12,7 +12,7 @@ namespace Allors.Database.Domain
     {
         public static bool IsAdministrator(this User @this)
         {
-            var cache = new UniquelyIdentifiableCache<UserGroup>(@this.Transaction());
+            var cache = @this.Transaction().Caches().UserGroupByUniqueId();
             var administrators = cache[UserGroup.AdministratorsId];
             return administrators.Members.Contains(@this);
         }
@@ -48,7 +48,7 @@ namespace Allors.Database.Domain
         {
             if (!@this.ExistOwnerGrant)
             {
-                var cache = new UniquelyIdentifiableCache<Role>(@this.Transaction());
+                var cache = @this.Transaction().Caches().RoleByUniqueId();
                 var ownerRole = cache[Role.OwnerId];
                 @this.OwnerGrant = @this.Transaction().Build<Grant>(grant =>
                 {

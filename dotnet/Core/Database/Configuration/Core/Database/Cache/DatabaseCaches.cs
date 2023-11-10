@@ -1,4 +1,4 @@
-// <copyright file="Caches.cs" company="Allors bvba">
+// <copyright file="DatabaseCaches.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -9,11 +9,11 @@ namespace Allors.Database.Configuration
     using System.Collections.Generic;
     using Allors.Database.Domain;
 
-    public class Caches : ICaches
+    public class DatabaseCaches : IDatabaseCaches
     {
         private readonly ConcurrentDictionary<string, object> caches;
 
-        public Caches() => this.caches = new ConcurrentDictionary<string, object>();
+        public DatabaseCaches() => this.caches = new ConcurrentDictionary<string, object>();
 
         public IDictionary<T, long> Get<T>(string key)
         {

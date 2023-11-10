@@ -11,9 +11,9 @@ namespace Allors.Database.Domain
 
     public partial class OrderStates
     {
-        private UniquelyIdentifiableCache<OrderState> cache;
+        private ICache<Guid, OrderState> cache;
 
-        public Cache<Guid, OrderState> Cache => this.cache ??= new UniquelyIdentifiableCache<OrderState>(this.Transaction);
+        public ICache<Guid, OrderState> Cache => this.cache ??= this.Transaction.Caches().OrderStateByUniqueId();
 
         public OrderState Initial => this.Cache[OrderState.InitialId];
 

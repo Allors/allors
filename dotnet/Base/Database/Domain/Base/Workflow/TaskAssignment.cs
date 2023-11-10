@@ -11,7 +11,7 @@ namespace Allors.Database.Domain
         {
             if (!this.ExistSecurityTokens)
             {
-                var cache = new UniquelyIdentifiableCache<SecurityToken>(this.Transaction());
+                var cache = this.Transaction().Caches().SecurityTokenByUniqueId();
                 var defaultSecurityToken = cache[SecurityToken.DefaultSecurityTokenId];
                 this.SecurityTokens = new[] { defaultSecurityToken, this.User?.OwnerSecurityToken };
             }

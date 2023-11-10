@@ -9,9 +9,9 @@ namespace Allors.Database.Domain
 
     public partial class Grants
     {
-        private UniquelyIdentifiableCache<Grant> cache;
+        private ICache<Guid, Grant> cache;
 
-        public UniquelyIdentifiableCache<Grant> Cache => this.cache ??= new UniquelyIdentifiableCache<Grant>(this.Transaction);
+        public ICache<Guid, Grant> Cache => this.cache ??= this.Transaction.Caches().GrantByUniqueId();
 
         public Grant Creators => this.Cache[Grant.CreatorsId];
 

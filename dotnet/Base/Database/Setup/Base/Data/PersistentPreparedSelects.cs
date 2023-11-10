@@ -1,16 +1,16 @@
-// <copyright file="PersistentPreparedSelects.cs" company="Allors bvba">
+﻿// <copyright file="PersistentPreparedSelects.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
 namespace Allors.Database.Domain
 {
-   
+    using System;
 
     public partial class PersistentPreparedSelects
     {
-        private UniquelyIdentifiableCache<PersistentPreparedSelect> cache;
+        private ICache<Guid, PersistentPreparedSelect> cache;
 
-        public UniquelyIdentifiableCache<PersistentPreparedSelect> Cache => this.cache ??= new UniquelyIdentifiableCache<PersistentPreparedSelect>(this.Transaction);
+        public ICache<Guid, PersistentPreparedSelect> Cache => this.cache ??= this.Transaction.Caches().PersistentPreparedSelectByUniqueId();
     }
 }

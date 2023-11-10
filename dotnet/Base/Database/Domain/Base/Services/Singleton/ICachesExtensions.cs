@@ -5,7 +5,7 @@
 
 namespace Allors.Database.Domain
 {
-    public static partial class TransactionExtension
+    public static partial class ICachesExtensions
     {
         public static Singleton GetSingleton(this ITransaction @this)
         {

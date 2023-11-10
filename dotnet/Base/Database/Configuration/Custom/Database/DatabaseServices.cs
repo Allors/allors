@@ -36,7 +36,7 @@ namespace Allors.Database.Configuration
 
         private ITime time;
 
-        private ICaches caches;
+        private IDatabaseCaches databaseCaches;
 
         private IMethodService methodService;
 
@@ -90,7 +90,7 @@ namespace Allors.Database.Configuration
                 { } type when type == typeof(IPermissions) => (T)(this.permissions ??= new Permissions()),
                 { } type when type == typeof(IMethodService) => (T)(this.methodService ??= new MethodService(this.M, this.Database.ObjectFactory.Assembly)),
                 { } type when type == typeof(ITime) => (T)(this.time ??= new Time()),
-                { } type when type == typeof(ICaches) => (T)(this.caches ??= new Caches()),
+                { } type when type == typeof(IDatabaseCaches) => (T)(this.databaseCaches ??= new DatabaseCaches()),
                 { } type when type == typeof(IPasswordHasher) => (T)(this.passwordHasher ??= this.CreatePasswordHasher()),
                 { } type when type == typeof(IWorkspaceMask) => (T)(this.workspaceMask ??= new WorkspaceMask(this.M)),
                 // Base

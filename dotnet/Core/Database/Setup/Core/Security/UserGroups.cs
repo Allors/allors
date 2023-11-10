@@ -10,7 +10,7 @@ namespace Allors.Database.Domain
 
     public partial class UserGroups
     {
-        private UniquelyIdentifiableCache<UserGroup> cache;
+        private ICache<Guid, UserGroup> cache;
 
         public UserGroup Administrators => this.Cache[UserGroup.AdministratorsId];
 
@@ -18,7 +18,7 @@ namespace Allors.Database.Domain
 
         public UserGroup Guests => this.Cache[UserGroup.GuestsId];
 
-        private UniquelyIdentifiableCache<UserGroup> Cache => this.cache ??= new UniquelyIdentifiableCache<UserGroup>(this.Transaction);
+        public ICache<Guid, UserGroup> Cache => this.cache ??= this.Transaction.Caches().UserGroupByUniqueId();
 
         protected override void CoreSetup(Setup setup)
         {

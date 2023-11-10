@@ -10,9 +10,9 @@ namespace Allors.Database.Domain
 
     public partial class AutomatedAgents
     {
-        private UniquelyIdentifiableCache<AutomatedAgent> cache;
+        private ICache<Guid, AutomatedAgent> cache;
 
-        public UniquelyIdentifiableCache<AutomatedAgent> Cache => this.cache ??= new UniquelyIdentifiableCache<AutomatedAgent>(this.Transaction);
+        public ICache<Guid, AutomatedAgent> Cache => this.cache ??= this.Transaction.Caches().AutomatedAgentByUniqueId();
 
         public AutomatedAgent Guest => this.Cache[AutomatedAgent.GuestId];
 

@@ -1,4 +1,4 @@
-// <copyright file="ShipmentStates.cs" company="Allors bvba">
+﻿// <copyright file="ShipmentStates.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -15,9 +15,9 @@ namespace Allors.Database.Domain
         private static readonly Guid PartiallyShippedId = new Guid("5FF39A43-EFD8-4660-A7E8-60A519BF4C74");
         private static readonly Guid ShippedId = new Guid("B9C74F0B-0FED-4AEF-B087-8062708DCF5F");
 
-        private UniquelyIdentifiableCache<ShipmentState> cache;
+        private ICache<Guid, ShipmentState> cache;
 
-        public Cache<Guid, ShipmentState> Cache => this.cache ??= new UniquelyIdentifiableCache<ShipmentState>(this.Transaction);
+        public ICache<Guid, ShipmentState> Cache => this.cache ??= this.Transaction.Caches().ShipmentStateByUniqueId();
 
         public ShipmentState NotShipped => this.Cache[NotShippedId];
 

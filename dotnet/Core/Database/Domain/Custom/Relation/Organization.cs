@@ -20,7 +20,7 @@ namespace Allors.Database.Domain
             }
             else
             {
-                var cache = new UniquelyIdentifiableCache<Revocation>(this.Transaction());
+                var cache = this.Transaction().Caches().RevocationByUniqueId();
                 var toggleRevocation = cache[Revocation.ToggleRevocationId];
                 this.AddRevocation(toggleRevocation);
             }

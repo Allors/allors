@@ -10,7 +10,7 @@ namespace Allors.Database.Domain
 
     public partial class Roles
     {
-        private UniquelyIdentifiableCache<Role> cache;
+        private ICache<Guid, Role> cache;
 
         public Role Administrator => this.Cache[Role.AdministratorId];
 
@@ -22,8 +22,7 @@ namespace Allors.Database.Domain
 
         public Role Owner => this.Cache[Role.OwnerId];
 
-        private UniquelyIdentifiableCache<Role> Cache => this.cache ??= new UniquelyIdentifiableCache<Role>(this.Transaction);
-
+        public ICache<Guid, Role> Cache => this.cache ??= this.Transaction.Caches().RoleByUniqueId();
         protected override void CoreSetup(Setup setup)
         {
             var merge = this.Cache.Merger().Action();

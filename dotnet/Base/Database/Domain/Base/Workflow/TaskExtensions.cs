@@ -38,7 +38,7 @@ namespace Allors.Database.Domain
             @this.Participants = participantSet.ToArray();
 
             // Manage Security
-            var cache = new UniquelyIdentifiableCache<SecurityToken>(@this.Transaction());
+            var cache = @this.Transaction().Caches().SecurityTokenByUniqueId();
             var defaultSecurityToken = cache[SecurityToken.DefaultSecurityTokenId];
             var securityTokens = new HashSet<SecurityToken> { defaultSecurityToken };
             var ownerSecurityTokens = participantSet.Where(v => v.ExistOwnerSecurityToken).Select(v => v.OwnerSecurityToken);

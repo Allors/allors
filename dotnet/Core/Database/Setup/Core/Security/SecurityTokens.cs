@@ -9,8 +9,8 @@ namespace Allors.Database.Domain
 
     public partial class SecurityTokens
     {
-  
-        private UniquelyIdentifiableCache<SecurityToken> cache;
+
+        private ICache<Guid, SecurityToken> cache;
 
         public SecurityToken InitialSecurityToken => this.Cache[SecurityToken.InitialSecurityTokenId];
 
@@ -18,7 +18,7 @@ namespace Allors.Database.Domain
 
         public SecurityToken AdministratorSecurityToken => this.Cache[SecurityToken.AdministratorSecurityTokenId];
 
-        private UniquelyIdentifiableCache<SecurityToken> Cache => this.cache ??= new UniquelyIdentifiableCache<SecurityToken>(this.Transaction);
+        public ICache<Guid, SecurityToken> Cache => this.cache ??= this.Transaction.Caches().SecurityTokenByUniqueId();
 
         protected override void CorePrepare(Setup setup) => setup.AddDependency(this.ObjectType, this.M.Grant);
 

@@ -59,7 +59,7 @@ namespace Allors.Database.Domain
 
             if (tokens == null)
             {
-                var cache = new UniquelyIdentifiableCache<SecurityToken>(@object.Transaction());
+                var cache = @object.Transaction().Caches().SecurityTokenByUniqueId();
                 tokens = strategy.IsNewInTransaction
                     ? new[] { cache[SecurityToken.InitialSecurityTokenId] ?? cache[SecurityToken.DefaultSecurityTokenId] }
                     : new[] { cache[SecurityToken.DefaultSecurityTokenId] };

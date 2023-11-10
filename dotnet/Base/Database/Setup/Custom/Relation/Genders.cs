@@ -14,7 +14,7 @@ namespace Allors.Database.Domain
         private static readonly Guid OtherId = new Guid("09210D7C-804B-4E76-AD91-0E150D36E86E");
         private static readonly Guid PreferNotToSayId = new Guid("AEE7F928-B36B-47AE-BB17-747F1D0A9D23");
 
-        private UniquelyIdentifiableCache<Gender> cache;
+        private ICache<Guid, Gender> cache;
 
         public Gender Male => this.Cache[MaleId];
 
@@ -24,7 +24,7 @@ namespace Allors.Database.Domain
 
         public Gender PreferNotToSay => this.Cache[PreferNotToSayId];
 
-        private UniquelyIdentifiableCache<Gender> Cache => this.cache ??= new UniquelyIdentifiableCache<Gender>(this.Transaction);
+        public ICache<Guid, Gender> Cache => this.cache ??= this.Transaction.Caches().GenderByUniqueId();
 
         protected override void CustomSetup(Setup setup)
         {

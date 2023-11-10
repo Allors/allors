@@ -1,4 +1,4 @@
-namespace Allors.Database.Domain
+﻿namespace Allors.Database.Domain
 {
     using System;
     using System.IO;
@@ -12,9 +12,9 @@ namespace Allors.Database.Domain
         public static readonly Guid MadeliefjeId = new Guid("AE0D2BAA-9E07-4DD2-8AAD-98E57010CE98");
         public static readonly Guid AboutId = new Guid("F5922C1B-A0DA-4A77-98BD-21F037C0E3E6");
 
-        private UniquelyIdentifiableCache<Media> cache;
+        private ICache<Guid, Media> cache;
 
-        public Cache<Guid, Media> Cache => this.cache ??= new UniquelyIdentifiableCache<Media>(this.Transaction);
+        public ICache<Guid, Media> Cache => this.cache ??= this.Transaction.Caches().MediaByUniqueId();
 
         public Media Avatar => this.Cache[AvatarId];
 

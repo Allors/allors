@@ -27,7 +27,7 @@ namespace Allors.Database.Domain
             {
                 if (@this.ExistAmount && @this.Amount == -1)
                 {
-                    var cache = new UniquelyIdentifiableCache<OrderState>(cycle.Transaction);
+                    var cache = cycle.Transaction.Caches().OrderStateByUniqueId();
                     @this.OrderState = cache[OrderState.CancelledId];
                 }
             }
