@@ -25,6 +25,13 @@ public interface ITransaction : IDisposable
     ITransactionServices Services { get; }
 
     /// <summary>
+    ///     Returns an instance of the supplied type.
+    ///     Only one instance will exist within the scope of this transaction.
+    /// </summary>
+    /// <returns>The scoped object</returns>
+    T Scoped<T>() where T : class, IScoped;
+
+    /// <summary>
     ///     Creates a change set of all changes up to this checkpoint,
     ///     starting from either the beginning of the transaction or
     ///     from a previous checkpoint.

@@ -25,7 +25,7 @@ namespace Allors.Database.Domain
         {
             var administratorRole = new Roles(this.transaction).Administrator;
             var administrators = new UserGroups(this.transaction).Administrators;
-            var defaultSecurityToken = new SecurityTokens(this.transaction).DefaultSecurityToken;
+            var defaultSecurityToken = this.transaction.Scoped<SecurityTokenByUniqueId>().DefaultSecurityToken;
 
             var acl = this.transaction.Build<Grant>(v =>
             {

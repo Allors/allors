@@ -5,26 +5,13 @@
 
 namespace Allors.Database.Domain
 {
-    using System;
-
     public partial class SecurityTokens
     {
-
-        private ICache<Guid, SecurityToken> cache;
-
-        public SecurityToken InitialSecurityToken => this.Cache[SecurityToken.InitialSecurityTokenId];
-
-        public SecurityToken DefaultSecurityToken => this.Cache[SecurityToken.DefaultSecurityTokenId];
-
-        public SecurityToken AdministratorSecurityToken => this.Cache[SecurityToken.AdministratorSecurityTokenId];
-
-        public ICache<Guid, SecurityToken> Cache => this.cache ??= this.Transaction.Caches().SecurityTokenByUniqueId();
-
         protected override void CorePrepare(Setup setup) => setup.AddDependency(this.ObjectType, this.M.Grant);
 
         protected override void CoreSetup(Setup setup)
         {
-            var merge = this.Cache.Merger().Action();
+            var merge = this.Transaction.Caches().SecurityTokenByUniqueId().Merger().Action();
 
             var grants = new Grants(this.Transaction);
 

@@ -1,4 +1,4 @@
-// <copyright file="TestPopulation.cs" company="Allors bvba">
+﻿// <copyright file="TestPopulation.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -65,7 +65,7 @@ namespace Allors.Database.Domain
             var noperm= BuildPerson("no", "perm", "noperm");
 
             var emptyRole = BuildRole("Empty");
-            var defaultSecurityToken = new SecurityTokens(this.transaction).DefaultSecurityToken;
+            var defaultSecurityToken = this.transaction.Scoped<SecurityTokenByUniqueId>().DefaultSecurityToken;
 
             var acl = BuildGrant(emptyRole, noperm, defaultSecurityToken);
 

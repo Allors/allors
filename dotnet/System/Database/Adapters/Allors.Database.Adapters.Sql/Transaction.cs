@@ -17,6 +17,8 @@ public sealed class Transaction : ITransaction
 
     private Dictionary<string, object> properties;
 
+    private readonly Dictionary<Type, IScoped> scopedByType;
+
     internal Transaction(Database database, IConnection connection, ITransactionServices scope)
     {
         this.Database = database;
@@ -24,7 +26,7 @@ public sealed class Transaction : ITransaction
         this.Services = scope;
 
         this.State = new State(this);
-
+        this.scopedByType = new Dictionary<Type, IScoped>();
 
         if (this.Database.Sink != null)
         {
@@ -345,6 +347,18 @@ public sealed class Transaction : ITransaction
             var prefetcher = new Prefetch(this.Prefetcher, prefetchPolicy, references);
             prefetcher.Execute();
         }
+    }
+
+    public T Scoped<T>() where T : class, IScoped
+    {
+        if (this.scopedByType.TryGetValue(typeof(T), out var scoped))
+        {
+            return (T)scoped;
+        }
+
+        scoped = (IScoped)Activator.CreateInstance(typeof(T), new[] { this });
+        this.scopedByType.Add(typeof(T), scoped);
+        return (T)scoped;
     }
 
     public IChangeSet Checkpoint()

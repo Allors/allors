@@ -1,4 +1,4 @@
-// <copyright file="DatabaseAccessControlListTests.cs" company="Allors bvba">
+﻿// <copyright file="DatabaseAccessControlListTests.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -42,7 +42,7 @@ namespace Allors.Database.Domain.Tests
             var person = this.BuildPerson("John", "Doe");
             var grant = this.BuildGrant(person, role);
 
-            var initialSecurityToken = new SecurityTokens(this.Transaction).InitialSecurityToken;
+            var initialSecurityToken = this.Transaction.Scoped<SecurityTokenByUniqueId>().InitialSecurityToken;
             initialSecurityToken.AddGrant(grant);
 
             this.Transaction.Derive();

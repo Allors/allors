@@ -24,6 +24,8 @@ public class Transaction : ITransaction
 
     private Dictionary<long, Strategy> strategyByObjectId;
 
+    private readonly Dictionary<Type, object> scopedByType;
+
     internal Transaction(Database database, ITransactionServices services)
     {
         this.Database = database;
@@ -32,6 +34,7 @@ public class Transaction : ITransaction
         this.busyCommittingOrRollingBack = false;
 
         this.concreteClassesByObjectType = new Dictionary<IObjectType, IObjectType[]>();
+        this.scopedByType = new Dictionary<Type, object>();
 
         this.ChangeLog = new ChangeLog();
 
@@ -298,6 +301,18 @@ public class Transaction : ITransaction
     public void Prefetch(PrefetchPolicy prefetchPolicy, IEnumerable<IObject> objects)
     {
         // nop
+    }
+
+    public T Scoped<T>() where T : class, IScoped
+    {
+        if (this.scopedByType.TryGetValue(typeof(T), out var scoped))
+        {
+            return (T)scoped;
+        }
+
+        scoped = (IScoped)Activator.CreateInstance(typeof(T), new[] { this });
+        this.scopedByType.Add(typeof(T), scoped);
+        return (T)scoped;
     }
 
     public IChangeSet Checkpoint()

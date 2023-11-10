@@ -48,7 +48,7 @@ namespace Allors.Database.Server.Controllers
 
             var emptyRole = this.transaction.Build<Role>(v => v.Name = "Empty");
 
-            var defaultSecurityToken = new SecurityTokens(this.transaction).DefaultSecurityToken;
+            var defaultSecurityToken = this.transaction.Scoped<SecurityTokenByUniqueId>().DefaultSecurityToken;
 
             var acl = this.transaction.Build<Grant>(v =>
             {
