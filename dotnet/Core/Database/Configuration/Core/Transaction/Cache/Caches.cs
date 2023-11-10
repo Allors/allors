@@ -16,6 +16,7 @@ namespace Allors.Database.Domain
         {
             this.Transaction = transaction;
             this.M = m;
+            this.cacheByRoleTypeByObjectType = new Dictionary<IComposite, IDictionary<IRoleType, object>>();
         }
 
         public ITransaction Transaction { get; }

@@ -9,13 +9,14 @@ namespace Allors.Database.Configuration
     using System;
     using Database;
     using Domain;
+    using Meta;
     using Services;
 
     public class TransactionServices : ITransactionServices
     {
-        private readonly ICaches caches;
         private readonly UserService userService;
 
+        private ICaches caches;
         private IDatabaseAclsService databaseAclsService;
         private IWorkspaceAclsService workspaceAclsService;
         private IObjectBuilderService objectBuilderService;
@@ -53,8 +54,9 @@ namespace Allors.Database.Configuration
 
         public virtual void OnInit(ITransaction transaction)
         {
-            transaction.Database.Services.Get<IPermissions>().Load(transaction);
             this.Transaction = transaction;
+            transaction.Database.Services.Get<IPermissions>().Load(transaction);
+            this.caches = new Caches(transaction, this.DatabaseServices.Get<M>());
         }
 
         private void OnUserChanged(object sender, EventArgs e)
