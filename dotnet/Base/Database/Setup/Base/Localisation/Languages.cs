@@ -1,4 +1,4 @@
-// <copyright file="Languages.cs" company="Allors bvba">
+﻿// <copyright file="Languages.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -9,9 +9,9 @@ namespace Allors.Database.Domain
 
     public partial class Languages
     {
-        private Cache<string, Language> languageByCode;
+        private ICache<string, Language> languageByIsoCode;
 
-        public Cache<string, Language> LanguageByCode => this.languageByCode ??= new Cache<string, Language>(this.Transaction, this.Meta.IsoCode);
+        public ICache<string, Language> LanguageByIsoCode => this.languageByIsoCode ??= this.Transaction.Caches().LanguageByIsoCode();
 
         protected override void CoreSetup(Setup setup)
         {
@@ -201,7 +201,7 @@ namespace Allors.Database.Domain
                 { "za", "Zhuang, Chuang", "Saɯ cueŋƅ, Saw cuengh" },
             };
 
-            var merge = this.LanguageByCode.Merger().Action();
+            var merge = this.LanguageByIsoCode.Merger().Action();
 
             var count = data.Length / 3;
             for (var i = 0; i < count; i++)

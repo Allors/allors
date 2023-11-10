@@ -1,4 +1,4 @@
-// <copyright file="Locales.cs" company="Allors bvba">
+﻿// <copyright file="Locales.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -9,9 +9,9 @@ namespace Allors.Database.Domain
 
     public partial class Locales
     {
-        private Cache<string, Locale> localeByName;
+        private ICache<string, Locale> localeByName;
 
-        public Cache<string, Locale> LocaleByName => this.localeByName ??= new Cache<string, Locale>(this.Transaction, this.Meta.Name);
+        public ICache<string, Locale> LocaleByName => this.localeByName ??= this.Transaction.Caches().LocaleByName();
 
         protected override void CorePrepare(Setup setup)
         {
@@ -29,7 +29,7 @@ namespace Allors.Database.Domain
             foreach (var language in languages.Extent().Cast<Language>())
             {
                 var name = language.IsoCode.ToLowerInvariant();
-                merge(name, v => v.Language = languages.LanguageByCode[name]);
+                merge(name, v => v.Language = languages.LanguageByIsoCode[name]);
             }
         }
     }

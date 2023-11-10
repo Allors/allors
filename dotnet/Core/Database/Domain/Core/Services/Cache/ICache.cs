@@ -14,6 +14,6 @@ namespace Allors.Database.Domain
             get;
         }
 
-        CacheMerger<TKey, TObject> Merger(Action<TObject>? defaults = null);
+        ICacheMerger<TKey, TObject> Merger(Action<TObject>? defaults = null);
     }
 }

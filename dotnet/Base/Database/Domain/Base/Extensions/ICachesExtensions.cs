@@ -11,6 +11,14 @@ namespace Allors.Database.Domain
     {
         public static ICache<Guid, AutomatedAgent> AutomatedAgentByUniqueId(this ICaches @this) => @this.Get<Guid, AutomatedAgent>(@this.M.AutomatedAgent, @this.M.AutomatedAgent.UniqueId);
 
+        public static ICache<string, Country> CountryByIsoCode(this ICaches @this) => @this.Get<string, Country>(@this.M.Country, @this.M.Country.IsoCode);
+
+        public static ICache<string, Currency> CurrencyByIsoCode(this ICaches @this) => @this.Get<string, Currency>(@this.M.Currency, @this.M.Currency.IsoCode);
+
+        public static ICache<string, Language> LanguageByIsoCode(this ICaches @this) => @this.Get<string, Language>(@this.M.Language, @this.M.Language.IsoCode);
+
+        public static ICache<string, Locale> LocaleByName(this ICaches @this) => @this.Get<string, Locale>(@this.M.Locale, @this.M.Locale.Name);
+
         public static ICache<Guid, Media> MediaByUniqueId(this ICaches @this) => @this.Get<Guid, Media>(@this.M.Media, @this.M.Media.UniqueId);
 
         public static ICache<Guid, PersistentPreparedExtent> PersistentPreparedExtentByUniqueId(this ICaches @this) => @this.Get<Guid, PersistentPreparedExtent>(@this.M.PersistentPreparedExtent, @this.M.PersistentPreparedExtent.UniqueId);
