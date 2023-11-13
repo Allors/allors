@@ -21,9 +21,9 @@ namespace Allors.Database.Domain
 
         public static ICache<Guid, Media> MediaByUniqueId(this ICaches @this) => @this.Get<Guid, Media>(@this.M.Media, @this.M.Media.UniqueId);
 
-        public static ICache<Guid, PersistentPreparedExtent> PersistentPreparedExtentByUniqueId(this ICaches @this) => @this.Get<Guid, PersistentPreparedExtent>(@this.M.PersistentPreparedExtent, @this.M.PersistentPreparedExtent.Name);
+        public static ICache<Guid, PersistentPreparedExtent> PersistentPreparedExtentByUniqueId(this ICaches @this) => @this.Get<Guid, PersistentPreparedExtent>(@this.M.PersistentPreparedExtent, @this.M.PersistentPreparedExtent.UniqueId);
 
-        public static ICache<Guid, PersistentPreparedSelect> PersistentPreparedSelectByUniqueId(this ICaches @this) => @this.Get<Guid, PersistentPreparedSelect>(@this.M.PersistentPreparedSelect, @this.M.PersistentPreparedSelect.Name);
+        public static ICache<Guid, PersistentPreparedSelect> PersistentPreparedSelectByUniqueId(this ICaches @this) => @this.Get<Guid, PersistentPreparedSelect>(@this.M.PersistentPreparedSelect, @this.M.PersistentPreparedSelect.UniqueId);
 
         public static ICache<Guid, TemplateType> TemplateTypeByUniqueId(this ICaches @this) => @this.Get<Guid, TemplateType>(@this.M.TemplateType, @this.M.TemplateType.UniqueId);
     }
