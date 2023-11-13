@@ -1,4 +1,4 @@
-// <copyright file="TestController.cs" company="Allors bvba">
+﻿// <copyright file="TestController.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -67,7 +67,7 @@ namespace Allors.Server.Controllers
                     transaction.Commit();
 
                     var administrator = transaction.Build<Person>(v => v.UserName = "administrator");
-                    new UserGroups(transaction).Administrators.AddMember(administrator);
+                    transaction.Scoped<UserGroupByUniqueId>().Administrators.AddMember(administrator);
                     transaction.Services.Get<IUserService>().User = administrator;
 
                     new TestPopulation(transaction).Apply();

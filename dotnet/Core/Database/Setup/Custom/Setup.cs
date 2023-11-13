@@ -1,4 +1,4 @@
-// <copyright file="Setup.cs" company="Allors bvba">
+﻿// <copyright file="Setup.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -27,9 +27,9 @@ namespace Allors.Database.Domain
         private void CustomOnPostSetup(Config config)
         {
             #region Plurals
-            var revocations = new Revocations(this.transaction);
+            var revocations = this.transaction.Scoped<RevocationByUniqueId>();
             var people = new People(this.transaction);
-            var userGroups = new UserGroups(this.transaction);
+            var userGroups = this.transaction.Scoped<UserGroupByUniqueId>();
             var organizations = new Organizations(this.transaction);
             var trimFroms = new TrimFroms(this.transaction);
             var trimTos = new TrimTos(this.transaction);
@@ -55,7 +55,7 @@ namespace Allors.Database.Domain
                 return organizations.Create(Builder, extraBuilder);
             }
 
-            Revocation BuildRevocation(params Permission[] deniedPermissions) => revocations.Create(v => v.DeniedPermissions = deniedPermissions);
+            Revocation BuildRevocation(params Permission[] deniedPermissions) => this.transaction.Build<Revocation>(v => v.DeniedPermissions = deniedPermissions);
 
             TrimFrom BuildTrimFrom(string name, Action<TrimFrom> extraBuilder = null)
             {

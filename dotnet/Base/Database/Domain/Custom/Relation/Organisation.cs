@@ -16,8 +16,8 @@ namespace Allors.Database.Domain
             }
             else
             {
-                var cache = this.Transaction().Caches().RevocationByUniqueId();
-                var toggleRevocation = cache[Revocation.ToggleRevocationId];
+                var cache = this.Transaction().Scoped<RevocationByUniqueId>();
+                var toggleRevocation = cache.ToggleRevocation;
                 this.AddRevocation(toggleRevocation);
             }
 

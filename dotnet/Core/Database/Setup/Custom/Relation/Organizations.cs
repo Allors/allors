@@ -18,8 +18,8 @@ namespace Allors.Database.Domain
 
         protected override void CustomSecure(Security security)
         {
-            var revocations = new Revocations(this.Transaction);
-            var permissions = new Permissions(this.Transaction);
+            var revocations = this.Transaction.Scoped<RevocationByUniqueId>();
+            var permissions = this.Transaction.Scoped<PermissionByMeta>();
 
             revocations.ToggleRevocation.DeniedPermissions = new[]
             {

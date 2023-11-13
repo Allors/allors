@@ -12,16 +12,6 @@ namespace Allors.Database.Domain
     {
         private ICache<Guid, Role> cache;
 
-        public Role Administrator => this.Cache[Role.AdministratorId];
-
-        public Role Guest => this.Cache[Role.GuestId];
-
-        public Role GuestCreator => this.Cache[Role.GuestCreatorId];
-
-        public Role Creator => this.Cache[Role.CreatorId];
-
-        public Role Owner => this.Cache[Role.OwnerId];
-
         public ICache<Guid, Role> Cache => this.cache ??= this.Transaction.Caches().RoleByUniqueId();
         protected override void CoreSetup(Setup setup)
         {

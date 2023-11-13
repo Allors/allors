@@ -14,15 +14,7 @@ namespace Allors.Database.Domain
         private ICache<Guid, OrderState> cache;
 
         public ICache<Guid, OrderState> Cache => this.cache ??= this.Transaction.Caches().OrderStateByUniqueId();
-
-        public OrderState Initial => this.Cache[OrderState.InitialId];
-
-        public OrderState Confirmed => this.Cache[OrderState.ConfirmedId];
-
-        public OrderState Closed => this.Cache[OrderState.ClosedId];
-
-        public OrderState Cancelled => this.Cache[OrderState.CancelledId];
-
+        
         protected override void CustomSetup(Setup setup)
         {
             var merge = this.Cache.Merger().Action();

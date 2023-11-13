@@ -78,7 +78,9 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void InitialCompositeRole()
         {
-            var initialObjectState = new OrderStates(this.Transaction).Initial;
+            var orderStates = this.Transaction.Scoped<OrderStateByUniqueId>();
+
+            var initialObjectState = orderStates.Initial;
 
             var order = this.Transaction.Build<Order>(v =>
             {

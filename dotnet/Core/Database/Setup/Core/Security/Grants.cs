@@ -13,14 +13,6 @@ namespace Allors.Database.Domain
 
         public ICache<Guid, Grant> Cache => this.cache ??= this.Transaction.Caches().GrantByUniqueId();
 
-        public Grant Creators => this.Cache[Grant.CreatorsId];
-
-        public Grant GuestCreator => this.Cache[Grant.GuestCreatorsId];
-
-        public Grant Administrator => this.Cache[Grant.AdministratorId];
-
-        public Grant Guest => this.Cache[Grant.GuestId];
-
         protected override void CorePrepare(Setup setup)
         {
             setup.AddDependency(this.ObjectType, this.M.Role);
@@ -33,8 +25,8 @@ namespace Allors.Database.Domain
             {
                 var merge = this.Cache.Merger().Action();
 
-                var roles = new Roles(this.Transaction);
-                var userGroups = new UserGroups(this.Transaction);
+                var roles = this.Transaction.Scoped<RoleByUniqueId>();
+                var userGroups = this.Transaction.Scoped<UserGroupByUniqueId>();
 
                 merge(Grant.CreatorsId, v =>
                   {

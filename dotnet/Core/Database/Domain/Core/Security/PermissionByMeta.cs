@@ -9,9 +9,15 @@ namespace Allors.Database.Domain
     using Allors.Database.Meta.Extensions;
     using Allors.Database.Meta;
 
-    public partial class Permissions
+    public partial class PermissionByMeta : IScoped
     {
-        // TODO: Make extension method on Class
+        public PermissionByMeta(ITransaction transaction)
+        {
+            this.Transaction = transaction;
+        }
+
+        public ITransaction Transaction { get; }
+
         public Permission Get(IClass @class, IRoleType roleType, Operations operation)
         {
             var id = operation switch

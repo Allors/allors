@@ -31,7 +31,7 @@ namespace Allors.Database.Domain
             var guest = merge(AutomatedAgent.GuestId, v => v.UserName = "Guest");
             merge(AutomatedAgent.SystemId, v => v.UserName = "System");
 
-            var userGroups = new UserGroups(this.Transaction);
+            var userGroups = this.Transaction.Scoped<UserGroupByUniqueId>();
             userGroups.Guests.AddMember(guest);
         }
     }

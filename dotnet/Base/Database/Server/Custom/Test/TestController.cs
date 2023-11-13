@@ -54,18 +54,18 @@ namespace Allors.Database.Server.Controllers
                 var config = new Config();
                 new Setup(database, config).Apply();
 
-                using (var session = database.CreateTransaction())
+                using (var transaction = database.CreateTransaction())
                 {
-                    session.Derive();
-                    session.Commit();
+                    transaction.Derive();
+                    transaction.Commit();
 
-                    var administrator = session.Build<Person>(v => v.UserName = "administrator");
-                    new UserGroups(session).Administrators.AddMember(administrator);
-                    session.Services.Get<IUserService>().User = administrator;
+                    var administrator = transaction.Build<Person>(v => v.UserName = "administrator");
+                    transaction.Scoped<UserGroupByUniqueId>().Administrators.AddMember(administrator);
+                    transaction.Services.Get<IUserService>().User = administrator;
 
-                    new TestPopulation(session, population).Apply();
-                    session.Derive();
-                    session.Commit();
+                    new TestPopulation(transaction, population).Apply();
+                    transaction.Derive();
+                    transaction.Commit();
                 }
 
                 return this.Ok();

@@ -23,9 +23,13 @@ namespace Allors.Database.Domain
 
         private void CustomOnPostSetup(Config config)
         {
-            var administratorRole = new Roles(this.transaction).Administrator;
-            var administrators = new UserGroups(this.transaction).Administrators;
-            var defaultSecurityToken = this.transaction.Scoped<SecurityTokenByUniqueId>().DefaultSecurityToken;
+            var roles = this.transaction.Scoped<RoleByUniqueId>();
+            var userGroups = this.transaction.Scoped<UserGroupByUniqueId>();
+            var securityTokens = this.transaction.Scoped<SecurityTokenByUniqueId>();
+
+            var administratorRole = roles.Administrator;
+            var administrators = userGroups.Administrators;
+            var defaultSecurityToken = securityTokens.DefaultSecurityToken;
 
             var acl = this.transaction.Build<Grant>(v =>
             {
@@ -98,9 +102,10 @@ namespace Allors.Database.Domain
             jenny.SetPassword("jenny");
 
             administrators.AddMember(jane);
-            new UserGroups(this.transaction).Creators.AddMember(jane);
-            new UserGroups(this.transaction).Creators.AddMember(john);
-            new UserGroups(this.transaction).Creators.AddMember(jenny);
+
+            userGroups.Creators.AddMember(jane);
+            userGroups.Creators.AddMember(john);
+            userGroups.Creators.AddMember(jenny);
 
             var acme = this.transaction.Build<Organisation>(v =>
             {

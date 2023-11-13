@@ -60,7 +60,7 @@ namespace Allors.Database.Domain.Tests
         public void GivenAWorkspaceAccessControlListsThenADatabaseDeniedPermissionsIsNotPresent()
         {
             var administrator = this.BuildPerson("administrator");
-            var administrators = new UserGroups(this.Transaction).Administrators;
+            var administrators = this.Transaction.Scoped<UserGroupByUniqueId>().Administrators;
             administrators.AddMember(administrator);
 
             var databaseOnlyPermissions = new Permissions(this.Transaction).Extent().Where(v => v.ExistOperandType && v.OperandType.Equals(M.Person.DatabaseOnlyField));
@@ -83,7 +83,7 @@ namespace Allors.Database.Domain.Tests
         public void GivenAWorkspaceAccessControlListsThenAWorkspaceDeniedPermissionsIsNotPresent()
         {
             var administrator = this.BuildPerson("administrator");
-            var administrators = new UserGroups(this.Transaction).Administrators;
+            var administrators = this.Transaction.Scoped<UserGroupByUniqueId>().Administrators;
             administrators.AddMember(administrator);
 
             var workspacePermissions = new Permissions(this.Transaction).Extent().Where(v => v.ExistOperandType && v.OperandType.Equals(M.Person.DefaultWorkspaceField));
@@ -105,7 +105,7 @@ namespace Allors.Database.Domain.Tests
         public void GivenAWorkspaceAccessControlListsThenAnotherWorkspaceDeniedPermissionsIsNotPresent()
         {
             var administrator = this.BuildPerson("administrator");
-            var administrators = new UserGroups(this.Transaction).Administrators;
+            var administrators = this.Transaction.Scoped<UserGroupByUniqueId>().Administrators;
             administrators.AddMember(administrator);
 
             var workspacePermissions = new Permissions(this.Transaction).Extent().Where(v => v.ExistOperandType && v.OperandType.Equals(M.Person.DefaultWorkspaceField));

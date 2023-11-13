@@ -66,7 +66,7 @@ namespace Allors.Workspace.Adapters.Direct.Tests
             using var transaction = this.Database.CreateTransaction();
 
             var administrator = transaction.Build<Allors.Database.Domain.Person>(v => v.UserName = "administrator");
-            new UserGroups(transaction).Administrators.AddMember(administrator);
+            transaction.Scoped<UserGroupByUniqueId>().Administrators.AddMember(administrator);
             transaction.Services.Get<IUserService>().User = administrator;
 
             new TestPopulation(transaction).Apply();

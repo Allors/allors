@@ -73,10 +73,10 @@ namespace Allors.Database.Domain
 
             if (tokens == null)
             {
-                var cache = @object.Transaction().Caches().SecurityTokenByUniqueId();
+                var cache = @object.Transaction().Scoped<SecurityTokenByUniqueId>();
                 tokens = strategy.IsNewInTransaction
-                    ? new[] { cache[SecurityToken.InitialSecurityTokenId] ?? cache[SecurityToken.DefaultSecurityTokenId] }
-                    : new[] { cache[SecurityToken.DefaultSecurityTokenId] };
+                    ? new[] { cache.InitialSecurityToken ?? cache.DefaultSecurityToken }
+                    : new[] { cache.DefaultSecurityToken };
             }
 
             var versionedGrants = this.security.GetVersionedGrants(transaction, this.user, tokens.ToArray(), this.workspaceName);

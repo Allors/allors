@@ -1,4 +1,4 @@
-// <copyright file="SyncTests.cs" company="Allors bvba">
+﻿// <copyright file="SyncTests.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -22,7 +22,7 @@ namespace Tests
         {
             var workspaceName = "X";
             var metaCache = this.Transaction.Database.Services.Get<IMetaCache>();
-            var grant = new Grants(this.Transaction).Administrator;
+            var grant = this.Transaction.Scoped<GrantByUniqueId>().Administrator;
             var securityToken = this.Transaction.Build<SecurityToken>(v => v.AddGrant(grant));
 
             this.Transaction.Derive();

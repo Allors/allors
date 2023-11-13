@@ -19,9 +19,11 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void SingleObjectState()
         {
-            var initial = new OrderStates(this.Transaction).Initial;
-            var confirmed = new OrderStates(this.Transaction).Confirmed;
-            var cancelled = new OrderStates(this.Transaction).Cancelled;
+            var orderStates = this.Transaction.Scoped<OrderStateByUniqueId>();
+
+            var initial = orderStates.Initial;
+            var confirmed = orderStates.Confirmed;
+            var cancelled = orderStates.Cancelled;
 
             var order = this.Transaction.Build<Order>();
 
@@ -68,9 +70,11 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void MultipleObjectStates()
         {
-            var initial = new OrderStates(this.Transaction).Initial;
-            var confirmed = new OrderStates(this.Transaction).Confirmed;
-            var cancelled = new OrderStates(this.Transaction).Cancelled;
+            var orderStates = this.Transaction.Scoped<OrderStateByUniqueId>();
+
+            var initial = orderStates.Initial;
+            var confirmed = orderStates.Confirmed;
+            var cancelled = orderStates.Cancelled;
 
             var notShipped = new ShipmentStates(this.Transaction).NotShipped;
             var partiallyShipped = new ShipmentStates(this.Transaction).PartiallyShipped;

@@ -8,8 +8,6 @@ namespace Allors.Database.Domain
 {
     public partial class Revocations
     {
-        public Revocation ToggleRevocation => this.Cache[Revocation.ToggleRevocationId];
-
         protected override void CustomSecure(Security security)
         {
             var merge = this.Cache.Merger().Action();

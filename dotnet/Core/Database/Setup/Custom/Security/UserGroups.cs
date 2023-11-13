@@ -10,12 +10,6 @@ namespace Allors.Database.Domain
 
     public partial class UserGroups
     {
-        public UserGroup Operations => this.Cache[UserGroup.OperationsId];
-
-        public UserGroup Sales => this.Cache[UserGroup.SalesId];
-
-        public UserGroup Procurement => this.Cache[UserGroup.ProcurementId];
-
         protected override void CustomSetup(Setup setup)
         {
             base.CustomSetup(setup);
