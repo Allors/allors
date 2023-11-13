@@ -23,6 +23,7 @@ namespace Allors.Database.Domain
 
         private void CustomOnPostSetup(Config config)
         {
+            var countryByIsoCode = this.transaction.Scoped<CountryByIsoCode>();
             var genders = this.transaction.Scoped<GenderByUniqueId>();
             var medias = this.transaction.Scoped<MediaByUniqueId>();
             var roles = this.transaction.Scoped<RoleByUniqueId>();
@@ -46,7 +47,7 @@ namespace Allors.Database.Domain
             {
                 v.PostalCode = "X";
                 v.City = "London";
-                v.Country = new Countries(this.transaction).CountryByIsoCode["GB"];
+                v.Country = countryByIsoCode["GB"];
             });
             var address = this.transaction.Build<HomeAddress>(v =>
             {
@@ -62,7 +63,7 @@ namespace Allors.Database.Domain
                 {
                     w.City = "De Haan";
                     w.PostalCode = "8420";
-                    w.Country = new Countries(this.transaction).CountryByIsoCode["BE"];
+                    w.Country = countryByIsoCode["BE"];
                 });
                 v.PoBox = "P.O. Box 20";
             });

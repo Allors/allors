@@ -25,14 +25,16 @@ namespace Allors.Database.Domain.Tests
             this.Transaction.Derive();
             this.Transaction.Commit();
 
-            var sessions = new[] { this.Transaction };
-            foreach (var session in sessions)
-            {
-                session.Commit();
+            var automatedAgents = this.Transaction.Scoped<AutomatedAgentByUniqueId>();
 
-                var guest = new AutomatedAgents(this.Transaction).Guest;
+            var transactions = new[] { this.Transaction };
+            foreach (var transaction in transactions)
+            {
+                transaction.Commit();
+
+                var guest = automatedAgents.Guest;
                 var acls = new DatabaseAccessControl(this.Security, guest);
-                foreach (Object aco in (IObject[])session.Extent(this.M.Organisation))
+                foreach (Object aco in (IObject[])transaction.Extent(this.M.Organisation))
                 {
                     // When
                     var accessList = acls[aco];
@@ -41,7 +43,7 @@ namespace Allors.Database.Domain.Tests
                     Assert.False(accessList.CanExecute(this.M.Organisation.JustDoIt));
                 }
 
-                session.Rollback();
+                transaction.Rollback();
             }
         }
 

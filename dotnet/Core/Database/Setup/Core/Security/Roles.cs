@@ -6,16 +6,11 @@
 
 namespace Allors.Database.Domain
 {
-    using System;
-
     public partial class Roles
     {
-        private ICache<Guid, Role> cache;
-
-        public ICache<Guid, Role> Cache => this.cache ??= this.Transaction.Caches().RoleByUniqueId();
         protected override void CoreSetup(Setup setup)
         {
-            var merge = this.Cache.Merger().Action();
+            var merge = this.Transaction.Caches().RoleByUniqueId().Merger().Action();
 
             merge(Role.AdministratorId, v => v.Name = "Administrator");
             merge(Role.GuestId, v => v.Name = "Guest");

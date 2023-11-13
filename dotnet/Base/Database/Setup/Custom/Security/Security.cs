@@ -9,17 +9,17 @@ namespace Allors.Database.Domain
 
     public partial class Security
     {
-        public void GrantOperations(IObjectType objectType, params Operations[] operations) => this.Grant(Roles.OperationsId, objectType, operations);
+        public void GrantOperations(IObjectType objectType, params Operations[] operations) => this.Grant(Role.OperationsId, objectType, operations);
 
-        public void GrantOperations(IObjectType objectType, IOperandType operandType, params Operations[] operations) => this.Grant(Roles.OperationsId, objectType, operandType, operations);
+        public void GrantOperations(IObjectType objectType, IOperandType operandType, params Operations[] operations) => this.Grant(Role.OperationsId, objectType, operandType, operations);
 
-        public void GrantProcurement(IObjectType objectType, params Operations[] operations) => this.Grant(Roles.ProcurementId, objectType, operations);
+        public void GrantProcurement(IObjectType objectType, params Operations[] operations) => this.Grant(Role.ProcurementId, objectType, operations);
 
-        public void GrantProcurement(IObjectType objectType, IOperandType operandType, params Operations[] operations) => this.Grant(Roles.ProcurementId, objectType, operandType, operations);
+        public void GrantProcurement(IObjectType objectType, IOperandType operandType, params Operations[] operations) => this.Grant(Role.ProcurementId, objectType, operandType, operations);
 
-        public void GrantSales(IObjectType objectType, params Operations[] operations) => this.Grant(Roles.SalesId, objectType, operations);
+        public void GrantSales(IObjectType objectType, params Operations[] operations) => this.Grant(Role.SalesId, objectType, operations);
 
-        public void GrantSales(IObjectType objectType, IOperandType operandType, params Operations[] operations) => this.Grant(Roles.SalesId, objectType, operandType, operations);
+        public void GrantSales(IObjectType objectType, IOperandType operandType, params Operations[] operations) => this.Grant(Role.SalesId, objectType, operandType, operations);
 
         private void CustomOnPostSetup()
         {

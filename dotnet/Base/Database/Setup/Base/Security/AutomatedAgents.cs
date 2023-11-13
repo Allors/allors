@@ -5,19 +5,8 @@
 
 namespace Allors.Database.Domain
 {
-    using System;
-
-
     public partial class AutomatedAgents
     {
-        private ICache<Guid, AutomatedAgent> cache;
-
-        public ICache<Guid, AutomatedAgent> Cache => this.cache ??= this.Transaction.Caches().AutomatedAgentByUniqueId();
-
-        public AutomatedAgent Guest => this.Cache[AutomatedAgent.GuestId];
-
-        public AutomatedAgent System => this.Cache[AutomatedAgent.SystemId];
-
         protected override void CorePrepare(Setup setup)
         {
             setup.AddDependency(this.ObjectType, this.M.UserGroup);
@@ -26,7 +15,7 @@ namespace Allors.Database.Domain
 
         protected override void CoreSetup(Setup setup)
         {
-            var merge = this.Cache.Merger().Function();
+            var merge = this.Transaction.Caches().AutomatedAgentByUniqueId().Merger().Function();
 
             var guest = merge(AutomatedAgent.GuestId, v => v.UserName = "Guest");
             merge(AutomatedAgent.SystemId, v => v.UserName = "System");

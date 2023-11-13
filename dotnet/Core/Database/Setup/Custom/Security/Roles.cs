@@ -6,21 +6,13 @@
 
 namespace Allors.Database.Domain
 {
-    using System;
-
     public partial class Roles
     {
-        public Role Operations => this.Cache[Role.OperationsId];
-
-        public Role Procurement => this.Cache[Role.ProcurementId];
-
-        public Role Sales => this.Cache[Role.SalesId];
-
         protected override void CustomSetup(Setup setup)
         {
             base.CustomSetup(setup);
 
-            var merge = this.Cache.Merger().Action();
+            var merge = this.Transaction.Caches().RoleByUniqueId().Merger().Action();
 
             merge(Role.OperationsId, v => v.Name = "Operations");
             merge(Role.ProcurementId, v => v.Name = "Procurement");

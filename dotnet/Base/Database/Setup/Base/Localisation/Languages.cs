@@ -5,14 +5,8 @@
 
 namespace Allors.Database.Domain
 {
-   
-
     public partial class Languages
     {
-        private ICache<string, Language> languageByIsoCode;
-
-        public ICache<string, Language> LanguageByIsoCode => this.languageByIsoCode ??= this.Transaction.Caches().LanguageByIsoCode();
-
         protected override void CoreSetup(Setup setup)
         {
             var data = new[,]
@@ -201,7 +195,7 @@ namespace Allors.Database.Domain
                 { "za", "Zhuang, Chuang", "Saɯ cueŋƅ, Saw cuengh" },
             };
 
-            var merge = this.LanguageByIsoCode.Merger().Action();
+            var merge = this.Transaction.Caches().LanguageByIsoCode().Merger().Action();
 
             var count = data.Length / 3;
             for (var i = 0; i < count; i++)

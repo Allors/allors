@@ -6,17 +6,11 @@
 
 namespace Allors.Database.Domain
 {
-    using System;
-
     public partial class UserGroups
     {
-        private ICache<Guid, UserGroup> cache;
-        
-        public ICache<Guid, UserGroup> Cache => this.cache ??= this.Transaction.Caches().UserGroupByUniqueId();
-
         protected override void CoreSetup(Setup setup)
         {
-            var merge = this.Cache.Merger().Action();
+            var merge = this.Transaction.Caches().UserGroupByUniqueId().Merger().Action();
 
             merge(UserGroup.AdministratorsId, v => v.Name = "Administrators");
             merge(UserGroup.CreatorsId, v => v.Name = "Creators");

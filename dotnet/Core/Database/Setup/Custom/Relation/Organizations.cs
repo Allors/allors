@@ -6,14 +6,8 @@
 
 namespace Allors.Database.Domain
 {
-    using System;
-
     public partial class Organizations
     {
-        private ICache<Guid, Organization> cache;
-
-        public ICache<Guid, Organization> Cache => this.cache ??= this.Transaction.Caches().OrganizationByUniqueId();
-
         protected override void CustomPrepare(Security security) => security.AddDependency(this.ObjectType, M.Revocation);
 
         protected override void CustomSecure(Security security)

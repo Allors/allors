@@ -21,7 +21,8 @@ namespace Allors.Database.Domain.Tests
         public void Render()
         {
             var media = this.Transaction.Build<Media>(v => v.InData = this.GetResourceBytes("Domain.Tests.Resources.EmbeddedTemplate.odt"));
-            var templateType = new TemplateTypes(this.Transaction).OpenDocumentType;
+            var templateTypes = this.Transaction.Scoped<TemplateTypeByUniqueId>();
+            var templateType = templateTypes.OpenDocumentType;
             var template = this.Transaction.Build<Template>(v =>
             {
                 v.Media = media;

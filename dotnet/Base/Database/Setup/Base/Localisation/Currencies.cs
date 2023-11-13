@@ -5,14 +5,8 @@
 
 namespace Allors.Database.Domain
 {
-   
-
     public partial class Currencies
     {
-        private ICache<string, Currency> currencyByCode;
-
-        public ICache<string, Currency> CurrencyByCode => this.currencyByCode ??= this.Transaction.Caches().CurrencyByIsoCode();
-
         protected override void CoreSetup(Setup setup)
         {
             var data = new[,]
@@ -191,7 +185,7 @@ namespace Allors.Database.Domain
                 { "ZWL", "Zimbabwean Dollar" },
             };
 
-            var merge = this.CurrencyByCode.Merger().Action();
+            var merge = this.Transaction.Caches().CurrencyByIsoCode().Merger().Action();
 
             var count = data.Length / 2;
             for (var i = 0; i < count; i++)

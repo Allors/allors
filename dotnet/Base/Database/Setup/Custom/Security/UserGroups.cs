@@ -10,17 +10,11 @@ namespace Allors.Database.Domain
 
     public partial class UserGroups
     {
-        public UserGroup Operations => this.Cache[UserGroup.OperationsId];
-
-        public UserGroup Sales => this.Cache[UserGroup.SalesId];
-
-        public UserGroup Procurement => this.Cache[UserGroup.ProcurementId];
-
         protected override void CustomSetup(Setup setup)
         {
             base.CustomSetup(setup);
 
-            var merge = this.Cache.Merger().Action();
+            var merge = this.Transaction.Caches().UserGroupByUniqueId().Merger().Action();
 
             merge(UserGroup.OperationsId, v => v.Name = "operations");
             merge(UserGroup.SalesId, v => v.Name = "sales");

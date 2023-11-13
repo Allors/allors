@@ -1,4 +1,4 @@
-// <copyright file="Populate.cs" company="Allors bvba">
+﻿// <copyright file="Populate.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -31,7 +31,8 @@ namespace Commands
 
             using (var session = database.CreateTransaction())
             {
-                var scheduler = new AutomatedAgents(session).System;
+                var automatedAgents = session.Scoped<AutomatedAgentByUniqueId>();
+                var scheduler = automatedAgents.System;
                 session.Services.Get<IUserService>().User = scheduler;
 
                 new Allors.Database.Domain.Upgrade(session, this.Parent.DataPath).Execute();

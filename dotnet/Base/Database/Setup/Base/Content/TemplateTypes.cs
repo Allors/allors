@@ -5,20 +5,11 @@
 
 namespace Allors.Database.Domain
 {
-    using System;
-
-
     public partial class TemplateTypes
     {
-        private ICache<Guid, TemplateType> cache;
-
-        public ICache<Guid, TemplateType> Cache => this.cache ??= this.Transaction.Caches().TemplateTypeByUniqueId();
-
-        public TemplateType OpenDocumentType => this.Cache[TemplateType.OpenDocumentTypeId];
-
         protected override void CoreSetup(Setup setup)
         {
-            var merge = this.Cache.Merger(v => v.IsActive = true).Action();
+            var merge = this.Transaction.Caches().TemplateTypeByUniqueId().Merger().Action();
 
             merge(TemplateType.OpenDocumentTypeId, v => v.Name = "Odt Template");
         }

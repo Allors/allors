@@ -5,8 +5,6 @@
 
 namespace Allors.Database.Domain
 {
-    using System;
-
     public partial class Grants
     {
         protected override void CustomSetup(Setup setup)

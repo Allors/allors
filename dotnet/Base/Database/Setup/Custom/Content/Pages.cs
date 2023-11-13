@@ -5,28 +5,17 @@
 
 namespace Allors.Database.Domain
 {
-    using System;
-   
-
     public partial class Pages
     {
-        public static readonly Guid IndexId = new Guid("A88D6A90-43F0-49B6-83D6-B05B2F783F9D");
-
-        private ICache<Guid, Page> cache;
-
-        public ICache<Guid, Page> Cache => this.cache ??= this.Transaction.Caches().PageByUniqueId();
-
-        public Page Index => this.Cache[IndexId];
-
         protected override void CustomPrepare(Setup setup) => setup.AddDependency(this.ObjectType, this.M.Media);
 
         protected override void CustomSetup(Setup setup)
         {
             var medias = this.Transaction.Scoped<MediaByUniqueId>();
 
-            var merge = this.Cache.Merger().Action();
+            var merge = this.Transaction.Caches().PageByUniqueId().Merger().Action();
 
-            merge(IndexId, v =>
+            merge(Page.IndexId, v =>
             {
                 v.Name = "About";
                 v.Content = medias.About;
