@@ -6,18 +6,11 @@
 
 namespace Allors.Database.Domain
 {
-    using System;
-   
-
     public partial class OrderStates
     {
-        private ICache<Guid, OrderState> cache;
-
-        public ICache<Guid, OrderState> Cache => this.cache ??= this.Transaction.Caches().OrderStateByUniqueId();
-        
         protected override void CustomSetup(Setup setup)
         {
-            var merge = this.Cache.Merger().Action();
+            var merge = this.Transaction.Caches().OrderStateByUniqueId().Merger().Action();
 
             merge(OrderState.InitialId, v => v.Name = "Initial");
             merge(OrderState.ConfirmedId, v => v.Name = "Confirmed");

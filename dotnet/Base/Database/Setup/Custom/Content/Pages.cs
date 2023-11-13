@@ -22,7 +22,7 @@ namespace Allors.Database.Domain
 
         protected override void CustomSetup(Setup setup)
         {
-            var medias = new Medias(this.Transaction);
+            var medias = this.Transaction.Scoped<MediaByUniqueId>();
 
             var merge = this.Cache.Merger().Action();
 

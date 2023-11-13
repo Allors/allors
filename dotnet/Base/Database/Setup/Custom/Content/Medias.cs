@@ -1,44 +1,28 @@
 ﻿namespace Allors.Database.Domain
 {
-    using System;
     using System.IO;
     using System.Linq;
     using System.Reflection;
    
-
     public partial class Medias
     {
-        public static readonly Guid AvatarId = new Guid("E9B790FB-B35E-441C-A25F-904D0674B32C");
-        public static readonly Guid MadeliefjeId = new Guid("AE0D2BAA-9E07-4DD2-8AAD-98E57010CE98");
-        public static readonly Guid AboutId = new Guid("F5922C1B-A0DA-4A77-98BD-21F037C0E3E6");
-
-        private ICache<Guid, Media> cache;
-
-        public ICache<Guid, Media> Cache => this.cache ??= this.Transaction.Caches().MediaByUniqueId();
-
-        public Media Avatar => this.Cache[AvatarId];
-
-        public Media Madeliefje => this.Cache[MadeliefjeId];
-
-        public Media About => this.Cache[AboutId];
-
         protected override void CustomSetup(Setup setup)
         {
-            var merge = this.Cache.Merger().Action();
+            var merge = this.Transaction.Caches().MediaByUniqueId().Merger().Action(); ;
 
-            merge(AvatarId, v =>
+            merge(Media.AvatarId, v =>
             {
                 v.InData = this.GetResourceBytes("avatar.png");
                 v.InFileName = "avatar.png";
             });
 
-            merge(AboutId, v =>
+            merge(Media.AboutId, v =>
             {
                 v.InData = this.GetResourceBytes("about.md");
                 v.InFileName = "about.md";
             });
 
-            merge(MadeliefjeId, v =>
+            merge(Media.MadeliefjeId, v =>
             {
                 v.InData = this.GetResourceBytes("madeliefje.jpg");
                 v.InFileName = "madeliefje.jpg";

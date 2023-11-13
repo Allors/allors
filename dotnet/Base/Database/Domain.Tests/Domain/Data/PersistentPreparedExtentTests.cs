@@ -23,7 +23,7 @@ namespace Allors.Database.Domain.Tests
             var organisations = new Organisations(this.Transaction).Extent().ToArray();
 
             var extentService = this.Transaction.Database.Services.Get<IPreparedExtents>();
-            var organizationByName = extentService.Get(PersistentPreparedExtents.ByName);
+            var organizationByName = extentService.Get(PersistentPreparedExtent.ByNameId);
 
             var arguments = new Arguments(new Dictionary<string, object>
             {

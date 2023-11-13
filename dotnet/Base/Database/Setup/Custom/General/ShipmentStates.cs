@@ -6,32 +6,15 @@
 
 namespace Allors.Database.Domain
 {
-    using System;
-   
-
     public partial class ShipmentStates
     {
-        private static readonly Guid NotShippedId = new Guid("C74EBE0F-5A3E-4160-9A34-68DC2C69E8B6");
-        private static readonly Guid PartiallyShippedId = new Guid("5FF39A43-EFD8-4660-A7E8-60A519BF4C74");
-        private static readonly Guid ShippedId = new Guid("B9C74F0B-0FED-4AEF-B087-8062708DCF5F");
-
-        private ICache<Guid, ShipmentState> cache;
-
-        public ICache<Guid, ShipmentState> Cache => this.cache ??= this.Transaction.Caches().ShipmentStateByUniqueId();
-
-        public ShipmentState NotShipped => this.Cache[NotShippedId];
-
-        public ShipmentState PartiallyShipped => this.Cache[PartiallyShippedId];
-
-        public ShipmentState Shipped => this.Cache[ShippedId];
-
         protected override void CoreSetup(Setup setup)
         {
-            var merge = this.Cache.Merger().Action();
+            var merge = this.Transaction.Caches().ShipmentStateByUniqueId().Merger().Action();
 
-            merge(NotShippedId, v => v.Name = "NotShipped");
-            merge(PartiallyShippedId, v => v.Name = "PartiallyShipped");
-            merge(ShippedId, v => v.Name = "Shipped");
+            merge(ShipmentState.NotShippedId, v => v.Name = "NotShipped");
+            merge(ShipmentState.PartiallyShippedId, v => v.Name = "PartiallyShipped");
+            merge(ShipmentState.ShippedId, v => v.Name = "Shipped");
         }
     }
 }

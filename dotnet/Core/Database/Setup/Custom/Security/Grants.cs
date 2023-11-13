@@ -9,17 +9,11 @@ namespace Allors.Database.Domain
 
     public partial class Grants
     {
-        public Grant Sales => this.Cache[Grant.SalesId];
-
-        public Grant Operations => this.Cache[Grant.OperationsId];
-
-        public Grant Procurement => this.Cache[Grant.ProcurementId];
-
         protected override void CustomSetup(Setup setup)
         {
             if (setup.Config.SetupSecurity)
             {
-                var merge = this.Cache.Merger().Action();
+                var merge = this.Transaction.Caches().GrantByUniqueId().Merger().Action();
 
                 var roles = this.Transaction.Scoped<RoleByUniqueId>();
                 var userGroups = this.Transaction.Scoped<UserGroupByUniqueId>();

@@ -23,9 +23,11 @@ namespace Allors.Database.Domain
 
         private void CustomOnPostSetup(Config config)
         {
+            var genders = this.transaction.Scoped<GenderByUniqueId>();
+            var medias = this.transaction.Scoped<MediaByUniqueId>();
             var roles = this.transaction.Scoped<RoleByUniqueId>();
-            var userGroups = this.transaction.Scoped<UserGroupByUniqueId>();
             var securityTokens = this.transaction.Scoped<SecurityTokenByUniqueId>();
+            var userGroups = this.transaction.Scoped<UserGroupByUniqueId>();
 
             var administratorRole = roles.Administrator;
             var administrators = userGroups.Administrators;
@@ -38,7 +40,7 @@ namespace Allors.Database.Domain
                 v.AddSecurityToken(defaultSecurityToken);
             });
 
-            var avatar = new Medias(this.transaction).Avatar;
+            var avatar = medias.Avatar;
 
             var place = this.transaction.Build<Place>(v =>
             {
@@ -53,7 +55,6 @@ namespace Allors.Database.Domain
                 v.Place = place;
             });
 
-            var genders = new Genders(this.transaction);
 
             var mailboxAdress = this.transaction.Build<MailboxAddress>(v =>
             {

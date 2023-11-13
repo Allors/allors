@@ -1,4 +1,4 @@
-// <copyright file="Organisations.cs" company="Allors bvba">
+﻿// <copyright file="Organisations.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -11,13 +11,11 @@ namespace Allors.Database.Domain
 
     public partial class PersistentPreparedSelects
     {
-        public static readonly Guid SelectPeople = new Guid("F24CC434-8CDE-4E64-8970-4F693A606B7D");
-
         protected override void CustomSetup(Setup setup)
         {
-            var merge = this.Cache.Merger().Action();
+            var merge = this.Transaction.Caches().PersistentPreparedSelectByUniqueId().Merger().Action();
 
-            merge(SelectPeople, v =>
+            merge(PersistentPreparedSelect.SelectPeopleId, v =>
             {
                 v.Description = "Select People";
                 v.Select = new Select

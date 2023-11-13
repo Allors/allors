@@ -71,14 +71,15 @@ namespace Allors.Database.Domain.Tests
         public void MultipleObjectStates()
         {
             var orderStates = this.Transaction.Scoped<OrderStateByUniqueId>();
+            var shipmentStates = this.Transaction.Scoped<ShipmentStateByUniqueId>();
 
             var initial = orderStates.Initial;
             var confirmed = orderStates.Confirmed;
             var cancelled = orderStates.Cancelled;
 
-            var notShipped = new ShipmentStates(this.Transaction).NotShipped;
-            var partiallyShipped = new ShipmentStates(this.Transaction).PartiallyShipped;
-            var shipped = new ShipmentStates(this.Transaction).Shipped;
+            var notShipped = shipmentStates.NotShipped;
+            var partiallyShipped = shipmentStates.PartiallyShipped;
+            var shipped = shipmentStates.Shipped;
 
             var order = this.Transaction.Build<Order>();
 

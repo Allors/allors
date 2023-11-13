@@ -6,32 +6,15 @@
 
 namespace Allors.Database.Domain
 {
-    using System;
-   
-
     public partial class PaymentStates
     {
-        private static readonly Guid UnpaidId = new Guid("FC38E48D-C8C4-4F26-A8F1-5D4E962B6F93");
-        private static readonly Guid PartiallyPaidId = new Guid("1801737F-2760-4600-9243-7E6BDD8A224D");
-        private static readonly Guid PaidId = new Guid("04FAD96A-2B0F-4F07-ABB7-57657A34E422");
-
-        private ICache<Guid, PaymentState> cache;
-
-        public ICache<Guid, PaymentState> Cache => this.cache ??= this.Transaction.Caches().PaymentStateByUniqueId();
-
-        public PaymentState Unpaid => this.Cache[UnpaidId];
-
-        public PaymentState PartiallyPaid => this.Cache[PartiallyPaidId];
-
-        public PaymentState Paid => this.Cache[PaidId];
-
         protected override void CoreSetup(Setup setup)
         {
-            var merge = this.Cache.Merger().Action();
+            var merge = this.Transaction.Caches().PaymentStateByUniqueId().Merger().Action();
 
-            merge(UnpaidId, v => v.Name = "Unpaid");
-            merge(PartiallyPaidId, v => v.Name = "PartiallyPaid");
-            merge(PaidId, v => v.Name = "Paid");
+            merge(PaymentState.UnpaidId, v => v.Name = "Unpaid");
+            merge(PaymentState.PartiallyPaidId, v => v.Name = "PartiallyPaid");
+            merge(PaymentState.PaidId, v => v.Name = "Paid");
         }
     }
 }
