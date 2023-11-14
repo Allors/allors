@@ -21,7 +21,7 @@ namespace Allors.Database.Domain
             {
                 using TextReader reader = new StringReader(this.Content);
                 var protocolSelect = (Select)XmlSerializer.Deserialize(reader);
-                return protocolSelect.FromJson(this.Strategy.Transaction, new UnitConvert());
+                return protocolSelect.FromJson(this.Transaction(), new UnitConvert());
             }
 
             set

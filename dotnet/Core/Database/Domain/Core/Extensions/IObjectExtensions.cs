@@ -7,6 +7,6 @@ namespace Allors.Database.Domain
 {
     public static class IObjectExtensions
     {
-        public static ITransaction Transaction(this IObject @this) => @this.Strategy.Transaction;
+        public static ITransaction Transaction(this IObject @this) => @this.Transaction();
     }
 }

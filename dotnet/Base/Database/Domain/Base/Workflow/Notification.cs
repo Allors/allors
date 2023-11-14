@@ -11,7 +11,7 @@ namespace Allors.Database.Domain
         {
             if (!this.ExistDateCreated)
             {
-                this.DateCreated = this.Strategy.Transaction.Now();
+                this.DateCreated = this.Transaction().Now();
             }
 
             if (!this.ExistConfirmed)

@@ -15,7 +15,7 @@ namespace Allors.Database.Domain
         IClass IPermission.Class => this.Class;
         public IClass Class
         {
-            get => (IClass)this.Strategy.Transaction.Database.MetaPopulation.FindById(this.ClassPointer);
+            get => (IClass)this.Transaction().Database.MetaPopulation.FindById(this.ClassPointer);
 
             set
             {

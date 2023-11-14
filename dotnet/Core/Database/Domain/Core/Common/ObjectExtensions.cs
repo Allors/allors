@@ -13,7 +13,7 @@ namespace Allors.Database.Domain
     {
         public static void CoreOnPostBuild(this Object @this, ObjectOnPostBuild method)
         {
-            var metaCache = @this.Strategy.Transaction.Database.Services.Get<IMetaCache>();
+            var metaCache = @this.Transaction().Database.Services.Get<IMetaCache>();
             var requiredCompositeRoleTypes = metaCache.GetRequiredCompositeRoleTypesByClass(@this.Strategy.Class);
 
             foreach (var compositeRoleType in requiredCompositeRoleTypes)
@@ -45,7 +45,7 @@ namespace Allors.Database.Domain
                             break;
 
                         case UnitTags.DateTime:
-                            @this.Strategy.SetUnitRole(roleType, @this.Strategy.Transaction.Now());
+                            @this.Strategy.SetUnitRole(roleType, @this.Transaction().Now());
                             break;
                     }
                 }
