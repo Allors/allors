@@ -5,17 +5,8 @@
 
 namespace Allors.Database.Domain
 {
-    using System;
-
-    public partial class UserGroupByUniqueId : IScoped
+    public partial class UserGroupByUniqueId
     {
-        private readonly ICache<Guid, UserGroup> cache;
-
-        public UserGroupByUniqueId(ITransaction transaction)
-        {
-            this.cache = transaction.Caches().UserGroupByUniqueId();
-        }
-
         public UserGroup Administrators => this.cache[UserGroup.AdministratorsId];
 
         public UserGroup Creators => this.cache[UserGroup.CreatorsId];

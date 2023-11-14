@@ -5,15 +5,12 @@
 
 namespace Allors.Database.Domain
 {
-    using System;
-
-    public partial class GrantByUniqueId : IScoped
+    public partial class GrantByUniqueId
     {
         public Grant Sales => this.cache[Grant.SalesId];
 
         public Grant Operations => this.cache[Grant.OperationsId];
 
         public Grant Procurement => this.cache[Grant.ProcurementId];
-
     }
 }

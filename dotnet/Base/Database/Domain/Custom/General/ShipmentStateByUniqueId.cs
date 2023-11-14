@@ -5,17 +5,8 @@
 
 namespace Allors.Database.Domain
 {
-    using System;
-
-    public partial class ShipmentStateByUniqueId : IScoped
+    public partial class ShipmentStateByUniqueId
     {
-        private readonly ICache<Guid, ShipmentState> cache;
-
-        public ShipmentStateByUniqueId(ITransaction transaction)
-        {
-            this.cache = transaction.Caches().ShipmentStateByUniqueId();
-        }
-
         public ShipmentState NotShipped => this.cache[ShipmentState.NotShippedId];
 
         public ShipmentState PartiallyShipped => this.cache[ShipmentState.PartiallyShippedId];

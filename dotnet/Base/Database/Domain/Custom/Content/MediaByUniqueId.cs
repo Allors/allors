@@ -5,17 +5,8 @@
 
 namespace Allors.Database.Domain
 {
-    using System;
-
-    public partial class MediaByUniqueId : IScoped
+    public partial class MediaByUniqueId
     {
-        private readonly ICache<Guid, Media> cache;
-
-        public MediaByUniqueId(ITransaction transaction)
-        {
-            this.cache = transaction.Caches().MediaByUniqueId();
-        }
-
         public Media Avatar => this.cache[Media.AvatarId];
 
         public Media Madeliefje => this.cache[Media.MadeliefjeId];

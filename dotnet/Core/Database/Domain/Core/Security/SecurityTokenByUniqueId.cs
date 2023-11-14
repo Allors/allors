@@ -5,17 +5,8 @@
 
 namespace Allors.Database.Domain
 {
-    using System;
-
-    public partial class SecurityTokenByUniqueId : IScoped
+    public partial class SecurityTokenByUniqueId
     {
-        private readonly ICache<Guid, SecurityToken> cache;
-
-        public SecurityTokenByUniqueId(ITransaction transaction)
-        {
-            this.cache = transaction.Caches().SecurityTokenByUniqueId();
-        }
-
         public SecurityToken InitialSecurityToken => this.cache[SecurityToken.InitialSecurityTokenId];
 
         public SecurityToken DefaultSecurityToken => this.cache[SecurityToken.DefaultSecurityTokenId];

@@ -5,17 +5,8 @@
 
 namespace Allors.Database.Domain
 {
-    using System;
-
-    public partial class PaymentStateByUniqueId : IScoped
+    public partial class PaymentStateByUniqueId
     {
-        private readonly ICache<Guid, PaymentState> cache;
-
-        public PaymentStateByUniqueId(ITransaction transaction)
-        {
-            this.cache = transaction.Caches().PaymentStateByUniqueId();
-        }
-
         public PaymentState Unpaid => this.cache[PaymentState.UnpaidId];
 
         public PaymentState PartiallyPaid => this.cache[PaymentState.PartiallyPaidId];

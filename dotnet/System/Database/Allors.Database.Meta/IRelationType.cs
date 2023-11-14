@@ -26,4 +26,6 @@ public interface IRelationType : IMetaIdentifiableObject, IComparable
     bool ExistExclusiveClasses { get; }
 
     bool IsDerived { get; }
+
+    bool IsKey { get; set; }
 }

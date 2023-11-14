@@ -1,4 +1,4 @@
-// <copyright file="RoleType.cs" company="Allors bvba">
+﻿// <copyright file="RoleType.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -113,29 +113,29 @@ public abstract class RoleType : IRoleType, IComparable
         {
             switch (unitType.Tag)
             {
-                case UnitTags.String:
-                    this.Size ??= 256;
-                    this.Scale = null;
-                    this.Precision = null;
-                    break;
+            case UnitTags.String:
+                this.Size ??= 256;
+                this.Scale = null;
+                this.Precision = null;
+                break;
 
-                case UnitTags.Binary:
-                    this.Size ??= MaximumSize;
-                    this.Scale = null;
-                    this.Precision = null;
-                    break;
+            case UnitTags.Binary:
+                this.Size ??= MaximumSize;
+                this.Scale = null;
+                this.Precision = null;
+                break;
 
-                case UnitTags.Decimal:
-                    this.Precision ??= 19;
-                    this.Scale ??= 2;
-                    this.Size = null;
-                    break;
+            case UnitTags.Decimal:
+                this.Precision ??= 19;
+                this.Scale ??= 2;
+                this.Size = null;
+                break;
 
-                default:
-                    this.Size = null;
-                    this.Scale = null;
-                    this.Precision = null;
-                    break;
+            default:
+                this.Size = null;
+                this.Scale = null;
+                this.Precision = null;
+                break;
             }
         }
         else

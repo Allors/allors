@@ -5,18 +5,9 @@
 
 namespace Allors.Database.Domain
 {
-    using System;
-
-    public partial class OrderStateByUniqueId : IScoped
+    public partial class OrderStateByUniqueId
     {
-        private readonly ICache<Guid, OrderState> cache;
-
-        public OrderStateByUniqueId(ITransaction transaction)
-        {
-            this.cache = transaction.Caches().OrderStateByUniqueId();
-        }
-
-        public OrderState Initial => this.cache[OrderState.InitialId];
+      public OrderState Initial => this.cache[OrderState.InitialId];
 
         public OrderState Confirmed => this.cache[OrderState.ConfirmedId];
 

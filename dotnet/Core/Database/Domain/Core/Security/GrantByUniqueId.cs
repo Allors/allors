@@ -5,17 +5,8 @@
 
 namespace Allors.Database.Domain
 {
-    using System;
-
-    public partial class GrantByUniqueId : IScoped
+    public partial class GrantByUniqueId
     {
-        private readonly ICache<Guid, Grant> cache;
-
-        public GrantByUniqueId(ITransaction transaction)
-        {
-            this.cache = transaction.Caches().GrantByUniqueId();
-        }
-
         public Grant Creators => this.cache[Grant.CreatorsId];
 
         public Grant GuestCreator => this.cache[Grant.GuestCreatorsId];

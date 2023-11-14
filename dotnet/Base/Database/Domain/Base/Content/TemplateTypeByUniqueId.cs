@@ -5,17 +5,8 @@
 
 namespace Allors.Database.Domain
 {
-    using System;
-
-    public partial class TemplateTypeByUniqueId : IScoped
+    public partial class TemplateTypeByUniqueId
     {
-        private readonly ICache<Guid, TemplateType> cache;
-
-        public TemplateTypeByUniqueId(ITransaction transaction)
-        {
-            this.cache = transaction.Caches().TemplateTypeByUniqueId();
-        }
-
         public TemplateType OpenDocumentType => this.cache[TemplateType.OpenDocumentTypeId];
     }
 }

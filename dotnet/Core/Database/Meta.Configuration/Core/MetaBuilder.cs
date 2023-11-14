@@ -9,6 +9,7 @@ namespace Allors.Database.Meta.Configuration
     {
         private void BuildCore(MetaPopulation meta, Domains domains, RelationTypes relationTypes, MethodTypes methodTypes)
         {
+            relationTypes.UniquelyIdentifiableUniqueId.IsKey = true;
         }
     }
 }

@@ -5,17 +5,8 @@
 
 namespace Allors.Database.Domain
 {
-    using System;
-
-    public partial class GenderByUniqueId : IScoped
+    public partial class GenderByUniqueId
     {
-        private readonly ICache<Guid, Gender> cache;
-
-        public GenderByUniqueId(ITransaction transaction)
-        {
-            this.cache = transaction.Caches().GenderByUniqueId();
-        }
-
         public Gender Male => this.cache[Gender.MaleId];
 
         public Gender Female => this.cache[Gender.FemaleId];

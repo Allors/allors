@@ -5,17 +5,8 @@
 
 namespace Allors.Database.Domain
 {
-    using System;
-
-    public partial class RoleByUniqueId : IScoped
+    public partial class RoleByUniqueId
     {
-        private readonly ICache<Guid, Role> cache;
-
-        public RoleByUniqueId(ITransaction transaction)
-        {
-            this.cache = transaction.Caches().RoleByUniqueId();
-        }
-
         public Role Administrator => this.cache[Role.AdministratorId];
 
         public Role Guest => this.cache[Role.GuestId];

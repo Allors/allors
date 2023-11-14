@@ -65,6 +65,8 @@ public sealed class RelationType : MetaIdentifiableObject, IRelationType
 
     public bool IsDerived { get; }
 
+    public bool IsKey { get; set; }
+
     // TODO: Derive
     public bool ExistExclusiveClasses
     {

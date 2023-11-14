@@ -36,6 +36,8 @@ public abstract class CompositeModel : ObjectTypeModel
 
     public IEnumerable<MethodTypeModel> ExclusiveMethodTypes => this.MethodTypes.Where(v => this.Equals(v.ObjectType));
 
+    public IEnumerable<RoleTypeModel> KeyRoleTypes => this.Composite.RoleTypes.Where(v => v.RelationType.IsKey).Select(this.MetaModel.Map);
+
     // IComposite Extra
     public bool ExistDirectSupertypes => this.DirectSupertypes.Any();
 

@@ -5,17 +5,8 @@
 
 namespace Allors.Database.Domain
 {
-    using System;
-
-    public partial class AutomatedAgentByUniqueId : IScoped
+    public partial class AutomatedAgentByUniqueId 
     {
-        private readonly ICache<Guid, AutomatedAgent> cache;
-
-        public AutomatedAgentByUniqueId(ITransaction transaction)
-        {
-            this.cache = transaction.Caches().AutomatedAgentByUniqueId();
-        }
-
         public AutomatedAgent Guest => this.cache[AutomatedAgent.GuestId];
 
         public AutomatedAgent System => this.cache[AutomatedAgent.SystemId];

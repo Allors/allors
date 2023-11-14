@@ -26,6 +26,7 @@ For more information visit http://www.allors.com/legal
 	$meta.Interfaces:{interface|<generation template="castInterface" input="$interface.Id$" output="$interface.SingularName$.g.cs"/>}$
 	$meta.Classes:{class|<generation template="castClass" input="$class.Id$" output="$class.SingularName$.g.cs"/>}$
 	$meta.MethodTypes:{methodType|<generation template="methodType" input="$methodType.Id$" output="$methodType.FullName$.g.cs"/>}$
+	<generation template="cache" output="ICachesExtensions.g.cs"/>
 </generations>
 >>
 
@@ -187,6 +188,8 @@ $class.CompositeRoleTypes:{compositeRoleType|$classCompositeRoleType_Class()$}$
 $class.AssociationTypes:{associationType|$classAssociationType_Class()$}$
 $class.MethodTypes:{methodType|$classMethodType_Method()$}$
 	}
+
+$class.KeyRoleTypes:{roleType|$classKeyRoleTypes()$}$
 }
 >>
 
@@ -394,6 +397,41 @@ methodTypeLeafClass() ::= <<
 			}
 		}
 	}
+>>
+
+classKeyRoleTypes() ::= <<
+$\n$
+	public partial class $class.SingularName$By$roleType.SingularName$ : IScoped
+	{
+		private readonly ICache<$roleType_ObjectType(roleType)$, $class.SingularName$> cache;
+
+		public $class.SingularName$By$roleType.SingularName$(ITransaction transaction)
+		{
+			this.cache = transaction.Caches().$class.SingularName$By$roleType.SingularName$();
+		}
+
+		public $class.SingularName$ this[$roleType_ObjectType(roleType)$ key]
+		{
+			get => this.cache[key];
+		}
+	}
+>>
+
+cache(meta) ::= <<
+namespace Allors.Database.Domain
+{
+    public static partial class ICachesExtensions
+    {
+$meta.classes:{class|$cacheClass()$}$
+    }
+}
+>>
+
+cacheClass() ::= <<$class.KeyRoleTypes:{roleType|$cacheClassKeyRoleTypes()$}$>>
+
+cacheClassKeyRoleTypes() ::= <<
+$\n$
+		public static ICache<$roleType_ObjectType(roleType)$, $class.SingularName$> $class.SingularName$By$roleType.SingularName$(this ICaches @this) => @this.Get<$roleType_ObjectType(roleType)$, $class.SingularName$>(@this.M.$class.SingularName$, @this.M.$class.SingularName$.$roleType.SingularName$);
 >>
 
 boolean(value) ::= "$if(value)$true$else$false$endif$"

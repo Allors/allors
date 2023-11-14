@@ -5,22 +5,8 @@
 
 namespace Allors.Database.Domain
 {
-    using System;
-
-    public partial class PersistentPreparedExtentByUniqueId : IScoped
+    public partial class PersistentPreparedExtentByUniqueId 
     {
-        private readonly ICache<Guid, PersistentPreparedExtent> cache;
-
-        public PersistentPreparedExtentByUniqueId(ITransaction transaction)
-        {
-            this.cache = transaction.Caches().PersistentPreparedExtentByUniqueId();
-        }
-
-        public PersistentPreparedExtent this[Guid key]
-        {
-            get => this.cache[key];
-        }
-
         public PersistentPreparedExtent ByName => this.cache[PersistentPreparedExtent.ByNameId];
     }
 }

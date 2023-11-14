@@ -5,17 +5,8 @@
 
 namespace Allors.Database.Domain
 {
-    using System;
-
-    public partial class RevocationByUniqueId : IScoped
+    public partial class RevocationByUniqueId
     {
-        private readonly ICache<Guid, Revocation> cache;
-
-        public RevocationByUniqueId(ITransaction transaction)
-        {
-            this.cache = transaction.Caches().RevocationByUniqueId();
-        }
-
         public Revocation ToggleRevocation => this.cache[Revocation.ToggleRevocationId];
     }
 }
