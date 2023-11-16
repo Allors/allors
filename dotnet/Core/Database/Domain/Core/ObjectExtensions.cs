@@ -64,7 +64,7 @@ namespace Allors.Database.Domain
 
         public static T Clone<T>(this T @this) where T : IObject
         {
-            var clone = (T)@this.Strategy.Transaction.Build(@this.Strategy.Class);
+            var clone = (T)@this.Transaction().Build(@this.Strategy.Class);
 
             foreach (var roleType in @this.Strategy.Class.RoleTypes.Where(v => v.IsCloneable()))
             {

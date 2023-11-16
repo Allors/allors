@@ -15,7 +15,7 @@ namespace Allors.Database.Domain
         {
             if (!@this.ExistDateCreated)
             {
-                @this.DateCreated = @this.Strategy.Transaction.Now();
+                @this.DateCreated = @this.Transaction().Now();
             }
         }
 
@@ -27,11 +27,11 @@ namespace Allors.Database.Domain
             }
         }
 
-        public static void AssignPerformer(this Task @this) => @this.Performer = @this.Strategy.Transaction.Services.Get<IUserService>().User as Person;
+        public static void AssignPerformer(this Task @this) => @this.Performer = @this.Transaction().Services.Get<IUserService>().User as Person;
 
         public static void AssignParticipants(this Task @this, IEnumerable<User> participants)
         {
-            var transaction = @this.Strategy.Transaction;
+            var transaction = @this.Transaction();
 
             var participantSet = new HashSet<User>(participants.Where(v => v != null).Distinct());
 

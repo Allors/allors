@@ -11,7 +11,7 @@ namespace Allors.Database.Domain
     {
         public static void CoreOnPostDerive(this Auditable @this, ObjectOnPostDerive method)
         {
-            var user = @this.Strategy.Transaction.Services.Get<IUserService>().User;
+            var user = @this.Transaction().Services.Get<IUserService>().User;
             if (user != null)
             {
                 var derivation = method.Derivation;
@@ -19,13 +19,13 @@ namespace Allors.Database.Domain
 
                 if (changeSet.Created.Contains(@this))
                 {
-                    @this.CreationDate = @this.Strategy.Transaction.Now();
+                    @this.CreationDate = @this.Transaction().Now();
                     @this.CreatedBy = (User)user;
                 }
 
                 if (changeSet.Associations.Contains(@this))
                 {
-                    @this.LastModifiedDate = @this.Strategy.Transaction.Now();
+                    @this.LastModifiedDate = @this.Transaction().Now();
                     @this.LastModifiedBy = (User)user;
                 }
             }
