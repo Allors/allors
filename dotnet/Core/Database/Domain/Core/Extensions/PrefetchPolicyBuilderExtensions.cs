@@ -10,7 +10,7 @@ namespace Allors.Database.Domain
     using Allors.Database.Data;
     using Allors.Database.Meta;
 
-    public static class PrefetchPolicyBuilderExtensions
+    public static partial class PrefetchPolicyBuilderExtensions
     {
         public static PrefetchPolicyBuilder WithSecurityRules(this PrefetchPolicyBuilder @this, M m)
         {

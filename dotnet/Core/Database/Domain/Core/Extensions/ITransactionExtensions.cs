@@ -4,7 +4,7 @@
     using Allors.Database.Derivations;
     using Allors.Database.Domain.Derivations;
 
-    public static class ITransactionExtensions
+    public static partial class ITransactionExtensions
     {
         public static ICaches Caches(this ITransaction @this) => @this.Services.Get<ICaches>();
 

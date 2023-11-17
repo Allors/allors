@@ -1,4 +1,4 @@
-// <copyright file="AssemblyExtension.cs" company="Allors bvba">
+﻿// <copyright file="AssemblyExtension.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -10,7 +10,7 @@ namespace Allors.Database.Domain.Tests
     using System.Reflection;
     using System.Security.Cryptography;
 
-    public static class AssemblyExtensions
+    public static partial class AssemblyExtensions
     {
         public static string Fingerprint(this Assembly assembly)
         {
