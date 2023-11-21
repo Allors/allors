@@ -1511,7 +1511,7 @@ namespace Allors.Database.Domain
                 },
             };
 
-            var merge = this.Transaction.Caches().CountryByIsoCode().Merger().Action();
+            var merge = this.ByIsoCode.Merger().Action();
 
             var count = data.Length / 4;
             for (var i = 0; i < count; i++)

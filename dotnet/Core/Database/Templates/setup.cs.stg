@@ -76,7 +76,14 @@ objectType_Plural() ::= <<
 				return Meta;
 			}
 		}
+$if(objectType.isClass)$
+$objectType.KeyRoleTypes:{roleType|$cacheClassKeyRoleTypes()$}$
+$endif$
 	}
+>>
+
+cacheClassKeyRoleTypes() ::= <<
+			public ICache<$roleType_ObjectType(roleType)$, $objectType.SingularName$> By$roleType.SingularName$ => this.Transaction.Caches().$objectType.SingularName$By$roleType.SingularName$();
 >>
 
 boolean(value) ::= "$if(value)$true$else$false$endif$"
