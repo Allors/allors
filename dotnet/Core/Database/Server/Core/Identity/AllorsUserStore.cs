@@ -1,4 +1,4 @@
-// <copyright file="AllorsUserStore.cs" company="Allors bvba">
+﻿// <copyright file="AllorsUserStore.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -169,7 +169,7 @@ namespace Allors.Security
 
             cancellationToken.ThrowIfCancellationRequested();
             using var transaction = this.database.CreateTransaction();
-            var user = new Users(transaction).FindBy(m.User.NormalizedUserName, normalizedUserName);
+            var user = transaction.Extent<User>().FindBy(m.User.NormalizedUserName, normalizedUserName);
             return user?.AsIdentityUser();
         }
 
@@ -223,7 +223,7 @@ namespace Allors.Security
             var m = this.database.Services.Get<M>();
 
             using var transaction = this.database.CreateTransaction();
-            var extent = new Logins(transaction).Extent();
+            var extent = transaction.Extent<Login>();
             extent.Filter.AddEquals(m.Login.Provider, loginProvider);
             extent.Filter.AddEquals(m.Login.Key, providerKey);
 
@@ -247,7 +247,7 @@ namespace Allors.Security
             var m = this.database.Services.Get<M>();
 
             using var transaction = this.database.CreateTransaction();
-            var extent = new Logins(transaction).Extent();
+            var extent = transaction.Extent<Login>();
             extent.Filter.AddEquals(m.Login.Provider, loginProvider);
             extent.Filter.AddEquals(m.Login.Key, providerKey);
 
@@ -298,7 +298,7 @@ namespace Allors.Security
             var m = this.database.Services.Get<M>();
 
             using var transaction = this.database.CreateTransaction();
-            var user = new Users(transaction).FindBy(m.User.NormalizedUserEmail, normalizedEmail);
+            var user = transaction.Extent<User>().FindBy(m.User.NormalizedUserEmail, normalizedEmail);
             return user?.AsIdentityUser();
         }
 

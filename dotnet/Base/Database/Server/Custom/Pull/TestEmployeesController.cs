@@ -1,4 +1,4 @@
-// <copyright file="TestEmployeesController.cs" company="Allors bvba">
+﻿// <copyright file="TestEmployeesController.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -38,7 +38,7 @@ namespace Allors.Database.Server.Controllers
             var response = api.CreatePullResponseBuilder();
 
             var m = this.Transaction.Database.Services.Get<M>();
-            var organisation = new Organisations(this.Transaction).FindBy(m.Organisation.Owner, this.Transaction.Services.Get<IUserService>().User);
+            var organisation = this.Transaction.Extent<Organisation>().FindBy(m.Organisation.Owner, this.Transaction.Services.Get<IUserService>().User);
 
             response.AddObject("root", organisation, new[]
             {

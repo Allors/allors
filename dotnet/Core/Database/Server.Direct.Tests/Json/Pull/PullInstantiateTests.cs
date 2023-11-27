@@ -27,7 +27,7 @@ namespace Tests
         {
             var user = this.SetUser("jane@example.com");
 
-            var c1b = new C1s(this.Transaction).Extent().First(v => "c1B".Equals(v.Name));
+            var c1b = this.Transaction.Extent<C1>().First(v => "c1B".Equals(v.Name));
 
             this.Transaction.Derive();
             this.Transaction.Commit();
@@ -49,7 +49,7 @@ namespace Tests
         {
             var user = this.SetUser("jane@example.com");
 
-            var c1b = new C1s(this.Transaction).Extent().First(v => "c1B".Equals(v.Name));
+            var c1b = this.Transaction.Extent<C1>().First(v => "c1B".Equals(v.Name));
 
             this.Transaction.Derive();
             this.Transaction.Commit();
@@ -78,7 +78,7 @@ namespace Tests
         {
             var user = this.SetUser("jane@example.com");
 
-            var c2b = new C2s(this.Transaction).Extent().First(v => "c2B".Equals(v.Name));
+            var c2b = this.Transaction.Extent<C2>().First(v => "c2B".Equals(v.Name));
 
             this.Transaction.Derive();
             this.Transaction.Commit();
@@ -107,7 +107,7 @@ namespace Tests
         {
             var user = this.SetUser("jane@example.com");
 
-            var c1b = new C1s(this.Transaction).Extent().First(v => "c1B".Equals(v.Name));
+            var c1b = this.Transaction.Extent<C1>().First(v => "c1B".Equals(v.Name));
 
             this.Transaction.Derive();
             this.Transaction.Commit();
@@ -146,7 +146,7 @@ namespace Tests
         {
             var user = this.SetUser("jane@example.com");
 
-            var c2b = new C2s(this.Transaction).Extent().First(v => "c2B".Equals(v.Name));
+            var c2b = this.Transaction.Extent<C2>().First(v => "c2B".Equals(v.Name));
 
             this.Transaction.Derive();
             this.Transaction.Commit();
@@ -186,7 +186,7 @@ namespace Tests
         {
             var user = this.SetUser("jane@example.com");
 
-            var c1b = new C1s(this.Transaction).Extent().First(v => "c1B".Equals(v.Name));
+            var c1b = this.Transaction.Extent<C1>().First(v => "c1B".Equals(v.Name));
 
             this.Transaction.Derive();
             this.Transaction.Commit();

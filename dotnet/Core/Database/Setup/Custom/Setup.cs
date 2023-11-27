@@ -27,12 +27,7 @@ namespace Allors.Database.Domain
         private void CustomOnPostSetup(Config config)
         {
             #region Plurals
-            var revocations = this.transaction.Scoped<RevocationByUniqueId>();
-            var people = new People(this.transaction);
             var userGroups = this.transaction.Scoped<UserGroupByUniqueId>();
-            var organizations = new Organizations(this.transaction);
-            var trimFroms = new TrimFroms(this.transaction);
-            var trimTos = new TrimTos(this.transaction);
             #endregion
 
             #region Builders
@@ -46,13 +41,13 @@ namespace Allors.Database.Domain
                     v.SetPassword(password);
                 }
 
-                return people.Create(Builder);
+                return this.transaction.Build<Person>(Builder);
             }
 
             Organization BuildOrganization(string name, Action<Organization> extraBuilder = null)
             {
                 void Builder(Organization v) => v.Name = name;
-                return organizations.Create(Builder, extraBuilder);
+                return this.transaction.Build<Organization>(Builder, extraBuilder);
             }
 
             Revocation BuildRevocation(params Permission[] deniedPermissions) => this.transaction.Build<Revocation>(v => v.DeniedPermissions = deniedPermissions);
@@ -60,13 +55,13 @@ namespace Allors.Database.Domain
             TrimFrom BuildTrimFrom(string name, Action<TrimFrom> extraBuilder = null)
             {
                 void Builder(TrimFrom v) => v.Name = name;
-                return trimFroms.Create(Builder, extraBuilder);
+                return this.transaction.Build<TrimFrom>(Builder, extraBuilder);
             }
 
             TrimTo BuildTrimTo(string name, Action<TrimTo> extraBuilder = null)
             {
                 void Builder(TrimTo v) => v.Name = name;
-                return trimTos.Create(Builder, extraBuilder);
+                return this.transaction.Build<TrimTo>(Builder, extraBuilder);
             }
 
             #endregion
@@ -140,9 +135,9 @@ namespace Allors.Database.Domain
 
                 var m = denied.M;
 
-                var databaseWrite = new Permissions(this.transaction).Extent().First(v => v.Operation == Operations.Write && v.OperandType.Equals(m.Denied.DatabaseProperty));
-                var defaultWorkspaceWrite = new Permissions(this.transaction).Extent().First(v => v.Operation == Operations.Write && v.OperandType.Equals(m.Denied.DefaultWorkspaceProperty));
-                var workspaceXWrite = new Permissions(this.transaction).Extent().First(v => v.Operation == Operations.Write && v.OperandType.Equals(m.Denied.WorkspaceXProperty));
+                var databaseWrite = this.transaction.Extent<Permission>().First(v => v.Operation == Operations.Write && v.OperandType.Equals(m.Denied.DatabaseProperty));
+                var defaultWorkspaceWrite = this.transaction.Extent<Permission>().First(v => v.Operation == Operations.Write && v.OperandType.Equals(m.Denied.DefaultWorkspaceProperty));
+                var workspaceXWrite = this.transaction.Extent<Permission>().First(v => v.Operation == Operations.Write && v.OperandType.Equals(m.Denied.WorkspaceXProperty));
 
                 var revocation = BuildRevocation(databaseWrite, defaultWorkspaceWrite, workspaceXWrite);
 
@@ -164,12 +159,12 @@ namespace Allors.Database.Domain
                 var m = this.transaction.Database.Services.Get<M>();
 
                 // Denied Permissions
-                var fromTrimPermission = new Permissions(this.transaction).Extent().First(v => v.Operation == Operations.Read && v.OperandType.Equals(m.TrimFrom.Name));
+                var fromTrimPermission = this.transaction.Extent<Permission>().First(v => v.Operation == Operations.Read && v.OperandType.Equals(m.TrimFrom.Name));
                 var fromRevocation = BuildRevocation(fromTrimPermission);
                 fromTrimmed1.AddRevocation(fromRevocation);
                 fromTrimmed2.AddRevocation(fromRevocation);
 
-                var toTrimPermission = new Permissions(this.transaction).Extent().First(v => v.Operation == Operations.Read && v.OperandType.Equals(m.TrimTo.Name));
+                var toTrimPermission = this.transaction.Extent<Permission>().First(v => v.Operation == Operations.Read && v.OperandType.Equals(m.TrimTo.Name));
                 var toRevocation = BuildRevocation(toTrimPermission);
                 toTrimmed.AddRevocation(toRevocation);
 

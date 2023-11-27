@@ -1,4 +1,4 @@
-// <copyright file="OrganisationsController.cs" company="Allors bvba">
+﻿// <copyright file="OrganisationsController.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -12,6 +12,7 @@ namespace Allors.Database.Server.Controllers
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Database;
+    using Meta;
     using Protocol.Json;
 
     public class OrganisationsController : Controller
@@ -33,10 +34,11 @@ namespace Allors.Database.Server.Controllers
         [Authorize]
         public async Task<IActionResult> Pull(CancellationToken cancellationToken)
         {
+            var m = this.Transaction.Database.Services.Get<M>();
+
             var api = new Api(this.Transaction, this.WorkspaceService.Name, cancellationToken);
             var response = api.CreatePullResponseBuilder();
-            var organisations = new Organisations(this.Transaction);
-            response.AddCollection("organisations", organisations.ObjectType, organisations.Extent().ToArray());
+            response.AddCollection("organisations", m.Organisation, this.Transaction.Extent<Organisation>().ToArray());
             return this.Ok(response.Build());
         }
     }

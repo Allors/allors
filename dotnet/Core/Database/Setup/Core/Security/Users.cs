@@ -13,7 +13,7 @@ namespace Allors.Database.Domain
     {
         public void SavePasswords(XmlWriter writer)
         {
-            var usersWithPassword = this.Extent();
+            var usersWithPassword = this.Transaction.Extent<User>();
             usersWithPassword.Filter.AddExists(this.Meta.UserPasswordHash);
 
             var records = new List<Credentials.Record>();
@@ -37,7 +37,7 @@ namespace Allors.Database.Domain
             var credentials = (Credentials)xmlSerializer.Deserialize(reader);
             foreach (var credential in credentials.Records)
             {
-                var user = this.FindBy(this.Meta.UserName, credential.UserName);
+                var user = this.Transaction.Extent<User>().FindBy(this.Meta.UserName, credential.UserName);
                 if (user != null)
                 {
                     user.UserPasswordHash = credential.PasswordHash;

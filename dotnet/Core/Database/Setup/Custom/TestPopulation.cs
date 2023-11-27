@@ -15,18 +15,10 @@ namespace Allors.Database.Domain
 
         public void Apply()
         {
-            #region Plurals
-            var roles = new Roles(this.transaction);
-            var grants = new Grants(this.transaction);
-            var people = new People(this.transaction);
-            var c1s = new C1s(this.transaction);
-            var c2s = new C2s(this.transaction);
-            #endregion
-
             #region Builders
-            Role BuildRole(string name) => roles.Create(v => v.Name = name);
+            Role BuildRole(string name) => this.transaction.Build<Role>(v => v.Name = name);
 
-            Grant BuildGrant(Role role, User subject, SecurityToken securityToken) => grants.Create(v =>
+            Grant BuildGrant(Role role, User subject, SecurityToken securityToken) => this.transaction.Build<Grant>(v =>
             {
                 v.Role = role;
                 v.AddSubject(subject);
@@ -43,17 +35,17 @@ namespace Allors.Database.Domain
                     v.SetPassword(password);
                 }
 
-                return people.Create(Builder);
+                return this.transaction.Build<Person>(Builder);
             }
 
-            C1 BuildC1(string name, int order) => c1s.Create(v =>
+            C1 BuildC1(string name, int order) => this.transaction.Build<C1>(v =>
             {
                 v.Name = name;
                 v.Order = order;
             });
 
 
-            C2 BuildC2(string name, int order) => c2s.Create(v =>
+            C2 BuildC2(string name, int order) => this.transaction.Build<C2>(v =>
             {
                 v.Name = name;
                 v.Order = order;

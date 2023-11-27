@@ -1,4 +1,4 @@
-// <copyright file="SyncTests.cs" company="Allors bvba">
+﻿// <copyright file="SyncTests.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -45,7 +45,7 @@ namespace Tests
         {
             this.SetUser("jane@example.com");
 
-            var people = new People(this.Transaction).Extent();
+            var people = this.Transaction.Extent<Person>();
             var person = people[0];
 
             var syncRequest = new SyncRequest
@@ -67,14 +67,14 @@ namespace Tests
         [Fact]
         public void WithoutAccessControl()
         {
-            new People(this.Transaction).Extent().First(v => "noacl".Equals(v.UserName));
+            this.Transaction.Extent<Person>().First(v => "noacl".Equals(v.UserName));
 
             this.Transaction.Derive();
             this.Transaction.Commit();
 
             this.SetUser("noacl");
 
-            var people = new People(this.Transaction).Extent();
+            var people = this.Transaction.Extent<Person>();
             var person = people[0];
 
             var syncRequest = new SyncRequest

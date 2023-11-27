@@ -71,7 +71,7 @@
 
         public Task Login(string userName)
         {
-            this.user = new Allors.Database.Domain.Users(this.Transaction).Extent().ToArray().First(v => v.UserName.Equals(userName, StringComparison.InvariantCultureIgnoreCase));
+            this.user = this.Transaction.Extent<Allors.Database.Domain.User>().First(v => v.UserName.Equals(userName, StringComparison.InvariantCultureIgnoreCase));
             this.Transaction.Services.Get<Allors.Database.Services.IUserService>().User = this.user;
 
             this.Connection = new Connection(this.configuration, this.database, this.servicesBuilder) { UserId = this.user.Id };

@@ -88,7 +88,7 @@ namespace Allors.Workspace.Adapters.Direct.Tests
         public Task Login(string userName)
         {
             using var transaction = this.Database.CreateTransaction();
-            this.user = new Users(transaction).Extent().ToArray().First(v => v.UserName.Equals(userName, StringComparison.InvariantCultureIgnoreCase));
+            this.user = transaction.Extent<User>().ToArray().First(v => v.UserName.Equals(userName, StringComparison.InvariantCultureIgnoreCase));
             transaction.Services.Get<IUserService>().User = this.user;
 
             this.Connection = new Connection(this.configuration, this.Database, this.servicesBuilder) { UserId = this.user.Id };

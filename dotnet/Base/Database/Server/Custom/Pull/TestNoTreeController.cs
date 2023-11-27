@@ -1,4 +1,4 @@
-// <copyright file="TestNoTreeController.cs" company="Allors bvba">
+﻿// <copyright file="TestNoTreeController.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -10,6 +10,7 @@ namespace Allors.Database.Server.Controllers
     using Domain;
     using Microsoft.AspNetCore.Mvc;
     using Database;
+    using Meta;
     using Protocol.Json;
 
 
@@ -31,12 +32,13 @@ namespace Allors.Database.Server.Controllers
         [HttpPost]
         public IActionResult Pull(CancellationToken cancellationToken)
         {
+            var m = this.Transaction.Database.Services.Get<M>();
+
             var api = new Api(this.Transaction, this.WorkspaceService.Name, cancellationToken);
             var response = api.CreatePullResponseBuilder();
 
             response.AddObject("object", api.User);
-            var organisations = new Organisations(this.Transaction);
-            response.AddCollection("collection", organisations.ObjectType, organisations.Extent());
+            response.AddCollection("collection", m.Organisation, this.Transaction.Extent<Organisation>());
             return this.Ok(response.Build());
         }
     }

@@ -30,7 +30,7 @@ namespace Commands
             transaction.Services.Get<IUserService>().User = scheduler;
 
             var m = this.Parent.M;
-            var printDocuments = new PrintDocuments(transaction).Extent();
+            var printDocuments = transaction.Extent<PrintDocument>();
             printDocuments.Filter.AddNot().AddExists(m.PrintDocument.Media);
 
             foreach (PrintDocument printDocument in printDocuments)

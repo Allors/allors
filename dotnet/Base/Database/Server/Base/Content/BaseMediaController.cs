@@ -65,7 +65,7 @@ namespace Allors.Database.Server.Controllers
 
             if (Guid.TryParse(idString, out var id))
             {
-                var media = new Medias(this.Transaction).FindBy(m.Media.UniqueId, id);
+                var media = this.Transaction.Extent<Media>().FindBy(m.Media.UniqueId, id);
                 if (media != null)
                 {
                     string actionName = nameof(this.Get);
@@ -86,7 +86,7 @@ namespace Allors.Database.Server.Controllers
 
             if (Guid.TryParse(idString, out var id))
             {
-                var media = new Medias(this.Transaction).FindBy(m.Media.UniqueId, id);
+                var media = this.Transaction.Extent<Media>().FindBy(m.Media.UniqueId, id);
                 if (media != null)
                 {
                     if (media.MediaContent?.Data == null)

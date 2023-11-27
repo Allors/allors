@@ -1,4 +1,4 @@
-// <copyright file="PermissionTests.cs" company="Allors bvba">
+﻿// <copyright file="PermissionTests.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -72,7 +72,7 @@ namespace Allors.Database.Domain.Tests
         {
             this.Transaction.Database.Services.Get<IPermissions>().Sync(this.Transaction);
 
-            var permissions = new Permissions(this.Transaction).Extent().ToArray();
+            var permissions = this.Transaction.Extent<Permission>().ToArray();
 
             Assert.Empty(permissions.Where(v => v.OperandType is IAssociationType associationType && associationType.RoleType.ObjectType.IsUnit));
         }
@@ -82,7 +82,7 @@ namespace Allors.Database.Domain.Tests
         {
             var domain = (Domain)this.Transaction.Database.MetaPopulation.FindById(new Guid("AB41FD0C-C887-4A1D-BEDA-CED69527E69A"));
 
-            var count = new Permissions(this.Transaction).Extent().Count;
+            var count = this.Transaction.Extent<Permission>().Count;
 
             var permission = this.Transaction.Build<ExecutePermission>(v =>
             {

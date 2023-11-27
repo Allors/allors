@@ -1,4 +1,4 @@
-// <copyright file="ContentTests.cs" company="Allors bvba">
+﻿// <copyright file="ContentTests.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -160,7 +160,7 @@ namespace Tests
             var user = this.SetUser("jane@example.com");
 
             var data = this.Transaction.Build<Data>(v => v.String = "First");
-            var permissions = new Permissions(this.Transaction).Extent();
+            var permissions = this.Transaction.Extent<Permission>();
             var permission = permissions.First(v => Equals(v.Class, this.M.Data) && v.InWorkspace("Default"));
             var revocation = this.Transaction.Build<Revocation>(v => v.AddDeniedPermission(permission));
             data.AddRevocation(revocation);
@@ -225,9 +225,9 @@ namespace Tests
 
             var pullResponseObject = pullResponse.p[0];
 
-            var databaseWrite = new Permissions(this.Transaction).Extent().First(v => v.Operation == Operations.Write && v.OperandType.Equals(m.Denied.DatabaseProperty));
-            var defaultWorkspaceWrite = new Permissions(this.Transaction).Extent().First(v => v.Operation == Operations.Write && v.OperandType.Equals(m.Denied.DefaultWorkspaceProperty) && v.Operation == Operations.Write);
-            var workspaceXWrite = new Permissions(this.Transaction).Extent().First(v => v.Operation == Operations.Write && v.OperandType.Equals(m.Denied.WorkspaceXProperty) && v.Operation == Operations.Write);
+            var databaseWrite = this.Transaction.Extent<Permission>().First(v => v.Operation == Operations.Write && v.OperandType.Equals(m.Denied.DatabaseProperty));
+            var defaultWorkspaceWrite = this.Transaction.Extent<Permission>().First(v => v.Operation == Operations.Write && v.OperandType.Equals(m.Denied.DefaultWorkspaceProperty) && v.Operation == Operations.Write);
+            var workspaceXWrite = this.Transaction.Extent<Permission>().First(v => v.Operation == Operations.Write && v.OperandType.Equals(m.Denied.WorkspaceXProperty) && v.Operation == Operations.Write);
 
             // TODO: Koen
             //Assert.Single(pullResponseObject.d);

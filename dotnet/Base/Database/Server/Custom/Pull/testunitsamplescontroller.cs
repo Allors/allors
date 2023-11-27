@@ -35,7 +35,7 @@ namespace Allors.Database.Server.Controllers
         {
             try
             {
-                var unitSample = new UnitSamples(this.Transaction).Extent().First;
+                var unitSample = this.Transaction.Extent<UnitSample>().First;
                 if (unitSample == null)
                 {
                     unitSample = this.Transaction.Build<UnitSample>();
