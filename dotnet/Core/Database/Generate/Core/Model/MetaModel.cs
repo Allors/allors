@@ -1,10 +1,11 @@
-namespace Allors.Meta.Generation.Model;
+﻿namespace Allors.Meta.Generation.Model;
 
 using System.Collections.Generic;
 using System.Linq;
-using Allors.Database.Meta;
+using Database.Meta;
+using MetaPopulation = Database.Meta.Configuration.MetaPopulation;
 
-public class MetaModel
+public partial class MetaModel
 {
     private readonly Dictionary<IMetaExtensible, IMetaExtensibleModel> mapping;
 
@@ -167,4 +168,8 @@ public class MetaModel
 
     public MethodTypeModel Map(IMethodType v) => v != null ? (MethodTypeModel)this.mapping[v] : null;
     #endregion
+
+    public void CoreInit()
+    {
+    }
 }

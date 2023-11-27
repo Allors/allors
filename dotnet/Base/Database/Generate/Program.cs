@@ -38,6 +38,7 @@ namespace Allors.Meta.Generation
 
             var metaPopulation = MetaBuilder.Build();
             var model = new MetaModel(metaPopulation);
+            model.Init();
 
             for (var i = 0; i < database.GetLength(0); i++)
             {
