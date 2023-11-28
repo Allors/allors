@@ -141,6 +141,8 @@ namespace Allors.Database.Domain
 		private readonly IStrategy strategy;
 		private readonly Allors.Database.Meta.M m;
 
+		//TODO: Population
+
 		public $class.name$(Allors.Database.IStrategy strategy)
 		{
 			this.strategy = strategy;

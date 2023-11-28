@@ -20,7 +20,7 @@ namespace Allors.Resources.Tests
             var metaPopulation = metaBuilder.Build();
             var population = new Population(metaPopulation);
 
-            Assert.NotNull(population.XmlDocument);
+            Assert.NotNull(population.ObjectsByClass);
         }
 
     }

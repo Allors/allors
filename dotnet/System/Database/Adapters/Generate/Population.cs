@@ -5,13 +5,11 @@
 
 namespace Allors.Meta.Generation.Storage;
 
-using System;
-using System.IO;
-using Allors.Database.Meta.Configuration;
+using System.Collections.Generic;
 using Allors.Database.Meta;
-using Allors.Meta.Generation.Model;
 using Database.Population;
 
 public class Population : IPopulation
 {
+    public IDictionary<IClass, IObject> ObjectsByClass { get; } = new Dictionary<IClass, IObject>();
 }
