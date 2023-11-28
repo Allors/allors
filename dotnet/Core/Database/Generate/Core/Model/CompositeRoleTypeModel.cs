@@ -6,13 +6,13 @@ using Allors.Meta.Generation.Model;
 
 public class CompositeRoleTypeModel : IMetaExtensibleModel
 {
-    public CompositeRoleTypeModel(MetaModel metaModel, ICompositeRoleType compositeRoleType)
+    public CompositeRoleTypeModel(Model model, ICompositeRoleType compositeRoleType)
     {
-        this.MetaModel = metaModel;
+        this.Model = model;
         this.CompositeRoleType = compositeRoleType;
     }
 
-    public MetaModel MetaModel { get; }
+    public Model Model { get; }
 
     public IMetaExtensible MetaExtensible => this.CompositeRoleType;
 
@@ -20,7 +20,7 @@ public class CompositeRoleTypeModel : IMetaExtensibleModel
 
     public ICompositeRoleType CompositeRoleType { get; }
 
-    public RoleTypeModel RoleType => this.MetaModel.Map(this.CompositeRoleType.RoleType);
+    public RoleTypeModel RoleType => this.Model.Map(this.CompositeRoleType.RoleType);
 
     // ICompositeRoleType
     public bool IsRequired => this.CompositeRoleType.IsRequired();

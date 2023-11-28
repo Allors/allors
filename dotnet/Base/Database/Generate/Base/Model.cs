@@ -1,6 +1,6 @@
 ﻿namespace Allors.Meta.Generation.Model;
 
-public partial class MetaModel
+public partial class Model
 {
     public void BaseInit()
     {

@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<population>
+	<singletons>
+		<singleton>
+			<locale>en</locale>
+		</singleton>
+	</singletons>
+	<locales>
+		<locale>
+			<IsoCode>en</IsoCode>
+			<Name>Hoog Nederlands</Name>
+		</locale>
+	</locales>
+</population>

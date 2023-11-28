@@ -5,7 +5,7 @@ using Allors.Meta.Generation.Model;
 
 public static class Generate
 {
-    public static Log Execute(MetaModel meta, string template, string output, string workspaceName = null)
+    public static Log Execute(Model.Model meta, string template, string output, string workspaceName = null)
     {
         var log = new GenerateLog();
 

@@ -4,7 +4,7 @@ using Allors.Database.Meta;
 
 public interface IMetaExtensibleModel
 {
-    MetaModel MetaModel { get; }
+    Model Model { get; }
 
     IMetaExtensible MetaExtensible { get; }
 

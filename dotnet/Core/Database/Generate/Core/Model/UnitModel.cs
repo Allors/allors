@@ -4,8 +4,8 @@ using Allors.Database.Meta;
 
 public class UnitModel : ObjectTypeModel
 {
-    public UnitModel(MetaModel metaModel, IUnit unit)
-        : base(metaModel) => this.Unit = unit;
+    public UnitModel(Model model, IUnit unit)
+        : base(model) => this.Unit = unit;
 
     public IUnit Unit { get; }
 

@@ -4,8 +4,8 @@ using Allors.Database.Meta;
 
 public class AssociationTypeModel : RelationEndTypeModel
 {
-    public AssociationTypeModel(MetaModel metaModel, IAssociationType associationType)
-        : base(metaModel) =>
+    public AssociationTypeModel(Model model, IAssociationType associationType)
+        : base(model) =>
         this.AssociationType = associationType;
 
     public IAssociationType AssociationType { get; }
@@ -13,7 +13,7 @@ public class AssociationTypeModel : RelationEndTypeModel
     protected override IRelationEndType RelationEndType => this.AssociationType;
 
     // IAssociationType
-    public RelationTypeModel RelationType => this.MetaModel.Map(this.AssociationType.RelationType);
+    public RelationTypeModel RelationType => this.Model.Map(this.AssociationType.RelationType);
 
-    public RoleTypeModel RoleType => this.MetaModel.Map(this.AssociationType.RoleType);
+    public RoleTypeModel RoleType => this.Model.Map(this.AssociationType.RoleType);
 }

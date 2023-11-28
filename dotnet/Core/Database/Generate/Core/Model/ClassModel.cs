@@ -6,8 +6,8 @@ using Allors.Database.Meta;
 
 public sealed class ClassModel : CompositeModel
 {
-    public ClassModel(MetaModel metaModel, Class @class)
-        : base(metaModel) => this.Class = @class;
+    public ClassModel(Model model, Class @class)
+        : base(model) => this.Class = @class;
 
     protected override ObjectType ObjectType => this.Class;
 

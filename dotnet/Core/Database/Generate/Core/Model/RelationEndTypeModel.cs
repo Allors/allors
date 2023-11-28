@@ -5,12 +5,12 @@ using Allors.Database.Meta;
 public abstract class RelationEndTypeModel
     : IMetaExtensibleModel
 {
-    protected RelationEndTypeModel(MetaModel metaModel)
+    protected RelationEndTypeModel(Model model)
     {
-        this.MetaModel = metaModel;
+        this.Model = model;
     }
 
-    public MetaModel MetaModel { get; }
+    public Model Model { get; }
 
     // IMetaExtensible
     public IMetaExtensible MetaExtensible => this.RelationEndType;
@@ -18,7 +18,7 @@ public abstract class RelationEndTypeModel
     public dynamic Extensions => this.MetaExtensible.Attributes;
 
     // IRelationEndType
-    public ObjectTypeModel ObjectType => this.MetaModel.Map(this.RelationEndType.ObjectType);
+    public ObjectTypeModel ObjectType => this.Model.Map(this.RelationEndType.ObjectType);
 
     public string Name => this.RelationEndType.Name;
 

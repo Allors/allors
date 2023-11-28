@@ -6,12 +6,12 @@ using Allors.Database.Meta;
 
 public class RelationTypeModel : MetaIdentifiableObjectModel
 {
-    public RelationTypeModel(MetaModel metaModel, IRelationType relationType)
-        : base(metaModel)
+    public RelationTypeModel(Model model, IRelationType relationType)
+        : base(model)
     {
         this.RelationType = relationType;
-        this.AssociationType = new AssociationTypeModel(metaModel, relationType.AssociationType);
-        this.RoleType = new RoleTypeModel(metaModel, relationType.RoleType);
+        this.AssociationType = new AssociationTypeModel(model, relationType.AssociationType);
+        this.RoleType = new RoleTypeModel(model, relationType.RoleType);
     }
 
     public IRelationType RelationType { get; }

@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Meta.Configuration\Meta.Configuration.csproj" />
+    <ProjectReference Include="..\Population\Population.csproj" />
   </ItemGroup>
 
 </Project>

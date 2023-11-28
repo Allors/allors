@@ -5,8 +5,8 @@ using Allors.Database.Meta;
 
 public class DomainModel : MetaIdentifiableObjectModel
 {
-    public DomainModel(MetaModel metaModel, IDomain domain)
-        : base(metaModel) => this.Domain = domain;
+    public DomainModel(Model model, IDomain domain)
+        : base(model) => this.Domain = domain;
 
     public IDomain Domain { get; }
 

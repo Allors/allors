@@ -3,13 +3,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using Database.Meta;
+using Database.Population;
 using MetaPopulation = Database.Meta.Configuration.MetaPopulation;
 
-public partial class MetaModel
+public partial class Model
 {
     private readonly Dictionary<IMetaExtensible, IMetaExtensibleModel> mapping;
 
-    public MetaModel(MetaPopulation metaPopulation)
+    public Model(MetaPopulation metaPopulation, IPopulation population)
     {
         this.MetaPopulation = metaPopulation;
 

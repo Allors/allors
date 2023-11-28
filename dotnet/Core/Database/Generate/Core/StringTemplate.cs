@@ -68,7 +68,7 @@ public class StringTemplate
 
     public override string ToString() => this.Name;
 
-    internal void Generate(MetaModel meta, string workspaceName, DirectoryInfo outputDirectory, Log log)
+    internal void Generate(Model.Model meta, string workspaceName, DirectoryInfo outputDirectory, Log log)
     {
         var validation = meta.MetaPopulation.Validate();
         if (validation.ContainsErrors)

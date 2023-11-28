@@ -9,6 +9,7 @@ namespace Allors.Meta.Generation
     using System.IO;
     using Allors.Database.Meta.Configuration;
     using Allors.Meta.Generation.Model;
+    using Resources;
 
     internal class Program
     {
@@ -36,7 +37,9 @@ namespace Allors.Meta.Generation
             };
 
             var metaPopulation = MetaBuilder.Build();
-            var model = new MetaModel(metaPopulation);
+            var population = new Population(metaPopulation);
+            var model = new Model.Model(metaPopulation, population);
+            model.Init();
 
             for (var i = 0; i < database.GetLength(0); i++)
             {

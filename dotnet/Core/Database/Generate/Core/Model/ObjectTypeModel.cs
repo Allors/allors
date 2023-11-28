@@ -5,8 +5,8 @@ using Allors.Database.Meta;
 
 public abstract class ObjectTypeModel : MetaIdentifiableObjectModel
 {
-    protected ObjectTypeModel(MetaModel metaModel)
-        : base(metaModel)
+    protected ObjectTypeModel(Model model)
+        : base(model)
     {
     }
 

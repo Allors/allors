@@ -5,17 +5,17 @@ using Allors.Database.Meta;
 
 public class RoleTypeModel : RelationEndTypeModel
 {
-    public RoleTypeModel(MetaModel metaModel, IRoleType roleType)
-        : base(metaModel) => this.RoleType = roleType;
+    public RoleTypeModel(Model model, IRoleType roleType)
+        : base(model) => this.RoleType = roleType;
 
     public IRoleType RoleType { get; }
 
     protected override IRelationEndType RelationEndType => this.RoleType;
 
     // IRoleType
-    public AssociationTypeModel AssociationType => this.MetaModel.Map(this.RoleType.AssociationType);
+    public AssociationTypeModel AssociationType => this.Model.Map(this.RoleType.AssociationType);
 
-    public RelationTypeModel RelationType => this.MetaModel.Map(this.RoleType.RelationType);
+    public RelationTypeModel RelationType => this.Model.Map(this.RoleType.RelationType);
 
     public string FullName => this.RoleType.FullName;
 

@@ -6,12 +6,12 @@ using Allors.Database.Meta;
 
 public abstract class MetaIdentifiableObjectModel : IMetaExtensibleModel
 {
-    protected MetaIdentifiableObjectModel(MetaModel metaModel)
+    protected MetaIdentifiableObjectModel(Model model)
     {
-        this.MetaModel = metaModel;
+        this.Model = model;
     }
 
-    public MetaModel MetaModel { get; }
+    public Model Model { get; }
 
     public abstract IMetaIdentifiableObject MetaObject { get; }
 

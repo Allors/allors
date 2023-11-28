@@ -18,7 +18,7 @@ internal class Program
     private static int Main()
     {
         var metaPopulation = MetaBuilder.Build();
-        var model = new MetaModel(metaPopulation);
+        var model = new Model(metaPopulation, new Population());
 
         string[,] config = { { "Templates/adapters.cs.stg", "Domain/Generated" } };
 
