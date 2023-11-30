@@ -11,5 +11,5 @@ using Database.Population;
 
 public class Population : IPopulation
 {
-    public IDictionary<IClass, IObject> ObjectsByClass { get; } = new Dictionary<IClass, IObject>();
+    public IDictionary<IClass, IRecord[]> ObjectsByClass { get; } = new Dictionary<IClass, IRecord[]>();
 }

@@ -1,19 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <population>
 	<genders>
-		<gender ref="Male">
+		<gender handle="Male">
 			<uniqueid>DAB59C10-0D45-4478-A802-3ABE54308CCD</uniqueid>
 			<name>Male</name>
 		</gender>
-		<gender ref="Female">
+		<gender handle="Female">
 			<uniqueid>B68704AD-82F1-4d5d-BBAF-A54635B5034F</uniqueid>
 			<name>Female</name>
 		</gender>
-		<gender ref="Other">
+		<gender handle="Other">
 			<uniqueid>DAB59C10-0D45-4478-A802-3ABE54308CCD</uniqueid>
 			<name>Other</name>
 		</gender>
-		<gender ref="PreferNotToSay">
+		<gender handle="PreferNotToSay">
 			<uniqueid>DAB59C10-0D45-4478-A802-3ABE54308CCD</uniqueid>
 			<name>Prefer not to say</name>
 		</gender>

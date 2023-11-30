@@ -1,9 +1,11 @@
 ﻿namespace Allors.Resources
 {
+    using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using System.Reflection;
-    using System.Xml;
+    using System.Xml.Linq;
     using Database.Meta;
     using Database.Population;
 
@@ -11,21 +13,26 @@
     {
         public Population(MetaPopulation metaPopulation)
         {
-            XmlDocument document = new XmlDocument();
             using Stream stream = this.GetResource("Allors.Resources.Custom.Population.xml");
-            using XmlReader reader = XmlReader.Create(stream);
-            document.Load(reader);
+            XDocument document = XDocument.Load(stream);
 
-            this.ObjectsByClass = new Dictionary<IClass, IObject>();
+            this.ObjectsByClass = new Dictionary<IClass, IRecord[]>();
 
-            var documentElement = document.DocumentElement;
+            var documentElement = document.Elements().First();
 
             foreach (var @class in metaPopulation.Classes)
             {
+                var classElement = documentElement.Elements().FirstOrDefault(v=> @class.PluralName.Equals(v.Name.LocalName, StringComparison.OrdinalIgnoreCase));
+                var records = classElement?
+                    .Elements()
+                    .Select(v => new Record(this, @class, v))
+                    .ToArray()
+                        ?? Array.Empty<IRecord>();
+                this.ObjectsByClass[@class] = records;
             }
         }
 
-        public IDictionary<IClass, IObject> ObjectsByClass { get; }
+        public IDictionary<IClass, IRecord[]> ObjectsByClass { get; }
 
         private Stream GetResource(string name)
         {

@@ -1,8 +1,10 @@
 ﻿namespace Allors.Meta.Generation.Model;
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Allors.Database.Meta;
+using Database.Population;
 
 public sealed class ClassModel : CompositeModel
 {
@@ -16,7 +18,7 @@ public sealed class ClassModel : CompositeModel
     public Class Class { get; }
 
     public override IMetaIdentifiableObject MetaObject => this.Class;
-
+    
     // IClass
     public IEnumerable<RoleTypeModel> OverriddenRequiredRoleTypes => this.CompositeRoleTypes.Where(v => v.IsAssignedRequired).Select(v => v.RoleType);
 
@@ -25,4 +27,14 @@ public sealed class ClassModel : CompositeModel
         .ToDictionary(
             v => v,
             v => this.OverriddenRequiredRoleTypes.Where(w => w.RelationType.WorkspaceNames.Contains(v)));
+
+    // Population
+    public IEnumerable<IRecord> Objects
+    {
+        get
+        {
+            this.Model.Population.ObjectsByClass.TryGetValue(this.Class, out var objects);
+            return objects ?? Array.Empty<IRecord>();
+        }
+    }
 }

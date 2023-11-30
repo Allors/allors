@@ -13,6 +13,7 @@ public partial class Model
     public Model(MetaPopulation metaPopulation, IPopulation population)
     {
         this.MetaPopulation = metaPopulation;
+        this.Population = population;
 
         this.mapping = new Dictionary<IMetaExtensible, IMetaExtensibleModel>();
 
@@ -54,6 +55,8 @@ public partial class Model
     }
 
     public MetaPopulation MetaPopulation { get; }
+
+    public IPopulation Population { get; }
 
     public IEnumerable<DomainModel> Domains => this.MetaPopulation.Domains.Select(this.Map);
 

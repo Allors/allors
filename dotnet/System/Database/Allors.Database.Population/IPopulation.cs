@@ -5,5 +5,5 @@ using Meta;
 
 public interface IPopulation
 {
-    IDictionary<IClass, IObject> ObjectsByClass { get; }
+    IDictionary<IClass, IRecord[]> ObjectsByClass { get; }
 }
