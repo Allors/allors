@@ -13,13 +13,13 @@ namespace Allors.Database.Domain
 
             var merge = this.Transaction.Caches().GenderByKey().Merger().Action();
 
-            merge(Gender.MaleId, v => { });
+            merge(Gender.MaleKey, v => { });
 
-            merge(Gender.FemaleId, v => { });
+            merge(Gender.FemaleKey, v => { });
 
-            merge(Gender.OtherId, v => { });
+            merge(Gender.OtherKey, v => { });
 
-            merge(Gender.PreferNotToSayId, v => { });
+            merge(Gender.PreferNotToSayKey, v => { });
         }
     }
 }

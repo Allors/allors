@@ -197,9 +197,9 @@ $class.KeyRoleTypes:{roleType|$classKeyRoleTypes()$}$
 
 class_Object() ::= <<
 $if(object.Handle)$
-		public static readonly $objectType_Name(object.Handle.RoleType.ObjectType)$ $object.Handle.Name$Id = new $objectType_Name(object.Handle.RoleType.ObjectType)$("$object.Handle.Value$");
+		public static readonly $objectType_Name(object.Handle.RoleType.ObjectType)$ $object.Handle.Name$Key = $object_Value(object.Handle.RoleType.ObjectType, object.Handle.Value)$;
 
-		public bool Is$object.Handle.Name$ => this.$object.Handle.RoleType.Name$.Equals($object.Handle.Name$Id);
+		public bool Is$object.Handle.Name$ => this.$object.Handle.RoleType.Name$.Equals($object.Handle.Name$Key);
 $endif$
 >>
 
@@ -431,7 +431,7 @@ $class.Objects:{object|$byClass_Object()$}; separator="\n"$
 
 byClass_Object() ::= <<
 $if(object.Handle)$
-		public $class.Name$ $object.Handle.Name$ => this.cache[$class.Name$.$object.Handle.Name$Id];
+		public $class.Name$ $object.Handle.Name$ => this.cache[$class.Name$.$object.Handle.Name$Key];
 $endif$
 >>
 
@@ -522,3 +522,18 @@ $else$
 	$objectType.SingularName$
 $endif$
 %>
+
+object_Value(objectType, value) ::= <%
+$if(objectType.IsUnit)$
+$if(objectType.IsString)$
+"$value$"
+$elseif(objectType.IsUnique)$
+new $objectType_Name(objectType)$("$value$")
+$else$
+		!!! Unsupported value !!!
+$endif$
+$else$
+	$objectType.SingularName$
+$endif$
+%>
+
