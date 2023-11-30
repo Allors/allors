@@ -58,6 +58,7 @@ namespace Allors.Repository
         public Revocation[] Revocations { get; set; }
 
         public DelegatedAccess AccessDelegation { get; set; }
+
         public SecurityToken[] SecurityTokens { get; set; }
 
         #endregion
@@ -81,9 +82,7 @@ namespace Allors.Repository
 
         public void OnPostBuild() { }
 
-        public void OnInit()
-        {
-        }
+        public void OnInit() { }
 
         public void OnPostDerive() { }
 

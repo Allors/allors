@@ -8,8 +8,6 @@ namespace Allors.Repository
 {
     using Attributes;
     
-
-
     #region Allors
     [Id("2288E1F3-5DC5-458B-9F5E-076F133890C0")]
     #endregion
@@ -17,12 +15,9 @@ namespace Allors.Repository
     {
         #region inherited properties
         public Revocation[] Revocations { get; set; }
-
         public DelegatedAccess AccessDelegation { get; set; }
         public SecurityToken[] SecurityTokens { get; set; }
-
         public Locale Locale { get; set; }
-
         #endregion
 
         #region Allors
@@ -30,18 +25,14 @@ namespace Allors.Repository
         [Indexed]
         #endregion
         [Multiplicity(Multiplicity.OneToOne)]
-
         public Media Media { get; set; }
 
         #region inherited methods
-
         public void OnBuild() { }
 
         public void OnPostBuild() { }
 
-        public void OnInit()
-        {
-        }
+        public void OnInit() { }
 
         public void OnPostDerive() { }
 

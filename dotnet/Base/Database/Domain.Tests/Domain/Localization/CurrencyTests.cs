@@ -27,16 +27,6 @@ namespace Allors.Database.Domain.Tests
                 v.IsoCode = "BND";
             });
 
-            Assert.True(this.Transaction.Derive(false).HasErrors);
-
-            this.Transaction.Rollback();
-
-            this.Transaction.Build<Currency>(v =>
-                {
-                    v.IsoCode = "BND";
-                    v.Name = "Brunei Dollar";
-                });
-
             Assert.False(this.Transaction.Derive(false).HasErrors);
         }
     }

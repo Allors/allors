@@ -1,4 +1,4 @@
-// <copyright file="ObjectState.cs" company="Allors bvba">
+﻿// <copyright file="ObjectState.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -8,8 +8,6 @@ namespace Allors.Repository
 {
     using Attributes;
     
-
-
     #region Allors
     [Id("f991813f-3146-4431-96d0-554aa2186887")]
     #endregion
@@ -25,7 +23,6 @@ namespace Allors.Repository
         #region Allors
         [Id("b86f9e42-fe10-4302-ab7c-6c6c7d357c39")]
         #endregion
-
         [Indexed]
         [Size(256)]
         string Name { get; set; }

@@ -25,14 +25,10 @@ public partial class Revocation : UniquelyIdentifiable, Deletable
 
     public DelegatedAccess AccessDelegation { get; set; }
     public Revocation[] Revocations { get; set; }
-
-
+    
     public SecurityToken[] SecurityTokens { get; set; }
 
-    public void OnBuild()
-    {
-        
-    }
+    public void OnBuild() { }
 
     public void OnPostBuild() { }
 

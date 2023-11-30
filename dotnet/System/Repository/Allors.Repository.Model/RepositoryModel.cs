@@ -1,4 +1,4 @@
-namespace Allors.Repository.Model;
+﻿namespace Allors.Repository.Model;
 
 using System;
 using System.Collections.Generic;
@@ -64,17 +64,17 @@ public class RepositoryModel
 
         foreach (var composite in this.Objects.OfType<CompositeModel>())
         {
-            this.CheckId(ids, composite.Id, $"{composite.SingularName}", "id");
+            this.CheckId(ids, composite.Id, $"{composite}", "id");
         }
 
         foreach (var property in this.Objects.OfType<PropertyModel>().Where(v => v.DefiningProperty == null))
         {
-            this.CheckId(ids, property.Id, $"{property.ObjectType.SingularName}.{property.RoleName}", "id");
+            this.CheckId(ids, property.Id, $"{property}", "id");
         }
 
         foreach (var method in this.Objects.OfType<MethodModel>().Where(v => v.DefiningMethod == null))
         {
-            this.CheckId(ids, method.Id, $"{method.DefiningType.SingularName}.{method.Name}", "id");
+            this.CheckId(ids, method.Id, $"{method}", "id");
         }
     }
 

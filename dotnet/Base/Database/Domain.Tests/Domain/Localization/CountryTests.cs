@@ -19,28 +19,11 @@ namespace Allors.Database.Domain.Tests
 
             Assert.True(this.Transaction.Derive(false).HasErrors);
 
-            this.Transaction.Build<Country>(v =>
-            {
-                v.IsoCode = "XX";
-            });
-
-            Assert.True(this.Transaction.Derive(false).HasErrors);
-
-            this.Transaction.Rollback();
-
-            this.Transaction.Build<Country>(v =>
-            {
-                v.Name = "X Country";
-            });
-
-            Assert.True(this.Transaction.Derive(false).HasErrors);
-
             this.Transaction.Rollback();
 
             this.Transaction.Build<Country>(v =>
             {
                 v.IsoCode = "XX";
-                v.Name = "X Country";
             });
 
             Assert.False(this.Transaction.Derive(false).HasErrors);

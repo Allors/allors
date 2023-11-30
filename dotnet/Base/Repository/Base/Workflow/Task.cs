@@ -1,4 +1,4 @@
-// <copyright file="Task.cs" company="Allors bvba">
+﻿// <copyright file="Task.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -9,8 +9,6 @@ namespace Allors.Repository
     using System;
     using Attributes;
     
-
-
     #region Allors
     [Id("84eb0e6e-68e1-478c-a35f-6036d45792be")]
     #endregion
@@ -22,7 +20,6 @@ namespace Allors.Repository
         #endregion
         [Multiplicity(Multiplicity.ManyToOne)]
         [Derived]
-
         WorkItem WorkItem { get; set; }
 
         #region Allors
@@ -31,7 +28,6 @@ namespace Allors.Repository
         #endregion
         [Size(512)]
         [Derived]
-
         string Title { get; set; }
 
         #region Allors
@@ -39,7 +35,6 @@ namespace Allors.Repository
         [Indexed]
         #endregion
         [Derived]
-
         DateTime DateCreated { get; set; }
 
         #region Allors
@@ -47,14 +42,12 @@ namespace Allors.Repository
         [Indexed]
         #endregion
         [Derived]
-
         DateTime DateDue { get; set; }
 
         #region Allors
         [Id("5ad0b9f5-669c-4b05-8c97-89b59a227da2")]
         [Indexed]
         #endregion
-
         DateTime DateClosed { get; set; }
 
         #region Allors
@@ -63,7 +56,6 @@ namespace Allors.Repository
         [Indexed]
         #endregion
         [Derived]
-
         User[] Participants { get; set; }
 
         #region Allors
@@ -72,7 +64,6 @@ namespace Allors.Repository
         [Indexed]
         #endregion
         [Derived]
-
         User Performer { get; set; }
     }
 }

@@ -190,11 +190,7 @@ namespace Allors.Database.Domain
             var count = data.Length / 2;
             for (var i = 0; i < count; i++)
             {
-                merge(data[i, 0], v =>
-                {
-                    v.Name = data[i, 1];
-                    v.IsActive = true;
-                });
+                merge(data[i, 0], v => { });
             }
         }
     }

@@ -7,8 +7,6 @@ namespace Allors.Repository
 {
     using Attributes;
     
-
-
     #region Allors
     [Id("6161594B-8ACF-4DFA-AE6D-A9BC96040714")]
     #endregion
@@ -16,7 +14,6 @@ namespace Allors.Repository
     {
         #region inherited properties
         public Revocation[] Revocations { get; set; }
-
         public DelegatedAccess AccessDelegation { get; set; }
         public SecurityToken[] SecurityTokens { get; set; }
 
@@ -27,7 +24,6 @@ namespace Allors.Repository
         [Indexed]
         #endregion
         [Multiplicity(Multiplicity.OneToOne)]
-
         public Media Media { get; set; }
 
         #region inherited methods
@@ -35,9 +31,7 @@ namespace Allors.Repository
 
         public void OnPostBuild() { }
 
-        public void OnInit()
-        {
-        }
+        public void OnInit() { }
 
         public void OnPostDerive() { }
 

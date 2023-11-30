@@ -198,6 +198,8 @@ $class.KeyRoleTypes:{roleType|$classKeyRoleTypes()$}$
 class_Object() ::= <<
 $if(object.Handle)$
 		public static readonly $objectType_Name(object.Handle.RoleType.ObjectType)$ $object.Handle.Name$Id = new $objectType_Name(object.Handle.RoleType.ObjectType)$("$object.Handle.Value$");
+
+		public bool Is$object.Handle.Name$ => this.$object.Handle.RoleType.Name$.Equals($object.Handle.Name$Id);
 $endif$
 >>
 
@@ -422,8 +424,17 @@ $\n$
 		{
 			get => this.cache[key];
 		}
+
+$class.Objects:{object|$byClass_Object()$}; separator="\n"$
 	}
 >>
+
+byClass_Object() ::= <<
+$if(object.Handle)$
+		public $class.Name$ $object.Handle.Name$ => this.cache[$class.Name$.$object.Handle.Name$Id];
+$endif$
+>>
+
 
 cache(meta) ::= <<
 namespace Allors.Database.Domain

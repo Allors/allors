@@ -11,7 +11,7 @@ namespace Allors.Database.Domain
         {
             var merge = this.Transaction.Caches().TemplateTypeByUniqueId().Merger().Action();
 
-            merge(TemplateType.OpenDocumentTypeId, v => v.Name = "Odt Template");
+            merge(TemplateType.OpenDocumentTypeId, v => { });
         }
     }
 }

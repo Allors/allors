@@ -1,4 +1,4 @@
-// <copyright file="Localised.cs" company="Allors bvba">
+﻿// <copyright file="Localised.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -7,9 +7,7 @@
 namespace Allors.Repository
 {
     using Attributes;
-    
-
-
+  
     #region Allors
     [Id("7979a17c-0829-46df-a0d4-1b01775cfaac")]
     #endregion
@@ -20,7 +18,6 @@ namespace Allors.Repository
         #endregion
         [Multiplicity(Multiplicity.ManyToOne)]
         [Indexed]
-
         Locale Locale { get; set; }
     }
 }

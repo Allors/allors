@@ -1,4 +1,4 @@
-// <copyright file="PermissionsCache.cs" company="Allors bvba">
+﻿// <copyright file="PermissionsCache.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -13,7 +13,7 @@ namespace Allors.Database.Domain
         public TemplateObjectCacheEntry(Template template)
         {
             this.Revision = template.Media.Revision.Value;
-            this.Object = template.TemplateType.IsOpenDocumentTemplate ?
+            this.Object = template.TemplateType.IsOpenDocumentType ?
                 new OpenDocumentTemplate(template.Media.MediaContent.Data, template.Arguments) :
                 null;
         }

@@ -8,17 +8,13 @@ namespace Allors.Repository
 {
     using Attributes;
     
-
-
     #region Allors
     [Id("45033ae6-85b5-4ced-87ce-02518e6c27fd")]
     #endregion
-    
     public partial class Locale : Object
     {
         #region inherited properties
         public Revocation[] Revocations { get; set; }
-
         public DelegatedAccess AccessDelegation { get; set; }
         public SecurityToken[] SecurityTokens { get; set; }
 
@@ -28,7 +24,6 @@ namespace Allors.Repository
         [Id("2a2c6f77-e6a2-4eab-bfe3-5d35a8abd7f7")]
         [Size(256)]
         #endregion
-
         public string Name { get; set; }
 
         #region Allors
@@ -37,7 +32,6 @@ namespace Allors.Repository
         [Multiplicity(Multiplicity.ManyToOne)]
         [Indexed]
         [Required]
-
         public Language Language { get; set; }
 
         #region Allors
@@ -45,21 +39,16 @@ namespace Allors.Repository
         #endregion
         [Multiplicity(Multiplicity.ManyToOne)]
         [Indexed]
-
         public Country Country { get; set; }
 
         #region inherited methods
-
         public void OnBuild() { }
 
         public void OnPostBuild() { }
 
-        public void OnInit()
-        {
-        }
+        public void OnInit() { }
 
         public void OnPostDerive() { }
-
         #endregion
     }
 }

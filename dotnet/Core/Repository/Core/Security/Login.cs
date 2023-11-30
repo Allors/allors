@@ -37,14 +37,10 @@ public partial class Login : Deletable
 
     public DelegatedAccess AccessDelegation { get; set; }
     public Revocation[] Revocations { get; set; }
-
-
+    
     public SecurityToken[] SecurityTokens { get; set; }
 
-    public void OnBuild()
-    {
-        throw new System.NotImplementedException();
-    }
+    public void OnBuild() { }
 
     public void OnPostBuild() { }
 

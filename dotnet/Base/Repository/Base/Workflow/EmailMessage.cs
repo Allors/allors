@@ -15,16 +15,12 @@ namespace Allors.Repository
     #endregion
     public partial class EmailMessage : Object
     {
-        #region inherited properties
-        #endregion
-
         #region Allors
         [Id("5de25d18-3c36-418f-9c85-55a480d58bc5")]
         [Indexed]
         #endregion
         [Derived]
         [Required]
-        
         public DateTime DateCreated { get; set; }
 
         #region Allors
@@ -37,7 +33,6 @@ namespace Allors.Repository
         [Id("cc36e90a-dcda-4289-b84f-c947c97847b0")]
         [Indexed]
         #endregion
-        
         public DateTime DateSent { get; set; }
 
         #region Allors
@@ -45,7 +40,6 @@ namespace Allors.Repository
         [Indexed]
         #endregion
         [Multiplicity(Multiplicity.ManyToOne)]
-        
         public User Sender { get; set; }
 
         #region Allors
@@ -53,7 +47,6 @@ namespace Allors.Repository
         [Indexed]
         #endregion
         [Multiplicity(Multiplicity.ManyToMany)]
-        
         public User[] Recipients { get; set; }
 
         #region Allors
@@ -61,7 +54,6 @@ namespace Allors.Repository
         #endregion
         [Indexed]
         [Size(256)]
-        
         public string RecipientEmailAddress { get; set; }
 
         #region Allors
@@ -69,7 +61,6 @@ namespace Allors.Repository
         #endregion
         [Size(1024)]
         [Required]
-        
         public string Subject { get; set; }
 
         #region Allors
@@ -77,7 +68,6 @@ namespace Allors.Repository
         #endregion
         [Size(-1)]
         [Required]
-        
         public string Body { get; set; }
 
         #region inherited methods
@@ -91,9 +81,7 @@ namespace Allors.Repository
 
         public void OnPostBuild() { }
 
-        public void OnInit()
-        {
-        }
+        public void OnInit() { }
 
         public void OnPostDerive() { }
 

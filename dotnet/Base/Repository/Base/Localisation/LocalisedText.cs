@@ -8,22 +8,16 @@ namespace Allors.Repository
 {
     using Attributes;
     
-
-
     #region Allors
     [Id("020f5d4d-4a59-4d7b-865a-d72fc70e4d97")]
     #endregion
-    
     public partial class LocalisedText : Localised, Deletable, Object
     {
         #region inherited properties
         public Revocation[] Revocations { get; set; }
-
         public DelegatedAccess AccessDelegation { get; set; }
         public SecurityToken[] SecurityTokens { get; set; }
-
         public Locale Locale { get; set; }
-
         #endregion
 
         #region Allors
@@ -39,9 +33,7 @@ namespace Allors.Repository
 
         public void OnPostBuild() { }
 
-        public void OnInit()
-        {
-        }
+        public void OnInit() { }
 
         public void OnPostDerive() { }
 

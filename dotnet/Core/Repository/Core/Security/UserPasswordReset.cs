@@ -1,7 +1,6 @@
-// <copyright file="UserPasswordReset.cs" company="Allors bv">
+﻿// <copyright file="UserPasswordReset.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // </copyright>
-
 
 namespace Allors.Repository;
 

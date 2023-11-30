@@ -65,7 +65,6 @@ namespace Allors.Database.Meta.Configuration
             // Country;
             AddWorkspace(relationTypes.CountryCurrency, new[] { "Default" });
             AddWorkspace(relationTypes.CountryIsoCode, new[] { "Default" });
-            AddWorkspace(relationTypes.CountryName, new[] { "Default" });
             AddWorkspace(relationTypes.CountryLocalisedNames, new[] { "Default" });
 
             // Currency;
@@ -497,7 +496,7 @@ namespace Allors.Database.Meta.Configuration
             // Cacheable;
 
             // Enumeration;
-            AddWorkspace(relationTypes.EnumerationName, new[] { "Default" });
+            AddWorkspace(relationTypes.EnumerationKey, new[] { "Default" });
             AddWorkspace(relationTypes.EnumerationLocalisedNames, new[] { "Default" });
             AddWorkspace(relationTypes.EnumerationIsActive, new[] { "Default" });
 

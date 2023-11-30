@@ -2,7 +2,6 @@
 // Copyright (c) Allors bv. All rights reserved.
 // </copyright>
 
-
 namespace Allors.Repository;
 
 using System;

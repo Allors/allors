@@ -1,4 +1,4 @@
-// <copyright file="ApproveTask.cs" company="Allors bvba">
+﻿// <copyright file="ApproveTask.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -7,7 +7,6 @@ namespace Allors.Repository
 {
     using Attributes;
     
-
     /// <summary>
     /// A <see cref="Task"/> that can be approved or rejected.
     /// </summary>
@@ -23,7 +22,6 @@ namespace Allors.Repository
         [Id("a280bf60-2eb7-488a-abf7-f03c9d9197b5")]
         [Size(-1)]
         #endregion
-
         string Comment { get; set; }
 
         /// <summary>
@@ -54,7 +52,6 @@ namespace Allors.Repository
         #region Allors
         [Id("0158D8F3-3E9F-48B3-AD25-51BD7EABC27C")]
         #endregion
-
         void Approve();
 
         /// <summary>
@@ -63,7 +60,6 @@ namespace Allors.Repository
         #region Allors
         [Id("F68B3D21-0108-40EC-9455-98764EB74874")]
         #endregion
-
         void Reject();
     }
 }

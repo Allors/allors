@@ -56,10 +56,7 @@ public partial class Grant : UniquelyIdentifiable, Deletable
 
     public SecurityToken[] SecurityTokens { get; set; }
 
-    public void OnBuild()
-    {
-        
-    }
+    public void OnBuild() { }
 
     public void OnPostBuild() { }
 

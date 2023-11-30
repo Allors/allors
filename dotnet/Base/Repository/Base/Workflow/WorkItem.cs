@@ -1,4 +1,4 @@
-// <copyright file="WorkItem.cs" company="Allors bvba">
+﻿// <copyright file="WorkItem.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -8,8 +8,6 @@ namespace Allors.Repository
 {
     using Attributes;
     
-
-
     #region Allors
     [Id("fbea29c6-6109-4163-a088-9f0b4deac896")]
     #endregion
@@ -21,7 +19,6 @@ namespace Allors.Repository
         [Indexed]
         [Size(-1)]
         #endregion
-
         string WorkItemDescription { get; set; }
     }
 }

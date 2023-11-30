@@ -1,4 +1,4 @@
-// <copyright file="Auditable.cs" company="Allors bvba">
+﻿// <copyright file="Auditable.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -8,7 +8,6 @@ namespace Allors.Repository
     using System;
     using Attributes;
     
-
     #region Allors
     [Id("6C726DED-C081-46D7-8DCF-F0A376943531")]
     #endregion
@@ -19,7 +18,6 @@ namespace Allors.Repository
         #endregion
         [Multiplicity(Multiplicity.ManyToOne)]
         [Indexed]
-
         User CreatedBy { get; set; }
 
         #region Allors
@@ -27,19 +25,16 @@ namespace Allors.Repository
         #endregion
         [Multiplicity(Multiplicity.ManyToOne)]
         [Indexed]
-
         User LastModifiedBy { get; set; }
 
         #region Allors
         [Id("C1BA5015-21DD-49A9-AE0F-E70F4035CCA6")]
         #endregion
-
         DateTime CreationDate { get; set; }
 
         #region Allors
         [Id("94EB2712-25E1-415B-9657-2DFD460B7969")]
         #endregion
-
         DateTime LastModifiedDate { get; set; }
     }
 }

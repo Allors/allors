@@ -1517,7 +1517,7 @@ namespace Allors.Database.Domain
             for (var i = 0; i < count; i++)
             {
                 var index = i;
-                merge(data[index, 1], v => v.Name = data[index, 0]);
+                merge(data[index, 1], v => { });
             }
 
             var currencyCodeByCountryCode = new Dictionary<string, string>

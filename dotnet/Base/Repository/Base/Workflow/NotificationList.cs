@@ -8,22 +8,16 @@ namespace Allors.Repository
 {
     using Attributes;
     
-
-
     #region Allors
     [Id("b6579993-4ff1-4853-b048-1f8e67419c00")]
     #endregion
     public partial class NotificationList : Deletable, Object
     {
-        #region inherited properties
-        #endregion
-
         #region Allors
         [Id("4516c5c1-73a0-4fdc-ac3c-aefaf417c8ba")]
         [Multiplicity(Multiplicity.OneToMany)]
         [Indexed]
         #endregion
-
         public Notification[] Notifications { get; set; }
 
         #region Allors
@@ -32,7 +26,6 @@ namespace Allors.Repository
         [Indexed]
         #endregion
         [Derived]
-
         public Notification[] UnconfirmedNotifications { get; set; }
 
         #region Allors
@@ -41,36 +34,26 @@ namespace Allors.Repository
         [Indexed]
         #endregion
         [Derived]
-
         public Notification[] ConfirmedNotifications { get; set; }
 
         #region inherited methods
 
-        public void OnBuild()
-        {
-        }
+        public void OnBuild() { }
 
-        public void OnPostBuild()
-        {
-        }
+        public void OnPostBuild() { }
 
-        public void OnInit()
-        {
-        }
+        public void OnInit() { }
 
-        public void OnPostDerive()
-        {
-        }
+        public void OnPostDerive() { }
 
-        public void Delete()
-        {
-        }
-
-        #endregion
+        public void Delete() { }
 
         public Revocation[] Revocations { get; set; }
 
         public DelegatedAccess AccessDelegation { get; set; }
+
         public SecurityToken[] SecurityTokens { get; set; }
+
+        #endregion
     }
 }

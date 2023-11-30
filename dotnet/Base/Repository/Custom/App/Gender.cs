@@ -5,7 +5,6 @@
 
 namespace Allors.Repository
 {
-    using System;
     using Attributes;
 
     #region Allors
@@ -14,9 +13,9 @@ namespace Allors.Repository
     public partial class Gender : Enumeration
     {
         #region inherited properties
-        public LocalisedText[] LocalisedNames { get; set; }
+        public string Key { get; set; }
 
-        public string Name { get; set; }
+        public LocalisedText[] LocalisedNames { get; set; }
 
         public bool IsActive { get; set; }
 
@@ -24,8 +23,6 @@ namespace Allors.Repository
 
         public DelegatedAccess AccessDelegation { get; set; }
         public SecurityToken[] SecurityTokens { get; set; }
-
-        public Guid UniqueId { get; set; }
 
         #endregion
 

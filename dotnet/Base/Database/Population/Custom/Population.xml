@@ -2,20 +2,21 @@
 <population>
 	<genders>
 		<gender handle="Male">
-			<uniqueid>DAB59C10-0D45-4478-A802-3ABE54308CCD</uniqueid>
-			<name>Male</name>
+			<key>Male</key>
 		</gender>
 		<gender handle="Female">
-			<uniqueid>B68704AD-82F1-4d5d-BBAF-A54635B5034F</uniqueid>
-			<name>Female</name>
+			<key>Female</key>
 		</gender>
 		<gender handle="Other">
-			<uniqueid>DAB59C10-0D45-4478-A802-3ABE54308CCD</uniqueid>
-			<name>Other</name>
+			<key>Other</key>
 		</gender>
 		<gender handle="PreferNotToSay">
-			<uniqueid>DAB59C10-0D45-4478-A802-3ABE54308CCD</uniqueid>
-			<name>Prefer not to say</name>
+			<key>PreferNotToSay</key>
 		</gender>
 	</genders>
+	<templateTypes>
+		<templateType handle="OpenDocumentType">
+			<uniqueId>64B48FA3-EDF2-45A3-ADFB-4A55E14E0B34</uniqueId>
+		</templateType>
+	</templateTypes>
 </population>

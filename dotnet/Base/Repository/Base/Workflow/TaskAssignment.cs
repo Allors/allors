@@ -8,17 +8,13 @@ namespace Allors.Repository
 {
     using Attributes;
     
-
-
     #region Allors
     [Id("4092d0b4-c6f4-4b81-b023-66be3f4c90bd")]
     #endregion
-    
     public partial class TaskAssignment : Deletable, Object
     {
         #region inherited properties
         public Revocation[] Revocations { get; set; }
-
         public DelegatedAccess AccessDelegation { get; set; }
         public SecurityToken[] SecurityTokens { get; set; }
 
@@ -29,7 +25,6 @@ namespace Allors.Repository
         [Multiplicity(Multiplicity.ManyToOne)]
         [Indexed]
         #endregion
-
         [Required]
         public User User { get; set; }
 
@@ -45,7 +40,6 @@ namespace Allors.Repository
         [Multiplicity(Multiplicity.ManyToOne)]
         [Indexed]
         #endregion
-
         [Required]
         public Task Task { get; set; }
 

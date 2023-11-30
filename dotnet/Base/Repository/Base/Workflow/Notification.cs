@@ -7,11 +7,8 @@
 namespace Allors.Repository
 {
     using System;
-
     using Attributes;
     
-
-
     #region Allors
     [Id("73dcdc68-7571-4ed1-86db-77c914fe2f62")]
     #endregion
@@ -19,7 +16,6 @@ namespace Allors.Repository
     {
         #region inherited properties
         public Revocation[] Revocations { get; set; }
-
         public DelegatedAccess AccessDelegation { get; set; }
         public SecurityToken[] SecurityTokens { get; set; }
 
@@ -35,7 +31,6 @@ namespace Allors.Repository
         #region Allors
         [Id("50b1be30-d6a9-49e8-84da-a47647e443f0")]
         #endregion
-
         [Required]
         public bool Confirmed { get; set; }
 
@@ -43,7 +38,6 @@ namespace Allors.Repository
         [Id("70292962-9e0e-4b57-a710-c8ac34f65b11")]
         [Size(1024)]
         #endregion
-
         [Required]
         public string Title { get; set; }
 
@@ -51,7 +45,6 @@ namespace Allors.Repository
         [Id("e83600fc-5411-4c72-9903-80a3741a9165")]
         [Size(-1)]
         #endregion
-
         public string Description { get; set; }
 
         #region Allors
@@ -59,7 +52,6 @@ namespace Allors.Repository
         [Derived]
         [Indexed]
         #endregion
-
         [Required]
         public DateTime DateCreated { get; set; }
 
@@ -80,7 +72,6 @@ namespace Allors.Repository
         #region Allors
         [Id("B445FC66-27AF-4D45-ADA8-4F1409EBBE72")]
         #endregion
-
         public void Confirm() { }
     }
 }

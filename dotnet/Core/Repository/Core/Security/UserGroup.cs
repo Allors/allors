@@ -2,7 +2,6 @@
 // Copyright (c) Allors bv. All rights reserved.
 // </copyright>
 
-
 namespace Allors.Repository;
 
 using System;
@@ -37,16 +36,11 @@ public partial class UserGroup : UniquelyIdentifiable
 
     public SecurityToken[] SecurityTokens { get; set; }
 
-    public void OnBuild()
-    {
-        
-    }
+    public void OnBuild() { }
 
     public void OnPostBuild() { }
 
-    public void OnInit()
-    {
-    }
+    public void OnInit() { }
 
     public void OnPostDerive() { }
 

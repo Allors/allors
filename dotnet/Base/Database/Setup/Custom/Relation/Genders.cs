@@ -5,35 +5,21 @@
 
 namespace Allors.Database.Domain
 {
-    using System;
-
     public partial class Genders
     {
         protected override void CustomSetup(Setup setup)
         {
             base.CustomSetup(setup);
 
-            var merge = this.Transaction.Caches().GenderByUniqueId().Merger().Action();
+            var merge = this.Transaction.Caches().GenderByKey().Merger().Action();
 
-            merge(Gender.MaleId, v =>
-            {
-                v.Name = "Male";
-            });
+            merge(Gender.MaleId, v => { });
 
-            merge(Gender.FemaleId, v =>
-            {
-                v.Name = "Female";
-            });
+            merge(Gender.FemaleId, v => { });
 
-            merge(Gender.OtherId, v =>
-            {
-                v.Name = "Other";
-            });
+            merge(Gender.OtherId, v => { });
 
-            merge(Gender.PreferNotToSayId, v =>
-            {
-                v.Name = "Prefer not to say";
-            });
+            merge(Gender.PreferNotToSayId, v => { });
         }
     }
 }

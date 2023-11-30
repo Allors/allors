@@ -11,7 +11,7 @@
         public Handle(Record record, XAttribute attribute)
         {
             this.Record = record;
-            this.RoleType = record.Class.RoleTypes.First(v => v.Name.Equals("UniqueId", StringComparison.OrdinalIgnoreCase));
+            this.RoleType = record.Class.RoleTypes.First(v => v.RelationType.IsKey);
             this.Name = attribute.Value;
         }
 

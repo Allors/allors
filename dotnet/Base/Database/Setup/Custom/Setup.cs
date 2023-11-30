@@ -24,7 +24,7 @@ namespace Allors.Database.Domain
         private void CustomOnPostSetup(Config config)
         {
             var countryByIsoCode = this.transaction.Scoped<CountryByIsoCode>();
-            var genders = this.transaction.Scoped<GenderByUniqueId>();
+            var genders = this.transaction.Scoped<GenderByKey>();
             var medias = this.transaction.Scoped<MediaByUniqueId>();
             var roles = this.transaction.Scoped<RoleByUniqueId>();
             var securityTokens = this.transaction.Scoped<SecurityTokenByUniqueId>();

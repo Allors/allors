@@ -12,15 +12,14 @@ namespace Allors.Repository
     #region Allors
     [Id("b7bcc22f-03f0-46fd-b738-4e035921d445")]
     #endregion
-    public partial interface Enumeration : UniquelyIdentifiable, Object
+    public partial interface Enumeration : Object
     {
         #region Allors
-        [Id("3d3ae4d0-bac6-4645-8a53-3e9f7f9af086")]
+        [Id("0480FA94-E067-4195-A656-534E2273E061")]
         #endregion
         [Indexed]
         [Required]
-        [Size(256)]
-        string Name { get; set; }
+        string Key { get; set; }
 
         #region Allors
         [Id("07e034f1-246a-4115-9662-4c798f31343f")]

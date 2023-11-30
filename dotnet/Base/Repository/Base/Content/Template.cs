@@ -7,7 +7,6 @@
 namespace Allors.Repository
 {
     using System;
-
     using Attributes;
 
     #region Allors
@@ -17,12 +16,9 @@ namespace Allors.Repository
     {
         #region inherited properties
         public Guid UniqueId { get; set; }
-
         public Revocation[] Revocations { get; set; }
-
         public DelegatedAccess AccessDelegation { get; set; }
         public SecurityToken[] SecurityTokens { get; set; }
-
         #endregion
 
         #region Allors
@@ -53,9 +49,7 @@ namespace Allors.Repository
 
         public void OnPostBuild() { }
 
-        public void OnInit()
-        {
-        }
+        public void OnInit() { }
 
         public void OnPostDerive() { }
 

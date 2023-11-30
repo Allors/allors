@@ -1,7 +1,6 @@
-// <copyright file="SecurityTokenOwner.cs" company="Allors bv">
+﻿// <copyright file="SecurityTokenOwner.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // </copyright>
-
 
 namespace Allors.Repository;
 
