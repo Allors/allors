@@ -30,6 +30,8 @@ public interface IComposite : IObjectType
 
     IReadOnlyDictionary<IRoleType, ICompositeRoleType> CompositeRoleTypeByRoleType { get; }
 
+    IRoleType KeyRoleType { get; }
+
     IReadOnlyList<IMethodType> MethodTypes { get; }
 
     IReadOnlyDictionary<IMethodType, ICompositeMethodType> CompositeMethodTypeByMethodType { get; }

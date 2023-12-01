@@ -17,6 +17,8 @@ public abstract class Composite : ObjectType, IComposite
     private IReadOnlyList<IMethodType> methodTypes;
     private IReadOnlyList<IInterface> supertypes;
 
+    private IRoleType derivedKeyRoleType;
+
     protected Composite(MetaPopulation metaPopulation, Guid id, IReadOnlyList<IInterface> directSupertypes, string singularName, string assignedPluralName)
         : base(metaPopulation, id, singularName, assignedPluralName)
     {
@@ -42,6 +44,8 @@ public abstract class Composite : ObjectType, IComposite
     public IReadOnlyList<IRoleType> RoleTypes => this.roleTypes;
 
     public IReadOnlyDictionary<IRoleType, ICompositeRoleType> CompositeRoleTypeByRoleType { get; private set; }
+
+    public IRoleType KeyRoleType => this.derivedKeyRoleType;
 
     public IReadOnlyList<IMethodType> MethodTypes => this.methodTypes;
 
@@ -138,5 +142,21 @@ public abstract class Composite : ObjectType, IComposite
                 directSupertype.InitializeSupertypesRecursively(type, superTypes);
             }
         }
+    }
+
+    internal override void Validate(ValidationLog validationLog)
+    {
+        base.Validate(validationLog);
+
+        if (this.RoleTypes.Count(v => v.RelationType.IsKey) > 1)
+        {
+            var message = this.ValidationName + " has more than 1 key";
+            validationLog.AddError(message, this, ValidationKind.Multiplicity, "IComposite.KeyRoleType");
+        }
+    }
+
+    internal void DeriveKeyRoleType()
+    {
+        this.derivedKeyRoleType = this.RoleTypes.FirstOrDefault(v => v.RelationType.IsKey);
     }
 }

@@ -2,8 +2,8 @@
   "profiles": {
     "Generate": {
       "commandName": "Project",
-      //"workingDirectory": "D:\\repos\\allors\\allors\\dotnet\\Base",
-      "workingDirectory": "C:\\repos\\allors\\allors\\dotnet\\Base"
+      "workingDirectory": "D:\\repos\\allors\\allors\\dotnet\\Base",
+      //"workingDirectory": "C:\\repos\\allors\\allors\\dotnet\\Base"
     }
   }
 }

@@ -1,4 +1,4 @@
-// <copyright file="ObjectType.cs" company="Allors bvba">
+﻿// <copyright file="ObjectType.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -71,7 +71,7 @@ public abstract class ObjectType : MetaIdentifiableObject, IObjectType
         return this.Tag;
     }
 
-    internal void Validate(ValidationLog validationLog)
+    internal virtual void Validate(ValidationLog validationLog)
     {
         if (!string.IsNullOrEmpty(this.SingularName))
         {

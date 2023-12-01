@@ -1,4 +1,4 @@
-// <copyright file="MetaPopulation.cs" company="Allors bvba">
+﻿// <copyright file="MetaPopulation.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -296,6 +296,11 @@ public abstract class MetaPopulation : IMetaPopulation
         foreach (var roleType in this.RelationTypes.Select(v => v.RoleType))
         {
             roleType.DeriveIsUnique();
+        }
+
+        foreach (var composite in this.Composites)
+        {
+            composite.DeriveKeyRoleType();
         }
 
         this.compositeByLowercaseName = this.Composites.ToDictionary(v => v.Name.ToLowerInvariant());
