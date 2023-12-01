@@ -10,7 +10,7 @@ namespace Commands
     using McMaster.Extensions.CommandLineUtils;
     using NLog;
 
-    [Command(Description = "Restore the population to file")]
+    [Command(Description = "Make a backup of the database")]
     public class Backup
     {
         public Program Parent { get; set; }
@@ -18,13 +18,13 @@ namespace Commands
         public Logger Logger => LogManager.GetCurrentClassLogger();
 
         [Option("-f", Description = "Backup file")]
-        public string FileName { get; set; } = "population.xml";
+        public string FileName { get; set; }
 
         public int OnExecute(CommandLineApplication app)
         {
             this.Logger.Info("Begin");
 
-            var fileName = this.FileName ?? this.Parent.Configuration["populationFile"];
+            var fileName = this.FileName ?? this.Parent.Configuration["backupFile"] ?? "backup.xml";
             var fileInfo = new FileInfo(fileName);
 
             using (var stream = File.Create(fileInfo.FullName))

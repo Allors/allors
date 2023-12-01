@@ -21,6 +21,7 @@ namespace Commands
 
     [Command(Description = "Allors Base Commands")]
     [Subcommand(
+        typeof(Roundtrip),
         typeof(Backup),
         typeof(Restore),
         typeof(Upgrade),

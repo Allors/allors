@@ -10,21 +10,21 @@ namespace Commands
     using McMaster.Extensions.CommandLineUtils;
     using NLog;
 
-    [Command(Description = "Import the population from file")]
+    [Command(Description = "Restore the database")]
     public class Restore
     {
         public Program Parent { get; set; }
 
         public Logger Logger => LogManager.GetCurrentClassLogger();
 
-        [Option("-f", Description = "Backup file (default is population.xml)")]
+        [Option("-f", Description = "Backup file (default is backup.xml)")]
         public string FileName { get; set; }
 
         public int OnExecute(CommandLineApplication app)
         {
             this.Logger.Info("Begin");
 
-            var fileName = this.FileName ?? this.Parent.Configuration["populationFile"] ?? "population.xml";
+            var fileName = this.FileName ?? this.Parent.Configuration["backupFile"] ?? "backup.xml";
             var fileInfo = new FileInfo(fileName);
 
             using (var reader = XmlReader.Create(fileInfo.FullName))
