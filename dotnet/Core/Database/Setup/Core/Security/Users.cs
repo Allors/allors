@@ -27,13 +27,13 @@ namespace Allors.Database.Domain
             }
 
             var credentials = new Credentials { Records = records.ToArray() };
-            var xmlSerializer = new XmlSerializer(typeof(Credentials));
+            var xmlSerializer = new System.Xml.Serialization.XmlSerializer(typeof(Credentials));
             xmlSerializer.Serialize(writer, credentials);
         }
 
         public void LoadPasswords(XmlReader reader)
         {
-            var xmlSerializer = new XmlSerializer(typeof(Credentials));
+            var xmlSerializer = new System.Xml.Serialization.XmlSerializer(typeof(Credentials));
             var credentials = (Credentials)xmlSerializer.Deserialize(reader);
             foreach (var credential in credentials.Records)
             {

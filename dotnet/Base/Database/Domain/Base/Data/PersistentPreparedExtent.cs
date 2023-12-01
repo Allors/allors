@@ -33,6 +33,6 @@ namespace Allors.Database.Domain
             }
         }
 
-        private static XmlSerializer XmlSerializer => new XmlSerializer(typeof(Allors.Protocol.Json.Data.Extent));
+        private static System.Xml.Serialization.XmlSerializer XmlSerializer => new System.Xml.Serialization.XmlSerializer(typeof(Allors.Protocol.Json.Data.Extent));
     }
 }

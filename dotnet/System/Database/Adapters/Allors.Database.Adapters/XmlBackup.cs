@@ -17,7 +17,7 @@ using System.Xml;
 public static class XmlBackup
 {
     /// <summary>
-    ///     This is the document element for a serialized <see cref="IDatabase" />.
+    ///     This is the document element for a backed up <see cref="IDatabase" />.
     /// </summary>
     public const string Allors = "allors";
 
@@ -28,7 +28,7 @@ public static class XmlBackup
     public const string Version = "version";
 
     /// <summary>
-    ///     The current <see cref="XmlBackup" /> of the serialization schema.
+    ///     The current <see cref="XmlBackup" /> of the xml backup schema.
     /// </summary>
     public const int VersionCurrent = 1;
 
