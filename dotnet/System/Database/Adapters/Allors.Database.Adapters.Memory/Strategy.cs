@@ -489,7 +489,7 @@ public sealed class Strategy : IStrategy
 
     internal void Commit()
     {
-        if (!this.IsDeleted && !this.Transaction.Database.IsLoading)
+        if (!this.IsDeleted && !this.Transaction.Database.IsRestoring)
         {
             // TODO: Test
             /*
@@ -779,7 +779,7 @@ public sealed class Strategy : IStrategy
         }
     }
 
-    internal void FillRoleForSave(Dictionary<IRoleType, List<Strategy>> strategiesByRoleType)
+    internal void FillRoleForBackup(Dictionary<IRoleType, List<Strategy>> strategiesByRoleType)
     {
         if (this.IsDeleted)
         {
@@ -835,21 +835,21 @@ public sealed class Strategy : IStrategy
         }
     }
 
-    internal void SaveUnit(XmlWriter writer, IRoleType roleType)
+    internal void BackupUnit(XmlWriter writer, IRoleType roleType)
     {
         var unitType = (IUnit)roleType.ObjectType;
-        var value = Serialization.WriteString(unitType.Tag, this.unitRoleByRoleType[roleType]);
+        var value = XmlBackup.WriteString(unitType.Tag, this.unitRoleByRoleType[roleType]);
 
-        writer.WriteStartElement(Serialization.Relation);
-        writer.WriteAttributeString(Serialization.Association, this.ObjectId.ToString());
+        writer.WriteStartElement(XmlBackup.Relation);
+        writer.WriteAttributeString(XmlBackup.Association, this.ObjectId.ToString());
         writer.WriteString(value);
         writer.WriteEndElement();
     }
 
-    internal void SaveComposites(XmlWriter writer, IRoleType roleType)
+    internal void BackupComposites(XmlWriter writer, IRoleType roleType)
     {
-        writer.WriteStartElement(Serialization.Relation);
-        writer.WriteAttributeString(Serialization.Association, this.ObjectId.ToString());
+        writer.WriteStartElement(XmlBackup.Relation);
+        writer.WriteAttributeString(XmlBackup.Association, this.ObjectId.ToString());
 
         var roleStragies = this.compositesRoleByRoleType[roleType];
         var i = 0;
@@ -857,7 +857,7 @@ public sealed class Strategy : IStrategy
         {
             if (i > 0)
             {
-                writer.WriteString(Serialization.ObjectsSplitter);
+                writer.WriteString(XmlBackup.ObjectsSplitter);
             }
 
             writer.WriteString(roleStrategy.ObjectId.ToString());
@@ -867,10 +867,10 @@ public sealed class Strategy : IStrategy
         writer.WriteEndElement();
     }
 
-    internal void SaveComposite(XmlWriter writer, IRoleType roleType)
+    internal void BackupComposite(XmlWriter writer, IRoleType roleType)
     {
-        writer.WriteStartElement(Serialization.Relation);
-        writer.WriteAttributeString(Serialization.Association, this.ObjectId.ToString());
+        writer.WriteStartElement(XmlBackup.Relation);
+        writer.WriteAttributeString(XmlBackup.Association, this.ObjectId.ToString());
 
         var roleStragy = this.compositeRoleByRoleType[roleType];
         writer.WriteString(roleStragy.ObjectId.ToString());

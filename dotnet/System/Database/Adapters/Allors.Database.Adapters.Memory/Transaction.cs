@@ -480,7 +480,7 @@ public class Transaction : ITransaction
         }
     }
 
-    internal void Save(XmlWriter writer)
+    internal void Backup(XmlWriter writer)
     {
         var sortedNonDeletedStrategiesByObjectType = new Dictionary<IObjectType, List<Strategy>>();
         foreach (var dictionaryEntry in this.strategyByObjectId)
@@ -506,8 +506,8 @@ public class Transaction : ITransaction
             sortedNonDeletedStrategies.Sort(new Strategy.ObjectIdComparer());
         }
 
-        var save = new Save(this, writer, sortedNonDeletedStrategiesByObjectType);
-        save.Execute();
+        var backup = new Backup(this, writer, sortedNonDeletedStrategiesByObjectType);
+        backup.Execute();
     }
 
     private void Reset()

@@ -1,4 +1,4 @@
-// <copyright file="ObjectsReader.cs" company="Allors bvba">
+﻿// <copyright file="ObjectsReader.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -9,13 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 
-internal class LoadObjectsReader : IDataReader
+internal class RestoreObjectsReader : IDataReader
 {
     private readonly IEnumerator<object[]> enumerable;
 
     private object[] xmlObject;
 
-    public LoadObjectsReader(Objects xmlObjects) => this.enumerable = xmlObjects.GetEnumerator();
+    public RestoreObjectsReader(Objects xmlObjects) => this.enumerable = xmlObjects.GetEnumerator();
 
     public int FieldCount => 3;
 

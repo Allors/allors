@@ -1,4 +1,4 @@
-// <copyright file="Save.cs" company="Allors bvba">
+// <copyright file="Backup.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -9,13 +9,13 @@ using System.Collections.Generic;
 using System.Xml;
 using Allors.Database.Meta;
 
-public class Save
+public class Backup
 {
     private readonly Dictionary<IObjectType, List<Strategy>> sortedNonDeletedStrategiesByObjectType;
     private readonly Transaction transaction;
     private readonly XmlWriter writer;
 
-    public Save(Transaction transaction, XmlWriter writer, Dictionary<IObjectType, List<Strategy>> sortedNonDeletedStrategiesByObjectType)
+    public Backup(Transaction transaction, XmlWriter writer, Dictionary<IObjectType, List<Strategy>> sortedNonDeletedStrategiesByObjectType)
     {
         this.transaction = transaction;
         this.writer = writer;
@@ -28,11 +28,11 @@ public class Save
         if (this.writer.WriteState == WriteState.Start)
         {
             this.writer.WriteStartDocument();
-            this.writer.WriteStartElement(Serialization.Allors);
+            this.writer.WriteStartElement(XmlBackup.Allors);
             writeDocument = true;
         }
 
-        this.SavePopulation();
+        this.BackupPopulation();
 
         if (writeDocument)
         {
@@ -41,22 +41,22 @@ public class Save
         }
     }
 
-    internal void SavePopulation()
+    internal void BackupPopulation()
     {
-        this.writer.WriteStartElement(Serialization.Population);
-        this.writer.WriteAttributeString(Serialization.Version, Serialization.VersionCurrent.ToString());
+        this.writer.WriteStartElement(XmlBackup.Population);
+        this.writer.WriteAttributeString(XmlBackup.Version, XmlBackup.VersionCurrent.ToString());
 
-        this.SaveObjectType();
+        this.BackupObjectType();
 
-        this.SaveRelationType();
+        this.BackupRelationType();
 
         this.writer.WriteEndElement();
     }
 
-    internal virtual void SaveObjectType()
+    internal virtual void BackupObjectType()
     {
-        this.writer.WriteStartElement(Serialization.Objects);
-        this.writer.WriteStartElement(Serialization.Database);
+        this.writer.WriteStartElement(XmlBackup.Objects);
+        this.writer.WriteStartElement(XmlBackup.Database);
 
         var sortedObjectTypes = new List<IObjectType>(this.sortedNonDeletedStrategiesByObjectType.Keys);
         sortedObjectTypes.Sort();
@@ -67,18 +67,18 @@ public class Save
 
             if (sortedNonDeletedStrategies.Count > 0)
             {
-                this.writer.WriteStartElement(Serialization.ObjectType);
-                this.writer.WriteAttributeString(Serialization.Id, objectType.Id.ToString("N").ToLowerInvariant());
+                this.writer.WriteStartElement(XmlBackup.ObjectType);
+                this.writer.WriteAttributeString(XmlBackup.Id, objectType.Id.ToString("N").ToLowerInvariant());
 
                 for (var i = 0; i < sortedNonDeletedStrategies.Count; i++)
                 {
                     var strategy = sortedNonDeletedStrategies[i];
                     if (i > 0)
                     {
-                        this.writer.WriteString(Serialization.ObjectsSplitter);
+                        this.writer.WriteString(XmlBackup.ObjectsSplitter);
                     }
 
-                    this.writer.WriteString(strategy.ObjectId + Serialization.ObjectSplitter + strategy.ObjectVersion);
+                    this.writer.WriteString(strategy.ObjectId + XmlBackup.ObjectSplitter + strategy.ObjectVersion);
                 }
 
                 this.writer.WriteEndElement();
@@ -89,17 +89,17 @@ public class Save
         this.writer.WriteEndElement();
     }
 
-    internal virtual void SaveRelationType()
+    internal virtual void BackupRelationType()
     {
-        this.writer.WriteStartElement(Serialization.Relations);
-        this.writer.WriteStartElement(Serialization.Database);
+        this.writer.WriteStartElement(XmlBackup.Relations);
+        this.writer.WriteStartElement(XmlBackup.Database);
 
         var sortedStrategiesByRoleType = new Dictionary<IRoleType, List<Strategy>>();
         foreach (var dictionaryEntry in this.sortedNonDeletedStrategiesByObjectType)
         {
             foreach (var strategy in dictionaryEntry.Value)
             {
-                strategy.FillRoleForSave(sortedStrategiesByRoleType);
+                strategy.FillRoleForBackup(sortedStrategiesByRoleType);
             }
         }
 
@@ -121,30 +121,30 @@ public class Save
             if (strategies != null)
             {
                 this.writer.WriteStartElement(roleType.ObjectType is IUnit
-                    ? Serialization.RelationTypeUnit
-                    : Serialization.RelationTypeComposite);
+                    ? XmlBackup.RelationTypeUnit
+                    : XmlBackup.RelationTypeComposite);
 
-                this.writer.WriteAttributeString(Serialization.Id, relationType.Id.ToString("N").ToLowerInvariant());
+                this.writer.WriteAttributeString(XmlBackup.Id, relationType.Id.ToString("N").ToLowerInvariant());
 
                 if (roleType.ObjectType is IUnit)
                 {
                     foreach (var strategy in strategies)
                     {
-                        strategy.SaveUnit(this.writer, roleType);
+                        strategy.BackupUnit(this.writer, roleType);
                     }
                 }
                 else if (roleType.IsMany)
                 {
                     foreach (var strategy in strategies)
                     {
-                        strategy.SaveComposites(this.writer, roleType);
+                        strategy.BackupComposites(this.writer, roleType);
                     }
                 }
                 else
                 {
                     foreach (var strategy in strategies)
                     {
-                        strategy.SaveComposite(this.writer, roleType);
+                        strategy.BackupComposite(this.writer, roleType);
                     }
                 }
 

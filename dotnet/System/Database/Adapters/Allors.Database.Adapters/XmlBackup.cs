@@ -1,8 +1,8 @@
-﻿// <copyright file="Serialization.cs" company="Allors bvba">
+﻿// <copyright file="XmlBackup.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
-// <summary>Defines the Serialization type.</summary>
+// <summary>Defines the XmlBackup type.</summary>
 
 namespace Allors.Database.Adapters;
 
@@ -10,11 +10,11 @@ using System;
 using System.Xml;
 
 /// <summary>
-///     Xml tag definitions and utility methods for Xml Serialization.
-///     An <see cref="IDatabase" /> is serialized to a <see cref="XmlDocument" />
-///     according to the Allors Serialization Xml Schema.
+///     Xml definitions and utility methods for Xml Backup.
+///     An <see cref="IDatabase" /> is backed up to a <see cref="XmlDocument" />
+///     according to the Allors Backup Xml Schema.
 /// </summary>
-public static class Serialization
+public static class XmlBackup
 {
     /// <summary>
     ///     This is the document element for a serialized <see cref="IDatabase" />.
@@ -22,49 +22,49 @@ public static class Serialization
     public const string Allors = "allors";
 
     /// <summary>
-    ///     This attribute holds the version of the Allors Framework when this <see cref="IDatabase" /> was saved.
-    ///     Attribute of the <see cref="Serialization#Allors" /> element.
+    ///     This attribute holds the version of Allors when this <see cref="IDatabase" /> was backed up.
+    ///     Attribute of the <see cref="XmlBackup" /> element.
     /// </summary>
     public const string Version = "version";
 
     /// <summary>
-    ///     The current <see cref="Serialization#Version" /> of the serialization schema.
+    ///     The current <see cref="XmlBackup" /> of the serialization schema.
     /// </summary>
     public const int VersionCurrent = 1;
 
     /// <summary>
     ///     This attribute holds the <see cref="ObjectId" /> of the association of a relation.
-    ///     Attribute of the <see cref="Serialization#ChangedRelations" /> element.
+    ///     Attribute of the <see cref="XmlBackup" /> element.
     /// </summary>
     public const string Association = "a";
 
     /// <summary>
     ///     This attribute is used for <see cref="ObjectType#Id" /> and <see cref="RelationType#Id" />.
-    ///     Attribute of the <see cref="Serialization#IObjectType" /> and <see cref="Serialization#RelationType" /> element.
+    ///     Attribute of the <see cref="XmlBackup" /> and <see cref="XmlBackup" /> element.
     /// </summary>
     public const string Id = "i";
 
     /// <summary>
     ///     This element is the container for objects and relations.
-    ///     Child element of the <see cref="Serialization#Allors" /> element.
+    ///     Child element of the <see cref="XmlBackup" /> element.
     /// </summary>
     public const string Population = "population";
 
     /// <summary>
     ///     This element is the container for <see cref="IObject" />s.
-    ///     Child element of the <see cref="Serialization#Population" /> element.
+    ///     Child element of the <see cref="XmlBackup" /> element.
     /// </summary>
     public const string Objects = "objects";
 
     /// <summary>
     ///     This element is the container for new <see cref="IObject" />s.
-    ///     Child element of the <see cref="Serialization#Objects" /> element.
+    ///     Child element of the <see cref="XmlBackup" /> element.
     /// </summary>
     public const string New = "new";
 
     /// <summary>
     ///     This element is the container for deleted <see cref="IObject" />s.
-    ///     Child element of the <see cref="Serialization#Objects" /> element.
+    ///     Child element of the <see cref="XmlBackup" /> element.
     /// </summary>
     public const string Deleted = "deleted";
 
@@ -80,61 +80,61 @@ public static class Serialization
 
     /// <summary>
     ///     This element groups <see cref="IObject" />s having the same <see cref="ObjectType" />.
-    ///     Child element of the <see cref="Serialization#Objects" /> element.
+    ///     Child element of the <see cref="XmlBackup" /> element.
     /// </summary>
     public const string ObjectType = "ot";
 
     /// <summary>
     ///     This element groups the <see cref="IObject" />s and relations.
-    ///     Child element of the <see cref="Serialization#Allors" /> element.
+    ///     Child element of the <see cref="XmlBackup" /> element.
     /// </summary>
     public const string Database = "database";
 
     /// <summary>
     ///     This element groups the <see cref="IObject" />s and relations.
-    ///     Child element of the <see cref="Serialization#Allors" /> element.
+    ///     Child element of the <see cref="XmlBackup" /> element.
     /// </summary>
     public const string Workspace = "workspace";
 
     /// <summary>
     ///     This element holds a relation.
-    ///     Child element of the <see cref="Serialization#RelationType" /> element.
+    ///     Child element of the <see cref="XmlBackup" /> element.
     /// </summary>
     public const string Relation = "r";
 
     /// <summary>
     ///     This element holds a relation.
-    ///     Child element of the <see cref="Serialization#RelationType" /> element.
+    ///     Child element of the <see cref="XmlBackup" /> element.
     /// </summary>
     public const string NoRelation = "x";
 
     /// <summary>
     ///     This element is the container for relations.
-    ///     Child element of the <see cref="Serialization#Population" /> element.
+    ///     Child element of the <see cref="XmlBackup" /> element.
     /// </summary>
     public const string Relations = "relations";
 
     /// <summary>
     ///     This element groups relations having the same <see cref="RelationType" /> and
     ///     where the role's <see cref="ObjectType" /> is a composite.
-    ///     Child element of the <see cref="Serialization#Relations" /> element.
+    ///     Child element of the <see cref="XmlBackup" /> element.
     /// </summary>
     public const string RelationTypeComposite = "rtc";
 
     /// <summary>
     ///     This element groups relations having the same <see cref="RelationType" /> and
     ///     where the role's <see cref="ObjectType" /> is a unit.
-    ///     Child element of the <see cref="Serialization#Relations" /> element.
+    ///     Child element of the <see cref="XmlBackup" /> element.
     /// </summary>
     public const string RelationTypeUnit = "rtu";
 
     /// <summary>
-    ///     Char array for <see cref="Serialization#ObjectsSplitter" />.
+    ///     Char array for <see cref="XmlBackup" />.
     /// </summary>
     public static readonly char[] ObjectsSplitterCharArray = { ObjectsSplitter[0] };
 
     /// <summary>
-    ///     Char array for <see cref="Serialization#ObjectSplitter" />.
+    ///     Char array for <see cref="XmlBackup" />.
     /// </summary>
     public static readonly char[] ObjectSplitterCharArray = { ObjectSplitter[0] };
 

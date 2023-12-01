@@ -15,7 +15,7 @@ using Allors.Database.Domain;
 using Allors.Database.Meta;
 using Xunit;
 
-public abstract class ObsoleteSerializationTest : IDisposable
+public abstract class ObsoleteBackupTest : IDisposable
 {
     protected static readonly bool[] TrueFalse = { true, false };
     private static readonly string GuidString = Guid.NewGuid().ToString();
@@ -51,7 +51,7 @@ public abstract class ObsoleteSerializationTest : IDisposable
                 var stringWriter = new StringWriter();
                 using (var writer = XmlWriter.Create(stringWriter))
                 {
-                    otherPopulation.Save(writer);
+                    otherPopulation.Backup(writer);
                 }
 
                 var xml = stringWriter.ToString();
@@ -67,7 +67,7 @@ public abstract class ObsoleteSerializationTest : IDisposable
                     {
                         using (var reader = XmlReader.Create(stringReader))
                         {
-                            this.Population.Load(reader);
+                            this.Population.Restore(reader);
                         }
                     }
 
@@ -86,7 +86,7 @@ public abstract class ObsoleteSerializationTest : IDisposable
                     {
                         using (var reader = XmlReader.Create(stringReader))
                         {
-                            this.Population.Load(reader);
+                            this.Population.Restore(reader);
                         }
                     }
 
@@ -106,7 +106,7 @@ public abstract class ObsoleteSerializationTest : IDisposable
                     {
                         using (var reader = XmlReader.Create(stringReader))
                         {
-                            this.Population.Load(reader);
+                            this.Population.Restore(reader);
                         }
                     }
                 }
@@ -127,7 +127,7 @@ public abstract class ObsoleteSerializationTest : IDisposable
                     {
                         using (var reader = XmlReader.Create(stringReader))
                         {
-                            this.Population.Load(reader);
+                            this.Population.Restore(reader);
                         }
                     }
                 }
@@ -146,7 +146,7 @@ public abstract class ObsoleteSerializationTest : IDisposable
     }
 
     [Fact]
-    public void Load()
+    public void Restore()
     {
         foreach (var indentation in TrueFalse)
         {
@@ -165,7 +165,7 @@ public abstract class ObsoleteSerializationTest : IDisposable
                     var xmlWriterSettings = new XmlWriterSettings { Indent = indentation };
                     using (var writer = XmlWriter.Create(stringWriter, xmlWriterSettings))
                     {
-                        otherPopulation.Save(writer);
+                        otherPopulation.Backup(writer);
                     }
 
                     var xml = stringWriter.ToString();
@@ -174,7 +174,7 @@ public abstract class ObsoleteSerializationTest : IDisposable
                     var stringReader = new StringReader(xml);
                     using (var reader = XmlReader.Create(stringReader))
                     {
-                        this.Population.Load(reader);
+                        this.Population.Restore(reader);
                     }
 
                     using (var transaction = this.Population.CreateTransaction())
@@ -190,7 +190,7 @@ public abstract class ObsoleteSerializationTest : IDisposable
     }
 
     [Fact]
-    public void LoadVersions()
+    public void RestoreVersions()
     {
         foreach (var init in this.Inits)
         {
@@ -207,8 +207,8 @@ public abstract class ObsoleteSerializationTest : IDisposable
 
                 var initialObjectVersion = otherC1.Strategy.ObjectVersion;
 
-                var xml = DoSave(otherPopulation);
-                DoLoad(this.Population, xml);
+                var xml = DoBackup(otherPopulation);
+                DoRestore(this.Population, xml);
 
                 using (var transaction = this.Population.CreateTransaction())
                 {
@@ -224,8 +224,8 @@ public abstract class ObsoleteSerializationTest : IDisposable
 
                 var changedObjectVersion = otherC1.Strategy.ObjectVersion;
 
-                xml = DoSave(otherPopulation);
-                DoLoad(this.Population, xml);
+                xml = DoBackup(otherPopulation);
+                DoRestore(this.Population, xml);
 
                 using (var transaction = this.Population.CreateTransaction())
                 {
@@ -240,8 +240,8 @@ public abstract class ObsoleteSerializationTest : IDisposable
 
                 otherTransaction.Commit();
 
-                xml = DoSave(otherPopulation);
-                DoLoad(this.Population, xml);
+                xml = DoBackup(otherPopulation);
+                DoRestore(this.Population, xml);
 
                 using (var transaction = this.Population.CreateTransaction())
                 {
@@ -256,7 +256,7 @@ public abstract class ObsoleteSerializationTest : IDisposable
     }
 
     [Fact]
-    public void LoadRollback()
+    public void RestoreRollback()
     {
         foreach (var init in this.Inits)
         {
@@ -272,7 +272,7 @@ public abstract class ObsoleteSerializationTest : IDisposable
                 var stringWriter = new StringWriter();
                 using (var writer = XmlWriter.Create(stringWriter))
                 {
-                    otherPopulation.Save(writer);
+                    otherPopulation.Backup(writer);
                 }
 
                 var xml = stringWriter.ToString();
@@ -280,7 +280,7 @@ public abstract class ObsoleteSerializationTest : IDisposable
                 var stringReader = new StringReader(xml);
                 using (var reader = XmlReader.Create(stringReader))
                 {
-                    this.Population.Load(reader);
+                    this.Population.Restore(reader);
                 }
 
                 using (var transaction = this.Population.CreateTransaction())
@@ -294,7 +294,7 @@ public abstract class ObsoleteSerializationTest : IDisposable
     }
 
     [Fact]
-    public void LoadDifferentMode()
+    public void RestoreDifferentMode()
     {
         foreach (var init in this.Inits)
         {
@@ -312,7 +312,7 @@ public abstract class ObsoleteSerializationTest : IDisposable
                 var stringWriter = new StringWriter();
                 using (var writer = XmlWriter.Create(stringWriter))
                 {
-                    population.Save(writer);
+                    population.Backup(writer);
                 }
 
                 Dump(population);
@@ -322,7 +322,7 @@ public abstract class ObsoleteSerializationTest : IDisposable
 
                 try
                 {
-                    this.Population.Load(reader);
+                    this.Population.Restore(reader);
                     Assert.True(false); // Fail
                 }
                 catch
@@ -337,7 +337,7 @@ public abstract class ObsoleteSerializationTest : IDisposable
     }
 
     [Fact]
-    public void LoadDifferentCultureInfos()
+    public void RestoreDifferentCultureInfos()
     {
         foreach (var init in this.Inits)
         {
@@ -350,14 +350,14 @@ public abstract class ObsoleteSerializationTest : IDisposable
             CultureInfo.CurrentCulture = writeCultureInfo;
             CultureInfo.CurrentUICulture = writeCultureInfo;
 
-            var loadPopulation = this.CreatePopulation();
-            var loadTransaction = loadPopulation.CreateTransaction();
-            this.Populate(loadTransaction);
+            var restorePopulation = this.CreatePopulation();
+            var restoreTransaction = restorePopulation.CreateTransaction();
+            this.Populate(restoreTransaction);
 
             var stringWriter = new StringWriter();
             using (var writer = XmlWriter.Create(stringWriter))
             {
-                loadTransaction.Database.Save(writer);
+                restoreTransaction.Database.Backup(writer);
             }
 
             CultureInfo.CurrentCulture = readCultureInfo;
@@ -367,7 +367,7 @@ public abstract class ObsoleteSerializationTest : IDisposable
             var stringReader = new StringReader(xml);
             using (var reader = XmlReader.Create(stringReader))
             {
-                this.Population.Load(reader);
+                this.Population.Restore(reader);
             }
 
             using (var transaction = this.Population.CreateTransaction())
@@ -375,12 +375,12 @@ public abstract class ObsoleteSerializationTest : IDisposable
                 this.AssertPopulation(transaction);
             }
 
-            loadTransaction.Rollback();
+            restoreTransaction.Rollback();
         }
     }
 
     [Fact]
-    public void LoadDifferentVersion()
+    public void RestoreDifferentVersion()
     {
         foreach (var init in this.Inits)
         {
@@ -398,7 +398,7 @@ public abstract class ObsoleteSerializationTest : IDisposable
                 var stringWriter = new StringWriter();
                 using (var writer = XmlWriter.Create(stringWriter))
                 {
-                    population.Save(writer);
+                    population.Backup(writer);
                 }
 
                 Dump(population);
@@ -413,7 +413,7 @@ public abstract class ObsoleteSerializationTest : IDisposable
 
                 try
                 {
-                    this.Population.Load(reader);
+                    this.Population.Restore(reader);
                     Assert.True(false); // Fail
                 }
                 catch
@@ -428,41 +428,41 @@ public abstract class ObsoleteSerializationTest : IDisposable
     }
 
     [Fact]
-    public void LoadSpecial()
+    public void RestoreSpecial()
     {
         foreach (var init in this.Inits)
         {
             init();
             var m = this.Transaction.Database.Context().M;
 
-            var savePopulation = this.CreatePopulation();
-            var saveTransaction = savePopulation.CreateTransaction();
+            var backupPopulation = this.CreatePopulation();
+            var backupTransaction = backupPopulation.CreateTransaction();
 
             try
             {
-                this.c1A = C1.Create(saveTransaction);
+                this.c1A = C1.Create(backupTransaction);
                 this.c1A.C1AllorsString = "> <";
                 this.c1A.I12AllorsString = "< >";
                 this.c1A.I1AllorsString = "& &&";
                 this.c1A.S1AllorsString = "' \" ''";
 
-                this.c1Empty = C1.Create(saveTransaction);
+                this.c1Empty = C1.Create(backupTransaction);
 
-                saveTransaction.Commit();
+                backupTransaction.Commit();
 
                 var stringWriter = new StringWriter();
                 using (var writer = XmlWriter.Create(stringWriter))
                 {
-                    savePopulation.Save(writer);
+                    backupPopulation.Backup(writer);
                 }
 
                 // writer = XmlWriter.Create(@"population.xml", Encoding.UTF8);
-                // saveTransaction.Population.Save(writer);
+                // backupTransaction.Population.Backup(writer);
                 // writer.Close();
                 var stringReader = new StringReader(stringWriter.ToString());
                 using (var reader = XmlReader.Create(stringReader))
                 {
-                    this.Population.Load(reader);
+                    this.Population.Restore(reader);
                 }
 
                 using (var transaction = this.Population.CreateTransaction())
@@ -474,19 +474,19 @@ public abstract class ObsoleteSerializationTest : IDisposable
                     Assert.Equal(this.c1A.I1AllorsString, copyValues.I1AllorsString);
                     Assert.Equal(this.c1A.S1AllorsString, copyValues.S1AllorsString);
 
-                    var c1EmptyLoaded = C1.Instantiate(transaction, this.c1Empty.Strategy.ObjectId);
-                    Assert.NotNull(c1EmptyLoaded);
+                    var c1EmptyRestored = C1.Instantiate(transaction, this.c1Empty.Strategy.ObjectId);
+                    Assert.NotNull(c1EmptyRestored);
                 }
             }
             finally
             {
-                saveTransaction.Rollback();
+                backupTransaction.Rollback();
             }
         }
     }
 
     [Fact]
-    public void Save()
+    public void Backup()
     {
         foreach (var init in this.Inits)
         {
@@ -500,12 +500,12 @@ public abstract class ObsoleteSerializationTest : IDisposable
                 var stringWriter = new StringWriter();
                 using (var writer = XmlWriter.Create(stringWriter))
                 {
-                    this.Population.Save(writer);
+                    this.Population.Backup(writer);
                 }
 
                 //using (var writer = XmlWriter.Create("population.xml"))
                 //{
-                //    this.Population.Save(writer);
+                //    this.Population.Backup(writer);
                 //    writer.Close();
                 //}
 
@@ -514,12 +514,12 @@ public abstract class ObsoleteSerializationTest : IDisposable
                 var stringReader = new StringReader(xml);
                 using (var reader = XmlReader.Create(stringReader))
                 {
-                    var savePopulation = this.CreatePopulation();
-                    savePopulation.Load(reader);
+                    var backupPopulation = this.CreatePopulation();
+                    backupPopulation.Restore(reader);
 
-                    using (var saveTransaction = savePopulation.CreateTransaction())
+                    using (var backupTransaction = backupPopulation.CreateTransaction())
                     {
-                        this.AssertPopulation(saveTransaction);
+                        this.AssertPopulation(backupTransaction);
                     }
                 }
             }
@@ -527,7 +527,7 @@ public abstract class ObsoleteSerializationTest : IDisposable
     }
 
     [Fact]
-    public void SaveVersions()
+    public void BackupVersions()
     {
         foreach (var init in this.Inits)
         {
@@ -543,10 +543,10 @@ public abstract class ObsoleteSerializationTest : IDisposable
 
                 var initialObjectVersion = c1.Strategy.ObjectVersion;
 
-                var xml = DoSave(this.Population);
+                var xml = DoBackup(this.Population);
 
                 var otherPopulation = this.CreatePopulation();
-                DoLoad(otherPopulation, xml);
+                DoRestore(otherPopulation, xml);
 
                 using (var otherTransaction = otherPopulation.CreateTransaction())
                 {
@@ -562,10 +562,10 @@ public abstract class ObsoleteSerializationTest : IDisposable
 
                 var changedObjectVersion = c1.Strategy.ObjectVersion;
 
-                xml = DoSave(this.Population);
+                xml = DoBackup(this.Population);
 
                 otherPopulation = this.CreatePopulation();
-                DoLoad(otherPopulation, xml);
+                DoRestore(otherPopulation, xml);
 
                 using (var otherTransaction = otherPopulation.CreateTransaction())
                 {
@@ -580,10 +580,10 @@ public abstract class ObsoleteSerializationTest : IDisposable
 
                 transaction.Commit();
 
-                xml = DoSave(this.Population);
+                xml = DoBackup(this.Population);
 
                 otherPopulation = this.CreatePopulation();
-                DoLoad(otherPopulation, xml);
+                DoRestore(otherPopulation, xml);
 
                 using (var otherTransaction = otherPopulation.CreateTransaction())
                 {
@@ -598,7 +598,7 @@ public abstract class ObsoleteSerializationTest : IDisposable
     }
 
     [Fact]
-    public void SaveDifferentCultureInfos()
+    public void BackupDifferentCultureInfos()
     {
         foreach (var init in this.Inits)
         {
@@ -618,7 +618,7 @@ public abstract class ObsoleteSerializationTest : IDisposable
                 var stringWriter = new StringWriter();
                 using (var writer = XmlWriter.Create(stringWriter))
                 {
-                    transaction.Database.Save(writer);
+                    transaction.Database.Backup(writer);
                 }
 
                 CultureInfo.CurrentCulture = readCultureInfo;
@@ -627,21 +627,21 @@ public abstract class ObsoleteSerializationTest : IDisposable
                 var stringReader = new StringReader(stringWriter.ToString());
                 using (var reader = XmlReader.Create(stringReader))
                 {
-                    var savePopulation = this.CreatePopulation();
-                    savePopulation.Load(reader);
+                    var backupPopulation = this.CreatePopulation();
+                    backupPopulation.Restore(reader);
 
-                    var saveTransaction = savePopulation.CreateTransaction();
+                    var backupTransaction = backupPopulation.CreateTransaction();
 
-                    this.AssertPopulation(saveTransaction);
+                    this.AssertPopulation(backupTransaction);
 
-                    saveTransaction.Rollback();
+                    backupTransaction.Rollback();
                 }
             }
         }
     }
 
     [Fact]
-    public void LoadBinary()
+    public void RestoresBinary()
     {
         foreach (var init in this.Inits)
         {
@@ -666,7 +666,7 @@ public abstract class ObsoleteSerializationTest : IDisposable
                 var stringWriter = new StringWriter();
                 using (var writer = XmlWriter.Create(stringWriter))
                 {
-                    otherPopulation.Save(writer);
+                    otherPopulation.Backup(writer);
                 }
 
                 var xml = stringWriter.ToString();
@@ -674,7 +674,7 @@ public abstract class ObsoleteSerializationTest : IDisposable
                 var stringReader = new StringReader(stringWriter.ToString());
                 using (var reader = XmlReader.Create(stringReader))
                 {
-                    this.Population.Load(reader);
+                    this.Population.Restore(reader);
                 }
 
                 using (var transaction = this.Population.CreateTransaction())
@@ -718,7 +718,7 @@ public abstract class ObsoleteSerializationTest : IDisposable
             var stringReader = new StringReader(xml);
             using (var reader = XmlReader.Create(stringReader))
             {
-                this.Population.Load(reader);
+                this.Population.Restore(reader);
             }
 
             using (var transaction = this.Population.CreateTransaction())
@@ -733,7 +733,7 @@ public abstract class ObsoleteSerializationTest : IDisposable
     }
 
     [Fact]
-    public void CantLoadObjects()
+    public void CantRestoreObjects()
     {
         foreach (var init in this.Inits)
         {
@@ -753,20 +753,20 @@ public abstract class ObsoleteSerializationTest : IDisposable
     </objects>
   </population>
 </allors>";
-            var notLoadedEventArgs = new List<ObjectNotLoadedEventArgs>();
-            this.Population.ObjectNotLoaded += (o, args) =>
-                notLoadedEventArgs.Add(args);
+            var notRestoredEventArgs = new List<ObjectNotRestoredEventArgs>();
+            this.Population.ObjectNotRestored += (o, args) =>
+                notRestoredEventArgs.Add(args);
 
             var stringReader = new StringReader(xml);
             using (var reader = XmlReader.Create(stringReader))
             {
-                this.Population.Load(reader);
+                this.Population.Restore(reader);
             }
 
-            Assert.Single(notLoadedEventArgs);
-            var notLoadedEventArg = notLoadedEventArgs.First();
-            Assert.Equal(3, notLoadedEventArg.ObjectId);
-            Assert.Equal(new Guid("71000000000000000000000000000000"), notLoadedEventArg.ObjectTypeId);
+            Assert.Single(notRestoredEventArgs);
+            var notRestoredEventArg = notRestoredEventArgs.First();
+            Assert.Equal(3, notRestoredEventArg.ObjectId);
+            Assert.Equal(new Guid("71000000000000000000000000000000"), notRestoredEventArg.ObjectTypeId);
 
             using (var transaction = this.Population.CreateTransaction())
             {
@@ -780,7 +780,7 @@ public abstract class ObsoleteSerializationTest : IDisposable
     }
 
     [Fact]
-    public void CantLoadUnitRelation()
+    public void CantRestoreUnitRelation()
     {
         foreach (var init in this.Inits)
         {
@@ -816,21 +816,21 @@ public abstract class ObsoleteSerializationTest : IDisposable
   </population>
 </allors>";
 
-            var notLoadedEventArgs = new List<RelationNotLoadedEventArgs>();
-            this.Population.RelationNotLoaded += (o, args) =>
-                notLoadedEventArgs.Add(args);
+            var notRestoredEventArgs = new List<RelationNotRestoredEventArgs>();
+            this.Population.RelationNotRestored += (o, args) =>
+                notRestoredEventArgs.Add(args);
 
             var stringReader = new StringReader(xml);
             using (var reader = XmlReader.Create(stringReader))
             {
-                this.Population.Load(reader);
+                this.Population.Restore(reader);
             }
 
-            Assert.Single(notLoadedEventArgs);
-            var notLoadedEventArg = notLoadedEventArgs.First();
-            Assert.Equal(2, notLoadedEventArg.AssociationId);
-            Assert.Equal(new Guid("40000000000000000000000000000000"), notLoadedEventArg.RelationTypeId);
-            Assert.Equal("T29wcw==", notLoadedEventArg.RoleContents);
+            Assert.Single(notRestoredEventArgs);
+            var notRestoredEventArg = notRestoredEventArgs.First();
+            Assert.Equal(2, notRestoredEventArg.AssociationId);
+            Assert.Equal(new Guid("40000000000000000000000000000000"), notRestoredEventArg.RelationTypeId);
+            Assert.Equal("T29wcw==", notRestoredEventArg.RoleContents);
 
             using (var transaction = this.Population.CreateTransaction())
             {
@@ -845,7 +845,7 @@ public abstract class ObsoleteSerializationTest : IDisposable
     }
 
     [Fact]
-    public void CantLoadUnitRole()
+    public void CantRestoreUnitRole()
     {
         foreach (var init in this.Inits)
         {
@@ -881,21 +881,21 @@ public abstract class ObsoleteSerializationTest : IDisposable
   </population>
 </allors>";
 
-            var notLoadedEventArgs = new List<RelationNotLoadedEventArgs>();
-            this.Population.RelationNotLoaded += (o, args) =>
-                notLoadedEventArgs.Add(args);
+            var notRestoredEventArgs = new List<RelationNotRestoredEventArgs>();
+            this.Population.RelationNotRestored += (o, args) =>
+                notRestoredEventArgs.Add(args);
 
             var stringReader = new StringReader(xml);
             using (var reader = XmlReader.Create(stringReader))
             {
-                this.Population.Load(reader);
+                this.Population.Restore(reader);
             }
 
-            Assert.Single(notLoadedEventArgs);
-            var notLoadedEventArg = notLoadedEventArgs.First();
-            Assert.Equal(99, notLoadedEventArg.AssociationId);
-            Assert.Equal(new Guid("87eb0d1973a74aaeaeed66dc9163233c"), notLoadedEventArg.RelationTypeId);
-            Assert.Equal("1.1", notLoadedEventArg.RoleContents);
+            Assert.Single(notRestoredEventArgs);
+            var notRestoredEventArg = notRestoredEventArgs.First();
+            Assert.Equal(99, notRestoredEventArg.AssociationId);
+            Assert.Equal(new Guid("87eb0d1973a74aaeaeed66dc9163233c"), notRestoredEventArg.RelationTypeId);
+            Assert.Equal("1.1", notRestoredEventArg.RoleContents);
 
             using (var transaction = this.Population.CreateTransaction())
             {
@@ -909,7 +909,7 @@ public abstract class ObsoleteSerializationTest : IDisposable
     }
 
     [Fact]
-    public void CantLoadCompositeRelation()
+    public void CantRestoreCompositeRelation()
     {
         foreach (var init in this.Inits)
         {
@@ -945,21 +945,21 @@ public abstract class ObsoleteSerializationTest : IDisposable
   </population>
 </allors>";
 
-            var notLoadedEventArgs = new List<RelationNotLoadedEventArgs>();
-            this.Population.RelationNotLoaded += (o, args) =>
-                notLoadedEventArgs.Add(args);
+            var notRestoredEventArgs = new List<RelationNotRestoredEventArgs>();
+            this.Population.RelationNotRestored += (o, args) =>
+                notRestoredEventArgs.Add(args);
 
             var stringReader = new StringReader(xml);
             using (var reader = XmlReader.Create(stringReader))
             {
-                this.Population.Load(reader);
+                this.Population.Restore(reader);
             }
 
-            Assert.Single(notLoadedEventArgs);
-            var notLoadedEventArg = notLoadedEventArgs.First();
-            Assert.Equal(2, notLoadedEventArg.AssociationId);
-            Assert.Equal(new Guid("30000000000000000000000000000000"), notLoadedEventArg.RelationTypeId);
-            Assert.Equal("3", notLoadedEventArg.RoleContents);
+            Assert.Single(notRestoredEventArgs);
+            var notRestoredEventArg = notRestoredEventArgs.First();
+            Assert.Equal(2, notRestoredEventArg.AssociationId);
+            Assert.Equal(new Guid("30000000000000000000000000000000"), notRestoredEventArg.RelationTypeId);
+            Assert.Equal("3", notRestoredEventArg.RoleContents);
 
             using (var transaction = this.Population.CreateTransaction())
             {
@@ -978,7 +978,7 @@ public abstract class ObsoleteSerializationTest : IDisposable
     }
 
     [Fact]
-    public void CantLoadCompositeRole()
+    public void CantRestoreCompositeRole()
     {
         foreach (var init in this.Inits)
         {
@@ -1014,21 +1014,21 @@ public abstract class ObsoleteSerializationTest : IDisposable
   </population>
 </allors>";
 
-            var notLoadedEventArgs = new List<RelationNotLoadedEventArgs>();
-            this.Population.RelationNotLoaded += (o, args) =>
-                notLoadedEventArgs.Add(args);
+            var notRestoredEventArgs = new List<RelationNotRestoredEventArgs>();
+            this.Population.RelationNotRestored += (o, args) =>
+                notRestoredEventArgs.Add(args);
 
             var stringReader = new StringReader(xml);
             using (var reader = XmlReader.Create(stringReader))
             {
-                this.Population.Load(reader);
+                this.Population.Restore(reader);
             }
 
-            Assert.Single(notLoadedEventArgs);
-            var notLoadedEventArg = notLoadedEventArgs.First();
-            Assert.Equal(99, notLoadedEventArg.AssociationId);
-            Assert.Equal(new Guid("2cd8b843-f1f5-413d-9d6d-0d2b9b3c5cf6"), notLoadedEventArg.RelationTypeId);
-            Assert.Equal("3", notLoadedEventArg.RoleContents);
+            Assert.Single(notRestoredEventArgs);
+            var notRestoredEventArg = notRestoredEventArgs.First();
+            Assert.Equal(99, notRestoredEventArg.AssociationId);
+            Assert.Equal(new Guid("2cd8b843-f1f5-413d-9d6d-0d2b9b3c5cf6"), notRestoredEventArg.RelationTypeId);
+            Assert.Equal("3", notRestoredEventArg.RoleContents);
 
             using (var transaction = this.Population.CreateTransaction())
             {
@@ -1048,23 +1048,23 @@ public abstract class ObsoleteSerializationTest : IDisposable
 
     protected abstract IDatabase CreatePopulation();
 
-    private static string DoSave(IDatabase otherPopulation)
+    private static string DoBackup(IDatabase otherPopulation)
     {
         var stringWriter = new StringWriter();
         using (var writer = XmlWriter.Create(stringWriter))
         {
-            otherPopulation.Save(writer);
+            otherPopulation.Backup(writer);
         }
 
         return stringWriter.ToString();
     }
 
-    private static void DoLoad(IDatabase database, string xml)
+    private static void DoRestore(IDatabase database, string xml)
     {
         var stringReader = new StringReader(xml);
         using (var reader = XmlReader.Create(stringReader))
         {
-            database.Load(reader);
+            database.Restore(reader);
         }
     }
 
@@ -1223,7 +1223,7 @@ public abstract class ObsoleteSerializationTest : IDisposable
         {
             using (var writer = XmlWriter.Create(stream))
             {
-                population.Save(writer);
+                population.Backup(writer);
             }
         }
     }

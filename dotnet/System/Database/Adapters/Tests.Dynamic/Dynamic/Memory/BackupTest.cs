@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------------------------- 
-// <copyright file="SerializationTest.cs" company="Allors bvba">
+// <copyright file="BackupTest.cs" company="Allors bvba">
 // Copyright 2002-2012 Allors bvba.
 // 
 // Dual Licensed under
@@ -23,11 +23,11 @@ namespace Allors.Database.Adapters.Memory;
 
 using Allors.Database.Meta;
 
-public class SerializationTest : Adapters.SerializationTest
+public class BackupTest : Adapters.BackupTest
 {
     private readonly Profile profile = new();
 
-    public SerializationTest() => this.profile.Init();
+    public BackupTest() => this.profile.Init();
 
     public override void Dispose() => this.profile.Dispose();
 

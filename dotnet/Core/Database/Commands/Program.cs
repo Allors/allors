@@ -21,8 +21,8 @@ namespace Commands
 
     [Command(Description = "Allors Core Commands")]
     [Subcommand(
-        typeof(Save),
-        typeof(Load),
+        typeof(Backup),
+        typeof(Restore),
         typeof(Upgrade),
         typeof(Populate))]
     public class Program

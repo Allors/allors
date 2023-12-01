@@ -1,4 +1,4 @@
-// <copyright file="RelationNotLoadedEventArgs.cs" company="Allors bvba">
+﻿// <copyright file="RelationNotRestoredEventArgs.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -8,17 +8,17 @@ namespace Allors.Database;
 using System;
 
 /// <summary>
-///     The relation not loaded event arguments.
+///     The relation not restored event arguments.
 /// </summary>
-public class RelationNotLoadedEventArgs
+public class RelationNotRestoredEventArgs
 {
     /// <summary>
-    ///     Initializes a new state of the <see cref="RelationNotLoadedEventArgs" /> class.
+    ///     Initializes a new state of the <see cref="RelationNotRestoredEventArgs" /> class.
     /// </summary>
     /// <param name="relationTypeId">The relation type id.</param>
     /// <param name="associationId">The association id.</param>
     /// <param name="roleContents">The role contents.</param>
-    public RelationNotLoadedEventArgs(Guid relationTypeId, long associationId, string roleContents)
+    public RelationNotRestoredEventArgs(Guid relationTypeId, long associationId, string roleContents)
     {
         this.RelationTypeId = relationTypeId;
         this.AssociationId = associationId;
@@ -54,10 +54,10 @@ public class RelationNotLoadedEventArgs
 }
 
 /// <summary>
-///     The loader raises an RoleNotLoaded event when either the object's
-///     saved relation is not compatible with the current relation or the
-///     relation's saved type doesn't exist in the current domain.
+///     The database raises an RoleNotRestored event when either the object's
+///     backed up relation is not compatible with the current relation or the
+///     relation's backed up type doesn't exist in the current domain.
 /// </summary>
 /// <param name="sender">The sender.</param>
-/// <param name="args">The <see cref="RelationNotLoadedEventHandler" />.</param>
-public delegate void RelationNotLoadedEventHandler(object sender, RelationNotLoadedEventArgs args);
+/// <param name="args">The <see cref="RelationNotRestoredEventHandler" />.</param>
+public delegate void RelationNotRestoredEventHandler(object sender, RelationNotRestoredEventArgs args);

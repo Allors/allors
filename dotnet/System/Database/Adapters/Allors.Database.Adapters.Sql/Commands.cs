@@ -1,4 +1,4 @@
-// <copyright file="Commands.cs" company="Allors bvba">
+﻿// <copyright file="Commands.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -285,7 +285,7 @@ public abstract class Commands
         else
         {
             var objectId = this.Transaction.State.GetObjectIdForExistingObject(result.ToString());
-            // TODO: Should add to objectsToLoad
+            // TODO: Should add to objectsToRestore
             strategy.CachedObject.SetValue(roleType, objectId);
         }
     }

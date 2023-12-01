@@ -1,4 +1,4 @@
-// <copyright file="CompositeRelations.cs" company="Allors bvba">
+﻿// <copyright file="CompositeRelations.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -13,25 +13,25 @@ using Allors.Database.Meta;
 
 internal class CompositeRelations : IEnumerable<CompositeRelation>
 {
-    private readonly Action<XmlReader, Guid> cantLoadCompositeRole;
+    private readonly Action<XmlReader, Guid> canNotRestoreCompositeRole;
     private readonly Dictionary<long, IClass> classByObjectId;
     private readonly Database database;
-    private readonly Action<Guid, long, string> onRelationNotLoaded;
+    private readonly Action<Guid, long, string> onRelationNotRestored;
     private readonly XmlReader reader;
     private readonly IRelationType relationType;
 
     public CompositeRelations(
         Database database,
         IRelationType relationType,
-        Action<XmlReader, Guid> cantLoadCompositeRole,
-        Action<Guid, long, string> onRelationNotLoaded,
+        Action<XmlReader, Guid> canNotRestoreCompositeRole,
+        Action<Guid, long, string> onRelationNotRestored,
         Dictionary<long, IClass> classByObjectId,
         XmlReader reader)
     {
         this.database = database;
         this.relationType = relationType;
-        this.cantLoadCompositeRole = cantLoadCompositeRole;
-        this.onRelationNotLoaded = onRelationNotLoaded;
+        this.canNotRestoreCompositeRole = canNotRestoreCompositeRole;
+        this.onRelationNotRestored = onRelationNotRestored;
         this.classByObjectId = classByObjectId;
         this.reader = reader;
     }
@@ -50,16 +50,16 @@ internal class CompositeRelations : IEnumerable<CompositeRelation>
             {
                 // eat everything but elements
                 case XmlNodeType.Element:
-                    if (this.reader.Name.Equals(Serialization.Relation))
+                    if (this.reader.Name.Equals(XmlBackup.Relation))
                     {
-                        var associationIdString = this.reader.GetAttribute(Serialization.Association);
+                        var associationIdString = this.reader.GetAttribute(XmlBackup.Association);
                         var associationId = long.Parse(associationIdString);
 
                         this.classByObjectId.TryGetValue(associationId, out var associationClass);
 
                         if (associationClass == null || !allowedAssociationClasses.Contains(associationClass))
                         {
-                            this.cantLoadCompositeRole(this.reader.ReadSubtree(), this.relationType.Id);
+                            this.canNotRestoreCompositeRole(this.reader.ReadSubtree(), this.relationType.Id);
                         }
                         else
                         {
@@ -69,13 +69,13 @@ internal class CompositeRelations : IEnumerable<CompositeRelation>
                                 value = this.reader.ReadElementContentAsString();
 
                                 var roleIdsString = value;
-                                var roleIdStringArray = roleIdsString.Split(Serialization.ObjectsSplitterCharArray);
+                                var roleIdStringArray = roleIdsString.Split(XmlBackup.ObjectsSplitterCharArray);
 
                                 if (this.relationType.RoleType.IsOne && roleIdStringArray.Length != 1)
                                 {
                                     foreach (var roleId in roleIdStringArray)
                                     {
-                                        this.onRelationNotLoaded(this.relationType.Id, associationId, roleId);
+                                        this.onRelationNotRestored(this.relationType.Id, associationId, roleId);
                                     }
                                 }
                                 else if (this.relationType.RoleType.IsOne)
@@ -86,7 +86,7 @@ internal class CompositeRelations : IEnumerable<CompositeRelation>
 
                                     if (roleClass == null || !allowedRoleClasses.Contains(roleClass))
                                     {
-                                        this.onRelationNotLoaded(this.relationType.Id, associationId, roleIdStringArray[0]);
+                                        this.onRelationNotRestored(this.relationType.Id, associationId, roleIdStringArray[0]);
                                     }
                                     else
                                     {
@@ -103,7 +103,7 @@ internal class CompositeRelations : IEnumerable<CompositeRelation>
 
                                         if (roleClass == null || !allowedRoleClasses.Contains(roleClass))
                                         {
-                                            this.onRelationNotLoaded(this.relationType.Id, associationId, roleId.ToString());
+                                            this.onRelationNotRestored(this.relationType.Id, associationId, roleId.ToString());
                                         }
                                         else
                                         {

@@ -96,9 +96,9 @@ public abstract class Database : IDatabase
 
     public abstract string ValidationMessage { get; }
 
-    public abstract event ObjectNotLoadedEventHandler ObjectNotLoaded;
+    public abstract event ObjectNotRestoredEventHandler ObjectNotRestored;
 
-    public abstract event RelationNotLoadedEventHandler RelationNotLoaded;
+    public abstract event RelationNotRestoredEventHandler RelationNotRestored;
 
     public IDatabaseServices Services { get; }
 
@@ -112,9 +112,9 @@ public abstract class Database : IDatabase
 
     public abstract void Init();
 
-    public abstract void Load(XmlReader reader);
+    public abstract void Restore(XmlReader reader);
 
-    public abstract void Save(XmlWriter writer);
+    public abstract void Backup(XmlWriter writer);
 
     public ISink Sink { get; set; }
 

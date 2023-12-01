@@ -1,4 +1,4 @@
-// <copyright file="Objects.cs" company="Allors bvba">
+﻿// <copyright file="Objects.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -15,17 +15,17 @@ public class Objects : IEnumerable<object[]>
 {
     private readonly Dictionary<long, IClass> classByObjectId;
     private readonly Database database;
-    private readonly Action<Guid, long> onObjectNotLoaded;
+    private readonly Action<Guid, long> onObjectNotRestored;
     private readonly XmlReader reader;
 
     public Objects(
         Database database,
-        Action<Guid, long> onObjectNotLoaded,
+        Action<Guid, long> onObjectNotRestored,
         Dictionary<long, IClass> classByObjectId,
         XmlReader reader)
     {
         this.database = database;
-        this.onObjectNotLoaded = onObjectNotLoaded;
+        this.onObjectNotRestored = onObjectNotRestored;
         this.classByObjectId = classByObjectId;
         this.reader = reader;
     }
@@ -41,11 +41,11 @@ public class Objects : IEnumerable<object[]>
             {
                 // eat everything but elements
                 case XmlNodeType.Element:
-                    if (this.reader.Name.Equals(Serialization.ObjectType))
+                    if (this.reader.Name.Equals(XmlBackup.ObjectType))
                     {
                         if (!this.reader.IsEmptyElement)
                         {
-                            var objectTypeIdString = this.reader.GetAttribute(Serialization.Id);
+                            var objectTypeIdString = this.reader.GetAttribute(XmlBackup.Id);
                             if (string.IsNullOrEmpty(objectTypeIdString))
                             {
                                 throw new Exception("object type has no id");
@@ -55,13 +55,13 @@ public class Objects : IEnumerable<object[]>
                             var objectType = this.database.ObjectFactory.GetObjectType(objectTypeId);
 
                             var objectIdsString = this.reader.ReadElementContentAsString();
-                            foreach (var objectIdString in objectIdsString.Split(Serialization.ObjectsSplitterCharArray))
+                            foreach (var objectIdString in objectIdsString.Split(XmlBackup.ObjectsSplitterCharArray))
                             {
-                                var objectArray = objectIdString.Split(Serialization.ObjectSplitterCharArray);
+                                var objectArray = objectIdString.Split(XmlBackup.ObjectSplitterCharArray);
 
                                 var objectId = long.Parse(objectArray[0]);
                                 var objectVersion = objectArray.Length > 1
-                                    ? Serialization.EnsureVersion(long.Parse(objectArray[1]))
+                                    ? XmlBackup.EnsureVersion(long.Parse(objectArray[1]))
                                     : (long)Allors.Version.DatabaseInitial;
 
                                 if (objectType is IClass @class)
@@ -71,7 +71,7 @@ public class Objects : IEnumerable<object[]>
                                 }
                                 else
                                 {
-                                    this.onObjectNotLoaded(objectTypeId, objectId);
+                                    this.onObjectNotRestored(objectTypeId, objectId);
                                 }
                             }
 

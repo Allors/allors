@@ -1,4 +1,4 @@
-// <copyright file="SandboxTest.cs" company="Allors bvba">
+﻿// <copyright file="SandboxTest.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -124,7 +124,7 @@ public abstract class SandboxTest : IDisposable
 
     // TODO: Move to Protocol
     //[Fact]
-    //public void LoadExtent()
+    //public void RestoredExtent()
     //{
     //    foreach (var init in this.Inits)
     //    {
@@ -154,7 +154,7 @@ public abstract class SandboxTest : IDisposable
 
     // TODO: Move to Protocol
     //[Fact]
-    //public void SaveExtent()
+    //public void BackupExtent()
     //{
     //    foreach (var init in this.Inits)
     //    {
@@ -167,7 +167,7 @@ public abstract class SandboxTest : IDisposable
     //            Predicate = new Equals(m.C1.C1AllorsString) { Parameter = "pString" },
     //        };
 
-    //        var schemaExtent = extent.Save();
+    //        var schemaExtent = extent.Backup();
 
     //        Assert.NotNull(schemaExtent);
 

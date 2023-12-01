@@ -1,4 +1,4 @@
-// <copyright file="Database.cs" company="Allors bvba">
+﻿// <copyright file="Database.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -100,9 +100,9 @@ public class Database : Sql.Database
 
     public override string ValidationMessage => this.validationMessage;
 
-    public override event ObjectNotLoadedEventHandler ObjectNotLoaded;
+    public override event ObjectNotRestoredEventHandler ObjectNotRestored;
 
-    public override event RelationNotLoadedEventHandler RelationNotLoaded;
+    public override event RelationNotRestoredEventHandler RelationNotRestored;
 
     public override void Init()
     {
@@ -118,7 +118,7 @@ public class Database : Sql.Database
         }
     }
 
-    public override void Load(XmlReader reader)
+    public override void Restore(XmlReader reader)
     {
         lock (this)
         {
@@ -130,8 +130,8 @@ public class Database : Sql.Database
                 {
                     connection.Open();
 
-                    var load = new Load(this, connection, this.ObjectNotLoaded, this.RelationNotLoaded);
-                    load.Execute(reader);
+                    var restore = new Restore(this, connection, this.ObjectNotRestored, this.RelationNotRestored);
+                    restore.Execute(reader);
 
                     connection.Close();
                 }
@@ -151,15 +151,15 @@ public class Database : Sql.Database
         }
     }
 
-    public override void Save(XmlWriter writer)
+    public override void Backup(XmlWriter writer)
     {
         lock (this.lockObject)
         {
             var transaction = new ManagementTransaction(this, this.ManagementConnectionFactory);
             try
             {
-                var save = new Save(this, writer);
-                save.Execute(transaction);
+                var backup = new Backup(this, writer);
+                backup.Execute(transaction);
             }
             finally
             {

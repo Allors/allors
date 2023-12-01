@@ -1,4 +1,4 @@
-// <copyright file="IDatabase.cs" company="Allors bvba">
+﻿// <copyright file="IDatabase.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -47,14 +47,14 @@ public interface IDatabase
     public ISink Sink { get; set; }
 
     /// <summary>
-    ///     Occurs when an object could not be loaded.
+    ///     Occurs when an object could not be restored.
     /// </summary>
-    event ObjectNotLoadedEventHandler ObjectNotLoaded;
+    event ObjectNotRestoredEventHandler ObjectNotRestored;
 
     /// <summary>
-    ///     Occurs when a relation could not be loaded.
+    ///     Occurs when a relation could not be restored.
     /// </summary>
-    event RelationNotLoadedEventHandler RelationNotLoaded;
+    event RelationNotRestoredEventHandler RelationNotRestored;
 
     /// <summary>
     ///     Initializes the database. If this population is persistent then
@@ -69,14 +69,14 @@ public interface IDatabase
     ITransaction CreateTransaction();
 
     /// <summary>
-    ///     Loads the population from the <see cref="XmlReader" />.
+    ///     Restores the database from the backup.
     /// </summary>
     /// <param name="reader">The reader.</param>
-    void Load(XmlReader reader);
+    void Restore(XmlReader reader);
 
     /// <summary>
-    ///     Saves the population to the <see cref="XmlWriter" />.
+    ///     Creates a backup of the database. 
     /// </summary>
     /// <param name="writer">The writer.</param>
-    void Save(XmlWriter writer);
+    void Backup(XmlWriter writer);
 }

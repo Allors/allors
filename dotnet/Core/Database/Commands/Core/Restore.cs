@@ -1,4 +1,4 @@
-// <copyright file="Save.cs" company="Allors bvba">
+﻿// <copyright file="Import.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -10,30 +10,27 @@ namespace Commands
     using McMaster.Extensions.CommandLineUtils;
     using NLog;
 
-    [Command(Description = "Save the population to file")]
-    public class Save
+    [Command(Description = "Import the population from file")]
+    public class Restore
     {
         public Program Parent { get; set; }
 
         public Logger Logger => LogManager.GetCurrentClassLogger();
 
-        [Option("-f", Description = "File to save")]
-        public string FileName { get; set; } = "population.xml";
+        [Option("-f", Description = "Backup file (default is population.xml)")]
+        public string FileName { get; set; }
 
         public int OnExecute(CommandLineApplication app)
         {
             this.Logger.Info("Begin");
 
-            var fileName = this.FileName ?? this.Parent.Configuration["populationFile"];
+            var fileName = this.FileName ?? this.Parent.Configuration["populationFile"] ?? "population.xml";
             var fileInfo = new FileInfo(fileName);
 
-            using (var stream = File.Create(fileInfo.FullName))
+            using (var reader = XmlReader.Create(fileInfo.FullName))
             {
-                using (var writer = XmlWriter.Create(stream))
-                {
-                    this.Logger.Info("Saving {file}", fileInfo.FullName);
-                    this.Parent.Database.Save(writer);
-                }
+                this.Logger.Info("Restoring {file}", fileInfo.FullName);
+                this.Parent.Database.Restore(reader);
             }
 
             this.Logger.Info("End");

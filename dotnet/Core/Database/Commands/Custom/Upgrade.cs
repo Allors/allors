@@ -1,4 +1,4 @@
-// <copyright file="Upgrade.cs" company="Allors bvba">
+﻿// <copyright file="Upgrade.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -28,7 +28,7 @@ namespace Commands
 
         public Logger Logger => LogManager.GetCurrentClassLogger();
 
-        [Option("-f", Description = "File to load")]
+        [Option("-f", Description = "Backup file")]
         public string FileName { get; set; } = "population.xml";
 
         public int OnExecute(CommandLineApplication app)
@@ -37,53 +37,53 @@ namespace Commands
 
             this.Logger.Info("Begin");
 
-            var notLoadedObjectTypeIds = new HashSet<Guid>();
-            var notLoadedRelationTypeIds = new HashSet<Guid>();
+            var notRestoredObjectTypeIds = new HashSet<Guid>();
+            var notRestoredRelationTypeIds = new HashSet<Guid>();
 
-            var notLoadedObjects = new HashSet<long>();
+            var notRestoredObjects = new HashSet<long>();
 
             using (var reader = XmlReader.Create(fileInfo.FullName))
             {
-                this.Parent.Database.ObjectNotLoaded += (sender, args) =>
+                this.Parent.Database.ObjectNotRestored += (sender, args) =>
                 {
                     if (!this.excludedObjectTypes.Contains(args.ObjectTypeId))
                     {
-                        notLoadedObjectTypeIds.Add(args.ObjectTypeId);
+                        notRestoredObjectTypeIds.Add(args.ObjectTypeId);
                     }
                     else
                     {
                         var id = args.ObjectId;
-                        notLoadedObjects.Add(id);
+                        notRestoredObjects.Add(id);
                     }
                 };
 
-                this.Parent.Database.RelationNotLoaded += (sender, args) =>
+                this.Parent.Database.RelationNotRestored += (sender, args) =>
                 {
-                    if (!this.excludedRelationTypes.Contains(args.RelationTypeId) && !notLoadedObjects.Contains(args.AssociationId))
+                    if (!this.excludedRelationTypes.Contains(args.RelationTypeId) && !notRestoredObjects.Contains(args.AssociationId))
                     {
-                        notLoadedRelationTypeIds.Add(args.RelationTypeId);
+                        notRestoredRelationTypeIds.Add(args.RelationTypeId);
                     }
                 };
 
-                this.Logger.Info("Loading {file}", fileInfo.FullName);
-                this.Parent.Database.Load(reader);
+                this.Logger.Info("Restoring {file}", fileInfo.FullName);
+                this.Parent.Database.Restore(reader);
             }
 
-            if (notLoadedObjectTypeIds.Count > 0)
+            if (notRestoredObjectTypeIds.Count > 0)
             {
-                var notLoaded = notLoadedObjectTypeIds
-                    .Aggregate("Could not load following ObjectTypeIds: ", (current, objectTypeId) => current + "- " + objectTypeId);
+                var notRestored = notRestoredObjectTypeIds
+                    .Aggregate("Could not restore following ObjectTypeIds: ", (current, objectTypeId) => current + "- " + objectTypeId);
 
-                this.Logger.Error(notLoaded);
+                this.Logger.Error(notRestored);
                 return 1;
             }
 
-            if (notLoadedRelationTypeIds.Count > 0)
+            if (notRestoredRelationTypeIds.Count > 0)
             {
-                var notLoaded = notLoadedRelationTypeIds
-                    .Aggregate("Could not load following RelationTypeIds: ", (current, relationTypeId) => current + "- " + relationTypeId);
+                var notRestored = notRestoredRelationTypeIds
+                    .Aggregate("Could not restore following RelationTypeIds: ", (current, relationTypeId) => current + "- " + relationTypeId);
 
-                this.Logger.Error(notLoaded);
+                this.Logger.Error(notRestored);
                 return 1;
             }
 

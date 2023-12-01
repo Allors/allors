@@ -1,4 +1,4 @@
-// <copyright file="Import.cs" company="Allors bvba">
+﻿// <copyright file="Import.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -10,14 +10,14 @@ using System.Collections.Generic;
 using System.Xml;
 using Allors.Database.Meta;
 
-public class Load
+public class Restore
 {
     private static readonly byte[] emptyByteArray = Array.Empty<byte>();
     private readonly XmlReader reader;
 
     private readonly Transaction transaction;
 
-    public Load(Transaction transaction, XmlReader reader)
+    public Restore(Transaction transaction, XmlReader reader)
     {
         this.transaction = transaction;
         this.reader = reader;
@@ -28,19 +28,19 @@ public class Load
         while (this.reader.Read())
         {
             // only process elements, ignore others
-            if (this.reader.NodeType.Equals(XmlNodeType.Element) && this.reader.Name.Equals(Serialization.Population))
+            if (this.reader.NodeType.Equals(XmlNodeType.Element) && this.reader.Name.Equals(XmlBackup.Population))
             {
-                var version = this.reader.GetAttribute(Serialization.Version);
+                var version = this.reader.GetAttribute(XmlBackup.Version);
                 if (string.IsNullOrEmpty(version))
                 {
-                    throw new ArgumentException("Save population has no version.");
+                    throw new ArgumentException("Backup population has no version.");
                 }
 
-                Serialization.CheckVersion(int.Parse(version));
+                XmlBackup.CheckVersion(int.Parse(version));
 
                 if (!this.reader.IsEmptyElement)
                 {
-                    this.LoadPopulation();
+                    this.RestorePopulation();
                 }
 
                 break;
@@ -48,7 +48,7 @@ public class Load
         }
     }
 
-    private void LoadPopulation()
+    private void RestorePopulation()
     {
         while (this.reader.Read())
         {
@@ -56,32 +56,32 @@ public class Load
             {
                 // eat everything but elements
                 case XmlNodeType.Element:
-                    if (this.reader.Name.Equals(Serialization.Objects))
+                    if (this.reader.Name.Equals(XmlBackup.Objects))
                     {
                         if (!this.reader.IsEmptyElement)
                         {
-                            this.LoadObjects();
+                            this.RestoreObjects();
                         }
                     }
-                    else if (this.reader.Name.Equals(Serialization.Relations))
+                    else if (this.reader.Name.Equals(XmlBackup.Relations))
                     {
                         if (!this.reader.IsEmptyElement)
                         {
-                            this.LoadRelations();
+                            this.RestoreRelations();
                         }
                     }
                     else
                     {
                         throw new Exception("Unknown child element <" + this.reader.Name + "> in parent element <" +
-                                            Serialization.Population + ">");
+                                            XmlBackup.Population + ">");
                     }
 
                     break;
 
                 case XmlNodeType.EndElement:
-                    if (!this.reader.Name.Equals(Serialization.Population))
+                    if (!this.reader.Name.Equals(XmlBackup.Population))
                     {
-                        throw new Exception("Expected closing element </" + Serialization.Population + ">");
+                        throw new Exception("Expected closing element </" + XmlBackup.Population + ">");
                     }
 
                     return;
@@ -89,36 +89,36 @@ public class Load
         }
     }
 
-    private void LoadObjects()
+    private void RestoreObjects()
     {
         while (this.reader.Read())
         {
             switch (this.reader.NodeType)
             {
                 case XmlNodeType.Element:
-                    if (this.reader.Name.Equals(Serialization.Database))
+                    if (this.reader.Name.Equals(XmlBackup.Database))
                     {
                         if (!this.reader.IsEmptyElement)
                         {
-                            this.LoadObjectTypes();
+                            this.RestoreObjectTypes();
                         }
                     }
-                    else if (this.reader.Name.Equals(Serialization.Workspace))
+                    else if (this.reader.Name.Equals(XmlBackup.Workspace))
                     {
-                        throw new Exception("Can not load workspace objects in a database.");
+                        throw new Exception("Can not restore workspace objects in a database.");
                     }
                     else
                     {
-                        throw new Exception("Unknown child element <" + this.reader.Name + "> in parent element <" + Serialization.Objects +
+                        throw new Exception("Unknown child element <" + this.reader.Name + "> in parent element <" + XmlBackup.Objects +
                                             ">");
                     }
 
                     break;
 
                 case XmlNodeType.EndElement:
-                    if (!this.reader.Name.Equals(Serialization.Objects))
+                    if (!this.reader.Name.Equals(XmlBackup.Objects))
                     {
-                        throw new Exception("Expected closing element </" + Serialization.Objects + ">");
+                        throw new Exception("Expected closing element </" + XmlBackup.Objects + ">");
                     }
 
                     return;
@@ -126,7 +126,7 @@ public class Load
         }
     }
 
-    private void LoadObjectTypes()
+    private void RestoreObjectTypes()
     {
         var skip = false;
         while (skip || this.reader.Read())
@@ -137,11 +137,11 @@ public class Load
             {
                 // eat everything but elements
                 case XmlNodeType.Element:
-                    if (this.reader.Name.Equals(Serialization.ObjectType))
+                    if (this.reader.Name.Equals(XmlBackup.ObjectType))
                     {
                         if (!this.reader.IsEmptyElement)
                         {
-                            var objectTypeIdString = this.reader.GetAttribute(Serialization.Id);
+                            var objectTypeIdString = this.reader.GetAttribute(XmlBackup.Id);
                             if (string.IsNullOrEmpty(objectTypeIdString))
                             {
                                 throw new Exception("object type has no id");
@@ -151,13 +151,13 @@ public class Load
                             var objectType = this.transaction.Database.ObjectFactory.GetObjectType(objectTypeId);
 
                             var objectIdsString = this.reader.ReadElementContentAsString();
-                            foreach (var objectIdString in objectIdsString.Split(Serialization.ObjectsSplitterCharArray))
+                            foreach (var objectIdString in objectIdsString.Split(XmlBackup.ObjectsSplitterCharArray))
                             {
-                                var objectArray = objectIdString.Split(Serialization.ObjectSplitterCharArray);
+                                var objectArray = objectIdString.Split(XmlBackup.ObjectSplitterCharArray);
 
                                 var objectId = long.Parse(objectArray[0]);
                                 var objectVersion = objectArray.Length > 1
-                                    ? Serialization.EnsureVersion(long.Parse(objectArray[1]))
+                                    ? XmlBackup.EnsureVersion(long.Parse(objectArray[1]))
                                     : (long)Allors.Version.DatabaseInitial;
 
                                 if (objectType is IClass)
@@ -166,26 +166,26 @@ public class Load
                                 }
                                 else
                                 {
-                                    this.transaction.Database.OnObjectNotLoaded(objectTypeId, objectId);
+                                    this.transaction.Database.OnObjectNotRestored(objectTypeId, objectId);
                                 }
                             }
 
                             skip = this.reader.IsStartElement() ||
-                                   (this.reader.NodeType == XmlNodeType.EndElement && this.reader.Name.Equals(Serialization.Database));
+                                   (this.reader.NodeType == XmlNodeType.EndElement && this.reader.Name.Equals(XmlBackup.Database));
                         }
                     }
                     else
                     {
                         throw new Exception("Unknown child element <" + this.reader.Name + "> in parent element <" +
-                                            Serialization.Database + ">");
+                                            XmlBackup.Database + ">");
                     }
 
                     break;
 
                 case XmlNodeType.EndElement:
-                    if (!this.reader.Name.Equals(Serialization.Database))
+                    if (!this.reader.Name.Equals(XmlBackup.Database))
                     {
-                        throw new Exception("Expected closing element </" + Serialization.Database + ">");
+                        throw new Exception("Expected closing element </" + XmlBackup.Database + ">");
                     }
 
                     return;
@@ -193,36 +193,36 @@ public class Load
         }
     }
 
-    private void LoadRelations()
+    private void RestoreRelations()
     {
         while (this.reader.Read())
         {
             switch (this.reader.NodeType)
             {
                 case XmlNodeType.Element:
-                    if (this.reader.Name.Equals(Serialization.Database))
+                    if (this.reader.Name.Equals(XmlBackup.Database))
                     {
                         if (!this.reader.IsEmptyElement)
                         {
-                            this.LoadDatabaseRelationTypes();
+                            this.RestoreDatabaseRelationTypes();
                         }
                     }
-                    else if (this.reader.Name.Equals(Serialization.Workspace))
+                    else if (this.reader.Name.Equals(XmlBackup.Workspace))
                     {
-                        throw new Exception("Can not load workspace relations in a database.");
+                        throw new Exception("Can not restore workspace relations in a database.");
                     }
                     else
                     {
                         throw new Exception("Unknown child element <" + this.reader.Name + "> in parent element <" +
-                                            Serialization.Relations + ">");
+                                            XmlBackup.Relations + ">");
                     }
 
                     break;
 
                 case XmlNodeType.EndElement:
-                    if (!this.reader.Name.Equals(Serialization.Relations))
+                    if (!this.reader.Name.Equals(XmlBackup.Relations))
                     {
-                        throw new Exception("Expected closing element </" + Serialization.Relations + ">");
+                        throw new Exception("Expected closing element </" + XmlBackup.Relations + ">");
                     }
 
                     return;
@@ -230,7 +230,7 @@ public class Load
         }
     }
 
-    private void LoadDatabaseRelationTypes()
+    private void RestoreDatabaseRelationTypes()
     {
         while (this.reader.Read())
         {
@@ -240,10 +240,10 @@ public class Load
                 case XmlNodeType.Element:
                     if (!this.reader.IsEmptyElement)
                     {
-                        if (this.reader.Name.Equals(Serialization.RelationTypeUnit)
-                            || this.reader.Name.Equals(Serialization.RelationTypeComposite))
+                        if (this.reader.Name.Equals(XmlBackup.RelationTypeUnit)
+                            || this.reader.Name.Equals(XmlBackup.RelationTypeComposite))
                         {
-                            var relationTypeIdString = this.reader.GetAttribute(Serialization.Id);
+                            var relationTypeIdString = this.reader.GetAttribute(XmlBackup.Id);
                             if (string.IsNullOrEmpty(relationTypeIdString))
                             {
                                 throw new Exception("Relation type has no id");
@@ -252,26 +252,26 @@ public class Load
                             var relationTypeId = new Guid(relationTypeIdString);
                             var relationType = (IRelationType)this.transaction.Database.MetaPopulation.FindById(relationTypeId);
 
-                            if (this.reader.Name.Equals(Serialization.RelationTypeUnit))
+                            if (this.reader.Name.Equals(XmlBackup.RelationTypeUnit))
                             {
                                 if (relationType == null || relationType.RoleType.ObjectType is IComposite)
                                 {
-                                    this.CantLoadUnitRole(relationTypeId);
+                                    this.CantRestoreUnitRole(relationTypeId);
                                 }
                                 else
                                 {
-                                    this.LoadUnitRelations(relationType);
+                                    this.RestoreUnitRelations(relationType);
                                 }
                             }
-                            else if (this.reader.Name.Equals(Serialization.RelationTypeComposite))
+                            else if (this.reader.Name.Equals(XmlBackup.RelationTypeComposite))
                             {
                                 if (relationType == null || relationType.RoleType.ObjectType is IUnit)
                                 {
-                                    this.CantLoadCompositeRole(relationTypeId);
+                                    this.CantRestoreCompositeRole(relationTypeId);
                                 }
                                 else
                                 {
-                                    this.LoadCompositeRelations(relationType);
+                                    this.RestoreCompositeRelations(relationType);
                                 }
                             }
                         }
@@ -279,16 +279,16 @@ public class Load
                         {
                             throw new Exception(
                                 "Unknown child element <" + this.reader.Name + "> in parent element <"
-                                + Serialization.Database + ">");
+                                + XmlBackup.Database + ">");
                         }
                     }
 
                     break;
 
                 case XmlNodeType.EndElement:
-                    if (!this.reader.Name.Equals(Serialization.Database))
+                    if (!this.reader.Name.Equals(XmlBackup.Database))
                     {
-                        throw new Exception("Expected closing element </" + Serialization.Database + ">");
+                        throw new Exception("Expected closing element </" + XmlBackup.Database + ">");
                     }
 
                     return;
@@ -296,7 +296,7 @@ public class Load
         }
     }
 
-    private void LoadUnitRelations(IRelationType relationType)
+    private void RestoreUnitRelations(IRelationType relationType)
     {
         var skip = false;
         while (skip || this.reader.Read())
@@ -307,11 +307,11 @@ public class Load
             {
                 // eat everything but elements
                 case XmlNodeType.Element:
-                    if (this.reader.Name.Equals(Serialization.Relation))
+                    if (this.reader.Name.Equals(XmlBackup.Relation))
                     {
-                        var associationIdString = this.reader.GetAttribute(Serialization.Association);
+                        var associationIdString = this.reader.GetAttribute(XmlBackup.Association);
                         var associationId = long.Parse(associationIdString);
-                        var strategy = this.LoadInstantiateStrategy(associationId);
+                        var strategy = this.RestoreInstantiateStrategy(associationId);
 
                         var value = string.Empty;
                         if (!this.reader.IsEmptyElement)
@@ -320,12 +320,12 @@ public class Load
 
                             skip = this.reader.IsStartElement() ||
                                    (this.reader.NodeType == XmlNodeType.EndElement &&
-                                    this.reader.Name.Equals(Serialization.RelationTypeUnit));
+                                    this.reader.Name.Equals(XmlBackup.RelationTypeUnit));
                         }
 
                         if (strategy == null)
                         {
-                            this.transaction.Database.OnRelationNotLoaded(relationType.Id, associationId, value);
+                            this.transaction.Database.OnRelationNotRestored(relationType.Id, associationId, value);
                         }
                         else
                         {
@@ -351,28 +351,28 @@ public class Load
                                     var unitType = (IUnit)relationType.RoleType.ObjectType;
                                     var unitTypeTag = unitType.Tag;
 
-                                    var unit = Serialization.ReadString(value, unitTypeTag);
+                                    var unit = XmlBackup.ReadString(value, unitTypeTag);
                                     strategy.SetUnitRole(relationType.RoleType, unit);
                                 }
                             }
                             catch
                             {
-                                this.transaction.Database.OnRelationNotLoaded(relationType.Id, associationId, value);
+                                this.transaction.Database.OnRelationNotRestored(relationType.Id, associationId, value);
                             }
                         }
                     }
                     else
                     {
                         throw new Exception("Unknown child element <" + this.reader.Name + "> in parent element <" +
-                                            Serialization.RelationTypeUnit + ">");
+                                            XmlBackup.RelationTypeUnit + ">");
                     }
 
                     break;
 
                 case XmlNodeType.EndElement:
-                    if (!this.reader.Name.Equals(Serialization.RelationTypeUnit))
+                    if (!this.reader.Name.Equals(XmlBackup.RelationTypeUnit))
                     {
-                        throw new Exception("Expected closing element </" + Serialization.RelationTypeUnit + ">");
+                        throw new Exception("Expected closing element </" + XmlBackup.RelationTypeUnit + ">");
                     }
 
                     return;
@@ -380,7 +380,7 @@ public class Load
         }
     }
 
-    private void LoadCompositeRelations(IRelationType relationType)
+    private void RestoreCompositeRelations(IRelationType relationType)
     {
         var skip = false;
         while (skip || this.reader.Read())
@@ -391,10 +391,10 @@ public class Load
             {
                 // eat everything but elements
                 case XmlNodeType.Element:
-                    if (this.reader.Name.Equals(Serialization.Relation))
+                    if (this.reader.Name.Equals(XmlBackup.Relation))
                     {
-                        var associationId = long.Parse(this.reader.GetAttribute(Serialization.Association));
-                        var association = this.LoadInstantiateStrategy(associationId);
+                        var associationId = long.Parse(this.reader.GetAttribute(XmlBackup.Association));
+                        var association = this.RestoreInstantiateStrategy(associationId);
 
                         var value = string.Empty;
                         if (!this.reader.IsEmptyElement)
@@ -403,10 +403,10 @@ public class Load
 
                             skip = this.reader.IsStartElement() ||
                                    (this.reader.NodeType == XmlNodeType.EndElement &&
-                                    this.reader.Name.Equals(Serialization.RelationTypeComposite));
+                                    this.reader.Name.Equals(XmlBackup.RelationTypeComposite));
 
                             var roleIdsString = value;
-                            var roleIdStringArray = roleIdsString.Split(Serialization.ObjectsSplitterCharArray);
+                            var roleIdStringArray = roleIdsString.Split(XmlBackup.ObjectsSplitterCharArray);
 
                             if (association == null ||
                                 !this.transaction.Database.ContainsClass(
@@ -415,18 +415,18 @@ public class Load
                             {
                                 foreach (var roleId in roleIdStringArray)
                                 {
-                                    this.transaction.Database.OnRelationNotLoaded(relationType.Id, associationId, roleId);
+                                    this.transaction.Database.OnRelationNotRestored(relationType.Id, associationId, roleId);
                                 }
                             }
                             else if (relationType.RoleType.IsOne)
                             {
                                 var roleIdString = long.Parse(roleIdStringArray[0]);
-                                var roleStrategy = this.LoadInstantiateStrategy(roleIdString);
+                                var roleStrategy = this.RestoreInstantiateStrategy(roleIdString);
                                 if (roleStrategy == null ||
                                     !this.transaction.Database.ContainsClass((IComposite)relationType.RoleType.ObjectType,
                                         roleStrategy.UncheckedObjectType))
                                 {
-                                    this.transaction.Database.OnRelationNotLoaded(relationType.Id, associationId, roleIdStringArray[0]);
+                                    this.transaction.Database.OnRelationNotRestored(relationType.Id, associationId, roleIdStringArray[0]);
                                 }
                                 else if (relationType.RoleType.AssociationType.IsMany)
                                 {
@@ -443,13 +443,13 @@ public class Load
                                 foreach (var roleIdString in roleIdStringArray)
                                 {
                                     var roleId = long.Parse(roleIdString);
-                                    var role = this.LoadInstantiateStrategy(roleId);
+                                    var role = this.RestoreInstantiateStrategy(roleId);
                                     if (role == null ||
                                         !this.transaction.Database.ContainsClass(
                                             (IComposite)relationType.RoleType.ObjectType,
                                             role.UncheckedObjectType))
                                     {
-                                        this.transaction.Database.OnRelationNotLoaded(relationType.Id, associationId, roleId.ToString());
+                                        this.transaction.Database.OnRelationNotRestored(relationType.Id, associationId, roleId.ToString());
                                     }
                                     else
                                     {
@@ -471,15 +471,15 @@ public class Load
                     else
                     {
                         throw new Exception("Unknown child element <" + this.reader.Name + "> in parent element <" +
-                                            Serialization.RelationTypeComposite + ">");
+                                            XmlBackup.RelationTypeComposite + ">");
                     }
 
                     break;
 
                 case XmlNodeType.EndElement:
-                    if (!this.reader.Name.Equals(Serialization.RelationTypeComposite))
+                    if (!this.reader.Name.Equals(XmlBackup.RelationTypeComposite))
                     {
-                        throw new Exception("Expected closing element </" + Serialization.RelationTypeComposite +
+                        throw new Exception("Expected closing element </" + XmlBackup.RelationTypeComposite +
                                             ">");
                     }
 
@@ -488,18 +488,18 @@ public class Load
         }
     }
 
-    private Strategy LoadInstantiateStrategy(long id) => this.transaction.GetStrategy(id);
+    private Strategy RestoreInstantiateStrategy(long id) => this.transaction.GetStrategy(id);
 
-    private void CantLoadUnitRole(Guid relationTypeId)
+    private void CantRestoreUnitRole(Guid relationTypeId)
     {
         while (this.reader.Read())
         {
             switch (this.reader.NodeType)
             {
                 case XmlNodeType.Element:
-                    if (this.reader.Name.Equals(Serialization.Relation))
+                    if (this.reader.Name.Equals(XmlBackup.Relation))
                     {
-                        var a = this.reader.GetAttribute(Serialization.Association);
+                        var a = this.reader.GetAttribute(XmlBackup.Association);
                         var value = string.Empty;
 
                         if (!this.reader.IsEmptyElement)
@@ -507,7 +507,7 @@ public class Load
                             value = this.reader.ReadElementContentAsString();
                         }
 
-                        this.transaction.Database.OnRelationNotLoaded(relationTypeId, long.Parse(a), value);
+                        this.transaction.Database.OnRelationNotRestored(relationTypeId, long.Parse(a), value);
                     }
 
                     break;
@@ -518,16 +518,16 @@ public class Load
         }
     }
 
-    private void CantLoadCompositeRole(Guid relationTypeId)
+    private void CantRestoreCompositeRole(Guid relationTypeId)
     {
         while (this.reader.Read())
         {
             switch (this.reader.NodeType)
             {
                 case XmlNodeType.Element:
-                    if (this.reader.Name.Equals(Serialization.Relation))
+                    if (this.reader.Name.Equals(XmlBackup.Relation))
                     {
-                        var associationIdString = this.reader.GetAttribute(Serialization.Association);
+                        var associationIdString = this.reader.GetAttribute(XmlBackup.Association);
                         var associationId = long.Parse(associationIdString);
                         if (string.IsNullOrEmpty(associationIdString))
                         {
@@ -536,14 +536,14 @@ public class Load
 
                         if (this.reader.IsEmptyElement)
                         {
-                            this.transaction.Database.OnRelationNotLoaded(relationTypeId, associationId, null);
+                            this.transaction.Database.OnRelationNotRestored(relationTypeId, associationId, null);
                         }
                         else
                         {
                             var value = this.reader.ReadElementContentAsString();
-                            foreach (var r in value.Split(Serialization.ObjectsSplitterCharArray))
+                            foreach (var r in value.Split(XmlBackup.ObjectsSplitterCharArray))
                             {
-                                this.transaction.Database.OnRelationNotLoaded(relationTypeId, associationId, r);
+                                this.transaction.Database.OnRelationNotRestored(relationTypeId, associationId, r);
                             }
                         }
                     }

@@ -1,24 +1,24 @@
-// <copyright file="ObjectNotLoadedEventArgs.cs" company="Allors bvba">
+﻿// <copyright file="ObjectNotRestoredEventArgs.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
-// <summary>Defines the ObjectNotLoadedEventArgs type.</summary>
+// <summary>Defines the ObjectNotRestoredEventArgs type.</summary>
 
 namespace Allors.Database;
 
 using System;
 
 /// <summary>
-///     The object not loaded event arguments.
+///     The object not restored event arguments.
 /// </summary>
-public class ObjectNotLoadedEventArgs
+public class ObjectNotRestoredEventArgs
 {
     /// <summary>
-    ///     Initializes a new state of the <see cref="ObjectNotLoadedEventArgs" /> class.
+    ///     Initializes a new state of the <see cref="ObjectNotRestoredEventArgs" /> class.
     /// </summary>
     /// <param name="objectTypeId">The object type id.</param>
     /// <param name="objectId">The object id.</param>
-    public ObjectNotLoadedEventArgs(Guid objectTypeId, long objectId)
+    public ObjectNotRestoredEventArgs(Guid objectTypeId, long objectId)
     {
         this.ObjectTypeId = objectTypeId;
         this.ObjectId = objectId;
@@ -46,10 +46,10 @@ public class ObjectNotLoadedEventArgs
 }
 
 /// <summary>
-///     The loader raises an ObjectNotLoaded event when either the object's
-///     saved type is not compatible with the current type or the
-///     object's saved type doesn't exist in the current domain.
+///     The database raises an ObjectNotRestored event when either the object's
+///     backed up type is not compatible with the current type or the
+///     object's backed up type doesn't exist in the current domain.
 /// </summary>
 /// <param name="sender">The sender.</param>
-/// <param name="args">The <see cref="ObjectNotLoadedEventArgs" />.</param>
-public delegate void ObjectNotLoadedEventHandler(object sender, ObjectNotLoadedEventArgs args);
+/// <param name="args">The <see cref="ObjectNotRestoredEventArgs" />.</param>
+public delegate void ObjectNotRestoredEventHandler(object sender, ObjectNotRestoredEventArgs args);

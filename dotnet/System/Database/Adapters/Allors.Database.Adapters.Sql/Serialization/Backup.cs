@@ -1,47 +1,47 @@
-// <copyright file="Save.cs" company="Allors bvba">
+﻿// <copyright file="Backup.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Adapters.Sql.SqlClient;
+namespace Allors.Database.Adapters.Sql;
 
 using System.Collections.Generic;
 using System.Xml;
 using Allors.Database.Meta;
 
-internal class Save
+public class Backup
 {
     private readonly Database database;
     private readonly XmlWriter writer;
 
-    internal Save(Database database, XmlWriter writer)
+    public Backup(Database database, XmlWriter writer)
     {
         this.database = database;
         this.writer = writer;
     }
 
-    internal virtual void Execute(ManagementTransaction transaction)
+    public virtual void Execute(ManagementTransaction transaction)
     {
         var writeDocument = false;
         if (this.writer.WriteState == WriteState.Start)
         {
             this.writer.WriteStartDocument();
-            this.writer.WriteStartElement(Serialization.Allors);
+            this.writer.WriteStartElement(XmlBackup.Allors);
             writeDocument = true;
         }
 
-        this.writer.WriteStartElement(Serialization.Population);
-        this.writer.WriteAttributeString(Serialization.Version, Serialization.VersionCurrent.ToString());
+        this.writer.WriteStartElement(XmlBackup.Population);
+        this.writer.WriteAttributeString(XmlBackup.Version, XmlBackup.VersionCurrent.ToString());
 
-        this.writer.WriteStartElement(Serialization.Objects);
-        this.writer.WriteStartElement(Serialization.Database);
-        this.SaveObjects(transaction);
+        this.writer.WriteStartElement(XmlBackup.Objects);
+        this.writer.WriteStartElement(XmlBackup.Database);
+        this.BackupObjects(transaction);
         this.writer.WriteEndElement();
         this.writer.WriteEndElement();
 
-        this.writer.WriteStartElement(Serialization.Relations);
-        this.writer.WriteStartElement(Serialization.Database);
-        this.SaveRelations(transaction);
+        this.writer.WriteStartElement(XmlBackup.Relations);
+        this.writer.WriteStartElement(XmlBackup.Database);
+        this.BackupRelations(transaction);
         this.writer.WriteEndElement();
         this.writer.WriteEndElement();
 
@@ -54,7 +54,7 @@ internal class Save
         }
     }
 
-    protected void SaveObjects(ManagementTransaction transaction)
+    protected void BackupObjects(ManagementTransaction transaction)
     {
         var mapping = this.database.Mapping;
 
@@ -64,10 +64,10 @@ internal class Save
         {
             var atLeastOne = false;
 
-            var sql = $"SELECT {Sql.Mapping.ColumnNameForObject}, {Sql.Mapping.ColumnNameForVersion}\n";
-            sql += $"FROM {this.database.Mapping.TableNameForObjects}\n";
-            sql += $"WHERE {Sql.Mapping.ColumnNameForClass}={mapping.ParamInvocationNameForClass}\n";
-            sql += $"ORDER BY {Sql.Mapping.ColumnNameForObject}";
+            var sql = "SELECT " + Mapping.ColumnNameForObject + ", " + Mapping.ColumnNameForVersion + "\n";
+            sql += "FROM " + this.database.Mapping.TableNameForObjects + "\n";
+            sql += "WHERE " + Mapping.ColumnNameForClass + "=" + mapping.ParamInvocationNameForClass + "\n";
+            sql += "ORDER BY " + Mapping.ColumnNameForObject;
 
             using (var command = transaction.Connection.CreateCommand())
             {
@@ -82,18 +82,18 @@ internal class Save
                         {
                             atLeastOne = true;
 
-                            this.writer.WriteStartElement(Serialization.ObjectType);
-                            this.writer.WriteAttributeString(Serialization.Id, type.Id.ToString());
+                            this.writer.WriteStartElement(XmlBackup.ObjectType);
+                            this.writer.WriteAttributeString(XmlBackup.Id, type.Id.ToString());
                         }
                         else
                         {
-                            this.writer.WriteString(Serialization.ObjectsSplitter);
+                            this.writer.WriteString(XmlBackup.ObjectsSplitter);
                         }
 
                         var objectId = long.Parse(reader[0].ToString());
                         var version = reader[1].ToString();
 
-                        this.writer.WriteString(objectId + Serialization.ObjectSplitter + version);
+                        this.writer.WriteString(objectId + XmlBackup.ObjectSplitter + version);
                     }
                 }
             }
@@ -105,7 +105,7 @@ internal class Save
         }
     }
 
-    protected void SaveRelations(ManagementTransaction transaction)
+    protected void BackupRelations(ManagementTransaction transaction)
     {
         var exclusiveRootClassesByObjectType = new Dictionary<IObjectType, HashSet<IObjectType>>();
 
@@ -146,45 +146,43 @@ internal class Save
                             sql += "UNION\n";
                         }
 
-                        sql +=
-                            $"SELECT {Sql.Mapping.ColumnNameForObject} As {Sql.Mapping.ColumnNameForAssociation}, {this.database.Mapping.ColumnNameByRelationType[roleType.RelationType]} As {Sql.Mapping.ColumnNameForRole}\n";
-                        sql +=
-                            $"FROM {this.database.Mapping.TableNameForObjectByClass[(IClass)exclusiveRootClass]}\n";
-                        sql +=
-                            $"WHERE {this.database.Mapping.ColumnNameByRelationType[roleType.RelationType]} IS NOT NULL\n";
+                        sql += "SELECT " + Mapping.ColumnNameForObject + " As " + Mapping.ColumnNameForAssociation + ", " +
+                               this.database.Mapping.ColumnNameByRelationType[roleType.RelationType] + " As " + Mapping.ColumnNameForRole +
+                               "\n";
+                        sql += "FROM " + this.database.Mapping.TableNameForObjectByClass[(IClass)exclusiveRootClass] + "\n";
+                        sql += "WHERE " + this.database.Mapping.ColumnNameByRelationType[roleType.RelationType] + " IS NOT NULL\n";
                     }
 
-                    sql += $"ORDER BY {Sql.Mapping.ColumnNameForAssociation}";
+                    sql += "ORDER BY " + Mapping.ColumnNameForAssociation;
                 }
                 else if ((roleType.IsMany && associationType.IsMany) || !relation.ExistExclusiveClasses)
                 {
-                    sql += $"SELECT {Sql.Mapping.ColumnNameForAssociation},{Sql.Mapping.ColumnNameForRole}\n";
-                    sql += $"FROM {this.database.Mapping.TableNameForRelationByRelationType[relation]}\n";
-                    sql += $"ORDER BY {Sql.Mapping.ColumnNameForAssociation},{Sql.Mapping.ColumnNameForRole}";
+                    sql += "SELECT " + Mapping.ColumnNameForAssociation + "," + Mapping.ColumnNameForRole + "\n";
+                    sql += "FROM " + this.database.Mapping.TableNameForRelationByRelationType[relation] + "\n";
+                    sql += "ORDER BY " + Mapping.ColumnNameForAssociation + "," + Mapping.ColumnNameForRole;
                 }
                 else
                 {
                     // use foreign keys
                     if (roleType.IsOne)
                     {
-                        sql +=
-                            $"SELECT {Sql.Mapping.ColumnNameForObject} As {Sql.Mapping.ColumnNameForAssociation}, {this.database.Mapping.ColumnNameByRelationType[roleType.RelationType]} As {Sql.Mapping.ColumnNameForRole}\n";
-                        sql +=
-                            $"FROM {this.database.Mapping.TableNameForObjectByClass[associationType.ObjectType.ExclusiveClass]}\n";
-                        sql +=
-                            $"WHERE {this.database.Mapping.ColumnNameByRelationType[roleType.RelationType]} IS NOT NULL\n";
-                        sql += $"ORDER BY {Sql.Mapping.ColumnNameForAssociation}";
+                        sql += "SELECT " + Mapping.ColumnNameForObject + " As " + Mapping.ColumnNameForAssociation + ", " +
+                               this.database.Mapping.ColumnNameByRelationType[roleType.RelationType] + " As " + Mapping.ColumnNameForRole +
+                               "\n";
+                        sql += "FROM " + this.database.Mapping.TableNameForObjectByClass[associationType.ObjectType.ExclusiveClass] + "\n";
+                        sql += "WHERE " + this.database.Mapping.ColumnNameByRelationType[roleType.RelationType] + " IS NOT NULL\n";
+                        sql += "ORDER BY " + Mapping.ColumnNameForAssociation;
                     }
                     else
                     {
                         // role.Many
-                        sql +=
-                            $"SELECT {this.database.Mapping.ColumnNameByRelationType[associationType.RelationType]} As {Sql.Mapping.ColumnNameForAssociation}, {Sql.Mapping.ColumnNameForObject} As {Sql.Mapping.ColumnNameForRole}\n";
-                        sql +=
-                            $"FROM {this.database.Mapping.TableNameForObjectByClass[((IComposite)roleType.ObjectType).ExclusiveClass]}\n";
-                        sql +=
-                            $"WHERE {this.database.Mapping.ColumnNameByRelationType[associationType.RelationType]} IS NOT NULL\n";
-                        sql += $"ORDER BY {Sql.Mapping.ColumnNameForAssociation},{Sql.Mapping.ColumnNameForRole}";
+                        sql += "SELECT " + this.database.Mapping.ColumnNameByRelationType[associationType.RelationType] + " As " +
+                               Mapping.ColumnNameForAssociation + ", " + Mapping.ColumnNameForObject + " As " + Mapping.ColumnNameForRole +
+                               "\n";
+                        sql += "FROM " + this.database.Mapping.TableNameForObjectByClass[((IComposite)roleType.ObjectType).ExclusiveClass] +
+                               "\n";
+                        sql += "WHERE " + this.database.Mapping.ColumnNameByRelationType[associationType.RelationType] + " IS NOT NULL\n";
+                        sql += "ORDER BY " + Mapping.ColumnNameForAssociation + "," + Mapping.ColumnNameForRole;
                     }
                 }
 
@@ -217,7 +215,7 @@ internal class Save
                                     {
                                         var unitTypeTag = ((IUnit)roleType.ObjectType).Tag;
                                         var r = command.GetValue(reader, unitTypeTag, 1);
-                                        var content = Serialization.WriteString(unitTypeTag, r);
+                                        var content = XmlBackup.WriteString(unitTypeTag, r);
                                         relationTypeOneXmlWriter.Write(a, content);
                                     }
                                     else

@@ -42,15 +42,15 @@ public class Database : IDatabase
         this.MetaCache = this.Services.Get<IMetaCache>();
     }
 
-    internal bool IsLoading { get; private set; }
+    internal bool IsRestoring { get; private set; }
 
     internal IMetaCache MetaCache { get; set; }
 
     protected virtual Transaction Transaction => this.transaction ??= new Transaction(this, this.Services.CreateTransactionServices());
 
-    public event ObjectNotLoadedEventHandler ObjectNotLoaded;
+    public event ObjectNotRestoredEventHandler ObjectNotRestored;
 
-    public event RelationNotLoadedEventHandler RelationNotLoaded;
+    public event RelationNotRestoredEventHandler RelationNotRestored;
 
     public string Id { get; }
 
@@ -64,26 +64,26 @@ public class Database : IDatabase
 
     ITransaction IDatabase.CreateTransaction() => this.CreateDatabaseTransaction();
 
-    public void Load(XmlReader reader)
+    public void Restore(XmlReader reader)
     {
         this.Init();
 
         try
         {
-            this.IsLoading = true;
+            this.IsRestoring = true;
 
-            var load = new Load(this.Transaction, reader);
-            load.Execute();
+            var restore = new Restore(this.Transaction, reader);
+            restore.Execute();
 
             this.Transaction.Commit();
         }
         finally
         {
-            this.IsLoading = false;
+            this.IsRestoring = false;
         }
     }
 
-    public void Save(XmlWriter writer) => this.Transaction.Save(writer);
+    public void Backup(XmlWriter writer) => this.Transaction.Backup(writer);
 
     public ISink Sink { get; set; }
 
@@ -160,29 +160,29 @@ public class Database : IDatabase
         return roleStrategy;
     }
 
-    internal void OnObjectNotLoaded(Guid metaTypeId, long allorsObjectId)
+    internal void OnObjectNotRestored(Guid metaTypeId, long allorsObjectId)
     {
-        var args = new ObjectNotLoadedEventArgs(metaTypeId, allorsObjectId);
-        if (this.ObjectNotLoaded != null)
+        var args = new ObjectNotRestoredEventArgs(metaTypeId, allorsObjectId);
+        if (this.ObjectNotRestored != null)
         {
-            this.ObjectNotLoaded(this, args);
+            this.ObjectNotRestored(this, args);
         }
         else
         {
-            throw new Exception("Object not loaded: " + args);
+            throw new Exception("Object not restored: " + args);
         }
     }
 
-    internal void OnRelationNotLoaded(Guid relationTypeId, long associationObjectId, string roleContents)
+    internal void OnRelationNotRestored(Guid relationTypeId, long associationObjectId, string roleContents)
     {
-        var args = new RelationNotLoadedEventArgs(relationTypeId, associationObjectId, roleContents);
-        if (this.RelationNotLoaded != null)
+        var args = new RelationNotRestoredEventArgs(relationTypeId, associationObjectId, roleContents);
+        if (this.RelationNotRestored != null)
         {
-            this.RelationNotLoaded(this, args);
+            this.RelationNotRestored(this, args);
         }
         else
         {
-            throw new Exception("RelationType not loaded: " + args);
+            throw new Exception("RelationType not restored: " + args);
         }
     }
 

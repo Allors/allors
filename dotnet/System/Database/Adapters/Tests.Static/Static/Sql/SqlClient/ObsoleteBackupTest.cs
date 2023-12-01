@@ -7,11 +7,11 @@ namespace Allors.Database.Adapters.Sql.SqlClient;
 
 using Xunit;
 
-public class ObsoleteSerializationTest : Adapters.ObsoleteSerializationTest, IClassFixture<Fixture<ObsoleteSerializationTest>>
+public class ObsoleteBackupTest : Adapters.ObsoleteBackupTest, IClassFixture<Fixture<ObsoleteBackupTest>>
 {
     private readonly Profile profile;
 
-    public ObsoleteSerializationTest() => this.profile = new Profile(this.GetType().Name);
+    public ObsoleteBackupTest() => this.profile = new Profile(this.GetType().Name);
 
     protected override IProfile Profile => this.profile;
 

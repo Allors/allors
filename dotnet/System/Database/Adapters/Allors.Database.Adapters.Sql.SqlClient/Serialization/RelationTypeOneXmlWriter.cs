@@ -12,7 +12,7 @@ using Allors.Database.Meta;
 
 /// <summary>
 ///     Writes all relations from a <see cref="IRelationType" /> with a Role
-///     with multiplicity of one  to the <see cref="XmlWriter" /> during a <see cref="IDatabase#Save" />.
+///     with multiplicity of one  to the <see cref="XmlWriter" /> during a <see cref="IDatabase#Backup" />.
 /// </summary>
 internal class RelationTypeOneXmlWriter : IDisposable
 {
@@ -81,18 +81,18 @@ internal class RelationTypeOneXmlWriter : IDisposable
             this.isInUse = true;
             if (this.relationType.RoleType.ObjectType.IsUnit)
             {
-                this.xmlWriter.WriteStartElement(Serialization.RelationTypeUnit);
+                this.xmlWriter.WriteStartElement(XmlBackup.RelationTypeUnit);
             }
             else
             {
-                this.xmlWriter.WriteStartElement(Serialization.RelationTypeComposite);
+                this.xmlWriter.WriteStartElement(XmlBackup.RelationTypeComposite);
             }
 
-            this.xmlWriter.WriteAttributeString(Serialization.Id, this.relationType.Id.ToString());
+            this.xmlWriter.WriteAttributeString(XmlBackup.Id, this.relationType.Id.ToString());
         }
 
-        this.xmlWriter.WriteStartElement(Serialization.Relation);
-        this.xmlWriter.WriteAttributeString(Serialization.Association, XmlConvert.ToString(associationId));
+        this.xmlWriter.WriteStartElement(XmlBackup.Relation);
+        this.xmlWriter.WriteAttributeString(XmlBackup.Association, XmlConvert.ToString(associationId));
         this.xmlWriter.WriteString(roleContents);
         this.xmlWriter.WriteEndElement();
     }

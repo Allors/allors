@@ -12,7 +12,7 @@ using Allors.Database.Meta;
 
 /// <summary>
 ///     Writes all relations from a <see cref="IRelationType" /> with a <see cref="IRoleType" /> with multiplicity of many
-///     to the <see cref="XmlWriter" /> during a <see cref="IDatabase#Save" />.
+///     to the <see cref="XmlWriter" /> during a <see cref="IDatabase#Backup" />.
 /// </summary>
 internal class RelationTypeManyXmlWriter : IDisposable
 {
@@ -95,14 +95,14 @@ internal class RelationTypeManyXmlWriter : IDisposable
             this.isInUse = true;
             if (this.relationType.RoleType.ObjectType.IsUnit)
             {
-                this.xmlWriter.WriteStartElement(Serialization.RelationTypeUnit);
+                this.xmlWriter.WriteStartElement(XmlBackup.RelationTypeUnit);
             }
             else
             {
-                this.xmlWriter.WriteStartElement(Serialization.RelationTypeComposite);
+                this.xmlWriter.WriteStartElement(XmlBackup.RelationTypeComposite);
             }
 
-            this.xmlWriter.WriteAttributeString(Serialization.Id, this.relationType.Id.ToString());
+            this.xmlWriter.WriteAttributeString(XmlBackup.Id, this.relationType.Id.ToString());
         }
 
         if (this.previousAssociationId != associationId)
@@ -114,7 +114,7 @@ internal class RelationTypeManyXmlWriter : IDisposable
 
         if (this.rolesStringBuilder.Length != 0)
         {
-            this.rolesStringBuilder.Append(Serialization.ObjectsSplitter);
+            this.rolesStringBuilder.Append(XmlBackup.ObjectsSplitter);
         }
 
         this.rolesStringBuilder.Append(XmlConvert.ToString(roleId));
@@ -127,8 +127,8 @@ internal class RelationTypeManyXmlWriter : IDisposable
     {
         if (this.rolesStringBuilder.Length > 0)
         {
-            this.xmlWriter.WriteStartElement(Serialization.Relation);
-            this.xmlWriter.WriteAttributeString(Serialization.Association, XmlConvert.ToString(this.previousAssociationId));
+            this.xmlWriter.WriteStartElement(XmlBackup.Relation);
+            this.xmlWriter.WriteAttributeString(XmlBackup.Association, XmlConvert.ToString(this.previousAssociationId));
             this.xmlWriter.WriteString(this.rolesStringBuilder.ToString());
             this.xmlWriter.WriteEndElement();
         }

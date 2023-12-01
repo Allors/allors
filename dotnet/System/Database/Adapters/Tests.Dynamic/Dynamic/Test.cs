@@ -285,22 +285,22 @@ public abstract class Test : IDisposable
         return roleList.ToArray();
     }
 
-    public void Load(ITransaction transaction, string xml)
+    public void Restore(ITransaction transaction, string xml)
     {
         using (var stringReader = new StringReader(xml))
         {
             var reader = new XmlTextReader(stringReader);
-            transaction.Database.Load(reader);
+            transaction.Database.Restore(reader);
             reader.Close();
         }
     }
 
-    protected string Save(ITransaction transaction)
+    protected string Backup(ITransaction transaction)
     {
         using (var stringWriter = new StringWriter())
         {
             var writer = new XmlTextWriter(stringWriter);
-            transaction.Database.Save(writer);
+            transaction.Database.Backup(writer);
             writer.Close();
             return stringWriter.ToString();
         }

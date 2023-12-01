@@ -1,32 +1,34 @@
-// <copyright file="Load2.cs" company="Allors bvba">
+﻿// <copyright file="Import.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
-namespace Allors.Database.Adapters.Sql.SqlClient;
+namespace Allors.Database.Adapters.Sql.Npgsql;
 
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Xml;
+using global::Npgsql;
 using Allors.Database.Meta;
-using Microsoft.Data.SqlClient;
+using NpgsqlTypes;
 
-public class Load
+public class Restore
 {
     private readonly Dictionary<long, IClass> classByObjectId;
-    private readonly SqlConnection connection;
+    private readonly NpgsqlConnection connection;
     private readonly Database database;
-    private readonly ObjectNotLoadedEventHandler objectNotLoaded;
-    private readonly RelationNotLoadedEventHandler relationNotLoaded;
+    private readonly ObjectNotRestoredEventHandler objectNotRestored;
+    private readonly RelationNotRestoredEventHandler relationNotRestored;
 
-    public Load(Database database, SqlConnection connection, ObjectNotLoadedEventHandler objectNotLoaded,
-        RelationNotLoadedEventHandler relationNotLoaded)
+    public Restore(Database database, NpgsqlConnection connection, ObjectNotRestoredEventHandler objectNotRestored,
+        RelationNotRestoredEventHandler relationNotRestored)
     {
         this.database = database;
         this.connection = connection;
-        this.objectNotLoaded = objectNotLoaded;
-        this.relationNotLoaded = relationNotLoaded;
+        this.objectNotRestored = objectNotRestored;
+        this.relationNotRestored = relationNotRestored;
 
         this.classByObjectId = new Dictionary<long, IClass>();
     }
@@ -35,19 +37,19 @@ public class Load
     {
         while (reader.Read())
         {
-            if (reader.NodeType.Equals(XmlNodeType.Element) && reader.Name.Equals(Serialization.Population))
+            if (reader.NodeType.Equals(XmlNodeType.Element) && reader.Name.Equals(XmlBackup.Population))
             {
-                var version = reader.GetAttribute(Serialization.Version);
+                var version = reader.GetAttribute(XmlBackup.Version);
                 if (string.IsNullOrEmpty(version))
                 {
-                    throw new ArgumentException("Save population has no version.");
+                    throw new ArgumentException("Backup population has no version.");
                 }
 
-                Serialization.CheckVersion(int.Parse(version));
+                XmlBackup.CheckVersion(int.Parse(version));
 
                 if (!reader.IsEmptyElement)
                 {
-                    this.LoadPopulation(reader);
+                    this.RestorePopulation(reader);
                 }
 
                 break;
@@ -55,7 +57,7 @@ public class Load
         }
     }
 
-    private void LoadPopulation(XmlReader reader)
+    private void RestorePopulation(XmlReader reader)
     {
         while (reader.Read())
         {
@@ -63,18 +65,18 @@ public class Load
             {
                 // eat everything but elements
                 case XmlNodeType.Element:
-                    if (reader.Name.Equals(Serialization.Objects))
+                    if (reader.Name.Equals(XmlBackup.Objects))
                     {
                         if (!reader.IsEmptyElement)
                         {
-                            this.LoadObjects(reader.ReadSubtree());
+                            this.RestoreObjects(reader.ReadSubtree());
                         }
                     }
-                    else if (reader.Name.Equals(Serialization.Relations))
+                    else if (reader.Name.Equals(XmlBackup.Relations))
                     {
                         if (!reader.IsEmptyElement)
                         {
-                            this.LoadRelations(reader.ReadSubtree());
+                            this.RestoreRelations(reader.ReadSubtree());
                         }
                     }
 
@@ -83,7 +85,7 @@ public class Load
         }
     }
 
-    private void LoadObjects(XmlReader reader)
+    private void RestoreObjects(XmlReader reader)
     {
         reader.MoveToContent();
 
@@ -92,16 +94,16 @@ public class Load
             switch (reader.NodeType)
             {
                 case XmlNodeType.Element:
-                    if (reader.Name.Equals(Serialization.Database))
+                    if (reader.Name.Equals(XmlBackup.Database))
                     {
                         if (!reader.IsEmptyElement)
                         {
-                            this.LoadObjectsDatabase(reader.ReadSubtree());
+                            this.RestoreObjectsDatabase(reader.ReadSubtree());
                         }
                     }
-                    else if (reader.Name.Equals(Serialization.Workspace))
+                    else if (reader.Name.Equals(XmlBackup.Workspace))
                     {
-                        throw new Exception("Can not load workspace objects in a database.");
+                        throw new Exception("Can not restore workspace objects in a database.");
                     }
 
                     break;
@@ -109,16 +111,22 @@ public class Load
         }
     }
 
-    private void LoadObjectsDatabase(XmlReader reader)
+    private void RestoreObjectsDatabase(XmlReader reader)
     {
-        var xmlObjects = new Objects(this.database, this.OnObjectNotLoaded, this.classByObjectId, reader);
-        using (var objectsReader = new LoadObjectsReader(xmlObjects))
-        using (var sqlBulkCopy = new SqlBulkCopy(this.connection, SqlBulkCopyOptions.KeepIdentity, null))
+        var xmlObjects = new Objects(this.database, this.OnObjectNotRestore, this.classByObjectId, reader);
+        var mapping = this.database.Mapping;
+        using (var writer = this.connection.BeginBinaryImport(
+                   $"COPY {mapping.TableNameForObjects} ({Sql.Mapping.ColumnNameForObject}, {Sql.Mapping.ColumnNameForClass}, {Sql.Mapping.ColumnNameForVersion}) FROM STDIN (FORMAT BINARY)"))
         {
-            sqlBulkCopy.BulkCopyTimeout = 0;
-            sqlBulkCopy.BatchSize = 5000;
-            sqlBulkCopy.DestinationTableName = this.database.Mapping.TableNameForObjects;
-            sqlBulkCopy.WriteToServer(objectsReader);
+            foreach (var values in xmlObjects)
+            {
+                writer.StartRow();
+                writer.Write(values[0], NpgsqlDbType.Bigint);
+                writer.Write(values[1], NpgsqlDbType.Uuid);
+                writer.Write(XmlBackup.EnsureVersion((long)values[2]), NpgsqlDbType.Bigint);
+            }
+
+            writer.Complete();
         }
 
         // TODO: move this to a stored procedure
@@ -147,23 +155,23 @@ where c = '{@class.Id}'";
         }
     }
 
-    private void LoadRelations(XmlReader reader)
+    private void RestoreRelations(XmlReader reader)
     {
         while (reader.Read())
         {
             switch (reader.NodeType)
             {
                 case XmlNodeType.Element:
-                    if (reader.Name.Equals(Serialization.Database))
+                    if (reader.Name.Equals(XmlBackup.Database))
                     {
                         if (!reader.IsEmptyElement)
                         {
-                            this.LoadRelationsDatabase(reader);
+                            this.RestoreRelationsDatabase(reader);
                         }
                     }
-                    else if (reader.Name.Equals(Serialization.Workspace))
+                    else if (reader.Name.Equals(XmlBackup.Workspace))
                     {
-                        throw new Exception("Can not load workspace relations in a database.");
+                        throw new Exception("Can not restore workspace relations in a database.");
                     }
 
                     break;
@@ -171,7 +179,7 @@ where c = '{@class.Id}'";
         }
     }
 
-    private void LoadRelationsDatabase(XmlReader reader)
+    private void RestoreRelationsDatabase(XmlReader reader)
     {
         while (reader.Read())
         {
@@ -181,10 +189,10 @@ where c = '{@class.Id}'";
                 case XmlNodeType.Element:
                     if (!reader.IsEmptyElement)
                     {
-                        if (reader.Name.Equals(Serialization.RelationTypeUnit)
-                            || reader.Name.Equals(Serialization.RelationTypeComposite))
+                        if (reader.Name.Equals(XmlBackup.RelationTypeUnit)
+                            || reader.Name.Equals(XmlBackup.RelationTypeComposite))
                         {
-                            var relationTypeIdString = reader.GetAttribute(Serialization.Id);
+                            var relationTypeIdString = reader.GetAttribute(XmlBackup.Id);
                             if (string.IsNullOrEmpty(relationTypeIdString))
                             {
                                 throw new Exception("Relation type has no id");
@@ -193,26 +201,26 @@ where c = '{@class.Id}'";
                             var relationTypeId = new Guid(relationTypeIdString);
                             var relationType = (IRelationType)this.database.MetaPopulation.FindById(relationTypeId);
 
-                            if (reader.Name.Equals(Serialization.RelationTypeUnit))
+                            if (reader.Name.Equals(XmlBackup.RelationTypeUnit))
                             {
                                 if (relationType == null || relationType.RoleType.ObjectType is IComposite)
                                 {
-                                    this.CantLoadUnitRole(reader.ReadSubtree(), relationTypeId);
+                                    this.CantRestoreUnitRole(reader.ReadSubtree(), relationTypeId);
                                 }
                                 else
                                 {
-                                    this.LoadUnitRelations(reader.ReadSubtree(), relationType);
+                                    this.RestoreUnitRelations(reader.ReadSubtree(), relationType);
                                 }
                             }
-                            else if (reader.Name.Equals(Serialization.RelationTypeComposite))
+                            else if (reader.Name.Equals(XmlBackup.RelationTypeComposite))
                             {
                                 if (relationType == null || relationType.RoleType.ObjectType is IUnit)
                                 {
-                                    this.CantLoadCompositeRole(reader.ReadSubtree(), relationTypeId);
+                                    this.CantRestoreCompositeRole(reader.ReadSubtree(), relationTypeId);
                                 }
                                 else
                                 {
-                                    this.LoadCompositeRelations(reader.ReadSubtree(), relationType);
+                                    this.RestoreCompositeRelations(reader.ReadSubtree(), relationType);
                                 }
                             }
                         }
@@ -223,7 +231,7 @@ where c = '{@class.Id}'";
         }
     }
 
-    private void LoadUnitRelations(XmlReader reader, IRelationType relationType)
+    private void RestoreUnitRelations(XmlReader reader, IRelationType relationType)
     {
         var allowedClasses = new HashSet<IClass>(relationType.AssociationType.ObjectType.Classes);
         var unitRelationsByClass = new Dictionary<IClass, List<UnitRelation>>();
@@ -237,16 +245,16 @@ where c = '{@class.Id}'";
             {
                 // eat everything but elements
                 case XmlNodeType.Element:
-                    if (reader.Name.Equals(Serialization.Relation))
+                    if (reader.Name.Equals(XmlBackup.Relation))
                     {
-                        var associationIdString = reader.GetAttribute(Serialization.Association);
+                        var associationIdString = reader.GetAttribute(XmlBackup.Association);
                         var associationId = long.Parse(associationIdString);
 
                         this.classByObjectId.TryGetValue(associationId, out var @class);
 
                         if (@class == null || !allowedClasses.Contains(@class))
                         {
-                            this.CantLoadUnitRole(reader.ReadSubtree(), relationType.Id);
+                            this.CantRestoreUnitRole(reader.ReadSubtree(), relationType.Id);
                         }
                         else
                         {
@@ -279,14 +287,14 @@ where c = '{@class.Id}'";
                                 {
                                     var unitType = (IUnit)relationType.RoleType.ObjectType;
                                     var unitTypeTag = unitType.Tag;
-                                    unit = Serialization.ReadString(value, unitTypeTag);
+                                    unit = XmlBackup.ReadString(value, unitTypeTag);
                                 }
 
                                 unitRelations.Add(new UnitRelation(associationId, unit));
                             }
                             catch
                             {
-                                this.OnRelationNotLoaded(relationType.Id, associationId, value);
+                                this.OnRelationNotRestored(relationType.Id, associationId, value);
                             }
 
                             skip = reader.IsStartElement();
@@ -304,6 +312,7 @@ where c = '{@class.Id}'";
             {
                 var @class = kvp.Key;
                 var unitRelations = kvp.Value;
+
                 var sql = this.database.Mapping.ProcedureNameForSetUnitRoleByRelationTypeByClass[@class][relationType];
                 var command = con.CreateCommand();
                 command.CommandText = sql;
@@ -320,16 +329,16 @@ where c = '{@class.Id}'";
         }
     }
 
-    private void LoadCompositeRelations(XmlReader reader, IRelationType relationType)
+    private void RestoreCompositeRelations(XmlReader reader, IRelationType relationType)
     {
         var con = this.database.ConnectionFactory.Create();
         try
         {
-            var relations = new LoadCompositeRelations(
+            var relations = new CompositeRelations(
                 this.database,
                 relationType,
-                this.CantLoadCompositeRole,
-                this.OnRelationNotLoaded,
+                this.CantRestoreCompositeRole,
+                this.OnRelationNotRestored,
                 this.classByObjectId,
                 reader);
 
@@ -340,7 +349,7 @@ where c = '{@class.Id}'";
             var command = con.CreateCommand();
             command.CommandText = sql;
             command.CommandType = CommandType.StoredProcedure;
-            command.AddCompositeRoleTableParameter(relations);
+            command.AddCompositeRoleTableParameter(relations.ToArray());
             command.ExecuteNonQuery();
 
             con.Commit();
@@ -351,13 +360,13 @@ where c = '{@class.Id}'";
         }
     }
 
-    private void CantLoadUnitRole(XmlReader reader, Guid relationTypeId)
+    private void CantRestoreUnitRole(XmlReader reader, Guid relationTypeId)
     {
         while (reader.Read())
         {
-            if (reader.IsStartElement() && reader.Name.Equals(Serialization.Relation))
+            if (reader.IsStartElement() && reader.Name.Equals(XmlBackup.Relation))
             {
-                var a = reader.GetAttribute(Serialization.Association);
+                var a = reader.GetAttribute(XmlBackup.Association);
                 var value = string.Empty;
 
                 if (!reader.IsEmptyElement)
@@ -365,18 +374,18 @@ where c = '{@class.Id}'";
                     value = reader.ReadElementContentAsString();
                 }
 
-                this.OnRelationNotLoaded(relationTypeId, long.Parse(a), value);
+                this.OnRelationNotRestored(relationTypeId, long.Parse(a), value);
             }
         }
     }
 
-    private void CantLoadCompositeRole(XmlReader reader, Guid relationTypeId)
+    private void CantRestoreCompositeRole(XmlReader reader, Guid relationTypeId)
     {
         while (reader.Read())
         {
-            if (reader.IsStartElement() && reader.Name.Equals(Serialization.Relation))
+            if (reader.IsStartElement() && reader.Name.Equals(XmlBackup.Relation))
             {
-                var associationIdString = reader.GetAttribute(Serialization.Association);
+                var associationIdString = reader.GetAttribute(XmlBackup.Association);
                 var associationId = long.Parse(associationIdString);
                 if (string.IsNullOrEmpty(associationIdString))
                 {
@@ -385,14 +394,14 @@ where c = '{@class.Id}'";
 
                 if (reader.IsEmptyElement)
                 {
-                    this.OnRelationNotLoaded(relationTypeId, associationId, null);
+                    this.OnRelationNotRestored(relationTypeId, associationId, null);
                 }
                 else
                 {
                     var value = reader.ReadElementContentAsString();
-                    foreach (var r in value.Split(Serialization.ObjectsSplitterCharArray))
+                    foreach (var r in value.Split(XmlBackup.ObjectsSplitterCharArray))
                     {
-                        this.OnRelationNotLoaded(relationTypeId, associationId, r);
+                        this.OnRelationNotRestored(relationTypeId, associationId, r);
                     }
                 }
             }
@@ -400,28 +409,28 @@ where c = '{@class.Id}'";
     }
 
     #region Import Errors
-    private void OnObjectNotLoaded(Guid objectTypeId, long allorsObjectId)
+    private void OnObjectNotRestore(Guid objectTypeId, long allorsObjectId)
     {
-        if (this.objectNotLoaded != null)
+        if (this.objectNotRestored != null)
         {
-            this.objectNotLoaded(this, new ObjectNotLoadedEventArgs(objectTypeId, allorsObjectId));
+            this.objectNotRestored(this, new ObjectNotRestoredEventArgs(objectTypeId, allorsObjectId));
         }
         else
         {
-            throw new Exception($"Object not loaded: {objectTypeId}:{allorsObjectId}");
+            throw new Exception("Object not restored: " + objectTypeId + ":" + allorsObjectId);
         }
     }
 
-    private void OnRelationNotLoaded(Guid relationTypeId, long associationObjectId, string roleContents)
+    private void OnRelationNotRestored(Guid relationTypeId, long associationObjectId, string roleContents)
     {
-        var args = new RelationNotLoadedEventArgs(relationTypeId, associationObjectId, roleContents);
-        if (this.relationNotLoaded != null)
+        var args = new RelationNotRestoredEventArgs(relationTypeId, associationObjectId, roleContents);
+        if (this.relationNotRestored != null)
         {
-            this.relationNotLoaded(this, args);
+            this.relationNotRestored(this, args);
         }
         else
         {
-            throw new Exception($"Role not loaded: {args}");
+            throw new Exception("Role not restored: " + args);
         }
     }
     #endregion Import Errors

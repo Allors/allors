@@ -1,4 +1,4 @@
-// <copyright file="Mapping.cs" company="Allors bvba">
+﻿// <copyright file="Mapping.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -31,7 +31,7 @@ public class Mapping : Sql.Mapping
     private const string ProcedurePrefixForCreateObject = "co_";
     private const string ProcedurePrefixForCreateObjects = "cos_";
     private const string ProcedurePrefixForDeleteObject = "do_";
-    private const string ProcedurePrefixForLoad = "l_";
+    private const string ProcedurePrefixForRestore = "r_";
 
     private const string ProcedurePrefixForGetUnits = "gu_";
     private const string ProcedurePrefixForPrefetchUnits = "pu_";
@@ -340,7 +340,7 @@ public class Mapping : Sql.Mapping
 
         foreach (var @class in this.Database.MetaPopulation.Classes)
         {
-            this.LoadObjects(@class);
+            this.RestoreObjects(@class);
             this.CreateObject(@class);
             this.CreateObjects(@class);
             this.DeleteObject(@class);
@@ -651,10 +651,10 @@ public class Mapping : Sql.Mapping
         };
     }
 
-    private void LoadObjects(IClass @class)
+    private void RestoreObjects(IClass @class)
     {
         var table = this.tableNameForObjectByClass[@class];
-        var name = $"{this.Database.SchemaName}.{ProcedurePrefixForLoad}{@class.Name.ToLowerInvariant()}";
+        var name = $"{this.Database.SchemaName}.{ProcedurePrefixForRestore}{@class.Name.ToLowerInvariant()}";
 
         // Import Objects
         var definition = $@"

@@ -1,5 +1,5 @@
-// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SerializationTest.cs" company="Allors bvba">
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="BackupTest.cs" company="Allors bvba">
 //   Copyright 2002-2012 Allors bvba.
 // Dual Licensed under
 //   a) the Lesser General Public Licence v3 (LGPL)
@@ -24,16 +24,16 @@ using Allors.Database.Meta;
 using Xunit;
 
 /// <summary>
-///     Serialization Tests.
+///     XmlBackup Tests.
 /// </summary>
-public abstract class SerializationTest : Test
+public abstract class BackupTest : Test
 {
     /// <summary>
-    ///     Test the Save and Import.
+    ///     Test the Backup and Import.
     /// </summary>
     [Fact]
     [Trait("Category", "Dynamic")]
-    public void SaveAndLoad()
+    public void BackupAndRestore()
     {
         int[] stringLengths = { 0, 1, 10 };
 
@@ -57,8 +57,8 @@ public abstract class SerializationTest : Test
 
             foreach (var transactionPair in transactionPairs)
             {
-                var saveTransaction = transactionPair[0];
-                var loadTransaction = transactionPair[1];
+                var backupTransaction = transactionPair[0];
+                var restoreTransaction = transactionPair[1];
 
                 var concreteClasses = this.GetTestTypes();
 
@@ -72,7 +72,7 @@ public abstract class SerializationTest : Test
                 {
                     foreach (var concreteClass in concreteClasses)
                     {
-                        ((ArrayList)objectsByMetaType[concreteClass]).Add(saveTransaction.Build(concreteClass));
+                        ((ArrayList)objectsByMetaType[concreteClass]).Add(backupTransaction.Build(concreteClass));
                     }
                 }
 
@@ -81,14 +81,14 @@ public abstract class SerializationTest : Test
                     for (var j = 0; j < this.ObjectsPerClass; j++)
                     {
                         var concreteClass = t;
-                        ((ArrayList)objectsByMetaType[concreteClass]).Add(saveTransaction.Build(concreteClass));
+                        ((ArrayList)objectsByMetaType[concreteClass]).Add(backupTransaction.Build(concreteClass));
                     }
                 }
 
                 // Unit Role
                 foreach (var concreteClass in concreteClasses)
                 {
-                    foreach (var allorsObject in (IObject[])saveTransaction.Extent(concreteClass))
+                    foreach (var allorsObject in (IObject[])backupTransaction.Extent(concreteClass))
                     {
                         foreach (var role in concreteClass.RoleTypes.Where(v => v.ObjectType.IsUnit))
                         {
@@ -334,28 +334,28 @@ public abstract class SerializationTest : Test
                     }
                 }
 
-                saveTransaction.Commit();
+                backupTransaction.Commit();
 
-                var xml = this.Save(saveTransaction);
+                var xml = this.Backup(backupTransaction);
 
                 // File.WriteAllText("Population.xml", xml);
                 AssertSchema(xml);
 
-                this.Load(loadTransaction, xml);
+                this.Restore(restoreTransaction, xml);
 
                 // Use diff
                 foreach (var concreteClass in concreteClasses)
                 {
-                    foreach (var saveObject in (IObject[])saveTransaction.Extent(concreteClass))
+                    foreach (var backupObject in (IObject[])backupTransaction.Extent(concreteClass))
                     {
-                        var loadObject = loadTransaction.Instantiate(saveObject.Strategy.ObjectId);
+                        var restoreObject = restoreTransaction.Instantiate(backupObject.Strategy.ObjectId);
 
                         // TODO: Resurrect Diff
-                        //Assert.False(Diff.Execute(saveObject, loadObject).Count() > 0);
+                        //Assert.False(Diff.Execute(backupObject, restoreObject).Count() > 0);
                     }
                 }
 
-                loadTransaction.Commit();
+                restoreTransaction.Commit();
             }
         }
     }

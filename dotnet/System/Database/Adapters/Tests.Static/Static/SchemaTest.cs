@@ -40,7 +40,7 @@ public abstract class SchemaTest : IDisposable
 
     protected Action[] Inits => this.Profile.Inits;
 
-    // TODO: Save Import (remove and add relations)
+    // TODO: Backup Import (remove and add relations)
     public abstract void Dispose();
 
     [Fact]
