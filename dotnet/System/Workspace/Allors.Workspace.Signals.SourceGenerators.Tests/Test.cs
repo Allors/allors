@@ -38,14 +38,14 @@
 
             // fail if the injected program isn't valid before running generators
             var compileDiagnostics = compilation.GetDiagnostics();
-            Assert.False(compileDiagnostics.Any(d => d.Severity == DiagnosticSeverity.Error), "Failed: " + compileDiagnostics.FirstOrDefault()?.GetMessage());
+            Assert.That(compileDiagnostics.Any(d => d.Severity == DiagnosticSeverity.Error), Is.False, "Failed: " + compileDiagnostics.FirstOrDefault()?.GetMessage());
 
             IIncrementalGenerator generator = new SignalPropertyGenerator();
             var driver = CSharpGeneratorDriver.Create(generator);
             driver.RunGeneratorsAndUpdateCompilation(compilation, out var outputCompilation, out var generateDiagnostics);
 
             // fail if the generation had errors
-            Assert.False(generateDiagnostics.Any(d => d.Severity == DiagnosticSeverity.Error), "Failed: " + generateDiagnostics.FirstOrDefault()?.GetMessage());
+            Assert.That(generateDiagnostics.Any(d => d.Severity == DiagnosticSeverity.Error), Is.False, "Failed: " + generateDiagnostics.FirstOrDefault()?.GetMessage());
 
             string output = outputCompilation.SyntaxTrees.Last().ToString();
             return output;

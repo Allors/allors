@@ -54,9 +54,9 @@ public partial class TestClass
 
             string output = GetGeneratedOutput(source).ReplaceLineEndings("\n");
 
-            Assert.NotNull(output);
+            Assert.That(output, Is.Not.Null);
 
-            Assert.AreEqual(expected, output);
+            Assert.That(output, Is.EqualTo(expected));
         }
 
         [Test]
@@ -111,9 +111,9 @@ public partial class TestClass
 
             string output = GetGeneratedOutput(source).ReplaceLineEndings("\n");
 
-            Assert.NotNull(output);
+            Assert.That(output, Is.Not.Null);
 
-            Assert.AreEqual(expected, output);
+            Assert.That(output, Is.EqualTo(expected));
         }
 
         [Test]
@@ -168,9 +168,9 @@ public partial class TestClass
 
             string output = GetGeneratedOutput(source).ReplaceLineEndings("\n");
 
-            Assert.NotNull(output);
+            Assert.That(output, Is.Not.Null);
 
-            Assert.AreEqual(expected, output);
+            Assert.That(output, Is.EqualTo(expected));
         }
 
         [Test]
@@ -225,9 +225,9 @@ public partial class TestClass
 
             string output = GetGeneratedOutput(source).ReplaceLineEndings("\n");
 
-            Assert.NotNull(output);
+            Assert.That(output, Is.Not.Null);
 
-            Assert.AreEqual(expected, output);
+            Assert.That(output, Is.EqualTo(expected));
         }
 
         [Test]
@@ -282,9 +282,9 @@ public partial class TestClass
 
             string output = GetGeneratedOutput(source).ReplaceLineEndings("\n");
 
-            Assert.NotNull(output);
+            Assert.That(output, Is.Not.Null);
 
-            Assert.AreEqual(expected, output);
+            Assert.That(output, Is.EqualTo(expected));
         }
 
         [Test]
@@ -340,9 +340,9 @@ public partial class TestClass
 
             string output = GetGeneratedOutput(source).ReplaceLineEndings("\n");
 
-            Assert.NotNull(output);
+            Assert.That(output, Is.Not.Null);
 
-            Assert.AreEqual(expected, output);
+            Assert.That(output, Is.EqualTo(expected));
         }
 
         [Test]
@@ -396,9 +396,9 @@ public partial class TestClass
 
             string output = GetGeneratedOutput(source).ReplaceLineEndings("\n");
 
-            Assert.NotNull(output);
+            Assert.That(output, Is.Not.Null);
 
-            Assert.AreEqual(expected, output);
+            Assert.That(output, Is.EqualTo(expected));
         }
 
         [Test]
@@ -452,9 +452,9 @@ public partial class TestClass
 
             string output = GetGeneratedOutput(source).ReplaceLineEndings("\n");
 
-            Assert.NotNull(output);
+            Assert.That(output, Is.Not.Null);
 
-            Assert.AreEqual(expected, output);
+            Assert.That(output, Is.EqualTo(expected));
         }
 
         [Test]
@@ -509,9 +509,9 @@ public partial class TestClass
 
             string output = GetGeneratedOutput(source).ReplaceLineEndings("\n");
 
-            Assert.NotNull(output);
+            Assert.That(output, Is.Not.Null);
 
-            Assert.AreEqual(expected, output);
+            Assert.That(output, Is.EqualTo(expected));
         }
 
         [Test]
@@ -566,9 +566,9 @@ public partial class TestClass
 
             string output = GetGeneratedOutput(source).ReplaceLineEndings("\n");
 
-            Assert.NotNull(output);
+            Assert.That(output, Is.Not.Null);
 
-            Assert.AreEqual(expected, output);
+            Assert.That(output, Is.EqualTo(expected));
         }
 
         [Test]
@@ -623,9 +623,9 @@ public partial class TestClass
 
             string output = GetGeneratedOutput(source).ReplaceLineEndings("\n");
 
-            Assert.NotNull(output);
+            Assert.That(output, Is.Not.Null);
 
-            Assert.AreEqual(expected, output);
+            Assert.That(output, Is.EqualTo(expected));
         }
 
         [Test]
@@ -680,9 +680,9 @@ public partial class TestClass
 
             string output = GetGeneratedOutput(source).ReplaceLineEndings("\n");
 
-            Assert.NotNull(output);
+            Assert.That(output, Is.Not.Null);
 
-            Assert.AreEqual(expected, output);
+            Assert.That(output, Is.EqualTo(expected));
         }
     }
 }
