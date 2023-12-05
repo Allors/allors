@@ -11,10 +11,6 @@
 
     public class FixtureWriter : IFixtureWriter
     {
-        public StringComparer ObjectTypeNameComparer { get; } = StringComparer.OrdinalIgnoreCase;
-
-        public StringComparer RoleTypeNameComparer { get; } = StringComparer.OrdinalIgnoreCase;
-
         public FixtureWriter(IMetaPopulation metaPopulation)
         {
             this.MetaPopulation = metaPopulation;
@@ -31,16 +27,19 @@
         private XDocument Write(Fixture fixture)
         {
             return new XDocument(new XElement("population", fixture.RecordsByClass
-                .OrderBy(v => v.Key.Name, this.ObjectTypeNameComparer)
+                .OrderBy(v => v.Key.Name, StringComparer.OrdinalIgnoreCase)
                 .Select(Class)));
 
             XElement Class(KeyValuePair<IClass, Record[]> grouping) =>
                 new(grouping.Key.PluralName,
-                    grouping.Value.Select(Object(grouping.Key)));
+                    (grouping.Key.KeyRoleType.ObjectType.Tag == UnitTags.String ?
+                        grouping.Value.OrderBy(v => (string)v.ValueByRoleType[grouping.Key.KeyRoleType], StringComparer.OrdinalIgnoreCase) :
+                        grouping.Value.OrderBy(v => v.ValueByRoleType[grouping.Key.KeyRoleType]))
+                    .Select(Object(grouping.Key)));
 
             Func<Record, XElement> Object(IClass @class) => record =>
                 new XElement(@class.SingularName,
-                    record.ValueByRoleType.Keys.OrderBy(v => v.Name, this.RoleTypeNameComparer)
+                    record.ValueByRoleType.Keys.OrderBy(v => v.Name, StringComparer.OrdinalIgnoreCase)
                         .Select(Role(record)));
 
             Func<IRoleType, XElement> Role(Record strategy) => roleType =>

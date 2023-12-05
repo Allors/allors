@@ -6,9 +6,6 @@
 namespace Commands
 {
     using System.IO;
-    using System.Linq;
-    using System.Xml;
-    using Allors.Database.Domain;
     using Allors.Database.Meta;
     using Allors.Database.Roundtrip;
     using Allors.Resources;
@@ -39,7 +36,7 @@ namespace Commands
 
             var m = database.Services.Get<M>();
 
-            using var stream = File.OpenWrite(fileInfo.FullName);
+            using var stream = File.Open(fileInfo.FullName, FileMode.Create);
 
             var fixture = transaction.ToFixture();
             var fixtureWriter = new FixtureWriter(m);

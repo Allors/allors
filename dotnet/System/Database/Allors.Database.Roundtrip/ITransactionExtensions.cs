@@ -1,6 +1,7 @@
 ﻿namespace Allors.Database.Roundtrip;
 
 using System.Linq;
+using System.Reflection;
 using Database.Population;
 using Meta;
 
@@ -10,16 +11,31 @@ public static class ITransactionExtensions
     {
         var metaPopulation = transaction.Database.MetaPopulation;
 
+        bool IsDefault(object value)
+        {
+            return value switch
+            {
+                bool booleanValue => booleanValue == false,
+                decimal decimalValue => decimalValue == 0m,
+                double doubleValue => doubleValue == 0d,
+                int intValue => intValue == 0,
+                _ => false
+            };
+        }
+
         var recordsByClass = metaPopulation.Classes
             .Where(v => v.KeyRoleType != null)
-            .SelectMany(v => transaction.Extent(v).ToArray())
+            .SelectMany(transaction.Extent)
+            .Select(v => v.Strategy)
             .Select(v =>
             {
-                var valueByRoleType = v.Strategy.Class.RoleTypes
-                    .Where(roleType => roleType.ObjectType.IsUnit && !roleType.RelationType.IsDerived &&
-                                       v.Strategy.ExistRole(roleType))
-                    .ToDictionary(w => w, w => v.Strategy.GetUnitRole(w));
-                return new Record(v.Strategy.Class, null, valueByRoleType);
+                var valueByRoleType = v.Class.RoleTypes
+                    .Where(roleType => roleType.ObjectType.IsUnit &&
+                                       !roleType.RelationType.IsDerived &&
+                                       v.ExistRole(roleType) &&
+                                       !IsDefault(v.GetUnitRole(roleType)))
+                    .ToDictionary(roleType => roleType, v.GetUnitRole);
+                return new Record(v.Class, null, valueByRoleType);
             })
             .GroupBy(v => v.Class)
             .ToDictionary(v => v.Key, v => v.ToArray());
