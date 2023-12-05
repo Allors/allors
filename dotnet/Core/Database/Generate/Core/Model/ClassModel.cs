@@ -29,12 +29,12 @@ public sealed class ClassModel : CompositeModel
             v => this.OverriddenRequiredRoleTypes.Where(w => w.RelationType.WorkspaceNames.Contains(v)));
 
     // Population
-    public IEnumerable<IRecord> Objects
+    public IEnumerable<Record> Objects
     {
         get
         {
-            this.Model.Population.ObjectsByClass.TryGetValue(this.Class, out var objects);
-            return objects ?? Array.Empty<IRecord>();
+            this.Model.Fixture.ObjectsByClass.TryGetValue(this.Class, out var objects);
+            return objects ?? Array.Empty<Record>();
         }
     }
 }

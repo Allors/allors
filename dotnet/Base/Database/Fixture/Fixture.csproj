@@ -3,8 +3,9 @@
     <TargetFramework>net8.0</TargetFramework>
     <RootNamespace>Allors.Resources</RootNamespace>
   </PropertyGroup>
+
   <ItemGroup>
-    <ProjectReference Include="..\..\..\System\Database\Allors.Database.Population\Allors.Database.Population.csproj" />
+    <ProjectReference Include="..\..\..\System\Database\Allors.Database.Fixture.Xml\Allors.Database.Fixture.Xml.csproj" />
     <ProjectReference Include="..\Meta.Configuration\Meta.Configuration.csproj" />
   </ItemGroup>
 
@@ -13,14 +14,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Base\Population.xml" />
-    <None Remove="Custom\Population.xml" />
+    <None Remove="Fixture.xml" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="..\..\..\Core\Database\Population\Core\Population.xml" />
-    <EmbeddedResource Include="Base\Population.xml" />
-    <EmbeddedResource Include="Custom\Population.xml" />
+    <EmbeddedResource Include="Fixture.xml" />
   </ItemGroup>
 
 </Project>

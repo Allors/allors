@@ -6,10 +6,12 @@
 namespace Allors.Meta.Generation.Storage;
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Allors.Database.Meta.Configuration;
 using Allors.Database.Meta;
 using Allors.Meta.Generation.Model;
+using Database.Population;
 
 internal class Program
 {
@@ -18,7 +20,7 @@ internal class Program
     private static int Main()
     {
         var metaPopulation = MetaBuilder.Build();
-        var model = new Model(metaPopulation, new Population());
+        var model = new Model(metaPopulation, new Fixture(new Dictionary<IClass, Record[]>()));
 
         string[,] config = { { "Templates/adapters.cs.stg", "Domain/Generated" } };
 

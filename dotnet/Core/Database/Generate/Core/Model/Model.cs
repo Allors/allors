@@ -10,10 +10,10 @@ public partial class Model
 {
     private readonly Dictionary<IMetaExtensible, IMetaExtensibleModel> mapping;
 
-    public Model(MetaPopulation metaPopulation, IPopulation population)
+    public Model(MetaPopulation metaPopulation, Fixture fixture)
     {
         this.MetaPopulation = metaPopulation;
-        this.Population = population;
+        this.Fixture = fixture;
 
         this.mapping = new Dictionary<IMetaExtensible, IMetaExtensibleModel>();
 
@@ -56,7 +56,7 @@ public partial class Model
 
     public MetaPopulation MetaPopulation { get; }
 
-    public IPopulation Population { get; }
+    public Fixture Fixture { get; }
 
     public IEnumerable<DomainModel> Domains => this.MetaPopulation.Domains.Select(this.Map);
 
