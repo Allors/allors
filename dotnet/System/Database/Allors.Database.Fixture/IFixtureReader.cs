@@ -2,7 +2,7 @@
 
 using System.IO;
 
-public interface IPopulationReader
+public interface IFixtureReader
 {
     Fixture Read(Stream stream);
 }

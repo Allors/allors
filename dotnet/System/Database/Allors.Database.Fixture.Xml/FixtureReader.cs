@@ -10,11 +10,11 @@
     using Database.Meta;
     using Database.Population;
 
-    public class PopulationReader : IPopulationReader
+    public class FixtureReader : IFixtureReader
     {
         public const string HandleAttributeName = "handle";
 
-        public PopulationReader(IMetaPopulation metaPopulation)
+        public FixtureReader(IMetaPopulation metaPopulation)
         {
             this.MetaPopulation = metaPopulation;
         }
@@ -25,7 +25,7 @@
         {
             XDocument document = XDocument.Load(stream);
 
-            var population = new Fixture(new Dictionary<IClass, Database.Population.Record[]>());
+            var fixture = new Fixture(new Dictionary<IClass, Database.Population.Record[]>());
 
             var documentElement = document.Elements().First();
 
@@ -55,14 +55,14 @@
                                           })
                                           .FirstOrDefault();
 
-                                      return new Record(population, @class, handle, valueByRoleType);
+                                      return new Record(@class, handle, valueByRoleType);
                                   })
                                   .ToArray()
                               ?? Array.Empty<Database.Population.Record>();
-                population.ObjectsByClass[@class] = records;
+                fixture.RecordsByClass[@class] = records;
             }
 
-            return population;
+            return fixture;
         }
 
         public static object ReadString(string value, string tag) =>

@@ -33,7 +33,7 @@ public sealed class ClassModel : CompositeModel
     {
         get
         {
-            this.Model.Fixture.ObjectsByClass.TryGetValue(this.Class, out var objects);
+            this.Model.Fixture.RecordsByClass.TryGetValue(this.Class, out var objects);
             return objects ?? Array.Empty<Record>();
         }
     }

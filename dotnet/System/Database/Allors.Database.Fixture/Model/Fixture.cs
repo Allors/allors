@@ -3,4 +3,4 @@
 using System.Collections.Generic;
 using Meta;
 
-public record Fixture(IDictionary<IClass, Record[]> ObjectsByClass);
+public record Fixture(IDictionary<IClass, Record[]> RecordsByClass);

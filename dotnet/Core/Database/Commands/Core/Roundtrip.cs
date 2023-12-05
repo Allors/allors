@@ -10,6 +10,8 @@ namespace Commands
     using System.Xml;
     using Allors.Database.Domain;
     using Allors.Database.Meta;
+    using Allors.Database.Roundtrip;
+    using Allors.Resources;
     using McMaster.Extensions.CommandLineUtils;
     using NLog;
 
@@ -37,14 +39,12 @@ namespace Commands
 
             var m = database.Services.Get<M>();
 
-            var @objects = m.Classes
-                .Where(v => v.KeyRoleType != null)
-                .SelectMany(v => transaction.Extent(v).ToArray());
+            using var stream = File.OpenWrite(fileInfo.FullName);
 
-            var serializer = new XmlSerializer();
-            var population = serializer.Serialize(@objects);
-            population.Save(fileInfo.FullName);
-
+            var fixture = transaction.ToFixture();
+            var fixtureWriter = new FixtureWriter(m);
+            fixtureWriter.Write(stream, fixture);
+         
             this.Logger.Info("End");
             return ExitCode.Success;
         }

@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using Meta;
 
 public record Record(
-    Fixture Fixture, 
-    IClass Class, 
+    IClass Class,
     Handle Handle,
     IDictionary<IRoleType, object> ValueByRoleType);

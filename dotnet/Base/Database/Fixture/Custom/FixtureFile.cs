@@ -17,7 +17,7 @@
         public Fixture Read()
         {
             using Stream stream = this.GetResource("Allors.Resources.Fixture.xml");
-            var reader = new PopulationReader(this.MetaPopulation);
+            var reader = new FixtureReader(this.MetaPopulation);
             return reader.Read(stream);
         }
         
