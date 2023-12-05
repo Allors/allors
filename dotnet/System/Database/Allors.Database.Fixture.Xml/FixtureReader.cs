@@ -28,7 +28,7 @@
 
             var documentElement = document.Elements().First();
 
-            foreach (var @class in this.MetaPopulation.Classes)
+            foreach (var @class in this.MetaPopulation.Classes.Where(v => v.KeyRoleType != null))
             {
                 var classElement = documentElement.Elements().FirstOrDefault(v => @class.PluralName.Equals(v.Name.LocalName, StringComparison.OrdinalIgnoreCase));
                 var records = classElement?

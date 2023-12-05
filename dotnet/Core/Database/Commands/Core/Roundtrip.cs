@@ -5,8 +5,11 @@
 
 namespace Commands
 {
+    using System;
     using System.IO;
+    using Allors.Database;
     using Allors.Database.Meta;
+    using Allors.Database.Population;
     using Allors.Database.Roundtrip;
     using Allors.Resources;
     using McMaster.Extensions.CommandLineUtils;
@@ -36,12 +39,21 @@ namespace Commands
 
             var m = database.Services.Get<M>();
 
-            using var stream = File.Open(fileInfo.FullName, FileMode.Create);
+            Func<IStrategy, Handle> handleResolver = strategy => null;
 
-            var fixture = transaction.ToFixture();
+            if (fileInfo.Exists)
+            {
+                using var existingStream = File.Open(fileInfo.FullName, FileMode.Open);
+                var fixtureReader = new FixtureReader(m);
+                var existingFixture = fixtureReader.Read(existingStream);
+                handleResolver = HandleResolvers.FromFixture(existingFixture);
+            }
+
+            using var stream = File.Open(fileInfo.FullName, FileMode.Create);
+            var fixture = transaction.ToFixture(handleResolver);
             var fixtureWriter = new FixtureWriter(m);
             fixtureWriter.Write(stream, fixture);
-         
+
             this.Logger.Info("End");
             return ExitCode.Success;
         }

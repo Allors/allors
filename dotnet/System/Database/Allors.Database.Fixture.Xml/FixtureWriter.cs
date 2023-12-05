@@ -38,9 +38,14 @@
                     .Select(Object(grouping.Key)));
 
             Func<Record, XElement> Object(IClass @class) => record =>
-                new XElement(@class.SingularName,
+                new XElement(@class.SingularName, Handle(record),
                     record.ValueByRoleType.Keys.OrderBy(v => v.Name, StringComparer.OrdinalIgnoreCase)
                         .Select(Role(record)));
+
+            XAttribute Handle(Record record) =>
+                record.Handle != null
+                    ? new XAttribute(FixtureReader.HandleAttributeName, WriteString(record.Class.KeyRoleType, record.Handle.Name))
+                    : null;
 
             Func<IRoleType, XElement> Role(Record strategy) => roleType =>
                 new XElement(roleType.Name, this.WriteString(roleType, strategy.ValueByRoleType[roleType]));
