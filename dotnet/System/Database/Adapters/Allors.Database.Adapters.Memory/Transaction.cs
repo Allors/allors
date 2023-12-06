@@ -199,21 +199,62 @@ public class Transaction : ITransaction
         return newObject;
     }
 
-    public virtual IObject Build(IClass objectType)
+    public virtual IObject Build(IClass @class)
     {
-        var newObject = this.CreateWithoutOnBuild(objectType);
+        var newObject = this.CreateWithoutOnBuild(@class);
         newObject.OnBuild();
         newObject.OnPostBuild();
         return newObject;
     }
 
-    public IObject[] Build(IClass objectType, int count)
+    public IObject Build(IClass @class, params Action<IObject>[] builders)
     {
-        var arrayType = this.Database.ObjectFactory.GetType(objectType);
+        var newObject = this.CreateWithoutOnBuild(@class);
+
+        if (builders != null)
+        {
+            foreach (var builder in builders)
+            {
+                builder?.Invoke(newObject);
+            }
+        }
+
+        newObject.OnBuild();
+        newObject.OnPostBuild();
+
+        return newObject;
+    }
+
+    public IObject Build(IClass @class, IEnumerable<Action<IObject>> builders, params Action<IObject>[] extraBuilders)
+    {
+        var newObject = this.CreateWithoutOnBuild(@class);
+
+        if (builders != null)
+        {
+            foreach (var builder in builders)
+            {
+                builder?.Invoke(newObject);
+            }
+        }
+
+        foreach (var extraBuilder in extraBuilders)
+        {
+            extraBuilder?.Invoke(newObject);
+        }
+
+        newObject.OnBuild();
+        newObject.OnPostBuild();
+
+        return newObject;
+    }
+
+    public IObject[] Build(IClass @class, int count)
+    {
+        var arrayType = this.Database.ObjectFactory.GetType(@class);
         var allorsObjects = (IObject[])Array.CreateInstance(arrayType, count);
         for (var i = 0; i < count; i++)
         {
-            var newObject = this.CreateWithoutOnBuild(objectType);
+            var newObject = this.CreateWithoutOnBuild(@class);
             newObject.OnBuild();
             newObject.OnPostBuild();
             allorsObjects[i] = newObject;

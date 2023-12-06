@@ -122,7 +122,7 @@ public sealed class Transaction : ITransaction
             }
         }
 
-        newObject.OnBuild(); 
+        newObject.OnBuild();
         newObject.OnPostBuild();
 
         return newObject;
@@ -152,30 +152,71 @@ public sealed class Transaction : ITransaction
             extraBuilder?.Invoke(newObject);
         }
 
-        newObject.OnBuild(); 
+        newObject.OnBuild();
         newObject.OnPostBuild();
 
         return newObject;
     }
 
-    public IObject Build(IClass objectType)
+    public IObject Build(IClass @class)
     {
-        var newObject = this.CreateWithoutOnBuild(objectType);
-        newObject.OnBuild(); 
+        var newObject = this.CreateWithoutOnBuild(@class);
+        newObject.OnBuild();
         newObject.OnPostBuild();
         return newObject;
     }
 
-    public IObject[] Build(IClass objectType, int count)
+    public IObject Build(IClass @class, params Action<IObject>[] builders)
     {
-        if (!objectType.IsClass)
+        var newObject = this.CreateWithoutOnBuild(@class);
+
+        if (builders != null)
         {
-            throw new ArgumentException("Can not create non concrete composite type " + objectType);
+            foreach (var builder in builders)
+            {
+                builder?.Invoke(newObject);
+            }
         }
 
-        var references = this.Commands.CreateObjects(objectType, count);
+        newObject.OnBuild();
+        newObject.OnPostBuild();
 
-        var arrayType = this.Database.ObjectFactory.GetType(objectType);
+        return newObject;
+    }
+
+    public IObject Build(IClass @class, IEnumerable<Action<IObject>> builders, params Action<IObject>[] extraBuilders)
+    {
+        var newObject = this.CreateWithoutOnBuild(@class);
+
+        if (builders != null)
+        {
+            foreach (var builder in builders)
+            {
+                builder?.Invoke(newObject);
+            }
+        }
+
+        foreach (var extraBuilder in extraBuilders)
+        {
+            extraBuilder?.Invoke(newObject);
+        }
+
+        newObject.OnBuild();
+        newObject.OnPostBuild();
+
+        return newObject;
+    }
+
+    public IObject[] Build(IClass @class, int count)
+    {
+        if (!@class.IsClass)
+        {
+            throw new ArgumentException("Can not create non concrete composite type " + @class);
+        }
+
+        var references = this.Commands.CreateObjects(@class, count);
+
+        var arrayType = this.Database.ObjectFactory.GetType(@class);
         var domainObjects = (IObject[])Array.CreateInstance(arrayType, count);
 
         for (var i = 0; i < references.Count; i++)
@@ -185,7 +226,7 @@ public sealed class Transaction : ITransaction
             this.State.ChangeLog.OnCreated(reference.Strategy);
 
             var newObject = reference.Strategy.GetObject();
-            newObject.OnBuild(); 
+            newObject.OnBuild();
             newObject.OnPostBuild();
             domainObjects[i] = newObject;
         }
@@ -219,7 +260,7 @@ public sealed class Transaction : ITransaction
 
             var newObject = (TObject)reference.Strategy.GetObject();
             builder?.Invoke(newObject, arg);
-            newObject.OnBuild(); 
+            newObject.OnBuild();
             newObject.OnPostBuild();
             domainObjects[i] = newObject;
             i++;
