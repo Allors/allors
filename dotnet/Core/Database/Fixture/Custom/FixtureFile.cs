@@ -1,31 +1,21 @@
-﻿namespace Allors.Resources
+﻿namespace Allors.Fixture
 {
-    using System.IO;
-    using System.Reflection;
-    using Database.Meta;
-    using Database.Population;
+    using System;
+    using Database;
+    using Database.Fixture;
+    using Database.Roundtrip;
 
-    public class FixtureFile
+    public partial class FixtureFile
     {
-        public FixtureFile(IMetaPopulation metaPopulation)
+        private Func<IStrategy, Handle> HandleResolver()
         {
-            this.MetaPopulation = metaPopulation;
-        }
+            Func<IStrategy, Handle> handleResolver = _ => null;
+            Fixture existingFixture = this.ExistingFixture();
 
-        public IMetaPopulation MetaPopulation { get; }
-
-        public Fixture Read()
-        {
-            using Stream stream = this.GetResource("Allors.Resources.Fixture.xml");
-            var reader = new FixtureReader(this.MetaPopulation);
-            return reader.Read(stream);
-        }
-        
-        private Stream GetResource(string name)
-        {
-            var assembly = this.GetType().GetTypeInfo().Assembly;
-            var resource = assembly.GetManifestResourceStream(name);
-            return resource;
+            var fromExisting = HandleResolvers.FromFixture(existingFixture);
+            var fromKey = HandleResolvers.PascalCaseKey();
+            handleResolver = strategy => fromExisting(strategy) ?? fromKey(strategy);
+            return handleResolver;
         }
     }
 }

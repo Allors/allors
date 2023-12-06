@@ -1,4 +1,4 @@
-﻿namespace Allors.Resources
+﻿namespace Allors.Database.Fixture.Xml
 {
     using System;
     using System.Collections.Generic;
@@ -7,7 +7,7 @@
     using System.Xml;
     using System.Xml.Linq;
     using Database.Meta;
-    using Database.Population;
+    using Database.Fixture;
 
     public class FixtureWriter : IFixtureWriter
     {
@@ -44,7 +44,7 @@
 
             XAttribute Handle(Record record) =>
                 record.Handle != null
-                    ? new XAttribute(FixtureReader.HandleAttributeName, WriteString(record.Class.KeyRoleType, record.Handle.Name))
+                    ? new XAttribute(FixtureReader.HandleAttributeName, this.WriteString(record.Class.KeyRoleType, record.Handle.Name))
                     : null;
 
             Func<IRoleType, XElement> Role(Record strategy) => roleType =>

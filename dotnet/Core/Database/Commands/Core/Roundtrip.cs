@@ -9,9 +9,10 @@ namespace Commands
     using System.IO;
     using Allors.Database;
     using Allors.Database.Meta;
-    using Allors.Database.Population;
+    using Allors.Database.Fixture;
+    using Allors.Database.Fixture.Xml;
     using Allors.Database.Roundtrip;
-    using Allors.Resources;
+    using Allors.Fixture;
     using McMaster.Extensions.CommandLineUtils;
     using NLog;
 
@@ -35,24 +36,9 @@ namespace Commands
             this.Logger.Info("Saving {file}", fileInfo.FullName);
 
             var database = this.Parent.Database;
-            using var transaction = database.CreateTransaction();
 
-            var m = database.Services.Get<M>();
-
-            Func<IStrategy, Handle> handleResolver = strategy => null;
-
-            if (fileInfo.Exists)
-            {
-                using var existingStream = File.Open(fileInfo.FullName, FileMode.Open);
-                var fixtureReader = new FixtureReader(m);
-                var existingFixture = fixtureReader.Read(existingStream);
-                handleResolver = HandleResolvers.FromFixture(existingFixture);
-            }
-
-            using var stream = File.Open(fileInfo.FullName, FileMode.Create);
-            var fixture = transaction.ToFixture(handleResolver);
-            var fixtureWriter = new FixtureWriter(m);
-            fixtureWriter.Write(stream, fixture);
+            var fixtureFile = new FixtureFile(database, fileInfo);
+            fixtureFile.Write();
 
             this.Logger.Info("End");
             return ExitCode.Success;

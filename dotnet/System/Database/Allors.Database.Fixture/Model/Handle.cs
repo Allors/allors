@@ -1,4 +1,4 @@
-﻿namespace Allors.Database.Population;
+﻿namespace Allors.Database.Fixture;
 
 using Meta;
 

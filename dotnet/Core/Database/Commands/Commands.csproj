@@ -17,6 +17,7 @@
     <ProjectReference Include="..\..\..\System\Database\Allors.Database.Fixture.Xml\Allors.Database.Fixture.Xml.csproj" />
     <ProjectReference Include="..\..\..\System\Database\Allors.Database.Roundtrip\Allors.Database.Roundtrip.csproj" />
     <ProjectReference Include="..\Configuration\Configuration.csproj" />
+    <ProjectReference Include="..\Fixture\Fixture.csproj" />
     <ProjectReference Include="..\Meta.Configuration\Meta.Configuration.csproj" />
     <ProjectReference Include="..\Setup\Setup.csproj" />
   </ItemGroup>

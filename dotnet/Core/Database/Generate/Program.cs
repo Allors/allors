@@ -9,8 +9,8 @@ namespace Allors.Meta.Generation
     using System.IO;
     using Allors.Database.Meta.Configuration;
     using Allors.Meta.Generation.Model;
-    using Database.Population;
-    using Resources;
+    using Database.Fixture;
+    using Fixture;
 
     internal class Program
     {
@@ -38,7 +38,7 @@ namespace Allors.Meta.Generation
             };
 
             var metaPopulation = MetaBuilder.Build();
-            var fixtureFile = new FixtureFile(metaPopulation);
+            var fixtureFile = new FixtureResource(metaPopulation);
             var fixture = fixtureFile.Read();
             var model = new Model.Model(metaPopulation, fixture);
             model.Init();

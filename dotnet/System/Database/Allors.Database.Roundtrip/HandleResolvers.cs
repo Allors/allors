@@ -2,7 +2,9 @@
 
 using System;
 using System.Linq;
-using Population;
+using CaseExtensions;
+using Fixture;
+using Meta;
 
 public static class HandleResolvers
 {
@@ -20,7 +22,7 @@ public static class HandleResolvers
             {
                 return null;
             }
-            
+
             var key = strategy.GetUnitRole(strategy.Class.KeyRoleType);
             if (key == null)
             {
@@ -29,6 +31,23 @@ public static class HandleResolvers
 
             handleByKey.TryGetValue(key, out var handle);
             return handle;
+        };
+    }
+
+    public static Func<IStrategy, Handle> PascalCaseKey()
+    {
+        return strategy =>
+        {
+            var keyRoleType = strategy.Class.KeyRoleType;
+            var keyValue = strategy.GetUnitRole(keyRoleType);
+            if (keyValue is not string)
+            {
+                return null;
+            }
+
+            var keyName = ((string)keyValue).ToPascalCase();
+
+            return new Handle(keyRoleType, keyName, keyValue);
         };
     }
 }

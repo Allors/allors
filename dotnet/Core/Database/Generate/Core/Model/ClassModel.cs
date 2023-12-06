@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Allors.Database.Meta;
-using Database.Population;
+using Database.Fixture;
 
 public sealed class ClassModel : CompositeModel
 {
