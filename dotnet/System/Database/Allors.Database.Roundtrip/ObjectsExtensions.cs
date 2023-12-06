@@ -1,15 +1,14 @@
 ﻿namespace Allors.Database.Roundtrip;
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Fixture;
 
-public static class ITransactionExtensions
+public static class ObjectsExtensions
 {
-    public static Fixture ToFixture(this ITransaction transaction, Func<IStrategy, Handle> handleResolver)
+    public static Fixture ToFixture(this IEnumerable<IObject> objects, Func<IStrategy, Handle> handleResolver)
     {
-        var metaPopulation = transaction.Database.MetaPopulation;
-
         bool IsDefault(object value)
         {
             return value switch
@@ -22,9 +21,7 @@ public static class ITransactionExtensions
             };
         }
 
-        var recordsByClass = metaPopulation.Classes
-            .Where(v => v.KeyRoleType != null)
-            .SelectMany(transaction.Extent)
+        var recordsByClass = objects
             .Select(v => v.Strategy)
             .Select(v =>
             {

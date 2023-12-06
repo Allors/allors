@@ -1,7 +1,9 @@
 ﻿namespace Allors.Fixture
 {
     using System;
+    using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using Database;
     using Database.Fixture;
     using Database.Fixture.Xml;
@@ -19,31 +21,31 @@
             this.database = database;
             this.fileInfo = fileInfo;
             this.m = database.Services.Get<M>();
+
+            if (this.fileInfo.Exists)
+            {
+                using var existingStream = File.Open(this.fileInfo.FullName, FileMode.Open);
+                var fixtureReader = new FixtureReader(this.m);
+                this.ExistingFixture = fixtureReader.Read(existingStream);
+            }
         }
 
         public void Write()
         {
-            using var transaction = this.database.CreateTransaction();
-
             Func<IStrategy, Handle> handleResolver = this.HandleResolver();
 
             using var stream = File.Open(fileInfo.FullName, FileMode.Create);
-            var fixture = transaction.ToFixture(handleResolver);
+
+            using var transaction = this.database.CreateTransaction();
+
+            IEnumerable<IObject> objects = this.Objects(transaction);
+
+            var fixture = objects.ToFixture(handleResolver);
+
             var fixtureWriter = new FixtureWriter(m);
             fixtureWriter.Write(stream, fixture);
         }
         
-        private Fixture ExistingFixture()
-        {
-            if (!this.fileInfo.Exists)
-            {
-                return null;
-            }
-
-            using var existingStream = File.Open(this.fileInfo.FullName, FileMode.Open);
-            var fixtureReader = new FixtureReader(this.m);
-            var existingFixture = fixtureReader.Read(existingStream);
-            return existingFixture;
-        }
+        private Fixture ExistingFixture { get; }
     }
 }

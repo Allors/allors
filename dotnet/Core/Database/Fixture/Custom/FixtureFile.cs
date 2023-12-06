@@ -1,6 +1,8 @@
 ﻿namespace Allors.Fixture
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using Database;
     using Database.Fixture;
     using Database.Roundtrip;
@@ -10,12 +12,19 @@
         private Func<IStrategy, Handle> HandleResolver()
         {
             Func<IStrategy, Handle> handleResolver = _ => null;
-            Fixture existingFixture = this.ExistingFixture();
 
-            var fromExisting = HandleResolvers.FromFixture(existingFixture);
+            var fromExisting = HandleResolvers.FromFixture(this.ExistingFixture);
             var fromKey = HandleResolvers.PascalCaseKey();
             handleResolver = strategy => fromExisting(strategy) ?? fromKey(strategy);
             return handleResolver;
+        }
+
+        private IEnumerable<IObject> Objects(ITransaction transaction)
+        {
+            var objects = this.ExistingFixture.RecordsByClass.Keys
+                .Where(v => v.KeyRoleType != null)
+                .SelectMany(transaction.Extent);
+            return objects;
         }
     }
 }
