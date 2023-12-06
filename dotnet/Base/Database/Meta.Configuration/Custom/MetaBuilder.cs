@@ -7,7 +7,6 @@ namespace Allors.Database.Meta.Configuration
 {
     using System;
     using System.Linq;
-    using Extensions;
 
     public partial class MetaBuilder
     {

@@ -3,7 +3,6 @@
 using System;
 using System.Linq;
 using Fixture;
-using Meta;
 
 public static class ITransactionExtensions
 {

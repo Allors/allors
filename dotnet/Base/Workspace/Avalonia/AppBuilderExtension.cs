@@ -3,13 +3,9 @@
 using System;
 using System.Net.Http;
 using Splat;
-using System;
-using System.Net.Http;
-using System.Threading.Tasks;
 using Allors.Workspace;
 using Allors.Workspace.Adapters;
 using Allors.Workspace.Configuration;
-using Allors.Workspace.Meta;
 using Allors.Workspace.Meta.Static;
 using Configuration = Allors.Workspace.Adapters.Json.Configuration;
 public static class AppBuilderExtensions

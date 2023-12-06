@@ -8,7 +8,6 @@ namespace Allors.Database.Domain.Tests
     using System.Linq;
     using Allors.Database.Configuration;
     using Xunit;
-    using Permissions = Allors.Database.Domain.Permissions;
 
     public class WorkspaceAccessControlListsTests : DomainTest, IClassFixture<Fixture>
     {

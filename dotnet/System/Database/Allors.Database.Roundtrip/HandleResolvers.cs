@@ -4,7 +4,6 @@ using System;
 using System.Linq;
 using CaseExtensions;
 using Fixture;
-using Meta;
 
 public static class HandleResolvers
 {

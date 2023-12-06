@@ -44,7 +44,7 @@
 
             XAttribute Handle(Record record) =>
                 record.Handle != null
-                    ? new XAttribute(FixtureReader.HandleAttributeName, this.WriteString(record.Class.KeyRoleType, record.Handle.Name))
+                    ? new XAttribute(FixtureReader.HandleAttributeName, record.Handle.Name)
                     : null;
 
             Func<IRoleType, XElement> Role(Record strategy) => roleType =>

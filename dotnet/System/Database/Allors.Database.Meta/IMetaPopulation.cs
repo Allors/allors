@@ -8,7 +8,6 @@ namespace Allors.Database.Meta;
 
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 
 public interface IMetaPopulation
 {

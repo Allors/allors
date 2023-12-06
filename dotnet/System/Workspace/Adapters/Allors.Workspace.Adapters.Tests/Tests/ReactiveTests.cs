@@ -5,7 +5,6 @@
 
 namespace Allors.Workspace.Adapters.Tests
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -13,8 +12,6 @@ namespace Allors.Workspace.Adapters.Tests
     using Xunit;
     using Allors.Workspace.Data;
     using Allors.Workspace;
-    using System.ComponentModel;
-    using System.Linq.Expressions;
 
     public abstract class ReactiveTests : Test
     {

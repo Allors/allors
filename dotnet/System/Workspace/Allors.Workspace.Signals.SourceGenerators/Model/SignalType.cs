@@ -1,6 +1,5 @@
 ﻿namespace Allors.Workspace.Mvvm.Generator;
 
-using System;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 

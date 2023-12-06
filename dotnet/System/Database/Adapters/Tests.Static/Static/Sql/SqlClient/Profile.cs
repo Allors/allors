@@ -12,7 +12,6 @@ using System.Text;
 using Allors.Database.Meta.Configuration;
 using Allors.Database.Adapters.Sql.Caching;
 using Allors.Database.Domain;
-using Allors.Database.Meta;
 using Microsoft.Data.SqlClient;
 
 public class Profile : Adapters.Profile

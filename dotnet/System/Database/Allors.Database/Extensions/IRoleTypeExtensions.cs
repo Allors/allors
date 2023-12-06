@@ -8,7 +8,6 @@ using System.Linq;
 
 namespace Allors.Database.Meta;
 
-using System;
 using System.Collections.Generic;
 
 public static class IRoleTypeExtensions

@@ -4,7 +4,6 @@ using Allors.Workspace;
 using Allors.Workspace.Domain;
 using Allors.Workspace.Mvvm.Generator;
 using Allors.Workspace.Signals;
-using CommunityToolkit.Mvvm.ComponentModel;
 
 public partial class PersonGeneratorViewModel : ObjectViewModel<Person>
 {

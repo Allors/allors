@@ -6,7 +6,6 @@
 namespace Allors.Workspace.Adapters.Tests
 {
     using System.Threading.Tasks;
-    using Allors;
     using Allors.Workspace.Data;
     using Allors.Workspace.Domain;
     using Xunit;

@@ -5,7 +5,6 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Allors.Workspace;
 using global::ReactiveUI;
-using Splat;
 
 public class MainWindowViewModel : ReactiveObject, IScreen, IActivatableViewModel
 {

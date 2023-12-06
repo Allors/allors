@@ -6,9 +6,6 @@
 
 namespace Allors.Workspace.Meta
 {
-    using System.Drawing;
-    using Allors.Text;
-
     /// <summary>
     ///     A relation type defines the state and behavior for
     ///     a set of association types and role types.

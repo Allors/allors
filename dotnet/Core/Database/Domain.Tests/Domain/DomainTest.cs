@@ -15,7 +15,6 @@ namespace Allors.Database.Domain.Tests
     using Allors.Database.Security;
     using Allors.Database.Meta;
     using Moq;
-    using Permissions = Allors.Database.Domain.Permissions;
 
     public class DomainTest : IDisposable
     {

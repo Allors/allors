@@ -6,8 +6,6 @@
 
 namespace Allors.Database.Domain
 {
-    using System;
-
     public partial class Organisations
     {
         protected override void CustomPrepare(Security security) => security.AddDependency(this.ObjectType, this.M.Revocation);

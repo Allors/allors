@@ -6,8 +6,6 @@
 
 namespace Allors.Database.Domain
 {
-    using System;
-
     public partial class Organization
     {
         public void CustomOnPostDerive(ObjectOnPostDerive _) => this.PostDeriveTrigger = true;

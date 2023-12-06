@@ -6,8 +6,6 @@
 
 namespace Allors.Database.Domain
 {
-    using System;
-
     public partial class UserGroups
     {
         protected override void CustomSetup(Setup setup)

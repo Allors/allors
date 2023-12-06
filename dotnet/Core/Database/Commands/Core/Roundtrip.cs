@@ -5,13 +5,7 @@
 
 namespace Commands
 {
-    using System;
     using System.IO;
-    using Allors.Database;
-    using Allors.Database.Meta;
-    using Allors.Database.Fixture;
-    using Allors.Database.Fixture.Xml;
-    using Allors.Database.Roundtrip;
     using Allors.Fixture;
     using McMaster.Extensions.CommandLineUtils;
     using NLog;
@@ -23,14 +17,14 @@ namespace Commands
 
         public Logger Logger => LogManager.GetCurrentClassLogger();
 
-        [Option("-f", Description = "population file")]
-        public string FileName { get; set; } = "population.xml";
+        [Option("-f", Description = "fixture file")]
+        public string FileName { get; set; }
 
         public int OnExecute(CommandLineApplication app)
         {
             this.Logger.Info("Begin");
 
-            var fileName = this.FileName ?? this.Parent.Configuration["populationFile"];
+            var fileName = this.FileName ?? this.Parent.Configuration["fixtureFile"] ?? "../../../../Fixture/Fixture.xml";
             var fileInfo = new FileInfo(fileName);
 
             this.Logger.Info("Saving {file}", fileInfo.FullName);

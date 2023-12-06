@@ -6,11 +6,8 @@
 namespace Allors.Database.Domain
 {
     using System;
-    using System.Collections.Concurrent;
-    using System.Collections.Generic;
-    using Meta;
 
-     public interface ICacheMerger<TKey, TObject> 
+    public interface ICacheMerger<TKey, TObject> 
         where TObject : class, IObject
     {
 

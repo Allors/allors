@@ -4,7 +4,6 @@
 // </copyright>
 
 using Allors.Workspace.Adapters.Tests;
-using Allors.Workspace.Adapters.Direct.Tests;
 
 namespace Allors.Workspace.Adapters.Direct.Tests
 {

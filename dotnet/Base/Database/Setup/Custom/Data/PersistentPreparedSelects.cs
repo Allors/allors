@@ -5,8 +5,6 @@
 
 namespace Allors.Database.Domain
 {
-    using System;
-
     using Allors.Database.Data;
 
     public partial class PersistentPreparedSelects

@@ -12,7 +12,6 @@ using Allors.Database.Meta.Configuration;
 using Allors.Database.Adapters.Sql.Caching;
 using Allors.Database.Domain;
 using global::Npgsql;
-using Allors.Database.Meta;
 
 public class Profile : Adapters.Profile
 {

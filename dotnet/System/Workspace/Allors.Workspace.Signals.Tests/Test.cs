@@ -1,7 +1,6 @@
 ﻿namespace Allors.Workspace.Signals.Tests
 {
     using Adapters.Direct;
-    using Configuration;
     using Database;
     using Database.Adapters.Memory;
     using Database.Configuration;

@@ -7,7 +7,6 @@ namespace Allors.Database.Domain
 {
     using System.IO;
     using System.Text;
-    using System.Xml.Serialization;
     using Allors.Database.Data;
     using Allors.Protocol.Json.SystemText;
     using Protocol.Json;

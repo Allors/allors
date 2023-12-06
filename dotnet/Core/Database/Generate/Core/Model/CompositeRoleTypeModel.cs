@@ -2,7 +2,6 @@
 
 using Allors.Database.Meta;
 using Allors.Database.Meta.Extensions;
-using Allors.Meta.Generation.Model;
 
 public class CompositeRoleTypeModel : IMetaExtensibleModel
 {

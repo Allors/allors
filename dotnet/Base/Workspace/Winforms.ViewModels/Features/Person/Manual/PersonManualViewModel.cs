@@ -1,6 +1,5 @@
 ﻿namespace Workspace.WinForms.ViewModels.Features;
 
-using System.Linq.Expressions;
 using Allors.Workspace;
 using Allors.Workspace.Domain;
 using Allors.Workspace.Signals;

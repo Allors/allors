@@ -6,7 +6,6 @@
 namespace Allors.Database.Domain
 {
     using System;
-    using Allors.Database.Security;
 
     public partial class Role
     {

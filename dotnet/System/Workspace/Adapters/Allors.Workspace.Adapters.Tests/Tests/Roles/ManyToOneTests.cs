@@ -10,7 +10,6 @@ namespace Allors.Workspace.Adapters.Tests
     using Allors.Workspace;
     using Xunit;
     using Allors.Workspace.Data;
-    using System;
     using System.Linq;
 
     public abstract class ManyToOneTests : Test

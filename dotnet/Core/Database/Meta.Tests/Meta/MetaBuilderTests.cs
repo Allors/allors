@@ -9,7 +9,6 @@
 namespace Allors.Database.Domain.Tests
 {
     using Allors.Database.Meta.Configuration;
-    using Allors.Database.Meta;
     using Xunit;
 
     public class MetaBuilderTests

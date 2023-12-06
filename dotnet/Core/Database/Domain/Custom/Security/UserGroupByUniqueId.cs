@@ -5,8 +5,6 @@
 
 namespace Allors.Database.Domain
 {
-    using System;
-
     public partial class UserGroupByUniqueId : IScoped
     {
         public UserGroup Operations => this.cache[UserGroup.OperationsId];

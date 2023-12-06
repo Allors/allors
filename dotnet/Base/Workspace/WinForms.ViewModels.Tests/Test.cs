@@ -6,7 +6,6 @@
     using Allors.Database.Domain;
     using Allors.Database.Services;
     using Allors.Workspace;
-    using Allors.Workspace.Adapters;
     using Allors.Workspace.Meta.Static;
     using Configuration;
     using Configuration = Allors.Workspace.Adapters.Direct.Configuration;

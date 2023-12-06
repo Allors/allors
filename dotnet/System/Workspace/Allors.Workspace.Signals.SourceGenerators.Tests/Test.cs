@@ -1,6 +1,5 @@
 ﻿namespace Allors.Workspace.Mvvm.SourceGenerators.Tests
 {
-    using System.Diagnostics;
     using System.Reflection;
     using Generator;
     using Microsoft.CodeAnalysis;

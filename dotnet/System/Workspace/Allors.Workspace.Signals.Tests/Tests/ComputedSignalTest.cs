@@ -1,8 +1,5 @@
 ﻿namespace Allors.Workspace.Signals.Tests
 {
-    using System.Linq.Expressions;
-    using Configuration;
-    using Data;
     using Domain;
 
     public class ComputedSignalTest : Test

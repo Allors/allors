@@ -5,7 +5,6 @@
 
 namespace Allors.Workspace.Adapters.Tests
 {
-    using System.Linq;
     using Allors.Workspace;
     using Allors.Workspace.Data;
     using Allors.Workspace.Domain;

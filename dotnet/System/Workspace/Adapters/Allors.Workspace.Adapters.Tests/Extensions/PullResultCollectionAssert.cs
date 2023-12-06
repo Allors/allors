@@ -3,7 +3,6 @@
     using System.Linq;
     using Allors.Workspace;
     using Xunit;
-    using Allors.Workspace.Domain;
 
     public class PullResultCollectionAssert<T> where T : class, IObject
     {

@@ -1,11 +1,8 @@
 ﻿namespace Allors.Fixture
 {
     using System;
-    using System.IO;
     using Database;
     using Database.Fixture;
-    using Database.Fixture.Xml;
-    using Database.Meta;
     using Database.Roundtrip;
 
     public partial class FixtureFile

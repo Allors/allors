@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using Allors.Database.Meta.Configuration;
 using Allors.Database.Domain;
 using Allors.Database.Adapters.Memory;
-using Allors.Database.Meta;
 
 public abstract class Profile : IProfile
 {

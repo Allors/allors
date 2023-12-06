@@ -10,7 +10,6 @@ namespace Allors.Workspace.Adapters.Direct
     using System.Threading.Tasks;
     using System;
     using System.Collections.Generic;
-    using System.Linq;
 
     public class Workspace : Adapters.Workspace
     {
