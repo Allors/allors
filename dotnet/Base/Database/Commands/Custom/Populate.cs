@@ -7,6 +7,7 @@ namespace Commands
 {
     using Allors.Database.Domain;
     using Allors.Database.Services;
+    using Allors.Fixture;
     using McMaster.Extensions.CommandLineUtils;
     using NLog;
     using Setup = Allors.Database.Domain.Setup;
@@ -27,7 +28,8 @@ namespace Commands
             database.Init();
 
             var config = new Config { DataPath = this.Parent.DataPath };
-            new Setup(database, config).Apply();
+            var fixture = new FixtureResource(database.MetaPopulation).Read();
+            new Setup(database, fixture, config).Apply();
 
             using (var session = database.CreateTransaction())
             {

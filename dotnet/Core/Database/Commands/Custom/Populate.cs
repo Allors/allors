@@ -1,4 +1,4 @@
-// <copyright file="Populate.cs" company="Allors bvba">
+﻿// <copyright file="Populate.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -6,6 +6,7 @@
 namespace Commands
 {
     using Allors.Database.Domain;
+    using Allors.Fixture;
     using McMaster.Extensions.CommandLineUtils;
     using NLog;
 
@@ -25,7 +26,8 @@ namespace Commands
             database.Init();
 
             var config = new Config { DataPath = this.Parent.DataPath };
-            new Setup(database, config).Apply();
+            var fixture = new FixtureResource(database.MetaPopulation).Read();
+            new Setup(database, fixture, config).Apply();
 
             using (var transaction = database.CreateTransaction())
             {

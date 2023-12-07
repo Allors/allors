@@ -8,6 +8,8 @@ namespace Allors.Database.Domain
     using System.Collections.Generic;
     using Allors.Graph;
     using Allors.Database.Meta;
+    using Fixture;
+    using Roundtrip;
 
     public partial class Setup
     {
@@ -16,8 +18,9 @@ namespace Allors.Database.Domain
         private readonly Dictionary<IObjectType, IObjects> objectsByObjectType;
         private readonly Graph<IObjects> objectsGraph;
 
-        public Setup(IDatabase database, Config config)
+        public Setup(IDatabase database, Fixture fixture, Config config)
         {
+            this.Fixture = fixture;
             this.Config = config;
             this.transaction = database.CreateTransaction();
 
@@ -29,6 +32,8 @@ namespace Allors.Database.Domain
 
             this.objectsGraph = new Graph<IObjects>();
         }
+
+        public Fixture Fixture { get; }
 
         public Config Config { get; }
 
@@ -88,6 +93,7 @@ namespace Allors.Database.Domain
 
         private void CoreOnPreSetup()
         {
+            this.Fixture.ToDatabase(this.transaction);
         }
 
         private void CoreOnPostSetup(Config config)
