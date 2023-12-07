@@ -24,7 +24,7 @@ namespace Commands
         {
             this.Logger.Info("Begin");
 
-            var fileName = this.FileName ?? this.Parent.Configuration["fixtureFile"] ?? "../../../../Fixture/Fixture.xml";
+            var fileName = this.FileName ?? this.Parent.Configuration["fixtureFile"] ?? "../../../../Fixture/Population.xml";
             var fileInfo = new FileInfo(fileName);
 
             this.Logger.Info("Saving {file}", fileInfo.FullName);

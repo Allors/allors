@@ -27,7 +27,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Core\Database\Configuration\Configuration.csproj" />
-    <ProjectReference Include="..\..\..\Core\Database\Fixture\Fixture.csproj" />
+    <ProjectReference Include="..\..\..\Core\Database\Population\Population.csproj" />
     <ProjectReference Include="..\..\..\Core\Database\Meta.Configuration\Meta.Configuration.csproj" />
     <ProjectReference Include="..\..\..\Core\Database\Setup\Setup.csproj" />
     <ProjectReference Include="..\..\..\Core\Workspace\Configuration\Workspace.Configuration.csproj" />
