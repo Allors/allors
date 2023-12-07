@@ -19,6 +19,7 @@
     <ProjectReference Include="..\..\..\System\Database\Adapters\Allors.Database.Adapters.Memory\Allors.Database.Adapters.Memory.csproj" />
     <ProjectReference Include="..\..\..\System\Database\Adapters\Allors.Database.Adapters.Sql.SqlClient\Allors.Database.Adapters.Sql.SqlClient.csproj" />
     <ProjectReference Include="..\Configuration.Tests\Configuration.Tests.csproj" />
+    <ProjectReference Include="..\Fixture\Fixture.csproj" />
     <ProjectReference Include="..\Meta.Configuration\Meta.Configuration.csproj" />
     <ProjectReference Include="..\Setup\Setup.csproj" />
   </ItemGroup>

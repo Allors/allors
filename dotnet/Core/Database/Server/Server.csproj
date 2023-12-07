@@ -20,6 +20,7 @@
     <ProjectReference Include="..\..\..\System\Protocol\Allors.Protocol.Json.SystemText\Allors.Protocol.Json.SystemText.csproj" />
     <ProjectReference Include="..\..\..\System\Workspace\Allors.Workspace\Allors.Workspace.csproj" />
     <ProjectReference Include="..\Configuration\Configuration.csproj" />
+    <ProjectReference Include="..\Fixture\Fixture.csproj" />
     <ProjectReference Include="..\Meta.Configuration\Meta.Configuration.csproj" />
     <ProjectReference Include="..\Setup\Setup.csproj" />
   </ItemGroup>

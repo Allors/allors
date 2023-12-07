@@ -15,6 +15,7 @@ namespace Allors.Database.Domain.Tests
     using Allors.Database.Security;
     using Allors.Database.Meta;
     using Moq;
+    using Allors.Population;
 
     public class DomainTest : IDisposable
     {
@@ -73,7 +74,8 @@ namespace Allors.Database.Domain.Tests
         {
             database.Init();
 
-            new Setup(database, this.Config).Apply();
+            var fixture = new FixtureResource(this.M).Read();
+            new Setup(database, fixture, this.Config).Apply();
 
             this.Transaction = database.CreateTransaction();
 

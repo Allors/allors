@@ -1,10 +1,10 @@
-﻿namespace Allors.Fixture
+﻿namespace Allors.Population
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using Database;
-    using Database.Fixture;
+    using Database.Population;
     using Database.Roundtrip;
 
     public partial class FixtureFile

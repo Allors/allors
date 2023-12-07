@@ -1,10 +1,10 @@
-﻿namespace Allors.Fixture
+﻿namespace Allors.Population
 {
     using System.IO;
     using System.Reflection;
     using Database.Meta;
-    using Database.Fixture;
-    using Database.Fixture.Xml;
+    using Database.Population;
+    using Database.Population.Xml;
 
     public partial class FixtureResource
     {
@@ -14,7 +14,7 @@
 
         public Fixture Read()
         {
-            using Stream stream = this.GetResource("Allors.Fixture.Fixture.xml");
+            using Stream stream = this.GetResource("Allors.Population.Fixture.xml");
             var reader = new FixtureReader(this.metaPopulation);
             return reader.Read(stream);
         }

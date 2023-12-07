@@ -1,11 +1,11 @@
-﻿namespace Allors.Fixture
+﻿namespace Allors.Population
 {
     using System;
     using System.Collections.Generic;
     using System.IO;
     using Database;
-    using Database.Fixture;
-    using Database.Fixture.Xml;
+    using Database.Population;
+    using Database.Population.Xml;
     using Database.Meta;
     using Database.Roundtrip;
 

@@ -1,4 +1,4 @@
-﻿namespace Allors.Database.Fixture.Xml
+﻿namespace Allors.Database.Population.Xml
 {
     using System;
     using System.Collections.Generic;
@@ -8,7 +8,7 @@
     using System.Xml.Linq;
     using CaseExtensions;
     using Database.Meta;
-    using Database.Fixture;
+    using Population;
 
     public class FixtureWriter : IFixtureWriter
     {

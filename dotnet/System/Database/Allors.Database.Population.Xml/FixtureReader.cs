@@ -1,4 +1,4 @@
-﻿namespace Allors.Database.Fixture.Xml
+﻿namespace Allors.Database.Population.Xml
 {
     using System;
     using System.Collections.Generic;
@@ -7,7 +7,7 @@
     using System.Xml;
     using System.Xml.Linq;
     using Database.Meta;
-    using Database.Fixture;
+    using Population;
 
     public class FixtureReader : IFixtureReader
     {
@@ -56,7 +56,7 @@
                                       return new Record(@class, handle, valueByRoleType);
                                   })
                                   .ToArray()
-                              ?? Array.Empty<Database.Fixture.Record>();
+                              ?? Array.Empty<Record>();
                 fixture.RecordsByClass[@class] = records;
 
             }

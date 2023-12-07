@@ -5,11 +5,12 @@
     using Database.Adapters.Memory;
     using Database.Configuration;
     using Database.Configuration.Derivations.Default;
+    using Population;
     using Configuration = Database.Adapters.Memory.Configuration;
 
     public class Test
     {
-      
+
         private Database database;
 
         public Adapters.Direct.Configuration configuration;
@@ -40,7 +41,8 @@
 
                 this.database.Init();
                 var config = new Allors.Database.Domain.Config();
-                new Allors.Database.Domain.Setup(this.database, config).Apply();
+                var fixture = new FixtureResource(metaPopulation).Read();
+                new Allors.Database.Domain.Setup(this.database, fixture, config).Apply();
                 this.Transaction = this.database.CreateTransaction();
                 new Allors.Database.Domain.TestPopulation(this.Transaction).Apply();
                 this.Transaction.Commit();

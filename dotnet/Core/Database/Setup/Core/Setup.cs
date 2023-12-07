@@ -8,7 +8,7 @@ namespace Allors.Database.Domain
     using System.Collections.Generic;
     using Allors.Graph;
     using Allors.Database.Meta;
-    using Fixture;
+    using Population;
     using Roundtrip;
 
     public partial class Setup

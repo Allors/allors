@@ -3,7 +3,7 @@
 using System;
 using System.Linq;
 using CaseExtensions;
-using Fixture;
+using Population;
 
 public static class HandleResolvers
 {

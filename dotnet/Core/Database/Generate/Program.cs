@@ -8,7 +8,7 @@ namespace Allors.Meta.Generation
     using System;
     using System.IO;
     using Allors.Database.Meta.Configuration;
-    using Fixture;
+    using Population;
 
     internal class Program
     {

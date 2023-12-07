@@ -1,4 +1,4 @@
-﻿namespace Allors.Database.Fixture;
+﻿namespace Allors.Database.Population;
 
 using System.IO;
 

@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Fixture;
+using Population;
 
 public static class ObjectsExtensions
 {

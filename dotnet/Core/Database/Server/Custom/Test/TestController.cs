@@ -11,6 +11,7 @@ namespace Allors.Server.Controllers
     using Database.Services;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
+    using Population;
     using Services;
 
     public class TestController : Controller
@@ -59,7 +60,8 @@ namespace Allors.Server.Controllers
                 database.Init();
 
                 var config = new Config();
-                new Setup(database, config).Apply();
+                var fixture = new FixtureResource(database.MetaPopulation).Read();
+                new Setup(database, fixture, config).Apply();
 
                 using (var transaction = database.CreateTransaction())
                 {

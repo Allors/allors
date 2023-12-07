@@ -20,6 +20,7 @@ namespace Tests
     using Allors.Database.Domain;
     using Allors.Database.Meta;
     using Allors.Database.Meta.Configuration;
+    using Allors.Population;
     using Microsoft.Extensions.Configuration;
     using Database = Allors.Database.Adapters.Sql.SqlClient.Database;
 
@@ -82,7 +83,8 @@ namespace Tests
         {
             database.Init();
 
-            new Setup(database, this.Config).Apply();
+            var fixture = new FixtureResource(database.MetaPopulation).Read();
+            new Setup(database, fixture, this.Config).Apply();
 
             this.Transaction = database.CreateTransaction();
 

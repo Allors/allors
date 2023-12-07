@@ -11,7 +11,7 @@ using System.IO;
 using Allors.Database.Meta.Configuration;
 using Allors.Database.Meta;
 using Allors.Meta.Generation.Model;
-using Database.Fixture;
+using Database.Population;
 
 internal class Program
 {

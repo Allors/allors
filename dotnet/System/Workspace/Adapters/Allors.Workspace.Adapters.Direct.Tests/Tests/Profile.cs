@@ -19,6 +19,7 @@ namespace Allors.Workspace.Adapters.Direct.Tests
     using Allors.Workspace;
     using Allors.Workspace.Configuration;
     using Allors.Workspace.Meta;
+    using Population;
     using Configuration = Allors.Workspace.Adapters.Direct.Configuration;
     using Connection = Direct.Connection;
     using IWorkspaceServices = Allors.Workspace.IWorkspaceServices;
@@ -60,7 +61,8 @@ namespace Allors.Workspace.Adapters.Direct.Tests
             this.Database.Init();
 
             var config = new Config();
-            new Setup(this.Database, config).Apply();
+            var x = new FixtureResource(this.Database.MetaPopulation).Read();
+            new Setup(this.Database, x, config).Apply();
 
             using var transaction = this.Database.CreateTransaction();
 
@@ -93,7 +95,7 @@ namespace Allors.Workspace.Adapters.Direct.Tests
             this.Connection = new Connection(this.configuration, this.Database, this.servicesBuilder) { UserId = this.user.Id };
 
             this.Workspace = this.Connection.CreateWorkspace();
-            
+
             return Task.CompletedTask;
         }
     }

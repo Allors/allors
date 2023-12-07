@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <RootNamespace>Allors.Fixture</RootNamespace>
+    <RootNamespace>Allors.Population</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Fixture.xml" />
@@ -11,8 +11,7 @@
   </ItemGroup>
  
   <ItemGroup>
-    <ProjectReference Include="..\..\..\System\Database\Allors.Database.Fixture.Xml\Allors.Database.Fixture.Xml.csproj" />
-    <ProjectReference Include="..\..\..\System\Database\Allors.Database.Roundtrip\Allors.Database.Roundtrip.csproj" />
+    <ProjectReference Include="..\..\..\System\Database\Allors.Database.Population.Xml\Allors.Database.Population.Xml.csproj" />
     <ProjectReference Include="..\Meta.Configuration\Meta.Configuration.csproj" />
   </ItemGroup>
   

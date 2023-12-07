@@ -6,7 +6,7 @@
 namespace Commands
 {
     using System.IO;
-    using Allors.Fixture;
+    using Allors.Population;
     using McMaster.Extensions.CommandLineUtils;
     using NLog;
 

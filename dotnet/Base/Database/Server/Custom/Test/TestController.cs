@@ -6,6 +6,7 @@
 namespace Allors.Database.Server.Controllers
 {
     using System;
+    using Allors.Population;
     using Allors.Services;
     using Domain;
     using Microsoft.AspNetCore.Mvc;
@@ -52,7 +53,8 @@ namespace Allors.Database.Server.Controllers
                 database.Init();
 
                 var config = new Config();
-                new Setup(database, config).Apply();
+                var fixture = new FixtureResource(database.MetaPopulation).Read();
+                new Setup(database, fixture, config).Apply();
 
                 using (var transaction = database.CreateTransaction())
                 {

@@ -2,7 +2,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Fixture;
+using Population;
 using Meta;
 
 public static class IFixtureExtensions

@@ -6,8 +6,8 @@
   <ItemGroup>
     <PackageReference Include="CaseExtensions" Version="1.1.0" />
   </ItemGroup>
-
+  
   <ItemGroup>
-    <ProjectReference Include="..\Allors.Database.Fixture\Allors.Database.Fixture.csproj" />
+    <ProjectReference Include="..\Allors.Database.Population\Allors.Database.Population.csproj" />
   </ItemGroup>
 </Project>

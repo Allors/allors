@@ -13,6 +13,7 @@ namespace Allors.Database.Domain.Tests
     using Adapters.Memory;
     using Domain;
     using Allors.Database.Security;
+    using Allors.Population;
     using Configuration;
     using Database.Derivations;
     using Meta;
@@ -78,7 +79,8 @@ namespace Allors.Database.Domain.Tests
 
             if (populate)
             {
-                new Setup(database, this.Config).Apply();
+                var fixture = new FixtureResource(database.MetaPopulation).Read();
+                new Setup(database, fixture, this.Config).Apply();
             }
 
             this.Transaction = database.CreateTransaction();

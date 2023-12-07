@@ -8,6 +8,7 @@
     using Allors.Workspace;
     using Allors.Workspace.Meta.Static;
     using Configuration;
+    using Population;
     using Configuration = Allors.Workspace.Adapters.Direct.Configuration;
     using Connection = Allors.Workspace.Adapters.Direct.Connection;
     using Person = Allors.Workspace.Domain.Person;
@@ -53,7 +54,8 @@
             this.Database.Init();
 
             var config = new Config();
-            new Setup(this.Database, config).Apply();
+            var fixture = new FixtureResource(this.Database.MetaPopulation).Read();
+            new Setup(this.Database, fixture, config).Apply();
 
             using var transaction = this.Database.CreateTransaction();
 
