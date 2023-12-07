@@ -30,7 +30,6 @@ namespace Allors.Database.Domain.Tests
             this.Transaction.Build<Language>(v =>
             {
                 v.IsoCode = "XX";
-                v.Name = "XXX";
             });
 
             Assert.True(this.Transaction.Derive(false).HasErrors);
@@ -40,7 +39,6 @@ namespace Allors.Database.Domain.Tests
             this.Transaction.Build<Language>(v =>
             {
                 v.IsoCode = "XX";
-                v.Name = "XXX";
                 v.NativeName = "XXXX";
             });
 
