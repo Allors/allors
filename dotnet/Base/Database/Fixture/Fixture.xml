@@ -1,22 +1,22 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <population>
-	<genders>
-		<gender handle="Male">
-			<key>Male</key>
-		</gender>
-		<gender handle="Female">
-			<key>Female</key>
-		</gender>
-		<gender handle="Other">
-			<key>Other</key>
-		</gender>
-		<gender handle="PreferNotToSay">
-			<key>PreferNotToSay</key>
-		</gender>
-	</genders>
-	<templateTypes>
-		<templateType handle="OpenDocumentType">
-			<uniqueId>64B48FA3-EDF2-45A3-ADFB-4A55E14E0B34</uniqueId>
-		</templateType>
-	</templateTypes>
+  <genders>
+    <gender handle="Female">
+      <key>Female</key>
+    </gender>
+    <gender handle="Male">
+      <key>Male</key>
+    </gender>
+    <gender handle="Other">
+      <key>Other</key>
+    </gender>
+    <gender handle="PreferNotToSay">
+      <key>PreferNotToSay</key>
+    </gender>
+  </genders>
+  <templateTypes>
+    <templateType handle="OpenDocumentType">
+      <uniqueId>64b48fa3-edf2-45a3-adfb-4a55e14e0b34</uniqueId>
+    </templateType>
+  </templateTypes>
 </population>

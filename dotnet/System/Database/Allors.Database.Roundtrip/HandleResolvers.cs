@@ -39,14 +39,14 @@ public static class HandleResolvers
         {
             var keyRoleType = strategy.Class.KeyRoleType;
             var keyValue = strategy.GetUnitRole(keyRoleType);
-            if (keyValue is not string)
+            if (keyValue is not string keyString)
             {
                 return null;
             }
 
-            var keyName = ((string)keyValue).ToPascalCase();
+            var keyName = keyString.ToPascalCase();
 
-            return new Handle(keyRoleType, keyName, keyValue);
+            return new Handle(keyRoleType, keyName, keyString);
         };
     }
 }

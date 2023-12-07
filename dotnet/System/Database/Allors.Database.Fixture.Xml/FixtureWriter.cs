@@ -6,6 +6,7 @@
     using System.Linq;
     using System.Xml;
     using System.Xml.Linq;
+    using CaseExtensions;
     using Database.Meta;
     using Database.Fixture;
 
@@ -26,30 +27,29 @@
 
         private XDocument Write(Fixture fixture)
         {
-            return new XDocument(new XElement("population", fixture.RecordsByClass
-                .OrderBy(v => v.Key.Name, StringComparer.OrdinalIgnoreCase)
-                .Select(Class)));
+            return new XDocument(new XElement("population",
+                fixture.RecordsByClass
+                    .OrderBy(v => v.Key.Name, StringComparer.OrdinalIgnoreCase)
+                    .Select(Class)));
 
-            XElement Class(KeyValuePair<IClass, Record[]> grouping) =>
-                new(grouping.Key.PluralName,
-                    (grouping.Key.KeyRoleType.ObjectType.Tag == UnitTags.String ?
+            XElement Class(KeyValuePair<IClass, Record[]> grouping) => new(grouping.Key.PluralName.ToCamelCase(),
+                (grouping
+                    .Key.KeyRoleType.ObjectType.Tag == UnitTags.String ?
                         grouping.Value.OrderBy(v => (string)v.ValueByRoleType[grouping.Key.KeyRoleType], StringComparer.OrdinalIgnoreCase) :
                         grouping.Value.OrderBy(v => v.ValueByRoleType[grouping.Key.KeyRoleType]))
                     .Select(Object(grouping.Key)));
 
-            Func<Record, XElement> Object(IClass @class) => record =>
-                new XElement(@class.SingularName, Handle(record),
-                    record.ValueByRoleType.Keys.OrderBy(v => v.Name, StringComparer.OrdinalIgnoreCase)
-                        .Select(Role(record)));
+            Func<Record, XElement> Object(IClass @class) => record => new XElement(@class.SingularName.ToCamelCase(),
+                Handle(record),
+                record.ValueByRoleType
+                    .Keys
+                    .OrderBy(v => v.SingularName, StringComparer.OrdinalIgnoreCase)
+                    .Select(Role(record)));
 
-            XAttribute Handle(Record record) =>
-                record.Handle != null
-                    ? new XAttribute(FixtureReader.HandleAttributeName, record.Handle.Name)
-                    : null;
+            XAttribute Handle(Record record) => record.Handle != null ? new XAttribute(FixtureReader.HandleAttributeName, record.Handle.Name) : null;
 
-            Func<IRoleType, XElement> Role(Record strategy) => roleType =>
-                new XElement(roleType.Name, this.WriteString(roleType, strategy.ValueByRoleType[roleType]));
-
+            Func<IRoleType, XElement> Role(Record strategy) => roleType => new XElement(roleType.Name.ToCamelCase(),
+                this.WriteString(roleType, strategy.ValueByRoleType[roleType]));
         }
 
         public string WriteString(IRoleType roleType, object unit) =>

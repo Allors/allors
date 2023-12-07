@@ -22,15 +22,14 @@
 
         public Fixture Read(Stream stream)
         {
+            var fixture = new Fixture(new Dictionary<IClass, Record[]>());
+
             XDocument document = XDocument.Load(stream);
-
-            var fixture = new Fixture(new Dictionary<IClass, Database.Fixture.Record[]>());
-
             var documentElement = document.Elements().First();
 
-            foreach (var @class in this.MetaPopulation.Classes.Where(v => v.KeyRoleType != null))
+            foreach (var classElement in documentElement.Elements())
             {
-                var classElement = documentElement.Elements().FirstOrDefault(v => @class.PluralName.Equals(v.Name.LocalName, StringComparison.OrdinalIgnoreCase));
+                var @class = this.MetaPopulation.Classes.First(v => string.Equals(v.PluralName, classElement.Name.LocalName, StringComparison.OrdinalIgnoreCase));
                 var records = classElement?
                                   .Elements()
                                   .Select(recordElement =>
@@ -59,6 +58,7 @@
                                   .ToArray()
                               ?? Array.Empty<Database.Fixture.Record>();
                 fixture.RecordsByClass[@class] = records;
+
             }
 
             return fixture;
