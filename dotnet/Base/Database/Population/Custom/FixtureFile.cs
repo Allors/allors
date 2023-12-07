@@ -12,7 +12,8 @@
     {
         private Func<IStrategy, Handle> HandleResolver()
         {
-            var excluded = new HashSet<IClass> { this.m.Country };
+            var excluded = new HashSet<IClass> { this.m.Country, this.m.Currency, this.m.Language };
+
             var fromExisting = HandleResolvers.FromFixture(this.ExistingFixture);
             var fromKey = HandleResolvers.PascalCaseKey();
 
@@ -29,11 +30,11 @@
 
         private IEnumerable<IObject> Objects(ITransaction transaction)
         {
-            var extraClasses = new IClass[] { this.m.Country };
-            var existingClasses = this.ExistingFixture.RecordsByClass.Keys;
-            var classes = extraClasses.Union(existingClasses).Distinct();
+            var classes = new IClass[] { this.m.Country, this.m.Currency, this.m.Language };
 
             return classes
+                .Union(this.ExistingFixture.RecordsByClass.Keys)
+                .Distinct()
                 .SelectMany(transaction.Extent);
         }
     }

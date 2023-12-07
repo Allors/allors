@@ -71,7 +71,6 @@ namespace Allors.Database.Meta.Configuration
 
             // Language;
             AddWorkspace(relationTypes.LanguageIsoCode, new[] { "Default" });
-            AddWorkspace(relationTypes.LanguageName, new[] { "Default" });
             AddWorkspace(relationTypes.LanguageLocalisedNames, new[] { "Default" });
             AddWorkspace(relationTypes.LanguageNativeName, new[] { "Default" });
 

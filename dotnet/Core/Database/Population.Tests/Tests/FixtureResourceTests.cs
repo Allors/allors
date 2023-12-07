@@ -9,19 +9,19 @@
 namespace Allors.Resources.Tests
 {
     using Database.Meta.Configuration;
+    using Population;
     using Xunit;
 
-    public class PopulationTests
+    public class FixtureResourceTests
     {
         [Fact]
         public void Build()
         {
             var metaBuilder = new MetaBuilder();
             var metaPopulation = metaBuilder.Build();
-            var population = new Population(metaPopulation);
+            var fixture = new FixtureResource(metaPopulation).Read();
 
-            Assert.NotNull(population.ObjectsByClass);
+            Assert.NotNull(fixture.RecordsByClass);
         }
-
     }
 }

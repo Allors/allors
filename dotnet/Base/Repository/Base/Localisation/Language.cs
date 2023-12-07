@@ -27,14 +27,6 @@ namespace Allors.Repository
         public string IsoCode { get; set; }
 
         #region Allors
-        [Id("be482902-beb5-4a76-8ad0-c1b1c1c0e5c4")]
-        #endregion
-        [Indexed]
-        [Required]
-        [Size(256)]
-        public string Name { get; set; }
-
-        #region Allors
         [Id("f091b264-e6b1-4a57-bbfb-8225cbe8190c")]
         #endregion
         [Multiplicity(Multiplicity.OneToMany)]
