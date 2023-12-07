@@ -21,7 +21,11 @@
             this.fileInfo = fileInfo;
             this.m = database.Services.Get<M>();
 
-            if (this.fileInfo.Exists)
+            if (!this.fileInfo.Exists)
+            {
+                this.ExistingFixture = new Fixture(new Dictionary<IClass, Record[]>());
+            }
+            else
             {
                 using var existingStream = File.Open(this.fileInfo.FullName, FileMode.Open);
                 var fixtureReader = new FixtureReader(this.m);

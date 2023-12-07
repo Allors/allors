@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="..\..\..\Core\Database\Fixture\Core*\**\*.cs" />
+    <Compile Include="..\..\..\Core\Database\Population\Core*\**\*.cs" />
   </ItemGroup>
 
   <ItemGroup>
