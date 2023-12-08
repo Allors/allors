@@ -6,8 +6,11 @@
 namespace Allors.Meta.Generation
 {
     using System;
+    using System.Collections.Generic;
     using System.IO;
     using Allors.Database.Meta.Configuration;
+    using Database.Meta;
+    using Database.Population;
     using Population;
 
     internal class Program
@@ -37,8 +40,7 @@ namespace Allors.Meta.Generation
 
             var metaPopulation = MetaBuilder.Build();
             var recordsFromResource = new RecordsFromResource(typeof(RoundtripStrategy).Assembly, metaPopulation);
-            var recordsByClass = recordsFromResource.Read();
-            var model = new Model.Model(metaPopulation, recordsByClass);
+            var model = new Model.Model(metaPopulation, recordsFromResource.RecordsByClass);
             model.Init();
 
             for (var i = 0; i < database.GetLength(0); i++)

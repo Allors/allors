@@ -10,6 +10,7 @@ using Allors.Database.Services;
 namespace Tests
 {
     using System;
+    using System.Collections.Generic;
     using System.IO;
     using System.Reflection;
     using Allors.Database;
@@ -20,6 +21,7 @@ namespace Tests
     using Allors.Database.Domain;
     using Allors.Database.Meta;
     using Allors.Database.Meta.Configuration;
+    using Allors.Database.Population;
     using Allors.Population;
     using Microsoft.Extensions.Configuration;
     using Database = Allors.Database.Adapters.Sql.SqlClient.Database;
@@ -84,8 +86,7 @@ namespace Tests
             database.Init();
 
             var recordsFromResource = new RecordsFromResource(typeof(RoundtripStrategy).Assembly, database.MetaPopulation);
-            var recordsByClass = recordsFromResource.Read();
-            new Setup(database, recordsByClass, this.Config).Apply();
+            new Setup(database, recordsFromResource.RecordsByClass, this.Config).Apply();
 
             this.Transaction = database.CreateTransaction();
 

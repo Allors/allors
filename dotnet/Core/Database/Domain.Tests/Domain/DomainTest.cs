@@ -7,6 +7,7 @@
 namespace Allors.Database.Domain.Tests
 {
     using System;
+    using System.Collections.Generic;
     using System.IO;
     using System.Reflection;
     using Allors.Database.Adapters.Memory;
@@ -16,6 +17,7 @@ namespace Allors.Database.Domain.Tests
     using Allors.Database.Meta;
     using Moq;
     using Allors.Population;
+    using Population;
 
     public class DomainTest : IDisposable
     {
@@ -75,8 +77,7 @@ namespace Allors.Database.Domain.Tests
             database.Init();
 
             var recordsFromResource = new RecordsFromResource(typeof(RoundtripStrategy).Assembly, this.M);
-            var recordsByClass = recordsFromResource.Read();
-            new Setup(database, recordsByClass, this.Config).Apply();
+            new Setup(database, recordsFromResource.RecordsByClass, this.Config).Apply();
 
             this.Transaction = database.CreateTransaction();
 

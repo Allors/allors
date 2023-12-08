@@ -5,8 +5,10 @@
     using Database.Adapters.Memory;
     using Database.Configuration;
     using Database.Configuration.Derivations.Default;
+    using Database.Meta;
     using Population;
     using Configuration = Database.Adapters.Memory.Configuration;
+    using Record = Database.Population.Record;
 
     public class Test
     {
@@ -42,8 +44,7 @@
                 this.database.Init();
                 var config = new Allors.Database.Domain.Config();
                 var recordsFromResource = new RecordsFromResource(typeof(RoundtripStrategy).Assembly, metaPopulation);
-                var recordsByClass = recordsFromResource.Read();
-                new Allors.Database.Domain.Setup(this.database, recordsByClass, config).Apply();
+                new Allors.Database.Domain.Setup(this.database, recordsFromResource.RecordsByClass, config).Apply();
                 this.Transaction = this.database.CreateTransaction();
                 new Allors.Database.Domain.TestPopulation(this.Transaction).Apply();
                 this.Transaction.Commit();
@@ -51,7 +52,7 @@
 
             {
                 var metaPopulation = new Meta.Static.MetaBuilder().Build();
-                var objectFactory = new Allors.Workspace.Configuration.ReflectionObjectFactory(metaPopulation, typeof(Domain.Person));
+                var objectFactory = new Allors.Workspace.Configuration.ReflectionObjectFactory(metaPopulation, typeof(Allors.Workspace.Domain.Person));
                 this.servicesBuilder = () => new WorkspaceServices(objectFactory, metaPopulation);
                 this.configuration = new Adapters.Direct.Configuration("Default", metaPopulation);
             }

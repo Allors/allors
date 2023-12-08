@@ -9,6 +9,7 @@ using Allors.Workspace.Meta.Static;
 namespace Allors.Workspace.Adapters.Direct.Tests
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
     using Allors.Database;
@@ -19,9 +20,11 @@ namespace Allors.Workspace.Adapters.Direct.Tests
     using Allors.Workspace;
     using Allors.Workspace.Configuration;
     using Allors.Workspace.Meta;
+    using Database.Population;
     using Population;
     using Configuration = Allors.Workspace.Adapters.Direct.Configuration;
     using Connection = Direct.Connection;
+    using IClass = Database.Meta.IClass;
     using IWorkspaceServices = Allors.Workspace.IWorkspaceServices;
     using Person = Allors.Workspace.Domain.Person;
     using User = Allors.Database.Domain.User;
@@ -62,8 +65,7 @@ namespace Allors.Workspace.Adapters.Direct.Tests
 
             var config = new Config();
             var recordsFromResource = new RecordsFromResource(typeof(RoundtripStrategy).Assembly, this.Database.MetaPopulation);
-            var recordsByClass = recordsFromResource.Read();
-            new Setup(this.Database, recordsByClass, config).Apply();
+            new Setup(this.Database, recordsFromResource.RecordsByClass, config).Apply();
 
             using var transaction = this.Database.CreateTransaction();
 

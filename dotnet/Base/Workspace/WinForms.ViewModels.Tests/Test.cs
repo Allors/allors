@@ -8,6 +8,8 @@
     using Allors.Workspace;
     using Allors.Workspace.Meta.Static;
     using Configuration;
+    using Database.Meta;
+    using Database.Population;
     using Population;
     using Configuration = Allors.Workspace.Adapters.Direct.Configuration;
     using Connection = Allors.Workspace.Adapters.Direct.Connection;
@@ -55,8 +57,7 @@
 
             var config = new Config();
             var recordsFromResource = new RecordsFromResource(typeof(RoundtripStrategy).Assembly, this.Database.MetaPopulation);
-            var recordsByClass = recordsFromResource.Read();
-            new Setup(this.Database, recordsByClass, config).Apply();
+            new Setup(this.Database, recordsFromResource.RecordsByClass, config).Apply();
 
             using var transaction = this.Database.CreateTransaction();
 

@@ -19,7 +19,8 @@ namespace Allors.Resources.Tests
         {
             var metaBuilder = new MetaBuilder();
             var metaPopulation = metaBuilder.Build();
-            var recordsByClass = new RecordsFromResource(typeof(RoundtripStrategy).Assembly, metaPopulation).Read();
+            var recordsFromResource = new RecordsFromResource(typeof(RoundtripStrategy).Assembly, metaPopulation);
+            var recordsByClass = recordsFromResource.RecordsByClass;
 
             Assert.NotNull(recordsByClass);
         }

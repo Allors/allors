@@ -79,8 +79,8 @@ namespace Allors.Database.Domain.Tests
 
             if (populate)
             {
-                var recordsFromResource = new RecordsFromResource(typeof(RoundtripStrategy).Assembly, database.MetaPopulation).Read();
-                new Setup(database, recordsFromResource, this.Config).Apply();
+                var recordsFromResource = new RecordsFromResource(typeof(RoundtripStrategy).Assembly, database.MetaPopulation);
+                new Setup(database, recordsFromResource.RecordsByClass, this.Config).Apply();
             }
 
             this.Transaction = database.CreateTransaction();

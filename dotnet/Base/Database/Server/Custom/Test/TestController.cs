@@ -6,11 +6,14 @@
 namespace Allors.Database.Server.Controllers
 {
     using System;
+    using System.Collections.Generic;
     using Allors.Population;
     using Allors.Services;
     using Domain;
+    using Meta;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
+    using Population;
     using Services;
 
     public class TestController : Controller
@@ -54,8 +57,7 @@ namespace Allors.Database.Server.Controllers
 
                 var config = new Config();
                 var recordsFromResource = new RecordsFromResource(typeof(RoundtripStrategy).Assembly, database.MetaPopulation);
-                var recordsByClass = recordsFromResource.Read();
-                new Setup(database, recordsByClass, config).Apply();
+                new Setup(database, recordsFromResource.RecordsByClass, config).Apply();
 
                 using (var transaction = database.CreateTransaction())
                 {

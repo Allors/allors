@@ -5,7 +5,10 @@
 
 namespace Commands
 {
+    using System.Collections.Generic;
     using Allors.Database.Domain;
+    using Allors.Database.Meta;
+    using Allors.Database.Population;
     using Allors.Database.Services;
     using Allors.Population;
     using McMaster.Extensions.CommandLineUtils;
@@ -29,8 +32,7 @@ namespace Commands
 
             var config = new Config { DataPath = this.Parent.DataPath };
             var recordsFromResource = new RecordsFromResource(typeof(RoundtripStrategy).Assembly, database.MetaPopulation);
-            var recordsByClass = recordsFromResource.Read();
-            new Setup(database, recordsByClass, config).Apply();
+            new Setup(database, recordsFromResource.RecordsByClass, config).Apply();
 
             using (var session = database.CreateTransaction())
             {

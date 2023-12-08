@@ -241,6 +241,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Population", "Core\Database
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Population.Tests", "Core\Database\Population.Tests\Population.Tests.csproj", "{94C78A02-CCF3-4010-A7D0-B6B6A0CAE3A1}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Database.Population.Resx", "System\Database\Allors.Database.Population.Resx\Allors.Database.Population.Resx.csproj", "{6973F7F2-E306-43E4-B263-561E93D82A01}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -635,6 +637,10 @@ Global
 		{94C78A02-CCF3-4010-A7D0-B6B6A0CAE3A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{94C78A02-CCF3-4010-A7D0-B6B6A0CAE3A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{94C78A02-CCF3-4010-A7D0-B6B6A0CAE3A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6973F7F2-E306-43E4-B263-561E93D82A01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6973F7F2-E306-43E4-B263-561E93D82A01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6973F7F2-E306-43E4-B263-561E93D82A01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6973F7F2-E306-43E4-B263-561E93D82A01}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -754,6 +760,7 @@ Global
 		{F63996CE-31F4-4272-95B4-43BFBBAC926A} = {CB13DE60-A40E-432C-913B-985F19CB2655}
 		{CB26DD64-2575-44A0-992C-2522B099F2B6} = {583954BC-1E23-4E62-B539-131CF3FBC96E}
 		{94C78A02-CCF3-4010-A7D0-B6B6A0CAE3A1} = {583954BC-1E23-4E62-B539-131CF3FBC96E}
+		{6973F7F2-E306-43E4-B263-561E93D82A01} = {9C68988B-09AE-4C63-A5AB-4EE71649283D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {00D78C3D-8536-4549-B1EE-C19BD0C50387}

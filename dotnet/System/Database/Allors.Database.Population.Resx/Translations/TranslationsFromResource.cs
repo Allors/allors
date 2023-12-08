@@ -5,25 +5,19 @@
     using System.Reflection;
     using Database.Meta;
     using Database.Population;
-    using Database.Population.Xml;
 
-    public partial class RecordsFromResource
+    public partial class TranslationsFromResource
     {
         private readonly Assembly assembly;
         private readonly IMetaPopulation metaPopulation;
 
-        public RecordsFromResource(Assembly assembly, IMetaPopulation metaPopulation)
+        public TranslationsFromResource(Assembly assembly, IMetaPopulation metaPopulation)
         {
             this.assembly = assembly;
             this.metaPopulation = metaPopulation;
-
-            string assemblyName = assembly.GetName().Name;
-            using Stream stream = this.GetResource($"{assemblyName}.Records.xml");
-            var reader = new RecordsReader(this.metaPopulation);
-            this.RecordsByClass = reader.Read(stream);
         }
 
-        public IDictionary<IClass, Record[]> RecordsByClass { get; }
+        public IDictionary<IClass, IDictionary<string, Translation[]>> TranslationsByIsoCodeByClass { get; }
 
         private Stream GetResource(string name)
         {

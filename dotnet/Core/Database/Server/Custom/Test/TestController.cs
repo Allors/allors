@@ -6,8 +6,11 @@
 namespace Allors.Server.Controllers
 {
     using System;
+    using System.Collections.Generic;
     using Database;
     using Database.Domain;
+    using Database.Meta;
+    using Database.Population;
     using Database.Services;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
@@ -61,8 +64,7 @@ namespace Allors.Server.Controllers
 
                 var config = new Config();
                 var recordsFromResource = new RecordsFromResource(typeof(RoundtripStrategy).Assembly, database.MetaPopulation);
-                var recordsByClass = recordsFromResource.Read();
-                new Setup(database, recordsByClass, config).Apply();
+                new Setup(database, recordsFromResource.RecordsByClass, config).Apply();
 
                 using (var transaction = database.CreateTransaction())
                 {
