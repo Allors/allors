@@ -76,8 +76,10 @@ namespace Allors.Database.Domain.Tests
         {
             database.Init();
 
-            var recordsFromResource = new RecordsFromResource(typeof(RoundtripStrategy).Assembly, this.M);
-            new Setup(database, recordsFromResource.RecordsByClass, this.Config).Apply();
+            Assembly populationAssembly = typeof(RoundtripStrategy).Assembly;
+            var recordsFromResource = new RecordsFromResource(populationAssembly, this.M);
+            var translationsFromResource = new TranslationsFromResource(populationAssembly, database.MetaPopulation);
+            new Setup(database, recordsFromResource.RecordsByClass, translationsFromResource.TranslationsByIsoCodeByClass, this.Config).Apply();
 
             this.Transaction = database.CreateTransaction();
 

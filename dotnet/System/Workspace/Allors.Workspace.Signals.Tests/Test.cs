@@ -1,5 +1,6 @@
 ﻿namespace Allors.Workspace.Signals.Tests
 {
+    using System.Reflection;
     using Adapters.Direct;
     using Database;
     using Database.Adapters.Memory;
@@ -43,8 +44,10 @@
 
                 this.database.Init();
                 var config = new Allors.Database.Domain.Config();
-                var recordsFromResource = new RecordsFromResource(typeof(RoundtripStrategy).Assembly, metaPopulation);
-                new Allors.Database.Domain.Setup(this.database, recordsFromResource.RecordsByClass, config).Apply();
+                Assembly populationAssembly = typeof(RoundtripStrategy).Assembly;
+                var recordsFromResource = new RecordsFromResource(populationAssembly, metaPopulation);
+                var translationsFromResource = new TranslationsFromResource(populationAssembly, database.MetaPopulation);
+                new Allors.Database.Domain.Setup(this.database, recordsFromResource.RecordsByClass, translationsFromResource.TranslationsByIsoCodeByClass, config).Apply();
                 this.Transaction = this.database.CreateTransaction();
                 new Allors.Database.Domain.TestPopulation(this.Transaction).Apply();
                 this.Transaction.Commit();

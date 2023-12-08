@@ -7,6 +7,7 @@ namespace Allors.Server.Controllers
 {
     using System;
     using System.Collections.Generic;
+    using System.Reflection;
     using Database;
     using Database.Domain;
     using Database.Meta;
@@ -63,8 +64,10 @@ namespace Allors.Server.Controllers
                 database.Init();
 
                 var config = new Config();
-                var recordsFromResource = new RecordsFromResource(typeof(RoundtripStrategy).Assembly, database.MetaPopulation);
-                new Setup(database, recordsFromResource.RecordsByClass, config).Apply();
+                Assembly populationAssembly = typeof(RoundtripStrategy).Assembly;
+                var recordsFromResource = new RecordsFromResource(populationAssembly, database.MetaPopulation);
+                var translationsFromResource = new TranslationsFromResource(populationAssembly, database.MetaPopulation);
+                new Setup(database, recordsFromResource.RecordsByClass, translationsFromResource.TranslationsByIsoCodeByClass, config).Apply();
 
                 using (var transaction = database.CreateTransaction())
                 {

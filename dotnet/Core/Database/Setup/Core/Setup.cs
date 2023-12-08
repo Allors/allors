@@ -18,9 +18,14 @@ namespace Allors.Database.Domain
         private readonly Dictionary<IObjectType, IObjects> objectsByObjectType;
         private readonly Graph<IObjects> objectsGraph;
 
-        public Setup(IDatabase database, IDictionary<IClass, Record[]> recordsByClass, Config config)
+        public Setup(
+            IDatabase database, 
+            IDictionary<IClass, Record[]> recordsByClass,
+            IDictionary<IClass, IDictionary<string, Translation[]>> translationsByIsoCodeByClass, 
+            Config config)
         {
             this.RecordsByClass = recordsByClass;
+            this.TranslationsByIsoCodeByClass = translationsByIsoCodeByClass;
             this.Config = config;
             this.transaction = database.CreateTransaction();
 
@@ -34,6 +39,8 @@ namespace Allors.Database.Domain
         }
 
         public IDictionary<IClass, Record[]> RecordsByClass { get; }
+
+        public IDictionary<IClass, IDictionary<string, Translation[]>> TranslationsByIsoCodeByClass { get; }
 
         public Config Config { get; }
 

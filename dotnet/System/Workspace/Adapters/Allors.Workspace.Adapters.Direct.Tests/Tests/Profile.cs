@@ -11,6 +11,7 @@ namespace Allors.Workspace.Adapters.Direct.Tests
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Reflection;
     using System.Threading.Tasks;
     using Allors.Database;
     using Allors.Database.Adapters.Memory;
@@ -64,8 +65,10 @@ namespace Allors.Workspace.Adapters.Direct.Tests
             this.Database.Init();
 
             var config = new Config();
-            var recordsFromResource = new RecordsFromResource(typeof(RoundtripStrategy).Assembly, this.Database.MetaPopulation);
-            new Setup(this.Database, recordsFromResource.RecordsByClass, config).Apply();
+            Assembly populationAssembly = typeof(RoundtripStrategy).Assembly;
+            var recordsFromResource = new RecordsFromResource(populationAssembly, this.Database.MetaPopulation);
+            var translationsFromResource = new TranslationsFromResource(populationAssembly, this.Database.MetaPopulation);
+            new Setup(this.Database, recordsFromResource.RecordsByClass, translationsFromResource.TranslationsByIsoCodeByClass, config).Apply();
 
             using var transaction = this.Database.CreateTransaction();
 

@@ -6,6 +6,7 @@
 namespace Commands
 {
     using System.Collections.Generic;
+    using System.Reflection;
     using Allors.Database.Domain;
     using Allors.Database.Meta;
     using Allors.Database.Population;
@@ -29,8 +30,10 @@ namespace Commands
             database.Init();
 
             var config = new Config { DataPath = this.Parent.DataPath };
-            var recordsFromResource = new RecordsFromResource(typeof(RoundtripStrategy).Assembly, database.MetaPopulation);
-            new Setup(database, recordsFromResource.RecordsByClass, config).Apply();
+            Assembly populationAssembly = typeof(RoundtripStrategy).Assembly;
+            var recordsFromResource = new RecordsFromResource(populationAssembly, database.MetaPopulation);
+            var translationsFromResource = new TranslationsFromResource(populationAssembly, database.MetaPopulation);
+            new Setup(database, recordsFromResource.RecordsByClass, translationsFromResource.TranslationsByIsoCodeByClass, config).Apply();
 
             using (var transaction = database.CreateTransaction())
             {

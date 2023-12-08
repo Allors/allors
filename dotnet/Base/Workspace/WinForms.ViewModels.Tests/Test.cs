@@ -1,5 +1,6 @@
 ﻿namespace Allors.Workspace.WinForms.ViewModels.Tests
 {
+    using System.Reflection;
     using Allors.Database;
     using Allors.Database.Adapters.Memory;
     using Allors.Database.Configuration;
@@ -56,8 +57,10 @@
             this.Database.Init();
 
             var config = new Config();
-            var recordsFromResource = new RecordsFromResource(typeof(RoundtripStrategy).Assembly, this.Database.MetaPopulation);
-            new Setup(this.Database, recordsFromResource.RecordsByClass, config).Apply();
+            Assembly populationAssembly = typeof(RoundtripStrategy).Assembly;
+            var recordsFromResource = new RecordsFromResource(populationAssembly, this.Database.MetaPopulation);
+            var translationsFromResource = new TranslationsFromResource(populationAssembly, this.Database.MetaPopulation);
+            new Setup(this.Database, recordsFromResource.RecordsByClass, translationsFromResource.TranslationsByIsoCodeByClass, config).Apply();
 
             using var transaction = this.Database.CreateTransaction();
 

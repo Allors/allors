@@ -11,6 +11,7 @@
   </ItemGroup>
  
   <ItemGroup>
+    <ProjectReference Include="..\..\..\System\Database\Allors.Database.Population.Resx\Allors.Database.Population.Resx.csproj" />
     <ProjectReference Include="..\..\..\System\Database\Allors.Database.Population.Xml\Allors.Database.Population.Xml.csproj" />
     <ProjectReference Include="..\Meta.Configuration\Meta.Configuration.csproj" />
   </ItemGroup>

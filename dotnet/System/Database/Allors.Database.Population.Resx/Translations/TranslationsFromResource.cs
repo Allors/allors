@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using System.Reflection;
     using Database.Meta;
     using Database.Population;
@@ -15,6 +16,15 @@
         {
             this.assembly = assembly;
             this.metaPopulation = metaPopulation;
+
+
+            var assemblyName = assembly.GetName().Name;
+            var translationsPrefix = $"{assemblyName}.Translations";
+            var resourceNames = assembly.GetManifestResourceNames()
+                .Where(v => v.StartsWith(translationsPrefix))
+                .ToArray();
+
+
         }
 
         public IDictionary<IClass, IDictionary<string, Translation[]>> TranslationsByIsoCodeByClass { get; }
