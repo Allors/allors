@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using Meta;
 
-public interface IFixtureReader
+public interface IRecordsReader
 {
     IDictionary<IClass, Record[]> Read(Stream stream);
 }

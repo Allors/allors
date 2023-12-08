@@ -83,7 +83,7 @@ namespace Tests
         {
             database.Init();
 
-            var fixture = new FixtureResource(database.MetaPopulation).Read();
+            var fixture = new ResourceRecords(database.MetaPopulation).Read();
             new Setup(database, fixture, this.Config).Apply();
 
             this.Transaction = database.CreateTransaction();

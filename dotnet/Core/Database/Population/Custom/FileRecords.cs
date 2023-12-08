@@ -7,13 +7,13 @@
     using Database.Population;
     using Database.Roundtrip;
 
-    public partial class FixtureFile
+    public partial class FileRecords
     {
         private Func<IStrategy, Handle> HandleResolver()
         {
             Func<IStrategy, Handle> handleResolver = _ => null;
 
-            var fromExisting = HandleResolvers.FromFixture(this.ExistingRecordsByClass);
+            var fromExisting = HandleResolvers.FromExisting(this.ExistingRecordsByClass);
             var fromKey = HandleResolvers.PascalCaseKey();
             handleResolver = strategy => fromExisting(strategy) ?? fromKey(strategy);
             return handleResolver;

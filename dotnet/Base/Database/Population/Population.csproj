@@ -14,11 +14,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Fixture.xml" />
+    <None Remove="Records.xml" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Fixture.xml" />
+    <EmbeddedResource Include="Records.xml" />
   </ItemGroup>
 
 </Project>

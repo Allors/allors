@@ -54,7 +54,7 @@
             this.Database.Init();
 
             var config = new Config();
-            var fixture = new FixtureResource(this.Database.MetaPopulation).Read();
+            var fixture = new ResourceRecords(this.Database.MetaPopulation).Read();
             new Setup(this.Database, fixture, config).Apply();
 
             using var transaction = this.Database.CreateTransaction();

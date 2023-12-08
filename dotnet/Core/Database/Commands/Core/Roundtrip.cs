@@ -17,22 +17,22 @@ namespace Commands
 
         public Logger Logger => LogManager.GetCurrentClassLogger();
 
-        [Option("-f", Description = "fixture file")]
+        [Option("-f", Description = "records file")]
         public string FileName { get; set; }
 
         public int OnExecute(CommandLineApplication app)
         {
             this.Logger.Info("Begin");
 
-            var fileName = this.FileName ?? this.Parent.Configuration["fixtureFile"] ?? "../../../../Population/RecordsByClass.xml";
+            var fileName = this.FileName ?? this.Parent.Configuration["recordsFile"] ?? "../../../../Population/Records.xml";
             var fileInfo = new FileInfo(fileName);
 
             this.Logger.Info("Saving {file}", fileInfo.FullName);
 
             var database = this.Parent.Database;
 
-            var fixtureFile = new FixtureFile(database, fileInfo);
-            fixtureFile.Write();
+            var records = new FileRecords(database, fileInfo);
+            records.Write();
 
             this.Logger.Info("End");
             return ExitCode.Success;

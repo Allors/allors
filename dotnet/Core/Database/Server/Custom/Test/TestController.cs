@@ -60,7 +60,7 @@ namespace Allors.Server.Controllers
                 database.Init();
 
                 var config = new Config();
-                var fixture = new FixtureResource(database.MetaPopulation).Read();
+                var fixture = new ResourceRecords(database.MetaPopulation).Read();
                 new Setup(database, fixture, config).Apply();
 
                 using (var transaction = database.CreateTransaction())

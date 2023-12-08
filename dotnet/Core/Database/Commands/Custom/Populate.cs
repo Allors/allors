@@ -26,8 +26,8 @@ namespace Commands
             database.Init();
 
             var config = new Config { DataPath = this.Parent.DataPath };
-            var fixture = new FixtureResource(database.MetaPopulation).Read();
-            new Setup(database, fixture, config).Apply();
+            var records = new ResourceRecords(database.MetaPopulation).Read();
+            new Setup(database, records, config).Apply();
 
             using (var transaction = database.CreateTransaction())
             {

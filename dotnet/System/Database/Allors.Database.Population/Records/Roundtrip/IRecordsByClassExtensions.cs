@@ -5,7 +5,7 @@ using System.Linq;
 using Population;
 using Meta;
 
-public static class IFixtureExtensions
+public static class IRecordsByClassExtensions
 {
     public static void ToDatabase(this IDictionary<IClass, Record[]> recordsByClass, ITransaction transaction)
     {

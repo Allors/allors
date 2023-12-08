@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using Meta;
 
-public interface IFixtureWriter
+public interface IRecordsWriter
 {
     void Write(Stream stream, IDictionary<IClass, Record[]> recordsByClass);
 }

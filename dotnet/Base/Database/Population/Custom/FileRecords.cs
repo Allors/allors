@@ -8,13 +8,13 @@
     using Database.Population;
     using Database.Roundtrip;
 
-    public partial class FixtureFile
+    public partial class FileRecords
     {
         private Func<IStrategy, Handle> HandleResolver()
         {
             var excluded = new HashSet<IClass> { this.m.Country, this.m.Currency, this.m.Language };
 
-            var fromExisting = HandleResolvers.FromFixture(this.ExistingRecordsByClass);
+            var fromExisting = HandleResolvers.FromExisting(this.ExistingRecordsByClass);
             var fromKey = HandleResolvers.PascalCaseKey();
 
             return strategy =>

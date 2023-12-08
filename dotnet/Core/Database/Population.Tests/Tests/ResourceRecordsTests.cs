@@ -12,14 +12,14 @@ namespace Allors.Resources.Tests
     using Population;
     using Xunit;
 
-    public class FixtureResourceTests
+    public class ResourceRecordsTests
     {
         [Fact]
         public void Build()
         {
             var metaBuilder = new MetaBuilder();
             var metaPopulation = metaBuilder.Build();
-            var recordsByClass = new FixtureResource(metaPopulation).Read();
+            var recordsByClass = new ResourceRecords(metaPopulation).Read();
 
             Assert.NotNull(recordsByClass);
         }

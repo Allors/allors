@@ -61,7 +61,7 @@ namespace Allors.Workspace.Adapters.Direct.Tests
             this.Database.Init();
 
             var config = new Config();
-            var x = new FixtureResource(this.Database.MetaPopulation).Read();
+            var x = new ResourceRecords(this.Database.MetaPopulation).Read();
             new Setup(this.Database, x, config).Apply();
 
             using var transaction = this.Database.CreateTransaction();

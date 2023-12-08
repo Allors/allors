@@ -37,9 +37,9 @@ namespace Allors.Meta.Generation
             };
 
             var metaPopulation = MetaBuilder.Build();
-            var fixtureFile = new FixtureResource(metaPopulation);
-            var fixture = fixtureFile.Read();
-            var model = new Model.Model(metaPopulation, fixture);
+            var records = new ResourceRecords(metaPopulation);
+            var recordsByClass = records.Read();
+            var model = new Model.Model(metaPopulation, recordsByClass);
             model.Init();
 
             for (var i = 0; i < database.GetLength(0); i++)

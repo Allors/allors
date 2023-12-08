@@ -53,8 +53,8 @@ namespace Allors.Database.Server.Controllers
                 database.Init();
 
                 var config = new Config();
-                var fixture = new FixtureResource(database.MetaPopulation).Read();
-                new Setup(database, fixture, config).Apply();
+                var recordsByClass = new ResourceRecords(database.MetaPopulation).Read();
+                new Setup(database, recordsByClass, config).Apply();
 
                 using (var transaction = database.CreateTransaction())
                 {

@@ -10,9 +10,9 @@
     using Database.Meta;
     using Population;
 
-    public class FixtureWriter : IFixtureWriter
+    public class RecordsWriter : IRecordsWriter
     {
-        public FixtureWriter(IMetaPopulation metaPopulation)
+        public RecordsWriter(IMetaPopulation metaPopulation)
         {
             this.MetaPopulation = metaPopulation;
         }
@@ -46,7 +46,7 @@
                     .OrderBy(v => v.SingularName, StringComparer.OrdinalIgnoreCase)
                     .Select(Role(record)));
 
-            XAttribute Handle(Record record) => record.Handle != null ? new XAttribute(FixtureReader.HandleAttributeName, record.Handle.Name) : null;
+            XAttribute Handle(Record record) => record.Handle != null ? new XAttribute(RecordsReader.HandleAttributeName, record.Handle.Name) : null;
 
             Func<IRoleType, XElement> Role(Record strategy) => roleType => new XElement(roleType.Name.ToCamelCase(),
                 this.WriteString(roleType, strategy.ValueByRoleType[roleType]));

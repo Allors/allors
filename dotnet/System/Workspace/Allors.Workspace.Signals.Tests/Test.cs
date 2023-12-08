@@ -41,7 +41,7 @@
 
                 this.database.Init();
                 var config = new Allors.Database.Domain.Config();
-                var fixture = new FixtureResource(metaPopulation).Read();
+                var fixture = new ResourceRecords(metaPopulation).Read();
                 new Allors.Database.Domain.Setup(this.database, fixture, config).Apply();
                 this.Transaction = this.database.CreateTransaction();
                 new Allors.Database.Domain.TestPopulation(this.Transaction).Apply();

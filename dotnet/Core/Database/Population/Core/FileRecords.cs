@@ -9,13 +9,13 @@
     using Database.Meta;
     using Database.Roundtrip;
 
-    public partial class FixtureFile
+    public partial class FileRecords
     {
         private readonly IDatabase database;
         private readonly FileInfo fileInfo;
         private readonly M m;
 
-        public FixtureFile(IDatabase database, FileInfo fileInfo)
+        public FileRecords(IDatabase database, FileInfo fileInfo)
         {
             this.database = database;
             this.fileInfo = fileInfo;
@@ -28,8 +28,8 @@
             else
             {
                 using var existingStream = File.Open(this.fileInfo.FullName, FileMode.Open);
-                var fixtureReader = new FixtureReader(this.m);
-                this.ExistingRecordsByClass = fixtureReader.Read(existingStream);
+                var recordsReader = new RecordsReader(this.m);
+                this.ExistingRecordsByClass = recordsReader.Read(existingStream);
             }
         }
 
@@ -43,10 +43,10 @@
 
             IEnumerable<IObject> objects = this.Objects(transaction);
 
-            var fixture = objects.ToFixture(handleResolver);
+            var recordsByClass = objects.ToRecordsByClass(handleResolver);
 
-            var fixtureWriter = new FixtureWriter(m);
-            fixtureWriter.Write(stream, fixture);
+            var recordsWriter = new RecordsWriter(m);
+            recordsWriter.Write(stream, recordsByClass);
         }
         
         private IDictionary<IClass, Record[]> ExistingRecordsByClass { get; }

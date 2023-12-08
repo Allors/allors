@@ -9,7 +9,7 @@ using Population;
 
 public static class HandleResolvers
 {
-    public static Func<IStrategy, Handle> FromFixture(IDictionary<IClass, Record[]> existingRecordsByClass)
+    public static Func<IStrategy, Handle> FromExisting(IDictionary<IClass, Record[]> existingRecordsByClass)
     {
         var handleByKeyByClass = existingRecordsByClass
             .SelectMany(v => v.Value)

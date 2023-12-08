@@ -9,11 +9,11 @@
     using Database.Meta;
     using Population;
 
-    public class FixtureReader : IFixtureReader
+    public class RecordsReader : IRecordsReader
     {
         public const string HandleAttributeName = "handle";
 
-        public FixtureReader(IMetaPopulation metaPopulation)
+        public RecordsReader(IMetaPopulation metaPopulation)
         {
             this.MetaPopulation = metaPopulation;
         }

@@ -7,16 +7,16 @@
     using Database.Population;
     using Database.Population.Xml;
 
-    public partial class FixtureResource
+    public partial class ResourceRecords
     {
         private readonly IMetaPopulation metaPopulation;
 
-        public FixtureResource(IMetaPopulation metaPopulation) => this.metaPopulation = metaPopulation;
+        public ResourceRecords(IMetaPopulation metaPopulation) => this.metaPopulation = metaPopulation;
 
         public IDictionary<IClass, Record[]> Read()
         {
-            using Stream stream = this.GetResource("Allors.Population.Fixture.xml");
-            var reader = new FixtureReader(this.metaPopulation);
+            using Stream stream = this.GetResource("Allors.Population.Records.xml");
+            var reader = new RecordsReader(this.metaPopulation);
             return reader.Read(stream);
         }
 

@@ -8,7 +8,7 @@ using Population;
 
 public static class ObjectsExtensions
 {
-    public static IDictionary<IClass, Record[]> ToFixture(this IEnumerable<IObject> objects, Func<IStrategy, Handle> handleResolver)
+    public static IDictionary<IClass, Record[]> ToRecordsByClass(this IEnumerable<IObject> objects, Func<IStrategy, Handle> handleResolver)
     {
         bool IsDefault(object value)
         {
