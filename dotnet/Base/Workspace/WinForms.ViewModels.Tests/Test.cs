@@ -54,8 +54,9 @@
             this.Database.Init();
 
             var config = new Config();
-            var fixture = new ResourceRecords(this.Database.MetaPopulation).Read();
-            new Setup(this.Database, fixture, config).Apply();
+            var recordsFromResource = new RecordsFromResource(typeof(RoundtripStrategy).Assembly, this.Database.MetaPopulation);
+            var recordsByClass = recordsFromResource.Read();
+            new Setup(this.Database, recordsByClass, config).Apply();
 
             using var transaction = this.Database.CreateTransaction();
 

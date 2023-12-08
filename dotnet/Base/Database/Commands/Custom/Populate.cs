@@ -28,8 +28,9 @@ namespace Commands
             database.Init();
 
             var config = new Config { DataPath = this.Parent.DataPath };
-            var records = new ResourceRecords(database.MetaPopulation).Read();
-            new Setup(database, records, config).Apply();
+            var recordsFromResource = new RecordsFromResource(typeof(RoundtripStrategy).Assembly, database.MetaPopulation);
+            var recordsByClass = recordsFromResource.Read();
+            new Setup(database, recordsByClass, config).Apply();
 
             using (var session = database.CreateTransaction())
             {

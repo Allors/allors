@@ -60,8 +60,9 @@ namespace Allors.Server.Controllers
                 database.Init();
 
                 var config = new Config();
-                var fixture = new ResourceRecords(database.MetaPopulation).Read();
-                new Setup(database, fixture, config).Apply();
+                var recordsFromResource = new RecordsFromResource(typeof(RoundtripStrategy).Assembly, database.MetaPopulation);
+                var recordsByClass = recordsFromResource.Read();
+                new Setup(database, recordsByClass, config).Apply();
 
                 using (var transaction = database.CreateTransaction())
                 {

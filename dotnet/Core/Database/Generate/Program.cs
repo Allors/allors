@@ -27,7 +27,7 @@ namespace Allors.Meta.Generation
             {
                 { "Workspace/Templates/uml.cs.stg", "Workspace/Diagrams/Generated" },
                 { "Workspace/Templates/meta.cs.stg", "Workspace/Meta.Domain/Generated" },
-                { "Workspace/Templates/meta.static.cs.stg", "Workspace/Meta.Configuration/Generated" },
+                { "Workspace/Templates/meta.static.cs.stg", "Workspace/Meta.Resolvers/Generated" },
                 { "Workspace/Templates/domain.cs.stg", "Workspace/Domain/Generated" },
 
                 { "../../typescript/templates/workspace.meta.ts.stg", "../../typescript/libs/core/workspace/meta/src/lib/generated" },
@@ -36,8 +36,8 @@ namespace Allors.Meta.Generation
             };
 
             var metaPopulation = MetaBuilder.Build();
-            var records = new ResourceRecords(metaPopulation);
-            var recordsByClass = records.Read();
+            var recordsFromResource = new RecordsFromResource(typeof(RoundtripStrategy).Assembly, metaPopulation);
+            var recordsByClass = recordsFromResource.Read();
             var model = new Model.Model(metaPopulation, recordsByClass);
             model.Init();
 

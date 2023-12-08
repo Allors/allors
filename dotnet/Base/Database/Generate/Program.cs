@@ -37,8 +37,8 @@ namespace Allors.Meta.Generation
             };
 
             var metaPopulation = MetaBuilder.Build();
-            var records = new ResourceRecords(metaPopulation);
-            var recordsByClass = records.Read();
+            var recordsFromResource = new RecordsFromResource(typeof(RoundtripStrategy).Assembly, metaPopulation);
+            var recordsByClass = recordsFromResource.Read();
             var model = new Model.Model(metaPopulation, recordsByClass);
             model.Init();
 

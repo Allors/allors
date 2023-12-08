@@ -74,8 +74,9 @@ namespace Allors.Database.Domain.Tests
         {
             database.Init();
 
-            var fixture = new ResourceRecords(this.M).Read();
-            new Setup(database, fixture, this.Config).Apply();
+            var recordsFromResource = new RecordsFromResource(typeof(RoundtripStrategy).Assembly, this.M);
+            var recordsByClass = recordsFromResource.Read();
+            new Setup(database, recordsByClass, this.Config).Apply();
 
             this.Transaction = database.CreateTransaction();
 

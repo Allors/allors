@@ -7,11 +7,16 @@
     using Database.Population;
     using Database.Population.Xml;
 
-    public partial class ResourceRecords
+    public partial class RecordsFromResource
     {
+        private readonly Assembly assembly;
         private readonly IMetaPopulation metaPopulation;
 
-        public ResourceRecords(IMetaPopulation metaPopulation) => this.metaPopulation = metaPopulation;
+        public RecordsFromResource(Assembly assembly, IMetaPopulation metaPopulation)
+        {
+            this.assembly = assembly;
+            this.metaPopulation = metaPopulation;
+        }
 
         public IDictionary<IClass, Record[]> Read()
         {
@@ -22,8 +27,7 @@
 
         private Stream GetResource(string name)
         {
-            var assembly = this.GetType().GetTypeInfo().Assembly;
-            var resource = assembly.GetManifestResourceStream(name);
+            var resource = this.assembly.GetManifestResourceStream(name);
             return resource;
         }
     }

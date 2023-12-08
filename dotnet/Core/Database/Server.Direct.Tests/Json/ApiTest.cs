@@ -83,8 +83,9 @@ namespace Tests
         {
             database.Init();
 
-            var fixture = new ResourceRecords(database.MetaPopulation).Read();
-            new Setup(database, fixture, this.Config).Apply();
+            var recordsFromResource = new RecordsFromResource(typeof(RoundtripStrategy).Assembly, database.MetaPopulation);
+            var recordsByClass = recordsFromResource.Read();
+            new Setup(database, recordsByClass, this.Config).Apply();
 
             this.Transaction = database.CreateTransaction();
 

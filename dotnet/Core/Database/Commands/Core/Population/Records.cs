@@ -10,8 +10,8 @@ namespace Commands
     using McMaster.Extensions.CommandLineUtils;
     using NLog;
 
-    [Command(Description = "Roundtrip to population file")]
-    public class Roundtrip
+    [Command(Description = "Roundtrip records to file")]
+    public class Records
     {
         public Program Parent { get; set; }
 
@@ -31,8 +31,10 @@ namespace Commands
 
             var database = this.Parent.Database;
 
-            var records = new FileRecords(database, fileInfo);
-            records.Write();
+            var recordsFromFile = new RecordsFromFile(fileInfo, database.MetaPopulation);
+            var roundtrip = new RoundtripStrategy(database, recordsFromFile.RecordsByClass);
+            var recordsToFile = new RecordsToFile(fileInfo, database.MetaPopulation, roundtrip);
+            recordsToFile.Roundtrip();
 
             this.Logger.Info("End");
             return ExitCode.Success;

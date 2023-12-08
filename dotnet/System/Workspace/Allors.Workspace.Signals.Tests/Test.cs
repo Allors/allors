@@ -41,8 +41,9 @@
 
                 this.database.Init();
                 var config = new Allors.Database.Domain.Config();
-                var fixture = new ResourceRecords(metaPopulation).Read();
-                new Allors.Database.Domain.Setup(this.database, fixture, config).Apply();
+                var recordsFromResource = new RecordsFromResource(typeof(RoundtripStrategy).Assembly, metaPopulation);
+                var recordsByClass = recordsFromResource.Read();
+                new Allors.Database.Domain.Setup(this.database, recordsByClass, config).Apply();
                 this.Transaction = this.database.CreateTransaction();
                 new Allors.Database.Domain.TestPopulation(this.Transaction).Apply();
                 this.Transaction.Commit();

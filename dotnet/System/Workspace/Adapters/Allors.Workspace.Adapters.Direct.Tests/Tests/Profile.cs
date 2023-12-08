@@ -61,8 +61,9 @@ namespace Allors.Workspace.Adapters.Direct.Tests
             this.Database.Init();
 
             var config = new Config();
-            var x = new ResourceRecords(this.Database.MetaPopulation).Read();
-            new Setup(this.Database, x, config).Apply();
+            var recordsFromResource = new RecordsFromResource(typeof(RoundtripStrategy).Assembly, this.Database.MetaPopulation);
+            var recordsByClass = recordsFromResource.Read();
+            new Setup(this.Database, recordsByClass, config).Apply();
 
             using var transaction = this.Database.CreateTransaction();
 
