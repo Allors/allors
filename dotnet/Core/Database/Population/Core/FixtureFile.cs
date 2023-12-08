@@ -23,13 +23,13 @@
 
             if (!this.fileInfo.Exists)
             {
-                this.ExistingFixture = new Fixture(new Dictionary<IClass, Record[]>());
+                this.ExistingRecordsByClass = new Dictionary<IClass, Record[]>();
             }
             else
             {
                 using var existingStream = File.Open(this.fileInfo.FullName, FileMode.Open);
                 var fixtureReader = new FixtureReader(this.m);
-                this.ExistingFixture = fixtureReader.Read(existingStream);
+                this.ExistingRecordsByClass = fixtureReader.Read(existingStream);
             }
         }
 
@@ -49,6 +49,6 @@
             fixtureWriter.Write(stream, fixture);
         }
         
-        private Fixture ExistingFixture { get; }
+        private IDictionary<IClass, Record[]> ExistingRecordsByClass { get; }
     }
 }

@@ -1,15 +1,17 @@
 ﻿namespace Allors.Database.Roundtrip;
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using CaseExtensions;
+using Meta;
 using Population;
 
 public static class HandleResolvers
 {
-    public static Func<IStrategy, Handle> FromFixture(Fixture existingFixture)
+    public static Func<IStrategy, Handle> FromFixture(IDictionary<IClass, Record[]> existingRecordsByClass)
     {
-        var handleByKeyByClass = existingFixture.RecordsByClass
+        var handleByKeyByClass = existingRecordsByClass
             .SelectMany(v => v.Value)
             .Where(v => v.Handle != null)
             .GroupBy(v => v.Class)

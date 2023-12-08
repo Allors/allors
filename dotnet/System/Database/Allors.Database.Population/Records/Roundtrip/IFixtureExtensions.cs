@@ -7,11 +7,11 @@ using Meta;
 
 public static class IFixtureExtensions
 {
-    public static void ToDatabase(this Fixture fixture, ITransaction transaction)
+    public static void ToDatabase(this IDictionary<IClass, Record[]> recordsByClass, ITransaction transaction)
     {
         Dictionary<IClass, Dictionary<object, IObject>> objectByKeyByClass = new();
 
-        foreach (var kvp in fixture.RecordsByClass)
+        foreach (var kvp in recordsByClass)
         {
             var @class = kvp.Key;
             var records = kvp.Value;

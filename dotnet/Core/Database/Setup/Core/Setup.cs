@@ -18,9 +18,9 @@ namespace Allors.Database.Domain
         private readonly Dictionary<IObjectType, IObjects> objectsByObjectType;
         private readonly Graph<IObjects> objectsGraph;
 
-        public Setup(IDatabase database, Fixture fixture, Config config)
+        public Setup(IDatabase database, IDictionary<IClass, Record[]> recordsByClass, Config config)
         {
-            this.Fixture = fixture;
+            this.RecordsByClass = recordsByClass;
             this.Config = config;
             this.transaction = database.CreateTransaction();
 
@@ -33,7 +33,7 @@ namespace Allors.Database.Domain
             this.objectsGraph = new Graph<IObjects>();
         }
 
-        public Fixture Fixture { get; }
+        public IDictionary<IClass, Record[]> RecordsByClass { get; }
 
         public Config Config { get; }
 
@@ -93,7 +93,7 @@ namespace Allors.Database.Domain
 
         private void CoreOnPreSetup()
         {
-            this.Fixture.ToDatabase(this.transaction);
+            this.RecordsByClass.ToDatabase(this.transaction);
         }
 
         private void CoreOnPostSetup(Config config)

@@ -19,9 +19,9 @@ namespace Allors.Resources.Tests
         {
             var metaBuilder = new MetaBuilder();
             var metaPopulation = metaBuilder.Build();
-            var fixture = new FixtureResource(metaPopulation).Read();
+            var recordsByClass = new FixtureResource(metaPopulation).Read();
 
-            Assert.NotNull(fixture.RecordsByClass);
+            Assert.NotNull(recordsByClass);
         }
     }
 }

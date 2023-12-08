@@ -3,11 +3,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Meta;
 using Population;
 
 public static class ObjectsExtensions
 {
-    public static Fixture ToFixture(this IEnumerable<IObject> objects, Func<IStrategy, Handle> handleResolver)
+    public static IDictionary<IClass, Record[]> ToFixture(this IEnumerable<IObject> objects, Func<IStrategy, Handle> handleResolver)
     {
         bool IsDefault(object value)
         {
@@ -39,6 +40,6 @@ public static class ObjectsExtensions
             .GroupBy(v => v.Class)
             .ToDictionary(v => v.Key, v => v.ToArray());
 
-        return new Fixture(recordsByClass);
+        return recordsByClass;
     }
 }

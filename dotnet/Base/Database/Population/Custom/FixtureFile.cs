@@ -14,7 +14,7 @@
         {
             var excluded = new HashSet<IClass> { this.m.Country, this.m.Currency, this.m.Language };
 
-            var fromExisting = HandleResolvers.FromFixture(this.ExistingFixture);
+            var fromExisting = HandleResolvers.FromFixture(this.ExistingRecordsByClass);
             var fromKey = HandleResolvers.PascalCaseKey();
 
             return strategy =>
@@ -33,7 +33,7 @@
             var classes = new IClass[] { this.m.Country, this.m.Currency, this.m.Language };
 
             return classes
-                .Union(this.ExistingFixture.RecordsByClass.Keys)
+                .Union(this.ExistingRecordsByClass.Keys)
                 .Distinct()
                 .SelectMany(transaction.Extent);
         }

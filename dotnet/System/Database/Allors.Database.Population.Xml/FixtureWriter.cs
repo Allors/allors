@@ -19,16 +19,16 @@
 
         public IMetaPopulation MetaPopulation { get; }
 
-        public void Write(Stream stream, Fixture fixture)
+        public void Write(Stream stream, IDictionary<IClass, Record[]> recordsByClass)
         {
-            var document = this.Write(fixture);
+            var document = this.Write(recordsByClass);
             document.Save(stream);
         }
 
-        private XDocument Write(Fixture fixture)
+        private XDocument Write(IDictionary<IClass, Record[]> recordsByClass)
         {
             return new XDocument(new XElement("population",
-                fixture.RecordsByClass
+                recordsByClass
                     .OrderBy(v => v.Key.Name, StringComparer.OrdinalIgnoreCase)
                     .Select(Class)));
 

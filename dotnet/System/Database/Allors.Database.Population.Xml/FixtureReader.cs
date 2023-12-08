@@ -20,9 +20,9 @@
 
         public IMetaPopulation MetaPopulation { get; }
 
-        public Fixture Read(Stream stream)
+        public IDictionary<IClass, Record[]> Read(Stream stream)
         {
-            var fixture = new Fixture(new Dictionary<IClass, Record[]>());
+            var recordsByClass = new Dictionary<IClass, Record[]>();
 
             XDocument document = XDocument.Load(stream);
             var documentElement = document.Elements().First();
@@ -57,11 +57,11 @@
                                   })
                                   .ToArray()
                               ?? Array.Empty<Record>();
-                fixture.RecordsByClass[@class] = records;
+                recordsByClass[@class] = records;
 
             }
 
-            return fixture;
+            return recordsByClass;
         }
 
         public static object ReadString(string value, string tag) =>

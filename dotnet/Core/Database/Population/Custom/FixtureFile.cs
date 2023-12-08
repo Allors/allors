@@ -13,7 +13,7 @@
         {
             Func<IStrategy, Handle> handleResolver = _ => null;
 
-            var fromExisting = HandleResolvers.FromFixture(this.ExistingFixture);
+            var fromExisting = HandleResolvers.FromFixture(this.ExistingRecordsByClass);
             var fromKey = HandleResolvers.PascalCaseKey();
             handleResolver = strategy => fromExisting(strategy) ?? fromKey(strategy);
             return handleResolver;
@@ -21,7 +21,7 @@
 
         private IEnumerable<IObject> Objects(ITransaction transaction)
         {
-            var objects = this.ExistingFixture.RecordsByClass.Keys
+            var objects = this.ExistingRecordsByClass.Keys
                 .Where(v => v.KeyRoleType != null)
                 .SelectMany(transaction.Extent);
             return objects;

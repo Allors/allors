@@ -1,5 +1,6 @@
 ﻿namespace Allors.Population
 {
+    using System.Collections.Generic;
     using System.IO;
     using System.Reflection;
     using Database.Meta;
@@ -12,7 +13,7 @@
 
         public FixtureResource(IMetaPopulation metaPopulation) => this.metaPopulation = metaPopulation;
 
-        public Fixture Read()
+        public IDictionary<IClass, Record[]> Read()
         {
             using Stream stream = this.GetResource("Allors.Population.Fixture.xml");
             var reader = new FixtureReader(this.metaPopulation);
