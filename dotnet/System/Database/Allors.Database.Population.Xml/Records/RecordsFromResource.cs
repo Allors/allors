@@ -22,7 +22,7 @@
             this.metaPopulation = metaPopulation;
 
             var name = assembly.GetManifestResourceNames()
-                .First(v => v.EndsWith(RecordsXmlFileName, StringComparison.InvariantCultureIgnoreCase));
+                .First(v => v.EndsWith(RecordsXmlFileName, StringComparison.OrdinalIgnoreCase));
 
             using Stream stream = this.assembly.GetManifestResourceStream(name);
             var reader = new RecordsReader(this.metaPopulation);
