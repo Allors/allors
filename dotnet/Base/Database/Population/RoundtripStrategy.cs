@@ -31,9 +31,20 @@
 
         Func<IStrategy, Handle> IRoundtripStrategy.HandleResolver()
         {
+            var m = this.database.Services.Get<M>();
+
+            var excluded = new HashSet<IClass> { m.Country, m.Currency, m.Language };
             var fromExisting = HandleResolvers.FromExisting(this.existingRecordsByClass);
             var fromKey = HandleResolvers.PascalCaseKey();
-            return strategy => fromExisting(strategy) ?? fromKey(strategy);
+            return strategy =>
+            {
+                if (excluded.Contains(strategy.Class))
+                {
+                    return null;
+                }
+
+                return fromExisting(strategy) ?? fromKey(strategy);
+            };
 
         }
     }
