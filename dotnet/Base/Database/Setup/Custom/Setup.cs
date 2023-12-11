@@ -21,7 +21,7 @@ namespace Allors.Database.Domain
         {
         }
 
-        private void CustomOnPostSetup(Config config)
+        private void CustomOnPostSetup()
         {
             var countryByIsoCode = this.transaction.Scoped<CountryByIsoCode>();
             var genders = this.transaction.Scoped<GenderByKey>();
@@ -222,6 +222,10 @@ namespace Allors.Database.Domain
             {
                 this.transaction.Database.Services.Get<IPermissions>().Sync(this.transaction);
             }
+        }
+
+        private void CustomOnCreated(IObject @object)
+        {
         }
     }
 }

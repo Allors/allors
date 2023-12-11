@@ -1,4 +1,4 @@
-// <copyright file="Setup.v.cs" company="Allors bvba">
+﻿// <copyright file="Setup.v.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -25,10 +25,16 @@ namespace Allors.Database.Domain
             this.CustomOnPreSetup();
         }
 
-        private void OnPostSetup(Config config)
+        private void OnPostSetup()
         {
-            this.CoreOnPostSetup(config);
-            this.CustomOnPostSetup(config);
+            this.CoreOnPostSetup();
+            this.CustomOnPostSetup();
+        }
+
+        private void OnCreated(IObject @object)
+        {
+            this.CoreOnCreated(@object);
+            this.CustomOnCreated(@object);
         }
     }
 }

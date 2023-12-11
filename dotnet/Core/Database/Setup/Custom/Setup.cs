@@ -24,7 +24,7 @@ namespace Allors.Database.Domain
         {
         }
 
-        private void CustomOnPostSetup(Config config)
+        private void CustomOnPostSetup()
         {
             #region Plurals
             var userGroups = this.transaction.Scoped<UserGroupByUniqueId>();
@@ -179,6 +179,10 @@ namespace Allors.Database.Domain
                 fromUntrimmed1.AddMany2Many(toTrimmed);
                 fromUntrimmed2.AddMany2Many(toUntrimmed);
             }
+        }
+
+        private void CustomOnCreated(IObject @object)
+        {
         }
     }
 }
