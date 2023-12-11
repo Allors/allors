@@ -10,7 +10,7 @@
  
   <ItemGroup>
     <ProjectReference Include="..\..\..\System\Database\Allors.Database.Population\Allors.Database.Population.csproj" />
-    <ProjectReference Include="..\Domain\Domain.csproj" />
+    <ProjectReference Include="..\..\..\System\Database\Allors.Database\Allors.Database.csproj" />
     <ProjectReference Include="..\Meta.Configuration\Meta.Configuration.csproj" />
   </ItemGroup>
 
