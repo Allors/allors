@@ -8,10 +8,17 @@ namespace Allors.Database.Domain
 {
     public partial class Organizations
     {
-        protected override void CustomPrepare(Security security) => security.AddDependency(this.ObjectType, M.Revocation);
+        protected override void CustomPrepare(Security security)
+        {
+            base.CustomPrepare(security);
+
+            security.AddDependency(this.ObjectType, M.Revocation);
+        }
 
         protected override void CustomSecure(Security security)
         {
+            base.CustomSecure(security);
+
             var revocations = this.Transaction.Scoped<RevocationByUniqueId>();
             var permissions = this.Transaction.Scoped<PermissionByMeta>();
 

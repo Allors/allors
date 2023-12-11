@@ -5,7 +5,10 @@
 
 namespace Allors.Database.Domain
 {
+    using System.Collections.Generic;
+    using System.Linq;
     using Allors.Database.Meta;
+    using Population;
 
     public abstract partial class ObjectsBase<T> : IObjects where T : IObject
     {
@@ -25,6 +28,38 @@ namespace Allors.Database.Domain
 
         protected virtual void CoreSetup(Setup setup)
         {
+            if (this.ObjectType is IClass @class)
+            {
+                var recordsByClass = setup.Config.RecordsByClass;
+
+                if (recordsByClass != null && recordsByClass.TryGetValue(@class, out var records))
+                {
+                    var keyRoleType = @class.KeyRoleType;
+
+                    var objectByKey = this.Transaction.Extent(@class).ToDictionary(v => v.Strategy.GetUnitRole(keyRoleType));
+
+                    foreach (var record in records)
+                    {
+                        var key = record.ValueByRoleType[@class.KeyRoleType];
+
+                        if (!objectByKey.TryGetValue(key, out var @object))
+                        {
+                            @object = this.Transaction.Build(@class, v =>
+                            {
+                                var strategy = v.Strategy;
+                                foreach ((IRoleType roleType, object value) in record.ValueByRoleType.Where(role => role.Key.ObjectType.IsUnit))
+                                {
+                                    strategy.SetRole(roleType, value);
+                                }
+                            });
+
+                            setup.OnCreated(@object);
+
+                            objectByKey.Add(key, @object);
+                        }
+                    }
+                }
+            }
         }
 
         protected virtual void CorePrepare(Security security) => security.Add(this);

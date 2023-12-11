@@ -10,6 +10,8 @@ namespace Allors.Database.Domain
     {
         protected override void CustomSetup(Setup setup)
         {
+            base.CustomSetup(setup);
+
             var merge = this.Transaction.Caches().OrderStateByUniqueId().Merger().Action();
 
             merge(OrderState.InitialId, v => v.Name = "Initial");

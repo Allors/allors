@@ -7,14 +7,19 @@ namespace Allors.Database.Domain
 {
     public partial class Singletons
     {
-        protected override void CorePrepare(Setup setup) => setup.AddDependency(this.ObjectType, this.M.Locale);
-
-        protected override void CoreSetup(Setup setup)
+        protected override void BasePrepare(Setup setup)
         {
+            base.BasePrepare(setup);
+
+            setup.AddDependency(this.ObjectType, this.M.Locale);
+        }
+
+        protected override void BaseSetup(Setup setup)
+        {
+            base.BaseSetup(setup);
+
             var localeByName = this.Transaction.Scoped<LocaleByName>();
-
             var singleton = this.Transaction.GetSingleton() ?? this.Transaction.Build<Singleton>();
-
             singleton.DefaultLocale = localeByName["en"];
         }
     }

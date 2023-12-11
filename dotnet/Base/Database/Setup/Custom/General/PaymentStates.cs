@@ -10,6 +10,8 @@ namespace Allors.Database.Domain
     {
         protected override void CoreSetup(Setup setup)
         {
+            base.CustomSetup(setup);
+
             var merge = this.Transaction.Caches().PaymentStateByUniqueId().Merger().Action();
 
             merge(PaymentState.UnpaidId, v => v.Name = "Unpaid");

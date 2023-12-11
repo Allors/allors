@@ -8,8 +8,10 @@ namespace Allors.Database.Domain
 {
     public partial class ShipmentStates
     {
-        protected override void CoreSetup(Setup setup)
+        protected override void CustomSetup(Setup setup)
         {
+            base.CustomSetup(setup);
+
             var merge = this.Transaction.Caches().ShipmentStateByUniqueId().Merger().Action();
 
             merge(ShipmentState.NotShippedId, v => v.Name = "NotShipped");

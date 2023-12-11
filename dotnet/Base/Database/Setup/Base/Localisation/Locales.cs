@@ -7,14 +7,18 @@ namespace Allors.Database.Domain
 {
     public partial class Locales
     {
-        protected override void CorePrepare(Setup setup)
+        protected override void BasePrepare(Setup setup)
         {
+            base.BasePrepare(setup);
+
             setup.AddDependency(this.ObjectType, this.M.Country);
             setup.AddDependency(this.ObjectType, this.M.Language);
         }
 
-        protected override void CoreSetup(Setup setup)
+        protected override void BaseSetup(Setup setup)
         {
+            base.BaseSetup(setup);
+
             var languages = this.Transaction.Scoped<LanguageByIsoCode>();
 
             var merge = this.Transaction.Caches().LocaleByName().Merger().Action();

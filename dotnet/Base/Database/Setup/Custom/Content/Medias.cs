@@ -3,11 +3,13 @@
     using System.IO;
     using System.Linq;
     using System.Reflection;
-   
+
     public partial class Medias
     {
         protected override void CustomSetup(Setup setup)
         {
+            base.CustomSetup(setup);
+
             var merge = this.Transaction.Caches().MediaByUniqueId().Merger().Action(); ;
 
             merge(Media.AvatarId, v =>
@@ -34,16 +36,15 @@
             var assembly = this.GetType().GetTypeInfo().Assembly;
             var manifestResourceName = assembly.GetManifestResourceNames().First(v => v.ToLower().Contains(name.ToLower()));
             var resource = assembly.GetManifestResourceStream(manifestResourceName);
-            if (resource != null)
+            if (resource == null)
             {
-                using (var ms = new MemoryStream())
-                {
-                    resource.CopyTo(ms);
-                    return ms.ToArray();
-                }
+                return null;
             }
 
-            return null;
+            using var ms = new MemoryStream();
+            resource.CopyTo(ms);
+            return ms.ToArray();
+
         }
     }
 }

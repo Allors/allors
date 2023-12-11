@@ -10,6 +10,8 @@ namespace Allors.Database.Domain
     {
         protected override void CoreSetup(Setup setup)
         {
+            base.CoreSetup(setup);
+
             var merge = this.Transaction.Caches().UserGroupByUniqueId().Merger().Action();
 
             merge(UserGroup.AdministratorsId, v => v.Name = "Administrators");

@@ -11,6 +11,8 @@ namespace Allors.Database.Domain
     {
         protected override void CustomSetup(Setup setup)
         {
+            base.CustomSetup(setup);
+
             var merge = this.Transaction.Caches().PersistentPreparedSelectByUniqueId().Merger().Action();
 
             merge(PersistentPreparedSelect.SelectPeopleId, v =>

@@ -31,7 +31,7 @@ namespace Allors.Database.Domain
             this.CustomOnPostSetup();
         }
 
-        private void OnCreated(IObject @object)
+        internal void OnCreated(IObject @object)
         {
             this.CoreOnCreated(@object);
             this.CustomOnCreated(@object);

@@ -7,10 +7,17 @@ namespace Allors.Database.Domain
 {
     public partial class Pages
     {
-        protected override void CustomPrepare(Setup setup) => setup.AddDependency(this.ObjectType, this.M.Media);
+        protected override void CustomPrepare(Setup setup)
+        {
+            base.CustomPrepare(setup);
+
+            setup.AddDependency(this.ObjectType, this.M.Media);
+        }
 
         protected override void CustomSetup(Setup setup)
         {
+            base.CustomSetup(setup);
+
             var medias = this.Transaction.Scoped<MediaByUniqueId>();
 
             var merge = this.Transaction.Caches().PageByUniqueId().Merger().Action();

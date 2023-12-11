@@ -9,12 +9,16 @@ namespace Allors.Database.Domain
     {
         protected override void CorePrepare(Setup setup)
         {
+            base.CorePrepare(setup);
+
             setup.AddDependency(this.ObjectType, this.M.Role);
             setup.AddDependency(this.ObjectType, this.M.UserGroup);
         }
 
         protected override void CoreSetup(Setup setup)
         {
+            base.CoreSetup(setup);
+
             if (setup.Config.SetupSecurity)
             {
                 var merge = this.Transaction.Caches().GrantByUniqueId().Merger().Action();

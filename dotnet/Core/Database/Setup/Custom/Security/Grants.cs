@@ -9,6 +9,8 @@ namespace Allors.Database.Domain
     {
         protected override void CustomSetup(Setup setup)
         {
+            base.CustomSetup(setup);
+
             if (setup.Config.SetupSecurity)
             {
                 var merge = this.Transaction.Caches().GrantByUniqueId().Merger().Action();

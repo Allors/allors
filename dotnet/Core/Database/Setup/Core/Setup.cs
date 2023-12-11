@@ -21,6 +21,9 @@ namespace Allors.Database.Domain
         public Setup(IDatabase database, Config config)
         {
             this.Config = config;
+
+            this.M = database.Services.Get<M>();
+
             this.transaction = database.CreateTransaction();
 
             this.objectsByObjectType = new Dictionary<IObjectType, IObjects>();
@@ -33,6 +36,8 @@ namespace Allors.Database.Domain
         }
 
         public Config Config { get; }
+
+        public M M { get; set; }
 
         public void Apply()
         {
@@ -90,41 +95,6 @@ namespace Allors.Database.Domain
 
         private void CoreOnPreSetup()
         {
-            if (this.Config.RecordsByClass != null)
-            {
-                Dictionary<IClass, Dictionary<object, IObject>> objectByKeyByClass = new();
-
-                foreach (var kvp in this.Config.RecordsByClass)
-                {
-                    var @class = kvp.Key;
-                    var records = kvp.Value;
-                    var keyRoleType = @class.KeyRoleType;
-
-                    var objectByKey = transaction.Extent(@class).ToDictionary(v => v.Strategy.GetUnitRole(keyRoleType));
-                    objectByKeyByClass.Add(@class, objectByKey);
-
-                    foreach (var record in records)
-                    {
-                        var key = record.ValueByRoleType[@class.KeyRoleType];
-
-                        if (!objectByKey.TryGetValue(key, out var @object))
-                        {
-                            @object = transaction.Build(@class, v =>
-                            {
-                                var strategy = v.Strategy;
-                                foreach ((IRoleType roleType, object value) in record.ValueByRoleType.Where(role => role.Key.ObjectType.IsUnit))
-                                {
-                                    strategy.SetRole(roleType, value);
-                                }
-                            });
-
-                            this.OnCreated(@object);
-
-                            objectByKey.Add(key, @object);
-                        }
-                    }
-                }
-            }
         }
 
         private void CoreOnPostSetup()
@@ -134,6 +104,5 @@ namespace Allors.Database.Domain
         private void CoreOnCreated(IObject @object)
         {
         }
-
     }
 }

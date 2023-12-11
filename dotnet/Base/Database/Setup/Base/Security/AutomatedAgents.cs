@@ -7,14 +7,18 @@ namespace Allors.Database.Domain
 {
     public partial class AutomatedAgents
     {
-        protected override void CorePrepare(Setup setup)
+        protected override void BasePrepare(Setup setup)
         {
+            base.BasePrepare(setup);
+
             setup.AddDependency(this.ObjectType, this.M.UserGroup);
             setup.AddDependency(this.ObjectType, this.M.SecurityToken);
         }
 
-        protected override void CoreSetup(Setup setup)
+        protected override void BaseSetup(Setup setup)
         {
+            base.BaseSetup(setup);
+
             var merge = this.Transaction.Caches().AutomatedAgentByUniqueId().Merger().Function();
 
             var guest = merge(AutomatedAgent.GuestId, v => v.UserName = "Guest");

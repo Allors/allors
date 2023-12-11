@@ -15,6 +15,10 @@ namespace Allors.Database.Domain
 
         private void BaseOnPostPrepare()
         {
+            foreach (var @class in this.Config.ResourceSetByCultureInfoByRoleTypeByClass.Keys)
+            {
+                this.AddDependency(@class, this.M.Locale);
+            }
         }
 
         private void BaseOnPreSetup()

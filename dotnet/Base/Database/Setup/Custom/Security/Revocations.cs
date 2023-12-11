@@ -10,6 +10,8 @@ namespace Allors.Database.Domain
     {
         protected override void CustomSecure(Security security)
         {
+            base.CustomSecure(security);
+
             var merge = this.Transaction.Caches().RevocationByUniqueId().Merger().Action();
             merge(Revocation.ToggleRevocationId, _ => { });
         }
