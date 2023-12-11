@@ -118,6 +118,8 @@ namespace Allors.Database.Domain
                                 }
                             });
 
+                            this.OnCreated(@object);
+
                             objectByKey.Add(key, @object);
                         }
                     }

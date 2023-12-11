@@ -11,6 +11,7 @@
 
     public partial class TranslationsFromResource
     {
+        private const string Translations = ".translations.";
         private const string ResourcesExtension = ".resources";
 
         public TranslationsFromResource(IMetaPopulation metaPopulation, ITranslationConfiguration configuration)
@@ -19,21 +20,42 @@
 
             var assembly = Assembly.GetExecutingAssembly();
 
-            this.ResourceSetByCultureInfoByClass = assembly.GetManifestResourceNames()
-                .Where(v => v.EndsWith(ResourcesExtension, StringComparison.OrdinalIgnoreCase))
-                .Select(v => v.Substring(0, v.Length - ResourcesExtension.Length))
-                .ToDictionary(v =>
+            this.ResourceSetByCultureInfoByRoleTypeByClass = new Dictionary<IClass, IDictionary<IRoleType, IDictionary<CultureInfo, ResourceSet>>>();
+
+            foreach ((String baseName, IClass @class, IRoleType roleType) in assembly.GetManifestResourceNames()
+                .Where(v => v.Contains(Translations, StringComparison.OrdinalIgnoreCase) && v.EndsWith(ResourcesExtension, StringComparison.OrdinalIgnoreCase))
+                .Select(v =>
                 {
-                    var name = v.Substring(v.LastIndexOf('.') + 1);
-                    return metaPopulation.Classes.First(w => w.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
-                }, className =>
+                    var end = v.LastIndexOf('.') + 1;
+                    var middle = v.LastIndexOf('.', end - 2) + 1;
+                    var begin = v.LastIndexOf('.', middle - 2) + 1;
+
+                    var baseName = v.Substring(0, end - 1);
+                    var className = v.Substring(begin, middle - begin - 1);
+                    var roleName = v.Substring(middle, end - middle - 1);
+
+                    var @class = metaPopulation.Classes.First(w => w.SingularName.Equals(className, StringComparison.OrdinalIgnoreCase));
+                    var roleType = @class.RoleTypes.First(w => w.SingularName.Equals(roleName, StringComparison.OrdinalIgnoreCase));
+
+                    return new Tuple<String, IClass, IRoleType>(baseName, @class, roleType);
+                }))
+            {
+                if (!this.ResourceSetByCultureInfoByRoleTypeByClass.TryGetValue(@class, out var resourceSetByCultureInfoByRoleType))
                 {
-                    var resourceManager = new ResourceManager(className, assembly);
-                    IDictionary<CultureInfo, ResourceSet> resourceSetByCultureInfo = cultureInfos.ToDictionary(cultureInfo => Equals(CultureInfo.InvariantCulture, cultureInfo) ? configuration.DefaultCultureInfo : cultureInfo, cultureInfo => resourceManager.GetResourceSet(cultureInfo, true, false));
-                    return resourceSetByCultureInfo;
-                });
+                    resourceSetByCultureInfoByRoleType = new Dictionary<IRoleType, IDictionary<CultureInfo, ResourceSet>>();
+                    this.ResourceSetByCultureInfoByRoleTypeByClass.Add(@class, resourceSetByCultureInfoByRoleType);
+                }
+
+                var resourceManager = new ResourceManager(baseName, assembly);
+                var resourceSetByCultureInfo = cultureInfos.ToDictionary(
+                    cultureInfo => Equals(CultureInfo.InvariantCulture, cultureInfo)
+                        ? configuration.DefaultCultureInfo
+                        : cultureInfo,
+                    cultureInfo => resourceManager.GetResourceSet(cultureInfo, true, false));
+                resourceSetByCultureInfoByRoleType.Add(roleType, resourceSetByCultureInfo);
+            }
         }
 
-        public IDictionary<IClass, IDictionary<CultureInfo, ResourceSet>> ResourceSetByCultureInfoByClass { get; }
+        public IDictionary<IClass, IDictionary<IRoleType, IDictionary<CultureInfo, ResourceSet>>> ResourceSetByCultureInfoByRoleTypeByClass { get; }
     }
 }

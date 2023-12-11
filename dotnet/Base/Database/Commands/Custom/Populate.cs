@@ -35,7 +35,7 @@ namespace Commands
             {
                 DataPath = this.Parent.DataPath,
                 RecordsByClass = new RecordsFromResource(database.MetaPopulation).RecordsByClass,
-                ResourceSetByCultureInfoByClass = new TranslationsFromResource(database.MetaPopulation, new TranslationConfiguration()).ResourceSetByCultureInfoByClass
+                ResourceSetByCultureInfoByRoleTypeByClass = new TranslationsFromResource(database.MetaPopulation, new TranslationConfiguration()).ResourceSetByCultureInfoByRoleTypeByClass
             };
 
             new Setup(database, config).Apply();

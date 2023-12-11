@@ -12,6 +12,6 @@ namespace Allors.Database.Domain
 
     public partial record Config
     {
-        public IDictionary<IClass, IDictionary<CultureInfo, ResourceSet>> ResourceSetByCultureInfoByClass { get; set; }
+        public IDictionary<IClass, IDictionary<IRoleType, IDictionary<CultureInfo, ResourceSet>>> ResourceSetByCultureInfoByRoleTypeByClass { get; set; }
     }
 }

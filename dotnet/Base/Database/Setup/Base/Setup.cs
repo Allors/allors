@@ -30,18 +30,27 @@ namespace Allors.Database.Domain
             IClass @class = @object.Strategy.Class;
             if (@class.KeyRoleType != null)
             {
-                if (this.Config.ResourceSetByCultureInfoByClass.TryGetValue(@class, out var resourceSetByCultureInfo))
+                if (this.Config.ResourceSetByCultureInfoByRoleTypeByClass.TryGetValue(@class, out var resourceSetByCultureInfoByRoleType))
                 {
                     var key = (string)@object.Strategy.GetUnitRole(@class.KeyRoleType);
-                    foreach (var (cultureInfo, resourceSet) in resourceSetByCultureInfo)
-                    {
-                        var value = resourceSet.GetString(key);
-                        if (value != null)
-                        {
-                            var locales = new LocaleByName(this.transaction);
-                            var locale = locales[cultureInfo.TwoLetterISOLanguageName];
 
-                            // TODO:
+                    foreach (var (roleType, resourceSetByCultureInfo) in resourceSetByCultureInfoByRoleType)
+                    {
+                        foreach (var (cultureInfo, resourceSet) in resourceSetByCultureInfo)
+                        {
+                            var value = resourceSet.GetString(key);
+                            if (value != null)
+                            {
+                                var locales = new LocaleByName(this.transaction);
+                                var locale = locales[cultureInfo.TwoLetterISOLanguageName];
+                                var localisedText = this.transaction.Build<LocalisedText>(v =>
+                                {
+                                    v.Locale = locale;
+                                    v.Text = value;
+                                });
+
+                                @object.Strategy.AddCompositesRole(roleType, localisedText);
+                            }
                         }
                     }
                 }

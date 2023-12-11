@@ -62,7 +62,7 @@ namespace Allors.Database.Server.Controllers
                 var config = new Config
                 {
                     RecordsByClass = recordsFromResource.RecordsByClass,
-                    ResourceSetByCultureInfoByClass = translationsFromResource.ResourceSetByCultureInfoByClass
+                    ResourceSetByCultureInfoByRoleTypeByClass = translationsFromResource.ResourceSetByCultureInfoByClass
                 };
 
                 new Setup(database, config).Apply();
