@@ -22,7 +22,6 @@ namespace Allors.Workspace.Adapters.Direct.Tests
     using Allors.Workspace.Configuration;
     using Allors.Workspace.Meta;
     using Database.Population;
-    using Population;
     using Configuration = Allors.Workspace.Adapters.Direct.Configuration;
     using Connection = Direct.Connection;
     using IClass = Database.Meta.IClass;
@@ -64,11 +63,7 @@ namespace Allors.Workspace.Adapters.Direct.Tests
 
             this.Database.Init();
 
-            var config = new Config();
-            Assembly populationAssembly = typeof(RoundtripStrategy).Assembly;
-            var recordsFromResource = new RecordsFromResource(populationAssembly, this.Database.MetaPopulation);
-            var translationsFromResource = new TranslationsFromResource(populationAssembly, this.Database.MetaPopulation);
-            new Setup(this.Database, recordsFromResource.RecordsByClass, translationsFromResource.TranslationsByIsoCodeByClass, config).Apply();
+            new Setup(this.Database, new Config()).Apply();
 
             using var transaction = this.Database.CreateTransaction();
 

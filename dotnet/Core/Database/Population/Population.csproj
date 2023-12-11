@@ -3,17 +3,22 @@
     <TargetFramework>net8.0</TargetFramework>
     <RootNamespace>Allors.Population</RootNamespace>
   </PropertyGroup>
+
   <ItemGroup>
-    <None Remove="Records.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Records.xml" />
+    <PackageReference Include="CaseExtensions" Version="1.1.0" />
   </ItemGroup>
  
   <ItemGroup>
-    <ProjectReference Include="..\..\..\System\Database\Allors.Database.Population.Resx\Allors.Database.Population.Resx.csproj" />
-    <ProjectReference Include="..\..\..\System\Database\Allors.Database.Population.Xml\Allors.Database.Population.Xml.csproj" />
+    <ProjectReference Include="..\..\..\System\Database\Allors.Database.Population\Allors.Database.Population.csproj" />
+    <ProjectReference Include="..\Domain\Domain.csproj" />
     <ProjectReference Include="..\Meta.Configuration\Meta.Configuration.csproj" />
   </ItemGroup>
-  
+
+  <ItemGroup>
+    <None Remove="Records.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Records.xml" />
+  </ItemGroup>
 </Project>

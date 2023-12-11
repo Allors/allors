@@ -56,11 +56,13 @@
 
             this.Database.Init();
 
-            var config = new Config();
-            Assembly populationAssembly = typeof(RoundtripStrategy).Assembly;
-            var recordsFromResource = new RecordsFromResource(populationAssembly, this.Database.MetaPopulation);
-            var translationsFromResource = new TranslationsFromResource(populationAssembly, this.Database.MetaPopulation);
-            new Setup(this.Database, recordsFromResource.RecordsByClass, translationsFromResource.TranslationsByIsoCodeByClass, config).Apply();
+            var config = new Config
+            {
+                RecordsByClass = new RecordsFromResource(this.Database.MetaPopulation).RecordsByClass,
+                ResourceSetByCultureInfoByClass = new TranslationsFromResource(this.Database.MetaPopulation, new TranslationConfiguration()).ResourceSetByCultureInfoByClass
+            };
+
+            new Setup(this.Database, config).Apply();
 
             using var transaction = this.Database.CreateTransaction();
 

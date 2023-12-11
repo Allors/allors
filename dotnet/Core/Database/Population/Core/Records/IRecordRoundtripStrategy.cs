@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using Population;
 
-public interface IRoundtripStrategy
+public interface IRecordRoundtripStrategy
 {
     IEnumerable<IObject> Objects();
 

@@ -11,8 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\System\Database\Allors.Database.Population\Allors.Database.Population.csproj" />
     <ProjectReference Include="..\Domain\Domain.csproj" />
-    <ProjectReference Include="..\Population\Population.csproj" />
   </ItemGroup>
 
   <ItemGroup>

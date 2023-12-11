@@ -17,7 +17,7 @@ namespace Allors.Database.Domain.Tests
     {
         public AccessControlListTests(Fixture fixture) : base(fixture) { }
 
-        public override Config Config => new Config { SetupSecurity = true };
+        public override Config Config => this.Config with { SetupSecurity = true };
 
         [Fact]
         public void GivenAnAuthenticationPopulationWhenCreatingAnAccessListForGuestThenPermissionIsDenied()

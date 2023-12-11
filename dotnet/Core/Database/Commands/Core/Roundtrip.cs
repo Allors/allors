@@ -11,7 +11,7 @@ namespace Commands
     using NLog;
 
     [Command(Description = "Roundtrip records to file")]
-    public class Records
+    public class Roundtrip
     {
         public Program Parent { get; set; }
 
@@ -32,7 +32,7 @@ namespace Commands
             var database = this.Parent.Database;
 
             var recordsFromFile = new RecordsFromFile(fileInfo, database.MetaPopulation);
-            var roundtrip = new RoundtripStrategy(database, recordsFromFile.RecordsByClass);
+            var roundtrip = new RecordRoundtripStrategy(database, recordsFromFile.RecordsByClass);
             var recordsToFile = new RecordsToFile(fileInfo, database.MetaPopulation, roundtrip);
             recordsToFile.Roundtrip();
 

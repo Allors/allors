@@ -56,11 +56,16 @@ namespace Allors.Database.Server.Controllers
                 var database = this.DatabaseService.Database;
                 database.Init();
 
-                var config = new Config();
-                Assembly populationAssembly = typeof(RoundtripStrategy).Assembly;
-                var recordsFromResource = new RecordsFromResource(populationAssembly, database.MetaPopulation);
-                var translationsFromResource = new TranslationsFromResource(populationAssembly, database.MetaPopulation);
-                new Setup(database, recordsFromResource.RecordsByClass, translationsFromResource.TranslationsByIsoCodeByClass, config).Apply();
+                var recordsFromResource = new RecordsFromResource(database.MetaPopulation);
+                var translationsFromResource = new TranslationsFromResource(database.MetaPopulation, new TranslationConfiguration());
+
+                var config = new Config
+                {
+                    RecordsByClass = recordsFromResource.RecordsByClass,
+                    ResourceSetByCultureInfoByClass = translationsFromResource.ResourceSetByCultureInfoByClass
+                };
+
+                new Setup(database, config).Apply();
 
                 using (var transaction = database.CreateTransaction())
                 {

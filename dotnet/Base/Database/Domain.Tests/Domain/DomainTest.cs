@@ -32,13 +32,20 @@ namespace Allors.Database.Domain.Tests
                 });
 
             this.M = database.Services.Get<M>();
+            
+            this.Config = new Config
+            {
+                SetupSecurity = false,
+                RecordsByClass = new RecordsFromResource(database.MetaPopulation).RecordsByClass,
+                ResourceSetByCultureInfoByClass = new TranslationsFromResource(database.MetaPopulation, new TranslationConfiguration()).ResourceSetByCultureInfoByClass
+            };
 
             this.Setup(database, populate);
         }
 
         public M M { get; }
 
-        public virtual Config Config { get; } = new Config { SetupSecurity = false };
+        public virtual Config Config { get; }
 
         public ITransaction Transaction { get; private set; }
 
@@ -79,10 +86,7 @@ namespace Allors.Database.Domain.Tests
 
             if (populate)
             {
-                Assembly populationAssembly = typeof(RoundtripStrategy).Assembly;
-                var recordsFromResource = new RecordsFromResource(populationAssembly, database.MetaPopulation);
-                var translationsFromResource = new TranslationsFromResource(populationAssembly, database.MetaPopulation);
-                new Setup(database, recordsFromResource.RecordsByClass, translationsFromResource.TranslationsByIsoCodeByClass, this.Config).Apply();
+                new Setup(database, this.Config).Apply();
             }
 
             this.Transaction = database.CreateTransaction();

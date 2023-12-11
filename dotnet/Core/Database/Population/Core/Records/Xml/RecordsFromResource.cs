@@ -13,19 +13,15 @@
     {
         private const string RecordsXmlFileName = "Records.xml";
 
-        private readonly Assembly assembly;
-        private readonly IMetaPopulation metaPopulation;
-
-        public RecordsFromResource(Assembly assembly, IMetaPopulation metaPopulation)
+        public RecordsFromResource(IMetaPopulation metaPopulation)
         {
-            this.assembly = assembly;
-            this.metaPopulation = metaPopulation;
+            var assembly = Assembly.GetExecutingAssembly();
 
             var name = assembly.GetManifestResourceNames()
                 .First(v => v.EndsWith(RecordsXmlFileName, StringComparison.OrdinalIgnoreCase));
 
-            using Stream stream = this.assembly.GetManifestResourceStream(name);
-            var reader = new RecordsReader(this.metaPopulation);
+            using Stream stream = assembly.GetManifestResourceStream(name);
+            var reader = new RecordsReader(metaPopulation);
             this.RecordsByClass = reader.Read(stream);
         }
 

@@ -11,22 +11,22 @@
     {
         private readonly FileInfo fileInfo;
         private readonly IMetaPopulation metaPopulation;
-        private readonly IRoundtripStrategy roundtrip;
+        private readonly IRecordRoundtripStrategy recordRoundtripStrategy;
 
-        public RecordsToFile(FileInfo fileInfo, IMetaPopulation metaPopulation, IRoundtripStrategy roundtrip)
+        public RecordsToFile(FileInfo fileInfo, IMetaPopulation metaPopulation, IRecordRoundtripStrategy recordRoundtripStrategy)
         {
             this.fileInfo = fileInfo;
             this.metaPopulation = metaPopulation;
-            this.roundtrip = roundtrip;
+            this.recordRoundtripStrategy = recordRoundtripStrategy;
         }
 
         public void Roundtrip()
         {
             using var stream = File.Open(fileInfo.FullName, FileMode.Create);
 
-            IEnumerable<IObject> objects = this.roundtrip.Objects();
+            IEnumerable<IObject> objects = this.recordRoundtripStrategy.Objects();
 
-            var recordsByClass = objects.ToRecordsByClass(this.roundtrip.HandleResolver());
+            var recordsByClass = objects.ToRecordsByClass(this.recordRoundtripStrategy.HandleResolver());
 
             var recordsWriter = new RecordsWriter(this.metaPopulation);
             recordsWriter.Write(stream, recordsByClass);

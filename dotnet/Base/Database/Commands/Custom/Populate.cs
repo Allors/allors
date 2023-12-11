@@ -31,12 +31,14 @@ namespace Commands
 
             database.Init();
 
-            var config = new Config { DataPath = this.Parent.DataPath };
-            Assembly populationAssembly = typeof(RoundtripStrategy).Assembly;
-            var recordsFromResource = new RecordsFromResource(populationAssembly, database.MetaPopulation);
-            var translationsFromResource = new TranslationsFromResource(populationAssembly, database.MetaPopulation);
+            var config = new Config
+            {
+                DataPath = this.Parent.DataPath,
+                RecordsByClass = new RecordsFromResource(database.MetaPopulation).RecordsByClass,
+                ResourceSetByCultureInfoByClass = new TranslationsFromResource(database.MetaPopulation, new TranslationConfiguration()).ResourceSetByCultureInfoByClass
+            };
 
-            new Setup(database, recordsFromResource.RecordsByClass, translationsFromResource.TranslationsByIsoCodeByClass, config).Apply();
+            new Setup(database, config).Apply();
 
             using (var session = database.CreateTransaction())
             {

@@ -6,10 +6,10 @@
 namespace Allors.Database.Domain
 {
     using System.Collections.Generic;
+    using System.Linq;
     using Allors.Graph;
     using Allors.Database.Meta;
     using Population;
-    using Roundtrip;
 
     public partial class Setup
     {
@@ -18,14 +18,8 @@ namespace Allors.Database.Domain
         private readonly Dictionary<IObjectType, IObjects> objectsByObjectType;
         private readonly Graph<IObjects> objectsGraph;
 
-        public Setup(
-            IDatabase database, 
-            IDictionary<IClass, Record[]> recordsByClass,
-            IDictionary<IClass, IDictionary<string, Translation[]>> translationsByIsoCodeByClass, 
-            Config config)
+        public Setup(IDatabase database, Config config)
         {
-            this.RecordsByClass = recordsByClass;
-            this.TranslationsByIsoCodeByClass = translationsByIsoCodeByClass;
             this.Config = config;
             this.transaction = database.CreateTransaction();
 
@@ -37,10 +31,6 @@ namespace Allors.Database.Domain
 
             this.objectsGraph = new Graph<IObjects>();
         }
-
-        public IDictionary<IClass, Record[]> RecordsByClass { get; }
-
-        public IDictionary<IClass, IDictionary<string, Translation[]>> TranslationsByIsoCodeByClass { get; }
 
         public Config Config { get; }
 
@@ -100,7 +90,39 @@ namespace Allors.Database.Domain
 
         private void CoreOnPreSetup()
         {
-            this.RecordsByClass.ToDatabase(this.transaction);
+            if (this.Config.RecordsByClass != null)
+            {
+                Dictionary<IClass, Dictionary<object, IObject>> objectByKeyByClass = new();
+
+                foreach (var kvp in this.Config.RecordsByClass)
+                {
+                    var @class = kvp.Key;
+                    var records = kvp.Value;
+                    var keyRoleType = @class.KeyRoleType;
+
+                    var objectByKey = transaction.Extent(@class).ToDictionary(v => v.Strategy.GetUnitRole(keyRoleType));
+                    objectByKeyByClass.Add(@class, objectByKey);
+
+                    foreach (var record in records)
+                    {
+                        var key = record.ValueByRoleType[@class.KeyRoleType];
+
+                        if (!objectByKey.TryGetValue(key, out var @object))
+                        {
+                            @object = transaction.Build(@class, v =>
+                            {
+                                var strategy = v.Strategy;
+                                foreach ((IRoleType roleType, object value) in record.ValueByRoleType.Where(role => role.Key.ObjectType.IsUnit))
+                                {
+                                    strategy.SetRole(roleType, value);
+                                }
+                            });
+
+                            objectByKey.Add(key, @object);
+                        }
+                    }
+                }
+            }
         }
 
         private void CoreOnPostSetup(Config config)

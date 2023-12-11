@@ -53,12 +53,15 @@ namespace Tests
 
             this.M = metaPopulation;
 
+            var recordsFromResource = new RecordsFromResource(database.MetaPopulation);
+            this.Config = new Config { SetupSecurity = true, RecordsByClass = recordsFromResource.RecordsByClass };
+
             this.Setup(database, populate);
         }
 
         public M M { get; }
 
-        public virtual Config Config { get; } = new Config { SetupSecurity = true };
+        public virtual Config Config { get; }
 
         public ITransaction Transaction { get; set; }
 
@@ -85,10 +88,7 @@ namespace Tests
         {
             database.Init();
 
-            Assembly populationAssembly = typeof(RoundtripStrategy).Assembly;
-            var recordsFromResource = new RecordsFromResource(populationAssembly, database.MetaPopulation);
-            var translationsFromResource = new TranslationsFromResource(populationAssembly, database.MetaPopulation);
-            new Setup(database, recordsFromResource.RecordsByClass, translationsFromResource.TranslationsByIsoCodeByClass, this.Config).Apply();
+            new Setup(database, this.Config).Apply();
 
             this.Transaction = database.CreateTransaction();
 

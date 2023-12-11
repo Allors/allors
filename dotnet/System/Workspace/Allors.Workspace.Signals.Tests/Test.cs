@@ -6,6 +6,7 @@
     using Database.Adapters.Memory;
     using Database.Configuration;
     using Database.Configuration.Derivations.Default;
+    using Database.Domain;
     using Database.Meta;
     using Population;
     using Configuration = Database.Adapters.Memory.Configuration;
@@ -33,23 +34,19 @@
             {
                 var metaBuilder = new Allors.Database.Meta.Configuration.MetaBuilder();
                 var metaPopulation = metaBuilder.Build();
-                var rules = Allors.Database.Domain.Rules.Create(metaPopulation);
+                var rules = Rules.Create(metaPopulation);
                 var engine = new Engine(rules);
                 this.database = new Database(
                     new DefaultDatabaseServices(engine),
                     new Configuration
                     {
-                        ObjectFactory = new ObjectFactory(metaPopulation, typeof(Allors.Database.Domain.Person)),
+                        ObjectFactory = new ObjectFactory(metaPopulation, typeof(Person)),
                     });
 
                 this.database.Init();
-                var config = new Allors.Database.Domain.Config();
-                Assembly populationAssembly = typeof(RoundtripStrategy).Assembly;
-                var recordsFromResource = new RecordsFromResource(populationAssembly, metaPopulation);
-                var translationsFromResource = new TranslationsFromResource(populationAssembly, database.MetaPopulation);
-                new Allors.Database.Domain.Setup(this.database, recordsFromResource.RecordsByClass, translationsFromResource.TranslationsByIsoCodeByClass, config).Apply();
+                new Setup(this.database, new Config()).Apply();
                 this.Transaction = this.database.CreateTransaction();
-                new Allors.Database.Domain.TestPopulation(this.Transaction).Apply();
+                new TestPopulation(this.Transaction).Apply();
                 this.Transaction.Commit();
             }
 
@@ -77,7 +74,7 @@
 
         public Task Login(string userName)
         {
-            this.user = this.Transaction.Extent<Allors.Database.Domain.User>().First(v => v.UserName.Equals(userName, StringComparison.InvariantCultureIgnoreCase));
+            this.user = this.Transaction.Extent<User>().First(v => v.UserName.Equals(userName, StringComparison.InvariantCultureIgnoreCase));
             this.Transaction.Services.Get<Allors.Database.Services.IUserService>().User = this.user;
 
             this.Connection = new Connection(this.configuration, this.database, this.servicesBuilder) { UserId = this.user.Id };

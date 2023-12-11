@@ -8,12 +8,12 @@
     using Database.Population;
     using Database.Roundtrip;
 
-    public class RoundtripStrategy : IRoundtripStrategy
+    public class RecordRoundtripStrategy : IRecordRoundtripStrategy
     {
         private readonly IDatabase database;
         private readonly IDictionary<IClass, Record[]> existingRecordsByClass;
 
-        public RoundtripStrategy(IDatabase database, IDictionary<IClass, Record[]> existingRecordsByClass)
+        public RecordRoundtripStrategy(IDatabase database, IDictionary<IClass, Record[]> existingRecordsByClass)
         {
             this.database = database;
             this.existingRecordsByClass = existingRecordsByClass;
@@ -29,11 +29,22 @@
             return objects;
         }
 
-        Func<IStrategy, Handle> IRoundtripStrategy.HandleResolver()
+        public Func<IStrategy, Handle> HandleResolver()
         {
+            var m = this.database.Services.Get<M>();
+
+            var excluded = new HashSet<IClass> { m.Country, m.Currency, m.Language };
             var fromExisting = HandleResolvers.FromExisting(this.existingRecordsByClass);
             var fromKey = HandleResolvers.PascalCaseKey();
-            return strategy => fromExisting(strategy) ?? fromKey(strategy);
+            return strategy =>
+            {
+                if (excluded.Contains(strategy.Class))
+                {
+                    return null;
+                }
+
+                return fromExisting(strategy) ?? fromKey(strategy);
+            };
 
         }
     }

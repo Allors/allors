@@ -32,12 +32,15 @@ namespace Allors.Database.Domain.Tests
 
             this.M = ((IDatabase)database).Services.Get<M>();
 
+            var recordsFromResource = new RecordsFromResource(this.M);
+            this.Config =  new Config { SetupSecurity = false, RecordsByClass = recordsFromResource.RecordsByClass};
+
             this.Setup(database, populate);
         }
 
         public M M { get; set; }
 
-        public virtual Config Config { get; } = new Config { SetupSecurity = false };
+        public virtual Config Config { get; }
 
         public ITransaction Transaction { get; private set; }
 
@@ -75,11 +78,8 @@ namespace Allors.Database.Domain.Tests
         protected void Setup(IDatabase database, bool populate)
         {
             database.Init();
-
-            Assembly populationAssembly = typeof(RoundtripStrategy).Assembly;
-            var recordsFromResource = new RecordsFromResource(populationAssembly, this.M);
-            var translationsFromResource = new TranslationsFromResource(populationAssembly, database.MetaPopulation);
-            new Setup(database, recordsFromResource.RecordsByClass, translationsFromResource.TranslationsByIsoCodeByClass, this.Config).Apply();
+            
+            new Setup(database, this.Config).Apply();
 
             this.Transaction = database.CreateTransaction();
 
