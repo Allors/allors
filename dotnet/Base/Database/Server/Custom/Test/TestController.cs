@@ -8,13 +8,13 @@ namespace Allors.Database.Server.Controllers
     using System;
     using System.Collections.Generic;
     using System.Reflection;
-    using Allors.Population;
     using Allors.Services;
     using Domain;
     using Meta;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
     using Population;
+    using Population.Resx;
     using Services;
 
     public class TestController : Controller

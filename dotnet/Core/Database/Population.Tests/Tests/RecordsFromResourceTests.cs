@@ -9,7 +9,7 @@
 namespace Allors.Resources.Tests
 {
     using Database.Meta.Configuration;
-    using Population;
+    using Database.Population;
     using Xunit;
 
     public class RecordsFromResourceTests

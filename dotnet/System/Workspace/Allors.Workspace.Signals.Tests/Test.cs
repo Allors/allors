@@ -8,7 +8,7 @@
     using Database.Configuration.Derivations.Default;
     using Database.Domain;
     using Database.Meta;
-    using Population;
+    using Database.Population;
     using Configuration = Database.Adapters.Memory.Configuration;
     using Record = Database.Population.Record;
 

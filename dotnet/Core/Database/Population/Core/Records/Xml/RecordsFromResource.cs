@@ -1,4 +1,4 @@
-﻿namespace Allors.Population
+﻿namespace Allors.Database.Population
 {
     using System;
     using System.Collections.Generic;

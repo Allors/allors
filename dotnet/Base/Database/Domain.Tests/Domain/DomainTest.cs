@@ -13,11 +13,12 @@ namespace Allors.Database.Domain.Tests
     using Adapters.Memory;
     using Domain;
     using Allors.Database.Security;
-    using Allors.Population;
+    using Population;
     using Configuration;
     using Database.Derivations;
     using Meta;
     using Moq;
+    using Population.Resx;
     using User = Domain.User;
 
     public class DomainTest : IDisposable

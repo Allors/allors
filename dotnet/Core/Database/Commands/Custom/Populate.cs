@@ -10,7 +10,6 @@ namespace Commands
     using Allors.Database.Domain;
     using Allors.Database.Meta;
     using Allors.Database.Population;
-    using Allors.Population;
     using McMaster.Extensions.CommandLineUtils;
     using NLog;
 

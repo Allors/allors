@@ -1,4 +1,4 @@
-﻿namespace Allors.Population
+﻿namespace Allors.Database.Population.Resx
 {
     using System;
     using System.Collections.Generic;
@@ -7,7 +7,7 @@
     using System.Reflection;
     using System.Resources;
     using Database.Meta;
-    using Database.Roundtrip;
+    using Population;
 
     public partial class TranslationsFromResource
     {

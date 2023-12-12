@@ -22,7 +22,6 @@ namespace Tests
     using Allors.Database.Meta;
     using Allors.Database.Meta.Configuration;
     using Allors.Database.Population;
-    using Allors.Population;
     using Microsoft.Extensions.Configuration;
     using Database = Allors.Database.Adapters.Sql.SqlClient.Database;
 

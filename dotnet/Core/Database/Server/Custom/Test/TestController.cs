@@ -15,7 +15,6 @@ namespace Allors.Server.Controllers
     using Database.Services;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
-    using Population;
     using Services;
 
     public class TestController : Controller

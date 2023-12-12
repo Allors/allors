@@ -11,7 +11,7 @@
     using Configuration;
     using Database.Meta;
     using Database.Population;
-    using Population;
+    using Database.Population.Resx;
     using Configuration = Allors.Workspace.Adapters.Direct.Configuration;
     using Connection = Allors.Workspace.Adapters.Direct.Connection;
     using Person = Allors.Workspace.Domain.Person;

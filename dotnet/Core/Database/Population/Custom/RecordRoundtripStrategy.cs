@@ -1,4 +1,4 @@
-﻿namespace Allors.Population
+﻿namespace Allors.Database.Population
 {
     using System;
     using System.Collections.Generic;
@@ -6,7 +6,6 @@
     using Database;
     using Database.Meta;
     using Database.Population;
-    using Database.Roundtrip;
 
     public class RecordRoundtripStrategy : IRecordRoundtripStrategy
     {

@@ -1,7 +1,7 @@
-﻿namespace Allors.Population
+﻿namespace Allors.Database.Population
 {
     using System.Globalization;
-    using Database.Roundtrip;
+    using Population;
 
     public class TranslationConfiguration : ITranslationConfiguration
     {

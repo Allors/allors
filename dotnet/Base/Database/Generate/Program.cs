@@ -11,7 +11,6 @@ namespace Allors.Meta.Generation
     using Allors.Database.Meta.Configuration;
     using Database.Meta;
     using Database.Population;
-    using Population;
 
     internal class Program
     {

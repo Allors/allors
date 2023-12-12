@@ -1,11 +1,11 @@
-﻿namespace Allors.Population
+﻿namespace Allors.Database.Population
 {
     using System.Collections.Generic;
     using System.IO;
     using Database;
     using Database.Population.Xml;
     using Database.Meta;
-    using Database.Roundtrip;
+    using Population;
 
     public partial class RecordsToFile
     {
