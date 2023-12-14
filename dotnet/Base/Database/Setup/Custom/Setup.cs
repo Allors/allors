@@ -5,6 +5,9 @@
 
 namespace Allors.Database.Domain
 {
+    using System;
+    using System.Linq;
+    using Meta;
     using Services;
 
     public partial class Setup
@@ -23,23 +26,50 @@ namespace Allors.Database.Domain
 
         private void CustomOnPostSetup()
         {
+            #region Plurals
             var countryByIsoCode = this.transaction.Scoped<CountryByIsoCode>();
             var genders = this.transaction.Scoped<GenderByKey>();
             var medias = this.transaction.Scoped<MediaByUniqueId>();
             var roles = this.transaction.Scoped<RoleByUniqueId>();
             var securityTokens = this.transaction.Scoped<SecurityTokenByUniqueId>();
             var userGroups = this.transaction.Scoped<UserGroupByUniqueId>();
+            #endregion
 
-            var administratorRole = roles.Administrator;
-            var administrators = userGroups.Administrators;
-            var defaultSecurityToken = securityTokens.DefaultSecurityToken;
-
-            var acl = this.transaction.Build<Grant>(v =>
+            #region Builders
+            Person BuildPerson(string firstName, string lastName, string userName, string password = null)
             {
-                v.Role = administratorRole;
-                v.AddSubjectGroup(administrators);
-                v.AddSecurityToken(defaultSecurityToken);
-            });
+                void Builder(Person v)
+                {
+                    v.FirstName = firstName;
+                    v.LastName = lastName;
+                    v.UserName = userName;
+                    v.SetPassword(password);
+                }
+
+                return this.transaction.Build<Person>(Builder);
+            }
+
+            Organization BuildOrganization(string name, Action<Organization> extraBuilder = null)
+            {
+                void Builder(Organization v) => v.Name = name;
+                return this.transaction.Build<Organization>(Builder, extraBuilder);
+            }
+
+            Revocation BuildRevocation(params Permission[] deniedPermissions) => this.transaction.Build<Revocation>(v => v.DeniedPermissions = deniedPermissions);
+
+            TrimFrom BuildTrimFrom(string name, Action<TrimFrom> extraBuilder = null)
+            {
+                void Builder(TrimFrom v) => v.Name = name;
+                return this.transaction.Build<TrimFrom>(Builder, extraBuilder);
+            }
+
+            TrimTo BuildTrimTo(string name, Action<TrimTo> extraBuilder = null)
+            {
+                void Builder(TrimTo v) => v.Name = name;
+                return this.transaction.Build<TrimTo>(Builder, extraBuilder);
+            }
+
+            #endregion
 
             var avatar = medias.Avatar;
 
@@ -49,14 +79,14 @@ namespace Allors.Database.Domain
                 v.City = "London";
                 v.Country = countryByIsoCode["GB"];
             });
+
             var address = this.transaction.Build<HomeAddress>(v =>
             {
                 v.Street = "Main Street";
                 v.HouseNumber = "1";
                 v.Place = place;
             });
-
-
+            
             var mailboxAdress = this.transaction.Build<MailboxAddress>(v =>
             {
                 v.Place = this.transaction.Build<Place>(w =>
@@ -68,48 +98,18 @@ namespace Allors.Database.Domain
                 v.PoBox = "P.O. Box 20";
             });
 
-            var jane = this.transaction.Build<Person>(v =>
-            {
-                v.MainAddress = address;
-                v.FirstName = "Jane";
-                v.LastName = "Doe";
-                v.UserName = "jane@example.com";
-                v.Photo = avatar;
-                v.Gender = genders.Female;
-                v.MailboxAddress = mailboxAdress;
-            });
+            var jane = BuildPerson("Jane", "Doe", "jane@example.com", "jane");
+            var john = BuildPerson("John", "Doe", "john@example.com", "john");
+            var jenny = BuildPerson("Jenny", "Doe", "jenny@example.com", "jenny");
 
-            var john = this.transaction.Build<Person>(v =>
-            {
-                v.FirstName = "John";
-                v.LastName = "Doe";
-                v.UserName = "john@example.com";
-                v.Photo = avatar;
-                v.Gender = genders.Male;
-                v.MailboxAddress = mailboxAdress;
-            });
+            var guest = BuildPerson("Gu", "est", "guest@example.com");
 
-            var jenny = this.transaction.Build<Person>(v =>
-            {
-                v.FirstName = "Jenny";
-                v.LastName = "Doe";
-                v.UserName = "jenny@example.com";
-                v.Photo = avatar;
-                v.Gender = genders.Other;
-                v.MailboxAddress = mailboxAdress;
-            });
-
-            jane.SetPassword("jane");
-            john.SetPassword("john");
-            jenny.SetPassword("jenny");
-
-            administrators.AddMember(jane);
-
+            userGroups.Administrators.AddMember(jane);
             userGroups.Creators.AddMember(jane);
             userGroups.Creators.AddMember(john);
             userGroups.Creators.AddMember(jenny);
 
-            var acme = this.transaction.Build<Organisation>(v =>
+            var acme = this.transaction.Build<Organization>(v =>
             {
                 v.Name = "Acme";
                 v.Owner = jane;
@@ -139,55 +139,33 @@ namespace Allors.Database.Domain
                 v.ThroughDate = now.AddDays(-1);
             });
 
-            // Create cycles between Organisation and Person
-            var cycleOrganisation1 = this.transaction.Build<Organisation>(v =>
-            {
-                v.Name = "Organisatin Cycle One";
-                v.IncorporationDate = DateTimeFactory.CreateDate(2000, 1, 1);
-            });
 
-            var cycleOrganisation2 = this.transaction.Build<Organisation>(v =>
-            {
-                v.Name = "Organisatin Cycle Two";
-                v.IncorporationDate = DateTimeFactory.CreateDate(2001, 1, 1);
-            });
+            // Create cycles between Organization and Person
+            var cycleOrganization1 = BuildOrganization("Organization Cycle One");
+            var cycleOrganization2 = BuildOrganization("Organization Cycle Two");
 
-            cycleOrganisation1.AddShareholder(jane);
-            cycleOrganisation2.AddShareholder(jenny);
-
-            var cyclePerson1 = this.transaction.Build<Person>(v =>
-            {
-                v.FirstName = "Person Cycle";
-                v.LastName = "One";
-                v.UserName = "cycle1@one.org";
-            });
-
-            var cyclePerson2 = this.transaction.Build<Person>(v =>
-            {
-                v.FirstName = "Person Cycle";
-                v.LastName = "Two";
-                v.UserName = "cycle2@one.org";
-            });
+            var cyclePerson1 = BuildPerson("Person Cycle", "One", "cycle1@one.org");
+            var cyclePerson2 = BuildPerson("Person Cycle", "Two", "cycle2@one.org");
 
             // One
-            cycleOrganisation1.CycleOne = cyclePerson1;
-            cyclePerson1.CycleOne = cycleOrganisation1;
+            cycleOrganization1.CycleOne = cyclePerson1;
+            cyclePerson1.CycleOne = cycleOrganization1;
 
-            cycleOrganisation2.CycleOne = cyclePerson2;
-            cyclePerson2.CycleOne = cycleOrganisation2;
+            cycleOrganization2.CycleOne = cyclePerson2;
+            cyclePerson2.CycleOne = cycleOrganization2;
 
             // Many
-            cycleOrganisation1.AddCycleMany(cyclePerson1);
-            cycleOrganisation1.AddCycleMany(cyclePerson2);
+            cycleOrganization1.AddCycleMany(cyclePerson1);
+            cycleOrganization1.AddCycleMany(cyclePerson2);
 
-            cycleOrganisation1.AddCycleMany(cyclePerson1);
-            cycleOrganisation1.AddCycleMany(cyclePerson2);
+            cycleOrganization1.AddCycleMany(cyclePerson1);
+            cycleOrganization1.AddCycleMany(cyclePerson2);
 
-            cyclePerson1.AddCycleMany(cycleOrganisation1);
-            cyclePerson1.AddCycleMany(cycleOrganisation2);
+            cyclePerson1.AddCycleMany(cycleOrganization1);
+            cyclePerson1.AddCycleMany(cycleOrganization2);
 
-            cyclePerson2.AddCycleMany(cycleOrganisation1);
-            cyclePerson2.AddCycleMany(cycleOrganisation2);
+            cyclePerson2.AddCycleMany(cycleOrganization1);
+            cyclePerson2.AddCycleMany(cycleOrganization2);
 
             // MediaTyped
             var mediaTyped = this.transaction.Build<MediaTyped>(v =>
@@ -221,11 +199,67 @@ namespace Allors.Database.Domain
             if (this.Config.SetupSecurity)
             {
                 this.transaction.Database.Services.Get<IPermissions>().Sync(this.transaction);
+
+                // Denied
+                var denied = this.transaction.Build<Denied>(denied =>
+                {
+                    denied.DatabaseProperty = "DatabaseProp";
+                    denied.DefaultWorkspaceProperty = "DefaultWorkspaceProp";
+                    denied.WorkspaceXProperty = "WorkspaceXProp";
+                });
+
+                var m = denied.M;
+
+                var databaseWrite = this.transaction.Extent<Permission>().First(v => v.Operation == Operations.Write && v.OperandType.Equals(m.Denied.DatabaseProperty));
+                var defaultWorkspaceWrite = this.transaction.Extent<Permission>().First(v => v.Operation == Operations.Write && v.OperandType.Equals(m.Denied.DefaultWorkspaceProperty));
+                var workspaceXWrite = this.transaction.Extent<Permission>().First(v => v.Operation == Operations.Write && v.OperandType.Equals(m.Denied.WorkspaceXProperty));
+
+                var revocation = BuildRevocation(databaseWrite, defaultWorkspaceWrite, workspaceXWrite);
+
+                denied.AddRevocation(revocation);
+            }
+
+            // Trimming
+            if (this.Config.SetupSecurity)
+            {
+                // Objects
+                var fromTrimmed1 = BuildTrimFrom("Trimmed1");
+                var fromTrimmed2 = BuildTrimFrom("Trimmed2");
+                var fromUntrimmed1 = BuildTrimFrom("Untrimmed1");
+                var fromUntrimmed2 = BuildTrimFrom("Untrimmed2");
+
+                var toTrimmed = BuildTrimTo("Trimmed1");
+                var toUntrimmed = BuildTrimTo("Untrimmed1");
+
+                var m = this.transaction.Database.Services.Get<M>();
+
+                // Denied Permissions
+                var fromTrimPermission = this.transaction.Extent<Permission>().First(v => v.Operation == Operations.Read && v.OperandType.Equals(m.TrimFrom.Name));
+                var fromRevocation = BuildRevocation(fromTrimPermission);
+                fromTrimmed1.AddRevocation(fromRevocation);
+                fromTrimmed2.AddRevocation(fromRevocation);
+
+                var toTrimPermission = this.transaction.Extent<Permission>().First(v => v.Operation == Operations.Read && v.OperandType.Equals(m.TrimTo.Name));
+                var toRevocation = BuildRevocation(toTrimPermission);
+                toTrimmed.AddRevocation(toRevocation);
+
+                // Relations
+                fromTrimmed1.Many2One = toTrimmed;
+                fromTrimmed2.Many2One = toUntrimmed;
+                fromUntrimmed1.Many2One = toTrimmed;
+                fromUntrimmed2.Many2One = toUntrimmed;
+
+                fromTrimmed1.AddMany2Many(toTrimmed);
+                fromTrimmed2.AddMany2Many(toUntrimmed);
+                fromUntrimmed1.AddMany2Many(toTrimmed);
+                fromUntrimmed2.AddMany2Many(toUntrimmed);
             }
         }
 
         private void CustomOnCreated(IObject @object)
         {
+
+            
         }
     }
 }

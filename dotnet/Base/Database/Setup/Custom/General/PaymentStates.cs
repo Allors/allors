@@ -8,7 +8,7 @@ namespace Allors.Database.Domain
 {
     public partial class PaymentStates
     {
-        protected override void CoreSetup(Setup setup)
+        protected override void BaseSetup(Setup setup)
         {
             base.CustomSetup(setup);
 

@@ -30,10 +30,6 @@ stages:
           target: 'CiDotnetSystemWorkspaceAdaptersJsonNewtonsoft'
         dotnet_system_workspace_adapters_json_systemtext:
           target: 'CiDotnetSystemWorkspaceAdaptersJsonSystemText'
-        dotnet_core_database:
-          target: 'CiDotnetCoreDatabase'
-        dotnet_core_workspace:
-          target: 'CiDotnetCoreWorkspace'
         dotnet_base_database:
           target: 'CiDotnetBaseDatabase'
         dotnet_base_workspace:

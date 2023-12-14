@@ -24,9 +24,17 @@ namespace Allors.Database.Configuration
         }
 
         public IDatabase Database { get; }
-
+        
+        public static Guid OrganizationByName => new Guid("5D8D1C36-4ABD-4969-BCDC-4B6FA2454D65");
+        
         public IExtent Get(Guid id)
         {
+            if (id == OrganizationByName)
+            {
+                var m = this.Database.Services.Get<M>();
+                return new Extent(m.Organization) { Predicate = new Equals(m.Organization.Name) { Parameter = "name" } };
+            }
+
             if (!this.extentById.TryGetValue(id, out var extent))
             {
                 var transaction = this.Database.CreateTransaction();

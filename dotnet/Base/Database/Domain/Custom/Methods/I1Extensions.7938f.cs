@@ -1,4 +1,4 @@
-// <copyright file="I1Extensions1.cs" company="Allors bvba">
+﻿// <copyright file="I1Extensions1.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -8,7 +8,7 @@ namespace Allors.Database.Domain
 {
     public static partial class I1Extensions
     {
-        public static void CoreSuperinterfaceMethod(this I1 @this, S1SuperinterfaceMethod method) => method.Value += "I1Core";
+        public static void BaseSuperinterfaceMethod(this I1 @this, S1SuperinterfaceMethod method) => method.Value += "I1Base";
 
         public static void CustomSuperinterfaceMethod(this I1 @this, S1SuperinterfaceMethod method) => method.Value += "I1Custom";
     }

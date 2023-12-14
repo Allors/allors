@@ -9,7 +9,7 @@ namespace Allors.Database.Domain
 
     public static partial class TransitionalExtensions
     {
-        public static void CoreOnPostDerive(this Transitional @this, ObjectOnPostDerive method)
+        public static void BaseOnPostDerive(this Transitional @this, ObjectOnPostDerive method)
         {
             // Update PreviousObjectState and LastObjectState
             foreach (var transitionalConfiguration in @this.TransitionalConfigurations)

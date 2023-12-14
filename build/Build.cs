@@ -48,7 +48,6 @@ partial class Build : NukeBuild
 
     private Target Generate => _ => _
         .DependsOn(AllorsDotnetSystemAdaptersGenerate)
-        .DependsOn(AllorsDotnetCoreGenerate)
         .DependsOn(AllorsDotnetBaseGenerate);
 
     private Target Default => _ => _

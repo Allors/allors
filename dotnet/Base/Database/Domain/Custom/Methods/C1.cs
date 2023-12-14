@@ -1,4 +1,4 @@
-// <copyright file="C1.cs" company="Allors bvba">
+﻿// <copyright file="C1.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -8,15 +8,15 @@ namespace Allors.Database.Domain
 {
     public partial class C1
     {
-        public void CoreClassMethod(C1ClassMethod method) => method.Value += "C1Core";
+        public void BaseClassMethod(C1ClassMethod method) => method.Value += "C1Base";
 
         public void CustomClassMethod(C1ClassMethod method) => method.Value += "C1Custom";
 
-        public void CoreInterfaceMethod(I1InterfaceMethod method) => method.Value += "C1Core";
+        public void BaseInterfaceMethod(I1InterfaceMethod method) => method.Value += "C1Base";
 
         public void CustomInterfaceMethod(I1InterfaceMethod method) => method.Value += "C1Custom";
 
-        public void CoreSuperinterfaceMethod(S1SuperinterfaceMethod method) => method.Value += "C1Core";
+        public void BaseSuperinterfaceMethod(S1SuperinterfaceMethod method) => method.Value += "C1Base";
 
         public void CustomSuperinterfaceMethod(S1SuperinterfaceMethod method) => method.Value += "C1Custom";
     }

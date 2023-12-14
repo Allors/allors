@@ -20,18 +20,18 @@ namespace Allors.Meta.Generation
         {
             string[,] database =
                 {
-                    { "../Core/Database/Templates/domain.cs.stg", "Database/Domain/Generated" },
-                    { "../Core/Database/Templates/setup.cs.stg", "Database/Setup/Generated" },
-                    { "../Core/Database/Templates/uml.cs.stg", "Database/Domain.Diagrams/Generated" },
+                    { "Database/Templates/domain.cs.stg", "Database/Domain/Generated" },
+                    { "Database/Templates/setup.cs.stg", "Database/Setup/Generated" },
+                    { "Database/Templates/uml.cs.stg", "Database/Domain.Diagrams/Generated" },
                 };
 
             string[,] workspace =
             {
-                { "../Core/Workspace/Templates/uml.cs.stg", "Workspace/Diagrams/Generated" },
-                { "../Core/Workspace/Templates/meta.cs.stg", "Workspace/Meta.Domain/Generated" },
-                { "../Core/Workspace/Templates/meta.static.cs.stg", "Workspace/Meta.Configuration/Generated" },
-                { "../Core/Workspace/Templates/domain.cs.stg", "Workspace/Domain/Generated" },
-                { "../Core/Workspace/Templates/signals.cs.stg", "Workspace/Signals/Generated" },
+                { "Workspace/Templates/uml.cs.stg", "Workspace/Diagrams/Generated" },
+                { "Workspace/Templates/meta.cs.stg", "Workspace/Meta.Domain/Generated" },
+                { "Workspace/Templates/meta.static.cs.stg", "Workspace/Meta.Configuration/Generated" },
+                { "Workspace/Templates/domain.cs.stg", "Workspace/Domain/Generated" },
+                { "Workspace/Templates/signals.cs.stg", "Workspace/Signals/Generated" },
 
                 { "../../typescript/templates/workspace.meta.ts.stg", "../../typescript/libs/base/workspace/meta/src/lib/generated" },
                 { "../../typescript/templates/workspace.meta.json.ts.stg", "../../typescript/libs/base/workspace/meta-json/src/lib/generated" },

@@ -1,4 +1,4 @@
-﻿// <copyright file="Organisation.cs" company="Allors bvba">
+﻿// <copyright file="Organization.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -112,6 +112,8 @@ namespace Allors.Database.Meta.Configuration
             AddWorkspace(relationTypes.PersonCycleOne, new[] { "Default" });
             AddWorkspace(relationTypes.PersonCycleMany, new[] { "Default" });
 
+            AddWorkspace(relationTypes.PersonDefaultWorkspaceField, new[] { "Default" });
+
             // EmailMessage;
             AddWorkspace(relationTypes.EmailMessageDateCreated, new[] { "Default" });
 
@@ -139,7 +141,10 @@ namespace Allors.Database.Meta.Configuration
 
             AddWorkspace(relationTypes.TaskAssignmentTask, new[] { "Default" });
 
-            // AccessClass;
+            // AccessClass
+            AddWorkspace(relationTypes.AccessClassProperty, new[] { "Default" });
+            AddWorkspace(relationTypes.AccessClassAnotherProperty, new[] { "Default" });
+
 
             // Employment;
             AddWorkspace(relationTypes.EmploymentEmployee, new[] { "Default" });
@@ -147,31 +152,32 @@ namespace Allors.Database.Meta.Configuration
 
             // Gender;
 
-            // Organisation;
-            AddWorkspace(relationTypes.OrganisationEmployees, new[] { "Default" });
-            AddWorkspace(relationTypes.OrganisationManager, new[] { "Default" });
-            AddWorkspace(relationTypes.OrganisationOwner, new[] { "Default" });
-            AddWorkspace(relationTypes.OrganisationShareholders, new[] { "Default" });
-            AddWorkspace(relationTypes.OrganisationActiveEmployments, new[] { "Default" });
-            AddWorkspace(relationTypes.OrganisationInactiveEmployments, new[] { "Default" });
-            AddWorkspace(relationTypes.OrganisationActiveEmployees, new[] { "Default" });
+            // Organization;
+            AddWorkspace(relationTypes.OrganizationEmployees, new[] { "Default" });
+            AddWorkspace(relationTypes.OrganizationManager, new[] { "Default" });
+            AddWorkspace(relationTypes.OrganizationOwner, new[] { "Default" });
+            AddWorkspace(relationTypes.OrganizationShareholders, new[] { "Default" });
+            AddWorkspace(relationTypes.OrganizationActiveEmployments, new[] { "Default" });
+            AddWorkspace(relationTypes.OrganizationInactiveEmployments, new[] { "Default" });
+            AddWorkspace(relationTypes.OrganizationActiveEmployees, new[] { "Default" });
 
 
-            AddWorkspace(relationTypes.OrganisationIncorporationDate, new[] { "Default" });
+            AddWorkspace(relationTypes.OrganizationIncorporationDate, new[] { "Default" });
 
 
 
 
-            AddWorkspace(relationTypes.OrganisationName, new[] { "Default" });
+            AddWorkspace(relationTypes.OrganizationName, new[] { "Default" });
 
-            AddWorkspace(relationTypes.OrganisationCycleOne, new[] { "Default" });
-            AddWorkspace(relationTypes.OrganisationCycleMany, new[] { "Default" });
-            AddWorkspace(relationTypes.OrganisationOneData, new[] { "Default" });
-            AddWorkspace(relationTypes.OrganisationManyDatas, new[] { "Default" });
-            AddWorkspace(relationTypes.OrganisationJustDidIt, new[] { "Default" });
-            AddWorkspace(relationTypes.OrganisationCountry, new[] { "Default" });
-            AddWorkspace(methodTypes.OrganisationJustDoIt, new[] { "Default" });
-            AddWorkspace(methodTypes.OrganisationToggleCanWrite, new[] { "Default" });
+            AddWorkspace(relationTypes.OrganizationCycleOne, new[] { "Default" });
+            AddWorkspace(relationTypes.OrganizationCycleMany, new[] { "Default" });
+            AddWorkspace(relationTypes.OrganizationOneData, new[] { "Default" });
+            AddWorkspace(relationTypes.OrganizationManyDatas, new[] { "Default" });
+            AddWorkspace(relationTypes.OrganizationJustDidIt, new[] { "Default" });
+            AddWorkspace(relationTypes.OrganizationJustDidItDerived, new[] { "Default" });
+            AddWorkspace(relationTypes.OrganizationCountry, new[] { "Default" });
+            AddWorkspace(methodTypes.OrganizationJustDoIt, new[] { "Default" });
+            AddWorkspace(methodTypes.OrganizationToggleCanWrite, new[] { "Default" });
 
             // BadUI;
 
@@ -484,6 +490,7 @@ namespace Allors.Database.Meta.Configuration
             // Revocation;
 
             // Role;
+            AddWorkspace(relationTypes.RoleName, "Default");
 
             // SecurityToken;
 
@@ -545,15 +552,10 @@ namespace Allors.Database.Meta.Configuration
 
             // User;
             AddWorkspace(relationTypes.UserNotificationList, new[] { "Default" });
+            AddWorkspace(relationTypes.UserGroupMembers, "Default");
             AddWorkspace(relationTypes.UserUserName, new[] { "Default" });
-
-
             AddWorkspace(relationTypes.UserUserEmail, new[] { "Default" });
-
-
-
-
-
+            
 
 
 
@@ -691,6 +693,8 @@ namespace Allors.Database.Meta.Configuration
             AddWorkspace(relationTypes.UserPasswordResetInUserPassword, new[] { "Default" });
 
             // Classes
+            AddWorkspace(meta.AccessClass, new[] { "Default" });
+            AddWorkspace(meta.Denied, new[] { "Default" });
             AddWorkspace(meta.Media, new[] { "Default" });
             AddWorkspace(meta.MediaContent, new[] { "Default" });
             AddWorkspace(meta.MediaTyped, new[] { "Default" });
@@ -703,7 +707,7 @@ namespace Allors.Database.Meta.Configuration
             AddWorkspace(meta.TaskAssignment, new[] { "Default" });
             AddWorkspace(meta.Employment, new[] { "Default" });
             AddWorkspace(meta.MailboxAddress, new[] { "Default" });
-            AddWorkspace(meta.Organisation, new[] { "Default" });
+            AddWorkspace(meta.Organization, new[] { "Default" });
             AddWorkspace(meta.C1, new[] { "Default" });
             AddWorkspace(meta.C2, new[] { "Default" });
             AddWorkspace(meta.Data, new[] { "Default" });

@@ -1,4 +1,4 @@
-﻿// <copyright file="Organisations.cs" company="Allors bvba">
+﻿// <copyright file="Organizations.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -22,8 +22,8 @@ namespace Allors.Database.Domain
                 {
                     Include = new[]
                     {
-                        new Node(this.M.Organisation.Owner),
-                        new Node(this.M.Organisation.Employees),
+                        new Node(this.M.Organization.Owner),
+                        new Node(this.M.Organization.Employees),
                     },
                 };
             });

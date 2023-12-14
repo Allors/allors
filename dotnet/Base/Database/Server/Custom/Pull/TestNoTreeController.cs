@@ -38,7 +38,7 @@ namespace Allors.Database.Server.Controllers
             var response = api.CreatePullResponseBuilder();
 
             response.AddObject("object", api.User);
-            response.AddCollection("collection", m.Organisation, this.Transaction.Extent<Organisation>());
+            response.AddCollection("collection", m.Organization, this.Transaction.Extent<Organization>());
             return this.Ok(response.Build());
         }
     }

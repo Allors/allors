@@ -14,6 +14,6 @@ using static DebuggerDisplayConstants;
 // Allors
 [assembly: DebuggerDisplay("{DebuggerDisplay}" + id, Target = typeof(Grant))]
 [assembly: DebuggerDisplay("{DebuggerDisplay}", Target = typeof(LocalisedText))]
-[assembly: DebuggerDisplay(name, Target = typeof(Organisation))]
+[assembly: DebuggerDisplay(name, Target = typeof(Organization))]
 [assembly: DebuggerDisplay("{PartyName}" + id, Target = typeof(Person))]
 [assembly: DebuggerDisplay("{DebuggerDisplay}" + id, Target = typeof(SecurityToken))]

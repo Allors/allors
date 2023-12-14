@@ -93,7 +93,7 @@ namespace Allors.Database.Domain
             return false;
         }
 
-        public void CoreOnPostDerive(ObjectOnPostDerive method)
+        public void BaseOnPostDerive(ObjectOnPostDerive method)
         {
             var derivation = method.Derivation;
 

@@ -26,18 +26,18 @@ namespace Allors.Workspace.Adapters.Tests
 
             var pull = new[] { new Pull { Extent = new Filter(this.M.Organization) } };
 
-            var organisation = (await workspace.PullAsync(pull)).GetCollection<Organization>()[0];
+            var organization = (await workspace.PullAsync(pull)).GetCollection<Organization>()[0];
 
-            Assert.False(organisation.JustDidIt.Value);
+            Assert.False(organization.JustDidIt.Value);
 
-            var invokeResult = await workspace.InvokeAsync(organisation.JustDoIt);
+            var invokeResult = await workspace.InvokeAsync(organization.JustDoIt);
 
             Assert.False(invokeResult.HasErrors);
 
-            await workspace.PullAsync(new Pull { Object = organisation.Strategy });
+            await workspace.PullAsync(new Pull { Object = organization.Strategy });
 
-            Assert.True(organisation.JustDidIt.Value);
-            Assert.True(organisation.JustDidItDerived.Value);
+            Assert.True(organization.JustDidIt.Value);
+            Assert.True(organization.JustDidItDerived.Value);
         }
 
         [Fact]

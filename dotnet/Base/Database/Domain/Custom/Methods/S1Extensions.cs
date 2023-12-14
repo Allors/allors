@@ -8,7 +8,7 @@ namespace Allors.Database.Domain
 {
     public static partial class S1Extensions
     {
-        public static void CoreSuperinterfaceMethod(this S1 @this, S1SuperinterfaceMethod method) => method.Value += "S1Core";
+        public static void BaseSuperinterfaceMethod(this S1 @this, S1SuperinterfaceMethod method) => method.Value += "S1Base";
 
         public static void CustomSuperinterfaceMethod(this S1 @this, S1SuperinterfaceMethod method) => method.Value += "S1Custom";
     }

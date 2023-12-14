@@ -8,7 +8,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="..\..\..\..\Core\Database\Configuration\Core\Database\Metacache\**\*.cs" />
+    <Compile Include="..\..\..\..\Base\Database\Configuration\Base\Database\Metacache\**\*.cs" />
   </ItemGroup>
 
 </Project>

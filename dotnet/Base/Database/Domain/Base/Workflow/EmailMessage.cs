@@ -42,7 +42,7 @@ namespace Allors.Database.Domain
             }
         }
 
-        public void CoreOnBuild(ObjectOnBuild method)
+        public void BaseOnBuild(ObjectOnBuild method)
         {
             if (!this.ExistDateCreated)
             {

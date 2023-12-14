@@ -7,6 +7,6 @@ namespace Allors.Database.Domain
 {
     public partial class PrintDocument
     {
-        public void CoreDelete(DeletableDelete method) => this.Media?.CascadingDelete();
+        public void BaseDelete(DeletableDelete method) => this.Media?.CascadingDelete();
     }
 }

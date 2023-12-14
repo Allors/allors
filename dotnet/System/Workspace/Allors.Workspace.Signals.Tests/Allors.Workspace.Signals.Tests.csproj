@@ -26,12 +26,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Core\Database\Configuration\Configuration.csproj" />
-    <ProjectReference Include="..\..\..\Core\Database\Population\Population.csproj" />
-    <ProjectReference Include="..\..\..\Core\Database\Meta.Configuration\Meta.Configuration.csproj" />
-    <ProjectReference Include="..\..\..\Core\Database\Setup\Setup.csproj" />
-    <ProjectReference Include="..\..\..\Core\Workspace\Configuration\Workspace.Configuration.csproj" />
-    <ProjectReference Include="..\..\..\Core\Workspace\Meta.Configuration\Workspace.Meta.Configuration.csproj" />
+    <ProjectReference Include="..\..\..\Base\Database\Configuration\Configuration.csproj" />
+    <ProjectReference Include="..\..\..\Base\Database\Population\Population.csproj" />
+    <ProjectReference Include="..\..\..\Base\Database\Meta.Configuration\Meta.Configuration.csproj" />
+    <ProjectReference Include="..\..\..\Base\Database\Setup\Setup.csproj" />
+    <ProjectReference Include="..\..\..\Base\Workspace\Configuration\Workspace.Configuration.csproj" />
+    <ProjectReference Include="..\..\..\Base\Workspace\Meta.Configuration\Workspace.Meta.Configuration.csproj" />
     <ProjectReference Include="..\..\Database\Adapters\Allors.Database.Adapters.Memory\Allors.Database.Adapters.Memory.csproj" />
     <ProjectReference Include="..\Adapters\Allors.Workspace.Adapters.Direct\Allors.Workspace.Adapters.Direct.csproj" />
     <ProjectReference Include="..\Allors.Workspace.Signals.Default\Allors.Workspace.Signals.Default.csproj" />

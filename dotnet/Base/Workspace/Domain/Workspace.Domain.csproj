@@ -6,10 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\..\..\Core\Workspace\Domain\Core*\**\*.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\..\System\Workspace\Allors.Workspace\Allors.Workspace.csproj" />
     <ProjectReference Include="..\Meta.Domain\Workspace.Meta.Domain.csproj" />
   </ItemGroup>

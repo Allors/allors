@@ -28,9 +28,9 @@ namespace Allors.Database.Domain
 
         public void CustomOnInit(ObjectOnInit method)
         {
-            if (this.ExistOrganisationWhereManager)
+            if (this.ExistOrganizationWhereManager)
             {
-                this.OrganisationWhereManager.AddEmployee(this);
+                this.OrganizationWhereManager.AddEmployee(this);
             }
         }
     }

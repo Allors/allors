@@ -9,7 +9,6 @@ namespace Allors.Database.Domain.Tests
     using Allors.Protocol.Json.SystemText;
     using Database;
     using Domain;
-    using Protocol.Json;
     using Services;
     using Xunit;
 
@@ -20,17 +19,17 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public async void WithParameter()
         {
-            var organisations = this.Transaction.Extent<Organisation>().ToArray();
+            var organisations = this.Transaction.Extent<Organization>().ToArray();
 
             var extentService = this.Transaction.Database.Services.Get<IPreparedExtents>();
             var organizationByName = extentService.Get(PersistentPreparedExtent.ByNameId);
 
-            var arguments = new Arguments(new Dictionary<string, object>
+            var arguments = new Protocol.Json.Arguments(new Dictionary<string, object>
             {
                 { "name", "Acme" },
             }, new UnitConvert());
 
-            Extent<Organisation> organizations = organizationByName.Build(this.Transaction, arguments).ToArray();
+            Extent<Organization> organizations = organizationByName.Build(this.Transaction, arguments).ToArray();
 
             Assert.Single(organizations);
 

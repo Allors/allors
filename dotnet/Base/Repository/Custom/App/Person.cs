@@ -57,6 +57,16 @@ namespace Allors.Repository
         public string DomainGreeting { get; set; }
 
         #region Allors
+
+        [Id("9B98B181-E2E6-499B-BD17-82C6E1D6679A")]
+        [Size(256)]
+
+        #endregion
+
+        [Derived]
+        public string CustomFullName { get; set; }
+
+        #region Allors
         [Id("654f6c84-62f2-4c0a-9d68-532ed3f39447")]
         [Multiplicity(Multiplicity.ManyToOne)]
         [Indexed]
@@ -136,20 +146,44 @@ namespace Allors.Repository
 
         [Multiplicity(Multiplicity.ManyToOne)]
         [Indexed]
-        public Organisation CycleOne { get; set; }
+        public Organization CycleOne { get; set; }
 
         #region Allors
         [Id("2EB2AF4F-2BF4-475F-BB41-D740197F168E")]
         #endregion
-
         [Multiplicity(Multiplicity.ManyToMany)]
         [Indexed]
-        public Organisation[] CycleMany { get; set; }
+        public Organization[] CycleMany { get; set; }
 
-        [Id("FAF120ED-09D1-4E42-86A6-F0D9FF75E03C")]
-        public void Method() { }
+        #region Allors
 
-        #region inherited methods
+        [Id("46395751-D63E-4D84-9110-197BA6930ACC")]
+
         #endregion
+
+        [Derived]
+        public bool Owning { get; set; }
+
+        #region Allors
+
+        [Id("1198D746-8FEE-4B94-B878-09028A1FCC9F")]
+
+        #endregion
+        [Derived]
+        public string DatabaseOnlyField { get; set; }
+
+        #region Allors
+
+        [Id("423735DF-1712-4C19-B5FE-121FF9BEF9F1")]
+
+        #endregion
+
+        [Derived]
+        public string DefaultWorkspaceField { get; set; }
+
+        #region Allors
+        [Id("FAF120ED-09D1-4E42-86A6-F0D9FF75E03C")]
+        #endregion
+        public void Method() { }
     }
 }

@@ -40,10 +40,10 @@ namespace Allors.Database.Server.Controllers
                 var response = api.CreatePullResponseBuilder();
 
                 var m = this.Transaction.Database.Services.Get<M>();
-                var organisation = this.Transaction.Extent<Organisation>().FindBy(m.Organisation.Owner, this.Transaction.Services.Get<IUserService>().User);
+                var organisation = this.Transaction.Extent<Organization>().FindBy(m.Organization.Owner, this.Transaction.Services.Get<IUserService>().User);
                 response.AddObject("root", organisation,
                     new[] {
-                                new Node(m.Organisation.Shareholders)
+                                new Node(m.Organization.Shareholders)
                                     .Add(m.Person.Photo),
                                 });
                 return this.Ok(response.Build());

@@ -13,8 +13,4 @@
     <ProjectReference Include="..\Population\Population.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Include="..\..\..\Core\Database\Generate\Core*\**\*.cs" />
-  </ItemGroup>
-
 </Project>

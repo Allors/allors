@@ -28,8 +28,6 @@ namespace Allors.Database.Configuration
             this.userService.UserChanged += OnUserChanged;
         }
 
-
-
         public ITransaction Transaction { get; private set; }
 
         public IDatabaseServices DatabaseServices => this.Transaction.Database.Services;

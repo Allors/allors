@@ -10,7 +10,6 @@ using Allors.Repository.Attributes;
 
 [Id("ACAD1D11-277B-4CAB-8C5E-4AC915985C45")]
 [Domain]
-[Extends(nameof(Core))]
 public struct Base
 {
 }

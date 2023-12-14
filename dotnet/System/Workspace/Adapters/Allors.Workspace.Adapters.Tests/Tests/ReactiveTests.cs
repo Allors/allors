@@ -19,7 +19,7 @@ namespace Allors.Workspace.Adapters.Tests
         {
         }
 
-        public override async Task InitializeAsync()
+        public override async System.Threading.Tasks.Task InitializeAsync()
         {
             await base.InitializeAsync();
             await this.Login("administrator");
