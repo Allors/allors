@@ -9,13 +9,13 @@ partial class Build
     private Target AllorsDotnetSystemSharedTests => _ => _
         .Executes(() => DotNetTest(s => s
             .SetProjectFile(Paths.AllorsDotnetSystemSharedTests)
-            .AddLoggers("trx;LogFileName=DotnetSystemSharedTests.trx")
+            .AddLoggers("trx;LogFileName=AllorsDotnetSystemSharedTests.trx")
             .SetResultsDirectory(Paths.ArtifactsTests)));
 
     private Target AllorsDotnetSystemRepositoryModelTests => _ => _
         .Executes(() => DotNetTest(s => s
             .SetProjectFile(Paths.AllorsDotnetSystemRepositoryModelTests)
-            .AddLoggers("trx;LogFileName=DotnetSystemRepositoryModelTests.trx")
+            .AddLoggers("trx;LogFileName=AllorsDotnetSystemRepositoryModelTests.trx")
             .SetResultsDirectory(Paths.ArtifactsTests)));
 
     private Target AllorsDotnetSystemAdaptersGenerate => _ => _
@@ -40,7 +40,7 @@ partial class Build
         .Executes(() => DotNetTest(s => s
             .SetProjectFile(Paths.AllorsDotnetSystemAdaptersStaticTests)
             .SetFilter("FullyQualifiedName~Allors.Database.Adapters.Memory")
-            .AddLoggers("trx;LogFileName=DotnetSystemAdaptersTestMemory.trx")
+            .AddLoggers("trx;LogFileName=AllorsDotnetSystemDatabaseAdaptersTestMemory.trx")
             .SetResultsDirectory(Paths.ArtifactsTests)));
 
     private Target AllorsDotnetSystemDatabaseAdaptersSqlClientTests => _ => _
@@ -52,7 +52,7 @@ partial class Build
                 DotNetTest(s => s
                     .SetProjectFile(Paths.AllorsDotnetSystemAdaptersStaticTests)
                     .SetFilter("FullyQualifiedName~Allors.Database.Adapters.Sql.SqlClient")
-                    .AddLoggers("trx;LogFileName=DotnetSystemAdaptersTestSqlClient.trx")
+                    .AddLoggers("trx;LogFileName=AllorsDotnetSystemDatabaseAdaptersSqlClientTests.trx")
                     .SetResultsDirectory(Paths.ArtifactsTests));
             }
         });
@@ -64,69 +64,69 @@ partial class Build
             DotNetTest(s => s
                  .SetProjectFile(Paths.AllorsDotnetSystemAdaptersStaticTests)
                  .SetFilter("FullyQualifiedName~Allors.Database.Adapters.Sql.Npgsql")
-                 .AddLoggers("trx;LogFileName=DotnetSystemAdaptersTestNpgsql.trx")
+                 .AddLoggers("trx;LogFileName=AllorsDotnetSystemDatabaseAdaptersNpgsqlTests.trx")
                  .SetResultsDirectory(Paths.ArtifactsTests));
         });
 
 
 
     private Target AllorsDotnetSystemWorkspaceAdaptersDirectTests => _ => _
-        .DependsOn(AllorsDotnetCorePublishServer)
-        .DependsOn(AllorsDotnetCorePublishCommands)
-        .DependsOn(AllorsDotnetCoreResetDatabase)
+        .DependsOn(AllorsDotnetBasePublishServer)
+        .DependsOn(AllorsDotnetBasePublishCommands)
+        .DependsOn(AllorsDotnetBaseResetDatabase)
         .Executes(() =>
         {
-            DotNet("Commands.dll Populate", Paths.ArtifactsCoreCommands);
+            DotNet("Commands.dll Populate", Paths.ArtifactsCommands);
 
             {
                 DotNetTest(s => s
                     .SetProjectFile(Paths.AllorsDotnetSystemWorkspaceAdaptersDirectTests)
-                    .AddLoggers("trx;LogFileName=DotnetCoreWorkspaceAdaptersDirectTests.trx")
+                    .AddLoggers("trx;LogFileName=AllorsDotnetSystemWorkspaceAdaptersDirectTests.trx")
                     .SetResultsDirectory(Paths.ArtifactsTests));
             }
         });
 
     private Target AllorsDotnetSystemWorkspaceAdaptersJsonNewtonsoftTests => _ => _
-        .DependsOn(AllorsDotnetCorePublishServer)
-        .DependsOn(AllorsDotnetCorePublishCommands)
-        .DependsOn(AllorsDotnetCoreResetDatabase)
+        .DependsOn(AllorsDotnetBasePublishServer)
+        .DependsOn(AllorsDotnetBasePublishCommands)
+        .DependsOn(AllorsDotnetBaseResetDatabase)
         .Executes(async () =>
         {
-            DotNet("Commands.dll Populate", Paths.ArtifactsCoreCommands);
+            DotNet("Commands.dll Populate", Paths.ArtifactsCommands);
             {
-                using var server = new Server(Paths.ArtifactsCoreServer);
+                using var server = new Server(Paths.ArtifactsServer);
                 await server.Ready();
 
                 DotNetTest(s => s
                     .SetProjectFile(Paths.AllorsDotnetSystemWorkspaceAdaptersJsonNewtonsoftTests)
-                    .AddLoggers("trx;LogFileName=DotnetCoreWorkspaceAdaptersJsonNewtonsoftTests.trx")
+                    .AddLoggers("trx;LogFileName=AllorsDotnetSystemWorkspaceAdaptersJsonNewtonsoftTests.trx")
                     .SetResultsDirectory(Paths.ArtifactsTests));
             }
         });
 
     private Target AllorsDotnetSystemWorkspaceAdaptersJsonSystemTextTests => _ => _
-        .DependsOn(AllorsDotnetCorePublishServer)
-        .DependsOn(AllorsDotnetCorePublishCommands)
-        .DependsOn(AllorsDotnetCoreResetDatabase)
+        .DependsOn(AllorsDotnetBasePublishServer)
+        .DependsOn(AllorsDotnetBasePublishCommands)
+        .DependsOn(AllorsDotnetBaseResetDatabase)
         .Executes(async () =>
         {
-            DotNet("Commands.dll Populate", Paths.ArtifactsCoreCommands);
+            DotNet("Commands.dll Populate", Paths.ArtifactsCommands);
 
 
             {
-                using var server = new Server(Paths.ArtifactsCoreServer);
+                using var server = new Server(Paths.ArtifactsServer);
                 await server.Ready();
 
                 DotNetTest(s => s
                     .SetProjectFile(Paths.AllorsDotnetSystemWorkspaceAdaptersJsonSystemTextTests)
-                    .AddLoggers("trx;LogFileName=DotnetCoreWorkspaceAdaptersJsonSystemTextTests.trx")
+                    .AddLoggers("trx;LogFileName=AllorsDotnetSystemWorkspaceAdaptersJsonSystemTextTests.trx")
                     .SetResultsDirectory(Paths.ArtifactsTests));
             }
 
         });
 
     private Target AllorsDotnetSystemWorkspaceSignalsTests => _ => _
-        .DependsOn(AllorsDotnetCoreGenerate)
+        .DependsOn(AllorsDotnetBaseGenerate)
         .Executes(() =>
         {
             DotNetTest(s => s
@@ -137,7 +137,7 @@ partial class Build
 
 
     private Target AllorsDotnetSystemWorkspaceSignalsSourceGeneratorsTests => _ => _
-        .DependsOn(AllorsDotnetCoreGenerate)
+        .DependsOn(AllorsDotnetBaseGenerate)
         .Executes(() =>
         {
             DotNetTest(s => s

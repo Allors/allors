@@ -32,7 +32,7 @@ partial class Build : NukeBuild
                 }
             }
 
-            foreach (var path in new[] { Paths.AllorsDotnetSystem, Paths.AllorsDotnetCore })
+            foreach (var path in new[] { Paths.AllorsDotnetSystem, Paths.AllorsDotnetBase })
             {
                 foreach (var child in new DirectoryInfo(path).GetDirectories().Where(v => !v.Name.Equals("build")))
                 {

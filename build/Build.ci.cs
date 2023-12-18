@@ -36,26 +36,18 @@ partial class Build
         .DependsOn(Reset)
         .DependsOn(AllorsDotnetSystemWorkspaceAdaptersJsonSystemTextTests);
 
-    //private Target CiDotnetCoreDatabase => _ => _
-    //    .DependsOn(Reset)
-    //    .DependsOn(AllorsDotnetCoreDatabaseMetaTests)
-    //    .DependsOn(AllorsDotnetCoreDatabaseDomainTests)
-    //    .DependsOn(AllorsDotnetCoreDatabaseServerDirectTests)
-    //    .DependsOn(AllorsDotnetCoreDatabaseServerJsonTests);
-
-    //private Target CiDotnetCoreWorkspace => _ => _
-    //    .DependsOn(Reset)
-    //    .DependsOn(AllorsDotnetCoreWorkspaceMetaStaticTests);
-
     private Target CiDotnetBaseDatabase => _ => _
         .DependsOn(Reset)
-        .DependsOn(AllorsDotnetBaseDatabaseDomainTests);
+        .DependsOn(AllorsDotnetBaseDatabaseMetaTests)
+        .DependsOn(AllorsDotnetBaseDatabaseDomainTests)
+        .DependsOn(AllorsDotnetBaseDatabaseServerDirectTests)
+        .DependsOn(AllorsDotnetBaseDatabaseServerJsonTests);
 
-    // TODO:
     private Target CiDotnetBaseWorkspace => _ => _
         .DependsOn(Reset)
+        .DependsOn(AllorsDotnetBaseWorkspaceMetaStaticTests)
         .DependsOn(AllorsDotnetBaseWorkspaceWinformsViewModelsTests);
-    
+
     private Target CiTypescriptWorkspace => _ => _
         .DependsOn(Reset)
         .DependsOn(TypescriptInstall)

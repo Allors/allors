@@ -1,9 +1,7 @@
 ﻿using Nuke.Common;
 using Nuke.Common.Tooling;
 using Nuke.Common.Tools.DotNet;
-using Nuke.Common.Tools.Npm;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
-using static Nuke.Common.Tools.Npm.NpmTasks;
 
 partial class Build
 {
@@ -32,12 +30,78 @@ partial class Build
                 .SetProjectFile(Paths.AllorsDotnetBaseDatabaseGenerate));
         });
 
+    private Target AllorsDotnetBaseDatabaseMetaTests => _ => _
+        .DependsOn(AllorsDotnetBaseGenerate)
+        .Executes(() => DotNetTest(s => s
+            .SetProjectFile(Paths.AllorsDotnetBaseDatabaseMetaTests)
+            .AddLoggers("trx;LogFileName=AllorsDotnetBaseDatabaseMetaTests.trx")
+            .SetResultsDirectory(Paths.ArtifactsTests)));
+
     private Target AllorsDotnetBaseDatabaseDomainTests => _ => _
         .DependsOn(AllorsDotnetBaseGenerate)
         .Executes(() => DotNetTest(s => s
             .SetProjectFile(Paths.AllorsDotnetBaseDatabaseDomainTests)
-            .AddLoggers("trx;LogFileName=BaseDatabaseDomain.trx")
+            .AddLoggers("trx;LogFileName=AllorsDotnetBaseDatabaseDomainTests.trx")
             .SetResultsDirectory(Paths.ArtifactsTests)));
+
+    private Target AllorsDotnetBaseDatabaseServerDirectTests => _ => _
+        .DependsOn(AllorsDotnetBaseGenerate)
+        .Executes(() => DotNetTest(s => s
+            .SetProjectFile(Paths.AllorsDotnetBaseDatabaseServerDirectTests)
+            .AddLoggers("trx;LogFileName=AllorsDotnetBaseDatabaseServerDirectTests.trx")
+            .SetResultsDirectory(Paths.ArtifactsTests)));
+
+    private Target AllorsDotnetBasePublishCommands => _ => _
+        .DependsOn(AllorsDotnetBaseGenerate)
+        .Executes(() =>
+        {
+            var dotNetPublishSettings = new DotNetPublishSettings()
+                .SetProcessWorkingDirectory(Paths.AllorsDotnetBaseDatabaseCommands)
+                .SetOutput(Paths.ArtifactsCommands);
+            DotNetPublish(dotNetPublishSettings);
+        });
+
+    private Target AllorsDotnetBasePublishServer => _ => _
+        .DependsOn(AllorsDotnetBaseGenerate)
+        .Executes(() =>
+        {
+            var dotNetPublishSettings = new DotNetPublishSettings()
+                .SetProcessWorkingDirectory(Paths.AllorsDotnetBaseDatabaseServer)
+                .SetOutput(Paths.ArtifactsServer);
+            DotNetPublish(dotNetPublishSettings);
+        });
+
+    private Target AllorsDotnetBaseDatabaseServerJsonTests => _ => _
+        .DependsOn(AllorsDotnetBaseGenerate)
+        .DependsOn(AllorsDotnetBasePublishServer)
+        .DependsOn(AllorsDotnetBasePublishCommands)
+        .DependsOn(AllorsDotnetBaseResetDatabase)
+        .Executes(async () =>
+        {
+            DotNet("Commands.dll Populate", Paths.ArtifactsCommands);
+            using var server = new Server(Paths.ArtifactsServer);
+            await server.Ready();
+            DotNetTest(s => s
+                .SetProjectFile(Paths.AllorsDotnetBaseDatabaseServerJsonTests)
+                .AddLoggers("trx;LogFileName=AllorsDotnetBaseDatabaseServerJsonTests.trx")
+                .SetResultsDirectory(Paths.ArtifactsTests));
+        });
+
+    private Target AllorsDotnetBaseWorkspaceMetaStaticTests => _ => _
+        .DependsOn(AllorsDotnetBasePublishServer)
+        .DependsOn(AllorsDotnetBasePublishCommands)
+        .DependsOn(AllorsDotnetBaseResetDatabase)
+        .Executes(() =>
+        {
+            DotNet("Commands.dll Populate", Paths.ArtifactsCommands);
+
+            {
+                DotNetTest(s => s
+                    .SetProjectFile(Paths.AllorsDotnetBaseWorkspaceMetaTests)
+                    .AddLoggers("trx;LogFileName=AllorsDotnetBaseWorkspaceMetaStaticTests.trx")
+                    .SetResultsDirectory(Paths.ArtifactsTests));
+            }
+        });
 
     private Target AllorsDotnetBaseWorkspaceWinformsViewModelsTests => _ => _
         .DependsOn(AllorsDotnetBaseGenerate)
@@ -48,5 +112,4 @@ partial class Build
                 .AddLoggers("trx;LogFileName=AllorsDotnetBaseWorkspaceWinformsViewModelsTests.trx")
                 .SetResultsDirectory(Paths.ArtifactsTests));
         });
-
 }
