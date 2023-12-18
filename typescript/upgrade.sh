@@ -30,11 +30,6 @@ npx nx g @nx/js:lib base/workspace/domain --bundler=none --unitTestRunner=none -
 npx nx g @nx/js:lib base/workspace/meta --bundler=none --unitTestRunner=none --minimal=true --strict=false
 npx nx g @nx/js:lib base/workspace/meta-json --bundler=none --unitTestRunner=none --minimal=true --strict=false
 
-# Core
-npx nx g @nx/js:lib core/workspace/domain --bundler=none --unitTestRunner=none --minimal=true --strict=false
-npx nx g @nx/js:lib core/workspace/meta --bundler=none --unitTestRunner=none --minimal=true --strict=false
-npx nx g @nx/js:lib core/workspace/meta-json --bundler=none --unitTestRunner=none --minimal=true --strict=false
-
 # System
 npx nx g @nx/js:lib system/common/protocol-json --bundler=none --unitTestRunner=none --minimal=true --strict=false
 

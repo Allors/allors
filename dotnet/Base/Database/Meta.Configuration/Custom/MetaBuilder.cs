@@ -567,6 +567,14 @@ namespace Allors.Database.Meta.Configuration
 
             // TransitionalVersion;
 
+            // TrimFrom
+            AddWorkspace(relationTypes.TrimFromName, new[] { "Default" });
+            AddWorkspace(relationTypes.TrimFromMany2Manies, new[] { "Default" });
+            AddWorkspace(relationTypes.TrimFromMany2One, new[] { "Default" });
+
+            // TrimTo
+            AddWorkspace(relationTypes.TrimToName, new[] { "Default" });
+
             // User;
             AddWorkspace(relationTypes.UserNotificationList, new[] { "Default" });
             AddWorkspace(relationTypes.UserGroupMembers, "Default");
@@ -729,6 +737,8 @@ namespace Allors.Database.Meta.Configuration
             AddWorkspace(meta.C2, new[] { "Default" });
             AddWorkspace(meta.Data, new[] { "Default" });
             AddWorkspace(meta.HomeAddress, new[] { "Default" });
+            AddWorkspace(meta.TrimFrom, new[] { "Default" });
+            AddWorkspace(meta.TrimTo, new[] { "Default" });
             AddWorkspace(meta.UnitSample, new[] { "Default" });
             AddWorkspace(meta.WorkspaceXObject1, new[] { "X" });
             AddWorkspace(meta.WorkspaceXObject2, new[] { "X" });

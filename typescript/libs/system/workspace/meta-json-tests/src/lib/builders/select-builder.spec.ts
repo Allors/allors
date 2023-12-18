@@ -1,7 +1,7 @@
 import { MetaPopulation } from '@allors/system/workspace/meta';
 import { LazyMetaPopulation } from '@allors/system/workspace/meta-json';
-import { M } from '@allors/core/workspace/meta';
-import { data } from '@allors/core/workspace/meta-json';
+import { M } from '@allors/base/workspace/meta';
+import { data } from '@allors/base/workspace/meta-json';
 
 describe('SelectBuilder', () => {
   const metaPopulation = new LazyMetaPopulation(data) as MetaPopulation;
