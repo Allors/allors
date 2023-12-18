@@ -1,6 +1,7 @@
 ﻿namespace Allors.Workspace.Signals.Tests
 {
     using Domain;
+    using Task = System.Threading.Tasks.Task;
 
     public class EffectTest : Test
     {

@@ -23,10 +23,6 @@ public class C1 : I1, DerivationCounted, Object
 
     public void ClassMethod() { }
 
-    #region Database Relation
-
-    #region Unit
-
     #region Allors
 
     [Id("97f31053-0e7b-42a0-90c2-ce6f09c56e86")]
@@ -250,10 +246,6 @@ public class C1 : I1, DerivationCounted, Object
 
     public Guid C1AllorsUnique { get; set; }
 
-    #endregion
-
-    #region Database Role
-
     #region Allors
 
     [Id("8c198447-e943-4f5a-b749-9534b181c664")]
@@ -435,10 +427,6 @@ public class C1 : I1, DerivationCounted, Object
     [Indexed]
     public I2 C1I2One2One { get; set; }
 
-    #endregion
-
-    #endregion
-
     #region inherited
 
     public I1 I1I1Many2One { get; set; }
@@ -576,7 +564,7 @@ public class C1 : I1, DerivationCounted, Object
 
     public void OnBuild()
     {
-        
+
     }
 
     public void OnPostBuild() { }

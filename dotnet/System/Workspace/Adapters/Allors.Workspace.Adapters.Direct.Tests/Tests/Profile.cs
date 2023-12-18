@@ -12,21 +12,21 @@ namespace Allors.Workspace.Adapters.Direct.Tests
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
-    using System.Threading.Tasks;
     using Allors.Database;
     using Allors.Database.Adapters.Memory;
     using Allors.Database.Configuration;
-    using Allors.Database.Domain;
     using Allors.Database.Services;
     using Allors.Workspace;
     using Allors.Workspace.Configuration;
     using Allors.Workspace.Meta;
+    using Database.Domain;
     using Database.Population;
     using Configuration = Allors.Workspace.Adapters.Direct.Configuration;
     using Connection = Direct.Connection;
     using IClass = Database.Meta.IClass;
     using IWorkspaceServices = Allors.Workspace.IWorkspaceServices;
     using Person = Allors.Workspace.Domain.Person;
+    using Task = System.Threading.Tasks.Task;
     using User = Allors.Database.Domain.User;
 
     public class Profile : IProfile
