@@ -6,6 +6,8 @@
     using Database.Configuration;
     using Database.Configuration.Derivations.Default;
     using Database.Domain;
+    using Database.Population;
+    using Database.Population.Resx;
     using Configuration = Database.Adapters.Memory.Configuration;
     using Task = System.Threading.Tasks.Task;
 
@@ -41,7 +43,14 @@
                     });
 
                 this.database.Init();
-                new Setup(this.database, new Config()).Apply();
+
+                var config = new Config
+                {
+                    RecordsByClass = new RecordsFromResource(this.database.MetaPopulation).RecordsByClass,
+                    ResourceSetByCultureInfoByRoleTypeByClass = new TranslationsFromResource(this.database.MetaPopulation, new TranslationConfiguration()).ResourceSetByCultureInfoByRoleTypeByClass
+                };
+
+                new Setup(this.database, config).Apply();
                 this.Transaction = this.database.CreateTransaction();
                 new TestPopulation(this.Transaction).Apply();
                 this.Transaction.Commit();

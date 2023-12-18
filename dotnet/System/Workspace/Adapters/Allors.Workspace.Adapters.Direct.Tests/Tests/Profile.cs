@@ -21,6 +21,7 @@ namespace Allors.Workspace.Adapters.Direct.Tests
     using Allors.Workspace.Meta;
     using Database.Domain;
     using Database.Population;
+    using Database.Population.Resx;
     using Configuration = Allors.Workspace.Adapters.Direct.Configuration;
     using Connection = Direct.Connection;
     using IClass = Database.Meta.IClass;
@@ -63,7 +64,13 @@ namespace Allors.Workspace.Adapters.Direct.Tests
 
             this.Database.Init();
 
-            new Setup(this.Database, new Config()).Apply();
+            var config = new Config
+            {
+                RecordsByClass = new RecordsFromResource(this.Database.MetaPopulation).RecordsByClass,
+                ResourceSetByCultureInfoByRoleTypeByClass = new TranslationsFromResource(this.Database.MetaPopulation, new TranslationConfiguration()).ResourceSetByCultureInfoByRoleTypeByClass
+            };
+
+            new Setup(this.Database, config).Apply();
 
             using var transaction = this.Database.CreateTransaction();
 
