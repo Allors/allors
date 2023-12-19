@@ -36,6 +36,9 @@
     },
     "@nx/angular:component": {
       "style": "scss"
+    },
+    "@nx/angular:move": {
+      "projectNameAndRootFormat": "as-provided"
     }
   }
 }

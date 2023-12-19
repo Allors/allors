@@ -1,0 +1,16 @@
+{
+  "name": "workspace-base-angular-application",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/workspace/base/angular-application/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/workspace/base/angular-application/**/*.ts"]
+      }
+    }
+  },
+  "tags": []
+}

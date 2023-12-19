@@ -2,7 +2,7 @@ import {
   PushRequestNewObject,
   PushRequestObject,
   PushRequestRole,
-} from '@allors/system/common/protocol-json';
+} from '@allors/database/system/protocol-json';
 import {
   DatabaseState as SystemDatabaseState,
   DatabaseRecord,

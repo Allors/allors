@@ -11,7 +11,7 @@ import {
   AccessResponse,
   PermissionRequest,
   PermissionResponse,
-} from '@allors/system/common/protocol-json';
+} from '@allors/database/system/protocol-json';
 
 export interface IDatabaseJsonClient {
   pull(pullRequest: PullRequest): Promise<PullResponse>;

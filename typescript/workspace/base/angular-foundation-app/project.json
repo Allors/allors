@@ -1,0 +1,91 @@
+{
+  "name": "workspace-base-angular-foundation-app",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "allors",
+  "sourceRoot": "workspace/base/angular-foundation-app/src",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/workspace/base/angular-foundation-app",
+        "index": "workspace/base/angular-foundation-app/src/index.html",
+        "main": "workspace/base/angular-foundation-app/src/main.ts",
+        "polyfills": ["zone.js"],
+        "tsConfig": "workspace/base/angular-foundation-app/tsconfig.app.json",
+        "assets": ["workspace/base/angular-foundation-app/src/favicon.ico", "workspace/base/angular-foundation-app/src/assets"],
+        "styles": ["workspace/base/angular-foundation-app/src/styles.scss"],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "configurations": {
+        "production": {
+          "browserTarget": "workspace-base-angular-foundation-app:build:production",
+          "proxyConfig": "workspace/base/angular-foundation-app/proxy.conf.json"
+        },
+        "development": {
+          "browserTarget": "workspace-base-angular-foundation-app:build:development",
+          "proxyConfig": "workspace/base/angular-foundation-app/proxy.conf.json"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "workspace-base-angular-foundation-app:build"
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["workspace/base/angular-foundation-app/**/*.ts", "workspace/base/angular-foundation-app/**/*.html"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "workspace/base/angular-foundation-app/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    }
+  }
+}

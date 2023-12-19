@@ -1,4 +1,4 @@
-import { ObjectTypeData } from '@allors/system/common/protocol-json';
+import { ObjectTypeData } from '@allors/database/system/protocol-json';
 
 import { Lookup } from './utils/lookup';
 import { InternalClass } from './internal/internal-class';

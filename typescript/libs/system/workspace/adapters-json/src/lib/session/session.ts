@@ -3,7 +3,7 @@ import {
   PullRequest,
   PullResponse,
   PushRequest,
-} from '@allors/system/common/protocol-json';
+} from '@allors/database/system/protocol-json';
 import { Session as SystemSession } from '@allors/system/workspace/adapters';
 import {
   IInvokeResult,

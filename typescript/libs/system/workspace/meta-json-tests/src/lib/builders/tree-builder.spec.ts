@@ -1,7 +1,7 @@
 import { MetaPopulation } from '@allors/system/workspace/meta';
 import { LazyMetaPopulation } from '@allors/system/workspace/meta-json';
-import { M } from '@allors/base/workspace/meta';
-import { data } from '@allors/base/workspace/meta-json';
+import { M } from '@allors/workspace/base/meta';
+import { data } from '@allors/workspace/base/meta-json';
 
 describe('TreeBuilder', () => {
   const metaPopulation = new LazyMetaPopulation(data) as MetaPopulation;

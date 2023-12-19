@@ -6,7 +6,7 @@ import {
   AccessResponse,
   PermissionRequest,
   PermissionResponse,
-} from '@allors/system/common/protocol-json';
+} from '@allors/database/system/protocol-json';
 import {
   Grant,
   DatabaseConnection as SystemDatabaseConnection,

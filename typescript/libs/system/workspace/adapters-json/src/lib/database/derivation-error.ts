@@ -1,4 +1,4 @@
-import { ResponseDerivationError } from '@allors/system/common/protocol-json';
+import { ResponseDerivationError } from '@allors/database/system/protocol-json';
 import {
   IDatabaseDerivationError,
   ISession,

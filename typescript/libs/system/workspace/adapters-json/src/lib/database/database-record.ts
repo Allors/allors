@@ -6,7 +6,7 @@ import {
 import {
   SyncResponseObject,
   SyncResponseRole,
-} from '@allors/system/common/protocol-json';
+} from '@allors/database/system/protocol-json';
 import { DatabaseConnection } from './database-connection';
 import { ResponseContext } from './security/response-context';
 import { unitFromJson } from '../json/from-json';
