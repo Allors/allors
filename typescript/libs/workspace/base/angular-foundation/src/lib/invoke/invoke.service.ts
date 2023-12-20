@@ -2,7 +2,7 @@ import {
   IInvokeResult,
   Method,
   InvokeOptions,
-} from '@allors/system/workspace/domain';
+} from '@allors/workspace/system/domain';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { WorkspaceService } from '../workspace/workspace-service';

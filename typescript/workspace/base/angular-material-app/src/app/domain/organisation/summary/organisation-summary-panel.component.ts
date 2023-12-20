@@ -11,7 +11,7 @@ import {
   PanelService,
   ScopedService,
 } from '@allors/workspace/base/angular-application';
-import { IPullResult, Pull } from '@allors/system/workspace/domain';
+import { IPullResult, Pull } from '@allors/workspace/system/domain';
 import { M } from '@allors/default/workspace/meta';
 
 @Component({

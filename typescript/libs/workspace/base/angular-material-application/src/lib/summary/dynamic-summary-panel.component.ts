@@ -1,6 +1,6 @@
 import { delay, pipe, Subscription, tap } from 'rxjs';
 import { Component, OnDestroy } from '@angular/core';
-import { Composite, RoleType } from '@allors/system/workspace/meta';
+import { Composite, RoleType } from '@allors/workspace/system/meta';
 import {
   IObject,
   IPullResult,
@@ -8,7 +8,7 @@ import {
   Pull,
   nodeResolve,
   pathResolve,
-} from '@allors/system/workspace/domain';
+} from '@allors/workspace/system/domain';
 import {
   Action,
   ActionService,

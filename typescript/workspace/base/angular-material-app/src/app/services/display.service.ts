@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { IObject } from '@allors/system/workspace/domain';
-import { Class, Composite, RoleType } from '@allors/system/workspace/meta';
+import { IObject } from '@allors/workspace/system/domain';
+import { Class, Composite, RoleType } from '@allors/workspace/system/meta';
 import {
   DisplayService,
   WorkspaceService,

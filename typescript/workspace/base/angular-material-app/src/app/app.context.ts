@@ -15,8 +15,8 @@ import {
   IWorkspace,
   Method,
   Pull,
-} from '@allors/system/workspace/domain';
-import { Class, Composite } from '@allors/system/workspace/meta';
+} from '@allors/workspace/system/domain';
+import { Class, Composite } from '@allors/workspace/system/meta';
 
 export class AppContext implements Context {
   constructor(public workspaceService: WorkspaceService) {

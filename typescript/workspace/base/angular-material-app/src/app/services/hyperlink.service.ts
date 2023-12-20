@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Composite } from '@allors/system/workspace/meta';
-import { Node, toPaths } from '@allors/system/workspace/domain';
+import { Composite } from '@allors/workspace/system/meta';
+import { Node, toPaths } from '@allors/workspace/system/domain';
 import { M } from '@allors/default/workspace/meta';
 import { WorkspaceService } from '@allors/workspace/base/angular-foundation';
 import {

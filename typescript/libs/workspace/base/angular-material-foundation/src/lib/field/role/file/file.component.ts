@@ -8,7 +8,7 @@ import {
 import { NgForm } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { M } from '@allors/default/workspace/meta';
-import { ISession } from '@allors/system/workspace/domain';
+import { ISession } from '@allors/workspace/system/domain';
 import { Media } from '@allors/default/workspace/domain';
 import { WorkspaceService } from '@allors/workspace/base/angular-foundation';
 import {

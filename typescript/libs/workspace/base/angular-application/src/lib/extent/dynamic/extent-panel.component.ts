@@ -6,13 +6,13 @@ import {
   humanize,
   RelationEndType,
   RoleType,
-} from '@allors/system/workspace/meta';
+} from '@allors/workspace/system/meta';
 import {
   isPath,
   Path,
   pathLeaf,
   pathObjectType,
-} from '@allors/system/workspace/domain';
+} from '@allors/workspace/system/domain';
 import {
   MetaService,
   RefreshService,

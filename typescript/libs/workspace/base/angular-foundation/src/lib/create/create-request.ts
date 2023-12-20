@@ -1,5 +1,5 @@
-import { Class } from '@allors/system/workspace/meta';
-import { Initializer } from '@allors/system/workspace/domain';
+import { Class } from '@allors/workspace/system/meta';
+import { Initializer } from '@allors/workspace/system/domain';
 
 export interface CreateRequest {
   readonly kind: 'CreateRequest';

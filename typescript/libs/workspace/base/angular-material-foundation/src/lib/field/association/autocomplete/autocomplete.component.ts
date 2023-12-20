@@ -19,7 +19,7 @@ import {
   MatAutocompleteSelectedEvent,
   MatAutocompleteTrigger,
 } from '@angular/material/autocomplete';
-import { IObject, TypeForParameter } from '@allors/system/workspace/domain';
+import { IObject, TypeForParameter } from '@allors/workspace/system/domain';
 import { AssociationField } from '@allors/workspace/base/angular-foundation';
 
 @Component({

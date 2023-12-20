@@ -10,8 +10,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatStepper } from '@angular/material/stepper';
-import { assert } from '@allors/system/workspace/meta';
-import { parameterizablePredicateObjectType } from '@allors/system/workspace/domain';
+import { assert } from '@allors/workspace/system/meta';
+import { parameterizablePredicateObjectType } from '@allors/workspace/system/domain';
 import {
   AllorsComponent,
   Filter,

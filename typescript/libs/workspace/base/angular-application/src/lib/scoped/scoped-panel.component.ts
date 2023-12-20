@@ -7,7 +7,7 @@ import {
   IPullResult,
   Pull,
   SharedPullHandler,
-} from '@allors/system/workspace/domain';
+} from '@allors/workspace/system/domain';
 import {
   AllorsComponent,
   SharedPullService,

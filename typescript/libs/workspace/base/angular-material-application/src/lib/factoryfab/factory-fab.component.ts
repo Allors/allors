@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Class, Composite } from '@allors/system/workspace/meta';
-import { IObject, Initializer } from '@allors/system/workspace/domain';
+import { Class, Composite } from '@allors/workspace/system/meta';
+import { IObject, Initializer } from '@allors/workspace/system/domain';
 import {
   AllorsComponent,
   CreateRequest,

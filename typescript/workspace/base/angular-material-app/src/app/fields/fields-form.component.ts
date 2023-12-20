@@ -10,7 +10,7 @@ import {
   Person,
   Locale,
 } from '@allors/default/workspace/domain';
-import { IPullResult } from '@allors/system/workspace/domain';
+import { IPullResult } from '@allors/workspace/system/domain';
 import { ContextService } from '@allors/workspace/base/angular-foundation';
 import {
   ErrorService,

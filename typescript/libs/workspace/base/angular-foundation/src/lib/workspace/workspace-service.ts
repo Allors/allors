@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { IWorkspace } from '@allors/system/workspace/domain';
+import { IWorkspace } from '@allors/workspace/system/domain';
 import { Context } from '../context/context';
-import { MetaPopulation } from '@allors/system/workspace/meta';
+import { MetaPopulation } from '@allors/workspace/system/meta';
 
 @Injectable({
   providedIn: 'root',

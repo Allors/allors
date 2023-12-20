@@ -1,4 +1,4 @@
-import { RelationEndType } from '@allors/system/workspace/meta';
+import { RelationEndType } from '@allors/workspace/system/meta';
 
 import { SearchFactory } from '../search/search-factory';
 

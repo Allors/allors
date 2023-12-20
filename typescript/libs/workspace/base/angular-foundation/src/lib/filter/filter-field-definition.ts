@@ -1,8 +1,8 @@
-import { humanize, ObjectType, UnitTags } from '@allors/system/workspace/meta';
+import { humanize, ObjectType, UnitTags } from '@allors/workspace/system/meta';
 import {
   ParameterizablePredicate,
   parameterizablePredicateObjectType,
-} from '@allors/system/workspace/domain';
+} from '@allors/workspace/system/domain';
 
 import { FilterOptions } from './filter-options';
 

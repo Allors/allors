@@ -7,7 +7,7 @@ import {
   distinctUntilChanged,
   switchMap,
 } from 'rxjs/operators';
-import { IObject } from '@allors/system/workspace/domain';
+import { IObject } from '@allors/workspace/system/domain';
 import { ContextService } from '@allors/workspace/base/angular-foundation';
 import {
   AllorsComponent,

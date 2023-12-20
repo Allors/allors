@@ -1,6 +1,6 @@
 import { HostBinding, Directive } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { Composite } from '@allors/system/workspace/meta';
+import { Composite } from '@allors/workspace/system/meta';
 import { M } from '@allors/default/workspace/meta';
 import {
   AllorsComponent,

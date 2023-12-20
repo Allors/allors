@@ -1,5 +1,5 @@
 import { Input, Directive } from '@angular/core';
-import { assert, humanize } from '@allors/system/workspace/meta';
+import { assert, humanize } from '@allors/workspace/system/meta';
 import { M } from '@allors/default/workspace/meta';
 import { Locale, LocalisedText } from '@allors/default/workspace/domain';
 

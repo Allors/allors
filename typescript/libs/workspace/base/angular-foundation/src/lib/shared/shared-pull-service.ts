@@ -1,4 +1,4 @@
-import { SharedPullHandler } from '@allors/system/workspace/domain';
+import { SharedPullHandler } from '@allors/workspace/system/domain';
 import { Injectable } from '@angular/core';
 
 @Injectable({

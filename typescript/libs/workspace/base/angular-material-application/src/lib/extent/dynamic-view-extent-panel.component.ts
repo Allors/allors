@@ -1,5 +1,5 @@
 import { Component, HostBinding, OnInit } from '@angular/core';
-import { Composite, humanize, RoleType } from '@allors/system/workspace/meta';
+import { Composite, humanize, RoleType } from '@allors/workspace/system/meta';
 import {
   IObject,
   IPullResult,
@@ -8,7 +8,7 @@ import {
   SharedPullHandler,
   selectLeaf,
   toSelect,
-} from '@allors/system/workspace/domain';
+} from '@allors/workspace/system/domain';
 import { Period } from '@allors/default/workspace/domain';
 import {
   SharedPullService,

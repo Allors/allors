@@ -1,4 +1,4 @@
-import { Composite } from '@allors/system/workspace/meta';
+import { Composite } from '@allors/workspace/system/meta';
 
 export interface MenuItem {
   objectType?: Composite;

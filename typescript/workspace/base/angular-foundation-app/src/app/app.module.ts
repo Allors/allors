@@ -8,9 +8,9 @@ import {
   ThrottledDirective,
   WorkspaceService,
 } from '@allors/workspace/base/angular-foundation';
-import { PrototypeObjectFactory } from '@allors/system/workspace/adapters';
-import { DatabaseConnection } from '@allors/system/workspace/adapters-json';
-import { LazyMetaPopulation } from '@allors/system/workspace/meta-json';
+import { PrototypeObjectFactory } from '@allors/workspace/system/adapters';
+import { DatabaseConnection } from '@allors/workspace/system/adapters-json';
+import { LazyMetaPopulation } from '@allors/workspace/system/meta-json';
 import { data } from '@allors/default/workspace/meta-json';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { M } from '@allors/default/workspace/meta';
@@ -23,7 +23,7 @@ import { HomeComponent } from './home/home.component';
 import { QueryComponent } from './query/query.component';
 import { FetchComponent } from './fetch/fetch.component';
 import { CoreContext } from '../allors/core-context';
-import { Configuration } from '@allors/system/workspace/domain';
+import { Configuration } from '@allors/workspace/system/domain';
 
 export function appInitFactory(
   workspaceService: WorkspaceService,

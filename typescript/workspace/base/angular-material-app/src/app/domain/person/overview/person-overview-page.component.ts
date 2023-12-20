@@ -14,7 +14,7 @@ import {
   ScopedService,
   AllorsOverviewPageComponent,
 } from '@allors/workspace/base/angular-application';
-import { IPullResult, Pull } from '@allors/system/workspace/domain';
+import { IPullResult, Pull } from '@allors/workspace/system/domain';
 import { AllorsMaterialPanelService } from '@allors/workspace/base/angular-material-application';
 import { M } from '@allors/default/workspace/meta';
 

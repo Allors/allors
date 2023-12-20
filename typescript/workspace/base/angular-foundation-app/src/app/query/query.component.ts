@@ -6,7 +6,7 @@ import {
   ContextService,
   WorkspaceService,
 } from '@allors/workspace/base/angular-foundation';
-import { IPullResult, Pull } from '@allors/system/workspace/domain';
+import { IPullResult, Pull } from '@allors/workspace/system/domain';
 import { M } from '@allors/default/workspace/meta';
 import { Organisation } from '@allors/default/workspace/domain';
 

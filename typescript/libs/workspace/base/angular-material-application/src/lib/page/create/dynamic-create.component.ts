@@ -1,5 +1,5 @@
 import { Subscription, tap } from 'rxjs';
-import { Class, Composite, humanize } from '@allors/system/workspace/meta';
+import { Class, Composite, humanize } from '@allors/workspace/system/meta';
 import {
   Component,
   Inject,

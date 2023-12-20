@@ -1,5 +1,5 @@
-import { Composite } from '@allors/system/workspace/meta';
-import { IObject } from '@allors/system/workspace/domain';
+import { Composite } from '@allors/workspace/system/meta';
+import { IObject } from '@allors/workspace/system/domain';
 
 export interface EditRequest {
   readonly kind: 'EditRequest';

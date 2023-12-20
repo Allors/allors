@@ -1,4 +1,4 @@
-import { IUnit } from '@allors/system/workspace/domain';
+import { IUnit } from '@allors/workspace/system/domain';
 import { Extent } from './extent';
 import { PredicateKind } from './predicate-kind';
 

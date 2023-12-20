@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { IObject } from '@allors/system/workspace/domain';
+import { IObject } from '@allors/workspace/system/domain';
 
 export type ActionResult = boolean;
 

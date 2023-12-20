@@ -1,6 +1,6 @@
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Component, Inject } from '@angular/core';
-import { IResult, ResultError } from '@allors/system/workspace/domain';
+import { IResult, ResultError } from '@allors/workspace/system/domain';
 import { AllorsComponent } from '@allors/workspace/base/angular-foundation';
 
 @Component({

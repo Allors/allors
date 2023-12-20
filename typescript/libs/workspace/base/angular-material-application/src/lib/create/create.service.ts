@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable, throwError } from 'rxjs';
-import { IObject } from '@allors/system/workspace/domain';
-import { Composite } from '@allors/system/workspace/meta';
+import { IObject } from '@allors/workspace/system/domain';
+import { Composite } from '@allors/workspace/system/meta';
 import {
   CreateRequest,
   CreateService,

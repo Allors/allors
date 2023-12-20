@@ -10,7 +10,7 @@ import {
   ContextService,
 } from '@allors/workspace/base/angular-foundation';
 import { ErrorService } from '@allors/workspace/base/angular-foundation';
-import { IPullResult, Pull } from '@allors/system/workspace/domain';
+import { IPullResult, Pull } from '@allors/workspace/system/domain';
 import { NgForm } from '@angular/forms';
 import { M } from '@allors/default/workspace/meta';
 @Component({

@@ -7,7 +7,7 @@ import {
 import { ContextService } from '@allors/workspace/base/angular-foundation';
 import { NgForm } from '@angular/forms';
 import { M } from '@allors/default/workspace/meta';
-import { IPullResult, Pull } from '@allors/system/workspace/domain';
+import { IPullResult, Pull } from '@allors/workspace/system/domain';
 
 @Component({
   templateUrl: 'country-form.component.html',

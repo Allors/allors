@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Composite } from '@allors/system/workspace/meta';
+import { Composite } from '@allors/workspace/system/meta';
 import { Action } from './action';
 
 @Injectable()

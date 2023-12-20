@@ -9,7 +9,7 @@ import {
   RefreshService,
   SharedPullService,
 } from '@allors/workspace/base/angular-foundation';
-import { IObject, IPullResult, Pull } from '@allors/system/workspace/domain';
+import { IObject, IPullResult, Pull } from '@allors/workspace/system/domain';
 
 @Component({
   selector: 'a-mat-dyn-view-detail-panel',

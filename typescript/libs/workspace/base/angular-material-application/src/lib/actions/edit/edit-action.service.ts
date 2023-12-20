@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { RoleType } from '@allors/system/workspace/meta';
+import { RoleType } from '@allors/workspace/system/meta';
 import {
   RefreshService,
   EditDialogService,

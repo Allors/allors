@@ -7,7 +7,7 @@ import { Directive, Input } from '@angular/core';
 import { ScopedService } from '../../scoped/scoped.service';
 import { PanelService } from '../../panel/panel.service';
 import { AllorsDynamicExtentPanelComponent } from './extent-panel.component';
-import { Composite } from '@allors/system/workspace/meta';
+import { Composite } from '@allors/workspace/system/meta';
 
 @Directive()
 export abstract class AllorsDynamicEditExtentPanelComponent extends AllorsDynamicExtentPanelComponent {

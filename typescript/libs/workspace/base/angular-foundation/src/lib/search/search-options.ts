@@ -1,5 +1,5 @@
-﻿import { Composite, RoleType } from '@allors/system/workspace/meta';
-import { And, Predicate, Node } from '@allors/system/workspace/domain';
+﻿import { Composite, RoleType } from '@allors/workspace/system/meta';
+import { And, Predicate, Node } from '@allors/workspace/system/domain';
 
 export interface SearchOptions {
   objectType: Composite;

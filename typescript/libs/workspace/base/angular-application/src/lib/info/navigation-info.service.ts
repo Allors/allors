@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MetaPopulation } from '@allors/system/workspace/meta';
+import { MetaPopulation } from '@allors/workspace/system/meta';
 import { WorkspaceService } from '@allors/workspace/base/angular-foundation';
 import { NavigationService } from '../navigation/navigation.service';
 

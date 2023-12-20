@@ -2,7 +2,7 @@ import {
   Predicate,
   Extent,
   ParameterizablePredicate,
-} from '@allors/system/workspace/domain';
+} from '@allors/workspace/system/domain';
 
 import { FilterOptions } from './filter-options';
 import { FilterFieldDefinition } from './filter-field-definition';

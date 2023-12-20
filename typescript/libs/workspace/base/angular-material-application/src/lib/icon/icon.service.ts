@@ -1,4 +1,4 @@
-import { Composite, RelationType } from '@allors/system/workspace/meta';
+import { Composite, RelationType } from '@allors/workspace/system/meta';
 import { Injectable } from '@angular/core';
 
 @Injectable()

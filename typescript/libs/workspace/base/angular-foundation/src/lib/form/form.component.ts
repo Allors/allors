@@ -11,8 +11,8 @@ import {
   IPullResult,
   Pull,
   IResult,
-} from '@allors/system/workspace/domain';
-import { AssociationType, RoleType } from '@allors/system/workspace/meta';
+} from '@allors/workspace/system/domain';
+import { AssociationType, RoleType } from '@allors/workspace/system/meta';
 import { AllorsComponent } from '../component';
 import { AllorsForm } from './form';
 import { Context } from '../context/context';

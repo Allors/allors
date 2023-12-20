@@ -1,4 +1,4 @@
-import { IUnit } from '@allors/system/workspace/domain';
+import { IUnit } from '@allors/workspace/system/domain';
 
 export interface PushRequestRole {
   /** RelationType */

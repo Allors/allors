@@ -4,7 +4,7 @@ import {
   Context,
   WorkspaceService,
 } from '@allors/workspace/base/angular-foundation';
-import { MethodType } from '@allors/system/workspace/meta';
+import { MethodType } from '@allors/workspace/system/meta';
 import {
   Action,
   RefreshService,

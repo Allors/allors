@@ -1,7 +1,7 @@
 import { Subject } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MethodType } from '@allors/system/workspace/meta';
-import { IObject } from '@allors/system/workspace/domain';
+import { MethodType } from '@allors/workspace/system/meta';
+import { IObject } from '@allors/workspace/system/domain';
 import {
   Context,
   ContextService,

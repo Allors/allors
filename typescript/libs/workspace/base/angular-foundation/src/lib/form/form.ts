@@ -1,4 +1,4 @@
-import { IObject, PullHandler } from '@allors/system/workspace/domain';
+import { IObject, PullHandler } from '@allors/workspace/system/domain';
 import { EventEmitter } from '@angular/core';
 import { CreateRequest } from '../create/create-request';
 import { EditRequest } from '../edit/edit-request';

@@ -1,8 +1,8 @@
 import { Component, Input, Optional } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { humanize } from '@allors/system/workspace/meta';
+import { humanize } from '@allors/workspace/system/meta';
 import { RoleField } from '@allors/workspace/base/angular-foundation';
-import { IObject, IUnit } from '@allors/system/workspace/domain';
+import { IObject, IUnit } from '@allors/workspace/system/domain';
 
 export interface RadioGroupOption {
   label?: string;

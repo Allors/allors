@@ -2,10 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { WorkspaceService } from '@allors/workspace/base/angular-foundation';
 
 import { AppClient } from './app.client';
-import { Configuration } from '@allors/system/workspace/domain';
-import { LazyMetaPopulation } from '@allors/system/workspace/meta-json';
-import { PrototypeObjectFactory } from '@allors/system/workspace/adapters';
-import { DatabaseConnection } from '@allors/system/workspace/adapters-json';
+import { Configuration } from '@allors/workspace/system/domain';
+import { LazyMetaPopulation } from '@allors/workspace/system/meta-json';
+import { PrototypeObjectFactory } from '@allors/workspace/system/adapters';
+import { DatabaseConnection } from '@allors/workspace/system/adapters-json';
 import { data } from '@allors/default/workspace/meta-json';
 import { M } from '@allors/default/workspace/meta';
 import { AppContext } from './app.context';

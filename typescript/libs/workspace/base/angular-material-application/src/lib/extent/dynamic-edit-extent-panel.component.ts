@@ -6,7 +6,7 @@ import {
   humanize,
   RoleType,
   Unit,
-} from '@allors/system/workspace/meta';
+} from '@allors/workspace/system/meta';
 import {
   IObject,
   IPullResult,
@@ -16,7 +16,7 @@ import {
   SharedPullHandler,
   selectLeaf,
   toSelect,
-} from '@allors/system/workspace/domain';
+} from '@allors/workspace/system/domain';
 import { Period } from '@allors/default/workspace/domain';
 import {
   Action,

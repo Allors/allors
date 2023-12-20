@@ -9,7 +9,7 @@ import {
   pluralize,
   RelationEndType,
   RoleType,
-} from '@allors/system/workspace/meta';
+} from '@allors/workspace/system/meta';
 import { Injectable } from '@angular/core';
 
 @Injectable()

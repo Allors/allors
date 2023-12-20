@@ -2,7 +2,7 @@ import { Observable, throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
-import { IObject } from '@allors/system/workspace/domain';
+import { IObject } from '@allors/workspace/system/domain';
 import {
   EditRequest,
   EditDialogService,

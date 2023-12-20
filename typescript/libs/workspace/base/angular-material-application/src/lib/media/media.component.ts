@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { IObject } from '@allors/system/workspace/domain';
+import { IObject } from '@allors/workspace/system/domain';
 import { Media } from '@allors/default/workspace/domain';
 import {
   AllorsComponent,

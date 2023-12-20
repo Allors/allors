@@ -1,4 +1,4 @@
-import { Node, Path } from '@allors/system/workspace/domain';
+import { Node, Path } from '@allors/workspace/system/domain';
 
 export interface HyperlinkType {
   paths: Path[];

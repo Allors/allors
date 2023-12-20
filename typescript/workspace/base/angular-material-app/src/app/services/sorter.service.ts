@@ -4,7 +4,7 @@ import {
 } from '@allors/workspace/base/angular-material-application';
 import { WorkspaceService } from '@allors/workspace/base/angular-foundation';
 import { M, tags } from '@allors/default/workspace/meta';
-import { Composite } from '@allors/system/workspace/meta';
+import { Composite } from '@allors/workspace/system/meta';
 import { Injectable } from '@angular/core';
 
 @Injectable()

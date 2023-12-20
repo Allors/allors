@@ -13,7 +13,7 @@ import {
   TemplateHostDirective,
 } from '@allors/workspace/base/angular-foundation';
 import { map, Subscription, tap } from 'rxjs';
-import { IPullResult, Pull } from '@allors/system/workspace/domain';
+import { IPullResult, Pull } from '@allors/workspace/system/domain';
 
 @Component({
   selector: 'a-mat-dyn-edit-detail-panel',

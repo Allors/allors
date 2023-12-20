@@ -1,0 +1,16 @@
+{
+  "name": "workspace-system-adapters",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/workspace/system/adapters/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/workspace/system/adapters/**/*.ts"]
+      }
+    }
+  },
+  "tags": []
+}

@@ -1,5 +1,5 @@
 import { M, tags } from '@allors/default/workspace/meta';
-import { Composite } from '@allors/system/workspace/meta';
+import { Composite } from '@allors/workspace/system/meta';
 import {
   FormService,
   WorkspaceService,

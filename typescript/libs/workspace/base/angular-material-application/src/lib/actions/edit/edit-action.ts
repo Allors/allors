@@ -1,6 +1,6 @@
 import { Subject } from 'rxjs';
-import { RoleType } from '@allors/system/workspace/meta';
-import { IObject } from '@allors/system/workspace/domain';
+import { RoleType } from '@allors/workspace/system/meta';
+import { IObject } from '@allors/workspace/system/domain';
 import {
   Action,
   ActionTarget,
