@@ -53,7 +53,7 @@ partial class Build
             NpmRun(s => s
                 .AddProcessEnvironmentVariable("npm_config_loglevel", "error")
                 .SetProcessWorkingDirectory(Paths.Typescript)
-                .SetCommand("workspace-system-adapters-json:test:test"));
+                .SetCommand("workspace-system-adapters-json:test"));
         });
 
     private Target TypescriptWorkspaceTests => _ => _
