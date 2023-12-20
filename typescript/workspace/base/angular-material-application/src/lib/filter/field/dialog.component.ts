@@ -17,7 +17,7 @@ import {
   Filter,
   FilterField,
   FilterFieldDefinition,
-} from '@allors/workspace/base/angular-foundation';
+} from '@allors/workspace/base/angular/foundation';
 
 @Component({
   templateUrl: 'dialog.component.html',

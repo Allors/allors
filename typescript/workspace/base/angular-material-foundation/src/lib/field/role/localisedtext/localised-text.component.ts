@@ -1,6 +1,6 @@
 import { Component, Optional } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { LocalisedRoleField } from '@allors/workspace/base/angular-foundation';
+import { LocalisedRoleField } from '@allors/workspace/base/angular/foundation';
 
 @Component({
   selector: 'a-mat-localised-text',

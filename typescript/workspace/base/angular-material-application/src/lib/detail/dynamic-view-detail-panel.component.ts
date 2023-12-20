@@ -3,12 +3,12 @@ import {
   AllorsViewDetailPanelComponent,
   ScopedService,
   PanelService,
-} from '@allors/workspace/base/angular-application';
+} from '@allors/workspace/base/angular/application';
 import {
   MetaService,
   RefreshService,
   SharedPullService,
-} from '@allors/workspace/base/angular-foundation';
+} from '@allors/workspace/base/angular/foundation';
 import { IObject, IPullResult, Pull } from '@allors/workspace/system/domain';
 
 @Component({

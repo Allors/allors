@@ -1,7 +1,7 @@
 import {
   DialogConfig,
   PromptType,
-} from '@allors/workspace/base/angular-foundation';
+} from '@allors/workspace/base/angular/foundation';
 
 export interface AllorsMaterialDialogData {
   alert?: boolean;

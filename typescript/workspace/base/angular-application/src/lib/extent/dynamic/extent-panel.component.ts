@@ -17,7 +17,7 @@ import {
   MetaService,
   RefreshService,
   SharedPullService,
-} from '@allors/workspace/base/angular-foundation';
+} from '@allors/workspace/base/angular/foundation';
 import { AllorsScopedPanelComponent } from '../../scoped/scoped-panel.component';
 import { ScopedService } from '../../scoped/scoped.service';
 import { PanelService } from '../../panel/panel.service';

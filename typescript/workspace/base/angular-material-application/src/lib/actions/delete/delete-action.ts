@@ -4,13 +4,13 @@ import { Deletable } from '@allors/workspace/default/domain';
 import {
   AllorsDialogService,
   Context,
-} from '@allors/workspace/base/angular-foundation';
+} from '@allors/workspace/base/angular/foundation';
 import {
   Action,
   ActionTarget,
   RefreshService,
   ErrorService,
-} from '@allors/workspace/base/angular-foundation';
+} from '@allors/workspace/base/angular/foundation';
 
 export class DeleteAction implements Action {
   name = 'delete';

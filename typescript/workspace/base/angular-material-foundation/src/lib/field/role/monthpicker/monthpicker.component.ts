@@ -1,7 +1,7 @@
 import { Component, Optional, Output, EventEmitter } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { DateTime } from 'luxon';
-import { RoleField } from '@allors/workspace/base/angular-foundation';
+import { RoleField } from '@allors/workspace/base/angular/foundation';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 import { Platform } from '@angular/cdk/platform';

@@ -7,7 +7,7 @@ import {
   EditRequest,
   EditDialogService,
   RefreshService,
-} from '@allors/workspace/base/angular-foundation';
+} from '@allors/workspace/base/angular/foundation';
 
 export class EditAction implements Action {
   name = 'edit';

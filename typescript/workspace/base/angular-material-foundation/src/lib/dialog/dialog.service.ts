@@ -6,7 +6,7 @@ import { AllorsMaterialDialogComponent } from './dialog.component';
 import {
   AllorsDialogService,
   DialogConfig,
-} from '@allors/workspace/base/angular-foundation';
+} from '@allors/workspace/base/angular/foundation';
 
 @Injectable()
 export class AllorsMaterialDialogService extends AllorsDialogService {

@@ -1,4 +1,4 @@
-import { ErrorService } from '@allors/workspace/base/angular-foundation';
+import { ErrorService } from '@allors/workspace/base/angular/foundation';
 import { ResultError } from '@allors/workspace/system/domain';
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';

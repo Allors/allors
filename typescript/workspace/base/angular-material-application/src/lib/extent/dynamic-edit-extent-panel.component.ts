@@ -29,17 +29,17 @@ import {
   TableConfig,
   MetaService,
   ActionService,
-} from '@allors/workspace/base/angular-foundation';
+} from '@allors/workspace/base/angular/foundation';
 import {
   NavigationService,
   AllorsDynamicEditExtentPanelComponent,
   PanelService,
   ScopedService,
-} from '@allors/workspace/base/angular-application';
+} from '@allors/workspace/base/angular/application';
 import { DeleteActionService } from '../actions/delete/delete-action.service';
 import { IconService } from '../icon/icon.service';
 import { M } from '@allors/workspace/default/meta';
-import { PeriodSelection } from '@allors/workspace/base/angular-material-foundation';
+import { PeriodSelection } from '@allors/workspace/base/angular/material/foundation';
 import { ViewActionService } from '../actions/view/view-action.service';
 
 interface Row extends TableRow {

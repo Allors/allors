@@ -15,51 +15,23 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@allors/database-system-protocol-json": [
-        "database/system/protocol-json/src/index.ts"
-      ],
-      "@allors/workspace-base-angular-application": [
-        "workspace/base/angular-application/src/index.ts"
-      ],
-      "@allors/workspace-base-angular-foundation": [
-        "workspace/base/angular-foundation/src/index.ts"
-      ],
-      "@allors/workspace-base-angular-material-application": [
-        "workspace/base/angular-material-application/src/index.ts"
-      ],
-      "@allors/workspace-base-angular-material-foundation": [
-        "workspace/base/angular-material-foundation/src/index.ts"
-      ],
+      "@allors/database-system-protocol-json": ["database/system/protocol-json/src/index.ts"],
+      "@allors/workspace-base-angular-application": ["workspace/base/angular-application/src/index.ts"],
+      "@allors/workspace-base-angular-foundation": ["workspace/base/angular-foundation/src/index.ts"],
+      "@allors/workspace-base-angular-material-application": ["workspace/base/angular-material-application/src/index.ts"],
+      "@allors/workspace-base-angular-material-foundation": ["workspace/base/angular-material-foundation/src/index.ts"],
       "@allors/workspace-base-domain": ["workspace/base/domain/src/index.ts"],
       "@allors/workspace-base-meta": ["workspace/base/meta/src/index.ts"],
-      "@allors/workspace-base-meta-json": [
-        "workspace/base/meta-json/src/index.ts"
-      ],
-      "@allors/workspace-system-adapters": [
-        "workspace/system/adapters/src/index.ts"
-      ],
-      "@allors/workspace-system-adapters-json": [
-        "workspace/system/adapters-json/src/index.ts"
-      ],
-      "@allors/workspace-system-adapters-json-tests": [
-        "workspace/system/adapters-json-tests/src/index.ts"
-      ],
-      "@allors/workspace-system-adapters-tests": [
-        "workspace/system/adapters-tests/src/index.ts"
-      ],
-      "@allors/workspace-system-domain": [
-        "workspace/system/domain/src/index.ts"
-      ],
+      "@allors/workspace-base-meta-json": ["workspace/base/meta-json/src/index.ts"],
+      "@allors/workspace-system-adapters": ["workspace/system/adapters/src/index.ts"],
+      "@allors/workspace-system-adapters-json": ["workspace/system/adapters-json/src/index.ts"],
+      "@allors/workspace-system-adapters-json-tests": ["workspace/system/adapters-json-tests/src/index.ts"],
+      "@allors/workspace-system-adapters-tests": ["workspace/system/adapters-tests/src/index.ts"],
+      "@allors/workspace-system-domain": ["workspace/system/domain/src/index.ts"],
       "@allors/workspace-system-meta": ["workspace/system/meta/src/index.ts"],
-      "@allors/workspace-system-meta-json": [
-        "workspace/system/meta-json/src/index.ts"
-      ],
-      "@allors/workspace-system-meta-json-tests": [
-        "workspace/system/meta-json-test/src/index.ts"
-      ],
-      "@allors/workspace-system-meta-tests": [
-        "workspace/system/meta-tests/src/index.ts"
-      ]
+      "@allors/workspace-system-meta-json": ["workspace/system/meta-json/src/index.ts"],
+      "@allors/workspace-system-meta-json-tests": ["workspace/system/meta-json-test/src/index.ts"],
+      "@allors/workspace-system-meta-tests": ["workspace/system/meta-tests/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

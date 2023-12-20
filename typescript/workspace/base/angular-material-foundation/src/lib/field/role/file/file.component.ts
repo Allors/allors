@@ -10,11 +10,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { M } from '@allors/workspace/default/meta';
 import { ISession } from '@allors/workspace/system/domain';
 import { Media } from '@allors/workspace/default/domain';
-import { WorkspaceService } from '@allors/workspace/base/angular-foundation';
+import { WorkspaceService } from '@allors/workspace/base/angular/foundation';
 import {
   MediaService,
   RoleField,
-} from '@allors/workspace/base/angular-foundation';
+} from '@allors/workspace/base/angular/foundation';
 
 @Component({
   selector: 'a-mat-file',

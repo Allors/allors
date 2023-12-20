@@ -23,7 +23,7 @@ import {
   RefreshService,
   SharedPullService,
   WorkspaceService,
-} from '@allors/workspace/base/angular-foundation';
+} from '@allors/workspace/base/angular/foundation';
 import { ScopedService } from '../scoped/scoped.service';
 import { Scoped } from '../scoped/scoped';
 import { ActivatedRoute } from '@angular/router';

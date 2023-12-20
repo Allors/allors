@@ -66,7 +66,7 @@ export abstract class LocalisedRoleField extends RoleField {
       }
 
       const label = this.assignedLabel ? this.assignedLabel : humanize(name);
-      return label + ' (' + this.locale.Language?.Name + ')';
+      return label + ' (' + this.locale.Language?.IsoCode + ')';
     }
 
     return null;

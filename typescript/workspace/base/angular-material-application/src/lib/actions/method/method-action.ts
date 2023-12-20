@@ -6,13 +6,13 @@ import {
   Context,
   ContextService,
   WorkspaceService,
-} from '@allors/workspace/base/angular-foundation';
+} from '@allors/workspace/base/angular/foundation';
 import {
   Action,
   ActionTarget,
   RefreshService,
   ErrorService,
-} from '@allors/workspace/base/angular-foundation';
+} from '@allors/workspace/base/angular/foundation';
 import { MethodConfig } from './method-config';
 
 export class MethodAction implements Action {

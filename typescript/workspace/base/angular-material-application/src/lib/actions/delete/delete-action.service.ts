@@ -3,12 +3,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import {
   AllorsDialogService,
   WorkspaceService,
-} from '@allors/workspace/base/angular-foundation';
+} from '@allors/workspace/base/angular/foundation';
 import {
   Action,
   RefreshService,
   ErrorService,
-} from '@allors/workspace/base/angular-foundation';
+} from '@allors/workspace/base/angular/foundation';
 import { DeleteAction } from './delete-action';
 
 @Injectable({

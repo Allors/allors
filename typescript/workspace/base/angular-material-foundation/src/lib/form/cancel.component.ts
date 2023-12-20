@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import {
   AllorsComponent,
   AllorsForm,
-} from '@allors/workspace/base/angular-foundation';
+} from '@allors/workspace/base/angular/foundation';
 
 @Component({
   selector: 'a-mat-cancel',

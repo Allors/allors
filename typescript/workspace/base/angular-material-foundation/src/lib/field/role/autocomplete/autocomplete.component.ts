@@ -22,7 +22,7 @@ import {
   MatAutocompleteSelectedEvent,
 } from '@angular/material/autocomplete';
 import { IObject, TypeForParameter } from '@allors/workspace/system/domain';
-import { RoleField } from '@allors/workspace/base/angular-foundation';
+import { RoleField } from '@allors/workspace/base/angular/foundation';
 
 @Component({
   selector: 'a-mat-autocomplete',

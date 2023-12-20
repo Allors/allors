@@ -13,7 +13,7 @@ import { Media } from '@allors/workspace/default/domain';
 import {
   AllorsComponent,
   MediaService,
-} from '@allors/workspace/base/angular-foundation';
+} from '@allors/workspace/base/angular/foundation';
 import { AllorMediaPreviewComponent } from './preview/media-preview.component';
 import { isImage } from './media';
 

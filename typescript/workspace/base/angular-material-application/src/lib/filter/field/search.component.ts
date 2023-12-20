@@ -8,11 +8,11 @@ import {
   switchMap,
 } from 'rxjs/operators';
 import { IObject } from '@allors/workspace/system/domain';
-import { ContextService } from '@allors/workspace/base/angular-foundation';
+import { ContextService } from '@allors/workspace/base/angular/foundation';
 import {
   AllorsComponent,
   FilterFieldDefinition,
-} from '@allors/workspace/base/angular-foundation';
+} from '@allors/workspace/base/angular/foundation';
 
 @Component({
   selector: 'a-mat-filter-field-search',

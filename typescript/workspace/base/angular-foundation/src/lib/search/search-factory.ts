@@ -11,7 +11,7 @@ import {
   Like,
   Pull,
 } from '@allors/workspace/system/domain';
-import { Context } from '@allors/workspace/base/angular-foundation';
+import { Context } from '@allors/workspace/base/angular/foundation';
 
 import { SearchOptions } from './search-options';
 

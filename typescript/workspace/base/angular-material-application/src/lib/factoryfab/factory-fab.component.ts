@@ -6,7 +6,7 @@ import {
   CreateRequest,
   CreateService,
   MetaService,
-} from '@allors/workspace/base/angular-foundation';
+} from '@allors/workspace/base/angular/foundation';
 import { IconService } from '../icon/icon.service';
 
 @Component({

@@ -12,7 +12,7 @@ import {
   AllorsComponent,
   SharedPullService,
   RefreshService,
-} from '@allors/workspace/base/angular-foundation';
+} from '@allors/workspace/base/angular/foundation';
 import { Scoped } from './scoped';
 
 @Directive()

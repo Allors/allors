@@ -3,7 +3,7 @@ import { from, Observable } from 'rxjs';
 import {
   Context,
   WorkspaceService,
-} from '@allors/workspace/base/angular-foundation';
+} from '@allors/workspace/base/angular/foundation';
 import {
   Configuration,
   IInvokeResult,

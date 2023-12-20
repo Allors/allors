@@ -6,7 +6,7 @@ import {
   AllorsComponent,
   ContextService,
   MetaService,
-} from '@allors/workspace/base/angular-foundation';
+} from '@allors/workspace/base/angular/foundation';
 
 @Directive()
 export abstract class AllorsListPageComponent extends AllorsComponent {

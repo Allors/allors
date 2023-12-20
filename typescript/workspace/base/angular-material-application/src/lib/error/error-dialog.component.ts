@@ -1,7 +1,7 @@
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Component, Inject } from '@angular/core';
 import { IResult, ResultError } from '@allors/workspace/system/domain';
-import { AllorsComponent } from '@allors/workspace/base/angular-foundation';
+import { AllorsComponent } from '@allors/workspace/base/angular/foundation';
 
 @Component({
   templateUrl: 'error-dialog.component.html',

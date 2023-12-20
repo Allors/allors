@@ -1,6 +1,6 @@
 import { Input, Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AllorsComponent } from '@allors/workspace/base/angular-foundation';
+import { AllorsComponent } from '@allors/workspace/base/angular/foundation';
 import { SideMenuItem } from './side-menu-item';
 
 @Component({

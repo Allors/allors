@@ -8,7 +8,7 @@ import {
   AfterViewInit,
 } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { RoleField } from '@allors/workspace/base/angular-foundation';
+import { RoleField } from '@allors/workspace/base/angular/foundation';
 import * as EasyMDE from 'easymde';
 
 @Component({

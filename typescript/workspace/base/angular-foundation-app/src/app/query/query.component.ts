@@ -5,17 +5,17 @@ import { Subscription } from 'rxjs';
 import {
   ContextService,
   WorkspaceService,
-} from '@allors/workspace/base/angular-foundation';
+} from '@allors/workspace/base/angular/foundation';
 import { IPullResult, Pull } from '@allors/workspace/system/domain';
 import { M } from '@allors/workspace/default/meta';
-import { Organisation } from '@allors/workspace/default/domain';
+import { Organization } from '@allors/workspace/default/domain';
 
 @Component({
   templateUrl: './query.component.html',
   providers: [ContextService],
 })
 export class QueryComponent implements OnInit, OnDestroy {
-  public organisations: Organisation[];
+  public organisations: Organization[];
 
   public organisationCount: number;
   public skip = 1;
@@ -46,8 +46,8 @@ export class QueryComponent implements OnInit, OnDestroy {
     const { pullBuilder: p } = m;
 
     const pulls: Pull[] = [
-      p.Organisation({
-        sorting: [{ roleType: m.Organisation.Name }],
+      p.Organization({
+        sorting: [{ roleType: m.Organization.Name }],
         select: {
           include: {
             Owner: {},
@@ -60,7 +60,7 @@ export class QueryComponent implements OnInit, OnDestroy {
 
     this.subscription = context.pull(pulls).subscribe(
       (result: IPullResult) => {
-        this.organisations = result.collection<Organisation>(m.Organisation);
+        this.organisations = result.collection<Organization>(m.Organization);
       },
       (error) => {
         alert(error);

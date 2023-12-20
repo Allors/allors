@@ -16,14 +16,14 @@ import {
   RefreshService,
   SharedPullService,
   WorkspaceService,
-} from '@allors/workspace/base/angular-foundation';
+} from '@allors/workspace/base/angular/foundation';
 import {
   AllorsViewSummaryPanelComponent,
   NavigationService,
   Scoped,
   ScopedService,
   PanelService,
-} from '@allors/workspace/base/angular-application';
+} from '@allors/workspace/base/angular/application';
 import { HyperlinkType } from '../hyperlink/hyperlink-type';
 import { HyperlinkService } from '../hyperlink/hyperlink.service';
 import { IconService } from '../icon/icon.service';

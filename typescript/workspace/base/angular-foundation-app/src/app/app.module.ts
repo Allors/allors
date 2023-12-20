@@ -7,7 +7,7 @@ import {
   ThrottledConfig,
   ThrottledDirective,
   WorkspaceService,
-} from '@allors/workspace/base/angular-foundation';
+} from '@allors/workspace/base/angular/foundation';
 import { PrototypeObjectFactory } from '@allors/workspace/system/adapters';
 import { DatabaseConnection } from '@allors/workspace/system/adapters/json';
 import { LazyMetaPopulation } from '@allors/workspace/system/meta/json';
