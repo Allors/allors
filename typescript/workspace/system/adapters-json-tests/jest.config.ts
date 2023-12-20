@@ -1,14 +1,13 @@
 /* eslint-disable */
 export default {
   displayName: 'workspace-system-adapters-json-tests',
-  preset: '../../../../jest.preset.js',
+  preset: '../../../jest.preset.js',
   testEnvironment: 'node',
   transform: {
     '^.+\\.[tj]s$': ['ts-jest', { tsconfig: '<rootDir>/tsconfig.spec.json' }],
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
-  coverageDirectory:
-    '../../../../coverage/libs/workspace/system/adapters-json-tests',
+  coverageDirectory: '../../../coverage/workspace/system/adapters-json-tests',
   // Allors
   reporters: [
     'default',

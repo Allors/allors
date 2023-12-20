@@ -2,6 +2,7 @@
   "compilerOptions": {
     "target": "es2022",
     "useDefineForClassFields": false,
+    "esModuleInterop": true,
     "paths": {
       // System
       "@allors/system/common/protocol-json": ["libs/system/common/protocol-json/src/index.ts"],
