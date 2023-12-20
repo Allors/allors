@@ -2,6 +2,7 @@
   "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
     "module": "commonjs",
+    "esModuleInterop": true,
     "paths": {
       // System
       "@allors/database/system/protocol/json": ["database/system/protocol-json/src/index.ts"],

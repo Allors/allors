@@ -11,35 +11,34 @@ partial class Build
             .AddProcessEnvironmentVariable("npm_config_loglevel", "error")
             .SetProcessWorkingDirectory(Paths.Typescript)));
 
-    private Target TypescriptSystemWorkspaceMeta => _ => _
+    private Target TypescriptWorkspaceSystemMeta => _ => _
     .After(TypescriptInstall)
     .DependsOn(AllorsDotnetBaseGenerate)
     .DependsOn(EnsureDirectories)
     .Executes(() => NpmRun(s => s
         .AddProcessEnvironmentVariable("npm_config_loglevel", "error")
         .SetProcessWorkingDirectory(Paths.Typescript)
-        .SetCommand("system-workspace-meta:test")));
+        .SetCommand("workspace-system-meta:test")));
 
-
-    private Target TypescriptSystemWorkspaceMetaJson => _ => _
+    private Target TypescriptWorkspaceSystemMetaJson => _ => _
         .After(TypescriptInstall)
         .DependsOn(AllorsDotnetBaseGenerate)
         .DependsOn(EnsureDirectories)
         .Executes(() => NpmRun(s => s
             .AddProcessEnvironmentVariable("npm_config_loglevel", "error")
             .SetProcessWorkingDirectory(Paths.Typescript)
-            .SetCommand("system-workspace-meta-json:test")));
+            .SetCommand("workspace-system-meta-json:test")));
 
-    private Target TypescriptSystemWorkspaceAdapters => _ => _
+    private Target TypescriptWorkspaceSystemAdapters => _ => _
         .After(TypescriptInstall)
         .DependsOn(AllorsDotnetBaseGenerate)
         .DependsOn(EnsureDirectories)
         .Executes(() => NpmRun(s => s
             .AddProcessEnvironmentVariable("npm_config_loglevel", "error")
             .SetProcessWorkingDirectory(Paths.Typescript)
-            .SetCommand("system-workspace-adapters:test")));
+            .SetCommand("workspace-system-adapters:test")));
 
-    private Target TypescriptSystemWorkspaceAdaptersJson => _ => _
+    private Target TypescriptWorkspaceSystemAdaptersJson => _ => _
         .After(TypescriptInstall)
         .DependsOn(EnsureDirectories)
         .DependsOn(AllorsDotnetBaseGenerate)
@@ -54,16 +53,16 @@ partial class Build
             NpmRun(s => s
                 .AddProcessEnvironmentVariable("npm_config_loglevel", "error")
                 .SetProcessWorkingDirectory(Paths.Typescript)
-                .SetCommand("system-workspace-adapters-json:test"));
+                .SetCommand("workspace-system-adapters-json:test:test"));
         });
 
     private Target TypescriptWorkspaceTests => _ => _
          .After(TypescriptInstall)
-         .DependsOn(TypescriptSystemWorkspaceMeta)
-         .DependsOn(TypescriptSystemWorkspaceMetaJson)
-         .DependsOn(TypescriptSystemWorkspaceAdapters);
+         .DependsOn(TypescriptWorkspaceSystemMeta)
+         .DependsOn(TypescriptWorkspaceSystemMetaJson)
+         .DependsOn(TypescriptWorkspaceSystemAdapters);
 
     private Target TypescriptWorkspaceAdaptersJsonTests => _ => _
         .After(TypescriptInstall)
-        .DependsOn(TypescriptSystemWorkspaceAdaptersJson);
+        .DependsOn(TypescriptWorkspaceSystemAdaptersJson);
 }

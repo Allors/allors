@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { LocalisedRoleField } from '@allors/workspace/base/angular/foundation';
-import * as EasyMDE from 'easymde';
+import EasyMDE from 'easymde';
 
 @Component({
   // tslint:disable-next-line: component-selector
