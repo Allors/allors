@@ -5,7 +5,7 @@ import {
   DisplayService,
   WorkspaceService,
 } from '@allors/workspace/base/angular-foundation';
-import { M } from '@allors/default/workspace/meta';
+import { M } from '@allors/workspace/default/meta';
 
 @Injectable()
 export class AppDisplayService implements DisplayService {

@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Composite } from '@allors/workspace/system/meta';
 import { Node, toPaths } from '@allors/workspace/system/domain';
-import { M } from '@allors/default/workspace/meta';
+import { M } from '@allors/workspace/default/meta';
 import { WorkspaceService } from '@allors/workspace/base/angular-foundation';
 import {
   HyperlinkService,
   HyperlinkType,
-} from '@allors/workspace/base/angular-material-application';
+} from '@allors/workspace/base/angular/material/application';
 
 function create(tree: Node[], label?: string): HyperlinkType {
   return {

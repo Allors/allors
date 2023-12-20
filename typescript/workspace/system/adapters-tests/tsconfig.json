@@ -3,18 +3,18 @@
   "compilerOptions": {
     "module": "commonjs",
     "paths": {
-      "@allors/system/common/protocol-json": ["libs/system/common/protocol-json/src/index.ts"],
-      "@allors/system/workspace/adapters-json": ["libs/system/workspace/adapters-json/src/index.ts"],
-      "@allors/system/workspace/adapters": ["libs/system/workspace/adapters/src/index.ts"],
-      "@allors/system/workspace/adapters-tests": ["libs/system/workspace/adapters-tests/src/index.ts"],
-      "@allors/default/workspace/domain": ["libs/base/workspace/domain/src/index.ts"],
-      "@allors/system/workspace/domain": ["libs/system/workspace/domain/src/index.ts"],
-      "@allors/default/workspace/meta": ["libs/base/workspace/meta/src/index.ts"],
-      "@allors/default/workspace/meta-json": ["libs/base/workspace/meta-json/src/index.ts"],
-      "@allors/system/workspace/meta-json": ["libs/system/workspace/meta-json/src/index.ts"],
-      "@allors/system/workspace/meta-json-tests": ["libs/system/workspace/meta-json-tests/src/index.ts"],
-      "@allors/system/workspace/meta": ["libs/system/workspace/meta/src/index.ts"],
-      "@allors/system/workspace/meta-tests": ["libs/system/workspace/meta-tests/src/index.ts"]
+      "@allors/database/system/protocol/json": ["database/system/protocol-json/src/index.ts"],
+      "@allors/workspace/system/adapters": ["workspace/system/adapters/src/index.ts"],
+      "@allors/workspace/system/adapters-json": ["workspace/system/adapters-json/src/index.ts"],
+      "@allors/workspace/system/adapters-tests": ["workspace/system/adapters-tests/src/index.ts"],
+      "@allors/workspace/default/domain": ["workspace/base/domain/src/index.ts"],
+      "@allors/workspace/system/domain": ["workspace/system/domain/src/index.ts"],
+      "@allors/workspace/default/meta": ["workspace/base/meta/src/index.ts"],
+      "@allors/workspace/default/meta-json": ["libs/base/workspace/meta-json/src/index.ts"],
+      "@allors/workspace/system/meta-json": ["workspace/system/meta-json/src/index.ts"],
+      "@allors/workspace/system/meta-json-tests": ["libs/system/workspace/meta-json-tests/src/index.ts"],
+      "@allors/workspace/system/meta": ["workspace/system/meta/src/index.ts"],
+      "@allors/workspace/system/meta-tests": ["libs/system/workspace/meta-tests/src/index.ts"]
     }
   },
   "files": [],

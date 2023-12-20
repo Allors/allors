@@ -1,8 +1,8 @@
 import { Component, Self } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { tags } from '@allors/default/workspace/meta';
-import { Person } from '@allors/default/workspace/domain';
+import { tags } from '@allors/workspace/default/meta';
+import { Person } from '@allors/workspace/default/domain';
 import {
   RefreshService,
   SharedPullService,
@@ -15,8 +15,8 @@ import {
   AllorsOverviewPageComponent,
 } from '@allors/workspace/base/angular-application';
 import { IPullResult, Pull } from '@allors/workspace/system/domain';
-import { AllorsMaterialPanelService } from '@allors/workspace/base/angular-material-application';
-import { M } from '@allors/default/workspace/meta';
+import { AllorsMaterialPanelService } from '@allors/workspace/base/angular/material/application';
+import { M } from '@allors/workspace/default/meta';
 
 @Component({
   templateUrl: './person-overview-page.component.html',

@@ -1,6 +1,6 @@
 import { Component, Self } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Country, Organisation } from '@allors/default/workspace/domain';
+import { Country, Organisation } from '@allors/workspace/default/domain';
 import {
   AllorsFormComponent,
   ContextService,
@@ -8,7 +8,7 @@ import {
 } from '@allors/workspace/base/angular-foundation';
 import { ErrorService } from '@allors/workspace/base/angular-foundation';
 import { IPullResult, Pull } from '@allors/workspace/system/domain';
-import { M } from '@allors/default/workspace/meta';
+import { M } from '@allors/workspace/default/meta';
 
 @Component({
   templateUrl: './organisation-form.component.html',

@@ -114,7 +114,7 @@ import {
 import {
   // Service
   HyperlinkService,
-} from '@allors/workspace/base/angular-material-application';
+} from '@allors/workspace/base/angular/material/application';
 
 import {
   // Services
@@ -143,7 +143,7 @@ import {
   AllorsMaterialDynamicSummaryPanelComponent,
   AllorsMaterialDynamicViewDetailPanelComponent,
   AllorsMaterialDynamicViewExtentPanelComponent,
-} from '@allors/workspace/base/angular-material-application';
+} from '@allors/workspace/base/angular/material/application';
 
 import { routes, components as routeComponents } from './app.routes';
 import { components as dialogComponents } from './app.dialog';

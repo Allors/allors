@@ -1,4 +1,4 @@
-import { C1 } from '@allors/default/workspace/domain';
+import { C1 } from '@allors/workspace/default/domain';
 import { Fixture } from '../fixture';
 import '../matchers';
 

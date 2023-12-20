@@ -84,8 +84,8 @@ export const environment = {
  * This import should be commented out in production mode because it will have a negative impact
  * on performance if an error is thrown.
  */
-import 'zone.js/plugins/zone-error'; // Included with Angular CLI.import { AllorsMaterialCreateService } from '@allors/base/workspace/angular-material/application';
+import 'zone.js/plugins/zone-error'; // Included with Angular CLI.import { AllorsMaterialCreateService } from '@allors/workspace/base/angular/material/application';
 import {
   AllorsMaterialCreateService,
   AllorsMaterialEditDialogService,
-} from '@allors/workspace/base/angular-material-application';
+} from '@allors/workspace/base/angular/material/application';

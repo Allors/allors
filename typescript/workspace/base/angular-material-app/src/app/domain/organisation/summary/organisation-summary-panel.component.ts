@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Organisation } from '@allors/default/workspace/domain';
+import { Organisation } from '@allors/workspace/default/domain';
 import {
   RefreshService,
   SharedPullService,
@@ -12,7 +12,7 @@ import {
   ScopedService,
 } from '@allors/workspace/base/angular-application';
 import { IPullResult, Pull } from '@allors/workspace/system/domain';
-import { M } from '@allors/default/workspace/meta';
+import { M } from '@allors/workspace/default/meta';
 
 @Component({
   selector: 'organisation-summary-panel',

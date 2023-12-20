@@ -1,9 +1,9 @@
-import { M } from '@allors/default/workspace/meta';
+import { M } from '@allors/workspace/default/meta';
 import { Composite, RelationType } from '@allors/workspace/system/meta';
 import { WorkspaceService } from '@allors/workspace/base/angular-foundation';
 
 import { Injectable } from '@angular/core';
-import { IconService } from '@allors/workspace/base/angular-material-application';
+import { IconService } from '@allors/workspace/base/angular/material/application';
 
 @Injectable()
 export class AppIconService implements IconService {

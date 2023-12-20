@@ -4,8 +4,8 @@ import { Component, OnDestroy, OnInit, Self } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Sort } from '@angular/material/sort';
 import { PageEvent } from '@angular/material/paginator';
-import { M } from '@allors/default/workspace/meta';
-import { Organisation } from '@allors/default/workspace/domain';
+import { M } from '@allors/workspace/default/meta';
+import { Organisation } from '@allors/workspace/default/domain';
 import {
   ContextService,
   CreateService,
@@ -30,7 +30,7 @@ import {
   MethodActionService,
   OverviewActionService,
   SorterService,
-} from '@allors/workspace/base/angular-material-application';
+} from '@allors/workspace/base/angular/material/application';
 
 interface Row extends TableRow {
   object: Organisation;

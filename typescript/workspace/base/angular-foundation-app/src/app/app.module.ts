@@ -11,9 +11,9 @@ import {
 import { PrototypeObjectFactory } from '@allors/workspace/system/adapters';
 import { DatabaseConnection } from '@allors/workspace/system/adapters-json';
 import { LazyMetaPopulation } from '@allors/workspace/system/meta-json';
-import { data } from '@allors/default/workspace/meta-json';
+import { data } from '@allors/workspace/default/meta-json';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { M } from '@allors/default/workspace/meta';
+import { M } from '@allors/workspace/default/meta';
 
 import { AngularClient } from '../allors/angular-client';
 import { environment } from '../environments/environment';

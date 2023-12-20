@@ -3,8 +3,8 @@ import { switchMap } from 'rxjs/operators';
 import { Component, OnDestroy, OnInit, Self, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { M } from '@allors/default/workspace/meta';
-import { Locale, Person, Organisation } from '@allors/default/workspace/domain';
+import { M } from '@allors/workspace/default/meta';
+import { Locale, Person, Organisation } from '@allors/workspace/default/domain';
 import {
   ContextService,
   CreateRequest,

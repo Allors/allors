@@ -9,9 +9,9 @@ import {
   EditActionService,
   OverviewActionService,
   SorterService,
-} from '@allors/workspace/base/angular-material-application';
-import { M } from '@allors/default/workspace/meta';
-import { Country } from '@allors/default/workspace/domain';
+} from '@allors/workspace/base/angular/material/application';
+import { M } from '@allors/workspace/default/meta';
+import { Country } from '@allors/workspace/default/domain';
 import {
   ContextService,
   FilterService,

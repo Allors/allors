@@ -1,4 +1,4 @@
-import { C1, C2 } from '@allors/default/workspace/domain';
+import { C1, C2 } from '@allors/workspace/default/domain';
 import exp = require('constants');
 import { Fixture, name_c1A, name_c2A } from '../../fixture';
 import '../../matchers';

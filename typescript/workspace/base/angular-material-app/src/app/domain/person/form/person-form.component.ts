@@ -4,7 +4,7 @@ import {
   Gender,
   Locale,
   Person,
-} from '@allors/default/workspace/domain';
+} from '@allors/workspace/default/domain';
 import {
   AllorsFormComponent,
   ContextService,
@@ -12,7 +12,7 @@ import {
 import { ErrorService } from '@allors/workspace/base/angular-foundation';
 import { IPullResult, Pull } from '@allors/workspace/system/domain';
 import { NgForm } from '@angular/forms';
-import { M } from '@allors/default/workspace/meta';
+import { M } from '@allors/workspace/default/meta';
 @Component({
   selector: 'person-form',
   templateUrl: './person-form.component.html',

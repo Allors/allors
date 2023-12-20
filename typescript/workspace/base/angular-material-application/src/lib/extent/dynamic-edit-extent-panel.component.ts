@@ -17,7 +17,7 @@ import {
   selectLeaf,
   toSelect,
 } from '@allors/workspace/system/domain';
-import { Period } from '@allors/default/workspace/domain';
+import { Period } from '@allors/workspace/default/domain';
 import {
   Action,
   SharedPullService,
@@ -38,7 +38,7 @@ import {
 } from '@allors/workspace/base/angular-application';
 import { DeleteActionService } from '../actions/delete/delete-action.service';
 import { IconService } from '../icon/icon.service';
-import { M } from '@allors/default/workspace/meta';
+import { M } from '@allors/workspace/default/meta';
 import { PeriodSelection } from '@allors/workspace/base/angular-material-foundation';
 import { ViewActionService } from '../actions/view/view-action.service';
 

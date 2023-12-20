@@ -3,13 +3,13 @@ import { switchMap } from 'rxjs/operators';
 import { Component, OnDestroy, OnInit, Self } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, UrlSegment } from '@angular/router';
-import { M } from '@allors/default/workspace/meta';
+import { M } from '@allors/workspace/default/meta';
 import {
   Data,
   Organisation,
   Person,
   Locale,
-} from '@allors/default/workspace/domain';
+} from '@allors/workspace/default/domain';
 import { IPullResult } from '@allors/workspace/system/domain';
 import { ContextService } from '@allors/workspace/base/angular-foundation';
 import {

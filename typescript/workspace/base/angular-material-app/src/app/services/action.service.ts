@@ -4,9 +4,9 @@ import {
   ActionService,
   WorkspaceService,
 } from '@allors/workspace/base/angular-foundation';
-import { M } from '@allors/default/workspace/meta';
+import { M } from '@allors/workspace/default/meta';
 import { Composite } from '@allors/workspace/system/meta';
-import { MethodActionService } from '@allors/workspace/base/angular-material-application';
+import { MethodActionService } from '@allors/workspace/base/angular/material/application';
 
 @Injectable()
 export class AppActionService implements ActionService {

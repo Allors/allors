@@ -7,8 +7,8 @@ import {
   WorkspaceService,
 } from '@allors/workspace/base/angular-foundation';
 import { IPullResult, Pull } from '@allors/workspace/system/domain';
-import { M } from '@allors/default/workspace/meta';
-import { Organisation } from '@allors/default/workspace/domain';
+import { M } from '@allors/workspace/default/meta';
+import { Organisation } from '@allors/workspace/default/domain';
 
 @Component({
   templateUrl: './query.component.html',

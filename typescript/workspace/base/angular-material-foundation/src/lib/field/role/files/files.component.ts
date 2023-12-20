@@ -6,8 +6,8 @@ import {
   Output,
 } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { M } from '@allors/default/workspace/meta';
-import { Media } from '@allors/default/workspace/domain';
+import { M } from '@allors/workspace/default/meta';
+import { Media } from '@allors/workspace/default/domain';
 import { WorkspaceService } from '@allors/workspace/base/angular-foundation';
 import {
   MediaService,

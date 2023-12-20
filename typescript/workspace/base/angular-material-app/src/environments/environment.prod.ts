@@ -6,7 +6,7 @@ import { ErrorHandlerService } from '../app/services/error-handler.service';
 import {
   AllorsMaterialCreateService,
   AllorsMaterialEditDialogService,
-} from '@allors/workspace/base/angular-material-application';
+} from '@allors/workspace/base/angular/material/application';
 import { dialogs } from '../app/app.dialog';
 
 // This file can be replaced during build by using the `fileReplacements` array.

@@ -9,7 +9,7 @@ import {
 import { NgForm } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { IObject } from '@allors/workspace/system/domain';
-import { Media } from '@allors/default/workspace/domain';
+import { Media } from '@allors/workspace/default/domain';
 import {
   AllorsComponent,
   MediaService,

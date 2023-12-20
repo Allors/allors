@@ -9,7 +9,7 @@ import {
   selectLeaf,
   toSelect,
 } from '@allors/workspace/system/domain';
-import { Period } from '@allors/default/workspace/domain';
+import { Period } from '@allors/workspace/default/domain';
 import {
   SharedPullService,
   RefreshService,
@@ -22,7 +22,7 @@ import {
   ScopedService,
   AllorsDynamicViewExtentPanelComponent,
 } from '@allors/workspace/base/angular-application';
-import { M } from '@allors/default/workspace/meta';
+import { M } from '@allors/workspace/default/meta';
 import { PeriodSelection } from '@allors/workspace/base/angular-material-foundation';
 
 @Component({

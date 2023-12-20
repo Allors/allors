@@ -1,6 +1,6 @@
 import { Subject } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Deletable } from '@allors/default/workspace/domain';
+import { Deletable } from '@allors/workspace/default/domain';
 import {
   AllorsDialogService,
   Context,

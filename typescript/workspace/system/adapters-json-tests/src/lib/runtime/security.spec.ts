@@ -1,4 +1,4 @@
-import { C1, Denied, TrimFrom } from '@allors/default/workspace/domain';
+import { C1, Denied, TrimFrom } from '@allors/workspace/default/domain';
 import { Pull } from '@allors/workspace/system/domain';
 import { Fixture } from '../fixture';
 import '../matchers';

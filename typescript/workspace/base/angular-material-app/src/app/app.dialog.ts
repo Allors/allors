@@ -1,8 +1,8 @@
 import {
   AllorsMaterialDynamicCreateComponent as Create,
   AllorsMaterialDynamicEditComponent as Edit,
-} from '@allors/workspace/base/angular-material-application';
-import { tags } from '@allors/default/workspace/meta';
+} from '@allors/workspace/base/angular/material/application';
+import { tags } from '@allors/workspace/default/meta';
 
 import { PersonCreateDialogComponent } from './domain/person/create/person-create-dialog.component';
 

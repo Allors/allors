@@ -3,7 +3,7 @@ import { filter } from 'rxjs/operators';
 import { Component, ViewChild, OnDestroy, OnInit, Self } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router, NavigationEnd } from '@angular/router';
-import { Organisation } from '@allors/default/workspace/domain';
+import { Organisation } from '@allors/workspace/default/domain';
 import {
   ContextService,
   MetaService,
@@ -16,7 +16,7 @@ import {
   AllorsMaterialSideNavService,
   IconService,
   SideMenuItem,
-} from '@allors/workspace/base/angular-material-application';
+} from '@allors/workspace/base/angular/material/application';
 
 @Component({
   styleUrls: ['main.component.scss'],
