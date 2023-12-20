@@ -5,7 +5,7 @@ import {
   IWorkspace,
   IUnit,
 } from '@allors/workspace/system/domain';
-import { PullResponse } from '@allors/database/system/protocol-json';
+import { PullResponse } from '@allors/database/system/protocol/json';
 import { Result } from '../result';
 import {
   AssociationType,

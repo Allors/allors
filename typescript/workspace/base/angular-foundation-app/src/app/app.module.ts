@@ -9,9 +9,9 @@ import {
   WorkspaceService,
 } from '@allors/workspace/base/angular-foundation';
 import { PrototypeObjectFactory } from '@allors/workspace/system/adapters';
-import { DatabaseConnection } from '@allors/workspace/system/adapters-json';
-import { LazyMetaPopulation } from '@allors/workspace/system/meta-json';
-import { data } from '@allors/workspace/default/meta-json';
+import { DatabaseConnection } from '@allors/workspace/system/adapters/json';
+import { LazyMetaPopulation } from '@allors/workspace/system/meta/json';
+import { data } from '@allors/workspace/default/meta/json';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { M } from '@allors/workspace/default/meta';
 

@@ -1,7 +1,7 @@
 import { MetaPopulation } from '@allors/workspace/system/meta';
-import { LazyMetaPopulation } from '@allors/workspace/system/meta-json';
-import { data } from '@allors/workspace/default/meta-json';
-import { DatabaseConnection } from '@allors/workspace/system/adapters-json';
+import { LazyMetaPopulation } from '@allors/workspace/system/meta/json';
+import { data } from '@allors/workspace/default/meta/json';
+import { DatabaseConnection } from '@allors/workspace/system/adapters/json';
 import { PrototypeObjectFactory } from '@allors/workspace/system/adapters';
 import { M } from '@allors/workspace/default/meta';
 

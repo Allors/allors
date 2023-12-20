@@ -1,7 +1,12 @@
 {
   "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
-    "module": "commonjs"
+    "module": "commonjs",
+    "paths": {
+      // System
+      "@allors/database/system/protocol/json": ["database/system/protocol-json/src/index.ts"],
+      "@allors/workspace/system/meta": ["workspace/system/meta/src/index.ts"],
+    }
   },
   "files": [],
   "include": [],

@@ -27,7 +27,7 @@ import {
   Sort,
   Node,
   PredicateKind,
-} from '@allors/database/system/protocol-json';
+} from '@allors/database/system/protocol/json';
 
 export function unitToJson(from: unknown): IUnit {
   if (from == null) {

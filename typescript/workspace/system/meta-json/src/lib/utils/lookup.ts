@@ -1,4 +1,4 @@
-import { MetaData } from '@allors/database/system/protocol-json';
+import { MetaData } from '@allors/database/system/protocol/json';
 import { Multiplicity } from '@allors/workspace/system/meta';
 
 export class Lookup {

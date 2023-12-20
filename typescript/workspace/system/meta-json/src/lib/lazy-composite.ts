@@ -5,7 +5,7 @@ import {
   RelationEndType,
   RoleType,
 } from '@allors/workspace/system/meta';
-import { ObjectTypeData } from '@allors/database/system/protocol-json';
+import { ObjectTypeData } from '@allors/database/system/protocol/json';
 
 import { frozenEmptySet } from './utils/frozen-empty-set';
 import { Lookup } from './utils/lookup';

@@ -1,5 +1,5 @@
 import { Unit } from '@allors/workspace/system/meta';
-import { LazyMetaPopulation } from '@allors/workspace/system/meta-json';
+import { LazyMetaPopulation } from '@allors/workspace/system/meta/json';
 
 interface M extends LazyMetaPopulation {
   Binary: Unit;

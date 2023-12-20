@@ -3,7 +3,7 @@ import {
   Interface,
   MethodType,
 } from '@allors/workspace/system/meta';
-import { LazyMetaPopulation } from '@allors/workspace/system/meta-json';
+import { LazyMetaPopulation } from '@allors/workspace/system/meta/json';
 
 interface Action extends Interface {
   Do: MethodType;

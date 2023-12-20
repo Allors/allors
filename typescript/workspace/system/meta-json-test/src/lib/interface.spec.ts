@@ -1,6 +1,6 @@
 import { Interface } from '@allors/workspace/system/meta';
-import { MetaData } from '@allors/database/system/protocol-json';
-import { LazyMetaPopulation } from '@allors/workspace/system/meta-json';
+import { MetaData } from '@allors/database/system/protocol/json';
+import { LazyMetaPopulation } from '@allors/workspace/system/meta/json';
 
 type Named = Interface;
 

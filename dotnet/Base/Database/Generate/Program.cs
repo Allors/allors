@@ -33,9 +33,9 @@ namespace Allors.Meta.Generation
                 { "Workspace/Templates/domain.cs.stg", "Workspace/Domain/Generated" },
                 { "Workspace/Templates/signals.cs.stg", "Workspace/Signals/Generated" },
 
-                { "../../typescript/templates/workspace.meta.ts.stg", "../../typescript/libs/base/workspace/meta/src/lib/generated" },
-                { "../../typescript/templates/workspace.meta.json.ts.stg", "../../typescript/libs/base/workspace/meta-json/src/lib/generated" },
-                { "../../typescript/templates/workspace.domain.ts.stg", "../../typescript/libs/base/workspace/domain/src/lib/generated" },
+                { "../../typescript/templates/workspace.meta.ts.stg", "../../typescript/workspace/base/meta/src/lib/generated" },
+                { "../../typescript/templates/workspace.meta.json.ts.stg", "../../typescript/workspace/base/meta-json/src/lib/generated" },
+                { "../../typescript/templates/workspace.domain.ts.stg", "../../typescript/workspace/base/domain/src/lib/generated" },
             };
 
             var metaPopulation = MetaBuilder.Build();
