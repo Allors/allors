@@ -172,8 +172,4 @@ public partial class Model
 
     public MethodTypeModel Map(IMethodType v) => v != null ? (MethodTypeModel)this.mapping[v] : null;
     #endregion
-
-    public void CoreInit()
-    {
-    }
 }
