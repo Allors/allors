@@ -19,14 +19,14 @@ namespace Allors.Database.Domain
         {
             base.BaseSetup(setup);
 
-            var languages = this.Transaction.Scoped<LanguageByIsoCode>();
+            var languages = this.Transaction.Scoped<LanguageByKey>();
 
-            var merge = this.Transaction.Caches().LocaleByName().Merger().Action();
+            var merge = this.Transaction.Caches().LocaleByKey().Merger().Action();
 
             // Create a generic locale (without a region) for every language.
             foreach (Language language in this.Transaction.Extent<Language>())
             {
-                var name = language.IsoCode.ToLowerInvariant();
+                var name = language.Key.ToLowerInvariant();
                 merge(name, v => v.Language = languages[name]);
             }
         }

@@ -63,19 +63,13 @@ namespace Allors.Database.Meta.Configuration
 
             // Country;
             AddWorkspace(relationTypes.CountryCurrency, new[] { "Default" });
-            AddWorkspace(relationTypes.CountryIsoCode, new[] { "Default" });
-            AddWorkspace(relationTypes.CountryLocalisedNames, new[] { "Default" });
 
             // Currency;
-            AddWorkspace(relationTypes.CurrencyIsoCode, new[] { "Default" });
 
             // Language;
-            AddWorkspace(relationTypes.LanguageIsoCode, new[] { "Default" });
-            AddWorkspace(relationTypes.LanguageLocalisedNames, new[] { "Default" });
             AddWorkspace(relationTypes.LanguageNativeName, new[] { "Default" });
 
             // Locale;
-            AddWorkspace(relationTypes.LocaleName, new[] { "Default" });
             AddWorkspace(relationTypes.LocaleLanguage, new[] { "Default" });
             AddWorkspace(relationTypes.LocaleCountry, new[] { "Default" });
 

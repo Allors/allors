@@ -2,1269 +2,1269 @@
 <population>
   <countries>
     <country>
-      <isoCode>AD</isoCode>
+      <key>AD</key>
     </country>
     <country>
-      <isoCode>AE</isoCode>
+      <key>AE</key>
     </country>
     <country>
-      <isoCode>AF</isoCode>
+      <key>AF</key>
     </country>
     <country>
-      <isoCode>AG</isoCode>
+      <key>AG</key>
     </country>
     <country>
-      <isoCode>AI</isoCode>
+      <key>AI</key>
     </country>
     <country>
-      <isoCode>AL</isoCode>
+      <key>AL</key>
     </country>
     <country>
-      <isoCode>AM</isoCode>
+      <key>AM</key>
     </country>
     <country>
-      <isoCode>AO</isoCode>
+      <key>AO</key>
     </country>
     <country>
-      <isoCode>AQ</isoCode>
+      <key>AQ</key>
     </country>
     <country>
-      <isoCode>AR</isoCode>
+      <key>AR</key>
     </country>
     <country>
-      <isoCode>AS</isoCode>
+      <key>AS</key>
     </country>
     <country>
-      <isoCode>AT</isoCode>
+      <key>AT</key>
     </country>
     <country>
-      <isoCode>AU</isoCode>
+      <key>AU</key>
     </country>
     <country>
-      <isoCode>AW</isoCode>
+      <key>AW</key>
     </country>
     <country>
-      <isoCode>AX</isoCode>
+      <key>AX</key>
     </country>
     <country>
-      <isoCode>AZ</isoCode>
+      <key>AZ</key>
     </country>
     <country>
-      <isoCode>BA</isoCode>
+      <key>BA</key>
     </country>
     <country>
-      <isoCode>BB</isoCode>
+      <key>BB</key>
     </country>
     <country>
-      <isoCode>BD</isoCode>
+      <key>BD</key>
     </country>
     <country>
-      <isoCode>BE</isoCode>
+      <key>BE</key>
     </country>
     <country>
-      <isoCode>BF</isoCode>
+      <key>BF</key>
     </country>
     <country>
-      <isoCode>BG</isoCode>
+      <key>BG</key>
     </country>
     <country>
-      <isoCode>BH</isoCode>
+      <key>BH</key>
     </country>
     <country>
-      <isoCode>BI</isoCode>
+      <key>BI</key>
     </country>
     <country>
-      <isoCode>BJ</isoCode>
+      <key>BJ</key>
     </country>
     <country>
-      <isoCode>BL</isoCode>
+      <key>BL</key>
     </country>
     <country>
-      <isoCode>BM</isoCode>
+      <key>BM</key>
     </country>
     <country>
-      <isoCode>BN</isoCode>
+      <key>BN</key>
     </country>
     <country>
-      <isoCode>BO</isoCode>
+      <key>BO</key>
     </country>
     <country>
-      <isoCode>BQ</isoCode>
+      <key>BQ</key>
     </country>
     <country>
-      <isoCode>BR</isoCode>
+      <key>BR</key>
     </country>
     <country>
-      <isoCode>BS</isoCode>
+      <key>BS</key>
     </country>
     <country>
-      <isoCode>BT</isoCode>
+      <key>BT</key>
     </country>
     <country>
-      <isoCode>BV</isoCode>
+      <key>BV</key>
     </country>
     <country>
-      <isoCode>BW</isoCode>
+      <key>BW</key>
     </country>
     <country>
-      <isoCode>BY</isoCode>
+      <key>BY</key>
     </country>
     <country>
-      <isoCode>BZ</isoCode>
+      <key>BZ</key>
     </country>
     <country>
-      <isoCode>CA</isoCode>
+      <key>CA</key>
     </country>
     <country>
-      <isoCode>CC</isoCode>
+      <key>CC</key>
     </country>
     <country>
-      <isoCode>CD</isoCode>
+      <key>CD</key>
     </country>
     <country>
-      <isoCode>CF</isoCode>
+      <key>CF</key>
     </country>
     <country>
-      <isoCode>CG</isoCode>
+      <key>CG</key>
     </country>
     <country>
-      <isoCode>CH</isoCode>
+      <key>CH</key>
     </country>
     <country>
-      <isoCode>CI</isoCode>
+      <key>CI</key>
     </country>
     <country>
-      <isoCode>CK</isoCode>
+      <key>CK</key>
     </country>
     <country>
-      <isoCode>CL</isoCode>
+      <key>CL</key>
     </country>
     <country>
-      <isoCode>CM</isoCode>
+      <key>CM</key>
     </country>
     <country>
-      <isoCode>CN</isoCode>
+      <key>CN</key>
     </country>
     <country>
-      <isoCode>CO</isoCode>
+      <key>CO</key>
     </country>
     <country>
-      <isoCode>CR</isoCode>
+      <key>CR</key>
     </country>
     <country>
-      <isoCode>CU</isoCode>
+      <key>CU</key>
     </country>
     <country>
-      <isoCode>CV</isoCode>
+      <key>CV</key>
     </country>
     <country>
-      <isoCode>CW</isoCode>
+      <key>CW</key>
     </country>
     <country>
-      <isoCode>CX</isoCode>
+      <key>CX</key>
     </country>
     <country>
-      <isoCode>CY</isoCode>
+      <key>CY</key>
     </country>
     <country>
-      <isoCode>CZ</isoCode>
+      <key>CZ</key>
     </country>
     <country>
-      <isoCode>DE</isoCode>
+      <key>DE</key>
     </country>
     <country>
-      <isoCode>DJ</isoCode>
+      <key>DJ</key>
     </country>
     <country>
-      <isoCode>DK</isoCode>
+      <key>DK</key>
     </country>
     <country>
-      <isoCode>DM</isoCode>
+      <key>DM</key>
     </country>
     <country>
-      <isoCode>DO</isoCode>
+      <key>DO</key>
     </country>
     <country>
-      <isoCode>DZ</isoCode>
+      <key>DZ</key>
     </country>
     <country>
-      <isoCode>EC</isoCode>
+      <key>EC</key>
     </country>
     <country>
-      <isoCode>EE</isoCode>
+      <key>EE</key>
     </country>
     <country>
-      <isoCode>EG</isoCode>
+      <key>EG</key>
     </country>
     <country>
-      <isoCode>EH</isoCode>
+      <key>EH</key>
     </country>
     <country>
-      <isoCode>ER</isoCode>
+      <key>ER</key>
     </country>
     <country>
-      <isoCode>ES</isoCode>
+      <key>ES</key>
     </country>
     <country>
-      <isoCode>ET</isoCode>
+      <key>ET</key>
     </country>
     <country>
-      <isoCode>FI</isoCode>
+      <key>FI</key>
     </country>
     <country>
-      <isoCode>FJ</isoCode>
+      <key>FJ</key>
     </country>
     <country>
-      <isoCode>FK</isoCode>
+      <key>FK</key>
     </country>
     <country>
-      <isoCode>FM</isoCode>
+      <key>FM</key>
     </country>
     <country>
-      <isoCode>FO</isoCode>
+      <key>FO</key>
     </country>
     <country>
-      <isoCode>FR</isoCode>
+      <key>FR</key>
     </country>
     <country>
-      <isoCode>GA</isoCode>
+      <key>GA</key>
     </country>
     <country>
-      <isoCode>GB</isoCode>
+      <key>GB</key>
     </country>
     <country>
-      <isoCode>GD</isoCode>
+      <key>GD</key>
     </country>
     <country>
-      <isoCode>GE</isoCode>
+      <key>GE</key>
     </country>
     <country>
-      <isoCode>GF</isoCode>
+      <key>GF</key>
     </country>
     <country>
-      <isoCode>GG</isoCode>
+      <key>GG</key>
     </country>
     <country>
-      <isoCode>GH</isoCode>
+      <key>GH</key>
     </country>
     <country>
-      <isoCode>GI</isoCode>
+      <key>GI</key>
     </country>
     <country>
-      <isoCode>GL</isoCode>
+      <key>GL</key>
     </country>
     <country>
-      <isoCode>GM</isoCode>
+      <key>GM</key>
     </country>
     <country>
-      <isoCode>GN</isoCode>
+      <key>GN</key>
     </country>
     <country>
-      <isoCode>GP</isoCode>
+      <key>GP</key>
     </country>
     <country>
-      <isoCode>GQ</isoCode>
+      <key>GQ</key>
     </country>
     <country>
-      <isoCode>GR</isoCode>
+      <key>GR</key>
     </country>
     <country>
-      <isoCode>GS</isoCode>
+      <key>GS</key>
     </country>
     <country>
-      <isoCode>GT</isoCode>
+      <key>GT</key>
     </country>
     <country>
-      <isoCode>GU</isoCode>
+      <key>GU</key>
     </country>
     <country>
-      <isoCode>GW</isoCode>
+      <key>GW</key>
     </country>
     <country>
-      <isoCode>GY</isoCode>
+      <key>GY</key>
     </country>
     <country>
-      <isoCode>HK</isoCode>
+      <key>HK</key>
     </country>
     <country>
-      <isoCode>HM</isoCode>
+      <key>HM</key>
     </country>
     <country>
-      <isoCode>HN</isoCode>
+      <key>HN</key>
     </country>
     <country>
-      <isoCode>HR</isoCode>
+      <key>HR</key>
     </country>
     <country>
-      <isoCode>HT</isoCode>
+      <key>HT</key>
     </country>
     <country>
-      <isoCode>HU</isoCode>
+      <key>HU</key>
     </country>
     <country>
-      <isoCode>ID</isoCode>
+      <key>ID</key>
     </country>
     <country>
-      <isoCode>IE</isoCode>
+      <key>IE</key>
     </country>
     <country>
-      <isoCode>IL</isoCode>
+      <key>IL</key>
     </country>
     <country>
-      <isoCode>IM</isoCode>
+      <key>IM</key>
     </country>
     <country>
-      <isoCode>IN</isoCode>
+      <key>IN</key>
     </country>
     <country>
-      <isoCode>IO</isoCode>
+      <key>IO</key>
     </country>
     <country>
-      <isoCode>IQ</isoCode>
+      <key>IQ</key>
     </country>
     <country>
-      <isoCode>IR</isoCode>
+      <key>IR</key>
     </country>
     <country>
-      <isoCode>IS</isoCode>
+      <key>IS</key>
     </country>
     <country>
-      <isoCode>IT</isoCode>
+      <key>IT</key>
     </country>
     <country>
-      <isoCode>JE</isoCode>
+      <key>JE</key>
     </country>
     <country>
-      <isoCode>JM</isoCode>
+      <key>JM</key>
     </country>
     <country>
-      <isoCode>JO</isoCode>
+      <key>JO</key>
     </country>
     <country>
-      <isoCode>JP</isoCode>
+      <key>JP</key>
     </country>
     <country>
-      <isoCode>KE</isoCode>
+      <key>KE</key>
     </country>
     <country>
-      <isoCode>KG</isoCode>
+      <key>KG</key>
     </country>
     <country>
-      <isoCode>KH</isoCode>
+      <key>KH</key>
     </country>
     <country>
-      <isoCode>KI</isoCode>
+      <key>KI</key>
     </country>
     <country>
-      <isoCode>KM</isoCode>
+      <key>KM</key>
     </country>
     <country>
-      <isoCode>KN</isoCode>
+      <key>KN</key>
     </country>
     <country>
-      <isoCode>KP</isoCode>
+      <key>KP</key>
     </country>
     <country>
-      <isoCode>KR</isoCode>
+      <key>KR</key>
     </country>
     <country>
-      <isoCode>KW</isoCode>
+      <key>KW</key>
     </country>
     <country>
-      <isoCode>KY</isoCode>
+      <key>KY</key>
     </country>
     <country>
-      <isoCode>KZ</isoCode>
+      <key>KZ</key>
     </country>
     <country>
-      <isoCode>LA</isoCode>
+      <key>LA</key>
     </country>
     <country>
-      <isoCode>LB</isoCode>
+      <key>LB</key>
     </country>
     <country>
-      <isoCode>LC</isoCode>
+      <key>LC</key>
     </country>
     <country>
-      <isoCode>LI</isoCode>
+      <key>LI</key>
     </country>
     <country>
-      <isoCode>LK</isoCode>
+      <key>LK</key>
     </country>
     <country>
-      <isoCode>LR</isoCode>
+      <key>LR</key>
     </country>
     <country>
-      <isoCode>LS</isoCode>
+      <key>LS</key>
     </country>
     <country>
-      <isoCode>LT</isoCode>
+      <key>LT</key>
     </country>
     <country>
-      <isoCode>LU</isoCode>
+      <key>LU</key>
     </country>
     <country>
-      <isoCode>LV</isoCode>
+      <key>LV</key>
     </country>
     <country>
-      <isoCode>LY</isoCode>
+      <key>LY</key>
     </country>
     <country>
-      <isoCode>MA</isoCode>
+      <key>MA</key>
     </country>
     <country>
-      <isoCode>MC</isoCode>
+      <key>MC</key>
     </country>
     <country>
-      <isoCode>MD</isoCode>
+      <key>MD</key>
     </country>
     <country>
-      <isoCode>ME</isoCode>
+      <key>ME</key>
     </country>
     <country>
-      <isoCode>MF</isoCode>
+      <key>MF</key>
     </country>
     <country>
-      <isoCode>MG</isoCode>
+      <key>MG</key>
     </country>
     <country>
-      <isoCode>MH</isoCode>
+      <key>MH</key>
     </country>
     <country>
-      <isoCode>MK</isoCode>
+      <key>MK</key>
     </country>
     <country>
-      <isoCode>ML</isoCode>
+      <key>ML</key>
     </country>
     <country>
-      <isoCode>MM</isoCode>
+      <key>MM</key>
     </country>
     <country>
-      <isoCode>MN</isoCode>
+      <key>MN</key>
     </country>
     <country>
-      <isoCode>MO</isoCode>
+      <key>MO</key>
     </country>
     <country>
-      <isoCode>MP</isoCode>
+      <key>MP</key>
     </country>
     <country>
-      <isoCode>MQ</isoCode>
+      <key>MQ</key>
     </country>
     <country>
-      <isoCode>MR</isoCode>
+      <key>MR</key>
     </country>
     <country>
-      <isoCode>MS</isoCode>
+      <key>MS</key>
     </country>
     <country>
-      <isoCode>MT</isoCode>
+      <key>MT</key>
     </country>
     <country>
-      <isoCode>MU</isoCode>
+      <key>MU</key>
     </country>
     <country>
-      <isoCode>MV</isoCode>
+      <key>MV</key>
     </country>
     <country>
-      <isoCode>MW</isoCode>
+      <key>MW</key>
     </country>
     <country>
-      <isoCode>MX</isoCode>
+      <key>MX</key>
     </country>
     <country>
-      <isoCode>MY</isoCode>
+      <key>MY</key>
     </country>
     <country>
-      <isoCode>MZ</isoCode>
+      <key>MZ</key>
     </country>
     <country>
-      <isoCode>NA</isoCode>
+      <key>NA</key>
     </country>
     <country>
-      <isoCode>NC</isoCode>
+      <key>NC</key>
     </country>
     <country>
-      <isoCode>NE</isoCode>
+      <key>NE</key>
     </country>
     <country>
-      <isoCode>NF</isoCode>
+      <key>NF</key>
     </country>
     <country>
-      <isoCode>NG</isoCode>
+      <key>NG</key>
     </country>
     <country>
-      <isoCode>NI</isoCode>
+      <key>NI</key>
     </country>
     <country>
-      <isoCode>NL</isoCode>
+      <key>NL</key>
     </country>
     <country>
-      <isoCode>NO</isoCode>
+      <key>NO</key>
     </country>
     <country>
-      <isoCode>NP</isoCode>
+      <key>NP</key>
     </country>
     <country>
-      <isoCode>NR</isoCode>
+      <key>NR</key>
     </country>
     <country>
-      <isoCode>NU</isoCode>
+      <key>NU</key>
     </country>
     <country>
-      <isoCode>NZ</isoCode>
+      <key>NZ</key>
     </country>
     <country>
-      <isoCode>OM</isoCode>
+      <key>OM</key>
     </country>
     <country>
-      <isoCode>PA</isoCode>
+      <key>PA</key>
     </country>
     <country>
-      <isoCode>PE</isoCode>
+      <key>PE</key>
     </country>
     <country>
-      <isoCode>PF</isoCode>
+      <key>PF</key>
     </country>
     <country>
-      <isoCode>PG</isoCode>
+      <key>PG</key>
     </country>
     <country>
-      <isoCode>PH</isoCode>
+      <key>PH</key>
     </country>
     <country>
-      <isoCode>PK</isoCode>
+      <key>PK</key>
     </country>
     <country>
-      <isoCode>PL</isoCode>
+      <key>PL</key>
     </country>
     <country>
-      <isoCode>PM</isoCode>
+      <key>PM</key>
     </country>
     <country>
-      <isoCode>PN</isoCode>
+      <key>PN</key>
     </country>
     <country>
-      <isoCode>PR</isoCode>
+      <key>PR</key>
     </country>
     <country>
-      <isoCode>PS</isoCode>
+      <key>PS</key>
     </country>
     <country>
-      <isoCode>PT</isoCode>
+      <key>PT</key>
     </country>
     <country>
-      <isoCode>PW</isoCode>
+      <key>PW</key>
     </country>
     <country>
-      <isoCode>PY</isoCode>
+      <key>PY</key>
     </country>
     <country>
-      <isoCode>QA</isoCode>
+      <key>QA</key>
     </country>
     <country>
-      <isoCode>RE</isoCode>
+      <key>RE</key>
     </country>
     <country>
-      <isoCode>RO</isoCode>
+      <key>RO</key>
     </country>
     <country>
-      <isoCode>RS</isoCode>
+      <key>RS</key>
     </country>
     <country>
-      <isoCode>RU</isoCode>
+      <key>RU</key>
     </country>
     <country>
-      <isoCode>RW</isoCode>
+      <key>RW</key>
     </country>
     <country>
-      <isoCode>SA</isoCode>
+      <key>SA</key>
     </country>
     <country>
-      <isoCode>SB</isoCode>
+      <key>SB</key>
     </country>
     <country>
-      <isoCode>SC</isoCode>
+      <key>SC</key>
     </country>
     <country>
-      <isoCode>SD</isoCode>
+      <key>SD</key>
     </country>
     <country>
-      <isoCode>SE</isoCode>
+      <key>SE</key>
     </country>
     <country>
-      <isoCode>SG</isoCode>
+      <key>SG</key>
     </country>
     <country>
-      <isoCode>SH</isoCode>
+      <key>SH</key>
     </country>
     <country>
-      <isoCode>SI</isoCode>
+      <key>SI</key>
     </country>
     <country>
-      <isoCode>SJ</isoCode>
+      <key>SJ</key>
     </country>
     <country>
-      <isoCode>SK</isoCode>
+      <key>SK</key>
     </country>
     <country>
-      <isoCode>SL</isoCode>
+      <key>SL</key>
     </country>
     <country>
-      <isoCode>SM</isoCode>
+      <key>SM</key>
     </country>
     <country>
-      <isoCode>SN</isoCode>
+      <key>SN</key>
     </country>
     <country>
-      <isoCode>SO</isoCode>
+      <key>SO</key>
     </country>
     <country>
-      <isoCode>SR</isoCode>
+      <key>SR</key>
     </country>
     <country>
-      <isoCode>SS</isoCode>
+      <key>SS</key>
     </country>
     <country>
-      <isoCode>ST</isoCode>
+      <key>ST</key>
     </country>
     <country>
-      <isoCode>SV</isoCode>
+      <key>SV</key>
     </country>
     <country>
-      <isoCode>SX</isoCode>
+      <key>SX</key>
     </country>
     <country>
-      <isoCode>SY</isoCode>
+      <key>SY</key>
     </country>
     <country>
-      <isoCode>SZ</isoCode>
+      <key>SZ</key>
     </country>
     <country>
-      <isoCode>TC</isoCode>
+      <key>TC</key>
     </country>
     <country>
-      <isoCode>TD</isoCode>
+      <key>TD</key>
     </country>
     <country>
-      <isoCode>TF</isoCode>
+      <key>TF</key>
     </country>
     <country>
-      <isoCode>TG</isoCode>
+      <key>TG</key>
     </country>
     <country>
-      <isoCode>TH</isoCode>
+      <key>TH</key>
     </country>
     <country>
-      <isoCode>TJ</isoCode>
+      <key>TJ</key>
     </country>
     <country>
-      <isoCode>TK</isoCode>
+      <key>TK</key>
     </country>
     <country>
-      <isoCode>TL</isoCode>
+      <key>TL</key>
     </country>
     <country>
-      <isoCode>TM</isoCode>
+      <key>TM</key>
     </country>
     <country>
-      <isoCode>TN</isoCode>
+      <key>TN</key>
     </country>
     <country>
-      <isoCode>TO</isoCode>
+      <key>TO</key>
     </country>
     <country>
-      <isoCode>TR</isoCode>
+      <key>TR</key>
     </country>
     <country>
-      <isoCode>TT</isoCode>
+      <key>TT</key>
     </country>
     <country>
-      <isoCode>TV</isoCode>
+      <key>TV</key>
     </country>
     <country>
-      <isoCode>TW</isoCode>
+      <key>TW</key>
     </country>
     <country>
-      <isoCode>TZ</isoCode>
+      <key>TZ</key>
     </country>
     <country>
-      <isoCode>UA</isoCode>
+      <key>UA</key>
     </country>
     <country>
-      <isoCode>UG</isoCode>
+      <key>UG</key>
     </country>
     <country>
-      <isoCode>UM</isoCode>
+      <key>UM</key>
     </country>
     <country>
-      <isoCode>US</isoCode>
+      <key>US</key>
     </country>
     <country>
-      <isoCode>UY</isoCode>
+      <key>UY</key>
     </country>
     <country>
-      <isoCode>UZ</isoCode>
+      <key>UZ</key>
     </country>
     <country>
-      <isoCode>VA</isoCode>
+      <key>VA</key>
     </country>
     <country>
-      <isoCode>VC</isoCode>
+      <key>VC</key>
     </country>
     <country>
-      <isoCode>VE</isoCode>
+      <key>VE</key>
     </country>
     <country>
-      <isoCode>VG</isoCode>
+      <key>VG</key>
     </country>
     <country>
-      <isoCode>VI</isoCode>
+      <key>VI</key>
     </country>
     <country>
-      <isoCode>VN</isoCode>
+      <key>VN</key>
     </country>
     <country>
-      <isoCode>VU</isoCode>
+      <key>VU</key>
     </country>
     <country>
-      <isoCode>WF</isoCode>
+      <key>WF</key>
     </country>
     <country>
-      <isoCode>WS</isoCode>
+      <key>WS</key>
     </country>
     <country>
-      <isoCode>YE</isoCode>
+      <key>YE</key>
     </country>
     <country>
-      <isoCode>YT</isoCode>
+      <key>YT</key>
     </country>
     <country>
-      <isoCode>ZA</isoCode>
+      <key>ZA</key>
     </country>
     <country>
-      <isoCode>ZM</isoCode>
+      <key>ZM</key>
     </country>
     <country>
-      <isoCode>ZW</isoCode>
+      <key>ZW</key>
     </country>
   </countries>
   <currencies>
     <currency>
-      <isoCode>AED</isoCode>
+      <key>AED</key>
     </currency>
     <currency>
-      <isoCode>AFN</isoCode>
+      <key>AFN</key>
     </currency>
     <currency>
-      <isoCode>ALL</isoCode>
+      <key>ALL</key>
     </currency>
     <currency>
-      <isoCode>AMD</isoCode>
+      <key>AMD</key>
     </currency>
     <currency>
-      <isoCode>ANG</isoCode>
+      <key>ANG</key>
     </currency>
     <currency>
-      <isoCode>AOA</isoCode>
+      <key>AOA</key>
     </currency>
     <currency>
-      <isoCode>ARS</isoCode>
+      <key>ARS</key>
     </currency>
     <currency>
-      <isoCode>AUD</isoCode>
+      <key>AUD</key>
     </currency>
     <currency>
-      <isoCode>AWG</isoCode>
+      <key>AWG</key>
     </currency>
     <currency>
-      <isoCode>AZN</isoCode>
+      <key>AZN</key>
     </currency>
     <currency>
-      <isoCode>BAM</isoCode>
+      <key>BAM</key>
     </currency>
     <currency>
-      <isoCode>BBD</isoCode>
+      <key>BBD</key>
     </currency>
     <currency>
-      <isoCode>BDT</isoCode>
+      <key>BDT</key>
     </currency>
     <currency>
-      <isoCode>BGN</isoCode>
+      <key>BGN</key>
     </currency>
     <currency>
-      <isoCode>BHD</isoCode>
+      <key>BHD</key>
     </currency>
     <currency>
-      <isoCode>BIF</isoCode>
+      <key>BIF</key>
     </currency>
     <currency>
-      <isoCode>BMD</isoCode>
+      <key>BMD</key>
     </currency>
     <currency>
-      <isoCode>BND</isoCode>
+      <key>BND</key>
     </currency>
     <currency>
-      <isoCode>BOB</isoCode>
+      <key>BOB</key>
     </currency>
     <currency>
-      <isoCode>BRL</isoCode>
+      <key>BRL</key>
     </currency>
     <currency>
-      <isoCode>BSD</isoCode>
+      <key>BSD</key>
     </currency>
     <currency>
-      <isoCode>BTC</isoCode>
+      <key>BTC</key>
     </currency>
     <currency>
-      <isoCode>BTN</isoCode>
+      <key>BTN</key>
     </currency>
     <currency>
-      <isoCode>BWP</isoCode>
+      <key>BWP</key>
     </currency>
     <currency>
-      <isoCode>BYN</isoCode>
+      <key>BYN</key>
     </currency>
     <currency>
-      <isoCode>BYR</isoCode>
+      <key>BYR</key>
     </currency>
     <currency>
-      <isoCode>BZD</isoCode>
+      <key>BZD</key>
     </currency>
     <currency>
-      <isoCode>CAD</isoCode>
+      <key>CAD</key>
     </currency>
     <currency>
-      <isoCode>CDF</isoCode>
+      <key>CDF</key>
     </currency>
     <currency>
-      <isoCode>CHF</isoCode>
+      <key>CHF</key>
     </currency>
     <currency>
-      <isoCode>CLF</isoCode>
+      <key>CLF</key>
     </currency>
     <currency>
-      <isoCode>CLP</isoCode>
+      <key>CLP</key>
     </currency>
     <currency>
-      <isoCode>CNY</isoCode>
+      <key>CNY</key>
     </currency>
     <currency>
-      <isoCode>COP</isoCode>
+      <key>COP</key>
     </currency>
     <currency>
-      <isoCode>CRC</isoCode>
+      <key>CRC</key>
     </currency>
     <currency>
-      <isoCode>CUC</isoCode>
+      <key>CUC</key>
     </currency>
     <currency>
-      <isoCode>CUP</isoCode>
+      <key>CUP</key>
     </currency>
     <currency>
-      <isoCode>CVE</isoCode>
+      <key>CVE</key>
     </currency>
     <currency>
-      <isoCode>CZK</isoCode>
+      <key>CZK</key>
     </currency>
     <currency>
-      <isoCode>DJF</isoCode>
+      <key>DJF</key>
     </currency>
     <currency>
-      <isoCode>DKK</isoCode>
+      <key>DKK</key>
     </currency>
     <currency>
-      <isoCode>DOP</isoCode>
+      <key>DOP</key>
     </currency>
     <currency>
-      <isoCode>DZD</isoCode>
+      <key>DZD</key>
     </currency>
     <currency>
-      <isoCode>EEK</isoCode>
+      <key>EEK</key>
     </currency>
     <currency>
-      <isoCode>EGP</isoCode>
+      <key>EGP</key>
     </currency>
     <currency>
-      <isoCode>ERN</isoCode>
+      <key>ERN</key>
     </currency>
     <currency>
-      <isoCode>ETB</isoCode>
+      <key>ETB</key>
     </currency>
     <currency>
-      <isoCode>EUR</isoCode>
+      <key>EUR</key>
     </currency>
     <currency>
-      <isoCode>FJD</isoCode>
+      <key>FJD</key>
     </currency>
     <currency>
-      <isoCode>FKP</isoCode>
+      <key>FKP</key>
     </currency>
     <currency>
-      <isoCode>GBP</isoCode>
+      <key>GBP</key>
     </currency>
     <currency>
-      <isoCode>GEL</isoCode>
+      <key>GEL</key>
     </currency>
     <currency>
-      <isoCode>GGP</isoCode>
+      <key>GGP</key>
     </currency>
     <currency>
-      <isoCode>GHS</isoCode>
+      <key>GHS</key>
     </currency>
     <currency>
-      <isoCode>GIP</isoCode>
+      <key>GIP</key>
     </currency>
     <currency>
-      <isoCode>GMD</isoCode>
+      <key>GMD</key>
     </currency>
     <currency>
-      <isoCode>GNF</isoCode>
+      <key>GNF</key>
     </currency>
     <currency>
-      <isoCode>GTQ</isoCode>
+      <key>GTQ</key>
     </currency>
     <currency>
-      <isoCode>GYD</isoCode>
+      <key>GYD</key>
     </currency>
     <currency>
-      <isoCode>HKD</isoCode>
+      <key>HKD</key>
     </currency>
     <currency>
-      <isoCode>HNL</isoCode>
+      <key>HNL</key>
     </currency>
     <currency>
-      <isoCode>HRK</isoCode>
+      <key>HRK</key>
     </currency>
     <currency>
-      <isoCode>HTG</isoCode>
+      <key>HTG</key>
     </currency>
     <currency>
-      <isoCode>HUF</isoCode>
+      <key>HUF</key>
     </currency>
     <currency>
-      <isoCode>IDR</isoCode>
+      <key>IDR</key>
     </currency>
     <currency>
-      <isoCode>ILS</isoCode>
+      <key>ILS</key>
     </currency>
     <currency>
-      <isoCode>IMP</isoCode>
+      <key>IMP</key>
     </currency>
     <currency>
-      <isoCode>INR</isoCode>
+      <key>INR</key>
     </currency>
     <currency>
-      <isoCode>IQD</isoCode>
+      <key>IQD</key>
     </currency>
     <currency>
-      <isoCode>IRR</isoCode>
+      <key>IRR</key>
     </currency>
     <currency>
-      <isoCode>ISK</isoCode>
+      <key>ISK</key>
     </currency>
     <currency>
-      <isoCode>JEP</isoCode>
+      <key>JEP</key>
     </currency>
     <currency>
-      <isoCode>JMD</isoCode>
+      <key>JMD</key>
     </currency>
     <currency>
-      <isoCode>JOD</isoCode>
+      <key>JOD</key>
     </currency>
     <currency>
-      <isoCode>JPY</isoCode>
+      <key>JPY</key>
     </currency>
     <currency>
-      <isoCode>KES</isoCode>
+      <key>KES</key>
     </currency>
     <currency>
-      <isoCode>KGS</isoCode>
+      <key>KGS</key>
     </currency>
     <currency>
-      <isoCode>KHR</isoCode>
+      <key>KHR</key>
     </currency>
     <currency>
-      <isoCode>KMF</isoCode>
+      <key>KMF</key>
     </currency>
     <currency>
-      <isoCode>KPW</isoCode>
+      <key>KPW</key>
     </currency>
     <currency>
-      <isoCode>KRW</isoCode>
+      <key>KRW</key>
     </currency>
     <currency>
-      <isoCode>KWD</isoCode>
+      <key>KWD</key>
     </currency>
     <currency>
-      <isoCode>KYD</isoCode>
+      <key>KYD</key>
     </currency>
     <currency>
-      <isoCode>KZT</isoCode>
+      <key>KZT</key>
     </currency>
     <currency>
-      <isoCode>LAK</isoCode>
+      <key>LAK</key>
     </currency>
     <currency>
-      <isoCode>LBP</isoCode>
+      <key>LBP</key>
     </currency>
     <currency>
-      <isoCode>LKR</isoCode>
+      <key>LKR</key>
     </currency>
     <currency>
-      <isoCode>LRD</isoCode>
+      <key>LRD</key>
     </currency>
     <currency>
-      <isoCode>LSL</isoCode>
+      <key>LSL</key>
     </currency>
     <currency>
-      <isoCode>LTL</isoCode>
+      <key>LTL</key>
     </currency>
     <currency>
-      <isoCode>LVL</isoCode>
+      <key>LVL</key>
     </currency>
     <currency>
-      <isoCode>LYD</isoCode>
+      <key>LYD</key>
     </currency>
     <currency>
-      <isoCode>MAD</isoCode>
+      <key>MAD</key>
     </currency>
     <currency>
-      <isoCode>MDL</isoCode>
+      <key>MDL</key>
     </currency>
     <currency>
-      <isoCode>MGA</isoCode>
+      <key>MGA</key>
     </currency>
     <currency>
-      <isoCode>MKD</isoCode>
+      <key>MKD</key>
     </currency>
     <currency>
-      <isoCode>MMK</isoCode>
+      <key>MMK</key>
     </currency>
     <currency>
-      <isoCode>MNT</isoCode>
+      <key>MNT</key>
     </currency>
     <currency>
-      <isoCode>MOP</isoCode>
+      <key>MOP</key>
     </currency>
     <currency>
-      <isoCode>MRO</isoCode>
+      <key>MRO</key>
     </currency>
     <currency>
-      <isoCode>MTL</isoCode>
+      <key>MTL</key>
     </currency>
     <currency>
-      <isoCode>MUR</isoCode>
+      <key>MUR</key>
     </currency>
     <currency>
-      <isoCode>MVR</isoCode>
+      <key>MVR</key>
     </currency>
     <currency>
-      <isoCode>MWK</isoCode>
+      <key>MWK</key>
     </currency>
     <currency>
-      <isoCode>MXN</isoCode>
+      <key>MXN</key>
     </currency>
     <currency>
-      <isoCode>MYR</isoCode>
+      <key>MYR</key>
     </currency>
     <currency>
-      <isoCode>MZN</isoCode>
+      <key>MZN</key>
     </currency>
     <currency>
-      <isoCode>NAD</isoCode>
+      <key>NAD</key>
     </currency>
     <currency>
-      <isoCode>NGN</isoCode>
+      <key>NGN</key>
     </currency>
     <currency>
-      <isoCode>NIO</isoCode>
+      <key>NIO</key>
     </currency>
     <currency>
-      <isoCode>NOK</isoCode>
+      <key>NOK</key>
     </currency>
     <currency>
-      <isoCode>NPR</isoCode>
+      <key>NPR</key>
     </currency>
     <currency>
-      <isoCode>NZD</isoCode>
+      <key>NZD</key>
     </currency>
     <currency>
-      <isoCode>OMR</isoCode>
+      <key>OMR</key>
     </currency>
     <currency>
-      <isoCode>PAB</isoCode>
+      <key>PAB</key>
     </currency>
     <currency>
-      <isoCode>PEN</isoCode>
+      <key>PEN</key>
     </currency>
     <currency>
-      <isoCode>PGK</isoCode>
+      <key>PGK</key>
     </currency>
     <currency>
-      <isoCode>PHP</isoCode>
+      <key>PHP</key>
     </currency>
     <currency>
-      <isoCode>PKR</isoCode>
+      <key>PKR</key>
     </currency>
     <currency>
-      <isoCode>PLN</isoCode>
+      <key>PLN</key>
     </currency>
     <currency>
-      <isoCode>PYG</isoCode>
+      <key>PYG</key>
     </currency>
     <currency>
-      <isoCode>QAR</isoCode>
+      <key>QAR</key>
     </currency>
     <currency>
-      <isoCode>RON</isoCode>
+      <key>RON</key>
     </currency>
     <currency>
-      <isoCode>RSD</isoCode>
+      <key>RSD</key>
     </currency>
     <currency>
-      <isoCode>RUB</isoCode>
+      <key>RUB</key>
     </currency>
     <currency>
-      <isoCode>RWF</isoCode>
+      <key>RWF</key>
     </currency>
     <currency>
-      <isoCode>SAR</isoCode>
+      <key>SAR</key>
     </currency>
     <currency>
-      <isoCode>SBD</isoCode>
+      <key>SBD</key>
     </currency>
     <currency>
-      <isoCode>SCR</isoCode>
+      <key>SCR</key>
     </currency>
     <currency>
-      <isoCode>SDG</isoCode>
+      <key>SDG</key>
     </currency>
     <currency>
-      <isoCode>SEK</isoCode>
+      <key>SEK</key>
     </currency>
     <currency>
-      <isoCode>SGD</isoCode>
+      <key>SGD</key>
     </currency>
     <currency>
-      <isoCode>SHP</isoCode>
+      <key>SHP</key>
     </currency>
     <currency>
-      <isoCode>SLL</isoCode>
+      <key>SLL</key>
     </currency>
     <currency>
-      <isoCode>SOS</isoCode>
+      <key>SOS</key>
     </currency>
     <currency>
-      <isoCode>SRD</isoCode>
+      <key>SRD</key>
     </currency>
     <currency>
-      <isoCode>STD</isoCode>
+      <key>STD</key>
     </currency>
     <currency>
-      <isoCode>SVC</isoCode>
+      <key>SVC</key>
     </currency>
     <currency>
-      <isoCode>SYP</isoCode>
+      <key>SYP</key>
     </currency>
     <currency>
-      <isoCode>SZL</isoCode>
+      <key>SZL</key>
     </currency>
     <currency>
-      <isoCode>THB</isoCode>
+      <key>THB</key>
     </currency>
     <currency>
-      <isoCode>TJS</isoCode>
+      <key>TJS</key>
     </currency>
     <currency>
-      <isoCode>TMT</isoCode>
+      <key>TMT</key>
     </currency>
     <currency>
-      <isoCode>TND</isoCode>
+      <key>TND</key>
     </currency>
     <currency>
-      <isoCode>TOP</isoCode>
+      <key>TOP</key>
     </currency>
     <currency>
-      <isoCode>TRY</isoCode>
+      <key>TRY</key>
     </currency>
     <currency>
-      <isoCode>TTD</isoCode>
+      <key>TTD</key>
     </currency>
     <currency>
-      <isoCode>TWD</isoCode>
+      <key>TWD</key>
     </currency>
     <currency>
-      <isoCode>TZS</isoCode>
+      <key>TZS</key>
     </currency>
     <currency>
-      <isoCode>UAH</isoCode>
+      <key>UAH</key>
     </currency>
     <currency>
-      <isoCode>UGX</isoCode>
+      <key>UGX</key>
     </currency>
     <currency>
-      <isoCode>USD</isoCode>
+      <key>USD</key>
     </currency>
     <currency>
-      <isoCode>UYU</isoCode>
+      <key>UYU</key>
     </currency>
     <currency>
-      <isoCode>UZS</isoCode>
+      <key>UZS</key>
     </currency>
     <currency>
-      <isoCode>VEF</isoCode>
+      <key>VEF</key>
     </currency>
     <currency>
-      <isoCode>VND</isoCode>
+      <key>VND</key>
     </currency>
     <currency>
-      <isoCode>VUV</isoCode>
+      <key>VUV</key>
     </currency>
     <currency>
-      <isoCode>WST</isoCode>
+      <key>WST</key>
     </currency>
     <currency>
-      <isoCode>XAF</isoCode>
+      <key>XAF</key>
     </currency>
     <currency>
-      <isoCode>XAG</isoCode>
+      <key>XAG</key>
     </currency>
     <currency>
-      <isoCode>XAU</isoCode>
+      <key>XAU</key>
     </currency>
     <currency>
-      <isoCode>XCD</isoCode>
+      <key>XCD</key>
     </currency>
     <currency>
-      <isoCode>XDR</isoCode>
+      <key>XDR</key>
     </currency>
     <currency>
-      <isoCode>XOF</isoCode>
+      <key>XOF</key>
     </currency>
     <currency>
-      <isoCode>XPD</isoCode>
+      <key>XPD</key>
     </currency>
     <currency>
-      <isoCode>XPF</isoCode>
+      <key>XPF</key>
     </currency>
     <currency>
-      <isoCode>XPT</isoCode>
+      <key>XPT</key>
     </currency>
     <currency>
-      <isoCode>YER</isoCode>
+      <key>YER</key>
     </currency>
     <currency>
-      <isoCode>ZAR</isoCode>
+      <key>ZAR</key>
     </currency>
     <currency>
-      <isoCode>ZMK</isoCode>
+      <key>ZMK</key>
     </currency>
     <currency>
-      <isoCode>ZMW</isoCode>
+      <key>ZMW</key>
     </currency>
     <currency>
-      <isoCode>ZWL</isoCode>
+      <key>ZWL</key>
     </currency>
   </currencies>
   <genders>
@@ -1283,731 +1283,731 @@
   </genders>
   <languages>
     <language>
-      <isoCode>aa</isoCode>
+      <key>aa</key>
       <nativeName>Afaraf</nativeName>
     </language>
     <language>
-      <isoCode>ab</isoCode>
+      <key>ab</key>
       <nativeName>аҧсуа</nativeName>
     </language>
     <language>
-      <isoCode>ae</isoCode>
+      <key>ae</key>
       <nativeName>avesta</nativeName>
     </language>
     <language>
-      <isoCode>af</isoCode>
+      <key>af</key>
       <nativeName>Afrikaans</nativeName>
     </language>
     <language>
-      <isoCode>ak</isoCode>
+      <key>ak</key>
       <nativeName>Akan</nativeName>
     </language>
     <language>
-      <isoCode>am</isoCode>
+      <key>am</key>
       <nativeName>አማርኛ</nativeName>
     </language>
     <language>
-      <isoCode>an</isoCode>
+      <key>an</key>
       <nativeName>Aragonés</nativeName>
     </language>
     <language>
-      <isoCode>ar</isoCode>
+      <key>ar</key>
       <nativeName>العربية</nativeName>
     </language>
     <language>
-      <isoCode>as</isoCode>
+      <key>as</key>
       <nativeName>অসমীয়া</nativeName>
     </language>
     <language>
-      <isoCode>av</isoCode>
+      <key>av</key>
       <nativeName>авар мацӀ, магӀарул мацӀ</nativeName>
     </language>
     <language>
-      <isoCode>ay</isoCode>
+      <key>ay</key>
       <nativeName>aymar aru</nativeName>
     </language>
     <language>
-      <isoCode>az</isoCode>
+      <key>az</key>
       <nativeName>azərbaycan dili</nativeName>
     </language>
     <language>
-      <isoCode>ba</isoCode>
+      <key>ba</key>
       <nativeName>башҡорт теле</nativeName>
     </language>
     <language>
-      <isoCode>be</isoCode>
+      <key>be</key>
       <nativeName>Беларуская</nativeName>
     </language>
     <language>
-      <isoCode>bg</isoCode>
+      <key>bg</key>
       <nativeName>български език</nativeName>
     </language>
     <language>
-      <isoCode>bh</isoCode>
+      <key>bh</key>
       <nativeName>भोजपुरी</nativeName>
     </language>
     <language>
-      <isoCode>bi</isoCode>
+      <key>bi</key>
       <nativeName>Bislama</nativeName>
     </language>
     <language>
-      <isoCode>bm</isoCode>
+      <key>bm</key>
       <nativeName>bamanankan</nativeName>
     </language>
     <language>
-      <isoCode>bn</isoCode>
+      <key>bn</key>
       <nativeName>বাংলা</nativeName>
     </language>
     <language>
-      <isoCode>bo</isoCode>
+      <key>bo</key>
       <nativeName>བོད་ཡིག</nativeName>
     </language>
     <language>
-      <isoCode>br</isoCode>
+      <key>br</key>
       <nativeName>brezhoneg</nativeName>
     </language>
     <language>
-      <isoCode>bs</isoCode>
+      <key>bs</key>
       <nativeName>bosanski jezik</nativeName>
     </language>
     <language>
-      <isoCode>ca</isoCode>
+      <key>ca</key>
       <nativeName>Català</nativeName>
     </language>
     <language>
-      <isoCode>ce</isoCode>
+      <key>ce</key>
       <nativeName>нохчийн мотт</nativeName>
     </language>
     <language>
-      <isoCode>ch</isoCode>
+      <key>ch</key>
       <nativeName>Chamoru</nativeName>
     </language>
     <language>
-      <isoCode>co</isoCode>
+      <key>co</key>
       <nativeName>corsu, lingua corsa</nativeName>
     </language>
     <language>
-      <isoCode>cr</isoCode>
+      <key>cr</key>
       <nativeName>ᓀᐦᐃᔭᐍᐏᐣ</nativeName>
     </language>
     <language>
-      <isoCode>cs</isoCode>
+      <key>cs</key>
       <nativeName>česky, čeština</nativeName>
     </language>
     <language>
-      <isoCode>cu</isoCode>
+      <key>cu</key>
       <nativeName>ѩзыкъ словѣньскъ</nativeName>
     </language>
     <language>
-      <isoCode>cv</isoCode>
+      <key>cv</key>
       <nativeName>чӑваш чӗлхи</nativeName>
     </language>
     <language>
-      <isoCode>cy</isoCode>
+      <key>cy</key>
       <nativeName>Cymraeg</nativeName>
     </language>
     <language>
-      <isoCode>da</isoCode>
+      <key>da</key>
       <nativeName>dansk</nativeName>
     </language>
     <language>
-      <isoCode>de</isoCode>
+      <key>de</key>
       <nativeName>Deutsch</nativeName>
     </language>
     <language>
-      <isoCode>dv</isoCode>
+      <key>dv</key>
       <nativeName>ދިވެހި</nativeName>
     </language>
     <language>
-      <isoCode>ee</isoCode>
+      <key>ee</key>
       <nativeName>Eʋegbe</nativeName>
     </language>
     <language>
-      <isoCode>el</isoCode>
+      <key>el</key>
       <nativeName>Ελληνικά</nativeName>
     </language>
     <language>
-      <isoCode>en</isoCode>
+      <key>en</key>
       <nativeName>English</nativeName>
     </language>
     <language>
-      <isoCode>eo</isoCode>
+      <key>eo</key>
       <nativeName>Esperanto</nativeName>
     </language>
     <language>
-      <isoCode>es</isoCode>
+      <key>es</key>
       <nativeName>español, castellano</nativeName>
     </language>
     <language>
-      <isoCode>et</isoCode>
+      <key>et</key>
       <nativeName>eesti, eesti keel</nativeName>
     </language>
     <language>
-      <isoCode>eu</isoCode>
+      <key>eu</key>
       <nativeName>euskara, euskera</nativeName>
     </language>
     <language>
-      <isoCode>fa</isoCode>
+      <key>fa</key>
       <nativeName>فارسی</nativeName>
     </language>
     <language>
-      <isoCode>ff</isoCode>
+      <key>ff</key>
       <nativeName>Fulfulde, Pulaar, Pular</nativeName>
     </language>
     <language>
-      <isoCode>fi</isoCode>
+      <key>fi</key>
       <nativeName>suomi, suomen kieli</nativeName>
     </language>
     <language>
-      <isoCode>fj</isoCode>
+      <key>fj</key>
       <nativeName>vosa Vakaviti</nativeName>
     </language>
     <language>
-      <isoCode>fo</isoCode>
+      <key>fo</key>
       <nativeName>føroyskt</nativeName>
     </language>
     <language>
-      <isoCode>fr</isoCode>
+      <key>fr</key>
       <nativeName>français, langue française</nativeName>
     </language>
     <language>
-      <isoCode>fy</isoCode>
+      <key>fy</key>
       <nativeName>Frysk</nativeName>
     </language>
     <language>
-      <isoCode>ga</isoCode>
+      <key>ga</key>
       <nativeName>Gaeilge</nativeName>
     </language>
     <language>
-      <isoCode>gd</isoCode>
+      <key>gd</key>
       <nativeName>Gàidhlig</nativeName>
     </language>
     <language>
-      <isoCode>gl</isoCode>
+      <key>gl</key>
       <nativeName>Galego</nativeName>
     </language>
     <language>
-      <isoCode>gn</isoCode>
+      <key>gn</key>
       <nativeName>Avañeẽ</nativeName>
     </language>
     <language>
-      <isoCode>gu</isoCode>
+      <key>gu</key>
       <nativeName>ગુજરાતી</nativeName>
     </language>
     <language>
-      <isoCode>gv</isoCode>
+      <key>gv</key>
       <nativeName>Gaelg, Gailck</nativeName>
     </language>
     <language>
-      <isoCode>ha</isoCode>
+      <key>ha</key>
       <nativeName>Hausa, هَوُسَ</nativeName>
     </language>
     <language>
-      <isoCode>he</isoCode>
+      <key>he</key>
       <nativeName>עברית</nativeName>
     </language>
     <language>
-      <isoCode>hi</isoCode>
+      <key>hi</key>
       <nativeName>हिन्दी, हिंदी</nativeName>
     </language>
     <language>
-      <isoCode>ho</isoCode>
+      <key>ho</key>
       <nativeName>Hiri Motu</nativeName>
     </language>
     <language>
-      <isoCode>hr</isoCode>
+      <key>hr</key>
       <nativeName>hrvatski</nativeName>
     </language>
     <language>
-      <isoCode>ht</isoCode>
+      <key>ht</key>
       <nativeName>Kreyòl ayisyen</nativeName>
     </language>
     <language>
-      <isoCode>hu</isoCode>
+      <key>hu</key>
       <nativeName>Magyar</nativeName>
     </language>
     <language>
-      <isoCode>hy</isoCode>
+      <key>hy</key>
       <nativeName>Հայերեն</nativeName>
     </language>
     <language>
-      <isoCode>hz</isoCode>
+      <key>hz</key>
       <nativeName>Otjiherero</nativeName>
     </language>
     <language>
-      <isoCode>ia</isoCode>
+      <key>ia</key>
       <nativeName>Interlingua</nativeName>
     </language>
     <language>
-      <isoCode>id</isoCode>
+      <key>id</key>
       <nativeName>Bahasa Indonesia</nativeName>
     </language>
     <language>
-      <isoCode>ie</isoCode>
+      <key>ie</key>
       <nativeName>Originally called Occidental; then Interlingue after WWII</nativeName>
     </language>
     <language>
-      <isoCode>ig</isoCode>
+      <key>ig</key>
       <nativeName>Asụsụ Igbo</nativeName>
     </language>
     <language>
-      <isoCode>ii</isoCode>
+      <key>ii</key>
       <nativeName>ꆈꌠ꒿ Nuosuhxop</nativeName>
     </language>
     <language>
-      <isoCode>ik</isoCode>
+      <key>ik</key>
       <nativeName>Iñupiaq, Iñupiatun</nativeName>
     </language>
     <language>
-      <isoCode>io</isoCode>
+      <key>io</key>
       <nativeName>Ido</nativeName>
     </language>
     <language>
-      <isoCode>is</isoCode>
+      <key>is</key>
       <nativeName>Íslenska</nativeName>
     </language>
     <language>
-      <isoCode>it</isoCode>
+      <key>it</key>
       <nativeName>Italiano</nativeName>
     </language>
     <language>
-      <isoCode>iu</isoCode>
+      <key>iu</key>
       <nativeName>ᐃᓄᒃᑎᑐᑦ</nativeName>
     </language>
     <language>
-      <isoCode>ja</isoCode>
+      <key>ja</key>
       <nativeName>日本語 (にほんご／にっぽんご)</nativeName>
     </language>
     <language>
-      <isoCode>jv</isoCode>
+      <key>jv</key>
       <nativeName>basa Jawa</nativeName>
     </language>
     <language>
-      <isoCode>ka</isoCode>
+      <key>ka</key>
       <nativeName>ქართული</nativeName>
     </language>
     <language>
-      <isoCode>kg</isoCode>
+      <key>kg</key>
       <nativeName>KiKongo</nativeName>
     </language>
     <language>
-      <isoCode>ki</isoCode>
+      <key>ki</key>
       <nativeName>Gĩkũyũ</nativeName>
     </language>
     <language>
-      <isoCode>kj</isoCode>
+      <key>kj</key>
       <nativeName>Kuanyama</nativeName>
     </language>
     <language>
-      <isoCode>kk</isoCode>
+      <key>kk</key>
       <nativeName>Қазақ тілі</nativeName>
     </language>
     <language>
-      <isoCode>kl</isoCode>
+      <key>kl</key>
       <nativeName>kalaallisut, kalaallit oqaasii</nativeName>
     </language>
     <language>
-      <isoCode>km</isoCode>
+      <key>km</key>
       <nativeName>ភាសាខ្មែរ</nativeName>
     </language>
     <language>
-      <isoCode>kn</isoCode>
+      <key>kn</key>
       <nativeName>ಕನ್ನಡ</nativeName>
     </language>
     <language>
-      <isoCode>ko</isoCode>
+      <key>ko</key>
       <nativeName>한국어 (韓國語), 조선말 (朝鮮語)</nativeName>
     </language>
     <language>
-      <isoCode>kr</isoCode>
+      <key>kr</key>
       <nativeName>Kanuri</nativeName>
     </language>
     <language>
-      <isoCode>ks</isoCode>
+      <key>ks</key>
       <nativeName>कश्मीरी, كشميري‎</nativeName>
     </language>
     <language>
-      <isoCode>ku</isoCode>
+      <key>ku</key>
       <nativeName>Kurdî, كوردی‎</nativeName>
     </language>
     <language>
-      <isoCode>kv</isoCode>
+      <key>kv</key>
       <nativeName>коми кыв</nativeName>
     </language>
     <language>
-      <isoCode>kw</isoCode>
+      <key>kw</key>
       <nativeName>Kernewek</nativeName>
     </language>
     <language>
-      <isoCode>ky</isoCode>
+      <key>ky</key>
       <nativeName>кыргыз тили</nativeName>
     </language>
     <language>
-      <isoCode>la</isoCode>
+      <key>la</key>
       <nativeName>latine, lingua latina</nativeName>
     </language>
     <language>
-      <isoCode>lb</isoCode>
+      <key>lb</key>
       <nativeName>Lëtzebuergesch</nativeName>
     </language>
     <language>
-      <isoCode>lg</isoCode>
+      <key>lg</key>
       <nativeName>Luganda</nativeName>
     </language>
     <language>
-      <isoCode>li</isoCode>
+      <key>li</key>
       <nativeName>Limburgs</nativeName>
     </language>
     <language>
-      <isoCode>ln</isoCode>
+      <key>ln</key>
       <nativeName>Lingála</nativeName>
     </language>
     <language>
-      <isoCode>lo</isoCode>
+      <key>lo</key>
       <nativeName>ພາສາລາວ</nativeName>
     </language>
     <language>
-      <isoCode>lt</isoCode>
+      <key>lt</key>
       <nativeName>lietuvių kalba</nativeName>
     </language>
     <language>
-      <isoCode>lu</isoCode>
+      <key>lu</key>
       <nativeName>Luba-Katanga</nativeName>
     </language>
     <language>
-      <isoCode>lv</isoCode>
+      <key>lv</key>
       <nativeName>latviešu valoda</nativeName>
     </language>
     <language>
-      <isoCode>mg</isoCode>
+      <key>mg</key>
       <nativeName>Malagasy fiteny</nativeName>
     </language>
     <language>
-      <isoCode>mh</isoCode>
+      <key>mh</key>
       <nativeName>Kajin M̧ajeļ</nativeName>
     </language>
     <language>
-      <isoCode>mi</isoCode>
+      <key>mi</key>
       <nativeName>te reo Māori</nativeName>
     </language>
     <language>
-      <isoCode>mk</isoCode>
+      <key>mk</key>
       <nativeName>македонски јазик</nativeName>
     </language>
     <language>
-      <isoCode>ml</isoCode>
+      <key>ml</key>
       <nativeName>മലയാളം</nativeName>
     </language>
     <language>
-      <isoCode>mn</isoCode>
+      <key>mn</key>
       <nativeName>монгол</nativeName>
     </language>
     <language>
-      <isoCode>mr</isoCode>
+      <key>mr</key>
       <nativeName>मराठी</nativeName>
     </language>
     <language>
-      <isoCode>ms</isoCode>
+      <key>ms</key>
       <nativeName>bahasa Melayu, بهاس ملايو‎</nativeName>
     </language>
     <language>
-      <isoCode>mt</isoCode>
+      <key>mt</key>
       <nativeName>Malti</nativeName>
     </language>
     <language>
-      <isoCode>my</isoCode>
+      <key>my</key>
       <nativeName>ဗမာစာ</nativeName>
     </language>
     <language>
-      <isoCode>na</isoCode>
+      <key>na</key>
       <nativeName>Ekakairũ Naoero</nativeName>
     </language>
     <language>
-      <isoCode>nb</isoCode>
+      <key>nb</key>
       <nativeName>Norsk bokmål</nativeName>
     </language>
     <language>
-      <isoCode>nd</isoCode>
+      <key>nd</key>
       <nativeName>isiNdebele (North)</nativeName>
     </language>
     <language>
-      <isoCode>ne</isoCode>
+      <key>ne</key>
       <nativeName>नेपाली</nativeName>
     </language>
     <language>
-      <isoCode>ng</isoCode>
+      <key>ng</key>
       <nativeName>Owambo</nativeName>
     </language>
     <language>
-      <isoCode>nl</isoCode>
+      <key>nl</key>
       <nativeName>Nederlands, Vlaams</nativeName>
     </language>
     <language>
-      <isoCode>nn</isoCode>
+      <key>nn</key>
       <nativeName>Norsk nynorsk</nativeName>
     </language>
     <language>
-      <isoCode>no</isoCode>
+      <key>no</key>
       <nativeName>Norsk</nativeName>
     </language>
     <language>
-      <isoCode>nr</isoCode>
+      <key>nr</key>
       <nativeName>isiNdebele (South)</nativeName>
     </language>
     <language>
-      <isoCode>nv</isoCode>
+      <key>nv</key>
       <nativeName>Diné bizaad, Dinékʼehǰí</nativeName>
     </language>
     <language>
-      <isoCode>ny</isoCode>
+      <key>ny</key>
       <nativeName>chiCheŵa, chinyanja</nativeName>
     </language>
     <language>
-      <isoCode>oc</isoCode>
+      <key>oc</key>
       <nativeName>Occitan</nativeName>
     </language>
     <language>
-      <isoCode>oj</isoCode>
+      <key>oj</key>
       <nativeName>ᐊᓂᔑᓈᐯᒧᐎᓐ</nativeName>
     </language>
     <language>
-      <isoCode>om</isoCode>
+      <key>om</key>
       <nativeName>Afaan Oromoo</nativeName>
     </language>
     <language>
-      <isoCode>or</isoCode>
+      <key>or</key>
       <nativeName>ଓଡ଼ିଆ</nativeName>
     </language>
     <language>
-      <isoCode>os</isoCode>
+      <key>os</key>
       <nativeName>ирон æвзаг</nativeName>
     </language>
     <language>
-      <isoCode>pa</isoCode>
+      <key>pa</key>
       <nativeName>ਪੰਜਾਬੀ, پنجابی‎</nativeName>
     </language>
     <language>
-      <isoCode>pi</isoCode>
+      <key>pi</key>
       <nativeName>पाऴि</nativeName>
     </language>
     <language>
-      <isoCode>pl</isoCode>
+      <key>pl</key>
       <nativeName>polski</nativeName>
     </language>
     <language>
-      <isoCode>ps</isoCode>
+      <key>ps</key>
       <nativeName>پښتو</nativeName>
     </language>
     <language>
-      <isoCode>pt</isoCode>
+      <key>pt</key>
       <nativeName>Português</nativeName>
     </language>
     <language>
-      <isoCode>qu</isoCode>
+      <key>qu</key>
       <nativeName>Runa Simi, Kichwa</nativeName>
     </language>
     <language>
-      <isoCode>rm</isoCode>
+      <key>rm</key>
       <nativeName>rumantsch grischun</nativeName>
     </language>
     <language>
-      <isoCode>rn</isoCode>
+      <key>rn</key>
       <nativeName>kiRundi</nativeName>
     </language>
     <language>
-      <isoCode>ro</isoCode>
+      <key>ro</key>
       <nativeName>română</nativeName>
     </language>
     <language>
-      <isoCode>ru</isoCode>
+      <key>ru</key>
       <nativeName>русский язык</nativeName>
     </language>
     <language>
-      <isoCode>rw</isoCode>
+      <key>rw</key>
       <nativeName>Ikinyarwanda</nativeName>
     </language>
     <language>
-      <isoCode>sa</isoCode>
+      <key>sa</key>
       <nativeName>संस्कृतम्</nativeName>
     </language>
     <language>
-      <isoCode>sc</isoCode>
+      <key>sc</key>
       <nativeName>sardu</nativeName>
     </language>
     <language>
-      <isoCode>sd</isoCode>
+      <key>sd</key>
       <nativeName>सिन्धी, سنڌي، سندھی‎</nativeName>
     </language>
     <language>
-      <isoCode>se</isoCode>
+      <key>se</key>
       <nativeName>Davvisámegiella</nativeName>
     </language>
     <language>
-      <isoCode>sg</isoCode>
+      <key>sg</key>
       <nativeName>yângâ tî sängö</nativeName>
     </language>
     <language>
-      <isoCode>si</isoCode>
+      <key>si</key>
       <nativeName>සිංහල</nativeName>
     </language>
     <language>
-      <isoCode>sk</isoCode>
+      <key>sk</key>
       <nativeName>slovenčina</nativeName>
     </language>
     <language>
-      <isoCode>sl</isoCode>
+      <key>sl</key>
       <nativeName>slovenščina</nativeName>
     </language>
     <language>
-      <isoCode>sm</isoCode>
+      <key>sm</key>
       <nativeName>gagana faa Samoa</nativeName>
     </language>
     <language>
-      <isoCode>sn</isoCode>
+      <key>sn</key>
       <nativeName>chiShona</nativeName>
     </language>
     <language>
-      <isoCode>so</isoCode>
+      <key>so</key>
       <nativeName>Soomaaliga, af Soomaali</nativeName>
     </language>
     <language>
-      <isoCode>sq</isoCode>
+      <key>sq</key>
       <nativeName>Shqip</nativeName>
     </language>
     <language>
-      <isoCode>sr</isoCode>
+      <key>sr</key>
       <nativeName>српски језик</nativeName>
     </language>
     <language>
-      <isoCode>ss</isoCode>
+      <key>ss</key>
       <nativeName>SiSwati</nativeName>
     </language>
     <language>
-      <isoCode>st</isoCode>
+      <key>st</key>
       <nativeName>Sesotho</nativeName>
     </language>
     <language>
-      <isoCode>su</isoCode>
+      <key>su</key>
       <nativeName>Basa Sunda</nativeName>
     </language>
     <language>
-      <isoCode>sv</isoCode>
+      <key>sv</key>
       <nativeName>svenska</nativeName>
     </language>
     <language>
-      <isoCode>sw</isoCode>
+      <key>sw</key>
       <nativeName>Kiswahili</nativeName>
     </language>
     <language>
-      <isoCode>ta</isoCode>
+      <key>ta</key>
       <nativeName>தமிழ்</nativeName>
     </language>
     <language>
-      <isoCode>te</isoCode>
+      <key>te</key>
       <nativeName>తెలుగు</nativeName>
     </language>
     <language>
-      <isoCode>tg</isoCode>
+      <key>tg</key>
       <nativeName>тоҷикӣ, toğikī, تاجیکی‎</nativeName>
     </language>
     <language>
-      <isoCode>th</isoCode>
+      <key>th</key>
       <nativeName>ไทย</nativeName>
     </language>
     <language>
-      <isoCode>ti</isoCode>
+      <key>ti</key>
       <nativeName>ትግርኛ</nativeName>
     </language>
     <language>
-      <isoCode>tk</isoCode>
+      <key>tk</key>
       <nativeName>Türkmen, Түркмен</nativeName>
     </language>
     <language>
-      <isoCode>tl</isoCode>
+      <key>tl</key>
       <nativeName>Wikang Tagalog</nativeName>
     </language>
     <language>
-      <isoCode>tn</isoCode>
+      <key>tn</key>
       <nativeName>Setswana</nativeName>
     </language>
     <language>
-      <isoCode>to</isoCode>
+      <key>to</key>
       <nativeName>faka Tonga</nativeName>
     </language>
     <language>
-      <isoCode>tr</isoCode>
+      <key>tr</key>
       <nativeName>Türkçe</nativeName>
     </language>
     <language>
-      <isoCode>ts</isoCode>
+      <key>ts</key>
       <nativeName>Xitsonga</nativeName>
     </language>
     <language>
-      <isoCode>tt</isoCode>
+      <key>tt</key>
       <nativeName>татарча, tatarça, تاتارچا‎</nativeName>
     </language>
     <language>
-      <isoCode>tw</isoCode>
+      <key>tw</key>
       <nativeName>Twi</nativeName>
     </language>
     <language>
-      <isoCode>ty</isoCode>
+      <key>ty</key>
       <nativeName>Reo Tahiti</nativeName>
     </language>
     <language>
-      <isoCode>ug</isoCode>
+      <key>ug</key>
       <nativeName>Uyƣurqə, ئۇيغۇرچە‎</nativeName>
     </language>
     <language>
-      <isoCode>uk</isoCode>
+      <key>uk</key>
       <nativeName>українська</nativeName>
     </language>
     <language>
-      <isoCode>ur</isoCode>
+      <key>ur</key>
       <nativeName>اردو</nativeName>
     </language>
     <language>
-      <isoCode>uz</isoCode>
+      <key>uz</key>
       <nativeName>zbek, Ўзбек, أۇزبېك‎</nativeName>
     </language>
     <language>
-      <isoCode>ve</isoCode>
+      <key>ve</key>
       <nativeName>Tshivenḓa</nativeName>
     </language>
     <language>
-      <isoCode>vi</isoCode>
+      <key>vi</key>
       <nativeName>Tiếng Việt</nativeName>
     </language>
     <language>
-      <isoCode>vo</isoCode>
+      <key>vo</key>
       <nativeName>Volapük</nativeName>
     </language>
     <language>
-      <isoCode>wa</isoCode>
+      <key>wa</key>
       <nativeName>Walon</nativeName>
     </language>
     <language>
-      <isoCode>wo</isoCode>
+      <key>wo</key>
       <nativeName>Wollof</nativeName>
     </language>
     <language>
-      <isoCode>xh</isoCode>
+      <key>xh</key>
       <nativeName>isiXhosa</nativeName>
     </language>
     <language>
-      <isoCode>yi</isoCode>
+      <key>yi</key>
       <nativeName>ייִדיש</nativeName>
     </language>
     <language>
-      <isoCode>yo</isoCode>
+      <key>yo</key>
       <nativeName>Yorùbá</nativeName>
     </language>
     <language>
-      <isoCode>za</isoCode>
+      <key>za</key>
       <nativeName>Saɯ cueŋƅ, Saw cuengh</nativeName>
     </language>
     <language>
-      <isoCode>zh</isoCode>
+      <key>zh</key>
       <nativeName>中文 (Zhōngwén), 汉语, 漢語</nativeName>
     </language>
   </languages>

@@ -122,8 +122,8 @@ namespace Allors.Database.Domain
                             var value = resourceSet.GetString(key);
                             if (value != null)
                             {
-                                var locales = new LocaleByName(this.transaction);
-                                var locale = locales[cultureInfo.TwoLetterISOLanguageName];
+                                var localeByKey = new LocaleByKey(this.transaction);
+                                var locale = localeByKey[cultureInfo.TwoLetterISOLanguageName];
                                 var localisedText = this.transaction.Build<LocalisedText>(v =>
                                 {
                                     v.Locale = locale;

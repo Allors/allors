@@ -18,9 +18,9 @@ namespace Allors.Database.Domain
         {
             base.BaseSetup(setup);
 
-            var localeByName = this.Transaction.Scoped<LocaleByName>();
+            var localeByKey = this.Transaction.Scoped<LocaleByKey>();
             var singleton = this.Transaction.GetSingleton() ?? this.Transaction.Build<Singleton>();
-            singleton.DefaultLocale = localeByName["en"];
+            singleton.DefaultLocale = localeByKey["en"];
         }
     }
 }

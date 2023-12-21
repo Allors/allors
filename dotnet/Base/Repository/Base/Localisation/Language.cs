@@ -7,32 +7,12 @@
 namespace Allors.Repository
 {
     using Attributes;
-    
+
     #region Allors
     [Id("4a0eca4b-281f-488d-9c7e-497de882c044")]
     #endregion
-    public partial class Language : Object
+    public partial class Language : Enumeration
     {
-        #region inherited properties
-        public Revocation[] Revocations { get; set; }
-        public DelegatedAccess AccessDelegation { get; set; }
-        public SecurityToken[] SecurityTokens { get; set; }
-        #endregion
-
-        #region Allors
-        [Id("d2a32d9f-21cc-4f9d-b0d3-a9b75da66907")]
-        #endregion
-        [Required]
-        [Size(256)]
-        public string IsoCode { get; set; }
-
-        #region Allors
-        [Id("f091b264-e6b1-4a57-bbfb-8225cbe8190c")]
-        #endregion
-        [Multiplicity(Multiplicity.OneToMany)]
-        [Indexed]
-        public LocalisedText[] LocalisedNames { get; set; }
-
         #region Allors
         [Id("842CC899-3F37-455A-AE91-51D29D615E69")]
         #endregion
@@ -42,7 +22,13 @@ namespace Allors.Repository
         [Size(256)]
         public string NativeName { get; set; }
 
-        #region inherited methods
+        #region inherited
+        public Revocation[] Revocations { get; set; }
+        public DelegatedAccess AccessDelegation { get; set; }
+        public SecurityToken[] SecurityTokens { get; set; }
+        public string Key { get; set; }
+        public LocalisedText[] LocalisedNames { get; set; }
+        public bool IsActive { get; set; }
         public void OnBuild() { }
         public void OnPostBuild() { }
         public void OnInit() { }

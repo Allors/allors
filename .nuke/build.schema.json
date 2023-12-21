@@ -123,11 +123,11 @@
               "Install",
               "Reset",
               "TypescriptInstall",
-              "TypescriptSystemWorkspaceAdapters",
-              "TypescriptSystemWorkspaceAdaptersJson",
-              "TypescriptSystemWorkspaceMeta",
-              "TypescriptSystemWorkspaceMetaJson",
               "TypescriptWorkspaceAdaptersJsonTests",
+              "TypescriptWorkspaceSystemAdapters",
+              "TypescriptWorkspaceSystemAdaptersJson",
+              "TypescriptWorkspaceSystemMeta",
+              "TypescriptWorkspaceSystemMetaJson",
               "TypescriptWorkspaceTests"
             ]
           }
@@ -178,11 +178,11 @@
               "Install",
               "Reset",
               "TypescriptInstall",
-              "TypescriptSystemWorkspaceAdapters",
-              "TypescriptSystemWorkspaceAdaptersJson",
-              "TypescriptSystemWorkspaceMeta",
-              "TypescriptSystemWorkspaceMetaJson",
               "TypescriptWorkspaceAdaptersJsonTests",
+              "TypescriptWorkspaceSystemAdapters",
+              "TypescriptWorkspaceSystemAdaptersJson",
+              "TypescriptWorkspaceSystemMeta",
+              "TypescriptWorkspaceSystemMetaJson",
               "TypescriptWorkspaceTests"
             ]
           }

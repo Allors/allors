@@ -9,11 +9,7 @@ namespace Allors.Database.Meta.Configuration
     {
         private void BuildBase(MetaPopulation meta, Domains domains, RelationTypes relationTypes, MethodTypes methodTypes)
         {
-            relationTypes.CountryIsoCode.IsKey = true;
-            relationTypes.CurrencyIsoCode.IsKey = true;
             relationTypes.EnumerationKey.IsKey = true;
-            relationTypes.LanguageIsoCode.IsKey = true;
-            relationTypes.LocaleName.IsKey = true;
             relationTypes.UniquelyIdentifiableUniqueId.IsKey = true;
         }
     }

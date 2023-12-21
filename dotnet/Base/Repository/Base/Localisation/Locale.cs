@@ -11,21 +11,8 @@ namespace Allors.Repository
     #region Allors
     [Id("45033ae6-85b5-4ced-87ce-02518e6c27fd")]
     #endregion
-    public partial class Locale : Object
+    public partial class Locale : Enumeration
     {
-        #region inherited properties
-        public Revocation[] Revocations { get; set; }
-        public DelegatedAccess AccessDelegation { get; set; }
-        public SecurityToken[] SecurityTokens { get; set; }
-
-        #endregion
-
-        #region Allors
-        [Id("2a2c6f77-e6a2-4eab-bfe3-5d35a8abd7f7")]
-        [Size(256)]
-        #endregion
-        public string Name { get; set; }
-
         #region Allors
         [Id("d8cac34a-9bb2-4190-bd2a-ec0b87e04cf5")]
         #endregion
@@ -42,12 +29,15 @@ namespace Allors.Repository
         public Country Country { get; set; }
 
         #region inherited methods
+        public Revocation[] Revocations { get; set; }
+        public DelegatedAccess AccessDelegation { get; set; }
+        public SecurityToken[] SecurityTokens { get; set; }
+        public string Key { get; set; }
+        public LocalisedText[] LocalisedNames { get; set; }
+        public bool IsActive { get; set; }
         public void OnBuild() { }
-
         public void OnPostBuild() { }
-
         public void OnInit() { }
-
         public void OnPostDerive() { }
         #endregion
     }

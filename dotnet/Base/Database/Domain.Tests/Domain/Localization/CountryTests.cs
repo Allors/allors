@@ -23,7 +23,7 @@ namespace Allors.Database.Domain.Tests
 
             this.Transaction.Build<Country>(v =>
             {
-                v.IsoCode = "XX";
+                v.Key = "XX";
             });
 
             Assert.False(this.Transaction.Derive(false).HasErrors);

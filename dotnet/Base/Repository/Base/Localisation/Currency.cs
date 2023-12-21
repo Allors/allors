@@ -8,36 +8,19 @@ namespace Allors.Repository
 {
     using Attributes;
     
-
-
     #region Allors
     [Id("fd397adf-40b4-4ef8-b449-dd5a24273df3")]
     #endregion
     [Plural("Currencies")]
-    public partial class Currency : Object
+    public partial class Currency : Enumeration
     {
-        #region inherited properties
+        #region inherited
         public Revocation[] Revocations { get; set; }
         public DelegatedAccess AccessDelegation { get; set; }
         public SecurityToken[] SecurityTokens { get; set; }
-
-        #endregion
-
-        #region Allors
-        [Id("294a4bdc-f03a-47a2-a649-419e6b9021a3")]
-        #endregion
-        [Required]
-        [Size(256)]
-        public string IsoCode { get; set; }
-
-        #region Allors
-        [Id("523849D5-5AF9-43A9-89C2-864EF67C77CA")]
-        #endregion
-        [Multiplicity(Multiplicity.OneToMany)]
-        [Indexed]
+        public string Key { get; set; }
         public LocalisedText[] LocalisedNames { get; set; }
-
-        #region inherited methods
+        public bool IsActive { get; set; }
         public void OnBuild() { }
 
         public void OnPostBuild() { }

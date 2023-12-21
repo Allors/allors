@@ -24,7 +24,7 @@ namespace Allors.Database.Domain.Tests
 
             this.Transaction.Build<Currency>(v =>
             {
-                v.IsoCode = "BND";
+                v.Key = "BND";
             });
 
             Assert.False(this.Transaction.Derive(false).HasErrors);

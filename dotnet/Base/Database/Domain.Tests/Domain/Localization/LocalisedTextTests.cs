@@ -21,11 +21,11 @@ namespace Allors.Database.Domain.Tests
 
             this.Transaction.Rollback();
 
-            var localeByName = this.Transaction.Scoped<LocaleByName>();
+            var localeByKey = this.Transaction.Scoped<LocaleByKey>();
 
             this.Transaction.Build<LocalisedText>(v =>
             {
-                v.Locale = localeByName["en"];
+                v.Locale = localeByKey["en"];
             });
 
             Assert.False(this.Transaction.Derive(false).HasErrors);

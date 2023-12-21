@@ -5,15 +5,13 @@
 
 namespace Allors.Database.Domain
 {
-    using System.Linq;
-
     public partial class LocalisedText
     {
         public string DebuggerDisplay
         {
             get
             {
-                return $"{this.Locale.Name}: {this.Text}";
+                return $"{this.Locale.Key}: {this.Text}";
             }
         }
     }
