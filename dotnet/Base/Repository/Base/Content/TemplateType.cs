@@ -13,10 +13,9 @@ namespace Allors.Repository
     #region Allors
     [Id("BDABB545-3B39-4F91-9D01-A589A5DA670E")]
     #endregion
-    public partial class TemplateType : UniquelyIdentifiable, Deletable
+    public partial class TemplateType : Enumeration, Deletable
     {
         #region inherited properties
-        public Guid UniqueId { get; set; }
         public Revocation[] Revocations { get; set; }
         public DelegatedAccess AccessDelegation { get; set; }
         public SecurityToken[] SecurityTokens { get; set; }
@@ -24,6 +23,10 @@ namespace Allors.Repository
         #endregion
 
         #region inherited methods
+        public string Key { get; set; }
+        public LocalisedText[] LocalisedNames { get; set; }
+        public bool IsActive { get; set; }
+
         public void OnBuild() { }
 
         public void OnPostBuild() { }
