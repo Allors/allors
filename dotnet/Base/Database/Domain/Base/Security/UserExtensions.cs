@@ -48,7 +48,7 @@ namespace Allors.Database.Domain
         {
             if (!@this.ExistOwnerGrant)
             {
-                var cache = @this.Transaction().Scoped<RoleByKey>();
+                var cache = @this.Transaction().Scoped<RoleByUniqueId>();
                 var ownerRole = cache.Owner;
                 @this.OwnerGrant = @this.Transaction().Build<Grant>(grant =>
                 {

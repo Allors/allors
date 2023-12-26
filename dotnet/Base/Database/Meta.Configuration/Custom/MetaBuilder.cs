@@ -545,9 +545,6 @@ namespace Allors.Database.Meta.Configuration
             AddWorkspace(methodTypes.ApproveTaskApprove, new[] { "Default" });
             AddWorkspace(methodTypes.ApproveTaskReject, new[] { "Default" });
 
-            // ObjectState;
-            AddWorkspace(relationTypes.ObjectStateName, new[] { "Default" });
-
             // Task;
             AddWorkspace(relationTypes.TaskWorkItem, new[] { "Default" });
             AddWorkspace(relationTypes.TaskTitle, new[] { "Default" });

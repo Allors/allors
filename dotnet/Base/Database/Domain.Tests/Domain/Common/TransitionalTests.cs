@@ -19,7 +19,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void SingleObjectState()
         {
-            var orderStates = this.Transaction.Scoped<OrderStateByUniqueId>();
+            var orderStates = this.Transaction.Scoped<OrderStateByKey>();
 
             var initial = orderStates.Initial;
             var confirmed = orderStates.Confirmed;
@@ -70,8 +70,8 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void MultipleObjectStates()
         {
-            var orderStates = this.Transaction.Scoped<OrderStateByUniqueId>();
-            var shipmentStates = this.Transaction.Scoped<ShipmentStateByUniqueId>();
+            var orderStates = this.Transaction.Scoped<OrderStateByKey>();
+            var shipmentStates = this.Transaction.Scoped<ShipmentStateByKey>();
 
             var initial = orderStates.Initial;
             var confirmed = orderStates.Confirmed;

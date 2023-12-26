@@ -22,9 +22,9 @@ namespace Allors.Repository
 
         public Revocation ObjectRevocation { get; set; }
 
-        public string Name { get; set; }
-
-        public Guid UniqueId { get; set; }
+        public string Key { get; set; }
+        public LocalisedText[] LocalisedNames { get; set; }
+        public bool IsActive { get; set; }
 
         #endregion
 
