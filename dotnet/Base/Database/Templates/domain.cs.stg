@@ -197,7 +197,7 @@ $class.KeyRoleTypes:{roleType|$classKeyRoleTypes()$}$
 
 class_Object() ::= <<
 $if(object.Handle)$
-		public static readonly $objectType_Name(object.Handle.RoleType.ObjectType)$ $object.Handle.Name$Key = $object_Value(object.Handle.RoleType.ObjectType, object.Handle.Value)$;
+		public const $objectType_Name(object.Handle.RoleType.ObjectType)$ $object.Handle.Name$Key = $object_Value(object.Handle.RoleType.ObjectType, object.Handle.Value)$;
 
 		public bool Is$object.Handle.Name$ => this.$object.Handle.RoleType.Name$.Equals($object.Handle.Name$Key);
 $endif$
