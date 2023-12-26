@@ -20,7 +20,7 @@ namespace Allors.Database.Domain
 
             var merge = this.Transaction.Caches().SecurityTokenByUniqueId().Merger().Action();
 
-            var grants = this.Transaction.Scoped<GrantByUniqueId>();
+            var grants = this.Transaction.Scoped<GrantByKey>();
 
             merge(SecurityToken.InitialSecurityTokenId, v =>
               {

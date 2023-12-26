@@ -25,7 +25,7 @@ namespace Commands
             using var transaction = this.Parent.Database.CreateTransaction();
             this.Logger.Info("Begin");
 
-            var automatedAgents = transaction.Scoped<AutomatedAgentByUniqueId>();
+            var automatedAgents = transaction.Scoped<AutomatedAgentByKey>();
             var scheduler = automatedAgents.System;
             transaction.Services.Get<IUserService>().User = scheduler;
 

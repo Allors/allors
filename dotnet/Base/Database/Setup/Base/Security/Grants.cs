@@ -23,7 +23,7 @@ namespace Allors.Database.Domain
             {
                 var merge = this.Transaction.Caches().GrantByUniqueId().Merger().Action();
 
-                var roles = this.Transaction.Scoped<RoleByUniqueId>();
+                var roles = this.Transaction.Scoped<RoleByKey>();
                 var userGroups = this.Transaction.Scoped<UserGroupByUniqueId>();
 
                 merge(Grant.CreatorsId, v =>
