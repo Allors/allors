@@ -2,32 +2,29 @@
 {
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using Database.Meta;
     using Database.Population;
 
     public partial class TranslationsToFile
     {
         private readonly DirectoryInfo directoryInfo;
-        private readonly IMetaPopulation metaPopulation;
+        private readonly IDatabase database;
+        private readonly M M;
 
-        public TranslationsToFile(DirectoryInfo directoryInfo, IMetaPopulation metaPopulation)
+        public TranslationsToFile(DirectoryInfo directoryInfo, IDatabase database, IDictionary<IClass, IDictionary<string, Translations>> translationsByIsoCodeByClass)
         {
             this.directoryInfo = directoryInfo;
-            this.metaPopulation = metaPopulation;
+            this.database = database;
+            this.TranslationsByIsoCodeByClass = translationsByIsoCodeByClass;
+
+            this.M = this.database.Services.Get<M>();
         }
 
-        public IDictionary<IClass, IDictionary<string, Translation[]>> TranslationsByIsoCodeByClass { get; }
+        public IDictionary<IClass, IDictionary<string, Translations>> TranslationsByIsoCodeByClass { get; }
 
         public void Roundtrip()
         {
-            //using var stream = File.Open(directoryInfo.FullName, FileMode.Create);
-
-            //IEnumerable<IObject> objects = this.roundtrip.Objects();
-
-            //var recordsByClass = objects.ToRecordsByClass(this.roundtrip.HandleResolver());
-
-            //var recordsWriter = new RecordsWriter(this.metaPopulation);
-            //recordsWriter.Write(stream, recordsByClass);
         }
     }
 }

@@ -5,8 +5,13 @@
 
 namespace Commands
 {
+    using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
+    using Allors.Database.Domain;
+    using Allors.Database.Meta;
     using Allors.Database.Population;
+    using Allors.Database.Population.Resx;
     using McMaster.Extensions.CommandLineUtils;
     using NLog;
 
@@ -17,24 +22,49 @@ namespace Commands
 
         public Logger Logger => LogManager.GetCurrentClassLogger();
 
-        [Option("-f", Description = "records file")]
-        public string FileName { get; set; }
+        [Option("-d", Description = "directory")]
+        public string DirectoryName { get; set; }
 
         public int OnExecute(CommandLineApplication app)
         {
-            this.Logger.Info("Begin");
-
-            var fileName = this.FileName ?? this.Parent.Configuration["recordsFile"] ?? "../../../../Population/Records.xml";
-            var fileInfo = new FileInfo(fileName);
-
-            this.Logger.Info("Saving {file}", fileInfo.FullName);
-
             var database = this.Parent.Database;
 
-            var recordsFromFile = new RecordsFromFile(fileInfo, database.MetaPopulation);
+            this.Logger.Info("Begin");
+
+            var directory = this.DirectoryName ?? this.Parent.Configuration["roundtrip"] ?? "../../../../Population";
+            var directoryInfo = new DirectoryInfo(directory);
+
+            this.Logger.Info("Records");
+
+            var recordsFileInfo = new FileInfo(Path.Combine(directoryInfo.FullName, "Records.xml"));
+
+            this.Logger.Info("Saving {file}", recordsFileInfo.FullName);
+
+            var recordsFromFile = new RecordsFromFile(recordsFileInfo, database.MetaPopulation);
             var roundtrip = new RecordRoundtripStrategy(database, recordsFromFile.RecordsByClass);
-            var recordsToFile = new RecordsToFile(fileInfo, database.MetaPopulation, roundtrip);
+            var recordsToFile = new RecordsToFile(recordsFileInfo, database.MetaPopulation, roundtrip);
             recordsToFile.Roundtrip();
+
+            this.Logger.Info("Translations");
+
+
+            using var transaction = database.CreateTransaction();
+            var enumerations = transaction.Extent<Enumeration>();
+
+            // IDictionary<IClass, IDictionary< string, Translations[]>>
+            var translationsByIsoCodeByClass = enumerations
+                .GroupBy(v => v.Strategy.Class)
+                .ToDictionary(v => v.Key, v => v
+                    .SelectMany(w => w.LocalisedNames)
+                    .Select(w => new Translation(v.Key, w.Locale.Key, w.EnumerationWhereLocalisedName.Key, w.Text))
+                    .GroupBy(w => w.IsoCode)
+                    .ToDictionary(w => w.Key, w => new Translations(v.Key, w.Key, w.ToDictionary(x => x.Key, x => x.Value))) as IDictionary<string, Translations>
+                );
+
+            var translationsDirectoryInfo = new DirectoryInfo(Path.Combine(directoryInfo.FullName, "Translations"));
+            var translationsToFile = new TranslationsToFile(translationsDirectoryInfo, database, translationsByIsoCodeByClass);
+
+            translationsToFile.Roundtrip();
 
             this.Logger.Info("End");
             return ExitCode.Success;

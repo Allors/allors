@@ -9,12 +9,12 @@
     public partial class RecordsFromFile
     {
         private readonly FileInfo fileInfo;
-        private readonly IMetaPopulation metaPo;
+        private readonly IMetaPopulation metaPopulation;
 
         public RecordsFromFile(FileInfo fileInfo, IMetaPopulation metaPopulation)
         {
             this.fileInfo = fileInfo;
-            this.metaPo = metaPopulation;
+            this.metaPopulation = metaPopulation;
 
             if (!this.fileInfo.Exists)
             {
@@ -23,7 +23,7 @@
             else
             {
                 using var existingStream = File.Open(this.fileInfo.FullName, FileMode.Open);
-                var recordsReader = new RecordsReader(this.metaPo);
+                var recordsReader = new RecordsReader(this.metaPopulation);
                 this.RecordsByClass = recordsReader.Read(existingStream);
             }
         }

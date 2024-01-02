@@ -17,7 +17,7 @@
 
             if (!this.directoryInfo.Exists)
             {
-                this.TranslationsByIsoCodeByClass = new Dictionary<IClass, IDictionary<string, Translation[]>>();
+                this.TranslationsByIsoCodeByClass = new Dictionary<IClass, IDictionary<string, Translations[]>>();
             }
             else
             {
@@ -27,6 +27,6 @@
             }
         }
 
-        public IDictionary<IClass, IDictionary<string, Translation[]>> TranslationsByIsoCodeByClass { get; }
+        public IDictionary<IClass, IDictionary<string, Translations[]>> TranslationsByIsoCodeByClass { get; }
     }
 }
