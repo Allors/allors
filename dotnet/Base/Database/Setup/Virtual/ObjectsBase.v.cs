@@ -19,8 +19,6 @@ namespace Allors.Database.Domain
         {
             this.BaseSetup(setup);
             this.CustomSetup(setup);
-
-            this.Transaction.Derive();
         }
 
         public void Prepare(Security security)

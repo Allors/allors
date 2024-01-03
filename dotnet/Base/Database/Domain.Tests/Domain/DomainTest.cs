@@ -38,7 +38,7 @@ namespace Allors.Database.Domain.Tests
             {
                 SetupSecurity = false,
                 RecordsByClass = new RecordsFromResource(database.MetaPopulation).RecordsByClass,
-                ResourceSetByCultureInfoByRoleTypeByClass = new TranslationsFromResource(database.MetaPopulation, new TranslationConfiguration()).ResourceSetByCultureInfoByRoleTypeByClass
+                Translation = new TranslationsFromResource(database.MetaPopulation, new TranslationConfiguration())
             };
 
             this.Setup(database, populate);

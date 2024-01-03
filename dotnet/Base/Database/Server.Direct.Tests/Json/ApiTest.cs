@@ -58,7 +58,7 @@ namespace Tests
             {
                 SetupSecurity = true, 
                 RecordsByClass = recordsFromResource.RecordsByClass,
-                ResourceSetByCultureInfoByRoleTypeByClass = new TranslationsFromResource(database.MetaPopulation, new TranslationConfiguration()).ResourceSetByCultureInfoByRoleTypeByClass
+                Translation= new TranslationsFromResource(database.MetaPopulation, new TranslationConfiguration())
             };
 
             this.Setup(database, populate);

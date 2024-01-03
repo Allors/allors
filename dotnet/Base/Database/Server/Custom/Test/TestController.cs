@@ -56,13 +56,10 @@ namespace Allors.Database.Server.Controllers
                 var database = this.DatabaseService.Database;
                 database.Init();
 
-                var recordsFromResource = new RecordsFromResource(database.MetaPopulation);
-                var translationsFromResource = new TranslationsFromResource(database.MetaPopulation, new TranslationConfiguration());
-
                 var config = new Config
                 {
-                    RecordsByClass = recordsFromResource.RecordsByClass,
-                    ResourceSetByCultureInfoByRoleTypeByClass = translationsFromResource.ResourceSetByCultureInfoByRoleTypeByClass
+                    RecordsByClass = new RecordsFromResource(database.MetaPopulation).RecordsByClass,
+                    Translation = new TranslationsFromResource(database.MetaPopulation, new TranslationConfiguration())
                 };
 
                 new Setup(database, config).Apply();

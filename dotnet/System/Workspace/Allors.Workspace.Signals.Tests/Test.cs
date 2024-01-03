@@ -47,7 +47,7 @@
                 var config = new Config
                 {
                     RecordsByClass = new RecordsFromResource(this.database.MetaPopulation).RecordsByClass,
-                    ResourceSetByCultureInfoByRoleTypeByClass = new TranslationsFromResource(this.database.MetaPopulation, new TranslationConfiguration()).ResourceSetByCultureInfoByRoleTypeByClass
+                    Translation = new TranslationsFromResource(this.database.MetaPopulation, new TranslationConfiguration())
                 };
 
                 new Setup(this.database, config).Apply();
