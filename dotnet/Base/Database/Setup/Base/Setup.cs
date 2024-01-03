@@ -5,6 +5,7 @@
 
 namespace Allors.Database.Domain
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Allors.Graph;
@@ -91,7 +92,7 @@ namespace Allors.Database.Domain
 
         private void BaseOnPostPrepare()
         {
-            foreach (var @class in this.Config.ResourceSetByCultureInfoByRoleTypeByClass.Keys)
+            foreach (var @class in this.Config.Translation.ResourceSetByCultureInfoByRoleTypeByClass.Keys)
             {
                 this.AddDependency(@class, this.M.Locale);
             }
@@ -104,14 +105,14 @@ namespace Allors.Database.Domain
         private void BaseOnPostSetup()
         {
         }
-        
+
 
         private void BaseOnCreated(IObject @object)
         {
             IClass @class = @object.Strategy.Class;
             if (@class.KeyRoleType != null)
             {
-                if (this.Config.ResourceSetByCultureInfoByRoleTypeByClass.TryGetValue(@class, out var resourceSetByCultureInfoByRoleType))
+                if (this.Config.Translation.ResourceSetByCultureInfoByRoleTypeByClass.TryGetValue(@class, out var resourceSetByCultureInfoByRoleType))
                 {
                     var key = (string)@object.Strategy.GetUnitRole(@class.KeyRoleType);
 
@@ -119,19 +120,22 @@ namespace Allors.Database.Domain
                     {
                         foreach (var (cultureInfo, resourceSet) in resourceSetByCultureInfo)
                         {
-                            var value = resourceSet.GetString(key);
-                            if (value != null)
-                            {
-                                var localeByKey = new LocaleByKey(this.transaction);
-                                var locale = localeByKey[cultureInfo.TwoLetterISOLanguageName];
-                                var localisedText = this.transaction.Build<LocalisedText>(v =>
-                                {
-                                    v.Locale = locale;
-                                    v.Text = value;
-                                });
+                            var value = resourceSet?.GetString(key);
 
-                                @object.Strategy.AddCompositesRole(roleType, localisedText);
+                            if (value == null)
+                            {
+                                continue;
                             }
+
+                            var localeByKey = new LocaleByKey(this.transaction);
+                            var locale = localeByKey[cultureInfo.TwoLetterISOLanguageName];
+                            var localisedText = this.transaction.Build<LocalisedText>(v =>
+                            {
+                                v.Locale = locale;
+                                v.Text = value;
+                            });
+
+                            @object.Strategy.AddCompositesRole(roleType, localisedText);
                         }
                     }
                 }

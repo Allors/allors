@@ -22,6 +22,6 @@ namespace Allors.Database.Domain
 
         public IDictionary<IClass, Record[]> RecordsByClass { get; set; }
 
-        public IDictionary<IClass, IDictionary<IRoleType, IDictionary<CultureInfo, ResourceSet>>> ResourceSetByCultureInfoByRoleTypeByClass { get; set; }
+        public ITranslation Translation { get; set; }
     }
 }

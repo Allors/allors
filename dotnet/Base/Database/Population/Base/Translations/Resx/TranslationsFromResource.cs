@@ -9,13 +9,14 @@
     using Database.Meta;
     using Population;
 
-    public partial class TranslationsFromResource
+    public partial class TranslationsFromResource : ITranslation
     {
         private const string Translations = ".translations.";
         private const string ResourcesExtension = ".resources";
 
         public TranslationsFromResource(IMetaPopulation metaPopulation, ITranslationConfiguration configuration)
         {
+            this.Configuration = configuration;
             CultureInfo[] cultureInfos = [CultureInfo.InvariantCulture, .. configuration.AdditionalCultureInfos];
 
             var assembly = Assembly.GetExecutingAssembly();
@@ -55,6 +56,8 @@
                 resourceSetByCultureInfoByRoleType.Add(roleType, resourceSetByCultureInfo);
             }
         }
+
+        public ITranslationConfiguration Configuration { get; }
 
         public IDictionary<IClass, IDictionary<IRoleType, IDictionary<CultureInfo, ResourceSet>>> ResourceSetByCultureInfoByRoleTypeByClass { get; }
     }

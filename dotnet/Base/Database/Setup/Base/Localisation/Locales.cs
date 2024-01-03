@@ -9,25 +9,19 @@ namespace Allors.Database.Domain
     {
         protected override void BasePrepare(Setup setup)
         {
-            base.BasePrepare(setup);
-
-            setup.AddDependency(this.ObjectType, this.M.Country);
-            setup.AddDependency(this.ObjectType, this.M.Language);
-        }
-
-        protected override void BaseSetup(Setup setup)
-        {
-            base.BaseSetup(setup);
-
-            var languages = this.Transaction.Scoped<LanguageByKey>();
+            base.CustomPrepare(setup);
 
             var merge = this.Transaction.Caches().LocaleByKey().Merger().Action();
 
-            // Create a generic locale (without a region) for every language.
-            foreach (Language language in this.Transaction.Extent<Language>())
+            var configuration = setup.Config.Translation.Configuration;
+
+            // Default
+            merge(configuration.DefaultCultureInfo.Name, v => { });
+
+            // Additional
+            foreach (var cultureInfo in configuration.AdditionalCultureInfos)
             {
-                var name = language.Key.ToLowerInvariant();
-                merge(name, v => v.Language = languages[name]);
+                merge(cultureInfo.Name, v => { });
             }
         }
     }
