@@ -28,6 +28,7 @@ namespace Commands
         public int OnExecute(CommandLineApplication app)
         {
             var database = this.Parent.Database;
+            var m = database.Services.Get<M>();
 
             this.Logger.Info("Begin");
 
@@ -61,8 +62,7 @@ namespace Commands
                     .ToDictionary(w => w.Key, w => new Translations(v.Key, w.Key, w.ToDictionary(x => x.Key, x => x.Value))) as IDictionary<string, Translations>
                 );
 
-            var translationsDirectoryInfo = new DirectoryInfo(Path.Combine(directoryInfo.FullName, "Translations"));
-            var translationsToFile = new TranslationsToFile(translationsDirectoryInfo, database, translationsByIsoCodeByClass);
+            var translationsToFile = new TranslationsToFile(directoryInfo, translationsByIsoCodeByClass, m.Enumeration.LocalisedNames);
 
             translationsToFile.Roundtrip();
 
