@@ -28,7 +28,6 @@ namespace Allors.Repository
         public SecurityToken[] SecurityTokens { get; set; }
         public string Key { get; set; }
         public LocalisedText[] LocalisedNames { get; set; }
-        public bool IsActive { get; set; }
         public void OnBuild() { }
         public void OnPostBuild() { }
         public void OnInit() { }
