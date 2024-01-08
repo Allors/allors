@@ -197,9 +197,9 @@ $class.KeyRoleTypes:{roleType|$classKeyRoleTypes()$}$
 
 class_Object() ::= <<
 $if(object.Handle)$
-		public const $objectType_Name(object.Handle.RoleType.ObjectType)$ _$object.Handle.Name$ = $object_Value(object.Handle.RoleType.ObjectType, object.Handle.Value)$;
+		public const $objectType_Name(object.Handle.RoleType.ObjectType)$ $object.Handle.Name$Key = $object_Value(object.Handle.RoleType.ObjectType, object.Handle.Value)$;
 
-		public bool Is$object.Handle.Name$ => this.$object.Handle.RoleType.Name$.Equals(_$object.Handle.Name$);
+		public bool Is$object.Handle.Name$ => this.$object.Handle.RoleType.Name$.Equals($object.Handle.Name$Key);
 $endif$
 >>
 
@@ -431,7 +431,7 @@ $class.Objects:{object|$byClass_Object()$}; separator="\n"$
 
 byClass_Object() ::= <<
 $if(object.Handle)$
-		public $class.Name$ $object.Handle.Name$ => this.cache[$class.Name$._$object.Handle.Name$];
+		public $class.Name$ $object.Handle.Name$ => this.cache[$class.Name$.$object.Handle.Name$Key];
 $endif$
 >>
 
