@@ -1,4 +1,4 @@
-// <copyright file="Multiplicity.cs" company="Allors bvba">
+﻿// <copyright file="Multiplicity.cs" company="Allors bvba">
 // Copyright (c) Allors bvba. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -29,7 +29,7 @@ namespace Allors
 
         public bool Equals(Version other) => this.Value == other.Value;
 
-        public override bool Equals(object obj) => obj is Version other && this.Equals(other);
+        public override bool Equals(object? obj) => obj is Version other && this.Equals(other);
 
         public override int GetHashCode() => this.Value.GetHashCode();
 

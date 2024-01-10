@@ -36,13 +36,13 @@ namespace Allors.Graph
             this.dependencies.Add(node);
         }
 
-        public bool Equals(Node<T> other) => other != null && this.@object.Equals(other.@object);
+        public bool Equals(Node<T>? other) => other != null && this.@object.Equals(other.@object);
 
-        public override bool Equals(object obj) => this.Equals((Node<T>)obj);
+        public override bool Equals(object? obj) => this.Equals((Node<T>?)obj);
 
         public override int GetHashCode() => this.@object.GetHashCode();
 
-        public override string ToString() => this.@object.ToString();
+        public override string ToString() => this.@object?.ToString() ?? string.Empty;
 
         private void Execute(Node<T> currentRoot, Action<T> execute)
         {
