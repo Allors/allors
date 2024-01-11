@@ -9,15 +9,13 @@ namespace Allors.Workspace
     using Meta;
     using Signals;
 
-    public class UnitRole<T> : IUnitRole<T>, IOperandInternal
+    public class UnitRole<T> : IUnitRole<T>, IRoleInternal
     {
-        private long databaseVersion;
-        private long workspaceVersion;
-
         public UnitRole(Strategy strategy, IRoleType roleType)
         {
             this.Object = strategy;
             this.RoleType = roleType;
+            this.Version = 0;
         }
 
         IStrategy IRelationEnd.Object => this.Object;
@@ -50,17 +48,17 @@ namespace Allors.Workspace
 
         public bool IsModified => this.Object.IsModified(this.RoleType);
 
-        public long Version
-        {
-            get
-            {
-                if (this.databaseVersion != this.Object.Workspace.DatabaseVersion)
-                {
-                    this.databaseVersion = this.Object.Workspace.DatabaseVersion;
-                    ++this.workspaceVersion;
-                }
+        public long Version { get; private set; }
 
-                return workspaceVersion;
+        public event ChangedEventHandler Changed
+        {
+            add
+            {
+                this.Object.Workspace.Add(this, value);
+            }
+            remove
+            {
+                this.Object.Workspace.Remove(this, value);
             }
         }
 
@@ -68,9 +66,9 @@ namespace Allors.Workspace
 
         IUnitRole<T> ISignal<IUnitRole<T>>.Value => this;
 
-        public void BumpWorkspaceVersion()
+        public void BumpVersion()
         {
-            ++this.workspaceVersion;
+            ++this.Version;
         }
 
         public void Restore()

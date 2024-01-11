@@ -11,11 +11,11 @@ namespace Allors.Workspace
     using Meta;
     using Signals;
 
-    public class CompositesRole<T> : ICompositesRole<T>, IOperandInternal
+    public class CompositesRole<T> : ICompositesRole<T>, IRoleInternal
         where T : class, IObject
     {
         private long databaseVersion;
-        private long workspaceVersion;
+
         public CompositesRole(Strategy strategy, IRoleType roleType)
         {
             this.Object = strategy;
@@ -78,27 +78,27 @@ namespace Allors.Workspace
 
         public bool IsModified => this.Object.IsModified(this.RoleType);
 
-        public long Version
+        public long Version { get; private set; }
+        
+        public event ChangedEventHandler Changed
         {
-            get
+            add
             {
-                if (this.databaseVersion != this.Object.Workspace.DatabaseVersion)
-                {
-                    this.databaseVersion = this.Object.Workspace.DatabaseVersion;
-                    ++this.workspaceVersion;
-                }
-
-                return workspaceVersion;
+                this.Object.Workspace.Add(this, value);
+            }
+            remove
+            {
+                this.Object.Workspace.Remove(this, value);
             }
         }
-        
+
         object ISignal.Value => this;
 
         ICompositesRole<T> ISignal<ICompositesRole<T>>.Value => this;
         
-        public void BumpWorkspaceVersion()
+        public void BumpVersion()
         {
-            ++this.workspaceVersion;
+            ++this.Version;
         }
 
         public void Restore()

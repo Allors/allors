@@ -10,8 +10,8 @@ public class Effect : IEffect, IUpstream
     private readonly Dispatcher dispatcher;
     private readonly Action<ITracker> dependencies;
 
-    private IDictionary<ISignal, long> workspaceVersionBySignal;
-    private IDictionary<ISignal, long> trackingWorkspaceVersionBySignal;
+    private IDictionary<ISignal, long> versionBySignal;
+    private IDictionary<ISignal, long> trackingVersionBySignal;
 
     private bool shouldRaise;
     
@@ -21,7 +21,7 @@ public class Effect : IEffect, IUpstream
         this.dependencies = dependencies;
         this.Action = action;
 
-        this.workspaceVersionBySignal = EmptyDictionary;
+        this.versionBySignal = EmptyDictionary;
     }
 
     public Action Action { get; }
@@ -38,7 +38,7 @@ public class Effect : IEffect, IUpstream
     
     public void Handle()
     {
-        this.trackingWorkspaceVersionBySignal = new Dictionary<ISignal, long>();
+        this.trackingVersionBySignal = new Dictionary<ISignal, long>();
         this.dependencies(this);
 
         if (this.shouldRaise)
@@ -47,23 +47,23 @@ public class Effect : IEffect, IUpstream
             this.Action();
         }
 
-        this.workspaceVersionBySignal = this.trackingWorkspaceVersionBySignal;
-        this.trackingWorkspaceVersionBySignal = null;
+        this.versionBySignal = this.trackingVersionBySignal;
+        this.trackingVersionBySignal = null;
         
-        this.dispatcher.UpdateTracked(this, this.workspaceVersionBySignal.Keys);
+        this.dispatcher.UpdateTracked(this, this.versionBySignal.Keys);
     }
 
     public void Track(ISignal signal)
     {
-        if (signal == null || this.trackingWorkspaceVersionBySignal.ContainsKey(signal))
+        if (signal == null || this.trackingVersionBySignal.ContainsKey(signal))
         {
             return;
         }
         
         var trackingWorkspaceVersion = signal.Version;
-        if (this.workspaceVersionBySignal.TryGetValue(signal, out var workspaceVersion))
+        if (this.versionBySignal.TryGetValue(signal, out var version))
         {
-            if (workspaceVersion != trackingWorkspaceVersion)
+            if (version != trackingWorkspaceVersion)
             {
                 this.shouldRaise = true;
             }
@@ -73,6 +73,6 @@ public class Effect : IEffect, IUpstream
             this.shouldRaise = true;
         }
 
-        this.trackingWorkspaceVersionBySignal[signal] = trackingWorkspaceVersion;
+        this.trackingVersionBySignal[signal] = trackingWorkspaceVersion;
     }
 }

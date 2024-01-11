@@ -9,11 +9,10 @@ namespace Allors.Workspace
     using Allors.Workspace.Signals;
     using Meta;
 
-    public class CompositeAssociation<T> : ICompositeAssociation<T>, IOperandInternal
+    public class CompositeAssociation<T> : ICompositeAssociation<T>, IAssociationInternal
         where T : class, IObject
     {
         private long databaseVersion;
-        private long workspaceVersion;
 
         public CompositeAssociation(Strategy @object, IAssociationType associationType)
         {
@@ -35,17 +34,17 @@ namespace Allors.Workspace
 
         public IStrategy Value => this.Object.GetCompositeAssociation(this.AssociationType);
 
-        public long Version
-        {
-            get
-            {
-                if (this.databaseVersion != this.Object.Workspace.DatabaseVersion)
-                {
-                    this.databaseVersion = this.Object.Workspace.DatabaseVersion;
-                    ++this.workspaceVersion;
-                }
+        public long Version { get; private set; }
 
-                return workspaceVersion;
+        public event ChangedEventHandler Changed
+        {
+            add
+            {
+                this.Object.Workspace.Add(this, value);
+            }
+            remove
+            {
+                this.Object.Workspace.Remove(this, value);
             }
         }
 
@@ -53,9 +52,9 @@ namespace Allors.Workspace
 
         ICompositeAssociation<T> ISignal<ICompositeAssociation<T>>.Value => this;
 
-        public void BumpWorkspaceVersion()
+        public void BumpVersion()
         {
-            ++this.workspaceVersion;
+            ++this.Version;
         }
 
         public override string ToString()

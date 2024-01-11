@@ -11,13 +11,11 @@ namespace Allors.Workspace
 
     public class Method : IMethod
     {
-        private bool previousCanExecute;
-        private long workspaceVersion;
-
         public Method(Strategy strategy, IMethodType methodType)
         {
             this.Object = strategy;
             this.MethodType = methodType;
+            this.Version = 0;
         }
 
         IStrategy IMethod.Object => this.Object;
@@ -28,21 +26,27 @@ namespace Allors.Workspace
 
         public bool CanExecute => this.Object.CanExecute(this.MethodType);
 
-        public long Version
-        {
-            get
-            {
-                if (this.previousCanExecute != this.CanExecute)
-                {
-                    ++this.workspaceVersion;
-                }
+        public long Version { get; private set; }
 
-                return this.workspaceVersion;
+        public event ChangedEventHandler Changed
+        {
+            add
+            {
+                this.Object.Workspace.Add(this, value);
+            }
+            remove
+            {
+                this.Object.Workspace.Remove(this, value);
             }
         }
 
         object ISignal.Value => this;
 
         IMethod ISignal<IMethod>.Value => this;
+
+        public void BumpVersion()
+        {
+            ++this.Version;
+        }
     }
 }

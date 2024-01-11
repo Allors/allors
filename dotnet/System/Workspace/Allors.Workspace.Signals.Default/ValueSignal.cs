@@ -5,7 +5,7 @@ using System;
 public class ValueSignal<T> : IValueSignal<T>, IDownstream
 {
     private readonly Dispatcher dispatcher;
-    private long workspaceVersion;
+    private long version;
     private T value;
 
     public ValueSignal(Dispatcher dispatcher, T value)
@@ -24,7 +24,7 @@ public class ValueSignal<T> : IValueSignal<T>, IDownstream
             if (!Equals(value, this.value))
             {
                 this.value = value;
-                ++this.workspaceVersion;
+                ++this.version;
                 this.OnChanged();
             }
         }
@@ -32,7 +32,10 @@ public class ValueSignal<T> : IValueSignal<T>, IDownstream
 
     object IValueSignal.Value { get; set; }
 
-    public long Version => this.workspaceVersion;
+
+    public event ChangedEventHandler Changed;
+    
+    public long Version => this.version;
 
     public WeakReference<IUpstream>[] Upstreams { get; set; }
 

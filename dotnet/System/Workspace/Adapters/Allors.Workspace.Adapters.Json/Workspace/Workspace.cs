@@ -117,7 +117,7 @@ namespace Allors.Workspace.Adapters.Json
                 }
             }
 
-            this.HandleDatabaseReactions();
+            this.OnPull();
 
             return pullResult;
         }

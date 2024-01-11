@@ -11,7 +11,7 @@ using Allors.Workspace.Data;
 namespace Allors.Workspace
 {
     using Signals;
-    public interface IWorkspace : ISignal<IWorkspace>, INotifyDatabaseChanged, INotifyWorkspaceChanged
+    public interface IWorkspace : ISignal<IWorkspace>
     {
         IWorkspaceServices Services { get; }
 

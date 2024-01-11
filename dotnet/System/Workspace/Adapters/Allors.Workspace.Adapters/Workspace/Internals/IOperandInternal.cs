@@ -7,6 +7,6 @@ namespace Allors.Workspace
 {
     public interface IOperandInternal : IOperand
     {
-        void BumpWorkspaceVersion();
+        void BumpVersion();
     }
 }

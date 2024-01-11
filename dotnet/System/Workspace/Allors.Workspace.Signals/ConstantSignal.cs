@@ -12,6 +12,12 @@ namespace Allors.Workspace.Signals
             this.Value = value;
         }
 
+        public event ChangedEventHandler Changed
+        {
+            add { }
+            remove { }
+        }
+
         public long Version => 0;
 
         object ISignal.Value => this.Value;

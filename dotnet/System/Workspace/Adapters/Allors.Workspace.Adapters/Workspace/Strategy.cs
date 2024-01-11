@@ -119,8 +119,9 @@ namespace Allors.Workspace.Adapters
             return this.CompositesRole(roleType);
         }
 
-        public IUnitRole<T> UnitRole<T>(IRoleType roleType) =>
-            roleType.ObjectType.Tag switch
+        public IUnitRole<T> UnitRole<T>(IRoleType roleType)
+        {
+            return roleType.ObjectType.Tag switch
             {
                 UnitTags.Binary => (IUnitRole<T>)this.Workspace.BinaryRole(this, roleType),
                 UnitTags.Boolean => (IUnitRole<T>)this.Workspace.BooleanRole(this, roleType),
@@ -132,6 +133,7 @@ namespace Allors.Workspace.Adapters
                 UnitTags.Unique => (IUnitRole<T>)this.Workspace.UniqueRole(this, roleType),
                 _ => throw new Exception("Unknown unit role")
             };
+        }
 
         public ICompositeRole CompositeRole(IRoleType roleType) => this.Workspace.CompositeRole(this, roleType);
 
@@ -368,11 +370,10 @@ namespace Allors.Workspace.Adapters
                 };
 
                 this.Workspace.PushToDatabaseTracker.OnChanged(this);
-
-                this.Workspace.RegisterWorkspaceReaction(this, roleType);
+                this.Workspace.RegisterModifiedOperand(this, roleType);
             }
 
-            this.Workspace.HandleWorkspaceReactions();
+            this.Workspace.OnModifiedOperands();
         }
 
         public void SetCompositeRole(IRoleType roleType, IStrategy value)
@@ -400,7 +401,7 @@ namespace Allors.Workspace.Adapters
                     this.SetCompositeRoleManyToOne(roleType, (Strategy)value);
                 }
 
-                this.Workspace.HandleWorkspaceReactions();
+                this.Workspace.OnModifiedOperands();
             }
         }
 
@@ -442,7 +443,7 @@ namespace Allors.Workspace.Adapters
                     }
                 }
 
-                this.Workspace.HandleWorkspaceReactions();
+                this.Workspace.OnModifiedOperands();
             }
         }
 
@@ -474,7 +475,7 @@ namespace Allors.Workspace.Adapters
                     this.AddCompositesRoleStrategyManyToMany(roleType, (Strategy)value);
                 }
 
-                this.Workspace.HandleWorkspaceReactions();
+                this.Workspace.OnModifiedOperands();
             }
         }
 
@@ -500,7 +501,7 @@ namespace Allors.Workspace.Adapters
                     this.RemoveCompositesRoleStrategyManyToMany(roleType, (Strategy)value, null);
                 }
 
-                this.Workspace.HandleWorkspaceReactions();
+                this.Workspace.OnModifiedOperands();
             }
         }
 
@@ -708,31 +709,32 @@ namespace Allors.Workspace.Adapters
             // RA --x-- R
             if (roleAssociation != null)
             {
-                roleAssociation.Workspace.RegisterWorkspaceReaction(roleAssociation, roleType);
+                this.Workspace.RegisterModifiedOperand(roleAssociation, roleType);
+
                 this.AddDependent(roleType, roleAssociation);
                 roleAssociation.SetCompositeChange(roleType, new SetCompositeChange(null, this));
-                roleAssociation.Workspace.PushToDatabaseTracker.OnChanged(roleAssociation);
+
+                this.Workspace.PushToDatabaseTracker.OnChanged(roleAssociation);
             }
 
             // A --x-- PR
             previousRole?.AddInvolvedAssociation(roleType.AssociationType, this);
-            Strategy tempQualifier = previousRole;
-            if (tempQualifier != null)
+            if (previousRole != null)
             {
-                tempQualifier.Workspace.RegisterWorkspaceReaction(tempQualifier, roleType.AssociationType);
+                this.Workspace.RegisterModifiedOperand(previousRole, roleType.AssociationType);
             }
 
             // A ----> R
             this.SetCompositeChange(roleType, new SetCompositeChange(role, null));
-            this.Workspace.RegisterWorkspaceReaction(this, roleType);
+
+            this.Workspace.RegisterModifiedOperand(this, roleType);
             this.Workspace.PushToDatabaseTracker.OnChanged(this);
 
             // A <---- R
             role?.AddInvolvedAssociation(roleType.AssociationType, this);
-            Strategy tempQualifier1 = role;
-            if (tempQualifier1 != null)
+            if (role != null)
             {
-                tempQualifier1.Workspace.RegisterWorkspaceReaction(tempQualifier1, roleType.AssociationType);
+                this.Workspace.RegisterModifiedOperand(role, roleType.AssociationType);
             }
         }
 
@@ -754,23 +756,21 @@ namespace Allors.Workspace.Adapters
 
             // A --x-- PR
             previousRole?.AddInvolvedAssociation(roleType.AssociationType, this);
-            Strategy tempQualifier = previousRole;
-            if (tempQualifier != null)
+            if (previousRole != null)
             {
-                tempQualifier.Workspace.RegisterWorkspaceReaction(tempQualifier, roleType.AssociationType);
+                this.Workspace.RegisterModifiedOperand(previousRole, roleType.AssociationType);
             }
 
             // A ----> R
             this.SetCompositeChange(roleType, new SetCompositeChange(role, null));
-            this.Workspace.RegisterWorkspaceReaction(this, roleType);
+            this.Workspace.RegisterModifiedOperand(this, roleType);
             this.Workspace.PushToDatabaseTracker.OnChanged(this);
 
             // A <---- R
             role?.AddInvolvedAssociation(roleType.AssociationType, this);
-            Strategy tempQualifier1 = role;
-            if (tempQualifier1 != null)
+            if (role != null)
             {
-                tempQualifier1.Workspace.RegisterWorkspaceReaction(tempQualifier1, roleType.AssociationType);
+                this.Workspace.RegisterModifiedOperand(role, roleType.AssociationType);
             }
         }
 
@@ -831,12 +831,12 @@ namespace Allors.Workspace.Adapters
 
             // A ----> R
             this.AddCompositesRoleStrategyChange(roleType, role);
-            this.Workspace.RegisterWorkspaceReaction(this, roleType);
+            this.Workspace.RegisterModifiedOperand(this, roleType);
             this.Workspace.PushToDatabaseTracker.OnChanged(this);
 
             // A <---- R
             role.AddInvolvedAssociation(roleType.AssociationType, this);
-            role.Workspace.RegisterWorkspaceReaction(role, roleType.AssociationType);
+            this.Workspace.RegisterModifiedOperand(role, roleType.AssociationType);
         }
 
         private void AddCompositesRoleStrategyManyToMany(IRoleType roleType, Strategy role)
@@ -856,12 +856,12 @@ namespace Allors.Workspace.Adapters
 
             // A ----> R
             this.AddCompositesRoleStrategyChange(roleType, role);
-            this.Workspace.RegisterWorkspaceReaction(this, roleType);
+            this.Workspace.RegisterModifiedOperand(this, roleType);
             this.Workspace.PushToDatabaseTracker.OnChanged(this);
 
             // A <---- R
             role.AddInvolvedAssociation(roleType.AssociationType, this);
-            role.Workspace.RegisterWorkspaceReaction(role, roleType.AssociationType);
+            this.Workspace.RegisterModifiedOperand(role, roleType.AssociationType);
         }
 
         private void AddCompositesRoleStrategyChange(IRoleType roleType, Strategy roleToAdd)
@@ -949,11 +949,11 @@ namespace Allors.Workspace.Adapters
             }
 
             dependee?.AddDependent(roleType, this);
-            this.Workspace.RegisterWorkspaceReaction(this, roleType);
+            this.Workspace.RegisterModifiedOperand(this, roleType);
             this.Workspace.PushToDatabaseTracker.OnChanged(this);
 
             // A <---- R
-            role.Workspace.RegisterWorkspaceReaction(role, roleType.AssociationType);
+            this.Workspace.RegisterModifiedOperand(role, roleType.AssociationType);
         }
 
         private void RemoveCompositesRoleStrategyManyToMany(IRoleType roleType, Strategy role, Strategy dependee)
@@ -1003,11 +1003,11 @@ namespace Allors.Workspace.Adapters
             }
 
             dependee?.AddDependent(roleType, this);
-            this.Workspace.RegisterWorkspaceReaction(this, roleType);
+            this.Workspace.RegisterModifiedOperand(this, roleType);
             this.Workspace.PushToDatabaseTracker.OnChanged(this);
 
             // A <---- R
-            role.Workspace.RegisterWorkspaceReaction(role, roleType.AssociationType);
+            this.Workspace.RegisterModifiedOperand(role, roleType.AssociationType);
         }
 
         private void AddInvolvedAssociation(IAssociationType associationType, Strategy association)

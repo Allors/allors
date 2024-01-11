@@ -7,7 +7,7 @@ namespace Allors.Workspace.Signals
 {
     public interface ISignal
     {
-        //event ChangedEventHandler Changed;
+        event ChangedEventHandler Changed;
 
         long Version { get; }
 

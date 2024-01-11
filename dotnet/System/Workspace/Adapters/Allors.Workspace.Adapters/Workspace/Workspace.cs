@@ -13,6 +13,8 @@ using Allors.Workspace.Signals;
 
 namespace Allors.Workspace.Adapters
 {
+    using System.Collections.Concurrent;
+
     public abstract class Workspace : IWorkspace
     {
         private readonly Dictionary<IClass, ISet<Strategy>> strategiesByClass;
@@ -21,7 +23,9 @@ namespace Allors.Workspace.Adapters
         private readonly IDictionary<IAssociationType, IDictionary<IStrategy, IAssociation>> associationByStrategyByAssociationType;
         private readonly IDictionary<IMethodType, IDictionary<IStrategy, IMethod>> methodByStrategyByMethodType;
 
-        private ISet<IOperand> changedOperands;
+        private bool isSignaling;
+        private readonly Dictionary<IOperand, ISignaler> signalerByOperand;
+        private readonly HashSet<ISignaler> signalers;
 
         protected Workspace(Connection connection, IWorkspaceServices services)
         {
@@ -39,16 +43,16 @@ namespace Allors.Workspace.Adapters
 
             this.PushToDatabaseTracker = new PushToDatabaseTracker();
 
-            this.changedOperands = new HashSet<IOperand>();
+            this.isSignaling = false;
+            this.signalerByOperand = new Dictionary<IOperand, ISignaler>();
+            this.signalers = new HashSet<ISignaler>();
 
             this.Services.OnInit(this);
 
             this.ObjectFactory = this.Services.Get<IObjectFactory>();
         }
 
-        public event DatabaseChangedEventHandler DatabaseChanged;
-
-        public event WorkspaceChangedEventHandler WorkspaceChanged;
+        public event ChangedEventHandler Changed;
 
         public IObjectFactory ObjectFactory { get; set; }
 
@@ -60,8 +64,6 @@ namespace Allors.Workspace.Adapters
 
         // TODO: Cache
         public bool HasModifications => this.StrategyById.Any(kvp => kvp.Value.HasChanges);
-
-        public long DatabaseVersion { get; private set; }
 
         public PushToDatabaseTracker PushToDatabaseTracker { get; }
 
@@ -372,40 +374,150 @@ namespace Allors.Workspace.Adapters
             return method;
         }
 
-        public void HandleDatabaseReactions()
+        #region signals
+
+        public void Add(Method method, ChangedEventHandler handler)
         {
-            ++this.DatabaseVersion;
-            ++this.Version;
-
-            this.DatabaseChanged?.Invoke(this, new DatabaseChangedEventArgs());
-        }
-
-        public void HandleWorkspaceReactions()
-        {
-            ++this.Version;
-
-            var operands = this.changedOperands;
-            this.changedOperands = new HashSet<IOperand>();
-
-            foreach (var operand in operands)
+            if (!this.signalerByOperand.TryGetValue(method, out var signaler))
             {
-                ((IOperandInternal)operand).BumpWorkspaceVersion();
+                signaler = new MethodSignaler(method);
+                this.signalerByOperand[method] = signaler;
             }
 
-            this.WorkspaceChanged?.Invoke(this, new WorkspaceChangedEventArgs(operands));
+            signaler.Changed += handler;
         }
 
-        public void RegisterWorkspaceReaction(Strategy association, IRoleType roleType)
+        public void Add<T>(UnitRole<T> unitRole, ChangedEventHandler handler)
+        {
+            if (!this.signalerByOperand.TryGetValue(unitRole, out var signaler))
+            {
+                signaler = new UnitRoleSignaler(unitRole);
+                this.signalerByOperand[unitRole] = signaler;
+            }
+
+            signaler.Changed += handler;
+        }
+
+        public void Add<T>(CompositeRole<T> compositeRole, ChangedEventHandler handler) where T : class, IObject
+        {
+
+            if (!this.signalerByOperand.TryGetValue(compositeRole, out var signaler))
+            {
+                signaler = new CompositeRoleSignaler(compositeRole);
+                this.signalerByOperand[compositeRole] = signaler;
+            }
+
+            signaler.Changed += handler;
+        }
+
+        public void Add<T>(CompositesRole<T> compositesRole, ChangedEventHandler handler) where T : class, IObject
+        {
+            if (!this.signalerByOperand.TryGetValue(compositesRole, out var signaler))
+            {
+                signaler = new CompositesRoleSignaler(compositesRole);
+                this.signalerByOperand[compositesRole] = signaler;
+            }
+
+            signaler.Changed += handler;
+        }
+
+        public void Add<T>(CompositeAssociation<T> compositeAssociation, ChangedEventHandler handler) where T : class, IObject
+        {
+            if (!this.signalerByOperand.TryGetValue(compositeAssociation, out var signaler))
+            {
+                signaler = new CompositeAssociationSignaler(compositeAssociation);
+                this.signalerByOperand[compositeAssociation] = signaler;
+            }
+
+            signaler.Changed += handler;
+        }
+
+        public void Add<T>(CompositesAssociation<T> compositesAssociation, ChangedEventHandler handler) where T : class, IObject
+        {
+            if (!this.signalerByOperand.TryGetValue(compositesAssociation, out var signaler))
+            {
+                signaler = new CompositeAssociationSignaler(compositesAssociation);
+                this.signalerByOperand[compositesAssociation] = signaler;
+            }
+
+            signaler.Changed += handler;
+        }
+
+        public void Remove(IOperand operand, ChangedEventHandler handler)
+        {
+            if (this.signalerByOperand.TryGetValue(operand, out var signaler))
+            {
+                signaler.Changed -= handler;
+                if (!signaler.HasHandlers)
+                {
+                    this.signalers.Remove(signaler);
+                    this.signalerByOperand.Remove(operand);
+                }
+            }
+        }
+
+        public void OnPull()
+        {
+            this.signalers.UnionWith(this.signalerByOperand.Values);
+        }
+
+        public void OnModifiedOperands()
+        {
+            this.Signal();
+        }
+
+        public void RegisterModifiedOperand(Strategy association, IRoleType roleType)
         {
             var role = this.Role(association, roleType);
-            this.changedOperands.Add(role);
+
+            if (this.signalerByOperand.TryGetValue(role, out var signaler))
+            {
+                this.signalers.Add(signaler);
+            }
         }
 
-        public void RegisterWorkspaceReaction(Strategy role, IAssociationType associationType)
+        public void RegisterModifiedOperand(Strategy role, IAssociationType associationType)
         {
             var association = this.Association(role, associationType);
-            this.changedOperands.Add(association);
+
+            if (this.signalerByOperand.TryGetValue(association, out var signaler))
+            {
+                this.signalers.Add(signaler);
+            }
         }
+
+        private void Signal()
+        {
+            if (this.isSignaling)
+            {
+                return;
+            }
+
+            this.isSignaling = true;
+
+            try
+            {
+                ISignaler signaler;
+
+                do
+                {
+                    signaler = this.signalers.FirstOrDefault();
+                    this.signalers.Remove(signaler);
+
+                    signaler?.Handle();
+
+                } while (signaler != null);
+
+            }
+            finally
+            {
+                this.isSignaling = false;
+            }
+
+
+            this.Changed?.Invoke(this, EventArgs.Empty);
+        }
+        #endregion
 
         #region role, association and method
         private IOperand Role(Strategy association, IRoleType roleType)

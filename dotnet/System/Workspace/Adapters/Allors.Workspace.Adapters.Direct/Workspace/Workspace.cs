@@ -78,7 +78,7 @@ namespace Allors.Workspace.Adapters.Direct
                 }
             }
            
-            this.HandleDatabaseReactions();
+            this.OnPull();
 
             return Task.FromResult<IPullResult>(result);
         }

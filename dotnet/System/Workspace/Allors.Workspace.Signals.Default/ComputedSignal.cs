@@ -9,7 +9,7 @@ public class ComputedSignal<T> : IComputedSignal<T>, IUpstream, IDownstream
     private readonly Func<ITracker, T> expression;
 
     private T value;
-    private long workspaceVersion;
+    private long version;
     private bool isInvalid;
 
     private object previousValue;
@@ -26,6 +26,8 @@ public class ComputedSignal<T> : IComputedSignal<T>, IUpstream, IDownstream
 
     object ISignal.Value => this.Value;
 
+    public event ChangedEventHandler Changed;
+
     public long Version
     {
         get
@@ -35,7 +37,7 @@ public class ComputedSignal<T> : IComputedSignal<T>, IUpstream, IDownstream
                 this.Validate();
             }
 
-            return this.workspaceVersion;
+            return this.version;
         }
     }
 
@@ -88,13 +90,13 @@ public class ComputedSignal<T> : IComputedSignal<T>, IUpstream, IDownstream
         if (!Equals(newValue, this.value))
         {
             this.value = newValue;
-            ++this.workspaceVersion;
+            ++this.version;
         }
         else
         {
             if (newValueVersion != this.previousValueVersion)
             {
-                ++this.workspaceVersion;
+                ++this.version;
             }
         }
         
