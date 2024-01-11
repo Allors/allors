@@ -65,7 +65,7 @@ namespace Allors.Workspace.Adapters
 
         public PushToDatabaseTracker PushToDatabaseTracker { get; }
 
-        public long WorkspaceVersion { get; private set; }
+        public long Version { get; private set; }
 
         object ISignal.Value => this;
 
@@ -375,14 +375,14 @@ namespace Allors.Workspace.Adapters
         public void HandleDatabaseReactions()
         {
             ++this.DatabaseVersion;
-            ++this.WorkspaceVersion;
+            ++this.Version;
 
             this.DatabaseChanged?.Invoke(this, new DatabaseChangedEventArgs());
         }
 
         public void HandleWorkspaceReactions()
         {
-            ++this.WorkspaceVersion;
+            ++this.Version;
 
             var operands = this.changedOperands;
             this.changedOperands = new HashSet<IOperand>();

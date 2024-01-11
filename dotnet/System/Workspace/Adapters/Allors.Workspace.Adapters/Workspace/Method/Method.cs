@@ -28,7 +28,7 @@ namespace Allors.Workspace
 
         public bool CanExecute => this.Object.CanExecute(this.MethodType);
 
-        public long WorkspaceVersion
+        public long Version
         {
             get
             {

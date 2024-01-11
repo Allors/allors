@@ -26,7 +26,7 @@ public class ComputedSignal<T> : IComputedSignal<T>, IUpstream, IDownstream
 
     object ISignal.Value => this.Value;
 
-    public long WorkspaceVersion
+    public long Version
     {
         get
         {
@@ -80,7 +80,7 @@ public class ComputedSignal<T> : IComputedSignal<T>, IUpstream, IDownstream
         this.trackedSignals = new HashSet<ISignal>();
 
         var newValue = this.expression(this);
-        var newValueVersion = (newValue as IOperand)?.WorkspaceVersion ??
+        var newValueVersion = (newValue as IOperand)?.Version ??
                               (newValue as IObject)?.Strategy.Version ??
                               (newValue as IStrategy)?.Version ??
                               0;

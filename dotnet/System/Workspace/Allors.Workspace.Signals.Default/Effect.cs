@@ -60,7 +60,7 @@ public class Effect : IEffect, IUpstream
             return;
         }
         
-        var trackingWorkspaceVersion = signal.WorkspaceVersion;
+        var trackingWorkspaceVersion = signal.Version;
         if (this.workspaceVersionBySignal.TryGetValue(signal, out var workspaceVersion))
         {
             if (workspaceVersion != trackingWorkspaceVersion)

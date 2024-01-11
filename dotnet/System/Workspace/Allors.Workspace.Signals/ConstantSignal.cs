@@ -12,7 +12,7 @@ namespace Allors.Workspace.Signals
             this.Value = value;
         }
 
-        public long WorkspaceVersion => 0;
+        public long Version => 0;
 
         object ISignal.Value => this.Value;
 

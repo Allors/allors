@@ -32,7 +32,7 @@ public class ValueSignal<T> : IValueSignal<T>, IDownstream
 
     object IValueSignal.Value { get; set; }
 
-    public long WorkspaceVersion => this.workspaceVersion;
+    public long Version => this.workspaceVersion;
 
     public WeakReference<IUpstream>[] Upstreams { get; set; }
 

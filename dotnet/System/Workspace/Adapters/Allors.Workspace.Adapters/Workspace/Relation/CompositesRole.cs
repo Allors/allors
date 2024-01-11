@@ -78,7 +78,7 @@ namespace Allors.Workspace
 
         public bool IsModified => this.Object.IsModified(this.RoleType);
 
-        public long WorkspaceVersion
+        public long Version
         {
             get
             {

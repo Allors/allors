@@ -43,23 +43,23 @@ namespace Allors.Workspace.Adapters.Tests
                 changes.UnionWith(args.Operands);
             };
 
-            Assert.Equal(0, c1.C1AllorsString.WorkspaceVersion);
+            Assert.Equal(0, c1.C1AllorsString.Version);
 
             c1.C1AllorsString.Value = null;
 
             Assert.Empty(changes);
-            Assert.Equal(0, c1.C1AllorsString.WorkspaceVersion);
+            Assert.Equal(0, c1.C1AllorsString.Version);
 
             c1.C1AllorsString.Value = null;
 
             Assert.Empty(changes);
-            Assert.Equal(0, c1.C1AllorsString.WorkspaceVersion);
+            Assert.Equal(0, c1.C1AllorsString.Version);
 
             c1.C1AllorsString.Value = "Hello world!";
 
             Assert.Single(changes);
             Assert.Contains(c1.C1AllorsString, changes);
-            Assert.Equal(1, c1.C1AllorsString.WorkspaceVersion);
+            Assert.Equal(1, c1.C1AllorsString.Version);
         }
 
         [Fact]

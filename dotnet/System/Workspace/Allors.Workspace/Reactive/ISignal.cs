@@ -9,7 +9,7 @@ namespace Allors.Workspace.Signals
     {
         //event ChangedEventHandler Changed;
 
-        long WorkspaceVersion { get; }
+        long Version { get; }
 
         object Value { get; }
     }

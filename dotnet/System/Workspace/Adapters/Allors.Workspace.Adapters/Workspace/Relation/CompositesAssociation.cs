@@ -36,7 +36,7 @@ namespace Allors.Workspace
 
         public IEnumerable<IStrategy> Value => this.Object.GetCompositesAssociation(this.AssociationType);
 
-        public long WorkspaceVersion
+        public long Version
         {
             get
             {
