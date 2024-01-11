@@ -48,7 +48,6 @@ namespace Commands
 
             this.Logger.Info("Translations");
 
-
             using var transaction = database.CreateTransaction();
             var enumerations = transaction.Extent<Enumeration>();
 

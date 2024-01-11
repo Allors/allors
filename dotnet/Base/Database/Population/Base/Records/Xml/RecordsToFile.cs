@@ -26,7 +26,7 @@
 
             IEnumerable<IObject> objects = this.recordRoundtripStrategy.Objects();
 
-            var recordsByClass = objects.ToRecordsByClass(this.recordRoundtripStrategy.HandleResolver());
+            var recordsByClass = objects.ToRecordsByClass(this.recordRoundtripStrategy);
 
             var recordsWriter = new RecordsWriter(this.metaPopulation);
             recordsWriter.Write(stream, recordsByClass);

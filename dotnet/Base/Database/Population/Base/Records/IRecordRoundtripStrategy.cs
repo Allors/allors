@@ -2,11 +2,13 @@
 
 using System;
 using System.Collections.Generic;
-using Population;
+using Meta;
 
 public interface IRecordRoundtripStrategy
 {
     IEnumerable<IObject> Objects();
 
     Func<IStrategy, Handle> HandleResolver();
+
+    Func<IStrategy, IRoleType, bool> RoleFilter();
 }
