@@ -44,7 +44,12 @@
 
                 return fromExisting(strategy) ?? fromKey(strategy);
             };
-
         }
+
+        public Func<IStrategy, IRoleType, bool> RoleFilter() => (strategy, roleType) =>
+            strategy.ExistRole(roleType) &&
+            roleType.ObjectType.IsUnit &&
+            !roleType.RelationType.IsDerived &&
+            !roleType.SingularName.Equals("ExternalPrimaryKey");
     }
 }
