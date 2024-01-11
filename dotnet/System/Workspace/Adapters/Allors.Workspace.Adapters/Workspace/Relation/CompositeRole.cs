@@ -7,6 +7,7 @@ namespace Allors.Workspace
 {
     using Adapters;
     using Meta;
+    using Signals;
 
     public class CompositeRole<T> : ICompositeRole<T>, IOperandInternal
         where T : class, IObject
@@ -69,6 +70,10 @@ namespace Allors.Workspace
                 return workspaceVersion;
             }
         }
+
+        object ISignal.Value => this;
+
+        ICompositeRole<T> ISignal<ICompositeRole<T>>.Value => this;
 
         public void BumpWorkspaceVersion()
         {

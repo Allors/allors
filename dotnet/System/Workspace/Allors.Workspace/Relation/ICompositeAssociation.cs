@@ -10,7 +10,7 @@ namespace Allors.Workspace
         new IStrategy Value { get; }
     }
 
-    public interface ICompositeAssociation<out T> : ICompositeAssociation
+    public interface ICompositeAssociation<out T> : ICompositeAssociation, IOperand<ICompositeAssociation<T>>
         where T : class, IObject
     {
         new T Value { get; }

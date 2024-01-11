@@ -7,6 +7,7 @@ namespace Allors.Workspace
 {
     using Adapters;
     using Meta;
+    using Signals;
 
     public class UnitRole<T> : IUnitRole<T>, IOperandInternal
     {
@@ -62,6 +63,10 @@ namespace Allors.Workspace
                 return workspaceVersion;
             }
         }
+
+        object ISignal.Value => this;
+
+        IUnitRole<T> ISignal<IUnitRole<T>>.Value => this;
 
         public void BumpWorkspaceVersion()
         {

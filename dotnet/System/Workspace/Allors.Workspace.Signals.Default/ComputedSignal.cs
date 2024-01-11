@@ -15,7 +15,7 @@ public class ComputedSignal<T> : IComputedSignal<T>, IUpstream, IDownstream
     private object previousValue;
     private long previousValueVersion;
 
-    private ISet<IOperand> trackedOperands;
+    private ISet<ISignal> trackedSignals;
 
     public ComputedSignal(Dispatcher dispatcher, Func<ITracker, T> expression)
     {
@@ -54,14 +54,14 @@ public class ComputedSignal<T> : IComputedSignal<T>, IUpstream, IDownstream
 
     public WeakReference<IUpstream>[] Upstreams { get; set; }
 
-    public void Track(IOperand operand)
+    public void Track(ISignal signal)
     {
-        if (operand == null)
+        if (signal == null)
         {
             return;
         }
 
-        this.trackedOperands.Add(operand);
+        this.trackedSignals.Add(signal);
     }
 
     public void TrackedBy(IUpstream newUpstream)
@@ -77,7 +77,7 @@ public class ComputedSignal<T> : IComputedSignal<T>, IUpstream, IDownstream
 
     private void Validate()
     {
-        this.trackedOperands = new HashSet<IOperand>();
+        this.trackedSignals = new HashSet<ISignal>();
 
         var newValue = this.expression(this);
         var newValueVersion = (newValue as IOperand)?.WorkspaceVersion ??
@@ -101,9 +101,9 @@ public class ComputedSignal<T> : IComputedSignal<T>, IUpstream, IDownstream
         this.previousValue = newValue;
         this.previousValueVersion = newValueVersion;
 
-        this.dispatcher.UpdateTracked(this, this.trackedOperands);
+        this.dispatcher.UpdateTracked(this, this.trackedSignals);
 
-        this.trackedOperands = null;
+        this.trackedSignals = null;
         this.isInvalid = false;
     }
 }

@@ -5,8 +5,10 @@
 
 namespace Allors.Workspace.Signals
 {
-    public interface ISignal : IOperand
+    public interface ISignal
     {
+        long WorkspaceVersion { get; }
+
         object Value { get; }
     }
 

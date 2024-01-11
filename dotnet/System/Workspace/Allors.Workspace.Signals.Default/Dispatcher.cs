@@ -11,12 +11,12 @@ namespace Allors.Workspace.Signals.Default
 
     public class Dispatcher : IDispatcher
     {
-        private readonly Dictionary<IOperand, WeakReference<IUpstream>[]> upstreamsByNonSignalOperand;
+        private readonly Dictionary<ISignal, WeakReference<IUpstream>[]> upstreamsBySignal;
         private readonly IList<Effect> effects;
 
         public Dispatcher(IWorkspace workspace)
         {
-            this.upstreamsByNonSignalOperand = new Dictionary<IOperand, WeakReference<IUpstream>[]>();
+            this.upstreamsBySignal = new Dictionary<ISignal, WeakReference<IUpstream>[]>();
             this.effects = new List<Effect>();
 
             workspace.DatabaseChanged += this.WorkspaceOnDatabaseChanged;
@@ -59,19 +59,19 @@ namespace Allors.Workspace.Signals.Default
             this.effects.Remove(effect);
         }
 
-        internal void UpdateTracked(IUpstream upstream, IEnumerable<IOperand> trackedOperands)
+        internal void UpdateTracked(IUpstream upstream, IEnumerable<ISignal> trackedSignals)
         {
-            foreach (var trackedOperand in trackedOperands)
+            foreach (var trackedSignal in trackedSignals)
             {
-                if (trackedOperand is IDownstream downstream)
+                if (trackedSignal is IDownstream downstream)
                 {
                     downstream.TrackedBy(upstream);
                 }
                 else
                 {
-                    this.upstreamsByNonSignalOperand.TryGetValue(trackedOperand, out var upstreams);
+                    this.upstreamsBySignal.TryGetValue(trackedSignal, out var upstreams);
                     upstreams = upstreams.Update(upstream);
-                    this.upstreamsByNonSignalOperand[trackedOperand] = upstreams;
+                    this.upstreamsBySignal[trackedSignal] = upstreams;
                 }
             }
         }
@@ -86,9 +86,9 @@ namespace Allors.Workspace.Signals.Default
 
         private void WorkspaceOnDatabaseChanged(object sender, DatabaseChangedEventArgs e)
         {
-            foreach (var weakOperandSignal in this.upstreamsByNonSignalOperand.Select(kvp => kvp.Value))
+            foreach (var weakSignal in this.upstreamsBySignal.Select(kvp => kvp.Value))
             {
-                weakOperandSignal.Invalidate();
+                weakSignal.Invalidate();
             }
 
             this.HandleEffects();
@@ -99,7 +99,7 @@ namespace Allors.Workspace.Signals.Default
             var operands = e.Operands;
             foreach (var operand in operands)
             {
-                if (this.upstreamsByNonSignalOperand.TryGetValue(operand, out var operandSignal))
+                if (this.upstreamsBySignal.TryGetValue(operand, out var operandSignal))
                 {
                     operandSignal.Invalidate();
                 }

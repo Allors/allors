@@ -5,13 +5,13 @@ using System.Collections.Generic;
 
 public class Effect : IEffect, IUpstream
 {
-    private static readonly IDictionary<IOperand, long> EmptyDictionary = new Dictionary<IOperand, long>();
+    private static readonly IDictionary<ISignal, long> EmptyDictionary = new Dictionary<ISignal, long>();
 
     private readonly Dispatcher dispatcher;
     private readonly Action<ITracker> dependencies;
 
-    private IDictionary<IOperand, long> workspaceVersionByOperand;
-    private IDictionary<IOperand, long> trackingWorkspaceVersionByOperand;
+    private IDictionary<ISignal, long> workspaceVersionBySignal;
+    private IDictionary<ISignal, long> trackingWorkspaceVersionBySignal;
 
     private bool shouldRaise;
     
@@ -21,7 +21,7 @@ public class Effect : IEffect, IUpstream
         this.dependencies = dependencies;
         this.Action = action;
 
-        this.workspaceVersionByOperand = EmptyDictionary;
+        this.workspaceVersionBySignal = EmptyDictionary;
     }
 
     public Action Action { get; }
@@ -38,7 +38,7 @@ public class Effect : IEffect, IUpstream
     
     public void Handle()
     {
-        this.trackingWorkspaceVersionByOperand = new Dictionary<IOperand, long>();
+        this.trackingWorkspaceVersionBySignal = new Dictionary<ISignal, long>();
         this.dependencies(this);
 
         if (this.shouldRaise)
@@ -47,21 +47,21 @@ public class Effect : IEffect, IUpstream
             this.Action();
         }
 
-        this.workspaceVersionByOperand = this.trackingWorkspaceVersionByOperand;
-        this.trackingWorkspaceVersionByOperand = null;
+        this.workspaceVersionBySignal = this.trackingWorkspaceVersionBySignal;
+        this.trackingWorkspaceVersionBySignal = null;
         
-        this.dispatcher.UpdateTracked(this, this.workspaceVersionByOperand.Keys);
+        this.dispatcher.UpdateTracked(this, this.workspaceVersionBySignal.Keys);
     }
 
-    public void Track(IOperand operand)
+    public void Track(ISignal signal)
     {
-        if (operand == null || this.trackingWorkspaceVersionByOperand.ContainsKey(operand))
+        if (signal == null || this.trackingWorkspaceVersionBySignal.ContainsKey(signal))
         {
             return;
         }
         
-        var trackingWorkspaceVersion = operand.WorkspaceVersion;
-        if (this.workspaceVersionByOperand.TryGetValue(operand, out var workspaceVersion))
+        var trackingWorkspaceVersion = signal.WorkspaceVersion;
+        if (this.workspaceVersionBySignal.TryGetValue(signal, out var workspaceVersion))
         {
             if (workspaceVersion != trackingWorkspaceVersion)
             {
@@ -73,6 +73,6 @@ public class Effect : IEffect, IUpstream
             this.shouldRaise = true;
         }
 
-        this.trackingWorkspaceVersionByOperand[operand] = trackingWorkspaceVersion;
+        this.trackingWorkspaceVersionBySignal[signal] = trackingWorkspaceVersion;
     }
 }

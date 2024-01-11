@@ -7,6 +7,7 @@ namespace Allors.Workspace
 {
     using Adapters;
     using Meta;
+    using Signals;
 
     public class Method : IMethod
     {
@@ -35,9 +36,13 @@ namespace Allors.Workspace
                 {
                     ++this.workspaceVersion;
                 }
-                
+
                 return this.workspaceVersion;
             }
         }
+
+        object ISignal.Value => this;
+
+        IMethod ISignal<IMethod>.Value => this;
     }
 }

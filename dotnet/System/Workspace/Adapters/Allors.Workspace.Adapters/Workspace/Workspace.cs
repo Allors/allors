@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Allors.Workspace.Data;
+using Allors.Workspace.Signals;
 
 namespace Allors.Workspace.Adapters
 {
@@ -63,6 +64,12 @@ namespace Allors.Workspace.Adapters
         public long DatabaseVersion { get; private set; }
 
         public PushToDatabaseTracker PushToDatabaseTracker { get; }
+
+        public long WorkspaceVersion { get; private set; }
+
+        object ISignal.Value => this;
+
+        IWorkspace ISignal<IWorkspace>.Value => this;
 
         protected Dictionary<long, Strategy> StrategyById { get; }
 
@@ -368,11 +375,15 @@ namespace Allors.Workspace.Adapters
         public void HandleDatabaseReactions()
         {
             ++this.DatabaseVersion;
+            ++this.WorkspaceVersion;
+
             this.DatabaseChanged?.Invoke(this, new DatabaseChangedEventArgs());
         }
 
         public void HandleWorkspaceReactions()
         {
+            ++this.WorkspaceVersion;
+
             var operands = this.changedOperands;
             this.changedOperands = new HashSet<IOperand>();
 

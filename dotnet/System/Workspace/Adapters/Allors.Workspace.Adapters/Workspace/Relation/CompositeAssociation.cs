@@ -6,6 +6,7 @@
 namespace Allors.Workspace
 {
     using Adapters;
+    using Allors.Workspace.Signals;
     using Meta;
 
     public class CompositeAssociation<T> : ICompositeAssociation<T>, IOperandInternal
@@ -47,6 +48,10 @@ namespace Allors.Workspace
                 return workspaceVersion;
             }
         }
+
+        object ISignal.Value => this;
+
+        ICompositeAssociation<T> ISignal<ICompositeAssociation<T>>.Value => this;
 
         public void BumpWorkspaceVersion()
         {

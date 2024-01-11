@@ -24,11 +24,11 @@
   <Interface Name="Allors.Workspace.IMethod">
     <Position X="10.75" Y="2.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAIAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAIAAAAAgAEAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Method\IMethod.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="Allors.Workspace.IOperand">
+  <Interface Name="Allors.Workspace.IOperand&lt;T&gt;">
     <Position X="7" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>

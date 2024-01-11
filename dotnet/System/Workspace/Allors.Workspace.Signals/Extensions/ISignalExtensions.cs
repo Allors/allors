@@ -5,9 +5,9 @@
 
 namespace Allors.Workspace.Signals
 {
-    public static class IOperandExtensions
+    public static class ISignalExtensions
     {
-        public static T Track<T>(this T @this, ITracker tracker) where T : IOperand
+        public static T Track<T>(this T @this, ITracker tracker) where T : ISignal
         {
             tracker.Track(@this);
             return @this;
