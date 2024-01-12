@@ -436,7 +436,7 @@ namespace Allors.Workspace.Adapters
         {
             if (!this.signalerByOperand.TryGetValue(compositesAssociation, out var signaler))
             {
-                signaler = new CompositeAssociationSignaler(compositesAssociation);
+                signaler = new CompositesAssociationSignaler(compositesAssociation);
                 this.signalerByOperand[compositesAssociation] = signaler;
             }
 
@@ -459,6 +459,8 @@ namespace Allors.Workspace.Adapters
         public void OnPull()
         {
             this.signalers.UnionWith(this.signalerByOperand.Values);
+
+            this.Signal();
         }
 
         public void OnModifiedOperands()

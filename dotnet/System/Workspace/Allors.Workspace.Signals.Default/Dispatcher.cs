@@ -19,8 +19,8 @@ namespace Allors.Workspace.Signals.Default
             this.upstreamsBySignal = new Dictionary<ISignal, WeakReference<IUpstream>[]>();
             this.effects = new List<Effect>();
 
-            workspace.DatabaseChanged += this.WorkspaceOnDatabaseChanged;
-            workspace.WorkspaceChanged += WorkspaceOnWorkspaceChanged;
+            //workspace.DatabaseChanged += this.WorkspaceOnDatabaseChanged;
+            //workspace.WorkspaceChanged += WorkspaceOnWorkspaceChanged;
         }
 
         public IValueSignal<T> CreateValueSignal<T>(T value)
@@ -84,29 +84,29 @@ namespace Allors.Workspace.Signals.Default
             }
         }
 
-        private void WorkspaceOnDatabaseChanged(object sender, DatabaseChangedEventArgs e)
-        {
-            foreach (var weakSignal in this.upstreamsBySignal.Select(kvp => kvp.Value))
-            {
-                weakSignal.Invalidate();
-            }
+        //private void WorkspaceOnDatabaseChanged(object sender, DatabaseChangedEventArgs e)
+        //{
+        //    foreach (var weakSignal in this.upstreamsBySignal.Select(kvp => kvp.Value))
+        //    {
+        //        weakSignal.Invalidate();
+        //    }
 
-            this.HandleEffects();
-        }
+        //    this.HandleEffects();
+        //}
 
-        private void WorkspaceOnWorkspaceChanged(object sender, WorkspaceChangedEventArgs e)
-        {
-            var operands = e.Operands;
-            foreach (var operand in operands)
-            {
-                if (this.upstreamsBySignal.TryGetValue(operand, out var operandSignal))
-                {
-                    operandSignal.Invalidate();
-                }
-            }
+        //private void WorkspaceOnWorkspaceChanged(object sender, WorkspaceChangedEventArgs e)
+        //{
+        //    var operands = e.Operands;
+        //    foreach (var operand in operands)
+        //    {
+        //        if (this.upstreamsBySignal.TryGetValue(operand, out var operandSignal))
+        //        {
+        //            operandSignal.Invalidate();
+        //        }
+        //    }
 
-            this.HandleEffects();
-        }
+        //    this.HandleEffects();
+        //}
 
         public void Dispose()
         {
