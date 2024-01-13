@@ -29,8 +29,6 @@ namespace Allors.Workspace
                 return;
             }
 
-            this.method.BumpVersion();
-
             this.canExecute = this.method.CanExecute;
             
             var changed = this.Changed;

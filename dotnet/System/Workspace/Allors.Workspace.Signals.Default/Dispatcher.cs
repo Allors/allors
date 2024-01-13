@@ -11,12 +11,12 @@ namespace Allors.Workspace.Signals.Default
 
     public class Dispatcher : IDispatcher
     {
-        private readonly Dictionary<ISignal, WeakReference<IUpstream>[]> upstreamsBySignal;
+        private readonly Dictionary<INotifyChanged, WeakReference<IUpstream>[]> upstreamsBySignal;
         private readonly IList<Effect> effects;
 
         public Dispatcher(IWorkspace workspace)
         {
-            this.upstreamsBySignal = new Dictionary<ISignal, WeakReference<IUpstream>[]>();
+            this.upstreamsBySignal = new Dictionary<INotifyChanged, WeakReference<IUpstream>[]>();
             this.effects = new List<Effect>();
 
             //workspace.DatabaseChanged += this.WorkspaceOnDatabaseChanged;
@@ -59,7 +59,7 @@ namespace Allors.Workspace.Signals.Default
             this.effects.Remove(effect);
         }
 
-        internal void UpdateTracked(IUpstream upstream, IEnumerable<ISignal> trackedSignals)
+        internal void UpdateTracked(IUpstream upstream, IEnumerable<INotifyChanged> trackedSignals)
         {
             foreach (var trackedSignal in trackedSignals)
             {

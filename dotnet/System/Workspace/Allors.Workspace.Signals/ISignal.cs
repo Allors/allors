@@ -5,10 +5,8 @@
 
 namespace Allors.Workspace.Signals
 {
-    public interface ISignal
+    public interface ISignal : INotifyChanged
     {
-        event ChangedEventHandler Changed;
-
         long Version { get; }
 
         object Value { get; }

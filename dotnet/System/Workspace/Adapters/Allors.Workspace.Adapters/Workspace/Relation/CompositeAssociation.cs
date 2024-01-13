@@ -6,10 +6,9 @@
 namespace Allors.Workspace
 {
     using Adapters;
-    using Allors.Workspace.Signals;
     using Meta;
 
-    public class CompositeAssociation<T> : ICompositeAssociation<T>, IAssociationInternal
+    public class CompositeAssociation<T> : ICompositeAssociation<T>
         where T : class, IObject
     {
         private long databaseVersion;
@@ -47,10 +46,6 @@ namespace Allors.Workspace
                 this.Object.Workspace.Remove(this, value);
             }
         }
-
-        object ISignal.Value => this;
-
-        ICompositeAssociation<T> ISignal<ICompositeAssociation<T>>.Value => this;
 
         public void BumpVersion()
         {

@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Allors.Workspace.Data;
-using Allors.Workspace.Signals;
 
 namespace Allors.Workspace.Adapters
 {
@@ -68,10 +67,6 @@ namespace Allors.Workspace.Adapters
         public PushToDatabaseTracker PushToDatabaseTracker { get; }
 
         public long Version { get; private set; }
-
-        object ISignal.Value => this;
-
-        IWorkspace ISignal<IWorkspace>.Value => this;
 
         protected Dictionary<long, Strategy> StrategyById { get; }
 

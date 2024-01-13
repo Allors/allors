@@ -53,26 +53,26 @@ public class Effect : IEffect, IUpstream
         this.dispatcher.UpdateTracked(this, this.versionBySignal.Keys);
     }
 
-    public void Track(ISignal signal)
+    public void Track(INotifyChanged signal)
     {
-        if (signal == null || this.trackingVersionBySignal.ContainsKey(signal))
-        {
-            return;
-        }
+        //if (signal == null || this.trackingVersionBySignal.ContainsKey(signal))
+        //{
+        //    return;
+        //}
         
-        var trackingWorkspaceVersion = signal.Version;
-        if (this.versionBySignal.TryGetValue(signal, out var version))
-        {
-            if (version != trackingWorkspaceVersion)
-            {
-                this.shouldRaise = true;
-            }
-        }
-        else
-        {
-            this.shouldRaise = true;
-        }
+        //var trackingWorkspaceVersion = signal.Version;
+        //if (this.versionBySignal.TryGetValue(signal, out var version))
+        //{
+        //    if (version != trackingWorkspaceVersion)
+        //    {
+        //        this.shouldRaise = true;
+        //    }
+        //}
+        //else
+        //{
+        //    this.shouldRaise = true;
+        //}
 
-        this.trackingVersionBySignal[signal] = trackingWorkspaceVersion;
+        //this.trackingVersionBySignal[signal] = trackingWorkspaceVersion;
     }
 }

@@ -7,6 +7,6 @@ namespace Allors.Workspace.Signals
 {
     public interface ITracker
     {
-        void Track(ISignal signal);
+        void Track(INotifyChanged signal);
   }
 }

@@ -5,13 +5,11 @@
 
 namespace Allors.Workspace
 {
-    using Signals;
-
-    public interface IOperand : ISignal
+    public interface IOperand : INotifyChanged
     {
     }
 
-    public interface IOperand<out T> : IOperand, ISignal<T>
+    public interface IOperand<out T> : IOperand
     {
     }
 }

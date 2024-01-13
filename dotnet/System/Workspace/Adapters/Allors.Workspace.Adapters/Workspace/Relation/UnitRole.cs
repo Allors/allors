@@ -7,15 +7,13 @@ namespace Allors.Workspace
 {
     using Adapters;
     using Meta;
-    using Signals;
 
-    public class UnitRole<T> : IUnitRole<T>, IRoleInternal
+    public class UnitRole<T> : IUnitRole<T>
     {
         public UnitRole(Strategy strategy, IRoleType roleType)
         {
             this.Object = strategy;
             this.RoleType = roleType;
-            this.Version = 0;
         }
 
         IStrategy IRelationEnd.Object => this.Object;
@@ -48,8 +46,6 @@ namespace Allors.Workspace
 
         public bool IsModified => this.Object.IsModified(this.RoleType);
 
-        public long Version { get; private set; }
-
         public event ChangedEventHandler Changed
         {
             add
@@ -60,15 +56,6 @@ namespace Allors.Workspace
             {
                 this.Object.Workspace.Remove(this, value);
             }
-        }
-
-        object ISignal.Value => this;
-
-        IUnitRole<T> ISignal<IUnitRole<T>>.Value => this;
-
-        public void BumpVersion()
-        {
-            ++this.Version;
         }
 
         public void Restore()

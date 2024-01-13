@@ -7,9 +7,8 @@ namespace Allors.Workspace
 {
     using Adapters;
     using Meta;
-    using Signals;
 
-    public class CompositeRole<T> : ICompositeRole<T>, IRoleInternal
+    public class CompositeRole<T> : ICompositeRole<T>
         where T : class, IObject
     {
         private long databaseVersion;
@@ -69,10 +68,6 @@ namespace Allors.Workspace
                 this.Object.Workspace.Remove(this, value);
             }
         }
-
-        object ISignal.Value => this;
-
-        ICompositeRole<T> ISignal<ICompositeRole<T>>.Value => this;
 
         public void BumpVersion()
         {

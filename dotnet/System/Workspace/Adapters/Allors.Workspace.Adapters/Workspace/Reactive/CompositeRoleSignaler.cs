@@ -9,12 +9,12 @@ namespace Allors.Workspace
 
     public class CompositeRoleSignaler : ISignaler
     {
-        private readonly IRoleInternal role;
+        private readonly IRole role;
         private bool canRead;
         private bool canWrite;
         private IStrategy value;
 
-        public CompositeRoleSignaler(IRoleInternal role)
+        public CompositeRoleSignaler(IRole role)
         {
             this.role = role;
             this.canRead = this.role.CanRead;
@@ -39,8 +39,6 @@ namespace Allors.Workspace
             {
                 return;
             }
-
-            this.role.BumpVersion();
 
             this.canRead = this.role.CanRead;
             this.canWrite = this.role.CanWrite;

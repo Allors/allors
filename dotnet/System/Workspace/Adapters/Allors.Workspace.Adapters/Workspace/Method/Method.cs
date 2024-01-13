@@ -7,7 +7,6 @@ namespace Allors.Workspace
 {
     using Adapters;
     using Meta;
-    using Signals;
 
     public class Method : IMethod
     {
@@ -15,7 +14,6 @@ namespace Allors.Workspace
         {
             this.Object = strategy;
             this.MethodType = methodType;
-            this.Version = 0;
         }
 
         IStrategy IMethod.Object => this.Object;
@@ -25,8 +23,6 @@ namespace Allors.Workspace
         public IMethodType MethodType { get; }
 
         public bool CanExecute => this.Object.CanExecute(this.MethodType);
-
-        public long Version { get; private set; }
 
         public event ChangedEventHandler Changed
         {
@@ -38,15 +34,6 @@ namespace Allors.Workspace
             {
                 this.Object.Workspace.Remove(this, value);
             }
-        }
-
-        object ISignal.Value => this;
-
-        IMethod ISignal<IMethod>.Value => this;
-
-        public void BumpVersion()
-        {
-            ++this.Version;
         }
     }
 }

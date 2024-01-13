@@ -10,10 +10,10 @@ namespace Allors.Workspace
 
     public class CompositesAssociationSignaler : ISignaler
     {
-        private readonly IAssociationInternal association;
+        private readonly IAssociation association;
         private HashSet<IStrategy> value;
 
-        public CompositesAssociationSignaler(IAssociationInternal association)
+        public CompositesAssociationSignaler(IAssociation association)
         {
             this.association = association;
             this.value = [.. (IEnumerable<IStrategy>)this.association.Value];
@@ -31,8 +31,6 @@ namespace Allors.Workspace
             {
                 return;
             }
-
-            this.association.BumpVersion();
 
             this.value = [.. (IEnumerable<IStrategy>)this.association.Value];
 

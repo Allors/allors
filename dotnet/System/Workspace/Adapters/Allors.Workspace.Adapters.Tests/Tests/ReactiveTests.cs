@@ -49,8 +49,6 @@ namespace Allors.Workspace.Adapters.Tests
                 ++workspaceChanged;
             };
 
-            Assert.Equal(0, c1.C1AllorsString.Version);
-
             c1.C1AllorsString.Value = null;
 
             Assert.Equal(0, operandChanged);

@@ -9,9 +9,8 @@ namespace Allors.Workspace
     using System.Linq;
     using Adapters;
     using Meta;
-    using Signals;
 
-    public class CompositesRole<T> : ICompositesRole<T>, IRoleInternal
+    public class CompositesRole<T> : ICompositesRole<T>
         where T : class, IObject
     {
         private long databaseVersion;
@@ -91,10 +90,6 @@ namespace Allors.Workspace
                 this.Object.Workspace.Remove(this, value);
             }
         }
-
-        object ISignal.Value => this;
-
-        ICompositesRole<T> ISignal<ICompositesRole<T>>.Value => this;
         
         public void BumpVersion()
         {
