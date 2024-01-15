@@ -5,7 +5,5 @@
 
 namespace Allors.Workspace
 {
-    using System;
-
-    public delegate void ChangedEventHandler(object sender, EventArgs e);
+    public delegate void ChangedEventHandler(object sender, ChangedEventArgs e);
 }

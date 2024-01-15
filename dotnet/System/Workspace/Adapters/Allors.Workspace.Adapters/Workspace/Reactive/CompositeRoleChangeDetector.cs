@@ -7,19 +7,21 @@ namespace Allors.Workspace
 {
     using System;
 
-    public class UnitRoleSignaler : ISignaler
+    public class CompositeRoleChangeDetector : IChangeDetector
     {
         private readonly IRole role;
         private bool canRead;
         private bool canWrite;
-        private object value;
+        private IStrategy value;
+        
+        private ChangedEventArgs changedEventArgs;
 
-        public UnitRoleSignaler(IRole role)
+        public CompositeRoleChangeDetector(IRole role)
         {
             this.role = role;
             this.canRead = this.role.CanRead;
             this.canWrite = this.role.CanWrite;
-            this.value = this.role.Value;
+            this.value = (IStrategy)this.role.Value;
         }
 
         public event ChangedEventHandler Changed;
@@ -42,10 +44,10 @@ namespace Allors.Workspace
 
             this.canRead = this.role.CanRead;
             this.canWrite = this.role.CanWrite;
-            this.value = this.role.Value;
+            this.value = (IStrategy)this.role.Value;
 
             var changed = this.Changed;
-            changed?.Invoke(this.role, EventArgs.Empty);
+            changed?.Invoke(this.role, this.changedEventArgs ??= new ChangedEventArgs(this.role));
         }
     }
 }

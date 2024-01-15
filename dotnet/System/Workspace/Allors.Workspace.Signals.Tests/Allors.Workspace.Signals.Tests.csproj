@@ -34,7 +34,7 @@
     <ProjectReference Include="..\..\..\Base\Workspace\Meta.Configuration\Workspace.Meta.Configuration.csproj" />
     <ProjectReference Include="..\..\Database\Adapters\Allors.Database.Adapters.Memory\Allors.Database.Adapters.Memory.csproj" />
     <ProjectReference Include="..\Adapters\Allors.Workspace.Adapters.Direct\Allors.Workspace.Adapters.Direct.csproj" />
-    <ProjectReference Include="..\Allors.Workspace.Signals.Default\Allors.Workspace.Signals.Default.csproj" />
+    <ProjectReference Include="..\Allors.Workspace.Signals\Allors.Workspace.Signals.csproj" />
   </ItemGroup>
 
 

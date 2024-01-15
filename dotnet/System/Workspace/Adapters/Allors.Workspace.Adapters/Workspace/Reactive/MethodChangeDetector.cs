@@ -7,12 +7,14 @@ namespace Allors.Workspace
 {
     using System;
 
-    public class MethodSignaler : ISignaler
+    public class MethodChangeDetector : IChangeDetector
     {
         private readonly Method method;
         private bool canExecute;
 
-        public MethodSignaler(Method method)
+        private ChangedEventArgs changedEventArgs;
+
+        public MethodChangeDetector(Method method)
         {
             this.method = method;
             this.canExecute = this.method.CanExecute;
@@ -32,7 +34,7 @@ namespace Allors.Workspace
             this.canExecute = this.method.CanExecute;
             
             var changed = this.Changed;
-            changed?.Invoke(this.method, EventArgs.Empty);
+            changed?.Invoke(this.method, this.changedEventArgs ??= new ChangedEventArgs(this.method));
         }
     }
 }

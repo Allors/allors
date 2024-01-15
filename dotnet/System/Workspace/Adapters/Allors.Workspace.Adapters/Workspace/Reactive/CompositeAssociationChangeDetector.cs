@@ -5,18 +5,17 @@
 
 namespace Allors.Workspace
 {
-    using System;
-    using System.Collections.Generic;
-
-    public class CompositesAssociationSignaler : ISignaler
+    public class CompositeAssociationChangeDetector : IChangeDetector
     {
         private readonly IAssociation association;
-        private HashSet<IStrategy> value;
+        private IStrategy value;
 
-        public CompositesAssociationSignaler(IAssociation association)
+        private ChangedEventArgs changedEventArgs;
+
+        public CompositeAssociationChangeDetector(IAssociation association)
         {
             this.association = association;
-            this.value = [.. (IEnumerable<IStrategy>)this.association.Value];
+            this.value = (IStrategy)this.association.Value;
         }
 
         public event ChangedEventHandler Changed;
@@ -25,17 +24,17 @@ namespace Allors.Workspace
 
         public void Handle()
         {
-            bool hasChanges = !this.value.SetEquals((IEnumerable<IStrategy>)this.association.Value);
+            bool hasChanges = !Equals(this.value, this.association.Value);
 
             if (!hasChanges)
             {
                 return;
             }
 
-            this.value = [.. (IEnumerable<IStrategy>)this.association.Value];
+            this.value = (IStrategy)this.association.Value;
 
-            var changed = this.Changed;
-            changed?.Invoke(this.association, EventArgs.Empty);
+            var handler = this.Changed;
+            handler?.Invoke(this.association, this.changedEventArgs ??= new ChangedEventArgs(this.association));
         }
     }
 }

@@ -12,8 +12,6 @@ using Allors.Workspace.Data;
 
 namespace Allors.Workspace.Adapters
 {
-    using System.Collections.Concurrent;
-
     public abstract class Workspace : IWorkspace
     {
         private readonly Dictionary<IClass, ISet<Strategy>> strategiesByClass;
@@ -22,9 +20,10 @@ namespace Allors.Workspace.Adapters
         private readonly IDictionary<IAssociationType, IDictionary<IStrategy, IAssociation>> associationByStrategyByAssociationType;
         private readonly IDictionary<IMethodType, IDictionary<IStrategy, IMethod>> methodByStrategyByMethodType;
 
-        private bool isSignaling;
-        private readonly Dictionary<IOperand, ISignaler> signalerByOperand;
-        private readonly HashSet<ISignaler> signalers;
+        private readonly Dictionary<IOperand, IChangeDetector> changeDetectorByOperand;
+        private readonly HashSet<IChangeDetector> changeDetectors;
+        private readonly ChangedEventArgs changedEventArgs;
+        private bool isHandlingChanges;
 
         protected Workspace(Connection connection, IWorkspaceServices services)
         {
@@ -42,9 +41,11 @@ namespace Allors.Workspace.Adapters
 
             this.PushToDatabaseTracker = new PushToDatabaseTracker();
 
-            this.isSignaling = false;
-            this.signalerByOperand = new Dictionary<IOperand, ISignaler>();
-            this.signalers = new HashSet<ISignaler>();
+            this.changedEventArgs = new ChangedEventArgs(this);
+
+            this.isHandlingChanges = false;
+            this.changeDetectorByOperand = new Dictionary<IOperand, IChangeDetector>();
+            this.changeDetectors = new HashSet<IChangeDetector>();
 
             this.Services.OnInit(this);
 
@@ -373,10 +374,10 @@ namespace Allors.Workspace.Adapters
 
         public void Add(Method method, ChangedEventHandler handler)
         {
-            if (!this.signalerByOperand.TryGetValue(method, out var signaler))
+            if (!this.changeDetectorByOperand.TryGetValue(method, out var signaler))
             {
-                signaler = new MethodSignaler(method);
-                this.signalerByOperand[method] = signaler;
+                signaler = new MethodChangeDetector(method);
+                this.changeDetectorByOperand[method] = signaler;
             }
 
             signaler.Changed += handler;
@@ -384,10 +385,10 @@ namespace Allors.Workspace.Adapters
 
         public void Add<T>(UnitRole<T> unitRole, ChangedEventHandler handler)
         {
-            if (!this.signalerByOperand.TryGetValue(unitRole, out var signaler))
+            if (!this.changeDetectorByOperand.TryGetValue(unitRole, out var signaler))
             {
-                signaler = new UnitRoleSignaler(unitRole);
-                this.signalerByOperand[unitRole] = signaler;
+                signaler = new UnitRoleChangeDetector(unitRole);
+                this.changeDetectorByOperand[unitRole] = signaler;
             }
 
             signaler.Changed += handler;
@@ -396,10 +397,10 @@ namespace Allors.Workspace.Adapters
         public void Add<T>(CompositeRole<T> compositeRole, ChangedEventHandler handler) where T : class, IObject
         {
 
-            if (!this.signalerByOperand.TryGetValue(compositeRole, out var signaler))
+            if (!this.changeDetectorByOperand.TryGetValue(compositeRole, out var signaler))
             {
-                signaler = new CompositeRoleSignaler(compositeRole);
-                this.signalerByOperand[compositeRole] = signaler;
+                signaler = new CompositeRoleChangeDetector(compositeRole);
+                this.changeDetectorByOperand[compositeRole] = signaler;
             }
 
             signaler.Changed += handler;
@@ -407,10 +408,10 @@ namespace Allors.Workspace.Adapters
 
         public void Add<T>(CompositesRole<T> compositesRole, ChangedEventHandler handler) where T : class, IObject
         {
-            if (!this.signalerByOperand.TryGetValue(compositesRole, out var signaler))
+            if (!this.changeDetectorByOperand.TryGetValue(compositesRole, out var signaler))
             {
-                signaler = new CompositesRoleSignaler(compositesRole);
-                this.signalerByOperand[compositesRole] = signaler;
+                signaler = new CompositesRoleChangeDetector(compositesRole);
+                this.changeDetectorByOperand[compositesRole] = signaler;
             }
 
             signaler.Changed += handler;
@@ -418,10 +419,10 @@ namespace Allors.Workspace.Adapters
 
         public void Add<T>(CompositeAssociation<T> compositeAssociation, ChangedEventHandler handler) where T : class, IObject
         {
-            if (!this.signalerByOperand.TryGetValue(compositeAssociation, out var signaler))
+            if (!this.changeDetectorByOperand.TryGetValue(compositeAssociation, out var signaler))
             {
-                signaler = new CompositeAssociationSignaler(compositeAssociation);
-                this.signalerByOperand[compositeAssociation] = signaler;
+                signaler = new CompositeAssociationChangeDetector(compositeAssociation);
+                this.changeDetectorByOperand[compositeAssociation] = signaler;
             }
 
             signaler.Changed += handler;
@@ -429,10 +430,10 @@ namespace Allors.Workspace.Adapters
 
         public void Add<T>(CompositesAssociation<T> compositesAssociation, ChangedEventHandler handler) where T : class, IObject
         {
-            if (!this.signalerByOperand.TryGetValue(compositesAssociation, out var signaler))
+            if (!this.changeDetectorByOperand.TryGetValue(compositesAssociation, out var signaler))
             {
-                signaler = new CompositesAssociationSignaler(compositesAssociation);
-                this.signalerByOperand[compositesAssociation] = signaler;
+                signaler = new CompositesAssociationChangeDetector(compositesAssociation);
+                this.changeDetectorByOperand[compositesAssociation] = signaler;
             }
 
             signaler.Changed += handler;
@@ -440,20 +441,20 @@ namespace Allors.Workspace.Adapters
 
         public void Remove(IOperand operand, ChangedEventHandler handler)
         {
-            if (this.signalerByOperand.TryGetValue(operand, out var signaler))
+            if (this.changeDetectorByOperand.TryGetValue(operand, out var signaler))
             {
                 signaler.Changed -= handler;
                 if (!signaler.HasHandlers)
                 {
-                    this.signalers.Remove(signaler);
-                    this.signalerByOperand.Remove(operand);
+                    this.changeDetectors.Remove(signaler);
+                    this.changeDetectorByOperand.Remove(operand);
                 }
             }
         }
 
         public void OnPull()
         {
-            this.signalers.UnionWith(this.signalerByOperand.Values);
+            this.changeDetectors.UnionWith(this.changeDetectorByOperand.Values);
 
             this.Signal();
         }
@@ -467,9 +468,9 @@ namespace Allors.Workspace.Adapters
         {
             var role = this.Role(association, roleType);
 
-            if (this.signalerByOperand.TryGetValue(role, out var signaler))
+            if (this.changeDetectorByOperand.TryGetValue(role, out var signaler))
             {
-                this.signalers.Add(signaler);
+                this.changeDetectors.Add(signaler);
             }
         }
 
@@ -477,42 +478,42 @@ namespace Allors.Workspace.Adapters
         {
             var association = this.Association(role, associationType);
 
-            if (this.signalerByOperand.TryGetValue(association, out var signaler))
+            if (this.changeDetectorByOperand.TryGetValue(association, out var signaler))
             {
-                this.signalers.Add(signaler);
+                this.changeDetectors.Add(signaler);
             }
         }
 
         private void Signal()
         {
-            if (this.isSignaling)
+            if (this.isHandlingChanges)
             {
                 return;
             }
 
-            this.isSignaling = true;
+            this.isHandlingChanges = true;
 
             try
             {
-                ISignaler signaler;
+                IChangeDetector changeDetector;
 
                 do
                 {
-                    signaler = this.signalers.FirstOrDefault();
-                    this.signalers.Remove(signaler);
+                    changeDetector = this.changeDetectors.FirstOrDefault();
+                    this.changeDetectors.Remove(changeDetector);
 
-                    signaler?.Handle();
+                    changeDetector?.Handle();
 
-                } while (signaler != null);
+                } while (changeDetector != null);
 
             }
             finally
             {
-                this.isSignaling = false;
+                this.isHandlingChanges = false;
             }
 
 
-            this.Changed?.Invoke(this, EventArgs.Empty);
+            this.Changed?.Invoke(this, this.changedEventArgs);
         }
         #endregion
 

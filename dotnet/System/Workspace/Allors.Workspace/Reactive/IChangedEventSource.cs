@@ -1,15 +1,11 @@
-﻿// <copyright file="IOperand.cs" company="Allors bv">
+﻿// <copyright file="INotifyChanged.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
 namespace Allors.Workspace
 {
-    public interface IOperand : INotifyChanged, IChangedEventSource
-    {
-    }
-
-    public interface IOperand<out T> : IOperand
+    public interface IChangedEventSource
     {
     }
 }

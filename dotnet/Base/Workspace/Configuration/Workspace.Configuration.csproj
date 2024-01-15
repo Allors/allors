@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\System\Workspace\Adapters\Allors.Workspace.Adapters\Allors.Workspace.Adapters.csproj" />
-    <ProjectReference Include="..\..\..\System\Workspace\Allors.Workspace.Signals.Default\Allors.Workspace.Signals.Default.csproj" />
+    <ProjectReference Include="..\..\..\System\Workspace\Allors.Workspace.Signals\Allors.Workspace.Signals.csproj" />
     <ProjectReference Include="..\Domain\Workspace.Domain.csproj" />
   </ItemGroup>
 
