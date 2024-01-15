@@ -14,7 +14,7 @@ using Task = Task;
 
 public partial class PersonGeneratorFormViewModel : ObservableObject, IDisposable
 {
-    [SignalProperty] private readonly IValueSignal<PersonGeneratorViewModel?> selected;
+    [SignalProperty] private readonly ValueSignal<PersonGeneratorViewModel?> selected;
 
     public PersonGeneratorFormViewModel(IWorkspace workspace, IMessageService messageService)
     {

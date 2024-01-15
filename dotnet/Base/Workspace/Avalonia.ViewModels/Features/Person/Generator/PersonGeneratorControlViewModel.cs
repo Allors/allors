@@ -13,7 +13,7 @@ using Task = Task;
 
 public partial class PersonGeneratorControlViewModel : ViewModel, IRoutableViewModel, IDisposable
 {
-    [SignalProperty] private readonly IValueSignal<PersonGeneratorViewModel?> selected;
+    [SignalProperty] private readonly ValueSignal<PersonGeneratorViewModel?> selected;
 
     private IEffect hasSelectedChanged;
 

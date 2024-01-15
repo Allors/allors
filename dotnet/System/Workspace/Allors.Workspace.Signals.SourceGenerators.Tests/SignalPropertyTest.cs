@@ -15,7 +15,7 @@ namespace Signal.Test;
 
 public partial class TestClass
 {
-    [SignalProperty] private readonly IValueSignal<string> article;
+    [SignalProperty] private readonly ValueSignal<string> article;
 
 }
 ";
@@ -72,7 +72,7 @@ namespace Signal.Test;
 
 public partial class TestClass
 {
-    [SignalProperty] private readonly IComputedSignal<IUnitRole<string>> firstName;
+    [SignalProperty] private readonly ComputedSignal<IUnitRole<string>> firstName;
 
 }
 ";
@@ -129,7 +129,7 @@ namespace Signal.Test;
 
 public partial class TestClass
 {
-    [SignalProperty] private readonly IComputedSignal<IUnitRole<int?>> number;
+    [SignalProperty] private readonly ComputedSignal<IUnitRole<int?>> number;
 
 }
 ";
@@ -186,7 +186,7 @@ namespace Signal.Test;
 
 public partial class TestClass
 {
-    [SignalProperty] private readonly IComputedSignal<IUnitRole<string>?> firstName;
+    [SignalProperty] private readonly ComputedSignal<IUnitRole<string>?> firstName;
 
 }
 ";
@@ -243,7 +243,7 @@ namespace Signal.Test;
 
 public partial class TestClass
 {
-    [SignalProperty] private readonly IComputedSignal<IUnitRole<int?>?> number;
+    [SignalProperty] private readonly ComputedSignal<IUnitRole<int?>?> number;
 
 }
 ";
@@ -300,7 +300,7 @@ namespace Signal.Test;
 
 public partial class TestClass
 {
-    [SignalProperty(""Test Name"")] private readonly IComputedSignal<IUnitRole<string>> firstName;
+    [SignalProperty(""Test Name"")] private readonly ComputedSignal<IUnitRole<string>> firstName;
 
 }
 ";
@@ -358,7 +358,7 @@ namespace Signal.Test;
 
 public partial class TestClass
 {
-    [SignalProperty] private readonly IComputedSignal<string?> fullName;
+    [SignalProperty] private readonly ComputedSignal<string?> fullName;
 
 }
 ";
@@ -414,7 +414,7 @@ namespace Signal.Test;
 
 public partial class TestClass
 {
-    [SignalProperty] private readonly IComputedSignal<Allors.Workspace.Mvvm.SourceGenerators.Tests.PersonViewModel?> person;
+    [SignalProperty] private readonly ComputedSignal<Allors.Workspace.Mvvm.SourceGenerators.Tests.PersonViewModel?> person;
 
 }
 ";
@@ -470,7 +470,7 @@ namespace Signal.Test;
 
 public partial class TestClass
 {
-    [SignalProperty] private readonly IComputedSignal<Allors.Workspace.Mvvm.SourceGenerators.Tests.CompositeRoleWrapper?> person;
+    [SignalProperty] private readonly ComputedSignal<Allors.Workspace.Mvvm.SourceGenerators.Tests.CompositeRoleWrapper?> person;
 
 }
 ";
@@ -527,7 +527,7 @@ namespace Signal.Test;
 
 public partial class TestClass
 {
-    [SignalProperty] private readonly IComputedSignal<ICompositeRoleWrapper<Allors.Workspace.Mvvm.SourceGenerators.Tests.PersonViewModel>> person;
+    [SignalProperty] private readonly ComputedSignal<ICompositeRoleWrapper<Allors.Workspace.Mvvm.SourceGenerators.Tests.PersonViewModel>> person;
 
 }
 ";
@@ -584,7 +584,7 @@ namespace Signal.Test;
 
 public partial class TestClass
 {
-    [SignalProperty] private readonly IComputedSignal<Allors.Workspace.Mvvm.SourceGenerators.Tests.CompositesRoleWrapper?> people;
+    [SignalProperty] private readonly ComputedSignal<Allors.Workspace.Mvvm.SourceGenerators.Tests.CompositesRoleWrapper?> people;
 
 }
 ";
@@ -641,7 +641,7 @@ namespace Signal.Test;
 
 public partial class TestClass
 {
-    [SignalProperty] private readonly IComputedSignal<ICompositesRoleWrapper<Allors.Workspace.Mvvm.SourceGenerators.Tests.PersonViewModel>> people;
+    [SignalProperty] private readonly ComputedSignal<ICompositesRoleWrapper<Allors.Workspace.Mvvm.SourceGenerators.Tests.PersonViewModel>> people;
 
 }
 ";

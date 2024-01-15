@@ -7,14 +7,14 @@ using Allors.Workspace.Signals;
 
 public partial class PersonGeneratorViewModel : ObjectViewModel<Person>
 {
-    private readonly IValueSignal<Person> model;
+    private readonly ValueSignal<Person> model;
 
-    [SignalProperty] private readonly IComputedSignal<IUnitRole<string>?> firstName;
-    [SignalProperty] private readonly IComputedSignal<string?> fullName;
-    [SignalProperty] private readonly IComputedSignal<string?> greeting;
+    [SignalProperty] private readonly ComputedSignal<IUnitRole<string>?> firstName;
+    [SignalProperty] private readonly ComputedSignal<string?> fullName;
+    [SignalProperty] private readonly ComputedSignal<string?> greeting;
 
-    private readonly IComputedSignal<ICompositeRole<MailboxAddress>?> mailboxAddress;
-    [SignalProperty] private readonly IComputedSignal<IUnitRole<string>?> poBox;
+    private readonly ComputedSignal<ICompositeRole<MailboxAddress>?> mailboxAddress;
+    [SignalProperty] private readonly ComputedSignal<IUnitRole<string>?> poBox;
 
     public PersonGeneratorViewModel(Person model) : base(model)
     {

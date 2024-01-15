@@ -1,17 +1,15 @@
-﻿namespace Allors.Workspace.Signals.Default;
+﻿namespace Allors.Workspace.Signals;
 
-using System;
-
-public class ValueSignal<T> : IValueSignal<T>, IDownstream
+public class ValueSignal<T> : ISignal<T>
 {
-    private readonly Dispatcher dispatcher;
-    private long version;
     private T value;
+    
+    private readonly ChangedEventArgs changedEventArgs;
 
-    public ValueSignal(Dispatcher dispatcher, T value)
+    public ValueSignal(T value)
     {
-        this.dispatcher = dispatcher;
         this.Value = value;
+        this.changedEventArgs = new ChangedEventArgs(this);
     }
 
     object ISignal.Value => this.Value;
@@ -24,30 +22,19 @@ public class ValueSignal<T> : IValueSignal<T>, IDownstream
             if (!Equals(value, this.value))
             {
                 this.value = value;
-                ++this.version;
+                ++this.Version;
                 this.OnChanged();
             }
         }
     }
 
-    object IValueSignal.Value { get; set; }
-
-
     public event ChangedEventHandler Changed;
-    
-    public long Version => this.version;
 
-    public WeakReference<IUpstream>[] Upstreams { get; set; }
+    public long Version { get; private set; }
 
-    public void TrackedBy(IUpstream newUpstream)
+    private void OnChanged()
     {
-        this.Upstreams = this.Upstreams.Update(newUpstream);
-    }
-
-    public void OnChanged()
-    {
-        this.Upstreams.Invalidate();
-
-        this.dispatcher.HandleEffects();
+        var handlers = this.Changed;
+        handlers?.Invoke(this, changedEventArgs);
     }
 }

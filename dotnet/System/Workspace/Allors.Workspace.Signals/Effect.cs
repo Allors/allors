@@ -1,78 +1,58 @@
-﻿namespace Allors.Workspace.Signals.Default;
+﻿namespace Allors.Workspace.Signals;
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
-public class Effect : IEffect, IUpstream
+public class Effect : IEffect
 {
-    private static readonly IDictionary<ISignal, long> EmptyDictionary = new Dictionary<ISignal, long>();
+    private readonly HashSet<INotifyChanged> changeNotifiers;
 
-    private readonly Dispatcher dispatcher;
-    private readonly Action<ITracker> dependencies;
-
-    private IDictionary<ISignal, long> versionBySignal;
-    private IDictionary<ISignal, long> trackingVersionBySignal;
-
-    private bool shouldRaise;
-    
-    public Effect(Dispatcher dispatcher, Action<ITracker> dependencies, Action action)
+    public Effect(Action<IChangedEventSource> action, INotifyChanged changeNotifier) : this(action, [changeNotifier])
     {
-        this.dispatcher = dispatcher;
-        this.dependencies = dependencies;
-        this.Action = action;
-
-        this.versionBySignal = EmptyDictionary;
     }
 
-    public Action Action { get; }
+    public Effect(Action<IChangedEventSource> action, params INotifyChanged[] changeNotifiers)
+    {
+        this.changeNotifiers = new HashSet<INotifyChanged>();
+        this.Action = action;
+
+        foreach (var changeNotifier in changeNotifiers)
+        {
+            this.Add(changeNotifier);
+        }
+    }
+
+    public IEnumerable<INotifyChanged> ChangeNotifiers => this.changeNotifiers.ToArray();
+
+    public Action<IChangedEventSource> Action { get; }
+
+    public void Add(INotifyChanged changeNotifier)
+    {
+        if (this.changeNotifiers.Add(changeNotifier))
+        {
+            changeNotifier.Changed += ChangeNotifierOnChanged;
+        }
+    }
+
+    public void Remove(INotifyChanged changeNotifier)
+    {
+        if (this.changeNotifiers.Remove(changeNotifier))
+        {
+            changeNotifier.Changed -= ChangeNotifierOnChanged;
+        }
+    }
 
     public void Dispose()
     {
-        this.dispatcher.RemoveEffect(this);
-    }
-
-    public void Invalidate()
-    {
-        // TODO:
-    }
-    
-    public void Handle()
-    {
-        this.trackingVersionBySignal = new Dictionary<ISignal, long>();
-        this.dependencies(this);
-
-        if (this.shouldRaise)
+        foreach (var changeNotifier in this.changeNotifiers)
         {
-            this.shouldRaise = false;
-            this.Action();
+            changeNotifier.Changed -= ChangeNotifierOnChanged;
         }
-
-        this.versionBySignal = this.trackingVersionBySignal;
-        this.trackingVersionBySignal = null;
-        
-        this.dispatcher.UpdateTracked(this, this.versionBySignal.Keys);
     }
 
-    public void Track(INotifyChanged signal)
+    private void ChangeNotifierOnChanged(object sender, ChangedEventArgs e)
     {
-        //if (signal == null || this.trackingVersionBySignal.ContainsKey(signal))
-        //{
-        //    return;
-        //}
-        
-        //var trackingWorkspaceVersion = signal.Version;
-        //if (this.versionBySignal.TryGetValue(signal, out var version))
-        //{
-        //    if (version != trackingWorkspaceVersion)
-        //    {
-        //        this.shouldRaise = true;
-        //    }
-        //}
-        //else
-        //{
-        //    this.shouldRaise = true;
-        //}
-
-        //this.trackingVersionBySignal[signal] = trackingWorkspaceVersion;
+        this.Action(e.Source);
     }
 }

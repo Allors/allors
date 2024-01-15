@@ -6,17 +6,22 @@
     using Microsoft.CodeAnalysis.CSharp;
     using Signals;
 
-    public class Test
+    public class Test : IDisposable
     {
 
-        [SignalProperty] private IComputedSignal<IUnitRole<string?>> fullName;
+        [SignalProperty] private ComputedSignal<IUnitRole<string?>> fullName;
 
         [SetUp]
         public void TestSetup()
         {
             // trigger the activation of the signal Assembly
-            IDispatcher dispatcher = null;
-            this.fullName = dispatcher?.CreateComputedSignal<IUnitRole<string?>>((tracker) => null);
+            ISignal signal = null;
+            this.fullName = new ComputedSignal<IUnitRole<string?>>((tracker) => null);
+        }
+
+        public void Dispose()
+        {
+            this.fullName?.Dispose();
         }
 
         protected string GetGeneratedOutput(string source)

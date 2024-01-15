@@ -19,9 +19,9 @@ public class SignalType
 
     public ArgumentType ArgumentType { get; }
 
-    public bool IsValueSignal => this.TypeSyntax.ToString().StartsWith("IValueSignal<");
+    public bool IsValueSignal => this.TypeSyntax.ToString().StartsWith("ValueSignal<");
 
-    public bool IsComputedSignal => this.TypeSyntax.ToString().StartsWith("IComputedSignal<");
+    public bool IsComputedSignal => this.TypeSyntax.ToString().StartsWith("ComputedSignal<");
 
     public string Name => this.TypeSyntax.ToFullString();
 }

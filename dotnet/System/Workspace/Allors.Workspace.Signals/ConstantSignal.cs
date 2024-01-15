@@ -5,7 +5,7 @@
 
 namespace Allors.Workspace.Signals
 {
-    public class ConstantSignal<T> : IComputedSignal<T>
+    public class ConstantSignal<T> : ISignal<T>
     {
         public ConstantSignal(T value)
         {

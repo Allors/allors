@@ -9,7 +9,7 @@ public abstract class ObjectViewModel<T> : ViewModel, IDisposable
     where T : class, IObject
 {
     protected readonly IDispatcher dispatcher;
-    protected readonly IValueSignal<T> model;
+    protected readonly ValueSignal<T> model;
 
     protected IEffect modelChanged;
 
@@ -24,7 +24,7 @@ public abstract class ObjectViewModel<T> : ViewModel, IDisposable
     }
 
     [Browsable(false)]
-    public IValueSignal<T> Model => this.model;
+    public ValueSignal<T> Model => this.model;
 
     protected T ModelValue(ITracker tracker) => this.model.Track(tracker).Value;
 

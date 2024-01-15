@@ -6,8 +6,16 @@
 namespace Allors.Workspace.Signals
 {
     using System;
+    using System.Collections.Generic;
 
     public interface IEffect : IDisposable
     {
+        Action<IChangedEventSource> Action { get; }
+
+        void Add(INotifyChanged changeNotifier);
+
+        void Remove(INotifyChanged changeNotifier);
+
+        IEnumerable<INotifyChanged> ChangeNotifiers { get; }
     }
 }

@@ -56,13 +56,13 @@ else
 
     public IPushResult? Result { get; set; } 
 
-    public IValueSignal<Person?> Person { get; private set; } = null!;
+    public ValueSignal<Person?> Person { get; private set; } = null!;
 
-    public IComputedSignal<IUnitRole<string>?> FirstName { get; private set; } = null!;
+    public ComputedSignal<IUnitRole<string>?> FirstName { get; private set; } = null!;
 
-    public IComputedSignal<ICompositeRole<MailboxAddress>?> MailboxAddress { get; private set; } = null!;
+    public ComputedSignal<ICompositeRole<MailboxAddress>?> MailboxAddress { get; private set; } = null!;
 
-    public IComputedSignal<IUnitRole<string>?> PoBox { get; private set; } = null!;
+    public ComputedSignal<IUnitRole<string>?> PoBox { get; private set; } = null!;
 
     public IEffect Effect { get; private set; } = null!;
 

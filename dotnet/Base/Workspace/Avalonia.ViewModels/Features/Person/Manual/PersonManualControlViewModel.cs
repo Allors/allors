@@ -12,7 +12,7 @@ using Task = System.Threading.Tasks.Task;
 
 public class PersonManualControlViewModel : ViewModel, IRoutableViewModel
 {
-    private readonly IValueSignal<PersonManualViewModel?> selected;
+    private readonly ValueSignal<PersonManualViewModel?> selected;
 
     private readonly IEffect selectedChanged;
 

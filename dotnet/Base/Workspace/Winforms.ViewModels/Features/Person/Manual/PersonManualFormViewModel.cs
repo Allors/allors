@@ -13,7 +13,7 @@ using Task = Task;
 
 public partial class PersonManualFormViewModel : ObservableObject, IDisposable
 {
-    private readonly IValueSignal<PersonManualViewModel?> selected;
+    private readonly ValueSignal<PersonManualViewModel?> selected;
 
     private readonly IEffect selectedChanged;
 

@@ -16,16 +16,13 @@ namespace Allors.Workspace
         {
             this.ObjectFactory = objectFactory;
             this.M = m;
-            this.DispatcherBuilder = new DefaultDispatcherBuilder();
         }
 
         public IObjectFactory ObjectFactory { get; }
 
         public M M { get; private set; }
 
-        public IDispatcherBuilder DispatcherBuilder { get; }
-
-       public ITime Time { get; private set; }
+        public ITime Time { get; private set; }
 
         public void OnInit(IWorkspace workspace)
         {
@@ -42,7 +39,6 @@ namespace Allors.Workspace
                 // Core
                 { } type when type == typeof(M) => (T)this.M,
                 { } type when type == typeof(IObjectFactory) => (T)this.ObjectFactory,
-                { } type when type == typeof(IDispatcherBuilder) => (T)this.DispatcherBuilder,
                 { } type when type == typeof(ITime) => (T)this.Time,
                 _ => throw new NotSupportedException($"Service {typeof(T)} not supported")
             };

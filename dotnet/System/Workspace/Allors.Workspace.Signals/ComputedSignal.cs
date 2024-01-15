@@ -1,27 +1,27 @@
-﻿namespace Allors.Workspace.Signals.Default;
+﻿namespace Allors.Workspace.Signals;
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
-public class ComputedSignal<T> : IComputedSignal<T>, IUpstream, IDownstream
+public sealed class ComputedSignal<T> : ISignal<T>, ITracker
 {
-    private readonly Dispatcher dispatcher;
     private readonly Func<ITracker, T> expression;
 
     private T value;
     private long version;
-    private bool isInvalid;
+    private bool isValid;
 
-    private object previousValue;
-    private long previousValueVersion;
+    private HashSet<INotifyChanged> changeNotifiers;
+    private INotifyChanged valueChangeNotifier;
+    private bool isValueChanged;
 
-    private ISet<INotifyChanged> trackedSignals;
-
-    public ComputedSignal(Dispatcher dispatcher, Func<ITracker, T> expression)
+    public ComputedSignal(Func<ITracker, T> expression)
     {
-        this.dispatcher = dispatcher;
         this.expression = expression;
-        this.isInvalid = true;
+        this.changeNotifiers = new HashSet<INotifyChanged>();
+        this.isValid = false;
+        this.isValueChanged = false;
     }
 
     object ISignal.Value => this.Value;
@@ -32,7 +32,7 @@ public class ComputedSignal<T> : IComputedSignal<T>, IUpstream, IDownstream
     {
         get
         {
-            if (this.isInvalid)
+            if (!this.isValid)
             {
                 this.Validate();
             }
@@ -45,7 +45,7 @@ public class ComputedSignal<T> : IComputedSignal<T>, IUpstream, IDownstream
     {
         get
         {
-            if (this.isInvalid)
+            if (!this.isValid)
             {
                 this.Validate();
             }
@@ -54,58 +54,98 @@ public class ComputedSignal<T> : IComputedSignal<T>, IUpstream, IDownstream
         }
     }
 
-    public WeakReference<IUpstream>[] Upstreams { get; set; }
 
-    public void Track(INotifyChanged signal)
+    void ITracker.Track(INotifyChanged signal)
     {
         if (signal == null)
         {
             return;
         }
 
-        this.trackedSignals.Add(signal);
+        this.changeNotifiers.Add(signal);
     }
 
-    public void TrackedBy(IUpstream newUpstream)
+    public void Dispose()
     {
-        this.Upstreams = this.Upstreams.Update(newUpstream);
+        foreach (var signal in this.changeNotifiers)
+        {
+            signal.Changed -= this.ChangeNotifierTrackedChanged;
+        }
+
+        if (this.valueChangeNotifier != null)
+        {
+            this.valueChangeNotifier.Changed -= this.ValueChangeNotifierTrackedChanged;
+        }
     }
 
-    public void Invalidate()
+    private void ChangeNotifierTrackedChanged(object sender, ChangedEventArgs e)
     {
-        this.isInvalid = true;
-        this.Upstreams.Invalidate();
+        this.OnTrackedChanged();
+    }
+
+    private void ValueChangeNotifierTrackedChanged(object sender, ChangedEventArgs e)
+    {
+        this.isValueChanged = true;
+        this.OnTrackedChanged();
+    }
+
+    private void OnTrackedChanged()
+    {
+        this.isValid = false;
+
+        var handlers = this.Changed;
+        handlers?.Invoke(this, new ChangedEventArgs(this));
     }
 
     private void Validate()
     {
-        this.trackedSignals = new HashSet<INotifyChanged>();
+        var oldChangeNotifiers = this.changeNotifiers;
+        var oldValueChangeNotifier = this.valueChangeNotifier;
+
+        this.changeNotifiers = new HashSet<INotifyChanged>();
+        this.valueChangeNotifier = null;
 
         var newValue = this.expression(this);
-        var newValueVersion = (newValue as ISignal)?.Version ??
-                              (newValue as IObject)?.Strategy.Version ??
-                              (newValue as IStrategy)?.Version ??
-                              0;
 
-        if (!Equals(newValue, this.value))
+        if (!Equals(newValue, this.value) || this.isValueChanged)
         {
             this.value = newValue;
             ++this.version;
         }
-        else
+
+        this.valueChangeNotifier = newValue as INotifyChanged;
+        if (!Equals(oldValueChangeNotifier, this.valueChangeNotifier) && (oldValueChangeNotifier != null || this.valueChangeNotifier != null))
         {
-            if (newValueVersion != this.previousValueVersion)
+            if (oldValueChangeNotifier != null)
             {
-                ++this.version;
+                oldValueChangeNotifier.Changed -= this.ValueChangeNotifierTrackedChanged;
+            }
+
+            if (this.valueChangeNotifier != null)
+            {
+                this.valueChangeNotifier.Changed += this.ValueChangeNotifierTrackedChanged;
+            }
+        }
+
+        var changeNotifiersToRemove = oldChangeNotifiers.Except(this.changeNotifiers);
+        foreach (var changeNotifier in changeNotifiersToRemove)
+        {
+            if (changeNotifier != this.valueChangeNotifier)
+            {
+                changeNotifier.Changed -= this.ValueChangeNotifierTrackedChanged;
+            }
+        }
+
+        var changeNotifiersToAdd = this.changeNotifiers.Except(oldChangeNotifiers);
+        foreach (var changeNotifier in changeNotifiersToAdd)
+        {
+            if (changeNotifier != this.valueChangeNotifier)
+            {
+                changeNotifier.Changed += this.ValueChangeNotifierTrackedChanged;
             }
         }
         
-        this.previousValue = newValue;
-        this.previousValueVersion = newValueVersion;
-
-        this.dispatcher.UpdateTracked(this, this.trackedSignals);
-
-        this.trackedSignals = null;
-        this.isInvalid = false;
+        this.isValid = true;
+        this.isValueChanged = false;
     }
 }

@@ -7,14 +7,14 @@ using global::ReactiveUI;
 
 public partial class PersonManualViewModel : ReactiveObject, IDisposable
 {
-    private readonly IValueSignal<Person> model;
+    private readonly ValueSignal<Person> model;
 
-    private readonly IComputedSignal<IUnitRole<string>> firstName;
-    private readonly IComputedSignal<string?> fullName;
-    private readonly IComputedSignal<string?> greeting;
+    private readonly ComputedSignal<IUnitRole<string>> firstName;
+    private readonly ComputedSignal<string?> fullName;
+    private readonly ComputedSignal<string?> greeting;
 
-    private readonly IComputedSignal<ICompositeRole<MailboxAddress>> mailboxAddress;
-    private readonly IComputedSignal<IUnitRole<string?>?> poBox;
+    private readonly ComputedSignal<ICompositeRole<MailboxAddress>> mailboxAddress;
+    private readonly ComputedSignal<IUnitRole<string?>?> poBox;
 
     private readonly IEffect firstNameChanged;
     private readonly IEffect fullNameChanged;
