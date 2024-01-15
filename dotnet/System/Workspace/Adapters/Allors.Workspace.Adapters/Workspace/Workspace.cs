@@ -500,9 +500,11 @@ namespace Allors.Workspace.Adapters
                 do
                 {
                     changeDetector = this.changeDetectors.FirstOrDefault();
-                    this.changeDetectors.Remove(changeDetector);
-
-                    changeDetector?.Handle();
+                    if (changeDetector != null)
+                    {
+                        this.changeDetectors.Remove(changeDetector);
+                        changeDetector.Handle();
+                    }
 
                 } while (changeDetector != null);
 

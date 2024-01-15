@@ -22,14 +22,13 @@ public class PersonManualControlViewModel : ViewModel, IRoutableViewModel
         this.MessageService = messageService;
         this.HostScreen = screen;
 
-        var dispatcher = workspace.Services.Get<IDispatcherBuilder>().Build(workspace);
-        this.selected = dispatcher.CreateValueSignal<PersonManualViewModel>(null);
+        this.selected = new ValueSignal<PersonManualViewModel>(null);
 
-        this.selectedChanged = dispatcher.CreateEffect(tracker => this.selected.Track(tracker), () =>
+        this.selectedChanged = new Effect((src) =>
         {
             this.RaisePropertyChanged(nameof(this.Selected));
             this.RaisePropertyChanged(nameof(this.HasSelected));
-        });
+        }, this.selected);
 
         this.Load = ReactiveCommand.CreateFromTask(this.SaveAsync);
         this.Save = ReactiveCommand.CreateFromTask(this.LoadAsync);

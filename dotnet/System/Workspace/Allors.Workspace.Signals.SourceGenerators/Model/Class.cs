@@ -77,7 +77,7 @@ public partial class {this.Name}
 
 {properties}
 
-    private void OnInitEffects(IDispatcher dispatcher)
+    private void OnInitEffects()
     {{
 {initEffects}
     }}

@@ -40,9 +40,9 @@ public partial class TestClass
         set => this.article.Value = value;
     }
 
-    private void OnInitEffects(IDispatcher dispatcher)
+    private void OnInitEffects()
     {
-        this.articleChanged = dispatcher.CreateEffect(tracker => this.article.Track(tracker), () => this.OnEffect(nameof(Article)));
+        this.articleChanged = new Effect((src) => this.OnEffect(nameof(Article)), this.article);
     }
 
     private void OnDisposeEffects()
@@ -97,9 +97,9 @@ public partial class TestClass
         set { if(this.firstName.Value != null) this.firstName.Value.Value = value; }
     }
 
-    private void OnInitEffects(IDispatcher dispatcher)
+    private void OnInitEffects()
     {
-        this.firstNameChanged = dispatcher.CreateEffect(tracker => this.firstName.Track(tracker), () => this.OnEffect(nameof(FirstName)));
+        this.firstNameChanged = new Effect((src) => this.OnEffect(nameof(FirstName)), this.firstName);
     }
 
     private void OnDisposeEffects()
@@ -154,9 +154,9 @@ public partial class TestClass
         set { if(this.number.Value != null) this.number.Value.Value = value; }
     }
 
-    private void OnInitEffects(IDispatcher dispatcher)
+    private void OnInitEffects()
     {
-        this.numberChanged = dispatcher.CreateEffect(tracker => this.number.Track(tracker), () => this.OnEffect(nameof(Number)));
+        this.numberChanged = new Effect((src) => this.OnEffect(nameof(Number)), this.number);
     }
 
     private void OnDisposeEffects()
@@ -211,9 +211,9 @@ public partial class TestClass
         set { if(this.firstName.Value != null) this.firstName.Value.Value = value; }
     }
 
-    private void OnInitEffects(IDispatcher dispatcher)
+    private void OnInitEffects()
     {
-        this.firstNameChanged = dispatcher.CreateEffect(tracker => this.firstName.Track(tracker), () => this.OnEffect(nameof(FirstName)));
+        this.firstNameChanged = new Effect((src) => this.OnEffect(nameof(FirstName)), this.firstName);
     }
 
     private void OnDisposeEffects()
@@ -268,9 +268,9 @@ public partial class TestClass
         set { if(this.number.Value != null) this.number.Value.Value = value; }
     }
 
-    private void OnInitEffects(IDispatcher dispatcher)
+    private void OnInitEffects()
     {
-        this.numberChanged = dispatcher.CreateEffect(tracker => this.number.Track(tracker), () => this.OnEffect(nameof(Number)));
+        this.numberChanged = new Effect((src) => this.OnEffect(nameof(Number)), this.number);
     }
 
     private void OnDisposeEffects()
@@ -326,9 +326,9 @@ public partial class TestClass
         set { if(this.firstName.Value != null) this.firstName.Value.Value = value; }
     }
 
-    private void OnInitEffects(IDispatcher dispatcher)
+    private void OnInitEffects()
     {
-        this.firstNameChanged = dispatcher.CreateEffect(tracker => this.firstName.Track(tracker), () => this.OnEffect(nameof(FirstName)));
+        this.firstNameChanged = new Effect((src) => this.OnEffect(nameof(FirstName)), this.firstName);
     }
 
     private void OnDisposeEffects()
@@ -382,9 +382,9 @@ public partial class TestClass
         get => this.fullName.Value;
     }
 
-    private void OnInitEffects(IDispatcher dispatcher)
+    private void OnInitEffects()
     {
-        this.fullNameChanged = dispatcher.CreateEffect(tracker => this.fullName.Track(tracker), () => this.OnEffect(nameof(FullName)));
+        this.fullNameChanged = new Effect((src) => this.OnEffect(nameof(FullName)), this.fullName);
     }
 
     private void OnDisposeEffects()
@@ -438,9 +438,9 @@ public partial class TestClass
         get => this.person.Value;
     }
 
-    private void OnInitEffects(IDispatcher dispatcher)
+    private void OnInitEffects()
     {
-        this.personChanged = dispatcher.CreateEffect(tracker => this.person.Track(tracker), () => this.OnEffect(nameof(Person)));
+        this.personChanged = new Effect((src) => this.OnEffect(nameof(Person)), this.person);
     }
 
     private void OnDisposeEffects()
@@ -495,9 +495,9 @@ public partial class TestClass
         set { if(this.person.Value != null) this.person.Value.Value = value; }
     }
 
-    private void OnInitEffects(IDispatcher dispatcher)
+    private void OnInitEffects()
     {
-        this.personChanged = dispatcher.CreateEffect(tracker => this.person.Track(tracker), () => this.OnEffect(nameof(Person)));
+        this.personChanged = new Effect((src) => this.OnEffect(nameof(Person)), this.person);
     }
 
     private void OnDisposeEffects()
@@ -552,9 +552,9 @@ public partial class TestClass
         set { if(this.person.Value != null) this.person.Value.Value = value; }
     }
 
-    private void OnInitEffects(IDispatcher dispatcher)
+    private void OnInitEffects()
     {
-        this.personChanged = dispatcher.CreateEffect(tracker => this.person.Track(tracker), () => this.OnEffect(nameof(Person)));
+        this.personChanged = new Effect((src) => this.OnEffect(nameof(Person)), this.person);
     }
 
     private void OnDisposeEffects()
@@ -609,9 +609,9 @@ public partial class TestClass
         set { if(this.people.Value != null) this.people.Value.Value = value; }
     }
 
-    private void OnInitEffects(IDispatcher dispatcher)
+    private void OnInitEffects()
     {
-        this.peopleChanged = dispatcher.CreateEffect(tracker => this.people.Track(tracker), () => this.OnEffect(nameof(People)));
+        this.peopleChanged = new Effect((src) => this.OnEffect(nameof(People)), this.people);
     }
 
     private void OnDisposeEffects()
@@ -666,9 +666,9 @@ public partial class TestClass
         set { if(this.people.Value != null) this.people.Value.Value = value; }
     }
 
-    private void OnInitEffects(IDispatcher dispatcher)
+    private void OnInitEffects()
     {
-        this.peopleChanged = dispatcher.CreateEffect(tracker => this.people.Track(tracker), () => this.OnEffect(nameof(People)));
+        this.peopleChanged = new Effect((src) => this.OnEffect(nameof(People)), this.people);
     }
 
     private void OnDisposeEffects()

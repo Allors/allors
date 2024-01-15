@@ -23,16 +23,14 @@ public partial class PersonGeneratorControlViewModel : ViewModel, IRoutableViewM
         this.MessageService = messageService;
         this.HostScreen = screen;
 
-        var dispatcher = workspace.Services.Get<IDispatcherBuilder>().Build(workspace);
-
-        this.selected = dispatcher.CreateValueSignal<PersonGeneratorViewModel>(null);
+        this.selected = new ValueSignal<PersonGeneratorViewModel>(null);
 
         this.Load = ReactiveCommand.CreateFromTask(this.SaveAsync);
         this.Save = ReactiveCommand.CreateFromTask(this.LoadAsync);
 
-        this.hasSelectedChanged = dispatcher.CreateEffect(tracker => this.selected.Track(tracker), () => this.OnEffect(nameof(HasSelected)));
-        
-        this.OnInitEffects(dispatcher);
+        this.hasSelectedChanged = new Effect((src) => this.OnEffect(nameof(HasSelected)), this.selected);
+
+        this.OnInitEffects();
     }
 
     public IWorkspace Workspace { get; set; }
@@ -40,7 +38,7 @@ public partial class PersonGeneratorControlViewModel : ViewModel, IRoutableViewM
     public IMessageService MessageService { get; }
 
     public string UrlPathSegment { get; } = "PersonGenerator";
-    
+
     public IScreen HostScreen { get; }
 
     public ReactiveCommand<Unit, Unit> Load { get; }
@@ -52,7 +50,7 @@ public partial class PersonGeneratorControlViewModel : ViewModel, IRoutableViewM
     public ObservableCollection<PersonGeneratorViewModel> People { get; } = new();
 
     public bool HasSelected => this.Selected != null;
-    
+
     private async Task LoadAsync()
     {
         var m = this.Workspace.Services.Get<M>();

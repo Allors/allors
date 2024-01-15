@@ -173,7 +173,7 @@ public class Field
 
     public string GenerateInitEffects()
     {
-        return $@"        this.{this.Name}Changed = dispatcher.CreateEffect(tracker => this.{this.Name}.Track(tracker), () => this.{this.OnEffect}(nameof({this.PropertyName})));";
+        return $@"        this.{this.Name}Changed = new Effect((src) => this.{this.OnEffect}(nameof({this.PropertyName})), this.{this.Name});";
     }
 
     public string GenerateDisposeEffects()
