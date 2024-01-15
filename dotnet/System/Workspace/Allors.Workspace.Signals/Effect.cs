@@ -8,11 +8,11 @@ public class Effect : IEffect
 {
     private readonly HashSet<INotifyChanged> changeNotifiers;
 
-    public Effect(Action<IChangedEventSource> action, INotifyChanged changeNotifier) : this(action, [changeNotifier])
+    public Effect(Action action, INotifyChanged changeNotifier) : this(action, [changeNotifier])
     {
     }
 
-    public Effect(Action<IChangedEventSource> action, params INotifyChanged[] changeNotifiers)
+    public Effect(Action action, params INotifyChanged[] changeNotifiers)
     {
         this.changeNotifiers = new HashSet<INotifyChanged>();
         this.Action = action;
@@ -23,9 +23,26 @@ public class Effect : IEffect
         }
     }
 
+    public Effect(Action<IChangedEventSource> action, INotifyChanged changeNotifier) : this(action, [changeNotifier])
+    {
+    }
+
+    public Effect(Action<IChangedEventSource> action, params INotifyChanged[] changeNotifiers)
+    {
+        this.changeNotifiers = new HashSet<INotifyChanged>();
+        this.ActionWithArgument = action;
+
+        foreach (var changeNotifier in changeNotifiers)
+        {
+            this.Add(changeNotifier);
+        }
+    }
+
     public IEnumerable<INotifyChanged> ChangeNotifiers => this.changeNotifiers.ToArray();
 
-    public Action<IChangedEventSource> Action { get; }
+    public Action Action { get; }
+
+    public Action<IChangedEventSource> ActionWithArgument { get; }
 
     public void Add(INotifyChanged changeNotifier)
     {
@@ -53,6 +70,7 @@ public class Effect : IEffect
 
     private void ChangeNotifierOnChanged(object sender, ChangedEventArgs e)
     {
-        this.Action(e.Source);
+        this.Action?.Invoke();
+        this.ActionWithArgument?.Invoke(e.Source);
     }
 }

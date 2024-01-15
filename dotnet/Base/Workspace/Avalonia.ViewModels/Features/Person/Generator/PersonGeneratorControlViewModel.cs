@@ -28,7 +28,7 @@ public partial class PersonGeneratorControlViewModel : ViewModel, IRoutableViewM
         this.Load = ReactiveCommand.CreateFromTask(this.SaveAsync);
         this.Save = ReactiveCommand.CreateFromTask(this.LoadAsync);
 
-        this.hasSelectedChanged = new Effect((src) => this.OnEffect(nameof(HasSelected)), this.selected);
+        this.hasSelectedChanged = new Effect(() => this.OnEffect(nameof(HasSelected)), this.selected);
 
         this.OnInitEffects();
     }

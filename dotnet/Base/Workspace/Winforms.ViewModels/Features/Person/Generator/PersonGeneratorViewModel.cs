@@ -18,24 +18,24 @@ public partial class PersonGeneratorViewModel : ObjectViewModel<Person>
 
     public PersonGeneratorViewModel(Person model) : base(model)
     {
-        this.firstName = dispatcher.CreateComputedSignal(tracker => this.ModelValue(tracker).FirstName(tracker));
-        this.fullName = dispatcher.CreateComputedSignal(tracker =>
+        this.firstName = new ComputedSignal<IUnitRole<string>?>(tracker => this.ModelValue(tracker).FirstName(tracker));
+        this.fullName = new ComputedSignal<string?>(tracker =>
         {
             var person = this.ModelValue(tracker);
             string? firstNameValue = person.FirstName(tracker)?.Value;
             string? lastNameValue = person.LastName(tracker)?.Value;
             return $"{firstNameValue} {lastNameValue}".Trim();
         });
-        this.greeting = dispatcher.CreateComputedSignal(tracker =>
+        this.greeting = new ComputedSignal<string?>(tracker =>
         {
             var fullNameValue = this.fullName.Track(tracker).Value;
             return $"Hello {fullNameValue}!";
         });
 
-        this.mailboxAddress = dispatcher.CreateComputedSignal(tracker => this.ModelValue(tracker)?.MailboxAddress(tracker));
-        this.poBox = this.dispatcher.CreateComputedSignal(tracker => this.mailboxAddress.Value?.Track(tracker)?.Value?.PoBox(tracker));
+        this.mailboxAddress = new ComputedSignal<ICompositeRole<MailboxAddress>?>(tracker => this.ModelValue(tracker)?.MailboxAddress(tracker));
+        this.poBox = new ComputedSignal<IUnitRole<string>?>(tracker => this.mailboxAddress.Value?.Track(tracker)?.Value?.PoBox(tracker));
 
-        this.OnInitEffects(dispatcher);
+        this.OnInitEffects();
     }
 
     protected override void OnDispose() => this.OnDisposeEffects();

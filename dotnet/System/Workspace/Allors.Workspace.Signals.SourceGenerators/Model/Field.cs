@@ -173,7 +173,7 @@ public class Field
 
     public string GenerateInitEffects()
     {
-        return $@"        this.{this.Name}Changed = new Effect((src) => this.{this.OnEffect}(nameof({this.PropertyName})), this.{this.Name});";
+        return $@"        this.{this.Name}Changed = new Effect(() => this.{this.OnEffect}(nameof({this.PropertyName})), this.{this.Name});";
     }
 
     public string GenerateDisposeEffects()

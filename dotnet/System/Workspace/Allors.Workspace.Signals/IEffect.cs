@@ -10,8 +10,6 @@ namespace Allors.Workspace.Signals
 
     public interface IEffect : IDisposable
     {
-        Action<IChangedEventSource> Action { get; }
-
         void Add(INotifyChanged changeNotifier);
 
         void Remove(INotifyChanged changeNotifier);

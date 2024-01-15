@@ -21,11 +21,10 @@ public partial class PersonManualFormViewModel : ObservableObject, IDisposable
     {
         this.Workspace = workspace;
         this.MessageService = messageService;
-        var dispatcher = workspace.Services.Get<IDispatcherBuilder>().Build(workspace);
 
-        this.selected = dispatcher.CreateValueSignal<PersonManualViewModel>(null);
+        this.selected = new ValueSignal<PersonManualViewModel>(null);
 
-        this.selectedChanged = dispatcher.CreateEffect(tracker => this.selected.Track(tracker), () => this.OnPropertyChanged(nameof(Selected)));
+        this.selectedChanged = new Effect(() => this.OnPropertyChanged(nameof(Selected)), this.selected);
     }
 
     public IWorkspace Workspace { get; set; }

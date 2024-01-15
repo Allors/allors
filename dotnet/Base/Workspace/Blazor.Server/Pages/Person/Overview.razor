@@ -40,16 +40,15 @@ else
     {
         this.Workspace = this.WorkspaceFactory.CreateWorkspace();
         var m = this.Workspace.Services.Get<M>();
-        var dispatcher = this.Workspace.Services.Get<IDispatcherBuilder>().Build(this.Workspace);
 
-        this.Person = dispatcher.CreateValueSignal<Person?>(null);
-        this.Effect = dispatcher.CreateEffect(v => v.Track(this.Person), this.StateHasChanged);
+        this.Person = new ValueSignal<Person?>(null);
+        this.Effect = new Effect(this.StateHasChanged, this.Person);
 
         var result = await this.Workspace.PullAsync(new Pull
             {
                 ObjectId = long.Parse(this.Id),
                 Results = new[]
-                                            {
+                                                {
                     new Result
                     {
                         Select = new Select

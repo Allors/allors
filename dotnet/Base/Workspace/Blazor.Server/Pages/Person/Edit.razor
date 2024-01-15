@@ -44,7 +44,7 @@ else
             }
         </div>
 
-        <input type="submit" class="btn btn-primary" value="Restore" />
+        <input type="submit" class="btn btn-primary" value="Save" />
     </EditForm>
 }
 
@@ -54,7 +54,7 @@ else
 
     public IWorkspace Workspace = null!;
 
-    public IPushResult? Result { get; set; } 
+    public IPushResult? Result { get; set; }
 
     public ValueSignal<Person?> Person { get; private set; } = null!;
 
@@ -69,18 +69,13 @@ else
     protected override async Task OnInitializedAsync()
     {
         this.Workspace = this.WorkspaceFactory.CreateWorkspace();
-        var dispatcher = this.Workspace.Services.Get<IDispatcherBuilder>().Build(this.Workspace);
 
-        this.Person = dispatcher.CreateValueSignal<Person?>(null);
-        this.FirstName = dispatcher.CreateComputedSignal(tracker => this.Person.Track(tracker).Value?.FirstName.Track(tracker));
-        this.MailboxAddress = dispatcher.CreateComputedSignal(tracker => this.Person.Track(tracker).Value?.MailboxAddress.Track(tracker));
-        this.PoBox = dispatcher.CreateComputedSignal(tracker => this.MailboxAddress.Track(tracker).Value.Track(tracker).Value?.PoBox.Track(tracker));
+        this.Person = new ValueSignal<Person?>(null);
+        this.FirstName = new ComputedSignal<IUnitRole<string>?>(tracker => this.Person.Track(tracker).Value?.FirstName.Track(tracker));
+        this.MailboxAddress = new ComputedSignal<ICompositeRole<MailboxAddress>?>(tracker => this.Person.Track(tracker).Value?.MailboxAddress.Track(tracker));
+        this.PoBox = new ComputedSignal<IUnitRole<string>>(tracker => this.MailboxAddress.Track(tracker).Value.Track(tracker).Value?.PoBox.Track(tracker));
 
-        this.Effect = dispatcher.CreateEffect(v =>
-        {
-            v.Track(this.FirstName);
-            v.Track(this.PoBox);
-        }, this.StateHasChanged);
+        this.Effect = new Effect(this.StateHasChanged, this.FirstName, this.PoBox);
 
         await LoadAsync();
     }
@@ -111,7 +106,7 @@ else
             {
                 ObjectId = long.Parse(this.Id),
                 Results = new[]
-                                                                                                    {
+                                                                                                        {
                     new Result
                     {
                         Include = m.Person.Nodes(v=>v.MailboxAddress.Node())

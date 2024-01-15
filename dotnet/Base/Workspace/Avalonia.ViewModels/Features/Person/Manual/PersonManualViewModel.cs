@@ -44,10 +44,10 @@ public partial class PersonManualViewModel : ReactiveObject, IDisposable
         this.mailboxAddress = new ComputedSignal<ICompositeRole<MailboxAddress>>(tracker => this.model.Track(tracker).Value.MailboxAddress.Track(tracker));
         this.poBox = new ComputedSignal<IUnitRole<string>>(tracker => this.mailboxAddress.Track(tracker).Value?.Track(tracker).Value?.PoBox.Track(tracker));
 
-        this.firstNameChanged = new Effect((src) => this.RaisePropertyChanged(nameof(FirstName)), this.firstName);
-        this.fullNameChanged = new Effect((src) => this.RaisePropertyChanged(nameof(FullName)), this.fullName);
-        this.greetingChanged = new Effect((src) => this.RaisePropertyChanged(nameof(Greeting)), this.greeting);
-        this.poBoxChanged = new Effect((src) => this.RaisePropertyChanged(nameof(Greeting)), this.poBox);
+        this.firstNameChanged = new Effect(() => this.RaisePropertyChanged(nameof(FirstName)), this.firstName);
+        this.fullNameChanged = new Effect(() => this.RaisePropertyChanged(nameof(FullName)), this.fullName);
+        this.greetingChanged = new Effect(() => this.RaisePropertyChanged(nameof(Greeting)), this.greeting);
+        this.poBoxChanged = new Effect(() => this.RaisePropertyChanged(nameof(Greeting)), this.poBox);
     }
 
     public Person Model { get => this.model.Value; }

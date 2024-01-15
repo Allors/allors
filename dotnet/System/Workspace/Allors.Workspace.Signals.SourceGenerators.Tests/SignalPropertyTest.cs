@@ -42,7 +42,7 @@ public partial class TestClass
 
     private void OnInitEffects()
     {
-        this.articleChanged = new Effect((src) => this.OnEffect(nameof(Article)), this.article);
+        this.articleChanged = new Effect(() => this.OnEffect(nameof(Article)), this.article);
     }
 
     private void OnDisposeEffects()
@@ -99,7 +99,7 @@ public partial class TestClass
 
     private void OnInitEffects()
     {
-        this.firstNameChanged = new Effect((src) => this.OnEffect(nameof(FirstName)), this.firstName);
+        this.firstNameChanged = new Effect(() => this.OnEffect(nameof(FirstName)), this.firstName);
     }
 
     private void OnDisposeEffects()
@@ -156,7 +156,7 @@ public partial class TestClass
 
     private void OnInitEffects()
     {
-        this.numberChanged = new Effect((src) => this.OnEffect(nameof(Number)), this.number);
+        this.numberChanged = new Effect(() => this.OnEffect(nameof(Number)), this.number);
     }
 
     private void OnDisposeEffects()
@@ -213,7 +213,7 @@ public partial class TestClass
 
     private void OnInitEffects()
     {
-        this.firstNameChanged = new Effect((src) => this.OnEffect(nameof(FirstName)), this.firstName);
+        this.firstNameChanged = new Effect(() => this.OnEffect(nameof(FirstName)), this.firstName);
     }
 
     private void OnDisposeEffects()
@@ -270,7 +270,7 @@ public partial class TestClass
 
     private void OnInitEffects()
     {
-        this.numberChanged = new Effect((src) => this.OnEffect(nameof(Number)), this.number);
+        this.numberChanged = new Effect(() => this.OnEffect(nameof(Number)), this.number);
     }
 
     private void OnDisposeEffects()
@@ -328,7 +328,7 @@ public partial class TestClass
 
     private void OnInitEffects()
     {
-        this.firstNameChanged = new Effect((src) => this.OnEffect(nameof(FirstName)), this.firstName);
+        this.firstNameChanged = new Effect(() => this.OnEffect(nameof(FirstName)), this.firstName);
     }
 
     private void OnDisposeEffects()
@@ -384,7 +384,7 @@ public partial class TestClass
 
     private void OnInitEffects()
     {
-        this.fullNameChanged = new Effect((src) => this.OnEffect(nameof(FullName)), this.fullName);
+        this.fullNameChanged = new Effect(() => this.OnEffect(nameof(FullName)), this.fullName);
     }
 
     private void OnDisposeEffects()
@@ -440,7 +440,7 @@ public partial class TestClass
 
     private void OnInitEffects()
     {
-        this.personChanged = new Effect((src) => this.OnEffect(nameof(Person)), this.person);
+        this.personChanged = new Effect(() => this.OnEffect(nameof(Person)), this.person);
     }
 
     private void OnDisposeEffects()
@@ -497,7 +497,7 @@ public partial class TestClass
 
     private void OnInitEffects()
     {
-        this.personChanged = new Effect((src) => this.OnEffect(nameof(Person)), this.person);
+        this.personChanged = new Effect(() => this.OnEffect(nameof(Person)), this.person);
     }
 
     private void OnDisposeEffects()
@@ -554,7 +554,7 @@ public partial class TestClass
 
     private void OnInitEffects()
     {
-        this.personChanged = new Effect((src) => this.OnEffect(nameof(Person)), this.person);
+        this.personChanged = new Effect(() => this.OnEffect(nameof(Person)), this.person);
     }
 
     private void OnDisposeEffects()
@@ -611,7 +611,7 @@ public partial class TestClass
 
     private void OnInitEffects()
     {
-        this.peopleChanged = new Effect((src) => this.OnEffect(nameof(People)), this.people);
+        this.peopleChanged = new Effect(() => this.OnEffect(nameof(People)), this.people);
     }
 
     private void OnDisposeEffects()
@@ -668,7 +668,7 @@ public partial class TestClass
 
     private void OnInitEffects()
     {
-        this.peopleChanged = new Effect((src) => this.OnEffect(nameof(People)), this.people);
+        this.peopleChanged = new Effect(() => this.OnEffect(nameof(People)), this.people);
     }
 
     private void OnDisposeEffects()

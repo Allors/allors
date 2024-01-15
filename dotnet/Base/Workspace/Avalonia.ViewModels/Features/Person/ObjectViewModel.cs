@@ -16,7 +16,7 @@ public abstract class ObjectViewModel<T> : ViewModel, IDisposable
     {
         this.model = new ValueSignal<T>(model);
 
-        this.modelChanged = new Effect((src) => this.RaisePropertyChanged(nameof(this.Model)), this.model);
+        this.modelChanged = new Effect(() => this.RaisePropertyChanged(nameof(this.Model)), this.model);
     }
 
     [Browsable(false)]

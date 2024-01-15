@@ -54,16 +54,15 @@ else
     {
         this.Workspace = this.WorkspaceFactory.CreateWorkspace();
         var m = this.Workspace.Services.Get<M>();
-        var dispatcher = this.Workspace.Services.Get<IDispatcherBuilder>().Build(this.Workspace);
 
-        this.People = dispatcher.CreateValueSignal(Array.Empty<Person>());
-        this.Effect = dispatcher.CreateEffect(v => v.Track(this.People), this.StateHasChanged);
+        this.People = new ValueSignal<Person[]>(Array.Empty<Person>());
+        this.Effect = new Effect(this.StateHasChanged, this.People);
 
         var pull = new Pull
             {
                 Extent = new Filter(m.Person),
                 Results = new[]
-                {
+                    {
                     new Result
                     {
                         Include = m.Person.Nodes(v=>v.MailboxAddress.Node())

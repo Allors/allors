@@ -24,7 +24,7 @@ public class PersonManualControlViewModel : ViewModel, IRoutableViewModel
 
         this.selected = new ValueSignal<PersonManualViewModel>(null);
 
-        this.selectedChanged = new Effect((src) =>
+        this.selectedChanged = new Effect(() =>
         {
             this.RaisePropertyChanged(nameof(this.Selected));
             this.RaisePropertyChanged(nameof(this.HasSelected));

@@ -8,19 +8,15 @@ using CommunityToolkit.Mvvm.ComponentModel;
 public abstract class ObjectViewModel<T> : ObservableObject, IDisposable
     where T : class, IObject
 {
-    protected readonly IDispatcher dispatcher;
     protected readonly ValueSignal<T> model;
 
     protected IEffect modelChanged;
 
-    protected ObjectViewModel(T model, IDispatcher? dispatcher = null)
+    protected ObjectViewModel(T model)
     {
-        var workspace = model.Strategy.Workspace;
-        this.dispatcher = dispatcher ?? workspace.Services.Get<IDispatcherBuilder>().Build(workspace);
+        this.model = new ValueSignal<T>(model);
 
-        this.model = this.dispatcher.CreateValueSignal(model);
-
-        this.modelChanged = this.dispatcher.CreateEffect(tracker => this.model.Track(tracker), () => this.OnPropertyChanged(nameof(this.Model)));
+        this.modelChanged = new Effect(() => this.OnPropertyChanged(nameof(this.Model)), this.model);
     }
 
     [Browsable(false)]

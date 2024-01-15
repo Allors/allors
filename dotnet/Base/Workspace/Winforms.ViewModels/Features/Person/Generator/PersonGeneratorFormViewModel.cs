@@ -20,11 +20,10 @@ public partial class PersonGeneratorFormViewModel : ObservableObject, IDisposabl
     {
         this.Workspace = workspace;
         this.MessageService = messageService;
-        var dispatcher = workspace.Services.Get<IDispatcherBuilder>().Build(workspace);
 
-        this.selected = dispatcher.CreateValueSignal<PersonGeneratorViewModel>(null);
+        this.selected = new ValueSignal<PersonGeneratorViewModel>(null);
 
-        this.OnInitEffects(dispatcher);
+        this.OnInitEffects();
     }
 
     public IWorkspace Workspace { get; set; }

@@ -20,7 +20,7 @@
 
             var counter = 0;
 
-            using var effect = new Effect((src) =>
+            using var effect = new Effect(() =>
             {
                 ++counter;
             }, c1a.C1AllorsString);
@@ -58,7 +58,7 @@
 
             var counter = 0;
 
-            using var effect = new Effect((src) =>
+            using var effect = new Effect(() =>
             {
                 ++counter;
             }, c1a.C1AllorsString);
@@ -92,7 +92,7 @@
 
             var value = computed.Value;
 
-            using var computedEffect = new Effect((src) => ++counter, computed);
+            using var computedEffect = new Effect(() => ++counter, computed);
 
             Assert.That(counter, Is.EqualTo(0));
 

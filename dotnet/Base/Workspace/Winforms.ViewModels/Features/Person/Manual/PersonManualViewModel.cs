@@ -2,6 +2,7 @@
 
 using Allors.Workspace;
 using Allors.Workspace.Domain;
+using Allors.Workspace.Meta;
 using Allors.Workspace.Signals;
 using CommunityToolkit.Mvvm.ComponentModel;
 
@@ -24,31 +25,30 @@ public partial class PersonManualViewModel : ObservableObject, IDisposable
     public PersonManualViewModel(Person model)
     {
         var workspace = model.Strategy.Workspace;
-        var dispatcher = workspace.Services.Get<IDispatcherBuilder>().Build(workspace);
 
-        this.model = dispatcher.CreateValueSignal(model);
+        this.model = new ValueSignal<Person>(model);
 
-        this.firstName = dispatcher.CreateComputedSignal(tracker => this.model.Track(tracker).Value.FirstName.Track(tracker));
-        this.fullName = dispatcher.CreateComputedSignal(tracker =>
+        this.firstName = new ComputedSignal<IUnitRole<string>>(tracker => this.model.Track(tracker).Value.FirstName.Track(tracker));
+        this.fullName = new ComputedSignal<string?>(tracker =>
         {
             var personValue = this.model.Track(tracker).Value;
             string firstNameValue = personValue.FirstName.Track(tracker).Value;
             string lastNameValue = personValue.LastName.Track(tracker).Value;
             return $"{firstNameValue} {lastNameValue}".Trim();
         });
-        this.greeting = dispatcher.CreateComputedSignal(tracker =>
+        this.greeting = new ComputedSignal<string?>(tracker =>
         {
             var fullNameValue = this.fullName.Track(tracker).Value;
             return $"Hello {fullNameValue}!";
         });
 
-        this.mailboxAddress = dispatcher.CreateComputedSignal(tracker => this.model.Track(tracker).Value.MailboxAddress.Track(tracker));
-        this.poBox = dispatcher.CreateComputedSignal(tracker => this.mailboxAddress.Track(tracker).Value?.Track(tracker).Value?.PoBox.Track(tracker));
+        this.mailboxAddress = new ComputedSignal<ICompositeRole<MailboxAddress>>(tracker => this.model.Track(tracker).Value.MailboxAddress.Track(tracker));
+        this.poBox = new ComputedSignal<IUnitRole<String>>(tracker => this.mailboxAddress.Track(tracker).Value?.Track(tracker).Value?.PoBox.Track(tracker));
 
-        this.firstNameChanged = dispatcher.CreateEffect(tracker => this.firstName.Track(tracker).Value?.Track(tracker), () => this.OnPropertyChanged(nameof(FirstName)));
-        this.fullNameChanged = dispatcher.CreateEffect(tracker => this.fullName.Track(tracker), () => this.OnPropertyChanged(nameof(FullName)));
-        this.greetingChanged = dispatcher.CreateEffect(tracker => this.greeting.Track(tracker), () => this.OnPropertyChanged(nameof(Greeting)));
-        this.poBoxChanged = dispatcher.CreateEffect(tracker => this.poBox.Track(tracker).Value?.Track(tracker), () => this.OnPropertyChanged(nameof(Greeting)));
+        this.firstNameChanged = new Effect(() => this.OnPropertyChanged(nameof(FirstName)), this.firstName);
+        this.fullNameChanged = new Effect(() => this.OnPropertyChanged(nameof(FullName)), this.fullName);
+        this.greetingChanged = new Effect(() => this.OnPropertyChanged(nameof(Greeting)), this.greeting);
+        this.poBoxChanged = new Effect(() => this.OnPropertyChanged(nameof(Greeting)), this.poBox);
     }
 
     public Person Model { get => this.model.Value; }
