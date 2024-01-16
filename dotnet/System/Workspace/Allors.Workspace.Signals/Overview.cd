@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="Allors.Workspace.Signals.ConstantSignal&lt;T&gt;" Collapsed="true">
-    <Position X="0.75" Y="4.5" Width="1.75" />
+    <Position X="0.5" Y="3.25" Width="1.75" />
     <TypeIdentifier>
       <HashCode>IAAAACAAAAAAAAAABAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
       <FileName>ConstantSignal.cs</FileName>
@@ -9,7 +9,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Workspace.Signals.ValueSignal&lt;T&gt;" Collapsed="true">
-    <Position X="2.75" Y="4.5" Width="1.5" />
+    <Position X="2.5" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>IAAAACAAAQAAAAAABAAAAAAAAAAAACAAAAAgAAAAAAQ=</HashCode>
       <FileName>ValueSignal.cs</FileName>
@@ -17,62 +17,33 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Workspace.Signals.ComputedSignal&lt;T&gt;" Collapsed="true">
-    <Position X="4.5" Y="4.5" Width="1.5" />
+    <Position X="4.25" Y="3.25" Width="1.75" />
     <TypeIdentifier>
       <HashCode>MAQAgDAIACCACAAABAAABAAAABAQACAAAAAgAAAAAAA=</HashCode>
       <FileName>ComputedSignal.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Interface Name="Allors.Workspace.Signals.ICompositeRoleWrapper&lt;T&gt;" Collapsed="true">
-    <Position X="10.25" Y="0.5" Width="2.25" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
-      <FileName>Wrappers\ICompositeRoleWrapper.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
   <Interface Name="Allors.Workspace.Signals.ISignal" Collapsed="true">
-    <Position X="2.75" Y="1.75" Width="1.5" />
+    <Position X="2.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>IAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
       <FileName>ISignal.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Allors.Workspace.Signals.ISignal&lt;T&gt;" Collapsed="true">
-    <Position X="2.75" Y="3" Width="1.5" />
+    <Position X="2.5" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
       <FileName>ISignal.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="Allors.Workspace.Signals.ICompositesRoleWrapper&lt;T&gt;" Collapsed="true">
-    <Position X="12.75" Y="0.5" Width="2.25" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
-      <FileName>Wrappers\ICompositesRoleWrapper.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="Allors.Workspace.IOperand" Collapsed="true">
-    <Position X="0.5" Y="1.75" Width="1.5" />
-    <TypeIdentifier />
-  </Interface>
-  <Interface Name="Allors.Workspace.Signals.ITracker">
-    <Position X="4.5" Y="1.75" Width="1.5" />
+  <Interface Name="Allors.Workspace.Signals.ITracker" Collapsed="true">
+    <Position X="4.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ITracker.cs</FileName>
     </TypeIdentifier>
-  </Interface>
-  <Interface Name="Allors.Workspace.Signals.IEffect" Collapsed="true">
-    <Position X="7" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
-      <FileName>IEffect.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="Allors.Workspace.INotifyChanged" Collapsed="true">
-    <Position X="1.75" Y="0.5" Width="1.5" />
-    <TypeIdentifier />
   </Interface>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

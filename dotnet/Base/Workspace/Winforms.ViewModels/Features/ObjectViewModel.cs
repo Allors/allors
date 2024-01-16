@@ -10,7 +10,7 @@ public abstract class ObjectViewModel<T> : ObservableObject, IDisposable
 {
     protected readonly ValueSignal<T> model;
 
-    protected IEffect modelChanged;
+    protected Effect modelChanged;
 
     protected ObjectViewModel(T model)
     {

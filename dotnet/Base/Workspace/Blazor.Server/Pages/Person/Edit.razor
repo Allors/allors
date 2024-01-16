@@ -70,7 +70,7 @@ else
         set => this.Person!.MailboxAddress.Value.PoBox.Value = value;
     }
 
-    public IEffect? Effect { get; private set; }
+    public Effect? Effect { get; private set; }
 
     protected override async Task OnInitializedAsync()
     {

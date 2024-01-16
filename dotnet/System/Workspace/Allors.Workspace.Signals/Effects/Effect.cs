@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-public class Effect : IEffect
+public class Effect : IDisposable
 {
     private readonly HashSet<INotifyChanged> changeNotifiers;
 

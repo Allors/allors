@@ -17,10 +17,10 @@ public partial class PersonViewModel : ObservableObject, IDisposable
     private readonly ComputedSignal<ICompositeRole<MailboxAddress>> mailboxAddress;
     private readonly ComputedSignal<IUnitRole<string?>?> poBox;
 
-    private readonly IEffect firstNameChanged;
-    private readonly IEffect fullNameChanged;
-    private readonly IEffect greetingChanged;
-    private readonly IEffect poBoxChanged;
+    private readonly Effect firstNameChanged;
+    private readonly Effect fullNameChanged;
+    private readonly Effect greetingChanged;
+    private readonly Effect poBoxChanged;
 
     public PersonViewModel(Person model)
     {

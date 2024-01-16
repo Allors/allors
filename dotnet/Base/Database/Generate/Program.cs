@@ -31,7 +31,6 @@ namespace Allors.Meta.Generation
                 { "Workspace/Templates/meta.cs.stg", "Workspace/Meta.Domain/Generated" },
                 { "Workspace/Templates/meta.static.cs.stg", "Workspace/Meta.Configuration/Generated" },
                 { "Workspace/Templates/domain.cs.stg", "Workspace/Domain/Generated" },
-                { "Workspace/Templates/signals.cs.stg", "Workspace/Signals/Generated" },
 
                 { "../../typescript/templates/workspace.meta.ts.stg", "../../typescript/workspace/base/meta/src/lib/generated" },
                 { "../../typescript/templates/workspace.meta.json.ts.stg", "../../typescript/workspace/base/meta-json/src/lib/generated" },

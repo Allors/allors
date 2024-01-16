@@ -15,7 +15,7 @@ public partial class PersonFormViewModel : ObservableObject, IDisposable
 {
     private readonly ValueSignal<PersonViewModel?> selected;
 
-    private readonly IEffect selectedChanged;
+    private readonly Effect selectedChanged;
 
     public PersonFormViewModel(IWorkspace workspace, IMessageService messageService)
     {
