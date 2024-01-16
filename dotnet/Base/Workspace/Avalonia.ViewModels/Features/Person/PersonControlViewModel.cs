@@ -10,7 +10,7 @@ using Allors.Workspace.Signals;
 using global::ReactiveUI;
 using Task = System.Threading.Tasks.Task;
 
-public class PersonControlViewModel : ViewModel, IRoutableViewModel
+public class PersonControlViewModel : ReactiveObject, IRoutableViewModel
 {
     private readonly ValueSignal<PersonViewModel?> selected;
 
