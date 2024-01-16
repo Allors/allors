@@ -23,7 +23,7 @@
 
             var person = workspace.Create<Person>();
 
-            var personViewModel = new PersonManualViewModel(person);
+            var personViewModel = new PersonViewModel(person);
 
             Assert.That(personViewModel.FirstName, Is.Null);
 
@@ -45,7 +45,7 @@
 
             person.FirstName.Value = "John";
 
-            var personViewModel = new PersonManualViewModel(person);
+            var personViewModel = new PersonViewModel(person);
 
             Assert.That(personViewModel.Greeting, Is.EqualTo("Hello John!"));
 

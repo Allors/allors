@@ -6,7 +6,7 @@ using Allors.Workspace.Meta;
 using Allors.Workspace.Signals;
 using CommunityToolkit.Mvvm.ComponentModel;
 
-public partial class PersonManualViewModel : ObservableObject, IDisposable
+public partial class PersonViewModel : ObservableObject, IDisposable
 {
     private readonly ValueSignal<Person> model;
 
@@ -22,7 +22,7 @@ public partial class PersonManualViewModel : ObservableObject, IDisposable
     private readonly IEffect greetingChanged;
     private readonly IEffect poBoxChanged;
 
-    public PersonManualViewModel(Person model)
+    public PersonViewModel(Person model)
     {
         var workspace = model.Strategy.Workspace;
 

@@ -23,11 +23,7 @@ public class MainWindowViewModel : ReactiveObject, IScreen, IActivatableViewMode
         this.AutoLoginCancel = ReactiveCommand.Create(() => { });
 
         this.GoToPersonManual = ReactiveCommand.CreateFromObservable(
-            () => Router.Navigate.Execute(new PersonManualControlViewModel(this.WorkspaceFactory.CreateWorkspace(), this.MessageService, this))
-        );
-
-        this.GoToPersonGenerator = ReactiveCommand.CreateFromObservable(
-            () => Router.Navigate.Execute(new PersonGeneratorControlViewModel(this.WorkspaceFactory.CreateWorkspace(), this.MessageService, this))
+            () => Router.Navigate.Execute(new PersonControlViewModel(this.WorkspaceFactory.CreateWorkspace(), this.MessageService, this))
         );
 
         this.GoBack = Router.NavigateBack;
@@ -52,8 +48,6 @@ public class MainWindowViewModel : ReactiveObject, IScreen, IActivatableViewMode
     public RoutingState Router { get; } = new RoutingState();
 
     public ReactiveCommand<Unit, IRoutableViewModel> GoToPersonManual { get; }
-
-    public ReactiveCommand<Unit, IRoutableViewModel> GoToPersonGenerator { get; }
 
     public ReactiveCommand<Unit, IRoutableViewModel> GoBack { get; }
 

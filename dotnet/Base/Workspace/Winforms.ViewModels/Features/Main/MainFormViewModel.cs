@@ -11,8 +11,5 @@ public partial class MainFormViewModel : ObservableObject
     public IMdiService MdiService { get; }
 
     [RelayCommand]
-    private void ShowPersonManual() => this.MdiService.Open(typeof(PersonManualFormViewModel));
-
-    [RelayCommand]
-    private void ShowPersonGenerator() => this.MdiService.Open(typeof(PersonGeneratorFormViewModel));
+    private void ShowPersonManual() => this.MdiService.Open(typeof(PersonFormViewModel));
 }

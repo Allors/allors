@@ -18,7 +18,7 @@
     </div>
 }
 
-@if (this.Person.Value == null)
+@if (this.Person == null)
 {
     <div class="spinner-border text-primary" role="status">
         <span class="sr-only"></span>
@@ -29,18 +29,18 @@ else
     <EditForm Model="@this.Person" OnValidSubmit=@ValidFormSubmitted>
         <div class="form-group">
             <label for="FirstName">First Name</label>
-            <InputText @bind-Value=this.FirstName.Value!.Value class="form-control" id="FirstName" />
+            <InputText @bind-Value=this.FirstName class="form-control" id="FirstName" />
         </div>
 
         <div class="form-group">
             <label for="PoBox">P.O. Box</label>
-            @if (this.PoBox.Value == null)
+            @if (this.PoBox == null)
             {
                 <input readonly class="form-control" id="PoBox" value="not defined">
             }
             else
             {
-                <InputText @bind-Value=this.PoBox.Value.Value class="form-control" id="PoBox" />
+                <InputText @bind-Value=this.PoBox class="form-control" id="PoBox" />
             }
         </div>
 
@@ -56,33 +56,32 @@ else
 
     public IPushResult? Result { get; set; }
 
-    public ValueSignal<Person?> Person { get; private set; } = null!;
+    public Person? Person { get; private set; }
 
-    public ComputedSignal<IUnitRole<string>?> FirstName { get; private set; } = null!;
+    public string? FirstName
+    {
+        get => this.Person?.FirstName.Value;
+        set => this.Person!.FirstName.Value = value;
+    }
 
-    public ComputedSignal<ICompositeRole<MailboxAddress>?> MailboxAddress { get; private set; } = null!;
+    public string? PoBox
+    {
+        get => this.Person?.MailboxAddress.Value?.PoBox.Value;
+        set => this.Person!.MailboxAddress.Value.PoBox.Value = value;
+    }
 
-    public ComputedSignal<IUnitRole<string>?> PoBox { get; private set; } = null!;
-
-    public IEffect Effect { get; private set; } = null!;
+    public IEffect? Effect { get; private set; }
 
     protected override async Task OnInitializedAsync()
     {
         this.Workspace = this.WorkspaceFactory.CreateWorkspace();
-
-        this.Person = new ValueSignal<Person?>(null);
-        this.FirstName = new ComputedSignal<IUnitRole<string>?>(tracker => this.Person.Track(tracker).Value?.FirstName.Track(tracker));
-        this.MailboxAddress = new ComputedSignal<ICompositeRole<MailboxAddress>?>(tracker => this.Person.Track(tracker).Value?.MailboxAddress.Track(tracker));
-        this.PoBox = new ComputedSignal<IUnitRole<string>>(tracker => this.MailboxAddress.Track(tracker).Value.Track(tracker).Value?.PoBox.Track(tracker));
-
-        this.Effect = new Effect(this.StateHasChanged, this.FirstName, this.PoBox);
 
         await LoadAsync();
     }
 
     public void Dispose()
     {
-        Effect.Dispose();
+        this.Effect?.Dispose();
     }
 
     async Task ValidFormSubmitted(EditContext editContext)
@@ -106,7 +105,7 @@ else
             {
                 ObjectId = long.Parse(this.Id),
                 Results = new[]
-                                                                                                        {
+                                                                                                                                        {
                     new Result
                     {
                         Include = m.Person.Nodes(v=>v.MailboxAddress.Node())
@@ -114,7 +113,10 @@ else
                 }
             });
 
+        this.Effect?.Dispose();
 
-        this.Person.Value = result.GetObject<Person>();
+        this.Person = result.GetObject<Person>();
+
+        this.Effect = new Effect(this.StateHasChanged, this.Person.FirstName, this.Person.MailboxAddress, this.Person.MailboxAddress.Value?.PoBox);
     }
 }

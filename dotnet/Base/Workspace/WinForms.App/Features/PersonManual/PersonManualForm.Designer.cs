@@ -63,7 +63,7 @@
             // 
             // personFormControllerBindingSource
             // 
-            this.personFormControllerBindingSource.DataSource = typeof(PersonManualFormViewModel);
+            this.personFormControllerBindingSource.DataSource = typeof(PersonFormViewModel);
             // 
             // toolStrip1
             // 

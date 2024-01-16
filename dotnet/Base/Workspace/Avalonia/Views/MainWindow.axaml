@@ -25,7 +25,6 @@
 				</Style>
 			</StackPanel.Styles>
 			<Button Content="Person (Manual)" Command="{Binding GoToPersonManual}" />
-            <Button Content="Person (Generator)" Command="{Binding GoToPersonGenerator}" />
 			<Button Content="Back" Command="{Binding GoBack}" />
 		</StackPanel>
 		<rxui:RoutedViewHost Grid.Row="1" Router="{Binding Router}">

@@ -21,8 +21,7 @@ partial class Build
 
     private Target CiDotnetSystemWorkspace => _ => _
         .DependsOn(Reset)
-        .DependsOn(AllorsDotnetSystemWorkspaceSignalsTests)
-        .DependsOn(AllorsDotnetSystemWorkspaceSignalsSourceGeneratorsTests);
+        .DependsOn(AllorsDotnetSystemWorkspaceSignalsTests);
 
     private Target CiDotnetSystemWorkspaceAdaptersDirect => _ => _
         .DependsOn(Reset)

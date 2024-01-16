@@ -5,7 +5,7 @@ using Markup.Xaml;
 using ReactiveUI;
 using ViewModels;
 
-public partial class PersonManualControl : ReactiveUserControl<PersonManualControlViewModel>
+public partial class PersonManualControl : ReactiveUserControl<PersonControlViewModel>
 {
     public PersonManualControl()
     {

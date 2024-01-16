@@ -18,16 +18,9 @@
         {
             var parent = this.ServiceProvider.GetRequiredService<MainForm>();
 
-            if (controllerType == typeof(PersonManualFormViewModel))
+            if (controllerType == typeof(PersonFormViewModel))
             {
                 var form = this.ServiceProvider.GetRequiredService<PersonManualForm>();
-                form.MdiParent = parent;
-                form.Show();
-            }
-
-            if (controllerType == typeof(PersonGeneratorFormViewModel))
-            {
-                var form = this.ServiceProvider.GetRequiredService<PersonGeneratorForm>();
                 form.MdiParent = parent;
                 form.Show();
             }

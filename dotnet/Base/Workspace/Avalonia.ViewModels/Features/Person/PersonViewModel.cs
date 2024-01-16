@@ -5,7 +5,7 @@ using Allors.Workspace.Domain;
 using Allors.Workspace.Signals;
 using global::ReactiveUI;
 
-public partial class PersonManualViewModel : ReactiveObject, IDisposable
+public partial class PersonViewModel : ReactiveObject, IDisposable
 {
     private readonly ValueSignal<Person> model;
 
@@ -21,7 +21,7 @@ public partial class PersonManualViewModel : ReactiveObject, IDisposable
     private readonly IEffect greetingChanged;
     private readonly IEffect poBoxChanged;
 
-    public PersonManualViewModel(Person model)
+    public PersonViewModel(Person model)
     {
         var workspace = model.Strategy.Workspace;
 

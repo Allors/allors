@@ -1,4 +1,4 @@
-namespace Workspace.WinForms.App.Forms
+﻿namespace Workspace.WinForms.App.Forms
 {
     using ViewModels.Features;
 
@@ -34,7 +34,6 @@ namespace Workspace.WinForms.App.Forms
             this.menuStrip1 = new MenuStrip();
             this.peopleManualToolStripMenuItem = new ToolStripMenuItem();
             this.mainFormControllerBindingSource = new BindingSource(this.components);
-            this.peopleGeneratorToolStripMenuItem = new ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)this.mainFormControllerBindingSource).BeginInit();
             this.SuspendLayout();
@@ -42,7 +41,7 @@ namespace Workspace.WinForms.App.Forms
             // menuStrip1
             // 
             this.menuStrip1.ImageScalingSize = new Size(20, 20);
-            this.menuStrip1.Items.AddRange(new ToolStripItem[] { this.peopleManualToolStripMenuItem, this.peopleGeneratorToolStripMenuItem });
+            this.menuStrip1.Items.AddRange(new ToolStripItem[] { this.peopleManualToolStripMenuItem });
             this.menuStrip1.Location = new Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new Padding(8, 2, 0, 2);
@@ -60,13 +59,6 @@ namespace Workspace.WinForms.App.Forms
             // mainFormControllerBindingSource
             // 
             this.mainFormControllerBindingSource.DataSource = typeof(MainFormViewModel);
-            // 
-            // peopleGeneratorToolStripMenuItem
-            // 
-            this.peopleGeneratorToolStripMenuItem.DataBindings.Add(new Binding("Command", this.mainFormControllerBindingSource, "ShowPersonGeneratorCommand", true));
-            this.peopleGeneratorToolStripMenuItem.Name = "peopleGeneratorToolStripMenuItem";
-            this.peopleGeneratorToolStripMenuItem.Size = new Size(174, 29);
-            this.peopleGeneratorToolStripMenuItem.Text = "People (Generator)";
             // 
             // MainForm
             // 
@@ -92,6 +84,5 @@ namespace Workspace.WinForms.App.Forms
         private MenuStrip menuStrip1;
         private ToolStripMenuItem peopleManualToolStripMenuItem;
         private BindingSource mainFormControllerBindingSource;
-        private ToolStripMenuItem peopleGeneratorToolStripMenuItem;
     }
 }

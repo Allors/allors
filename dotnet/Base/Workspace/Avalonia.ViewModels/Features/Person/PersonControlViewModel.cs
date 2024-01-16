@@ -10,19 +10,19 @@ using Allors.Workspace.Signals;
 using global::ReactiveUI;
 using Task = System.Threading.Tasks.Task;
 
-public class PersonManualControlViewModel : ViewModel, IRoutableViewModel
+public class PersonControlViewModel : ViewModel, IRoutableViewModel
 {
-    private readonly ValueSignal<PersonManualViewModel?> selected;
+    private readonly ValueSignal<PersonViewModel?> selected;
 
     private readonly IEffect selectedChanged;
 
-    public PersonManualControlViewModel(IWorkspace workspace, IMessageService messageService, IScreen screen)
+    public PersonControlViewModel(IWorkspace workspace, IMessageService messageService, IScreen screen)
     {
         this.Workspace = workspace;
         this.MessageService = messageService;
         this.HostScreen = screen;
 
-        this.selected = new ValueSignal<PersonManualViewModel>(null);
+        this.selected = new ValueSignal<PersonViewModel>(null);
 
         this.selectedChanged = new Effect(() =>
         {
@@ -48,11 +48,11 @@ public class PersonManualControlViewModel : ViewModel, IRoutableViewModel
 
     public bool PeopleHasRows => this.People.Count > 0;
 
-    public ObservableCollection<PersonManualViewModel> People { get; } = new();
+    public ObservableCollection<PersonViewModel> People { get; } = new();
 
     public bool HasSelected => this.Selected != null;
 
-    public PersonManualViewModel? Selected
+    public PersonViewModel? Selected
     {
         get => this.selected.Value;
         set
@@ -83,7 +83,7 @@ public class PersonManualControlViewModel : ViewModel, IRoutableViewModel
         this.People.Clear();
         foreach (var person in people)
         {
-            this.People.Add(new PersonManualViewModel(person));
+            this.People.Add(new PersonViewModel(person));
         }
 
         this.RaisePropertyChanged(nameof(People));

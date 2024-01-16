@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 using Allors.Workspace;
 using Allors.Workspace.Data;
 using Allors.Workspace.Meta;
-using Allors.Workspace.Mvvm.Generator;
 using Allors.Workspace.Signals;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -12,25 +11,36 @@ using Services;
 using Person = Allors.Workspace.Domain.Person;
 using Task = Task;
 
-public partial class PersonGeneratorFormViewModel : ObservableObject, IDisposable
+public partial class PersonFormViewModel : ObservableObject, IDisposable
 {
-    [SignalProperty] private readonly ValueSignal<PersonGeneratorViewModel?> selected;
+    private readonly ValueSignal<PersonViewModel?> selected;
 
-    public PersonGeneratorFormViewModel(IWorkspace workspace, IMessageService messageService)
+    private readonly IEffect selectedChanged;
+
+    public PersonFormViewModel(IWorkspace workspace, IMessageService messageService)
     {
         this.Workspace = workspace;
         this.MessageService = messageService;
 
-        this.selected = new ValueSignal<PersonGeneratorViewModel>(null);
+        this.selected = new ValueSignal<PersonViewModel>(null);
 
-        this.OnInitEffects();
+        this.selectedChanged = new Effect(() => this.OnPropertyChanged(nameof(Selected)), this.selected);
     }
 
     public IWorkspace Workspace { get; set; }
 
     public IMessageService MessageService { get; }
 
-    public ObservableCollection<PersonGeneratorViewModel> People { get; } = new();
+    public ObservableCollection<PersonViewModel> People { get; } = new();
+
+    public PersonViewModel? Selected
+    {
+        get => this.selected.Value;
+        set
+        {
+            this.selected.Value = value;
+        }
+    }
 
     [RelayCommand]
     private void ShowDialog()
@@ -62,7 +72,7 @@ public partial class PersonGeneratorFormViewModel : ObservableObject, IDisposabl
         this.People.Clear();
         foreach (var person in people)
         {
-            this.People.Add(new PersonGeneratorViewModel(person));
+            this.People.Add(new PersonViewModel(person));
         }
 
         this.OnPropertyChanged(nameof(People));
@@ -86,6 +96,6 @@ public partial class PersonGeneratorFormViewModel : ObservableObject, IDisposabl
 
     public void Dispose()
     {
-        this.OnDisposeEffects();
+        this.selectedChanged.Dispose();
     }
 }

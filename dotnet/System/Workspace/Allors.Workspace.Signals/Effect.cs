@@ -17,7 +17,7 @@ public class Effect : IEffect
         this.changeNotifiers = new HashSet<INotifyChanged>();
         this.Action = action;
 
-        foreach (var changeNotifier in changeNotifiers)
+        foreach (var changeNotifier in changeNotifiers.Where(v => v != null))
         {
             this.Add(changeNotifier);
         }
