@@ -9,19 +9,22 @@ using CommunityToolkit.Mvvm.ComponentModel;
 public partial class PersonViewModel : ObservableObject, IDisposable
 {
     private readonly ComputedSignal<IUnitRole<string>> firstName;
+    private readonly IUnitRole<string> lastName;
+    private readonly ComputedSignal<IUnitRole<decimal?>> weight;
     private readonly ComputedSignal<string?> fullName;
     private readonly ComputedSignal<string?> greeting;
-
     private readonly ComputedSignal<ICompositeRole<MailboxAddress>> mailboxAddress;
     private readonly ComputedSignal<IUnitRole<string>?> poBox;
 
-    private readonly NamedEffect propertyChangedEffect;
+    private readonly IEffect propertyChangedEffect;
 
     public PersonViewModel(Person model)
     {
         this.Model = model;
 
         this.firstName = new ComputedSignal<IUnitRole<string>>(tracker => this.Model.FirstName.Track(tracker));
+        this.lastName = this.Model.LastName;
+        this.weight = new ComputedSignal<IUnitRole<decimal?>>(tracker => this.Model.Weight.Track(tracker));
         this.fullName = new ComputedSignal<string?>(tracker =>
         {
             string firstNameValue = this.Model.FirstName.Track(tracker).Value;
@@ -40,6 +43,7 @@ public partial class PersonViewModel : ObservableObject, IDisposable
         this.propertyChangedEffect = new NamedEffect(this.OnPropertyChanged, v =>
         {
             v.Add(this.firstName);
+            v.Add(this.lastName);
             v.Add(this.fullName, nameof(FullName));
             v.Add(this.greeting, nameof(Greeting));
             v.Add(this.poBox);
@@ -51,24 +55,30 @@ public partial class PersonViewModel : ObservableObject, IDisposable
     public string FirstName
     {
         get => this.firstName.Value.Value;
-        set => this.firstName.Value.Value = value;
+        set => this.firstName.Set(value);
     }
 
-    public string? PoBox
+    public string LastName
     {
-        get => this.poBox.Value?.Value;
-        set
-        {
-            if (this.poBox.Value != null)
-            {
-                this.poBox.Value.Value = value;
-            }
-        }
+        get => this.lastName.Value;
+        set => this.lastName.Value = value;
     }
 
-    public string FullName => this.fullName.Value;
+    public decimal? Weight
+    {
+        get => this.weight.Value.Value;
+        set => this.weight.Set(value);
+    }
 
-    public string Greeting => this.greeting.Value;
+    public string PoBox
+    {
+        get => this.poBox.Value?.Value ?? string.Empty;
+        set => this.firstName.Set(value);
+    }
+
+    public string FullName => this.fullName.Value ?? string.Empty;
+
+    public string Greeting => this.greeting.Value ?? string.Empty;
 
     public void Dispose()
     {

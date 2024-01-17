@@ -14,7 +14,7 @@ public class PersonControlViewModel : ReactiveObject, IRoutableViewModel
 {
     private readonly ValueSignal<PersonViewModel?> selected;
 
-    private readonly Effect selectedChanged;
+    private readonly IEffect selectedChanged;
 
     public PersonControlViewModel(IWorkspace workspace, IMessageService messageService, IScreen screen)
     {

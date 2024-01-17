@@ -34,7 +34,7 @@ else
 
     public ValueSignal<Person?> Person { get; private set; } = null!;
 
-    private Effect stateHasChangedEffect = null!;
+    private IEffect stateHasChangedEffect = null!;
 
     protected override async Task OnInitializedAsync()
     {

@@ -48,7 +48,7 @@ else
 
     public ValueSignal<Person[]> People { get; private set; } = null!;
 
-    private Effect stateHasChangedEffect = null!;
+    private IEffect stateHasChangedEffect = null!;
 
     protected override async Task OnInitializedAsync()
     {

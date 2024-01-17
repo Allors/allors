@@ -72,7 +72,7 @@ else
 
     private ComputedSignal<ICompositeRole<MailboxAddress>>? mailboxAddress;
     private ComputedSignal<IUnitRole<string>?>? poBox;
-    private Effect? stateHasChangedEffect;
+    private IEffect? stateHasChangedEffect;
 
     protected override async Task OnInitializedAsync()
     {
