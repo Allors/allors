@@ -10,8 +10,7 @@ namespace Allors.Workspace
         new IStrategy Value { get; set; }
     }
 
-    public interface ICompositeRole<T> : ICompositeRole, IOperand<ICompositeRole<T>>
-        where T : class, IObject
+    public interface ICompositeRole<T> : ICompositeRole where T : class, IObject
     {
         new T Value { get; set; }
     }

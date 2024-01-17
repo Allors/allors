@@ -8,8 +8,4 @@ namespace Allors.Workspace
     public interface IOperand : INotifyChanged
     {
     }
-
-    public interface IOperand<out T> : IOperand
-    {
-    }
 }

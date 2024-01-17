@@ -12,8 +12,7 @@ namespace Allors.Workspace
         new IEnumerable<IStrategy> Value { get; }
     }
 
-    public interface ICompositesAssociation<out T> : ICompositesAssociation, IOperand<ICompositesAssociation<T>>
-        where T : class, IObject
+    public interface ICompositesAssociation<out T> : ICompositesAssociation where T : class, IObject
     {
         new IEnumerable<T> Value { get; }
     }

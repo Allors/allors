@@ -41,11 +41,11 @@ public partial class PersonViewModel : ReactiveObject, IDisposable
 
         this.propertyChangedEffect = new NamedEffect(this.RaisePropertyChanged, v =>
         {
-            v.Add(this.firstName);
+            v.Add(this.firstName, nameof(FirstName));
             v.Add(this.lastName);
             v.Add(this.fullName, nameof(FullName));
             v.Add(this.greeting, nameof(Greeting));
-            v.Add(this.poBox);
+            v.Add(this.poBox, nameof(PoBox));
         });
     }
 

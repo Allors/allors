@@ -16,8 +16,7 @@ namespace Allors.Workspace
         new IEnumerable<IStrategy> Value { get; set; }
     }
 
-    public interface ICompositesRole<T> : ICompositesRole, IOperand<ICompositesRole<T>>
-        where T : class, IObject
+    public interface ICompositesRole<T> : ICompositesRole where T : class, IObject
     {
         void Add(T @object);
 

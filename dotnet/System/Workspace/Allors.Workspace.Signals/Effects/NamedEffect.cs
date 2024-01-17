@@ -28,7 +28,7 @@ public class NamedEffect : IEffect
         this.Add(changeNotifier, name);
     }
 
-    public void Add(INotifyChanged changeNotifier, string name = null)
+    public void Add(INotifyChanged changeNotifier, string? name = null)
     {
         name ??= changeNotifier switch
         {
