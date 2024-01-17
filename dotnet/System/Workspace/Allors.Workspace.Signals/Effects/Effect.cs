@@ -4,59 +4,41 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-public class Effect : IDisposable
+public class Effect : IEffect
 {
     private readonly HashSet<INotifyChanged> changeNotifiers;
 
-    public Effect(Action action, INotifyChanged changeNotifier) : this(action, [changeNotifier])
-    {
-    }
-
-    public Effect(Action action, params INotifyChanged[] changeNotifiers)
+    public Effect(Action action, params Action<Effect>[] builders)
     {
         this.changeNotifiers = new HashSet<INotifyChanged>();
         this.Action = action;
 
-        foreach (var changeNotifier in changeNotifiers.Where(v => v != null))
+        foreach (var builder in builders)
         {
-            this.Add(changeNotifier);
+            builder(this);
         }
     }
 
-    public Effect(Action<IChangedEventSource> action, INotifyChanged changeNotifier) : this(action, [changeNotifier])
-    {
-    }
-
-    public Effect(Action<IChangedEventSource> action, params INotifyChanged[] changeNotifiers)
+    public Effect(Action<INotifyChanged> action, params Action<Effect>[] builders)
     {
         this.changeNotifiers = new HashSet<INotifyChanged>();
         this.ActionWithArgument = action;
 
-        foreach (var changeNotifier in changeNotifiers)
+        foreach (var builder in builders)
         {
-            this.Add(changeNotifier);
+            builder(this);
         }
     }
 
-    public IEnumerable<INotifyChanged> ChangeNotifiers => this.changeNotifiers.ToArray();
-
     public Action Action { get; }
 
-    public Action<IChangedEventSource> ActionWithArgument { get; }
+    public Action<INotifyChanged> ActionWithArgument { get; }
 
     public void Add(INotifyChanged changeNotifier)
     {
         if (this.changeNotifiers.Add(changeNotifier))
         {
             changeNotifier.Changed += ChangeNotifierOnChanged;
-        }
-    }
-
-    public void Remove(INotifyChanged changeNotifier)
-    {
-        if (this.changeNotifiers.Remove(changeNotifier))
-        {
-            changeNotifier.Changed -= ChangeNotifierOnChanged;
         }
     }
 

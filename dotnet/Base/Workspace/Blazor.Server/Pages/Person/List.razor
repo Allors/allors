@@ -46,9 +46,9 @@ else
 @code {
     public IWorkspace Workspace = null!;
 
-    public ValueSignal<Person[]> People { get; private set; }
+    public ValueSignal<Person[]> People { get; private set; } = null!;
 
-    public Effect Effect { get; private set; }
+    private Effect stateHasChangedEffect = null!;
 
     protected override async Task OnInitializedAsync()
     {
@@ -56,13 +56,17 @@ else
         var m = this.Workspace.Services.Get<M>();
 
         this.People = new ValueSignal<Person[]>(Array.Empty<Person>());
-        this.Effect = new Effect(this.StateHasChanged, this.People);
+
+        this.stateHasChangedEffect = new Effect(this.StateHasChanged, v =>
+        {
+            v.Add(this.People);
+        });
 
         var pull = new Pull
             {
                 Extent = new Filter(m.Person),
                 Results = new[]
-                    {
+                                {
                     new Result
                     {
                         Include = m.Person.Nodes(v=>v.MailboxAddress.Node())
@@ -80,7 +84,7 @@ else
 
     public void Dispose()
     {
-        Effect.Dispose();
+        this.stateHasChangedEffect?.Dispose();
     }
 
     private object Overview(Person person) => $"/person/overview/{@person.Id}";

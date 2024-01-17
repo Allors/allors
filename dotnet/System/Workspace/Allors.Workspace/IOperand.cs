@@ -5,7 +5,7 @@
 
 namespace Allors.Workspace
 {
-    public interface IOperand : INotifyChanged, IChangedEventSource
+    public interface IOperand : INotifyChanged
     {
     }
 

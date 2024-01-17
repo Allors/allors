@@ -7,7 +7,7 @@ namespace Allors.Workspace.Signals
 {
     using System;
 
-    public interface ISignal : IChangedEventSource, INotifyChanged
+    public interface ISignal : INotifyChanged
     {
         long Version { get; }
 

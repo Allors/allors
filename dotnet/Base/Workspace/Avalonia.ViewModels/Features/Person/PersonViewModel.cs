@@ -7,32 +7,24 @@ using global::ReactiveUI;
 
 public partial class PersonViewModel : ReactiveObject, IDisposable
 {
-    private readonly ValueSignal<Person> model;
-
     private readonly ComputedSignal<IUnitRole<string>> firstName;
     private readonly ComputedSignal<string?> fullName;
     private readonly ComputedSignal<string?> greeting;
 
     private readonly ComputedSignal<ICompositeRole<MailboxAddress>> mailboxAddress;
-    private readonly ComputedSignal<IUnitRole<string?>?> poBox;
+    private readonly ComputedSignal<IUnitRole<string>?> poBox;
 
-    private readonly Effect firstNameChanged;
-    private readonly Effect fullNameChanged;
-    private readonly Effect greetingChanged;
-    private readonly Effect poBoxChanged;
+    private readonly NamedEffect propertyChangedEffect;
 
     public PersonViewModel(Person model)
     {
-        var workspace = model.Strategy.Workspace;
+        this.Model = model;
 
-        this.model = new ValueSignal<Person>(model);
-
-        this.firstName = new ComputedSignal<IUnitRole<string>>(tracker => this.model.Track(tracker).Value.FirstName.Track(tracker));
+        this.firstName = new ComputedSignal<IUnitRole<string>>(tracker => this.Model.FirstName.Track(tracker));
         this.fullName = new ComputedSignal<string?>(tracker =>
         {
-            var personValue = this.model.Track(tracker).Value;
-            string firstNameValue = personValue.FirstName.Track(tracker).Value;
-            string lastNameValue = personValue.LastName.Track(tracker).Value;
+            string firstNameValue = this.Model.FirstName.Track(tracker).Value;
+            string lastNameValue = this.Model.LastName.Track(tracker).Value;
             return $"{firstNameValue} {lastNameValue}".Trim();
         });
         this.greeting = new ComputedSignal<string?>(tracker =>
@@ -41,16 +33,19 @@ public partial class PersonViewModel : ReactiveObject, IDisposable
             return $"Hello {fullNameValue}!";
         });
 
-        this.mailboxAddress = new ComputedSignal<ICompositeRole<MailboxAddress>>(tracker => this.model.Track(tracker).Value.MailboxAddress.Track(tracker));
-        this.poBox = new ComputedSignal<IUnitRole<string>>(tracker => this.mailboxAddress.Track(tracker).Value?.Track(tracker).Value?.PoBox.Track(tracker));
+        this.mailboxAddress = new ComputedSignal<ICompositeRole<MailboxAddress>>(tracker => this.Model.MailboxAddress.Track(tracker));
+        this.poBox = new ComputedSignal<IUnitRole<string>?>(tracker => this.mailboxAddress.Value?.Track(tracker).Value?.PoBox.Track(tracker));
 
-        this.firstNameChanged = new Effect(() => this.RaisePropertyChanged(nameof(FirstName)), this.firstName);
-        this.fullNameChanged = new Effect(() => this.RaisePropertyChanged(nameof(FullName)), this.fullName);
-        this.greetingChanged = new Effect(() => this.RaisePropertyChanged(nameof(Greeting)), this.greeting);
-        this.poBoxChanged = new Effect(() => this.RaisePropertyChanged(nameof(Greeting)), this.poBox);
+        this.propertyChangedEffect = new NamedEffect(this.RaisePropertyChanged, v =>
+        {
+            v.Add(this.firstName);
+            v.Add(this.fullName, nameof(FullName));
+            v.Add(this.greeting, nameof(Greeting));
+            v.Add(this.poBox);
+        });
     }
 
-    public Person Model { get => this.model.Value; }
+    public Person Model { get; }
 
     public string FirstName
     {
@@ -76,9 +71,9 @@ public partial class PersonViewModel : ReactiveObject, IDisposable
 
     public void Dispose()
     {
-        this.firstNameChanged.Dispose();
-        this.fullNameChanged.Dispose();
-        this.greetingChanged.Dispose();
-        this.poBoxChanged.Dispose();
+        this.propertyChangedEffect?.Dispose();
+
+        this.mailboxAddress?.Dispose();
+        this.poBox?.Dispose();
     }
 }

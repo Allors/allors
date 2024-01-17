@@ -10,7 +10,7 @@ using Allors.Workspace.Data;
 
 namespace Allors.Workspace
 {
-    public interface IWorkspace : INotifyChanged, IChangedEventSource
+    public interface IWorkspace : INotifyChanged
     {
         IWorkspaceServices Services { get; }
 

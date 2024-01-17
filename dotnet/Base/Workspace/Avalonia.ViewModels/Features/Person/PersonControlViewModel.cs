@@ -28,7 +28,10 @@ public class PersonControlViewModel : ReactiveObject, IRoutableViewModel
         {
             this.RaisePropertyChanged(nameof(this.Selected));
             this.RaisePropertyChanged(nameof(this.HasSelected));
-        }, this.selected);
+        }, v=>
+        {
+            v.Add(this.selected);
+        });
 
         this.Load = ReactiveCommand.CreateFromTask(this.SaveAsync);
         this.Save = ReactiveCommand.CreateFromTask(this.LoadAsync);

@@ -53,8 +53,7 @@ public sealed class ComputedSignal<T> : ISignal<T>, ITracker
             return this.value;
         }
     }
-
-
+    
     void ITracker.Track(INotifyChanged signal)
     {
         if (signal == null)

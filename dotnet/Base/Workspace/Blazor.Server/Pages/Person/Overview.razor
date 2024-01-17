@@ -34,7 +34,7 @@ else
 
     public ValueSignal<Person?> Person { get; private set; } = null!;
 
-    public Effect Effect { get; private set; } = null!;
+    private Effect stateHasChangedEffect = null!;
 
     protected override async Task OnInitializedAsync()
     {
@@ -42,13 +42,13 @@ else
         var m = this.Workspace.Services.Get<M>();
 
         this.Person = new ValueSignal<Person?>(null);
-        this.Effect = new Effect(this.StateHasChanged, this.Person);
+        this.stateHasChangedEffect = new Effect(this.StateHasChanged, v => v.Add(this.Person));
 
         var result = await this.Workspace.PullAsync(new Pull
             {
                 ObjectId = long.Parse(this.Id),
                 Results = new[]
-                                                {
+                                                    {
                     new Result
                     {
                         Select = new Select
@@ -66,7 +66,7 @@ else
 
     public void Dispose()
     {
-        Effect.Dispose();
+        stateHasChangedEffect.Dispose();
     }
 
     private object Edit() => $"/person/edit/{Id}";

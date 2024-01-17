@@ -15,7 +15,7 @@ public partial class PersonFormViewModel : ObservableObject, IDisposable
 {
     private readonly ValueSignal<PersonViewModel?> selected;
 
-    private readonly Effect selectedChanged;
+    private readonly IEffect propertyChangedEffect;
 
     public PersonFormViewModel(IWorkspace workspace, IMessageService messageService)
     {
@@ -24,7 +24,10 @@ public partial class PersonFormViewModel : ObservableObject, IDisposable
 
         this.selected = new ValueSignal<PersonViewModel>(null);
 
-        this.selectedChanged = new Effect(() => this.OnPropertyChanged(nameof(Selected)), this.selected);
+        this.propertyChangedEffect = new NamedEffect(this.OnPropertyChanged, v =>
+        {
+            v.Add(this.selected, nameof(Selected));
+        });
     }
 
     public IWorkspace Workspace { get; set; }
@@ -96,6 +99,6 @@ public partial class PersonFormViewModel : ObservableObject, IDisposable
 
     public void Dispose()
     {
-        this.selectedChanged.Dispose();
+        this.propertyChangedEffect.Dispose();
     }
 }

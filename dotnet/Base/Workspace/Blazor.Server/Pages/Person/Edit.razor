@@ -70,7 +70,9 @@ else
         set => this.Person!.MailboxAddress.Value.PoBox.Value = value;
     }
 
-    public Effect? Effect { get; private set; }
+    private ComputedSignal<ICompositeRole<MailboxAddress>>? mailboxAddress;
+    private ComputedSignal<IUnitRole<string>?>? poBox;
+    private Effect? stateHasChangedEffect;
 
     protected override async Task OnInitializedAsync()
     {
@@ -81,7 +83,10 @@ else
 
     public void Dispose()
     {
-        this.Effect?.Dispose();
+        this.stateHasChangedEffect?.Dispose();
+
+        this.mailboxAddress?.Dispose();
+        this.poBox?.Dispose();
     }
 
     async Task ValidFormSubmitted(EditContext editContext)
@@ -105,7 +110,7 @@ else
             {
                 ObjectId = long.Parse(this.Id),
                 Results = new[]
-                                                                                                                                        {
+                                                                                                                                                    {
                     new Result
                     {
                         Include = m.Person.Nodes(v=>v.MailboxAddress.Node())
@@ -113,10 +118,17 @@ else
                 }
             });
 
-        this.Effect?.Dispose();
+        this.stateHasChangedEffect?.Dispose();
 
         this.Person = result.GetObject<Person>();
 
-        this.Effect = new Effect(this.StateHasChanged, this.Person.FirstName, this.Person.MailboxAddress, this.Person.MailboxAddress.Value?.PoBox);
+        this.mailboxAddress = new ComputedSignal<ICompositeRole<MailboxAddress>>(tracker => this.Person.MailboxAddress.Track(tracker));
+        this.poBox = new ComputedSignal<IUnitRole<string>?>(tracker => this.mailboxAddress.Value?.Track(tracker).Value?.PoBox.Track(tracker));
+
+        this.stateHasChangedEffect = new Effect(this.StateHasChanged, v =>
+        {
+            v.Add(this.Person.FirstName);
+            v.Add(this.poBox);
+        });
     }
 }

@@ -7,8 +7,8 @@ namespace Allors.Workspace
 {
     using System;
 
-    public class ChangedEventArgs(IChangedEventSource source) : EventArgs
+    public class ChangedEventArgs(INotifyChanged source) : EventArgs
     {
-        public IChangedEventSource Source { get; } = source;
+        public INotifyChanged Source { get; } = source;
     }
 }

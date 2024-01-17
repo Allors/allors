@@ -6,7 +6,6 @@
     public class EffectTest : Test
     {
         [Test]
-
         public async Task UnitRoles()
         {
             await this.Login("jane@example.com");
@@ -23,7 +22,7 @@
             using var effect = new Effect(() =>
             {
                 ++counter;
-            }, c1a.C1AllorsString);
+            }, v => v.Add(c1a.C1AllorsString));
 
             Assert.That(counter, Is.EqualTo(0));
 
@@ -48,7 +47,6 @@
         }
 
         [Test]
-
         public async Task Dispose()
         {
             await this.Login("jane@example.com");
@@ -61,7 +59,7 @@
             using var effect = new Effect(() =>
             {
                 ++counter;
-            }, c1a.C1AllorsString);
+            }, v => v.Add(c1a.C1AllorsString));
 
             Assert.That(counter, Is.EqualTo(0));
 
@@ -77,7 +75,6 @@
         }
 
         [Test]
-
         public async Task Computed()
         {
             await this.Login("jane@example.com");
@@ -92,7 +89,7 @@
 
             var value = computed.Value;
 
-            using var computedEffect = new Effect(() => ++counter, computed);
+            using var computedEffect = new Effect(() => ++counter, v => v.Add(computed));
 
             Assert.That(counter, Is.EqualTo(0));
 

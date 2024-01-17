@@ -6,7 +6,6 @@
     public class ComputedSignalTest : Test
     {
         [Test]
-
         public async Task Roles()
         {
             await this.Login("jane@example.com");
@@ -42,7 +41,6 @@
         }
 
         [Test]
-
         public async Task ValueSignalWithRoles()
         {
             await this.Login("jane@example.com");
@@ -94,6 +92,5 @@
 
             Assert.That(calculatedSignal.Value, Is.EqualTo("Hello 2"));
         }
-
     }
 }
