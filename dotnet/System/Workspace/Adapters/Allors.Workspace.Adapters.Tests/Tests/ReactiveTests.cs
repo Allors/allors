@@ -39,12 +39,12 @@ namespace Allors.Workspace.Adapters.Tests
             int operandChanged = 0;
             int workspaceChanged = 0;
 
-            c1.C1AllorsString.Changed += (sender, args) =>
+            c1.C1AllorsString.InvalidationRequested += (sender, args) =>
             {
                 ++operandChanged;
             };
 
-            workspace.Changed += (sender, args) =>
+            workspace.InvalidationRequested += (sender, args) =>
             {
                 ++workspaceChanged;
             };
@@ -90,27 +90,27 @@ namespace Allors.Workspace.Adapters.Tests
             int c1d_C1WhereC1C1One2One = 0;
             int workspaceChanged = 0;
 
-            c1a.C1C1One2One.Changed += (sender, args) =>
+            c1a.C1C1One2One.InvalidationRequested += (sender, args) =>
             {
                 ++c1a_C1C1One2One;
             };
 
-            c1b.C1WhereC1C1One2One.Changed += (sender, args) =>
+            c1b.C1WhereC1C1One2One.InvalidationRequested += (sender, args) =>
             {
                 ++c1b_C1WhereC1C1One2One;
             };
 
-            c1c.C1C1One2One.Changed += (sender, args) =>
+            c1c.C1C1One2One.InvalidationRequested += (sender, args) =>
             {
                 ++c1c_C1C1One2One;
             };
 
-            c1d.C1WhereC1C1One2One.Changed += (sender, args) =>
+            c1d.C1WhereC1C1One2One.InvalidationRequested += (sender, args) =>
             {
                 ++c1d_C1WhereC1C1One2One;
             };
 
-            workspace.Changed += (sender, args) =>
+            workspace.InvalidationRequested += (sender, args) =>
             {
                 ++workspaceChanged;
             };
@@ -175,27 +175,27 @@ namespace Allors.Workspace.Adapters.Tests
             int c1d_C1sWhereC1C1Many2One = 0;
             int workspaceChanged = 0;
 
-            c1a.C1C1Many2One.Changed += (sender, args) =>
+            c1a.C1C1Many2One.InvalidationRequested += (sender, args) =>
             {
                 ++c1a_C1C1Many2One;
             };
 
-            c1b.C1sWhereC1C1Many2One.Changed += (sender, args) =>
+            c1b.C1sWhereC1C1Many2One.InvalidationRequested += (sender, args) =>
             {
                 ++c1b_C1sWhereC1C1Many2One;
             };
 
-            c1c.C1C1Many2One.Changed += (sender, args) =>
+            c1c.C1C1Many2One.InvalidationRequested += (sender, args) =>
             {
                 ++c1c_C1C1Many2One;
             };
 
-            c1d.C1sWhereC1C1Many2One.Changed += (sender, args) =>
+            c1d.C1sWhereC1C1Many2One.InvalidationRequested += (sender, args) =>
             {
                 ++c1d_C1sWhereC1C1Many2One;
             };
 
-            workspace.Changed += (sender, args) =>
+            workspace.InvalidationRequested += (sender, args) =>
             {
                 ++workspaceChanged;
             };
@@ -260,27 +260,27 @@ namespace Allors.Workspace.Adapters.Tests
             int c1d_C1WhereC1C1One2Many = 0;
             int workspaceChanged = 0;
 
-            c1a.C1C1One2Manies.Changed += (sender, args) =>
+            c1a.C1C1One2Manies.InvalidationRequested += (sender, args) =>
             {
                 ++c1a_C1C1One2Manies;
             };
 
-            c1b.C1WhereC1C1One2Many.Changed += (sender, args) =>
+            c1b.C1WhereC1C1One2Many.InvalidationRequested += (sender, args) =>
             {
                 ++c1b_C1WhereC1C1One2Many;
             };
 
-            c1c.C1C1One2Manies.Changed += (sender, args) =>
+            c1c.C1C1One2Manies.InvalidationRequested += (sender, args) =>
             {
                 ++c1c_C1C1One2Manies;
             };
 
-            c1d.C1WhereC1C1One2Many.Changed += (sender, args) =>
+            c1d.C1WhereC1C1One2Many.InvalidationRequested += (sender, args) =>
             {
                 ++c1d_C1WhereC1C1One2Many;
             };
 
-            workspace.Changed += (sender, args) =>
+            workspace.InvalidationRequested += (sender, args) =>
             {
                 ++workspaceChanged;
             };
@@ -346,27 +346,27 @@ namespace Allors.Workspace.Adapters.Tests
             int c1d_C1WhereC1C1One2Many = 0;
             int workspaceChanged = 0;
 
-            c1a.C1C1One2Manies.Changed += (sender, args) =>
+            c1a.C1C1One2Manies.InvalidationRequested += (sender, args) =>
             {
                 ++c1a_C1C1One2Manies;
             };
 
-            c1b.C1WhereC1C1One2Many.Changed += (sender, args) =>
+            c1b.C1WhereC1C1One2Many.InvalidationRequested += (sender, args) =>
             {
                 ++c1b_C1WhereC1C1One2Many;
             };
 
-            c1c.C1C1One2Manies.Changed += (sender, args) =>
+            c1c.C1C1One2Manies.InvalidationRequested += (sender, args) =>
             {
                 ++c1c_C1C1One2Manies;
             };
 
-            c1d.C1WhereC1C1One2Many.Changed += (sender, args) =>
+            c1d.C1WhereC1C1One2Many.InvalidationRequested += (sender, args) =>
             {
                 ++c1d_C1WhereC1C1One2Many;
             };
 
-            workspace.Changed += (sender, args) =>
+            workspace.InvalidationRequested += (sender, args) =>
             {
                 ++workspaceChanged;
             };
@@ -431,27 +431,27 @@ namespace Allors.Workspace.Adapters.Tests
             int c1d_C1sWhereC1C1Many2Many = 0;
             int workspaceChanged = 0;
 
-            c1a.C1C1Many2Manies.Changed += (sender, args) =>
+            c1a.C1C1Many2Manies.InvalidationRequested += (sender, args) =>
             {
                 ++c1a_C1C1Many2Manies;
             };
 
-            c1b.C1sWhereC1C1Many2Many.Changed += (sender, args) =>
+            c1b.C1sWhereC1C1Many2Many.InvalidationRequested += (sender, args) =>
             {
                 ++c1b_C1sWhereC1C1Many2Many;
             };
 
-            c1c.C1C1Many2Manies.Changed += (sender, args) =>
+            c1c.C1C1Many2Manies.InvalidationRequested += (sender, args) =>
             {
                 ++c1c_C1C1Many2Manies;
             };
 
-            c1d.C1sWhereC1C1Many2Many.Changed += (sender, args) =>
+            c1d.C1sWhereC1C1Many2Many.InvalidationRequested += (sender, args) =>
             {
                 ++c1d_C1sWhereC1C1Many2Many;
             };
 
-            workspace.Changed += (sender, args) =>
+            workspace.InvalidationRequested += (sender, args) =>
             {
                 ++workspaceChanged;
             };
@@ -517,27 +517,27 @@ namespace Allors.Workspace.Adapters.Tests
             int c1d_C1sWhereC1C1Many2Many = 0;
             int workspaceChanged = 0;
 
-            c1a.C1C1Many2Manies.Changed += (sender, args) =>
+            c1a.C1C1Many2Manies.InvalidationRequested += (sender, args) =>
             {
                 ++c1a_C1C1Many2Manies;
             };
 
-            c1b.C1sWhereC1C1Many2Many.Changed += (sender, args) =>
+            c1b.C1sWhereC1C1Many2Many.InvalidationRequested += (sender, args) =>
             {
                 ++c1b_C1sWhereC1C1Many2Many;
             };
 
-            c1c.C1C1Many2Manies.Changed += (sender, args) =>
+            c1c.C1C1Many2Manies.InvalidationRequested += (sender, args) =>
             {
                 ++c1c_C1C1Many2Manies;
             };
 
-            c1d.C1sWhereC1C1Many2Many.Changed += (sender, args) =>
+            c1d.C1sWhereC1C1Many2Many.InvalidationRequested += (sender, args) =>
             {
                 ++c1d_C1sWhereC1C1Many2Many;
             };
 
-            workspace.Changed += (sender, args) =>
+            workspace.InvalidationRequested += (sender, args) =>
             {
                 ++workspaceChanged;
             };
@@ -598,12 +598,12 @@ namespace Allors.Workspace.Adapters.Tests
 
             #region signals
 
-            workspaceX.Changed += (sender, args) =>
+            workspaceX.InvalidationRequested += (sender, args) =>
             {
                 ++workspaceXChanges;
             };
 
-            workspaceY.Changed += (sender, args) =>
+            workspaceY.InvalidationRequested += (sender, args) =>
             {
                 ++workspaceYChanges;
             };

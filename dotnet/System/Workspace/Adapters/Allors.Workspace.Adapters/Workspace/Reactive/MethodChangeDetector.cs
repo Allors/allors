@@ -12,7 +12,7 @@ namespace Allors.Workspace
         private readonly Method method;
         private bool canExecute;
 
-        private ChangedEventArgs changedEventArgs;
+        private InvalidationRequestedEventArgs invalidationRequestedEventArgs;
 
         public MethodChangeDetector(Method method)
         {
@@ -20,7 +20,7 @@ namespace Allors.Workspace
             this.canExecute = this.method.CanExecute;
         }
 
-        public event ChangedEventHandler Changed;
+        public event InvalidationRequestedEventHandler Changed;
 
         public bool HasHandlers => this.Changed?.GetInvocationList().Length > 0;
 
@@ -34,7 +34,7 @@ namespace Allors.Workspace
             this.canExecute = this.method.CanExecute;
             
             var changed = this.Changed;
-            changed?.Invoke(this.method, this.changedEventArgs ??= new ChangedEventArgs(this.method));
+            changed?.Invoke(this.method, this.invalidationRequestedEventArgs ??= new InvalidationRequestedEventArgs(this.method));
         }
     }
 }

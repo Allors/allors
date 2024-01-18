@@ -13,7 +13,7 @@ namespace Allors.Workspace
         private readonly IAssociation association;
         private HashSet<IStrategy> value;
 
-        private ChangedEventArgs changedEventArgs;
+        private InvalidationRequestedEventArgs invalidationRequestedEventArgs;
 
         public CompositesAssociationChangeDetector(IAssociation association)
         {
@@ -21,7 +21,7 @@ namespace Allors.Workspace
             this.value = [.. (IEnumerable<IStrategy>)this.association.Value];
         }
 
-        public event ChangedEventHandler Changed;
+        public event InvalidationRequestedEventHandler Changed;
 
         public bool HasHandlers => this.Changed?.GetInvocationList().Length > 0;
 
@@ -37,7 +37,7 @@ namespace Allors.Workspace
             this.value = [.. (IEnumerable<IStrategy>)this.association.Value];
 
             var changed = this.Changed;
-            changed?.Invoke(this.association, this.changedEventArgs ??= new ChangedEventArgs(this.association));
+            changed?.Invoke(this.association, this.invalidationRequestedEventArgs ??= new InvalidationRequestedEventArgs(this.association));
         }
     }
 }

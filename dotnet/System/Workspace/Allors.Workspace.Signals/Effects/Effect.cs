@@ -5,11 +5,11 @@ using System.Collections.Generic;
 
 public class Effect : IEffect
 {
-    private readonly HashSet<INotifyChanged> changeNotifiers;
+    private readonly HashSet<ICacheable> cacheables;
 
     public Effect(Action action, params Action<Effect>[] builders)
     {
-        this.changeNotifiers = new HashSet<INotifyChanged>();
+        this.cacheables = new HashSet<ICacheable>();
         this.Action = action;
 
         foreach (var builder in builders)
@@ -18,9 +18,9 @@ public class Effect : IEffect
         }
     }
 
-    public Effect(Action<INotifyChanged> action, params Action<Effect>[] builders)
+    public Effect(Action<ICacheable> action, params Action<Effect>[] builders)
     {
-        this.changeNotifiers = new HashSet<INotifyChanged>();
+        this.cacheables = new HashSet<ICacheable>();
         this.ActionWithArgument = action;
 
         foreach (var builder in builders)
@@ -31,27 +31,27 @@ public class Effect : IEffect
 
     public Action Action { get; }
 
-    public Action<INotifyChanged> ActionWithArgument { get; }
+    public Action<ICacheable> ActionWithArgument { get; }
 
-    public void Add(INotifyChanged changeNotifier)
+    public void Add(ICacheable cacheable)
     {
-        if (this.changeNotifiers.Add(changeNotifier))
+        if (this.cacheables.Add(cacheable))
         {
-            changeNotifier.Changed += ChangeNotifierOnChanged;
+            cacheable.InvalidationRequested += this.Cacheable_InvalidationRequested;
         }
     }
 
     public void Dispose()
     {
-        foreach (var changeNotifier in this.changeNotifiers)
+        foreach (var cacheable in this.cacheables)
         {
-            changeNotifier.Changed -= ChangeNotifierOnChanged;
+            cacheable.InvalidationRequested -= this.Cacheable_InvalidationRequested;
         }
     }
 
-    private void ChangeNotifierOnChanged(object sender, ChangedEventArgs e)
+    private void Cacheable_InvalidationRequested(object sender, InvalidationRequestedEventArgs e)
     {
         this.Action?.Invoke();
-        this.ActionWithArgument?.Invoke(e.Source);
+        this.ActionWithArgument?.Invoke(e.Cacheable);
     }
 }

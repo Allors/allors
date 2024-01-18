@@ -1,60 +1,70 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Allors.Workspace.InvalidationRequestedEventArgs">
+    <Position X="9.25" Y="0.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Cache\InvalidationRequestedEventArgs.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Cacheable" />
+    </ShowAsAssociation>
+  </Class>
   <Interface Name="Allors.Workspace.IRelationEnd" Collapsed="true">
-    <Position X="4.5" Y="5.75" Width="1.75" />
+    <Position X="4.5" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAgAEAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
       <FileName>Relation\IRelationEnd.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Allors.Workspace.IAssociation" Collapsed="true">
-    <Position X="5.5" Y="7.25" Width="1.5" />
+    <Position X="5.5" Y="5.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Relation\IAssociation.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Allors.Workspace.IRole" Collapsed="true">
-    <Position X="3.75" Y="7.25" Width="1.5" />
+    <Position X="3.75" Y="5.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAIAAAAAAAAAAAABEAACAAAAAAAAAAAAAAAgAAEIAAA=</HashCode>
       <FileName>Relation\IRole.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Allors.Workspace.IMethod" Collapsed="true">
-    <Position X="2.5" Y="5.75" Width="1.5" />
+    <Position X="2.5" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAIAAAAAgAEAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Method\IMethod.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="Allors.Workspace.IOperand&lt;T&gt;" Collapsed="true">
-    <Position X="3.25" Y="4.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>IOperand.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
   <Interface Name="Allors.Workspace.IOperand" Collapsed="true">
-    <Position X="4.5" Y="2.5" Width="1.75" />
+    <Position X="4.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>IOperand.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Allors.Workspace.IWorkspace" Collapsed="true">
-    <Position X="0.5" Y="5.75" Width="1.5" />
+    <Position X="0.5" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>gAAAAAIAAAAABAAAAAQAAAAAAAAgAECQAAAAAABAAAA=</HashCode>
       <FileName>IWorkspace.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="Allors.Workspace.INotifyChanged">
-    <Position X="2.25" Y="0.5" Width="1.5" />
+  <Interface Name="Allors.Workspace.ICacheable">
+    <Position X="3.75" Y="0.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Reactive\INotifyChanged.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAA=</HashCode>
+      <FileName>Cache\ICacheable.cs</FileName>
     </TypeIdentifier>
   </Interface>
+  <Delegate Name="Allors.Workspace.InvalidationRequestedEventHandler" Collapsed="true">
+    <Position X="6.25" Y="0.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAABAAAAAAAQAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Cache\InvalidationRequestedEventHandler.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

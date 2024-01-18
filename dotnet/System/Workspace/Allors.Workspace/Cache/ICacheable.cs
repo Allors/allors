@@ -5,8 +5,8 @@
 
 namespace Allors.Workspace
 {
-    public interface INotifyChanged
+    public interface ICacheable
     {
-        event ChangedEventHandler Changed;
+        event InvalidationRequestedEventHandler InvalidationRequested;
     }
 }

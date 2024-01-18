@@ -5,11 +5,11 @@ using System.Collections.Concurrent;
 
 public class NamedEffect : IEffect
 {
-    private readonly ConcurrentDictionary<INotifyChanged, string> nameByChangeNotifier;
+    private readonly ConcurrentDictionary<ICacheable, string> nameByCacheable;
 
     public NamedEffect(Action<string> action, params Action<NamedEffect>[] builders)
     {
-        this.nameByChangeNotifier = new ConcurrentDictionary<INotifyChanged, string>();
+        this.nameByCacheable = new ConcurrentDictionary<ICacheable, string>();
         this.Action = action;
 
         foreach (var builder in builders)
@@ -20,17 +20,17 @@ public class NamedEffect : IEffect
 
     public Action<string> Action { get; }
 
-    public Action<string, INotifyChanged> ActionWithArgument { get; }
+    public Action<string, ICacheable> ActionWithArgument { get; }
 
-    public void Add((INotifyChanged, string) namedChangeNotifier)
+    public void Add((ICacheable, string) namedCacheable)
     {
-        (INotifyChanged changeNotifier, string name) = namedChangeNotifier;
-        this.Add(changeNotifier, name);
+        (ICacheable cacheable, string name) = namedCacheable;
+        this.Add(cacheable, name);
     }
 
-    public void Add(INotifyChanged changeNotifier, string? name = null)
+    public void Add(ICacheable cacheable, string? name = null)
     {
-        name ??= changeNotifier switch
+        name ??= cacheable switch
         {
             IRole role => role.RoleType.Name,
             IAssociation association => association.AssociationType.Name,
@@ -38,28 +38,28 @@ public class NamedEffect : IEffect
             _ => throw new ArgumentNullException(nameof(name)),
         };
 
-        if (this.nameByChangeNotifier.TryAdd(changeNotifier, name))
+        if (this.nameByCacheable.TryAdd(cacheable, name))
         {
-            changeNotifier.Changed += ChangeNotifierOnChanged;
+            cacheable.InvalidationRequested += this.Cacheable_InvalidationRequested;
         }
     }
 
     public void Dispose()
     {
-        foreach (var changeNotifier in this.nameByChangeNotifier.Keys)
+        foreach (var cacheable in this.nameByCacheable.Keys)
         {
-            changeNotifier.Changed -= ChangeNotifierOnChanged;
+            cacheable.InvalidationRequested -= this.Cacheable_InvalidationRequested;
         }
     }
 
-    private void ChangeNotifierOnChanged(object sender, ChangedEventArgs e)
+    private void Cacheable_InvalidationRequested(object sender, InvalidationRequestedEventArgs e)
     {
-        var changeNotifier = e.Source;
+        var cacheable = e.Cacheable;
 
-        if (this.nameByChangeNotifier.TryGetValue(changeNotifier, out var name))
+        if (this.nameByCacheable.TryGetValue(cacheable, out var name))
         {
             this.Action?.Invoke(name);
-            this.ActionWithArgument?.Invoke(name, changeNotifier);
+            this.ActionWithArgument?.Invoke(name, cacheable);
         }
     }
 }

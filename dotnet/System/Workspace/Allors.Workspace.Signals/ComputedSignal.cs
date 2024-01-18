@@ -10,33 +10,33 @@ public sealed class ComputedSignal<T> : ISignal<T>, ITracker
 
     private readonly Func<ITracker, T> expression;
 
-    private event ChangedEventHandler CustomChanged;
+    private event InvalidationRequestedEventHandler CustomChanged;
 
     private ComputedSignalState state;
 
-    private HashSet<INotifyChanged> changeNotifiers;
-    private INotifyChanged? valueChangeNotifier;
+    private HashSet<ICacheable> cacheables;
+    private ICacheable? valueCacheable;
     private T? cache;
     private bool isCacheInvalid;
 
     public ComputedSignal(Func<ITracker, T> expression)
     {
         this.expression = expression;
-        this.changeNotifiers = new();
+        this.cacheables = new();
         this.state = ComputedSignalState.Cold;
         this.isCacheInvalid = false;
     }
 
     object ISignal.Value => this.Value;
 
-    public event ChangedEventHandler Changed
+    public event InvalidationRequestedEventHandler InvalidationRequested
     {
         add
         {
             this.CustomChanged += value;
             if (this.state == ComputedSignalState.Cold)
             {
-                this.Cache();
+                this.Validate();
             }
         }
         remove
@@ -46,14 +46,14 @@ public sealed class ComputedSignal<T> : ISignal<T>, ITracker
             {
                 this.state = ComputedSignalState.Cold;
 
-                foreach (var signal in this.changeNotifiers)
+                foreach (var cacheable in this.cacheables)
                 {
-                    signal.Changed -= this.ChangeNotifierTrackedChanged;
+                    cacheable.InvalidationRequested -= this.Cacheable_InvalidationRequested;
                 }
 
-                if (this.valueChangeNotifier != null)
+                if (this.valueCacheable != null)
                 {
-                    this.valueChangeNotifier.Changed -= this.ValueChangeNotifierTrackedChanged;
+                    this.valueCacheable.InvalidationRequested -= this.ValueCacheable_InvalidationRequested;
                 }
             }
         }
@@ -70,7 +70,7 @@ public sealed class ComputedSignal<T> : ISignal<T>, ITracker
 
             if (this.state == ComputedSignalState.Hot)
             {
-                this.Cache();
+                this.Validate();
             }
 
             // HotAndCached
@@ -78,22 +78,22 @@ public sealed class ComputedSignal<T> : ISignal<T>, ITracker
         }
     }
 
-    void ITracker.Track(INotifyChanged? signal)
+    void ITracker.Track(ICacheable? signal)
     {
         if (signal == null)
         {
             return;
         }
 
-        this.changeNotifiers.Add(signal);
+        this.cacheables.Add(signal);
     }
 
-    private void ChangeNotifierTrackedChanged(object sender, ChangedEventArgs e)
+    private void Cacheable_InvalidationRequested(object sender, InvalidationRequestedEventArgs e)
     {
         this.OnTrackedChanged();
     }
 
-    private void ValueChangeNotifierTrackedChanged(object sender, ChangedEventArgs e)
+    private void ValueCacheable_InvalidationRequested(object sender, InvalidationRequestedEventArgs e)
     {
         this.isCacheInvalid = true;
         this.OnTrackedChanged();
@@ -104,16 +104,16 @@ public sealed class ComputedSignal<T> : ISignal<T>, ITracker
         this.state = ComputedSignalState.Hot;
 
         var handlers = this.CustomChanged;
-        handlers?.Invoke(this, new ChangedEventArgs(this));
+        handlers?.Invoke(this, new InvalidationRequestedEventArgs(this));
     }
 
-    private void Cache()
+    private void Validate()
     {
-        var oldChangeNotifiers = this.changeNotifiers;
-        var oldValueChangeNotifier = this.valueChangeNotifier;
+        var oldCacheables = this.cacheables;
+        var oldValueCacheable = this.valueCacheable;
 
-        this.changeNotifiers = new HashSet<INotifyChanged>();
-        this.valueChangeNotifier = null;
+        this.cacheables = new HashSet<ICacheable>();
+        this.valueCacheable = null;
 
         var newValue = this.expression(this);
 
@@ -122,35 +122,35 @@ public sealed class ComputedSignal<T> : ISignal<T>, ITracker
             this.cache = newValue;
         }
 
-        this.valueChangeNotifier = newValue as INotifyChanged;
-        if (!Equals(oldValueChangeNotifier, this.valueChangeNotifier) && (oldValueChangeNotifier != null || this.valueChangeNotifier != null))
+        this.valueCacheable = newValue as ICacheable;
+        if (!Equals(oldValueCacheable, this.valueCacheable) && (oldValueCacheable != null || this.valueCacheable != null))
         {
-            if (oldValueChangeNotifier != null)
+            if (oldValueCacheable != null)
             {
-                oldValueChangeNotifier.Changed -= this.ValueChangeNotifierTrackedChanged;
+                oldValueCacheable.InvalidationRequested -= this.ValueCacheable_InvalidationRequested;
             }
 
-            if (this.valueChangeNotifier != null)
+            if (this.valueCacheable != null)
             {
-                this.valueChangeNotifier.Changed += this.ValueChangeNotifierTrackedChanged;
-            }
-        }
-
-        var changeNotifiersToRemove = oldChangeNotifiers.Except(this.changeNotifiers);
-        foreach (var changeNotifier in changeNotifiersToRemove)
-        {
-            if (changeNotifier != this.valueChangeNotifier)
-            {
-                changeNotifier.Changed -= this.ValueChangeNotifierTrackedChanged;
+                this.valueCacheable.InvalidationRequested += this.ValueCacheable_InvalidationRequested;
             }
         }
 
-        var changeNotifiersToAdd = this.changeNotifiers.Except(oldChangeNotifiers);
-        foreach (var changeNotifier in changeNotifiersToAdd)
+        var cacheablesToRemove = oldCacheables.Except(this.cacheables);
+        foreach (var cacheable in cacheablesToRemove)
         {
-            if (changeNotifier != this.valueChangeNotifier)
+            if (cacheable != this.valueCacheable)
             {
-                changeNotifier.Changed += this.ValueChangeNotifierTrackedChanged;
+                cacheable.InvalidationRequested -= this.ValueCacheable_InvalidationRequested;
+            }
+        }
+
+        var cacheablesToAdd = this.cacheables.Except(oldCacheables);
+        foreach (var cacheable in cacheablesToAdd)
+        {
+            if (cacheable != this.valueCacheable)
+            {
+                cacheable.InvalidationRequested += this.ValueCacheable_InvalidationRequested;
             }
         }
 
@@ -160,7 +160,7 @@ public sealed class ComputedSignal<T> : ISignal<T>, ITracker
 
     private class NoopTracker : ITracker
     {
-        public void Track(INotifyChanged? signal)
+        public void Track(ICacheable? signal)
         {
         }
     }

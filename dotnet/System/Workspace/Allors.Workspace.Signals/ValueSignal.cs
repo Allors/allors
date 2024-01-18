@@ -4,12 +4,12 @@ public class ValueSignal<T> : ISignal<T>
 {
     private T value;
     
-    private readonly ChangedEventArgs changedEventArgs;
+    private readonly InvalidationRequestedEventArgs invalidationRequestedEventArgs;
 
     public ValueSignal(T value)
     {
         this.Value = value;
-        this.changedEventArgs = new ChangedEventArgs(this);
+        this.invalidationRequestedEventArgs = new InvalidationRequestedEventArgs(this);
     }
 
     object ISignal.Value => this.Value;
@@ -27,11 +27,11 @@ public class ValueSignal<T> : ISignal<T>
         }
     }
 
-    public event ChangedEventHandler Changed;
+    public event InvalidationRequestedEventHandler InvalidationRequested;
 
     private void OnChanged()
     {
-        var handlers = this.Changed;
-        handlers?.Invoke(this, changedEventArgs);
+        var handlers = this.InvalidationRequested;
+        handlers?.Invoke(this, this.invalidationRequestedEventArgs);
     }
 }
