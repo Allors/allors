@@ -40,7 +40,7 @@ public class NamedEffect : IEffect
 
         if (this.nameByCacheable.TryAdd(cacheable, name))
         {
-            cacheable.InvalidationRequested += this.Cacheable_InvalidationRequested;
+            cacheable.InvalidationRequested += this.CacheableInvalidationRequested;
         }
     }
 
@@ -48,11 +48,11 @@ public class NamedEffect : IEffect
     {
         foreach (var cacheable in this.nameByCacheable.Keys)
         {
-            cacheable.InvalidationRequested -= this.Cacheable_InvalidationRequested;
+            cacheable.InvalidationRequested -= this.CacheableInvalidationRequested;
         }
     }
 
-    private void Cacheable_InvalidationRequested(object sender, InvalidationRequestedEventArgs e)
+    private void CacheableInvalidationRequested(object sender, InvalidationRequestedEventArgs e)
     {
         var cacheable = e.Cacheable;
 

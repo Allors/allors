@@ -14,17 +14,17 @@ public sealed class ComputedSignal<T> : ISignal<T>, ITracker
 
     private bool isCold;
 
-    private HashSet<ICacheable> cacheables;
-    private ICacheable? valueCacheable;
-    private T? cache;
-    private bool isCacheInvalid;
+    private HashSet<ICacheable> cacheableOperands;
+    private ICacheable? cacheableResult;
+
+    private T? value;
+    private bool isInvalid;
 
     public ComputedSignal(Func<ITracker, T> expression)
     {
         this.expression = expression;
-        this.cacheables = new();
+        this.cacheableOperands = new();
         this.isCold = true;
-        this.isCacheInvalid = true;
     }
 
     object ISignal.Value => this.Value;
@@ -35,6 +35,7 @@ public sealed class ComputedSignal<T> : ISignal<T>, ITracker
         {
             this.CustomChanged += value;
             this.isCold = false;
+            this.isInvalid = true;
         }
         remove
         {
@@ -42,16 +43,15 @@ public sealed class ComputedSignal<T> : ISignal<T>, ITracker
             if (this.CustomChanged == null)
             {
                 this.isCold = true;
-                this.isCacheInvalid = true;
 
-                foreach (var cacheable in this.cacheables)
+                foreach (var cacheableOperand in this.cacheableOperands)
                 {
-                    cacheable.InvalidationRequested -= this.Cacheable_InvalidationRequested;
+                    cacheableOperand.InvalidationRequested -= this.CacheableOperand_InvalidationRequested;
                 }
 
-                if (this.valueCacheable != null)
+                if (this.cacheableResult != null)
                 {
-                    this.valueCacheable.InvalidationRequested -= this.ValueCacheable_InvalidationRequested;
+                    this.cacheableResult.InvalidationRequested -= this.CacheableResult_InvalidationRequested;
                 }
             }
         }
@@ -66,12 +66,12 @@ public sealed class ComputedSignal<T> : ISignal<T>, ITracker
                 return this.expression(ColdTracker);
             }
 
-            if (this.isCacheInvalid)
+            if (this.isInvalid)
             {
                 this.Validate();
             }
 
-            return this.cache;
+            return this.value;
         }
     }
 
@@ -82,22 +82,22 @@ public sealed class ComputedSignal<T> : ISignal<T>, ITracker
             return;
         }
 
-        this.cacheables.Add(signal);
+        this.cacheableOperands.Add(signal);
     }
 
-    private void Cacheable_InvalidationRequested(object sender, InvalidationRequestedEventArgs e)
+    private void CacheableOperand_InvalidationRequested(object sender, InvalidationRequestedEventArgs e)
     {
         this.Invalidate();
     }
 
-    private void ValueCacheable_InvalidationRequested(object sender, InvalidationRequestedEventArgs e)
+    private void CacheableResult_InvalidationRequested(object sender, InvalidationRequestedEventArgs e)
     {
         this.Invalidate();
     }
 
     private void Invalidate()
     {
-        this.isCacheInvalid = true;
+        this.isInvalid = true;
        
         var handlers = this.CustomChanged;
         handlers?.Invoke(this, new InvalidationRequestedEventArgs(this));
@@ -105,53 +105,50 @@ public sealed class ComputedSignal<T> : ISignal<T>, ITracker
 
     private void Validate()
     {
-        var oldCacheables = this.cacheables;
-        var oldValueCacheable = this.valueCacheable;
+        var oldCacheableOperand = this.cacheableOperands;
+        var oldCacheableResult = this.cacheableResult;
 
-        this.cacheables = new HashSet<ICacheable>();
-        this.valueCacheable = null;
+        this.cacheableOperands = new HashSet<ICacheable>();
+        this.cacheableResult = null;
 
         var newValue = this.expression(this);
 
-        if (!Equals(newValue, this.cache))
-        {
-            this.cache = newValue;
-        }
+        this.value = newValue;
 
-        this.valueCacheable = newValue as ICacheable;
-        if (!Equals(oldValueCacheable, this.valueCacheable) && (oldValueCacheable != null || this.valueCacheable != null))
+        this.cacheableResult = newValue as ICacheable;
+        if (!Equals(oldCacheableResult, this.cacheableResult) && (oldCacheableResult != null || this.cacheableResult != null))
         {
-            if (oldValueCacheable != null)
+            if (oldCacheableResult != null)
             {
-                oldValueCacheable.InvalidationRequested -= this.ValueCacheable_InvalidationRequested;
+                oldCacheableResult.InvalidationRequested -= this.CacheableResult_InvalidationRequested;
             }
 
-            if (this.valueCacheable != null)
+            if (this.cacheableResult != null)
             {
-                this.valueCacheable.InvalidationRequested += this.ValueCacheable_InvalidationRequested;
+                this.cacheableResult.InvalidationRequested += this.CacheableResult_InvalidationRequested;
             }
         }
 
-        var cacheablesToRemove = oldCacheables.Except(this.cacheables);
-        foreach (var cacheable in cacheablesToRemove)
+        var cacheableOperandToRemove = oldCacheableOperand.Except(this.cacheableOperands);
+        foreach (var cacheableOperand in cacheableOperandToRemove)
         {
-            if (cacheable != this.valueCacheable)
+            if (cacheableOperand != this.cacheableResult)
             {
-                cacheable.InvalidationRequested -= this.ValueCacheable_InvalidationRequested;
+                cacheableOperand.InvalidationRequested -= this.CacheableResult_InvalidationRequested;
             }
         }
 
-        var cacheablesToAdd = this.cacheables.Except(oldCacheables);
-        foreach (var cacheable in cacheablesToAdd)
+        var cacheableOperandsToAdd = this.cacheableOperands.Except(oldCacheableOperand);
+        foreach (var cacheableOperand in cacheableOperandsToAdd)
         {
-            if (cacheable != this.valueCacheable)
+            if (cacheableOperand != this.cacheableResult)
             {
-                cacheable.InvalidationRequested += this.ValueCacheable_InvalidationRequested;
+                cacheableOperand.InvalidationRequested += this.CacheableResult_InvalidationRequested;
             }
         }
 
         this.isCold = false;
-        this.isCacheInvalid = false;
+        this.isInvalid = false;
     }
 
     private class NoopTracker : ITracker

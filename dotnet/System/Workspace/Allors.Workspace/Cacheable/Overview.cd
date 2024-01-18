@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="Allors.Workspace.InvalidationRequestedEventArgs">
-    <Position X="9.25" Y="0.5" Width="2.5" />
+  <Class Name="Allors.Workspace.InvalidationRequestedEventArgs" Collapsed="true">
+    <Position X="7" Y="0.5" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Cache\InvalidationRequestedEventArgs.cs</FileName>
+      <FileName>Cacheable\InvalidationRequestedEventArgs.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="Cacheable" />
@@ -53,17 +53,17 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="Allors.Workspace.ICacheable">
-    <Position X="3.75" Y="0.5" Width="2" />
+    <Position X="4" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAA=</HashCode>
-      <FileName>Cache\ICacheable.cs</FileName>
+      <FileName>Cacheable\ICacheable.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Delegate Name="Allors.Workspace.InvalidationRequestedEventHandler" Collapsed="true">
-    <Position X="6.25" Y="0.5" Width="2.75" />
+    <Position X="9.75" Y="0.5" Width="2.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAABAAAAAAAQAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Cache\InvalidationRequestedEventHandler.cs</FileName>
+      <FileName>Cacheable\InvalidationRequestedEventHandler.cs</FileName>
     </TypeIdentifier>
   </Delegate>
   <Font Name="Segoe UI" Size="9" />
