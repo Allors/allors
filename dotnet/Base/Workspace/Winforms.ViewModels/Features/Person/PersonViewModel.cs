@@ -83,8 +83,5 @@ public partial class PersonViewModel : ObservableObject, IDisposable
     public void Dispose()
     {
         this.propertyChangedEffect?.Dispose();
-
-        this.mailboxAddress?.Dispose();
-        this.poBox?.Dispose();
     }
 }

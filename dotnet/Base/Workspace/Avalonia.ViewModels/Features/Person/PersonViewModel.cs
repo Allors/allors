@@ -82,12 +82,5 @@ public partial class PersonViewModel : ReactiveObject, IDisposable
     public void Dispose()
     {
         this.propertyChangedEffect?.Dispose();
-
-        this.firstName?.Dispose();
-        this.weight?.Dispose();
-        this.fullName?.Dispose();
-        this.greeting?.Dispose();
-        this.mailboxAddress?.Dispose();
-        this.poBox?.Dispose();
     }
 }

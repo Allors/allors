@@ -84,9 +84,6 @@ else
     public void Dispose()
     {
         this.stateHasChangedEffect?.Dispose();
-
-        this.mailboxAddress?.Dispose();
-        this.poBox?.Dispose();
     }
 
     async Task ValidFormSubmitted(EditContext editContext)
