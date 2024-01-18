@@ -28,19 +28,6 @@ public sealed class ComputedSignal<T> : ISignal<T>, ITracker
 
     public event ChangedEventHandler Changed;
 
-    public long Version
-    {
-        get
-        {
-            if (!this.isValid)
-            {
-                this.Validate();
-            }
-
-            return this.version;
-        }
-    }
-
     public T Value
     {
         get

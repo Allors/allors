@@ -22,15 +22,12 @@ public class ValueSignal<T> : ISignal<T>
             if (!Equals(value, this.value))
             {
                 this.value = value;
-                ++this.Version;
                 this.OnChanged();
             }
         }
     }
 
     public event ChangedEventHandler Changed;
-
-    public long Version { get; private set; }
 
     private void OnChanged()
     {

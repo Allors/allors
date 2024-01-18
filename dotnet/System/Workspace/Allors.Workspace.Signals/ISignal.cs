@@ -9,8 +9,6 @@ namespace Allors.Workspace.Signals
 
     public interface ISignal : INotifyChanged
     {
-        long Version { get; }
-
         object Value { get; }
     }
 

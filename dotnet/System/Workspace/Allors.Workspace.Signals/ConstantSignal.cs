@@ -18,8 +18,6 @@ namespace Allors.Workspace.Signals
             remove { }
         }
 
-        public long Version => 0;
-
         object ISignal.Value => this.Value;
 
         public T Value { get; }
