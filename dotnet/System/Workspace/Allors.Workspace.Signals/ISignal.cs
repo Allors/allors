@@ -5,8 +5,6 @@
 
 namespace Allors.Workspace.Signals
 {
-    using System;
-
     public interface ISignal : INotifyChanged
     {
         object Value { get; }
@@ -14,6 +12,6 @@ namespace Allors.Workspace.Signals
 
     public interface ISignal<out T> : ISignal
     {
-        new T Value { get; }
+        new T? Value { get; }
     }
 }

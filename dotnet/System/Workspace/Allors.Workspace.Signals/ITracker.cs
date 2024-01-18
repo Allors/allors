@@ -5,10 +5,8 @@
 
 namespace Allors.Workspace.Signals
 {
-    using System;
-
-    public interface ITracker : IDisposable
+    public interface ITracker
     {
-        void Track(INotifyChanged signal);
+        void Track(INotifyChanged? signal);
     }
 }

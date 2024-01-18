@@ -20,10 +20,10 @@
             c1b.C1C1One2One.Value = c1c;
             c1c.C1AllorsString.Value = "Hello";
 
-            var computedSignal = new ComputedSignal<string>((tracker) => c1a?
-                .C1C1One2One.Track(tracker).Value?
-                .C1C1One2One.Track(tracker).Value?
-                .C1AllorsString.Track(tracker).Value);
+            var computedSignal = new ComputedSignal<string?>((tracker) =>
+                c1a.C1C1One2One.Track(tracker).Value
+                ?.C1C1One2One.Track(tracker).Value
+                ?.C1AllorsString.Track(tracker).Value);
 
             Assert.That(computedSignal.Value, Is.EqualTo("Hello"));
 
@@ -63,12 +63,12 @@
             c1f.C1C1One2One.Value = c1g;
             c1g.C1AllorsString.Value = "Hello 2";
 
-            var signal = new ValueSignal<C1>(null);
+            var signal = new ValueSignal<C1?>(null);
 
-            var calculatedSignal = new ComputedSignal<string>((tracker) => signal.Track(tracker).Value?
-                .C1C1One2One.Track(tracker).Value?
-                .C1C1One2One.Track(tracker).Value?
-                .C1AllorsString.Track(tracker)?.Value);
+            var calculatedSignal = new ComputedSignal<string?>((tracker) => signal.Track(tracker).Value
+                ?.C1C1One2One.Track(tracker).Value
+                ?.C1C1One2One.Track(tracker).Value
+                ?.C1AllorsString.Track(tracker).Value);
 
             Assert.That(calculatedSignal.Value, Is.Null);
 

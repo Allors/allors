@@ -6,42 +6,79 @@ using System.Linq;
 
 public sealed class ComputedSignal<T> : ISignal<T>, ITracker
 {
+    private static readonly NoopTracker ColdTracker = new();
+
     private readonly Func<ITracker, T> expression;
 
-    private T value;
-    private long version;
-    private bool isValid;
+    private event ChangedEventHandler CustomChanged;
+
+    private ComputedSignalState state;
 
     private HashSet<INotifyChanged> changeNotifiers;
-    private INotifyChanged valueChangeNotifier;
-    private bool isValueChanged;
+    private INotifyChanged? valueChangeNotifier;
+    private T? cache;
+    private bool isCacheInvalid;
 
     public ComputedSignal(Func<ITracker, T> expression)
     {
         this.expression = expression;
-        this.changeNotifiers = new HashSet<INotifyChanged>();
-        this.isValid = false;
-        this.isValueChanged = false;
+        this.changeNotifiers = new();
+        this.state = ComputedSignalState.Cold;
+        this.isCacheInvalid = false;
     }
 
     object ISignal.Value => this.Value;
 
-    public event ChangedEventHandler Changed;
+    public event ChangedEventHandler Changed
+    {
+        add
+        {
+            this.CustomChanged += value;
+            if (this.state == ComputedSignalState.Cold)
+            {
+                this.Cache();
+            }
+        }
+        remove
+        {
+            this.CustomChanged -= value;
+            if (this.CustomChanged == null)
+            {
+                this.state = ComputedSignalState.Cold;
 
-    public T Value
+                foreach (var signal in this.changeNotifiers)
+                {
+                    signal.Changed -= this.ChangeNotifierTrackedChanged;
+                }
+
+                if (this.valueChangeNotifier != null)
+                {
+                    this.valueChangeNotifier.Changed -= this.ValueChangeNotifierTrackedChanged;
+                }
+            }
+        }
+    }
+
+    public T? Value
     {
         get
         {
-            if (!this.isValid)
+            if (this.state == ComputedSignalState.Cold)
             {
-                this.Validate();
+                return this.expression(ColdTracker);
             }
 
-            return this.value;
+            if (this.state == ComputedSignalState.Hot)
+            {
+                this.Cache();
+            }
+
+            // HotAndCached
+            return this.cache;
         }
     }
-    
-    void ITracker.Track(INotifyChanged signal)
+
+    void ITracker.Track(INotifyChanged? signal)
     {
         if (signal == null)
         {
@@ -51,19 +88,6 @@ public sealed class ComputedSignal<T> : ISignal<T>, ITracker
         this.changeNotifiers.Add(signal);
     }
 
-    public void Dispose()
-    {
-        foreach (var signal in this.changeNotifiers)
-        {
-            signal.Changed -= this.ChangeNotifierTrackedChanged;
-        }
-
-        if (this.valueChangeNotifier != null)
-        {
-            this.valueChangeNotifier.Changed -= this.ValueChangeNotifierTrackedChanged;
-        }
-    }
-
     private void ChangeNotifierTrackedChanged(object sender, ChangedEventArgs e)
     {
         this.OnTrackedChanged();
@@ -71,19 +95,19 @@ public sealed class ComputedSignal<T> : ISignal<T>, ITracker
 
     private void ValueChangeNotifierTrackedChanged(object sender, ChangedEventArgs e)
     {
-        this.isValueChanged = true;
+        this.isCacheInvalid = true;
         this.OnTrackedChanged();
     }
 
     private void OnTrackedChanged()
     {
-        this.isValid = false;
+        this.state = ComputedSignalState.Hot;
 
-        var handlers = this.Changed;
+        var handlers = this.CustomChanged;
         handlers?.Invoke(this, new ChangedEventArgs(this));
     }
 
-    private void Validate()
+    private void Cache()
     {
         var oldChangeNotifiers = this.changeNotifiers;
         var oldValueChangeNotifier = this.valueChangeNotifier;
@@ -93,10 +117,9 @@ public sealed class ComputedSignal<T> : ISignal<T>, ITracker
 
         var newValue = this.expression(this);
 
-        if (!Equals(newValue, this.value) || this.isValueChanged)
+        if (!Equals(newValue, this.cache) || this.isCacheInvalid)
         {
-            this.value = newValue;
-            ++this.version;
+            this.cache = newValue;
         }
 
         this.valueChangeNotifier = newValue as INotifyChanged;
@@ -130,8 +153,22 @@ public sealed class ComputedSignal<T> : ISignal<T>, ITracker
                 changeNotifier.Changed += this.ValueChangeNotifierTrackedChanged;
             }
         }
-        
-        this.isValid = true;
-        this.isValueChanged = false;
+
+        this.state = ComputedSignalState.HotAndCached;
+        this.isCacheInvalid = false;
+    }
+
+    private class NoopTracker : ITracker
+    {
+        public void Track(INotifyChanged? signal)
+        {
+        }
+    }
+
+    private enum ComputedSignalState
+    {
+        Cold,
+        Hot,
+        HotAndCached
     }
 }

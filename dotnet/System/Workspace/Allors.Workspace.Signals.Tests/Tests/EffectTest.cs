@@ -19,7 +19,7 @@
 
             var counter = 0;
 
-            using var effect = new Effect(() =>
+            var effect = new Effect(() =>
             {
                 ++counter;
             }, v => v.Add(c1a.C1AllorsString));
@@ -44,35 +44,14 @@
             c1b.C1AllorsString.Value = "Hello B!";
 
             Assert.That(counter, Is.EqualTo(3));
-        }
-
-        [Test]
-        public async Task Dispose()
-        {
-            await this.Login("jane@example.com");
-            var workspace = this.Workspace;
-
-            var c1a = workspace.Create<C1>();
-
-            var counter = 0;
-
-            using var effect = new Effect(() =>
-            {
-                ++counter;
-            }, v => v.Add(c1a.C1AllorsString));
-
-            Assert.That(counter, Is.EqualTo(0));
-
-            c1a.C1AllorsString.Value = "Hello A!";
-
-            Assert.That(counter, Is.EqualTo(1));
 
             effect.Dispose();
 
             c1a.C1AllorsString.Value = "Hello again A!";
 
-            Assert.That(counter, Is.EqualTo(1));
+            Assert.That(counter, Is.EqualTo(3));
         }
+        
 
         [Test]
         public async Task Computed()
@@ -87,9 +66,7 @@
             var model = new ValueSignal<Person>(person);
             var computed = new ComputedSignal<IUnitRole<string>?>(tracker => model.Track(tracker).Value.FirstName.Track(tracker));
 
-            var value = computed.Value;
-
-            using var computedEffect = new Effect(() => ++counter, v => v.Add(computed));
+            var computedEffect = new Effect(() => ++counter, v => v.Add(computed));
 
             Assert.That(counter, Is.EqualTo(0));
 
@@ -104,6 +81,14 @@
             person.FirstName.Value += "!";
 
             Assert.That(counter, Is.EqualTo(3));
+
+            computedEffect.Dispose();
+
+            person.FirstName.Value = "After Dispose!";
+
+            Assert.That(counter, Is.EqualTo(3));
+
+            Assert.That(computed.Value?.Value, Is.EqualTo("After Dispose!"));
         }
     }
 }
