@@ -22,14 +22,14 @@ public class ValueSignal<T> : ISignal<T>
             if (!Equals(value, this.value))
             {
                 this.value = value;
-                this.OnChanged();
+                this.OnInvalidationRequested();
             }
         }
     }
 
     public event InvalidationRequestedEventHandler InvalidationRequested;
 
-    private void OnChanged()
+    private void OnInvalidationRequested()
     {
         var handlers = this.InvalidationRequested;
         handlers?.Invoke(this, this.invalidationRequestedEventArgs);

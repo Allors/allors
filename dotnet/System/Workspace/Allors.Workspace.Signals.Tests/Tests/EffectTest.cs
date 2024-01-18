@@ -65,12 +65,14 @@
 
             var model = new ValueSignal<Person>(person);
             var computed = new ComputedSignal<IUnitRole<string>?>(tracker => model.Track(tracker).Value.FirstName.Track(tracker));
-
             var computedEffect = new Effect(() => ++counter, v => v.Add(computed));
+
+            var value = computed.Value;
 
             Assert.That(counter, Is.EqualTo(0));
 
             person.FirstName.Value += "!";
+            value = computed.Value;
 
             Assert.That(counter, Is.EqualTo(1));
 

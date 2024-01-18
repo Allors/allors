@@ -12,7 +12,7 @@ public sealed class ComputedSignal<T> : ISignal<T>, ITracker
 
     private event InvalidationRequestedEventHandler CustomChanged;
 
-    private ComputedSignalState state;
+    private bool isCold;
 
     private HashSet<ICacheable> cacheables;
     private ICacheable? valueCacheable;
@@ -23,8 +23,8 @@ public sealed class ComputedSignal<T> : ISignal<T>, ITracker
     {
         this.expression = expression;
         this.cacheables = new();
-        this.state = ComputedSignalState.Cold;
-        this.isCacheInvalid = false;
+        this.isCold = true;
+        this.isCacheInvalid = true;
     }
 
     object ISignal.Value => this.Value;
@@ -34,17 +34,15 @@ public sealed class ComputedSignal<T> : ISignal<T>, ITracker
         add
         {
             this.CustomChanged += value;
-            if (this.state == ComputedSignalState.Cold)
-            {
-                this.Validate();
-            }
+            this.isCold = false;
         }
         remove
         {
             this.CustomChanged -= value;
             if (this.CustomChanged == null)
             {
-                this.state = ComputedSignalState.Cold;
+                this.isCold = true;
+                this.isCacheInvalid = true;
 
                 foreach (var cacheable in this.cacheables)
                 {
@@ -63,17 +61,16 @@ public sealed class ComputedSignal<T> : ISignal<T>, ITracker
     {
         get
         {
-            if (this.state == ComputedSignalState.Cold)
+            if (this.isCold)
             {
                 return this.expression(ColdTracker);
             }
 
-            if (this.state == ComputedSignalState.Hot)
+            if (this.isCacheInvalid)
             {
                 this.Validate();
             }
 
-            // HotAndCached
             return this.cache;
         }
     }
@@ -90,19 +87,18 @@ public sealed class ComputedSignal<T> : ISignal<T>, ITracker
 
     private void Cacheable_InvalidationRequested(object sender, InvalidationRequestedEventArgs e)
     {
-        this.OnTrackedChanged();
+        this.Invalidate();
     }
 
     private void ValueCacheable_InvalidationRequested(object sender, InvalidationRequestedEventArgs e)
     {
-        this.isCacheInvalid = true;
-        this.OnTrackedChanged();
+        this.Invalidate();
     }
 
-    private void OnTrackedChanged()
+    private void Invalidate()
     {
-        this.state = ComputedSignalState.Hot;
-
+        this.isCacheInvalid = true;
+       
         var handlers = this.CustomChanged;
         handlers?.Invoke(this, new InvalidationRequestedEventArgs(this));
     }
@@ -117,7 +113,7 @@ public sealed class ComputedSignal<T> : ISignal<T>, ITracker
 
         var newValue = this.expression(this);
 
-        if (!Equals(newValue, this.cache) || this.isCacheInvalid)
+        if (!Equals(newValue, this.cache))
         {
             this.cache = newValue;
         }
@@ -154,7 +150,7 @@ public sealed class ComputedSignal<T> : ISignal<T>, ITracker
             }
         }
 
-        this.state = ComputedSignalState.HotAndCached;
+        this.isCold = false;
         this.isCacheInvalid = false;
     }
 
@@ -163,12 +159,5 @@ public sealed class ComputedSignal<T> : ISignal<T>, ITracker
         public void Track(ICacheable? signal)
         {
         }
-    }
-
-    private enum ComputedSignalState
-    {
-        Cold,
-        Hot,
-        HotAndCached
     }
 }

@@ -95,10 +95,9 @@
             var model = new ValueSignal<Person>(person);
 
             var computed = new ComputedSignal<IUnitRole<string>?>(tracker => model.Track(tracker).Value.FirstName.Track(tracker));
+            using var computedEffect = new NamedEffect((name) => list.Add(name), v => v.Add(computed, "Computed"));
 
             var value = computed.Value;
-
-            using var computedEffect = new NamedEffect((name) => list.Add(name), v => v.Add(computed, "Computed"));
 
             Assert.That(list, Has.Count.EqualTo(0));
 
