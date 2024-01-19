@@ -70,7 +70,7 @@ public sealed class ComputedSignal<T> : ISignal<T>, ITracker
             {
                 this.Validate();
             }
-
+            
             return this.value;
         }
     }

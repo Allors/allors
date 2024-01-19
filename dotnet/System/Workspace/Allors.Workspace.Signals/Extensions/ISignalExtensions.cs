@@ -23,7 +23,7 @@ namespace Allors.Workspace.Signals
             }
         }
 
-        public static void Set<T>(this ISignal<IUnitRole<T>> signal, T value) where T : class
+        public static void Set<T>(this ISignal<IUnitRole<T>?>? signal, T value) where T : class
         {
             if (signal is { Value: not null })
             {

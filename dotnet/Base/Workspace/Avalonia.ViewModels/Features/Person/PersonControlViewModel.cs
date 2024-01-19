@@ -14,7 +14,7 @@ public class PersonControlViewModel : ReactiveObject, IRoutableViewModel
 {
     private readonly ValueSignal<PersonViewModel?> selected;
 
-    private readonly IEffect selectedChanged;
+    private readonly IEffect propertyChangedEffect;
 
     public PersonControlViewModel(IWorkspace workspace, IMessageService messageService, IScreen screen)
     {
@@ -24,13 +24,17 @@ public class PersonControlViewModel : ReactiveObject, IRoutableViewModel
 
         this.selected = new ValueSignal<PersonViewModel>(null);
 
-        this.selectedChanged = new Effect(() =>
+        this.propertyChangedEffect = new NamedEffect((name) =>
         {
-            this.RaisePropertyChanged(nameof(this.Selected));
-            this.RaisePropertyChanged(nameof(this.HasSelected));
-        }, v=>
+            this.RaisePropertyChanged(name);
+
+            if (name == nameof(Selected))
+            {
+                this.RaisePropertyChanged(nameof(this.HasSelected));
+            }
+        }, v =>
         {
-            v.Add(this.selected);
+            v.Add(this.selected, nameof(Selected));
         });
 
         this.Load = ReactiveCommand.CreateFromTask(this.SaveAsync);
@@ -83,6 +87,11 @@ public class PersonControlViewModel : ReactiveObject, IRoutableViewModel
         var result = await this.Workspace.PullAsync(pull);
         var people = result.GetCollection<Person>();
 
+        foreach (var person in this.People)
+        {
+            person.Dispose();
+        }
+
         this.People.Clear();
         foreach (var person in people)
         {
@@ -99,7 +108,7 @@ public class PersonControlViewModel : ReactiveObject, IRoutableViewModel
 
         if (result.HasErrors)
         {
-            this.MessageService.Show(result.ErrorMessage, "Error");
+            await this.MessageService.Show(result.ErrorMessage, "Error");
             return;
         }
 
@@ -110,6 +119,6 @@ public class PersonControlViewModel : ReactiveObject, IRoutableViewModel
 
     public void Dispose()
     {
-        this.selectedChanged.Dispose();
+        this.propertyChangedEffect.Dispose();
     }
 }

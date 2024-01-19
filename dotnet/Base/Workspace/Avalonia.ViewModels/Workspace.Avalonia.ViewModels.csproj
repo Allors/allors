@@ -15,4 +15,8 @@
     <ProjectReference Include="..\Domain\Workspace.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Signals\" />
+  </ItemGroup>
+
 </Project>
