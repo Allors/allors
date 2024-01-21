@@ -5,5 +5,5 @@
 
 namespace Allors.Workspace
 {
-    public delegate void InvalidationRequestedEventHandler(object sender, InvalidationRequestedEventArgs e);
+    public delegate void ChangedEventHandler(object sender, ChangedEventArgs e);
 }

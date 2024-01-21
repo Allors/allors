@@ -4,12 +4,12 @@ public class ValueSignal<T> : ISignal<T>
 {
     private T value;
     
-    private readonly InvalidationRequestedEventArgs invalidationRequestedEventArgs;
+    private readonly ChangedEventArgs changedEventArgs;
 
     public ValueSignal(T value)
     {
         this.Value = value;
-        this.invalidationRequestedEventArgs = new InvalidationRequestedEventArgs(this);
+        this.changedEventArgs = new ChangedEventArgs(this);
     }
 
     object ISignal.Value => this.Value;
@@ -22,16 +22,16 @@ public class ValueSignal<T> : ISignal<T>
             if (!Equals(value, this.value))
             {
                 this.value = value;
-                this.OnInvalidationRequested();
+                this.OnChanged();
             }
         }
     }
 
-    public event InvalidationRequestedEventHandler InvalidationRequested;
+    public event ChangedEventHandler Changed;
 
-    private void OnInvalidationRequested()
+    private void OnChanged()
     {
-        var handlers = this.InvalidationRequested;
-        handlers?.Invoke(this, this.invalidationRequestedEventArgs);
+        var handlers = this.Changed;
+        handlers?.Invoke(this, this.changedEventArgs);
     }
 }

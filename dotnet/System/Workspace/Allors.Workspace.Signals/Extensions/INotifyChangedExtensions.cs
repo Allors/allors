@@ -7,7 +7,7 @@ namespace Allors.Workspace.Signals
 {
     public static class INotifyChangedExtensions
     {
-        public static T Track<T>(this T @this, ITracker tracker) where T : ICacheable
+        public static T Track<T>(this T @this, ITracker tracker) where T : IChangeable
         {
             tracker.Track(@this);
             return @this;

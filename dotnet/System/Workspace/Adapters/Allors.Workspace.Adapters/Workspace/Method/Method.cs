@@ -24,7 +24,7 @@ namespace Allors.Workspace
 
         public bool CanExecute => this.Object.CanExecute(this.MethodType);
 
-        public event InvalidationRequestedEventHandler InvalidationRequested
+        public event ChangedEventHandler Changed
         {
             add
             {

@@ -22,7 +22,7 @@ namespace Allors.Workspace.Adapters
 
         private readonly Dictionary<IOperand, IChangeDetector> changeDetectorByOperand;
         private readonly HashSet<IChangeDetector> changeDetectors;
-        private readonly InvalidationRequestedEventArgs invalidationRequestedEventArgs;
+        private readonly ChangedEventArgs changedEventArgs;
         private bool isHandlingChanges;
 
         protected Workspace(Connection connection, IWorkspaceServices services)
@@ -41,7 +41,7 @@ namespace Allors.Workspace.Adapters
 
             this.PushToDatabaseTracker = new PushToDatabaseTracker();
 
-            this.invalidationRequestedEventArgs = new InvalidationRequestedEventArgs(this);
+            this.changedEventArgs = new ChangedEventArgs(this);
 
             this.isHandlingChanges = false;
             this.changeDetectorByOperand = new Dictionary<IOperand, IChangeDetector>();
@@ -52,7 +52,7 @@ namespace Allors.Workspace.Adapters
             this.ObjectFactory = this.Services.Get<IObjectFactory>();
         }
 
-        public event InvalidationRequestedEventHandler InvalidationRequested;
+        public event ChangedEventHandler Changed;
 
         public IObjectFactory ObjectFactory { get; set; }
 
@@ -372,7 +372,7 @@ namespace Allors.Workspace.Adapters
 
         #region signals
 
-        public void Add(Method method, InvalidationRequestedEventHandler handler)
+        public void Add(Method method, ChangedEventHandler handler)
         {
             if (!this.changeDetectorByOperand.TryGetValue(method, out var signaler))
             {
@@ -383,7 +383,7 @@ namespace Allors.Workspace.Adapters
             signaler.Changed += handler;
         }
 
-        public void Add<T>(UnitRole<T> unitRole, InvalidationRequestedEventHandler handler)
+        public void Add<T>(UnitRole<T> unitRole, ChangedEventHandler handler)
         {
             if (!this.changeDetectorByOperand.TryGetValue(unitRole, out var signaler))
             {
@@ -394,7 +394,7 @@ namespace Allors.Workspace.Adapters
             signaler.Changed += handler;
         }
 
-        public void Add<T>(CompositeRole<T> compositeRole, InvalidationRequestedEventHandler handler) where T : class, IObject
+        public void Add<T>(CompositeRole<T> compositeRole, ChangedEventHandler handler) where T : class, IObject
         {
 
             if (!this.changeDetectorByOperand.TryGetValue(compositeRole, out var signaler))
@@ -406,7 +406,7 @@ namespace Allors.Workspace.Adapters
             signaler.Changed += handler;
         }
 
-        public void Add<T>(CompositesRole<T> compositesRole, InvalidationRequestedEventHandler handler) where T : class, IObject
+        public void Add<T>(CompositesRole<T> compositesRole, ChangedEventHandler handler) where T : class, IObject
         {
             if (!this.changeDetectorByOperand.TryGetValue(compositesRole, out var signaler))
             {
@@ -417,7 +417,7 @@ namespace Allors.Workspace.Adapters
             signaler.Changed += handler;
         }
 
-        public void Add<T>(CompositeAssociation<T> compositeAssociation, InvalidationRequestedEventHandler handler) where T : class, IObject
+        public void Add<T>(CompositeAssociation<T> compositeAssociation, ChangedEventHandler handler) where T : class, IObject
         {
             if (!this.changeDetectorByOperand.TryGetValue(compositeAssociation, out var signaler))
             {
@@ -428,7 +428,7 @@ namespace Allors.Workspace.Adapters
             signaler.Changed += handler;
         }
 
-        public void Add<T>(CompositesAssociation<T> compositesAssociation, InvalidationRequestedEventHandler handler) where T : class, IObject
+        public void Add<T>(CompositesAssociation<T> compositesAssociation, ChangedEventHandler handler) where T : class, IObject
         {
             if (!this.changeDetectorByOperand.TryGetValue(compositesAssociation, out var signaler))
             {
@@ -439,7 +439,7 @@ namespace Allors.Workspace.Adapters
             signaler.Changed += handler;
         }
 
-        public void Remove(IOperand operand, InvalidationRequestedEventHandler handler)
+        public void Remove(IOperand operand, ChangedEventHandler handler)
         {
             if (this.changeDetectorByOperand.TryGetValue(operand, out var signaler))
             {
@@ -515,7 +515,7 @@ namespace Allors.Workspace.Adapters
             }
 
 
-            this.InvalidationRequested?.Invoke(this, this.invalidationRequestedEventArgs);
+            this.Changed?.Invoke(this, this.changedEventArgs);
         }
         #endregion
 

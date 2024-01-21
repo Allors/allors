@@ -46,7 +46,7 @@ namespace Allors.Workspace
 
         public bool IsModified => this.Object.IsModified(this.RoleType);
 
-        public event InvalidationRequestedEventHandler InvalidationRequested
+        public event ChangedEventHandler Changed
         {
             add
             {

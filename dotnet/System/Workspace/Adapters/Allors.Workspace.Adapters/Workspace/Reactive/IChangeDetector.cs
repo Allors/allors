@@ -7,7 +7,7 @@ namespace Allors.Workspace
 {
     public interface IChangeDetector
     {
-        event InvalidationRequestedEventHandler Changed;
+        event ChangedEventHandler Changed;
 
         bool HasHandlers { get; }
 

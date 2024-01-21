@@ -12,7 +12,7 @@ namespace Allors.Workspace.Signals
             this.Value = value;
         }
 
-        public event InvalidationRequestedEventHandler InvalidationRequested
+        public event ChangedEventHandler Changed
         {
             add { }
             remove { }

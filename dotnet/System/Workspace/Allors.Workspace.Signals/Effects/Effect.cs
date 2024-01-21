@@ -5,11 +5,11 @@ using System.Collections.Generic;
 
 public class Effect : IEffect
 {
-    private readonly HashSet<ICacheable> cacheables;
+    private readonly HashSet<IChangeable> changeables;
 
     public Effect(Action action, params Action<Effect>[] builders)
     {
-        this.cacheables = new HashSet<ICacheable>();
+        this.changeables = new HashSet<IChangeable>();
         this.Action = action;
 
         foreach (var builder in builders)
@@ -18,9 +18,9 @@ public class Effect : IEffect
         }
     }
 
-    public Effect(Action<ICacheable> action, params Action<Effect>[] builders)
+    public Effect(Action<IChangeable> action, params Action<Effect>[] builders)
     {
-        this.cacheables = new HashSet<ICacheable>();
+        this.changeables = new HashSet<IChangeable>();
         this.ActionWithArgument = action;
 
         foreach (var builder in builders)
@@ -31,27 +31,27 @@ public class Effect : IEffect
 
     public Action Action { get; }
 
-    public Action<ICacheable> ActionWithArgument { get; }
+    public Action<IChangeable> ActionWithArgument { get; }
 
-    public void Add(ICacheable cacheable)
+    public void Add(IChangeable changeable)
     {
-        if (this.cacheables.Add(cacheable))
+        if (this.changeables.Add(changeable))
         {
-            cacheable.InvalidationRequested += this.Cacheable_InvalidationRequested;
+            changeable.Changed += this.ChangeableChanged;
         }
     }
 
     public void Dispose()
     {
-        foreach (var cacheable in this.cacheables)
+        foreach (var changeable in this.changeables)
         {
-            cacheable.InvalidationRequested -= this.Cacheable_InvalidationRequested;
+            changeable.Changed -= this.ChangeableChanged;
         }
     }
 
-    private void Cacheable_InvalidationRequested(object sender, InvalidationRequestedEventArgs e)
+    private void ChangeableChanged(object sender, ChangedEventArgs e)
     {
         this.Action?.Invoke();
-        this.ActionWithArgument?.Invoke(e.Cacheable);
+        this.ActionWithArgument?.Invoke(e.Changeable);
     }
 }

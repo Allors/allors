@@ -5,8 +5,8 @@
 
 namespace Allors.Workspace
 {
-    public interface ICacheable
+    public interface IChangeable
     {
-        event InvalidationRequestedEventHandler InvalidationRequested;
+        event ChangedEventHandler Changed;
     }
 }

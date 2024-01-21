@@ -5,11 +5,11 @@ using System.Collections.Concurrent;
 
 public class NamedEffect : IEffect
 {
-    private readonly ConcurrentDictionary<ICacheable, string> nameByCacheable;
+    private readonly ConcurrentDictionary<IChangeable, string> nameByChangeable;
 
     public NamedEffect(Action<string> action, params Action<NamedEffect>[] builders)
     {
-        this.nameByCacheable = new ConcurrentDictionary<ICacheable, string>();
+        this.nameByChangeable = new ConcurrentDictionary<IChangeable, string>();
         this.Action = action;
 
         foreach (var builder in builders)
@@ -20,17 +20,17 @@ public class NamedEffect : IEffect
 
     public Action<string> Action { get; }
 
-    public Action<string, ICacheable> ActionWithArgument { get; }
+    public Action<string, IChangeable> ActionWithArgument { get; }
 
-    public void Add((ICacheable, string) namedCacheable)
+    public void Add((IChangeable, string) namedChangeable)
     {
-        (ICacheable cacheable, string name) = namedCacheable;
-        this.Add(cacheable, name);
+        (IChangeable changeable, string name) = namedChangeable;
+        this.Add(changeable, name);
     }
 
-    public void Add(ICacheable cacheable, string? name = null)
+    public void Add(IChangeable changeable, string? name = null)
     {
-        name ??= cacheable switch
+        name ??= changeable switch
         {
             IRole role => role.RoleType.Name,
             IAssociation association => association.AssociationType.Name,
@@ -38,28 +38,28 @@ public class NamedEffect : IEffect
             _ => throw new ArgumentNullException(nameof(name)),
         };
 
-        if (this.nameByCacheable.TryAdd(cacheable, name))
+        if (this.nameByChangeable.TryAdd(changeable, name))
         {
-            cacheable.InvalidationRequested += this.CacheableInvalidationRequested;
+            changeable.Changed += this.ChangeableChanged;
         }
     }
 
     public void Dispose()
     {
-        foreach (var cacheable in this.nameByCacheable.Keys)
+        foreach (var changeable in this.nameByChangeable.Keys)
         {
-            cacheable.InvalidationRequested -= this.CacheableInvalidationRequested;
+            changeable.Changed -= this.ChangeableChanged;
         }
     }
 
-    private void CacheableInvalidationRequested(object sender, InvalidationRequestedEventArgs e)
+    private void ChangeableChanged(object sender, ChangedEventArgs e)
     {
-        var cacheable = e.Cacheable;
+        var changeable = e.Changeable;
 
-        if (this.nameByCacheable.TryGetValue(cacheable, out var name))
+        if (this.nameByChangeable.TryGetValue(changeable, out var name))
         {
             this.Action?.Invoke(name);
-            this.ActionWithArgument?.Invoke(name, cacheable);
+            this.ActionWithArgument?.Invoke(name, changeable);
         }
     }
 }

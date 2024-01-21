@@ -10,12 +10,12 @@ public sealed class ComputedSignal<T> : ISignal<T>, ITracker
 
     private readonly Func<ITracker, T> expression;
 
-    private event InvalidationRequestedEventHandler CustomChanged;
+    private event ChangedEventHandler CustomChanged;
 
     private bool isCold;
 
-    private HashSet<ICacheable> cacheableOperands;
-    private ICacheable? cacheableResult;
+    private HashSet<IChangeable> changeableOperands;
+    private IChangeable? changeableResult;
 
     private T? value;
     private bool isInvalid;
@@ -23,13 +23,13 @@ public sealed class ComputedSignal<T> : ISignal<T>, ITracker
     public ComputedSignal(Func<ITracker, T> expression)
     {
         this.expression = expression;
-        this.cacheableOperands = new();
+        this.changeableOperands = new();
         this.isCold = true;
     }
 
     object ISignal.Value => this.Value;
 
-    public event InvalidationRequestedEventHandler InvalidationRequested
+    public event ChangedEventHandler Changed
     {
         add
         {
@@ -44,14 +44,14 @@ public sealed class ComputedSignal<T> : ISignal<T>, ITracker
             {
                 this.isCold = true;
 
-                foreach (var cacheableOperand in this.cacheableOperands)
+                foreach (var changeableOperand in this.changeableOperands)
                 {
-                    cacheableOperand.InvalidationRequested -= this.CacheableOperand_InvalidationRequested;
+                    changeableOperand.Changed -= this.ChangeableOperand_Changed;
                 }
 
-                if (this.cacheableResult != null)
+                if (this.changeableResult != null)
                 {
-                    this.cacheableResult.InvalidationRequested -= this.CacheableResult_InvalidationRequested;
+                    this.changeableResult.Changed -= this.ChangeableResultChanged;
                 }
             }
         }
@@ -75,22 +75,22 @@ public sealed class ComputedSignal<T> : ISignal<T>, ITracker
         }
     }
 
-    void ITracker.Track(ICacheable? signal)
+    void ITracker.Track(IChangeable? signal)
     {
         if (signal == null)
         {
             return;
         }
 
-        this.cacheableOperands.Add(signal);
+        this.changeableOperands.Add(signal);
     }
 
-    private void CacheableOperand_InvalidationRequested(object sender, InvalidationRequestedEventArgs e)
+    private void ChangeableOperand_Changed(object sender, ChangedEventArgs e)
     {
         this.Invalidate();
     }
 
-    private void CacheableResult_InvalidationRequested(object sender, InvalidationRequestedEventArgs e)
+    private void ChangeableResultChanged(object sender, ChangedEventArgs e)
     {
         this.Invalidate();
     }
@@ -100,50 +100,50 @@ public sealed class ComputedSignal<T> : ISignal<T>, ITracker
         this.isInvalid = true;
        
         var handlers = this.CustomChanged;
-        handlers?.Invoke(this, new InvalidationRequestedEventArgs(this));
+        handlers?.Invoke(this, new ChangedEventArgs(this));
     }
 
     private void Validate()
     {
-        var oldCacheableOperand = this.cacheableOperands;
-        var oldCacheableResult = this.cacheableResult;
+        var oldChangeableOperand = this.changeableOperands;
+        var oldChangeableResult = this.changeableResult;
 
-        this.cacheableOperands = new HashSet<ICacheable>();
-        this.cacheableResult = null;
+        this.changeableOperands = new HashSet<IChangeable>();
+        this.changeableResult = null;
 
         var newValue = this.expression(this);
 
         this.value = newValue;
 
-        this.cacheableResult = newValue as ICacheable;
-        if (!Equals(oldCacheableResult, this.cacheableResult) && (oldCacheableResult != null || this.cacheableResult != null))
+        this.changeableResult = newValue as IChangeable;
+        if (!Equals(oldChangeableResult, this.changeableResult) && (oldChangeableResult != null || this.changeableResult != null))
         {
-            if (oldCacheableResult != null)
+            if (oldChangeableResult != null)
             {
-                oldCacheableResult.InvalidationRequested -= this.CacheableResult_InvalidationRequested;
+                oldChangeableResult.Changed -= this.ChangeableResultChanged;
             }
 
-            if (this.cacheableResult != null)
+            if (this.changeableResult != null)
             {
-                this.cacheableResult.InvalidationRequested += this.CacheableResult_InvalidationRequested;
-            }
-        }
-
-        var cacheableOperandToRemove = oldCacheableOperand.Except(this.cacheableOperands);
-        foreach (var cacheableOperand in cacheableOperandToRemove)
-        {
-            if (cacheableOperand != this.cacheableResult)
-            {
-                cacheableOperand.InvalidationRequested -= this.CacheableResult_InvalidationRequested;
+                this.changeableResult.Changed += this.ChangeableResultChanged;
             }
         }
 
-        var cacheableOperandsToAdd = this.cacheableOperands.Except(oldCacheableOperand);
-        foreach (var cacheableOperand in cacheableOperandsToAdd)
+        var changeableOperandToRemove = oldChangeableOperand.Except(this.changeableOperands);
+        foreach (var changeableOperand in changeableOperandToRemove)
         {
-            if (cacheableOperand != this.cacheableResult)
+            if (changeableOperand != this.changeableResult)
             {
-                cacheableOperand.InvalidationRequested += this.CacheableResult_InvalidationRequested;
+                changeableOperand.Changed -= this.ChangeableResultChanged;
+            }
+        }
+
+        var changeableOperandsToAdd = this.changeableOperands.Except(oldChangeableOperand);
+        foreach (var changeableOperand in changeableOperandsToAdd)
+        {
+            if (changeableOperand != this.changeableResult)
+            {
+                changeableOperand.Changed += this.ChangeableResultChanged;
             }
         }
 
@@ -153,7 +153,7 @@ public sealed class ComputedSignal<T> : ISignal<T>, ITracker
 
     private class NoopTracker : ITracker
     {
-        public void Track(ICacheable? signal)
+        public void Track(IChangeable? signal)
         {
         }
     }

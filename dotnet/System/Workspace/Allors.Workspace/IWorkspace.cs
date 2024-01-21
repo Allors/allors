@@ -10,7 +10,7 @@ using Allors.Workspace.Data;
 
 namespace Allors.Workspace
 {
-    public interface IWorkspace : ICacheable
+    public interface IWorkspace : IChangeable
     {
         IWorkspaceServices Services { get; }
 

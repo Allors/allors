@@ -57,7 +57,7 @@ namespace Allors.Workspace
 
         public long Version { get; private set; }
 
-        public event InvalidationRequestedEventHandler InvalidationRequested
+        public event ChangedEventHandler Changed
         {
             add
             {

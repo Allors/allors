@@ -5,7 +5,7 @@
 
 namespace Allors.Workspace
 {
-    public interface IOperand : ICacheable
+    public interface IOperand : IChangeable
     {
     }
 }

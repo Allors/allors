@@ -15,7 +15,7 @@ namespace Allors.Workspace
         private bool canWrite;
         private HashSet<IStrategy> value;
 
-        private InvalidationRequestedEventArgs invalidationRequestedEventArgs;
+        private ChangedEventArgs changedEventArgs;
 
         public CompositesRoleChangeDetector(IRole role)
         {
@@ -25,7 +25,7 @@ namespace Allors.Workspace
             this.value = [.. (IEnumerable<IStrategy>)this.role.Value];
         }
 
-        public event InvalidationRequestedEventHandler Changed;
+        public event ChangedEventHandler Changed;
 
         public bool HasHandlers => this.Changed?.GetInvocationList().Length > 0;
 
@@ -48,7 +48,7 @@ namespace Allors.Workspace
             this.value = [.. (IEnumerable<IStrategy>)this.role.Value];
 
             var changed = this.Changed;
-            changed?.Invoke(this.role, this.invalidationRequestedEventArgs ??= new InvalidationRequestedEventArgs(this.role));
+            changed?.Invoke(this.role, this.changedEventArgs ??= new ChangedEventArgs(this.role));
         }
     }
 }

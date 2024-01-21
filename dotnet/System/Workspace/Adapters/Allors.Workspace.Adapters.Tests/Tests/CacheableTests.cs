@@ -33,9 +33,9 @@ namespace Allors.Workspace.Adapters.Tests
 
             var counter = 0;
 
-            InvalidationRequestedEventHandler c1AllorsStringOnInvalidationRequested = (_, _) => ++counter;
+            ChangedEventHandler c1AllorsStringOnChanged = (_, _) => ++counter;
 
-            c1.C1AllorsString.InvalidationRequested += c1AllorsStringOnInvalidationRequested;
+            c1.C1AllorsString.Changed += c1AllorsStringOnChanged;
 
             c1.C1AllorsString.Value = "+";
 
@@ -45,7 +45,7 @@ namespace Allors.Workspace.Adapters.Tests
 
             Assert.Equal(2, counter);
 
-            c1.C1AllorsString.InvalidationRequested -= c1AllorsStringOnInvalidationRequested;
+            c1.C1AllorsString.Changed -= c1AllorsStringOnChanged;
 
             c1.C1AllorsString.Value = "+++";
 

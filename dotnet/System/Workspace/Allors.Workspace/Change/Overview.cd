@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="Allors.Workspace.InvalidationRequestedEventArgs" Collapsed="true">
-    <Position X="7" Y="0.5" Width="2.5" />
+  <Class Name="Allors.Workspace.ChangedEventArgs">
+    <Position X="9.75" Y="0.5" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Cacheable\InvalidationRequestedEventArgs.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Change\ChangedEventArgs.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="Cacheable" />
+      <Property Name="Changeable" />
     </ShowAsAssociation>
   </Class>
   <Interface Name="Allors.Workspace.IRelationEnd" Collapsed="true">
@@ -52,18 +52,18 @@
       <FileName>IWorkspace.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="Allors.Workspace.ICacheable">
-    <Position X="4" Y="0.5" Width="1.5" />
+  <Interface Name="Allors.Workspace.IChangeable">
+    <Position X="4" Y="0.5" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAA=</HashCode>
-      <FileName>Cacheable\ICacheable.cs</FileName>
+      <FileName>Change\IChangeable.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Delegate Name="Allors.Workspace.InvalidationRequestedEventHandler" Collapsed="true">
-    <Position X="9.75" Y="0.5" Width="2.75" />
+  <Delegate Name="Allors.Workspace.ChangedRequestedEventHandler" Collapsed="true">
+    <Position X="6.75" Y="0.5" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAABAAAAAAAQAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Cacheable\InvalidationRequestedEventHandler.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>Change\ChangedRequestedEventHandler.cs</FileName>
     </TypeIdentifier>
   </Delegate>
   <Font Name="Segoe UI" Size="9" />
