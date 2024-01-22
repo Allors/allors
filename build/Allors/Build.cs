@@ -1,4 +1,5 @@
 using Nuke.Common;
+using Nuke.Common.IO;
 using Nuke.Common.Tools.DotNet;
 using static Nuke.Common.Tooling.ProcessTasks;
 using static Nuke.Common.IO.FileSystemTasks;
@@ -8,7 +9,7 @@ public partial class Build
     private readonly Paths Paths = new Paths(RootDirectory);
 
     public Target EnsureDirectories => _ => _
-        .Executes(() => EnsureExistingDirectory(Paths.ArtifactsTests));
+        .Executes(() => Paths.ArtifactsTests.CreateDirectory());
 
     public static int Main() => Execute<Build>(x => x.Default);
 

@@ -1,12 +1,13 @@
 ﻿using System.IO;
 using System.Linq;
 using Nuke.Common;
+using Nuke.Common.IO;
 using Nuke.Common.Tools.DotNet;
 using static Nuke.Common.IO.FileSystemTasks;
 
 partial class Build : NukeBuild
 {
-    [Parameter("DotNet Verbosity")] private readonly DotNetVerbosity DotNetVerbosity = DotNetVerbosity.Quiet;
+    [Parameter("DotNet Verbosity")] private readonly DotNetVerbosity DotNetVerbosity = DotNetVerbosity.quiet;
 
     [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")]
     private readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
@@ -21,7 +22,7 @@ partial class Build : NukeBuild
                 if (new[] { "node_modules", "packages", "out-tsc", "bin", "obj", "generated" }.Contains(
                     directoryInfo.Name.ToLowerInvariant()))
                 {
-                    DeleteDirectory(directoryInfo.FullName);
+                    ((AbsolutePath)directoryInfo.FullName).DeleteDirectory();
                     return;
                 }
 
@@ -40,7 +41,7 @@ partial class Build : NukeBuild
                 }
             }
 
-            DeleteDirectory(Paths.Artifacts);
+            Paths.Artifacts.DeleteDirectory();
         });
 
     private Target Install => _ => _

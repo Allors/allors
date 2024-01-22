@@ -22,11 +22,11 @@
           "type": "string",
           "description": "DotNet Verbosity",
           "enum": [
-            "Detailed",
-            "Diagnostic",
-            "Minimal",
-            "Normal",
-            "Quiet"
+            "detailed",
+            "diagnostic",
+            "minimal",
+            "normal",
+            "quiet"
           ]
         },
         "Help": {
