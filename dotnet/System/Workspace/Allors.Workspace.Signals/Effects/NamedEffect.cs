@@ -7,6 +7,10 @@ public class NamedEffect : IEffect
 {
     private readonly ConcurrentDictionary<IChangeable, string> nameByChangeable;
 
+    public NamedEffect(Action<string> action, Action<NamedEffect> builder) : this(action, [builder])
+    {
+    }
+
     public NamedEffect(Action<string> action, params Action<NamedEffect>[] builders)
     {
         this.nameByChangeable = new ConcurrentDictionary<IChangeable, string>();
