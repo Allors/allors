@@ -5,7 +5,13 @@
 
 namespace Allors.Workspace
 {
-    public interface IOperand : IChangeable
+    using System;
+
+    public interface IOperand : IObservable<IOperand>
+    {
+    }
+
+    public interface IOperand<out T> : IObservable<T> where T : IOperand<T>
     {
     }
 }

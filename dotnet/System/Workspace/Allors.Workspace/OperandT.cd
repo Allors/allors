@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Interface Name="System.IObservable&lt;T&gt;" Collapsed="true">
+    <Position X="1.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="Allors.Workspace.IMethod" Collapsed="true">
+    <Position X="1.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAgAEAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Method\IMethod.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Allors.Workspace.IWorkspace" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAIAAAAABAAAAAQAAAAAAAAgAECQAAAAAABAAAA=</HashCode>
+      <FileName>IWorkspace.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Allors.Workspace.IOperand&lt;T&gt;" Collapsed="true">
+    <Position X="4.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IOperand.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Allors.Workspace.IRelationEnd&lt;T&gt;" Collapsed="true">
+    <Position X="4.5" Y="3.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Relation\IRelationEnd.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Allors.Workspace.IAssociation&lt;T&gt;" Collapsed="true" HideInheritanceLine="true">
+    <Position X="2.75" Y="4.5" Width="2" />
+    <InheritanceLine Type="Allors.Workspace.IOperand&lt;Allors.Workspace.IAssociation&lt;T&gt;&gt;" IsHidden="true" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Relation\IAssociation.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Allors.Workspace.IRole&lt;T&gt;" Collapsed="true" HideInheritanceLine="true">
+    <Position X="8" Y="4.5" Width="1.5" />
+    <InheritanceLine Type="Allors.Workspace.IOperand&lt;Allors.Workspace.IRole&lt;T&gt;&gt;" IsHidden="true" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Relation\IRole.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Allors.Workspace.ICompositeAssociation&lt;T&gt;" Collapsed="true" HideInheritanceLine="true">
+    <Position X="0.5" Y="6.5" Width="2.5" />
+    <InheritanceLine Type="Allors.Workspace.IOperand&lt;Allors.Workspace.ICompositeAssociation&lt;T&gt;&gt;" IsHidden="true" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Relation\ICompositeAssociation.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Allors.Workspace.ICompositesAssociation&lt;T&gt;" Collapsed="true" HideInheritanceLine="true">
+    <Position X="3.25" Y="6.5" Width="2.5" />
+    <InheritanceLine Type="Allors.Workspace.IOperand&lt;Allors.Workspace.ICompositesAssociation&lt;T&gt;&gt;" IsHidden="true" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Relation\ICompositesAssociation.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Allors.Workspace.ICompositeRole&lt;T&gt;" Collapsed="true" HideInheritanceLine="true">
+    <Position X="6" Y="6.5" Width="2" />
+    <InheritanceLine Type="Allors.Workspace.IOperand&lt;Allors.Workspace.ICompositeRole&lt;T&gt;&gt;" IsHidden="true" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Relation\ICompositeRole.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Allors.Workspace.ICompositesRole&lt;T&gt;" Collapsed="true" HideInheritanceLine="true">
+    <Position X="8.25" Y="6.5" Width="2" />
+    <InheritanceLine Type="Allors.Workspace.IOperand&lt;Allors.Workspace.ICompositesRole&lt;T&gt;&gt;" IsHidden="true" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Relation\ICompositesRole.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Allors.Workspace.IUnitRole&lt;T&gt;" Collapsed="true" HideInheritanceLine="true">
+    <Position X="10.5" Y="6.5" Width="1.75" />
+    <InheritanceLine Type="Allors.Workspace.IOperand&lt;Allors.Workspace.IUnitRole&lt;T&gt;&gt;" IsHidden="true" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Relation\IUnitRole.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

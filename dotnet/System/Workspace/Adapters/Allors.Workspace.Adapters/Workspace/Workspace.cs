@@ -71,6 +71,10 @@ namespace Allors.Workspace.Adapters
 
         protected Dictionary<long, Strategy> StrategyById { get; }
 
+        public IDisposable Subscribe(IObserver<IWorkspace> observer)
+        {
+        }
+
         public override string ToString() => $"workspace: {base.ToString()}";
 
         internal static bool IsNewId(long id) => id < 0;
@@ -595,5 +599,10 @@ namespace Allors.Workspace.Adapters
         }
 
         #endregion
+
+        internal IDisposable Subscribe(IObservable<IOperand> observable, IObserver<IOperand> observer)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

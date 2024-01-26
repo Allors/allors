@@ -10,7 +10,9 @@ using Allors.Workspace.Data;
 
 namespace Allors.Workspace
 {
-    public interface IWorkspace : IChangeable
+    using System;
+
+    public interface IWorkspace : IObservable<IWorkspace>
     {
         IWorkspaceServices Services { get; }
 

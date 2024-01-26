@@ -23,4 +23,9 @@ namespace Allors.Workspace
 
         void Restore();
     }
+
+    public interface IRole<T> : IRole, IRelationEnd<T>, IOperand<IRole<T>>
+    {
+        new T Value { get; set; }
+    }
 }

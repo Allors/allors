@@ -5,6 +5,7 @@
 
 namespace Allors.Workspace
 {
+    using System;
     using Adapters;
     using Meta;
 
@@ -46,21 +47,35 @@ namespace Allors.Workspace
 
         public bool IsModified => this.Object.IsModified(this.RoleType);
 
-        public event ChangedEventHandler Changed
-        {
-            add
-            {
-                this.Object.Workspace.Add(this, value);
-            }
-            remove
-            {
-                this.Object.Workspace.Remove(this, value);
-            }
-        }
 
         public void Restore()
         {
             this.Object.RestoreRole(this.RoleType);
+        }
+
+        public IDisposable Subscribe(IObserver<IOperand> observer)
+        {
+            return this.Object.Workspace.Subscribe(this, observer);
+        }
+
+        public IDisposable Subscribe(IObserver<IUnitRole> observer)
+        {
+            return this.Object.Workspace.Subscribe(this, (IObserver<IOperand>)observer);
+        }
+
+        public IDisposable Subscribe(IObserver<IRelationEnd<T>> observer)
+        {
+            return this.Object.Workspace.Subscribe(this, (IObserver<IOperand>)observer);
+        }
+
+        public IDisposable Subscribe(IObserver<IRole<T>> observer)
+        {
+            return this.Object.Workspace.Subscribe(this, (IObserver<IOperand>)observer);
+        }
+
+        public IDisposable Subscribe(IObserver<IUnitRole<T>> observer)
+        {
+            return this.Object.Workspace.Subscribe(this, (IObserver<IOperand>)observer);
         }
 
         public override string ToString()

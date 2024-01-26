@@ -3,19 +3,18 @@
   <Interface Name="Allors.Workspace.IWorkspace">
     <Position X="3.75" Y="0.5" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>gAAAAAIAAAAABEAAAAQAAAAAAAAgAEAQAAAAAABAAAA=</HashCode>
+      <HashCode>gAAAAAIAAAAABAAAAAQAAAAAAAAgAECQAAAAAABAAAA=</HashCode>
       <FileName>IWorkspace.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="Services" />
     </ShowAsAssociation>
   </Interface>
-  <Interface Name="Allors.Workspace.IReactive">
+  <Interface Name="Allors.Workspace.IStrategy">
     <Position X="7.75" Y="0.5" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>JBACQAQAAAFAAECAEAIgIAQAAAEABAAAQEgQAQAAAQQ=</HashCode>
-      <FileName>IReactive.cs</FileName>
-      <NewMemberFileName>IStrategy.cs</NewMemberFileName>
+      <HashCode>IBACAAQAAABAAEAAEAIgAAQAAAEAAAAAQEAQAQAAAQA=</HashCode>
+      <FileName>IStrategy.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Allors.Workspace.IWorkspaceServices">
@@ -24,10 +23,6 @@
       <HashCode>AAAAAAAAAAAAAABAAAAAAAAAAAAAAAQAAAAAAAAAAAA=</HashCode>
       <FileName>Services\IWorkspaceServices.cs</FileName>
     </TypeIdentifier>
-  </Interface>
-  <Interface Name="Allors.Workspace.Meta.IClass" Collapsed="true">
-    <Position X="11.25" Y="0.5" Width="1.5" />
-    <TypeIdentifier />
   </Interface>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>
