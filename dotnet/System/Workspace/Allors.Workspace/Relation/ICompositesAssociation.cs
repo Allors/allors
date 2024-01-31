@@ -7,12 +7,12 @@ namespace Allors.Workspace
 {
     using System.Collections.Generic;
 
-    public interface ICompositesAssociation : IAssociation, IOperand<ICompositesAssociation>
+    public interface ICompositesAssociation : IAssociation
     {
         new IEnumerable<IStrategy> Value { get; }
     }
 
-    public interface ICompositesAssociation<out T> : ICompositesAssociation, IAssociation<T>, IOperand<ICompositesAssociation<T>> where T : class, IObject
+    public interface ICompositesAssociation<out T> : ICompositesAssociation where T : class, IObject
     {
         new IEnumerable<T> Value { get; }
     }

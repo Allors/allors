@@ -15,9 +15,4 @@ namespace Allors.Workspace
 
         object Value { get; }
     }
-
-    public interface IRelationEnd<out T> : IRelationEnd, IOperand<IRelationEnd<T>>
-    {
-        new T Value { get; }
-    }
 }

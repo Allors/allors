@@ -5,7 +5,6 @@
 
 namespace Allors.Workspace
 {
-    using System;
     using Adapters;
     using Meta;
 
@@ -35,16 +34,6 @@ namespace Allors.Workspace
             {
                 this.Object.Workspace.Remove(this, value);
             }
-        }
-
-        public IDisposable Subscribe(IObserver<IOperand> observer)
-        {
-            return this.Subscribe((IObserver<IMethod>)observer);
-        }
-
-        public IDisposable Subscribe(IObserver<IMethod> observer)
-        {
-            return this.Object.Workspace.Subscribe(observer);
         }
     }
 }
