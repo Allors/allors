@@ -5,7 +5,7 @@
 
 namespace Allors.Workspace.Signals
 {
-    public interface ISignal : IChangeable
+    public interface ISignal : INotifyChanged
     {
         object Value { get; }
     }

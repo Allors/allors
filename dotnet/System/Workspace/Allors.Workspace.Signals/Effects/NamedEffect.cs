@@ -5,7 +5,7 @@ using System.Collections.Concurrent;
 
 public class NamedEffect : IEffect
 {
-    private readonly ConcurrentDictionary<IChangeable, string> nameByChangeable;
+    private readonly ConcurrentDictionary<INotifyChanged, string> nameByChangeable;
 
     public NamedEffect(Action<string> action, Action<NamedEffect> builder) : this(action, [builder])
     {
@@ -13,7 +13,7 @@ public class NamedEffect : IEffect
 
     public NamedEffect(Action<string> action, params Action<NamedEffect>[] builders)
     {
-        this.nameByChangeable = new ConcurrentDictionary<IChangeable, string>();
+        this.nameByChangeable = new ConcurrentDictionary<INotifyChanged, string>();
         this.Action = action;
 
         foreach (var builder in builders)
@@ -24,17 +24,17 @@ public class NamedEffect : IEffect
 
     public Action<string> Action { get; }
 
-    public Action<string, IChangeable> ActionWithArgument { get; }
+    public Action<string, INotifyChanged> ActionWithArgument { get; }
 
-    public void Add((IChangeable, string) namedChangeable)
+    public void Add((INotifyChanged, string) namedChangeable)
     {
-        (IChangeable changeable, string name) = namedChangeable;
+        (INotifyChanged changeable, string name) = namedChangeable;
         this.Add(changeable, name);
     }
 
-    public void Add(IChangeable changeable, string? name = null)
+    public void Add(INotifyChanged notifyChanged, string? name = null)
     {
-        name ??= changeable switch
+        name ??= notifyChanged switch
         {
             IRole role => role.RoleType.Name,
             IAssociation association => association.AssociationType.Name,
@@ -42,9 +42,9 @@ public class NamedEffect : IEffect
             _ => throw new ArgumentNullException(nameof(name)),
         };
 
-        if (this.nameByChangeable.TryAdd(changeable, name))
+        if (this.nameByChangeable.TryAdd(notifyChanged, name))
         {
-            changeable.Changed += this.ChangeableChanged;
+            notifyChanged.Changed += this.ChangeableChanged;
         }
     }
 
@@ -58,7 +58,7 @@ public class NamedEffect : IEffect
 
     private void ChangeableChanged(object sender, ChangedEventArgs e)
     {
-        var changeable = e.Changeable;
+        var changeable = e.Sender;
 
         if (this.nameByChangeable.TryGetValue(changeable, out var name))
         {

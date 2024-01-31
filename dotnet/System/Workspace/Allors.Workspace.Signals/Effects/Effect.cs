@@ -5,11 +5,11 @@ using System.Collections.Generic;
 
 public class Effect : IEffect
 {
-    private readonly HashSet<IChangeable> changeables;
+    private readonly HashSet<INotifyChanged> changeables;
 
     public Effect(Action action, params Action<Effect>[] builders)
     {
-        this.changeables = new HashSet<IChangeable>();
+        this.changeables = new HashSet<INotifyChanged>();
         this.Action = action;
 
         foreach (var builder in builders)
@@ -18,9 +18,9 @@ public class Effect : IEffect
         }
     }
 
-    public Effect(Action<IChangeable> action, params Action<Effect>[] builders)
+    public Effect(Action<INotifyChanged> action, params Action<Effect>[] builders)
     {
-        this.changeables = new HashSet<IChangeable>();
+        this.changeables = new HashSet<INotifyChanged>();
         this.ActionWithArgument = action;
 
         foreach (var builder in builders)
@@ -31,13 +31,13 @@ public class Effect : IEffect
 
     public Action Action { get; }
 
-    public Action<IChangeable> ActionWithArgument { get; }
+    public Action<INotifyChanged> ActionWithArgument { get; }
 
-    public void Add(IChangeable changeable)
+    public void Add(INotifyChanged notifyChanged)
     {
-        if (this.changeables.Add(changeable))
+        if (this.changeables.Add(notifyChanged))
         {
-            changeable.Changed += this.ChangeableChanged;
+            notifyChanged.Changed += this.ChangeableChanged;
         }
     }
 
@@ -52,6 +52,6 @@ public class Effect : IEffect
     private void ChangeableChanged(object sender, ChangedEventArgs e)
     {
         this.Action?.Invoke();
-        this.ActionWithArgument?.Invoke(e.Changeable);
+        this.ActionWithArgument?.Invoke(e.Sender);
     }
 }

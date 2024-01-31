@@ -14,8 +14,8 @@ public sealed class ComputedSignal<T> : ISignal<T>, ITracker
 
     private bool isCold;
 
-    private HashSet<IChangeable> changeableOperands;
-    private IChangeable? changeableResult;
+    private HashSet<INotifyChanged> changeableOperands;
+    private INotifyChanged? changeableResult;
 
     private T? value;
     private bool isInvalid;
@@ -75,7 +75,7 @@ public sealed class ComputedSignal<T> : ISignal<T>, ITracker
         }
     }
 
-    void ITracker.Track(IChangeable? signal)
+    void ITracker.Track(INotifyChanged? signal)
     {
         if (signal == null)
         {
@@ -108,14 +108,14 @@ public sealed class ComputedSignal<T> : ISignal<T>, ITracker
         var oldChangeableOperand = this.changeableOperands;
         var oldChangeableResult = this.changeableResult;
 
-        this.changeableOperands = new HashSet<IChangeable>();
+        this.changeableOperands = new HashSet<INotifyChanged>();
         this.changeableResult = null;
 
         var newValue = this.expression(this);
 
         this.value = newValue;
 
-        this.changeableResult = newValue as IChangeable;
+        this.changeableResult = newValue as INotifyChanged;
         if (!Equals(oldChangeableResult, this.changeableResult) && (oldChangeableResult != null || this.changeableResult != null))
         {
             if (oldChangeableResult != null)
@@ -153,7 +153,7 @@ public sealed class ComputedSignal<T> : ISignal<T>, ITracker
 
     private class NoopTracker : ITracker
     {
-        public void Track(IChangeable? signal)
+        public void Track(INotifyChanged? signal)
         {
         }
     }
