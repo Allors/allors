@@ -53,12 +53,6 @@ namespace Allors.Workspace
             this.Object.RestoreRole(this.RoleType);
         }
 
-        #region Reactive
-        public IDisposable Subscribe(IObserver<IObserved> observer)
-        {
-            return this.Object.Workspace.Subscribe(this, observer);
-        }
-
         public IDisposable Subscribe(IObserver<IOperand> observer)
         {
             return this.Object.Workspace.Subscribe(this, observer);
@@ -69,12 +63,12 @@ namespace Allors.Workspace
             return this.Object.Workspace.Subscribe(this, (IObserver<IOperand>)observer);
         }
 
-        public IDisposable Subscribe(IObserver<IRelationEnd> observer)
+        public IDisposable Subscribe(IObserver<IRelationEnd<T>> observer)
         {
             return this.Object.Workspace.Subscribe(this, (IObserver<IOperand>)observer);
         }
 
-        public IDisposable Subscribe(IObserver<IRole> observer)
+        public IDisposable Subscribe(IObserver<IRole<T>> observer)
         {
             return this.Object.Workspace.Subscribe(this, (IObserver<IOperand>)observer);
         }
@@ -83,9 +77,6 @@ namespace Allors.Workspace
         {
             return this.Object.Workspace.Subscribe(this, (IObserver<IOperand>)observer);
         }
-        #endregion
-
-    
 
         public override string ToString()
         {

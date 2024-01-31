@@ -5,10 +5,9 @@
 
 namespace Allors.Workspace
 {
-    using System;
     using Meta;
 
-    public interface IMethod : IOperand, IObservable<IMethod>
+    public interface IMethod : IOperand, IOperand<IMethod>
     {
         IStrategy Object { get; }
 

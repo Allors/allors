@@ -5,10 +5,9 @@
 
 namespace Allors.Workspace
 {
-    using System;
     using Meta;
 
-    public interface IRole : IRelationEnd, IObservable<IRole>
+    public interface IRole : IRelationEnd
     {
         IRoleType RoleType { get; }
 
@@ -23,5 +22,10 @@ namespace Allors.Workspace
         bool IsModified { get; }
 
         void Restore();
+    }
+
+    public interface IRole<T> : IRole, IRelationEnd<T>, IOperand<IRole<T>>
+    {
+        new T Value { get; set; }
     }
 }

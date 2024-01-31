@@ -5,7 +5,6 @@
 
 namespace Allors.Workspace
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Adapters;
@@ -14,16 +13,18 @@ namespace Allors.Workspace
     public class CompositesAssociation<T> : ICompositesAssociation<T>
         where T : class, IObject
     {
+        private long databaseVersion;
+
         public CompositesAssociation(Strategy @object, IAssociationType associationType)
         {
             this.Object = @object;
             this.AssociationType = associationType;
         }
-
         IStrategy IRelationEnd.Object => this.Object;
 
         public Strategy Object { get; }
-        
+
+
         public IRelationType RelationType => this.AssociationType.RelationType;
 
         IEnumerable<T> ICompositesAssociation<T>.Value => this.Value.Select(this.Object.Workspace.ObjectFactory.Object<T>);
@@ -34,39 +35,25 @@ namespace Allors.Workspace
 
         public IEnumerable<IStrategy> Value => this.Object.GetCompositesAssociation(this.AssociationType);
 
-        #region Reactive
-        public IDisposable Subscribe(IObserver<IObserved> observer)
-        {
-            return this.Object.Workspace.Subscribe(observer);
-        }
-
-        public IDisposable Subscribe(IObserver<IOperand> observer)
-        {
-            return this.Subscribe((IObserver<IObserved>)observer);
-        }
-
-        public IDisposable Subscribe(IObserver<ICompositesAssociation> observer)
-        {
-            return this.Subscribe((IObserver<IObserved>)observer);
-        }
-
-        public IDisposable Subscribe(IObserver<IRelationEnd> observer)
-        {
-            return this.Subscribe((IObserver<IObserved>)observer);
-        }
-
-        public IDisposable Subscribe(IObserver<IAssociation> observer)
-        {
-            return this.Subscribe((IObserver<IObserved>)observer);
-        }
-
-        public IDisposable Subscribe(IObserver<ICompositesAssociation<T>> observer)
-        {
-            return this.Subscribe((IObserver<IObserved>)observer);
-        }
-
-        #endregion
+        public long Version { get; private set; }
         
+        public event ChangedEventHandler Changed
+        {
+            add
+            {
+                this.Object.Workspace.Add(this, value);
+            }
+            remove
+            {
+                this.Object.Workspace.Remove(this, value);
+            }
+        }
+
+        public void BumpVersion()
+        {
+            ++this.Version;
+        }
+
         public override string ToString()
         {
             return this.Value != null ? $"[{string.Join(", ", this.Value.Select(v => v.Id))}]" : "[]";

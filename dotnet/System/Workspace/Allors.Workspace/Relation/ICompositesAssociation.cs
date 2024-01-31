@@ -5,15 +5,14 @@
 
 namespace Allors.Workspace
 {
-    using System;
     using System.Collections.Generic;
 
-    public interface ICompositesAssociation : IAssociation, IObservable<ICompositesAssociation>
+    public interface ICompositesAssociation : IAssociation, IOperand<ICompositesAssociation>
     {
         new IEnumerable<IStrategy> Value { get; }
     }
 
-    public interface ICompositesAssociation<out T> : ICompositesAssociation, IObservable<ICompositesAssociation<T>>
+    public interface ICompositesAssociation<out T> : ICompositesAssociation, IAssociation<T>, IOperand<ICompositesAssociation<T>> where T : class, IObject
     {
         new IEnumerable<T> Value { get; }
     }

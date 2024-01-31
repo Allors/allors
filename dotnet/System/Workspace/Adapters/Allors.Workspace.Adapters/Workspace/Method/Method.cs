@@ -25,21 +25,26 @@ namespace Allors.Workspace
 
         public bool CanExecute => this.Object.CanExecute(this.MethodType);
 
-        #region Reactive
-        public IDisposable Subscribe(IObserver<IObserved> observer)
+        public event ChangedEventHandler Changed
         {
-            return this.Object.Workspace.Subscribe(observer);
+            add
+            {
+                this.Object.Workspace.Add(this, value);
+            }
+            remove
+            {
+                this.Object.Workspace.Remove(this, value);
+            }
         }
 
         public IDisposable Subscribe(IObserver<IOperand> observer)
         {
-            return this.Subscribe((IObserver<IObserved>)observer);
+            return this.Subscribe((IObserver<IMethod>)observer);
         }
 
         public IDisposable Subscribe(IObserver<IMethod> observer)
         {
-            return this.Subscribe((IObserver<IObserved>)observer);
+            return this.Object.Workspace.Subscribe(observer);
         }
-        #endregion
     }
 }

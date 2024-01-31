@@ -5,7 +5,6 @@
 
 namespace Allors.Workspace
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Adapters;
@@ -14,6 +13,8 @@ namespace Allors.Workspace
     public class CompositesRole<T> : ICompositesRole<T>
         where T : class, IObject
     {
+        private long databaseVersion;
+
         public CompositesRole(Strategy strategy, IRoleType roleType)
         {
             this.Object = strategy;
@@ -75,45 +76,31 @@ namespace Allors.Workspace
         public bool Exist => this.Object.ExistRole(this.RoleType);
 
         public bool IsModified => this.Object.IsModified(this.RoleType);
+
+        public long Version { get; private set; }
         
+        public event ChangedEventHandler Changed
+        {
+            add
+            {
+                this.Object.Workspace.Add(this, value);
+            }
+            remove
+            {
+                this.Object.Workspace.Remove(this, value);
+            }
+        }
+        
+        public void BumpVersion()
+        {
+            ++this.Version;
+        }
+
         public void Restore()
         {
             this.Object.RestoreRole(this.RoleType);
         }
 
-        #region Reactive
-        public IDisposable Subscribe(IObserver<IObserved> observer)
-        {
-            return this.Object.Workspace.Subscribe(observer);
-        }
-
-        public IDisposable Subscribe(IObserver<IOperand> observer)
-        {
-            return this.Subscribe((IObserver<IObserved>)observer);
-        }
-
-        public IDisposable Subscribe(IObserver<IRelationEnd> observer)
-        {
-            return this.Subscribe((IObserver<IObserved>)observer);
-        }
-
-        public IDisposable Subscribe(IObserver<IRole> observer)
-        {
-            return this.Subscribe((IObserver<IObserved>)observer);
-        }
-
-        public IDisposable Subscribe(IObserver<ICompositesRole> observer)
-        {
-            return this.Subscribe((IObserver<IObserved>)observer);
-        }
-
-        public IDisposable Subscribe(IObserver<ICompositesRole<T>> observer)
-        {
-            return this.Subscribe((IObserver<IObserved>)observer);
-        }
-
-        #endregion
-        
         public override string ToString()
         {
             return this.Value != null ? $"[{string.Join(", ", this.Value.Select(v => v.Id))}]" : "[]";
