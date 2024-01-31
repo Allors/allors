@@ -5,11 +5,13 @@
 
 namespace Allors.Workspace
 {
-    public interface IUnitRole : IRole, IOperand<IUnitRole>
+    using System;
+
+    public interface IUnitRole : IRole, IObservable<IUnitRole>
     {
     }
 
-    public interface IUnitRole<T> : IUnitRole, IRole<T>, IOperand<IUnitRole<T>>
+    public interface IUnitRole<T> : IUnitRole, IObservable<IUnitRole<T>>
     {
         new T Value { get; set; }
     }

@@ -5,16 +5,11 @@
 
 namespace Allors.Workspace
 {
-    using System.Collections.Generic;
+    using System;
     using Meta;
 
-    public interface IAssociation : IRelationEnd
+    public interface IAssociation : IRelationEnd, IObservable<IAssociation>
     {
         IAssociationType AssociationType { get; }
-    }
-
-    public interface IAssociation<out T> : IAssociation, IRelationEnd<T>, IOperand<IAssociation<T>> where T : class, IObject
-    {
-        new IEnumerable<T> Value { get; }
     }
 }

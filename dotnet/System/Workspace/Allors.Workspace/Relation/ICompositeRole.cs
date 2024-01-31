@@ -5,12 +5,14 @@
 
 namespace Allors.Workspace
 {
-    public interface ICompositeRole : IRole, IOperand<ICompositeRole>
+    using System;
+
+    public interface ICompositeRole : IRole, IObservable<ICompositeRole>
     {
         new IStrategy Value { get; set; }
     }
 
-    public interface ICompositeRole<T> : ICompositeRole, IRole<T>, IOperand<ICompositeRole<T>> where T : class, IObject
+    public interface ICompositeRole<T> : ICompositeRole, IObservable<ICompositeRole<T>> where T : class, IObject
     {
         new T Value { get; set; }
     }

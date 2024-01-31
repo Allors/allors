@@ -12,7 +12,7 @@ namespace Allors.Workspace
 {
     using System;
 
-    public interface IWorkspace : IObservable<IWorkspace>
+    public interface IWorkspace : IObserved, IObservable<IWorkspace>
     {
         IWorkspaceServices Services { get; }
 

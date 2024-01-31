@@ -7,7 +7,7 @@ namespace Allors.Workspace
 {
     using System;
 
-    public interface IOperand : IObserved, IObservable<IOperand>
+    public interface IObserved : IObservable<IObserved>
     {
     }
 }

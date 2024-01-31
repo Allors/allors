@@ -5,6 +5,7 @@
 
 namespace Allors.Workspace
 {
+    using System;
     using Adapters;
     using Meta;
 
@@ -35,22 +36,37 @@ namespace Allors.Workspace
 
         public long Version { get; private set; }
 
-        public event ChangedEventHandler Changed
+        #region Reactive
+        public IDisposable Subscribe(IObserver<IObserved> observer)
         {
-            add
-            {
-                this.Object.Workspace.Add(this, value);
-            }
-            remove
-            {
-                this.Object.Workspace.Remove(this, value);
-            }
+            return this.Object.Workspace.Subscribe(observer);
         }
 
-        public void BumpVersion()
+        public IDisposable Subscribe(IObserver<IOperand> observer)
         {
-            ++this.Version;
+            return this.Subscribe((IObserver<IObserved>)observer);
         }
+
+        public IDisposable Subscribe(IObserver<ICompositeAssociation> observer)
+        {
+            return this.Subscribe((IObserver<IObserved>)observer);
+        }
+
+        public IDisposable Subscribe(IObserver<IRelationEnd> observer)
+        {
+            return this.Subscribe((IObserver<IObserved>)observer);
+        }
+
+        public IDisposable Subscribe(IObserver<IAssociation> observer)
+        {
+            return this.Subscribe((IObserver<IObserved>)observer);
+        }
+
+        public IDisposable Subscribe(IObserver<ICompositeAssociation<T>> observer)
+        {
+            return this.Subscribe((IObserver<IObserved>)observer);
+        }
+        #endregion
 
         public override string ToString()
         {

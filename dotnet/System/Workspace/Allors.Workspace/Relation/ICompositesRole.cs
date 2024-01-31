@@ -5,9 +5,10 @@
 
 namespace Allors.Workspace
 {
+    using System;
     using System.Collections.Generic;
 
-    public interface ICompositesRole : IRole, IOperand<ICompositesRole>
+    public interface ICompositesRole : IRole, IObservable<ICompositesRole>
     {
         void Add(IStrategy strategy);
 
@@ -16,7 +17,7 @@ namespace Allors.Workspace
         new IEnumerable<IStrategy> Value { get; set; }
     }
 
-    public interface ICompositesRole<T> : ICompositesRole, IRole<T>, IOperand<ICompositesRole<T>> where T : class, IObject
+    public interface ICompositesRole<T> : ICompositesRole, IObservable<ICompositesRole<T>> where T : class, IObject
     {
         void Add(T @object);
 

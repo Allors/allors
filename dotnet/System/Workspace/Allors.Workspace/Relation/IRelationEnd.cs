@@ -5,19 +5,15 @@
 
 namespace Allors.Workspace
 {
+    using System;
     using Meta;
 
-    public interface IRelationEnd : IOperand
+    public interface IRelationEnd : IOperand, IObservable<IRelationEnd>
     {
         IStrategy Object { get; }
 
         IRelationType RelationType { get; }
 
         object Value { get; }
-    }
-
-    public interface IRelationEnd<out T> : IRelationEnd, IOperand<IRelationEnd<T>>
-    {
-        new T Value { get; }
     }
 }

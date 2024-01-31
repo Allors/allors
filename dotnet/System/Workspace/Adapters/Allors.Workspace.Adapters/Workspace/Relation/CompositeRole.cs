@@ -5,14 +5,13 @@
 
 namespace Allors.Workspace
 {
+    using System;
     using Adapters;
     using Meta;
 
     public class CompositeRole<T> : ICompositeRole<T>
         where T : class, IObject
     {
-        private long databaseVersion;
-
         public CompositeRole(Strategy strategy, IRoleType roleType)
         {
             this.Object = strategy;
@@ -24,7 +23,7 @@ namespace Allors.Workspace
         public Strategy Object { get; }
 
         public IRelationType RelationType => this.RoleType.RelationType;
-
+        
         T ICompositeRole<T>.Value
         {
             get => this.Object.Workspace.ObjectFactory.Object<T>(this.Value);
@@ -55,29 +54,42 @@ namespace Allors.Workspace
 
         public bool IsModified => this.Object.IsModified(this.RoleType);
 
-        public long Version { get; private set; }
-
-        public event ChangedEventHandler Changed
-        {
-            add
-            {
-                this.Object.Workspace.Add(this, value);
-            }
-            remove
-            {
-                this.Object.Workspace.Remove(this, value);
-            }
-        }
-
-        public void BumpVersion()
-        {
-            ++this.Version;
-        }
-
         public void Restore()
         {
             this.Object.RestoreRole(this.RoleType);
         }
+
+        #region Reactive
+        public IDisposable Subscribe(IObserver<IObserved> observer)
+        {
+            return this.Object.Workspace.Subscribe(observer);
+        }
+
+        public IDisposable Subscribe(IObserver<IOperand> observer)
+        {
+            return this.Subscribe((IObserver<IObserved>)observer);
+        }
+
+        public IDisposable Subscribe(IObserver<IRelationEnd> observer)
+        {
+            return this.Subscribe((IObserver<IObserved>)observer);
+        }
+
+        public IDisposable Subscribe(IObserver<IRole> observer)
+        {
+            return this.Subscribe((IObserver<IObserved>)observer);
+        }
+
+        public IDisposable Subscribe(IObserver<ICompositeRole> observer)
+        {
+            return this.Subscribe((IObserver<IObserved>)observer);
+        }
+
+        public IDisposable Subscribe(IObserver<ICompositeRole<T>> observer)
+        {
+            return this.Subscribe((IObserver<IObserved>)observer);
+        }
+        #endregion
 
         public override string ToString()
         {
