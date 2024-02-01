@@ -37,7 +37,5 @@ public class RelationTypeModel : MetaIdentifiableObjectModel
 
     public IEnumerable<string> WorkspaceNames => this.RelationType.WorkspaceNames;
 
-    public string Name => ((RelationType)this.RelationType).Name;
-
     public string MediaType => this.RelationType.MediaType();
 }

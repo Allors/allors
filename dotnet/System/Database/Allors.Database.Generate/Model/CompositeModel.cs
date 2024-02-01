@@ -11,7 +11,7 @@ public abstract class CompositeModel : ObjectTypeModel
     {
     }
 
-    protected abstract Composite Composite { get; }
+    protected abstract IComposite Composite { get; }
 
     // IComposite
     public string AssignedPluralName => this.Composite.AssignedPluralName;

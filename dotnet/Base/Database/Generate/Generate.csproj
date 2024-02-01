@@ -5,10 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="StringTemplate4" Version="4.0.8" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\..\..\System\Database\Allors.Database.Generate\Allors.Database.Generate.csproj" />
     <ProjectReference Include="..\Meta.Configuration\Meta.Configuration.csproj" />
     <ProjectReference Include="..\Population\Population.csproj" />
   </ItemGroup>

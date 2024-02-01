@@ -1,13 +1,13 @@
-namespace Allors.Meta.Generation.Model;
+﻿namespace Allors.Meta.Generation.Model;
 
 using Allors.Database.Meta;
 
 public class MethodTypeModel : MetaIdentifiableObjectModel
 {
-    public MethodTypeModel(Model model, MethodType methodType)
+    public MethodTypeModel(Model model, IMethodType methodType)
         : base(model) => this.MethodType = methodType;
 
-    public MethodType MethodType { get; }
+    public IMethodType MethodType { get; }
 
     public override IMetaIdentifiableObject MetaObject => this.MethodType;
 

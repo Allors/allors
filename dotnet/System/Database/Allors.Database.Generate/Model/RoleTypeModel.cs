@@ -19,13 +19,13 @@ public class RoleTypeModel : RelationEndTypeModel
 
     public string FullName => this.RoleType.FullName;
 
-    public bool ExistAssignedSingularName => ((RoleType)this.RoleType).ExistAssignedSingularName;
+    public bool ExistAssignedSingularName => this.AssignedSingularName != null;
 
-    public string AssignedSingularName => ((RoleType)this.RoleType).AssignedSingularName;
+    public string AssignedSingularName => (this.RoleType).AssignedSingularName;
 
-    public bool ExistAssignedPluralName => ((RoleType)this.RoleType).ExistAssignedPluralName;
+    public bool ExistAssignedPluralName => this.AssignedPluralName != null;
 
-    public string AssignedPluralName => ((RoleType)this.RoleType).AssignedPluralName;
+    public string AssignedPluralName => (this.RoleType).AssignedPluralName;
 
     public int? Size => this.RoleType.Size;
 

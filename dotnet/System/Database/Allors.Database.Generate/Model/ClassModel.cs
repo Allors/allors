@@ -8,14 +8,14 @@ using Database.Population;
 
 public sealed class ClassModel : CompositeModel
 {
-    public ClassModel(Model model, Class @class)
+    public ClassModel(Model model, IClass @class)
         : base(model) => this.Class = @class;
 
-    protected override ObjectType ObjectType => this.Class;
+    protected override IObjectType ObjectType => this.Class;
 
-    protected override Composite Composite => this.Class;
+    protected override IComposite Composite => this.Class;
 
-    public Class Class { get; }
+    public IClass Class { get; }
 
     public override IMetaIdentifiableObject MetaObject => this.Class;
     

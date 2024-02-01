@@ -40,7 +40,6 @@ namespace Allors.Meta.Generation
             var metaPopulation = MetaBuilder.Build();
             var recordsFromResource = new RecordsFromResource(metaPopulation);
             var model = new Model.Model(metaPopulation, recordsFromResource.RecordsByClass);
-            model.Init();
 
             for (var i = 0; i < database.GetLength(0); i++)
             {

@@ -9,7 +9,7 @@ public partial class Model
 {
     private readonly Dictionary<IMetaExtensible, IMetaExtensibleModel> mapping;
 
-    public Model(MetaPopulation metaPopulation, IDictionary<IClass, Record[]> recordsByBlass)
+    public Model(IMetaPopulation metaPopulation, IDictionary<IClass, Record[]> recordsByBlass)
     {
         this.MetaPopulation = metaPopulation;
         this.RecordsByBlass = recordsByBlass;
@@ -53,7 +53,7 @@ public partial class Model
         }
     }
 
-    public MetaPopulation MetaPopulation { get; }
+    public IMetaPopulation MetaPopulation { get; }
 
     public IDictionary<IClass, Record[]> RecordsByBlass { get; }
 

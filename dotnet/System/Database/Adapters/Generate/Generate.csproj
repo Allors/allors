@@ -3,15 +3,11 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
+
   <ItemGroup>
-    <PackageReference Include="StringTemplate4" Version="4.0.8" />
-  </ItemGroup>
-  <ItemGroup>
+    <ProjectReference Include="..\..\Allors.Database.Generate\Allors.Database.Generate.csproj" />
     <ProjectReference Include="..\..\Allors.Database.Population\Allors.Database.Population.csproj" />
     <ProjectReference Include="..\..\Allors.Database\Allors.Database.csproj" />
     <ProjectReference Include="..\Meta.Configuration\Meta.Configuration.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="..\..\..\..\Base\Database\Generate\Base*\**\*.cs" />
   </ItemGroup>
 </Project>

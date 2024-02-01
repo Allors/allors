@@ -1,4 +1,4 @@
-namespace Allors.Meta.Generation.Model;
+﻿namespace Allors.Meta.Generation.Model;
 
 using System;
 using Allors.Database.Meta;
@@ -35,5 +35,5 @@ public abstract class ObjectTypeModel : MetaIdentifiableObjectModel
 
     public string PluralName => this.ObjectType.PluralName;
 
-    public bool ExistAssignedPluralName => ((ObjectType)this.ObjectType).ExistAssignedPluralName;
+    public bool ExistAssignedPluralName => this.PluralName != null;
 }
