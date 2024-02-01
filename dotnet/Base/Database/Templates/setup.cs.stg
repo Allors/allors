@@ -61,7 +61,7 @@ objectType_Plural() ::= <<
 		{
 		}
 
-		public Allors.Database.Meta.IMeta$objectType.SingularName$ Meta
+		public Allors.Database.Meta.Meta$objectType.SingularName$ Meta
 		{
 			get
 			{

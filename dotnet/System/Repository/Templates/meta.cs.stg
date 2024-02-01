@@ -35,17 +35,41 @@ For more information visit http://www.allors.com/legal
 m(repository) ::= <<
 namespace Allors.Database.Meta
 {
-    public interface M : IMetaPopulation {
+    public sealed class M : Allors.Database.Meta.MetaPopulation {
         // Units
-$repository.Units:{unit|        IMeta$unit.SingularName$ $unit.SingularName$ { get; \}}; separator="\n"$
+$repository.Units:{unit|$m_unit_declaration(unit)$}; separator="\n"$
 
         // Interfaces
-$repository.Interfaces:{interface|        IMeta$interface.SingularName$ $interface.SingularName$ { get; \}}; separator="\n"$
+$repository.Interfaces:{interface|$m_interface_declaration(interface)$}; separator="\n"$
 
         // Classes
-$repository.Classes:{class|        IMeta$class.SingularName$ $class.SingularName$ { get; \}}; separator="\n"$
+$repository.Classes:{class|$m_class_declaration(class)$}; separator="\n"$
     }
 }
+>>
+
+m_unit_declaration(unit) ::= <<
+        public Meta$unit.SingularName$ $unit.SingularName$; 
+>>
+
+m_interface_declaration(interface) ::= <<
+        public Meta$interface.SingularName$ $interface.SingularName$;
+>>
+
+m_class_declaration(class) ::= <<
+        public Meta$class.SingularName$ $class.SingularName$; 
+>>
+
+m_unit_implementation(unit) ::= <<
+        IMeta$unit.SingularName$ M.$unit.SingularName$ => this.$unit.SingularName$;
+>>
+
+m_interface_implementation(interface) ::= <<
+        IMeta$interface.SingularName$ M.$interface.SingularName$ => this.$interface.SingularName$;
+>>
+
+m_class_implementation(class) ::= <<
+        IMeta$class.SingularName$ M.$class.SingularName$ => this.$class.SingularName$;
 >>
 
 units(repository) ::= <<
@@ -56,7 +80,8 @@ $repository.Units:{unit|$define_unit(unit)$}; separator="\n"$
 >>
 
 define_unit(unit) ::= <<
-    public interface IMeta$unit.SingularName$ : IUnit {
+    public class Meta$unit.SingularName$ : Unit {
+        public Meta$unit.SingularName$(M m, System.Guid id, string tag, string singularName, string assignedPluralName) : base(m, id, tag, singularName, assignedPluralName) {}
     }
 >>
 
@@ -68,7 +93,15 @@ $repository.Interfaces:{interface|$define_interface(interface)$}; separator="\n"
 >>
 
 define_interface(interface) ::= <<
-    public interface IMeta$interface.SingularName$ : IInterface {
+    public partial class Meta$interface.SingularName$ : Interface {
+        public Meta$interface.SingularName$(M m, System.Guid id, System.Collections.Generic.IReadOnlyList<Interface> directSupertypes, string singularName, string assignedPluralName) : base(m, id, directSupertypes, singularName, assignedPluralName)
+        {
+$if(interface.ExtensionAttributes)$
+                Attributes = { $interface.ExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ }
+$endif$
+        }
+
+        public M M => (M)this.MetaPopulation;
 
 $interface.Subtypes:{subtype|$define_subtype(subtype)$}; separator="\n"$
 
@@ -94,7 +127,16 @@ $repository.Classes:{class|$define_class(class)$}; separator="\n"$
 >>
 
 define_class(class) ::= <<
-    public interface IMeta$class.SingularName$ : IClass {
+    public partial class Meta$class.SingularName$ : Class {
+        public Meta$class.SingularName$(M m, System.Guid id, Interface[] directSupertypes, string singularName, string assignedPluralName) : base(m, id, directSupertypes, singularName, assignedPluralName)
+        {
+$if(class.ExtensionAttributes)$
+                Attributes = { $class.ExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ }
+$endif$
+        }
+        
+        public M M => (M)this.MetaPopulation;
+
 $class.DefinedProperties:{property|$define_relationEndType(property)$}; separator="\n"$
 
 $class.InheritedProperties:{property|$define_inheritedrelationEndType(property)$}; separator="\n"$
@@ -110,31 +152,59 @@ $class.InheritedMethods:{method|$define_methodType(method)$}; separator="\n"$
 >>
 
 define_subtype(subtype) ::= <<
-        IMeta$subtype.SingularName$ As$subtype.SingularName$ { get; } 
+        public Meta$subtype.SingularName$ As$subtype.SingularName$;
 >>
 
 define_relationEndType(property) ::= <<
-        IMeta$property.DefiningType.SingularName$$property.RoleName$ $property.RoleName$ { get; }
+        public Meta$property.DefiningType.SingularName$$property.RoleName$ $property.RoleName$;
 >>
 
 define_inheritedrelationEndType(property) ::= <<
  $if(property.DefiningProperty)$
-        IMeta$property.DefiningProperty.DefiningType.SingularName$$property.DefiningProperty.RoleName$ $property.DefiningProperty.RoleName$ { get; }
+        public Meta$property.DefiningProperty.DefiningType.SingularName$$property.DefiningProperty.RoleName$ $property.DefiningProperty.RoleName$;
  $else$
-        IMeta$property.DefiningType.SingularName$$property.RoleName$ $property.RoleName$ { get; }
+        public Meta$property.DefiningType.SingularName$$property.RoleName$ $property.RoleName$;
  $endif$
 >>
 
 define_reverserelationEndType(property) ::= <<
-        IMeta$property.AssociationName$ $property.AssociationName$ { get; }
+        public Meta$property.AssociationName$ $property.AssociationName$;
 >>
 
 define_inheritedreverserelationEndType(property) ::= <<
-        IMeta$property.AssociationName$ $property.AssociationName$ { get; }
+        public Meta$property.AssociationName$ $property.AssociationName$;
 >>
 
 define_methodType(method) ::= <<
-        IMethodType $method.Name$ { get; }
+        public MethodType $method.Name$;
+>>
+
+implement_subtype(composite, subtype) ::= <<
+        IMeta$subtype.SingularName$ IMeta$composite.SingularName$.As$subtype.SingularName$ => this.As$subtype.SingularName$;
+>>
+
+implement_relationEndType(composite, property) ::= <<
+        IMeta$property.DefiningType.SingularName$$property.RoleName$ IMeta$composite.SingularName$.$property.RoleName$ => this.$property.RoleName$;
+>>
+
+implement_inheritedrelationEndType(composite, property) ::= <<
+ $if(property.DefiningProperty)$
+        IMeta$property.DefiningProperty.DefiningType.SingularName$$property.DefiningProperty.RoleName$ IMeta$composite.SingularName$.$property.DefiningProperty.RoleName$ => this.$property.DefiningProperty.RoleName$;
+ $else$
+        IMeta$property.DefiningType.SingularName$$property.RoleName$ IMeta$composite.SingularName$.$property.RoleName$ => this.$property.RoleName$;
+ $endif$
+>>
+
+implement_reverserelationEndType(composite, property) ::= <<
+        IMeta$property.AssociationName$ IMeta$composite.SingularName$.$property.AssociationName$ => this.$property.AssociationName$;
+>>
+
+implement_inheritedreverserelationEndType(composite, property) ::= <<
+        IMeta$property.AssociationName$ IMeta$composite.SingularName$.$property.AssociationName$ => this.$property.AssociationName$;
+>>
+
+implement_methodType(composite, method) ::= <<
+        IMethodType IMeta$composite.SingularName$.$method.Name$ => this.$method.Name$;
 >>
 
 associationTypes(repository) ::= <<
@@ -149,9 +219,14 @@ $composite.DefinedProperties:{property|$define_associationType(property)$}; sepa
 >>
 
 define_associationType(property) ::= <<
-    public interface IMeta$property.AssociationName$ : IAssociationType
+    public class Meta$property.AssociationName$ : AssociationType
     {
-        new IMeta$property.DefiningType.SingularName$ ObjectType { get; }
+        public Meta$property.AssociationName$(M m) : base(m.$property.DefiningType.SingularName$)
+        {
+            this.ObjectType = m.$property.DefiningType.SingularName$;
+        }
+
+        new public Meta$property.DefiningType.SingularName$ ObjectType;
     }
 
 >>
@@ -168,10 +243,21 @@ $composite.DefinedProperties:{property|$define_roleType(property)$}; separator="
 >>
 
 define_roleType(property) ::= <<
-    public interface IMeta$property.DefiningType.SingularName$$property.RoleName$ : IRoleType
+    public class Meta$property.DefiningType.SingularName$$property.RoleName$ : RoleType
     {
+        public Meta$property.DefiningType.SingularName$$property.RoleName$(M m) : base(m.$property.ObjectType.SingularName$, $if(property.AssignedRoleSingularName)$"$property.RoleSingularName$"$else$null$endif$, $if(property.AssignedRolePluralName)$"$property.RolePluralName$"$else$null$endif$)
+        {
 $if(property.ObjectType.IsComposite)$
-        new IMeta$property.ObjectType.SingularName$ ObjectType { get; }
+            this.ObjectType = m.$property.ObjectType.SingularName$;
+$endif$
+$if(property.AttributeByName.Size)$             Size = $property.AttributeByName.Size.Value$;$endif$
+$if(property.AttributeByName.Precision)$                Precision = $property.AttributeByName.Precision.Value$;$endif$
+$if(property.AttributeByName.Scale)$                Scale = $property.AttributeByName.Scale.Value$;$endif$
+        }
+$if(property.ObjectType.IsComposite)$
+
+        new public Meta$property.ObjectType.SingularName$ ObjectType;
+
 $endif$
     }
 

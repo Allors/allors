@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Database.Meta;
 using Database.Population;
-using MetaPopulation = Database.Meta.Configuration.MetaPopulation;
 
 public partial class Model
 {

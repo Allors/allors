@@ -6,6 +6,7 @@
     using Database;
     using Database.Meta;
     using Database.Population;
+    using Meta.Configuration;
 
     public class RecordRoundtripStrategy : IRecordRoundtripStrategy
     {

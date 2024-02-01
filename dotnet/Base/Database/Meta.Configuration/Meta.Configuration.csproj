@@ -4,7 +4,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\System\Database\Allors.Database.Meta.Static\Allors.Database.Meta.Static.csproj" />
     <ProjectReference Include="..\Meta.Domain\Meta.Domain.csproj" />
   </ItemGroup>
 

@@ -18,7 +18,7 @@ namespace Allors.Database.Domain
             : base(m, new Guid("69C87CD7-52DE-45ED-8709-898A3A701A71")) =>
             this.Patterns = new Pattern[]
             {
-                new RolePattern<IMetaOrganization>(m.Organization, v => v.JustDidIt),
+                new RolePattern<MetaOrganization>(m.Organization, v => v.JustDidIt),
             };
 
         public override void Derive(ICycle cycle, IEnumerable<IObject> matches)

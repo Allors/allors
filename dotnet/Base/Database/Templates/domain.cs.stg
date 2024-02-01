@@ -151,7 +151,7 @@ $class.Objects:{object|$class_Object()$}; separator="\n"$
 
 		public Allors.Database.Meta.M M => m;
 
-		public Allors.Database.Meta.IMeta$class.name$ Meta => m.$class.name$;
+		public Allors.Database.Meta.Meta$class.name$ Meta => m.$class.name$;
 
 		public long Id
 		{

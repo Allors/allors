@@ -16,12 +16,12 @@ namespace Allors.Database.Meta.Configuration
 
         static void AddWorkspace(RelationType relationType, params string[] workspaceNames) => relationType.AssignedWorkspaceNames = (relationType.AssignedWorkspaceNames ?? Array.Empty<string>()).Union(workspaceNames).ToArray();
 
-        private void BuildCustom(MetaPopulation meta, Domains domains, RelationTypes relationTypes, MethodTypes methodTypes)
+        private void BuildCustom(M m, Domains domains, RelationTypes relationTypes, MethodTypes methodTypes)
         {
-            this.DefaultWorkspace(meta, domains, relationTypes, methodTypes);
+            this.DefaultWorkspace(m, domains, relationTypes, methodTypes);
         }
 
-        private void DefaultWorkspace(MetaPopulation meta, Domains domains, RelationTypes relationTypes, MethodTypes methodTypes)
+        private void DefaultWorkspace(M m, Domains domains, RelationTypes relationTypes, MethodTypes methodTypes)
         {
 
             // RelationTypes & MethodTypes
@@ -571,7 +571,7 @@ namespace Allors.Database.Meta.Configuration
             AddWorkspace(relationTypes.UserGroupMembers, "Default");
             AddWorkspace(relationTypes.UserUserName, new[] { "Default" });
             AddWorkspace(relationTypes.UserUserEmail, new[] { "Default" });
-            
+
 
 
 
@@ -709,34 +709,34 @@ namespace Allors.Database.Meta.Configuration
             AddWorkspace(relationTypes.UserPasswordResetInUserPassword, new[] { "Default" });
 
             // Classes
-            AddWorkspace(meta.AccessClass, new[] { "Default" });
-            AddWorkspace(meta.Denied, new[] { "Default" });
-            AddWorkspace(meta.Media, new[] { "Default" });
-            AddWorkspace(meta.MediaContent, new[] { "Default" });
-            AddWorkspace(meta.MediaTyped, new[] { "Default" });
-            AddWorkspace(meta.Country, new[] { "Default" });
-            AddWorkspace(meta.Gender, new[] { "Default" });
-            AddWorkspace(meta.Language, new[] { "Default" });
-            AddWorkspace(meta.Locale, new[] { "Default" });
-            AddWorkspace(meta.LocalisedText, new[] { "Default" });
-            AddWorkspace(meta.Person, new[] { "Default" });
-            AddWorkspace(meta.TaskAssignment, new[] { "Default" });
-            AddWorkspace(meta.Employment, new[] { "Default" });
-            AddWorkspace(meta.MailboxAddress, new[] { "Default" });
-            AddWorkspace(meta.Organization, new[] { "Default" });
-            AddWorkspace(meta.C1, new[] { "Default" });
-            AddWorkspace(meta.C2, new[] { "Default" });
-            AddWorkspace(meta.Data, new[] { "Default" });
-            AddWorkspace(meta.HomeAddress, new[] { "Default" });
-            AddWorkspace(meta.TrimFrom, new[] { "Default" });
-            AddWorkspace(meta.TrimTo, new[] { "Default" });
-            AddWorkspace(meta.UnitSample, new[] { "Default" });
-            AddWorkspace(meta.WorkspaceXObject1, new[] { "X" });
-            AddWorkspace(meta.WorkspaceXObject2, new[] { "X" });
-            AddWorkspace(meta.WorkspaceXYObject1, new[] { "X", "Y" });
-            AddWorkspace(meta.WorkspaceXYObject2, new[] { "X", "Y" });
-            AddWorkspace(meta.WorkspaceYObject1, new[] { "Y" });
-            AddWorkspace(meta.WorkspaceYObject2, new[] { "Y" });
+            AddWorkspace(m.AccessClass, new[] { "Default" });
+            AddWorkspace(m.Denied, new[] { "Default" });
+            AddWorkspace(m.Media, new[] { "Default" });
+            AddWorkspace(m.MediaContent, new[] { "Default" });
+            AddWorkspace(m.MediaTyped, new[] { "Default" });
+            AddWorkspace(m.Country, new[] { "Default" });
+            AddWorkspace(m.Gender, new[] { "Default" });
+            AddWorkspace(m.Language, new[] { "Default" });
+            AddWorkspace(m.Locale, new[] { "Default" });
+            AddWorkspace(m.LocalisedText, new[] { "Default" });
+            AddWorkspace(m.Person, new[] { "Default" });
+            AddWorkspace(m.TaskAssignment, new[] { "Default" });
+            AddWorkspace(m.Employment, new[] { "Default" });
+            AddWorkspace(m.MailboxAddress, new[] { "Default" });
+            AddWorkspace(m.Organization, new[] { "Default" });
+            AddWorkspace(m.C1, new[] { "Default" });
+            AddWorkspace(m.C2, new[] { "Default" });
+            AddWorkspace(m.Data, new[] { "Default" });
+            AddWorkspace(m.HomeAddress, new[] { "Default" });
+            AddWorkspace(m.TrimFrom, new[] { "Default" });
+            AddWorkspace(m.TrimTo, new[] { "Default" });
+            AddWorkspace(m.UnitSample, new[] { "Default" });
+            AddWorkspace(m.WorkspaceXObject1, new[] { "X" });
+            AddWorkspace(m.WorkspaceXObject2, new[] { "X" });
+            AddWorkspace(m.WorkspaceXYObject1, new[] { "X", "Y" });
+            AddWorkspace(m.WorkspaceXYObject2, new[] { "X", "Y" });
+            AddWorkspace(m.WorkspaceYObject1, new[] { "Y" });
+            AddWorkspace(m.WorkspaceYObject2, new[] { "Y" });
         }
     }
 }

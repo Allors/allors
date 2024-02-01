@@ -22,7 +22,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void InterfaceAssociation()
         {
-            Expression<Func<IMetaUser, IRelationEndType>> expression = v => v.Logins;
+            Expression<Func<MetaUser, IRelationEndType>> expression = v => v.Logins;
 
             var path = expression.Node(this.M);
 
@@ -33,7 +33,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void ClassAssociation()
         {
-            Expression<Func<IMetaPerson, IRelationEndType>> expression = v => v.OrganizationWhereEmployee;
+            Expression<Func<MetaPerson, IRelationEndType>> expression = v => v.OrganizationWhereEmployee;
 
             var path = expression.Node(this.M);
 
@@ -44,7 +44,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void ClassAssociationClassRole()
         {
-            Expression<Func<IMetaPerson, IRelationEndType>> expression = v => v.OrganizationWhereEmployee.ObjectType.Information;
+            Expression<Func<MetaPerson, IRelationEndType>> expression = v => v.OrganizationWhereEmployee.ObjectType.Information;
 
             var path = expression.Node(this.M);
 
@@ -59,7 +59,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void ClassRole()
         {
-            Expression<Func<IMetaOrganization, IRelationEndType>> expression = v => v.Name;
+            Expression<Func<MetaOrganization, IRelationEndType>> expression = v => v.Name;
 
             var path = expression.Node(this.M);
 
@@ -70,7 +70,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void ClassRoleOfType()
         {
-            Expression<Func<IMetaUserGroup, IComposite>> expression = v => v.Members.ObjectType.AsPerson;
+            Expression<Func<MetaUserGroup, IComposite>> expression = v => v.Members.ObjectType.AsPerson;
 
             var path = expression.Node(this.M);
 
@@ -82,7 +82,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void ClassRoleClassRole()
         {
-            Expression<Func<IMetaOrganization, IRelationEndType>> expression = v => v.Employees.ObjectType.FirstName;
+            Expression<Func<MetaOrganization, IRelationEndType>> expression = v => v.Employees.ObjectType.FirstName;
 
             var path = expression.Node(this.M);
 
@@ -98,7 +98,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void ClassRoleInterfaceAsClassRole()
         {
-            Expression<Func<IMetaUserGroup, IRelationEndType>> expression = v => v.Members.ObjectType.AsPerson.FirstName;
+            Expression<Func<MetaUserGroup, IRelationEndType>> expression = v => v.Members.ObjectType.AsPerson.FirstName;
 
             var path = expression.Node(this.M);
 

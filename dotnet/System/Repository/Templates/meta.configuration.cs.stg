@@ -24,12 +24,6 @@ For more information visit http://www.allors.com/legal
 !$
 <generations>
     <generation template="ids" output="ids.g.cs"/>
-    <generation template="m" output="m.g.cs"/>
-    <generation template="units" output="units.g.cs"/>
-    <generation template="interfaces" output="interfaces.g.cs"/>
-    <generation template="classes" output="classes.g.cs"/>
-    <generation template="associationTypes" output="associationTypes.g.cs"/>
-    <generation template="roleTypes" output="roleTypes.g.cs"/>
     <generation template="builder" output="builder.g.cs"/>
 </generations>
 >>
@@ -75,285 +69,6 @@ ids_composite_methodType(method) ::= <<
         public static readonly Guid $composite.SingularName$$method.Name$ = new Guid("$method.Id$");
 >>
 
-m(repository) ::= <<
-namespace Allors.Database.Meta.Configuration
-{
-    public sealed class MetaPopulation : Allors.Database.Meta.MetaPopulation, M {
-        // Units
-$repository.Units:{unit|$m_unit_declaration(unit)$}; separator="\n"$
-
-        // Interfaces
-$repository.Interfaces:{interface|$m_interface_declaration(interface)$}; separator="\n"$
-
-        // Classes
-$repository.Classes:{class|$m_class_declaration(class)$}; separator="\n"$
-
-        #region Interface implementations
-        // Units
-$repository.Units:{unit|$m_unit_implementation(unit)$}; separator="\n"$
-
-        // Interfaces
-$repository.Interfaces:{interface|$m_interface_implementation(interface)$}; separator="\n"$
-
-        // Classes
-$repository.Classes:{class|$m_class_implementation(class)$}; separator="\n"$
-        #endregion
-    }
-}
->>
-
-m_unit_declaration(unit) ::= <<
-        public Meta$unit.SingularName$ $unit.SingularName$; 
->>
-
-m_interface_declaration(interface) ::= <<
-        public Meta$interface.SingularName$ $interface.SingularName$;
->>
-
-m_class_declaration(class) ::= <<
-        public Meta$class.SingularName$ $class.SingularName$; 
->>
-
-m_unit_implementation(unit) ::= <<
-        IMeta$unit.SingularName$ M.$unit.SingularName$ => this.$unit.SingularName$;
->>
-
-m_interface_implementation(interface) ::= <<
-        IMeta$interface.SingularName$ M.$interface.SingularName$ => this.$interface.SingularName$;
->>
-
-m_class_implementation(class) ::= <<
-        IMeta$class.SingularName$ M.$class.SingularName$ => this.$class.SingularName$;
->>
-
-units(repository) ::= <<
-namespace Allors.Database.Meta.Configuration
-{
-$repository.Units:{unit|$define_unit(unit)$}; separator="\n"$
-}
->>
-
-define_unit(unit) ::= <<
-    public class Meta$unit.SingularName$ : Unit, IMeta$unit.SingularName$ {
-        public Meta$unit.SingularName$(MetaPopulation m) : base(m, Ids.$unit.SingularName$, UnitTags.$unit.SingularName$, UnitNames.$unit.SingularName$, null) {}
-    }
->>
-
-interfaces(repository) ::= <<
-namespace Allors.Database.Meta.Configuration
-{
-$repository.Interfaces:{interface|$define_interface(interface)$}; separator="\n"$
-}
->>
-
-define_interface(interface) ::= <<
-    public partial class Meta$interface.SingularName$ : Interface, IMeta$interface.SingularName$ {
-        public Meta$interface.SingularName$(MetaPopulation m) : base(m, Ids.$interface.SingularName$, new Interface[]{$interface.ImplementedInterfaces:{implementedInterface|m.$implementedInterface.SingularName$}; separator=", "$}, "$interface.SingularName$", $if(interface.AssignedPluralName)$"$interface.AssignedPluralName$"$else$null$endif$)
-        {
-$if(interface.ExtensionAttributes)$
-                Attributes = { $interface.ExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ }
-$endif$
-        }
-
-        public MetaPopulation M => (MetaPopulation)this.MetaPopulation;
-
-$interface.Subtypes:{subtype|$define_subtype(subtype)$}; separator="\n"$
-
-$interface.DefinedProperties:{property|$define_relationEndType(property)$}; separator="\n"$
-
-$interface.InheritedProperties:{property|$define_inheritedrelationEndType(property)$}; separator="\n"$
-
-$interface.DefinedReverseProperties:{property|$define_reverserelationEndType(property)$}; separator="\n"$
-
-$interface.InheritedReverseProperties:{property|$define_inheritedreverserelationEndType(property)$}; separator="\n"$
-
-$interface.DefinedMethods:{method|$define_methodType(method)$}; separator="\n"$
-
-$interface.InheritedMethods:{method|$define_methodType(method)$}; separator="\n"$
-
-        #region Interface implementations
-$interface.Subtypes:{subtype|$implement_subtype(composite=interface, subtype=subtype)$}; separator="\n"$
-
-$interface.DefinedProperties:{property|$implement_relationEndType(composite=interface, property=property)$}; separator="\n"$
-
-$interface.InheritedProperties:{property|$implement_inheritedrelationEndType(composite=interface, property=property)$}; separator="\n"$
-
-$interface.DefinedReverseProperties:{property|$implement_reverserelationEndType(composite=interface, property=property)$}; separator="\n"$
-
-$interface.InheritedReverseProperties:{property|$implement_inheritedreverserelationEndType(composite=interface, property=property)$}; separator="\n"$
-
-$interface.DefinedMethods:{method|$implement_methodType(composite=interface, method=method)$}; separator="\n"$
-
-$interface.InheritedMethods:{method|$implement_methodType(composite=interface, method=method)$}; separator="\n"$
-        #endregion
-    }
->>
-
-classes(repository) ::= <<
-namespace Allors.Database.Meta.Configuration
-{
-$repository.Classes:{class|$define_class(class)$}; separator="\n"$
-}
->>
-
-define_class(class) ::= <<
-    public partial class Meta$class.SingularName$ : Class, IMeta$class.SingularName$ {
-        public Meta$class.SingularName$(MetaPopulation m) : base(m, Ids.$class.SingularName$, new Interface[]{$class.ImplementedInterfaces:{implementedInterface|m.$implementedInterface.SingularName$}; separator=", "$}, "$class.SingularName$", $if(class.AssignedPluralName)$"$class.AssignedPluralName$"$else$null$endif$)
-        {
-$if(class.ExtensionAttributes)$
-                Attributes = { $class.ExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ }
-$endif$
-        }
-        
-        public MetaPopulation M => (MetaPopulation)this.MetaPopulation;
-
-$class.DefinedProperties:{property|$define_relationEndType(property)$}; separator="\n"$
-
-$class.InheritedProperties:{property|$define_inheritedrelationEndType(property)$}; separator="\n"$
-
-$class.DefinedReverseProperties:{property|$define_reverserelationEndType(property)$}; separator="\n"$
-
-$class.InheritedReverseProperties:{property|$define_inheritedreverserelationEndType(property)$}; separator="\n"$
-
-$class.DefinedMethods:{method|$define_methodType(method)$}; separator="\n"$
-
-$class.InheritedMethods:{method|$define_methodType(method)$}; separator="\n"$
-
-        #region Interface implementations
-$class.DefinedProperties:{property|$implement_relationEndType(composite=class, property=property)$}; separator="\n"$
-
-$class.InheritedProperties:{property|$implement_inheritedrelationEndType(composite=class, property=property)$}; separator="\n"$
-
-$class.DefinedReverseProperties:{property|$implement_reverserelationEndType(composite=class, property=property)$}; separator="\n"$
-
-$class.InheritedReverseProperties:{property|$implement_inheritedreverserelationEndType(composite=class, property=property)$}; separator="\n"$
-
-$class.DefinedMethods:{method|$implement_methodType(composite=class, method=method)$}; separator="\n"$
-
-$class.InheritedMethods:{method|$implement_methodType(composite=class, method=method)$}; separator="\n"$
-        #endregion
-    }
->>
-
-define_subtype(subtype) ::= <<
-        public Meta$subtype.SingularName$ As$subtype.SingularName$;
->>
-
-define_relationEndType(property) ::= <<
-        public Meta$property.DefiningType.SingularName$$property.RoleName$ $property.RoleName$;
->>
-
-define_inheritedrelationEndType(property) ::= <<
- $if(property.DefiningProperty)$
-        public Meta$property.DefiningProperty.DefiningType.SingularName$$property.DefiningProperty.RoleName$ $property.DefiningProperty.RoleName$;
- $else$
-        public Meta$property.DefiningType.SingularName$$property.RoleName$ $property.RoleName$;
- $endif$
->>
-
-define_reverserelationEndType(property) ::= <<
-        public Meta$property.AssociationName$ $property.AssociationName$;
->>
-
-define_inheritedreverserelationEndType(property) ::= <<
-        public Meta$property.AssociationName$ $property.AssociationName$;
->>
-
-define_methodType(method) ::= <<
-        public MethodType $method.Name$;
->>
-
-implement_subtype(composite, subtype) ::= <<
-        IMeta$subtype.SingularName$ IMeta$composite.SingularName$.As$subtype.SingularName$ => this.As$subtype.SingularName$;
->>
-
-implement_relationEndType(composite, property) ::= <<
-        IMeta$property.DefiningType.SingularName$$property.RoleName$ IMeta$composite.SingularName$.$property.RoleName$ => this.$property.RoleName$;
->>
-
-implement_inheritedrelationEndType(composite, property) ::= <<
- $if(property.DefiningProperty)$
-        IMeta$property.DefiningProperty.DefiningType.SingularName$$property.DefiningProperty.RoleName$ IMeta$composite.SingularName$.$property.DefiningProperty.RoleName$ => this.$property.DefiningProperty.RoleName$;
- $else$
-        IMeta$property.DefiningType.SingularName$$property.RoleName$ IMeta$composite.SingularName$.$property.RoleName$ => this.$property.RoleName$;
- $endif$
->>
-
-implement_reverserelationEndType(composite, property) ::= <<
-        IMeta$property.AssociationName$ IMeta$composite.SingularName$.$property.AssociationName$ => this.$property.AssociationName$;
->>
-
-implement_inheritedreverserelationEndType(composite, property) ::= <<
-        IMeta$property.AssociationName$ IMeta$composite.SingularName$.$property.AssociationName$ => this.$property.AssociationName$;
->>
-
-implement_methodType(composite, method) ::= <<
-        IMethodType IMeta$composite.SingularName$.$method.Name$ => this.$method.Name$;
->>
-
-associationTypes(repository) ::= <<
-namespace Allors.Database.Meta.Configuration
-{
-$repository.Composites:{composite|$define_associationTypes(composite)$}; separator="\n"$
-}
->>
-
-define_associationTypes(composite) ::= <<
-$composite.DefinedProperties:{property|$define_associationType(property)$}; separator="\n"$
->>
-
-define_associationType(property) ::= <<
-    public class Meta$property.AssociationName$ : AssociationType, IMeta$property.AssociationName$
-    {
-        public Meta$property.AssociationName$(MetaPopulation m) : base(m.$property.DefiningType.SingularName$)
-        {
-            this.ObjectType = m.$property.DefiningType.SingularName$;
-        }
-
-        new public Meta$property.DefiningType.SingularName$ ObjectType;
-
-        #region Interface implementations
-        IMeta$property.DefiningType.SingularName$ IMeta$property.AssociationName$.ObjectType => this.ObjectType;
-        #endregion
-    }
-
->>
-
-roleTypes(repository) ::= <<
-namespace Allors.Database.Meta.Configuration
-{
-$repository.Composites:{composite|$define_roleTypes(composite)$}; separator="\n"$
-}
->>
-
-define_roleTypes(composite) ::= <<
-$composite.DefinedProperties:{property|$define_roleType(property)$}; separator="\n"$
->>
-
-define_roleType(property) ::= <<
-    public class Meta$property.DefiningType.SingularName$$property.RoleName$ : RoleType, IMeta$property.DefiningType.SingularName$$property.RoleName$
-    {
-        public Meta$property.DefiningType.SingularName$$property.RoleName$(MetaPopulation meta) : base(meta.$property.ObjectType.SingularName$, $if(property.AssignedRoleSingularName)$"$property.RoleSingularName$"$else$null$endif$, $if(property.AssignedRolePluralName)$"$property.RolePluralName$"$else$null$endif$)
-        {
-$if(property.ObjectType.IsComposite)$
-            this.ObjectType = meta.$property.ObjectType.SingularName$;
-$endif$
-$if(property.AttributeByName.Size)$             Size = $property.AttributeByName.Size.Value$;$endif$
-$if(property.AttributeByName.Precision)$                Precision = $property.AttributeByName.Precision.Value$;$endif$
-$if(property.AttributeByName.Scale)$                Scale = $property.AttributeByName.Scale.Value$;$endif$
-        }
-$if(property.ObjectType.IsComposite)$
-
-        new public Meta$property.ObjectType.SingularName$ ObjectType;
-
-        #region Interface implementations
-        IMeta$property.ObjectType.SingularName$ IMeta$property.DefiningType.SingularName$$property.RoleName$.ObjectType => this.ObjectType;
-        #endregion
-$endif$
-    }
-
->>
-
 builder(repository) ::= <<
 // <auto-generated />
 namespace Allors.Database.Meta.Configuration
@@ -381,8 +96,8 @@ $repository.Composites:{composite|$define_methods(composite)$}; separator="\n"$
         }
         #endregion
 
-        public MetaPopulation Build() {
-            var meta =  new MetaPopulation();
+        public M Build() {
+            var meta =  new M();
             var domains = new Domains();
             var relationTypes = new RelationTypes();
             var methodTypes = new MethodTypes();
@@ -409,52 +124,52 @@ $repository.Domains:{assembly|             this.Build$assembly.Name$(meta, domai
             return meta;
         }
 
-		private void BuildDomains(MetaPopulation meta, Domains domains)
+		private void BuildDomains(M meta, Domains domains)
 		{
 $repository.Domains:{assembly|$build_domain(assembly)$}; separator="\n"$
 		}
 
-		private void BuildUnits(MetaPopulation meta, Domains domains)
+		private void BuildUnits(M meta, Domains domains)
 		{
 $repository.Units:{unit|$build_unit(unit)$}; separator="\n"$
 		}
 
-		private void BuildInterfaces(MetaPopulation meta, Domains domains)
+		private void BuildInterfaces(M meta, Domains domains)
 		{
 $repository.Interfaces:{interface|$build_interface(interface)$}; separator="\n"$
 		}
 
-		private void BuildClasses(MetaPopulation meta, Domains domains)
+		private void BuildClasses(M meta, Domains domains)
 		{
 $repository.Classes:{class|$build_class(class)$}; separator="\n"$
 		}
 
-		private void BuildRelationTypes(MetaPopulation meta, Domains domains, RelationTypes relationTypes)
+		private void BuildRelationTypes(M meta, Domains domains, RelationTypes relationTypes)
 		{
 $repository.Composites:{composite|$build_relations(composite)$}; separator="\n"$
 		}
 
-		private void BuildMethodTypes(MetaPopulation meta, Domains domains, MethodTypes methodTypes)
+		private void BuildMethodTypes(M meta, Domains domains, MethodTypes methodTypes)
 		{
 $repository.Composites:{composite|$build_methods(composite)$}; separator="\n"$
 		}
 
-        private void AssignRelationEndTypes(MetaPopulation meta, RelationTypes relationTypes)
+        private void AssignRelationEndTypes(M meta, RelationTypes relationTypes)
         {
 $repository.Composites:{composite|$assign_properties(composite)$}; separator="\n"$
         }
 
-        private void AssignMethodTypes(MetaPopulation meta, MethodTypes methodTypes)
+        private void AssignMethodTypes(M meta, MethodTypes methodTypes)
         {
 $repository.Composites:{composite|$assign_methods(composite)$}; separator="\n"$
         }
         
-        private void ExtendCompositeRoleTypes(MetaPopulation meta, RelationTypes relationTypes)
+        private void ExtendCompositeRoleTypes(M meta, RelationTypes relationTypes)
         {
 $repository.Composites:{composite|$extend_compositeRoleTypes(composite)$}; separator="\n"$
         }
 
-        private void ExtendCompositeMethodTypes(MetaPopulation meta, MethodTypes methodTypes)
+        private void ExtendCompositeMethodTypes(M meta, MethodTypes methodTypes)
         {
 $repository.Composites:{composite|$extend_compositeMethodTypes(composite)$}; separator="\n"$
         }
@@ -488,15 +203,15 @@ $endif$
 >>
 
 build_unit(unit) ::= <<
-            meta.$unit.SingularName$ = new Meta$unit.SingularName$(meta);
+            meta.$unit.SingularName$ = new Meta$unit.SingularName$(meta, Ids.$unit.SingularName$, UnitTags.$unit.SingularName$, UnitNames.$unit.SingularName$, null);
 >>
 
 build_interface(interface) ::= <<
-	        meta.$interface.SingularName$ = new Meta$interface.SingularName$(meta);
+	        meta.$interface.SingularName$ = new Meta$interface.SingularName$(meta, Ids.$interface.SingularName$, new Interface[]{$interface.ImplementedInterfaces:{implementedInterface|meta.$implementedInterface.SingularName$}; separator=", "$}, "$interface.SingularName$", $if(interface.AssignedPluralName)$"$interface.AssignedPluralName$"$else$null$endif$);
 >>
 
 build_class(class) ::= <<
-	        meta.$class.SingularName$ = new Meta$class.SingularName$(meta);
+	        meta.$class.SingularName$ = new Meta$class.SingularName$(meta, Ids.$class.SingularName$, new Interface[]{$class.ImplementedInterfaces:{implementedInterface|meta.$implementedInterface.SingularName$}; separator=", "$}, "$class.SingularName$", $if(class.AssignedPluralName)$"$class.AssignedPluralName$"$else$null$endif$);
 >>
 
 build_relations(composite) ::= <<
