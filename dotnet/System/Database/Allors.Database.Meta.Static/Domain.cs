@@ -29,7 +29,7 @@ public sealed class Domain : MetaIdentifiableObject, IDomain
 
     public override IEnumerable<string> WorkspaceNames => this.MetaPopulation.WorkspaceNames;
 
-    internal string ValidationName
+    private string ValidationName
     {
         get
         {

@@ -1,4 +1,4 @@
-// <copyright file="AssociationType.cs" company="Allors bv">
+﻿// <copyright file="AssociationType.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -34,7 +34,7 @@ public abstract class AssociationType : IAssociationType, IComparable
 
     public RelationType RelationType { get; internal set; }
 
-    internal string ValidationName => "association type " + this.Name;
+    private string ValidationName => "association type " + this.Name;
 
     public string Name => this.IsMany ? this.PluralName : this.SingularName;
 

@@ -42,11 +42,7 @@ public abstract class RoleType : IRoleType, IComparable
 
     public string AssignedPluralName { get; }
 
-    public bool ExistAssignedSingularName => this.AssignedSingularName != null;
-
-    public bool ExistAssignedPluralName => this.PluralName != null;
-
-    internal string ValidationName => "RoleType: " + this.RelationType.Name;
+    private string ValidationName => "RoleType: " + this.RelationType.Name;
 
     IRelationType IRoleType.RelationType => this.RelationType;
 
@@ -93,8 +89,6 @@ public abstract class RoleType : IRoleType, IComparable
     public int? Precision { get; set; }
 
     public int? Scale { get; set; }
-
-    public string MediaType { get; set; }
 
     public int CompareTo(object other) => this.RelationType.Id.CompareTo((other as RoleType)?.RelationType.Id);
 

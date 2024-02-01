@@ -16,7 +16,7 @@ public abstract class ObjectType : MetaIdentifiableObject, IObjectType
     {
         this.SingularName = singularName;
         this.AssignedPluralName = !string.IsNullOrEmpty(assignedPluralName) ? assignedPluralName : null;
-        this.PluralName = this.ExistAssignedPluralName ? this.AssignedPluralName : Pluralizer.Pluralize(this.SingularName);
+        this.PluralName = this.AssignedPluralName != null ? this.AssignedPluralName : Pluralizer.Pluralize(this.SingularName);
     }
 
     public Type BoundType { get; set; }
@@ -24,8 +24,6 @@ public abstract class ObjectType : MetaIdentifiableObject, IObjectType
     public string Name => this.SingularName;
 
     public string SingularName { get; }
-
-    public bool ExistAssignedPluralName => this.AssignedPluralName != null;
 
     public string AssignedPluralName { get; }
 

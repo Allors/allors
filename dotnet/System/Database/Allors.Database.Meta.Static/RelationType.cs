@@ -32,7 +32,7 @@ public sealed class RelationType : MetaIdentifiableObject, IRelationType
         this.RoleType = roleType;
         this.RoleType.RelationType = this;
         this.RoleType.SingularName = this.RoleType.AssignedSingularName ?? this.RoleType.ObjectType.SingularName;
-        this.RoleType.PluralName = this.RoleType.AssignedPluralName ?? (this.RoleType.ExistAssignedSingularName ? Pluralizer.Pluralize(this.RoleType.AssignedSingularName) : this.RoleType.ObjectType.PluralName);
+        this.RoleType.PluralName = this.RoleType.AssignedPluralName ?? (this.RoleType.AssignedSingularName != null ? Pluralizer.Pluralize(this.RoleType.AssignedSingularName) : this.RoleType.ObjectType.PluralName);
 
         this.RoleType.CompositeRoleType = new CompositeRoleType(this.AssociationType.ObjectType, this.RoleType);
 
@@ -53,7 +53,7 @@ public sealed class RelationType : MetaIdentifiableObject, IRelationType
 
     public string Name => this.AssociationType.ObjectType + this.RoleType.SingularName;
 
-    public string ReverseName => this.RoleType.SingularName + this.AssociationType.ObjectType;
+    private string ReverseName => this.RoleType.SingularName + this.AssociationType.ObjectType;
 
     public override IEnumerable<string> WorkspaceNames
     {
@@ -81,7 +81,7 @@ public sealed class RelationType : MetaIdentifiableObject, IRelationType
         }
     }
 
-    internal string ValidationName => "relation type" + this.Name;
+    private string ValidationName => "relation type" + this.Name;
 
     public int CompareTo(object other) => this.Id.CompareTo((other as RelationType)?.Id);
 

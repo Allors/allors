@@ -37,8 +37,6 @@ public sealed class MethodType : MetaIdentifiableObject, IMethodType, IComparabl
 
     public string Name { get; }
 
-    public string DisplayName => this.Name;
-
     public override IEnumerable<string> WorkspaceNames
     {
         get
