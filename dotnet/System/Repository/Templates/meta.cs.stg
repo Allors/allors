@@ -49,15 +49,15 @@ $repository.Classes:{class|$m_class_declaration(class)$}; separator="\n"$
 >>
 
 m_unit_declaration(unit) ::= <<
-        public Meta$unit.SingularName$ $unit.SingularName$; 
+        public Meta$unit.SingularName$ $unit.SingularName$ { get; set; }
 >>
 
 m_interface_declaration(interface) ::= <<
-        public Meta$interface.SingularName$ $interface.SingularName$;
+        public Meta$interface.SingularName$ $interface.SingularName$ { get; set; }
 >>
 
 m_class_declaration(class) ::= <<
-        public Meta$class.SingularName$ $class.SingularName$; 
+        public Meta$class.SingularName$ $class.SingularName$ { get; set; }
 >>
 
 m_unit_implementation(unit) ::= <<
@@ -152,35 +152,35 @@ $class.InheritedMethods:{method|$define_methodType(method)$}; separator="\n"$
 >>
 
 define_subtype(subtype) ::= <<
-        public Meta$subtype.SingularName$ As$subtype.SingularName$;
+        public Meta$subtype.SingularName$ As$subtype.SingularName$ { get; set; }
 >>
 
 define_relationEndType(property) ::= <<
-        public Meta$property.DefiningType.SingularName$$property.RoleName$ $property.RoleName$;
+        public Meta$property.DefiningType.SingularName$$property.RoleName$ $property.RoleName$ { get; set; }
 >>
 
 define_inheritedrelationEndType(property) ::= <<
  $if(property.DefiningProperty)$
-        public Meta$property.DefiningProperty.DefiningType.SingularName$$property.DefiningProperty.RoleName$ $property.DefiningProperty.RoleName$;
+        public Meta$property.DefiningProperty.DefiningType.SingularName$$property.DefiningProperty.RoleName$ $property.DefiningProperty.RoleName$ { get; set; }
  $else$
-        public Meta$property.DefiningType.SingularName$$property.RoleName$ $property.RoleName$;
+        public Meta$property.DefiningType.SingularName$$property.RoleName$ $property.RoleName$ { get; set; }
  $endif$
 >>
 
 define_reverserelationEndType(property) ::= <<
-        public Meta$property.AssociationName$ $property.AssociationName$;
+        public Meta$property.AssociationName$ $property.AssociationName$ { get; set; }
 >>
 
 define_inheritedreverserelationEndType(property) ::= <<
-        public Meta$property.AssociationName$ $property.AssociationName$;
+        public Meta$property.AssociationName$ $property.AssociationName$ { get; set; }
 >>
 
 define_methodType(method) ::= <<
-        public MethodType $method.Name$;
+        public MethodType $method.Name$ { get; set; }
 >>
 
 implement_subtype(composite, subtype) ::= <<
-        IMeta$subtype.SingularName$ IMeta$composite.SingularName$.As$subtype.SingularName$ => this.As$subtype.SingularName$;
+        IMeta$subtype.SingularName$ IMeta$composite.SingularName$.As$subtype.SingularName$ => this.As$subtype.SingularName$ { get; set; }
 >>
 
 implement_relationEndType(composite, property) ::= <<
@@ -226,7 +226,7 @@ define_associationType(property) ::= <<
             this.ObjectType = m.$property.DefiningType.SingularName$;
         }
 
-        new public Meta$property.DefiningType.SingularName$ ObjectType;
+        new public Meta$property.DefiningType.SingularName$ ObjectType { get; set; }
     }
 
 >>
@@ -256,7 +256,7 @@ $if(property.AttributeByName.Scale)$                Scale = $property.AttributeB
         }
 $if(property.ObjectType.IsComposite)$
 
-        new public Meta$property.ObjectType.SingularName$ ObjectType;
+        new public Meta$property.ObjectType.SingularName$ ObjectType { get; set; }
 
 $endif$
     }

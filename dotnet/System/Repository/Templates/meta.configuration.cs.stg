@@ -82,7 +82,7 @@ $repository.Domains:{assembly|              public Domain $assembly.Name$;}; sep
         }
         #endregion
 
-	    #region RelationTypes
+	#region RelationTypes
         internal class RelationTypes
         {
 $repository.Composites:{composite|$define_relationTypes(composite)$}; separator="\n"$
