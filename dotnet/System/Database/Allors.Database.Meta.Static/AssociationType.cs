@@ -28,31 +28,29 @@ public abstract class AssociationType : IAssociationType, IComparable
 
     public dynamic Attributes { get; }
 
-    public Composite ObjectType { get; }
+    internal Composite ObjectType { get; }
 
-    public RoleType RoleType => this.RelationType.RoleType;
+    internal RoleType RoleType => this.RelationType.RoleType;
 
-    public RelationType RelationType { get; internal set; }
+    internal RelationType RelationType { get; set; }
+    
+    string IRelationEndType.Name => this.Name;
 
-    private string ValidationName => "association type " + this.Name;
+    string IRelationEndType.SingularName => this.SingularName;
 
-    public string Name => this.IsMany ? this.PluralName : this.SingularName;
+    string IRelationEndType.SingularFullName => this.SingularName;
 
-    public string SingularName => this.ObjectType.SingularName + Where + this.RoleType.SingularName;
+    string IRelationEndType.PluralName => this.ObjectType.PluralName + Where + this.RoleType.SingularName;
 
-    public string SingularFullName => this.SingularName;
-
-    public string PluralName => this.ObjectType.PluralName + Where + this.RoleType.SingularName;
-
-    public string PluralFullName => this.PluralName;
+    string IRelationEndType.PluralFullName => this.PluralName;
 
     IObjectType IRelationEndType.ObjectType => this.ObjectType;
 
     IComposite IAssociationType.ObjectType => this.ObjectType;
 
-    public bool IsOne => !this.IsMany;
+    bool IRelationEndType.IsOne => !this.IsMany;
 
-    public bool IsMany =>
+    bool IRelationEndType.IsMany =>
         this.RelationType.Multiplicity switch
         {
             Multiplicity.ManyToOne => true,
@@ -63,6 +61,22 @@ public abstract class AssociationType : IAssociationType, IComparable
     IRoleType IAssociationType.RoleType => this.RoleType;
 
     IRelationType IAssociationType.RelationType => this.RelationType;
+
+    private string Name => this.IsMany ? this.PluralName : this.SingularName;
+
+    private string SingularName => this.ObjectType.SingularName + Where + this.RoleType.SingularName;
+
+    private string PluralName => this.ObjectType.PluralName + Where + this.RoleType.SingularName;
+
+    private string ValidationName => "association type " + this.Name;
+
+    private bool IsMany =>
+        this.RelationType.Multiplicity switch
+        {
+            Multiplicity.ManyToOne => true,
+            Multiplicity.ManyToMany => true,
+            _ => false,
+        };
 
     public int CompareTo(object other) => this.RelationType.Id.CompareTo((other as AssociationType)?.RelationType.Id);
 

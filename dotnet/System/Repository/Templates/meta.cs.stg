@@ -227,6 +227,8 @@ define_associationType(property) ::= <<
         }
 
         new public Meta$property.DefiningType.SingularName$ ObjectType { get; set; }
+
+        new public Meta$property.DefiningType.SingularName$$property.RoleName$ RoleType { get; set; }
     }
 
 >>
@@ -258,6 +260,7 @@ $if(property.ObjectType.IsComposite)$
 
         new public Meta$property.ObjectType.SingularName$ ObjectType { get; set; }
 
+        new public Meta$property.AssociationName$ AssociationType { get; set; }
 $endif$
     }
 

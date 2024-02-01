@@ -46,13 +46,5 @@ namespace Allors.Database.Domain.Tests
                 transaction.Rollback();
             }
         }
-
-        private Permission FindPermission(RoleType roleType, Operations operation)
-        {
-            var permissionByMeta = this.Transaction.Scoped<PermissionByMeta>();
-
-            var objectType = (Class)roleType.AssociationType.ObjectType;
-            return permissionByMeta.Get(objectType, roleType, operation);
-        }
     }
 }
