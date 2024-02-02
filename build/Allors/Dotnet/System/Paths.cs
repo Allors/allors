@@ -19,7 +19,7 @@ public partial class Paths
     public AbsolutePath AllorsDotnetSystemAdaptersMetaGenerated => AllorsDotnetSystemAdapters / "Meta/Generated";
     public AbsolutePath AllorsDotnetSystemAdaptersMetaConfigurationGenerated => AllorsDotnetSystemAdapters / "Meta.Configuration/Generated";
     public AbsolutePath AllorsDotnetSystemAdaptersGenerate => AllorsDotnetSystemAdapters / "Generate/Generate.csproj";
-    public AbsolutePath AllorsDotnetSystemAdaptersStaticTests => AllorsDotnetSystemAdapters / "Tests.Static/Tests.Static.csproj";
+    public AbsolutePath AllorsDotnetSystemAdaptersTests => AllorsDotnetSystemAdapters / "Tests/Tests.csproj";
 
     public AbsolutePath AllorsDotnetSystemWorkspace => AllorsDotnetSystem / "Workspace";
     public AbsolutePath AllorsDotnetSystemWorkspaceSignalsTests => AllorsDotnetSystemWorkspace / "Allors.Workspace.Signals.Tests";

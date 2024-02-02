@@ -12,8 +12,6 @@ namespace Allors.Workspace
         private readonly Method method;
         private bool canExecute;
 
-        private ChangedEventArgs changedEventArgs;
-
         public MethodChangeDetector(Method method)
         {
             this.method = method;
@@ -34,7 +32,7 @@ namespace Allors.Workspace
             this.canExecute = this.method.CanExecute;
             
             var changed = this.Changed;
-            changed?.Invoke(this.method, this.changedEventArgs ??= new ChangedEventArgs(this.method));
+            changed?.Invoke(this.method, EventArgs.Empty);
         }
     }
 }

@@ -169,7 +169,7 @@ public abstract class ObsoleteBackupTest : IDisposable
                     }
 
                     var xml = stringWriter.ToString();
-                    File.WriteAllText(@"c:\temp\population.xml", xml);
+                    //File.WriteAllText(@"c:\temp\population.xml", xml);
                     // Console.Out.WriteLine(xml);
                     var stringReader = new StringReader(xml);
                     using (var reader = XmlReader.Create(stringReader))

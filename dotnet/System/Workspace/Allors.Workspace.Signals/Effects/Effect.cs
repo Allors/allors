@@ -49,9 +49,9 @@ public class Effect : IEffect
         }
     }
 
-    private void ChangeableChanged(object sender, ChangedEventArgs e)
+    private void ChangeableChanged(object sender, EventArgs e)
     {
         this.Action?.Invoke();
-        this.ActionWithArgument?.Invoke(e.Sender);
+        this.ActionWithArgument?.Invoke((INotifyChanged)sender);
     }
 }

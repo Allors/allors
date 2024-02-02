@@ -85,12 +85,12 @@ public sealed class ComputedSignal<T> : ISignal<T>, ITracker
         this.changeableOperands.Add(signal);
     }
 
-    private void ChangeableOperand_Changed(object sender, ChangedEventArgs e)
+    private void ChangeableOperand_Changed(object sender, EventArgs e)
     {
         this.Invalidate();
     }
 
-    private void ChangeableResultChanged(object sender, ChangedEventArgs e)
+    private void ChangeableResultChanged(object sender, EventArgs e)
     {
         this.Invalidate();
     }
@@ -100,7 +100,7 @@ public sealed class ComputedSignal<T> : ISignal<T>, ITracker
         this.isInvalid = true;
        
         var handlers = this.CustomChanged;
-        handlers?.Invoke(this, new ChangedEventArgs(this));
+        handlers?.Invoke(this, EventArgs.Empty);
     }
 
     private void Validate()

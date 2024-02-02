@@ -22,7 +22,7 @@ namespace Allors.Workspace.Adapters
 
         private readonly Dictionary<IOperand, IChangeDetector> changeDetectorByOperand;
         private readonly HashSet<IChangeDetector> changeDetectors;
-        private readonly ChangedEventArgs changedEventArgs;
+
         private bool isHandlingChanges;
 
         protected Workspace(Connection connection, IWorkspaceServices services)
@@ -40,8 +40,6 @@ namespace Allors.Workspace.Adapters
             this.methodByStrategyByMethodType = new Dictionary<IMethodType, IDictionary<IStrategy, IMethod>>();
 
             this.PushToDatabaseTracker = new PushToDatabaseTracker();
-
-            this.changedEventArgs = new ChangedEventArgs(this);
 
             this.isHandlingChanges = false;
             this.changeDetectorByOperand = new Dictionary<IOperand, IChangeDetector>();
@@ -515,7 +513,7 @@ namespace Allors.Workspace.Adapters
             }
 
 
-            this.Changed?.Invoke(this, this.changedEventArgs);
+            this.Changed?.Invoke(this, EventArgs.Empty);
         }
         #endregion
 

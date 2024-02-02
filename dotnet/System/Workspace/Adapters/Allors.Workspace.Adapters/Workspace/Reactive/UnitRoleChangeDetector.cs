@@ -14,8 +14,6 @@ namespace Allors.Workspace
         private bool canWrite;
         private object value;
 
-        private ChangedEventArgs changedEventArgs;
-
         public UnitRoleChangeDetector(IRole role)
         {
             this.role = role;
@@ -47,7 +45,7 @@ namespace Allors.Workspace
             this.value = this.role.Value;
 
             var changed = this.Changed;
-            changed?.Invoke(this.role, this.changedEventArgs ??= new ChangedEventArgs(this.role));
+            changed?.Invoke(this.role, EventArgs.Empty);
         }
     }
 }

@@ -13,8 +13,6 @@ namespace Allors.Workspace
         private readonly IAssociation association;
         private HashSet<IStrategy> value;
 
-        private ChangedEventArgs changedEventArgs;
-
         public CompositesAssociationChangeDetector(IAssociation association)
         {
             this.association = association;
@@ -37,7 +35,7 @@ namespace Allors.Workspace
             this.value = [.. (IEnumerable<IStrategy>)this.association.Value];
 
             var changed = this.Changed;
-            changed?.Invoke(this.association, this.changedEventArgs ??= new ChangedEventArgs(this.association));
+            changed?.Invoke(this.association, EventArgs.Empty);
         }
     }
 }

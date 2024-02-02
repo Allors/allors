@@ -1,15 +1,14 @@
 ﻿namespace Allors.Workspace.Signals;
 
+using System;
+
 public class ValueSignal<T> : ISignal<T>
 {
     private T value;
     
-    private readonly ChangedEventArgs changedEventArgs;
-
     public ValueSignal(T value)
     {
         this.Value = value;
-        this.changedEventArgs = new ChangedEventArgs(this);
     }
 
     object ISignal.Value => this.Value;
@@ -32,6 +31,6 @@ public class ValueSignal<T> : ISignal<T>
     private void OnChanged()
     {
         var handlers = this.Changed;
-        handlers?.Invoke(this, this.changedEventArgs);
+        handlers?.Invoke(this, EventArgs.Empty);
     }
 }

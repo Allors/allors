@@ -56,9 +56,9 @@ public class NamedEffect : IEffect
         }
     }
 
-    private void ChangeableChanged(object sender, ChangedEventArgs e)
+    private void ChangeableChanged(object sender, EventArgs e)
     {
-        var changeable = e.Sender;
+        var changeable = (INotifyChanged)sender;
 
         if (this.nameByChangeable.TryGetValue(changeable, out var name))
         {

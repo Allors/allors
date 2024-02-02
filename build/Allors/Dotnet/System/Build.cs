@@ -38,7 +38,7 @@ partial class Build
     private Target AllorsDotnetSystemDatabaseAdaptersTestMemory => _ => _
         .DependsOn(AllorsDotnetSystemAdaptersGenerate)
         .Executes(() => DotNetTest(s => s
-            .SetProjectFile(Paths.AllorsDotnetSystemAdaptersStaticTests)
+            .SetProjectFile(Paths.AllorsDotnetSystemAdaptersTests)
             .SetFilter("FullyQualifiedName~Allors.Database.Adapters.Memory")
             .AddLoggers("trx;LogFileName=AllorsDotnetSystemDatabaseAdaptersTestMemory.trx")
             .SetResultsDirectory(Paths.ArtifactsTests)));
@@ -50,7 +50,7 @@ partial class Build
             using (new SqlLocalDB())
             {
                 DotNetTest(s => s
-                    .SetProjectFile(Paths.AllorsDotnetSystemAdaptersStaticTests)
+                    .SetProjectFile(Paths.AllorsDotnetSystemAdaptersTests)
                     .SetFilter("FullyQualifiedName~Allors.Database.Adapters.Sql.SqlClient")
                     .AddLoggers("trx;LogFileName=AllorsDotnetSystemDatabaseAdaptersSqlClientTests.trx")
                     .SetResultsDirectory(Paths.ArtifactsTests));
@@ -62,7 +62,7 @@ partial class Build
         .Executes(() =>
         {
             DotNetTest(s => s
-                 .SetProjectFile(Paths.AllorsDotnetSystemAdaptersStaticTests)
+                 .SetProjectFile(Paths.AllorsDotnetSystemAdaptersTests)
                  .SetFilter("FullyQualifiedName~Allors.Database.Adapters.Sql.Npgsql")
                  .AddLoggers("trx;LogFileName=AllorsDotnetSystemDatabaseAdaptersNpgsqlTests.trx")
                  .SetResultsDirectory(Paths.ArtifactsTests));

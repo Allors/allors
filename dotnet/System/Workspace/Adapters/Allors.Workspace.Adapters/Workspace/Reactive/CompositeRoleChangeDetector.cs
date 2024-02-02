@@ -13,9 +13,7 @@ namespace Allors.Workspace
         private bool canRead;
         private bool canWrite;
         private IStrategy value;
-        
-        private ChangedEventArgs changedEventArgs;
-
+      
         public CompositeRoleChangeDetector(IRole role)
         {
             this.role = role;
@@ -47,7 +45,7 @@ namespace Allors.Workspace
             this.value = (IStrategy)this.role.Value;
 
             var changed = this.Changed;
-            changed?.Invoke(this.role, this.changedEventArgs ??= new ChangedEventArgs(this.role));
+            changed?.Invoke(this.role, EventArgs.Empty);
         }
     }
 }

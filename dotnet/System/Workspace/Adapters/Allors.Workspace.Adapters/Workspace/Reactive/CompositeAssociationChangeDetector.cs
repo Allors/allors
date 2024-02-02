@@ -5,12 +5,12 @@
 
 namespace Allors.Workspace
 {
+    using System;
+
     public class CompositeAssociationChangeDetector : IChangeDetector
     {
         private readonly IAssociation association;
         private IStrategy value;
-
-        private ChangedEventArgs changedEventArgs;
 
         public CompositeAssociationChangeDetector(IAssociation association)
         {
@@ -34,7 +34,7 @@ namespace Allors.Workspace
             this.value = (IStrategy)this.association.Value;
 
             var handler = this.Changed;
-            handler?.Invoke(this.association, this.changedEventArgs ??= new ChangedEventArgs(this.association));
+            handler?.Invoke(this.association, EventArgs.Empty);
         }
     }
 }
