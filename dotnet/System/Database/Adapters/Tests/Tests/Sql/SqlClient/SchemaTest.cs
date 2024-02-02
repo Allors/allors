@@ -1,4 +1,4 @@
-// <copyright file="SchemaTest.cs" company="Allors bv">
+﻿// <copyright file="SchemaTest.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -11,7 +11,7 @@ public class SchemaTest : Sql.SchemaTest, IClassFixture<Fixture<SchemaTest>>
 {
     private readonly Profile profile;
 
-    public SchemaTest() => this.profile = new Profile(this.GetType().Name);
+    public SchemaTest(Fixture<CacheTest> fixture) => this.profile = new Profile(fixture.ConnectionString);
 
     protected override IProfile Profile => this.profile;
 

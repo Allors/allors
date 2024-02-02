@@ -8,7 +8,7 @@ namespace Allors.Database.Adapters.Sql.Npgsql;
 using System;
 using global::Npgsql;
 
-public class Fixture<T>
+public class Fixture<T> : FixtureBase<T>
 {
     static Fixture()
     {
@@ -21,8 +21,7 @@ public class Fixture<T>
 
     public Fixture()
     {
-        var database = typeof(T).Name;
-        var connectionString = "Server=localhost; User Id=postgres; Password=root; Database=postgres; Pooling=false; CommandTimeout=300";
+        var connectionString = this.Configuration[this.ConnectionStringCreateKey];
 
         int version;
 
@@ -38,15 +37,14 @@ public class Fixture<T>
             version = int.Parse(major);
             connection.Close();
         }
-
-
+        
         {
             // version 13+
             using var connection = new NpgsqlConnection(connectionString);
             connection.Open();
             using var command = connection.CreateCommand();
             var withForce = version >= 13 ? "WITH (FORCE)" : string.Empty;
-            command.CommandText = $"DROP DATABASE IF EXISTS {database} {withForce}";
+            command.CommandText = $"DROP DATABASE IF EXISTS {Database} {withForce}";
             command.ExecuteNonQuery();
             connection.Close();
         }
@@ -55,8 +53,12 @@ public class Fixture<T>
             using var connection = new NpgsqlConnection(connectionString);
             connection.Open();
             using var command = connection.CreateCommand();
-            command.CommandText = $"CREATE DATABASE {database}";
+            command.CommandText = $"CREATE DATABASE {Database}";
             command.ExecuteNonQuery();
         }
     }
+
+    public string ConnectionStringCreateKey => "ConnectionStrings:npgsql-create";
+
+    public override string ConnectionStringKey => "ConnectionStrings:npgsql";
 }

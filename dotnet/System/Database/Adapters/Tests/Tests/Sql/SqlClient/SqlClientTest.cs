@@ -1,4 +1,4 @@
-// <copyright file="SqlClientTest.cs" company="Allors bv">
+﻿// <copyright file="SqlClientTest.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -13,7 +13,7 @@ public class SqlClientTest : IDisposable, IClassFixture<Fixture<SqlClientTest>>
 {
     private readonly Profile profile;
 
-    public SqlClientTest() => this.profile = new Profile(this.GetType().Name);
+    public SqlClientTest(Fixture<CacheTest> fixture) => this.profile = new Profile(fixture.ConnectionString);
 
     protected IProfile Profile => this.profile;
 

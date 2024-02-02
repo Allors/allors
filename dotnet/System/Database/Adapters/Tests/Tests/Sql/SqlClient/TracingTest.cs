@@ -1,4 +1,4 @@
-// <copyright file="CacheTest.cs" company="Allors bv">
+﻿// <copyright file="CacheTest.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -11,7 +11,7 @@ public class TracingTest : Sql.TracingTest, IClassFixture<Fixture<TracingTest>>
 {
     private readonly Profile profile;
 
-    public TracingTest() => this.profile = new Profile(this.GetType().Name);
+    public TracingTest(Fixture<CacheTest> fixture) => this.profile = new Profile(fixture.ConnectionString);
 
     public override void Dispose() => this.profile.Dispose();
 

@@ -18,13 +18,12 @@ public class Profile : Adapters.Profile
 {
     private readonly ICacheFactory cacheFactory;
     private readonly IConnectionFactory connectionFactory;
-    private readonly string database;
 
     private readonly Prefetchers prefetchers = new();
 
-    public Profile(string database, IConnectionFactory connectionFactory = null, ICacheFactory cacheFactory = null)
+    public Profile(string connectionString, IConnectionFactory connectionFactory = null, ICacheFactory cacheFactory = null)
     {
-        this.database = database.ToLowerInvariant();
+        this.ConnectionString = connectionString;
         this.connectionFactory = connectionFactory;
         this.cacheFactory = cacheFactory;
     }
@@ -52,7 +51,7 @@ public class Profile : Adapters.Profile
         }
     }
 
-    protected string ConnectionString => $@"server=(localdb)\MSSQLLocalDB;database={this.database};Integrated Security=true";
+    protected string ConnectionString { get; }
 
     public override IDatabase CreateDatabase()
     {

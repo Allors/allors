@@ -1,4 +1,4 @@
-// <copyright file="UnitTest.cs" company="Allors bv">
+﻿// <copyright file="UnitTest.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -14,7 +14,7 @@ public class UnitTest : Adapters.UnitTest, IClassFixture<Fixture<UnitTest>>
 {
     private readonly Profile profile;
 
-    public UnitTest() => this.profile = new Profile(this.GetType().Name);
+    public UnitTest(Fixture<CacheTest> fixture) => this.profile = new Profile(fixture.ConnectionString);
 
     protected override IProfile Profile => this.profile;
 

@@ -1,4 +1,4 @@
-// <copyright file="ChangesTest.cs" company="Allors bv">
+﻿// <copyright file="ChangesTest.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -11,7 +11,7 @@ public class ChangesTest : Adapters.ChangesTest, IClassFixture<Fixture<ChangesTe
 {
     private readonly Profile profile;
 
-    public ChangesTest() => this.profile = new Profile(this.GetType().Name);
+    public ChangesTest(Fixture<CacheTest> fixture) => this.profile = new Profile(fixture.ConnectionString);
 
     protected override IProfile Profile => this.profile;
 

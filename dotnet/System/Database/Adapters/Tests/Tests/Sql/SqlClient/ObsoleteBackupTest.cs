@@ -11,7 +11,7 @@ public class ObsoleteBackupTest : Adapters.ObsoleteBackupTest, IClassFixture<Fix
 {
     private readonly Profile profile;
 
-    public ObsoleteBackupTest() => this.profile = new Profile(this.GetType().Name);
+    public ObsoleteBackupTest(Fixture<CacheTest> fixture) => this.profile = new Profile(fixture.ConnectionString);
 
     protected override IProfile Profile => this.profile;
 

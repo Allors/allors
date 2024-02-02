@@ -17,11 +17,10 @@ public class Profile : Adapters.Profile
 {
     private readonly ICacheFactory cacheFactory;
     private readonly IConnectionFactory connectionFactory;
-    private readonly string database;
 
-    public Profile(string database, IConnectionFactory connectionFactory = null, ICacheFactory cacheFactory = null)
+    public Profile(string connectionString, IConnectionFactory connectionFactory = null, ICacheFactory cacheFactory = null)
     {
-        this.database = database.ToLowerInvariant();
+        this.ConnectionString = connectionString;
         this.connectionFactory = connectionFactory;
         this.cacheFactory = cacheFactory;
     }
@@ -36,8 +35,7 @@ public class Profile : Adapters.Profile
         }
     }
 
-    protected string ConnectionString =>
-        $"Server=localhost; User Id=postgres; Password=root; Database={this.database}; Pooling=false; Enlist=false; CommandTimeout=300";
+    protected string ConnectionString { get; }
 
     public override IDatabase CreateDatabase()
     {

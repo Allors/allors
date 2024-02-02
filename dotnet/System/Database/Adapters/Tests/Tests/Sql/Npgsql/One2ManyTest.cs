@@ -1,4 +1,4 @@
-// <copyright file="One2ManyTest.cs" company="Allors bv">
+﻿// <copyright file="One2ManyTest.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -11,7 +11,7 @@ public class One2ManyTest : Adapters.One2ManyTest, IClassFixture<Fixture<One2Man
 {
     private readonly Profile profile;
 
-    public One2ManyTest() => this.profile = new Profile(this.GetType().Name);
+    public One2ManyTest(Fixture<CacheTest> fixture) => this.profile = new Profile(fixture.ConnectionString);
 
     protected override IProfile Profile => this.profile;
 
