@@ -6,9 +6,11 @@ trigger:
 variables:
   ConnectionStrings__npgsql: "Server=localhost; Database=postgres; User Id=postgres; Password=root;"
   ConnectionStrings__sqlclient: "Server=(localdb)\\MSSQLLocalDB; Database=master; Integrated Security=true;"
+  adapter: "sqlclient"
+  ConnectionStrings__DefaultConnection: "server=(localdb)\\MSSQLLocalDB; database=base; Integrated Security=SSPI; TrustServerCertificate=True; Pooling=false"
 
 stages:
-- stage: System
+- stage: Testing
   jobs:
   - job: Test
     timeoutInMinutes: 480

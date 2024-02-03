@@ -208,6 +208,9 @@ AND data_type = 'uuid'";
         {
             var builder = this.ConnectionStringBuilder;
             builder.Database = this.database;
+            builder.Pooling = false;
+            builder.Enlist = false;
+            builder.CommandTimeout = 300;
             return builder.ConnectionString;
         }
     }

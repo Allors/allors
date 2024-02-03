@@ -67,7 +67,14 @@ namespace Commands
             }
         }
 
-        public DirectoryInfo DataPath => new DirectoryInfo(".").GetAncestorSibling(this.Configuration["datapath"]);
+        public DirectoryInfo DataPath
+        {
+            get
+            {
+                string dataPath = this.Configuration["datapath"];
+                return dataPath != null ? new DirectoryInfo(".").GetAncestorSibling(dataPath) : null;
+            }
+        }
 
         public IDatabase Database
         {
