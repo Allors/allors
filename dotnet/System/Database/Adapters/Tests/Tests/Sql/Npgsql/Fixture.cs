@@ -69,7 +69,13 @@ public class Fixture<T>
         get
         {
             var connectionString = this.Config.Root[ConnectionStringKey];
-            return new NpgsqlConnectionStringBuilder(connectionString);
+            var builder = new NpgsqlConnectionStringBuilder(connectionString)
+            {
+                Pooling = false,
+                Enlist = false,
+                CommandTimeout = 300
+            };
+            return builder;
         }
     }
 

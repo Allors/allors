@@ -286,7 +286,12 @@ AND column_name=@columnName";
         get
         {
             var connectionString = this.Config.Root[ConnectionStringKey];
-            return new SqlConnectionStringBuilder(connectionString);
+            var builder = new SqlConnectionStringBuilder(connectionString)
+            {
+                Pooling = false
+            };
+
+            return builder;
         }
     }
 }
