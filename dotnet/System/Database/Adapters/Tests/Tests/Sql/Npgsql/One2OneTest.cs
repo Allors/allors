@@ -11,7 +11,7 @@ public class One2OneTest : Adapters.One2OneTest, IClassFixture<Fixture<One2OneTe
 {
     private readonly Profile profile;
 
-    public One2OneTest(Fixture<CacheTest> fixture) => this.profile = new Profile(fixture.ConnectionString);
+    public One2OneTest() => this.profile = new Profile(this.GetType().Name);
 
     protected override IProfile Profile => this.profile;
 

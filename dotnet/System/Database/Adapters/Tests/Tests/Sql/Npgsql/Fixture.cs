@@ -8,8 +8,10 @@ namespace Allors.Database.Adapters.Sql.Npgsql;
 using System;
 using global::Npgsql;
 
-public class Fixture<T> : FixtureBase<T>
+public class Fixture<T>
 {
+    private const string ConnectionStringKey = "ConnectionStrings:npgsql";
+
     static Fixture()
     {
         // TODO: replace timestamp with timestamp with time zone
@@ -21,7 +23,9 @@ public class Fixture<T> : FixtureBase<T>
 
     public Fixture()
     {
-        var connectionString = this.Configuration[this.ConnectionStringCreateKey];
+        this.Config = new Config();
+
+        var connectionString = this.ConnectionStringBuilder.ConnectionString;
 
         int version;
 
@@ -58,7 +62,16 @@ public class Fixture<T> : FixtureBase<T>
         }
     }
 
-    public string ConnectionStringCreateKey => "ConnectionStrings:npgsql-create";
+    private Config Config { get; set; }
 
-    public override string ConnectionStringKey => "ConnectionStrings:npgsql";
+    private NpgsqlConnectionStringBuilder ConnectionStringBuilder
+    {
+        get
+        {
+            var connectionString = this.Config.Root[ConnectionStringKey];
+            return new NpgsqlConnectionStringBuilder(connectionString);
+        }
+    }
+
+    private string Database => typeof(T).Name.ToLowerInvariant();
 }

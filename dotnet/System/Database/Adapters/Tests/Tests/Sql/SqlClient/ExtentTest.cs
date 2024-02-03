@@ -13,7 +13,7 @@ public class ExtentTest : Adapters.ExtentTest, IClassFixture<Fixture<ExtentTest>
 {
     private readonly Profile profile;
 
-    public ExtentTest(Fixture<CacheTest> fixture) => this.profile = new Profile(fixture.ConnectionString);
+    public ExtentTest() => this.profile = new Profile(this.GetType().Name);
 
     protected override IProfile Profile => this.profile;
 

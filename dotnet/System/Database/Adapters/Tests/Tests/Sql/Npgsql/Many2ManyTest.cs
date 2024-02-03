@@ -14,7 +14,7 @@ public class Many2ManyTest : Adapters.Many2ManyTest, IClassFixture<Fixture<Many2
 {
     private readonly Profile profile;
 
-    public Many2ManyTest(Fixture<CacheTest> fixture) => this.profile = new Profile(fixture.ConnectionString);
+    public Many2ManyTest() => this.profile = new Profile(this.GetType().Name);
 
     protected override IProfile Profile => this.profile;
 

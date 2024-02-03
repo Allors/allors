@@ -11,7 +11,7 @@ public class SchemaTest : Sql.SchemaTest, IClassFixture<Fixture<SchemaTest>>
 {
     private readonly Profile profile;
 
-    public SchemaTest(Fixture<CacheTest> fixture) => this.profile = new Profile(fixture.ConnectionString);
+    public SchemaTest() => this.profile = new Profile(this.GetType().Name);
 
     protected override IProfile Profile => this.profile;
 

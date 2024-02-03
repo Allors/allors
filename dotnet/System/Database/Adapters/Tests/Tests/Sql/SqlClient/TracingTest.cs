@@ -11,7 +11,7 @@ public class TracingTest : Sql.TracingTest, IClassFixture<Fixture<TracingTest>>
 {
     private readonly Profile profile;
 
-    public TracingTest(Fixture<CacheTest> fixture) => this.profile = new Profile(fixture.ConnectionString);
+    public TracingTest() => this.profile = new Profile(this.GetType().Name);
 
     public override void Dispose() => this.profile.Dispose();
 

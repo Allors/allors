@@ -3,20 +3,22 @@
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 // <summary>Defines the DomainTest type.</summary>
-
 namespace Allors.Database.Adapters.Sql
 {
     using System.Runtime.InteropServices;
     using Microsoft.Extensions.Configuration;
 
-    public abstract class FixtureBase<T>
+    /// <remark>
+    /// When xunit will support generic IClassFixture change
+    /// implementation so that only Fixture will provide the Config
+    /// (now both Fixture and Profile do)
+    /// https://github.com/xunit/xunit/issues/2557
+    /// </remark>
+    public class Config
     {
-
         private const string Path = "/config/system";
 
-        private const string DatabaseParam = "[database]";
-
-        protected FixtureBase()
+        public Config()
         {
             var platform = "other";
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
@@ -37,23 +39,9 @@ namespace Allors.Database.Adapters.Sql
             configurationBuilder.AddJsonFile(System.IO.Path.Combine(Path, $"appSettings.{platform}.json"), true);
             configurationBuilder.AddEnvironmentVariables();
 
-            this.Configuration = configurationBuilder.Build();
+            this.Root = configurationBuilder.Build();
         }
 
-        public IConfigurationRoot Configuration { get; set; }
-
-        public string Database => typeof(T).Name;
-
-        public string ConnectionString
-        {
-            get
-            {
-                var connectionString = this.Configuration[ConnectionStringKey];
-                connectionString = connectionString.Replace(DatabaseParam, this.Database);
-                return connectionString;
-            }
-        }
-
-        public abstract string ConnectionStringKey { get; }
+        public IConfigurationRoot Root { get; }
     }
 }

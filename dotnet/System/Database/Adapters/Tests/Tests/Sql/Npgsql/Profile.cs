@@ -15,12 +15,17 @@ using global::Npgsql;
 
 public class Profile : Adapters.Profile
 {
+    private const string ConnectionStringKey = "ConnectionStrings:npgsql";
+
+    private readonly string database;
     private readonly ICacheFactory cacheFactory;
     private readonly IConnectionFactory connectionFactory;
 
-    public Profile(string connectionString, IConnectionFactory connectionFactory = null, ICacheFactory cacheFactory = null)
+    public Profile(string database, IConnectionFactory connectionFactory = null, ICacheFactory cacheFactory = null)
     {
-        this.ConnectionString = connectionString;
+        this.Config = new Config();
+
+        this.database = database.ToLowerInvariant();
         this.connectionFactory = connectionFactory;
         this.cacheFactory = cacheFactory;
     }
@@ -34,8 +39,6 @@ public class Profile : Adapters.Profile
             return markers.ToArray();
         }
     }
-
-    protected string ConnectionString { get; }
 
     public override IDatabase CreateDatabase()
     {
@@ -198,4 +201,25 @@ AND data_type = 'uuid'";
     }
 
     private NpgsqlConnection CreateConnection() => new(this.ConnectionString);
+
+    private string ConnectionString
+    {
+        get
+        {
+            var builder = this.ConnectionStringBuilder;
+            builder.Database = this.database;
+            return builder.ConnectionString;
+        }
+    }
+
+    private Config Config { get; set; }
+
+    private NpgsqlConnectionStringBuilder ConnectionStringBuilder
+    {
+        get
+        {
+            var connectionString = this.Config.Root[ConnectionStringKey];
+            return new NpgsqlConnectionStringBuilder(connectionString);
+        }
+    }
 }

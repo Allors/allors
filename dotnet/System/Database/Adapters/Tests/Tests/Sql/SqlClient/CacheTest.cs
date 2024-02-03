@@ -11,7 +11,7 @@ public class CacheTest : Adapters.CacheTest, IClassFixture<Fixture<CacheTest>>
 {
     private readonly Profile profile;
 
-    public CacheTest(Fixture<CacheTest> fixture) => this.profile = new Profile(fixture.ConnectionString);
+    public CacheTest() => this.profile = new Profile(this.GetType().Name);
 
     public override void Dispose() => this.profile.Dispose();
 

@@ -11,7 +11,7 @@ public class ChangesTest : Adapters.ChangesTest, IClassFixture<Fixture<ChangesTe
 {
     private readonly Adapters.Profile profile;
 
-    public ChangesTest(Fixture<CacheTest> fixture) => this.profile = new Profile(fixture.ConnectionString);
+    public ChangesTest() => this.profile = new Profile(this.GetType().Name);
 
     protected override IProfile Profile => this.profile;
 

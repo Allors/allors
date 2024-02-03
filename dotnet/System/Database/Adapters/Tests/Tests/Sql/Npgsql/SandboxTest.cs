@@ -11,7 +11,7 @@ public class SandboxTest : Adapters.SandboxTest, IClassFixture<Fixture<SandboxTe
 {
     private readonly Profile profile;
 
-    public SandboxTest(Fixture<CacheTest> fixture) => this.profile = new Profile(fixture.ConnectionString);
+    public SandboxTest() => this.profile = new Profile(this.GetType().Name);
 
     protected override IProfile Profile => this.profile;
 

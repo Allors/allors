@@ -12,7 +12,7 @@ public class UnitTest : Adapters.UnitTest, IClassFixture<Fixture<UnitTest>>
 {
     private readonly Profile profile;
 
-    public UnitTest(Fixture<CacheTest> fixture) => this.profile = new Profile(fixture.ConnectionString);
+    public UnitTest() => this.profile = new Profile(this.GetType().Name);
 
     protected override IProfile Profile => this.profile;
 
