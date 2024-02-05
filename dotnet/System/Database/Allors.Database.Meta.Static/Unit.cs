@@ -8,15 +8,76 @@ namespace Allors.Database.Meta;
 
 using System;
 using System.Collections.Generic;
+using Text;
 
 public abstract class Unit : ObjectType, IUnit
 {
     protected Unit(MetaPopulation metaPopulation, Guid id, string tag, string singularName, string assignedPluralName)
-        : base(metaPopulation, id, singularName, assignedPluralName)
     {
-        metaPopulation.OnCreated(this);
+        this.Attributes = new MetaExtension();
+        this.MetaPopulation = metaPopulation;
+        this.Id = id;
+        this.Tag = id.Tag();
+        this.SingularName = singularName;
+        this.AssignedPluralName = !string.IsNullOrEmpty(assignedPluralName) ? assignedPluralName : null;
+        this.PluralName = this.AssignedPluralName != null ? this.AssignedPluralName : Pluralizer.Pluralize(this.SingularName);
         this.Tag = tag;
+
+        metaPopulation.OnCreated(this);
     }
+
+    public dynamic Attributes { get; }
+
+    IMetaPopulation IMetaIdentifiableObject.MetaPopulation => this.MetaPopulation;
+
+    public MetaPopulation MetaPopulation { get; }
+
+    public Guid Id { get; }
+
+    public string Tag { get; set; }
+
+    public Type BoundType { get; set; }
+
+    public string Name => this.SingularName;
+
+    public string SingularName { get; }
+
+    public string AssignedPluralName { get; }
+
+    public string PluralName { get; }
+
+    public bool IsUnit => this is IUnit;
+
+    public bool IsComposite => this is IComposite;
+
+    public bool IsInterface => this is IInterface;
+
+    public bool IsClass => this is IClass;
+
+    public override bool Equals(object other) => this.Id.Equals((other as IMetaIdentifiableObject)?.Id);
+
+    public override int GetHashCode() => this.Id.GetHashCode();
+
+    public int CompareTo(IObjectType other)
+    {
+        return this.Id.CompareTo(other?.Id);
+    }
+
+    public override string ToString()
+    {
+        if (!string.IsNullOrEmpty(this.SingularName))
+        {
+            return this.SingularName;
+        }
+
+        return this.Tag;
+    }
+
+    internal virtual void Validate(ValidationLog validationLog)
+    {
+        this.ValidateObjectType(validationLog);
+    }
+
 
     public bool IsBinary => this.Tag == UnitTags.Binary;
 
@@ -34,5 +95,5 @@ public abstract class Unit : ObjectType, IUnit
 
     public bool IsUnique => this.Tag == UnitTags.Unique;
 
-    public override IEnumerable<string> WorkspaceNames => this.MetaPopulation.WorkspaceNames;
+    public IEnumerable<string> WorkspaceNames => this.MetaPopulation.WorkspaceNames;
 }

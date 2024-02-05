@@ -35,7 +35,7 @@
       <Method Name="IsAssignableFrom" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAJAIAAAQAHCIAQNACAAAAQQAUACAEAAQAJIAAgCABA=</HashCode>
+      <HashCode>AAJCIAAAQAHiIAYNACIAAAQQAWACAMACQAJIAAhCABA=</HashCode>
       <FileName>Composite.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -157,24 +157,8 @@
       <Method Name="Unit" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAAIAAAAAAAAAABIgAAAAAABAAAAAAIQAAAAAQAAAAA=</HashCode>
+      <HashCode>AAAIAAAAAAAAAABIgAIAAAARAAAAAAIQAAAAAQAAAAA=</HashCode>
       <FileName>Unit.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="Allors.Database.Meta.ObjectType">
-    <Position X="9.75" Y="1.25" Width="2" />
-    <Members>
-      <Method Name="CompareTo" Hidden="true" />
-      <Method Name="Equals" Hidden="true" />
-      <Method Name="GetHashCode" Hidden="true" />
-      <Method Name="ObjectType" Hidden="true" />
-      <Method Name="ToString" Hidden="true" />
-      <Method Name="Validate" Hidden="true" />
-    </Members>
-    <TypeIdentifier>
-      <HashCode>AAACAAAAAACgAAYMgAKAAAQQACCAAIACQAAAAUBAAAA=</HashCode>
-      <FileName>ObjectType.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>

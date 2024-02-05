@@ -9,6 +9,7 @@ namespace Allors.Database.Meta;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Text;
 
 public abstract class Composite : ObjectType, IComposite
 {
@@ -20,9 +21,64 @@ public abstract class Composite : ObjectType, IComposite
     private IRoleType derivedKeyRoleType;
 
     protected Composite(MetaPopulation metaPopulation, Guid id, IReadOnlyList<IInterface> directSupertypes, string singularName, string assignedPluralName)
-        : base(metaPopulation, id, singularName, assignedPluralName)
     {
+        this.Attributes = new MetaExtension();
+        this.MetaPopulation = metaPopulation;
+        this.Id = id;
+        this.Tag = id.Tag();
+        this.SingularName = singularName;
+        this.AssignedPluralName = !string.IsNullOrEmpty(assignedPluralName) ? assignedPluralName : null;
+        this.PluralName = this.AssignedPluralName != null ? this.AssignedPluralName : Pluralizer.Pluralize(this.SingularName);
         this.DirectSupertypes = directSupertypes;
+    }
+
+    public dynamic Attributes { get; }
+
+    IMetaPopulation IMetaIdentifiableObject.MetaPopulation => this.MetaPopulation;
+
+    public MetaPopulation MetaPopulation { get; }
+
+    public abstract IEnumerable<string> WorkspaceNames { get; }
+
+    public Guid Id { get; }
+
+    public string Tag { get; set; }
+
+    public Type BoundType { get; set; }
+
+    public string Name => this.SingularName;
+
+    public string SingularName { get; }
+
+    public string AssignedPluralName { get; }
+
+    public string PluralName { get; }
+
+    public bool IsUnit => this is IUnit;
+
+    public bool IsComposite => this is IComposite;
+
+    public bool IsInterface => this is IInterface;
+
+    public bool IsClass => this is IClass;
+
+    public override bool Equals(object other) => this.Id.Equals((other as IMetaIdentifiableObject)?.Id);
+
+    public override int GetHashCode() => this.Id.GetHashCode();
+
+    public int CompareTo(IObjectType other)
+    {
+        return this.Id.CompareTo(other?.Id);
+    }
+
+    public override string ToString()
+    {
+        if (!string.IsNullOrEmpty(this.SingularName))
+        {
+            return this.SingularName;
+        }
+
+        return this.Tag;
     }
 
     public IReadOnlyList<IInterface> DirectSupertypes { get; }
@@ -144,13 +200,13 @@ public abstract class Composite : ObjectType, IComposite
         }
     }
 
-    internal override void Validate(ValidationLog validationLog)
+    public void Validate(ValidationLog validationLog)
     {
-        base.Validate(validationLog);
+        this.ValidateObjectType(validationLog);
 
         if (this.RoleTypes.Count(v => v.RelationType.IsKey) > 1)
         {
-            var message = this.ValidationName + " has more than 1 key";
+            var message = this.ValidationName() + " has more than 1 key";
             validationLog.AddError(message, this, ValidationKind.Multiplicity, "IComposite.KeyRoleType");
         }
     }
