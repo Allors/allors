@@ -40,9 +40,9 @@ public abstract class Interface : Composite, IInterface
         this.Equals(objectType) || this.subtypes.Contains(objectType);
 
     internal void DeriveWorkspaceNames() =>
-        this.derivedWorkspaceNames = this
+        this.derivedWorkspaceNames = ((IInterface)this)
             .RoleTypes.SelectMany(v => v.RelationType.WorkspaceNames)
-            .Union(this.AssociationTypes.SelectMany(v => v.RelationType.WorkspaceNames))
+            .Union(((IInterface)this).AssociationTypes.SelectMany(v => v.RelationType.WorkspaceNames))
             .Union(this.MethodTypes.SelectMany(v => v.WorkspaceNames))
             .ToArray();
 
@@ -76,7 +76,7 @@ public abstract class Interface : Composite, IInterface
 
     internal void InitializeExclusiveSubclass() => this.exclusiveClass = this.subclasses.Count == 1 ? this.subclasses.First() : null;
 
-    private void InitializeSubtypesRecursively(ObjectType type, ISet<IComposite> subtypes)
+    private void InitializeSubtypesRecursively(IObjectType type, ISet<IComposite> subtypes)
     {
         foreach (var directSubtype in this.DirectSubtypes.Cast<Composite>())
         {

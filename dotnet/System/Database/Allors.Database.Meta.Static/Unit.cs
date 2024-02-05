@@ -10,7 +10,7 @@ using System;
 using System.Collections.Generic;
 using Text;
 
-public abstract class Unit : ObjectType, IUnit
+public abstract class Unit : IUnit, IObjectType, IMetaIdentifiableObject
 {
     protected Unit(MetaPopulation metaPopulation, Guid id, string tag, string singularName, string assignedPluralName)
     {

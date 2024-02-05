@@ -203,11 +203,11 @@ public abstract class MetaPopulation : IMetaPopulation
         // RoleTypes & AssociationTypes
         var roleTypesByAssociationTypeObjectType = this.RelationTypes
             .GroupBy(v => v.AssociationType.ObjectType)
-            .ToDictionary(g => g.Key, g => new HashSet<RoleType>(g.Select(v => v.RoleType)));
+            .ToDictionary(g => (IStaticComposite)g.Key, g => new HashSet<IRoleType>(g.Select(v => v.RoleType)));
 
         var associationTypesByRoleTypeObjectType = this.RelationTypes
             .GroupBy(v => v.RoleType.ObjectType)
-            .ToDictionary(g => g.Key, g => new HashSet<AssociationType>(g.Select(v => v.AssociationType)));
+            .ToDictionary(g => (IObjectType)g.Key, g => new HashSet<IAssociationType>(g.Select(v => v.AssociationType)));
 
         // RoleTypes
         foreach (var composite in this.Composites)
@@ -224,7 +224,7 @@ public abstract class MetaPopulation : IMetaPopulation
         // MethodTypes
         var methodTypeByClass = this.MethodTypes
             .GroupBy(v => v.ObjectType)
-            .ToDictionary(g => g.Key, g => new HashSet<MethodType>(g));
+            .ToDictionary(g => (IStaticComposite)g.Key, g => new HashSet<MethodType>(g));
 
         foreach (var composite in this.Composites)
         {

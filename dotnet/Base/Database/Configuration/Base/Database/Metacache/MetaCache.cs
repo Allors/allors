@@ -1,4 +1,4 @@
-// <copyright file="MetaCache.cs" company="Allors bv">
+﻿// <copyright file="MetaCache.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -8,9 +8,9 @@ namespace Allors.Database.Configuration
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Allors.Database.Meta;
-    using Allors.Database.Meta.Extensions;
-    using Allors.Database.Services;
+    using Meta;
+    using Meta.Extensions;
+    using Services;
 
     public class MetaCache : IMetaCache
     {
@@ -31,27 +31,27 @@ namespace Allors.Database.Configuration
 
         public MetaCache(IDatabase database)
         {
-            var metaPopulation = (M)database.MetaPopulation;
+            var metaPopulation = database.MetaPopulation;
             var assembly = database.ObjectFactory.Assembly;
 
             this.supertypesByComposite = metaPopulation.Composites
-                .ToDictionary(v => (IComposite)v, v => (IReadOnlySet<IInterface>)new HashSet<IInterface>(v.Supertypes));
+                .ToDictionary(v => v, v => (IReadOnlySet<IInterface>)new HashSet<IInterface>(v.Supertypes));
 
             this.associationTypesByComposite = metaPopulation.Composites
-                .ToDictionary(v => (IComposite)v, v => (IReadOnlySet<IAssociationType>)new HashSet<IAssociationType>(v.AssociationTypes));
+                .ToDictionary(v => v, v => (IReadOnlySet<IAssociationType>)new HashSet<IAssociationType>(v.AssociationTypes));
 
             this.roleTypesByComposite = metaPopulation.Composites
-                .ToDictionary(v => (IComposite)v, v => (IReadOnlySet<IRoleType>)new HashSet<IRoleType>(v.RoleTypes));
+                .ToDictionary(v => v, v => (IReadOnlySet<IRoleType>)new HashSet<IRoleType>(v.RoleTypes));
 
             this.requiredRoleTypesByComposite = metaPopulation.Composites
-                .ToDictionary(v => (IComposite)v, v => (IReadOnlySet<IRoleType>)new HashSet<IRoleType>(v.RoleTypes.Where(w => w.CompositeRoleType.IsRequired())));
+                .ToDictionary(v => v, v => (IReadOnlySet<IRoleType>)new HashSet<IRoleType>(v.RoleTypes.Where(w => w.CompositeRoleType.IsRequired())));
 
             this.requiredCompositeRoleTypesByClass = metaPopulation.Classes
-                .ToDictionary(v => (IClass)v, v => (IReadOnlySet<ICompositeRoleType>)new HashSet<ICompositeRoleType>(v.CompositeRoleTypeByRoleType.Values.Where(w => w.IsRequired())));
+                .ToDictionary(v => v, v => (IReadOnlySet<ICompositeRoleType>)new HashSet<ICompositeRoleType>(v.CompositeRoleTypeByRoleType.Values.Where(w => w.IsRequired())));
 
             this.builderTypeByClass = metaPopulation.Classes.
                 ToDictionary(
-                    v => (IClass)v,
+                    v => v,
                     v => assembly.GetType($"Allors.Database.Domain.{v.Name}Builder", false));
 
             this.classesByWorkspaceName = new Dictionary<string, IReadOnlySet<IClass>>();

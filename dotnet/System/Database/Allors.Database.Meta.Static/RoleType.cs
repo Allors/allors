@@ -18,7 +18,7 @@ public abstract class RoleType : IRoleType, IComparable
     /// </summary>
     public const int MaximumSize = -1;
 
-    protected RoleType(ObjectType objectType, string assignedSingularName, string assignedPluralName)
+    protected RoleType(IObjectType objectType, string assignedSingularName, string assignedPluralName)
     {
         this.Attributes = new MetaExtension();
         this.ObjectType = objectType;
@@ -36,7 +36,7 @@ public abstract class RoleType : IRoleType, IComparable
 
     public AssociationType AssociationType => this.RelationType.AssociationType;
 
-    public ObjectType ObjectType { get; }
+    public IObjectType ObjectType { get; }
 
     public string AssignedSingularName { get; }
 
