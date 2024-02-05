@@ -226,9 +226,9 @@ define_associationType(property) ::= <<
             this.ObjectType = m.$property.DefiningType.SingularName$;
         }
 
-        new public Meta$property.DefiningType.SingularName$ ObjectType { get; set; }
+        public Meta$property.DefiningType.SingularName$ ObjectType { get; set; }
 
-        new public Meta$property.DefiningType.SingularName$$property.RoleName$ RoleType => (Meta$property.DefiningType.SingularName$$property.RoleName$)((IAssociationType)this).RoleType;
+        public Meta$property.DefiningType.SingularName$$property.RoleName$ RoleType => (Meta$property.DefiningType.SingularName$$property.RoleName$)((IAssociationType)this).RoleType;
     }
 
 >>
@@ -258,9 +258,9 @@ $if(property.AttributeByName.Scale)$                Scale = $property.AttributeB
         }
 $if(property.ObjectType.IsComposite)$
 
-        new public Meta$property.ObjectType.SingularName$ ObjectType { get; set; }
+        public Meta$property.ObjectType.SingularName$ ObjectType { get; set; }
 
-        new public Meta$property.AssociationName$ AssociationType => (Meta$property.AssociationName$)((IRoleType)this).AssociationType;
+        public Meta$property.AssociationName$ AssociationType => (Meta$property.AssociationName$)((IRoleType)this).AssociationType;
 $endif$
     }
 
