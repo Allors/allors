@@ -2,7 +2,7 @@
 
 public class CompositeRoleType : ICompositeRoleType
 {
-    public CompositeRoleType(IComposite composite, RoleType roleType)
+    public CompositeRoleType(IComposite composite, IStaticRoleType roleType)
     {
         this.Attributes = new MetaExtension();
         this.Composite = composite;

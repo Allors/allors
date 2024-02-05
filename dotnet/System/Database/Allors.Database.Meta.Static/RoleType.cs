@@ -11,8 +11,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Allors.Graph;
 
-public abstract class RoleType : IRoleType, IComparable
+public abstract class RoleType : IStaticRoleType, IComparable
 {
+    private IStaticRelationType relationType;
+    private string singularName;
+    private string pluralName;
+    private ICompositeRoleType compositeRoleType;
+
     /// <summary>
     ///     The maximum size value.
     /// </summary>
@@ -28,13 +33,30 @@ public abstract class RoleType : IRoleType, IComparable
 
     public dynamic Attributes { get; }
 
-    public RelationType RelationType { get; internal set; }
+    public IRelationType RelationType => this.relationType;
 
-    public ICompositeRoleType CompositeRoleType { get; internal set; }
+    IStaticRelationType IStaticRoleType.RelationType
+    {
+        get => this.relationType;
+        set => this.relationType = value;
+    }
+
+    ICompositeRoleType IRoleType.CompositeRoleType
+    {
+        get => this.compositeRoleType;
+    }
+
+    ICompositeRoleType IStaticRoleType.CompositeRoleType
+    {
+        get => this.compositeRoleType;
+        set => this.compositeRoleType = value;
+    }
 
     public IReadOnlyDictionary<IComposite, ICompositeRoleType> CompositeRoleTypeByComposite { get; private set; }
 
-    public AssociationType AssociationType => this.RelationType.AssociationType;
+    IAssociationType IRoleType.AssociationType => this.relationType.AssociationType;
+
+    IStaticAssociationType IStaticRoleType.AssociationType => this.relationType.AssociationType;
 
     public IObjectType ObjectType { get; }
 
@@ -42,36 +64,50 @@ public abstract class RoleType : IRoleType, IComparable
 
     public string AssignedPluralName { get; }
 
-    private string ValidationName => "RoleType: " + this.RelationType.Name;
-
-    IRelationType IRoleType.RelationType => this.RelationType;
-
-    IAssociationType IRoleType.AssociationType => this.AssociationType;
+    private string ValidationName => "RoleType: " + this.relationType.Name;
 
     IObjectType IRelationEndType.ObjectType => this.ObjectType;
 
-    public string SingularName { get; internal set; }
+    string IRelationEndType.SingularName
+    {
+        get => this.singularName;
+    }
+
+    string IStaticRoleType.SingularName
+    {
+        get => this.singularName;
+        set => this.singularName = value;
+    }
 
     /// <summary>
     ///     Gets the full singular name.
     /// </summary>
     /// <value>The full singular name.</value>
-    public string SingularFullName => this.RelationType.AssociationType.ObjectType + this.SingularName;
+    public string SingularFullName => this.relationType.AssociationType.ObjectType + this.singularName;
 
-    public string PluralName { get; internal set; }
+    string IRelationEndType.PluralName
+    {
+        get => this.pluralName;
+    }
+
+    string IStaticRoleType.PluralName
+    {
+        get => this.pluralName;
+        set => this.pluralName = value;
+    }
 
     /// <summary>
     ///     Gets the full plural name.
     /// </summary>
     /// <value>The full plural name.</value>
-    public string PluralFullName => this.RelationType.AssociationType.ObjectType + this.PluralName;
+    public string PluralFullName => this.relationType.AssociationType.ObjectType + this.pluralName;
 
-    public string Name => this.IsMany ? this.PluralName : this.SingularName;
+    public string Name => this.IsMany ? this.pluralName : this.singularName;
 
     public string FullName => this.IsMany ? this.PluralFullName : this.SingularFullName;
 
     public bool IsMany =>
-        this.RelationType.Multiplicity switch
+        this.relationType.Multiplicity switch
         {
             Multiplicity.OneToMany => true,
             Multiplicity.ManyToMany => true,
@@ -90,18 +126,18 @@ public abstract class RoleType : IRoleType, IComparable
 
     public int? Scale { get; set; }
 
-    public int CompareTo(object other) => this.RelationType.Id.CompareTo((other as RoleType)?.RelationType.Id);
+    public int CompareTo(object other) => this.relationType.Id.CompareTo((other as RoleType)?.relationType.Id);
 
-    public override bool Equals(object other) => this.RelationType.Id.Equals((other as RoleType)?.RelationType.Id);
+    public override bool Equals(object other) => this.relationType.Id.Equals((other as RoleType)?.relationType.Id);
 
-    public override int GetHashCode() => this.RelationType.Id.GetHashCode();
+    public override int GetHashCode() => this.relationType.Id.GetHashCode();
 
-    public override string ToString() => $"{this.AssociationType.ObjectType.Name}.{this.Name}";
+    public override string ToString() => $"{this.relationType.AssociationType.ObjectType.Name}.{this.Name}";
 
     /// <summary>
     ///     Derive multiplicity, scale and size.
     /// </summary>
-    internal void DeriveScaleAndSize()
+    void IStaticRoleType.DeriveScaleAndSize()
     {
         if (this.ObjectType is IUnit unitType)
         {
@@ -144,7 +180,7 @@ public abstract class RoleType : IRoleType, IComparable
     ///     Validates the state.
     /// </summary>
     /// <param name="validationLog">The validation.</param>
-    internal void Validate(ValidationLog validationLog)
+    void IStaticRelationEndType.Validate(ValidationLog validationLog)
     {
         if (this.ObjectType == null)
         {
@@ -152,23 +188,23 @@ public abstract class RoleType : IRoleType, IComparable
             validationLog.AddError(message, this, ValidationKind.Required, "RoleType.IObjectType");
         }
 
-        if (!string.IsNullOrEmpty(this.SingularName) && this.SingularName.Length < 2)
+        if (!string.IsNullOrEmpty(this.singularName) && this.singularName.Length < 2)
         {
             var message = this.ValidationName + " should have an assigned singular name with at least 2 characters";
             validationLog.AddError(message, this, ValidationKind.MinimumLength, "RoleType.SingularName");
         }
 
-        if (!string.IsNullOrEmpty(this.PluralName) && this.PluralName.Length < 2)
+        if (!string.IsNullOrEmpty(this.pluralName) && this.pluralName.Length < 2)
         {
             var message = this.ValidationName + " should have an assigned plural role name with at least 2 characters";
             validationLog.AddError(message, this, ValidationKind.MinimumLength, "RoleType.PluralName");
         }
     }
 
-    internal void InitializeCompositeRoleTypes(Dictionary<IComposite, HashSet<ICompositeRoleType>> compositeRoleTypesByComposite)
+    void IStaticRoleType.InitializeCompositeRoleTypes(Dictionary<IComposite, HashSet<ICompositeRoleType>> compositeRoleTypesByComposite)
     {
-        var composite = this.AssociationType.ObjectType;
-        compositeRoleTypesByComposite[composite].Add(this.CompositeRoleType);
+        var composite = this.relationType.AssociationType.ObjectType;
+        compositeRoleTypesByComposite[composite].Add(this.compositeRoleType);
 
         var dictionary = composite.Subtypes.ToDictionary(v => v, v =>
         {
@@ -177,14 +213,14 @@ public abstract class RoleType : IRoleType, IComparable
             return compositeRoleType;
         });
 
-        dictionary[composite] = this.CompositeRoleType;
+        dictionary[composite] = this.compositeRoleType;
 
         this.CompositeRoleTypeByComposite = dictionary;
     }
 
-    internal void DeriveIsRequired()
+    void IStaticRoleType.DeriveIsRequired()
     {
-        var composites = new Graph<IComposite>(this.AssociationType.ObjectType.Composites, v => v.DirectSubtypes).Reverse();
+        var composites = new Graph<IComposite>(this.relationType.AssociationType.ObjectType.Composites, v => v.DirectSubtypes).Reverse();
 
         bool previousRequired = false;
         foreach (var composite in composites)
@@ -199,9 +235,9 @@ public abstract class RoleType : IRoleType, IComparable
         }
     }
 
-    internal void DeriveIsUnique()
+    void IStaticRoleType.DeriveIsUnique()
     {
-        var composites = new Graph<IComposite>(this.AssociationType.ObjectType.Composites, v => v.DirectSubtypes).Reverse();
+        var composites = new Graph<IComposite>(this.relationType.AssociationType.ObjectType.Composites, v => v.DirectSubtypes).Reverse();
 
         bool previousUnique = false;
         foreach (var composite in composites)

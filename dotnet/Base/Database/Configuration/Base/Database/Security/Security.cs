@@ -1,4 +1,4 @@
-// <copyright file="IBarcodeGenerator.cs" company="Allors bv">
+﻿// <copyright file="IBarcodeGenerator.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -53,7 +53,7 @@ namespace Allors.Database.Configuration
                 .WithRule(m.Revocation.DeniedPermissions)
                 .Build();
 
-            this.permissionIdsByWorkspaceName = m.WorkspaceNames
+            this.permissionIdsByWorkspaceName = ((IMetaPopulation)m).WorkspaceNames
                 .ToDictionary(v => v, v => new HashSet<long>(metaCache.GetWorkspaceClasses(v).SelectMany(w =>
                 {
                     var @class = w;

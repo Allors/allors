@@ -1,4 +1,4 @@
-// <copyright file="ExtentTest.cs" company="Allors bv">
+﻿// <copyright file="ExtentTest.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -16724,7 +16724,7 @@ public abstract class ExtentTest : IDisposable
                 var inExtent = this.Transaction.Extent(m.C1);
 
                 var extent = this.Transaction.Extent(m.C2);
-                extent.Filter.AddContainedIn(m.C1.I12AllorsBoolean.RelationType.AssociationType, inExtent);
+                extent.Filter.AddContainedIn(((IRoleType)m.C1.I12AllorsBoolean).AssociationType, inExtent);
                 extent.ToArray();
             }
             catch (ArgumentException)

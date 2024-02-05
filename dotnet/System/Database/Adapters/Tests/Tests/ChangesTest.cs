@@ -1,4 +1,4 @@
-// <copyright file="ChangesTest.cs" company="Allors bv">
+﻿// <copyright file="ChangesTest.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -9,6 +9,7 @@ namespace Allors.Database.Adapters;
 using System;
 using System.Linq;
 using Allors.Database.Domain;
+using Meta;
 using Xunit;
 
 public abstract class ChangesTest : IDisposable
@@ -68,7 +69,7 @@ public abstract class ChangesTest : IDisposable
             init();
             var m = this.Transaction.Database.Context().M;
 
-            foreach (var @class in m.Classes)
+            foreach (var @class in ((IMetaPopulation)m).Classes)
             {
                 dynamic newObject = this.Transaction.Build(@class);
                 Assert.True(newObject.onPostBuild);
@@ -84,7 +85,7 @@ public abstract class ChangesTest : IDisposable
             init();
             var m = this.Transaction.Database.Context().M;
 
-            foreach (var @class in m.Classes)
+            foreach (var @class in ((IMetaPopulation)m).Classes)
             {
                 {
                     var newObjects = this.Transaction.Build(@class, 2);

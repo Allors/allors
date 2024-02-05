@@ -10,9 +10,9 @@ using System;
 using System.Collections.Generic;
 using Text;
 
-public abstract class Unit : IUnit, IObjectType, IMetaIdentifiableObject
+public abstract class Unit : IStaticUnit, IObjectType, IMetaIdentifiableObject
 {
-    protected Unit(MetaPopulation metaPopulation, Guid id, string tag, string singularName, string assignedPluralName)
+    protected Unit(IStaticMetaPopulation metaPopulation, Guid id, string tag, string singularName, string assignedPluralName)
     {
         this.Attributes = new MetaExtension();
         this.MetaPopulation = metaPopulation;
@@ -30,7 +30,7 @@ public abstract class Unit : IUnit, IObjectType, IMetaIdentifiableObject
 
     IMetaPopulation IMetaIdentifiableObject.MetaPopulation => this.MetaPopulation;
 
-    public MetaPopulation MetaPopulation { get; }
+    public IStaticMetaPopulation MetaPopulation { get; }
 
     public Guid Id { get; }
 
@@ -73,12 +73,11 @@ public abstract class Unit : IUnit, IObjectType, IMetaIdentifiableObject
         return this.Tag;
     }
 
-    internal virtual void Validate(ValidationLog validationLog)
+    void IStaticMetaIdentifiableObject.Validate(ValidationLog validationLog)
     {
         this.ValidateObjectType(validationLog);
     }
-
-
+    
     public bool IsBinary => this.Tag == UnitTags.Binary;
 
     public bool IsBoolean => this.Tag == UnitTags.Boolean;

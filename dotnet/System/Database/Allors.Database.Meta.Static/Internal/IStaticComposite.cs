@@ -8,7 +8,7 @@ namespace Allors.Database.Meta;
 
 using System.Collections.Generic;
 
-public interface IStaticComposite : IComposite
+public interface IStaticComposite : IStaticObjectType, IComposite
 {
     new IReadOnlyList<IInterface> Supertypes { get; internal set; }
 
@@ -22,5 +22,5 @@ public interface IStaticComposite : IComposite
 
     new IReadOnlyDictionary<IMethodType, ICompositeMethodType> CompositeMethodTypeByMethodType { get; internal set; }
 
-    IRoleType DerivedKeyRoleType { get; set; }
+    internal IRoleType DerivedKeyRoleType { get; set; }
 }

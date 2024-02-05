@@ -13,88 +13,99 @@ using System;
 ///     This is also called the 'active', 'controlling' or 'owning' side.
 ///     AssociationTypes can only have composite <see cref="ObjectType" />s.
 /// </summary>
-public abstract class AssociationType : IAssociationType, IComparable
+public abstract class AssociationType : IStaticAssociationType, IComparable
 {
+    private readonly IStaticComposite objectType;
+    private IStaticRelationType relationType;
+
     /// <summary>
     ///     Used to create property names.
     /// </summary>
     private const string Where = "Where";
 
-    protected AssociationType(IComposite objectType)
+    protected AssociationType(IStaticComposite objectType)
     {
         this.Attributes = new MetaExtension();
-        this.ObjectType = objectType;
+        this.objectType = objectType;
     }
 
     public dynamic Attributes { get; }
 
-    internal IComposite ObjectType { get; }
+    IObjectType IRelationEndType.ObjectType => this.objectType;
 
-    internal RoleType RoleType => this.RelationType.RoleType;
+    IComposite IAssociationType.ObjectType => this.objectType;
 
-    internal RelationType RelationType { get; set; }
-    
+    IStaticComposite IStaticAssociationType.ObjectType
+    {
+        get => this.objectType;
+    }
+
+    IRoleType IAssociationType.RoleType => this.relationType.RoleType;
+
+    IStaticRoleType IStaticAssociationType.RoleType => this.relationType.RoleType;
+
+    public IRelationType RelationType => this.relationType;
+
+    IStaticRelationType IStaticAssociationType.RelationType
+    {
+        get => this.relationType;
+        set => this.relationType = value;
+    }
+
     string IRelationEndType.Name => this.Name;
+
+    private string Name => this.IsMany ? this.PluralName : this.SingularName;
 
     string IRelationEndType.SingularName => this.SingularName;
 
     string IRelationEndType.SingularFullName => this.SingularName;
 
-    string IRelationEndType.PluralName => this.ObjectType.PluralName + Where + this.RoleType.SingularName;
+    private string SingularName => this.objectType.SingularName + Where + this.relationType.RoleType.SingularName;
+
+    string IRelationEndType.PluralName => this.objectType.PluralName + Where + this.relationType.RoleType.SingularName;
 
     string IRelationEndType.PluralFullName => this.PluralName;
 
-    IObjectType IRelationEndType.ObjectType => this.ObjectType;
-
-    IComposite IAssociationType.ObjectType => this.ObjectType;
-
+    private string PluralName => this.objectType.PluralName + Where + this.relationType.RoleType.SingularName;
+    
     bool IRelationEndType.IsOne => !this.IsMany;
 
     bool IRelationEndType.IsMany =>
-        this.RelationType.Multiplicity switch
+        this.relationType.Multiplicity switch
         {
             Multiplicity.ManyToOne => true,
             Multiplicity.ManyToMany => true,
             _ => false,
         };
 
-    IRoleType IAssociationType.RoleType => this.RoleType;
-
-    IRelationType IAssociationType.RelationType => this.RelationType;
-
-    private string Name => this.IsMany ? this.PluralName : this.SingularName;
-
-    private string SingularName => this.ObjectType.SingularName + Where + this.RoleType.SingularName;
-
-    private string PluralName => this.ObjectType.PluralName + Where + this.RoleType.SingularName;
 
     private string ValidationName => "association type " + this.Name;
 
     private bool IsMany =>
-        this.RelationType.Multiplicity switch
+        this.relationType.Multiplicity switch
         {
             Multiplicity.ManyToOne => true,
             Multiplicity.ManyToMany => true,
             _ => false,
         };
 
-    public int CompareTo(object other) => this.RelationType.Id.CompareTo((other as AssociationType)?.RelationType.Id);
+    public int CompareTo(object other) => this.relationType.Id.CompareTo((other as AssociationType)?.relationType.Id);
 
-    public override bool Equals(object other) => this.RelationType.Id.Equals((other as AssociationType)?.RelationType.Id);
+    public override bool Equals(object other) => this.relationType.Id.Equals((other as AssociationType)?.relationType.Id);
 
-    public override int GetHashCode() => this.RelationType.Id.GetHashCode();
+    public override int GetHashCode() => this.relationType.Id.GetHashCode();
 
-    public override string ToString() => $"{this.RoleType.ObjectType.Name}.{this.Name}";
+    public override string ToString() => $"{this.relationType.RoleType.ObjectType.Name}.{this.Name}";
 
-    internal void Validate(ValidationLog validationLog)
+    void IStaticRelationEndType.Validate(ValidationLog validationLog)
     {
-        if (this.ObjectType == null)
+        if (this.objectType == null)
         {
             var message = this.ValidationName + " has no object type";
             validationLog.AddError(message, this, ValidationKind.Required, "AssociationType.IObjectType");
         }
 
-        if (this.RelationType == null)
+        if (this.relationType == null)
         {
             var message = this.ValidationName + " has no relation type";
             validationLog.AddError(message, this, ValidationKind.Required, "AssociationType.RelationType");

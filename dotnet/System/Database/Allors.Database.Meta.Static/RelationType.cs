@@ -15,11 +15,14 @@ using Allors.Text;
 ///     A <see cref="RelationType" /> defines the state and behavior for
 ///     a set of <see cref="AssociationType" />s and <see cref="RoleType" />s.
 /// </summary>
-public sealed class RelationType : IRelationType, IMetaIdentifiableObject
+public sealed class RelationType : IStaticRelationType, IMetaIdentifiableObject
 {
     private string[] derivedWorkspaceNames;
 
-    public RelationType(MetaPopulation metaPopulation, Guid id, Multiplicity? assignedMultiplicity, bool isDerived, AssociationType associationType, RoleType roleType)
+    private IStaticAssociationType associationType;
+    private IStaticRoleType roleType;
+
+    public RelationType(IStaticMetaPopulation metaPopulation, Guid id, Multiplicity? assignedMultiplicity, bool isDerived, AssociationType associationType, RoleType roleType)
     {
         this.Attributes = new MetaExtension();
         this.MetaPopulation = metaPopulation;
@@ -30,15 +33,15 @@ public sealed class RelationType : IRelationType, IMetaIdentifiableObject
         this.Multiplicity = roleType.ObjectType.IsUnit ? Multiplicity.OneToOne : assignedMultiplicity ?? Multiplicity.ManyToOne;
         this.AssignedWorkspaceNames = Array.Empty<string>();
 
-        this.AssociationType = associationType;
-        this.AssociationType.RelationType = this;
+        this.associationType = associationType;
+        this.associationType.RelationType = this;
 
-        this.RoleType = roleType;
-        this.RoleType.RelationType = this;
-        this.RoleType.SingularName = this.RoleType.AssignedSingularName ?? this.RoleType.ObjectType.SingularName;
-        this.RoleType.PluralName = this.RoleType.AssignedPluralName ?? (this.RoleType.AssignedSingularName != null ? Pluralizer.Pluralize(this.RoleType.AssignedSingularName) : this.RoleType.ObjectType.PluralName);
+        this.roleType = roleType;
+        this.roleType.RelationType = this;
+        this.roleType.SingularName = this.roleType.AssignedSingularName ?? this.roleType.ObjectType.SingularName;
+        this.roleType.PluralName = this.roleType.AssignedPluralName ?? (this.roleType.AssignedSingularName != null ? Pluralizer.Pluralize(this.roleType.AssignedSingularName) : this.roleType.ObjectType.PluralName);
 
-        this.RoleType.CompositeRoleType = new CompositeRoleType(this.AssociationType.ObjectType, this.RoleType);
+        this.roleType.CompositeRoleType = new CompositeRoleType(this.associationType.ObjectType, this.roleType);
 
         this.MetaPopulation.OnCreated(this);
     }
@@ -47,12 +50,17 @@ public sealed class RelationType : IRelationType, IMetaIdentifiableObject
 
     IMetaPopulation IMetaIdentifiableObject.MetaPopulation => this.MetaPopulation;
 
-    public MetaPopulation MetaPopulation { get; }
+    public IStaticMetaPopulation MetaPopulation { get; }
 
     public Guid Id { get; }
 
     public string Tag { get; set; }
 
+    // TODO: use object initializers
+    public IRoleType RoleType => this.roleType;
+
+    // TODO: use object initializers
+    public IAssociationType AssociationType => this.associationType;
 
 
 
@@ -60,17 +68,17 @@ public sealed class RelationType : IRelationType, IMetaIdentifiableObject
 
     public Multiplicity Multiplicity { get; }
 
-    IAssociationType IRelationType.AssociationType => this.AssociationType;
+    IAssociationType IRelationType.AssociationType => this.associationType;
 
-    public AssociationType AssociationType { get; }
+    IStaticAssociationType IStaticRelationType.AssociationType { get => this.associationType; set => this.associationType = value; }
 
-    IRoleType IRelationType.RoleType => this.RoleType;
+    IRoleType IRelationType.RoleType => this.roleType;
 
-    public RoleType RoleType { get; }
+    IStaticRoleType IStaticRelationType.RoleType { get => this.roleType; set => this.roleType = value; }
 
-    public string Name => this.AssociationType.ObjectType + this.RoleType.SingularName;
+    public string Name => this.associationType.ObjectType + this.roleType.SingularName;
 
-    private string ReverseName => this.RoleType.SingularName + this.AssociationType.ObjectType;
+    private string ReverseName => this.roleType.SingularName + this.associationType.ObjectType;
 
     public IEnumerable<string> WorkspaceNames
     {
@@ -89,9 +97,9 @@ public sealed class RelationType : IRelationType, IMetaIdentifiableObject
     {
         get
         {
-            if (this.AssociationType?.ObjectType != null && this.RoleType?.ObjectType != null)
+            if (this.associationType?.ObjectType != null && this.roleType?.ObjectType != null)
             {
-                return this.AssociationType.ObjectType.ExclusiveClass != null && this.RoleType.ObjectType is IComposite roleCompositeType && roleCompositeType.ExclusiveClass != null;
+                return this.associationType.ObjectType.ExclusiveClass != null && this.roleType.ObjectType is IComposite roleCompositeType && roleCompositeType.ExclusiveClass != null;
             }
 
             return false;
@@ -118,11 +126,11 @@ public sealed class RelationType : IRelationType, IMetaIdentifiableObject
         }
     }
 
-    internal void DeriveWorkspaceNames() =>
+    void IStaticRelationType.DeriveWorkspaceNames() =>
         this.derivedWorkspaceNames = this.AssignedWorkspaceNames != null
             ? this.AssignedWorkspaceNames
-                .Intersect(this.AssociationType.ObjectType.Classes.SelectMany(v => v.WorkspaceNames))
-                .Intersect(this.RoleType.ObjectType switch
+                .Intersect(this.associationType.ObjectType.Classes.SelectMany(v => v.WorkspaceNames))
+                .Intersect(this.roleType.ObjectType switch
                 {
                     Unit unit => unit.WorkspaceNames,
                     Interface @interface => @interface.Classes.SelectMany(v => v.WorkspaceNames),
@@ -132,11 +140,11 @@ public sealed class RelationType : IRelationType, IMetaIdentifiableObject
                 .ToArray()
             : Array.Empty<string>();
 
-    internal void Validate(ValidationLog validationLog)
+    void IStaticMetaIdentifiableObject.Validate(ValidationLog validationLog)
     {
         this.ValidateIdentity(validationLog);
 
-        if (this.AssociationType != null && this.RoleType != null)
+        if (this.associationType != null && this.roleType != null)
         {
             if (validationLog.ExistRelationName(this.Name))
             {
@@ -170,7 +178,7 @@ public sealed class RelationType : IRelationType, IMetaIdentifiableObject
                 validationLog.AddError(message, this, ValidationKind.Unique, "RelationType.Name");
             }
         }
-        else if (this.AssociationType == null)
+        else if (this.associationType == null)
         {
             var message = this.ValidationName + " has no association type";
             validationLog.AddError(message, this, ValidationKind.Required, "RelationType.AssociationType");
@@ -181,8 +189,8 @@ public sealed class RelationType : IRelationType, IMetaIdentifiableObject
             validationLog.AddError(message, this, ValidationKind.Required, "RelationType.RoleType");
         }
 
-        this.AssociationType?.Validate(validationLog);
+        this.associationType?.Validate(validationLog);
 
-        this.RoleType?.Validate(validationLog);
+        this.roleType?.Validate(validationLog);
     }
 }

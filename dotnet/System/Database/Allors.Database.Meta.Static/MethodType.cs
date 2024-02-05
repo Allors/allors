@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-public sealed class MethodType : IMethodType, IComparable, IMetaIdentifiableObject
+public sealed class MethodType : IStaticMethodType, IComparable, IMetaIdentifiableObject
 {
     private string[] derivedWorkspaceNames;
 
@@ -32,7 +32,7 @@ public sealed class MethodType : IMethodType, IComparable, IMetaIdentifiableObje
 
     IMetaPopulation IMetaIdentifiableObject.MetaPopulation => this.MetaPopulation;
 
-    public MetaPopulation MetaPopulation { get; }
+    public IStaticMetaPopulation MetaPopulation { get; }
 
     public Guid Id { get; }
 
@@ -80,7 +80,7 @@ public sealed class MethodType : IMethodType, IComparable, IMetaIdentifiableObje
 
     public override string ToString() => this.Name;
 
-    public void Validate(ValidationLog validationLog)
+    void  IStaticMetaIdentifiableObject.Validate(ValidationLog validationLog)
     {
         if (string.IsNullOrEmpty(this.Name))
         {
@@ -89,14 +89,14 @@ public sealed class MethodType : IMethodType, IComparable, IMetaIdentifiableObje
         }
     }
 
-    internal void DeriveWorkspaceNames() =>
+    void IStaticMethodType.DeriveWorkspaceNames() =>
         this.derivedWorkspaceNames = this.AssignedWorkspaceNames != null
             ? this.AssignedWorkspaceNames
                 .Intersect(this.ObjectType.Classes.SelectMany(v => v.WorkspaceNames))
                 .ToArray()
             : Array.Empty<string>();
 
-    internal void InitializeCompositeMethodTypes(Dictionary<IComposite, HashSet<ICompositeMethodType>> compositeMethodTypesByComposite)
+    void IStaticMethodType.InitializeCompositeMethodTypes(Dictionary<IComposite, HashSet<ICompositeMethodType>> compositeMethodTypesByComposite)
     {
         var composite = this.ObjectType;
         compositeMethodTypesByComposite[composite].Add(this.CompositeMethodType);

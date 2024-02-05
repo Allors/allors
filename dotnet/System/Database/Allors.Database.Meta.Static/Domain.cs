@@ -10,7 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-public sealed class Domain : IDomain, IMetaIdentifiableObject
+public sealed class Domain : IStaticDomain, IMetaIdentifiableObject
 {
     public Domain(MetaPopulation metaPopulation, Guid id, string name, params Domain[] directSuperdomains)
     {
@@ -19,7 +19,7 @@ public sealed class Domain : IDomain, IMetaIdentifiableObject
         this.Id = id;
         this.Tag = id.Tag();
         this.Name = name;
-        this.DirectSuperdomains = directSuperdomains ?? MetaPopulation.EmptyDomains;
+        this.DirectSuperdomains = directSuperdomains ?? Array.Empty<IDomain>();
 
         this.MetaPopulation.OnCreated(this);
     }
@@ -28,11 +28,8 @@ public sealed class Domain : IDomain, IMetaIdentifiableObject
 
     IMetaPopulation IMetaIdentifiableObject.MetaPopulation => this.MetaPopulation;
 
-    public MetaPopulation MetaPopulation { get; }
-
-
-
-
+    public IStaticMetaPopulation MetaPopulation { get; }
+    
     public Guid Id { get; }
 
     public string Tag { get; set; }
@@ -73,7 +70,7 @@ public sealed class Domain : IDomain, IMetaIdentifiableObject
     ///     Validates the domain.
     /// </summary>
     /// <param name="validationLog">The validation.</param>
-    internal void Validate(ValidationLog validationLog)
+    void IStaticMetaIdentifiableObject.Validate(ValidationLog validationLog)
     {
         this.ValidateIdentity(validationLog);
 
@@ -106,7 +103,7 @@ public sealed class Domain : IDomain, IMetaIdentifiableObject
         }
     }
 
-    internal void InitializeSuperdomains()
+    void IStaticDomain.InitializeSuperdomains()
     {
         var superdomains = new HashSet<Domain>();
         foreach (var directSuperdomain in this.DirectSuperdomains.Cast<Domain>())

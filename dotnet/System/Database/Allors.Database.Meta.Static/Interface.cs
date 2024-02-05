@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Text;
 
-public abstract class Interface : IInterface, IStaticComposite, IObjectType, IMetaIdentifiableObject
+public abstract class Interface : IStaticInterface, IStaticComposite, IObjectType, IMetaIdentifiableObject
 {
     private string[] derivedWorkspaceNames;
 
@@ -21,7 +21,7 @@ public abstract class Interface : IInterface, IStaticComposite, IObjectType, IMe
     private IReadOnlyList<IClass> subclasses;
     private IClass exclusiveClass;
 
-    protected Interface(MetaPopulation metaPopulation, Guid id, IReadOnlyList<Interface> directSupertypes, string singularName, string assignedPluralName)
+    protected Interface(IStaticMetaPopulation metaPopulation, Guid id, IReadOnlyList<Interface> directSupertypes, string singularName, string assignedPluralName)
     {
         this.Attributes = new MetaExtension();
         this.MetaPopulation = metaPopulation;
@@ -48,7 +48,7 @@ public abstract class Interface : IInterface, IStaticComposite, IObjectType, IMe
 
     IMetaPopulation IMetaIdentifiableObject.MetaPopulation => this.MetaPopulation;
 
-    public MetaPopulation MetaPopulation { get; }
+    public IStaticMetaPopulation MetaPopulation { get; }
 
     public Guid Id { get; }
 
@@ -149,7 +149,7 @@ public abstract class Interface : IInterface, IStaticComposite, IObjectType, IMe
         set => this.compositeMethodTypeByMethodType = value;
     }
 
-    public void Validate(ValidationLog validationLog)
+    void  IStaticMetaIdentifiableObject.Validate(ValidationLog validationLog)
     {
         this.ValidateObjectType(validationLog);
         this.ValidateComposite(validationLog);
@@ -171,26 +171,26 @@ public abstract class Interface : IInterface, IStaticComposite, IObjectType, IMe
     public bool IsAssignableFrom(IComposite objectType) =>
         this.Equals(objectType) || this.subtypes.Contains(objectType);
 
-    internal void DeriveWorkspaceNames() =>
+    void IStaticInterface.DeriveWorkspaceNames() =>
         this.derivedWorkspaceNames = ((IInterface)this)
             .RoleTypes.SelectMany(v => v.RelationType.WorkspaceNames)
             .Union(((IInterface)this).AssociationTypes.SelectMany(v => v.RelationType.WorkspaceNames))
             .Union(this.MethodTypes.SelectMany(v => v.WorkspaceNames))
             .ToArray();
 
-    internal void InitializeDirectSubtypes()
+    void IStaticInterface.InitializeDirectSubtypes()
     {
         this.directSubtypes = this.MetaPopulation.Composites.Where(v => v.DirectSupertypes.Contains(this)).ToArray();
     }
 
-    internal void InitializeSubtypes()
+    void IStaticInterface.InitializeSubtypes()
     {
         var subtypes = new HashSet<IComposite>();
         this.InitializeSubtypesRecursively(this, subtypes);
         this.subtypes = subtypes.ToArray();
     }
 
-    internal void InitializeSubclasses()
+    void IStaticInterface.InitializeSubclasses()
     {
         var subclasses = new HashSet<Class>();
         foreach (var subType in this.subtypes.OfType<IClass>())
@@ -201,12 +201,12 @@ public abstract class Interface : IInterface, IStaticComposite, IObjectType, IMe
         this.subclasses = subclasses.ToArray();
     }
 
-    internal void InitializeComposites()
+    void IStaticInterface.InitializeComposites()
     {
         this.composites = this.subtypes.Append(this).ToArray();
     }
 
-    internal void InitializeExclusiveSubclass() => this.exclusiveClass = this.subclasses.Count == 1 ? this.subclasses.First() : null;
+    void IStaticInterface.InitializeExclusiveSubclass() => this.exclusiveClass = this.subclasses.Count == 1 ? this.subclasses.First() : null;
 
     private void InitializeSubtypesRecursively(IObjectType type, ISet<IComposite> subtypes)
     {

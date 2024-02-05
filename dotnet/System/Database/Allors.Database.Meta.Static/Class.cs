@@ -11,11 +11,11 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using Text;
 
-public abstract class Class : IClass, IStaticComposite, IObjectType, IMetaIdentifiableObject
+public abstract class Class : IStaticClass, IStaticComposite, IObjectType, IMetaIdentifiableObject
 {
     private ConcurrentDictionary<IMethodType, Action<object, object>[]> actionsByMethodType;
 
-    protected Class(MetaPopulation metaPopulation, Guid id, Interface[] directSupertypes, string singularName, string assignedPluralName)
+    protected Class(IStaticMetaPopulation metaPopulation, Guid id, Interface[] directSupertypes, string singularName, string assignedPluralName)
     {
         // TODO: Create single element IReadOnlyList
         this.Attributes = new MetaExtension();
@@ -28,8 +28,8 @@ public abstract class Class : IClass, IStaticComposite, IObjectType, IMetaIdenti
         this.DirectSupertypes = directSupertypes;
         this.Composites = new[] { this };
         this.Classes = new[] { this };
-        this.DirectSubtypes = MetaPopulation.EmptyComposites;
-        this.Subtypes = MetaPopulation.EmptyComposites;
+        this.DirectSubtypes = Array.Empty<IComposite>();
+        this.Subtypes = Array.Empty<IComposite>();
         metaPopulation.OnCreated(this);
     }
 
@@ -47,7 +47,7 @@ public abstract class Class : IClass, IStaticComposite, IObjectType, IMetaIdenti
 
     IMetaPopulation IMetaIdentifiableObject.MetaPopulation => this.MetaPopulation;
 
-    public MetaPopulation MetaPopulation { get; }
+    public IStaticMetaPopulation MetaPopulation { get; }
 
     public Guid Id { get; }
 
@@ -148,7 +148,7 @@ public abstract class Class : IClass, IStaticComposite, IObjectType, IMetaIdenti
         set => this.compositeMethodTypeByMethodType = value;
     }
 
-    public void Validate(ValidationLog validationLog)
+    void  IStaticMetaIdentifiableObject.Validate(ValidationLog validationLog)
     {
         this.ValidateObjectType(validationLog);
         this.ValidateComposite(validationLog);
