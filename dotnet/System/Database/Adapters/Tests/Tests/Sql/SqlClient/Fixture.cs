@@ -6,15 +6,17 @@
 namespace Allors.Database.Adapters.Sql.SqlClient;
 
 using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
 
-public class Fixture<T> : FixtureBase<T>
+public class Fixture<T>
 {
+    private const string ConnectionStringKey = "ConnectionStrings:sqlclient";
 
     public Fixture()
     {
-        var connectionString = this.Configuration[this.ConnectionStringCreateKey];
-        
+        this.Config = new Config();
+
+        var connectionString = this.ConnectionStringBuilder.ConnectionString;
+
         using var connection = new SqlConnection(connectionString);
         connection.Open();
         using var command = connection.CreateCommand();
@@ -24,7 +26,16 @@ public class Fixture<T> : FixtureBase<T>
         command.ExecuteNonQuery();
     }
 
-    public string ConnectionStringCreateKey => "ConnectionStrings:sqlclient-create";
+    private Config Config { get; }
 
-    public override string ConnectionStringKey => "ConnectionStrings:sqlclient";
+    private SqlConnectionStringBuilder ConnectionStringBuilder
+    {
+        get
+        {
+            var connectionString = this.Config.Root[ConnectionStringKey];
+            return new SqlConnectionStringBuilder(connectionString);
+        }
+    }
+    private string Database => typeof(T).Name.ToLowerInvariant();
 }
+

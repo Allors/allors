@@ -16,16 +16,21 @@ using Microsoft.Data.SqlClient;
 
 public class Profile : Adapters.Profile
 {
+    private const string ConnectionStringKey = "ConnectionStrings:sqlclient";
+
+    private readonly string database;
     private readonly ICacheFactory cacheFactory;
     private readonly IConnectionFactory connectionFactory;
 
     private readonly Prefetchers prefetchers = new();
-
-    public Profile(string connectionString, IConnectionFactory connectionFactory = null, ICacheFactory cacheFactory = null)
+    
+    public Profile(string database, IConnectionFactory connectionFactory = null, ICacheFactory cacheFactory = null)
     {
-        this.ConnectionString = connectionString;
+        this.database = database.ToLowerInvariant();
         this.connectionFactory = connectionFactory;
         this.cacheFactory = cacheFactory;
+
+        this.Config = new Config();
     }
 
     public override Action[] Markers
@@ -50,8 +55,6 @@ public class Profile : Adapters.Profile
             return markers.ToArray();
         }
     }
-
-    protected string ConnectionString { get; }
 
     public override IDatabase CreateDatabase()
     {
@@ -263,6 +266,32 @@ AND column_name=@columnName";
 
                 return count != 0;
             }
+        }
+    }
+
+    public string ConnectionString
+    {
+        get
+        {
+            var builder = this.ConnectionStringBuilder;
+            builder.InitialCatalog = this.database;
+            return builder.ConnectionString;
+        }
+    }
+
+    private Config Config { get; set; }
+
+    private SqlConnectionStringBuilder ConnectionStringBuilder
+    {
+        get
+        {
+            var connectionString = this.Config.Root[ConnectionStringKey];
+            var builder = new SqlConnectionStringBuilder(connectionString)
+            {
+                Pooling = false
+            };
+
+            return builder;
         }
     }
 }

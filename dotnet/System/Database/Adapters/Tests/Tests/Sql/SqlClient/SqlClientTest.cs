@@ -13,7 +13,7 @@ public class SqlClientTest : IDisposable, IClassFixture<Fixture<SqlClientTest>>
 {
     private readonly Profile profile;
 
-    public SqlClientTest(Fixture<CacheTest> fixture) => this.profile = new Profile(fixture.ConnectionString);
+    public SqlClientTest() => this.profile = new Profile(this.GetType().Name);
 
     protected IProfile Profile => this.profile;
 

@@ -11,7 +11,7 @@ public class ServicesTest : Adapters.ServicesTest, IClassFixture<Fixture<Service
 {
     private readonly Profile profile;
 
-    public ServicesTest(Fixture<CacheTest> fixture) => this.profile = new Profile(fixture.ConnectionString);
+    public ServicesTest() => this.profile = new Profile(this.GetType().Name);
 
     protected override IProfile Profile => this.profile;
 
