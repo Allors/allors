@@ -19,7 +19,7 @@ public abstract class MetaPopulation : IMetaPopulation
 
     private Dictionary<Guid, IMetaIdentifiableObject> metaIdentifiableObjectById;
     private Dictionary<string, IMetaIdentifiableObject> metaIdentifiableObjectByTag;
-    private Dictionary<string, Composite> compositeByLowercaseName;
+    private Dictionary<string, IComposite> compositeByLowercaseName;
 
     private string[] derivedWorkspaceNames;
 
@@ -54,7 +54,7 @@ public abstract class MetaPopulation : IMetaPopulation
 
     IReadOnlyList<IComposite> IMetaPopulation.Composites => this.Composites;
 
-    public Composite[] Composites { get; set; }
+    public IComposite[] Composites { get; set; }
 
     IReadOnlyList<IUnit> IMetaPopulation.Units => this.Units;
 
@@ -93,7 +93,7 @@ public abstract class MetaPopulation : IMetaPopulation
 
     IComposite IMetaPopulation.FindCompositeByName(string name) => this.FindCompositeByName(name);
 
-    public Composite FindCompositeByName(string name)
+    public IComposite FindCompositeByName(string name)
     {
         this.compositeByLowercaseName.TryGetValue(name.ToLowerInvariant(), out var composite);
         return composite;
@@ -156,7 +156,7 @@ public abstract class MetaPopulation : IMetaPopulation
         this.RelationTypes = this.metaObjects.OfType<RelationType>().ToArray();
         this.MethodTypes = this.metaObjects.OfType<MethodType>().ToArray();
 
-        this.Composites = this.Classes.Cast<Composite>().Union(this.Interfaces).ToArray();
+        this.Composites = this.Classes.Cast<IComposite>().Union(this.Interfaces).ToArray();
 
         // Domains
         foreach (var domain in this.Domains)
@@ -171,7 +171,7 @@ public abstract class MetaPopulation : IMetaPopulation
         }
 
         // Supertypes
-        foreach (var type in this.Composites)
+        foreach (IStaticComposite type in this.Composites)
         {
             type.InitializeSupertypes();
         }
@@ -210,13 +210,13 @@ public abstract class MetaPopulation : IMetaPopulation
             .ToDictionary(g => (IObjectType)g.Key, g => new HashSet<IAssociationType>(g.Select(v => v.AssociationType)));
 
         // RoleTypes
-        foreach (var composite in this.Composites)
+        foreach (IStaticComposite composite in this.Composites)
         {
             composite.InitializeRoleTypes(roleTypesByAssociationTypeObjectType);
         }
 
         // AssociationTypes
-        foreach (var composite in this.Composites)
+        foreach (IStaticComposite composite in this.Composites)
         {
             composite.InitializeAssociationTypes(associationTypesByRoleTypeObjectType);
         }
@@ -226,7 +226,7 @@ public abstract class MetaPopulation : IMetaPopulation
             .GroupBy(v => v.ObjectType)
             .ToDictionary(g => (IStaticComposite)g.Key, g => new HashSet<MethodType>(g));
 
-        foreach (var composite in this.Composites)
+        foreach (IStaticComposite composite in this.Composites)
         {
             composite.InitializeMethodTypes(methodTypeByClass);
         }
@@ -238,7 +238,7 @@ public abstract class MetaPopulation : IMetaPopulation
             relationType.RoleType.InitializeCompositeRoleTypes(compositeRoleTypesByComposite);
         }
 
-        foreach (var composite in this.Composites)
+        foreach (IStaticComposite composite in this.Composites)
         {
             composite.InitializeCompositeRoleTypes(compositeRoleTypesByComposite);
         }
@@ -250,7 +250,7 @@ public abstract class MetaPopulation : IMetaPopulation
             methodType.InitializeCompositeMethodTypes(compositeMethodTypesByComposite);
         }
 
-        foreach (var composite in this.Composites)
+        foreach (IStaticComposite composite in this.Composites)
         {
             composite.InitializeCompositeMethodTypes(compositeMethodTypesByComposite);
         }
@@ -296,7 +296,7 @@ public abstract class MetaPopulation : IMetaPopulation
             roleType.DeriveIsUnique();
         }
 
-        foreach (var composite in this.Composites)
+        foreach (IStaticComposite composite in this.Composites)
         {
             composite.DeriveKeyRoleType();
         }

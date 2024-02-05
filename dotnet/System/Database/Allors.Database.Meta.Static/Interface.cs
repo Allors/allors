@@ -9,8 +9,9 @@ namespace Allors.Database.Meta;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Text;
 
-public abstract class Interface : Composite, IInterface
+public abstract class Interface : IInterface, IStaticComposite, IObjectType, IMetaIdentifiableObject
 {
     private string[] derivedWorkspaceNames;
 
@@ -21,22 +22,153 @@ public abstract class Interface : Composite, IInterface
     private IClass exclusiveClass;
 
     protected Interface(MetaPopulation metaPopulation, Guid id, IReadOnlyList<Interface> directSupertypes, string singularName, string assignedPluralName)
-        : base(metaPopulation, id, directSupertypes, singularName, assignedPluralName) =>
+    {
+        this.Attributes = new MetaExtension();
+        this.MetaPopulation = metaPopulation;
+        this.Id = id;
+        this.Tag = id.Tag();
+        this.SingularName = singularName;
+        this.AssignedPluralName = !string.IsNullOrEmpty(assignedPluralName) ? assignedPluralName : null;
+        this.PluralName = this.AssignedPluralName != null ? this.AssignedPluralName : Pluralizer.Pluralize(this.SingularName);
+        this.DirectSupertypes = directSupertypes;
         metaPopulation.OnCreated(this);
+    }
+    
+    private IReadOnlyList<IAssociationType> associationTypes;
+    private IReadOnlyList<IRoleType> roleTypes;
+    private IReadOnlyList<IMethodType> methodTypes;
+    private IReadOnlyList<IInterface> supertypes;
 
-    public override IReadOnlyList<IComposite> DirectSubtypes => this.directSubtypes;
+    private IReadOnlyDictionary<IRoleType, ICompositeRoleType> compositeRoleTypeByRoleType;
+    private IReadOnlyDictionary<IMethodType, ICompositeMethodType> compositeMethodTypeByMethodType;
 
-    public override IReadOnlyList<IComposite> Composites => this.composites;
+    private IRoleType derivedKeyRoleType;
 
-    public override IReadOnlyList<IClass> Classes => this.subclasses;
+    public dynamic Attributes { get; }
 
-    public override IReadOnlyList<IComposite> Subtypes => this.subtypes;
+    IMetaPopulation IMetaIdentifiableObject.MetaPopulation => this.MetaPopulation;
 
-    public override IClass ExclusiveClass => this.exclusiveClass;
+    public MetaPopulation MetaPopulation { get; }
 
-    public override IEnumerable<string> WorkspaceNames => this.derivedWorkspaceNames;
+    public Guid Id { get; }
 
-    public override bool IsAssignableFrom(IComposite objectType) =>
+    public string Tag { get; set; }
+
+    public Type BoundType { get; set; }
+
+    public string Name => this.SingularName;
+
+    public string SingularName { get; }
+
+    public string AssignedPluralName { get; }
+
+    public string PluralName { get; }
+
+    public bool IsUnit => this is IUnit;
+
+    public bool IsComposite => this is IComposite;
+
+    public bool IsInterface => this is IInterface;
+
+    public bool IsClass => this is IClass;
+
+    public override bool Equals(object other) => this.Id.Equals((other as IMetaIdentifiableObject)?.Id);
+
+    public override int GetHashCode() => this.Id.GetHashCode();
+
+    public int CompareTo(IObjectType other)
+    {
+        return this.Id.CompareTo(other?.Id);
+    }
+
+    public override string ToString()
+    {
+        if (!string.IsNullOrEmpty(this.SingularName))
+        {
+            return this.SingularName;
+        }
+
+        return this.Tag;
+    }
+
+    public IReadOnlyList<IInterface> DirectSupertypes { get; }
+
+    IReadOnlyList<IInterface> IComposite.Supertypes => this.supertypes;
+
+    IReadOnlyList<IInterface> IStaticComposite.Supertypes
+    {
+        get => this.supertypes;
+        set => this.supertypes = value;
+    }
+
+    IReadOnlyList<IAssociationType> IComposite.AssociationTypes => this.associationTypes;
+
+    IReadOnlyList<IAssociationType> IStaticComposite.AssociationTypes
+    {
+        get => this.associationTypes;
+        set => this.associationTypes = value;
+    }
+
+    IReadOnlyList<IRoleType> IComposite.RoleTypes => this.roleTypes;
+
+    IReadOnlyList<IRoleType> IStaticComposite.RoleTypes
+    {
+        get => this.roleTypes;
+        set => this.roleTypes = value;
+    }
+
+    public IReadOnlyDictionary<IRoleType, ICompositeRoleType> CompositeRoleTypeByRoleType => this.compositeRoleTypeByRoleType;
+
+    IReadOnlyDictionary<IRoleType, ICompositeRoleType> IStaticComposite.CompositeRoleTypeByRoleType
+    {
+        get => this.compositeRoleTypeByRoleType;
+        set => this.compositeRoleTypeByRoleType = value;
+    }
+
+    public IRoleType KeyRoleType => this.derivedKeyRoleType;
+
+    public IReadOnlyList<IMethodType> MethodTypes => this.methodTypes;
+
+    IReadOnlyList<IMethodType> IStaticComposite.MethodTypes
+    {
+        get => this.methodTypes;
+        set => this.methodTypes = value;
+    }
+
+    public IReadOnlyDictionary<IMethodType, ICompositeMethodType> CompositeMethodTypeByMethodType => this.compositeMethodTypeByMethodType;
+
+    IRoleType IStaticComposite.DerivedKeyRoleType
+    {
+        get => this.derivedKeyRoleType;
+        set => this.derivedKeyRoleType = value;
+    }
+
+    IReadOnlyDictionary<IMethodType, ICompositeMethodType> IStaticComposite.CompositeMethodTypeByMethodType
+    {
+        get => this.compositeMethodTypeByMethodType;
+        set => this.compositeMethodTypeByMethodType = value;
+    }
+
+    public void Validate(ValidationLog validationLog)
+    {
+        this.ValidateObjectType(validationLog);
+        this.ValidateComposite(validationLog);
+    }
+
+
+    public IReadOnlyList<IComposite> DirectSubtypes => this.directSubtypes;
+
+    public IReadOnlyList<IComposite> Composites => this.composites;
+
+    public IReadOnlyList<IClass> Classes => this.subclasses;
+
+    public IReadOnlyList<IComposite> Subtypes => this.subtypes;
+
+    public IClass ExclusiveClass => this.exclusiveClass;
+
+    public IEnumerable<string> WorkspaceNames => this.derivedWorkspaceNames;
+
+    public bool IsAssignableFrom(IComposite objectType) =>
         this.Equals(objectType) || this.subtypes.Contains(objectType);
 
     internal void DeriveWorkspaceNames() =>
@@ -78,7 +210,7 @@ public abstract class Interface : Composite, IInterface
 
     private void InitializeSubtypesRecursively(IObjectType type, ISet<IComposite> subtypes)
     {
-        foreach (var directSubtype in this.DirectSubtypes.Cast<Composite>())
+        foreach (var directSubtype in this.DirectSubtypes.Cast<IComposite>())
         {
             if (!Equals(directSubtype, type))
             {

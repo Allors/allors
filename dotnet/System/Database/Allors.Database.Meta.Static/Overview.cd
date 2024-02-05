@@ -17,31 +17,19 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Database.Meta.Class">
-    <Position X="12.25" Y="10.5" Width="2.75" />
+    <Position X="12.25" Y="0.75" Width="2.75" />
     <Members>
       <Method Name="Class" Hidden="true" />
       <Method Name="IsAssignableFrom" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAAAQAEAAAFCAAAIAAAAAAAAAAAAAEAAQAIAAAAAAAA=</HashCode>
+      <HashCode>ABBySAEgUAHiIAYMkAIAAAwQAWCGAMACQAIAA0BCABA=</HashCode>
       <FileName>Class.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="Allors.Database.Meta.Composite">
-    <Position X="10" Y="0.5" Width="2.75" />
-    <Members>
-      <Method Name="Composite" Hidden="true" />
-      <Method Name="IsAssignableFrom" Hidden="true" />
-    </Members>
-    <TypeIdentifier>
-      <HashCode>AAJCAAAAQAHiIAIIACIAAAQQAWCCAMACQAJAAABCABA=</HashCode>
-      <FileName>Composite.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
   <Class Name="Allors.Database.Meta.Domain" BaseTypeListCollapsed="true">
-    <Position X="16.5" Y="0.5" Width="2.5" />
+    <Position X="19" Y="0.5" Width="2.5" />
     <Members>
       <Method Name="CompareTo" Hidden="true" />
       <Method Name="Domain" Hidden="true" />
@@ -57,14 +45,14 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Database.Meta.Interface">
-    <Position X="8.5" Y="10.5" Width="2.5" />
+    <Position X="9.5" Y="0.75" Width="2.5" />
     <Members>
       <Method Name="DeriveWorkspaceNames" Hidden="true" />
       <Method Name="Interface" Hidden="true" />
       <Method Name="IsAssignableFrom" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AYAAAEAAAAFCAEEIIgAQAAAAAAAEJkAAQAIAAAAAAAA=</HashCode>
+      <HashCode>AZByCEAgUAHiIEcMsgIQAAwQAWCGJsACQAIAA0BCABA=</HashCode>
       <FileName>Interface.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -89,7 +77,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Database.Meta.MethodType" BaseTypeListCollapsed="true">
-    <Position X="13.5" Y="0.5" Width="2.25" />
+    <Position X="16" Y="0.5" Width="2.25" />
     <Members>
       <Method Name="CompareTo" Hidden="true" />
       <Method Name="DeriveWorkspaceNames" Hidden="true" />
@@ -157,7 +145,7 @@
       <Method Name="Unit" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAAIAAAAAAAAAABIgAIAAAARAAAAAAIQAAAAAQAAAAA=</HashCode>
+      <HashCode>AAAKAAAAAACgAAZMgAIAAAQRACCAAIISQAAAAUBAAAA=</HashCode>
       <FileName>Unit.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />

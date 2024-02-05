@@ -13,10 +13,10 @@ public sealed class MethodType : IMethodType, IComparable, IMetaIdentifiableObje
 {
     private string[] derivedWorkspaceNames;
 
-    public MethodType(Composite objectType, Guid id, string name)
+    public MethodType(IComposite objectType, Guid id, string name)
     {
         this.Attributes = new MetaExtension();
-        this.MetaPopulation = objectType.MetaPopulation;
+        this.MetaPopulation = (MetaPopulation)objectType.MetaPopulation;
         this.Id = id;
         this.Tag = id.Tag();
         this.ObjectType = objectType;
@@ -45,7 +45,7 @@ public sealed class MethodType : IMethodType, IComparable, IMetaIdentifiableObje
 
     IComposite IMethodType.ObjectType => this.ObjectType;
 
-    public Composite ObjectType { get; }
+    public IComposite ObjectType { get; }
 
     public IReadOnlyList<string> AssignedWorkspaceNames { get; set; }
 

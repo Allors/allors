@@ -91,7 +91,7 @@ public sealed class RelationType : IRelationType, IMetaIdentifiableObject
         {
             if (this.AssociationType?.ObjectType != null && this.RoleType?.ObjectType != null)
             {
-                return this.AssociationType.ObjectType.ExclusiveClass != null && this.RoleType.ObjectType is Composite roleCompositeType && roleCompositeType.ExclusiveClass != null;
+                return this.AssociationType.ObjectType.ExclusiveClass != null && this.RoleType.ObjectType is IComposite roleCompositeType && roleCompositeType.ExclusiveClass != null;
             }
 
             return false;

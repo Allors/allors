@@ -20,7 +20,7 @@ public abstract class AssociationType : IAssociationType, IComparable
     /// </summary>
     private const string Where = "Where";
 
-    protected AssociationType(Composite objectType)
+    protected AssociationType(IComposite objectType)
     {
         this.Attributes = new MetaExtension();
         this.ObjectType = objectType;
@@ -28,7 +28,7 @@ public abstract class AssociationType : IAssociationType, IComparable
 
     public dynamic Attributes { get; }
 
-    internal Composite ObjectType { get; }
+    internal IComposite ObjectType { get; }
 
     internal RoleType RoleType => this.RelationType.RoleType;
 
