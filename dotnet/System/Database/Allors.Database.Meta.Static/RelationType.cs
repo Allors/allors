@@ -15,13 +15,17 @@ using Allors.Text;
 ///     A <see cref="RelationType" /> defines the state and behavior for
 ///     a set of <see cref="AssociationType" />s and <see cref="RoleType" />s.
 /// </summary>
-public sealed class RelationType : MetaIdentifiableObject, IRelationType
+public sealed class RelationType : IRelationType, IMetaIdentifiableObject
 {
     private string[] derivedWorkspaceNames;
 
     public RelationType(MetaPopulation metaPopulation, Guid id, Multiplicity? assignedMultiplicity, bool isDerived, AssociationType associationType, RoleType roleType)
-        : base(metaPopulation, id)
     {
+        this.Attributes = new MetaExtension();
+        this.MetaPopulation = metaPopulation;
+        this.Id = id;
+        this.Tag = id.Tag();
+
         this.IsDerived = isDerived;
         this.Multiplicity = roleType.ObjectType.IsUnit ? Multiplicity.OneToOne : assignedMultiplicity ?? Multiplicity.ManyToOne;
         this.AssignedWorkspaceNames = Array.Empty<string>();
@@ -39,6 +43,19 @@ public sealed class RelationType : MetaIdentifiableObject, IRelationType
         this.MetaPopulation.OnCreated(this);
     }
 
+    public dynamic Attributes { get; }
+
+    IMetaPopulation IMetaIdentifiableObject.MetaPopulation => this.MetaPopulation;
+
+    public MetaPopulation MetaPopulation { get; }
+
+    public Guid Id { get; }
+
+    public string Tag { get; set; }
+
+
+
+
     public IReadOnlyList<string> AssignedWorkspaceNames { get; set; }
 
     public Multiplicity Multiplicity { get; }
@@ -55,7 +72,7 @@ public sealed class RelationType : MetaIdentifiableObject, IRelationType
 
     private string ReverseName => this.RoleType.SingularName + this.AssociationType.ObjectType;
 
-    public override IEnumerable<string> WorkspaceNames
+    public IEnumerable<string> WorkspaceNames
     {
         get
         {

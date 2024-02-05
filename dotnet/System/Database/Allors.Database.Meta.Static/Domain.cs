@@ -10,16 +10,32 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-public sealed class Domain : MetaIdentifiableObject, IDomain
+public sealed class Domain : IDomain, IMetaIdentifiableObject
 {
     public Domain(MetaPopulation metaPopulation, Guid id, string name, params Domain[] directSuperdomains)
-        : base(metaPopulation, id)
     {
+        this.Attributes = new MetaExtension();
+        this.MetaPopulation = metaPopulation;
+        this.Id = id;
+        this.Tag = id.Tag();
         this.Name = name;
         this.DirectSuperdomains = directSuperdomains ?? MetaPopulation.EmptyDomains;
 
         this.MetaPopulation.OnCreated(this);
     }
+
+    public dynamic Attributes { get; }
+
+    IMetaPopulation IMetaIdentifiableObject.MetaPopulation => this.MetaPopulation;
+
+    public MetaPopulation MetaPopulation { get; }
+
+
+
+
+    public Guid Id { get; }
+
+    public string Tag { get; set; }
 
     public string Name { get; }
 
@@ -27,7 +43,7 @@ public sealed class Domain : MetaIdentifiableObject, IDomain
 
     public IReadOnlyList<IDomain> Superdomains { get; private set; }
 
-    public override IEnumerable<string> WorkspaceNames => this.MetaPopulation.WorkspaceNames;
+    public IEnumerable<string> WorkspaceNames => this.MetaPopulation.WorkspaceNames;
 
     private string ValidationName
     {

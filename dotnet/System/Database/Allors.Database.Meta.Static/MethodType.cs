@@ -9,13 +9,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-public sealed class MethodType : MetaIdentifiableObject, IMethodType, IComparable
+public sealed class MethodType : IMethodType, IComparable, IMetaIdentifiableObject
 {
     private string[] derivedWorkspaceNames;
 
     public MethodType(Composite objectType, Guid id, string name)
-    : base(objectType.MetaPopulation, id)
     {
+        this.Attributes = new MetaExtension();
+        this.MetaPopulation = objectType.MetaPopulation;
+        this.Id = id;
+        this.Tag = id.Tag();
         this.ObjectType = objectType;
         this.Name = name;
         this.AssignedWorkspaceNames = Array.Empty<string>();
@@ -24,6 +27,17 @@ public sealed class MethodType : MetaIdentifiableObject, IMethodType, IComparabl
 
         this.MetaPopulation.OnCreated(this);
     }
+
+    public dynamic Attributes { get; }
+
+    IMetaPopulation IMetaIdentifiableObject.MetaPopulation => this.MetaPopulation;
+
+    public MetaPopulation MetaPopulation { get; }
+
+    public Guid Id { get; }
+
+    public string Tag { get; set; }
+
 
     public ICompositeMethodType CompositeMethodType { get; }
 
@@ -37,7 +51,7 @@ public sealed class MethodType : MetaIdentifiableObject, IMethodType, IComparabl
 
     public string Name { get; }
 
-    public override IEnumerable<string> WorkspaceNames
+    public IEnumerable<string> WorkspaceNames
     {
         get
         {

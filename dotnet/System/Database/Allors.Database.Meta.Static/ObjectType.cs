@@ -7,17 +7,33 @@
 namespace Allors.Database.Meta;
 
 using System;
+using System.Collections.Generic;
 using Allors.Text;
 
-public abstract class ObjectType : MetaIdentifiableObject, IObjectType
+public abstract class ObjectType : IObjectType, IMetaIdentifiableObject
 {
     protected ObjectType(MetaPopulation metaPopulation, Guid id, string singularName, string assignedPluralName)
-        : base(metaPopulation, id)
     {
+        this.Attributes = new MetaExtension();
+        this.MetaPopulation = metaPopulation;
+        this.Id = id;
+        this.Tag = id.Tag();
         this.SingularName = singularName;
         this.AssignedPluralName = !string.IsNullOrEmpty(assignedPluralName) ? assignedPluralName : null;
         this.PluralName = this.AssignedPluralName != null ? this.AssignedPluralName : Pluralizer.Pluralize(this.SingularName);
     }
+
+    public dynamic Attributes { get; }
+
+    IMetaPopulation IMetaIdentifiableObject.MetaPopulation => this.MetaPopulation;
+
+    public MetaPopulation MetaPopulation { get; }
+
+    public abstract IEnumerable<string> WorkspaceNames { get; }
+
+    public Guid Id { get; }
+
+    public string Tag { get; set; }
 
     public Type BoundType { get; set; }
 
