@@ -17,7 +17,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Database.Meta.Class">
-    <Position X="12.5" Y="12.75" Width="2.75" />
+    <Position X="12.75" Y="11.25" Width="2.75" />
     <Members>
       <Method Name="Class" Hidden="true" />
       <Method Name="IsAssignableFrom" Hidden="true" />
@@ -29,7 +29,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Database.Meta.Composite">
-    <Position X="10.75" Y="5.75" Width="2.75" />
+    <Position X="10.5" Y="1.25" Width="2.75" />
     <Members>
       <Method Name="Composite" Hidden="true" />
       <Method Name="IsAssignableFrom" Hidden="true" />
@@ -57,7 +57,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Database.Meta.Interface">
-    <Position X="9.5" Y="12.75" Width="2.5" />
+    <Position X="9" Y="11.25" Width="2.5" />
     <Members>
       <Method Name="DeriveWorkspaceNames" Hidden="true" />
       <Method Name="Interface" Hidden="true" />
@@ -144,7 +144,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Database.Meta.Unit">
-    <Position X="8.75" Y="5.75" Width="1.75" />
+    <Position X="8" Y="1.25" Width="1.75" />
     <Members>
       <Property Name="IsBinary" Hidden="true" />
       <Property Name="IsBoolean" Hidden="true" />
