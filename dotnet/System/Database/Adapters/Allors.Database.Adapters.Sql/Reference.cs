@@ -1,4 +1,4 @@
-// <copyright file="Reference.cs" company="Allors bv">
+﻿// <copyright file="Reference.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -7,6 +7,7 @@ namespace Allors.Database.Adapters.Sql
 {
     using System;
     using System.Collections.Generic;
+
     using Allors.Database.Meta;
 
     public class Reference
@@ -15,7 +16,7 @@ namespace Allors.Database.Adapters.Sql
 
         private Flags flags;
 
-        private WeakReference<Strategy> weakReference;
+        private Strategy strategy;
 
         internal Reference(Transaction transaction, IClass @class, long objectId, bool isNew)
         {
@@ -48,21 +49,7 @@ namespace Allors.Database.Adapters.Sql
             MaskExistsKnown = 4,
         }
 
-        internal virtual Strategy Strategy
-        {
-            get
-            {
-                var strategy = this.Target;
-
-                if (strategy == null)
-                {
-                    strategy = this.CreateStrategy();
-                    this.weakReference = new WeakReference<Strategy>(strategy);
-                }
-
-                return strategy;
-            }
-        }
+        internal virtual Strategy Strategy => this.strategy ??= this.CreateStrategy();
 
         internal Transaction Transaction { get; }
 
@@ -149,16 +136,6 @@ namespace Allors.Database.Adapters.Sql
             set { this.flags = value ? this.flags | Flags.MaskExistsKnown : this.flags & ~Flags.MaskExistsKnown; }
         }
 
-        private Strategy Target
-        {
-            get
-            {
-                Strategy strategy = null;
-                this.weakReference?.TryGetTarget(out strategy);
-                return strategy;
-            }
-        }
-
         public override int GetHashCode() => this.ObjectId.GetHashCode();
 
         public override bool Equals(object obj)
@@ -177,11 +154,10 @@ namespace Allors.Database.Adapters.Sql
             this.FlagIsNew = false;
             this.version = Allors.Version.Unknown;
 
-            var strategy = this.Target;
-            if (strategy != null)
+            if (this.strategy != null)
             {
                 referencesWithStrategy.Add(this);
-                strategy.Release();
+                this.strategy.Release();
             }
         }
 
@@ -199,11 +175,10 @@ namespace Allors.Database.Adapters.Sql
 
             this.version = Allors.Version.Unknown;
 
-            var strategy = this.Target;
-            if (strategy != null)
+            if (this.strategy != null)
             {
                 referencesWithStrategy.Add(this);
-                strategy.Release();
+                this.strategy.Release();
             }
         }
     }
