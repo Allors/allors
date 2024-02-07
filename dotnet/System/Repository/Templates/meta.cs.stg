@@ -222,6 +222,9 @@ define_relationType(property) ::= <<
     {
         public Meta$property.DefiningType.SingularName$$property.RoleName$(M m, System.Guid id, Multiplicity? multiplicity, bool isDerived) : base(m, id, multiplicity, isDerived, new A(m), new R(m))
         {
+$if(property.RelationTypeExtensionAttributes)$        
+            $property.RelationTypeExtensionAttributes:{attribute|this.Attributes.$attribute.Name$ = $attribute.Value$;}; separator="\n"$
+$endif$ 
         }
 
         public A AssociationType => (A)((IRelationType)this).AssociationType;
@@ -232,7 +235,10 @@ define_relationType(property) ::= <<
         {
             public A(M m) : base(m.$property.DefiningType.SingularName$)
             {
-            }
+$if(property.AssociationTypeExtensionAttributes)$        
+               $property.AssociationTypeExtensionAttributes:{attribute|this.Attributes.$attribute.Name$ = $attribute.Value$;}; separator="\n"$ 
+$endif$
+        }
 
             public Meta$property.DefiningType.SingularName$ ObjectType => (Meta$property.DefiningType.SingularName$)((IAssociationType)this).ObjectType;
 
@@ -243,6 +249,9 @@ define_relationType(property) ::= <<
         {
             public R(M m) : base(m.$property.ObjectType.SingularName$, $if(property.AssignedRoleSingularName)$"$property.RoleSingularName$"$else$null$endif$, $if(property.AssignedRolePluralName)$"$property.RolePluralName$"$else$null$endif$)
             {
+$if(property.RoleTypeExtensionAttributes)$
+            $property.RoleTypeExtensionAttributes:{attribute|this.Attributes.$attribute.Name$ = $attribute.Value$;}; separator="\n"$
+$endif$            
             }
 
             public Meta$property.ObjectType.SingularName$ ObjectType => (Meta$property.ObjectType.SingularName$)((IRoleType)this).ObjectType;
