@@ -19,6 +19,8 @@ public abstract class RepositoryObjectModel : IComparable<RepositoryObjectModel>
 
     public string Id => (string)((dynamic)this.AttributeByName.Get("Id"))?.Value;
 
+    public Guid? IdAsGuid => !string.IsNullOrWhiteSpace(this.Id) ? new Guid(this.Id) : null;
+
     public int CompareTo(RepositoryObjectModel other)
     {
         return string.CompareOrdinal(this.Id, other.Id);

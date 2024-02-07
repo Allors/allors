@@ -2,9 +2,10 @@
   "profiles": {
     "Allors.Generate.Cmd": {
       "commandName": "Project",
-      "commandLineArgs": "repository.csproj ../../system/repository/templates/meta.cs.stg ../database/meta/generated",
+      //"commandLineArgs": "repository.csproj ../../system/repository/templates/meta.cs.stg ../database/meta/generated",
       //"commandLineArgs": "repository.csproj ../../system/repository/templates/meta.configuration.cs.stg ../database/meta.configuration/generated",
-      "workingDirectory": "C:\\repos\\allors\\allors\\dotnet\\base\\repository"
+      "commandLineArgs": "repository.csproj ../../system/repository/templates/meta.extensions.cs.stg /temp/meta.extensions",
+      "workingDirectory": "\\repos\\allors\\dotnet\\base\\repository"
     }
   }
 }

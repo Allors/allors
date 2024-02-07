@@ -1,0 +1,56 @@
+﻿group AllorsCSharpRepository;
+
+TemplateId() ::= <<14F49218-A676-43ba-9CBD-B8FFA059D1BF>>
+TemplateName() ::= <<Allors C# Meta>>
+TemplateVersion() ::= <<3.0.19>>
+TemplateAllors() ::= <<1.0>>
+TemplateConfiguration(repository) ::= <<
+$!
+Copyright 2002-2022 Allors bvba.
+
+Dual Licensed under
+  a) the Lesser General Public Licence v3 (LGPL)
+  b) the Allors License
+
+The LGPL License is included in the file lgpl.txt.
+The Allors License is an addendum to your contract.
+
+Allors Platform is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+For more information visit http://www.allors.com/legal
+!$
+<generations>
+$repository.Composites:{composite|$generate_relationTypes(composite)$}; separator="\n"$
+</generations>
+>>
+
+generate_relationTypes(composite) ::= <<
+$composite.DefinedProperties:{property|$generate_relationType(property)$}; separator="\n"$
+>>
+
+generate_relationType(property) ::= <<
+$if(property.RelationTypeExtensionAttributes || property.AssociationTypeExtensionAttributes || property.RoleTypeExtensionAttributes || property.CompositeRoleTypeExtensionAttributes)$        
+<generation template="relationType" input="$property.Id$" output="Meta$property.DefiningType.SingularName$$property.RoleName$.g.cs"/>
+$endif$ 
+>>
+
+relationType(repository, property) ::= <<
+namespace Allors.Database.Meta
+{
+    public partial class Meta$property.DefiningType.SingularName$$property.RoleName$ : RelationType
+    {
+        public OnInit()
+        {
+            $property.RelationTypeExtensionAttributes:{attribute|this.Attributes.$attribute.Name$ = $attribute.Value$;}; separator="\n"$
+            $property.AssociationTypeExtensionAttributes:{attribute|this.AssociationType.Attributes.$attribute.Name$ = $attribute.Value$;}; separator="\n"$ 
+            $property.RoleTypeExtensionAttributes:{attribute|this.RoleType.Attributes.$attribute.Name$ = $attribute.Value$;}; separator="\n"$
+            $property.CompositeRoleTypeExtensionAttributes:{attribute|this.RoleType.CompositeRoleType.Attributes.$attribute.Name$ = $attribute.Value$;}; separator="\n"$  
+        }
+    }
+}
+>>
+
+boolean(value) ::= "$if(value)$true$else$false$endif$"

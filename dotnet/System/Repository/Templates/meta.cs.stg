@@ -222,18 +222,10 @@ define_relationType(property) ::= <<
     {
         public Meta$property.DefiningType.SingularName$$property.RoleName$(M m, System.Guid id, Multiplicity? multiplicity, bool isDerived) : base(m, id, multiplicity, isDerived, new A(m), new R(m))
         {
-$if(property.RelationTypeExtensionAttributes)$        
-            $property.RelationTypeExtensionAttributes:{attribute|this.Attributes.$attribute.Name$ = $attribute.Value$;}; separator="\n"$
-$endif$ 
-$if(property.AssociationTypeExtensionAttributes)$        
-               $property.AssociationTypeExtensionAttributes:{attribute|this.AssociationType.Attributes.$attribute.Name$ = $attribute.Value$;}; separator="\n"$ 
-$endif$
-$if(property.RoleTypeExtensionAttributes)$
-            $property.RoleTypeExtensionAttributes:{attribute|this.RoleType.Attributes.$attribute.Name$ = $attribute.Value$;}; separator="\n"$
-$endif$
-$if(property.CompositeRoleTypeExtensionAttributes)$
+                $property.RelationTypeExtensionAttributes:{attribute|this.Attributes.$attribute.Name$ = $attribute.Value$;}; separator="\n"$
+                $property.AssociationTypeExtensionAttributes:{attribute|this.AssociationType.Attributes.$attribute.Name$ = $attribute.Value$;}; separator="\n"$ 
+                $property.RoleTypeExtensionAttributes:{attribute|this.RoleType.Attributes.$attribute.Name$ = $attribute.Value$;}; separator="\n"$
                 $property.CompositeRoleTypeExtensionAttributes:{attribute|this.RoleType.CompositeRoleType.Attributes.$attribute.Name$ = $attribute.Value$;}; separator="\n"$  
-$endif$
                 $if(property.AttributeByName.Size)$this.RoleType.Size = $property.AttributeByName.Size.Value$;$endif$
                 $if(property.AttributeByName.Precision)$this.RoleType.Precision = $property.AttributeByName.Precision.Value$;$endif$
                 $if(property.AttributeByName.Scale)$this.RoleType.Scale = $property.AttributeByName.Scale.Value$;$endif$

@@ -1,4 +1,4 @@
-// <copyright file="StringTemplate.cs" company="Allors bv">
+﻿// <copyright file="StringTemplate.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -10,6 +10,7 @@ namespace Allors.Repository.Generation;
 
 using System;
 using System.IO;
+using System.Linq;
 using System.Xml;
 using Antlr4.StringTemplate;
 using Antlr4.StringTemplate.Misc;
@@ -28,6 +29,9 @@ public class StringTemplate
     private const string InputKey = "input";
     private const string OutputKey = "output";
     private const string GenerationKey = "generation";
+    private const string CompositeKey = "composite";
+    private const string PropertyKey = "property";
+    private const string MethodTypeKey = "method";
 
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
@@ -86,40 +90,32 @@ public class StringTemplate
 
             if (generation.HasAttribute(InputKey))
             {
-                // var input = new Guid(generation.GetAttribute(InputKey));
-                // var objectType = repository.Find(input) as IObjectType;
-                // if (objectType != null)
-                // {
-                //    template.Add(ObjectTypeKey, objectType);
-                // }
-                // else
-                // {
-                //    var relationType = repository.Find(input) as RelationType;
-                //    if (relationType != null)
-                //    {
-                //        template.Add(RelationTypeKey, relationType);
-                //    }
-                //    else
-                //    {
-                //        var inheritance = repository.Find(input) as Inheritance;
-                //        if (inheritance != null)
-                //        {
-                //            template.Add(InheritanceKey, inheritance);
-                //        }
-                //        else
-                //        {
-                //            var methodType = repository.Find(input) as MethodType;
-                //            if (methodType != null)
-                //            {
-                //                template.Add(MethodTypeKey, methodType);
-                //            }
-                //            else
-                //            {
-                //                throw new ArgumentException(input + " was not found");
-                //            }
-                //        }
-                //    }
-                // }
+                var input = new Guid(generation.GetAttribute(InputKey));
+                var compositeModel = repository.Composites.FirstOrDefault(v => v.IdAsGuid == input);
+                if (compositeModel != null)
+                {
+                    template.Add(CompositeKey, compositeModel);
+                }
+                else
+                {
+                    var propertyModel = repository.Properties.FirstOrDefault(v => v.IdAsGuid == input);
+                    if (propertyModel != null)
+                    {
+                        template.Add(PropertyKey, propertyModel);
+                    }
+                    else
+                    {
+                        var methodModel = repository.Methods.FirstOrDefault(v => v.IdAsGuid == input);
+                        if (methodModel != null)
+                        {
+                            template.Add(MethodTypeKey, methodModel);
+                        }
+                        else
+                        {
+                            throw new ArgumentException(input + " was not found");
+                        }
+                    }
+                }
             }
 
             var result = template.Render();

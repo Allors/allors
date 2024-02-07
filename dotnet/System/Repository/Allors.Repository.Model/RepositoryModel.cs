@@ -50,10 +50,14 @@ public class RepositoryModel
         this.Objects = this.Repository.Objects.Select(this.Map).ToArray();
         this.Units = this.Objects.OfType<UnitModel>().ToArray();
         this.Classes = this.Objects.OfType<ClassModel>().ToArray();
+        this.Properties = this.Objects.OfType<PropertyModel>().ToArray();
+        this.Methods = this.Objects.OfType<MethodModel>().ToArray();
 
         Array.Sort(this.Objects);
         Array.Sort(this.Units);
         Array.Sort(this.Classes);
+        Array.Sort(this.Properties);
+        Array.Sort(this.Methods);
 
         this.Domains = new Graph<DomainModel>(this.Objects.OfType<DomainModel>(), v => v.DirectSuperdomains);
         this.Composites = new Graph<CompositeModel>(this.Objects.OfType<CompositeModel>(), v => v.Interfaces);
@@ -93,6 +97,10 @@ public class RepositoryModel
     public Graph<InterfaceModel> Interfaces { get; }
 
     public ClassModel[] Classes { get; }
+
+    public PropertyModel[] Properties { get; }
+
+    public MethodModel[] Methods { get; }
 
     private void CheckId(ISet<Guid> ids, string id, string name, string key)
     {
