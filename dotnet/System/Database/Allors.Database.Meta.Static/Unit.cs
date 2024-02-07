@@ -46,13 +46,13 @@ public abstract class Unit : IStaticUnit, IObjectType, IMetaIdentifiableObject
 
     public string PluralName { get; }
 
-    public bool IsUnit => this is IUnit;
+    public bool IsUnit => true;
 
-    public bool IsComposite => this is IComposite;
+    public bool IsComposite => false;
 
-    public bool IsInterface => this is IInterface;
+    public bool IsInterface => false;
 
-    public bool IsClass => this is IClass;
+    public bool IsClass => false;
 
     public override bool Equals(object other) => this.Id.Equals((other as IMetaIdentifiableObject)?.Id);
 

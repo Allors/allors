@@ -55,7 +55,7 @@ public abstract class Class : IStaticClass, IStaticComposite, IObjectType, IMeta
 
     public Type BoundType { get; set; }
 
-    public string Name => this.SingularName;
+    string IObjectType.Name => this.SingularName;
 
     public string SingularName { get; }
 
@@ -63,13 +63,13 @@ public abstract class Class : IStaticClass, IStaticComposite, IObjectType, IMeta
 
     public string PluralName { get; }
 
-    public bool IsUnit => this is IUnit;
+    public bool IsUnit => false;
 
-    public bool IsComposite => this is IComposite;
+    public bool IsComposite => true;
 
-    public bool IsInterface => this is IInterface;
+    public bool IsInterface => false;
 
-    public bool IsClass => this is IClass;
+    public bool IsClass => true;
 
     public override bool Equals(object other) => this.Id.Equals((other as IMetaIdentifiableObject)?.Id);
 

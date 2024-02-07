@@ -225,9 +225,18 @@ define_relationType(property) ::= <<
 $if(property.RelationTypeExtensionAttributes)$        
             $property.RelationTypeExtensionAttributes:{attribute|this.Attributes.$attribute.Name$ = $attribute.Value$;}; separator="\n"$
 $endif$ 
+$if(property.AssociationTypeExtensionAttributes)$        
+               $property.AssociationTypeExtensionAttributes:{attribute|this.AssociationType.Attributes.$attribute.Name$ = $attribute.Value$;}; separator="\n"$ 
+$endif$
+$if(property.RoleTypeExtensionAttributes)$
+            $property.RoleTypeExtensionAttributes:{attribute|this.RoleType.Attributes.$attribute.Name$ = $attribute.Value$;}; separator="\n"$
+$endif$
 $if(property.CompositeRoleTypeExtensionAttributes)$
                 $property.CompositeRoleTypeExtensionAttributes:{attribute|this.RoleType.CompositeRoleType.Attributes.$attribute.Name$ = $attribute.Value$;}; separator="\n"$  
 $endif$
+                $if(property.AttributeByName.Size)$this.RoleType.Size = $property.AttributeByName.Size.Value$;$endif$
+                $if(property.AttributeByName.Precision)$this.RoleType.Precision = $property.AttributeByName.Precision.Value$;$endif$
+                $if(property.AttributeByName.Scale)$this.RoleType.Scale = $property.AttributeByName.Scale.Value$;$endif$
         }
 
         new public A AssociationType => (A)((IRelationType)this).AssociationType;
@@ -238,9 +247,6 @@ $endif$
         {
             public A(M m) : base(m.$property.DefiningType.SingularName$)
             {
-$if(property.AssociationTypeExtensionAttributes)$        
-               $property.AssociationTypeExtensionAttributes:{attribute|this.Attributes.$attribute.Name$ = $attribute.Value$;}; separator="\n"$ 
-$endif$
             }
 
             public Meta$property.DefiningType.SingularName$ ObjectType => (Meta$property.DefiningType.SingularName$)((IAssociationType)this).ObjectType;
@@ -252,12 +258,6 @@ $endif$
         {
             public R(M m) : base(m.$property.ObjectType.SingularName$, $if(property.AssignedRoleSingularName)$"$property.RoleSingularName$"$else$null$endif$, $if(property.AssignedRolePluralName)$"$property.RolePluralName$"$else$null$endif$)
             {
-$if(property.RoleTypeExtensionAttributes)$
-            $property.RoleTypeExtensionAttributes:{attribute|this.Attributes.$attribute.Name$ = $attribute.Value$;}; separator="\n"$
-$endif$
-                $if(property.AttributeByName.Size)$this.Size = $property.AttributeByName.Size.Value$;$endif$
-                $if(property.AttributeByName.Precision)$this.Precision = $property.AttributeByName.Precision.Value$;$endif$
-                $if(property.AttributeByName.Scale)$this.Scale = $property.AttributeByName.Scale.Value$;$endif$
             }
 
             public Meta$property.ObjectType.SingularName$ ObjectType => (Meta$property.ObjectType.SingularName$)((IRoleType)this).ObjectType;

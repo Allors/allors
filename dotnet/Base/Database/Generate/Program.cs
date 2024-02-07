@@ -6,13 +6,11 @@
 namespace Allors.Meta.Generation
 {
     using System;
-    using System.Collections.Generic;
     using System.IO;
     using Allors.Database.Meta.Configuration;
-    using Database.Meta;
     using Database.Population;
 
-    internal class Program
+    internal sealed class Program
     {
         private static readonly MetaBuilder MetaBuilder = new MetaBuilder();
 

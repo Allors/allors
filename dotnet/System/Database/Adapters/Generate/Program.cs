@@ -14,7 +14,7 @@ using Allors.Database.Meta;
 using Allors.Meta.Generation.Model;
 using Database.Population;
 
-internal class Program
+internal sealed class Program
 {
     private static readonly MetaBuilder MetaBuilder = new();
 

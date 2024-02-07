@@ -56,7 +56,7 @@ public abstract class Interface : IStaticInterface, IStaticComposite, IObjectTyp
 
     public Type BoundType { get; set; }
 
-    public string Name => this.SingularName;
+    string IObjectType.Name => this.SingularName;
 
     public string SingularName { get; }
 
@@ -64,13 +64,13 @@ public abstract class Interface : IStaticInterface, IStaticComposite, IObjectTyp
 
     public string PluralName { get; }
 
-    public bool IsUnit => this is IUnit;
+    public bool IsUnit => false;
 
-    public bool IsComposite => this is IComposite;
+    public bool IsComposite => true;
 
-    public bool IsInterface => this is IInterface;
+    public bool IsInterface => true;
 
-    public bool IsClass => this is IClass;
+    public bool IsClass => false;
 
     public override bool Equals(object other) => this.Id.Equals((other as IMetaIdentifiableObject)?.Id);
 
