@@ -178,7 +178,7 @@ $repository.Composites:{composite|$extend_compositeMethodTypes(composite)$}; sep
 >>
 
 define_relationTypes(composite) ::= <<
-$composite.DefinedProperties:{property|             public RelationType $property.DefiningType.SingularName$$property.RoleName$;}; separator="\n"$
+$composite.DefinedProperties:{property|             public Meta$property.DefiningType.SingularName$$property.RoleName$ $property.DefiningType.SingularName$$property.RoleName$;}; separator="\n"$
 >>
 
 define_roleClasses(class) ::= <<
@@ -221,7 +221,7 @@ $composite.DefinedProperties:{property|$build_relation(property)$}; separator="\
 >>
 
 build_relation(property) ::= <<
-            relationTypes.$property.DefiningType.SingularName$$property.RoleName$ = new RelationType(meta, Ids.$property.DefiningType.SingularName$$property.RoleName$, $if(property.AssignedMultiplicity)$Allors.Multiplicity.$property.AssignedMultiplicity$$else$null$endif$, $if(property.AttributeByName.Derived)$$property.AttributeByName.Derived.Value$$else$false$endif$, new Meta$property.AssociationName$(meta)$if(property.AssociationTypeExtensionAttributes)$ { Attributes = { $property.AssociationTypeExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ } }$endif$, new Meta$property.DefiningType.SingularName$$property.RoleName$(meta)$if(property.RoleTypeExtensionAttributes)${ Attributes = { $property.RoleTypeExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ } }$endif$)$if(property.RelationTypeExtensionAttributes || property.CompositeRoleTypeExtensionAttributes)$ { $if(property.RelationTypeExtensionAttributes)$Attributes = { $property.RelationTypeExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ }$if(property.RelationTypeExtensionAttributes && property.CompositeRoleTypeExtensionAttributes)$,$endif$$endif$$if(property.CompositeRoleTypeExtensionAttributes)$ RoleType = { CompositeRoleType = { Attributes = { $property.CompositeRoleTypeExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ } } } $endif$  } $endif$;
+            relationTypes.$property.DefiningType.SingularName$$property.RoleName$ = new Meta$property.DefiningType.SingularName$$property.RoleName$(meta, Ids.$property.DefiningType.SingularName$$property.RoleName$, $if(property.AssignedMultiplicity)$Allors.Multiplicity.$property.AssignedMultiplicity$$else$null$endif$, $if(property.AttributeByName.Derived)$$property.AttributeByName.Derived.Value$$else$false$endif$);
 >>
 
 assign_properties(composite) ::= <<
@@ -232,22 +232,22 @@ $composite.InheritedReverseProperties:{property|$assign_inheritedreverserelation
 >>
 
 assign_relationEndType(property) ::= <<
-                meta.$composite.SingularName$.$property.RoleName$ = (Meta$property.DefiningType.SingularName$$property.RoleName$) relationTypes.$property.DefiningType.SingularName$$property.RoleName$.RoleType;
+                meta.$composite.SingularName$.$property.RoleName$ = relationTypes.$property.DefiningType.SingularName$$property.RoleName$.RoleType;
 >>
 
 assign_inheritedrelationEndType(property) ::= <<
-$if(property.DefiningProperty)$                meta.$composite.SingularName$.$property.DefiningProperty.RoleName$ = (Meta$property.DefiningProperty.DefiningType.SingularName$$property.DefiningProperty.RoleName$) relationTypes.$property.DefiningProperty.DefiningType.SingularName$$property.DefiningProperty.RoleName$.RoleType;
-$else$                meta.$composite.SingularName$.$property.RoleName$ = (Meta$property.DefiningType.SingularName$$property.RoleName$) relationTypes.$property.DefiningType.SingularName$$property.RoleName$.RoleType;
+$if(property.DefiningProperty)$                meta.$composite.SingularName$.$property.DefiningProperty.RoleName$ = relationTypes.$property.DefiningProperty.DefiningType.SingularName$$property.DefiningProperty.RoleName$.RoleType;
+$else$                meta.$composite.SingularName$.$property.RoleName$ = relationTypes.$property.DefiningType.SingularName$$property.RoleName$.RoleType;
 $endif$
 >>
 
 assign_reverserelationEndType(property) ::= <<
-                meta.$composite.SingularName$.$property.AssociationName$ = (Meta$property.AssociationName$) relationTypes.$property.DefiningType.SingularName$$property.RoleName$.AssociationType;
+                meta.$composite.SingularName$.$property.AssociationName$ = relationTypes.$property.DefiningType.SingularName$$property.RoleName$.AssociationType;
 >>
 
 assign_inheritedreverserelationEndType(property) ::= <<
-$if(property.DefiningProperty)$                meta.$composite.SingularName$.$property.AssociationName$ = (Meta$property.AssociationName$) relationTypes.$property.DefiningProperty.DefiningType.SingularName$$property.DefiningProperty.RoleName$.AssociationType;
-$else$                meta.$composite.SingularName$.$property.AssociationName$ = (Meta$property.AssociationName$) relationTypes.$property.DefiningType.SingularName$$property.RoleName$.AssociationType;
+$if(property.DefiningProperty)$                meta.$composite.SingularName$.$property.AssociationName$ = relationTypes.$property.DefiningProperty.DefiningType.SingularName$$property.DefiningProperty.RoleName$.AssociationType;
+$else$                meta.$composite.SingularName$.$property.AssociationName$ = relationTypes.$property.DefiningType.SingularName$$property.RoleName$.AssociationType;
 $endif$
 >>
 
