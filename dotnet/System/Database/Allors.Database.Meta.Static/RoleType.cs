@@ -13,6 +13,8 @@ using Allors.Graph;
 
 public abstract class RoleType : IStaticRoleType, IComparable
 {
+    private readonly IObjectType objectType;
+
     private IStaticRelationType relationType;
     private string singularName;
     private string pluralName;
@@ -26,7 +28,7 @@ public abstract class RoleType : IStaticRoleType, IComparable
     protected RoleType(IObjectType objectType, string assignedSingularName, string assignedPluralName)
     {
         this.Attributes = new MetaExtension();
-        this.ObjectType = objectType;
+        this.objectType = objectType;
         this.AssignedSingularName = !string.IsNullOrEmpty(assignedSingularName) ? assignedSingularName : null;
         this.AssignedPluralName = !string.IsNullOrEmpty(assignedPluralName) ? assignedPluralName : null;
     }
@@ -41,7 +43,7 @@ public abstract class RoleType : IStaticRoleType, IComparable
         set => this.relationType = value;
     }
 
-    ICompositeRoleType IRoleType.CompositeRoleType
+    public ICompositeRoleType CompositeRoleType
     {
         get => this.compositeRoleType;
     }
@@ -58,15 +60,13 @@ public abstract class RoleType : IStaticRoleType, IComparable
 
     IStaticAssociationType IStaticRoleType.AssociationType => this.relationType.AssociationType;
 
-    public IObjectType ObjectType { get; }
-
     public string AssignedSingularName { get; }
 
     public string AssignedPluralName { get; }
 
     private string ValidationName => "RoleType: " + this.relationType.Name;
 
-    IObjectType IRelationEndType.ObjectType => this.ObjectType;
+    IObjectType IRelationEndType.ObjectType => this.objectType;
 
     string IRelationEndType.SingularName
     {
@@ -139,7 +139,7 @@ public abstract class RoleType : IStaticRoleType, IComparable
     /// </summary>
     void IStaticRoleType.DeriveScaleAndSize()
     {
-        if (this.ObjectType is IUnit unitType)
+        if (this.objectType is IUnit unitType)
         {
             switch (unitType.Tag)
             {
@@ -182,7 +182,7 @@ public abstract class RoleType : IStaticRoleType, IComparable
     /// <param name="validationLog">The validation.</param>
     void IStaticRelationEndType.Validate(ValidationLog validationLog)
     {
-        if (this.ObjectType == null)
+        if (this.objectType == null)
         {
             var message = this.ValidationName + " has no IObjectType";
             validationLog.AddError(message, this, ValidationKind.Required, "RoleType.IObjectType");

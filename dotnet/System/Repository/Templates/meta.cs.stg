@@ -225,11 +225,14 @@ define_relationType(property) ::= <<
 $if(property.RelationTypeExtensionAttributes)$        
             $property.RelationTypeExtensionAttributes:{attribute|this.Attributes.$attribute.Name$ = $attribute.Value$;}; separator="\n"$
 $endif$ 
+$if(property.CompositeRoleTypeExtensionAttributes)$
+                $property.CompositeRoleTypeExtensionAttributes:{attribute|this.RoleType.CompositeRoleType.Attributes.$attribute.Name$ = $attribute.Value$;}; separator="\n"$  
+$endif$
         }
 
-        public A AssociationType => (A)((IRelationType)this).AssociationType;
+        new public A AssociationType => (A)((IRelationType)this).AssociationType;
 
-        public R RoleType => (R)((IRelationType)this).RoleType;
+        new public R RoleType => (R)((IRelationType)this).RoleType;
 
         public class A : AssociationType
         {
@@ -238,7 +241,7 @@ $endif$
 $if(property.AssociationTypeExtensionAttributes)$        
                $property.AssociationTypeExtensionAttributes:{attribute|this.Attributes.$attribute.Name$ = $attribute.Value$;}; separator="\n"$ 
 $endif$
-        }
+            }
 
             public Meta$property.DefiningType.SingularName$ ObjectType => (Meta$property.DefiningType.SingularName$)((IAssociationType)this).ObjectType;
 
@@ -251,7 +254,10 @@ $endif$
             {
 $if(property.RoleTypeExtensionAttributes)$
             $property.RoleTypeExtensionAttributes:{attribute|this.Attributes.$attribute.Name$ = $attribute.Value$;}; separator="\n"$
-$endif$            
+$endif$
+                $if(property.AttributeByName.Size)$this.Size = $property.AttributeByName.Size.Value$;$endif$
+                $if(property.AttributeByName.Precision)$this.Precision = $property.AttributeByName.Precision.Value$;$endif$
+                $if(property.AttributeByName.Scale)$this.Scale = $property.AttributeByName.Scale.Value$;$endif$
             }
 
             public Meta$property.ObjectType.SingularName$ ObjectType => (Meta$property.ObjectType.SingularName$)((IRoleType)this).ObjectType;
