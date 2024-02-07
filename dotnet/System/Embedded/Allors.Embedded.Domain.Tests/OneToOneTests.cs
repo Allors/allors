@@ -18,16 +18,16 @@
             Assert.That(acme.Owner.Value, Is.EqualTo(jane));
             Assert.That(jane.OrganizationWhereOwner.Value, Is.EqualTo(acme));
 
-            Assert.Null(gizmo.Owner.Value);
-            Assert.Null(john.OrganizationWhereOwner.Value);
+            Assert.That(gizmo.Owner.Value, Is.Null);
+            Assert.That(john.OrganizationWhereOwner.Value, Is.Null);
 
             acme.Named.Value = jane;
 
             Assert.That(acme.Named.Value, Is.EqualTo(jane));
             Assert.That(jane.OrganizationWhereNamed.Value, Is.EqualTo(acme));
 
-            Assert.Null(gizmo.Named.Value);
-            Assert.Null(john.OrganizationWhereNamed.Value);
+            Assert.That(gizmo.Named.Value, Is.Null);
+            Assert.That(john.OrganizationWhereNamed.Value, Is.Null);
         }
 
         //[Test]

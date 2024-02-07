@@ -37,23 +37,23 @@
             var lastNameDoe = this.Population.Objects.OfType<Person>().Where(v => v.LastName.Value == "Doe").ToArray();
 
             Assert.That(lastNameDoe.Length, Is.EqualTo(3));
-            Assert.Contains(jane, lastNameDoe);
-            Assert.Contains(john, lastNameDoe);
-            Assert.Contains(jenny, lastNameDoe);
+            Assert.That(lastNameDoe, Does.Contain(jane));
+            Assert.That(lastNameDoe, Does.Contain(john));
+            Assert.That(lastNameDoe, Does.Contain(jenny));
 
             var lessThanFourLetterFirstNames = this.Population.Objects.OfType<Person>().Where(v => v.FirstName.Value.Length < 4).ToArray();
 
-            Assert.IsEmpty(lessThanFourLetterFirstNames);
+            Assert.That(lessThanFourLetterFirstNames, Is.Empty);
 
             var fourLetterFirstNames = this.Population.Objects.OfType<Person>().Where(v => v.FirstName.Value.Length == 4).ToArray();
 
             Assert.That(fourLetterFirstNames.Length, Is.EqualTo(2));
-            Assert.Contains(jane, fourLetterFirstNames);
-            Assert.Contains(john, fourLetterFirstNames);
+            Assert.That(fourLetterFirstNames, Does.Contain(jane));
+            Assert.That(fourLetterFirstNames, Does.Contain(john));
 
             var fiveLetterFirstNames = this.Population.Objects.OfType<Person>().Where(v => v.FirstName.Value.Length == 5).ToArray();
             Assert.That(fiveLetterFirstNames.Length, Is.EqualTo(1));
-            Assert.Contains(jenny, fiveLetterFirstNames);
+            Assert.That(fiveLetterFirstNames, Does.Contain(jenny));
         }
     }
 }

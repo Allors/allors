@@ -36,8 +36,8 @@
 
             Assert.That(changedFirstNames.Keys.Count(), Is.EqualTo(1));
             Assert.That(changedLastNames.Keys.Count(), Is.EqualTo(1));
-            Assert.Contains(john, changedFirstNames.Keys.ToArray());
-            Assert.Contains(john, changedLastNames.Keys.ToArray());
+            Assert.That(changedFirstNames.Keys.ToArray(), Does.Contain(john));
+            Assert.That(changedLastNames.Keys.ToArray(), Does.Contain(john));
 
             var snapshot2 = this.Population.Snapshot();
 
@@ -46,8 +46,8 @@
 
             Assert.That(changedFirstNames.Keys.Count(), Is.EqualTo(1));
             Assert.That(changedLastNames.Keys.Count(), Is.EqualTo(1));
-            Assert.Contains(jane, changedFirstNames.Keys.ToArray());
-            Assert.Contains(jane, changedLastNames.Keys.ToArray());
+            Assert.That(changedFirstNames.Keys.ToArray(), Does.Contain(jane));
+            Assert.That(changedLastNames.Keys.ToArray(), Does.Contain(jane));
         }
 
 
@@ -77,7 +77,7 @@
 
             snapshot = this.Population.Snapshot();
             changedEmployees = snapshot.ChangedRoles<Organization>("Employees");
-            Assert.IsEmpty(changedEmployees);
+            Assert.That(changedEmployees, Is.Empty);
 
             acme.Employees.Value = Array.Empty<Person>();
 
@@ -87,7 +87,7 @@
 
             snapshot = this.Population.Snapshot();
             changedEmployees = snapshot.ChangedRoles<Organization>("Employees");
-            Assert.IsEmpty(changedEmployees);
+            Assert.That(changedEmployees, Is.Empty);
         }
     }
 }
