@@ -22,14 +22,14 @@
         {
             this.Population.DerivationById["UppercaseName"] = new UppercaseNameDerivation();
 
-            var john = this.Population.New<Person>();
+            var john = this.Population.Create<Person>();
             john.Name.Value = "John Doe";
 
             this.Population.Derive();
 
             Assert.That(john.UppercasedName.Value, Is.EqualTo("JOHN DOE"));
 
-            var acme = this.Population.New<Organization>();
+            var acme = this.Population.Create<Organization>();
             acme.Name.Value = "Acme";
 
             this.Population.Derive();

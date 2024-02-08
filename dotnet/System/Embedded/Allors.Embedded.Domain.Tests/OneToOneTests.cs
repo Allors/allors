@@ -19,11 +19,11 @@
         [Test]
         public void StaticPropertySet()
         {
-            var acme = this.Population.New<Organization>();
-            var gizmo = this.Population.New<Organization>();
+            var acme = this.Population.Create<Organization>();
+            var gizmo = this.Population.Create<Organization>();
 
-            var jane = this.Population.New<Person>();
-            var john = this.Population.New<Person>();
+            var jane = this.Population.Create<Person>();
+            var john = this.Population.Create<Person>();
 
             acme.Owner.Value = jane;
 

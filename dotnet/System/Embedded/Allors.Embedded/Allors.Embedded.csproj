@@ -27,12 +27,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Allors.Embedded.Meta\Allors.Embedded.Meta.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="MetaDomain\" />
-  </ItemGroup>
-
 </Project>

@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using Meta;
 
-    public delegate T New<out T>(params Action<T>[] builders);
+    public delegate T Create<out T>(params Action<T>[] builders);
 
     public interface IEmbeddedPopulation
     {
@@ -14,9 +14,9 @@
 
         IEnumerable<IEmbeddedObject> Objects { get; }
 
-        IEmbeddedObject New(Type t, params Action<IEmbeddedObject>[] builders);
+        IEmbeddedObject Create(Type t, params Action<IEmbeddedObject>[] builders);
 
-        T New<T>(params Action<T>[] builders)
+        T Create<T>(params Action<T>[] builders)
             where T : IEmbeddedObject;
 
         void Derive();

@@ -1,6 +1,6 @@
 ﻿namespace Allors.Embedded
 {
-    public interface ICompositeAssociation<TAssociation> where TAssociation : IEmbeddedObject
+    public interface ICompositeAssociation<TAssociation> : IAssociation where TAssociation : IEmbeddedObject
     {
         TAssociation Value
         {

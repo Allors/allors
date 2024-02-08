@@ -20,8 +20,8 @@
         [Test]
         public void Unit()
         {
-            var john = this.Population.New<Person>();
-            var jane = this.Population.New<Person>();
+            var john = this.Population.Create<Person>();
+            var jane = this.Population.Create<Person>();
 
             john.FirstName.Value = "John";
             john.LastName.Value = "Doe";
@@ -54,8 +54,8 @@
         [Test]
         public void Composites()
         {
-            var john = this.Population.New<Person>();
-            var jane = this.Population.New<Person>();
+            var john = this.Population.Create<Person>();
+            var jane = this.Population.Create<Person>();
 
             john.FirstName.Value = "John";
             john.LastName.Value = "Doe";
@@ -63,7 +63,7 @@
             jane.FirstName.Value = "Jane";
             jane.LastName.Value = "Doe";
 
-            var acme = this.Population.New<Organization>();
+            var acme = this.Population.Create<Organization>();
 
             acme.Name.Value = "Acme";
 

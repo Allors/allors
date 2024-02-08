@@ -24,7 +24,7 @@
         {
             this.Population.DerivationById["FullName"] = new FullNameDerivation();
 
-            var john = this.Population.New<Person>();
+            var john = this.Population.Create<Person>();
             john.FirstName.Value = "John";
             john.LastName.Value = "Doe";
 
@@ -34,7 +34,7 @@
 
             this.Population.DerivationById["FullName"] = new GreetingDerivation(this.Population.DerivationById["FullName"]);
 
-            var jane = this.Population.New<Person>();
+            var jane = this.Population.Create<Person>();
             jane.FirstName.Value = "Jane";
             jane.LastName.Value = "Doe";
 
@@ -50,7 +50,7 @@
         {
             this.Population.DerivationById["Aliases"] = new AliasesDerivation();
 
-            var acme = this.Population.New<Organization>();
+            var acme = this.Population.Create<Organization>();
 
             this.Population.Derive();
 
@@ -127,7 +127,7 @@
         {
             public void Derive(IEmbeddedChangeSet changeSet)
             {
-                var created = changeSet.NewObjects.OfType<Organization>();
+                var created = changeSet.CreatedObjects.OfType<Organization>();
                 var changed = changeSet.ChangedRoles<Organization>("Aliases").Select(v => v.Key).Distinct().Cast<Organization>();
 
                 foreach (var organization in created.Union(changed))

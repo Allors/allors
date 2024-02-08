@@ -19,8 +19,8 @@
         [Test]
         public void String()
         {
-            var john = this.Population.New<Person>();
-            var jane = this.Population.New<Person>();
+            var john = this.Population.Create<Person>();
+            var jane = this.Population.Create<Person>();
             
             john.Name.Value = "John";
             jane.Name.Value = "Jane";

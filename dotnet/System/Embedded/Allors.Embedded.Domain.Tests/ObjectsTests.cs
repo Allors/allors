@@ -24,7 +24,7 @@
             T Create<T>(params Action<T>[] builders)
                  where T : EmbeddedObject
             {
-                return this.Population.New<T>(builders);
+                return this.Population.Create<T>(builders);
             }
 
             Action<Person> FirstName(string firstName)

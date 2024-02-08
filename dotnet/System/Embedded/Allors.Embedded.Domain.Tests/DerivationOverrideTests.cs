@@ -24,7 +24,7 @@
             this.Population.DerivationById["FullName"] = new FullNameDerivation();
             this.Population.DerivationById["Greeting"] = new GreetingDerivation();
 
-            var john = this.Population.New<Person>();
+            var john = this.Population.Create<Person>();
             john.FirstName.Value = "John";
             john.LastName.Value = "Doe";
 

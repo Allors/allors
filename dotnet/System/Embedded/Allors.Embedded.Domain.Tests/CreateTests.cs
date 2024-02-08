@@ -2,7 +2,7 @@
 {
     using Allors.Embedded.Tests.Domain;
 
-    public class NewTests : Tests
+    public class CreateTests : Tests
     {
         private EmbeddedPopulation population = null!;
 
@@ -17,15 +17,15 @@
         }
 
         [Test]
-        public void New()
+        public void Create()
         {
-            New<Organization> newOrganization = this.Population.New;
-            New<Person> newPerson = this.Population.New;
+            Create<Organization> createOrganization = this.Population.Create;
+            Create<Person> createPerson = this.Population.Create;
 
-            var acme = newOrganization(v =>
+            var acme = createOrganization(v =>
             {
                 v.Name.Value = "Acme";
-                v.Owner.Value = newPerson(v => v.Name.Value = "Jane");
+                v.Owner.Value = createPerson(v => v.Name.Value = "Jane");
             });
 
             var jane = acme.Owner;

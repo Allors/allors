@@ -13,7 +13,7 @@
         private readonly Dictionary<EmbeddedRoleType, Dictionary<IEmbeddedObject, object>> roleByAssociationByRoleType;
         private readonly Dictionary<EmbeddedAssociationType, Dictionary<IEmbeddedObject, object>> associationByRoleByAssociationType;
 
-        private ISet<IEmbeddedObject> newObjects;
+        private ISet<IEmbeddedObject> createdObjects;
         private Dictionary<EmbeddedRoleType, Dictionary<IEmbeddedObject, object>> changedRoleByAssociationByRoleType;
         private Dictionary<EmbeddedAssociationType, Dictionary<IEmbeddedObject, object>> changedAssociationByRoleByAssociationType;
         
@@ -24,7 +24,7 @@
             this.roleByAssociationByRoleType = new Dictionary<EmbeddedRoleType, Dictionary<IEmbeddedObject, object>>();
             this.associationByRoleByAssociationType = new Dictionary<EmbeddedAssociationType, Dictionary<IEmbeddedObject, object>>();
 
-            this.newObjects = new HashSet<IEmbeddedObject>();
+            this.createdObjects = new HashSet<IEmbeddedObject>();
             this.changedRoleByAssociationByRoleType = new Dictionary<EmbeddedRoleType, Dictionary<IEmbeddedObject, object>>();
             this.changedAssociationByRoleByAssociationType = new Dictionary<EmbeddedAssociationType, Dictionary<IEmbeddedObject, object>>();
         }
@@ -91,9 +91,9 @@
                 }
             }
 
-            var snapshot = new EmbeddedChangeSet(this.meta, this.newObjects, this.changedRoleByAssociationByRoleType, this.changedAssociationByRoleByAssociationType);
+            var snapshot = new EmbeddedChangeSet(this.meta, this.createdObjects, this.changedRoleByAssociationByRoleType, this.changedAssociationByRoleByAssociationType);
 
-            this.newObjects = new HashSet<IEmbeddedObject>();
+            this.createdObjects = new HashSet<IEmbeddedObject>();
 
             foreach (var kvp in this.changedRoleByAssociationByRoleType)
             {
@@ -134,7 +134,7 @@
         internal void AddObject(IEmbeddedObject newObject)
         {
             this.Objects = NullableArraySet.Add(this.Objects, newObject);
-            this.newObjects.Add(newObject);
+            this.createdObjects.Add(newObject);
         }
 
         internal void GetRoleValue(IEmbeddedObject association, EmbeddedRoleType roleType, out object? role)

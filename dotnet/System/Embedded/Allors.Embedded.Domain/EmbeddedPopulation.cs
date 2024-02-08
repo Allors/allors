@@ -23,7 +23,7 @@
 
         public IEnumerable<IEmbeddedObject> Objects => this.database.Objects;
 
-        public IEmbeddedObject New(Type type, params Action<IEmbeddedObject>[] builders)
+        public IEmbeddedObject Create(Type type, params Action<IEmbeddedObject>[] builders)
         {
             var @new = (IEmbeddedObject)Activator.CreateInstance(type, new object[] { this, this.Meta.GetOrAddObjectType(type) });
             this.database.AddObject(@new);
@@ -36,7 +36,7 @@
             return @new;
         }
 
-        public T New<T>(params Action<T>[] builders)
+        public T Create<T>(params Action<T>[] builders)
               where T : IEmbeddedObject
         {
             var @new = (T)Activator.CreateInstance(typeof(T), new object[] { this, this.Meta.GetOrAddObjectType(typeof(T)) });

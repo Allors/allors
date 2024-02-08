@@ -19,8 +19,8 @@
         [Test]
         public void AddInterface()
         {
-            var c1 = this.Population.New<C1>();
-            var c2 = this.Population.New<C2>();
+            var c1 = this.Population.Create<C1>();
+            var c2 = this.Population.Create<C2>();
             
             c1.ManyToMany.Add(c2);
 
@@ -34,12 +34,12 @@
         [Test]
         public void Add()
         {
-            var acme = this.Population.New<Organization>(v => v.Name.Value = "Acme");
-            var hooli = this.Population.New<Organization>(v => v.Name.Value = "Hooli");
+            var acme = this.Population.Create<Organization>(v => v.Name.Value = "Acme");
+            var hooli = this.Population.Create<Organization>(v => v.Name.Value = "Hooli");
 
-            var jane = this.Population.New<Person>();
-            var john = this.Population.New<Person>();
-            var jenny = this.Population.New<Person>();
+            var jane = this.Population.Create<Person>();
+            var john = this.Population.Create<Person>();
+            var jenny = this.Population.Create<Person>();
 
             acme.Employees.Add(jane);
             acme.Employees.Add(john);
@@ -65,12 +65,12 @@
         [Test]
         public void Set()
         {
-            var acme = this.Population.New<Organization>(v => v.Name.Value = "Acme");
-            var hooli = this.Population.New<Organization>(v => v.Name.Value = "Hooli");
+            var acme = this.Population.Create<Organization>(v => v.Name.Value = "Acme");
+            var hooli = this.Population.Create<Organization>(v => v.Name.Value = "Hooli");
 
-            var jane = this.Population.New<Person>();
-            var john = this.Population.New<Person>();
-            var jenny = this.Population.New<Person>();
+            var jane = this.Population.Create<Person>();
+            var john = this.Population.Create<Person>();
+            var jenny = this.Population.Create<Person>();
 
             acme.Employees.Value = new[] { jane };
 
@@ -133,12 +133,12 @@
         [Test]
         public void Remove()
         {
-            var acme = this.Population.New<Organization>(v => v.Name.Value = "Acme");
-            var hooli = this.Population.New<Organization>(v => v.Name.Value = "Hooli");
+            var acme = this.Population.Create<Organization>(v => v.Name.Value = "Acme");
+            var hooli = this.Population.Create<Organization>(v => v.Name.Value = "Hooli");
 
-            var jane = this.Population.New<Person>();
-            var john = this.Population.New<Person>();
-            var jenny = this.Population.New<Person>();
+            var jane = this.Population.Create<Person>();
+            var john = this.Population.Create<Person>();
+            var jenny = this.Population.Create<Person>();
 
             acme.Employees.Value = new[] { jane, john, jenny };
 
@@ -185,12 +185,12 @@
         [Test]
         public void Multipele()
         {
-            var acme = this.Population.New<Organization>(v => v.Name.Value = "Acme");
-            var hooli = this.Population.New<Organization>(v => v.Name.Value = "Hooli");
+            var acme = this.Population.Create<Organization>(v => v.Name.Value = "Acme");
+            var hooli = this.Population.Create<Organization>(v => v.Name.Value = "Hooli");
 
-            var jane = this.Population.New<Person>();
-            var john = this.Population.New<Person>();
-            var jenny = this.Population.New<Person>();
+            var jane = this.Population.Create<Person>();
+            var john = this.Population.Create<Person>();
+            var jenny = this.Population.Create<Person>();
 
             acme.Employees.Add(jane);
             acme.Employees.Add(john);

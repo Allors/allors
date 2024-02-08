@@ -1,6 +1,6 @@
 ﻿namespace Allors.Embedded
 {
-    public interface ICompositesRole<TRole> where TRole : IEmbeddedObject
+    public interface ICompositesRole<TRole> : IRole where TRole : IEmbeddedObject
     {
         TRole[] Value
         {

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="Allors.Embedded.Meta.EmbeddedMeta">
-    <Position X="2.75" Y="0.5" Width="3" />
+    <Position X="0.5" Y="0.5" Width="3" />
     <Members>
       <Field Name="objectTypeByType" Hidden="true" />
       <Method Name="Pluralize" Hidden="true" />
@@ -16,7 +16,7 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="Allors.Embedded.Meta.EmbeddedObjectType">
-    <Position X="7.75" Y="0.5" Width="1.75" />
+    <Position X="5" Y="0.5" Width="1.75" />
     <Members>
       <Method Name="AddAssociationType" Hidden="true" />
       <Method Name="AddManyToMany" Hidden="true" />
@@ -31,36 +31,33 @@
       <Field Name="derivedAssociationTypeByName" Hidden="true" />
       <Field Name="derivedRoleTypeByName" Hidden="true" />
       <Method Name="EmbeddedObjectType" Hidden="true" />
-      <Property Name="EmptyArray" Hidden="true" />
       <Method Name="ResetDerivations" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>QAQEAAAAAAAQAARAAGAIABAQAYAARIgAAQAAgAAAACA=</HashCode>
+      <HashCode>QAQEAAAAAAAQAABAAGAIABAQAYAABIgAAQAAgAAAACA=</HashCode>
       <FileName>Meta\EmbeddedObjectType.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
+      <Property Name="SuperTypes" />
       <Property Name="AssociationTypeByName" />
       <Property Name="RoleTypeByName" />
-      <Property Name="SuperTypes" />
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="Allors.Embedded.Meta.EmbeddedAssociationType">
-    <Position X="11.5" Y="0.5" Width="2.25" />
+    <Position X="9.75" Y="0.5" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAIAiAAAAAAAAAIAAAAAAAQAAAAAAAACAIAAAAAAAAA=</HashCode>
       <FileName>Meta\EmbeddedAssociationType.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Allors.Embedded.Meta.EmbeddedRoleType">
-    <Position X="15.25" Y="2.5" Width="2.5" />
+    <Position X="6.25" Y="2.25" Width="1.75" />
     <Members>
-      <Method Name="NormalizeToMany" Hidden="true" />
-      <Method Name="NormalizeToOne" Hidden="true" />
       <Method Name="PluralNameForAssociation" Hidden="true" />
       <Method Name="SingularNameForAssociation" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAAAiAAAAAAABAIEEAAAAQQAgDAAAAAGAIAAAAAAAAA=</HashCode>
+      <HashCode>AAAAiAAAAAAAAAIEAAAAAQQAgCAAAAAGAIAAAAAAAAA=</HashCode>
       <FileName>Meta\EmbeddedRoleType.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -68,10 +65,10 @@
     </ShowAsAssociation>
   </Class>
   <Interface Name="Allors.Embedded.IEmbeddedPopulation">
-    <Position X="2.75" Y="3.5" Width="2.5" />
+    <Position X="0.5" Y="3.5" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>EEBgACAAAAAwACAAAAQQAAACAAABAIEAAAQAAAAAAAE=</HashCode>
-      <FileName>IEmbeddedPopulation.cs</FileName>
+      <HashCode>EEBgACAAAAAQACAAAAQQAAACAAABAIEAAAQAAAAAAAE=</HashCode>
+      <FileName>Domain\IEmbeddedPopulation.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="Meta" />
@@ -82,17 +79,66 @@
     </ShowAsCollectionAssociation>
   </Interface>
   <Interface Name="Allors.Embedded.IEmbeddedObject">
-    <Position X="7.25" Y="5" Width="1.5" />
+    <Position X="4" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAIAAAAAAAAA=</HashCode>
-      <FileName>IEmbeddedObject.cs</FileName>
+      <FileName>Domain\IEmbeddedObject.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Allors.Embedded.IEmbeddedDerivation">
-    <Position X="5.5" Y="7.25" Width="1.75" />
+    <Position X="4.25" Y="5.5" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAA=</HashCode>
-      <FileName>IEmbeddedDerivation.cs</FileName>
+      <FileName>Domain\IEmbeddedDerivation.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Allors.Embedded.IRole">
+    <Position X="8.25" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Domain\Roles\IRole.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Allors.Embedded.IUnitRole&lt;T&gt;">
+    <Position X="6" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Domain\Roles\IUnitRole.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Allors.Embedded.ICompositesRole&lt;TRole&gt;">
+    <Position X="10" Y="9.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Domain\Roles\ICompositesRole.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Allors.Embedded.ICompositeRole&lt;TRole&gt;">
+    <Position X="7.75" Y="9.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Domain\Roles\ICompositeRole.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Allors.Embedded.IAssociation">
+    <Position X="2.5" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAAAAAAAAgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Domain\Associations\IAssociation.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Allors.Embedded.ICompositeAssociation&lt;TAssociation&gt;">
+    <Position X="0.5" Y="9.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Domain\Associations\ICompositeAssociation.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Allors.Embedded.ICompositesAssociation&lt;TAssociation&gt;">
+    <Position X="3" Y="9.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Domain\Associations\ICompositesAssociation.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Font Name="Segoe UI" Size="9" />

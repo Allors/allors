@@ -13,12 +13,12 @@
         private readonly IReadOnlyDictionary<EmbeddedAssociationType, Dictionary<IEmbeddedObject, object>> associationByRoleByRoleType;
 
         public EmbeddedChangeSet(EmbeddedMeta meta, 
-            ISet<IEmbeddedObject> newObjects,
+            ISet<IEmbeddedObject> createdObjects,
             IReadOnlyDictionary<EmbeddedRoleType, Dictionary<IEmbeddedObject, object>> roleByAssociationByRoleType,
             IReadOnlyDictionary<EmbeddedAssociationType, Dictionary<IEmbeddedObject, object>> associationByRoleByAssociationType)
         {
             this.Meta = meta;
-            this.NewObjects = newObjects;
+            this.CreatedObjects = createdObjects;
             this.roleByAssociationByRoleType = roleByAssociationByRoleType;
             this.associationByRoleByRoleType = associationByRoleByAssociationType;
         }
@@ -26,11 +26,11 @@
         public EmbeddedMeta Meta { get; }
 
         public bool HasChanges =>
-            this.NewObjects.Any() ||
+            this.CreatedObjects.Any() ||
             this.roleByAssociationByRoleType.Any(v => v.Value.Count > 0) ||
             this.associationByRoleByRoleType.Any(v => v.Value.Count > 0);
 
-        public ISet<IEmbeddedObject> NewObjects { get; }
+        public ISet<IEmbeddedObject> CreatedObjects { get; }
 
         public IReadOnlyDictionary<IEmbeddedObject, object> ChangedRoles<T>(string name)
         {

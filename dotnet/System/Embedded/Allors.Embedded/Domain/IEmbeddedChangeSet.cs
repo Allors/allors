@@ -9,7 +9,7 @@
 
         bool HasChanges { get; }
 
-        ISet<IEmbeddedObject> NewObjects { get; }
+        ISet<IEmbeddedObject> CreatedObjects { get; }
 
         IReadOnlyDictionary<IEmbeddedObject, object> ChangedRoles<T>(string name);
 
