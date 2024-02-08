@@ -1,27 +1,15 @@
-﻿namespace Allors.Embedded.Tests
+﻿namespace Allors.Embedded.Domain.Tests
 {
     using Domain;
 
-    public class UnitRoleTests : Tests
+    public abstract class UnitRoleTests : Tests
     {
-        private EmbeddedPopulation population = null!;
-
-        public override EmbeddedPopulation Population => population;
-
-        [SetUp]
-        public override void SetUp()
-        {
-            this.population = new EmbeddedPopulation();
-
-            base.SetUp();
-        }
-
         [Test]
         public void String()
         {
             var john = this.Population.Create<Person>();
             var jane = this.Population.Create<Person>();
-            
+
             john.Name.Value = "John";
             jane.Name.Value = "Jane";
 

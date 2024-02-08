@@ -1,9 +1,10 @@
-﻿namespace Allors.Embedded
+﻿namespace Allors.Embedded.Domain.Memory
 {
     using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
+    using Embedded.Meta;
     using Meta;
 
     internal class EmbeddedDatabase
@@ -13,7 +14,7 @@
         private readonly Dictionary<EmbeddedRoleType, Dictionary<IEmbeddedObject, object>> roleByAssociationByRoleType;
         private readonly Dictionary<EmbeddedAssociationType, Dictionary<IEmbeddedObject, object>> associationByRoleByAssociationType;
 
-        private ISet<IEmbeddedObject> createdObjects;
+        private HashSet<IEmbeddedObject> createdObjects;
         private Dictionary<EmbeddedRoleType, Dictionary<IEmbeddedObject, object>> changedRoleByAssociationByRoleType;
         private Dictionary<EmbeddedAssociationType, Dictionary<IEmbeddedObject, object>> changedAssociationByRoleByAssociationType;
         

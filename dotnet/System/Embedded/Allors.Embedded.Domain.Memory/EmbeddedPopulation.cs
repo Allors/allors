@@ -1,8 +1,8 @@
-﻿namespace Allors.Embedded
+﻿namespace Allors.Embedded.Domain.Memory
 {
     using System;
     using System.Collections.Generic;
-    using Meta;
+    using Embedded.Meta;
 
     public class EmbeddedPopulation : IEmbeddedPopulation
     {
@@ -25,15 +25,15 @@
 
         public IEmbeddedObject Create(Type type, params Action<IEmbeddedObject>[] builders)
         {
-            var @new = (IEmbeddedObject)Activator.CreateInstance(type, new object[] { this, this.Meta.GetOrAddObjectType(type) });
-            this.database.AddObject(@new);
+            var created = (IEmbeddedObject)Activator.CreateInstance(type, new object[] { this, this.Meta.GetOrAddObjectType(type) });
+            this.database.AddObject(created);
 
             foreach (var builder in builders)
             {
-                builder(@new);
+                builder(created);
             }
 
-            return @new;
+            return created;
         }
 
         public T Create<T>(params Action<T>[] builders)

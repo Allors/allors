@@ -1,8 +1,7 @@
-﻿namespace Allors.Embedded.Tests
+﻿namespace Allors.Embedded.Domain.Memory.Tests
 {
-    using Allors.Embedded.Tests.Domain;
-    using Embedded.Tests;
-
+    using Domain.Memory;
+    
     public class SnapshotTests : Tests
     {
         private EmbeddedPopulation population = null!;

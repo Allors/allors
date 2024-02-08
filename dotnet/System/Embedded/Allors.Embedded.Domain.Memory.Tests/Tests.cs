@@ -1,4 +1,4 @@
-﻿namespace Allors.Embedded.Domain.Tests
+﻿namespace Allors.Embedded.Domain.Memory.Tests
 {
     using Domain;
 

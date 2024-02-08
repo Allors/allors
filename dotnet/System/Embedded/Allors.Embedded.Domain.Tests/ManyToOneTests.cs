@@ -1,17 +1,6 @@
-﻿namespace Allors.Embedded.Tests
+﻿namespace Allors.Embedded.Domain.Tests
 {
-    public class ManyToOneTests : Tests
+    public abstract class ManyToOneTests : Tests
     {
-        private EmbeddedPopulation population = null!;
-
-        public override EmbeddedPopulation Population => population;
-
-        [SetUp]
-        public override void SetUp()
-        {
-            this.population = new EmbeddedPopulation();
-
-            base.SetUp();
-        }
     }
 }

@@ -1,23 +1,11 @@
-﻿namespace Allors.Embedded.Tests
+﻿namespace Allors.Embedded.Domain.Tests
 {
     using System;
     using System.Linq;
     using Domain;
 
-    public class DerivationOverrideTests : Tests
+    public abstract class DerivationOverrideTests : Tests
     {
-        private EmbeddedPopulation population = null!;
-
-        public override EmbeddedPopulation Population => population;
-
-        [SetUp]
-        public override void SetUp()
-        {
-            this.population = new EmbeddedPopulation();
-
-            base.SetUp();
-        }
-
         [Test]
         public void Derivation()
         {

@@ -1,4 +1,4 @@
-﻿namespace Allors.Embedded.Tests.Domain
+﻿namespace Allors.Embedded.Domain
 {
     using Allors.Embedded.Meta;
 

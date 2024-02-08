@@ -1,4 +1,4 @@
-﻿namespace Allors.Embedded.Tests.Domain
+﻿namespace Allors.Embedded.Domain
 {
     public interface INamed : IEmbeddedObject
     {

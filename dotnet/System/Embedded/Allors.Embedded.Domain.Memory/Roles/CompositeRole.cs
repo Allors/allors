@@ -1,6 +1,6 @@
-﻿namespace Allors.Embedded
+﻿namespace Allors.Embedded.Domain.Memory
 {
-    using Meta;
+    using Embedded.Meta;
 
     public class CompositeRole<TRole> : Role, ICompositeRole<TRole> where TRole : IEmbeddedObject
     {

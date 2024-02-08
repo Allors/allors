@@ -1,27 +1,13 @@
-﻿namespace Allors.Embedded.Tests
+﻿namespace Allors.Embedded.Domain.Tests
 {
-    using Allors.Embedded.Tests.Domain;
-
-    public class ManyToManyTests : Tests
+    public abstract class ManyToManyTests : Tests
     {
-        private EmbeddedPopulation population = null!;
-
-        public override EmbeddedPopulation Population => population;
-
-        [SetUp]
-        public override void SetUp()
-        {
-            this.population = new EmbeddedPopulation();
-
-            base.SetUp();
-        }
-
         [Test]
         public void AddInterface()
         {
             var c1 = this.Population.Create<C1>();
             var c2 = this.Population.Create<C2>();
-            
+
             c1.ManyToMany.Add(c2);
 
             Assert.That(c1.ManyToMany.Value.Length, Is.EqualTo(1));

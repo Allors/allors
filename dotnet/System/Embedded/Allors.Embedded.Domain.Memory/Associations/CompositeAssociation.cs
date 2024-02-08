@@ -1,6 +1,6 @@
-﻿namespace Allors.Embedded
+﻿namespace Allors.Embedded.Domain.Memory
 {
-    using Meta;
+    using Embedded.Meta;
 
     public class CompositeAssociation<TAssociation> : Association, ICompositeAssociation<TAssociation> where TAssociation : IEmbeddedObject
     {

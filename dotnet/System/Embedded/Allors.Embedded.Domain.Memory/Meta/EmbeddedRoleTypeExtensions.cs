@@ -1,9 +1,10 @@
-﻿namespace Allors.Embedded.Meta
+﻿namespace Allors.Embedded.Domain.Memory.Meta
 {
     using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
+    using Embedded.Meta;
 
     public static class EmbeddedRoleTypeExtenstions
     {

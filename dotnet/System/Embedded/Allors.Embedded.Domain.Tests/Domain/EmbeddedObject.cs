@@ -1,4 +1,4 @@
-﻿namespace Allors.Embedded
+﻿namespace Allors.Embedded.Domain
 {
     using Meta;
 

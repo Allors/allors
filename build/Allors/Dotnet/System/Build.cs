@@ -18,23 +18,23 @@ partial class Build
             .AddLoggers("trx;LogFileName=AllorsDotnetSystemRepositoryModelTests.trx")
             .SetResultsDirectory(Paths.ArtifactsTests)));
     
-    private Target AllorsDotnetSystemEmbeddedDomainTests => _ => _
+    private Target AllorsDotnetSystemEmbeddedTests => _ => _
         .DependsOn(AllorsDotnetBaseGenerate)
         .Executes(() =>
         {
             DotNetTest(s => s
-                .SetProjectFile(Paths.AllorsDotnetSystemEmbeddedDomainTests)
-                .AddLoggers("trx;LogFileName=AllorsDotnetSystemEmbeddedDomainTests.trx")
+                .SetProjectFile(Paths.AllorsDotnetSystemEmbeddedTests)
+                .AddLoggers("trx;LogFileName=AllorsDotnetSystemEmbeddedTests.trx")
                 .SetResultsDirectory(Paths.ArtifactsTests));
         });
 
-    private Target AllorsDotnetSystemEmbeddedMetaTests => _ => _
+    private Target AllorsDotnetSystemEmbeddedDomainMemoryTests => _ => _
         .DependsOn(AllorsDotnetBaseGenerate)
         .Executes(() =>
         {
             DotNetTest(s => s
-                .SetProjectFile(Paths.AllorsDotnetSystemEmbeddedMetaTests)
-                .AddLoggers("trx;LogFileName=AllorsDotnetSystemEmbeddedMetaTests.trx")
+                .SetProjectFile(Paths.AllorsDotnetSystemEmbeddedDomainMemoryTests)
+                .AddLoggers("trx;LogFileName=AllorsDotnetSystemEmbeddedDomainMemoryTests.trx")
                 .SetResultsDirectory(Paths.ArtifactsTests));
         });
 
