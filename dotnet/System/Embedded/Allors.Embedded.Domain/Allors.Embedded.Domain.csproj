@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <Title>Allors Embedded</Title>
     <Authors>allors</Authors>
@@ -28,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Allors.Embedded.Meta\Allors.Embedded.Meta.csproj" />
+    <ProjectReference Include="..\Allors.Embedded\Allors.Embedded.csproj" />
   </ItemGroup>
 
 </Project>
