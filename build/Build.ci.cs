@@ -5,7 +5,9 @@ partial class Build
     private Target CiDotnetSystem => _ => _
         .DependsOn(Reset)
         .DependsOn(AllorsDotnetSystemSharedTests)
-        .DependsOn(AllorsDotnetSystemRepositoryModelTests);
+        .DependsOn(AllorsDotnetSystemRepositoryModelTests)
+        .DependsOn(AllorsDotnetSystemEmbeddedDomainTests)
+        .DependsOn(AllorsDotnetSystemEmbeddedMetaTests);
 
     private Target CiDotnetSystemDatabaseAdaptersMemory => _ => _
         .DependsOn(Reset)

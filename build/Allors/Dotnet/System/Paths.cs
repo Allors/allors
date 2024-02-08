@@ -14,13 +14,17 @@ public partial class Paths
     public AbsolutePath AllorsDotnetSystemRepositoryTemplatesMetaExtensionsCs => AllorsDotnetSystemRepositoryTemplates / "meta.extensions.cs.stg";
     public AbsolutePath AllorsDotnetSystemRepositoryGenerate => AllorsDotnetSystemRepository / "Generate/Generate.csproj";
 
+    public AbsolutePath AllorsDotnetSystemEmbedded => AllorsDotnetSystem / "Embedded";
+    public AbsolutePath AllorsDotnetSystemEmbeddedDomainTests => AllorsDotnetSystemEmbedded / "Allors.Embedded.Domain.Tests/Allors.Embedded.Domain.Tests.csproj";
+    public AbsolutePath AllorsDotnetSystemEmbeddedMetaTests => AllorsDotnetSystemEmbedded / "Allors.Embedded.Meta.Tests/Allors.Embedded.Meta.Tests.csproj";
+    
     public AbsolutePath AllorsDotnetSystemDatabase => AllorsDotnetSystem / "Database";
-    public AbsolutePath AllorsDotnetSystemAdapters => AllorsDotnetSystemDatabase / "Adapters";
-    public AbsolutePath AllorsDotnetSystemAdaptersRepository => AllorsDotnetSystemAdapters / "Repository/Repository.csproj";
-    public AbsolutePath AllorsDotnetSystemAdaptersMetaGenerated => AllorsDotnetSystemAdapters / "Meta/Generated";
-    public AbsolutePath AllorsDotnetSystemAdaptersMetaConfigurationGenerated => AllorsDotnetSystemAdapters / "Meta.Configuration/Generated";
-    public AbsolutePath AllorsDotnetSystemAdaptersGenerate => AllorsDotnetSystemAdapters / "Generate/Generate.csproj";
-    public AbsolutePath AllorsDotnetSystemAdaptersTests => AllorsDotnetSystemAdapters / "Tests/Tests.csproj";
+    public AbsolutePath AllorsDotnetSystemDatabaseAdapters => AllorsDotnetSystemDatabase / "Adapters";
+    public AbsolutePath AllorsDotnetSystemDatabaseAdaptersRepository => AllorsDotnetSystemDatabaseAdapters / "Repository/Repository.csproj";
+    public AbsolutePath AllorsDotnetSystemDatabaseAdaptersMetaGenerated => AllorsDotnetSystemDatabaseAdapters / "Meta/Generated";
+    public AbsolutePath AllorsDotnetSystemDatabaseAdaptersMetaConfigurationGenerated => AllorsDotnetSystemDatabaseAdapters / "Meta.Configuration/Generated";
+    public AbsolutePath AllorsDotnetSystemDatabaseAdaptersGenerate => AllorsDotnetSystemDatabaseAdapters / "Generate/Generate.csproj";
+    public AbsolutePath AllorsDotnetSystemDatabaseAdaptersTests => AllorsDotnetSystemDatabaseAdapters / "Tests/Tests.csproj";
 
     public AbsolutePath AllorsDotnetSystemWorkspace => AllorsDotnetSystem / "Workspace";
     public AbsolutePath AllorsDotnetSystemWorkspaceSignalsTests => AllorsDotnetSystemWorkspace / "Allors.Workspace.Signals.Tests";
