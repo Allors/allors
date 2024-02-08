@@ -10,16 +10,16 @@
 
             var acme = createOrganization(v =>
             {
-                v.Name.EmbeddedValue = "Acme";
-                v.Owner.EmbeddedValue = createPerson(v => v.Name.EmbeddedValue = "Jane");
+                v.Name.Value = "Acme";
+                v.Owner.Value = createPerson(v => v.Name.Value = "Jane");
             });
 
             var jane = acme.Owner;
 
-            Assert.That(acme.Name.EmbeddedValue, Is.EqualTo("Acme"));
-            Assert.That(jane.EmbeddedValue.Name.EmbeddedValue, Is.EqualTo("Jane"));
+            Assert.That(acme.Name.Value, Is.EqualTo("Acme"));
+            Assert.That(jane.Value.Name.Value, Is.EqualTo("Jane"));
 
-            Assert.That(jane.EmbeddedValue.OrganizationWhereOwner.EmbeddedValue, Is.EqualTo(acme));
+            Assert.That(jane.Value.OrganizationWhereOwner.Value, Is.EqualTo(acme));
         }
     }
 }

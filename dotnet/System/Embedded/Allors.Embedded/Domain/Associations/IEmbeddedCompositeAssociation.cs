@@ -2,7 +2,7 @@
 {
     public interface IEmbeddedCompositeAssociation<out T> : IEmbeddedAssociation where T : IEmbeddedObject
     {
-        T EmbeddedValue
+        T Value
         {
             get;
         }

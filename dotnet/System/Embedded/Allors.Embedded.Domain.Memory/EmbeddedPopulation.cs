@@ -10,14 +10,14 @@
 
         public EmbeddedPopulation()
         {
-            this.Meta = new EmbeddedMeta();
+            this.EmbeddedMeta = new EmbeddedMeta();
             this.EmbeddedDerivationById = new Dictionary<string, IEmbeddedDerivation>();
-            this.database = new EmbeddedDatabase(this.Meta);
+            this.database = new EmbeddedDatabase(this.EmbeddedMeta);
         }
 
-        EmbeddedMeta IEmbeddedPopulation.EmbeddedMeta => this.Meta;
+        EmbeddedMeta IEmbeddedPopulation.EmbeddedMeta => this.EmbeddedMeta;
 
-        public EmbeddedMeta Meta { get; }
+        public EmbeddedMeta EmbeddedMeta { get; }
 
         public Dictionary<string, IEmbeddedDerivation> EmbeddedDerivationById { get; }
 
@@ -25,7 +25,7 @@
 
         public IEmbeddedObject EmbeddedCreateObject(Type type, params Action<IEmbeddedObject>[] builders)
         {
-            var created = (IEmbeddedObject)Activator.CreateInstance(type, new object[] { this, this.Meta.GetOrAddEmbeddedObjectType(type) });
+            var created = (IEmbeddedObject)Activator.CreateInstance(type, new object[] { this, this.EmbeddedMeta.GetOrAddEmbeddedObjectType(type) });
             this.database.AddObject(created);
 
             foreach (var builder in builders)
@@ -39,7 +39,7 @@
         public T EmbeddedCreateObject<T>(params Action<T>[] builders)
               where T : IEmbeddedObject
         {
-            var @new = (T)Activator.CreateInstance(typeof(T), new object[] { this, this.Meta.GetOrAddEmbeddedObjectType(typeof(T)) });
+            var @new = (T)Activator.CreateInstance(typeof(T), new object[] { this, this.EmbeddedMeta.GetOrAddEmbeddedObjectType(typeof(T)) });
             this.database.AddObject(@new);
 
             foreach (var builder in builders)

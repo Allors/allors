@@ -11,23 +11,23 @@
             this.Population.EmbeddedDerivationById["FullName"] = new FullNameDerivation();
 
             var john = this.Population.EmbeddedCreateObject<Person>();
-            john.FirstName.EmbeddedValue = "John";
-            john.LastName.EmbeddedValue = "Doe";
+            john.FirstName.Value = "John";
+            john.LastName.Value = "Doe";
 
             this.Population.EmbeddedDerive();
 
-            Assert.That(john.FullName.EmbeddedValue, Is.EqualTo("John Doe"));
+            Assert.That(john.FullName.Value, Is.EqualTo("John Doe"));
 
             this.Population.EmbeddedDerivationById["FullName"] = new GreetingDerivation(this.Population.EmbeddedDerivationById["FullName"]);
 
             var jane = this.Population.EmbeddedCreateObject<Person>();
-            jane.FirstName.EmbeddedValue = "Jane";
-            jane.LastName.EmbeddedValue = "Doe";
+            jane.FirstName.Value = "Jane";
+            jane.LastName.Value = "Doe";
 
             this.Population.EmbeddedDerive();
 
-            Assert.That(john.FullName.EmbeddedValue, Is.EqualTo("John Doe"));
-            Assert.That(jane.FullName.EmbeddedValue, Is.EqualTo("Jane Doe Chained"));
+            Assert.That(john.FullName.Value, Is.EqualTo("John Doe"));
+            Assert.That(jane.FullName.Value, Is.EqualTo("Jane Doe Chained"));
         }
 
 
@@ -40,19 +40,19 @@
 
             this.Population.EmbeddedDerive();
 
-            Assert.That(acme.DisplayAliases.EmbeddedValue, Is.EqualTo("Nada"));
+            Assert.That(acme.DisplayAliases.Value, Is.EqualTo("Nada"));
 
-            acme.Aliases.EmbeddedValue = new string[] { "Bim", "Bam", "Bom" };
-
-            this.Population.EmbeddedDerive();
-
-            Assert.That(acme.DisplayAliases.EmbeddedValue, Is.EqualTo("Bim, Bam, Bom"));
-
-            acme.Aliases.EmbeddedValue = null;
+            acme.Aliases.Value = new string[] { "Bim", "Bam", "Bom" };
 
             this.Population.EmbeddedDerive();
 
-            Assert.That(acme.DisplayAliases.EmbeddedValue, Is.EqualTo("Nada"));
+            Assert.That(acme.DisplayAliases.Value, Is.EqualTo("Bim, Bam, Bom"));
+
+            acme.Aliases.Value = null;
+
+            this.Population.EmbeddedDerive();
+
+            Assert.That(acme.DisplayAliases.Value, Is.EqualTo("Nada"));
         }
 
 
@@ -70,12 +70,12 @@
                     foreach (var person in people.Cast<Person>())
                     {
                         // Dummy updates ...
-                        person.FirstName.EmbeddedValue = person.FirstName.EmbeddedValue;
-                        person.LastName.EmbeddedValue = person.LastName.EmbeddedValue;
+                        person.FirstName.Value = person.FirstName.Value;
+                        person.LastName.Value = person.LastName.Value;
 
-                        person.DerivedAt.EmbeddedValue = DateTime.Now;
+                        person.DerivedAt.Value = DateTime.Now;
 
-                        person.FullName.EmbeddedValue = $"{person.FirstName.EmbeddedValue} {person.LastName.EmbeddedValue}";
+                        person.FullName.Value = $"{person.FirstName.Value} {person.LastName.Value}";
                     }
                 }
             }
@@ -103,7 +103,7 @@
 
                     foreach (var person in people.Cast<Person>())
                     {
-                        person.FullName.EmbeddedValue = $"{person.FullName.EmbeddedValue} Chained";
+                        person.FullName.Value = $"{person.FullName.Value} Chained";
                     }
                 }
             }
@@ -119,9 +119,9 @@
                 foreach (var organization in created.Union(changed))
                 {
                     // Dummy updates ...
-                    organization.Aliases.EmbeddedValue = organization.Aliases.EmbeddedValue;
+                    organization.Aliases.Value = organization.Aliases.Value;
 
-                    organization.DisplayAliases.EmbeddedValue = organization.Aliases.EmbeddedValue?.Length > 0 ? string.Join(", ", organization.Aliases.EmbeddedValue) : "Nada";
+                    organization.DisplayAliases.Value = organization.Aliases.Value?.Length > 0 ? string.Join(", ", organization.Aliases.Value) : "Nada";
                 }
             }
         }

@@ -4,7 +4,7 @@
 
     public interface IEmbeddedCompositesAssociation<out T> : IEmbeddedAssociation where T : IEmbeddedObject
     {
-        IReadOnlyCollection<T> EmbeddedValue
+        IReadOnlyCollection<T> Value
         {
             get;
         }

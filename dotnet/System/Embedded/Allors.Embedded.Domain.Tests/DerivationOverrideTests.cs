@@ -13,12 +13,12 @@
             this.Population.EmbeddedDerivationById["Greeting"] = new GreetingDerivation();
 
             var john = this.Population.EmbeddedCreateObject<Person>();
-            john.FirstName.EmbeddedValue = "John";
-            john.LastName.EmbeddedValue = "Doe";
+            john.FirstName.Value = "John";
+            john.LastName.Value = "Doe";
 
             this.Population.EmbeddedDerive();
 
-            Assert.That(john.Greeting.EmbeddedValue, Is.EqualTo("Hello John Doe!"));
+            Assert.That(john.Greeting.Value, Is.EqualTo("Hello John Doe!"));
         }
 
         public class FullNameDerivation : IEmbeddedDerivation
@@ -35,12 +35,12 @@
                     foreach (var person in people.Cast<Person>())
                     {
                         // Dummy updates ...
-                        person.FirstName.EmbeddedValue = person.FirstName.EmbeddedValue;
-                        person.LastName.EmbeddedValue = person.LastName.EmbeddedValue;
+                        person.FirstName.Value = person.FirstName.Value;
+                        person.LastName.Value = person.LastName.Value;
 
-                        person.DerivedAt.EmbeddedValue = DateTime.Now;
+                        person.DerivedAt.Value = DateTime.Now;
 
-                        person.FullName.EmbeddedValue = $"{person.FirstName.EmbeddedValue} {person.LastName.EmbeddedValue}";
+                        person.FullName.Value = $"{person.FirstName.Value} {person.LastName.Value}";
                     }
                 }
             }
@@ -58,7 +58,7 @@
 
                     foreach (var person in people.Cast<Person>())
                     {
-                        person.Greeting.EmbeddedValue = $"Hello {person.FullName.EmbeddedValue}!";
+                        person.Greeting.Value = $"Hello {person.FullName.Value}!";
                     }
                 }
             }

@@ -80,7 +80,7 @@ $repository.Units:{unit|$define_unit(unit)$}; separator="\n"$
 
 define_unit(unit) ::= <<
     public class Meta$unit.SingularName$ : Unit {
-        public Meta$unit.SingularName$(M m, System.Guid id, string tag, string singularName, string assignedPluralName) : base(m, id, tag, singularName, assignedPluralName) {}
+        public Meta$unit.SingularName$(MetaPopulation metaPopulation, Allors.Embedded.Meta.EmbeddedObjectType embeddedObjectType) : base(metaPopulation, embeddedObjectType) {}
     }
 >>
 

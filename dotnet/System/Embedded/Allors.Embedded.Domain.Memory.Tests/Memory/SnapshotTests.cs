@@ -22,13 +22,13 @@
             var john = this.Population.EmbeddedCreateObject<Person>();
             var jane = this.Population.EmbeddedCreateObject<Person>();
 
-            john.FirstName.EmbeddedValue = "John";
-            john.LastName.EmbeddedValue = "Doe";
+            john.FirstName.Value = "John";
+            john.LastName.Value = "Doe";
 
             var snapshot1 = this.Population.Snapshot();
 
-            jane.FirstName.EmbeddedValue = "Jane";
-            jane.LastName.EmbeddedValue = "Doe";
+            jane.FirstName.Value = "Jane";
+            jane.LastName.Value = "Doe";
 
             var changedFirstNames = snapshot1.EmbeddedChangedRoles<Person>("FirstName");
             var changedLastNames = snapshot1.EmbeddedChangedRoles<Person>("LastName");
@@ -56,33 +56,33 @@
             var john = this.Population.EmbeddedCreateObject<Person>();
             var jane = this.Population.EmbeddedCreateObject<Person>();
 
-            john.FirstName.EmbeddedValue = "John";
-            john.LastName.EmbeddedValue = "Doe";
+            john.FirstName.Value = "John";
+            john.LastName.Value = "Doe";
 
-            jane.FirstName.EmbeddedValue = "Jane";
-            jane.LastName.EmbeddedValue = "Doe";
+            jane.FirstName.Value = "Jane";
+            jane.LastName.Value = "Doe";
 
             var acme = this.Population.EmbeddedCreateObject<Organization>();
 
-            acme.Name.EmbeddedValue = "Acme";
+            acme.Name.Value = "Acme";
 
-            acme.Employees.EmbeddedValue = new[] { john, jane };
+            acme.Employees.Value = new[] { john, jane };
 
             var snapshot = this.Population.Snapshot();
             var changedEmployees = snapshot.EmbeddedChangedRoles<Organization>("Employees");
             Assert.That(changedEmployees.Count, Is.EqualTo(1));
 
-            acme.Employees.EmbeddedValue = new[] { jane, john };
+            acme.Employees.Value = new[] { jane, john };
 
             snapshot = this.Population.Snapshot();
             changedEmployees = snapshot.EmbeddedChangedRoles<Organization>("Employees");
             Assert.That(changedEmployees, Is.Empty);
 
-            acme.Employees.EmbeddedValue = Array.Empty<Person>();
+            acme.Employees.Value = Array.Empty<Person>();
 
             var x = acme.Employees;
 
-            acme.Employees.EmbeddedValue = new[] { jane, john };
+            acme.Employees.Value = new[] { jane, john };
 
             snapshot = this.Population.Snapshot();
             changedEmployees = snapshot.EmbeddedChangedRoles<Organization>("Employees");

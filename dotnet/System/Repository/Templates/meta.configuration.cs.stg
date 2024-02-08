@@ -2,7 +2,7 @@
 
 TemplateId() ::= <<14F49218-A676-43ba-9CBD-B8FFA059D1BF>>
 TemplateName() ::= <<Allors C# Meta>>
-TemplateVersion() ::= <<3.0.1>>
+TemplateVersion() ::= <<3.0.2>>
 TemplateAllors() ::= <<1.0>>
 TemplateConfiguration(repository) ::= <<
 $!
@@ -194,7 +194,13 @@ $composite.DefinedMethods:{method|          public MethodType $method.DefiningTy
 >>
 
 build_domain(assembly) ::= <<
-	        domains.$assembly.Name$ = new Domain(meta, Ids.$assembly.Name$, "$assembly.Name$", new Domain[]{$assembly.DirectSuperdomains:{superdomain|domains.$superdomain.Name$}; separator=","$})
+	        domains.$assembly.Name$ = meta.Create<Domain>(v=>
+                        {
+                                v.Id = Ids.$assembly.Name$; 
+                                v.Tag = v.Id.Tag();
+                                v.Name = "$assembly.Name$"; 
+                                v.DirectSuperdomains = new Domain[]{$assembly.DirectSuperdomains:{superdomain|domains.$superdomain.Name$}; separator=","$};
+                        });
 	        {
 $if(assembly.ExtensionAttributes)$
                 Attributes = { $assembly.ExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ }
@@ -203,7 +209,12 @@ $endif$
 >>
 
 build_unit(unit) ::= <<
-            meta.$unit.SingularName$ = new Meta$unit.SingularName$(meta, Ids.$unit.SingularName$, UnitTags.$unit.SingularName$, UnitNames.$unit.SingularName$, null);
+            meta.$unit.SingularName$ = meta.Create<Meta$unit.SingularName$>(v=>
+            {
+                v.Id = Ids.$unit.SingularName$; 
+                v.Tag = UnitTags.$unit.SingularName$;
+                v.SingularName = UnitNames.$unit.SingularName$; 
+            });
 >>
 
 build_interface(interface) ::= <<

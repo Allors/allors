@@ -2,7 +2,7 @@
 {
     public interface IEmbeddedUnitRole<T> : IEmbeddedRole
     {
-        T? EmbeddedValue
+        T? Value
         {
             get;
             set;

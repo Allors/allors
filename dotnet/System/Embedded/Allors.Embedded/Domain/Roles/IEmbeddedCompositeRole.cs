@@ -2,7 +2,7 @@
 {
     public interface IEmbeddedCompositeRole<T> : IEmbeddedRole where T : IEmbeddedObject
     {
-        T EmbeddedValue
+        T Value
         {
             get;
             set;

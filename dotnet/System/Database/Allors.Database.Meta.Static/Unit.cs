@@ -8,22 +8,27 @@ namespace Allors.Database.Meta;
 
 using System;
 using System.Collections.Generic;
+using Embedded;
+using Embedded.Meta;
 using Text;
 
-public abstract class Unit : IStaticUnit, IObjectType, IMetaIdentifiableObject
+public abstract class Unit : EmbeddedObject, IStaticUnit, IObjectType, IMetaIdentifiableObject
 {
-    protected Unit(IStaticMetaPopulation metaPopulation, Guid id, string tag, string singularName, string assignedPluralName)
+    private readonly IEmbeddedUnitRole<string> singularName;
+    private readonly IEmbeddedUnitRole<string> assignedPluralName;
+    private readonly IEmbeddedUnitRole<string> pluralName;
+
+    protected Unit(MetaPopulation metaPopulation, EmbeddedObjectType embeddedObjectType)
+        : base(metaPopulation, embeddedObjectType)
     {
         this.Attributes = new MetaExtension();
         this.MetaPopulation = metaPopulation;
-        this.Id = id;
-        this.Tag = id.Tag();
-        this.SingularName = singularName;
-        this.AssignedPluralName = !string.IsNullOrEmpty(assignedPluralName) ? assignedPluralName : null;
-        this.PluralName = this.AssignedPluralName != null ? this.AssignedPluralName : Pluralizer.Pluralize(this.SingularName);
-        this.Tag = tag;
 
-        metaPopulation.OnCreated(this);
+        this.singularName = this.EmbeddedPopulation.EmbeddedGetUnitRole<string>(this, metaPopulation.EmbeddedRoleTypes.ObjectTypeSingularName);
+        this.assignedPluralName = this.EmbeddedPopulation.EmbeddedGetUnitRole<string>(this, metaPopulation.EmbeddedRoleTypes.ObjectTypeAssignedPluralName);
+        this.pluralName = this.EmbeddedPopulation.EmbeddedGetUnitRole<string>(this, metaPopulation.EmbeddedRoleTypes.ObjectTypePluralName);
+
+        this.MetaPopulation.OnCreated(this);
     }
 
     public dynamic Attributes { get; }
@@ -32,7 +37,7 @@ public abstract class Unit : IStaticUnit, IObjectType, IMetaIdentifiableObject
 
     public IStaticMetaPopulation MetaPopulation { get; }
 
-    public Guid Id { get; }
+    public Guid Id { get; set; }
 
     public string Tag { get; set; }
 
@@ -40,11 +45,11 @@ public abstract class Unit : IStaticUnit, IObjectType, IMetaIdentifiableObject
 
     public string Name => this.SingularName;
 
-    public string SingularName { get; }
+    public string SingularName { get => this.singularName.Value; set => this.singularName.Value = value; }
 
-    public string AssignedPluralName { get; }
+    public string AssignedPluralName { get => this.assignedPluralName.Value; set => this.assignedPluralName.Value = value; }
 
-    public string PluralName { get; }
+    public string PluralName { get => this.pluralName.Value; set => this.pluralName.Value = value; }
 
     public bool IsUnit => true;
 

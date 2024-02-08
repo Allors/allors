@@ -10,18 +10,18 @@
             this.Population.EmbeddedDerivationById["UppercaseName"] = new UppercaseNameDerivation();
 
             var john = this.Population.EmbeddedCreateObject<Person>();
-            john.Name.EmbeddedValue = "John Doe";
+            john.Name.Value = "John Doe";
 
             this.Population.EmbeddedDerive();
 
-            Assert.That(john.UppercasedName.EmbeddedValue, Is.EqualTo("JOHN DOE"));
+            Assert.That(john.UppercasedName.Value, Is.EqualTo("JOHN DOE"));
 
             var acme = this.Population.EmbeddedCreateObject<Organization>();
-            acme.Name.EmbeddedValue = "Acme";
+            acme.Name.Value = "Acme";
 
             this.Population.EmbeddedDerive();
 
-            Assert.That(acme.UppercasedName.EmbeddedValue, Is.EqualTo("ACME"));
+            Assert.That(acme.UppercasedName.Value, Is.EqualTo("ACME"));
         }
 
         public class UppercaseNameDerivation : IEmbeddedDerivation
@@ -35,9 +35,9 @@
                     foreach (var named in names.Keys.Cast<INamed>())
                     {
                         // Dummy updates ...
-                        named.Name.EmbeddedValue = named.Name.EmbeddedValue;
+                        named.Name.Value = named.Name.Value;
 
-                        named.UppercasedName.EmbeddedValue = $"{named.Name.EmbeddedValue?.ToUpperInvariant()}";
+                        named.UppercasedName.Value = $"{named.Name.Value?.ToUpperInvariant()}";
                     }
                 }
             }

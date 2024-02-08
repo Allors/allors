@@ -8,7 +8,7 @@
         {
         }
 
-        public T EmbeddedValue
+        public T Value
         {
             get
             {

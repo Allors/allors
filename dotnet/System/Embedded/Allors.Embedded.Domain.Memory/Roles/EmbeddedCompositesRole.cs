@@ -11,7 +11,7 @@
         {
         }
 
-        public IReadOnlyCollection<T> EmbeddedValue
+        public IReadOnlyCollection<T> Value
         {
             get
             {
@@ -23,12 +23,12 @@
             }
         }
 
-        public void EmbeddedAdd(T value)
+        public void Add(T value)
         {
             this.EmbeddedObject.EmbeddedPopulation.EmbeddedAddRoleValue(this.EmbeddedObject, this.EmbeddedRoleType, value);
         }
 
-        public void EmbeddedRemove(T value)
+        public void Remove(T value)
         {
             this.EmbeddedObject.EmbeddedPopulation.EmbeddedRemoveRoleValue(this.EmbeddedObject, this.EmbeddedRoleType, value);
         }

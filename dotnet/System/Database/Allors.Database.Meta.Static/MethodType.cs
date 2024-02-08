@@ -37,8 +37,7 @@ public sealed class MethodType : IStaticMethodType, IComparable, IMetaIdentifiab
     public Guid Id { get; }
 
     public string Tag { get; set; }
-
-
+    
     public ICompositeMethodType CompositeMethodType { get; }
 
     public IReadOnlyDictionary<IComposite, ICompositeMethodType> CompositeMethodTypeByComposite { get; private set; }

@@ -9,18 +9,16 @@ namespace Allors.Database.Meta;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Embedded;
+using Embedded.Meta;
 
-public sealed class Domain : IStaticDomain, IMetaIdentifiableObject
+public sealed class Domain : EmbeddedObject, IStaticDomain, IMetaIdentifiableObject
 {
-    public Domain(MetaPopulation metaPopulation, Guid id, string name, params Domain[] directSuperdomains)
+    public Domain(IEmbeddedPopulation embeddedPopulation, EmbeddedObjectType embeddedObjectType)
+     : base(embeddedPopulation, embeddedObjectType)
     {
         this.Attributes = new MetaExtension();
-        this.MetaPopulation = metaPopulation;
-        this.Id = id;
-        this.Tag = id.Tag();
-        this.Name = name;
-        this.DirectSuperdomains = directSuperdomains ?? Array.Empty<IDomain>();
-
+        this.MetaPopulation = (IStaticMetaPopulation)embeddedPopulation;
         this.MetaPopulation.OnCreated(this);
     }
 
@@ -30,13 +28,13 @@ public sealed class Domain : IStaticDomain, IMetaIdentifiableObject
 
     public IStaticMetaPopulation MetaPopulation { get; }
     
-    public Guid Id { get; }
+    public Guid Id { get; set; }
 
     public string Tag { get; set; }
 
-    public string Name { get; }
+    public string Name { get; set;  }
 
-    public IReadOnlyList<IDomain> DirectSuperdomains { get; }
+    public IReadOnlyList<IDomain> DirectSuperdomains { get; set;  }
 
     public IReadOnlyList<IDomain> Superdomains { get; private set; }
 

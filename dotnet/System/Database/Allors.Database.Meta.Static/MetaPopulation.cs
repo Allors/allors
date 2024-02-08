@@ -9,8 +9,11 @@ namespace Allors.Database.Meta;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Allors.Embedded.Domain.Memory;
+using Embedded;
+using Embedded.Meta;
 
-public abstract class MetaPopulation : IStaticMetaPopulation
+public abstract class MetaPopulation : EmbeddedPopulation, IStaticMetaPopulation
 {
     internal static readonly IReadOnlyList<IComposite> EmptyComposites = Array.Empty<IComposite>();
     internal static readonly IReadOnlyList<IDomain> EmptyDomains = Array.Empty<IDomain>();
@@ -38,7 +41,14 @@ public abstract class MetaPopulation : IStaticMetaPopulation
         this.initialized = false;
 
         this.metaObjects = new List<IMetaIdentifiableObject>();
+
+        this.EmbeddedRoleTypes = new EmbeddedRoleTypes(this.EmbeddedMeta);
+        this.EmbeddedDerivations = new EmbeddedDerivations(this);
     }
+
+    public EmbeddedRoleTypes EmbeddedRoleTypes { get; set; }
+
+    public EmbeddedDerivations EmbeddedDerivations { get; set; }
 
     public bool IsBound { get; private set; }
 
@@ -338,6 +348,8 @@ public abstract class MetaPopulation : IStaticMetaPopulation
         }
 
         this.compositeByLowercaseName = this.composites.ToDictionary(v => v.Name.ToLowerInvariant());
+
+        this.EmbeddedDerive();
     }
 
     public void Bind(Type[] types)
@@ -374,6 +386,11 @@ public abstract class MetaPopulation : IStaticMetaPopulation
                 @class.BoundType = typeByName[@class.Name];
             }
         }
+    }
+
+    public T Create<T>(params Action<T>[] builders) where T : IEmbeddedObject
+    {
+        return this.EmbeddedCreateObject(builders);
     }
 
     void IStaticMetaPopulation.OnCreated(IMetaIdentifiableObject metaObject)

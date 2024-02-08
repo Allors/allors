@@ -11,7 +11,7 @@
         {
         }
 
-        public IReadOnlyCollection<T> EmbeddedValue
+        public IReadOnlyCollection<T> Value
         {
             get
             {

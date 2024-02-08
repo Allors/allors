@@ -10,13 +10,13 @@
             var john = this.Population.EmbeddedCreateObject<Person>();
             var jane = this.Population.EmbeddedCreateObject<Person>();
 
-            john.Name.EmbeddedValue = "John";
-            jane.Name.EmbeddedValue = "Jane";
+            john.Name.Value = "John";
+            jane.Name.Value = "Jane";
 
             Assert.Multiple(() =>
             {
-                Assert.That(john.Name.EmbeddedValue, Is.EqualTo("John"));
-                Assert.That(jane.Name.EmbeddedValue, Is.EqualTo("Jane"));
+                Assert.That(john.Name.Value, Is.EqualTo("John"));
+                Assert.That(jane.Name.Value, Is.EqualTo("Jane"));
             });
         }
     }

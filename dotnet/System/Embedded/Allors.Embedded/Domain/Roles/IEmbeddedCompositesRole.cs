@@ -4,14 +4,14 @@
 
     public interface IEmbeddedCompositesRole<T> : IEmbeddedRole where T : IEmbeddedObject
     {
-        IReadOnlyCollection<T> EmbeddedValue
+        IReadOnlyCollection<T> Value
         {
             get;
             set;
         }
 
-        void EmbeddedAdd(T value);
+        void Add(T value);
 
-        void EmbeddedRemove(T value);
+        void Remove(T value);
     }
 }
