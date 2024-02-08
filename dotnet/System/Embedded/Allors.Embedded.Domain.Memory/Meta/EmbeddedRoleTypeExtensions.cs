@@ -6,7 +6,7 @@
     using System.Linq;
     using Embedded.Meta;
 
-    public static class EmbeddedRoleTypeExtenstions
+    public static class EmbeddedRoleTypeExtensions
     {
         public static object? Normalize(this EmbeddedRoleType @this, object? value) =>
             @this.IsOne switch
@@ -19,7 +19,7 @@
         {
             if (value != null)
             {
-                var type = @this.ObjectType.Type;
+                var type = @this.EmbeddedObjectType.Type;
                 if (!type.IsInstanceOfType(value))
                 {
                     throw new ArgumentException($"{@this.Name} should be a {type.Name} but was a {value.GetType()}");
@@ -45,7 +45,7 @@
             {
                 if (@object != null)
                 {
-                    var type = @this.ObjectType.Type;
+                    var type = @this.EmbeddedObjectType.Type;
 
                     if (!type.IsInstanceOfType(@object))
                     {

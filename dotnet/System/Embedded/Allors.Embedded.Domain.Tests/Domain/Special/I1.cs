@@ -2,6 +2,6 @@
 {
     public interface I1 : IEmbeddedObject
     {
-        ICompositesRole<I2> ManyToMany { get; }
+        IEmbeddedCompositesRole<I2> ManyToMany { get; }
     }
 }

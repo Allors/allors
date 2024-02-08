@@ -8,7 +8,7 @@
 
         public virtual void SetUp()
         {
-            var meta = this.Population.Meta;
+            var meta = this.Population.EmbeddedMeta;
 
             meta.AddUnit<INamed, string>(nameof(INamed.Name));
             meta.AddUnit<INamed, string>(nameof(INamed.UppercasedName));

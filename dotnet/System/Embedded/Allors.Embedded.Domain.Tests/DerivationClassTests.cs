@@ -8,60 +8,60 @@
         [Test]
         public void String()
         {
-            this.Population.DerivationById["FullName"] = new FullNameDerivation();
+            this.Population.EmbeddedDerivationById["FullName"] = new FullNameDerivation();
 
-            var john = this.Population.Create<Person>();
-            john.FirstName.Value = "John";
-            john.LastName.Value = "Doe";
+            var john = this.Population.EmbeddedCreateObject<Person>();
+            john.FirstName.EmbeddedValue = "John";
+            john.LastName.EmbeddedValue = "Doe";
 
-            this.Population.Derive();
+            this.Population.EmbeddedDerive();
 
-            Assert.That(john.FullName.Value, Is.EqualTo("John Doe"));
+            Assert.That(john.FullName.EmbeddedValue, Is.EqualTo("John Doe"));
 
-            this.Population.DerivationById["FullName"] = new GreetingDerivation(this.Population.DerivationById["FullName"]);
+            this.Population.EmbeddedDerivationById["FullName"] = new GreetingDerivation(this.Population.EmbeddedDerivationById["FullName"]);
 
-            var jane = this.Population.Create<Person>();
-            jane.FirstName.Value = "Jane";
-            jane.LastName.Value = "Doe";
+            var jane = this.Population.EmbeddedCreateObject<Person>();
+            jane.FirstName.EmbeddedValue = "Jane";
+            jane.LastName.EmbeddedValue = "Doe";
 
-            this.Population.Derive();
+            this.Population.EmbeddedDerive();
 
-            Assert.That(john.FullName.Value, Is.EqualTo("John Doe"));
-            Assert.That(jane.FullName.Value, Is.EqualTo("Jane Doe Chained"));
+            Assert.That(john.FullName.EmbeddedValue, Is.EqualTo("John Doe"));
+            Assert.That(jane.FullName.EmbeddedValue, Is.EqualTo("Jane Doe Chained"));
         }
 
 
         [Test]
         public void ArrayOfString()
         {
-            this.Population.DerivationById["Aliases"] = new AliasesDerivation();
+            this.Population.EmbeddedDerivationById["Aliases"] = new AliasesDerivation();
 
-            var acme = this.Population.Create<Organization>();
+            var acme = this.Population.EmbeddedCreateObject<Organization>();
 
-            this.Population.Derive();
+            this.Population.EmbeddedDerive();
 
-            Assert.That(acme.DisplayAliases.Value, Is.EqualTo("Nada"));
+            Assert.That(acme.DisplayAliases.EmbeddedValue, Is.EqualTo("Nada"));
 
-            acme.Aliases.Value = new string[] { "Bim", "Bam", "Bom" };
+            acme.Aliases.EmbeddedValue = new string[] { "Bim", "Bam", "Bom" };
 
-            this.Population.Derive();
+            this.Population.EmbeddedDerive();
 
-            Assert.That(acme.DisplayAliases.Value, Is.EqualTo("Bim, Bam, Bom"));
+            Assert.That(acme.DisplayAliases.EmbeddedValue, Is.EqualTo("Bim, Bam, Bom"));
 
-            acme.Aliases.Value = null;
+            acme.Aliases.EmbeddedValue = null;
 
-            this.Population.Derive();
+            this.Population.EmbeddedDerive();
 
-            Assert.That(acme.DisplayAliases.Value, Is.EqualTo("Nada"));
+            Assert.That(acme.DisplayAliases.EmbeddedValue, Is.EqualTo("Nada"));
         }
 
 
         public class FullNameDerivation : IEmbeddedDerivation
         {
-            public void Derive(IEmbeddedChangeSet changeSet)
+            public void EmbeddedDerive(IEmbeddedChangeSet changeSet)
             {
-                var firstNames = changeSet.ChangedRoles<Person>("FirstName");
-                var lastNames = changeSet.ChangedRoles<Person>("LastName");
+                var firstNames = changeSet.EmbeddedChangedRoles<Person>("FirstName");
+                var lastNames = changeSet.EmbeddedChangedRoles<Person>("LastName");
 
                 if (firstNames.Any() || lastNames.Any())
                 {
@@ -70,12 +70,12 @@
                     foreach (var person in people.Cast<Person>())
                     {
                         // Dummy updates ...
-                        person.FirstName.Value = person.FirstName.Value;
-                        person.LastName.Value = person.LastName.Value;
+                        person.FirstName.EmbeddedValue = person.FirstName.EmbeddedValue;
+                        person.LastName.EmbeddedValue = person.LastName.EmbeddedValue;
 
-                        person.DerivedAt.Value = DateTime.Now;
+                        person.DerivedAt.EmbeddedValue = DateTime.Now;
 
-                        person.FullName.Value = $"{person.FirstName.Value} {person.LastName.Value}";
+                        person.FullName.EmbeddedValue = $"{person.FirstName.EmbeddedValue} {person.LastName.EmbeddedValue}";
                     }
                 }
             }
@@ -90,12 +90,12 @@
                 this.derivation = derivation;
             }
 
-            public void Derive(IEmbeddedChangeSet changeSet)
+            public void EmbeddedDerive(IEmbeddedChangeSet changeSet)
             {
-                this.derivation.Derive(changeSet);
+                this.derivation.EmbeddedDerive(changeSet);
 
-                var firstNames = changeSet.ChangedRoles<Person>("FirstName");
-                var lastNames = changeSet.ChangedRoles<Person>("LastName");
+                var firstNames = changeSet.EmbeddedChangedRoles<Person>("FirstName");
+                var lastNames = changeSet.EmbeddedChangedRoles<Person>("LastName");
 
                 if (firstNames?.Any() == true || lastNames?.Any() == true)
                 {
@@ -103,7 +103,7 @@
 
                     foreach (var person in people.Cast<Person>())
                     {
-                        person.FullName.Value = $"{person.FullName.Value} Chained";
+                        person.FullName.EmbeddedValue = $"{person.FullName.EmbeddedValue} Chained";
                     }
                 }
             }
@@ -111,17 +111,17 @@
 
         public class AliasesDerivation : IEmbeddedDerivation
         {
-            public void Derive(IEmbeddedChangeSet changeSet)
+            public void EmbeddedDerive(IEmbeddedChangeSet changeSet)
             {
-                var created = changeSet.CreatedObjects.OfType<Organization>();
-                var changed = changeSet.ChangedRoles<Organization>("Aliases").Select(v => v.Key).Distinct().Cast<Organization>();
+                var created = changeSet.EmbeddedCreatedObjects.OfType<Organization>();
+                var changed = changeSet.EmbeddedChangedRoles<Organization>("Aliases").Select(v => v.Key).Distinct().Cast<Organization>();
 
                 foreach (var organization in created.Union(changed))
                 {
                     // Dummy updates ...
-                    organization.Aliases.Value = organization.Aliases.Value;
+                    organization.Aliases.EmbeddedValue = organization.Aliases.EmbeddedValue;
 
-                    organization.DisplayAliases.Value = organization.Aliases.Value?.Length > 0 ? string.Join(", ", organization.Aliases.Value) : "Nada";
+                    organization.DisplayAliases.EmbeddedValue = organization.Aliases.EmbeddedValue?.Length > 0 ? string.Join(", ", organization.Aliases.EmbeddedValue) : "Nada";
                 }
             }
         }

@@ -11,8 +11,8 @@
             this.Same = GetUnitRole<string>(nameof(Same));
         }
 
-        public ICompositesAssociation<I1> Backs { get; }
+        public IEmbeddedCompositesAssociation<I1> Backs { get; }
 
-        public IUnitRole<string> Same { get; }
+        public IEmbeddedUnitRole<string> Same { get; }
     }
 }

@@ -2,6 +2,6 @@
 {
     public interface IEmbeddedDerivation
     {
-        void Derive(IEmbeddedChangeSet changeSet);
+        void EmbeddedDerive(IEmbeddedChangeSet changeSet);
     }
 }

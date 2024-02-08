@@ -1,8 +1,8 @@
 ﻿namespace Allors.Embedded
 {
-    public interface IUnitRole<T> : IRole
+    public interface IEmbeddedUnitRole<T> : IEmbeddedRole
     {
-        T? Value
+        T? EmbeddedValue
         {
             get;
             set;

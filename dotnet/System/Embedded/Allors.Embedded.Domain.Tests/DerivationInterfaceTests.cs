@@ -7,37 +7,37 @@
         [Test]
         public void Derivation()
         {
-            this.Population.DerivationById["UppercaseName"] = new UppercaseNameDerivation();
+            this.Population.EmbeddedDerivationById["UppercaseName"] = new UppercaseNameDerivation();
 
-            var john = this.Population.Create<Person>();
-            john.Name.Value = "John Doe";
+            var john = this.Population.EmbeddedCreateObject<Person>();
+            john.Name.EmbeddedValue = "John Doe";
 
-            this.Population.Derive();
+            this.Population.EmbeddedDerive();
 
-            Assert.That(john.UppercasedName.Value, Is.EqualTo("JOHN DOE"));
+            Assert.That(john.UppercasedName.EmbeddedValue, Is.EqualTo("JOHN DOE"));
 
-            var acme = this.Population.Create<Organization>();
-            acme.Name.Value = "Acme";
+            var acme = this.Population.EmbeddedCreateObject<Organization>();
+            acme.Name.EmbeddedValue = "Acme";
 
-            this.Population.Derive();
+            this.Population.EmbeddedDerive();
 
-            Assert.That(acme.UppercasedName.Value, Is.EqualTo("ACME"));
+            Assert.That(acme.UppercasedName.EmbeddedValue, Is.EqualTo("ACME"));
         }
 
         public class UppercaseNameDerivation : IEmbeddedDerivation
         {
-            public void Derive(IEmbeddedChangeSet changeSet)
+            public void EmbeddedDerive(IEmbeddedChangeSet changeSet)
             {
-                var names = changeSet.ChangedRoles<INamed>("Name");
+                var names = changeSet.EmbeddedChangedRoles<INamed>("Name");
 
                 if (names.Any())
                 {
                     foreach (var named in names.Keys.Cast<INamed>())
                     {
                         // Dummy updates ...
-                        named.Name.Value = named.Name.Value;
+                        named.Name.EmbeddedValue = named.Name.EmbeddedValue;
 
-                        named.UppercasedName.Value = $"{named.Name.Value?.ToUpperInvariant()}";
+                        named.UppercasedName.EmbeddedValue = $"{named.Name.EmbeddedValue?.ToUpperInvariant()}";
                     }
                 }
             }

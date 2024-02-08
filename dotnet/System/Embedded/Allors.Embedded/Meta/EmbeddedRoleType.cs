@@ -2,9 +2,9 @@
 {
     public class EmbeddedRoleType
     {
-        public EmbeddedAssociationType AssociationType { get; internal set; } = null!;
+        public EmbeddedAssociationType EmbeddedAssociationType { get; internal set; } = null!;
 
-        public EmbeddedObjectType ObjectType { get; }
+        public EmbeddedObjectType EmbeddedObjectType { get; }
 
         public string SingularName { get; }
 
@@ -18,9 +18,9 @@
 
         public bool IsUnit { get;  }
 
-        internal EmbeddedRoleType(EmbeddedObjectType objectType, string singularName, string pluralName, string name, bool isOne, bool isMany, bool isUnit)
+        internal EmbeddedRoleType(EmbeddedObjectType embeddedObjectType, string singularName, string pluralName, string name, bool isOne, bool isMany, bool isUnit)
         {
-            this.ObjectType = objectType;
+            this.EmbeddedObjectType = embeddedObjectType;
             this.SingularName = singularName;
             this.PluralName = pluralName;
             this.Name = name;
@@ -34,14 +34,14 @@
             return this.Name;
         }
 
-        internal string SingularNameForAssociation(EmbeddedObjectType objectType)
+        internal string SingularNameForEmbeddedAssociationType(EmbeddedObjectType embeddedObjectType)
         {
-            return $"{objectType.Type.Name}Where{this.SingularName}";
+            return $"{embeddedObjectType.Type.Name}Where{this.SingularName}";
         }
 
-        internal string PluralNameForAssociation(EmbeddedObjectType objectType)
+        internal string PluralNameForEmbeddedAssociationType(EmbeddedObjectType embeddedObjectType)
         {
-            return $"{this.ObjectType.Meta.Pluralize(objectType.Type.Name)}Where{this.SingularName}";
+            return $"{this.EmbeddedObjectType.EmbeddedMeta.Pluralize(embeddedObjectType.Type.Name)}Where{this.SingularName}";
         }
     }
 }

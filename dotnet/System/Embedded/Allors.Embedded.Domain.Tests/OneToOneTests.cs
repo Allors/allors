@@ -5,27 +5,27 @@
         [Test]
         public void StaticPropertySet()
         {
-            var acme = this.Population.Create<Organization>();
-            var gizmo = this.Population.Create<Organization>();
+            var acme = this.Population.EmbeddedCreateObject<Organization>();
+            var gizmo = this.Population.EmbeddedCreateObject<Organization>();
 
-            var jane = this.Population.Create<Person>();
-            var john = this.Population.Create<Person>();
+            var jane = this.Population.EmbeddedCreateObject<Person>();
+            var john = this.Population.EmbeddedCreateObject<Person>();
 
-            acme.Owner.Value = jane;
+            acme.Owner.EmbeddedValue = jane;
 
-            Assert.That(acme.Owner.Value, Is.EqualTo(jane));
-            Assert.That(jane.OrganizationWhereOwner.Value, Is.EqualTo(acme));
+            Assert.That(acme.Owner.EmbeddedValue, Is.EqualTo(jane));
+            Assert.That(jane.OrganizationWhereOwner.EmbeddedValue, Is.EqualTo(acme));
 
-            Assert.That(gizmo.Owner.Value, Is.Null);
-            Assert.That(john.OrganizationWhereOwner.Value, Is.Null);
+            Assert.That(gizmo.Owner.EmbeddedValue, Is.Null);
+            Assert.That(john.OrganizationWhereOwner.EmbeddedValue, Is.Null);
 
-            acme.Named.Value = jane;
+            acme.Named.EmbeddedValue = jane;
 
-            Assert.That(acme.Named.Value, Is.EqualTo(jane));
-            Assert.That(jane.OrganizationWhereNamed.Value, Is.EqualTo(acme));
+            Assert.That(acme.Named.EmbeddedValue, Is.EqualTo(jane));
+            Assert.That(jane.OrganizationWhereNamed.EmbeddedValue, Is.EqualTo(acme));
 
-            Assert.That(gizmo.Named.Value, Is.Null);
-            Assert.That(john.OrganizationWhereNamed.Value, Is.Null);
+            Assert.That(gizmo.Named.EmbeddedValue, Is.Null);
+            Assert.That(john.OrganizationWhereNamed.EmbeddedValue, Is.Null);
         }
 
         //[Test]

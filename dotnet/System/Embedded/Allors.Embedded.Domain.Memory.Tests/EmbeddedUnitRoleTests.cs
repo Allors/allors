@@ -2,7 +2,7 @@
 {
     using Domain;
 
-    public class UnitRoleTests : Domain.Tests.UnitRoleTests
+    public class EmbeddedUnitRoleTests : Domain.Tests.EmbeddedUnitRoleTests
     {
         private EmbeddedPopulation population = null!;
 

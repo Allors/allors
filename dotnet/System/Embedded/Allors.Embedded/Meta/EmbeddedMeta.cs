@@ -6,31 +6,31 @@
 
     public class EmbeddedMeta
     {
-        private readonly IDictionary<Type, EmbeddedObjectType> objectTypeByType;
+        private readonly IDictionary<Type, EmbeddedObjectType> embeddedObjectTypeByType;
 
         public EmbeddedMeta()
         {
-            this.objectTypeByType = new Dictionary<Type, EmbeddedObjectType>();
+            this.embeddedObjectTypeByType = new Dictionary<Type, EmbeddedObjectType>();
         }
 
-        public IReadOnlyDictionary<Type, EmbeddedObjectType> ObjectTypeByType => new ReadOnlyDictionary<Type, EmbeddedObjectType>(this.objectTypeByType);
+        public IReadOnlyDictionary<Type, EmbeddedObjectType> EmbeddedObjectTypeByType => new ReadOnlyDictionary<Type, EmbeddedObjectType>(this.embeddedObjectTypeByType);
 
-        public EmbeddedRoleType AddUnit<TAssociation, TRole>(string roleName, string? associationName = null) => this.GetOrAddObjectType(typeof(TAssociation)).AddUnit(this.GetOrAddObjectType(typeof(TRole)), roleName, associationName);
+        public EmbeddedRoleType AddUnit<TAssociation, TRole>(string roleName, string? associationName = null) => this.GetOrAddEmbeddedObjectType(typeof(TAssociation)).AddUnit(this.GetOrAddEmbeddedObjectType(typeof(TRole)), roleName, associationName);
 
-        public EmbeddedRoleType AddOneToOne<TAssociation, TRole>(string roleName, string? associationName = null) => this.GetOrAddObjectType(typeof(TAssociation)).AddOneToOne(this.GetOrAddObjectType(typeof(TRole)), roleName, associationName);
+        public EmbeddedRoleType AddOneToOne<TAssociation, TRole>(string roleName, string? associationName = null) => this.GetOrAddEmbeddedObjectType(typeof(TAssociation)).AddOneToOne(this.GetOrAddEmbeddedObjectType(typeof(TRole)), roleName, associationName);
 
-        public EmbeddedRoleType AddManyToOne<TAssociation, TRole>(string roleName, string? associationName = null) => this.GetOrAddObjectType(typeof(TAssociation)).AddManyToOne(this.GetOrAddObjectType(typeof(TRole)), roleName, associationName);
+        public EmbeddedRoleType AddManyToOne<TAssociation, TRole>(string roleName, string? associationName = null) => this.GetOrAddEmbeddedObjectType(typeof(TAssociation)).AddManyToOne(this.GetOrAddEmbeddedObjectType(typeof(TRole)), roleName, associationName);
 
-        public EmbeddedRoleType AddOneToMany<TAssociation, TRole>(string roleName, string? associationName = null) => this.GetOrAddObjectType(typeof(TAssociation)).AddOneToMany(this.GetOrAddObjectType(typeof(TRole)), roleName, associationName);
+        public EmbeddedRoleType AddOneToMany<TAssociation, TRole>(string roleName, string? associationName = null) => this.GetOrAddEmbeddedObjectType(typeof(TAssociation)).AddOneToMany(this.GetOrAddEmbeddedObjectType(typeof(TRole)), roleName, associationName);
 
-        public EmbeddedRoleType AddManyToMany<TAssociation, TRole>(string roleName, string? associationName = null) => this.GetOrAddObjectType(typeof(TAssociation)).AddManyToMany(this.GetOrAddObjectType(typeof(TRole)), roleName, associationName);
+        public EmbeddedRoleType AddManyToMany<TAssociation, TRole>(string roleName, string? associationName = null) => this.GetOrAddEmbeddedObjectType(typeof(TAssociation)).AddManyToMany(this.GetOrAddEmbeddedObjectType(typeof(TRole)), roleName, associationName);
 
-        public EmbeddedObjectType GetOrAddObjectType(Type type)
+        public EmbeddedObjectType GetOrAddEmbeddedObjectType(Type type)
         {
-            if (!this.ObjectTypeByType.TryGetValue(type, out var objectType))
+            if (!this.EmbeddedObjectTypeByType.TryGetValue(type, out var objectType))
             {
                 objectType = new EmbeddedObjectType(this, type);
-                this.objectTypeByType.Add(type, objectType);
+                this.embeddedObjectTypeByType.Add(type, objectType);
             }
 
             return objectType;
@@ -82,7 +82,7 @@
 
         internal void ResetDerivations()
         {
-            foreach (var kvp in this.ObjectTypeByType)
+            foreach (var kvp in this.EmbeddedObjectTypeByType)
             {
                 var objectType = kvp.Value;
                 objectType.ResetDerivations();

@@ -5,8 +5,4 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\System\Database\Allors.Database.Meta.Static\Allors.Database.Meta.Static.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Base\" />
-  </ItemGroup>
-
 </Project>

@@ -10,8 +10,8 @@
             this.ManyToMany = GetCompositesRole<I2>(nameof(this.ManyToMany));
             this.Same = GetUnitRole<string>(nameof(Same));
         }
-        public ICompositesRole<I2> ManyToMany { get; }
+        public IEmbeddedCompositesRole<I2> ManyToMany { get; }
         
-        public IUnitRole<string> Same { get; }
+        public IEmbeddedUnitRole<string> Same { get; }
     }
 }

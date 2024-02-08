@@ -4,8 +4,8 @@
 
     public interface IEmbeddedObject
     {
-        IEmbeddedPopulation Population { get; }
+        IEmbeddedPopulation EmbeddedPopulation { get; }
 
-        EmbeddedObjectType ObjectType { get; }
+        EmbeddedObjectType EmbeddedObjectType { get; }
     }
 }

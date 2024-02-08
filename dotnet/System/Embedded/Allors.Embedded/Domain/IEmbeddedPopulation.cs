@@ -8,41 +8,41 @@
 
     public interface IEmbeddedPopulation
     {
-        EmbeddedMeta Meta { get; }
+        EmbeddedMeta EmbeddedMeta { get; }
 
-        Dictionary<string, IEmbeddedDerivation> DerivationById { get; }
+        Dictionary<string, IEmbeddedDerivation> EmbeddedDerivationById { get; }
 
-        IEnumerable<IEmbeddedObject> Objects { get; }
+        IEnumerable<IEmbeddedObject> EmbeddedObjects { get; }
 
-        IEmbeddedObject Create(Type t, params Action<IEmbeddedObject>[] builders);
+        IEmbeddedObject EmbeddedCreateObject(Type t, params Action<IEmbeddedObject>[] builders);
 
-        T Create<T>(params Action<T>[] builders)
+        T EmbeddedCreateObject<T>(params Action<T>[] builders)
             where T : IEmbeddedObject;
 
-        void Derive();
+        void EmbeddedDerive();
 
-        IUnitRole<T> GetUnitRole<T>(IEmbeddedObject obj, EmbeddedRoleType roleType);
+        IEmbeddedUnitRole<T> EmbeddedGetUnitRole<T>(IEmbeddedObject obj, EmbeddedRoleType roleType);
 
-        ICompositeRole<T> GetCompositeRole<T>(IEmbeddedObject obj, EmbeddedRoleType roleType)
+        IEmbeddedCompositeRole<T> EmbeddedGetCompositeRole<T>(IEmbeddedObject obj, EmbeddedRoleType roleType)
             where T : IEmbeddedObject;
 
-        ICompositesRole<T> GetCompositesRole<T>(IEmbeddedObject obj, EmbeddedRoleType roleType)
+        IEmbeddedCompositesRole<T> EmbeddedGetCompositesRole<T>(IEmbeddedObject obj, EmbeddedRoleType roleType)
             where T : IEmbeddedObject;
 
-        ICompositeAssociation<T> GetCompositeAssociation<T>(IEmbeddedObject obj, EmbeddedAssociationType associationType)
+        IEmbeddedCompositeAssociation<T> EmbeddedGetCompositeAssociation<T>(IEmbeddedObject obj, EmbeddedAssociationType associationType)
             where T : IEmbeddedObject;
 
-        ICompositesAssociation<T> GetCompositesAssociation<T>(IEmbeddedObject obj, EmbeddedAssociationType associationType)
+        IEmbeddedCompositesAssociation<T> EmbeddedGetCompositesAssociation<T>(IEmbeddedObject obj, EmbeddedAssociationType associationType)
             where T : IEmbeddedObject;
 
-        object GetRoleValue(IEmbeddedObject obj, EmbeddedRoleType roleType);
+        object EmbeddedGetRoleValue(IEmbeddedObject obj, EmbeddedRoleType roleType);
 
-        void SetRoleValue(IEmbeddedObject obj, EmbeddedRoleType roleType, object value);
+        void EmbeddedSetRoleValue(IEmbeddedObject obj, EmbeddedRoleType roleType, object value);
 
-        void AddRoleValue(IEmbeddedObject obj, EmbeddedRoleType roleType, IEmbeddedObject role);
+        void EmbeddedAddRoleValue(IEmbeddedObject obj, EmbeddedRoleType roleType, IEmbeddedObject role);
 
-        void RemoveRoleValue(IEmbeddedObject obj, EmbeddedRoleType roleType, IEmbeddedObject role);
+        void EmbeddedRemoveRoleValue(IEmbeddedObject obj, EmbeddedRoleType roleType, IEmbeddedObject role);
 
-        object GetAssociationValue(IEmbeddedObject obj, EmbeddedAssociationType associationType);
+        object EmbeddedGetAssociationValue(IEmbeddedObject obj, EmbeddedAssociationType associationType);
     }
 }

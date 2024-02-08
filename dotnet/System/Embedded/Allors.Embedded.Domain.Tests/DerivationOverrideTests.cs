@@ -9,24 +9,24 @@
         [Test]
         public void Derivation()
         {
-            this.Population.DerivationById["FullName"] = new FullNameDerivation();
-            this.Population.DerivationById["Greeting"] = new GreetingDerivation();
+            this.Population.EmbeddedDerivationById["FullName"] = new FullNameDerivation();
+            this.Population.EmbeddedDerivationById["Greeting"] = new GreetingDerivation();
 
-            var john = this.Population.Create<Person>();
-            john.FirstName.Value = "John";
-            john.LastName.Value = "Doe";
+            var john = this.Population.EmbeddedCreateObject<Person>();
+            john.FirstName.EmbeddedValue = "John";
+            john.LastName.EmbeddedValue = "Doe";
 
-            this.Population.Derive();
+            this.Population.EmbeddedDerive();
 
-            Assert.That(john.Greeting.Value, Is.EqualTo("Hello John Doe!"));
+            Assert.That(john.Greeting.EmbeddedValue, Is.EqualTo("Hello John Doe!"));
         }
 
         public class FullNameDerivation : IEmbeddedDerivation
         {
-            public void Derive(IEmbeddedChangeSet changeSet)
+            public void EmbeddedDerive(IEmbeddedChangeSet changeSet)
             {
-                var firstNames = changeSet.ChangedRoles<Person>("FirstName");
-                var lastNames = changeSet.ChangedRoles<Person>("LastName");
+                var firstNames = changeSet.EmbeddedChangedRoles<Person>("FirstName");
+                var lastNames = changeSet.EmbeddedChangedRoles<Person>("LastName");
 
                 if (firstNames.Any() || lastNames.Any())
                 {
@@ -35,12 +35,12 @@
                     foreach (var person in people.Cast<Person>())
                     {
                         // Dummy updates ...
-                        person.FirstName.Value = person.FirstName.Value;
-                        person.LastName.Value = person.LastName.Value;
+                        person.FirstName.EmbeddedValue = person.FirstName.EmbeddedValue;
+                        person.LastName.EmbeddedValue = person.LastName.EmbeddedValue;
 
-                        person.DerivedAt.Value = DateTime.Now;
+                        person.DerivedAt.EmbeddedValue = DateTime.Now;
 
-                        person.FullName.Value = $"{person.FirstName.Value} {person.LastName.Value}";
+                        person.FullName.EmbeddedValue = $"{person.FirstName.EmbeddedValue} {person.LastName.EmbeddedValue}";
                     }
                 }
             }
@@ -48,9 +48,9 @@
 
         public class GreetingDerivation : IEmbeddedDerivation
         {
-            public void Derive(IEmbeddedChangeSet changeSet)
+            public void EmbeddedDerive(IEmbeddedChangeSet changeSet)
             {
-                var fullNames = changeSet.ChangedRoles<Person>("FullName");
+                var fullNames = changeSet.EmbeddedChangedRoles<Person>("FullName");
 
                 if (fullNames?.Any() == true)
                 {
@@ -58,7 +58,7 @@
 
                     foreach (var person in people.Cast<Person>())
                     {
-                        person.Greeting.Value = $"Hello {person.FullName.Value}!";
+                        person.Greeting.EmbeddedValue = $"Hello {person.FullName.EmbeddedValue}!";
                     }
                 }
             }

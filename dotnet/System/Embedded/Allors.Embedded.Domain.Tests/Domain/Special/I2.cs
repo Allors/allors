@@ -2,6 +2,6 @@
 {
     public interface I2 : IEmbeddedObject
     {
-        ICompositesAssociation<I1> Backs { get; }
+        IEmbeddedCompositesAssociation<I1> Backs { get; }
     }
 }

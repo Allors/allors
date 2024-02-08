@@ -2,9 +2,9 @@
 {
     public class EmbeddedAssociationType
     {
-        public EmbeddedObjectType ObjectType { get; }
+        public EmbeddedObjectType EmbeddedObjectType { get; }
 
-        public EmbeddedRoleType RoleType { get; }
+        public EmbeddedRoleType EmbeddedRoleType { get; }
 
         public string SingularName { get; }
 
@@ -16,10 +16,10 @@
 
         public bool IsMany { get; }
 
-        internal EmbeddedAssociationType(EmbeddedObjectType objectType, EmbeddedRoleType roleType, string singularName, string pluralName, string name, bool isOne, bool isMany)
+        internal EmbeddedAssociationType(EmbeddedObjectType embeddedObjectType, EmbeddedRoleType embeddedRoleType, string singularName, string pluralName, string name, bool isOne, bool isMany)
         {
-            this.ObjectType = objectType;
-            this.RoleType = roleType;
+            this.EmbeddedObjectType = embeddedObjectType;
+            this.EmbeddedRoleType = embeddedRoleType;
             this.SingularName = singularName;
             this.PluralName = pluralName;
             this.Name = name;

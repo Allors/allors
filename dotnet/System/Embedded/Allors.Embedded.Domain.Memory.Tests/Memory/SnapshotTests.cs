@@ -19,19 +19,19 @@
         [Test]
         public void Unit()
         {
-            var john = this.Population.Create<Person>();
-            var jane = this.Population.Create<Person>();
+            var john = this.Population.EmbeddedCreateObject<Person>();
+            var jane = this.Population.EmbeddedCreateObject<Person>();
 
-            john.FirstName.Value = "John";
-            john.LastName.Value = "Doe";
+            john.FirstName.EmbeddedValue = "John";
+            john.LastName.EmbeddedValue = "Doe";
 
             var snapshot1 = this.Population.Snapshot();
 
-            jane.FirstName.Value = "Jane";
-            jane.LastName.Value = "Doe";
+            jane.FirstName.EmbeddedValue = "Jane";
+            jane.LastName.EmbeddedValue = "Doe";
 
-            var changedFirstNames = snapshot1.ChangedRoles<Person>("FirstName");
-            var changedLastNames = snapshot1.ChangedRoles<Person>("LastName");
+            var changedFirstNames = snapshot1.EmbeddedChangedRoles<Person>("FirstName");
+            var changedLastNames = snapshot1.EmbeddedChangedRoles<Person>("LastName");
 
             Assert.That(changedFirstNames.Keys.Count(), Is.EqualTo(1));
             Assert.That(changedLastNames.Keys.Count(), Is.EqualTo(1));
@@ -40,8 +40,8 @@
 
             var snapshot2 = this.Population.Snapshot();
 
-            changedFirstNames = snapshot2.ChangedRoles<Person>("FirstName");
-            changedLastNames = snapshot2.ChangedRoles<Person>("LastName");
+            changedFirstNames = snapshot2.EmbeddedChangedRoles<Person>("FirstName");
+            changedLastNames = snapshot2.EmbeddedChangedRoles<Person>("LastName");
 
             Assert.That(changedFirstNames.Keys.Count(), Is.EqualTo(1));
             Assert.That(changedLastNames.Keys.Count(), Is.EqualTo(1));
@@ -53,39 +53,39 @@
         [Test]
         public void Composites()
         {
-            var john = this.Population.Create<Person>();
-            var jane = this.Population.Create<Person>();
+            var john = this.Population.EmbeddedCreateObject<Person>();
+            var jane = this.Population.EmbeddedCreateObject<Person>();
 
-            john.FirstName.Value = "John";
-            john.LastName.Value = "Doe";
+            john.FirstName.EmbeddedValue = "John";
+            john.LastName.EmbeddedValue = "Doe";
 
-            jane.FirstName.Value = "Jane";
-            jane.LastName.Value = "Doe";
+            jane.FirstName.EmbeddedValue = "Jane";
+            jane.LastName.EmbeddedValue = "Doe";
 
-            var acme = this.Population.Create<Organization>();
+            var acme = this.Population.EmbeddedCreateObject<Organization>();
 
-            acme.Name.Value = "Acme";
+            acme.Name.EmbeddedValue = "Acme";
 
-            acme.Employees.Value = new[] { john, jane };
+            acme.Employees.EmbeddedValue = new[] { john, jane };
 
             var snapshot = this.Population.Snapshot();
-            var changedEmployees = snapshot.ChangedRoles<Organization>("Employees");
+            var changedEmployees = snapshot.EmbeddedChangedRoles<Organization>("Employees");
             Assert.That(changedEmployees.Count, Is.EqualTo(1));
 
-            acme.Employees.Value = new[] { jane, john };
+            acme.Employees.EmbeddedValue = new[] { jane, john };
 
             snapshot = this.Population.Snapshot();
-            changedEmployees = snapshot.ChangedRoles<Organization>("Employees");
+            changedEmployees = snapshot.EmbeddedChangedRoles<Organization>("Employees");
             Assert.That(changedEmployees, Is.Empty);
 
-            acme.Employees.Value = Array.Empty<Person>();
+            acme.Employees.EmbeddedValue = Array.Empty<Person>();
 
             var x = acme.Employees;
 
-            acme.Employees.Value = new[] { jane, john };
+            acme.Employees.EmbeddedValue = new[] { jane, john };
 
             snapshot = this.Population.Snapshot();
-            changedEmployees = snapshot.ChangedRoles<Organization>("Employees");
+            changedEmployees = snapshot.EmbeddedChangedRoles<Organization>("Employees");
             Assert.That(changedEmployees, Is.Empty);
         }
     }

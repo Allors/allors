@@ -18,20 +18,20 @@
             this.OrganizationWhereNamed = GetCompositeAssociation<Organization>(nameof(OrganizationWhereNamed));
         }
        
-        public IUnitRole<string> Name { get; }
+        public IEmbeddedUnitRole<string> Name { get; }
 
-        public IUnitRole<string> UppercasedName { get; }
+        public IEmbeddedUnitRole<string> UppercasedName { get; }
         
-        public ICompositeRole<INamed> Named { get; }
+        public IEmbeddedCompositeRole<INamed> Named { get; }
 
-        public IUnitRole<string[]> Aliases { get; }
+        public IEmbeddedUnitRole<string[]> Aliases { get; }
 
-        public IUnitRole<string> DisplayAliases { get; }
+        public IEmbeddedUnitRole<string> DisplayAliases { get; }
 
-        public ICompositeRole<Person> Owner { get; }
+        public IEmbeddedCompositeRole<Person> Owner { get; }
 
-        public ICompositesRole<Person> Employees { get; }
+        public IEmbeddedCompositesRole<Person> Employees { get; }
 
-        public ICompositeAssociation<Organization> OrganizationWhereNamed { get; }
+        public IEmbeddedCompositeAssociation<Organization> OrganizationWhereNamed { get; }
     }
 }
