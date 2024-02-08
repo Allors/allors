@@ -1,4 +1,4 @@
-﻿namespace Allors.Embedded.Default.Tests
+﻿namespace Allors.Embedded.Tests
 {
     using Allors.Embedded.Tests.Domain;
     using Embedded.Tests;

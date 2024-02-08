@@ -2,8 +2,20 @@
 {
     using Domain;
 
-    public abstract class UnitRoleTests : Tests
+    public class UnitRoleTests : Tests
     {
+        private EmbeddedPopulation population = null!;
+
+        public override EmbeddedPopulation Population => population;
+
+        [SetUp]
+        public override void SetUp()
+        {
+            this.population = new EmbeddedPopulation();
+
+            base.SetUp();
+        }
+
         [Test]
         public void String()
         {

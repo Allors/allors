@@ -1,7 +1,19 @@
 ﻿namespace Allors.Embedded.Tests
 {
-    public abstract class OneToManyTests : Tests
+    public class OneToManyTests : Tests
     {
+        private EmbeddedPopulation population = null!;
+
+        public override EmbeddedPopulation Population => population;
+
+        [SetUp]
+        public override void SetUp()
+        {
+            this.population = new EmbeddedPopulation();
+
+            base.SetUp();
+        }
+
         //[Test]
         //public void AddSameAssociation()
         //{

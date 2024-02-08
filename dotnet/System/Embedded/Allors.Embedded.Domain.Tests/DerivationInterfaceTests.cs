@@ -3,8 +3,20 @@
     using System.Linq;
     using Allors.Embedded.Tests.Domain;
 
-    public abstract class DerivationInterfaceTests : Tests
+    public class DerivationInterfaceTests : Tests
     {
+        private EmbeddedPopulation population = null!;
+
+        public override EmbeddedPopulation Population => population;
+
+        [SetUp]
+        public override void SetUp()
+        {
+            this.population = new EmbeddedPopulation();
+
+            base.SetUp();
+        }
+
         [Test]
         public void Derivation()
         {

@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Embedded.Meta", "All
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Embedded.Domain.Default", "Allors.Embedded.Domain.Default\Allors.Embedded.Domain.Default.csproj", "{D95EA55C-3184-4F62-889D-14AB85409C03}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Embedded.Domain.Default.Tests", "Allors.Embedded.Domain.Default.Tests\Allors.Embedded.Domain.Default.Tests.csproj", "{5F1444F3-8491-46B5-84BB-906C2A8BE546}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Embedded.Meta.Tests", "Allors.Embedded.Meta.Tests\Allors.Embedded.Meta.Tests.csproj", "{3A9025FF-A6B1-4D94-B174-240ABCCED852}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Allors.Embedded.Domain.Tests", "Allors.Embedded.Domain.Tests\Allors.Embedded.Domain.Tests.csproj", "{833DE566-CA1C-453F-B0A5-6D7EE014E0DA}"
@@ -33,10 +31,6 @@ Global
 		{D95EA55C-3184-4F62-889D-14AB85409C03}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D95EA55C-3184-4F62-889D-14AB85409C03}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D95EA55C-3184-4F62-889D-14AB85409C03}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5F1444F3-8491-46B5-84BB-906C2A8BE546}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5F1444F3-8491-46B5-84BB-906C2A8BE546}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5F1444F3-8491-46B5-84BB-906C2A8BE546}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5F1444F3-8491-46B5-84BB-906C2A8BE546}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3A9025FF-A6B1-4D94-B174-240ABCCED852}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3A9025FF-A6B1-4D94-B174-240ABCCED852}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3A9025FF-A6B1-4D94-B174-240ABCCED852}.Release|Any CPU.ActiveCfg = Release|Any CPU

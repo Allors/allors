@@ -4,8 +4,20 @@
     using System.Linq;
     using Domain;
 
-    public abstract class DerivationOverrideTests : Tests
+    public class DerivationOverrideTests : Tests
     {
+        private EmbeddedPopulation population = null!;
+
+        public override EmbeddedPopulation Population => population;
+
+        [SetUp]
+        public override void SetUp()
+        {
+            this.population = new EmbeddedPopulation();
+
+            base.SetUp();
+        }
+
         [Test]
         public void Derivation()
         {

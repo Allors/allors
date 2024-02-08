@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Allors.Embedded.Domain\Allors.Embedded.Domain.csproj" />
+    <ProjectReference Include="..\Allors.Embedded.Domain.Default\Allors.Embedded.Domain.Default.csproj" />
   </ItemGroup>
 
 </Project>
