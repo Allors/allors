@@ -26,6 +26,7 @@ For more information visit http://www.allors.com/legal
 	$meta.Interfaces:{interface|<generation template="castInterface" input="$interface.Id$" output="$interface.SingularName$.g.cs"/>}$
 	$meta.Classes:{class|<generation template="castClass" input="$class.Id$" output="$class.SingularName$.g.cs"/>}$
 	$meta.MethodTypes:{methodType|<generation template="methodType" input="$methodType.Id$" output="$methodType.FullName$.g.cs"/>}$
+	<generation template="treeBuilder" output="TreeBuilder.g.cs"/>
 	<generation template="cache" output="ICachesExtensions.g.cs"/>
 </generations>
 >>
@@ -435,6 +436,63 @@ $if(object.Handle)$
 $endif$
 >>
 
+treeBuilder(meta) ::= <<
+namespace Allors.Database.Domain
+{
+	using System.Linq;
+    using M = Allors.Database.Meta.M;
+    using Node = Allors.Database.Data.Node;
+
+    public class TreeBuilder(M m)
+	{
+		private static readonly System.Func<Node[], Node[]> Filter = tree => tree.Where(v => v != null).ToArray();
+
+		public M M { get; set; } = m;
+
+$meta.composites:{composite|$treeBuilder_Composites()$}; separator="\n"$
+
+$meta.relationTypes:{relationType|$treeBuilder_RelationType()$}; separator="\n"$
+    }
+
+$meta.units:{unit|$treeBuilder_UnitNodes()$}; separator="\n"$
+
+$meta.composites:{composite|$treeBuilder_CompositeNodes()$}; separator="\n"$
+}
+>>
+
+treeBuilder_Composites() ::= <<
+		public Node[] Build(Node$composite.SingularName$ node) => Filter([
+$composite.roleTypes:{roleType|$treeBuilder_CompositeRoleType()$}; separator="\n"$
+		]);
+>>
+
+treeBuilder_CompositeRoleType() ::= <<
+			this.Build$roleType.FullName$(node.$roleType.Name$),
+>>
+
+treeBuilder_RelationType() ::= <<
+$if(relationType.RoleType.ObjectType.IsComposite)$	
+        public Node Build$relationType.RoleType.FullName$(Node$relationType.RoleType.ObjectType.SingularName$ node) => node != null ? new Node(this.M.$relationType.AssociationType.ObjectType.SingularName$.$relationType.RoleType.Name$, this.Build(node)) : null;
+$else$
+        public Node Build$relationType.RoleType.FullName$(Node$relationType.RoleType.ObjectType.SingularName$ node) => node != null ? new Node(this.M.$relationType.AssociationType.ObjectType.SingularName$.$relationType.RoleType.Name$) : null;
+$endif$	
+>>
+
+treeBuilder_UnitNodes() ::= <<
+	public record Node$unit.SingularName$ {
+	}
+>>
+
+treeBuilder_CompositeNodes() ::= <<
+	public record Node$composite.SingularName$()
+	{
+$composite.roleTypes:{roleType|$treeBuilder_CompositeNodesProperties()$}; separator="\n"$
+	}
+>>
+
+treeBuilder_CompositeNodesProperties() ::= <<
+		public Node$roleType.ObjectType.SingularName$ $roleType.Name$ { get; init; }
+>>
 
 cache(meta) ::= <<
 namespace Allors.Database.Domain
