@@ -26,7 +26,7 @@ For more information visit http://www.allors.com/legal
 	$meta.Interfaces:{interface|<generation template="castInterface" input="$interface.Id$" output="$interface.SingularName$.g.cs"/>}$
 	$meta.Classes:{class|<generation template="castClass" input="$class.Id$" output="$class.SingularName$.g.cs"/>}$
 	$meta.MethodTypes:{methodType|<generation template="methodType" input="$methodType.Id$" output="$methodType.FullName$.g.cs"/>}$
-	<generation template="treeBuilder" output="TreeBuilder.g.cs"/>
+	$! <generation template="treeBuilder" output="TreeBuilder.g.cs"/> !$
 	<generation template="cache" output="ICachesExtensions.g.cs"/>
 </generations>
 >>
