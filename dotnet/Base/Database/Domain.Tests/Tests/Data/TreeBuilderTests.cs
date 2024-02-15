@@ -17,24 +17,22 @@ namespace Allors.Database.Domain.Tests
 
     public interface ITreeBuilder
     {
+        M M { get; }
+
+        void Add(INodeBuilder nodeBuilder);
+
         Node[] Build();
     }
 
-    public interface INodeBuilder
-    {
-        Node Build();
-    }
-
-    public class OrganizationTreeBuilder(M m) : ITreeBuilder
+    public class TreeBuilder(M m) : ITreeBuilder
     {
         private readonly List<INodeBuilder> nodeBuilders = [];
 
-        public OrganizationTreeBuilder Owner(Action<OrganizationOwnerNodeBuilder> action = null)
+        public M M => m;
+
+        public void Add(INodeBuilder nodeBuilder)
         {
-            var nodeBuilder = new OrganizationOwnerNodeBuilder(m);
             this.nodeBuilders.Add(nodeBuilder);
-            action?.Invoke(nodeBuilder);
-            return this;
         }
 
         public Node[] Build()
@@ -43,58 +41,125 @@ namespace Allors.Database.Domain.Tests
         }
     }
 
-    public class PersonTreeBuilder(M m) : ITreeBuilder
+    public static class OrganizationTreeBuilderExtensions
     {
-        private readonly List<INodeBuilder> nodeBuilders = [];
-
-        public PersonTreeBuilder FirstName()
+        public static OrganizationOwnerNodeBuilder Owner(this OrganizationTreeBuilder @this, Action<OrganizationOwnerNodeBuilder> action = null)
         {
-            var nodeBuilder = new PersonFirstNameNodeBuilder(m);
-            this.nodeBuilders.Add(nodeBuilder);
-            return this;
+            var nodeBuilder = new OrganizationOwnerNodeBuilder(@this.M);
+            @this.Add(nodeBuilder);
+            action?.Invoke(nodeBuilder);
+            return nodeBuilder;
         }
-
-        public Node[] Build() => this.nodeBuilders.Select(v => v.Build()).ToArray();
     }
 
-    public class OrganizationOwnerNodeBuilder(M m) : INodeBuilder
+    public static class PersonTreeBuilderExtensions
     {
-        private PersonTreeBuilder treeBuilder;
-
-        public OrganizationOwnerNodeBuilder Person(Action<PersonTreeBuilder> action = null)
+        public static PersonTreeBuilder FirstName(this PersonTreeBuilder @this)
         {
+            var nodeBuilder = new PersonFirstNameNodeBuilder(@this.M);
+            @this.Add(nodeBuilder);
+            return @this;
+        }
+    }
+
+    public class OrganizationTreeBuilder : TreeBuilder
+    {
+        public OrganizationTreeBuilder(M m, Action<OrganizationTreeBuilder> init = null) : base(m)
+        {
+            init?.Invoke(this);
+        }
+    }
+
+    public class PersonTreeBuilder : TreeBuilder
+    {
+        public PersonTreeBuilder(M m, Action<PersonTreeBuilder> init = null) : base(m)
+        {
+            init?.Invoke(this);
+        }
+    }
+
+    public interface INodeBuilder
+    {
+        M M { get; }
+
+        void SetTreeBuilder(ITreeBuilder treeBuilder);
+
+        Node Build();
+    }
+
+    public class NodeBuilder(M m, IRelationEndType relationEndType) : INodeBuilder
+    {
+        private ITreeBuilder treeBuilder;
+
+        public M M => m;
+
+        public void SetTreeBuilder(ITreeBuilder treeBuilder) => this.treeBuilder = treeBuilder;
+
+        public Node Build() => new(relationEndType, this.treeBuilder?.Build());
+    }
+
+    public static class OrganizationOwnerNodeBuilderExtensions
+    {
+        public static PersonTreeBuilder Person(this OrganizationOwnerNodeBuilder @this, Action<PersonTreeBuilder> action = null)
+        {
+            var treeBuilder = new PersonTreeBuilder(@this.M);
+            @this.SetTreeBuilder(treeBuilder);
+
             if (action != null)
             {
-                this.treeBuilder = new PersonTreeBuilder(m);
-                action?.Invoke(this.treeBuilder);
+                action?.Invoke(treeBuilder);
             }
 
-            return this;
+            return treeBuilder;
         }
-
-        public Node Build() => new(m.Organization.Owner, this.treeBuilder.Build());
     }
 
-    public class PersonFirstNameNodeBuilder(M m) : INodeBuilder
+    public class OrganizationOwnerNodeBuilder(M m) : NodeBuilder(m, m.Organization.Owner)
     {
-        public Node Build() => new(m.Person.FirstName);
     }
 
-    public class TreeBuilderTests : DomainTest, IClassFixture<Fixture>
+    public class PersonFirstNameNodeBuilder(M m) : NodeBuilder(m, m.Person.FirstName)
     {
-        public TreeBuilderTests(Fixture fixture) : base(fixture) { }
+    }
 
+    public class TreeBuilderTests(Fixture fixture) : DomainTest(fixture), IClassFixture<Fixture>
+    {
         [Fact]
-        public void Test()
+        public void TestConstructor()
         {
-            var builder = new OrganizationTreeBuilder(this.M)
-                .Owner(organization =>
+            var builder = new OrganizationTreeBuilder(this.M,
+                organization =>
                 {
-                    organization.Person(person =>
+                    organization.Owner(owner =>
                     {
-                        person.FirstName();
+                        owner.Person(person =>
+                        {
+                            person.FirstName();
+                        });
                     });
                 });
+
+            var tree = builder.Build();
+
+            Assert.Single(tree);
+
+            var node = tree[0];
+
+            Assert.Equal(this.M.Organization.Owner, node.RelationEndType);
+            Assert.Single(node.Nodes);
+
+            var childNode = node.Nodes[0];
+
+            Assert.Equal(this.M.Person.FirstName, childNode.RelationEndType);
+        }
+
+        [Fact]
+        public void TestProperty()
+        {
+            var builder = new OrganizationTreeBuilder(this.M);
+            var owner = builder.Owner();
+            var person = owner.Person();
+            person.FirstName();
 
             var tree = builder.Build();
 
