@@ -128,7 +128,7 @@ namespace Allors.Database.Configuration
                 }
             }
 
-            return result.Values.ToArray();
+            return [.. result.Values];
         }
 
         public IVersionedGrant[] GetVersionedGrants(ITransaction transaction, IUser user, ISecurityToken[] securityTokens, string workspaceName)
@@ -169,7 +169,7 @@ namespace Allors.Database.Configuration
                 }
             }
 
-            return result.Values.ToArray();
+            return [.. result.Values];
         }
 
         public IVersionedRevocation[] GetVersionedRevocations(ITransaction transaction, IUser user, IRevocation[] revocations, string workspaceName)
@@ -206,7 +206,7 @@ namespace Allors.Database.Configuration
                 }
             }
 
-            return result.Values.ToArray();
+            return [.. result.Values];
         }
 
         private IList<IVersionedSecurityToken> GetVersionedSecurityTokens(ITransaction transaction, ISecurityToken[] securityTokens)
@@ -321,7 +321,7 @@ namespace Allors.Database.Configuration
                 }
             }
 
-            return result.ToArray();
+            return [.. result];
         }
     }
 }

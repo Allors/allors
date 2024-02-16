@@ -38,7 +38,7 @@ namespace Allors.Database.Configuration.Derivations.Default
                     }
                 }
 
-                return roleTypes.ToArray();
+                return [.. roleTypes];
             }
         }
     }

@@ -14,12 +14,25 @@ namespace Allors.Database.Domain
 
     public class GrantEffectivePermissionsRule : Rule
     {
-        public GrantEffectivePermissionsRule(M m) : base(m, new Guid("1F897B84-EF92-4E94-8877-3501D56D426B")) =>
-            this.Patterns = new Pattern[]
+        public GrantEffectivePermissionsRule(M m) : base(m, new Guid("1F897B84-EF92-4E94-8877-3501D56D426B"))
+        {
+            var tree = new GrantTreeBuilder
             {
-                m.Grant.RolePattern(v=>v.Role),
-                m.Role.RolePattern(v=>v.Permissions, v=>v.GrantsWhereRole),
+                Role = new(m)
+                {
+                    Role = new()
+                    {
+                        Permissions = new(m)
+                    }
+                }
             };
+
+            this.Patterns =
+            [
+                m.Grant.RolePattern(v => v.Role),
+                m.Role.RolePattern(v => v.Permissions, v => v.GrantsWhereRole),
+            ];
+        }
 
         public override void Derive(ICycle cycle, IEnumerable<IObject> matches)
         {

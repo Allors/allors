@@ -1,4 +1,4 @@
-// <copyright file="Engine.cs" company="Allors bv">
+﻿// <copyright file="Engine.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -38,10 +38,10 @@ namespace Allors.Database.Configuration.Derivations.Default
                     var patternClasses = pattern switch
                     {
                         IRolePattern { ObjectType: null } rolePattern => rolePattern.RoleType.AssociationType.ObjectType.Classes.ToArray(),
-                        IRolePattern { ObjectType: { } } rolePattern => rolePattern.ObjectType.Classes.ToArray(),
+                        IRolePattern { ObjectType: not null } rolePattern => rolePattern.ObjectType.Classes.ToArray(),
 
                         IAssociationPattern { ObjectType: null } associationPattern => associationPattern.AssociationType.RoleType.ObjectType.IsComposite ? ((IComposite)associationPattern.AssociationType.RoleType.ObjectType).Classes.ToArray() : Array.Empty<IClass>(),
-                        IAssociationPattern { ObjectType: { } } associationPattern => associationPattern.ObjectType.Classes.ToArray(),
+                        IAssociationPattern { ObjectType: not null } associationPattern => associationPattern.ObjectType.Classes.ToArray(),
 
                         _ => Array.Empty<IClass>(),
                     };

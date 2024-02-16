@@ -19,7 +19,7 @@ namespace Allors.Database.Configuration.Derivations.Default
 
         public bool HasErrors => this.errors.Count > 0;
 
-        public IDerivationError[] Errors => this.errors.ToArray();
+        public IDerivationError[] Errors => [.. this.errors];
 
         public void AddError(string errorCode) => this.AddError(new DerivationErrorGeneric(this, relation: null, errorCode));
 
