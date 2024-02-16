@@ -7,5 +7,5 @@ namespace Allors.Database.Data;
 
 public interface INodeBuilder
 {
-    Node Build();
+    Node[] Build();
 }

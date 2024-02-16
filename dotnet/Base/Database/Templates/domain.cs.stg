@@ -55,11 +55,11 @@ $interface.AssociationTypes:{associationType|$treeBuilderAssociationType_Declara
 
 		public Allors.Database.Data.Node[] Build()
 		{
-			Allors.Database.Data.Node[] nodes = [
+			Allors.Database.Data.Node[][] nodes = [
 $interface.RoleTypes:{roleType|$treeBuilderRoleType_Build()$}; separator="\n"$
 $interface.AssociationTypes:{associationType|$treeBuilderAssociationType_Build()$}; separator="\n"$
 				];
-			return nodes.Where(v => v != null).ToArray();
+			return nodes.Where(v => v != null).SelectMany(v => v).ToArray();
 		}
 	}
 
@@ -222,11 +222,11 @@ $class.AssociationTypes:{associationType|$treeBuilderAssociationType_Declaration
 
 		public Allors.Database.Data.Node[] Build()
 		{
-			Allors.Database.Data.Node[] nodes = [
+			Allors.Database.Data.Node[][] nodes = [
 $class.RoleTypes:{roleType|$treeBuilderRoleType_Build()$}; separator="\n"$
 $class.AssociationTypes:{associationType|$treeBuilderAssociationType_Build()$}; separator="\n"$
 				];
-			return nodes.Where(v => v != null).ToArray();
+			return nodes.Where(v => v != null).SelectMany(v => v).ToArray();
 		}
 	}
 
@@ -259,16 +259,19 @@ $if(roleType.ObjectType.IsComposite)$
 		public $roleType.ObjectType.SingularName$TreeBuilder $roleType.ObjectType.SingularName$ { get; init; }
 $roleType.ObjectType.Subtypes:{subtype|$nodeBuilderRoleTypeSubtype_Declaration()$}; separator="\n"$
 $endif$
-		public Allors.Database.Data.Node Build()
+	
+		public Allors.Database.Data.Node[] Build()
 		{
-$if(roleType.ObjectType.IsComposite)$
-$roleType.ObjectType.Subtypes:{subtype|$nodeBuilderRoleTypeSubtype_Build()$}; separator="\n"$
-			return new Allors.Database.Data.Node(this.M.$roleType.AssociationType.ObjectType.SingularName$.$roleType.Name$, this.$roleType.ObjectType.SingularName$.Build());
+$if(roleType.ObjectType.IsInterface)$
+	return null;
+$elseif(roleType.ObjectType.IsClass)$
+			return [new Allors.Database.Data.Node(this.M.$roleType.AssociationType.ObjectType.SingularName$.$roleType.Name$, this.$roleType.ObjectType.SingularName$?.Build())];
 $else$
-			return new Allors.Database.Data.Node(this.M.$roleType.AssociationType.ObjectType.SingularName$.$roleType.Name$);
+			return [new Allors.Database.Data.Node(this.M.$roleType.AssociationType.ObjectType.SingularName$.$roleType.Name$)];
 $endif$
 		}
 	}
+
 >>
 
 nodeBuilderRoleTypeSubtype_Declaration() ::= <<
@@ -276,10 +279,7 @@ nodeBuilderRoleTypeSubtype_Declaration() ::= <<
 >>
 
 nodeBuilderRoleTypeSubtype_Build() ::= <<
-			if (this.As$subtype.SingularName$ != null)
-			{
-				return new Allors.Database.Data.Node(this.M.$roleType.AssociationType.ObjectType.SingularName$.$roleType.Name$, this.As$subtype.SingularName$.Build()) { OfType = this.M.$subtype.SingularName$ };
-			}
+					this.As$subtype.SingularName$?.Build(),
 >>
 
 nodeBuilderAssociationType() ::= <<
@@ -288,10 +288,9 @@ nodeBuilderAssociationType() ::= <<
 		public $associationType.ObjectType.SingularName$TreeBuilder $associationType.ObjectType.SingularName$ { get; init; }
 $associationType.ObjectType.Subtypes:{subtype|$nodeBuilderAssociationTypeSubtype_Declaration()$}; separator="\n"$
 
-		public Allors.Database.Data.Node Build()
+		public Allors.Database.Data.Node[] Build()
 		{
-$associationType.ObjectType.Subtypes:{subtype|$nodeBuilderAssociationTypeSubtype_Build()$}; separator="\n"$
-			return new Allors.Database.Data.Node(this.M.$associationType.RoleType.ObjectType.SingularName$.$associationType.Name$, this.$associationType.ObjectType.SingularName$.Build());
+			return null;
 		}
 	}
 >>
@@ -301,10 +300,7 @@ nodeBuilderAssociationTypeSubtype_Declaration() ::= <<
 >>
 
 nodeBuilderAssociationTypeSubtype_Build() ::= <<
-			if (this.As$subtype.SingularName$ != null)
-			{
-				return new Allors.Database.Data.Node(this.M.$associationType.RoleType.ObjectType.SingularName$.$associationType.Name$, this.As$subtype.SingularName$.Build()) { OfType = this.M.$subtype.SingularName$ };
-			}
+					this.As$subtype.SingularName$?.Build(),
 >>
 
 class_Object() ::= <<
