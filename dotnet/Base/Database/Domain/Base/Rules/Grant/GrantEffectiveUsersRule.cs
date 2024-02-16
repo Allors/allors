@@ -1,4 +1,4 @@
-// <copyright file="Domain.cs" company="Allors bv">
+﻿// <copyright file="Domain.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -15,7 +15,7 @@ namespace Allors.Database.Domain
     public class GrantEffectiveUsersRule : Rule
     {
         public GrantEffectiveUsersRule(M m) : base(m, new Guid("2D3F4F02-7439-48E7-9E5B-363F4A4384F0")) =>
-            this.Patterns = new Pattern[]
+            this.Patterns = new IPattern[]
             {
                 m.Grant.RolePattern(v=>v.Subjects),
                 m.Grant.RolePattern(v=>v.SubjectGroups),

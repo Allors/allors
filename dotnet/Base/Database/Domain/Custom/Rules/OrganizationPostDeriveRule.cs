@@ -16,7 +16,7 @@ namespace Allors.Database.Domain
     {
         public OrganizationPostDeriveRule(M m) 
             : base(m, new Guid("755E60CF-1D5E-4D24-8FDE-396FF7C3030B")) =>
-            this.Patterns = new Pattern[]
+            this.Patterns = new IPattern[]
             {
                 new RolePattern<MetaOrganization>(m.Organization, v => v.PostDeriveTrigger),
             };

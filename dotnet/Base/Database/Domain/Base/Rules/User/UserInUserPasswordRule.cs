@@ -15,7 +15,7 @@ namespace Allors.Database.Domain
     public class UserInUserPasswordRule : Rule
     {
         public UserInUserPasswordRule(M m) : base(m, new Guid("AF93DA46-1C9A-47C4-9E5F-6A04751F5259")) =>
-            this.Patterns = new Pattern[]
+            this.Patterns = new IPattern[]
             {
                 m.User.RolePattern(v=>v.InExistingUserPassword),
                 m.User.RolePattern(v=>v.InUserPassword),

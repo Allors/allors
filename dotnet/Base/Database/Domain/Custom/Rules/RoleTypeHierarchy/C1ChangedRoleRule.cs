@@ -17,7 +17,7 @@ namespace Allors.Database.Domain
         public C1ChangedRoleRule(M m) : base(m, new Guid("84343F1E-7224-41CE-9B4C-69883417115F")) =>
             this.Patterns = new[]
             {
-                new RolePattern(m.C1, m.S12.ChangedRolePingC1),
+                new RolePattern(m.S12.ChangedRolePingC1, m.C1),
             };
 
         public override void Derive(ICycle cycle, IEnumerable<IObject> matches)

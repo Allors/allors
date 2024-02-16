@@ -6,19 +6,23 @@
 
 namespace Allors.Database.Domain.Derivations.Rules
 {
+    using System.Collections.Generic;
     using Allors.Database.Derivations;
     using Allors.Database.Meta;
+    using Database.Data;
 
-    public class RolePattern : Pattern, IRolePattern
+    public class RolePattern : IRolePattern
     {
-        public RolePattern(IRoleType roleType) => this.RoleType = roleType;
-
-        public RolePattern(IComposite objectType, IRoleType roleType)
+        public RolePattern(IRoleType roleType, IComposite ofType = null) 
         {
             this.RoleType = roleType;
-            this.OfType = !this.RoleType.AssociationType.ObjectType.Equals(objectType) ? objectType : null;
+            this.OfType = !this.RoleType.AssociationType.ObjectType.Equals(ofType) ? ofType : null;
         }
 
+        public IEnumerable<Node> Tree { get; set; }
+
+        public IComposite OfType { get; set; }
+        
         public IRoleType RoleType { get; }
     }
 }

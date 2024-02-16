@@ -15,9 +15,9 @@ namespace Allors.Database.Domain
     public class TransitionalDeniedPermissionRule : Rule
     {
         public TransitionalDeniedPermissionRule(M m) : base(m, new Guid("5affa463-9365-4916-89ef-cfc18d41b4fb")) =>
-            this.Patterns = new Pattern[]
+            this.Patterns = new IPattern[]
             {
-                new RolePattern(m.Transitional, m.Transitional.ObjectStates) ,
+                new RolePattern(m.Transitional.ObjectStates, m.Transitional) ,
                 m.ObjectState.RolePattern(v=>v.Revocations, v=> v.TransitionalsWhereObjectState),
             };
 

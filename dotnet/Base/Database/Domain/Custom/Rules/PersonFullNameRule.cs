@@ -15,10 +15,10 @@ namespace Allors.Database.Domain
     public class PersonFullNameRule : Rule
     {
         public PersonFullNameRule(M m) : base(m, new Guid("CDE0A670-4490-41ED-944E-7DFDF41B672B")) =>
-            this.Patterns = new Pattern[]
+            this.Patterns = new IPattern[]
             {
-                new RolePattern(m.Person, m.Person.FirstName),
-                new RolePattern(m.Person, m.Person.LastName),
+                new RolePattern(m.Person.FirstName, m.Person),
+                new RolePattern(m.Person.LastName, m.Person),
             };
 
         public override void Derive(ICycle cycle, IEnumerable<IObject> matches)

@@ -16,12 +16,12 @@ namespace Allors.Database.Domain
     public class MediaRule : Rule
     {
         public MediaRule(M m) : base(m, new Guid("436E574A-FE3E-46ED-8AD2-A59CACC2C9C4")) =>
-            this.Patterns = new Pattern[]
+            this.Patterns = new IPattern[]
             {
-                new RolePattern(m.Media, m.Media.InType),
-                new RolePattern(m.Media, m.Media.InData),
-                new RolePattern(m.Media, m.Media.InDataUri),
-                new RolePattern(m.Media, m.Media.InFileName),
+                new RolePattern(m.Media.InType, m.Media),
+                new RolePattern(m.Media.InData, m.Media),
+                new RolePattern(m.Media.InDataUri, m.Media),
+                new RolePattern(m.Media.InFileName, m.Media),
             };
 
         public override void Derive(ICycle cycle, IEnumerable<IObject> matches)

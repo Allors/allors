@@ -16,7 +16,7 @@ namespace Allors.Database.Domain
     {
         public OrganizationJustDidItRule(M m)
             : base(m, new Guid("69C87CD7-52DE-45ED-8709-898A3A701A71")) =>
-            this.Patterns = new Pattern[]
+            this.Patterns = new IPattern[]
             {
                 new RolePattern<MetaOrganization>(m.Organization, v => v.JustDidIt),
             };

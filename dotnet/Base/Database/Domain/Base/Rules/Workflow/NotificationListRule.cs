@@ -15,7 +15,7 @@ namespace Allors.Database.Domain
     public class NotificationListRule : Rule
     {
         public NotificationListRule(M m) : base(m, new Guid("e8071e5b-18a4-4a52-8b22-09a75c3dbf72")) =>
-            this.Patterns = new Pattern[]
+            this.Patterns = new IPattern[]
             {
                 m.NotificationList.RolePattern(v=>v.Notifications),
                 m.Notification.RolePattern(v=>v.Confirmed, v=> v.NotificationListWhereNotification),
