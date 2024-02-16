@@ -291,7 +291,7 @@ nodeBuilderRoleTypeSubtype_Declaration() ::= <<
 nodeBuilderRoleTypeSubtype_Build() ::= <<
 			if(this.As$subtype.SingularName$ != null) 
 			{
-				nodes = [.. nodes, new Allors.Database.Data.Node(this.M.$roleType.AssociationType.ObjectType.SingularName$.$roleType.Name$, this.As$subtype.SingularName$.Build())];
+				nodes = [.. nodes, new Allors.Database.Data.Node(this.M.$roleType.AssociationType.ObjectType.SingularName$.$roleType.Name$, this.As$subtype.SingularName$.Build()) { OfType = this.M.$subtype.SingularName$ }];
 			}
 
 >>
@@ -330,7 +330,7 @@ nodeBuilderAssociationTypeSubtype_Declaration() ::= <<
 nodeBuilderAssociationTypeSubtype_Build() ::= <<
 			if(this.As$subtype.SingularName$ != null) 
 			{
-				nodes = [.. nodes, new Allors.Database.Data.Node(this.M.$associationType.RoleType.ObjectType.SingularName$.$associationType.Name$, this.As$subtype.SingularName$.Build())];
+				nodes = [.. nodes, new Allors.Database.Data.Node(this.M.$associationType.RoleType.ObjectType.SingularName$.$associationType.Name$, this.As$subtype.SingularName$.Build()) { OfType = this.M.$subtype.SingularName$ }];
 			}
 >>
 
