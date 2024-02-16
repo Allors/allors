@@ -263,7 +263,17 @@ $endif$
 		public Allors.Database.Data.Node[] Build()
 		{
 $if(roleType.ObjectType.IsInterface)$
-	return null;
+			var nodes = System.Array.Empty<Allors.Database.Data.Node>();
+
+			if(this.$roleType.ObjectType.SingularName$ != null) 
+			{
+				nodes = [.. nodes, new Allors.Database.Data.Node(this.M.$roleType.AssociationType.ObjectType.SingularName$.$roleType.Name$, this.$roleType.ObjectType.SingularName$.Build())];
+			}
+
+$roleType.ObjectType.Subtypes:{subtype|$nodeBuilderRoleTypeSubtype_Build()$}; separator="\n"$
+			return nodes.Length > 0
+				? nodes
+				: [new Allors.Database.Data.Node(this.M.$roleType.AssociationType.ObjectType.SingularName$.$roleType.Name$)];
 $elseif(roleType.ObjectType.IsClass)$
 			return [new Allors.Database.Data.Node(this.M.$roleType.AssociationType.ObjectType.SingularName$.$roleType.Name$, this.$roleType.ObjectType.SingularName$?.Build())];
 $else$
@@ -279,7 +289,11 @@ nodeBuilderRoleTypeSubtype_Declaration() ::= <<
 >>
 
 nodeBuilderRoleTypeSubtype_Build() ::= <<
-					this.As$subtype.SingularName$?.Build(),
+			if(this.As$subtype.SingularName$ != null) 
+			{
+				nodes = [.. nodes, new Allors.Database.Data.Node(this.M.$roleType.AssociationType.ObjectType.SingularName$.$roleType.Name$, this.As$subtype.SingularName$.Build())];
+			}
+
 >>
 
 nodeBuilderAssociationType() ::= <<
@@ -290,7 +304,21 @@ $associationType.ObjectType.Subtypes:{subtype|$nodeBuilderAssociationTypeSubtype
 
 		public Allors.Database.Data.Node[] Build()
 		{
-			return null;
+$if(associationType.ObjectType.IsInterface)$
+			var nodes = System.Array.Empty<Allors.Database.Data.Node>();
+
+			if(this.$associationType.ObjectType.SingularName$ != null) 
+			{
+				nodes = [.. nodes, new Allors.Database.Data.Node(this.M.$associationType.RoleType.ObjectType.SingularName$.$associationType.Name$, $associationType.ObjectType.SingularName$.Build())];
+			}
+
+$associationType.ObjectType.Subtypes:{subtype|$nodeBuilderAssociationTypeSubtype_Build()$}; separator="\n"$
+			return nodes.Length > 0
+				? nodes
+				: [new Allors.Database.Data.Node(this.M.$associationType.RoleType.ObjectType.SingularName$.$associationType.Name$)];
+$else$
+			return [new Allors.Database.Data.Node(this.M.$associationType.RoleType.ObjectType.SingularName$.$associationType.Name$, $associationType.ObjectType.SingularName$?.Build())];
+$endif$
 		}
 	}
 >>
@@ -300,7 +328,10 @@ nodeBuilderAssociationTypeSubtype_Declaration() ::= <<
 >>
 
 nodeBuilderAssociationTypeSubtype_Build() ::= <<
-					this.As$subtype.SingularName$?.Build(),
+			if(this.As$subtype.SingularName$ != null) 
+			{
+				nodes = [.. nodes, new Allors.Database.Data.Node(this.M.$associationType.RoleType.ObjectType.SingularName$.$associationType.Name$, this.As$subtype.SingularName$.Build())];
+			}
 >>
 
 class_Object() ::= <<
