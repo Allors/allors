@@ -30,7 +30,7 @@ namespace Allors.Database.Domain.Tests
             var extent = this.Transaction.Extent(this.M.Person);
             extent.Filter.AddEquals(this.M.Person.FirstName, "John");
 
-            Assert.Equal(extent.ToArray(), queryExtent.ToArray());
+            Assert.Equal(extent.ToArray(), [.. queryExtent]);
         }
         
         [Fact]
@@ -45,7 +45,7 @@ namespace Allors.Database.Domain.Tests
 
             var extent = this.Transaction.Extent(this.M.Person);
 
-            Assert.Equal(extent.ToArray(), queryExtent.ToArray());
+            Assert.Equal(extent.ToArray(), [.. queryExtent]);
         }
 
         [Fact]
@@ -84,7 +84,7 @@ namespace Allors.Database.Domain.Tests
             and.AddEquals(this.M.Person.FirstName, "John");
             and.AddEquals(this.M.Person.LastName, "Doe");
 
-            Assert.Equal(extent.ToArray(), queryExtent.ToArray());
+            Assert.Equal(extent.ToArray(), [.. queryExtent]);
         }
 
         [Fact]
@@ -120,7 +120,7 @@ namespace Allors.Database.Domain.Tests
                 var extent = this.Transaction.Extent(this.M.Person);
                 extent.Filter.AddEquals(this.M.Person.FirstName, "John");
 
-                Assert.Equal(extent.ToArray(), queryExtent.ToArray());
+                Assert.Equal(extent.ToArray(), [.. queryExtent]);
             }
 
             {
@@ -128,7 +128,7 @@ namespace Allors.Database.Domain.Tests
 
                 var extent = this.Transaction.Extent(this.M.Person);
 
-                Assert.Equal(extent.ToArray(), queryExtent.ToArray());
+                Assert.Equal(extent.ToArray(), [.. queryExtent]);
             }
         }
 
@@ -159,7 +159,7 @@ namespace Allors.Database.Domain.Tests
             var extent = this.Transaction.Extent(this.M.C1);
             extent.Filter.AddContainedIn(this.M.C1.C1C2One2One, c2s);
 
-            Assert.Equal(extent.ToArray(), queryExtent.ToArray());
+            Assert.Equal(extent.ToArray(), [.. queryExtent]);
         }
 
         [Fact]
@@ -186,7 +186,7 @@ namespace Allors.Database.Domain.Tests
 
             var extent = this.Transaction.Extent(this.M.C1);
 
-            Assert.Equal(extent.ToArray(), queryExtent.ToArray());
+            Assert.Equal(extent.ToArray(), [.. queryExtent]);
         }
 
         [Fact]
@@ -219,7 +219,7 @@ namespace Allors.Database.Domain.Tests
 
             var extent = this.Transaction.Extent(this.M.C1);
 
-            Assert.Equal(extent.ToArray(), queryExtent.ToArray());
+            Assert.Equal(extent.ToArray(), [.. queryExtent]);
         }
 
         [Fact]
@@ -252,7 +252,7 @@ namespace Allors.Database.Domain.Tests
 
             var extent = this.Transaction.Extent(this.M.C1);
 
-            Assert.Equal(extent.ToArray(), queryExtent.ToArray());
+            Assert.Equal(extent.ToArray(), [.. queryExtent]);
         }
     }
 }

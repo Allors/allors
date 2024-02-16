@@ -100,7 +100,7 @@ public class SyncResponseBuilder
         else
         {
             var roles = @object.Strategy.GetCompositesRole<IObject>(roleType).Where(this.Include);
-            syncResponseRole.c = ValueRange<long>.Import(roles.Select(roleObject => roleObject.Id)).ToArray();
+            syncResponseRole.c = [.. ValueRange<long>.Import(roles.Select(roleObject => roleObject.Id))];
         }
 
         return syncResponseRole;

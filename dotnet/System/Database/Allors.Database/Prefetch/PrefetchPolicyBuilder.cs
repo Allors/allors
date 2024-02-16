@@ -40,7 +40,7 @@ public sealed class PrefetchPolicyBuilder
     {
         try
         {
-            return new PrefetchPolicy(this.rules.ToArray()) { AllowCompilation = this.allowCompilation };
+            return new PrefetchPolicy([.. this.rules]) { AllowCompilation = this.allowCompilation };
         }
         finally
         {

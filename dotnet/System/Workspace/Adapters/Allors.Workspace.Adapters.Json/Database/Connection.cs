@@ -157,7 +157,7 @@ namespace Allors.Workspace.Adapters.Json
                 }
             }
 
-            return missingPermissionIds != null ? new PermissionRequest { p = missingPermissionIds.ToArray() } : null;
+            return missingPermissionIds != null ? new PermissionRequest { p = [.. missingPermissionIds] } : null;
         }
 
         internal void PermissionResponse(PermissionResponse permissionResponse)

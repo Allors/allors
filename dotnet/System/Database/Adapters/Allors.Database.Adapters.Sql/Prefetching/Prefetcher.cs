@@ -627,7 +627,7 @@ internal abstract class Prefetcher
                 }
                 else
                 {
-                    associationsByRole[role] = associationIds.ToArray();
+                    associationsByRole[role] = [.. associationIds];
 
                     nestedObjectIds?.UnionWith(associationIds);
                     if (nestedObjectIds == null)
@@ -710,7 +710,7 @@ internal abstract class Prefetcher
                 }
                 else
                 {
-                    associationsByRole[role] = associationIds.ToArray();
+                    associationsByRole[role] = [.. associationIds];
 
                     nestedObjectIds?.UnionWith(associationIds);
                     if (nestedObjectIds == null)

@@ -30,7 +30,7 @@ public abstract class Profile : IProfile
                 inits.Add(this.Init);
             }
 
-            return inits.ToArray();
+            return [.. inits];
         }
     }
 

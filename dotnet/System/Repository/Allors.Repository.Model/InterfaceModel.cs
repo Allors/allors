@@ -22,7 +22,7 @@ public class InterfaceModel : CompositeModel
     public Dictionary<string, PropertyModel> InheritedPropertyByRoleName =>
         this.Interface.InheritedPropertyByRoleName.ToDictionary(v => v.Key, v => this.RepositoryModel.Map(v.Value));
 
-    public PropertyModel[] InheritedProperties => this.InheritedPropertyByRoleName.Values.ToArray();
+    public PropertyModel[] InheritedProperties => [.. this.InheritedPropertyByRoleName.Values];
 
   
 }

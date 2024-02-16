@@ -123,7 +123,7 @@ public sealed class State
             references.Add(reference);
         }
 
-        return references.ToArray();
+        return [.. references];
     }
 
     public Reference GetOrCreateReferenceForExistingObject(IClass objectType, long objectId, Transaction transaction)

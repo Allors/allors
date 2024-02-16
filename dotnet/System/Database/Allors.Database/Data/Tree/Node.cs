@@ -114,7 +114,7 @@ public class Node : IVisitable
         return this;
     }
 
-    public void Add(Node node) => this.Nodes = this.Nodes.Append(this.AssertAssignable(node)).ToArray();
+    public void Add(Node node) => this.Nodes = [.. this.Nodes, this.AssertAssignable(node)];
 
     private Node AssertAssignable(Node node)
     {

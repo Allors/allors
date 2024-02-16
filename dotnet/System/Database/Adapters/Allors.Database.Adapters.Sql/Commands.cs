@@ -464,7 +464,7 @@ public abstract class Commands
             }
         }
 
-        return objectIds.ToArray();
+        return [.. objectIds];
     }
 
     internal virtual Reference CreateObject(IClass @class)

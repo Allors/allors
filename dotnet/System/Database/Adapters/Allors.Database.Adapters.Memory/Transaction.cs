@@ -482,7 +482,7 @@ public class Transaction : ITransaction
                 }
             }
 
-            concreteClasses = sortedClassAndSubclassList.ToArray();
+            concreteClasses = [.. sortedClassAndSubclassList];
 
             this.concreteClassesByObjectType[type] = concreteClasses;
         }

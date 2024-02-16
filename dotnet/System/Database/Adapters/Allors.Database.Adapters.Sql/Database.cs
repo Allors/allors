@@ -163,7 +163,7 @@ public abstract class Database : IDatabase
         {
             var sortedUnitRoleList = new List<IRoleType>(((IComposite)objectType).RoleTypes.Where(r => r.ObjectType.IsUnit));
             sortedUnitRoleList.Sort();
-            sortedUnitRoles = sortedUnitRoleList.ToArray();
+            sortedUnitRoles = [.. sortedUnitRoleList];
             this.sortedUnitRolesByObjectType[objectType] = sortedUnitRoles;
         }
 

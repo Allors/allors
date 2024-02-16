@@ -26,7 +26,7 @@ namespace Allors.Database.Domain
                 });
             }
 
-            var credentials = new Credentials { Records = records.ToArray() };
+            var credentials = new Credentials { Records = [.. records] };
             var xmlSerializer = new System.Xml.Serialization.XmlSerializer(typeof(Credentials));
             xmlSerializer.Serialize(writer, credentials);
         }

@@ -17,7 +17,7 @@ public class Or : ICompositePredicate
 
     bool IPredicate.HasMissingArguments(IArguments arguments) => this.Operands.All(v => v.HasMissingArguments(arguments));
 
-    void IPredicateContainer.AddPredicate(IPredicate predicate) => this.Operands = this.Operands.Append(predicate).ToArray();
+    void IPredicateContainer.AddPredicate(IPredicate predicate) => this.Operands = [.. this.Operands, predicate];
 
     void IPredicate.Build(ITransaction transaction, IArguments arguments, Database.ICompositePredicate compositePredicate)
     {

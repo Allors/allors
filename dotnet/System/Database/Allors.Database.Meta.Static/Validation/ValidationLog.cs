@@ -46,7 +46,7 @@ public class ValidationLog : IValidationLog
         this.relationTypeNames = new HashSet<string>();
     }
 
-    public ValidationError[] Errors => this.errors.ToArray();
+    public ValidationError[] Errors => [.. this.errors];
 
     /// <summary>
     ///     Gets the messages.

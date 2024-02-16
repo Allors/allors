@@ -322,6 +322,6 @@ public class PushResponseBuilder
             roles.AddRange(existingRoles);
         }
 
-        return roles.ToArray();
+        return [.. roles];
     }
 }

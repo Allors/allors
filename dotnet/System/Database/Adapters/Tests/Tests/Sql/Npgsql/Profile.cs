@@ -36,7 +36,7 @@ public class Profile : Adapters.Profile
         {
             var markers = new List<Action> { () => { }, () => this.Transaction.Commit() };
 
-            return markers.ToArray();
+            return [.. markers];
         }
     }
 

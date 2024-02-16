@@ -30,10 +30,9 @@ public class Sink : ISink
 
     public Action<IEvent> PostOnAfter { get; set; }
 
-    public SinkTree[] Trees => this.TreeByTransaction
+    public SinkTree[] Trees => [.. this.TreeByTransaction
         .Values
-        .OrderBy(v => v.Index)
-        .ToArray();
+        .OrderBy(v => v.Index)];
 
     public void OnBefore(IEvent @event)
     {

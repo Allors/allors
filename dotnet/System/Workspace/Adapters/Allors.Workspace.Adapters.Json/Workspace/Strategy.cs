@@ -95,7 +95,7 @@ namespace Allors.Workspace.Adapters.Json
                     roles.Add(pushRequestRole);
                 }
 
-                return roles.ToArray();
+                return [.. roles];
             }
 
             return null;

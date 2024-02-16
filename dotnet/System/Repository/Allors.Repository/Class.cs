@@ -27,7 +27,7 @@ public class Class : Composite
                 interfaces.UnionWith(implementedInterface.Interfaces);
             }
 
-            return interfaces.ToArray();
+            return [.. interfaces];
         }
     }
 

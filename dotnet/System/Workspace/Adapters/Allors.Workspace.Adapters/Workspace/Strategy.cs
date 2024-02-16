@@ -890,7 +890,7 @@ namespace Allors.Workspace.Adapters
                 }
                 else if (add == null)
                 {
-                    changes = changes.Append(new AddCompositeChange(roleToAdd, null)).ToArray();
+                    changes = [.. changes, new AddCompositeChange(roleToAdd, null)];
                 }
 
                 this.changesByRelationType[roleType.RelationType] = changes;
@@ -937,7 +937,7 @@ namespace Allors.Workspace.Adapters
                 }
                 else if (remove == null)
                 {
-                    changes = changes.Append(new RemoveCompositeChange(role, dependee)).ToArray();
+                    changes = [.. changes, new RemoveCompositeChange(role, dependee)];
                 }
 
                 this.changesByRelationType[roleType.RelationType] = changes;
@@ -991,7 +991,7 @@ namespace Allors.Workspace.Adapters
                 }
                 else if (remove == null)
                 {
-                    changes = changes.Append(new RemoveCompositeChange(role, dependee)).ToArray();
+                    changes = [.. changes, new RemoveCompositeChange(role, dependee)];
                 }
 
                 this.changesByRelationType[roleType.RelationType] = changes;

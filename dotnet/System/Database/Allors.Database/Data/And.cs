@@ -29,7 +29,7 @@ public class And : ICompositePredicate
         }
     }
 
-    public void AddPredicate(IPredicate predicate) => this.Operands = this.Operands.Append(predicate).ToArray();
+    public void AddPredicate(IPredicate predicate) => this.Operands = [.. this.Operands, predicate];
 
     public void Accept(IVisitor visitor) => visitor.VisitAnd(this);
 }

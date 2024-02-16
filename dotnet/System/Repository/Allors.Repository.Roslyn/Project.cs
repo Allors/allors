@@ -313,7 +313,7 @@ public class Project
                 var attributeUsage = type.GetCustomAttributes<AttributeUsageAttribute>().FirstOrDefault();
                 if (attributeUsage != null && attributeUsage.AllowMultiple)
                 {
-                    domain.AttributesByName[typeName] = group.ToArray();
+                    domain.AttributesByName[typeName] = [.. group];
                 }
                 else
                 {
@@ -340,7 +340,7 @@ public class Project
                     var attributeUsage = type.GetCustomAttributes<AttributeUsageAttribute>().FirstOrDefault();
                     if (attributeUsage != null && attributeUsage.AllowMultiple)
                     {
-                        composite.AttributesByName[typeName] = group.ToArray();
+                        composite.AttributesByName[typeName] = [.. group];
                     }
                     else
                     {
@@ -383,7 +383,7 @@ public class Project
                         attributeType.GetCustomAttributes<AttributeUsageAttribute>().FirstOrDefault();
                     if (attributeUsage != null && attributeUsage.AllowMultiple)
                     {
-                        property.AttributesByName.Add(attributeTypeName, group.ToArray());
+                        property.AttributesByName.Add(attributeTypeName, [.. group]);
                     }
                     else
                     {
@@ -407,7 +407,7 @@ public class Project
                     var attributeUsage = attributeType.GetCustomAttributes<AttributeUsageAttribute>().FirstOrDefault();
                     if (attributeUsage != null && attributeUsage.AllowMultiple)
                     {
-                        method.AttributesByName.Add(attributeTypeName, group.ToArray());
+                        method.AttributesByName.Add(attributeTypeName, [.. group]);
                     }
                     else
                     {

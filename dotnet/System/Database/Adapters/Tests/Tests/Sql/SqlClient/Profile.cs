@@ -52,7 +52,7 @@ public class Profile : Adapters.Profile
                     });
             }
 
-            return markers.ToArray();
+            return [.. markers];
         }
     }
 

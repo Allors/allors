@@ -27,13 +27,13 @@ public class Interface : Composite
                 implementedInterface.AddInterfaces(interfaces);
             }
 
-            return interfaces.ToArray();
+            return [.. interfaces];
         }
     }
 
     public Dictionary<string, Property> InheritedPropertyByRoleName { get; }
 
-    public Property[] InheritedProperties => this.InheritedPropertyByRoleName.Values.ToArray();
+    public Property[] InheritedProperties => [.. this.InheritedPropertyByRoleName.Values];
 
     public override string ToString() => this.SingularName;
 

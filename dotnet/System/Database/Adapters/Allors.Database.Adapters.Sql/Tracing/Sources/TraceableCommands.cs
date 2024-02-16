@@ -40,7 +40,7 @@ public sealed class TraceableCommands : Commands
 
     internal override void SetUnitRoles(Strategy strategy, List<IRoleType> sortedRoleTypes)
     {
-        var @event = new SqlSetUnitRolesEvent(this.Transaction) { Strategy = strategy, RoleTypes = sortedRoleTypes.ToArray() };
+        var @event = new SqlSetUnitRolesEvent(this.Transaction) { Strategy = strategy, RoleTypes = [.. sortedRoleTypes] };
         this.sink.OnBefore(@event);
 
         base.SetUnitRoles(strategy, sortedRoleTypes);

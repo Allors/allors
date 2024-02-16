@@ -113,7 +113,7 @@ public class MethodCompiler
             }
         }
 
-        return actions.ToArray();
+        return [.. actions];
     }
 
     private MethodInfo[] GetExtensionMethods(Type @interface, string methodName) =>

@@ -103,7 +103,7 @@ public class PullInstantiate
                                         }
                                     }
 
-                                    objects = set.ToArray();
+                                    objects = [.. set];
                                 }
                                 else
                                 {

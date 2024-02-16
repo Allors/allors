@@ -28,16 +28,16 @@ public static class ResponseExtensions
 
             @this._d = @this._d != null
                 ? new List<ResponseDerivationError>(@this._d) { derivationErrorResponse }.ToArray()
-                : new List<ResponseDerivationError> { derivationErrorResponse }.ToArray();
+                : [derivationErrorResponse];
         }
     }
 
     public static void AddVersionError(this Response @this, IObject obj) =>
-        @this._v = @this._v != null ? new List<long>(@this._v) { obj.Id }.ToArray() : new List<long> { obj.Id }.ToArray();
+        @this._v = @this._v != null ? new List<long>(@this._v) { obj.Id }.ToArray() : [obj.Id];
 
     public static void AddAccessError(this Response @this, long id) =>
-        @this._a = @this._a != null ? new List<long>(@this._a) { id }.ToArray() : new List<long> { id }.ToArray();
+        @this._a = @this._a != null ? new List<long>(@this._a) { id }.ToArray() : [id];
 
     public static void AddMissingError(this Response @this, long id) =>
-        @this._m = @this._m != null ? new List<long>(@this._m) { id }.ToArray() : new List<long> { id }.ToArray();
+        @this._m = @this._m != null ? new List<long>(@this._m) { id }.ToArray() : [id];
 }

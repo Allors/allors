@@ -27,7 +27,7 @@ namespace Allors.Workspace.Data
 
         public Node Add(Node node)
         {
-            this.Nodes = this.Nodes.Append(node).ToArray();
+            this.Nodes = [.. this.Nodes, node];
             return this;
         }
 
