@@ -42,10 +42,10 @@ namespace Allors.Database.Server.Controllers
                 var m = this.Transaction.Database.Services.Get<M>();
                 var organisation = this.Transaction.Extent<Organization>().FindBy(m.Organization.Owner, this.Transaction.Services.Get<IUserService>().User);
                 response.AddObject("root", organisation,
-                    new[] {
+                    [
                                 new Node(m.Organization.Shareholders)
                                     .Add(m.Person.Photo),
-                                });
+                                ]);
                 return this.Ok(response.Build());
             }
             catch (Exception e)

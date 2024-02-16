@@ -42,15 +42,15 @@ namespace Tests
 
             var invokeRequest = new InvokeRequest
             {
-                l = new[]
-                {
+                l =
+                [
                     new Invocation
                     {
                         i = this.x1.Id,
                         v = this.x1.Strategy.ObjectVersion,
                         m = this.M.WorkspaceXObject1.DoX.Tag,
                     },
-                },
+                ],
             };
 
             var api = new Api(this.Transaction, "X", CancellationToken.None);
@@ -66,15 +66,15 @@ namespace Tests
 
             var invokeRequest = new InvokeRequest
             {
-                l = new[]
-                {
+                l =
+                [
                     new Invocation
                     {
                         i = this.x1.Id,
                         v = this.x1.Strategy.ObjectVersion,
                         m = this.M.WorkspaceXObject1.DoX.Tag,
                     },
-                },
+                ],
             };
 
             var api = new Api(this.Transaction, "Y", CancellationToken.None);
@@ -96,15 +96,15 @@ namespace Tests
 
             var invokeRequest = new InvokeRequest
             {
-                l = new[]
-                {
+                l =
+                [
                     new Invocation
                     {
                         i = this.x1.Id,
                         v = this.x1.Strategy.ObjectVersion,
                         m = this.M.WorkspaceXObject1.DoX.Tag,
                     },
-                },
+                ],
             };
 
             var api = new Api(this.Transaction, "None", CancellationToken.None);

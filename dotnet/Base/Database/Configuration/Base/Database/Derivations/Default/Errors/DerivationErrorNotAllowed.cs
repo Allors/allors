@@ -15,7 +15,7 @@ namespace Allors.Database.Configuration.Derivations.Default
     public class DerivationErrorNotAllowed : DerivationError, IDerivationErrorNotAllowed
     {
         public DerivationErrorNotAllowed(IValidation validation, IDerivationRelation relation)
-            : base(validation, new[] { relation }, ErrorCodes.DerivationErrorNotAllowed)
+            : base(validation, [relation], ErrorCodes.DerivationErrorNotAllowed)
         {
         }
 

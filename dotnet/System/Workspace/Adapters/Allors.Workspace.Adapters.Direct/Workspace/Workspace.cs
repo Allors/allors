@@ -32,7 +32,7 @@ namespace Allors.Workspace.Adapters.Direct
         }
 
         public override Task<IInvokeResult> InvokeAsync(IMethod method, InvokeOptions options = null) =>
-               this.InvokeAsync(new[] { method }, options);
+               this.InvokeAsync([method], options);
 
         public override Task<IInvokeResult> InvokeAsync(IMethod[] methods, InvokeOptions options = null)
         {

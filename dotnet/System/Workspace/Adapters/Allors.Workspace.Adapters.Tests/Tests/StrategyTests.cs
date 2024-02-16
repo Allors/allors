@@ -82,7 +82,7 @@ namespace Allors.Workspace.Adapters.Tests
 
             bool hasErrors;
 
-            c1.Strategy.CompositesRole(this.M.C1.C1C2Many2Manies).Value = new[] { c2.Strategy };
+            c1.Strategy.CompositesRole(this.M.C1.C1C2Many2Manies).Value = [c2.Strategy];
 
             try
             {

@@ -20,11 +20,11 @@ namespace Allors.Database.Domain
                 v.Description = "Select People";
                 v.Select = new Select
                 {
-                    Include = new[]
-                    {
+                    Include =
+                    [
                         new Node(this.M.Organization.Owner),
                         new Node(this.M.Organization.Employees),
-                    },
+                    ],
                 };
             });
         }

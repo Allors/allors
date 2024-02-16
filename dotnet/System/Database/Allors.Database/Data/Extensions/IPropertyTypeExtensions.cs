@@ -15,7 +15,7 @@ public static class IRelationEndTypeExtensions
 {
     public static Node Node<T>(this T @this) where T : IRelationEndType => new(@this);
 
-    public static Node Node<T>(this T @this, Func<T, Node> child) where T : IRelationEndType => new(@this, new[] { child(@this) });
+    public static Node Node<T>(this T @this, Func<T, Node> child) where T : IRelationEndType => new(@this, [child(@this)]);
 
     public static Node Node<T>(this T @this, params Func<T, Node>[] children) where T : IRelationEndType =>
         new(@this, children.Select(v => v(@this)));

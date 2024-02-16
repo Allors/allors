@@ -15,10 +15,10 @@ namespace Allors.Database.Domain
     public class I1ChangedRoleRule : Rule
     {
         public I1ChangedRoleRule(M m) : base(m, new Guid("475E8B38-21BB-40F9-AD67-9A7432F73CDD")) =>
-            this.Patterns = new IPattern[]
-            {
+            this.Patterns =
+            [
                 new RolePattern(m.S12.ChangedRolePingI1, m.I1),
-            };
+            ];
 
         public override void Derive(ICycle cycle, IEnumerable<IObject> matches)
         {

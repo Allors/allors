@@ -10,11 +10,10 @@ namespace Allors.Database.Domain
     {
         // TODO: Cache
         public TransitionalConfiguration[] TransitionalConfigurations =>
-            new[]
-            {
+            [
                 new TransitionalConfiguration(this.M.Order, this.M.Order.OrderState),
                 new TransitionalConfiguration(this.M.Order, this.M.Order.ShipmentState),
                 new TransitionalConfiguration(this.M.Order, this.M.Order.PaymentState),
-            };
+            ];
     }
 }

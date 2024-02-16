@@ -23,7 +23,7 @@ public class RangeImportTests
     [Fact]
     public void ImportSingle()
     {
-        var x = Range.Import(new[] { 1L });
+        var x = Range.Import([1L]);
 
         Assert.Equal(new[] { 1L }, x);
     }
@@ -31,7 +31,7 @@ public class RangeImportTests
     [Fact]
     public void ImportOrderedPair()
     {
-        var x = Range.Import(new[] { 1L, 2L });
+        var x = Range.Import([1L, 2L]);
 
         Assert.Equal(new[] { 1L, 2L }, x);
     }
@@ -39,7 +39,7 @@ public class RangeImportTests
     [Fact]
     public void ImportUnorderedPair()
     {
-        var x = Range.Import(new[] { 2L, 1L });
+        var x = Range.Import([2L, 1L]);
 
         Assert.Equal(new[] { 1L, 2L }, x);
     }

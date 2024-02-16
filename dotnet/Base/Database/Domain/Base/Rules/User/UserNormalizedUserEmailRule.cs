@@ -15,10 +15,10 @@ namespace Allors.Database.Domain
     public class UserNormalizedUserEmailRule : Rule
     {
         public UserNormalizedUserEmailRule(M m) : base(m, new Guid("904187C3-773E-47BC-A2EA-EF45ECA78FD2")) =>
-               this.Patterns = new IPattern[]
-               {
+               this.Patterns =
+               [
                 m.User.RolePattern(v=>v.UserEmail),
-               };
+               ];
 
         public override void Derive(ICycle cycle, IEnumerable<IObject> matches)
         {

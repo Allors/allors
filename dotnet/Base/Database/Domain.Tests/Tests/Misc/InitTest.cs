@@ -1,4 +1,4 @@
-// <copyright file="InitTest.cs" company="Allors bv">
+﻿// <copyright file="InitTest.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -20,7 +20,7 @@ namespace Allors.Database.Domain.Tests
 
             allors.Manager = person;
 
-            var derivation = this.Transaction.Derive();
+            this.Transaction.Derive();
 
             Assert.Contains(person, allors.Employees);
             Assert.DoesNotContain(person, acme.Employees);
@@ -28,7 +28,7 @@ namespace Allors.Database.Domain.Tests
             allors.RemoveManager();
             acme.Manager = person;
 
-            derivation = this.Transaction.Derive();
+            this.Transaction.Derive();
 
             Assert.Contains(person, allors.Employees);
             Assert.DoesNotContain(person, acme.Employees);

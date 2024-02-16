@@ -32,7 +32,7 @@ namespace Allors.Workspace.Adapters.Json
             return strategy;
         }
 
-        public override async Task<IInvokeResult> InvokeAsync(IMethod method, InvokeOptions options = null) => await this.InvokeAsync(new[] { method }, options);
+        public override async Task<IInvokeResult> InvokeAsync(IMethod method, InvokeOptions options = null) => await this.InvokeAsync([method], options);
 
         public override async Task<IInvokeResult> InvokeAsync(IMethod[] methods, InvokeOptions options = null)
         {

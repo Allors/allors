@@ -12,7 +12,7 @@ namespace Allors.Database.Configuration.Derivations.Default
     public class DerivationErrorConflict : DerivationError, IDerivationErrorConflict
     {
         public DerivationErrorConflict(IValidation validation, IDerivationRelation relation)
-            : base(validation, new[] { relation }, ErrorCodes.DerivationErrorConflict)
+            : base(validation, [relation], ErrorCodes.DerivationErrorConflict)
         {
         }
 

@@ -58,7 +58,7 @@
             var john = this.Population.EmbeddedCreateObject<Person>();
             var jenny = this.Population.EmbeddedCreateObject<Person>();
 
-            acme.Employees.Value = new[] { jane };
+            acme.Employees.Value = [jane];
 
             Assert.That(jane.OrganizationsWhereEmployee.Value.Count, Is.EqualTo(1));
             Assert.That(jane.OrganizationsWhereEmployee.Value, Does.Contain(acme));
@@ -72,7 +72,7 @@
 
             Assert.That(hooli.Employees.Value, Is.Empty);
 
-            acme.Employees.Value = new[] { jane, john };
+            acme.Employees.Value = [jane, john];
 
             Assert.That(jane.OrganizationsWhereEmployee.Value.Count, Is.EqualTo(1));
             Assert.That(jane.OrganizationsWhereEmployee.Value, Does.Contain(acme));
@@ -88,7 +88,7 @@
 
             Assert.That(hooli.Employees.Value, Is.Empty);
 
-            acme.Employees.Value = new[] { jane, john, jenny };
+            acme.Employees.Value = [jane, john, jenny];
 
             Assert.That(jane.OrganizationsWhereEmployee.Value.Count, Is.EqualTo(1));
             Assert.That(jane.OrganizationsWhereEmployee.Value, Does.Contain(acme));
@@ -106,7 +106,7 @@
 
             Assert.That(hooli.Employees.Value, Is.Empty);
 
-            acme.Employees.Value = new Person[] { };
+            acme.Employees.Value = [];
 
             Assert.That(jane.OrganizationsWhereEmployee.Value, Is.Empty);
             Assert.That(john.OrganizationsWhereEmployee.Value, Is.Empty);
@@ -126,7 +126,7 @@
             var john = this.Population.EmbeddedCreateObject<Person>();
             var jenny = this.Population.EmbeddedCreateObject<Person>();
 
-            acme.Employees.Value = new[] { jane, john, jenny };
+            acme.Employees.Value = [jane, john, jenny];
 
             acme.Employees.Remove(jenny);
 

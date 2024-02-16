@@ -148,13 +148,13 @@ namespace Allors.Workspace.Adapters.Tests
                 {
                     Predicate = new Equals(this.M.C1.Name) { Value = "c1A" }
                 },
-                Results = new[]
-                {
+                Results =
+                [
                     new Result
                     {
-                        Include = new[]{ new Node(this.M.C1.C1C1One2One)}
+                        Include = [new Node(this.M.C1.C1C1One2One)]
                     }
-                }
+                ]
             };
 
             var result = await workspace.PullAsync(pull);
@@ -209,13 +209,13 @@ namespace Allors.Workspace.Adapters.Tests
                 {
                     Predicate = new Equals(this.M.C1.Name) { Value = "c1A" }
                 },
-                Results = new[]
-                {
+                Results =
+                [
                     new Result
                     {
-                        Include = new[]{ new Node(this.M.C1.C1C1One2One)}
+                        Include = [new Node(this.M.C1.C1C1One2One)]
                     }
-                }
+                ]
             };
 
             var result = await workspace.PullAsync(pull);

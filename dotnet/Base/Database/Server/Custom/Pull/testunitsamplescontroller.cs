@@ -60,7 +60,7 @@ namespace Allors.Database.Server.Controllers
                         break;
 
                     case 1:
-                        unitSample.AllorsBinary = new byte[] { 1, 2, 3 };
+                        unitSample.AllorsBinary = [1, 2, 3];
                         unitSample.AllorsBoolean = true;
                         unitSample.AllorsDateTime = new DateTime(1973, 3, 27, 0, 0, 0, DateTimeKind.Utc);
                         unitSample.AllorsDecimal = 12.34m;

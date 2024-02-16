@@ -17,7 +17,7 @@ namespace Allors.Database.Configuration.Derivations.Default
         }
 
         public DerivationErrorGeneric(IValidation validation, IDerivationRelation relation, string errorCode)
-            : this(validation, relation != null ? new[] { relation } : Array.Empty<IDerivationRelation>(), errorCode)
+            : this(validation, relation != null ? [relation] : Array.Empty<IDerivationRelation>(), errorCode)
         {
         }
 

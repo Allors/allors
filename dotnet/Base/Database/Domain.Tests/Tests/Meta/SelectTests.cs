@@ -21,7 +21,7 @@ namespace Allors.Database.Domain.Tests
             var c2C = this.BuildC2("c2C");
 
             var c1A = this.BuildC1("c1A", v => v.AddC1C2One2Many(c2A));
-            var c1B = this.BuildC1("c1B", v => v.C1C2One2Manies = new[] { c2B, c2C });
+            var c1B = this.BuildC1("c1B", v => v.C1C2One2Manies = [c2B, c2C]);
 
             this.Transaction.Derive();
 
@@ -45,7 +45,7 @@ namespace Allors.Database.Domain.Tests
             var c2C = this.BuildC2("c2C");
 
             var c1A = this.BuildC1("c1A", v => v.AddC1C2One2Many(c2A));
-            var c1B = this.BuildC1("c1B", v => v.C1C2One2Manies = new[] { c2B, c2C });
+            var c1B = this.BuildC1("c1B", v => v.C1C2One2Manies = [c2B, c2C]);
 
             this.Transaction.Derive();
 
@@ -69,7 +69,7 @@ namespace Allors.Database.Domain.Tests
             var c2C = this.BuildC2("c2C");
 
             var c1A = this.BuildC1("c1A", v => v.AddC1C2One2Many(c2A));
-            var c1B = this.BuildC1("c1B", v => v.C1C2One2Manies = new[] { c2B, c2C });
+            var c1B = this.BuildC1("c1B", v => v.C1C2One2Manies = [c2B, c2C]);
 
             this.Transaction.Derive();
 

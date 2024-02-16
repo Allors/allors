@@ -119,7 +119,7 @@ public class ObjectFactory : IObjectFactory
     {
         var objectType = strategy.Class;
         var constructor = this.contructorInfoByObjectType[objectType];
-        object[] parameters = { strategy };
+        object[] parameters = [strategy];
 
         return (IObject)constructor.Invoke(parameters);
     }

@@ -39,11 +39,11 @@ namespace Allors.Workspace.Adapters.Tests
                 {
                     Predicate = new And
                     {
-                        Operands = new IPredicate[]
-                        {
+                        Operands =
+                        [
                             new GreaterThan(m.C1.C1AllorsInteger){Value = 0},
                             new LessThan(m.C1.C1AllorsInteger){Value = 2}
-                        }
+                        ]
                     }
                 }
             };
@@ -63,11 +63,11 @@ namespace Allors.Workspace.Adapters.Tests
                 {
                     Predicate = new And
                     {
-                        Operands = new IPredicate[]
-                        {
+                        Operands =
+                        [
                             new GreaterThan(m.I12.I12AllorsInteger){Value = 0},
                             new LessThan(m.I12.I12AllorsInteger){Value = 2}
-                        }
+                        ]
                     }
                 }
             };
@@ -740,14 +740,14 @@ namespace Allors.Workspace.Adapters.Tests
             {
                 Extent = new Except
                 {
-                    Operands = new Extent[]
-                    {
+                    Operands =
+                    [
                         new Filter(m.I12),
                         new Filter(m.I12)
                         {
                             Predicate = new Instanceof{ObjectType = m.C2}
                         }
-                    }
+                    ]
                 }
             };
 
@@ -772,14 +772,14 @@ namespace Allors.Workspace.Adapters.Tests
             {
                 Extent = new Intersect()
                 {
-                    Operands = new Extent[]
-                    {
+                    Operands =
+                    [
                         new Filter(m.I12),
                         new Filter(m.I12)
                         {
                             Predicate = new Instanceof{ObjectType = m.C2}
                         }
-                    }
+                    ]
                 }
             };
 
@@ -804,11 +804,11 @@ namespace Allors.Workspace.Adapters.Tests
             {
                 Extent = new Union
                 {
-                    Operands = new Extent[]
-                    {
+                    Operands =
+                    [
                         new Filter(m.C1){Predicate = new Equals(m.C1.Name) {Value = "c1A"}},
                         new Filter(m.C1){Predicate = new Equals(m.C1.Name) {Value = "c1B"}}
-                    }
+                    ]
                 }
             };
 
@@ -835,7 +835,7 @@ namespace Allors.Workspace.Adapters.Tests
                 {
                     Predicate = new Between(m.C1.C1AllorsDateTime)
                     {
-                        Paths = new IRoleType[] { m.C1.C1DateTimeBetweenA, m.C1.C1DateTimeBetweenB }
+                        Paths = [m.C1.C1DateTimeBetweenA, m.C1.C1DateTimeBetweenB]
                     }
                 }
             };
@@ -863,11 +863,11 @@ namespace Allors.Workspace.Adapters.Tests
                 {
                     Predicate = new Between(m.C1.C1AllorsDateTime)
                     {
-                        Values = new object[]
-                        {
+                        Values =
+                        [
                             new System.DateTime(2000, 1, 1, 0, 0, 4, DateTimeKind.Utc),
                             new System.DateTime(2000, 1, 1, 0, 0, 6, DateTimeKind.Utc)
-                        }
+                        ]
                     }
                 }
             };
@@ -1035,7 +1035,7 @@ namespace Allors.Workspace.Adapters.Tests
                 {
                     Predicate = new Between(m.C1.C1AllorsDecimal)
                     {
-                        Paths = new IRoleType[] { m.C1.C1DecimalBetweenA, m.C1.C1DecimalBetweenB }
+                        Paths = [m.C1.C1DecimalBetweenA, m.C1.C1DecimalBetweenB]
                     }
                 }
             };
@@ -1063,7 +1063,7 @@ namespace Allors.Workspace.Adapters.Tests
                 {
                     Predicate = new Between(m.C1.C1AllorsDecimal)
                     {
-                        Values = new object[] { 2.1m, 2.3m }
+                        Values = [2.1m, 2.3m]
                     }
                 }
             };
@@ -1231,7 +1231,7 @@ namespace Allors.Workspace.Adapters.Tests
                 {
                     Predicate = new Between(m.C1.C1AllorsDouble)
                     {
-                        Paths = new IRoleType[] { m.C1.C1DoubleBetweenA, m.C1.C1DoubleBetweenB }
+                        Paths = [m.C1.C1DoubleBetweenA, m.C1.C1DoubleBetweenB]
                     }
                 }
             };
@@ -1259,7 +1259,7 @@ namespace Allors.Workspace.Adapters.Tests
                 {
                     Predicate = new Between(m.C1.C1AllorsDouble)
                     {
-                        Values = new object[] { 2.1d, 2.3d }
+                        Values = [2.1d, 2.3d]
                     }
                 }
             };
@@ -1427,7 +1427,7 @@ namespace Allors.Workspace.Adapters.Tests
                 {
                     Predicate = new Between(m.C1.C1AllorsInteger)
                     {
-                        Paths = new IRoleType[] { m.C1.C1IntegerBetweenA, m.C1.C1IntegerBetweenB }
+                        Paths = [m.C1.C1IntegerBetweenA, m.C1.C1IntegerBetweenB]
                     }
                 }
             };
@@ -1455,7 +1455,7 @@ namespace Allors.Workspace.Adapters.Tests
                 {
                     Predicate = new Between(m.C1.C1AllorsInteger)
                     {
-                        Values = new object[] { 1, 2 }
+                        Values = [1, 2]
                     }
                 }
             };
@@ -1989,12 +1989,12 @@ namespace Allors.Workspace.Adapters.Tests
                         Value = 2
                     }
                 },
-                Results = new[]{
+                Results = [
                     new Result
                     {
                         Name = "IetsAnders",
                     }
-                }
+                ]
             };
 
             var result = await workspace.PullAsync(pull);
@@ -2037,8 +2037,8 @@ namespace Allors.Workspace.Adapters.Tests
             var pull = new Pull
             {
                 Extent = new Filter(this.M.C1),
-                Results = new[]
-                {
+                Results =
+                [
                     new Result
                     {
                         Select = new Select
@@ -2046,7 +2046,7 @@ namespace Allors.Workspace.Adapters.Tests
                             Include = this.M.C1.Nodes(v=>v.C1C2One2One.Node())
                         }
                     }
-                }
+                ]
             };
 
             var result = await workspace.PullAsync(pull);
@@ -2071,7 +2071,7 @@ namespace Allors.Workspace.Adapters.Tests
 
             var pull = new Pull
             {
-                Extent = new Filter(this.M.I12) { Sorting = new[] { new Sort(this.M.I12.Order) } },
+                Extent = new Filter(this.M.I12) { Sorting = [new Sort(this.M.I12.Order)] },
             };
 
             var result = await workspace.PullAsync(pull);
@@ -2096,7 +2096,7 @@ namespace Allors.Workspace.Adapters.Tests
 
             var pull = new Pull
             {
-                Extent = new Filter(this.M.I12) { Sorting = new[] { new Sort(this.M.I12.Order) { SortDirection = SortDirection.Ascending } } },
+                Extent = new Filter(this.M.I12) { Sorting = [new Sort(this.M.I12.Order) { SortDirection = SortDirection.Ascending }] },
             };
 
             var result = await workspace.PullAsync(pull);
@@ -2121,7 +2121,7 @@ namespace Allors.Workspace.Adapters.Tests
 
             var pull = new Pull
             {
-                Extent = new Filter(this.M.I12) { Sorting = new[] { new Sort(this.M.I12.Order) { SortDirection = SortDirection.Descending } } },
+                Extent = new Filter(this.M.I12) { Sorting = [new Sort(this.M.I12.Order) { SortDirection = SortDirection.Descending }] },
             };
 
             var result = await workspace.PullAsync(pull);

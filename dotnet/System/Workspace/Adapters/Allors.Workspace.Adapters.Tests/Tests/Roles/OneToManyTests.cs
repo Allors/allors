@@ -56,7 +56,7 @@ namespace Allors.Workspace.Adapters.Tests
                 // Role
                 Assert.Empty(c1A.C1C1One2Manies.Value);
                 c1B.C1C1One2Manies.Value.ShouldContainSingle(c1B);
-                c1C.C1C1One2Manies.Value.ShouldHaveSameElements(new[] { c1C, c1D });
+                c1C.C1C1One2Manies.Value.ShouldHaveSameElements([c1C, c1D]);
                 Assert.Empty(c1D.C1C1One2Manies.Value);
 
                 // Association
@@ -70,7 +70,7 @@ namespace Allors.Workspace.Adapters.Tests
                 // Role
                 Assert.Empty(c1A.C1C1One2Manies.Value);
                 c1B.C1C1One2Manies.Value.ShouldContainSingle(c1B);
-                c1C.C1C1One2Manies.Value.ShouldHaveSameElements(new[] { c1C, c1D });
+                c1C.C1C1One2Manies.Value.ShouldHaveSameElements([c1C, c1D]);
                 Assert.Empty(c1D.C1C1One2Manies.Value);
 
                 // Association
@@ -84,7 +84,7 @@ namespace Allors.Workspace.Adapters.Tests
                 // Role
                 Assert.Empty(c1A.C1C1One2Manies.Value);
                 c1B.C1C1One2Manies.Value.ShouldContainSingle(c1B);
-                c1C.C1C1One2Manies.Value.ShouldHaveSameElements(new[] { c1C, c1D });
+                c1C.C1C1One2Manies.Value.ShouldHaveSameElements([c1C, c1D]);
                 Assert.Empty(c1D.C1C1One2Manies.Value);
 
                 // Association
@@ -134,7 +134,7 @@ namespace Allors.Workspace.Adapters.Tests
                 // Role
                 Assert.Empty(c1A.C1C1One2Manies.Value);
                 c1B.C1C1One2Manies.Value.ShouldContainSingle(c1B);
-                c1C.C1C1One2Manies.Value.ShouldHaveSameElements(new[] { c1C, c1D });
+                c1C.C1C1One2Manies.Value.ShouldHaveSameElements([c1C, c1D]);
                 Assert.Empty(c1D.C1C1One2Manies.Value);
 
                 // Association
@@ -147,7 +147,7 @@ namespace Allors.Workspace.Adapters.Tests
 
                 // Role
                 Assert.Empty(c1A.C1C1One2Manies.Value);
-                c1B.C1C1One2Manies.Value.ShouldHaveSameElements(new[] { c1B, c1C });
+                c1B.C1C1One2Manies.Value.ShouldHaveSameElements([c1B, c1C]);
                 c1C.C1C1One2Manies.Value.ShouldContainSingle(c1D);
                 Assert.Empty(c1D.C1C1One2Manies.Value);
 
@@ -161,7 +161,7 @@ namespace Allors.Workspace.Adapters.Tests
 
                 // Role
                 Assert.Empty(c1A.C1C1One2Manies.Value);
-                c1B.C1C1One2Manies.Value.ShouldHaveSameElements(new[] { c1B, c1C });
+                c1B.C1C1One2Manies.Value.ShouldHaveSameElements([c1B, c1C]);
                 c1C.C1C1One2Manies.Value.ShouldContainSingle(c1D);
                 Assert.Empty(c1D.C1C1One2Manies.Value);
 
@@ -176,7 +176,7 @@ namespace Allors.Workspace.Adapters.Tests
                 // Role
                 Assert.Empty(c1A.C1C1One2Manies.Value);
                 c1B.C1C1One2Manies.Value.ShouldContainSingle(c1B);
-                c1C.C1C1One2Manies.Value.ShouldHaveSameElements(new[] { c1C, c1D });
+                c1C.C1C1One2Manies.Value.ShouldHaveSameElements([c1C, c1D]);
                 Assert.Empty(c1D.C1C1One2Manies.Value);
 
                 // Association
@@ -201,15 +201,15 @@ namespace Allors.Workspace.Adapters.Tests
 
             Assert.Empty(c1A.C1C1One2Manies.Value);
 
-            c1A.C1C1One2Manies.Value = new[]{c1B, null};
+            c1A.C1C1One2Manies.Value = [c1B, null];
 
             c1A.C1C1One2Manies.Value.ShouldContainSingle(c1B);
 
-            c1A.C1C1One2Manies.Value = new[] { null , c1C};
+            c1A.C1C1One2Manies.Value = [null , c1C];
 
             c1A.C1C1One2Manies.Value.ShouldContainSingle(c1C);
 
-            c1A.C1C1One2Manies.Value = new C1[] { null, null};
+            c1A.C1C1One2Manies.Value = [null, null];
 
             Assert.Empty(c1A.C1C1One2Manies.Value);
         }
@@ -245,7 +245,7 @@ namespace Allors.Workspace.Adapters.Tests
                 // Role
                 Assert.Empty(c1A.C1C1One2Manies.Value);
                 c1B.C1C1One2Manies.Value.ShouldContainSingle(c1B);
-                c1C.C1C1One2Manies.Value.ShouldHaveSameElements(new[] { c1C, c1D });
+                c1C.C1C1One2Manies.Value.ShouldHaveSameElements([c1C, c1D]);
                 Assert.Empty(c1D.C1C1One2Manies.Value);
 
                 // Association
@@ -259,7 +259,7 @@ namespace Allors.Workspace.Adapters.Tests
                 // Role
                 Assert.Empty(c1A.C1C1One2Manies.Value);
                 c1B.C1C1One2Manies.Value.ShouldContainSingle(c1B);
-                c1C.C1C1One2Manies.Value.ShouldHaveSameElements(new[] { c1C, c1D });
+                c1C.C1C1One2Manies.Value.ShouldHaveSameElements([c1C, c1D]);
                 Assert.Empty(c1D.C1C1One2Manies.Value);
 
                 // Association
@@ -273,7 +273,7 @@ namespace Allors.Workspace.Adapters.Tests
                 // Role
                 Assert.Empty(c1A.C1C1One2Manies.Value);
                 c1B.C1C1One2Manies.Value.ShouldContainSingle(c1B);
-                c1C.C1C1One2Manies.Value.ShouldHaveSameElements(new[] { c1C, c1D });
+                c1C.C1C1One2Manies.Value.ShouldHaveSameElements([c1C, c1D]);
                 Assert.Empty(c1D.C1C1One2Manies.Value);
 
                 // Association
@@ -323,7 +323,7 @@ namespace Allors.Workspace.Adapters.Tests
                 // Role
                 Assert.Empty(c1A.C1C1One2Manies.Value);
                 c1B.C1C1One2Manies.Value.ShouldContainSingle(c1B);
-                c1C.C1C1One2Manies.Value.ShouldHaveSameElements(new[] { c1C, c1D });
+                c1C.C1C1One2Manies.Value.ShouldHaveSameElements([c1C, c1D]);
                 Assert.Empty(c1D.C1C1One2Manies.Value);
 
                 // Association
@@ -365,7 +365,7 @@ namespace Allors.Workspace.Adapters.Tests
                 // Role
                 Assert.Empty(c1A.C1C1One2Manies.Value);
                 c1B.C1C1One2Manies.Value.ShouldContainSingle(c1B);
-                c1C.C1C1One2Manies.Value.ShouldHaveSameElements(new[] { c1C, c1D });
+                c1C.C1C1One2Manies.Value.ShouldHaveSameElements([c1C, c1D]);
                 Assert.Empty(c1D.C1C1One2Manies.Value);
 
                 // Association

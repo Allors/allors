@@ -52,11 +52,11 @@ internal static class TransactionExtensions
                         return idAsStrings.Select(@this.Instantiate).Where(v => v != null).ToArray();
 
                     case IObject @object:
-                        return new[] { @object };
+                        return [@object];
 
                     case long idAsLong:
                         var objectFromLong = @this.Instantiate(idAsLong);
-                        return objectFromLong != null ? new[] { objectFromLong } : Array.Empty<IObject>();
+                        return objectFromLong != null ? [objectFromLong] : Array.Empty<IObject>();
 
                     default:
                         throw new ArgumentException();

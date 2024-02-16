@@ -48,11 +48,11 @@ namespace Allors.Database.Domain.Tests
         {
             var m = this.M;
 
-            var node = m.UserGroup.Members.Node(v => new[]
-            {
+            var node = m.UserGroup.Members.Node(v =>
+            [
                 v.ObjectType.UniqueId.Node(),
                 v.ObjectType.SecurityTokens.Node(),
-            });
+            ]);
 
             Assert.Equal(m.UserGroup.Members, node.RelationEndType);
             Assert.Equal(2, node.Nodes.Length);

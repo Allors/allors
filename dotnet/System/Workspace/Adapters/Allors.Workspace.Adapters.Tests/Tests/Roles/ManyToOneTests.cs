@@ -62,7 +62,7 @@ namespace Allors.Workspace.Adapters.Tests
                 // Association
                 Assert.Empty(c1A.C1sWhereC1C1Many2One.Value);
                 c1B.C1sWhereC1C1Many2One.Value.ShouldContainSingle(c1B);
-                c1C.C1sWhereC1C1Many2One.Value.ShouldHaveSameElements(new[] { c1C, c1D });
+                c1C.C1sWhereC1C1Many2One.Value.ShouldHaveSameElements([c1C, c1D]);
                 Assert.Empty(c1D.C1sWhereC1C1Many2One.Value);
 
                 c1C.C1C1Many2One.Value = c1C;
@@ -76,7 +76,7 @@ namespace Allors.Workspace.Adapters.Tests
                 // Association
                 Assert.Empty(c1A.C1sWhereC1C1Many2One.Value);
                 c1B.C1sWhereC1C1Many2One.Value.ShouldContainSingle(c1B);
-                c1C.C1sWhereC1C1Many2One.Value.ShouldHaveSameElements(new[] { c1C, c1D });
+                c1C.C1sWhereC1C1Many2One.Value.ShouldHaveSameElements([c1C, c1D]);
                 Assert.Empty(c1D.C1sWhereC1C1Many2One.Value);
 
                 c1C.C1C1Many2One.Value = c1C;
@@ -90,7 +90,7 @@ namespace Allors.Workspace.Adapters.Tests
                 // Association
                 Assert.Empty(c1A.C1sWhereC1C1Many2One.Value);
                 c1B.C1sWhereC1C1Many2One.Value.ShouldContainSingle(c1B);
-                c1C.C1sWhereC1C1Many2One.Value.ShouldHaveSameElements(new[] { c1C, c1D });
+                c1C.C1sWhereC1C1Many2One.Value.ShouldHaveSameElements([c1C, c1D]);
                 Assert.Empty(c1D.C1sWhereC1C1Many2One.Value);
 
                 workspace.Reset();
@@ -138,7 +138,7 @@ namespace Allors.Workspace.Adapters.Tests
                 // Association
                 Assert.Empty(c1A.C1sWhereC1C1Many2One.Value);
                 c1B.C1sWhereC1C1Many2One.Value.ShouldContainSingle(c1B);
-                c1C.C1sWhereC1C1Many2One.Value.ShouldHaveSameElements(new[] { c1C, c1D });
+                c1C.C1sWhereC1C1Many2One.Value.ShouldHaveSameElements([c1C, c1D]);
                 Assert.Empty(c1D.C1sWhereC1C1Many2One.Value);
 
                 c1C.C1C1Many2One.Value = c1B;
@@ -151,7 +151,7 @@ namespace Allors.Workspace.Adapters.Tests
 
                 // Association
                 Assert.Empty(c1A.C1sWhereC1C1Many2One.Value);
-                c1B.C1sWhereC1C1Many2One.Value.ShouldHaveSameElements(new[] { c1B, c1C });
+                c1B.C1sWhereC1C1Many2One.Value.ShouldHaveSameElements([c1B, c1C]);
                 c1C.C1sWhereC1C1Many2One.Value.ShouldContainSingle(c1D);
                 Assert.Empty(c1D.C1sWhereC1C1Many2One.Value);
 
@@ -165,7 +165,7 @@ namespace Allors.Workspace.Adapters.Tests
 
                 // Association
                 Assert.Empty(c1A.C1sWhereC1C1Many2One.Value);
-                c1B.C1sWhereC1C1Many2One.Value.ShouldHaveSameElements(new[] { c1B, c1C });
+                c1B.C1sWhereC1C1Many2One.Value.ShouldHaveSameElements([c1B, c1C]);
                 c1C.C1sWhereC1C1Many2One.Value.ShouldContainSingle(c1D);
                 Assert.Empty(c1D.C1sWhereC1C1Many2One.Value);
 
@@ -180,7 +180,7 @@ namespace Allors.Workspace.Adapters.Tests
                 // Association
                 Assert.Empty(c1A.C1sWhereC1C1Many2One.Value);
                 c1B.C1sWhereC1C1Many2One.Value.ShouldContainSingle(c1B);
-                c1C.C1sWhereC1C1Many2One.Value.ShouldHaveSameElements(new[] { c1C, c1D });
+                c1C.C1sWhereC1C1Many2One.Value.ShouldHaveSameElements([c1C, c1D]);
                 Assert.Empty(c1D.C1sWhereC1C1Many2One.Value);
             }
         }

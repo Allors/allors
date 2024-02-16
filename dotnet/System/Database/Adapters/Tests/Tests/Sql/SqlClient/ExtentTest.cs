@@ -211,8 +211,6 @@ public class ExtentTest : Adapters.ExtentTest, IClassFixture<Fixture<ExtentTest>
 
             var sortedObjects = (C1[])extent.ToArray(typeof(C1));
 
-            var names = sortedObjects.Select(v => v.C1AllorsString).ToArray();
-
             Assert.Equal(4, sortedObjects.Length);
             Assert.Equal(c1D, sortedObjects[0]);
             Assert.Equal(c1B, sortedObjects[1]);
@@ -231,8 +229,6 @@ public class ExtentTest : Adapters.ExtentTest, IClassFixture<Fixture<ExtentTest>
                 extent.AddSort(m.C1.C1AllorsString, SortDirection.Ascending);
 
                 sortedObjects = (C1[])extent.ToArray(typeof(C1));
-
-                names = sortedObjects.Select(v => v.C1AllorsString).ToArray();
 
                 Assert.Equal(4, sortedObjects.Length);
                 Assert.Equal(c1D, sortedObjects[0]);

@@ -15,7 +15,7 @@
 
             if (sourceArray == null)
             {
-                return new[] { item };
+                return [item];
             }
 
             if (Array.IndexOf(sourceArray, item) >= 0)

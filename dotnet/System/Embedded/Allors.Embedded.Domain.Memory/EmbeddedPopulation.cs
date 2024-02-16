@@ -25,7 +25,7 @@
 
         public IEmbeddedObject EmbeddedCreateObject(Type type, params Action<IEmbeddedObject>[] builders)
         {
-            var created = (IEmbeddedObject)Activator.CreateInstance(type, new object[] { this, this.EmbeddedMeta.GetOrAddEmbeddedObjectType(type) });
+            var created = (IEmbeddedObject)Activator.CreateInstance(type, [this, this.EmbeddedMeta.GetOrAddEmbeddedObjectType(type)]);
             this.database.AddObject(created);
 
             foreach (var builder in builders)
@@ -39,7 +39,7 @@
         public T EmbeddedCreateObject<T>(params Action<T>[] builders)
               where T : IEmbeddedObject
         {
-            var @new = (T)Activator.CreateInstance(typeof(T), new object[] { this, this.EmbeddedMeta.GetOrAddEmbeddedObjectType(typeof(T)) });
+            var @new = (T)Activator.CreateInstance(typeof(T), [this, this.EmbeddedMeta.GetOrAddEmbeddedObjectType(typeof(T))]);
             this.database.AddObject(@new);
 
             foreach (var builder in builders)

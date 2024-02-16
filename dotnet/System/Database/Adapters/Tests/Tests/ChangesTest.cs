@@ -1153,7 +1153,7 @@ public abstract class ChangesTest : IDisposable
             Assert.Empty(changes.Roles);
 
             // Set same element
-            c1a.C1C2one2manies = new[] { c2b };
+            c1a.C1C2one2manies = [c2b];
 
             changes = this.Transaction.Checkpoint();
 
@@ -1325,7 +1325,7 @@ public abstract class ChangesTest : IDisposable
             Assert.Empty(changes.Roles);
 
             // Set same element
-            c1a.C1C2many2manies = new[] { c2b };
+            c1a.C1C2many2manies = [c2b];
 
             changes = this.Transaction.Checkpoint();
 

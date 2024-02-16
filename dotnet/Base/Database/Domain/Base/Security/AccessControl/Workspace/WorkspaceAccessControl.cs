@@ -76,7 +76,7 @@ namespace Allors.Database.Domain
                 var cache = @object.Transaction().Scoped<SecurityTokenByUniqueId>();
                 tokens = strategy.IsNewInTransaction
                     ? new[] { cache.InitialSecurityToken ?? cache.DefaultSecurityToken }
-                    : new[] { cache.DefaultSecurityToken };
+                    : [cache.DefaultSecurityToken];
             }
 
             var versionedGrants = this.security.GetVersionedGrants(transaction, this.user, tokens.ToArray(), this.workspaceName);

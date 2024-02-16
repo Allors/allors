@@ -13,7 +13,7 @@ namespace Allors.Database.Domain
             {
                 var cache = this.Transaction().Scoped<SecurityTokenByUniqueId>();
                 var defaultSecurityToken = cache.DefaultSecurityToken;
-                this.SecurityTokens = new[] { this.UserWhereNotificationList.OwnerSecurityToken, defaultSecurityToken };
+                this.SecurityTokens = [this.UserWhereNotificationList.OwnerSecurityToken, defaultSecurityToken];
             }
         }
     }

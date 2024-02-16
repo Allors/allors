@@ -60,12 +60,12 @@ namespace Allors.Workspace.Adapters.Tests
             var workspace1 = this.Workspace;
             var workspace2 = this.Profile.CreateExclusiveWorkspace();
 
-            Pull[] pull = {
+            Pull[] pull = [
                 new Pull
                 {
                     Extent = new Filter(this.M.C1),
                 },
-            };
+            ];
 
             var result_1 = await workspace1.PullAsync(pull);
             var c1_1 = result_1.GetCollection<C1>();
@@ -115,17 +115,16 @@ namespace Allors.Workspace.Adapters.Tests
             var workspace1 = this.Workspace;
             var workspace2 = this.Profile.CreateExclusiveWorkspace();
 
-            Pull[] pull = {
+            Pull[] pull = [
                 new Pull
                 {
                     Extent = new Filter(this.M.C1),
                 },
-            };
+            ];
 
             var result_1 = await workspace1.PullAsync(pull);
             var c1_1 = result_1.GetCollection<C1>();
 
-            var c1a_1 = c1_1.First(v => v.Name.Value == "c1A");
             var c1b_1 = c1_1.First(v => v.Name.Value == "c1B");
             var c1c_1 = c1_1.First(v => v.Name.Value == "c1C");
             var c1d_1 = c1_1.First(v => v.Name.Value == "c1D");
@@ -146,7 +145,6 @@ namespace Allors.Workspace.Adapters.Tests
 
             result_1 = await workspace1.PullAsync(pull);
 
-            c1a_1 = c1_1.First(v => v.Name.Value == "c1A");
             c1b_1 = c1_1.First(v => v.Name.Value == "c1B");
             c1c_1 = c1_1.First(v => v.Name.Value == "c1C");
             c1d_1 = c1_1.First(v => v.Name.Value == "c1D");

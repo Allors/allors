@@ -87,7 +87,6 @@ namespace Allors.Workspace.Adapters.Tests
             int c1a_C1C1One2One = 0;
             int c1b_C1WhereC1C1One2One = 0;
             int c1c_C1C1One2One = 0;
-            int c1d_C1WhereC1C1One2One = 0;
             int workspaceChanged = 0;
 
             c1a.C1C1One2One.Changed += (sender, args) =>
@@ -107,7 +106,6 @@ namespace Allors.Workspace.Adapters.Tests
 
             c1d.C1WhereC1C1One2One.Changed += (sender, args) =>
             {
-                ++c1d_C1WhereC1C1One2One;
             };
 
             workspace.Changed += (sender, args) =>

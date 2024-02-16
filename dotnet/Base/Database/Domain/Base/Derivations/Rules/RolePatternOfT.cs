@@ -17,22 +17,22 @@ namespace Allors.Database.Domain.Derivations.Rules
     {
         public RolePattern(T objectType, IRoleType roleType) : base(roleType, objectType) { }
 
-        public RolePattern(T objectType, IRoleType roleType, Func<T, Node> path) : base(roleType, objectType) => this.Tree = new[] { path(objectType) };
+        public RolePattern(T objectType, IRoleType roleType, Func<T, Node> path) : base(roleType, objectType) => this.Tree = [path(objectType)];
 
         public RolePattern(T objectType, IRoleType roleType, Func<T, IEnumerable<Node>> path) : base(roleType, objectType) => this.Tree = path(objectType).ToArray();
 
-        public RolePattern(T objectType, IRoleType roleType, Expression<Func<T, IRelationEndType>> step) : base(roleType, objectType) => this.Tree = new[] { step?.Node(objectType.MetaPopulation) };
+        public RolePattern(T objectType, IRoleType roleType, Expression<Func<T, IRelationEndType>> step) : base(roleType, objectType) => this.Tree = [step?.Node(objectType.MetaPopulation)];
 
-        public RolePattern(T objectType, IRoleType roleType, Expression<Func<T, IComposite>> step) : base(roleType, objectType) => this.Tree = new[] { step?.Node(objectType.MetaPopulation) };
+        public RolePattern(T objectType, IRoleType roleType, Expression<Func<T, IComposite>> step) : base(roleType, objectType) => this.Tree = [step?.Node(objectType.MetaPopulation)];
 
         public RolePattern(T objectType, Func<T, IRoleType> role) : base(role(objectType), objectType) { }
 
-        public RolePattern(T objectType, Func<T, IRoleType> role, Func<T, Node> path) : base(role(objectType), objectType) => this.Tree = new[] { path(objectType) };
+        public RolePattern(T objectType, Func<T, IRoleType> role, Func<T, Node> path) : base(role(objectType), objectType) => this.Tree = [path(objectType)];
 
         public RolePattern(T objectType, Func<T, IRoleType> role, Func<T, IEnumerable<Node>> path) : base(role(objectType), objectType) => this.Tree = path(objectType).ToArray();
 
-        public RolePattern(T objectType, Func<T, IRoleType> role, Expression<Func<T, IRelationEndType>> step) : base(role(objectType), objectType) => this.Tree = new[] { step?.Node(objectType.MetaPopulation) };
+        public RolePattern(T objectType, Func<T, IRoleType> role, Expression<Func<T, IRelationEndType>> step) : base(role(objectType), objectType) => this.Tree = [step?.Node(objectType.MetaPopulation)];
 
-        public RolePattern(T objectType, Func<T, IRoleType> role, Expression<Func<T, IComposite>> step) : base(role(objectType), objectType) => this.Tree = new[] { step?.Node(objectType.MetaPopulation) };
+        public RolePattern(T objectType, Func<T, IRoleType> role, Expression<Func<T, IComposite>> step) : base(role(objectType), objectType) => this.Tree = [step?.Node(objectType.MetaPopulation)];
     }
 }

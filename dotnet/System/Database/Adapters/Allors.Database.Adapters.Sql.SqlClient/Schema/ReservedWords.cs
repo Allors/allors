@@ -15,7 +15,7 @@ internal static class ReservedWords
     internal static readonly HashSet<string> Names;
 
     internal static readonly string[] Current =
-    {
+    [
         "ADD", "ALL", "ALTER", "AND", "ANY", "AS", "ASC", "AUTHORIZATION", "BACKUP", "BEGIN", "BETWEEN", "BREAK", "BROWSE", "BULK",
         "BY", "CASCADE", "CASE", "CHECK", "CHECKPOINT", "CLOSE", "CLUSTERED", "COALESCE", "COLLATE", "COLUMN", "COMMIT", "COMPUTE",
         "CONSTRAINT", "CONTAINS", "CONTAINSTABLE", "CONTINUE", "CONVERT", "CREATE", "CROSS", "CURRENT", "CURRENT_DATE", "CURRENT_TIME",
@@ -32,10 +32,10 @@ internal static class ReservedWords
         "TABLESAMPLE", "TEXTSIZE", "THEN", "TO", "TOP", "TRAN", "TRANSACTION", "TRIGGER", "TRUNCATE", "TSEQUAL", "UNION", "UNIQUE",
         "UNPIVOT", "UPDATE", "UPDATETEXT", "USE", "USER", "VALUES", "VARYING", "VIEW", "WAITFOR", "WHEN", "WHERE", "WHILE", "WITH",
         "WRITETEXT",
-    };
+    ];
 
     internal static readonly string[] Future =
-    {
+    [
         "ABSOLUTE", "ACTION", "ADMIN", "AFTER", "AGGREGATE", "ALIAS", "ALLOCATE", "ARE", "ARRAY", "ASENSITIVE", "ASSERTION",
         "ASYMMETRIC", "AT", "ATOMIC", "BEFORE", "BINARY", "BIT", "BLOB", "BOOLEAN", "BOTH", "BREADTH", "CALL", "CALLED", "CARDINALITY",
         "CASCADED", "CAST", "CATALOG", "CHAR", "CHARACTER", "CLASS", "CLOB", "COLLATION", "COLLECT", "COMPLETION", "CONDITION",
@@ -62,7 +62,7 @@ internal static class ReservedWords
         "WIDTH_BUCKET", "WITHOUT", "WINDOW", "WITHIN", "WORK", "WRITE", "XMLAGG", "XMLATTRIBUTES", "XMLBINARY", "XMLCAST", "XMLCOMMENT",
         "XMLCONCAT", "XMLDOCUMENT", "XMLELEMENT", "XMLEXISTS", "XMLFOREST", "XMLITERATE", "XMLNAMESPACES", "XMLPARSE", "XMLPI",
         "XMLQUERY", "XMLSERIALIZE", "XMLTABLE", "XMLTEXT", "XMLVALIDATE", "YEAR", "ZONE",
-    };
+    ];
 
     static ReservedWords()
     {

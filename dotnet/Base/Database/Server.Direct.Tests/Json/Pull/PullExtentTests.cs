@@ -34,14 +34,14 @@ namespace Tests
 
             var pullRequest = new PullRequest
             {
-                l = new[]
-                {
+                l =
+                [
                     new Pull
                     {
                         er = PreparedExtents.OrganizationByName,
                         a = new Dictionary<string, object> { ["name"] = "Acme" },
                     },
-                },
+                ],
             };
 
             var api = new Api(this.Transaction, "Default", CancellationToken.None);
@@ -60,14 +60,14 @@ namespace Tests
 
             var pullRequest = new PullRequest
             {
-                l = new[]
-                {
+                l =
+                [
                     new Pull
                     {
                         er = PreparedExtents.OrganizationByName,
                         a = new Dictionary<string, object> { ["name"] = "Acme" },
                     },
-                },
+                ],
             };
 
             var api = new Api(this.Transaction, "Default", CancellationToken.None);
@@ -91,18 +91,18 @@ namespace Tests
             var pull = new Allors.Database.Data.Pull
             {
                 Extent = new Extent(this.M.Data),
-                Results = new[]
-                {
+                Results =
+                [
                     new  Result { Name = "Datas" },
-                },
+                ],
             };
 
             var pullRequest = new PullRequest
             {
-                l = new[]
-                {
+                l =
+                [
                     pull.ToJson(this.UnitConvert),
-                },
+                ],
             };
 
             var api = new Api(this.Transaction, "Default", CancellationToken.None);
@@ -146,24 +146,24 @@ namespace Tests
                 {
                     Predicate = new Equals(this.M.C1.Name) { Value = "c1B" },
                 },
-                Results = new[]
-                {
+                Results =
+                [
                     new  Result
                     {
-                        Include = new []
-                        {
+                        Include =
+                        [
                             new Node(this.M.C1.C1C2One2One),
-                        },
+                        ],
                     },
-                },
+                ],
             };
 
             var pullRequest = new PullRequest
             {
-                l = new[]
-                {
+                l =
+                [
                     pull.ToJson(this.UnitConvert),
-                },
+                ],
             };
 
             var api = new Api(this.Transaction, "Default", CancellationToken.None);
@@ -193,24 +193,24 @@ namespace Tests
                 {
                     Predicate = new Equals(this.M.C2.Name) { Value = "c2B" },
                 },
-                Results = new[]
-                {
+                Results =
+                [
                     new  Result
                     {
-                        Include = new []
-                        {
+                        Include =
+                        [
                             new Node(this.M.C2.C1WhereC1C2One2One),
-                        },
+                        ],
                     },
-                },
+                ],
             };
 
             var pullRequest = new PullRequest
             {
-                l = new[]
-                {
+                l =
+                [
                     pull.ToJson(this.UnitConvert),
-                },
+                ],
             };
 
             var api = new Api(this.Transaction, "Default", CancellationToken.None);
@@ -240,28 +240,28 @@ namespace Tests
                 {
                     Predicate = new Equals(this.M.C1.Name) { Value = "c1B" },
                 },
-                Results = new[]
-                {
+                Results =
+                [
                     new  Result
                     {
                         Select = new Select
                         {
                             RelationEndType = this.M.C1.C1C2One2One,
-                            Include = new[]
-                            {
+                            Include =
+                            [
                                 new Node(this.M.C2.C2C2One2One),
-                            },
+                            ],
                         },
                     },
-                },
+                ],
             };
 
             var pullRequest = new PullRequest
             {
-                l = new[]
-                {
+                l =
+                [
                     pull.ToJson(this.UnitConvert),
-                },
+                ],
             };
 
             var api = new Api(this.Transaction, "Default", CancellationToken.None);
@@ -291,28 +291,28 @@ namespace Tests
                 {
                     Predicate = new Equals(this.M.C2.Name) { Value = "c2B" },
                 },
-                Results = new[]
-                {
+                Results =
+                [
                     new  Result
                     {
                         Select = new Select
                         {
                             RelationEndType = this.M.C2.C1WhereC1C2One2One,
-                            Include = new[]
-                            {
+                            Include =
+                            [
                                 new Node(this.M.C1.C1WhereC1C1One2One),
-                            },
+                            ],
                         },
                     },
-                },
+                ],
             };
 
             var pullRequest = new PullRequest
             {
-                l = new[]
-                {
+                l =
+                [
                     pull.ToJson(this.UnitConvert),
-                },
+                ],
             };
 
             var api = new Api(this.Transaction, "Default", CancellationToken.None);

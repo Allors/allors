@@ -31,7 +31,7 @@ namespace Tests
 
             var syncRequest = new SyncRequest
             {
-                o = new[] { organization.Id },
+                o = [organization.Id],
             };
 
             var api = new Api(this.Transaction, "Default", CancellationToken.None);
@@ -50,7 +50,7 @@ namespace Tests
 
             var syncRequest = new SyncRequest
             {
-                o = new[] { person.Id },
+                o = [person.Id],
             };
 
             var api = new Api(this.Transaction, "Default", CancellationToken.None);
@@ -79,7 +79,7 @@ namespace Tests
 
             var syncRequest = new SyncRequest
             {
-                o = new[] { person.Id },
+                o = [person.Id],
             };
 
             var api = new Api(this.Transaction, "Default", CancellationToken.None);

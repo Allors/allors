@@ -40,10 +40,10 @@ namespace Allors.Database.Server.Controllers
             var m = this.Transaction.Database.Services.Get<M>();
             var organisation = this.Transaction.Extent<Organization>().FindBy(m.Organization.Owner, this.Transaction.Services.Get<IUserService>().User);
 
-            response.AddObject("root", organisation, new[]
-            {
+            response.AddObject("root", organisation,
+            [
                 new Node(m.Organization.Employees),
-            });
+            ]);
 
             return this.Ok(response.Build());
         }

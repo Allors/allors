@@ -364,10 +364,10 @@ namespace Allors.Workspace.Adapters
             else
             {
                 this.changesByRelationType ??= new Dictionary<IRelationType, Change[]>();
-                this.changesByRelationType[roleType.RelationType] = new Change[]
-                {
+                this.changesByRelationType[roleType.RelationType] =
+                [
                     new SetUnitChange(role)
-                };
+                ];
 
                 this.Workspace.PushToDatabaseTracker.OnChanged(this);
                 this.Workspace.RegisterModifiedOperand(this, roleType);
@@ -898,7 +898,7 @@ namespace Allors.Workspace.Adapters
             else
             {
                 this.changesByRelationType ??= new Dictionary<IRelationType, Change[]>();
-                this.changesByRelationType[roleType.RelationType] = new Change[] { new AddCompositeChange(roleToAdd, null) };
+                this.changesByRelationType[roleType.RelationType] = [new AddCompositeChange(roleToAdd, null)];
             }
         }
 
@@ -945,7 +945,7 @@ namespace Allors.Workspace.Adapters
             else
             {
                 this.changesByRelationType ??= new Dictionary<IRelationType, Change[]>();
-                this.changesByRelationType[roleType.RelationType] = new Change[] { new RemoveCompositeChange(role, dependee) };
+                this.changesByRelationType[roleType.RelationType] = [new RemoveCompositeChange(role, dependee)];
             }
 
             dependee?.AddDependent(roleType, this);
@@ -999,7 +999,7 @@ namespace Allors.Workspace.Adapters
             else
             {
                 this.changesByRelationType ??= new Dictionary<IRelationType, Change[]>();
-                this.changesByRelationType[roleType.RelationType] = new Change[] { new RemoveCompositeChange(role, dependee) };
+                this.changesByRelationType[roleType.RelationType] = [new RemoveCompositeChange(role, dependee)];
             }
 
             dependee?.AddDependent(roleType, this);
@@ -1225,10 +1225,10 @@ namespace Allors.Workspace.Adapters
         private void SetCompositeChange(IRoleType roleType, SetCompositeChange setCompositeChange)
         {
             this.changesByRelationType ??= new Dictionary<IRelationType, Change[]>();
-            this.changesByRelationType[roleType.RelationType] = new Change[]
-            {
+            this.changesByRelationType[roleType.RelationType] =
+            [
                 setCompositeChange
-            };
+            ];
         }
 
         private static void AssertUnit(IRoleType roleType, object value)

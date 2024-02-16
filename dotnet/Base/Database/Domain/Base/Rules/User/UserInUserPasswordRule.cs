@@ -15,11 +15,11 @@ namespace Allors.Database.Domain
     public class UserInUserPasswordRule : Rule
     {
         public UserInUserPasswordRule(M m) : base(m, new Guid("AF93DA46-1C9A-47C4-9E5F-6A04751F5259")) =>
-            this.Patterns = new IPattern[]
-            {
+            this.Patterns =
+            [
                 m.User.RolePattern(v=>v.InExistingUserPassword),
                 m.User.RolePattern(v=>v.InUserPassword),
-            };
+            ];
 
         public override void Derive(ICycle cycle, IEnumerable<IObject> matches)
         {

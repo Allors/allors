@@ -54,7 +54,7 @@ namespace Allors.Workspace.Adapters.Tests
 
             Assert.False(organisation1.JustDidIt.Value);
 
-            var invokeResult = await workspace.InvokeAsync(new[] { organisation1.JustDoIt, organisation2.JustDoIt });
+            var invokeResult = await workspace.InvokeAsync([organisation1.JustDoIt, organisation2.JustDoIt]);
 
             Assert.False(invokeResult.HasErrors);
 
@@ -81,7 +81,7 @@ namespace Allors.Workspace.Adapters.Tests
 
             Assert.False(organisation1.JustDidIt.Value);
 
-            var invokeResult = await workspace.InvokeAsync(new[] { organisation1.JustDoIt, organisation2.JustDoIt }, new InvokeOptions { Isolated = true });
+            var invokeResult = await workspace.InvokeAsync([organisation1.JustDoIt, organisation2.JustDoIt], new InvokeOptions { Isolated = true });
 
             Assert.False(invokeResult.HasErrors);
 

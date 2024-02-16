@@ -23,7 +23,7 @@ public enum Zero2Four
 
 public abstract class ExtentTest : IDisposable
 {
-    protected static readonly bool[] TrueFalse = { true, false };
+    protected static readonly bool[] TrueFalse = [true, false];
 
     protected abstract IProfile Profile { get; }
 
@@ -33,7 +33,7 @@ public abstract class ExtentTest : IDisposable
 
     protected Action[] Inits => this.Profile.Inits;
 
-    protected virtual bool[] UseOperator => new[] { false, true };
+    protected virtual bool[] UseOperator => [false, true];
 
     public abstract void Dispose();
 
@@ -16604,8 +16604,6 @@ public abstract class ExtentTest : IDisposable
 
             var sortedObjects = (C1[])extent.ToArray(typeof(C1));
 
-            var names = sortedObjects.Select(v => v.C1AllorsString).ToArray();
-
             Assert.Equal(4, sortedObjects.Length);
             Assert.Equal(c1B, sortedObjects[0]);
             Assert.Equal(c1A, sortedObjects[1]);
@@ -16624,8 +16622,6 @@ public abstract class ExtentTest : IDisposable
                 extent.AddSort(m.C1.C1AllorsString, SortDirection.Ascending);
 
                 sortedObjects = (C1[])extent.ToArray(typeof(C1));
-
-                names = sortedObjects.Select(v => v.C1AllorsString).ToArray();
 
                 Assert.Equal(4, sortedObjects.Length);
                 Assert.Equal(c1B, sortedObjects[0]);

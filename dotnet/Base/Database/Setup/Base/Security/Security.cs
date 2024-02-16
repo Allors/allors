@@ -13,7 +13,7 @@ namespace Allors.Database.Domain
 
     public partial class Security
     {
-        private static readonly Operations[] ReadWriteExecute = { Operations.Read, Operations.Write, Operations.Execute };
+        private static readonly Operations[] ReadWriteExecute = [Operations.Read, Operations.Write, Operations.Execute];
 
         private readonly Dictionary<Guid, Dictionary<IOperandType, Permission>> deniablePermissionByOperandTypeByObjectTypeId;
         private readonly Dictionary<Guid, Dictionary<IOperandType, Permission>> executePermissionsByObjectTypeId;

@@ -15,7 +15,7 @@ namespace Allors.Database.Configuration.Derivations.Default
     public class DerivationErrorRequired : DerivationError, IDerivationErrorRequired
     {
         public DerivationErrorRequired(IValidation validation, IDerivationRelation relation)
-            : base(validation, new[] { relation }, ErrorCodes.DerivationErrorRequired)
+            : base(validation, [relation], ErrorCodes.DerivationErrorRequired)
         {
         }
 

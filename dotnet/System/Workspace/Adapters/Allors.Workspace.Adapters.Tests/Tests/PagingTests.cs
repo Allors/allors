@@ -28,14 +28,14 @@ namespace Allors.Workspace.Adapters.Tests
 
             var pull = new Pull
             {
-                Extent = new Filter(this.M.I12) { Sorting = new[] { new Sort(this.M.I12.Order) } },
-                Results = new[]
-                {
+                Extent = new Filter(this.M.I12) { Sorting = [new Sort(this.M.I12.Order)] },
+                Results =
+                [
                     new Result
                     {
                         Take = 1
                     }
-                }
+                ]
             };
 
             var result = await workspace.PullAsync(pull);

@@ -54,8 +54,8 @@ namespace Allors.Database.Domain.Tests
             {
                 Predicate = new And
                 {
-                    Operands = new IPredicate[]
-                    {
+                    Operands =
+                    [
                         new Equals
                             {
                                 RelationEndType = this.M.Person.FirstName,
@@ -66,7 +66,7 @@ namespace Allors.Database.Domain.Tests
                                 RelationEndType = this.M.Person.LastName,
                                 Value = "Doe",
                             },
-                    },
+                    ],
                 },
             };
 

@@ -38,7 +38,7 @@ namespace Allors.Workspace.Adapters.Tests
                 await workspace.PullAsync(new Pull { Object = c1.Strategy });
             }
 
-            c1.C1AllorsBinary.Value = new byte[] { 1, 2 };
+            c1.C1AllorsBinary.Value = [1, 2];
             c1.C1AllorsBoolean.Value = true;
             c1.C1AllorsDateTime.Value = new DateTime(1973, 3, 27, 12, 1, 2, 3, DateTimeKind.Utc);
             c1.C1AllorsDecimal.Value = 10.10m;
@@ -140,7 +140,7 @@ namespace Allors.Workspace.Adapters.Tests
                 await workspace.PullAsync(new Pull { Object = c1.Strategy });
             }
 
-            c1.C1AllorsBinary.Value = new byte[] { 1, 2 };
+            c1.C1AllorsBinary.Value = [1, 2];
             c1.C1AllorsBoolean.Value = true;
             c1.C1AllorsDateTime.Value = new DateTime(1973, 3, 27, 12, 1, 2, 3, DateTimeKind.Utc);
             c1.C1AllorsDecimal.Value = 10.10m;
@@ -275,7 +275,7 @@ namespace Allors.Workspace.Adapters.Tests
                 await workspace.PullAsync(new Pull { Object = c1.Strategy });
             }
 
-            c1.C1AllorsBinary.Value = new byte[] { 1, 2 };
+            c1.C1AllorsBinary.Value = [1, 2];
             c1.C1AllorsBoolean.Value = true;
             c1.C1AllorsDateTime.Value = new DateTime(1973, 3, 27, 12, 1, 2, 3, DateTimeKind.Utc);
             c1.C1AllorsDecimal.Value = 10.10m;

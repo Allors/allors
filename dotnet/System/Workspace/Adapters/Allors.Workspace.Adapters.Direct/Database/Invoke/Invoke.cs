@@ -133,7 +133,7 @@ namespace Allors.Workspace.Adapters.Direct
                 return true;
             }
 
-            var method = obj.GetType().GetMethod(methodType.Name, new Type[] { });
+            var method = obj.GetType().GetMethod(methodType.Name, []);
 
             try
             {

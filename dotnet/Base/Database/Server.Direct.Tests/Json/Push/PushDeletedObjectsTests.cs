@@ -34,22 +34,22 @@ namespace Tests
 
             var pushRequest = new PushRequest
             {
-                o = new[]
-                {
+                o =
+                [
                     new PushRequestObject
                     {
                         d = organizationId,
                         v = organizationVersion,
-                        r = new[]
-                        {
+                        r =
+                        [
                             new PushRequestRole
                             {
                               t = this.M.Organization.Name.RelationType.Tag,
                               u = "Acme",
                             },
-                        },
+                        ],
                     },
-                },
+                ],
             };
 
             var api = new Api(this.Transaction, "Default", CancellationToken.None);

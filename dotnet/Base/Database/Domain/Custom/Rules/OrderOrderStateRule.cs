@@ -16,10 +16,10 @@ namespace Allors.Database.Domain
     public class OrderOrderStateRule : Rule
     {
         public OrderOrderStateRule(M m) : base(m, new Guid("C9895CF4-98B2-4023-A3EA-582107C7D80D")) =>
-            this.Patterns = new IPattern[]
-            {
+            this.Patterns =
+            [
                 m.Order.RolePattern(v=>v.OrderState)
-            };
+            ];
 
         public override void Derive(ICycle cycle, IEnumerable<IObject> matches)
         {

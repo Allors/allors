@@ -131,12 +131,12 @@ public static class XmlBackup
     /// <summary>
     ///     Char array for <see cref="XmlBackup" />.
     /// </summary>
-    public static readonly char[] ObjectsSplitterCharArray = { ObjectsSplitter[0] };
+    public static readonly char[] ObjectsSplitterCharArray = [ObjectsSplitter[0]];
 
     /// <summary>
     ///     Char array for <see cref="XmlBackup" />.
     /// </summary>
-    public static readonly char[] ObjectSplitterCharArray = { ObjectSplitter[0] };
+    public static readonly char[] ObjectSplitterCharArray = [ObjectSplitter[0]];
 
     /// <summary>
     ///     Checks if the <see cref="IDatabase#Version" /> is correct.

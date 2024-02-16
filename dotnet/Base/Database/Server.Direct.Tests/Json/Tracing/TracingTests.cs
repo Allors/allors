@@ -59,7 +59,7 @@ namespace Tests
             var api = new Api(this.Transaction, "Default", CancellationToken.None);
 
             tree.Clear();
-            var pullResponse = api.Pull(pullRequest);
+            api.Pull(pullRequest);
 
             var nodes = tree.Nodes[0].Nodes;
 
@@ -71,7 +71,7 @@ namespace Tests
 
             tree.Clear();
 
-            pullResponse = api.Pull(pullRequest);
+            api.Pull(pullRequest);
 
             nodes = tree.Nodes[0].Nodes;
 
@@ -106,10 +106,10 @@ namespace Tests
             };
 
             var api = new Api(this.Transaction, "Default", CancellationToken.None);
-            var pullResponse = api.Pull(pullRequest);
+            api.Pull(pullRequest);
 
             tree.Clear();
-            pullResponse = api.Pull(pullRequest);
+            api.Pull(pullRequest);
 
             Assert.Single(tree.Nodes);
 
@@ -130,7 +130,7 @@ namespace Tests
             //    return v.Kind == EventKind.PrefetcherPrefetchCompositesRoleRelationTable;
             //};
 
-            pullResponse = api.Pull(pullRequest);
+            api.Pull(pullRequest);
         }
 
         [Fact]
@@ -151,14 +151,14 @@ namespace Tests
 
             var syncRequest = new SyncRequest
             {
-                o = new[] { this.x[0].Id },
+                o = [this.x[0].Id],
             };
 
             var api = new Api(this.Transaction, "Default", CancellationToken.None);
-            var syncResponse = api.Sync(syncRequest);
+            api.Sync(syncRequest);
 
             tree.Clear();
-            syncResponse = api.Sync(syncRequest);
+            api.Sync(syncRequest);
 
             var syncEventNode = tree.Nodes[0];
 

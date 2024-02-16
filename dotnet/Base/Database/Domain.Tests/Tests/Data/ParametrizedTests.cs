@@ -56,8 +56,8 @@ namespace Allors.Database.Domain.Tests
             {
                 Predicate = new And
                 {
-                    Operands = new IPredicate[]
-                                {
+                    Operands =
+                                [
                                     new Equals
                                         {
                                             RelationEndType = this.M.Person.FirstName,
@@ -68,7 +68,7 @@ namespace Allors.Database.Domain.Tests
                                             RelationEndType = this.M.Person.LastName,
                                             Parameter = "lastName",
                                         },
-                                },
+                                ],
                 },
             };
 
@@ -95,8 +95,8 @@ namespace Allors.Database.Domain.Tests
             {
                 Predicate = new And
                 {
-                    Operands = new IPredicate[]
-                        {
+                    Operands =
+                        [
                             new Equals
                                 {
                                     RelationEndType = this.M.Person.FirstName,
@@ -107,7 +107,7 @@ namespace Allors.Database.Domain.Tests
                                     RelationEndType = this.M.Person.LastName,
                                     Parameter = "lastName",
                                 },
-                        },
+                        ],
                 },
             };
             {
@@ -196,8 +196,8 @@ namespace Allors.Database.Domain.Tests
             {
                 Predicate = new And
                 {
-                    Operands = new IPredicate[]
-                    {
+                    Operands =
+                    [
                         new ContainedIn
                         {
                             RelationEndType = this.M.C1.C1C2One2One,
@@ -210,7 +210,7 @@ namespace Allors.Database.Domain.Tests
                                 },
                             },
                         },
-                    },
+                    ],
                 },
             };
 
@@ -229,8 +229,8 @@ namespace Allors.Database.Domain.Tests
             {
                 Predicate = new And
                 {
-                    Operands = new IPredicate[]
-                    {
+                    Operands =
+                    [
                         new ContainedIn
                             {
                                 RelationEndType = this.M.C1.C1C2One2One,
@@ -243,7 +243,7 @@ namespace Allors.Database.Domain.Tests
                                                                  },
                                              },
                             },
-                    },
+                    ],
                 },
             };
 

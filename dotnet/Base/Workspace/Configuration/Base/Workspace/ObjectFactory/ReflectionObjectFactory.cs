@@ -133,7 +133,7 @@ namespace Allors.Workspace.Configuration
             }
 
             var constructor = this.constructorInfoByObjectTypeForObject[@object.Class];
-            object[] parameters = { @object };
+            object[] parameters = [@object];
 
             return (T)constructor.Invoke(parameters);
         }
@@ -156,12 +156,12 @@ namespace Allors.Workspace.Configuration
             if (!this.constructedTypeByCompositeRoleType.TryGetValue(roleType, out var constructedType))
             {
                 Type type = typeof(CompositeRole<>);
-                Type[] typeArgs = { roleType.ObjectType.ClrType };
+                Type[] typeArgs = [roleType.ObjectType.ClrType];
                 constructedType = type.MakeGenericType(typeArgs);
                 this.constructedTypeByCompositeRoleType.Add(roleType, constructedType);
             }
 
-            return (ICompositeRole)Activator.CreateInstance(constructedType, new Object[] { strategy, roleType });
+            return (ICompositeRole)Activator.CreateInstance(constructedType, [strategy, roleType]);
         }
 
         public ICompositesRole CompositesRole(IStrategy strategy, IRoleType roleType)
@@ -169,12 +169,12 @@ namespace Allors.Workspace.Configuration
             if (!this.constructedTypeByCompositesRoleType.TryGetValue(roleType, out var constructedType))
             {
                 Type type = typeof(CompositesRole<>);
-                Type[] typeArgs = { roleType.ObjectType.ClrType };
+                Type[] typeArgs = [roleType.ObjectType.ClrType];
                 constructedType = type.MakeGenericType(typeArgs);
                 this.constructedTypeByCompositesRoleType.Add(roleType, constructedType);
             }
 
-            return (ICompositesRole)Activator.CreateInstance(constructedType, new Object[] { strategy, roleType });
+            return (ICompositesRole)Activator.CreateInstance(constructedType, [strategy, roleType]);
         }
 
         public ICompositeAssociation CompositeAssociation(IStrategy strategy, IAssociationType associationType)
@@ -182,12 +182,12 @@ namespace Allors.Workspace.Configuration
             if (!this.constructedTypeByCompositeAssociationType.TryGetValue(associationType, out var constructedType))
             {
                 Type type = typeof(CompositeAssociation<>);
-                Type[] typeArgs = { associationType.ObjectType.ClrType };
+                Type[] typeArgs = [associationType.ObjectType.ClrType];
                 constructedType = type.MakeGenericType(typeArgs);
                 this.constructedTypeByCompositeAssociationType.Add(associationType, constructedType);
             }
 
-            return (ICompositeAssociation)Activator.CreateInstance(constructedType, new Object[] { strategy, associationType });
+            return (ICompositeAssociation)Activator.CreateInstance(constructedType, [strategy, associationType]);
         }
 
         public ICompositesAssociation CompositesAssociation(IStrategy strategy, IAssociationType associationType)
@@ -195,12 +195,12 @@ namespace Allors.Workspace.Configuration
             if (!this.constructedTypeByCompositesAssociationType.TryGetValue(associationType, out var constructedType))
             {
                 Type type = typeof(CompositesAssociation<>);
-                Type[] typeArgs = { associationType.ObjectType.ClrType };
+                Type[] typeArgs = [associationType.ObjectType.ClrType];
                 constructedType = type.MakeGenericType(typeArgs);
                 this.constructedTypeByCompositesAssociationType.Add(associationType, constructedType);
             }
 
-            return (ICompositesAssociation)Activator.CreateInstance(constructedType, new Object[] { strategy, associationType });
+            return (ICompositesAssociation)Activator.CreateInstance(constructedType, [strategy, associationType]);
         }
     }
 }

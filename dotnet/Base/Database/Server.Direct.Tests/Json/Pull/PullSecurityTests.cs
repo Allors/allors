@@ -37,7 +37,7 @@ namespace Tests
             // Extent
             {
                 var pull = new Pull { Extent = new Extent(m.WorkspaceXObject1) };
-                var pullRequest = new PullRequest { l = new[] { pull.ToJson(this.UnitConvert) }, };
+                var pullRequest = new PullRequest { l = [pull.ToJson(this.UnitConvert)], };
 
                 var api = new Api(this.Transaction, "X", CancellationToken.None);
                 var pullResponse = api.Pull(pullRequest);
@@ -54,13 +54,13 @@ namespace Tests
             {
                 var pullRequest = new PullRequest
                 {
-                    l = new[]
-                                {
+                    l =
+                                [
                     new Allors.Protocol.Json.Data.Pull
                     {
                         o = x1.Id,
                     },
-                },
+                ],
                 };
 
                 var api = new Api(this.Transaction, "X", CancellationToken.None);
@@ -85,7 +85,7 @@ namespace Tests
             {
                 var pull = new Pull { Extent = new Extent(m.WorkspaceXObject1) };
 
-                var pullRequest = new PullRequest { l = new[] { pull.ToJson(this.UnitConvert) } };
+                var pullRequest = new PullRequest { l = [pull.ToJson(this.UnitConvert)] };
 
                 var api = new Api(this.Transaction, "Y", CancellationToken.None);
                 var pullResponse = api.Pull(pullRequest);
@@ -97,13 +97,13 @@ namespace Tests
             {
                 var pullRequest = new PullRequest
                 {
-                    l = new[]
-                    {
+                    l =
+                    [
                         new Allors.Protocol.Json.Data.Pull
                         {
                             o = x1.Id,
                         },
-                    },
+                    ],
                 };
 
                 var api = new Api(this.Transaction, "Y", CancellationToken.None);
@@ -125,7 +125,7 @@ namespace Tests
             // Extent
             {
                 var pull = new Pull { Extent = new Extent(m.WorkspaceXObject1) };
-                var pullRequest = new PullRequest { l = new[] { pull.ToJson(this.UnitConvert) }, };
+                var pullRequest = new PullRequest { l = [pull.ToJson(this.UnitConvert)], };
 
                 var api = new Api(this.Transaction, "None", CancellationToken.None);
                 var pullResponse = api.Pull(pullRequest);
@@ -137,13 +137,13 @@ namespace Tests
             {
                 var pullRequest = new PullRequest
                 {
-                    l = new[]
-                    {
+                    l =
+                    [
                         new Allors.Protocol.Json.Data.Pull
                         {
                             o = x1.Id,
                         },
-                    },
+                    ],
                 };
 
                 var api = new Api(this.Transaction, "None", CancellationToken.None);
@@ -170,10 +170,10 @@ namespace Tests
             var pull = new Pull { Extent = new Extent(m.Data) };
             var pullRequest = new PullRequest
             {
-                l = new[]
-                {
+                l =
+                [
                     pull.ToJson(this.UnitConvert),
-                },
+                ],
             };
 
             var api = new Api(this.Transaction, "Default", CancellationToken.None);
@@ -214,10 +214,10 @@ namespace Tests
 
             var pullRequest = new PullRequest
             {
-                l = new[]
-                {
+                l =
+                [
                     pull.ToJson(this.UnitConvert),
-                },
+                ],
             };
 
             var api = new Api(this.Transaction, "Default", CancellationToken.None);
@@ -253,10 +253,10 @@ namespace Tests
 
             var pullRequest = new PullRequest
             {
-                l = new[]
-                      {
+                l =
+                      [
                           pull.ToJson(this.UnitConvert),
-                      },
+                      ],
             };
 
             var api = new Api(this.Transaction, "Default", CancellationToken.None);

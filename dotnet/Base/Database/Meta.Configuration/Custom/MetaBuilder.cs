@@ -10,10 +10,10 @@ namespace Allors.Database.Meta.Configuration
 
     public partial class MetaBuilder
     {
-        private static readonly string[] DefaultWorkspaceNames = new[] { "Default" };
-        private static readonly string[] XWorkspaceNames = new[] { "X" };
-        private static readonly string[] YWorkspaceNames = new[] { "Y" };
-        private static readonly string[] XYWorkspaceNames = new[] { "X", "Y" };
+        private static readonly string[] DefaultWorkspaceNames = ["Default"];
+        private static readonly string[] XWorkspaceNames = ["X"];
+        private static readonly string[] YWorkspaceNames = ["Y"];
+        private static readonly string[] XYWorkspaceNames = ["X", "Y"];
 
         static void AddWorkspace(Class @class, params string[] workspaceNames) => @class.AssignedWorkspaceNames = (@class.AssignedWorkspaceNames ?? Array.Empty<string>()).Union(workspaceNames).ToArray();
 

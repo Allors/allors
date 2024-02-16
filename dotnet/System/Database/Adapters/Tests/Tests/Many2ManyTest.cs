@@ -725,9 +725,9 @@ public abstract class Many2ManyTest : IDisposable
                     Assert.False(to4.ExistC1sWhereC1C1many2many);
 
                     // Multiplicity
-                    C1[] to1Array = { to1 };
-                    C1[] to2Array = { to2 };
-                    C1[] to12Array = { to1, to2 };
+                    C1[] to1Array = [to1];
+                    C1[] to2Array = [to2];
+                    C1[] to12Array = [to1, to2];
 
                     // Get
                     mark();
@@ -2507,9 +2507,9 @@ public abstract class Many2ManyTest : IDisposable
                     Assert.False(to4.ExistI1sWhereI1I12many2many);
 
                     // Multiplicity
-                    C1[] to1Array = { to1 };
-                    C1[] to2Array = { to2 };
-                    C1[] to12Array = { to1, to2 };
+                    C1[] to1Array = [to1];
+                    C1[] to2Array = [to2];
+                    C1[] to12Array = [to1, to2];
 
                     // Get
                     mark();
@@ -4247,9 +4247,9 @@ public abstract class Many2ManyTest : IDisposable
                     Assert.False(to4.ExistC3sWhereC3C4many2many);
 
                     // Multiplicity
-                    C4[] to1Array = { to1 };
-                    C4[] to2Array = { to2 };
-                    C4[] to12Array = { to1, to2 };
+                    C4[] to1Array = [to1];
+                    C4[] to2Array = [to2];
+                    C4[] to12Array = [to1, to2];
 
                     // Get
                     mark();
@@ -5332,11 +5332,11 @@ public abstract class Many2ManyTest : IDisposable
             {
                 var c1A = C1.Create(this.Transaction);
                 var c1B = C1.Create(this.Transaction);
-                C1[] c1bs = { c1B };
+                C1[] c1bs = [c1B];
 
                 var c2A = C2.Create(this.Transaction);
                 var c2B = C2.Create(this.Transaction);
-                C2[] c2Bs = { c2B };
+                C2[] c2Bs = [c2B];
 
                 var c3A = C3.Create(this.Transaction);
                 var c3B = C3.Create(this.Transaction);

@@ -117,7 +117,7 @@ namespace Allors.Database.Configuration.Derivations.Default
                                     matchesByRule.Add(rule, matches);
                                 }
 
-                                IEnumerable<IObject> source = new[] { association };
+                                IEnumerable<IObject> source = [association];
 
                                 if (pattern.Tree != null)
                                 {
@@ -154,7 +154,7 @@ namespace Allors.Database.Configuration.Derivations.Default
                                     matchesByRule.Add(rule, matches);
                                 }
 
-                                IEnumerable<IObject> source = new[] { role };
+                                IEnumerable<IObject> source = [role];
 
                                 if (pattern.Tree != null)
                                 {

@@ -42,7 +42,7 @@
 
             Assert.That(acme.DisplayAliases.Value, Is.EqualTo("Nada"));
 
-            acme.Aliases.Value = new string[] { "Bim", "Bam", "Bom" };
+            acme.Aliases.Value = ["Bim", "Bam", "Bom"];
 
             this.Population.EmbeddedDerive();
 

@@ -15,11 +15,11 @@ namespace Allors.Database.Domain
     public class TransitionalDeniedPermissionRule : Rule
     {
         public TransitionalDeniedPermissionRule(M m) : base(m, new Guid("5affa463-9365-4916-89ef-cfc18d41b4fb")) =>
-            this.Patterns = new IPattern[]
-            {
+            this.Patterns =
+            [
                 new RolePattern(m.Transitional.ObjectStates, m.Transitional) ,
                 m.ObjectState.RolePattern(v=>v.Revocations, v=> v.TransitionalsWhereObjectState),
-            };
+            ];
 
         public override void Derive(ICycle cycle, IEnumerable<IObject> matches)
         {

@@ -90,7 +90,7 @@ namespace Allors.Protocol.Json.Newtonsoft
         {
             null => null,
             IEnumerable _ => ((IEnumerable<object>)value).Select(v => (long)v).ToArray(),
-            _ => new[] { (long)value },
+            _ => [(long)value],
         };
 
         public string StringFromJson(object value) => (string)value;

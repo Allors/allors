@@ -60,13 +60,13 @@ public partial class PersonFormViewModel : ObservableObject, IDisposable
         var pull = new Pull
         {
             Extent = new Filter(m.Person),
-            Results = new[]
-            {
+            Results =
+            [
                 new Result
                 {
                     Include = m.Person.Nodes(v=>v.MailboxAddress.Node())
                 }
-            }
+            ]
         };
 
         var result = await this.Workspace.PullAsync(pull);

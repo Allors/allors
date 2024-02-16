@@ -42,22 +42,22 @@ namespace Tests
 
             var pushRequest = new PushRequest
             {
-                o = new[]
-                {
+                o =
+                [
                     new PushRequestObject
                     {
                         d = this.x1.Id,
                         v = this.x1.Strategy.ObjectVersion,
-                        r = new []
-                        {
+                        r =
+                        [
                             new PushRequestRole
                             {
                                 t = this.M.WorkspaceXObject1.WorkspaceXString.RelationType.Tag,
                                 u = "x string",
                             },
-                        },
+                        ],
                     },
-                },
+                ],
             };
 
             var api = new Api(this.Transaction, "X", CancellationToken.None);
@@ -77,22 +77,22 @@ namespace Tests
 
             var pushRequest = new PushRequest
             {
-                o = new[]
-                {
+                o =
+                [
                     new PushRequestObject
                     {
                         d = this.x1.Id,
                         v = this.x1.Strategy.ObjectVersion,
-                        r = new []
-                        {
+                        r =
+                        [
                             new PushRequestRole
                             {
                                 t = this.M.WorkspaceXObject1.WorkspaceXString.RelationType.Tag,
                                 u = "x string",
                             },
-                        },
+                        ],
                     },
-                },
+                ],
             };
 
             var api = new Api(this.Transaction, "Y", CancellationToken.None);

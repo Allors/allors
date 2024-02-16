@@ -32,9 +32,9 @@ namespace Tests
             this.Transaction.Derive();
             this.Transaction.Commit();
 
-            var pull = new Pull { Object = c1b, Results = new[] { new Result { Name = "Data" }, } };
+            var pull = new Pull { Object = c1b, Results = [new Result { Name = "Data" },] };
 
-            var pullRequest = new PullRequest { l = new[] { pull.ToJson(this.UnitConvert) }, };
+            var pullRequest = new PullRequest { l = [pull.ToJson(this.UnitConvert)], };
 
             var api = new Api(this.Transaction, "Default", CancellationToken.None);
             var pullResponse = api.Pull(pullRequest);
@@ -57,10 +57,10 @@ namespace Tests
             var pull = new Pull
             {
                 Object = c1b,
-                Results = new[] { new Result { Include = new[] { new Node(this.M.C1.C1C2One2One) } }, },
+                Results = [new Result { Include = [new Node(this.M.C1.C1C2One2One)] },],
             };
 
-            var pullRequest = new PullRequest { l = new[] { pull.ToJson(this.UnitConvert) }, };
+            var pullRequest = new PullRequest { l = [pull.ToJson(this.UnitConvert)], };
 
             var api = new Api(this.Transaction, "Default", CancellationToken.None);
             var pullResponse = api.Pull(pullRequest);
@@ -86,10 +86,10 @@ namespace Tests
             var pull = new Pull
             {
                 Object = c2b,
-                Results = new[] { new Result { Include = new[] { new Node(this.M.C2.C1WhereC1C2One2One) } }, },
+                Results = [new Result { Include = [new Node(this.M.C2.C1WhereC1C2One2One)] },],
             };
 
-            var pullRequest = new PullRequest { l = new[] { pull.ToJson(this.UnitConvert) }, };
+            var pullRequest = new PullRequest { l = [pull.ToJson(this.UnitConvert)], };
 
             var api = new Api(this.Transaction, "Default", CancellationToken.None);
             var pullResponse = api.Pull(pullRequest);
@@ -115,20 +115,20 @@ namespace Tests
             var pull = new Pull
             {
                 Object = c1b,
-                Results = new[]
-                {
+                Results =
+                [
                     new Result
                     {
                         Select = new Select
                         {
                             RelationEndType = this.M.C1.C1C2One2One,
-                            Include = new[] { new Node(this.M.C2.C2C2One2One) },
+                            Include = [new Node(this.M.C2.C2C2One2One)],
                         },
                     },
-                },
+                ],
             };
 
-            var pullRequest = new PullRequest { l = new[] { pull.ToJson(this.UnitConvert) }, };
+            var pullRequest = new PullRequest { l = [pull.ToJson(this.UnitConvert)], };
 
             var api = new Api(this.Transaction, "Default", CancellationToken.None);
             var pullResponse = api.Pull(pullRequest);
@@ -154,20 +154,20 @@ namespace Tests
             var pull = new Pull
             {
                 Object = c2b,
-                Results = new[]
-                {
+                Results =
+                [
                     new Result
                     {
                         Select = new Select
                         {
                             RelationEndType = this.M.C2.C1WhereC1C2One2One,
-                            Include = new[] { new Node(this.M.C1.C1WhereC1C1One2One) },
+                            Include = [new Node(this.M.C1.C1WhereC1C1One2One)],
                         },
                     },
-                },
+                ],
             };
 
-            var pullRequest = new PullRequest { l = new[] { pull.ToJson(this.UnitConvert) }, };
+            var pullRequest = new PullRequest { l = [pull.ToJson(this.UnitConvert)], };
 
             var api = new Api(this.Transaction, "Default", CancellationToken.None);
             var pullResponse = api.Pull(pullRequest);
@@ -194,8 +194,8 @@ namespace Tests
             var pull = new Pull
             {
                 Object = c1b,
-                Results = new[]
-                {
+                Results =
+                [
                     new Result
                     {
                         Select = new Select
@@ -204,10 +204,10 @@ namespace Tests
                             OfType = this.M.C1,
                         },
                     },
-                },
+                ],
             };
 
-            var pullRequest = new PullRequest { l = new[] { pull.ToJson(this.UnitConvert) }, };
+            var pullRequest = new PullRequest { l = [pull.ToJson(this.UnitConvert)], };
 
             var api = new Api(this.Transaction, "Default", CancellationToken.None);
             var pullResponse = api.Pull(pullRequest);

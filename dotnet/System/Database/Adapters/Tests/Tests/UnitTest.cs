@@ -1428,9 +1428,9 @@ public abstract class UnitTest : IDisposable
 
                     this.Transaction.Commit();
 
-                    values.C1AllorsBinary = new byte[] { 9 };
-                    values.I1AllorsBinary = new byte[] { 9 };
-                    values.S1AllorsBinary = new byte[] { 9 };
+                    values.C1AllorsBinary = [9];
+                    values.I1AllorsBinary = [9];
+                    values.S1AllorsBinary = [9];
 
                     this.Transaction.Rollback();
 

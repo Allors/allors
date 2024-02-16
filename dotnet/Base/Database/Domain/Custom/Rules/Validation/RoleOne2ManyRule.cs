@@ -15,11 +15,11 @@ namespace Allors.Database.Domain
     public class RoleOne2ManyRule : Rule
     {
         public RoleOne2ManyRule(M m) : base(m, new Guid("d40ab5c5-c248-4455-bad4-8c825f48e080")) =>
-            this.Patterns = new IPattern[]
-            {
+            this.Patterns =
+            [
                 m.CC.RolePattern(v=>v.Assigned, v=>v.BBWhereOne2Many.ObjectType.AAWhereOne2Many),
                 m.CC.RolePattern(v=>v.Assigned, v=>v.BBWhereUnusedOne2Many.ObjectType.AAWhereUnusedOne2Many),
-            };
+            ];
 
         public override void Derive(ICycle cycle, IEnumerable<IObject> matches)
         {

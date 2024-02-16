@@ -18,7 +18,7 @@ namespace Allors.Database.Configuration.Derivations.Default
         }
 
         public DerivationErrorUnique(IValidation validation, IDerivationRelation relation)
-            : this(validation, new[] { relation })
+            : this(validation, [relation])
         {
         }
 

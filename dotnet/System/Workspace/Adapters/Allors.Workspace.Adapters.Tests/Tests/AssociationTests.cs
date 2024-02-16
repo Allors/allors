@@ -31,16 +31,16 @@ namespace Allors.Workspace.Adapters.Tests
                     {
                         Predicate = new Equals(this.M.C2.Name) {Value = "c2C"}
                     },
-                    Results = new[]
-                    {
+                    Results =
+                    [
                         new Result
                         {
                             Select = new Select
                             {
-                                Include = new[] {new Node(this.M.C2.C1WhereC1C2One2Many)}
+                                Include = [new Node(this.M.C2.C1WhereC1C2One2Many)]
                             }
                         }
-                    }
+                    ]
                 }
             };
 
@@ -71,16 +71,16 @@ namespace Allors.Workspace.Adapters.Tests
                     {
                         Predicate = new Equals(this.M.C2.Name) {Value = "c2C"}
                     },
-                    Results = new[]
-                    {
+                    Results =
+                    [
                         new Result
                         {
                             Select = new Select
                             {
-                                Include = new[] {new Node(this.M.C2.C1WhereC1C2One2One)}
+                                Include = [new Node(this.M.C2.C1WhereC1C2One2One)]
                             }
                         }
-                    }
+                    ]
                 }
             };
 

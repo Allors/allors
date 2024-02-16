@@ -66,13 +66,13 @@
 
             acme.Name.Value = "Acme";
 
-            acme.Employees.Value = new[] { john, jane };
+            acme.Employees.Value = [john, jane];
 
             var snapshot = this.Population.Snapshot();
             var changedEmployees = snapshot.EmbeddedChangedRoles<Organization>("Employees");
             Assert.That(changedEmployees.Count, Is.EqualTo(1));
 
-            acme.Employees.Value = new[] { jane, john };
+            acme.Employees.Value = [jane, john];
 
             snapshot = this.Population.Snapshot();
             changedEmployees = snapshot.EmbeddedChangedRoles<Organization>("Employees");
@@ -82,7 +82,7 @@
 
             var x = acme.Employees;
 
-            acme.Employees.Value = new[] { jane, john };
+            acme.Employees.Value = [jane, john];
 
             snapshot = this.Population.Snapshot();
             changedEmployees = snapshot.EmbeddedChangedRoles<Organization>("Employees");

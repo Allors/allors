@@ -15,7 +15,7 @@ using Xunit;
 
 public abstract class ServicesTest : IDisposable
 {
-    protected static readonly bool[] TrueFalse = { true, false };
+    protected static readonly bool[] TrueFalse = [true, false];
 
     protected abstract IProfile Profile { get; }
 
@@ -53,7 +53,7 @@ public abstract class ServicesTest : IDisposable
             init();
             var m = this.Transaction.Database.Context().M;
 
-            int[] runs = { 1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048 };
+            int[] runs = [1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048];
 
             var total = 0;
             foreach (var run in runs)
@@ -2649,7 +2649,7 @@ public abstract class ServicesTest : IDisposable
             anObject = C1.Create(this.Transaction);
             var c1Removed = C1.Create(this.Transaction);
             c1Removed.Strategy.Delete();
-            C1[] c1RemovedArray = { c1Removed };
+            C1[] c1RemovedArray = [c1Removed];
 
             var error = false;
             try
@@ -2992,7 +2992,7 @@ public abstract class ServicesTest : IDisposable
 
                 var c2a = C2.Create(secondTransaction);
                 var c2b = C2.Create(secondTransaction);
-                C2[] c2Array = { c2a, c2b };
+                C2[] c2Array = [c2a, c2b];
 
                 this.Transaction.Commit();
                 secondTransaction.Commit();
@@ -3519,7 +3519,7 @@ public abstract class ServicesTest : IDisposable
             init();
             var m = this.Transaction.Database.Context().M;
 
-            int[] runs = { 1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048 };
+            int[] runs = [1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048];
 
             foreach (var run in runs)
             {
@@ -4124,7 +4124,7 @@ public abstract class ServicesTest : IDisposable
 
             this.SwitchDatabase();
 
-            long[] objectIds = { c1A.Id, c2A.Id };
+            long[] objectIds = [c1A.Id, c2A.Id];
             var switchC1aC2a = this.Transaction.Instantiate(objectIds);
 
             Assert.Equal(2, switchC1aC2a.Length);

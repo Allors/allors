@@ -28,9 +28,9 @@ namespace Allors.Database.Domain.Tests
             var c = new Domain(repository.Objects, "C", directoryInfo);
             var d = new Domain(repository.Objects, "D", directoryInfo);
 
-            a.DirectSuperdomains = new[] { b, c };
-            b.DirectSuperdomains = new[] { c };
-            c.DirectSuperdomains = new[] { d };
+            a.DirectSuperdomains = [b, c];
+            b.DirectSuperdomains = [c];
+            c.DirectSuperdomains = [d];
 
             var repositoryModel = new RepositoryModel(repository);
 

@@ -15,7 +15,7 @@ namespace Allors.Workspace.Data
     {
         public static Node Node<T>(this T @this) where T : IRelationEndType => new Node(@this);
 
-        public static Node Node<T>(this T @this, Func<T, Node> child) where T : IRelationEndType => new Node(@this, new[] { child(@this) });
+        public static Node Node<T>(this T @this, Func<T, Node> child) where T : IRelationEndType => new Node(@this, [child(@this)]);
 
         public static Node Node<T>(this T @this, params Func<T, Node>[] children) where T : IRelationEndType => new Node(@this, children.Select(v => v(@this)));
 

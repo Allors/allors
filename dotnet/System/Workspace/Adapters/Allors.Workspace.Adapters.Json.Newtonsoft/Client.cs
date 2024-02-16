@@ -13,7 +13,7 @@ namespace Allors.Workspace.Adapters.Json.Newtonsoft
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "RCS1090:Add call to 'ConfigureAwait' (or vice versa).", Justification = "<Pending>")]
     public class Client
     {
-        public int[] SecondsBeforeRetry { get; set; } = { 1, 2, 4, 8, 16 };
+        public int[] SecondsBeforeRetry { get; set; } = [1, 2, 4, 8, 16];
 
         private readonly Func<IRestClient> restClientFactory;
 

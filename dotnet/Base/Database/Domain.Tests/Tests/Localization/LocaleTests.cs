@@ -15,13 +15,13 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void GivenLocale_WhenDeriving_ThenRequiredRelationsMustExist()
         {
-            var locale = this.Transaction.Build<Locale>();
+            this.Transaction.Build<Locale>();
 
             Assert.True(this.Transaction.Derive(false).HasErrors);
 
             this.Transaction.Rollback();
 
-            locale = this.Transaction.Build<Locale>(v =>
+            this.Transaction.Build<Locale>(v =>
             {
                 v.Country = this.Transaction.Extent<Country>().FindBy(this.M.Country.Key, "BE");
             });
@@ -30,7 +30,7 @@ namespace Allors.Database.Domain.Tests
 
             this.Transaction.Rollback();
 
-            locale = this.Transaction.Build<Locale>(v =>
+            this.Transaction.Build<Locale>(v =>
             {
                 v.Language = this.Transaction.Extent<Language>().FindBy(this.M.Language.Key, "en");
             });

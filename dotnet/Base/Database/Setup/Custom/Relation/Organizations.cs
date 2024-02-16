@@ -22,12 +22,12 @@ namespace Allors.Database.Domain
             var revocations = this.Transaction.Scoped<RevocationByUniqueId>();
             var permissions = this.Transaction.Scoped<PermissionByMeta>();
 
-            revocations.ToggleRevocation.DeniedPermissions = new[]
-            {
+            revocations.ToggleRevocation.DeniedPermissions =
+            [
                 permissions.Get(this.Meta, this.Meta.Name, Operations.Write),
                 permissions.Get(this.Meta, this.Meta.Owner, Operations.Write),
                 permissions.Get(this.Meta, this.Meta.Employees, Operations.Write),
-            };
+            ];
         }
     }
 }

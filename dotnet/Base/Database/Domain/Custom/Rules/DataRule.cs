@@ -15,12 +15,12 @@ namespace Allors.Database.Domain
     public class DataRule : Rule
     {
         public DataRule(M m) : base(m, new Guid("B3CADA5C-B844-40BF-82B9-CF4EC41AF198")) =>
-            this.Patterns = new IPattern[]
-            {
+            this.Patterns =
+            [
                 m.Data.RolePattern(v=>v.AutocompleteAssignedFilter),
                 m.Data.RolePattern(v=>v.AutocompleteAssignedOptions),
                 m.Data.RolePattern(v=>v.SelectAssigned)
-            };
+            ];
 
         public override void Derive(ICycle cycle, IEnumerable<IObject> matches)
         {
