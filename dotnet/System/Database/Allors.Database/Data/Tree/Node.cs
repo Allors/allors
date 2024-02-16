@@ -21,7 +21,6 @@ public class Node : IVisitable
     public Node(IRelationEndType relationEndType, IEnumerable<Node> nodes = null)
     {
         this.RelationEndType = relationEndType;
-        this.Composite = this.RelationEndType.ObjectType.IsComposite ? (IComposite)relationEndType.ObjectType : null;
 
         if (relationEndType.ObjectType.IsComposite)
         {
@@ -32,8 +31,6 @@ public class Node : IVisitable
     }
 
     public IRelationEndType RelationEndType { get; }
-
-    public IComposite Composite { get; }
 
     public Node[] Nodes { get; private set; }
 
@@ -121,7 +118,9 @@ public class Node : IVisitable
 
     private Node AssertAssignable(Node node)
     {
-        if (this.Composite != null)
+        var composite = this.OfType ?? this.RelationEndType.ObjectType as IComposite;
+
+        if (composite != null)
         {
             IComposite addedComposite = null;
 
@@ -135,9 +134,9 @@ public class Node : IVisitable
             }
 
             if (addedComposite == null ||
-                !(this.Composite.Equals(addedComposite) || this.Composite.Classes.Intersect(addedComposite.Classes).Any()))
+                !(composite.Equals(addedComposite) || composite.Classes.Intersect(addedComposite.Classes).Any()))
             {
-                throw new ArgumentException(node.RelationEndType + " is not a valid tree node on " + this.Composite + ".");
+                throw new ArgumentException(node.RelationEndType + " is not a valid tree node on " + composite + ".");
             }
         }
 
