@@ -1,4 +1,4 @@
-// <copyright file="IDomainDerivation.cs" company="Allors bv">
+﻿// <copyright file="IDomainDerivation.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -15,6 +15,4 @@ public interface IPattern
     IEnumerable<Node> Tree { get; }
 
     IComposite OfType { get; }
-
-    IComposite ObjectType { get; }
 }

@@ -37,11 +37,11 @@ namespace Allors.Database.Configuration.Derivations.Default
 
                     var patternClasses = pattern switch
                     {
-                        IRolePattern { ObjectType: null } rolePattern => rolePattern.RoleType.AssociationType.ObjectType.Classes.ToArray(),
-                        IRolePattern { ObjectType: not null } rolePattern => rolePattern.ObjectType.Classes.ToArray(),
+                        IRolePattern { OfType: null } rolePattern => rolePattern.RoleType.AssociationType.ObjectType.Classes.ToArray(),
+                        IRolePattern { OfType: not null } rolePattern => rolePattern.OfType.Classes.ToArray(),
 
-                        IAssociationPattern { ObjectType: null } associationPattern => associationPattern.AssociationType.RoleType.ObjectType.IsComposite ? ((IComposite)associationPattern.AssociationType.RoleType.ObjectType).Classes.ToArray() : Array.Empty<IClass>(),
-                        IAssociationPattern { ObjectType: not null } associationPattern => associationPattern.ObjectType.Classes.ToArray(),
+                        IAssociationPattern { OfType: null } associationPattern => (associationPattern.AssociationType.RoleType.ObjectType as IComposite)?.Classes.ToArray() ?? Array.Empty<IClass>(),
+                        IAssociationPattern { OfType: not null } associationPattern => associationPattern.OfType.Classes.ToArray(),
 
                         _ => Array.Empty<IClass>(),
                     };
@@ -50,48 +50,48 @@ namespace Allors.Database.Configuration.Derivations.Default
 
                     switch (pattern)
                     {
-                        case IRolePattern rolePattern:
-                            foreach (var @class in patternClasses)
+                    case IRolePattern rolePattern:
+                        foreach (var @class in patternClasses)
+                        {
+                            if (!this.PatternsByRoleTypeByClass.TryGetValue(@class, out var patternsByRoleType))
                             {
-                                if (!this.PatternsByRoleTypeByClass.TryGetValue(@class, out var patternsByRoleType))
-                                {
-                                    patternsByRoleType = new Dictionary<IRoleType, ISet<IRolePattern>>();
-                                    this.PatternsByRoleTypeByClass.Add(@class, patternsByRoleType);
-                                }
-
-                                var roleType = rolePattern.RoleType;
-
-                                if (!patternsByRoleType.TryGetValue(roleType, out var patterns))
-                                {
-                                    patterns = new HashSet<IRolePattern>();
-                                    patternsByRoleType.Add(roleType, patterns);
-                                }
-
-                                patterns.Add(rolePattern);
+                                patternsByRoleType = new Dictionary<IRoleType, ISet<IRolePattern>>();
+                                this.PatternsByRoleTypeByClass.Add(@class, patternsByRoleType);
                             }
 
-                            break;
-                        case IAssociationPattern associationPattern:
-                            foreach (var @class in patternClasses)
+                            var roleType = rolePattern.RoleType;
+
+                            if (!patternsByRoleType.TryGetValue(roleType, out var patterns))
                             {
-                                if (!this.PatternsByAssociationTypeByClass.TryGetValue(@class, out var patternsByAssociationType))
-                                {
-                                    patternsByAssociationType = new Dictionary<IAssociationType, ISet<IAssociationPattern>>();
-                                    this.PatternsByAssociationTypeByClass.Add(@class, patternsByAssociationType);
-                                }
-
-                                var associationType = associationPattern.AssociationType;
-
-                                if (!patternsByAssociationType.TryGetValue(associationType, out var patterns))
-                                {
-                                    patterns = new HashSet<IAssociationPattern>();
-                                    patternsByAssociationType.Add(associationType, patterns);
-                                }
-
-                                patterns.Add(associationPattern);
+                                patterns = new HashSet<IRolePattern>();
+                                patternsByRoleType.Add(roleType, patterns);
                             }
 
-                            break;
+                            patterns.Add(rolePattern);
+                        }
+
+                        break;
+                    case IAssociationPattern associationPattern:
+                        foreach (var @class in patternClasses)
+                        {
+                            if (!this.PatternsByAssociationTypeByClass.TryGetValue(@class, out var patternsByAssociationType))
+                            {
+                                patternsByAssociationType = new Dictionary<IAssociationType, ISet<IAssociationPattern>>();
+                                this.PatternsByAssociationTypeByClass.Add(@class, patternsByAssociationType);
+                            }
+
+                            var associationType = associationPattern.AssociationType;
+
+                            if (!patternsByAssociationType.TryGetValue(associationType, out var patterns))
+                            {
+                                patterns = new HashSet<IAssociationPattern>();
+                                patternsByAssociationType.Add(associationType, patterns);
+                            }
+
+                            patterns.Add(associationPattern);
+                        }
+
+                        break;
                     }
                 }
 

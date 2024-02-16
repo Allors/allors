@@ -1,4 +1,4 @@
-// <copyright file="ChangedRoles.cs" company="Allors bv">
+﻿// <copyright file="ChangedRoles.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -16,11 +16,9 @@ namespace Allors.Database.Domain.Derivations.Rules
         public RolePattern(IComposite objectType, IRoleType roleType)
         {
             this.RoleType = roleType;
-            this.ObjectType = !this.RoleType.AssociationType.ObjectType.Equals(objectType) ? objectType : null;
+            this.OfType = !this.RoleType.AssociationType.ObjectType.Equals(objectType) ? objectType : null;
         }
 
         public IRoleType RoleType { get; }
-
-        public override IComposite ObjectType { get; }
     }
 }

@@ -285,13 +285,13 @@ $endif$
 >>
 
 nodeBuilderRoleTypeSubtype_Declaration() ::= <<
-		public $subtype$TreeBuilder OfType$subtype.SingularName$ { get; init; }
+		public $subtype$TreeBuilder As$subtype.SingularName$ { get; init; }
 >>
 
 nodeBuilderRoleTypeSubtype_Build() ::= <<
-			if(this.OfType$subtype.SingularName$ != null) 
+			if(this.As$subtype.SingularName$ != null) 
 			{
-				nodes = [.. nodes, new Allors.Database.Data.Node(this.M.$roleType.AssociationType.ObjectType.SingularName$.$roleType.Name$, this.OfTyp$subtype.SingularName$.Build()) { OfType = this.M.$subtype.SingularName$ }];
+				nodes = [.. nodes, new Allors.Database.Data.Node(this.M.$roleType.AssociationType.ObjectType.SingularName$.$roleType.Name$, this.As$subtype.SingularName$.Build()) { OfType = this.M.$subtype.SingularName$ }];
 			}
 
 >>
@@ -324,13 +324,13 @@ $endif$
 >>
 
 nodeBuilderAssociationTypeSubtype_Declaration() ::= <<
-		public $subtype$TreeBuilder OfType$subtype.SingularName$ { get; init; }
+		public $subtype$TreeBuilder As$subtype.SingularName$ { get; init; }
 >>
 
 nodeBuilderAssociationTypeSubtype_Build() ::= <<
-			if(this.OfType$subtype.SingularName$ != null) 
+			if(this.As$subtype.SingularName$ != null) 
 			{
-				nodes = [.. nodes, new Allors.Database.Data.Node(this.M.$associationType.RoleType.ObjectType.SingularName$.$associationType.Name$, this.OfType$subtype.SingularName$.Build()) { OfType = this.M.$subtype.SingularName$ }];
+				nodes = [.. nodes, new Allors.Database.Data.Node(this.M.$associationType.RoleType.ObjectType.SingularName$.$associationType.Name$, this.As$subtype.SingularName$.Build()) { OfType = this.M.$subtype.SingularName$ }];
 			}
 >>
 

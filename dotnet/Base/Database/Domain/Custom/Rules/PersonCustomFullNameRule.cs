@@ -1,4 +1,4 @@
-// <copyright file="Domain.cs" company="Allors bv">
+﻿// <copyright file="Domain.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -37,8 +37,6 @@ namespace Allors.Database.Domain
             public IEnumerable<Node> Tree => null;
 
             public IComposite OfType => null;
-
-            public IComposite ObjectType => null;
 
             public IRoleType RoleType { get; }
         }
