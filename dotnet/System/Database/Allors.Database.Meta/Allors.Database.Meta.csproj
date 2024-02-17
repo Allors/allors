@@ -3,7 +3,8 @@
     <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Embedded\Allors.Embedded\Allors.Embedded.csproj" />
+    <ProjectReference Include="..\..\Embedded\Allors.Embedded.Domain.Memory\Allors.Embedded.Domain.Memory.csproj" />
     <ProjectReference Include="..\..\Shared\Allors.Shared.csproj" />
   </ItemGroup>
+
 </Project>
