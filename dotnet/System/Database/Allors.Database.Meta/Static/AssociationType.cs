@@ -16,7 +16,7 @@ using System;
 public abstract class AssociationType : IStaticAssociationType, IComparable
 {
     private readonly IStaticComposite objectType;
-    private IStaticRelationType relationType;
+    private IRelationType relationType;
 
     /// <summary>
     ///     Used to create property names.
@@ -33,20 +33,12 @@ public abstract class AssociationType : IStaticAssociationType, IComparable
 
     IObjectType IRelationEndType.ObjectType => this.objectType;
 
-    IComposite IAssociationType.ObjectType => this.objectType;
+    public IComposite ObjectType => this.objectType;
+    
+    public IRoleType RoleType => this.relationType.RoleType;
 
-    IStaticComposite IStaticAssociationType.ObjectType
-    {
-        get => this.objectType;
-    }
 
-    IRoleType IAssociationType.RoleType => this.relationType.RoleType;
-
-    IStaticRoleType IStaticAssociationType.RoleType => this.relationType.RoleType;
-
-    public IRelationType RelationType => this.relationType;
-
-    IStaticRelationType IStaticAssociationType.RelationType
+    public IRelationType RelationType
     {
         get => this.relationType;
         set => this.relationType = value;
@@ -56,11 +48,9 @@ public abstract class AssociationType : IStaticAssociationType, IComparable
 
     private string Name => this.IsMany ? this.PluralName : this.SingularName;
 
-    string IRelationEndType.SingularName => this.SingularName;
-
     string IRelationEndType.SingularFullName => this.SingularName;
 
-    private string SingularName => this.objectType.SingularName + Where + this.relationType.RoleType.SingularName;
+    public string SingularName => this.objectType.SingularName + Where + this.relationType.RoleType.SingularName;
 
     string IRelationEndType.PluralName => this.objectType.PluralName + Where + this.relationType.RoleType.SingularName;
 

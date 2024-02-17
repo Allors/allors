@@ -10,21 +10,5 @@ using System.Collections.Generic;
 
 public interface IStaticRoleType : IRoleType, IRelationEndType
 {
-    new string SingularName { get; internal set; }
 
-    new string PluralName { get; internal set; }
-
-    new IStaticRelationType RelationType { get; internal set; }
-
-    new IStaticAssociationType AssociationType { get; }
-
-    new ICompositeRoleType CompositeRoleType { get; internal set; }
-
-    internal void InitializeCompositeRoleTypes(Dictionary<IComposite, HashSet<ICompositeRoleType>> compositeRoleTypesByComposite);
-
-    internal void DeriveScaleAndSize();
-
-    internal void DeriveIsRequired();
-
-    internal void DeriveIsUnique();
 }

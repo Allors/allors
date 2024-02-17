@@ -15,7 +15,7 @@ public abstract class RoleType : IStaticRoleType, IComparable
 {
     private readonly IObjectType objectType;
 
-    private IStaticRelationType relationType;
+    private IRelationType relationType;
     private string singularName;
     private string pluralName;
     private ICompositeRoleType compositeRoleType;
@@ -35,9 +35,7 @@ public abstract class RoleType : IStaticRoleType, IComparable
 
     public dynamic Attributes { get; }
 
-    public IRelationType RelationType => this.relationType;
-
-    IStaticRelationType IStaticRoleType.RelationType
+    public IRelationType RelationType
     {
         get => this.relationType;
         set => this.relationType = value;
@@ -46,19 +44,12 @@ public abstract class RoleType : IStaticRoleType, IComparable
     public ICompositeRoleType CompositeRoleType
     {
         get => this.compositeRoleType;
-    }
-
-    ICompositeRoleType IStaticRoleType.CompositeRoleType
-    {
-        get => this.compositeRoleType;
         set => this.compositeRoleType = value;
     }
 
     public IReadOnlyDictionary<IComposite, ICompositeRoleType> CompositeRoleTypeByComposite { get; private set; }
 
-    IAssociationType IRoleType.AssociationType => this.relationType.AssociationType;
-
-    IStaticAssociationType IStaticRoleType.AssociationType => this.relationType.AssociationType;
+    public IAssociationType AssociationType => this.relationType.AssociationType;
 
     public string AssignedSingularName { get; }
 
@@ -68,12 +59,7 @@ public abstract class RoleType : IStaticRoleType, IComparable
 
     IObjectType IRelationEndType.ObjectType => this.objectType;
 
-    string IRelationEndType.SingularName
-    {
-        get => this.singularName;
-    }
-
-    string IStaticRoleType.SingularName
+    public string SingularName
     {
         get => this.singularName;
         set => this.singularName = value;
@@ -85,12 +71,7 @@ public abstract class RoleType : IStaticRoleType, IComparable
     /// <value>The full singular name.</value>
     public string SingularFullName => this.relationType.AssociationType.ObjectType + this.singularName;
 
-    string IRelationEndType.PluralName
-    {
-        get => this.pluralName;
-    }
-
-    string IStaticRoleType.PluralName
+    public string PluralName
     {
         get => this.pluralName;
         set => this.pluralName = value;
@@ -137,7 +118,7 @@ public abstract class RoleType : IStaticRoleType, IComparable
     /// <summary>
     ///     Derive multiplicity, scale and size.
     /// </summary>
-    void IStaticRoleType.DeriveScaleAndSize()
+    public void DeriveScaleAndSize()
     {
         if (this.objectType is IUnit unitType)
         {
@@ -201,7 +182,7 @@ public abstract class RoleType : IStaticRoleType, IComparable
         }
     }
 
-    void IStaticRoleType.InitializeCompositeRoleTypes(Dictionary<IComposite, HashSet<ICompositeRoleType>> compositeRoleTypesByComposite)
+    public void InitializeCompositeRoleTypes(Dictionary<IComposite, HashSet<ICompositeRoleType>> compositeRoleTypesByComposite)
     {
         var composite = this.relationType.AssociationType.ObjectType;
         compositeRoleTypesByComposite[composite].Add(this.compositeRoleType);
@@ -218,7 +199,7 @@ public abstract class RoleType : IStaticRoleType, IComparable
         this.CompositeRoleTypeByComposite = dictionary;
     }
 
-    void IStaticRoleType.DeriveIsRequired()
+    public void DeriveIsRequired()
     {
         var composites = new Graph<IComposite>(this.relationType.AssociationType.ObjectType.Composites, v => v.DirectSubtypes).Reverse();
 
@@ -235,7 +216,7 @@ public abstract class RoleType : IStaticRoleType, IComparable
         }
     }
 
-    void IStaticRoleType.DeriveIsUnique()
+    public void DeriveIsUnique()
     {
         var composites = new Graph<IComposite>(this.relationType.AssociationType.ObjectType.Composites, v => v.DirectSubtypes).Reverse();
 

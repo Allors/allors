@@ -8,9 +8,4 @@ namespace Allors.Database.Meta;
 
 public interface IStaticAssociationType : IAssociationType, IRelationEndType
 {
-    new IStaticRelationType RelationType { get; internal set; }
-
-    new IStaticRoleType RoleType { get; }
-
-    new IStaticComposite ObjectType { get;  }
 }

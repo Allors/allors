@@ -16,13 +16,13 @@ using System.Collections.Generic;
 /// </summary>
 public interface IRoleType : IRelationEndType, IComparable
 {
-    ICompositeRoleType CompositeRoleType { get; }
+    ICompositeRoleType CompositeRoleType { get; internal set; }
 
     IReadOnlyDictionary<IComposite, ICompositeRoleType> CompositeRoleTypeByComposite { get; }
 
     IAssociationType AssociationType { get; }
 
-    IRelationType RelationType { get; }
+    IRelationType RelationType { get; internal set; }
 
     string AssignedSingularName { get; }
 
@@ -35,4 +35,16 @@ public interface IRoleType : IRelationEndType, IComparable
     int? Precision { get; }
 
     int? Scale { get; }
+
+    new string SingularName { get; internal set; }
+
+    new string PluralName { get; internal set; }
+    
+    internal void InitializeCompositeRoleTypes(Dictionary<IComposite, HashSet<ICompositeRoleType>> compositeRoleTypesByComposite);
+
+    internal void DeriveScaleAndSize();
+
+    internal void DeriveIsRequired();
+
+    internal void DeriveIsUnique();
 }

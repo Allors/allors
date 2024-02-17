@@ -25,4 +25,8 @@ public interface IRelationType : IMetaIdentifiableObject, IComparable
     bool IsDerived { get; }
 
     bool IsKey { get; set; }
+    
+    internal string Name { get; }
+
+    internal void DeriveWorkspaceNames();
 }

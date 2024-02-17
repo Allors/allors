@@ -12,7 +12,6 @@ public interface IStaticRelationType : IRelationType, IMetaIdentifiableObject
 
     new IStaticRoleType RoleType { get; internal set; }
 
-    internal string Name { get; }
 
-    internal void DeriveWorkspaceNames();
+
 }

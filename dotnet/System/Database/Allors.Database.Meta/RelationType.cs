@@ -126,7 +126,7 @@ public abstract class RelationType : IStaticRelationType, IMetaIdentifiableObjec
         }
     }
 
-    void IStaticRelationType.DeriveWorkspaceNames() =>
+    public void DeriveWorkspaceNames() =>
         this.derivedWorkspaceNames = this.AssignedWorkspaceNames != null
             ? this.AssignedWorkspaceNames
                 .Intersect(this.associationType.ObjectType.Classes.SelectMany(v => v.WorkspaceNames))

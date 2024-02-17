@@ -1,4 +1,4 @@
-// <copyright file="IAssociationType.cs" company="Allors bv">
+﻿// <copyright file="IAssociationType.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -13,7 +13,7 @@ namespace Allors.Database.Meta;
 /// </summary>
 public interface IAssociationType : IRelationEndType
 {
-    IRelationType RelationType { get; }
+    IRelationType RelationType { get; internal set; }
 
     IRoleType RoleType { get; }
 
