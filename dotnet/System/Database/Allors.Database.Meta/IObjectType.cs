@@ -1,4 +1,4 @@
-// <copyright file="IObjectType.cs" company="Allors bv">
+﻿// <copyright file="IObjectType.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -10,7 +10,7 @@ using System;
 
 public interface IObjectType : IMetaIdentifiableObject, IComparable<IObjectType>
 {
-    Type BoundType { get; }
+    Type BoundType { get; internal set; }
 
     string Name { get; }
 

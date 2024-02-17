@@ -180,7 +180,7 @@ public abstract class RoleType : IStaticRoleType, IComparable
     ///     Validates the state.
     /// </summary>
     /// <param name="validationLog">The validation.</param>
-    void IStaticRelationEndType.Validate(ValidationLog validationLog)
+    public void Validate(ValidationLog validationLog)
     {
         if (this.objectType == null)
         {

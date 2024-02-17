@@ -17,4 +17,8 @@ public interface IMethodType : IMetaIdentifiableObject, IOperandType
     IComposite ObjectType { get; }
 
     string Name { get; }
+
+    internal void InitializeCompositeMethodTypes(Dictionary<IComposite, HashSet<ICompositeMethodType>> compositeMethodTypesByComposite);
+
+    internal void DeriveWorkspaceNames();
 }

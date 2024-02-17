@@ -12,7 +12,7 @@ using Embedded;
 using Embedded.Meta;
 using Text;
 
-public abstract class Unit : EmbeddedObject, IObjectType, IMetaIdentifiableObject, IStaticObjectType, IUnit
+public abstract class Unit : EmbeddedObject, IObjectType, IMetaIdentifiableObject, IUnit
 {
     private readonly IEmbeddedUnitRole<string> singularName;
     private readonly IEmbeddedUnitRole<string> assignedPluralName;

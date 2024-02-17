@@ -12,7 +12,7 @@ using System.Linq;
 using Embedded;
 using Embedded.Meta;
 
-public sealed class Domain : EmbeddedObject, IStaticDomain, IMetaIdentifiableObject
+public sealed class Domain : EmbeddedObject, IMetaIdentifiableObject, IDomain
 {
     public Domain(IEmbeddedPopulation embeddedPopulation, EmbeddedObjectType embeddedObjectType)
      : base(embeddedPopulation, embeddedObjectType)
@@ -101,7 +101,7 @@ public sealed class Domain : EmbeddedObject, IStaticDomain, IMetaIdentifiableObj
         }
     }
 
-    void IStaticDomain.InitializeSuperdomains()
+    public void InitializeSuperdomains()
     {
         var superdomains = new HashSet<Domain>();
         foreach (var directSuperdomain in this.DirectSuperdomains.Cast<Domain>())

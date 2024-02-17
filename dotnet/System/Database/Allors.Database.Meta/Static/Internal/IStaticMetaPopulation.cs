@@ -11,7 +11,7 @@ using System.Collections.Generic;
 
 public interface IStaticMetaPopulation : IMetaPopulation
 {
-    new IReadOnlyList<IStaticDomain> Domains { get; internal set; }
+    new IReadOnlyList<Domain> Domains { get; internal set; }
 
     new IReadOnlyList<Unit> Units { get; internal set; }
 
@@ -23,7 +23,7 @@ public interface IStaticMetaPopulation : IMetaPopulation
 
     new IReadOnlyList<IStaticRelationType> RelationTypes { get; internal set; }
 
-    new IReadOnlyList<IStaticMethodType> MethodTypes { get; internal set; }
+    new IReadOnlyList<MethodType> MethodTypes { get; internal set; }
 
     void OnCreated(IMetaIdentifiableObject metaObject);
 }

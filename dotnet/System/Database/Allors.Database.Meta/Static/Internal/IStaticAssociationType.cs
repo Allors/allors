@@ -6,7 +6,7 @@
 
 namespace Allors.Database.Meta;
 
-public interface IStaticAssociationType : IStaticRelationEndType, IAssociationType
+public interface IStaticAssociationType : IAssociationType, IRelationEndType
 {
     new IStaticRelationType RelationType { get; internal set; }
 

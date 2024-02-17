@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-public sealed class MethodType : IStaticMethodType, IComparable, IMetaIdentifiableObject
+public sealed class MethodType : IComparable, IMetaIdentifiableObject, IMethodType
 {
     private string[] derivedWorkspaceNames;
 
@@ -88,14 +88,14 @@ public sealed class MethodType : IStaticMethodType, IComparable, IMetaIdentifiab
         }
     }
 
-    void IStaticMethodType.DeriveWorkspaceNames() =>
+    public void DeriveWorkspaceNames() =>
         this.derivedWorkspaceNames = this.AssignedWorkspaceNames != null
             ? this.AssignedWorkspaceNames
                 .Intersect(this.ObjectType.Classes.SelectMany(v => v.WorkspaceNames))
                 .ToArray()
             : Array.Empty<string>();
 
-    void IStaticMethodType.InitializeCompositeMethodTypes(Dictionary<IComposite, HashSet<ICompositeMethodType>> compositeMethodTypesByComposite)
+    public void InitializeCompositeMethodTypes(Dictionary<IComposite, HashSet<ICompositeMethodType>> compositeMethodTypesByComposite)
     {
         var composite = this.ObjectType;
         compositeMethodTypesByComposite[composite].Add(this.CompositeMethodType);

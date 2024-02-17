@@ -16,4 +16,6 @@ public interface IDomain : IMetaIdentifiableObject, IComparable
     IReadOnlyList<IDomain> DirectSuperdomains { get; }
 
     IReadOnlyList<IDomain> Superdomains { get; }
+
+    internal void InitializeSuperdomains();
 }

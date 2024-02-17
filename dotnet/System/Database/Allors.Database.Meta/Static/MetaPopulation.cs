@@ -28,13 +28,13 @@ public abstract class MetaPopulation : EmbeddedPopulation, IStaticMetaPopulation
 
     private bool initialized;
 
-    private IReadOnlyList<IStaticDomain> domains;
+    private IReadOnlyList<Domain> domains;
     private IReadOnlyList<Class> classes;
     private IReadOnlyList<IStaticRelationType> relationTypes;
     private IReadOnlyList<IStaticInterface> interfaces;
     private IReadOnlyList<IStaticComposite> composites;
     private IReadOnlyList<Unit> units;
-    private IReadOnlyList<IStaticMethodType> methodTypes;
+    private IReadOnlyList<MethodType> methodTypes;
 
     protected MetaPopulation()
     {
@@ -56,7 +56,7 @@ public abstract class MetaPopulation : EmbeddedPopulation, IStaticMetaPopulation
 
     IReadOnlyList<IDomain> IMetaPopulation.Domains => this.domains;
 
-    IReadOnlyList<IStaticDomain> IStaticMetaPopulation.Domains
+    IReadOnlyList<Domain> IStaticMetaPopulation.Domains
     {
         get => this.domains;
         set => this.domains = value;
@@ -104,7 +104,7 @@ public abstract class MetaPopulation : EmbeddedPopulation, IStaticMetaPopulation
 
     IReadOnlyList<IMethodType> IMetaPopulation.MethodTypes => this.methodTypes;
 
-    IReadOnlyList<IStaticMethodType> IStaticMetaPopulation.MethodTypes
+    IReadOnlyList<MethodType> IStaticMetaPopulation.MethodTypes
     {
         get => this.methodTypes;
         set => this.methodTypes = value;
@@ -270,7 +270,7 @@ public abstract class MetaPopulation : EmbeddedPopulation, IStaticMetaPopulation
         // MethodTypes
         var methodTypeByClass = this.methodTypes
             .GroupBy(v => v.ObjectType)
-            .ToDictionary(g => (IStaticComposite)g.Key, g => new HashSet<IStaticMethodType>(g));
+            .ToDictionary(g => (IStaticComposite)g.Key, g => new HashSet<MethodType>(g));
 
         foreach (IStaticComposite composite in this.composites)
         {

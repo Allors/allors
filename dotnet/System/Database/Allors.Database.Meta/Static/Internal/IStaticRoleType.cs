@@ -8,7 +8,7 @@ namespace Allors.Database.Meta;
 
 using System.Collections.Generic;
 
-public interface IStaticRoleType : IStaticRelationEndType, IRoleType
+public interface IStaticRoleType : IRoleType, IRelationEndType
 {
     new string SingularName { get; internal set; }
 

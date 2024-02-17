@@ -8,7 +8,7 @@ namespace Allors.Database.Meta;
 
 using System.Collections.Generic;
 
-public interface IStaticComposite : IStaticObjectType, IComposite
+public interface IStaticComposite : IComposite, IObjectType, IMetaIdentifiableObject
 {
     new IReadOnlyList<IInterface> Supertypes { get; internal set; }
 

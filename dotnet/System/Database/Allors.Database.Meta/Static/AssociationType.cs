@@ -97,7 +97,7 @@ public abstract class AssociationType : IStaticAssociationType, IComparable
 
     public override string ToString() => $"{this.relationType.RoleType.ObjectType.Name}.{this.Name}";
 
-    void IStaticRelationEndType.Validate(ValidationLog validationLog)
+    public void Validate(ValidationLog validationLog)
     {
         if (this.objectType == null)
         {

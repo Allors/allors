@@ -67,9 +67,9 @@ public static class CompositeExtensions
         @this.AssociationTypes = associationTypes.ToArray();
     }
 
-    internal static void InitializeMethodTypes(this IStaticComposite @this, Dictionary<IStaticComposite, HashSet<IStaticMethodType>> methodTypeByClass)
+    internal static void InitializeMethodTypes(this IStaticComposite @this, Dictionary<IStaticComposite, HashSet<MethodType>> methodTypeByClass)
     {
-        var methodTypes = new HashSet<IStaticMethodType>();
+        var methodTypes = new HashSet<MethodType>();
 
         if (methodTypeByClass.TryGetValue(@this, out var directMethodTypes))
         {
