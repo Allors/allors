@@ -56,7 +56,7 @@ public abstract class Interface : IStaticComposite, IObjectType, IMetaIdentifiab
 
     public Type BoundType { get; set; }
 
-    string IObjectType.Name => this.SingularName;
+    public string Name => this.SingularName;
 
     public string SingularName { get; }
 
@@ -93,33 +93,25 @@ public abstract class Interface : IStaticComposite, IObjectType, IMetaIdentifiab
 
     public IReadOnlyList<IInterface> DirectSupertypes { get; }
 
-    IReadOnlyList<IInterface> IComposite.Supertypes => this.supertypes;
-
-    IReadOnlyList<IInterface> IStaticComposite.Supertypes
+    public IReadOnlyList<IInterface> Supertypes
     {
         get => this.supertypes;
         set => this.supertypes = value;
     }
 
-    IReadOnlyList<IAssociationType> IComposite.AssociationTypes => this.associationTypes;
-
-    IReadOnlyList<IAssociationType> IStaticComposite.AssociationTypes
+    public IReadOnlyList<IAssociationType> AssociationTypes
     {
         get => this.associationTypes;
         set => this.associationTypes = value;
     }
 
-    IReadOnlyList<IRoleType> IComposite.RoleTypes => this.roleTypes;
-
-    IReadOnlyList<IRoleType> IStaticComposite.RoleTypes
+    public IReadOnlyList<IRoleType> RoleTypes
     {
         get => this.roleTypes;
         set => this.roleTypes = value;
     }
 
-    public IReadOnlyDictionary<IRoleType, ICompositeRoleType> CompositeRoleTypeByRoleType => this.compositeRoleTypeByRoleType;
-
-    IReadOnlyDictionary<IRoleType, ICompositeRoleType> IStaticComposite.CompositeRoleTypeByRoleType
+    public IReadOnlyDictionary<IRoleType, ICompositeRoleType> CompositeRoleTypeByRoleType
     {
         get => this.compositeRoleTypeByRoleType;
         set => this.compositeRoleTypeByRoleType = value;
@@ -127,23 +119,19 @@ public abstract class Interface : IStaticComposite, IObjectType, IMetaIdentifiab
 
     public IRoleType KeyRoleType => this.derivedKeyRoleType;
 
-    public IReadOnlyList<IMethodType> MethodTypes => this.methodTypes;
-
-    IReadOnlyList<IMethodType> IStaticComposite.MethodTypes
+    public IReadOnlyList<IMethodType> MethodTypes
     {
         get => this.methodTypes;
         set => this.methodTypes = value;
     }
 
-    public IReadOnlyDictionary<IMethodType, ICompositeMethodType> CompositeMethodTypeByMethodType => this.compositeMethodTypeByMethodType;
-
-    IRoleType IStaticComposite.DerivedKeyRoleType
+    public IRoleType DerivedKeyRoleType
     {
         get => this.derivedKeyRoleType;
         set => this.derivedKeyRoleType = value;
     }
 
-    IReadOnlyDictionary<IMethodType, ICompositeMethodType> IStaticComposite.CompositeMethodTypeByMethodType
+    public IReadOnlyDictionary<IMethodType, ICompositeMethodType> CompositeMethodTypeByMethodType
     {
         get => this.compositeMethodTypeByMethodType;
         set => this.compositeMethodTypeByMethodType = value;

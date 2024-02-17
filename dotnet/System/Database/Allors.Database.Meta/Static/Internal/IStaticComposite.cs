@@ -10,17 +10,10 @@ using System.Collections.Generic;
 
 public interface IStaticComposite : IComposite, IObjectType, IMetaIdentifiableObject
 {
-    new IReadOnlyList<IInterface> Supertypes { get; internal set; }
 
-    new IReadOnlyList<IRoleType> RoleTypes { get; internal set; }
 
-    new IReadOnlyList<IAssociationType> AssociationTypes { get; internal set; }
 
-    new IReadOnlyList<IMethodType> MethodTypes { get; internal set; }
 
-    new IReadOnlyDictionary<IRoleType, ICompositeRoleType> CompositeRoleTypeByRoleType { get; internal set; }
 
-    new IReadOnlyDictionary<IMethodType, ICompositeMethodType> CompositeMethodTypeByMethodType { get; internal set; }
 
-    internal IRoleType DerivedKeyRoleType { get; set; }
 }

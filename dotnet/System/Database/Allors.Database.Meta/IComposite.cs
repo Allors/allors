@@ -12,7 +12,7 @@ public interface IComposite : IObjectType
 {
     IReadOnlyList<IInterface> DirectSupertypes { get; }
 
-    IReadOnlyList<IInterface> Supertypes { get; }
+    IReadOnlyList<IInterface> Supertypes { get; internal set; }
 
     IReadOnlyList<IComposite> DirectSubtypes { get; }
 
@@ -24,17 +24,19 @@ public interface IComposite : IObjectType
 
     IClass ExclusiveClass { get; }
 
-    IReadOnlyList<IAssociationType> AssociationTypes { get; }
+    IReadOnlyList<IAssociationType> AssociationTypes { get; internal set; }
 
-    IReadOnlyList<IRoleType> RoleTypes { get; }
+    IReadOnlyList<IRoleType> RoleTypes { get; internal set; }
 
-    IReadOnlyDictionary<IRoleType, ICompositeRoleType> CompositeRoleTypeByRoleType { get; }
+    IReadOnlyDictionary<IRoleType, ICompositeRoleType> CompositeRoleTypeByRoleType { get; internal set; }
 
     IRoleType KeyRoleType { get; }
 
-    IReadOnlyList<IMethodType> MethodTypes { get; }
+    IReadOnlyList<IMethodType> MethodTypes { get; internal set; }
 
-    IReadOnlyDictionary<IMethodType, ICompositeMethodType> CompositeMethodTypeByMethodType { get; }
+    IReadOnlyDictionary<IMethodType, ICompositeMethodType> CompositeMethodTypeByMethodType { get; internal set; }
 
     bool IsAssignableFrom(IComposite objectType);
+
+    internal IRoleType DerivedKeyRoleType { get; set; }
 }
