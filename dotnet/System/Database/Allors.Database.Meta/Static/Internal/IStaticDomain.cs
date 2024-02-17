@@ -6,7 +6,7 @@
 
 namespace Allors.Database.Meta;
 
-public interface IStaticDomain : IStaticMetaIdentifiableObject, IDomain
+public interface IStaticDomain : IDomain, IMetaIdentifiableObject
 {
     internal void InitializeSuperdomains();
 }

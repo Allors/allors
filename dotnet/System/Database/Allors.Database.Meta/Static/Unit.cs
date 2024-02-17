@@ -78,7 +78,7 @@ public abstract class Unit : EmbeddedObject, IStaticUnit, IObjectType, IMetaIden
         return this.Tag;
     }
 
-    void IStaticMetaIdentifiableObject.Validate(ValidationLog validationLog)
+    public void Validate(ValidationLog validationLog)
     {
         this.ValidateObjectType(validationLog);
     }

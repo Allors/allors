@@ -148,7 +148,7 @@ public abstract class Class : IStaticClass, IStaticComposite, IObjectType, IMeta
         set => this.compositeMethodTypeByMethodType = value;
     }
 
-    void  IStaticMetaIdentifiableObject.Validate(ValidationLog validationLog)
+    public void Validate(ValidationLog validationLog)
     {
         this.ValidateObjectType(validationLog);
         this.ValidateComposite(validationLog);

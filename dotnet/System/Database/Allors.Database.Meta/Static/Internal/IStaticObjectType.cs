@@ -8,7 +8,7 @@ namespace Allors.Database.Meta;
 
 using System;
 
-public interface IStaticObjectType : IStaticMetaIdentifiableObject, IObjectType
+public interface IStaticObjectType : IObjectType, IMetaIdentifiableObject
 {
     new Type BoundType { get; internal set; }
 }

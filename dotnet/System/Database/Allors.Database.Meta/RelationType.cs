@@ -140,7 +140,7 @@ public abstract class RelationType : IStaticRelationType, IMetaIdentifiableObjec
                 .ToArray()
             : Array.Empty<string>();
 
-    void IStaticMetaIdentifiableObject.Validate(ValidationLog validationLog)
+    public void Validate(ValidationLog validationLog)
     {
         this.ValidateIdentity(validationLog);
 

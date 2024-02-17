@@ -79,7 +79,7 @@ public sealed class MethodType : IStaticMethodType, IComparable, IMetaIdentifiab
 
     public override string ToString() => this.Name;
 
-    void  IStaticMetaIdentifiableObject.Validate(ValidationLog validationLog)
+    public void Validate(ValidationLog validationLog)
     {
         if (string.IsNullOrEmpty(this.Name))
         {

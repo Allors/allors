@@ -68,7 +68,7 @@ public sealed class Domain : EmbeddedObject, IStaticDomain, IMetaIdentifiableObj
     ///     Validates the domain.
     /// </summary>
     /// <param name="validationLog">The validation.</param>
-    void IStaticMetaIdentifiableObject.Validate(ValidationLog validationLog)
+    public void Validate(ValidationLog validationLog)
     {
         this.ValidateIdentity(validationLog);
 

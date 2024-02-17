@@ -20,4 +20,6 @@ public interface IMetaIdentifiableObject : IMetaExtensible
     Guid Id { get; }
 
     string Tag { get; }
+
+    internal void Validate(ValidationLog validationLog);
 }

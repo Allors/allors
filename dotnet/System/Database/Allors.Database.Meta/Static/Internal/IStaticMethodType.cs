@@ -8,7 +8,7 @@ namespace Allors.Database.Meta;
 
 using System.Collections.Generic;
 
-public interface IStaticMethodType : IStaticMetaIdentifiableObject, IMethodType
+public interface IStaticMethodType : IMethodType, IMetaIdentifiableObject
 {
     void InitializeCompositeMethodTypes(Dictionary<IComposite, HashSet<ICompositeMethodType>> compositeMethodTypesByComposite);
 
