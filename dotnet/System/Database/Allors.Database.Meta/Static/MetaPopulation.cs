@@ -13,7 +13,7 @@ using Allors.Embedded.Domain.Memory;
 using Embedded;
 using Embedded.Meta;
 
-public abstract class MetaPopulation : EmbeddedPopulation, IStaticMetaPopulation
+public abstract class MetaPopulation : EmbeddedPopulation, IMetaPopulation
 {
     internal static readonly IReadOnlyList<IComposite> EmptyComposites = Array.Empty<IComposite>();
     internal static readonly IReadOnlyList<IDomain> EmptyDomains = Array.Empty<IDomain>();
@@ -22,19 +22,19 @@ public abstract class MetaPopulation : EmbeddedPopulation, IStaticMetaPopulation
 
     private Dictionary<Guid, IMetaIdentifiableObject> metaIdentifiableObjectById;
     private Dictionary<string, IMetaIdentifiableObject> metaIdentifiableObjectByTag;
-    private Dictionary<string, IStaticComposite> compositeByLowercaseName;
+    private Dictionary<string, IComposite> compositeByLowercaseName;
 
     private string[] derivedWorkspaceNames;
 
     private bool initialized;
 
-    private IReadOnlyList<Domain> domains;
-    private IReadOnlyList<Class> classes;
-    private IReadOnlyList<RelationType> relationTypes;
-    private IReadOnlyList<Interface> interfaces;
-    private IReadOnlyList<IStaticComposite> composites;
-    private IReadOnlyList<Unit> units;
-    private IReadOnlyList<MethodType> methodTypes;
+    private IReadOnlyList<IDomain> domains;
+    private IReadOnlyList<IClass> classes;
+    private IReadOnlyList<IRelationType> relationTypes;
+    private IReadOnlyList<IInterface> interfaces;
+    private IReadOnlyList<IComposite> composites;
+    private IReadOnlyList<IUnit> units;
+    private IReadOnlyList<IMethodType> methodTypes;
 
     protected MetaPopulation()
     {
@@ -52,59 +52,45 @@ public abstract class MetaPopulation : EmbeddedPopulation, IStaticMetaPopulation
 
     public bool IsBound { get; private set; }
 
-    IReadOnlyList<string> IMetaPopulation.WorkspaceNames => this.derivedWorkspaceNames;
+    public IReadOnlyList<string> WorkspaceNames => this.derivedWorkspaceNames;
 
-    IReadOnlyList<IDomain> IMetaPopulation.Domains => this.domains;
-
-    IReadOnlyList<Domain> IStaticMetaPopulation.Domains
+    public IReadOnlyList<IDomain> Domains
     {
         get => this.domains;
         set => this.domains = value;
     }
 
-    IReadOnlyList<IClass> IMetaPopulation.Classes => this.classes;
-
-    IReadOnlyList<Class> IStaticMetaPopulation.Classes
+    public IReadOnlyList<IClass> Classes
     {
         get => this.classes;
         set => this.classes = value;
     }
 
-    IReadOnlyList<IRelationType> IMetaPopulation.RelationTypes => this.relationTypes;
-
-    IReadOnlyList<RelationType> IStaticMetaPopulation.RelationTypes
+    public IReadOnlyList<IRelationType> RelationTypes
     {
         get => this.relationTypes;
         set => this.relationTypes = value;
     }
 
-    IReadOnlyList<IInterface> IMetaPopulation.Interfaces => this.interfaces;
-
-    IReadOnlyList<Interface> IStaticMetaPopulation.Interfaces
+    public IReadOnlyList<IInterface> Interfaces
     {
         get => this.interfaces;
         set => this.interfaces = value;
     }
 
-    IReadOnlyList<IComposite> IMetaPopulation.Composites => this.composites;
-
-    IReadOnlyList<IStaticComposite> IStaticMetaPopulation.Composites
+    public IReadOnlyList<IComposite> Composites
     {
         get => this.composites;
         set => this.composites = value;
     }
 
-    IReadOnlyList<IUnit> IMetaPopulation.Units => this.units;
-
-    IReadOnlyList<Unit> IStaticMetaPopulation.Units
+    public IReadOnlyList<IUnit> Units
     {
         get => this.units;
         set => this.units = value;
     }
 
-    IReadOnlyList<IMethodType> IMetaPopulation.MethodTypes => this.methodTypes;
-
-    IReadOnlyList<MethodType> IStaticMetaPopulation.MethodTypes
+    public IReadOnlyList<IMethodType> MethodTypes
     {
         get => this.methodTypes;
         set => this.methodTypes = value;
@@ -202,7 +188,7 @@ public abstract class MetaPopulation : EmbeddedPopulation, IStaticMetaPopulation
         this.relationTypes = this.metaObjects.OfType<RelationType>().ToArray();
         this.methodTypes = this.metaObjects.OfType<MethodType>().ToArray();
 
-        this.composites = this.classes.Cast<IStaticComposite>().Union(this.interfaces.Cast<IStaticComposite>()).ToArray();
+        this.composites = this.classes.Cast<IComposite>().Union(this.interfaces.Cast<IComposite>()).ToArray();
 
         // Domains
         foreach (var domain in this.domains)
@@ -217,7 +203,7 @@ public abstract class MetaPopulation : EmbeddedPopulation, IStaticMetaPopulation
         }
 
         // Supertypes
-        foreach (IStaticComposite type in this.composites)
+        foreach (IComposite type in this.composites)
         {
             type.InitializeSupertypes();
         }
@@ -249,20 +235,20 @@ public abstract class MetaPopulation : EmbeddedPopulation, IStaticMetaPopulation
         // RoleTypes & AssociationTypes
         var roleTypesByAssociationTypeObjectType = this.relationTypes
             .GroupBy(v => v.AssociationType.ObjectType)
-            .ToDictionary(g => (IStaticComposite)g.Key, g => new HashSet<IRoleType>(g.Select(v => v.RoleType)));
+            .ToDictionary(g => (IComposite)g.Key, g => new HashSet<IRoleType>(g.Select(v => v.RoleType)));
 
         var associationTypesByRoleTypeObjectType = this.relationTypes
             .GroupBy(v => v.RoleType.ObjectType)
             .ToDictionary(g => (IObjectType)g.Key, g => new HashSet<IAssociationType>(g.Select(v => v.AssociationType)));
 
         // RoleTypes
-        foreach (IStaticComposite composite in this.composites)
+        foreach (IComposite composite in this.composites)
         {
             composite.InitializeRoleTypes(roleTypesByAssociationTypeObjectType);
         }
 
         // AssociationTypes
-        foreach (IStaticComposite composite in this.composites)
+        foreach (IComposite composite in this.composites)
         {
             composite.InitializeAssociationTypes(associationTypesByRoleTypeObjectType);
         }
@@ -270,9 +256,9 @@ public abstract class MetaPopulation : EmbeddedPopulation, IStaticMetaPopulation
         // MethodTypes
         var methodTypeByClass = this.methodTypes
             .GroupBy(v => v.ObjectType)
-            .ToDictionary(g => (IStaticComposite)g.Key, g => new HashSet<MethodType>(g));
+            .ToDictionary(g => (IComposite)g.Key, g => new HashSet<IMethodType>(g));
 
-        foreach (IStaticComposite composite in this.composites)
+        foreach (IComposite composite in this.composites)
         {
             composite.InitializeMethodTypes(methodTypeByClass);
         }
@@ -284,7 +270,7 @@ public abstract class MetaPopulation : EmbeddedPopulation, IStaticMetaPopulation
             relationType.RoleType.InitializeCompositeRoleTypes(compositeRoleTypesByComposite);
         }
 
-        foreach (IStaticComposite composite in this.composites)
+        foreach (IComposite composite in this.composites)
         {
             composite.InitializeCompositeRoleTypes(compositeRoleTypesByComposite);
         }
@@ -296,7 +282,7 @@ public abstract class MetaPopulation : EmbeddedPopulation, IStaticMetaPopulation
             methodType.InitializeCompositeMethodTypes(compositeMethodTypesByComposite);
         }
 
-        foreach (IStaticComposite composite in this.composites)
+        foreach (IComposite composite in this.composites)
         {
             composite.InitializeCompositeMethodTypes(compositeMethodTypesByComposite);
         }
@@ -342,7 +328,7 @@ public abstract class MetaPopulation : EmbeddedPopulation, IStaticMetaPopulation
             roleType.DeriveIsUnique();
         }
 
-        foreach (IStaticComposite composite in this.composites)
+        foreach (IComposite composite in this.composites)
         {
             composite.DeriveKeyRoleType();
         }
@@ -393,7 +379,7 @@ public abstract class MetaPopulation : EmbeddedPopulation, IStaticMetaPopulation
         return this.EmbeddedCreateObject(builders);
     }
 
-    void IStaticMetaPopulation.OnCreated(IMetaIdentifiableObject metaObject)
+    public void OnCreated(IMetaIdentifiableObject metaObject)
     {
         this.metaObjects.Add(metaObject);
     }

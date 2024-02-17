@@ -11,11 +11,11 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using Text;
 
-public abstract class Class : IStaticComposite, IObjectType, IMetaIdentifiableObject, IClass
+public abstract class Class : IComposite, IObjectType, IMetaIdentifiableObject, IClass
 {
     private ConcurrentDictionary<IMethodType, Action<object, object>[]> actionsByMethodType;
 
-    protected Class(IStaticMetaPopulation metaPopulation, Guid id, Interface[] directSupertypes, string singularName, string assignedPluralName)
+    protected Class(MetaPopulation metaPopulation, Guid id, Interface[] directSupertypes, string singularName, string assignedPluralName)
     {
         // TODO: Create single element IReadOnlyList
         this.Attributes = new MetaExtension();
@@ -47,7 +47,7 @@ public abstract class Class : IStaticComposite, IObjectType, IMetaIdentifiableOb
 
     IMetaPopulation IMetaIdentifiableObject.MetaPopulation => this.MetaPopulation;
 
-    public IStaticMetaPopulation MetaPopulation { get; }
+    public MetaPopulation MetaPopulation { get; }
 
     public Guid Id { get; }
 

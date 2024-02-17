@@ -18,7 +18,7 @@ public sealed class Domain : EmbeddedObject, IMetaIdentifiableObject, IDomain
      : base(embeddedPopulation, embeddedObjectType)
     {
         this.Attributes = new MetaExtension();
-        this.MetaPopulation = (IStaticMetaPopulation)embeddedPopulation;
+        this.MetaPopulation = (MetaPopulation)embeddedPopulation;
         this.MetaPopulation.OnCreated(this);
     }
 
@@ -26,7 +26,7 @@ public sealed class Domain : EmbeddedObject, IMetaIdentifiableObject, IDomain
 
     IMetaPopulation IMetaIdentifiableObject.MetaPopulation => this.MetaPopulation;
 
-    public IStaticMetaPopulation MetaPopulation { get; }
+    public MetaPopulation MetaPopulation { get; }
     
     public Guid Id { get; set; }
 

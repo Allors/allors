@@ -12,19 +12,19 @@ using Embedded;
 
 public interface IMetaPopulation : IEmbeddedPopulation
 {
-    IReadOnlyList<IDomain> Domains { get; }
+    IReadOnlyList<IDomain> Domains { get; internal set; }
 
-    IReadOnlyList<IUnit> Units { get; }
+    IReadOnlyList<IUnit> Units { get; internal set; }
 
-    IReadOnlyList<IComposite> Composites { get; }
+    IReadOnlyList<IComposite> Composites { get; internal set; }
 
-    IReadOnlyList<IInterface> Interfaces { get; }
+    IReadOnlyList<IInterface> Interfaces { get; internal set; }
 
-    IReadOnlyList<IClass> Classes { get; }
+    IReadOnlyList<IClass> Classes { get; internal set; }
 
-    IReadOnlyList<IRelationType> RelationTypes { get; }
+    IReadOnlyList<IRelationType> RelationTypes { get; internal set; }
 
-    IReadOnlyList<IMethodType> MethodTypes { get; }
+    IReadOnlyList<IMethodType> MethodTypes { get; internal set; }
 
     IReadOnlyList<string> WorkspaceNames { get; }
 
@@ -41,4 +41,6 @@ public interface IMetaPopulation : IEmbeddedPopulation
     void Bind(Type[] types);
 
     T Create<T>(params Action<T>[] builders) where T : IEmbeddedObject;
+
+    internal void OnCreated(IMetaIdentifiableObject metaObject);
 }

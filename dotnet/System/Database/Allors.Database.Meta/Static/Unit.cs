@@ -35,7 +35,7 @@ public abstract class Unit : EmbeddedObject, IObjectType, IMetaIdentifiableObjec
 
     IMetaPopulation IMetaIdentifiableObject.MetaPopulation => this.MetaPopulation;
 
-    public IStaticMetaPopulation MetaPopulation { get; }
+    public MetaPopulation MetaPopulation { get; }
 
     public Guid Id { get; set; }
 

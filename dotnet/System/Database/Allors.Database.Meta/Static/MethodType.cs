@@ -32,7 +32,7 @@ public sealed class MethodType : IComparable, IMetaIdentifiableObject, IMethodTy
 
     IMetaPopulation IMetaIdentifiableObject.MetaPopulation => this.MetaPopulation;
 
-    public IStaticMetaPopulation MetaPopulation { get; }
+    public MetaPopulation MetaPopulation { get; }
 
     public Guid Id { get; }
 

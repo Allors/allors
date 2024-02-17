@@ -15,7 +15,7 @@ using System;
 /// </summary>
 public abstract class AssociationType : IComparable, IAssociationType, IRelationEndType
 {
-    private readonly IStaticComposite objectType;
+    private readonly IComposite objectType;
     private IRelationType relationType;
 
     /// <summary>
@@ -23,7 +23,7 @@ public abstract class AssociationType : IComparable, IAssociationType, IRelation
     /// </summary>
     private const string Where = "Where";
 
-    protected AssociationType(IStaticComposite objectType)
+    protected AssociationType(IComposite objectType)
     {
         this.Attributes = new MetaExtension();
         this.objectType = objectType;

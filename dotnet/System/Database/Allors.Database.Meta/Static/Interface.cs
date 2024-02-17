@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Text;
 
-public abstract class Interface : IStaticComposite, IObjectType, IMetaIdentifiableObject, IInterface
+public abstract class Interface : IComposite, IObjectType, IMetaIdentifiableObject, IInterface
 {
     private string[] derivedWorkspaceNames;
 
@@ -21,7 +21,7 @@ public abstract class Interface : IStaticComposite, IObjectType, IMetaIdentifiab
     private IReadOnlyList<IClass> subclasses;
     private IClass exclusiveClass;
 
-    protected Interface(IStaticMetaPopulation metaPopulation, Guid id, IReadOnlyList<Interface> directSupertypes, string singularName, string assignedPluralName)
+    protected Interface(MetaPopulation metaPopulation, Guid id, IReadOnlyList<Interface> directSupertypes, string singularName, string assignedPluralName)
     {
         this.Attributes = new MetaExtension();
         this.MetaPopulation = metaPopulation;
@@ -48,7 +48,7 @@ public abstract class Interface : IStaticComposite, IObjectType, IMetaIdentifiab
 
     IMetaPopulation IMetaIdentifiableObject.MetaPopulation => this.MetaPopulation;
 
-    public IStaticMetaPopulation MetaPopulation { get; }
+    public MetaPopulation MetaPopulation { get; }
 
     public Guid Id { get; }
 

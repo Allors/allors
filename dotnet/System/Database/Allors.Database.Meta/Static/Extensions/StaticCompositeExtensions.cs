@@ -11,7 +11,7 @@ using System.Linq;
 
 public static class CompositeExtensions
 {
-    internal static void ValidateComposite(this IStaticComposite @this, ValidationLog validationLog)
+    internal static void ValidateComposite(this IComposite @this, ValidationLog validationLog)
     {
         if (@this.RoleTypes.Count(v => v.RelationType.IsKey) > 1)
         {
@@ -20,14 +20,14 @@ public static class CompositeExtensions
         }
     }
 
-    internal static void InitializeSupertypes(this IStaticComposite @this)
+    internal static void InitializeSupertypes(this IComposite @this)
     {
         var supertypes = new HashSet<IInterface>();
         @this.InitializeSupertypesRecursively(@this, supertypes);
         @this.Supertypes = supertypes.ToArray();
     }
 
-    internal static void InitializeRoleTypes(this IStaticComposite @this, Dictionary<IStaticComposite, HashSet<IRoleType>> roleTypesByAssociationObjectType)
+    internal static void InitializeRoleTypes(this IComposite @this, Dictionary<IComposite, HashSet<IRoleType>> roleTypesByAssociationObjectType)
     {
         var roleTypes = new HashSet<IRoleType>();
 
@@ -36,7 +36,7 @@ public static class CompositeExtensions
             roleTypes.UnionWith(directRoleTypes);
         }
 
-        foreach (var superType in @this.Supertypes.Cast<IStaticComposite>())
+        foreach (var superType in @this.Supertypes.Cast<IComposite>())
         {
             if (roleTypesByAssociationObjectType.TryGetValue(superType, out var inheritedRoleTypes))
             {
@@ -47,7 +47,7 @@ public static class CompositeExtensions
         @this.RoleTypes = roleTypes.ToArray();
     }
 
-    internal static void InitializeAssociationTypes(this IStaticComposite @this, Dictionary<IObjectType, HashSet<IAssociationType>> relationTypesByRoleObjectType)
+    internal static void InitializeAssociationTypes(this IComposite @this, Dictionary<IObjectType, HashSet<IAssociationType>> relationTypesByRoleObjectType)
     {
         var associationTypes = new HashSet<IAssociationType>();
 
@@ -67,9 +67,9 @@ public static class CompositeExtensions
         @this.AssociationTypes = associationTypes.ToArray();
     }
 
-    internal static void InitializeMethodTypes(this IStaticComposite @this, Dictionary<IStaticComposite, HashSet<MethodType>> methodTypeByClass)
+    internal static void InitializeMethodTypes(this IComposite @this, Dictionary<IComposite, HashSet<IMethodType>> methodTypeByClass)
     {
-        var methodTypes = new HashSet<MethodType>();
+        var methodTypes = new HashSet<IMethodType>();
 
         if (methodTypeByClass.TryGetValue(@this, out var directMethodTypes))
         {
@@ -87,19 +87,19 @@ public static class CompositeExtensions
         @this.MethodTypes = methodTypes.ToArray();
     }
 
-    internal static void InitializeCompositeRoleTypes(this IStaticComposite @this, Dictionary<IComposite, HashSet<ICompositeRoleType>> compositeRoleTypesByComposite)
+    internal static void InitializeCompositeRoleTypes(this IComposite @this, Dictionary<IComposite, HashSet<ICompositeRoleType>> compositeRoleTypesByComposite)
     {
         var compositeRoleTypes = compositeRoleTypesByComposite[@this];
         @this.CompositeRoleTypeByRoleType = compositeRoleTypes.ToDictionary(v => v.RoleType, v => v);
     }
 
-    internal static void InitializeCompositeMethodTypes(this IStaticComposite @this, Dictionary<IComposite, HashSet<ICompositeMethodType>> compositeMethodTypesByComposite)
+    internal static void InitializeCompositeMethodTypes(this IComposite @this, Dictionary<IComposite, HashSet<ICompositeMethodType>> compositeMethodTypesByComposite)
     {
         var compositeMethodTypes = compositeMethodTypesByComposite[@this];
         @this.CompositeMethodTypeByMethodType = compositeMethodTypes.ToDictionary(v => v.MethodType, v => v);
     }
 
-    internal static void InitializeSupertypesRecursively(this IStaticComposite @this, IObjectType type, ISet<IInterface> superTypes)
+    internal static void InitializeSupertypesRecursively(this IComposite @this, IObjectType type, ISet<IInterface> superTypes)
     {
         foreach (var directSupertype in @this.DirectSupertypes.Cast<Interface>())
         {
@@ -111,7 +111,7 @@ public static class CompositeExtensions
         }
     }
 
-    internal static void DeriveKeyRoleType(this IStaticComposite @this)
+    internal static void DeriveKeyRoleType(this IComposite @this)
     {
         @this.DerivedKeyRoleType = @this.RoleTypes.FirstOrDefault(v => v.RelationType.IsKey);
     }
