@@ -29,11 +29,11 @@ public abstract class MetaPopulation : EmbeddedPopulation, IStaticMetaPopulation
     private bool initialized;
 
     private IReadOnlyList<IStaticDomain> domains;
-    private IReadOnlyList<IStaticClass> classes;
+    private IReadOnlyList<Class> classes;
     private IReadOnlyList<IStaticRelationType> relationTypes;
     private IReadOnlyList<IStaticInterface> interfaces;
     private IReadOnlyList<IStaticComposite> composites;
-    private IReadOnlyList<IStaticUnit> units;
+    private IReadOnlyList<Unit> units;
     private IReadOnlyList<IStaticMethodType> methodTypes;
 
     protected MetaPopulation()
@@ -64,7 +64,7 @@ public abstract class MetaPopulation : EmbeddedPopulation, IStaticMetaPopulation
 
     IReadOnlyList<IClass> IMetaPopulation.Classes => this.classes;
 
-    IReadOnlyList<IStaticClass> IStaticMetaPopulation.Classes
+    IReadOnlyList<Class> IStaticMetaPopulation.Classes
     {
         get => this.classes;
         set => this.classes = value;
@@ -96,7 +96,7 @@ public abstract class MetaPopulation : EmbeddedPopulation, IStaticMetaPopulation
 
     IReadOnlyList<IUnit> IMetaPopulation.Units => this.units;
 
-    IReadOnlyList<IStaticUnit> IStaticMetaPopulation.Units
+    IReadOnlyList<Unit> IStaticMetaPopulation.Units
     {
         get => this.units;
         set => this.units = value;

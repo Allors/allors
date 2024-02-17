@@ -13,13 +13,13 @@ public interface IStaticMetaPopulation : IMetaPopulation
 {
     new IReadOnlyList<IStaticDomain> Domains { get; internal set; }
 
-    new IReadOnlyList<IStaticUnit> Units { get; internal set; }
+    new IReadOnlyList<Unit> Units { get; internal set; }
 
     new IReadOnlyList<IStaticComposite> Composites { get; internal set; }
 
     new IReadOnlyList<IStaticInterface> Interfaces { get; internal set; }
 
-    new IReadOnlyList<IStaticClass> Classes { get; internal set; }
+    new IReadOnlyList<Class> Classes { get; internal set; }
 
     new IReadOnlyList<IStaticRelationType> RelationTypes { get; internal set; }
 

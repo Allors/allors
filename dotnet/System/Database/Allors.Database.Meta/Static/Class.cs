@@ -11,7 +11,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using Text;
 
-public abstract class Class : IStaticClass, IStaticComposite, IObjectType, IMetaIdentifiableObject
+public abstract class Class : IStaticComposite, IObjectType, IMetaIdentifiableObject, IClass
 {
     private ConcurrentDictionary<IMethodType, Action<object, object>[]> actionsByMethodType;
 
@@ -55,7 +55,7 @@ public abstract class Class : IStaticClass, IStaticComposite, IObjectType, IMeta
 
     public Type BoundType { get; set; }
 
-    string IObjectType.Name => this.SingularName;
+    public string Name => this.SingularName;
 
     public string SingularName { get; }
 
