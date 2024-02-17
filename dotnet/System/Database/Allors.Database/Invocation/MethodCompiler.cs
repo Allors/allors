@@ -46,7 +46,7 @@ public class MethodCompiler
                     return -1;
                 }
 
-                return string.Compare(a.Name, b.Name, StringComparison.Ordinal);
+                return string.Compare(a.SingularName, b.SingularName, StringComparison.Ordinal);
             });
 
         // Interface

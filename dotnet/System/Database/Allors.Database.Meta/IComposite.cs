@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 public interface IComposite : IObjectType
 {
-    IReadOnlyList<IInterface> DirectSupertypes { get; }
+    IReadOnlyList<IInterface> DirectSupertypes { get; set; }
 
     IReadOnlyList<IInterface> Supertypes { get; internal set; }
 

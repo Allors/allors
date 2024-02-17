@@ -52,7 +52,7 @@ namespace Allors.Database.Configuration
             this.builderTypeByClass = metaPopulation.Classes.
                 ToDictionary(
                     v => v,
-                    v => assembly.GetType($"Allors.Database.Domain.{v.Name}Builder", false));
+                    v => assembly.GetType($"Allors.Database.Domain.{v.SingularName}Builder", false));
 
             this.classesByWorkspaceName = new Dictionary<string, IReadOnlySet<IClass>>();
             this.roleTypesByClassByWorkspaceName = new Dictionary<string, IDictionary<IClass, IReadOnlySet<IRoleType>>>();

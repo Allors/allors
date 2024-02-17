@@ -485,7 +485,7 @@ public sealed class Strategy : IStrategy
         return allorsObject;
     }
 
-    public override string ToString() => this.UncheckedObjectType.Name + " " + this.ObjectId;
+    public override string ToString() => this.UncheckedObjectType.SingularName + " " + this.ObjectId;
 
     internal void Commit()
     {
@@ -1231,7 +1231,7 @@ public sealed class Strategy : IStrategy
     {
         if (this.IsDeleted)
         {
-            throw new Exception($"Object of class {this.UncheckedObjectType.Name} with id {this.ObjectId} has been deleted");
+            throw new Exception($"Object of class {this.UncheckedObjectType.SingularName} with id {this.ObjectId} has been deleted");
         }
     }
 

@@ -127,7 +127,7 @@ $repository.Classes:{class|$define_class(class)$}; separator="\n"$
 
 define_class(class) ::= <<
     public partial class Meta$class.SingularName$ : Class {
-        public Meta$class.SingularName$(M m, System.Guid id, Interface[] directSupertypes, string singularName, string assignedPluralName) : base(m, id, directSupertypes, singularName, assignedPluralName)
+        public Meta$class.SingularName$(MetaPopulation metaPopulation, Allors.Embedded.Meta.EmbeddedObjectType embeddedObjectType) : base(metaPopulation, embeddedObjectType)
         {
 $if(class.ExtensionAttributes)$
                 Attributes = { $class.ExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ }

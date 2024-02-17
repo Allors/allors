@@ -42,8 +42,6 @@ public abstract class Unit : EmbeddedObject, IUnit
 
     public Type BoundType { get; set; }
 
-    public string Name => this.SingularName;
-
     public string SingularName { get => this.singularName.Value; set => this.singularName.Value = value; }
 
     public string AssignedPluralName { get => this.assignedPluralName.Value; set => this.assignedPluralName.Value = value; }

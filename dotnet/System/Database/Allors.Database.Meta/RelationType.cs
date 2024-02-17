@@ -39,7 +39,6 @@ public abstract class RelationType : IMetaIdentifiableObject, IRelationType
         this.roleType = roleType;
         this.roleType.RelationType = this;
         this.roleType.SingularName = this.roleType.AssignedSingularName ?? this.roleType.ObjectType.SingularName;
-        this.roleType.PluralName = this.roleType.AssignedPluralName ?? (this.roleType.AssignedSingularName != null ? Pluralizer.Pluralize(this.roleType.AssignedSingularName) : this.roleType.ObjectType.PluralName);
 
         this.roleType.CompositeRoleType = new CompositeRoleType(this.associationType.ObjectType, this.roleType);
 

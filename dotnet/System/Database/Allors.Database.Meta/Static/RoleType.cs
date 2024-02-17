@@ -9,6 +9,7 @@ namespace Allors.Database.Meta;
 using System.Collections.Generic;
 using System.Linq;
 using Allors.Graph;
+using Text;
 
 public abstract class RoleType : IRoleType
 {
@@ -16,7 +17,6 @@ public abstract class RoleType : IRoleType
 
     private IRelationType relationType;
     private string singularName;
-    private string pluralName;
     private ICompositeRoleType compositeRoleType;
 
     /// <summary>
@@ -72,17 +72,18 @@ public abstract class RoleType : IRoleType
 
     public string PluralName
     {
-        get => this.pluralName;
-        set => this.pluralName = value;
+        get => this.AssignedPluralName ?? (this.AssignedSingularName != null
+            ? Pluralizer.Pluralize(this.AssignedSingularName)
+            : ((IRelationEndType)this).ObjectType.PluralName);
     }
 
     /// <summary>
     ///     Gets the full plural name.
     /// </summary>
     /// <value>The full plural name.</value>
-    public string PluralFullName => this.relationType.AssociationType.ObjectType + this.pluralName;
+    public string PluralFullName => this.relationType.AssociationType.ObjectType + this.PluralName;
 
-    public string Name => this.IsMany ? this.pluralName : this.singularName;
+    public string Name => this.IsMany ? this.PluralName : this.singularName;
 
     public string FullName => this.IsMany ? this.PluralFullName : this.SingularFullName;
 
@@ -112,7 +113,7 @@ public abstract class RoleType : IRoleType
 
     public override int GetHashCode() => this.relationType.Id.GetHashCode();
 
-    public override string ToString() => $"{this.relationType.AssociationType.ObjectType.Name}.{this.Name}";
+    public override string ToString() => $"{this.relationType.AssociationType.ObjectType.SingularName}.{this.Name}";
 
     /// <summary>
     ///     Derive multiplicity, scale and size.
@@ -174,7 +175,7 @@ public abstract class RoleType : IRoleType
             validationLog.AddError(message, this, ValidationKind.MinimumLength, "RoleType.SingularName");
         }
 
-        if (!string.IsNullOrEmpty(this.pluralName) && this.pluralName.Length < 2)
+        if (!string.IsNullOrEmpty(this.PluralName) && this.PluralName.Length < 2)
         {
             var message = this.ValidationName + " should have an assigned plural role name with at least 2 characters";
             validationLog.AddError(message, this, ValidationKind.MinimumLength, "RoleType.PluralName");

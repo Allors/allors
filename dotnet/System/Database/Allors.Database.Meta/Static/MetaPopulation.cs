@@ -332,7 +332,7 @@ public abstract class MetaPopulation : EmbeddedPopulation, IMetaPopulation
             composite.DeriveKeyRoleType();
         }
 
-        this.compositeByLowercaseName = this.composites.ToDictionary(v => v.Name.ToLowerInvariant());
+        this.compositeByLowercaseName = this.composites.ToDictionary(v => v.SingularName.ToLowerInvariant());
 
         this.EmbeddedDerive();
     }
@@ -363,12 +363,12 @@ public abstract class MetaPopulation : EmbeddedPopulation, IMetaPopulation
 
             foreach (var @interface in this.interfaces)
             {
-                @interface.BoundType = typeByName[@interface.Name];
+                @interface.BoundType = typeByName[@interface.SingularName];
             }
 
             foreach (var @class in this.classes)
             {
-                @class.BoundType = typeByName[@class.Name];
+                @class.BoundType = typeByName[@class.SingularName];
             }
         }
     }

@@ -9,28 +9,35 @@ namespace Allors.Database.Meta;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using Allors.Embedded;
+using Allors.Embedded.Meta;
 using Text;
 
-public abstract class Class : IClass
+public abstract class Class : EmbeddedObject, IClass
 {
+    private readonly IEmbeddedUnitRole<string> singularName;
+    private readonly IEmbeddedUnitRole<string> assignedPluralName;
+    private readonly IEmbeddedUnitRole<string> pluralName;
+
     private ConcurrentDictionary<IMethodType, Action<object, object>[]> actionsByMethodType;
 
-    protected Class(MetaPopulation metaPopulation, Guid id, Interface[] directSupertypes, string singularName, string assignedPluralName)
+    protected Class(MetaPopulation metaPopulation, EmbeddedObjectType embeddedObjectType)
+        : base(metaPopulation, embeddedObjectType)
     {
         // TODO: Create single element IReadOnlyList
         this.Attributes = new MetaExtension();
         this.MetaPopulation = metaPopulation;
-        this.Id = id;
-        this.Tag = id.Tag();
-        this.SingularName = singularName;
-        this.AssignedPluralName = !string.IsNullOrEmpty(assignedPluralName) ? assignedPluralName : null;
-        this.PluralName = this.AssignedPluralName != null ? this.AssignedPluralName : Pluralizer.Pluralize(this.SingularName);
-        this.DirectSupertypes = directSupertypes;
+
+        this.singularName = this.EmbeddedPopulation.EmbeddedGetUnitRole<string>(this, metaPopulation.EmbeddedRoleTypes.ObjectTypeSingularName);
+        this.assignedPluralName = this.EmbeddedPopulation.EmbeddedGetUnitRole<string>(this, metaPopulation.EmbeddedRoleTypes.ObjectTypeAssignedPluralName);
+        this.pluralName = this.EmbeddedPopulation.EmbeddedGetUnitRole<string>(this, metaPopulation.EmbeddedRoleTypes.ObjectTypePluralName);
+
         this.Composites = new[] { this };
         this.Classes = new[] { this };
         this.DirectSubtypes = Array.Empty<IComposite>();
         this.Subtypes = Array.Empty<IComposite>();
-        metaPopulation.OnCreated(this);
+
+        this.MetaPopulation.OnCreated(this);
     }
 
     private IReadOnlyList<IAssociationType> associationTypes;
@@ -48,20 +55,18 @@ public abstract class Class : IClass
     IMetaPopulation IMetaIdentifiableObject.MetaPopulation => this.MetaPopulation;
 
     public MetaPopulation MetaPopulation { get; }
-
-    public Guid Id { get; }
+    
+    public Guid Id { get; set; }
 
     public string Tag { get; set; }
 
     public Type BoundType { get; set; }
 
-    public string Name => this.SingularName;
+    public string SingularName { get => this.singularName.Value; set => this.singularName.Value = value; }
 
-    public string SingularName { get; }
+    public string AssignedPluralName { get => this.assignedPluralName.Value; set => this.assignedPluralName.Value = value; }
 
-    public string AssignedPluralName { get; }
-
-    public string PluralName { get; }
+    public string PluralName { get => this.pluralName.Value; set => this.pluralName.Value = value; }
 
     public bool IsUnit => false;
 
@@ -90,7 +95,7 @@ public abstract class Class : IClass
         return this.Tag;
     }
 
-    public IReadOnlyList<IInterface> DirectSupertypes { get; }
+    public IReadOnlyList<IInterface> DirectSupertypes { get; set; }
 
     public IReadOnlyList<IInterface> Supertypes
     {

@@ -16,5 +16,5 @@ public class MethodTypeModel : MetaIdentifiableObjectModel
 
     public string Name => this.MethodType.Name;
 
-    public string FullName => $"{this.MethodType.ObjectType.Name}{this.MethodType.Name}";
+    public string FullName => $"{this.MethodType.ObjectType.SingularName}{this.MethodType.Name}";
 }

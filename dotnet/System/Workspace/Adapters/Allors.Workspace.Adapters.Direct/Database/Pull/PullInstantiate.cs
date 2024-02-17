@@ -84,13 +84,13 @@ namespace Allors.Workspace.Adapters.Direct
                             }
                             else
                             {
-                                name ??= this.pull.ObjectType?.Name ?? @object.Strategy.Class.SingularName;
+                                name ??= this.pull.ObjectType?.SingularName ?? @object.Strategy.Class.SingularName;
                                 response.AddObject(name, @object, include);
                             }
                         }
                         else
                         {
-                            name ??= this.pull.ObjectType?.Name ?? @object.Strategy.Class.SingularName;
+                            name ??= this.pull.ObjectType?.SingularName ?? @object.Strategy.Class.SingularName;
                             var include = result.Include;
                             response.AddObject(name, @object, include);
                         }
@@ -103,7 +103,7 @@ namespace Allors.Workspace.Adapters.Direct
             }
             else
             {
-                var name = this.pull.ObjectType?.Name ?? @object.Strategy.Class.SingularName;
+                var name = this.pull.ObjectType?.SingularName ?? @object.Strategy.Class.SingularName;
                 response.AddObject(name, @object);
             }
         }

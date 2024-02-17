@@ -356,7 +356,7 @@ CREATE SCHEMA {this.database.SchemaName}";
                         if (!(associationType.IsMany && roleType.IsMany) && relationType.ExistExclusiveClasses && roleType.IsMany)
                         {
                             var indexName =
-                                $"idx_{@class.Name.ToLowerInvariant()}_{relationType.AssociationType.SingularFullName.ToLowerInvariant()}";
+                                $"idx_{@class.SingularName.ToLowerInvariant()}_{relationType.AssociationType.SingularFullName.ToLowerInvariant()}";
                             this.CreateIndex(connection, indexName, relationType, tableName);
                         }
                     }
@@ -383,13 +383,13 @@ CREATE SCHEMA {this.database.SchemaName}";
                         if (roleType.ObjectType.IsUnit)
                         {
                             var indexName =
-                                $"idx_{@class.Name.ToLowerInvariant()}_{relationType.RoleType.SingularFullName.ToLowerInvariant()}";
+                                $"idx_{@class.SingularName.ToLowerInvariant()}_{relationType.RoleType.SingularFullName.ToLowerInvariant()}";
                             this.CreateIndex(connection, indexName, relationType, tableName);
                         }
                         else if (!(associationType.IsMany && roleType.IsMany) && relationType.ExistExclusiveClasses && !roleType.IsMany)
                         {
                             var indexName =
-                                $"idx_{@class.Name.ToLowerInvariant()}_{relationType.RoleType.SingularFullName.ToLowerInvariant()}";
+                                $"idx_{@class.SingularName.ToLowerInvariant()}_{relationType.RoleType.SingularFullName.ToLowerInvariant()}";
                             this.CreateIndex(connection, indexName, relationType, tableName);
                         }
                     }

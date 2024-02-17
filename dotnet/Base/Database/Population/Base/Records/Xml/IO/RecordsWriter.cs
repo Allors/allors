@@ -29,7 +29,7 @@
         {
             return new XDocument(new XElement("population",
                 recordsByClass
-                    .OrderBy(v => v.Key.Name, StringComparer.OrdinalIgnoreCase)
+                    .OrderBy(v => v.Key.SingularName, StringComparer.OrdinalIgnoreCase)
                     .Select(Class)));
 
             XElement Class(KeyValuePair<IClass, Record[]> grouping) => new(grouping.Key.PluralName.ToCamelCase(),

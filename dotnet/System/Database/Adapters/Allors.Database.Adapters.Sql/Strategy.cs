@@ -73,7 +73,7 @@ public class Strategy : IStrategy
         {
             if (!this.Reference.Exists)
             {
-                throw new Exception("Object that had  " + this.Reference.Class.Name + " with id " + this.ObjectId + " does not exist");
+                throw new Exception("Object that had  " + this.Reference.Class.SingularName + " with id " + this.ObjectId + " does not exist");
             }
 
             return this.Reference.Class;
@@ -461,7 +461,7 @@ public class Strategy : IStrategy
     {
         if (!this.Reference.Exists)
         {
-            throw new Exception("Object of class " + this.Class.Name + " with id " + this.ObjectId + " does not exist");
+            throw new Exception("Object of class " + this.Class.SingularName + " with id " + this.ObjectId + " does not exist");
         }
     }
 

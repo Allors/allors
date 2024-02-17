@@ -222,7 +222,14 @@ build_interface(interface) ::= <<
 >>
 
 build_class(class) ::= <<
-	        meta.$class.SingularName$ = new Meta$class.SingularName$(meta, Ids.$class.SingularName$, new Interface[]{$class.ImplementedInterfaces:{implementedInterface|meta.$implementedInterface.SingularName$}; separator=", "$}, "$class.SingularName$", $if(class.AssignedPluralName)$"$class.AssignedPluralName$"$else$null$endif$);
+                meta.$class.SingularName$ = meta.Create<Meta$class.SingularName$>(v=>
+                        {
+                                v.Id = Ids.$class.SingularName$; 
+                                v.Tag = v.Id.Tag();
+                                v.DirectSupertypes = new Interface[]{$class.ImplementedInterfaces:{implementedInterface|meta.$implementedInterface.SingularName$}; separator=", "$}; 
+                                v.SingularName = "$class.SingularName$";
+                                v.AssignedPluralName = $if(class.AssignedPluralName)$"$class.AssignedPluralName$"$else$null$endif$;
+                        });
 >>
 
 build_relations(composite) ::= <<

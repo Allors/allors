@@ -23,7 +23,7 @@ public sealed class SqlPrefetchUnitRolesEvent : Event
 
     protected override void ToString(StringBuilder builder) => _ = builder
         .Append('[')
-        .Append(this.Class.Name)
+        .Append(this.Class.SingularName)
         .Append(" : ")
         .Append(this.RoleType.Name)
         .Append(" -> #")

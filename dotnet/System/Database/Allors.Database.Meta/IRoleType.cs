@@ -38,7 +38,7 @@ public interface IRoleType : IRelationEndType, IComparable
 
     new string SingularName { get; internal set; }
 
-    new string PluralName { get; internal set; }
+    new string PluralName { get; }
     
     internal void InitializeCompositeRoleTypes(Dictionary<IComposite, HashSet<ICompositeRoleType>> compositeRoleTypesByComposite);
 

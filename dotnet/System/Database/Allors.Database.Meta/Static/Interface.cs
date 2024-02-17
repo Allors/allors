@@ -56,13 +56,11 @@ public abstract class Interface : IInterface
 
     public Type BoundType { get; set; }
 
-    public string Name => this.SingularName;
-
     public string SingularName { get; }
 
     public string AssignedPluralName { get; }
 
-    public string PluralName { get; }
+    public string PluralName { get; set; }
 
     public bool IsUnit => false;
 
@@ -91,7 +89,7 @@ public abstract class Interface : IInterface
         return this.Tag;
     }
 
-    public IReadOnlyList<IInterface> DirectSupertypes { get; }
+    public IReadOnlyList<IInterface> DirectSupertypes { get; set; }
 
     public IReadOnlyList<IInterface> Supertypes
     {

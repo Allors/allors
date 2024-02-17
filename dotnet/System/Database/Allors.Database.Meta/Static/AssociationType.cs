@@ -84,7 +84,7 @@ public abstract class AssociationType : IComparable, IAssociationType
 
     public override int GetHashCode() => this.relationType.Id.GetHashCode();
 
-    public override string ToString() => $"{this.relationType.RoleType.ObjectType.Name}.{this.Name}";
+    public override string ToString() => $"{this.relationType.RoleType.ObjectType.SingularName}.{this.Name}";
 
     public void Validate(ValidationLog validationLog)
     {

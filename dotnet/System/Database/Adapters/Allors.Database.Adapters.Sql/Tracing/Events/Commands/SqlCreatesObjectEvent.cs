@@ -21,7 +21,7 @@ public sealed class SqlCreatesObjectEvent : Event
 
     protected override void ToString(StringBuilder builder) => _ = builder
         .Append('[')
-        .Append(this.Class.Name)
+        .Append(this.Class.SingularName)
         .Append(" -> #")
         .Append(this.Count)
         .Append("] ");

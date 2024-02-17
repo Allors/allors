@@ -26,7 +26,7 @@ internal sealed class RoleEqualsValue : Predicate
             }
             else
             {
-                throw new Exception("Role Object Type " + roleType.ObjectType.Name + " doesn't support non int enumerations.");
+                throw new Exception("Role Object Type " + roleType.ObjectType.SingularName + " doesn't support non int enumerations.");
             }
         }
         else

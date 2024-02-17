@@ -12,13 +12,11 @@ public interface IObjectType : IMetaIdentifiableObject, IComparable<IObjectType>
 {
     Type BoundType { get; internal set; }
 
-    string Name { get; }
-
     string SingularName { get; }
 
     string AssignedPluralName { get; }
 
-    string PluralName { get; }
+    string PluralName { get; set; }
 
     bool IsUnit { get; }
 

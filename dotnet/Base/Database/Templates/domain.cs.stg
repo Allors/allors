@@ -41,14 +41,14 @@ namespace Allors.Database.Domain
 {
 	using System.Linq;
 
-	public partial interface $interface.name$ : $if(interface.ExistDirectSupertypes)$ $interface.directSupertypes:{directSupertype|$directSupertype.SingularName$,}$ $endif$ Allors.Database.IObject
+	public partial interface $interface.SingularName$ : $if(interface.ExistDirectSupertypes)$ $interface.directSupertypes:{directSupertype|$directSupertype.SingularName$,}$ $endif$ Allors.Database.IObject
 	{
 $interface.ExclusiveRoleTypes:{roleType|$interfaceExclusiveRoleType_Interface()$}$
 $interface.ExclusiveAssociationTypes:{associationType|$interfaceExclusiveAssociationType_Interface()$}$
 $interface.ExclusiveMethodTypes:{methodType|$interfaceExclusiveMethodType_Interface()$}$
 	}
 
-	public partial class $interface.name$TreeBuilder : Allors.Database.Data.ITreeBuilder
+	public partial class $interface.SingularName$TreeBuilder : Allors.Database.Data.ITreeBuilder
 	{
 $interface.RoleTypes:{roleType|$treeBuilderRoleType_Declaration()$}; separator="\n"$
 $interface.AssociationTypes:{associationType|$treeBuilderAssociationType_Declaration()$}; separator="\n"$
@@ -71,7 +71,7 @@ $interface.ExclusiveAssociationTypes:{associationType|$nodeBuilderAssociationTyp
 interfaceExclusiveAssociationType_Interface() ::= <<
 $\n$
 $if(associationType.IsMany)$
-		System.Collections.Generic.IEnumerable<$associationType.ObjectType.Name$> $associationType.PluralName$
+		System.Collections.Generic.IEnumerable<$associationType.ObjectType.SingularName$> $associationType.PluralName$
 		{
 			get;
 		}
@@ -81,7 +81,7 @@ $if(associationType.IsMany)$
 			get;
 		}
 $else$
-		$associationType.ObjectType.Name$ $associationType.SingularName$
+		$associationType.ObjectType.SingularName$ $associationType.SingularName$
 		{
 			get;
 		}
@@ -158,14 +158,14 @@ namespace Allors.Database.Domain
 {
 	using System.Linq;
 
-	public partial class $class.name$ : Allors.Database.IObject $class.directSupertypes:{directSupertype|, $directSupertype.SingularName$}$
+	public partial class $class.SingularName$ : Allors.Database.IObject $class.directSupertypes:{directSupertype|, $directSupertype.SingularName$}$
 	{
 		private readonly IStrategy strategy;
 		private readonly Allors.Database.Meta.M m;
 
 $class.Objects:{object|$class_Object()$}; separator="\n"$
 
-		public $class.name$(Allors.Database.IStrategy strategy)
+		public $class.SingularName$(Allors.Database.IStrategy strategy)
 		{
 			this.strategy = strategy;
             this.m = strategy.Transaction.Database.Services.Get<Allors.Database.Meta.M>();
@@ -173,7 +173,7 @@ $class.Objects:{object|$class_Object()$}; separator="\n"$
 
 		public Allors.Database.Meta.M M => m;
 
-		public Allors.Database.Meta.Meta$class.name$ Meta => m.$class.name$;
+		public Allors.Database.Meta.Meta$class.SingularName$ Meta => m.$class.SingularName$;
 
 		public long Id
 		{
@@ -190,9 +190,9 @@ $class.Objects:{object|$class_Object()$}; separator="\n"$
 		
    		void IObject.OnPostBuild() => this.OnPostBuild();
 
-		public static $class.name$ Instantiate (Allors.Database.ITransaction allorsTransaction, string allorsObjectId)
+		public static $class.SingularName$ Instantiate (Allors.Database.ITransaction allorsTransaction, string allorsObjectId)
 		{
-			return ($class.name$) allorsTransaction.Instantiate(allorsObjectId);
+			return ($class.SingularName$) allorsTransaction.Instantiate(allorsObjectId);
 		}
 
 		public override bool Equals(object obj)
@@ -215,7 +215,7 @@ $class.MethodTypes:{methodType|$classMethodType_Method()$}$
 
 $class.KeyRoleTypes:{roleType|$classKeyRoleTypes()$}$
 
-	public partial class $class.name$TreeBuilder : Allors.Database.Data.ITreeBuilder
+	public partial class $class.SingularName$TreeBuilder : Allors.Database.Data.ITreeBuilder
 	{
 $class.RoleTypes:{roleType|$treeBuilderRoleType_Declaration()$}; separator="\n"$
 $class.AssociationTypes:{associationType|$treeBuilderAssociationType_Declaration()$}; separator="\n"$
@@ -345,11 +345,11 @@ $endif$
 classAssociationType_Class() ::= <<
 $\n$
 $if(associationType.IsMany)$
-		public System.Collections.Generic.IEnumerable<$associationType.ObjectType.Name$> $associationType.PluralName$
+		public System.Collections.Generic.IEnumerable<$associationType.ObjectType.SingularName$> $associationType.PluralName$
 		{
 			get
 			{
-				return Strategy.GetCompositesAssociation<$associationType.ObjectType.Name$>(Meta.$associationType.Name$);
+				return Strategy.GetCompositesAssociation<$associationType.ObjectType.SingularName$>(Meta.$associationType.Name$);
 			}
 		}
 
@@ -362,11 +362,11 @@ $if(associationType.IsMany)$
 			}
 		}
 $else$
-		public $associationType.ObjectType.Name$ $associationType.SingularName$
+		public $associationType.ObjectType.SingularName$ $associationType.SingularName$
 		{
 			get
 			{
-				return ($associationType.ObjectType.Name$) Strategy.GetCompositeAssociation(Meta.$associationType.Name$);
+				return ($associationType.ObjectType.SingularName$) Strategy.GetCompositeAssociation(Meta.$associationType.Name$);
 			}
 		}
 
@@ -480,7 +480,7 @@ $\n$
 		[System.Diagnostics.DebuggerStepThrough]
 		public $methodType.FullName$ $methodType.Name$()
 		{
-			var method = new $class.Name$$methodType.Name$(this);
+			var method = new $class.SingularName$$methodType.Name$(this);
             method.Execute();
             return method;
 		}
@@ -488,7 +488,7 @@ $\n$
 		[System.Diagnostics.DebuggerStepThrough]
 		public $methodType.FullName$ $methodType.Name$(System.Action<$methodType.FullName$> action)
 		{
-			var method = new $class.Name$$methodType.Name$(this);
+			var method = new $class.SingularName$$methodType.Name$(this);
             action(method);
             method.Execute();
             return method;
@@ -531,9 +531,9 @@ $endif$
 >>
 
 methodTypeLeafClass() ::= <<
-	public partial class $class.Name$$methodType.Name$ : $methodType.FullName$
+	public partial class $class.SingularName$$methodType.Name$ : $methodType.FullName$
 	{
-		public $class.Name$$methodType.Name$($objectType_Name(methodType.ObjectType)$ @object) : base(@object)
+		public $class.SingularName$$methodType.Name$($objectType_Name(methodType.ObjectType)$ @object) : base(@object)
 		{
 		}
 
@@ -570,7 +570,7 @@ $class.Objects:{object|$byClass_Object()$}; separator="\n"$
 
 byClass_Object() ::= <<
 $if(object.Handle)$
-		public $class.Name$ $object.Handle.Name$ => this.cache[$class.Name$.$object.Handle.Name$Key];
+		public $class.SingularName$ $object.Handle.Name$ => this.cache[$class.SingularName$.$object.Handle.Name$Key];
 $endif$
 >>
 

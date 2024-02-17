@@ -78,18 +78,18 @@ namespace Allors.Database.Configuration.Derivations.Default
             {
                 if (this.RelationType != null)
                 {
-                    return this.Association.Strategy.Class.Name + "." + this.RelationType.RoleType.Name;
+                    return this.Association.Strategy.Class.SingularName + "." + this.RelationType.RoleType.Name;
                 }
 
-                return this.Association.Strategy.Class.Name;
+                return this.Association.Strategy.Class.SingularName;
             }
 
             if (this.RelationType != null)
             {
-                return this.Role.Strategy.Class.Name + "." + this.RelationType.AssociationType.Name;
+                return this.Role.Strategy.Class.SingularName + "." + this.RelationType.AssociationType.Name;
             }
 
-            return this.Role.Strategy.Class.Name;
+            return this.Role.Strategy.Class.SingularName;
         }
     }
 }

@@ -29,12 +29,12 @@ public class EmbeddedDerivations
                 var objectTypes = singularNames
                     .Union(assignedPluralNames)
                     .Select(v => v.Key)
-                    .OfType<Unit>()
+                    .OfType<IObjectType>()
                     .Distinct(); ;
 
                 foreach (var @this in objectTypes)
                 {
-                    @this.PluralName = Pluralizer.Pluralize(@this.SingularName);
+                    @this.PluralName = @this.AssignedPluralName ?? Pluralizer.Pluralize(@this.SingularName);
                 }
             }
         }

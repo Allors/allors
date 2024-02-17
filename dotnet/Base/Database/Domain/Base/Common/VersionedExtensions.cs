@@ -19,7 +19,7 @@ namespace Allors.Database.Domain
             var derivation = method.Derivation;
             var versionedClass = @this.Strategy.Class;
             var metaPopulation = versionedClass.MetaPopulation;
-            var versionClass = (IClass)metaPopulation.FindCompositeByName(versionedClass.Name + "Version");
+            var versionClass = (IClass)metaPopulation.FindCompositeByName(versionedClass.SingularName + "Version");
             var versionTypeRegex = new Regex(".+Version");
 
             var currentVersionRole = versionedClass.RoleTypes.First(v => v.Name.Equals("CurrentVersion"));
@@ -28,7 +28,7 @@ namespace Allors.Database.Domain
             var isNewVersion = currentVersion == null;
             if (!isNewVersion)
             {
-                foreach (var versionRoleType in versionClass.RoleTypes.Where(v => versionTypeRegex.IsMatch(v.AssociationType.ObjectType.Name)))
+                foreach (var versionRoleType in versionClass.RoleTypes.Where(v => versionTypeRegex.IsMatch(v.AssociationType.ObjectType.SingularName)))
                 {
                     var versionedRoleType = versionedClass.RoleTypes.FirstOrDefault(v => v.Name.Equals(versionRoleType.Name));
                     if (versionedRoleType == null)
@@ -69,12 +69,12 @@ namespace Allors.Database.Domain
                 newVersion.DerivationId = derivation.Id;
                 newVersion.DerivationTimeStamp = derivation.TimeStamp;
 
-                foreach (var versionRoleType in versionClass.RoleTypes.Where(v => versionTypeRegex.IsMatch(v.AssociationType.ObjectType.Name)))
+                foreach (var versionRoleType in versionClass.RoleTypes.Where(v => versionTypeRegex.IsMatch(v.AssociationType.ObjectType.SingularName)))
                 {
                     var versionedRoleType = versionedClass.RoleTypes.FirstOrDefault(v => v.Name.Equals(versionRoleType.Name));
                     if (versionedRoleType == null)
                     {
-                        throw new Exception("Could not find versioned role " + versionRoleType.Name + " on type " + versionedClass.Name);
+                        throw new Exception("Could not find versioned role " + versionRoleType.Name + " on type " + versionedClass.SingularName);
                     }
 
                     var versionedRole = @this.Strategy.GetRole(versionedRoleType);

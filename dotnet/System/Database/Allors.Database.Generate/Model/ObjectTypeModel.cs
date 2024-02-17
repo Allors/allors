@@ -18,7 +18,7 @@ public abstract class ObjectTypeModel : MetaIdentifiableObjectModel
     public string Tag => this.ObjectType.Tag;
 
     // IDataType
-    public string Name => this.ObjectType.Name;
+    public string Name => this.ObjectType.SingularName;
 
     public Type ClrType => this.ObjectType.BoundType;
 

@@ -418,7 +418,7 @@ public class Mapping : Sql.Mapping
     private void RestoreObjects(IClass @class)
     {
         var table = this.tableNameForObjectByClass[@class];
-        var name = this.Database.SchemaName + "." + ProcedurePrefixForRestore + @class.Name.ToLowerInvariant();
+        var name = this.Database.SchemaName + "." + ProcedurePrefixForRestore + @class.SingularName.ToLowerInvariant();
 
         // Import Objects
         var definition = $@"
@@ -440,7 +440,7 @@ $$;";
     private void CreateObject(IClass @class)
     {
         var table = this.tableNameForObjectByClass[@class];
-        var name = this.Database.SchemaName + "." + ProcedurePrefixForCreateObject + @class.Name.ToLowerInvariant();
+        var name = this.Database.SchemaName + "." + ProcedurePrefixForCreateObject + @class.SingularName.ToLowerInvariant();
         this.procedureNameForCreateObjectByClass.Add(@class, name);
 
         // CreateObject
@@ -469,7 +469,7 @@ $$;";
 
     private void CreateObjects(IClass @class)
     {
-        var name = this.Database.SchemaName + "." + ProcedurePrefixForCreateObjects + @class.Name.ToLowerInvariant();
+        var name = this.Database.SchemaName + "." + ProcedurePrefixForCreateObjects + @class.SingularName.ToLowerInvariant();
         this.procedureNameForCreateObjectsByClass.Add(@class, name);
 
         // CreateObjects
@@ -504,7 +504,7 @@ $$;";
     private void DeleteObject(IClass @class)
     {
         var table = this.tableNameForObjectByClass[@class];
-        var name = this.Database.SchemaName + "." + ProcedurePrefixForDeleteObject + @class.Name.ToLowerInvariant();
+        var name = this.Database.SchemaName + "." + ProcedurePrefixForDeleteObject + @class.SingularName.ToLowerInvariant();
         this.procedureNameForDeleteObjectByClass.Add(@class, name);
 
         var definition = $@"DROP FUNCTION IF EXISTS {name}({SqlTypeForObject});
@@ -527,7 +527,7 @@ $$;
     private void GetUnitRoles(IClass @class)
     {
         var sortedUnitRoleTypes = this.Database.GetSortedUnitRolesByObjectType(@class);
-        var name = this.Database.SchemaName + "." + ProcedurePrefixForGetUnits + @class.Name.ToLowerInvariant();
+        var name = this.Database.SchemaName + "." + ProcedurePrefixForGetUnits + @class.SingularName.ToLowerInvariant();
         this.procedureNameForGetUnitRolesByClass.Add(@class, name);
 
         // Get Unit Roles
@@ -551,7 +551,7 @@ $$;";
         var table = this.tableNameForObjectByClass[@class.ExclusiveClass];
         var objects = this.ObjectArrayParam;
         var objectsType = objects.TypeName;
-        var name = this.Database.SchemaName + "." + ProcedurePrefixForPrefetchUnits + @class.Name.ToLowerInvariant();
+        var name = this.Database.SchemaName + "." + ProcedurePrefixForPrefetchUnits + @class.SingularName.ToLowerInvariant();
         this.procedureNameForPrefetchUnitRolesByClass.Add(@class, name);
 
         var definition =
@@ -629,7 +629,7 @@ $$;";
     private void GetCompositeAssociationObjectTable(IClass @class, IAssociationType associationType)
     {
         var relationType = associationType.RelationType;
-        var name = this.Database.SchemaName + "." + ProcedurePrefixForGetAssociation + @class.Name.ToLowerInvariant() + "_" +
+        var name = this.Database.SchemaName + "." + ProcedurePrefixForGetAssociation + @class.SingularName.ToLowerInvariant() + "_" +
                    relationType.RoleType.SingularFullName.ToLowerInvariant();
         var table = this.tableNameForObjectByClass[@class];
         this.procedureNameForGetAssociationByRelationType.Add(relationType, name);
@@ -661,7 +661,7 @@ $$;";
         var table = this.tableNameForObjectByClass[@class];
         var objects = this.ObjectArrayParam;
         var objectsType = objects.TypeName;
-        var name = this.Database.SchemaName + "." + ProcedurePrefixForPrefetchAssociation + @class.Name.ToLowerInvariant() + "_" +
+        var name = this.Database.SchemaName + "." + ProcedurePrefixForPrefetchAssociation + @class.SingularName.ToLowerInvariant() + "_" +
                    relationType.RoleType.SingularFullName.ToLowerInvariant();
         this.procedureNameForPrefetchAssociationByRelationType.Add(relationType, name);
 
@@ -694,7 +694,7 @@ $$;";
         var objectsType = objects.TypeName;
         var roles = this.CompositeRoleArrayParam;
         var rolesType = roles.TypeName;
-        var name = this.Database.SchemaName + "." + ProcedurePrefixForAddRole + @class.Name.ToLowerInvariant() + "_" +
+        var name = this.Database.SchemaName + "." + ProcedurePrefixForAddRole + @class.SingularName.ToLowerInvariant() + "_" +
                    relationType.RoleType.SingularFullName.ToLowerInvariant();
         this.procedureNameForAddRoleByRelationType.Add(relationType, name);
 
@@ -724,7 +724,7 @@ $$;";
         var objectsType = objects.TypeName;
         var roles = this.CompositeRoleArrayParam;
         var rolesType = roles.TypeName;
-        var name = this.Database.SchemaName + "." + ProcedurePrefixForRemoveRole + @class.Name.ToLowerInvariant() + "_" +
+        var name = this.Database.SchemaName + "." + ProcedurePrefixForRemoveRole + @class.SingularName.ToLowerInvariant() + "_" +
                    relationType.RoleType.SingularFullName.ToLowerInvariant();
         this.procedureNameForRemoveRoleByRelationType.Add(relationType, name);
 
@@ -753,7 +753,7 @@ $$;";
         var table = this.tableNameForObjectByClass[@class];
         var objects = this.ObjectArrayParam;
         var objectsType = objects.TypeName;
-        var name = this.Database.SchemaName + "." + ProcedurePrefixForClearRole + @class.Name.ToLowerInvariant() + "_" +
+        var name = this.Database.SchemaName + "." + ProcedurePrefixForClearRole + @class.SingularName.ToLowerInvariant() + "_" +
                    relationType.RoleType.SingularFullName.ToLowerInvariant();
         this.procedureNameForClearRoleByRelationType.Add(relationType, name);
 
@@ -788,7 +788,7 @@ $$;";
         var table = this.tableNameForObjectByClass[@class];
         var objects = this.ObjectArrayParam;
         var objectsType = objects.TypeName;
-        var name = this.Database.SchemaName + "." + ProcedurePrefixForSetRole + @class.Name.ToLowerInvariant() + "_" +
+        var name = this.Database.SchemaName + "." + ProcedurePrefixForSetRole + @class.SingularName.ToLowerInvariant() + "_" +
                    roleType.SingularFullName.ToLowerInvariant();
         procedureNameForSetUnitRoleByRelationType.Add(relationType, name);
 
@@ -885,7 +885,7 @@ $$;";
     {
         var relationType = roleType.RelationType;
         var table = this.tableNameForObjectByClass[@class];
-        var name = this.Database.SchemaName + "." + ProcedurePrefixForGetAssociation + @class.Name.ToLowerInvariant() + "_" +
+        var name = this.Database.SchemaName + "." + ProcedurePrefixForGetAssociation + @class.SingularName.ToLowerInvariant() + "_" +
                    roleType.SingularFullName.ToLowerInvariant();
         this.procedureNameForGetAssociationByRelationType.Add(relationType, name);
 
@@ -916,7 +916,7 @@ $$;";
         var table = this.tableNameForObjectByClass[@class];
         var objects = this.ObjectArrayParam;
         var objectsType = objects.TypeName;
-        var name = this.Database.SchemaName + "." + ProcedurePrefixForPrefetchAssociation + @class.Name.ToLowerInvariant() + "_" +
+        var name = this.Database.SchemaName + "." + ProcedurePrefixForPrefetchAssociation + @class.SingularName.ToLowerInvariant() + "_" +
                    roleType.SingularFullName.ToLowerInvariant();
         this.procedureNameForPrefetchAssociationByRelationType.Add(relationType, name);
 
@@ -945,7 +945,7 @@ $$;";
     {
         var relationType = roleType.RelationType;
         var table = this.tableNameForObjectByClass[@class];
-        var name = this.Database.SchemaName + "." + ProcedurePrefixForGetAssociation + @class.Name.ToLowerInvariant() + "_" +
+        var name = this.Database.SchemaName + "." + ProcedurePrefixForGetAssociation + @class.SingularName.ToLowerInvariant() + "_" +
                    roleType.SingularFullName.ToLowerInvariant();
         this.procedureNameForGetAssociationByRelationType.Add(relationType, name);
 
@@ -970,7 +970,7 @@ $$;";
         var table = this.tableNameForObjectByClass[@class];
         var objects = this.ObjectArrayParam;
         var objectsType = objects.TypeName;
-        var name = this.Database.SchemaName + "." + ProcedurePrefixForPrefetchAssociation + @class.Name.ToLowerInvariant() + "_" +
+        var name = this.Database.SchemaName + "." + ProcedurePrefixForPrefetchAssociation + @class.SingularName.ToLowerInvariant() + "_" +
                    roleType.SingularFullName.ToLowerInvariant();
         this.procedureNameForPrefetchAssociationByRelationType.Add(relationType, name);
 
@@ -1003,7 +1003,7 @@ $$;";
         var objectsType = objects.TypeName;
         var roles = this.CompositeRoleArrayParam;
         var rolesType = roles.TypeName;
-        var name = this.Database.SchemaName + "." + ProcedurePrefixForSetRole + @class.Name.ToLowerInvariant() + "_" +
+        var name = this.Database.SchemaName + "." + ProcedurePrefixForSetRole + @class.SingularName.ToLowerInvariant() + "_" +
                    roleType.SingularFullName.ToLowerInvariant();
 
         // Set Composite Role (1-1 and *-1) [object table]
@@ -1031,7 +1031,7 @@ $$;";
         var table = this.tableNameForObjectByClass[@class];
         var objects = this.ObjectArrayParam;
         var objectsType = objects.TypeName;
-        var name = this.Database.SchemaName + "." + ProcedurePrefixForClearRole + @class.Name.ToLowerInvariant() + "_" +
+        var name = this.Database.SchemaName + "." + ProcedurePrefixForClearRole + @class.SingularName.ToLowerInvariant() + "_" +
                    roleType.SingularFullName.ToLowerInvariant();
 
         // Clear Composite Role (1-1 and *-1) [object table]

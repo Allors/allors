@@ -79,7 +79,7 @@ public class ObjectFactory : IObjectFactory
 
         foreach (var objectType in metaPopulation.Composites)
         {
-            var type = typeByName[objectType.Name];
+            var type = typeByName[objectType.SingularName];
 
             this.typeByObjectType[objectType] = type;
             this.objectTypeByType[type] = objectType;
@@ -90,7 +90,7 @@ public class ObjectFactory : IObjectFactory
                 var parameterTypes = new[] { typeof(IStrategy) };
                 var constructor = type.GetTypeInfo().GetConstructor(parameterTypes);
                 this.contructorInfoByObjectType[objectType] =
-                    constructor ?? throw new ArgumentException(objectType.Name + " has no Allors constructor.");
+                    constructor ?? throw new ArgumentException(objectType.SingularName + " has no Allors constructor.");
             }
         }
     }

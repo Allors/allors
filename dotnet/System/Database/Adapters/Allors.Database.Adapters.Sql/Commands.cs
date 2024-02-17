@@ -168,7 +168,7 @@ public abstract class Commands
                                 break;
 
                             default:
-                                throw new ArgumentException("Unknown Unit ObjectType: " + roleType.ObjectType.Name);
+                                throw new ArgumentException("Unknown Unit ObjectType: " + roleType.ObjectType.SingularName);
                         }
                     }
 
