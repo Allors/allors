@@ -8,10 +8,6 @@ namespace Allors.Database.Meta;
 
 public interface IStaticRelationType : IRelationType, IMetaIdentifiableObject
 {
-    new IStaticAssociationType AssociationType { get; internal set; }
-
-    new IStaticRoleType RoleType { get; internal set; }
-
 
 
 }

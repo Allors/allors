@@ -13,7 +13,7 @@ using System;
 ///     This is also called the 'active', 'controlling' or 'owning' side.
 ///     AssociationTypes can only have composite <see cref="ObjectType" />s.
 /// </summary>
-public abstract class AssociationType : IStaticAssociationType, IComparable
+public abstract class AssociationType : IComparable, IAssociationType, IRelationEndType
 {
     private readonly IStaticComposite objectType;
     private IRelationType relationType;

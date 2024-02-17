@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Allors.Graph;
 
-public abstract class RoleType : IStaticRoleType, IComparable
+public abstract class RoleType : IComparable, IRoleType, IRelationEndType
 {
     private readonly IObjectType objectType;
 
@@ -57,7 +57,7 @@ public abstract class RoleType : IStaticRoleType, IComparable
 
     private string ValidationName => "RoleType: " + this.relationType.Name;
 
-    IObjectType IRelationEndType.ObjectType => this.objectType;
+    public IObjectType ObjectType => this.objectType;
 
     public string SingularName
     {

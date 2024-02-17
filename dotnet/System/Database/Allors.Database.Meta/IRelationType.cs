@@ -14,9 +14,9 @@ using System;
 /// </summary>
 public interface IRelationType : IMetaIdentifiableObject, IComparable
 {
-    IAssociationType AssociationType { get; }
+    IAssociationType AssociationType { get; internal set; }
 
-    IRoleType RoleType { get; }
+    IRoleType RoleType { get; internal set; }
 
     Multiplicity Multiplicity { get; }
 

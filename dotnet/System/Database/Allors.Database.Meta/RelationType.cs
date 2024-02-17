@@ -19,10 +19,10 @@ public abstract class RelationType : IStaticRelationType, IMetaIdentifiableObjec
 {
     private string[] derivedWorkspaceNames;
 
-    private IStaticAssociationType associationType;
-    private IStaticRoleType roleType;
+    private IAssociationType associationType;
+    private IRoleType roleType;
 
-    protected RelationType(IStaticMetaPopulation metaPopulation, Guid id, Multiplicity? assignedMultiplicity, bool isDerived, IStaticAssociationType associationType, IStaticRoleType roleType)
+    protected RelationType(IStaticMetaPopulation metaPopulation, Guid id, Multiplicity? assignedMultiplicity, bool isDerived, AssociationType associationType, RoleType roleType)
     {
         this.Attributes = new MetaExtension();
         this.MetaPopulation = metaPopulation;
@@ -56,25 +56,13 @@ public abstract class RelationType : IStaticRelationType, IMetaIdentifiableObjec
 
     public string Tag { get; set; }
 
-    // TODO: use object initializers
-    public IRoleType RoleType => this.roleType;
-
-    // TODO: use object initializers
-    public IAssociationType AssociationType => this.associationType;
-
-
-
     public IReadOnlyList<string> AssignedWorkspaceNames { get; set; }
 
     public Multiplicity Multiplicity { get; }
 
-    IAssociationType IRelationType.AssociationType => this.associationType;
+    public IAssociationType AssociationType { get => this.associationType; set => this.associationType = value; }
 
-    IStaticAssociationType IStaticRelationType.AssociationType { get => this.associationType; set => this.associationType = value; }
-
-    IRoleType IRelationType.RoleType => this.roleType;
-
-    IStaticRoleType IStaticRelationType.RoleType { get => this.roleType; set => this.roleType = value; }
+    public IRoleType RoleType { get => this.roleType; set => this.roleType = value; }
 
     public string Name => this.associationType.ObjectType + this.roleType.SingularName;
 
