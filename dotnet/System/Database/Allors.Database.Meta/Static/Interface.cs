@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Text;
 
-public abstract class Interface : IComposite, IObjectType, IMetaIdentifiableObject, IInterface
+public abstract class Interface : IInterface
 {
     private string[] derivedWorkspaceNames;
 

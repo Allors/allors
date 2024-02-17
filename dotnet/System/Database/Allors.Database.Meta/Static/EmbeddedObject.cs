@@ -2,7 +2,6 @@
 {
     using Embedded;
     using Embedded.Meta;
-    using Meta;
 
     public abstract class EmbeddedObject : IEmbeddedObject
     {

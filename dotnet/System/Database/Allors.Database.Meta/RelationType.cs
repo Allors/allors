@@ -22,7 +22,7 @@ public abstract class RelationType : IMetaIdentifiableObject, IRelationType
     private IAssociationType associationType;
     private IRoleType roleType;
 
-    protected RelationType(MetaPopulation metaPopulation, Guid id, Multiplicity? assignedMultiplicity, bool isDerived, AssociationType associationType, RoleType roleType)
+    protected RelationType(MetaPopulation metaPopulation, Guid id, Multiplicity? assignedMultiplicity, bool isDerived, AssociationType associationType, IRoleType roleType)
     {
         this.Attributes = new MetaExtension();
         this.MetaPopulation = metaPopulation;

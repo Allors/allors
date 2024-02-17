@@ -1,4 +1,4 @@
-// <copyright file="ObjectType.cs" company="Allors bv">
+﻿// <copyright file="ObjectType.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -8,7 +8,7 @@ namespace Allors.Database.Meta;
 
 using System;
 
-public static class MetaIdentityExtensions
+public static class IMetaIdentifiableObjectExtensions
 {
     internal static void ValidateIdentity(this IMetaIdentifiableObject @this, ValidationLog validationLog)
     {

@@ -10,9 +10,8 @@ using System;
 using System.Collections.Generic;
 using Embedded;
 using Embedded.Meta;
-using Text;
 
-public abstract class Unit : EmbeddedObject, IObjectType, IMetaIdentifiableObject, IUnit
+public abstract class Unit : EmbeddedObject, IUnit
 {
     private readonly IEmbeddedUnitRole<string> singularName;
     private readonly IEmbeddedUnitRole<string> assignedPluralName;

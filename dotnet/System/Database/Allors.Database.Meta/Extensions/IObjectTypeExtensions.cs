@@ -6,7 +6,7 @@
 
 namespace Allors.Database.Meta;
 
-public static class ObjectTypeExtensions
+public static class IObjectTypeExtensions
 {
     internal static string ValidationName(this IObjectType @this)
     {

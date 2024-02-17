@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-public sealed class MethodType : IComparable, IMetaIdentifiableObject, IMethodType
+public sealed class MethodType : IComparable, IMethodType
 {
     private string[] derivedWorkspaceNames;
 

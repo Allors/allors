@@ -6,12 +6,11 @@
 
 namespace Allors.Database.Meta;
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Allors.Graph;
 
-public abstract class RoleType : IComparable, IRoleType, IRelationEndType
+public abstract class RoleType : IRoleType
 {
     private readonly IObjectType objectType;
 
@@ -49,7 +48,7 @@ public abstract class RoleType : IComparable, IRoleType, IRelationEndType
 
     public IReadOnlyDictionary<IComposite, ICompositeRoleType> CompositeRoleTypeByComposite { get; private set; }
 
-    public IAssociationType AssociationType => this.relationType.AssociationType;
+    IAssociationType IRoleType.AssociationType => this.relationType.AssociationType;
 
     public string AssignedSingularName { get; }
 
@@ -57,7 +56,7 @@ public abstract class RoleType : IComparable, IRoleType, IRelationEndType
 
     private string ValidationName => "RoleType: " + this.relationType.Name;
 
-    public IObjectType ObjectType => this.objectType;
+    IObjectType IRelationEndType.ObjectType => this.objectType;
 
     public string SingularName
     {

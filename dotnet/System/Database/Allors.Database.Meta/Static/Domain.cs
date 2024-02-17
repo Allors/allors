@@ -12,7 +12,7 @@ using System.Linq;
 using Embedded;
 using Embedded.Meta;
 
-public sealed class Domain : EmbeddedObject, IMetaIdentifiableObject, IDomain
+public sealed class Domain : EmbeddedObject, IDomain
 {
     public Domain(IEmbeddedPopulation embeddedPopulation, EmbeddedObjectType embeddedObjectType)
      : base(embeddedPopulation, embeddedObjectType)

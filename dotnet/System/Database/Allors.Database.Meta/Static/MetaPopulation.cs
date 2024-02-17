@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Allors.Embedded.Domain.Memory;
 using Embedded;
-using Embedded.Meta;
 
 public abstract class MetaPopulation : EmbeddedPopulation, IMetaPopulation
 {

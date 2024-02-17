@@ -11,7 +11,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using Text;
 
-public abstract class Class : IComposite, IObjectType, IMetaIdentifiableObject, IClass
+public abstract class Class : IClass
 {
     private ConcurrentDictionary<IMethodType, Action<object, object>[]> actionsByMethodType;
 
