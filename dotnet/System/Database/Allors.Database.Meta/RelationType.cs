@@ -15,7 +15,7 @@ using Allors.Text;
 ///     A <see cref="RelationType" /> defines the state and behavior for
 ///     a set of <see cref="AssociationType" />s and <see cref="RoleType" />s.
 /// </summary>
-public abstract class RelationType : IStaticRelationType, IMetaIdentifiableObject
+public abstract class RelationType : IMetaIdentifiableObject, IRelationType
 {
     private string[] derivedWorkspaceNames;
 

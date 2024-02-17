@@ -30,8 +30,8 @@ public abstract class MetaPopulation : EmbeddedPopulation, IStaticMetaPopulation
 
     private IReadOnlyList<Domain> domains;
     private IReadOnlyList<Class> classes;
-    private IReadOnlyList<IStaticRelationType> relationTypes;
-    private IReadOnlyList<IStaticInterface> interfaces;
+    private IReadOnlyList<RelationType> relationTypes;
+    private IReadOnlyList<Interface> interfaces;
     private IReadOnlyList<IStaticComposite> composites;
     private IReadOnlyList<Unit> units;
     private IReadOnlyList<MethodType> methodTypes;
@@ -72,7 +72,7 @@ public abstract class MetaPopulation : EmbeddedPopulation, IStaticMetaPopulation
 
     IReadOnlyList<IRelationType> IMetaPopulation.RelationTypes => this.relationTypes;
 
-    IReadOnlyList<IStaticRelationType> IStaticMetaPopulation.RelationTypes
+    IReadOnlyList<RelationType> IStaticMetaPopulation.RelationTypes
     {
         get => this.relationTypes;
         set => this.relationTypes = value;
@@ -80,7 +80,7 @@ public abstract class MetaPopulation : EmbeddedPopulation, IStaticMetaPopulation
 
     IReadOnlyList<IInterface> IMetaPopulation.Interfaces => this.interfaces;
 
-    IReadOnlyList<IStaticInterface> IStaticMetaPopulation.Interfaces
+    IReadOnlyList<Interface> IStaticMetaPopulation.Interfaces
     {
         get => this.interfaces;
         set => this.interfaces = value;

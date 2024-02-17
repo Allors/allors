@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Text;
 
-public abstract class Interface : IStaticInterface, IStaticComposite, IObjectType, IMetaIdentifiableObject
+public abstract class Interface : IStaticComposite, IObjectType, IMetaIdentifiableObject, IInterface
 {
     private string[] derivedWorkspaceNames;
 
@@ -171,26 +171,26 @@ public abstract class Interface : IStaticInterface, IStaticComposite, IObjectTyp
     public bool IsAssignableFrom(IComposite objectType) =>
         this.Equals(objectType) || this.subtypes.Contains(objectType);
 
-    void IStaticInterface.DeriveWorkspaceNames() =>
+    public void DeriveWorkspaceNames() =>
         this.derivedWorkspaceNames = ((IInterface)this)
             .RoleTypes.SelectMany(v => v.RelationType.WorkspaceNames)
             .Union(((IInterface)this).AssociationTypes.SelectMany(v => v.RelationType.WorkspaceNames))
             .Union(this.MethodTypes.SelectMany(v => v.WorkspaceNames))
             .ToArray();
 
-    void IStaticInterface.InitializeDirectSubtypes()
+    public void InitializeDirectSubtypes()
     {
         this.directSubtypes = this.MetaPopulation.Composites.Where(v => v.DirectSupertypes.Contains(this)).ToArray();
     }
 
-    void IStaticInterface.InitializeSubtypes()
+    public void InitializeSubtypes()
     {
         var subtypes = new HashSet<IComposite>();
         this.InitializeSubtypesRecursively(this, subtypes);
         this.subtypes = subtypes.ToArray();
     }
 
-    void IStaticInterface.InitializeSubclasses()
+    public void InitializeSubclasses()
     {
         var subclasses = new HashSet<Class>();
         foreach (var subType in this.subtypes.OfType<IClass>())
@@ -201,12 +201,12 @@ public abstract class Interface : IStaticInterface, IStaticComposite, IObjectTyp
         this.subclasses = subclasses.ToArray();
     }
 
-    void IStaticInterface.InitializeComposites()
+    public void InitializeComposites()
     {
         this.composites = this.subtypes.Append(this).ToArray();
     }
 
-    void IStaticInterface.InitializeExclusiveSubclass() => this.exclusiveClass = this.subclasses.Count == 1 ? this.subclasses.First() : null;
+    public void InitializeExclusiveSubclass() => this.exclusiveClass = this.subclasses.Count == 1 ? this.subclasses.First() : null;
 
     private void InitializeSubtypesRecursively(IObjectType type, ISet<IComposite> subtypes)
     {

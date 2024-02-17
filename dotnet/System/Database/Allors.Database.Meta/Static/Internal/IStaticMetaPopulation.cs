@@ -17,11 +17,11 @@ public interface IStaticMetaPopulation : IMetaPopulation
 
     new IReadOnlyList<IStaticComposite> Composites { get; internal set; }
 
-    new IReadOnlyList<IStaticInterface> Interfaces { get; internal set; }
+    new IReadOnlyList<Interface> Interfaces { get; internal set; }
 
     new IReadOnlyList<Class> Classes { get; internal set; }
 
-    new IReadOnlyList<IStaticRelationType> RelationTypes { get; internal set; }
+    new IReadOnlyList<RelationType> RelationTypes { get; internal set; }
 
     new IReadOnlyList<MethodType> MethodTypes { get; internal set; }
 

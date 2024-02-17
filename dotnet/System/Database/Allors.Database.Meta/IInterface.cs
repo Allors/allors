@@ -11,4 +11,16 @@ using System.Collections.Generic;
 public interface IInterface : IComposite
 {
     IReadOnlyList<IComposite> DirectSubtypes { get; }
+
+    internal void InitializeDirectSubtypes();
+
+    internal void InitializeSubtypes();
+
+    internal void InitializeSubclasses();
+
+    internal void InitializeComposites();
+
+    internal void InitializeExclusiveSubclass();
+
+    internal void DeriveWorkspaceNames();
 }
