@@ -1,0 +1,168 @@
+﻿delimiters "$", "$"
+
+TemplateId() ::= <<17ED40F8-BDF8-4A7C-9AE9-1C4D2AD6BA2B>>
+TemplateName() ::= <<Allors C# Configuration>>
+TemplateVersion() ::= <<3.0.3>>
+TemplateAllors() ::= <<1.0>>
+TemplateConfiguration(meta) ::= <<
+$!
+Copyright 2002-2022 Allors bvba.
+
+Dual Licensed under
+  a) the Lesser General Public Licence v3 (LGPL)
+  b) the Allors License
+
+The LGPL License is included in the file lgpl.txt.
+The Allors License is an addendum to your contract.
+
+Allors Platform is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+For more information visit http://www.allors.com/legal
+!$
+<generations>
+	<generation template="metaSource" output="MetaSource.g.cs"/>
+</generations>
+>>
+
+metaSource(meta) ::= <<
+namespace Allors.Database.Domain
+{
+    using Meta;
+
+    public sealed class MetaPopulationSource : IMetaPopulationSource
+    {
+		private readonly IMetaPopulation metaPopulation;
+
+		public MetaPopulationSource(IMetaPopulation metaPopulation)
+		{
+			this.metaPopulation = metaPopulation;
+
+			// Units
+$meta.units:{objectType|$metaUnit_Init()$}; separator="\n"$
+
+			// Interfaces
+$meta.interfaces:{objectType|$metaInterface_Init()$}; separator="\n"$
+
+			// Classes
+$meta.classes:{objectType|$metaClass_Init()$}; separator="\n"$
+
+			// AssociationType
+$! $meta.relationTypes:{relationType|$metaAssociationType_Init()$}; separator="\n"$ !$
+
+			// RoleType
+$! $meta.relationTypes:{relationType|$metaRoleType_Init()$}; separator="\n"$ !$
+		}
+
+        public IMetaPopulation MetaPopulation => metaPopulation;
+
+		// Units
+$meta.units:{objectType|$metaObjectType_Property()$}; separator="\n"$
+
+		// Interfaces
+$meta.interfaces:{objectType|$metaObjectType_Property()$}; separator="\n"$
+
+		// Classes
+$meta.classes:{objectType|$metaObjectType_Property()$}; separator="\n"$
+    }
+
+$meta.units:{unit|$metaUnit_Type()$}; separator="\n"$
+$meta.interfaces:{interface|$metaInterface_Type()$}; separator="\n"$
+$meta.classes:{class|$metaClass_Type()$}; separator="\n"$
+$meta.relationTypes:{relationType|$metaAssociationType_Type()$}; separator="\n"$
+$meta.relationTypes:{relationType|$metaRoleType_Type()$}; separator="\n"$
+}
+>>
+
+metaUnit_Init() ::= <<
+			this.$objectType.SingularName$ = new Meta$objectType.SingularName${ Unit = (IUnit)metaPopulation.FindById(System.Guid.Parse("$objectType.Id$")) };
+>>
+
+metaInterface_Init() ::= <<
+			this.$objectType.SingularName$ = new Meta$objectType.SingularName${ Interface = (IInterface)metaPopulation.FindById(System.Guid.Parse("$objectType.Id$")) };
+>>
+
+metaClass_Init() ::= <<
+			this.$objectType.SingularName$ = new Meta$objectType.SingularName${ Class = (IClass)metaPopulation.FindById(System.Guid.Parse("$objectType.Id$")) };
+>>
+
+metaAssociationType_Init() ::= <<
+			this.$relationType.RoleType.ObjectType.SingularName$.$relationType.AssociationType.Name$ = new Meta$relationType.AssociationType.Name${ AssociationType = ((IRelationType)metaPopulation.FindById(System.Guid.Parse("$relationType.Id$"))).AssociationType };
+>>
+
+metaRoleType_Init() ::= <<
+			this.$relationType.AssociationType.ObjectType.SingularName$.$relationType.RoleType.Name$ = new Meta$relationType.RoleType.FullName${ RoleType = ((IRelationType)metaPopulation.FindById(System.Guid.Parse("$relationType.Id$"))).RoleType };
+>>
+
+metaObjectType_Property() ::= <<
+        public IMeta$objectType.SingularName$ $objectType.SingularName$ { get; }
+
+>>
+
+metaUnit_Type() ::= <<
+	public class Meta$unit.SingularName$ : IMeta$unit.SingularName$ 
+	{
+		public IUnit Unit { get; internal set; }
+	}
+
+>>
+
+metaInterface_Type() ::= <<
+	public class Meta$interface.SingularName$ : IMeta$interface.SingularName$
+	{
+		public IInterface Interface { get; internal set; }
+
+$interface.RoleTypes:{roleType|$metaObjectType_RoleType()$}; separator="\n"$
+$interface.AssociationTypes:{associationType|$metaObjectType_AssociationType()$}; separator="\n"$
+	}
+
+>>
+
+metaClass_Type() ::= <<
+	public class Meta$class.SingularName$ : IMeta$class.SingularName$
+	{
+		public IClass Class { get; internal set; }
+
+$class.RoleTypes:{roleType|$metaObjectType_RoleType()$}; separator="\n"$
+$class.AssociationTypes:{associationType|$metaObjectType_AssociationType()$}; separator="\n"$
+	}
+
+>>
+
+metaObjectType_RoleType() ::= <<
+		public IMeta$roleType.FullName$ $roleType.Name$ { get; internal set; }
+
+
+>>
+
+metaObjectType_AssociationType() ::= <<
+		public IMeta$associationType.Name$ $associationType.Name$ { get; internal set; }
+>>
+
+metaRoleType_Type() ::= <<
+	public class Meta$relationType.RoleType.FullName$ : IMeta$relationType.RoleType.FullName$
+	{
+		public IRoleType RoleType { get; internal set; }
+
+$if(relationType.RoleType.ObjectType.IsComposite)$	
+	public IMeta$relationType.RoleType.ObjectType$ ObjectType { get; internal set; }
+
+	public IMeta$relationType.AssociationType.Name$ AssociationType { get; internal set; }
+$endif$
+	}
+>>
+
+metaAssociationType_Type() ::= <<
+	public class Meta$relationType.AssociationType.Name$ : IMeta$relationType.AssociationType.Name$
+	{
+		public IAssociationType AssociationType { get; internal set; }
+
+		public IMeta$relationType.AssociationType.ObjectType$ ObjectType { get; internal set; }
+
+		public IMeta$relationType.RoleType.FullName$ RoleType { get; internal set; }
+	}
+
+>>
+boolean(value) ::= "$if(value)$true$else$false$endif$"

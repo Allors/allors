@@ -68,7 +68,7 @@ public abstract class RoleType : IRoleType
     ///     Gets the full singular name.
     /// </summary>
     /// <value>The full singular name.</value>
-    public string SingularFullName => this.relationType.AssociationType.ObjectType + this.singularName;
+    public string SingularFullName => this.relationType.AssociationType.ObjectType + this.SingularName;
 
     public string PluralName
     {
@@ -83,7 +83,7 @@ public abstract class RoleType : IRoleType
     /// <value>The full plural name.</value>
     public string PluralFullName => this.relationType.AssociationType.ObjectType + this.PluralName;
 
-    public string Name => this.IsMany ? this.PluralName : this.singularName;
+    public string Name => this.IsMany ? this.PluralName : this.SingularName;
 
     public string FullName => this.IsMany ? this.PluralFullName : this.SingularFullName;
 

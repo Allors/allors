@@ -23,6 +23,8 @@ public class RelationTypeModel : MetaIdentifiableObjectModel
 
     public RoleTypeModel RoleType { get; }
 
+    public string Name => this.RelationType.Name;
+
     public Multiplicity Multiplicity => this.RelationType.Multiplicity;
 
     public bool IsOneToOne => this.RelationType.Multiplicity == Multiplicity.OneToOne;
