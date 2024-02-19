@@ -24,9 +24,9 @@ public abstract class Class : EmbeddedObject, IClass
     protected Class(MetaPopulation metaPopulation, EmbeddedObjectType embeddedObjectType)
         : base(metaPopulation, embeddedObjectType)
     {
-        // TODO: Create single element IReadOnlyList
-        this.Attributes = new MetaExtension();
         this.MetaPopulation = metaPopulation;
+
+        this.Attributes = new MetaExtension();
 
         this.singularName = this.EmbeddedPopulation.EmbeddedGetUnitRole<string>(this, metaPopulation.EmbeddedRoleTypes.ObjectTypeSingularName);
         this.assignedPluralName = this.EmbeddedPopulation.EmbeddedGetUnitRole<string>(this, metaPopulation.EmbeddedRoleTypes.ObjectTypeAssignedPluralName);

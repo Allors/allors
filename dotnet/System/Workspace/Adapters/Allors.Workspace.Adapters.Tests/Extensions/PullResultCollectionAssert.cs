@@ -14,7 +14,7 @@
 
         public void Equal(params string[] expected)
         {
-            var actual = this.collection.Select(v => (string)((dynamic)v).SingularName.Value).OrderBy(v => v);
+            var actual = this.collection.Select(v => (string)((dynamic)v).Name.Value).OrderBy(v => v);
             Assert.Equal(expected.OrderBy(v => v), actual);
         }
     }

@@ -203,7 +203,7 @@ build_domain(assembly) ::= <<
                         });
 	        {
 $if(assembly.ExtensionAttributes)$
-                Attributes = { $assembly.ExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ }
+                domains.$assembly.Name$.Attributes = { $assembly.ExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ }
 $endif$
 	        };
 >>
@@ -291,7 +291,21 @@ assign_inheritedmethodType(method) ::= <<
 
 build_methods(composite) ::= <<$composite.DefinedMethods:{method|$build_method(method)$}; separator="\n"$>>
 build_method(method) ::= <<
-            methodTypes.$method.DefiningType.SingularName$$method.Name$ = new MethodType(meta.$method.DefiningType.SingularName$, Ids.$method.DefiningType.SingularName$$method.Name$, "$method.Name$")$if(method.MethodTypeExtensionAttributes || method.CompositeMethodTypeExtensionAttributes)$ { $if(method.MethodTypeExtensionAttributes)$Attributes = { $method.MethodTypeExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ }$if(method.MethodTypeExtensionAttributes && method.CompositeMethodTypeExtensionAttributes)$,$endif$$endif$$if(method.CompositeMethodTypeExtensionAttributes)$ CompositeMethodType = { Attributes = { $method.CompositeMethodTypeExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ } } $endif$  } $endif$;
+                methodTypes.$method.DefiningType.SingularName$$method.Name$ = meta.Create<MethodType>(v=>
+                        {
+                                v.Id = Ids.$method.DefiningType.SingularName$$method.Name$; 
+                                v.Tag = v.Id.Tag();
+                                v.ObjectType = meta.$method.DefiningType.SingularName$; 
+                                v.Name = "$method.Name$";
+                                v.CompositeMethodType = new CompositeMethodType(v.ObjectType, v);
+                        });
+$if(method.MethodTypeExtensionAttributes)$
+                methodTypes.$method.DefiningType.SingularName$$method.Name$.Attributes = { $method.MethodTypeExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ }
+$endif$
+$if(method.CompositeMethodTypeExtensionAttributes)$
+        methodTypes.$method.DefiningType.SingularName$$method.Name$.CompositeMethodType.Attributes = { $method.CompositeMethodTypeExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ };
+$endif$ 
+
 >>
 
 extend_compositeRoleTypes(relationType) ::= <<

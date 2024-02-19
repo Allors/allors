@@ -8,22 +8,22 @@ namespace Allors.Database.Meta;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Embedded.Meta;
 
-public sealed class MethodType : IComparable, IMethodType
+public sealed class MethodType : EmbeddedObject, IComparable, IMethodType
 {
     private string[] derivedWorkspaceNames;
 
-    public MethodType(IComposite objectType, Guid id, string name)
+    public MethodType(MetaPopulation metaPopulation, EmbeddedObjectType embeddedObjectType)
+        : base(metaPopulation, embeddedObjectType)
     {
+        this.MetaPopulation = metaPopulation;
+
         this.Attributes = new MetaExtension();
-        this.MetaPopulation = (MetaPopulation)objectType.MetaPopulation;
-        this.Id = id;
-        this.Tag = id.Tag();
-        this.ObjectType = objectType;
-        this.Name = name;
+      
         this.AssignedWorkspaceNames = Array.Empty<string>();
 
-        this.CompositeMethodType = new CompositeMethodType(objectType, this);
+        //this.CompositeMethodType = new CompositeMethodType(objectType, this);
 
         this.MetaPopulation.OnCreated(this);
     }
@@ -34,21 +34,21 @@ public sealed class MethodType : IComparable, IMethodType
 
     public MetaPopulation MetaPopulation { get; }
 
-    public Guid Id { get; }
+    public Guid Id { get; set; }
 
     public string Tag { get; set; }
     
-    public ICompositeMethodType CompositeMethodType { get; }
+    public ICompositeMethodType CompositeMethodType { get; set; }
 
     public IReadOnlyDictionary<IComposite, ICompositeMethodType> CompositeMethodTypeByComposite { get; private set; }
 
     IComposite IMethodType.ObjectType => this.ObjectType;
 
-    public IComposite ObjectType { get; }
+    public IComposite ObjectType { get; set; }
 
     public IReadOnlyList<string> AssignedWorkspaceNames { get; set; }
 
-    public string Name { get; }
+    public string Name { get; set; }
 
     public IEnumerable<string> WorkspaceNames
     {
