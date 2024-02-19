@@ -218,7 +218,14 @@ build_unit(unit) ::= <<
 >>
 
 build_interface(interface) ::= <<
-	        meta.$interface.SingularName$ = new Meta$interface.SingularName$(meta, Ids.$interface.SingularName$, new Interface[]{$interface.ImplementedInterfaces:{implementedInterface|meta.$implementedInterface.SingularName$}; separator=", "$}, "$interface.SingularName$", $if(interface.AssignedPluralName)$"$interface.AssignedPluralName$"$else$null$endif$);
+                meta.$interface.SingularName$ = meta.Create<Meta$interface.SingularName$>(v=>
+                        {
+                                v.Id = Ids.$interface.SingularName$; 
+                                v.Tag = v.Id.Tag();
+                                v.DirectSupertypes = new Interface[]{$interface.ImplementedInterfaces:{implementedInterface|meta.$implementedInterface.SingularName$}; separator=", "$}; 
+                                v.SingularName = "$interface.SingularName$";
+                                v.AssignedPluralName = $if(interface.AssignedPluralName)$"$interface.AssignedPluralName$"$else$null$endif$;
+                        });
 >>
 
 build_class(class) ::= <<

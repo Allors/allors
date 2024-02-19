@@ -9,10 +9,16 @@ namespace Allors.Database.Meta;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Allors.Embedded;
+using Allors.Embedded.Meta;
 using Text;
 
-public abstract class Interface : IInterface
+public abstract class Interface : EmbeddedObject, IInterface
 {
+    private readonly IEmbeddedUnitRole<string> singularName;
+    private readonly IEmbeddedUnitRole<string> assignedPluralName;
+    private readonly IEmbeddedUnitRole<string> pluralName;
+
     private string[] derivedWorkspaceNames;
 
     private IReadOnlyList<IComposite> composites;
@@ -21,16 +27,18 @@ public abstract class Interface : IInterface
     private IReadOnlyList<IClass> subclasses;
     private IClass exclusiveClass;
 
-    protected Interface(MetaPopulation metaPopulation, Guid id, IReadOnlyList<Interface> directSupertypes, string singularName, string assignedPluralName)
+    protected Interface(MetaPopulation metaPopulation, EmbeddedObjectType embeddedObjectType)
+        : base(metaPopulation, embeddedObjectType)
     {
         this.Attributes = new MetaExtension();
         this.MetaPopulation = metaPopulation;
-        this.Id = id;
-        this.Tag = id.Tag();
-        this.SingularName = singularName;
-        this.AssignedPluralName = !string.IsNullOrEmpty(assignedPluralName) ? assignedPluralName : null;
-        this.PluralName = this.AssignedPluralName != null ? this.AssignedPluralName : Pluralizer.Pluralize(this.SingularName);
-        this.DirectSupertypes = directSupertypes;
+
+        this.singularName = this.EmbeddedPopulation.EmbeddedGetUnitRole<string>(this, metaPopulation.EmbeddedRoleTypes.ObjectTypeSingularName);
+        this.assignedPluralName = this.EmbeddedPopulation.EmbeddedGetUnitRole<string>(this, metaPopulation.EmbeddedRoleTypes.ObjectTypeAssignedPluralName);
+        this.pluralName = this.EmbeddedPopulation.EmbeddedGetUnitRole<string>(this, metaPopulation.EmbeddedRoleTypes.ObjectTypePluralName);
+        
+        this.DirectSupertypes = Array.Empty<IInterface>();
+
         metaPopulation.OnCreated(this);
     }
     
@@ -50,17 +58,17 @@ public abstract class Interface : IInterface
 
     public MetaPopulation MetaPopulation { get; }
 
-    public Guid Id { get; }
+    public Guid Id { get; set; }
 
     public string Tag { get; set; }
 
     public Type BoundType { get; set; }
 
-    public string SingularName { get; }
+    public string SingularName { get => this.singularName.Value; set => this.singularName.Value = value; }
 
-    public string AssignedPluralName { get; }
+    public string AssignedPluralName { get => this.assignedPluralName.Value; set => this.assignedPluralName.Value = value; }
 
-    public string PluralName { get; set; }
+    public string PluralName { get => this.pluralName.Value; set => this.pluralName.Value = value; }
 
     public bool IsUnit => false;
 

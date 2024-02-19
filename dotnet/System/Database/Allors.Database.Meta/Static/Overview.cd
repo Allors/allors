@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="Allors.Database.Meta.AssociationType" BaseTypeListCollapsed="true">
-    <Position X="3.5" Y="6.25" Width="2.25" />
+    <Position X="3.5" Y="6.75" Width="2.25" />
     <Members>
       <Method Name="AssociationType" Hidden="true" />
       <Method Name="CompareTo" Hidden="true" />
@@ -11,8 +11,8 @@
       <Method Name="Validate" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>EAJgCAgAAACAAAYEgECAAAQQAIEAAIACBIoIAAAAIAA=</HashCode>
-      <FileName>AssociationType.cs</FileName>
+      <HashCode>EAJACAiAAACAQAYEgECAAAQQAAEAAIACBAoAAAAAIAA=</HashCode>
+      <FileName>Static\AssociationType.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
@@ -23,8 +23,8 @@
       <Method Name="IsAssignableFrom" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>ABBySAEgUAHiIAYMkAIAAAwQAWCGAMACQAIAA0BCABA=</HashCode>
-      <FileName>Class.cs</FileName>
+      <HashCode>AAJCQAEAQgHmIAYMkCIAAAQQAWKGAMACQAJAAUBCABA=</HashCode>
+      <FileName>Static\Class.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
@@ -40,7 +40,7 @@
     </Members>
     <TypeIdentifier>
       <HashCode>AAACBAAAAACgAAQMgAKAAAQYAAAAAIAAAAAAAARAAAA=</HashCode>
-      <FileName>Domain.cs</FileName>
+      <FileName>Static\Domain.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
@@ -52,8 +52,8 @@
       <Method Name="IsAssignableFrom" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AZByCEAgUAHiIEcMsgIQAAwQAWCGJsACQAIAA0BCABA=</HashCode>
-      <FileName>Interface.cs</FileName>
+      <HashCode>AYJCAEAAQgHmIEcMsiIQAAQQAWKGJsACQAJAAUBCABA=</HashCode>
+      <FileName>Static\Interface.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
@@ -71,8 +71,8 @@
       <Method Name="Validate" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>EAFAgEGAIBGCBQDICAgAADhAQCABCAAgGAQAYAAAmAA=</HashCode>
-      <FileName>MetaPopulation.cs</FileName>
+      <HashCode>AABAgEGAYBGCBQDJOggAAChAQCARIEAgEAQAQAAAkEA=</HashCode>
+      <FileName>Static\MetaPopulation.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
@@ -89,7 +89,7 @@
     </Members>
     <TypeIdentifier>
       <HashCode>AAACIEEIAACgACQMoAKAABQQAAAAAIAAAIAAAABAAAA=</HashCode>
-      <FileName>MethodType.cs</FileName>
+      <FileName>Static\MethodType.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
@@ -105,17 +105,13 @@
       <Method Name="Validate" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>ACICAEEAAACgABQMoIKAAAQQiAAAAIBAEAIAAABAAAA=</HashCode>
+      <HashCode>AAICAEEAAACgABQMoIKAAAQQiAAAAIAAEAIAAABCAAA=</HashCode>
       <FileName>RelationType.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="AssociationType" />
-      <Property Name="RoleType" />
-    </ShowAsAssociation>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Database.Meta.RoleType" BaseTypeListCollapsed="true">
-    <Position X="6" Y="6.25" Width="2.25" />
+    <Position X="6" Y="6.75" Width="2.25" />
     <Members>
       <Method Name="CompareTo" Hidden="true" />
       <Method Name="DeriveScaleAndSize" Hidden="true" />
@@ -126,8 +122,8 @@
       <Method Name="Validate" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAIEqBAAAACAgIYGiELABAQQgAAAAIACAJAAAACAMAI=</HashCode>
-      <FileName>RoleType.cs</FileName>
+      <HashCode>AAIEqBCAAiCAwIYGiELAAAQQAAAAAIACABAAAACAMAI=</HashCode>
+      <FileName>Static\RoleType.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
@@ -145,8 +141,8 @@
       <Method Name="Unit" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAAKAAAAAACgAAZMgAIAAAQRACCAAIISQAAAAUBAAAA=</HashCode>
-      <FileName>Unit.cs</FileName>
+      <HashCode>AAAKAAAAAgCgAAZMgAIAAAARACKAAIISQAAAAUBAAAA=</HashCode>
+      <FileName>Static\Unit.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>

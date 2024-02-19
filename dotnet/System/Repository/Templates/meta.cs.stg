@@ -93,7 +93,7 @@ $repository.Interfaces:{interface|$define_interface(interface)$}; separator="\n"
 
 define_interface(interface) ::= <<
     public partial class Meta$interface.SingularName$ : Interface {
-        public Meta$interface.SingularName$(M m, System.Guid id, System.Collections.Generic.IReadOnlyList<Interface> directSupertypes, string singularName, string assignedPluralName) : base(m, id, directSupertypes, singularName, assignedPluralName)
+        public Meta$interface.SingularName$(MetaPopulation metaPopulation, Allors.Embedded.Meta.EmbeddedObjectType embeddedObjectType) : base(metaPopulation, embeddedObjectType)
         {
 $if(interface.ExtensionAttributes)$
                 Attributes = { $interface.ExtensionAttributes:{attribute|$attribute.Name$ = $attribute.Value$}; separator=", "$ }
