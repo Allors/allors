@@ -23,22 +23,22 @@ GNU General Public License for more details.
 For more information visit http://www.allors.com/legal
 !$
 <generations>
-	<generation template="metaSource" output="MetaSource.g.cs"/>
+	<generation template="metaIndex" output="MetaIndex.g.cs"/>
 </generations>
 >>
 
-metaSource(meta) ::= <<
+metaIndex(meta) ::= <<
 namespace Allors.Database.Domain
 {
     using Meta;
 
-    public sealed class MetaPopulationSource : IMetaPopulationSource
+    public sealed class MetaIndex : IMetaIndex
     {
-		private readonly IMetaPopulation metaPopulation;
+		private readonly IMetaPopulation meta;
 
-		public MetaPopulationSource(IMetaPopulation metaPopulation)
+		public MetaIndex(IMetaPopulation meta)
 		{
-			this.metaPopulation = metaPopulation;
+			this.meta = meta;
 
 			// Units
 $meta.units:{objectType|$metaUnit_Init()$}; separator="\n"$
@@ -49,14 +49,14 @@ $meta.interfaces:{objectType|$metaInterface_Init()$}; separator="\n"$
 			// Classes
 $meta.classes:{objectType|$metaClass_Init()$}; separator="\n"$
 
-			// AssociationType
-$! $meta.relationTypes:{relationType|$metaAssociationType_Init()$}; separator="\n"$ !$
-
 			// RoleType
-$! $meta.relationTypes:{relationType|$metaRoleType_Init()$}; separator="\n"$ !$
+$meta.relationTypes:{relationType|$metaRoleType_Init()$}; separator="\n"$
+	
+			// AssociationType
+$meta.relationTypes:{relationType|$metaAssociationType_Init()$}; separator="\n"$
 		}
 
-        public IMetaPopulation MetaPopulation => metaPopulation;
+        public IMetaPopulation Meta => meta;
 
 		// Units
 $meta.units:{objectType|$metaObjectType_Property()$}; separator="\n"$
@@ -66,6 +66,12 @@ $meta.interfaces:{objectType|$metaObjectType_Property()$}; separator="\n"$
 
 		// Classes
 $meta.classes:{objectType|$metaObjectType_Property()$}; separator="\n"$
+
+		// RoleType
+$meta.relationTypes:{relationType|$metaRoleType_Property()$}; separator="\n"$
+
+		// AssociationType
+$meta.relationTypes:{relationType|$metaAssociationType_Property()$}; separator="\n"$
     }
 
 $meta.units:{unit|$metaUnit_Type()$}; separator="\n"$
@@ -77,43 +83,54 @@ $meta.relationTypes:{relationType|$metaRoleType_Type()$}; separator="\n"$
 >>
 
 metaUnit_Init() ::= <<
-			this.$objectType.SingularName$ = new Meta$objectType.SingularName${ Unit = (IUnit)metaPopulation.FindById(System.Guid.Parse("$objectType.Id$")) };
+			this.$objectType.SingularName$ = new $objectType.SingularName$Index { Meta = (IUnit)meta.FindById(System.Guid.Parse("$objectType.Id$")) };
 >>
 
 metaInterface_Init() ::= <<
-			this.$objectType.SingularName$ = new Meta$objectType.SingularName${ Interface = (IInterface)metaPopulation.FindById(System.Guid.Parse("$objectType.Id$")) };
+			this.$objectType.SingularName$ = new $objectType.SingularName$Index { Meta = (IInterface)meta.FindById(System.Guid.Parse("$objectType.Id$")) };
 >>
 
 metaClass_Init() ::= <<
-			this.$objectType.SingularName$ = new Meta$objectType.SingularName${ Class = (IClass)metaPopulation.FindById(System.Guid.Parse("$objectType.Id$")) };
->>
-
-metaAssociationType_Init() ::= <<
-			this.$relationType.RoleType.ObjectType.SingularName$.$relationType.AssociationType.Name$ = new Meta$relationType.AssociationType.Name${ AssociationType = ((IRelationType)metaPopulation.FindById(System.Guid.Parse("$relationType.Id$"))).AssociationType };
+			this.$objectType.SingularName$ = new $objectType.SingularName$Index { Meta = (IClass)meta.FindById(System.Guid.Parse("$objectType.Id$")) };
 >>
 
 metaRoleType_Init() ::= <<
-			this.$relationType.AssociationType.ObjectType.SingularName$.$relationType.RoleType.Name$ = new Meta$relationType.RoleType.FullName${ RoleType = ((IRelationType)metaPopulation.FindById(System.Guid.Parse("$relationType.Id$"))).RoleType };
+			this.$relationType.RoleType.FullName$ = new $relationType.RoleType.FullName$Index { Meta = ((IRelationType)meta.FindById(System.Guid.Parse("$relationType.Id$"))).RoleType };
+>>
+
+metaAssociationType_Init() ::= <<
+			this.$relationType.AssociationType.Name$ = new $relationType.AssociationType.Name$Index { Meta = ((IRelationType)meta.FindById(System.Guid.Parse("$relationType.Id$"))).AssociationType };
 >>
 
 metaObjectType_Property() ::= <<
-        public IMeta$objectType.SingularName$ $objectType.SingularName$ { get; }
+        public I$objectType.SingularName$Index $objectType.SingularName$ { get; }
+
+>>
+
+metaRoleType_Property() ::= <<
+		public I$relationType.RoleType.FullName$Index $relationType.RoleType.FullName$ { get; }
+
+>>
+
+metaAssociationType_Property() ::= <<
+		public I$relationType.AssociationType.Name$Index $relationType.AssociationType.Name$ { get; }
 
 >>
 
 metaUnit_Type() ::= <<
-	public class Meta$unit.SingularName$ : IMeta$unit.SingularName$ 
+	public class $unit.SingularName$Index : I$unit.SingularName$Index 
 	{
-		public IUnit Unit { get; internal set; }
+		public IUnit Meta { get; internal set; }
 	}
 
 >>
 
 metaInterface_Type() ::= <<
-	public class Meta$interface.SingularName$ : IMeta$interface.SingularName$
+	public class $interface.SingularName$Index : I$interface.SingularName$Index
 	{
-		public IInterface Interface { get; internal set; }
+		public IInterface Meta { get; internal set; }
 
+$interface.Subtypes:{subtype|$metaObjectType_Subtype()$}; separator="\n"$
 $interface.RoleTypes:{roleType|$metaObjectType_RoleType()$}; separator="\n"$
 $interface.AssociationTypes:{associationType|$metaObjectType_AssociationType()$}; separator="\n"$
 	}
@@ -121,9 +138,9 @@ $interface.AssociationTypes:{associationType|$metaObjectType_AssociationType()$}
 >>
 
 metaClass_Type() ::= <<
-	public class Meta$class.SingularName$ : IMeta$class.SingularName$
+	public class $class.SingularName$Index : I$class.SingularName$Index
 	{
-		public IClass Class { get; internal set; }
+		public IClass Meta { get; internal set; }
 
 $class.RoleTypes:{roleType|$metaObjectType_RoleType()$}; separator="\n"$
 $class.AssociationTypes:{associationType|$metaObjectType_AssociationType()$}; separator="\n"$
@@ -131,37 +148,41 @@ $class.AssociationTypes:{associationType|$metaObjectType_AssociationType()$}; se
 
 >>
 
+metaObjectType_Subtype() ::= <<
+		public I$subtype.SingularName$Index As$subtype.SingularName$ { get; internal set; }
+>>
+
 metaObjectType_RoleType() ::= <<
-		public IMeta$roleType.FullName$ $roleType.Name$ { get; internal set; }
+		public I$roleType.FullName$Index $roleType.Name$ { get; internal set; }
 
 
 >>
 
 metaObjectType_AssociationType() ::= <<
-		public IMeta$associationType.Name$ $associationType.Name$ { get; internal set; }
+		public I$associationType.Name$Index $associationType.Name$ { get; internal set; }
 >>
 
 metaRoleType_Type() ::= <<
-	public class Meta$relationType.RoleType.FullName$ : IMeta$relationType.RoleType.FullName$
+	public class $relationType.RoleType.FullName$Index : I$relationType.RoleType.FullName$Index
 	{
-		public IRoleType RoleType { get; internal set; }
+		public IRoleType Meta { get; internal set; }
 
 $if(relationType.RoleType.ObjectType.IsComposite)$	
-	public IMeta$relationType.RoleType.ObjectType$ ObjectType { get; internal set; }
+	public I$relationType.RoleType.ObjectType$Index ObjectType { get; internal set; }
 
-	public IMeta$relationType.AssociationType.Name$ AssociationType { get; internal set; }
+	public I$relationType.AssociationType.Name$Index AssociationType { get; internal set; }
 $endif$
 	}
 >>
 
 metaAssociationType_Type() ::= <<
-	public class Meta$relationType.AssociationType.Name$ : IMeta$relationType.AssociationType.Name$
+	public class $relationType.AssociationType.Name$Index : I$relationType.AssociationType.Name$Index
 	{
-		public IAssociationType AssociationType { get; internal set; }
+		public IAssociationType Meta { get; internal set; }
 
-		public IMeta$relationType.AssociationType.ObjectType$ ObjectType { get; internal set; }
+		public I$relationType.AssociationType.ObjectType$Index ObjectType { get; internal set; }
 
-		public IMeta$relationType.RoleType.FullName$ RoleType { get; internal set; }
+		public I$relationType.RoleType.FullName$Index RoleType { get; internal set; }
 	}
 
 >>
