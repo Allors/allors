@@ -36,6 +36,21 @@ namespace Allors.Database.Domain
     {
 		private readonly IMetaPopulation meta;
 
+		// Units
+$meta.units:{objectType|$metaObjectType_Field()$}; separator="\n"$
+
+		// Interfaces
+$meta.interfaces:{objectType|$metaObjectType_Field()$}; separator="\n"$
+
+		// Classes
+$meta.classes:{objectType|$metaObjectType_Field()$}; separator="\n"$
+
+		// RoleType
+$meta.relationTypes:{relationType|$metaRoleType_Field()$}; separator="\n"$
+
+		// AssociationType
+$meta.relationTypes:{relationType|$metaAssociationType_Field()$}; separator="\n"$
+
 		public MetaIndex(IMetaPopulation meta)
 		{
 			this.meta = meta;
@@ -49,11 +64,22 @@ $meta.interfaces:{objectType|$metaInterface_Init()$}; separator="\n"$
 			// Classes
 $meta.classes:{objectType|$metaClass_Init()$}; separator="\n"$
 
-			// RoleType
+			// RoleTypes
 $meta.relationTypes:{relationType|$metaRoleType_Init()$}; separator="\n"$
 	
-			// AssociationType
+			// AssociationTypes
 $meta.relationTypes:{relationType|$metaAssociationType_Init()$}; separator="\n"$
+
+			// Interface Properties
+$meta.interfaces:{objectType|$metaInterface_Init_Properties()$}; separator="\n"$
+
+			// Class Properties
+$meta.classes:{objectType|$metaClass_Init_Properties()$}; separator="\n"$
+
+			// RoleType Properties
+$meta.relationTypes:{relationType|$metaRoleType_Init_Properties()$}; separator="\n"$
+			// AssociationType Properties
+$meta.relationTypes:{relationType|$metaAssociationType_Init_Properties()$}; separator="\n"$
 		}
 
         public IMetaPopulation Meta => meta;
@@ -83,37 +109,84 @@ $meta.relationTypes:{relationType|$metaRoleType_Type()$}; separator="\n"$
 >>
 
 metaUnit_Init() ::= <<
-			this.$objectType.SingularName$ = new $objectType.SingularName$Index { Meta = (IUnit)meta.FindById(System.Guid.Parse("$objectType.Id$")) };
+			this._$objectType.SingularName$ = new $objectType.SingularName$Index { Meta = (IUnit)meta.FindById(MetaIds.$objectType.SingularName$) };
 >>
 
 metaInterface_Init() ::= <<
-			this.$objectType.SingularName$ = new $objectType.SingularName$Index { Meta = (IInterface)meta.FindById(System.Guid.Parse("$objectType.Id$")) };
+			this._$objectType.SingularName$ = new $objectType.SingularName$Index { Meta = (IInterface)meta.FindById(MetaIds.$objectType.SingularName$) };
 >>
 
 metaClass_Init() ::= <<
-			this.$objectType.SingularName$ = new $objectType.SingularName$Index { Meta = (IClass)meta.FindById(System.Guid.Parse("$objectType.Id$")) };
+			this._$objectType.SingularName$ = new $objectType.SingularName$Index { Meta = (IClass)meta.FindById(MetaIds.$objectType.SingularName$) };
 >>
 
 metaRoleType_Init() ::= <<
-			this.$relationType.RoleType.FullName$ = new $relationType.RoleType.FullName$Index { Meta = ((IRelationType)meta.FindById(System.Guid.Parse("$relationType.Id$"))).RoleType };
+			this._$relationType.RoleType.FullName$ = new $relationType.RoleType.FullName$Index { Meta = ((IRelationType)meta.FindById(MetaIds.$relationType.RoleType.FullName$)).RoleType };
 >>
 
 metaAssociationType_Init() ::= <<
-			this.$relationType.AssociationType.Name$ = new $relationType.AssociationType.Name$Index { Meta = ((IRelationType)meta.FindById(System.Guid.Parse("$relationType.Id$"))).AssociationType };
+			this._$relationType.AssociationType.Name$ = new $relationType.AssociationType.Name$Index { Meta = ((IRelationType)meta.FindById(MetaIds.$relationType.RoleType.FullName$)).AssociationType };
+>>
+
+metaInterface_Init_Properties() ::= <<
+$objectType.Subtypes:{subtype|$metaInterface_Init_Properties_Subtype()$}; separator="\n"$
+$objectType.RoleTypes:{roleType|$metaObjectType_Init_Properties_RoleType()$}; separator="\n"$
+$objectType.AssociationTypes:{associationType|$metaObjectType_Init_Properties_AssociationType()$}; separator="\n"$
+>>
+
+metaClass_Init_Properties() ::= <<
+$objectType.RoleTypes:{roleType|$metaObjectType_Init_Properties_RoleType()$}; separator="\n"$
+$objectType.AssociationTypes:{associationType|$metaObjectType_Init_Properties_AssociationType()$}; separator="\n"$
+>>
+
+metaRoleType_Init_Properties() ::= <<
+$if(relationType.RoleType.ObjectType.IsComposite)$
+			this._$relationType.RoleType.FullName$.ObjectType = this.$relationType.RoleType.ObjectType.SingularName$;
+			this._$relationType.RoleType.FullName$.AssociationType = this.$relationType.AssociationType.Name$;
+$endif$
+>>
+
+metaAssociationType_Init_Properties() ::= <<
+			this._$relationType.AssociationType.Name$.ObjectType = this.$relationType.AssociationType.ObjectType.SingularName$;
+			this._$relationType.AssociationType.Name$.RoleType = this.$relationType.RoleType.FullName$;
+>>
+
+metaInterface_Init_Properties_Subtype() ::= <<
+			this._$objectType.SingularName$.As$subtype.SingularName$ = this.$subtype.SingularName$;
+>>
+
+metaObjectType_Init_Properties_RoleType() ::= <<
+			this._$objectType.SingularName$.$roleType.Name$ = this.$roleType.FullName$;
+>>
+
+metaObjectType_Init_Properties_AssociationType() ::= <<
+			this._$objectType.SingularName$.$associationType.Name$ = this.$associationType.Name$;
+>>
+
+metaObjectType_Field() ::= <<
+        private readonly $objectType.SingularName$Index _$objectType.SingularName$;
+>>
+
+metaRoleType_Field() ::= <<
+		private readonly $relationType.RoleType.FullName$Index _$relationType.RoleType.FullName$;
+>>
+
+metaAssociationType_Field() ::= <<
+		private readonly $relationType.AssociationType.Name$Index _$relationType.AssociationType.Name$;
 >>
 
 metaObjectType_Property() ::= <<
-        public I$objectType.SingularName$Index $objectType.SingularName$ { get; }
+        public I$objectType.SingularName$Index $objectType.SingularName$ => this._$objectType.SingularName$;
 
 >>
 
 metaRoleType_Property() ::= <<
-		public I$relationType.RoleType.FullName$Index $relationType.RoleType.FullName$ { get; }
+		public I$relationType.RoleType.FullName$Index $relationType.RoleType.FullName$ => this._$relationType.RoleType.FullName$;
 
 >>
 
 metaAssociationType_Property() ::= <<
-		public I$relationType.AssociationType.Name$Index $relationType.AssociationType.Name$ { get; }
+		public I$relationType.AssociationType.Name$Index $relationType.AssociationType.Name$ => this._$relationType.AssociationType.Name$;
 
 >>
 

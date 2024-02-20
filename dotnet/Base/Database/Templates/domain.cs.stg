@@ -26,6 +26,7 @@ For more information visit http://www.allors.com/legal
 	$meta.Interfaces:{interface|<generation template="castInterface" input="$interface.Id$" output="$interface.SingularName$.g.cs"/>}$
 	$meta.Classes:{class|<generation template="castClass" input="$class.Id$" output="$class.SingularName$.g.cs"/>}$
 	$meta.MethodTypes:{methodType|<generation template="methodType" input="$methodType.Id$" output="$methodType.FullName$.g.cs"/>}$
+	<generation template="metaIds" output="MetaIds.g.cs"/>
 	<generation template="metaIndex" output="MetaIndex.g.cs"/>
 	<generation template="cache" output="ICachesExtensions.g.cs"/>
 </generations>
@@ -590,6 +591,36 @@ cacheClass() ::= <<$class.KeyRoleTypes:{roleType|$cacheClassKeyRoleTypes()$}$>>
 cacheClassKeyRoleTypes() ::= <<
 $\n$
 		public static ICache<$roleType_ObjectType(roleType)$, $class.SingularName$> $class.SingularName$By$roleType.SingularName$(this ICaches @this) => @this.Get<$roleType_ObjectType(roleType)$, $class.SingularName$>(@this.M.$class.SingularName$, @this.M.$class.SingularName$.$roleType.SingularName$);
+>>
+
+metaIds(meta) ::= <<
+namespace Allors.Database.Domain
+{
+    using System;
+
+    public static class MetaIds 
+	{
+		// Units
+$meta.units:{objectType|$metaObjectType_Id()$}; separator="\n"$
+
+		// Interfaces
+$meta.interfaces:{objectType|$metaObjectType_Id()$}; separator="\n"$
+
+		// Classes
+$meta.classes:{objectType|$metaObjectType_Id()$}; separator="\n"$
+	
+		// RelationTypes
+$meta.relationTypes:{relationType|$metaRelationType_Id()$}; separator="\n"$
+    }
+}
+>>
+
+metaObjectType_Id() ::= <<
+		public static readonly Guid $objectType.SingularName$ = new Guid("$objectType.Id$");
+>>
+
+metaRelationType_Id() ::= <<
+		public static readonly Guid $relationType.RoleType.FullName$ = new Guid("$relationType.Id$");
 >>
 
 metaIndex(meta) ::= <<
