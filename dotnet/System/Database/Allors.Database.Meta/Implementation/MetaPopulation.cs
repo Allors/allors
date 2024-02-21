@@ -12,7 +12,7 @@ using System.Linq;
 using Allors.Embedded.Domain.Memory;
 using Embedded;
 
-public abstract class MetaPopulation : EmbeddedPopulation, IMetaPopulation
+public sealed class MetaPopulation : EmbeddedPopulation, IMetaPopulation
 {
     internal static readonly IReadOnlyList<IComposite> EmptyComposites = Array.Empty<IComposite>();
     internal static readonly IReadOnlyList<IDomain> EmptyDomains = Array.Empty<IDomain>();
@@ -35,7 +35,7 @@ public abstract class MetaPopulation : EmbeddedPopulation, IMetaPopulation
     private IReadOnlyList<IUnit> units;
     private IReadOnlyList<IMethodType> methodTypes;
 
-    protected MetaPopulation()
+    public MetaPopulation()
     {
         this.initialized = false;
 

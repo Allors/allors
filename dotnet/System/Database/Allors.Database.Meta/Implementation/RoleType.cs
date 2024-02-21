@@ -11,7 +11,7 @@ using System.Linq;
 using Allors.Graph;
 using Text;
 
-public abstract class RoleType : IRoleType
+public sealed class RoleType : IRoleType
 {
     private readonly IObjectType objectType;
 
@@ -24,7 +24,7 @@ public abstract class RoleType : IRoleType
     /// </summary>
     public const int MaximumSize = -1;
 
-    protected RoleType(IObjectType objectType, string assignedSingularName, string assignedPluralName)
+    public RoleType(IObjectType objectType, string assignedSingularName, string assignedPluralName)
     {
         this.Attributes = new MetaExtension();
         this.objectType = objectType;

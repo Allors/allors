@@ -15,14 +15,14 @@ using Allors.Text;
 ///     A <see cref="RelationType" /> defines the state and behavior for
 ///     a set of <see cref="AssociationType" />s and <see cref="RoleType" />s.
 /// </summary>
-public abstract class RelationType : IMetaIdentifiableObject, IRelationType
+public sealed class RelationType : IMetaIdentifiableObject, IRelationType
 {
     private string[] derivedWorkspaceNames;
 
     private IAssociationType associationType;
     private IRoleType roleType;
 
-    protected RelationType(MetaPopulation metaPopulation, Guid id, Multiplicity? assignedMultiplicity, bool isDerived, AssociationType associationType, IRoleType roleType)
+    public RelationType(MetaPopulation metaPopulation, Guid id, Multiplicity? assignedMultiplicity, bool isDerived, AssociationType associationType, IRoleType roleType)
     {
         this.Attributes = new MetaExtension();
         this.MetaPopulation = metaPopulation;

@@ -13,7 +13,7 @@ using System;
 ///     This is also called the 'active', 'controlling' or 'owning' side.
 ///     AssociationTypes can only have composite <see cref="ObjectType" />s.
 /// </summary>
-public abstract class AssociationType : IComparable, IAssociationType
+public sealed class AssociationType : IComparable, IAssociationType
 {
     private readonly IComposite objectType;
     private IRelationType relationType;
@@ -23,7 +23,7 @@ public abstract class AssociationType : IComparable, IAssociationType
     /// </summary>
     private const string Where = "Where";
 
-    protected AssociationType(IComposite objectType)
+    public AssociationType(IComposite objectType)
     {
         this.Attributes = new MetaExtension();
         this.objectType = objectType;

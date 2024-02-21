@@ -11,13 +11,13 @@ using System.Collections.Generic;
 using Embedded;
 using Embedded.Meta;
 
-public abstract class Unit : EmbeddedObject, IUnit
+public sealed class Unit : EmbeddedObject, IUnit
 {
     private readonly IEmbeddedUnitRole<string> singularName;
     private readonly IEmbeddedUnitRole<string> assignedPluralName;
     private readonly IEmbeddedUnitRole<string> pluralName;
 
-    protected Unit(MetaPopulation metaPopulation, EmbeddedObjectType embeddedObjectType)
+    public Unit(MetaPopulation metaPopulation, EmbeddedObjectType embeddedObjectType)
         : base(metaPopulation, embeddedObjectType)
     {
         this.Attributes = new MetaExtension();

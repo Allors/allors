@@ -31,9 +31,15 @@
 
         public Func<IStrategy, Handle> HandleResolver()
         {
-            var m = this.database.Services.Get<M>();
+            var m = this.database.MetaPopulation;
 
-            var excluded = new HashSet<IClass> { m.Country, m.Currency, m.Language };
+            var excluded = new HashSet<IObjectType>
+            {
+                // Remove Magic Strings
+                m.FindCompositeByName("Country"), 
+                m.FindCompositeByName("Currency"), 
+                m.FindCompositeByName("Language")
+            };
             var fromExisting = HandleResolvers.FromExisting(this.existingRecordsByClass);
             var fromKey = HandleResolvers.PascalCaseKey();
             return strategy =>

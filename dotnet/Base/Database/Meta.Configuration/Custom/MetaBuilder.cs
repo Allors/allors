@@ -21,12 +21,12 @@ namespace Allors.Database.Meta.Configuration
 
         static void AddWorkspace(RelationType relationType, params string[] workspaceNames) => relationType.AssignedWorkspaceNames = (relationType.AssignedWorkspaceNames ?? Array.Empty<string>()).Union(workspaceNames).ToArray();
 
-        private void BuildCustom(M m, Domains domains, RelationTypes relationTypes, MethodTypes methodTypes)
+        private void BuildCustom(MetaPopulation m, Domains domains, ObjectTypes objectTypes, RelationTypes relationTypes, MethodTypes methodTypes)
         {
-            this.DefaultWorkspace(m, domains, relationTypes, methodTypes);
+            this.DefaultWorkspace(m, domains, objectTypes, relationTypes, methodTypes);
         }
 
-        private void DefaultWorkspace(M m, Domains domains, RelationTypes relationTypes, MethodTypes methodTypes)
+        private void DefaultWorkspace(MetaPopulation m, Domains domains, ObjectTypes objectTypes, RelationTypes relationTypes, MethodTypes methodTypes)
         {
 
             // RelationTypes & MethodTypes
@@ -714,34 +714,34 @@ namespace Allors.Database.Meta.Configuration
             AddWorkspace(relationTypes.UserPasswordResetInUserPassword, DefaultWorkspaceNames);
 
             // Classes
-            AddWorkspace(m.AccessClass, DefaultWorkspaceNames);
-            AddWorkspace(m.Denied, DefaultWorkspaceNames);
-            AddWorkspace(m.Media, DefaultWorkspaceNames);
-            AddWorkspace(m.MediaContent, DefaultWorkspaceNames);
-            AddWorkspace(m.MediaTyped, DefaultWorkspaceNames);
-            AddWorkspace(m.Country, DefaultWorkspaceNames);
-            AddWorkspace(m.Gender, DefaultWorkspaceNames);
-            AddWorkspace(m.Language, DefaultWorkspaceNames);
-            AddWorkspace(m.Locale, DefaultWorkspaceNames);
-            AddWorkspace(m.LocalisedText, DefaultWorkspaceNames);
-            AddWorkspace(m.Person, DefaultWorkspaceNames);
-            AddWorkspace(m.TaskAssignment, DefaultWorkspaceNames);
-            AddWorkspace(m.Employment, DefaultWorkspaceNames);
-            AddWorkspace(m.MailboxAddress, DefaultWorkspaceNames);
-            AddWorkspace(m.Organization, DefaultWorkspaceNames);
-            AddWorkspace(m.C1, DefaultWorkspaceNames);
-            AddWorkspace(m.C2, DefaultWorkspaceNames);
-            AddWorkspace(m.Data, DefaultWorkspaceNames);
-            AddWorkspace(m.HomeAddress, DefaultWorkspaceNames);
-            AddWorkspace(m.TrimFrom, DefaultWorkspaceNames);
-            AddWorkspace(m.TrimTo, DefaultWorkspaceNames);
-            AddWorkspace(m.UnitSample, DefaultWorkspaceNames);
-            AddWorkspace(m.WorkspaceXObject1, XWorkspaceNames);
-            AddWorkspace(m.WorkspaceXObject2, XWorkspaceNames);
-            AddWorkspace(m.WorkspaceXYObject1, XYWorkspaceNames);
-            AddWorkspace(m.WorkspaceXYObject2, XYWorkspaceNames);
-            AddWorkspace(m.WorkspaceYObject1, YWorkspaceNames);
-            AddWorkspace(m.WorkspaceYObject2, YWorkspaceNames);
+            AddWorkspace(objectTypes.AccessClass, DefaultWorkspaceNames);
+            AddWorkspace(objectTypes.Denied, DefaultWorkspaceNames);
+            AddWorkspace(objectTypes.Media, DefaultWorkspaceNames);
+            AddWorkspace(objectTypes.MediaContent, DefaultWorkspaceNames);
+            AddWorkspace(objectTypes.MediaTyped, DefaultWorkspaceNames);
+            AddWorkspace(objectTypes.Country, DefaultWorkspaceNames);
+            AddWorkspace(objectTypes.Gender, DefaultWorkspaceNames);
+            AddWorkspace(objectTypes.Language, DefaultWorkspaceNames);
+            AddWorkspace(objectTypes.Locale, DefaultWorkspaceNames);
+            AddWorkspace(objectTypes.LocalisedText, DefaultWorkspaceNames);
+            AddWorkspace(objectTypes.Person, DefaultWorkspaceNames);
+            AddWorkspace(objectTypes.TaskAssignment, DefaultWorkspaceNames);
+            AddWorkspace(objectTypes.Employment, DefaultWorkspaceNames);
+            AddWorkspace(objectTypes.MailboxAddress, DefaultWorkspaceNames);
+            AddWorkspace(objectTypes.Organization, DefaultWorkspaceNames);
+            AddWorkspace(objectTypes.C1, DefaultWorkspaceNames);
+            AddWorkspace(objectTypes.C2, DefaultWorkspaceNames);
+            AddWorkspace(objectTypes.Data, DefaultWorkspaceNames);
+            AddWorkspace(objectTypes.HomeAddress, DefaultWorkspaceNames);
+            AddWorkspace(objectTypes.TrimFrom, DefaultWorkspaceNames);
+            AddWorkspace(objectTypes.TrimTo, DefaultWorkspaceNames);
+            AddWorkspace(objectTypes.UnitSample, DefaultWorkspaceNames);
+            AddWorkspace(objectTypes.WorkspaceXObject1, XWorkspaceNames);
+            AddWorkspace(objectTypes.WorkspaceXObject2, XWorkspaceNames);
+            AddWorkspace(objectTypes.WorkspaceXYObject1, XYWorkspaceNames);
+            AddWorkspace(objectTypes.WorkspaceXYObject2, XYWorkspaceNames);
+            AddWorkspace(objectTypes.WorkspaceYObject1, YWorkspaceNames);
+            AddWorkspace(objectTypes.WorkspaceYObject2, YWorkspaceNames);
         }
     }
 }

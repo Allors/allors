@@ -8,11 +8,13 @@ using Database.Population;
 public partial class Model
 {
     private readonly Dictionary<IMetaExtensible, IMetaExtensibleModel> mapping;
+    private readonly Dictionary<Record, RecordModel> recordMapping;
+    private readonly Dictionary<Handle, HandleModel> handleMapping;
 
-    public Model(IMetaPopulation metaPopulation, IDictionary<IClass, Record[]> recordsByBlass)
+    public Model(IMetaPopulation metaPopulation, IDictionary<IClass, Record[]> recordsByClass)
     {
         this.MetaPopulation = metaPopulation;
-        this.RecordsByBlass = recordsByBlass;
+        this.RecordsByClass = recordsByClass;
 
         this.mapping = new Dictionary<IMetaExtensible, IMetaExtensibleModel>();
 
@@ -51,11 +53,21 @@ public partial class Model
         {
             this.mapping.Add(methodType, new MethodTypeModel(this, methodType));
         }
+
+        this.recordMapping = this.RecordsByClass.Values
+            .SelectMany(v => v)
+            .ToDictionary(v => v, v => new RecordModel(this, v));
+
+        this.handleMapping = this.RecordsByClass.Values
+            .SelectMany(v => v)
+            .Where(v => v.Handle != null)
+            .Select(v => v.Handle)
+            .ToDictionary(v => v, v => new HandleModel(this, v));
     }
 
     public IMetaPopulation MetaPopulation { get; }
 
-    public IDictionary<IClass, Record[]> RecordsByBlass { get; }
+    public IDictionary<IClass, Record[]> RecordsByClass { get; }
 
     public IEnumerable<DomainModel> Domains => this.MetaPopulation.Domains.Select(this.Map);
 
@@ -170,5 +182,9 @@ public partial class Model
     public CompositeRoleTypeModel Map(ICompositeRoleType v) => v != null ? (CompositeRoleTypeModel)this.mapping[v] : null;
 
     public MethodTypeModel Map(IMethodType v) => v != null ? (MethodTypeModel)this.mapping[v] : null;
+
+    public RecordModel Map(Record v) => v != null ? this.recordMapping[v] : null;
+
+    public HandleModel Map(Handle v) => v != null ? this.handleMapping[v] : null;
     #endregion
 }

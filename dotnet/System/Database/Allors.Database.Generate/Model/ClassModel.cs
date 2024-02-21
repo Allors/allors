@@ -18,7 +18,7 @@ public sealed class ClassModel : CompositeModel
     public IClass Class { get; }
 
     public override IMetaIdentifiableObject MetaObject => this.Class;
-    
+
     // IClass
     public IEnumerable<RoleTypeModel> OverriddenRequiredRoleTypes => this.CompositeRoleTypes.Where(v => v.IsAssignedRequired).Select(v => v.RoleType);
 
@@ -29,12 +29,12 @@ public sealed class ClassModel : CompositeModel
             v => this.OverriddenRequiredRoleTypes.Where(w => w.RelationType.WorkspaceNames.Contains(v)));
 
     // Population
-    public IEnumerable<Record> Objects
+    public IEnumerable<RecordModel> Objects
     {
         get
         {
-            this.Model.RecordsByBlass.TryGetValue(this.Class, out var objects);
-            return objects ?? Array.Empty<Record>();
+            this.Model.RecordsByClass.TryGetValue(this.Class, out var objects);
+            return objects?.Select(this.Model.Map);
         }
     }
 }

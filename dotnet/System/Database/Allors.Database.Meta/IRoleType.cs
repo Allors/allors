@@ -30,11 +30,11 @@ public interface IRoleType : IRelationEndType, IComparable
 
     string FullName { get; }
 
-    int? Size { get; }
+    int? Size { get; set; }
 
-    int? Precision { get; }
+    int? Precision { get; set; }
 
-    int? Scale { get; }
+    int? Scale { get; set; }
 
     new string SingularName { get; internal set; }
 

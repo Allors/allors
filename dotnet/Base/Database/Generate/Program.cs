@@ -7,6 +7,7 @@ namespace Allors.Meta.Generation
 {
     using System;
     using System.IO;
+    using System.Linq;
     using Allors.Database.Meta.Configuration;
     using Database.Population;
 

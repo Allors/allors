@@ -11,9 +11,8 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using Allors.Embedded;
 using Allors.Embedded.Meta;
-using Text;
 
-public abstract class Class : EmbeddedObject, IClass
+public sealed class Class : EmbeddedObject, IClass
 {
     private readonly IEmbeddedUnitRole<string> singularName;
     private readonly IEmbeddedUnitRole<string> assignedPluralName;
@@ -21,7 +20,7 @@ public abstract class Class : EmbeddedObject, IClass
 
     private ConcurrentDictionary<IMethodType, Action<object, object>[]> actionsByMethodType;
 
-    protected Class(MetaPopulation metaPopulation, EmbeddedObjectType embeddedObjectType)
+    public Class(MetaPopulation metaPopulation, EmbeddedObjectType embeddedObjectType)
         : base(metaPopulation, embeddedObjectType)
     {
         this.MetaPopulation = metaPopulation;

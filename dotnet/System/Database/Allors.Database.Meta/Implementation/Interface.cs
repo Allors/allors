@@ -13,7 +13,7 @@ using Allors.Embedded;
 using Allors.Embedded.Meta;
 using Text;
 
-public abstract class Interface : EmbeddedObject, IInterface
+public sealed class Interface : EmbeddedObject, IInterface
 {
     private readonly IEmbeddedUnitRole<string> singularName;
     private readonly IEmbeddedUnitRole<string> assignedPluralName;
@@ -27,7 +27,7 @@ public abstract class Interface : EmbeddedObject, IInterface
     private IReadOnlyList<IClass> subclasses;
     private IClass exclusiveClass;
 
-    protected Interface(MetaPopulation metaPopulation, EmbeddedObjectType embeddedObjectType)
+    public Interface(MetaPopulation metaPopulation, EmbeddedObjectType embeddedObjectType)
         : base(metaPopulation, embeddedObjectType)
     {
         this.Attributes = new MetaExtension();

@@ -17,10 +17,10 @@ partial class Build
         .After(Clean)
         .Executes(() =>
         {
-            DotNetRun(s => s
-                .SetProjectFile(Paths.AllorsDotnetSystemRepositoryGenerate)
-                .SetApplicationArguments(
-                    $"{Paths.AllorsDotnetBaseRepository} {Paths.AllorsDotnetSystemRepositoryTemplatesMetaCs} {Paths.AllorsDotnetBaseDatabaseMetaGenerated}"));
+            //DotNetRun(s => s
+            //    .SetProjectFile(Paths.AllorsDotnetSystemRepositoryGenerate)
+            //    .SetApplicationArguments(
+            //        $"{Paths.AllorsDotnetBaseRepository} {Paths.AllorsDotnetSystemRepositoryTemplatesMetaCs} {Paths.AllorsDotnetBaseDatabaseMetaGenerated}"));
             DotNetRun(s => s
                 .SetProjectFile(Paths.AllorsDotnetSystemRepositoryGenerate)
                 .SetApplicationArguments(

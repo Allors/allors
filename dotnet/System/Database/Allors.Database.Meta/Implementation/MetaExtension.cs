@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 using System.Dynamic;
 
-internal class MetaExtension : DynamicObject
+internal sealed class MetaExtension : DynamicObject
 {
     private Dictionary<string, object> properties;
 

@@ -1,6 +1,6 @@
 ﻿namespace Allors.Database.Meta;
 
-public class CompositeMethodType : ICompositeMethodType
+public sealed class CompositeMethodType : ICompositeMethodType
 {
     public CompositeMethodType(IComposite composite, MethodType methodType)
     {
