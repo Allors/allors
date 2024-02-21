@@ -15,7 +15,7 @@ public sealed class SqlCreatesObjectEvent : Event
     {
     }
 
-    public IClass Class { get; set; }
+    public Class Class { get; set; }
 
     public int? Count { get; set; }
 

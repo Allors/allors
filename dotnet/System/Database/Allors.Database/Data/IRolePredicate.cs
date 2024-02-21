@@ -9,5 +9,5 @@ using Allors.Database.Meta;
 
 public interface IRolePredicate : IPredicate
 {
-    IRoleType RoleType { get; set; }
+    RoleType RoleType { get; set; }
 }

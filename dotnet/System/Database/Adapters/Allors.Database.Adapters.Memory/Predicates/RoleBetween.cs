@@ -12,10 +12,10 @@ internal sealed class RoleBetween : Predicate
 {
     private readonly ExtentFiltered extent;
     private readonly object first;
-    private readonly IRoleType roleType;
+    private readonly RoleType roleType;
     private readonly object second;
 
-    internal RoleBetween(ExtentFiltered extent, IRoleType roleType, object first, object second)
+    internal RoleBetween(ExtentFiltered extent, RoleType roleType, object first, object second)
     {
         extent.CheckForRoleType(roleType);
         PredicateAssertions.ValidateRoleBetween(roleType, first, second);
@@ -32,7 +32,7 @@ internal sealed class RoleBetween : Predicate
         var firstValue = this.first;
         var secondValue = this.second;
 
-        if (this.first is IRoleType firstRole)
+        if (this.first is RoleType firstRole)
         {
             firstValue = strategy.GetInternalizedUnitRole(firstRole);
         }
@@ -41,7 +41,7 @@ internal sealed class RoleBetween : Predicate
             firstValue = this.roleType.Normalize(this.first);
         }
 
-        if (this.second is IRoleType secondRole)
+        if (this.second is RoleType secondRole)
         {
             secondValue = strategy.GetInternalizedUnitRole(secondRole);
         }

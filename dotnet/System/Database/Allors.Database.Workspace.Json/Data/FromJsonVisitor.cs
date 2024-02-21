@@ -301,7 +301,7 @@ public class FromJsonVisitor : IVisitor
                         {
                             if (roleType?.ObjectType.IsUnit == true)
                             {
-                                equals.Value = this.fromJson.UnitConvert.UnitFromJson(((IRoleType)relationEndType).ObjectType.Tag, visited.v);
+                                equals.Value = this.fromJson.UnitConvert.UnitFromJson(((RoleType)relationEndType).ObjectType.Tag, visited.v);
                             }
                             else
                             {

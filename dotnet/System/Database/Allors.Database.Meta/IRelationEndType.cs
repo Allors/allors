@@ -7,7 +7,7 @@
 namespace Allors.Database.Meta;
 
 /// <summary>
-///     A <see cref="IRelationEndType" /> can be a <see cref="IAssociationType" /> or a <see cref="IRoleType" />.
+///     A <see cref="IRelationEndType" /> can be a <see cref="AssociationType" /> or a <see cref="RoleType" />.
 /// </summary>
 public interface IRelationEndType : IOperandType
 {

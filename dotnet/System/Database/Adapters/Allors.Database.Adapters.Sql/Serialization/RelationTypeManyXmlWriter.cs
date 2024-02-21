@@ -11,7 +11,7 @@ using System.Xml;
 using Allors.Database.Meta;
 
 /// <summary>
-///     Writes all relations from a <see cref="RelationType" /> with a <see cref="IRoleType" /> with multiplicity of many
+///     Writes all relations from a <see cref="RelationType" /> with a <see cref="RoleType" /> with multiplicity of many
 ///     to the <see cref="XmlWriter" /> during a <see cref="IDatabase#Backup" />.
 /// </summary>
 internal class RelationTypeManyXmlWriter : IDisposable

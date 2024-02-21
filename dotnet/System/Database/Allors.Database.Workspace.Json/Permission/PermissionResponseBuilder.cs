@@ -14,10 +14,10 @@ using Allors.Database.Security;
 
 public class PermissionResponseBuilder
 {
-    private readonly IReadOnlySet<IClass> allowedClasses;
+    private readonly IReadOnlySet<Class> allowedClasses;
     private readonly ITransaction transaction;
 
-    public PermissionResponseBuilder(ITransaction transaction, IReadOnlySet<IClass> allowedClasses)
+    public PermissionResponseBuilder(ITransaction transaction, IReadOnlySet<Class> allowedClasses)
     {
         this.transaction = transaction;
         this.allowedClasses = allowedClasses;

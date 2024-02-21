@@ -13,24 +13,24 @@ namespace Allors.Database.Configuration.Derivations.Default
 
     public class Engine
     {
-        public IDictionary<IRule, ISet<IClass>> ClassesByRule { get; }
+        public IDictionary<IRule, ISet<Class>> ClassesByRule { get; }
 
-        public IDictionary<IClass, IDictionary<IRoleType, ISet<IRolePattern>>> PatternsByRoleTypeByClass { get; }
+        public IDictionary<Class, IDictionary<RoleType, ISet<IRolePattern>>> PatternsByRoleTypeByClass { get; }
 
-        public IDictionary<IClass, IDictionary<IAssociationType, ISet<IAssociationPattern>>> PatternsByAssociationTypeByClass { get; }
+        public IDictionary<Class, IDictionary<AssociationType, ISet<IAssociationPattern>>> PatternsByAssociationTypeByClass { get; }
 
         public IDictionary<IPattern, IRule> RuleByPattern { get; }
 
         public Engine(IRule[] rules)
         {
-            this.ClassesByRule = new Dictionary<IRule, ISet<IClass>>();
-            this.PatternsByRoleTypeByClass = new Dictionary<IClass, IDictionary<IRoleType, ISet<IRolePattern>>>();
-            this.PatternsByAssociationTypeByClass = new Dictionary<IClass, IDictionary<IAssociationType, ISet<IAssociationPattern>>>();
+            this.ClassesByRule = new Dictionary<IRule, ISet<Class>>();
+            this.PatternsByRoleTypeByClass = new Dictionary<Class, IDictionary<RoleType, ISet<IRolePattern>>>();
+            this.PatternsByAssociationTypeByClass = new Dictionary<Class, IDictionary<AssociationType, ISet<IAssociationPattern>>>();
             this.RuleByPattern = new Dictionary<IPattern, IRule>();
 
             foreach (var rule in rules)
             {
-                var ruleClasses = new HashSet<IClass>();
+                var ruleClasses = new HashSet<Class>();
                 foreach (var pattern in rule.Patterns)
                 {
                     this.RuleByPattern.Add(pattern, rule);
@@ -40,10 +40,10 @@ namespace Allors.Database.Configuration.Derivations.Default
                         IRolePattern { OfType: null } rolePattern => [.. rolePattern.RoleType.AssociationType.ObjectType.Classes],
                         IRolePattern { OfType: not null } rolePattern => [.. rolePattern.OfType.Classes],
 
-                        IAssociationPattern { OfType: null } associationPattern => (associationPattern.AssociationType.RoleType.ObjectType as IComposite)?.Classes.ToArray() ?? Array.Empty<IClass>(),
+                        IAssociationPattern { OfType: null } associationPattern => (associationPattern.AssociationType.RoleType.ObjectType as IComposite)?.Classes.ToArray() ?? Array.Empty<Class>(),
                         IAssociationPattern { OfType: not null } associationPattern => [.. associationPattern.OfType.Classes],
 
-                        _ => Array.Empty<IClass>(),
+                        _ => Array.Empty<Class>(),
                     };
 
                     ruleClasses.UnionWith(patternClasses);
@@ -55,7 +55,7 @@ namespace Allors.Database.Configuration.Derivations.Default
                         {
                             if (!this.PatternsByRoleTypeByClass.TryGetValue(@class, out var patternsByRoleType))
                             {
-                                patternsByRoleType = new Dictionary<IRoleType, ISet<IRolePattern>>();
+                                patternsByRoleType = new Dictionary<RoleType, ISet<IRolePattern>>();
                                 this.PatternsByRoleTypeByClass.Add(@class, patternsByRoleType);
                             }
 
@@ -76,7 +76,7 @@ namespace Allors.Database.Configuration.Derivations.Default
                         {
                             if (!this.PatternsByAssociationTypeByClass.TryGetValue(@class, out var patternsByAssociationType))
                             {
-                                patternsByAssociationType = new Dictionary<IAssociationType, ISet<IAssociationPattern>>();
+                                patternsByAssociationType = new Dictionary<AssociationType, ISet<IAssociationPattern>>();
                                 this.PatternsByAssociationTypeByClass.Add(@class, patternsByAssociationType);
                             }
 

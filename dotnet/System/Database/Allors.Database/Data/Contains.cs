@@ -25,13 +25,13 @@ public class Contains : IPropertyPredicate
     {
         var containedObject = this.Parameter != null ? transaction.GetObject(arguments.ResolveObject(this.Parameter)) : this.Object;
 
-        if (this.RelationEndType is IRoleType roleType)
+        if (this.RelationEndType is RoleType roleType)
         {
             compositePredicate.AddContains(roleType, containedObject);
         }
         else
         {
-            var associationType = (IAssociationType)this.RelationEndType;
+            var associationType = (AssociationType)this.RelationEndType;
             compositePredicate.AddContains(associationType, containedObject);
         }
     }

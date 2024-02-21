@@ -77,13 +77,13 @@ public class Command : ICommand
     public void ObjectParameter(long objectId) =>
         this.GetOrCreateParameter(this.mapping.ParamInvocationNameForObject, Mapping.NpgsqlDbTypeForObject).Value = objectId;
 
-    public void AddTypeParameter(IClass @class) =>
+    public void AddTypeParameter(Class @class) =>
         this.GetOrCreateParameter(this.mapping.ParamInvocationNameForClass, Mapping.NpgsqlDbTypeForClass).Value = @class.Id;
 
     public void AddCountParameter(int count) =>
         this.GetOrCreateParameter(this.mapping.ParamInvocationNameForCount, Mapping.NpgsqlDbTypeForCount).Value = count;
 
-    public void AddUnitRoleParameter(IRoleType roleType, object unit) =>
+    public void AddUnitRoleParameter(RoleType roleType, object unit) =>
         this.GetOrCreateParameter(this.mapping.ParamInvocationNameByRoleType[roleType], this.mapping.GetNpgsqlDbType(roleType)).Value =
             unit ?? DBNull.Value;
 
@@ -97,7 +97,7 @@ public class Command : ICommand
         this.GetOrCreateTableParameter(this.mapping.ObjectArrayParam.InvocationName, Mapping.NpgsqlDbTypeForObject).Value =
             objectIds.ToArray();
 
-    public void UnitTableParameter(IRoleType roleType, IEnumerable<UnitRelation> relations)
+    public void UnitTableParameter(RoleType roleType, IEnumerable<UnitRelation> relations)
     {
         var objectParameter = this.GetOrCreateTableParameter(this.mapping.ObjectArrayParam.InvocationName, Mapping.NpgsqlDbTypeForObject);
         var roleParameter =

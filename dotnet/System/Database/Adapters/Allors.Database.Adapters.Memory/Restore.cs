@@ -160,9 +160,9 @@ public class Restore
                                     ? XmlBackup.EnsureVersion(long.Parse(objectArray[1]))
                                     : (long)Allors.Version.DatabaseInitial;
 
-                                if (objectType is IClass)
+                                if (objectType is Class)
                                 {
-                                    this.transaction.InsertStrategy((IClass)objectType, objectId, objectVersion);
+                                    this.transaction.InsertStrategy((Class)objectType, objectId, objectVersion);
                                 }
                                 else
                                 {

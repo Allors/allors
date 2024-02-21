@@ -25,6 +25,6 @@
             this.RecordsByClass = reader.Read(stream);
         }
 
-        public IDictionary<IClass, Record[]> RecordsByClass { get; }
+        public IDictionary<Class, Record[]> RecordsByClass { get; }
     }
 }

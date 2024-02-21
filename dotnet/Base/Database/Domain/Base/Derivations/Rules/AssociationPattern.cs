@@ -13,9 +13,9 @@ namespace Allors.Database.Domain.Derivations.Rules
 
     public class AssociationPattern : IAssociationPattern
     {
-        public AssociationPattern(IRoleType roleType) : this(roleType.AssociationType) { }
+        public AssociationPattern(RoleType roleType) : this(roleType.AssociationType) { }
 
-        public AssociationPattern(IAssociationType associationType, IComposite ofType = null)
+        public AssociationPattern(AssociationType associationType, IComposite ofType = null)
         {
             this.AssociationType = associationType;
             this.OfType = !this.AssociationType.RoleType.ObjectType.Equals(ofType) ? ofType : null;
@@ -25,6 +25,6 @@ namespace Allors.Database.Domain.Derivations.Rules
 
         public IComposite OfType { get; set; }
 
-        public IAssociationType AssociationType { get; }
+        public AssociationType AssociationType { get; }
     }
 }

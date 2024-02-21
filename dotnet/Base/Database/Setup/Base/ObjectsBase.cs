@@ -29,7 +29,7 @@ namespace Allors.Database.Domain
 
         protected virtual void BaseSetup(Setup setup)
         {
-            if (this.ObjectType is IClass @class)
+            if (this.ObjectType is Class @class)
             {
                 var recordsByClass = setup.Config.RecordsByClass;
 
@@ -48,7 +48,7 @@ namespace Allors.Database.Domain
                             @object = this.Transaction.Build(@class, v =>
                             {
                                 var strategy = v.Strategy;
-                                foreach ((IRoleType roleType, object value) in record.ValueByRoleType.Where(role => role.Key.ObjectType.IsUnit))
+                                foreach ((RoleType roleType, object value) in record.ValueByRoleType.Where(role => role.Key.ObjectType.IsUnit))
                                 {
                                     strategy.SetRole(roleType, value);
                                 }

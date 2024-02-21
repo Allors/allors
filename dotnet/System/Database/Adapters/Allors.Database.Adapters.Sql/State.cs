@@ -19,8 +19,8 @@ public sealed class State
         this.ExistingObjectIdsWithoutReference = new HashSet<long>();
         this.ReferencesWithoutVersions = new HashSet<Reference>();
 
-        this.AssociationByRoleByAssociationType = new Dictionary<IAssociationType, Dictionary<Reference, Reference>>();
-        this.AssociationsByRoleByAssociationType = new Dictionary<IAssociationType, Dictionary<Reference, long[]>>();
+        this.AssociationByRoleByAssociationType = new Dictionary<AssociationType, Dictionary<Reference, Reference>>();
+        this.AssociationsByRoleByAssociationType = new Dictionary<AssociationType, Dictionary<Reference, long[]>>();
 
         this.ChangeLog = new ChangeLog();
     }
@@ -31,13 +31,13 @@ public sealed class State
 
     internal Dictionary<Reference, Strategy> ModifiedRolesByReference { get; set; }
 
-    internal Dictionary<IAssociationType, Dictionary<Reference, Reference>> AssociationByRoleByAssociationType { get; set; }
+    internal Dictionary<AssociationType, Dictionary<Reference, Reference>> AssociationByRoleByAssociationType { get; set; }
 
-    internal Dictionary<IAssociationType, Dictionary<Reference, long[]>> AssociationsByRoleByAssociationType { get; set; }
+    internal Dictionary<AssociationType, Dictionary<Reference, long[]>> AssociationsByRoleByAssociationType { get; set; }
 
     internal Dictionary<Reference, Strategy> UnflushedRolesByReference { get; set; }
 
-    internal Dictionary<IAssociationType, HashSet<long>> TriggersFlushRolesByAssociationType { get; set; }
+    internal Dictionary<AssociationType, HashSet<long>> TriggersFlushRolesByAssociationType { get; set; }
 
     internal HashSet<long> ExistingObjectIdsWithoutReference { get; set; }
 
@@ -126,7 +126,7 @@ public sealed class State
         return [.. references];
     }
 
-    public Reference GetOrCreateReferenceForExistingObject(IClass objectType, long objectId, Transaction transaction)
+    public Reference GetOrCreateReferenceForExistingObject(Class objectType, long objectId, Transaction transaction)
     {
         if (!this.ReferenceByObjectId.TryGetValue(objectId, out var reference))
         {
@@ -142,7 +142,7 @@ public sealed class State
         return reference;
     }
 
-    public Reference GetOrCreateReferenceForExistingObject(IClass objectType, long objectId, long version, Transaction transaction)
+    public Reference GetOrCreateReferenceForExistingObject(Class objectType, long objectId, long version, Transaction transaction)
     {
         if (!this.ReferenceByObjectId.TryGetValue(objectId, out var reference))
         {
@@ -158,7 +158,7 @@ public sealed class State
         return reference;
     }
 
-    public Reference CreateReferenceForNewObject(IClass objectType, long objectId, Transaction transaction)
+    public Reference CreateReferenceForNewObject(Class objectType, long objectId, Transaction transaction)
     {
         var strategyReference = new Reference(transaction, objectType, objectId, true);
         this.ReferenceByObjectId[objectId] = strategyReference;
@@ -175,7 +175,7 @@ public sealed class State
         return this.ModifiedRolesByReference.TryGetValue(reference, out var roles) ? roles : new Strategy(reference);
     }
 
-    public Dictionary<Reference, Reference> GetAssociationByRole(IAssociationType associationType)
+    public Dictionary<Reference, Reference> GetAssociationByRole(AssociationType associationType)
     {
         if (this.AssociationByRoleByAssociationType.TryGetValue(associationType, out var associationByRole))
         {
@@ -188,7 +188,7 @@ public sealed class State
         return associationByRole;
     }
 
-    public Dictionary<Reference, long[]> GetAssociationsByRole(IAssociationType associationType)
+    public Dictionary<Reference, long[]> GetAssociationsByRole(AssociationType associationType)
     {
         if (this.AssociationsByRoleByAssociationType.TryGetValue(associationType, out var associationsByRole))
         {
@@ -222,9 +222,9 @@ public sealed class State
         this.ModifiedRolesByReference[roles.Reference] = roles;
     }
 
-    public void TriggerFlush(long role, IAssociationType associationType)
+    public void TriggerFlush(long role, AssociationType associationType)
     {
-        this.TriggersFlushRolesByAssociationType ??= new Dictionary<IAssociationType, HashSet<long>>();
+        this.TriggersFlushRolesByAssociationType ??= new Dictionary<AssociationType, HashSet<long>>();
 
         if (!this.TriggersFlushRolesByAssociationType.TryGetValue(associationType, out var associations))
         {
@@ -249,7 +249,7 @@ public sealed class State
         this.TriggersFlushRolesByAssociationType = null;
     }
 
-    internal void FlushConditionally(long roleId, IAssociationType associationType)
+    internal void FlushConditionally(long roleId, AssociationType associationType)
     {
         if (this.TriggersFlushRolesByAssociationType == null)
         {

@@ -10,5 +10,5 @@ public interface IRecordRoundtripStrategy
 
     Func<IStrategy, Handle> HandleResolver();
 
-    Func<IStrategy, IRoleType, bool> RoleFilter();
+    Func<IStrategy, RoleType, bool> RoleFilter();
 }

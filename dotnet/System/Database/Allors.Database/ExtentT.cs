@@ -423,7 +423,7 @@ public class Extent<T> : IList, IList<T> where T : IObject // Extent<T> must als
     /// </summary>
     /// <param name="roleType">The role type by which to sort.</param>
     /// <returns>The current extent.</returns>
-    public Extent<T> AddSort(IRoleType roleType)
+    public Extent<T> AddSort(RoleType roleType)
     {
         this.BaseExtent.AddSort(roleType);
         return this;
@@ -435,7 +435,7 @@ public class Extent<T> : IList, IList<T> where T : IObject // Extent<T> must als
     /// <param name="roleType">The role type by which to sort.</param>
     /// <param name="direction">The sort direction.</param>
     /// <returns>The current extent.</returns>
-    public Extent<T> AddSort(IRoleType roleType, SortDirection direction)
+    public Extent<T> AddSort(RoleType roleType, SortDirection direction)
     {
         this.BaseExtent.AddSort(roleType, direction);
         return this;

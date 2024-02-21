@@ -10,19 +10,19 @@ using Allors.Database.Meta;
 
 public sealed class DefaultCachedObject : ICachedObject
 {
-    private readonly ConcurrentDictionary<IRoleType, object> roleByRoleType;
+    private readonly ConcurrentDictionary<RoleType, object> roleByRoleType;
 
     internal DefaultCachedObject(long version)
     {
         this.Version = version;
-        this.roleByRoleType = new ConcurrentDictionary<IRoleType, object>();
+        this.roleByRoleType = new ConcurrentDictionary<RoleType, object>();
     }
 
     public long Version { get; }
 
-    public bool Contains(IRoleType roleType) => this.roleByRoleType.ContainsKey(roleType);
+    public bool Contains(RoleType roleType) => this.roleByRoleType.ContainsKey(roleType);
 
-    public bool TryGetValue(IRoleType roleType, out object value) => this.roleByRoleType.TryGetValue(roleType, out value);
+    public bool TryGetValue(RoleType roleType, out object value) => this.roleByRoleType.TryGetValue(roleType, out value);
 
-    public void SetValue(IRoleType roleType, object value) => this.roleByRoleType[roleType] = value;
+    public void SetValue(RoleType roleType, object value) => this.roleByRoleType[roleType] = value;
 }

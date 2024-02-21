@@ -17,9 +17,9 @@ public interface IAccessControlList
 
     IVersionedRevocation[] Revocations { get; }
 
-    bool CanRead(IRoleType roleType);
+    bool CanRead(RoleType roleType);
 
-    bool CanWrite(IRoleType roleType);
+    bool CanWrite(RoleType roleType);
 
     bool CanExecute(MethodType methodType);
 

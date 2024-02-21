@@ -13,10 +13,10 @@ using Allors.Database.Meta;
 
 internal abstract class Prefetcher
 {
-    private Dictionary<IAssociationType, ICommand> prefetchCompositeAssociationByAssociationType;
-    private Dictionary<IRoleType, ICommand> prefetchCompositeRoleByRoleType;
-    private Dictionary<IRoleType, ICommand> prefetchCompositesRoleByRoleType;
-    private Dictionary<IClass, ICommand> prefetchUnitRolesByClass;
+    private Dictionary<AssociationType, ICommand> prefetchCompositeAssociationByAssociationType;
+    private Dictionary<RoleType, ICommand> prefetchCompositeRoleByRoleType;
+    private Dictionary<RoleType, ICommand> prefetchCompositesRoleByRoleType;
+    private Dictionary<Class, ICommand> prefetchUnitRolesByClass;
 
     protected Prefetcher(Transaction transaction) => this.Transaction = transaction;
 
@@ -24,16 +24,16 @@ internal abstract class Prefetcher
 
     public Database Database => this.Transaction.Database;
 
-    private Dictionary<IClass, ICommand> PrefetchUnitRolesByClass => this.prefetchUnitRolesByClass ??= new Dictionary<IClass, ICommand>();
+    private Dictionary<Class, ICommand> PrefetchUnitRolesByClass => this.prefetchUnitRolesByClass ??= new Dictionary<Class, ICommand>();
 
-    private Dictionary<IRoleType, ICommand> PrefetchCompositeRoleByRoleType =>
-        this.prefetchCompositeRoleByRoleType ??= new Dictionary<IRoleType, ICommand>();
+    private Dictionary<RoleType, ICommand> PrefetchCompositeRoleByRoleType =>
+        this.prefetchCompositeRoleByRoleType ??= new Dictionary<RoleType, ICommand>();
 
-    private Dictionary<IRoleType, ICommand> PrefetchCompositesRoleByRoleType =>
-        this.prefetchCompositesRoleByRoleType ??= new Dictionary<IRoleType, ICommand>();
+    private Dictionary<RoleType, ICommand> PrefetchCompositesRoleByRoleType =>
+        this.prefetchCompositesRoleByRoleType ??= new Dictionary<RoleType, ICommand>();
 
-    private Dictionary<IAssociationType, ICommand> PrefetchCompositeAssociationByAssociationType =>
-        this.prefetchCompositeAssociationByAssociationType ??= new Dictionary<IAssociationType, ICommand>();
+    private Dictionary<AssociationType, ICommand> PrefetchCompositeAssociationByAssociationType =>
+        this.prefetchCompositeAssociationByAssociationType ??= new Dictionary<AssociationType, ICommand>();
 
     internal HashSet<Reference> GetReferencesForPrefetching(IEnumerable<long> objectIds)
     {
@@ -79,7 +79,7 @@ internal abstract class Prefetcher
         this.prefetchCompositeAssociationByAssociationType = null;
     }
 
-    internal virtual void PrefetchUnitRoles(IClass @class, HashSet<Reference> associations, IRoleType anyRoleType)
+    internal virtual void PrefetchUnitRoles(Class @class, HashSet<Reference> associations, RoleType anyRoleType)
     {
         var references = this.FilterForPrefetchRoles(associations, anyRoleType);
         if (references.Count == 0)
@@ -179,7 +179,7 @@ internal abstract class Prefetcher
         }
     }
 
-    internal virtual void PrefetchCompositeRoleObjectTable(HashSet<Reference> associations, IRoleType roleType,
+    internal virtual void PrefetchCompositeRoleObjectTable(HashSet<Reference> associations, RoleType roleType,
         HashSet<long> nestedObjectIds, HashSet<long> leafs)
     {
         var references = nestedObjectIds == null
@@ -246,7 +246,7 @@ internal abstract class Prefetcher
         }
     }
 
-    internal virtual void PrefetchCompositeRoleRelationTable(HashSet<Reference> associations, IRoleType roleType,
+    internal virtual void PrefetchCompositeRoleRelationTable(HashSet<Reference> associations, RoleType roleType,
         HashSet<long> nestedObjectIds, HashSet<long> leafs)
     {
         var references = nestedObjectIds == null
@@ -301,7 +301,7 @@ internal abstract class Prefetcher
         }
     }
 
-    internal virtual void PrefetchCompositesRoleObjectTable(HashSet<Reference> associations, IRoleType roleType,
+    internal virtual void PrefetchCompositesRoleObjectTable(HashSet<Reference> associations, RoleType roleType,
         HashSet<long> nestedObjectIds, HashSet<long> leafs)
     {
         var references = nestedObjectIds == null
@@ -370,7 +370,7 @@ internal abstract class Prefetcher
         }
     }
 
-    internal virtual void PrefetchCompositesRoleRelationTable(HashSet<Reference> associations, IRoleType roleType,
+    internal virtual void PrefetchCompositesRoleRelationTable(HashSet<Reference> associations, RoleType roleType,
         HashSet<long> nestedObjectIds, HashSet<long> leafs)
     {
         var references = nestedObjectIds == null
@@ -439,7 +439,7 @@ internal abstract class Prefetcher
         }
     }
 
-    internal virtual void PrefetchCompositeAssociationObjectTable(HashSet<Reference> roles, IAssociationType associationType,
+    internal virtual void PrefetchCompositeAssociationObjectTable(HashSet<Reference> roles, AssociationType associationType,
         HashSet<long> nestedObjectIds, HashSet<long> leafs)
     {
         var references = nestedObjectIds == null
@@ -497,7 +497,7 @@ internal abstract class Prefetcher
         }
     }
 
-    internal virtual void PrefetchCompositeAssociationRelationTable(HashSet<Reference> roles, IAssociationType associationType,
+    internal virtual void PrefetchCompositeAssociationRelationTable(HashSet<Reference> roles, AssociationType associationType,
         HashSet<long> nestedObjectIds, HashSet<long> leafs)
     {
         var references = nestedObjectIds == null
@@ -560,7 +560,7 @@ internal abstract class Prefetcher
         }
     }
 
-    internal virtual void PrefetchCompositesAssociationObjectTable(HashSet<Reference> roles, IAssociationType associationType,
+    internal virtual void PrefetchCompositesAssociationObjectTable(HashSet<Reference> roles, AssociationType associationType,
         HashSet<long> nestedObjectIds, HashSet<long> leafs)
     {
         var references = nestedObjectIds == null
@@ -641,7 +641,7 @@ internal abstract class Prefetcher
         }
     }
 
-    internal virtual void PrefetchCompositesAssociationRelationTable(HashSet<Reference> roles, IAssociationType associationType,
+    internal virtual void PrefetchCompositesAssociationRelationTable(HashSet<Reference> roles, AssociationType associationType,
         HashSet<long> nestedObjectIds, HashSet<long> leafs)
     {
         var references = nestedObjectIds == null
@@ -724,7 +724,7 @@ internal abstract class Prefetcher
         }
     }
 
-    private List<Reference> FilterForPrefetchRoles(HashSet<Reference> associations, IRoleType roleType)
+    private List<Reference> FilterForPrefetchRoles(HashSet<Reference> associations, RoleType roleType)
     {
         var references = new List<Reference>();
 
@@ -754,7 +754,7 @@ internal abstract class Prefetcher
         return references;
     }
 
-    private List<Reference> FilterForPrefetchCompositeRoles(HashSet<Reference> associations, IRoleType roleType,
+    private List<Reference> FilterForPrefetchCompositeRoles(HashSet<Reference> associations, RoleType roleType,
         HashSet<long> nestedObjects)
     {
         var references = new List<Reference>();
@@ -796,7 +796,7 @@ internal abstract class Prefetcher
         return references;
     }
 
-    private List<Reference> FilterForPrefetchCompositesRoles(HashSet<Reference> associations, IRoleType roleType,
+    private List<Reference> FilterForPrefetchCompositesRoles(HashSet<Reference> associations, RoleType roleType,
         HashSet<long> nestedObjects)
     {
         var references = new List<Reference>();
@@ -829,7 +829,7 @@ internal abstract class Prefetcher
         return references;
     }
 
-    private HashSet<Reference> FilterForPrefetchAssociations(HashSet<Reference> roles, IAssociationType associationType)
+    private HashSet<Reference> FilterForPrefetchAssociations(HashSet<Reference> roles, AssociationType associationType)
     {
         if (!this.Transaction.State.AssociationByRoleByAssociationType.TryGetValue(associationType, out var associationByRole))
         {
@@ -839,7 +839,7 @@ internal abstract class Prefetcher
         return new HashSet<Reference>(roles.Where(role => !associationByRole.ContainsKey(role)));
     }
 
-    private HashSet<Reference> FilterForPrefetchCompositeAssociations(HashSet<Reference> roles, IAssociationType associationType,
+    private HashSet<Reference> FilterForPrefetchCompositeAssociations(HashSet<Reference> roles, AssociationType associationType,
         HashSet<long> nestedObjectIds)
     {
         if (!this.Transaction.State.AssociationByRoleByAssociationType.TryGetValue(associationType, out var associationByRole))
@@ -862,7 +862,7 @@ internal abstract class Prefetcher
         return references;
     }
 
-    private HashSet<Reference> FilterForPrefetchCompositesAssociations(HashSet<Reference> roles, IAssociationType associationType,
+    private HashSet<Reference> FilterForPrefetchCompositesAssociations(HashSet<Reference> roles, AssociationType associationType,
         HashSet<long> nestedObjectIds)
     {
         if (!this.Transaction.State.AssociationsByRoleByAssociationType.TryGetValue(associationType, out var associationByRole))

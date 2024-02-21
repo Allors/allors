@@ -10,5 +10,5 @@ using Allors.Database.Meta;
 
 public interface IRolePattern : IPattern
 {
-    IRoleType RoleType { get; }
+    RoleType RoleType { get; }
 }

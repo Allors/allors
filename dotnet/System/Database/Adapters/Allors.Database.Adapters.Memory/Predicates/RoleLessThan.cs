@@ -12,9 +12,9 @@ internal sealed class RoleLessThan : Predicate
 {
     private readonly object compare;
     private readonly ExtentFiltered extent;
-    private readonly IRoleType roleType;
+    private readonly RoleType roleType;
 
-    internal RoleLessThan(ExtentFiltered extent, IRoleType roleType, object compare)
+    internal RoleLessThan(ExtentFiltered extent, RoleType roleType, object compare)
     {
         extent.CheckForRoleType(roleType);
         PredicateAssertions.ValidateRoleLessThan(roleType, compare);
@@ -28,7 +28,7 @@ internal sealed class RoleLessThan : Predicate
     {
         var compareValue = this.compare;
 
-        if (this.compare is IRoleType compareRole)
+        if (this.compare is RoleType compareRole)
         {
             compareValue = strategy.GetInternalizedUnitRole(compareRole);
         }

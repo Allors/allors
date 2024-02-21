@@ -9,13 +9,13 @@ using Allors.Database.Meta;
 
 public class Like : IRolePredicate
 {
-    public Like(IRoleType roleType = null) => this.RoleType = roleType;
+    public Like(RoleType roleType = null) => this.RoleType = roleType;
 
     public string Value { get; set; }
 
     public string Parameter { get; set; }
 
-    public IRoleType RoleType { get; set; }
+    public RoleType RoleType { get; set; }
 
     bool IPredicate.ShouldTreeShake(IArguments arguments) => ((IPredicate)this).HasMissingArguments(arguments);
 

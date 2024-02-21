@@ -38,7 +38,7 @@ public sealed class TraceableCommands : Commands
         this.sink.OnAfter(@event);
     }
 
-    internal override void SetUnitRoles(Strategy strategy, List<IRoleType> sortedRoleTypes)
+    internal override void SetUnitRoles(Strategy strategy, List<RoleType> sortedRoleTypes)
     {
         var @event = new SqlSetUnitRolesEvent(this.Transaction) { Strategy = strategy, RoleTypes = [.. sortedRoleTypes] };
         this.sink.OnBefore(@event);
@@ -48,7 +48,7 @@ public sealed class TraceableCommands : Commands
         this.sink.OnAfter(@event);
     }
 
-    internal override void GetCompositeRole(Strategy strategy, IRoleType roleType)
+    internal override void GetCompositeRole(Strategy strategy, RoleType roleType)
     {
         var @event = new SqlGetCompositeRoleEvent(this.Transaction) { Strategy = strategy, RoleType = roleType };
         this.sink.OnBefore(@event);
@@ -58,7 +58,7 @@ public sealed class TraceableCommands : Commands
         this.sink.OnAfter(@event);
     }
 
-    internal override void SetCompositeRole(List<CompositeRelation> relations, IRoleType roleType)
+    internal override void SetCompositeRole(List<CompositeRelation> relations, RoleType roleType)
     {
         var @event = new SqlSetCompositeRoleEvent(this.Transaction) { Relations = relations?.ToArray(), RoleType = roleType };
         this.sink.OnBefore(@event);
@@ -68,7 +68,7 @@ public sealed class TraceableCommands : Commands
         this.sink.OnAfter(@event);
     }
 
-    internal override void GetCompositesRole(Strategy strategy, IRoleType roleType)
+    internal override void GetCompositesRole(Strategy strategy, RoleType roleType)
     {
         var @event = new SqlGetCompositesRoleEvent(this.Transaction) { Strategy = strategy, RoleType = roleType };
         this.sink.OnBefore(@event);
@@ -78,7 +78,7 @@ public sealed class TraceableCommands : Commands
         this.sink.OnAfter(@event);
     }
 
-    internal override void AddCompositeRole(List<CompositeRelation> relations, IRoleType roleType)
+    internal override void AddCompositeRole(List<CompositeRelation> relations, RoleType roleType)
     {
         var @event = new SqlAddCompositeRoleEvent(this.Transaction) { Relations = relations?.ToArray(), RoleType = roleType };
         this.sink.OnBefore(@event);
@@ -88,7 +88,7 @@ public sealed class TraceableCommands : Commands
         this.sink.OnAfter(@event);
     }
 
-    internal override void RemoveCompositeRole(List<CompositeRelation> relations, IRoleType roleType)
+    internal override void RemoveCompositeRole(List<CompositeRelation> relations, RoleType roleType)
     {
         var @event = new SqlRemoveCompositeRoleEvent(this.Transaction) { Relations = relations?.ToArray(), RoleType = roleType };
         this.sink.OnBefore(@event);
@@ -98,7 +98,7 @@ public sealed class TraceableCommands : Commands
         this.sink.OnAfter(@event);
     }
 
-    internal override void ClearCompositeAndCompositesRole(IList<long> associations, IRoleType roleType)
+    internal override void ClearCompositeAndCompositesRole(IList<long> associations, RoleType roleType)
     {
         var @event = new SqlClearCompositeAndCompositesRole(this.Transaction)
         {
@@ -111,7 +111,7 @@ public sealed class TraceableCommands : Commands
         this.sink.OnAfter(@event);
     }
 
-    internal override Reference GetCompositeAssociation(Reference role, IAssociationType associationType)
+    internal override Reference GetCompositeAssociation(Reference role, AssociationType associationType)
     {
         var @event = new SqlGetCompositeAssociationEvent(this.Transaction) { Role = role, AssociationType = associationType };
         this.sink.OnBefore(@event);
@@ -126,7 +126,7 @@ public sealed class TraceableCommands : Commands
         }
     }
 
-    internal override long[] GetCompositesAssociation(Strategy role, IAssociationType associationType)
+    internal override long[] GetCompositesAssociation(Strategy role, AssociationType associationType)
     {
         var @event = new SqlGetCompositesAssociationEvent(this.Transaction) { Role = role.Reference, AssociationType = associationType };
         this.sink.OnBefore(@event);
@@ -141,7 +141,7 @@ public sealed class TraceableCommands : Commands
         }
     }
 
-    internal override Reference CreateObject(IClass @class)
+    internal override Reference CreateObject(Class @class)
     {
         var @event = new SqlCreateObjectEvent(this.Transaction) { Class = @class };
         this.sink.OnBefore(@event);
@@ -156,7 +156,7 @@ public sealed class TraceableCommands : Commands
         }
     }
 
-    internal override IList<Reference> CreateObjects(IClass @class, int count)
+    internal override IList<Reference> CreateObjects(Class @class, int count)
     {
         var @event = new SqlCreatesObjectEvent(this.Transaction) { Class = @class, Count = count };
         this.sink.OnBefore(@event);
@@ -226,9 +226,9 @@ public sealed class TraceableCommands : Commands
         this.sink.OnAfter(@event);
     }
 
-    private class SortedRoleTypeComparer : IEqualityComparer<IList<IRoleType>>
+    private class SortedRoleTypeComparer : IEqualityComparer<IList<RoleType>>
     {
-        public bool Equals(IList<IRoleType> x, IList<IRoleType> y)
+        public bool Equals(IList<RoleType> x, IList<RoleType> y)
         {
             if (x.Count == y.Count)
             {
@@ -246,7 +246,7 @@ public sealed class TraceableCommands : Commands
             return false;
         }
 
-        public int GetHashCode(IList<IRoleType> roleTypes)
+        public int GetHashCode(IList<RoleType> roleTypes)
         {
             var hashCode = 0;
             foreach (var roleType in roleTypes)

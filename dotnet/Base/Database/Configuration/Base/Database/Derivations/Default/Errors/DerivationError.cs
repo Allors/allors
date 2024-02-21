@@ -24,11 +24,11 @@ namespace Allors.Database.Configuration.Derivations.Default
 
         public string ErrorCode { get; }
 
-        public IRoleType[] RoleTypes
+        public RoleType[] RoleTypes
         {
             get
             {
-                var roleTypes = new List<IRoleType>();
+                var roleTypes = new List<RoleType>();
                 foreach (var relation in this.Relations)
                 {
                     var roleType = relation.RelationType.RoleType;

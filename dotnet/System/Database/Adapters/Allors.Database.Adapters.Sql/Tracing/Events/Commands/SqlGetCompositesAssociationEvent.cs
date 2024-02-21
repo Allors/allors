@@ -17,7 +17,7 @@ public sealed class SqlGetCompositesAssociationEvent : Event
 
     public Reference Role { get; set; }
 
-    public IAssociationType AssociationType { get; set; }
+    public AssociationType AssociationType { get; set; }
 
     protected override void ToString(StringBuilder builder) => _ = builder
         .Append('[')

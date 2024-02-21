@@ -16,7 +16,7 @@ namespace Allors.Database.Configuration.Derivations.Default
         {
         }
 
-        public DerivationErrorConflict(IValidation validation, IObject association, IRoleType roleType) :
+        public DerivationErrorConflict(IValidation validation, IObject association, RoleType roleType) :
             this(validation, new DerivationRelation(association, roleType))
         {
         }

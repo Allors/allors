@@ -11,11 +11,11 @@ internal class ExtentSort
 {
     private readonly SortDirection direction;
     private readonly Mapping mapping;
-    private readonly IRoleType roleType;
+    private readonly RoleType roleType;
     private readonly Transaction transaction;
     private ExtentSort subSorter;
 
-    internal ExtentSort(Transaction transaction, IRoleType roleType, SortDirection direction)
+    internal ExtentSort(Transaction transaction, RoleType roleType, SortDirection direction)
     {
         this.transaction = transaction;
         this.roleType = roleType;
@@ -23,7 +23,7 @@ internal class ExtentSort
         this.mapping = this.transaction.Database.Mapping;
     }
 
-    internal void AddSort(IRoleType subSortIRoleType, SortDirection subSortDirection)
+    internal void AddSort(RoleType subSortIRoleType, SortDirection subSortDirection)
     {
         if (this.subSorter == null)
         {

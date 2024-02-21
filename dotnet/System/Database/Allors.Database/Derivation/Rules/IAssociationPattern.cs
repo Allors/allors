@@ -10,5 +10,5 @@ using Allors.Database.Meta;
 
 public interface IAssociationPattern : IPattern
 {
-    IAssociationType AssociationType { get; }
+    AssociationType AssociationType { get; }
 }

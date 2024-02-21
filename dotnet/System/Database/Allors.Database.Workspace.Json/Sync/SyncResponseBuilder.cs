@@ -15,20 +15,20 @@ using Allors.Shared.Ranges;
 
 public class SyncResponseBuilder
 {
-    private readonly IReadOnlySet<IClass> allowedClasses;
+    private readonly IReadOnlySet<Class> allowedClasses;
 
     private readonly HashSet<IObject> maskedObjects;
-    private readonly IDictionary<IClass, PrefetchPolicy> prefetchPolicyByClass;
-    private readonly IDictionary<IClass, IReadOnlySet<IRoleType>> roleTypesByClass;
+    private readonly IDictionary<Class, PrefetchPolicy> prefetchPolicyByClass;
+    private readonly IDictionary<Class, IReadOnlySet<RoleType>> roleTypesByClass;
 
     private readonly ITransaction transaction;
     private readonly IUnitConvert unitConvert;
 
     public SyncResponseBuilder(ITransaction transaction,
         IAccessControl accessControl,
-        IReadOnlySet<IClass> allowedClasses,
-        IDictionary<IClass, IReadOnlySet<IRoleType>> roleTypesByClass,
-        IDictionary<IClass, PrefetchPolicy> prefetchPolicyByClass,
+        IReadOnlySet<Class> allowedClasses,
+        IDictionary<Class, IReadOnlySet<RoleType>> roleTypesByClass,
+        IDictionary<Class, PrefetchPolicy> prefetchPolicyByClass,
         IUnitConvert unitConvert)
     {
         this.transaction = transaction;
@@ -81,7 +81,7 @@ public class SyncResponseBuilder
         };
     }
 
-    private SyncResponseRole CreateSyncResponseRole(IObject @object, IRoleType roleType, IUnitConvert unitConvert)
+    private SyncResponseRole CreateSyncResponseRole(IObject @object, RoleType roleType, IUnitConvert unitConvert)
     {
         var syncResponseRole = new SyncResponseRole { t = roleType.RelationType.Tag };
 

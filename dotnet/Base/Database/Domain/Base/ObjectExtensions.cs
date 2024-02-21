@@ -12,9 +12,9 @@ namespace Allors.Database.Domain
 
     public static partial class ObjectExtensions
     {
-        public static bool IsCloneable(this IRoleType roleType) => !roleType.RelationType.IsDerived && (roleType.ObjectType.IsUnit || roleType.AssociationType.IsMany);
+        public static bool IsCloneable(this RoleType roleType) => !roleType.RelationType.IsDerived && (roleType.ObjectType.IsUnit || roleType.AssociationType.IsMany);
 
-        public static bool IsMergeable(this IRoleType roleType) => !roleType.RelationType.IsDerived;
+        public static bool IsMergeable(this RoleType roleType) => !roleType.RelationType.IsDerived;
 
         public static void Merge<T>(this T @this, IObject inTo) where T : IObject
         {
@@ -96,7 +96,7 @@ namespace Allors.Database.Domain
 
             foreach (var node in deepClone)
             {
-                var roleType = (IRoleType)node.RelationEndType;
+                var roleType = (RoleType)node.RelationEndType;
                 if (roleType.IsOne)
                 {
                     var role = strategy.GetCompositeRole(roleType);

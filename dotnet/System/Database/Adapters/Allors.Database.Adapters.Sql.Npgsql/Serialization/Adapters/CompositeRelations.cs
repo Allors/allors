@@ -14,7 +14,7 @@ using Allors.Database.Meta;
 internal class CompositeRelations : IEnumerable<CompositeRelation>
 {
     private readonly Action<XmlReader, Guid> canNotRestoreCompositeRole;
-    private readonly Dictionary<long, IClass> classByObjectId;
+    private readonly Dictionary<long, Class> classByObjectId;
     private readonly Database database;
     private readonly Action<Guid, long, string> onRelationNotRestored;
     private readonly XmlReader reader;
@@ -25,7 +25,7 @@ internal class CompositeRelations : IEnumerable<CompositeRelation>
         RelationType relationType,
         Action<XmlReader, Guid> canNotRestoreCompositeRole,
         Action<Guid, long, string> onRelationNotRestored,
-        Dictionary<long, IClass> classByObjectId,
+        Dictionary<long, Class> classByObjectId,
         XmlReader reader)
     {
         this.database = database;
@@ -38,8 +38,8 @@ internal class CompositeRelations : IEnumerable<CompositeRelation>
 
     public IEnumerator<CompositeRelation> GetEnumerator()
     {
-        var allowedAssociationClasses = new HashSet<IClass>(this.relationType.AssociationType.ObjectType.Classes);
-        var allowedRoleClasses = new HashSet<IClass>(((IComposite)this.relationType.RoleType.ObjectType).Classes);
+        var allowedAssociationClasses = new HashSet<Class>(this.relationType.AssociationType.ObjectType.Classes);
+        var allowedRoleClasses = new HashSet<Class>(((IComposite)this.relationType.RoleType.ObjectType).Classes);
 
         var skip = false;
         while (skip || this.reader.Read())

@@ -61,7 +61,7 @@ internal sealed class ChangeLog
             this.RoleTypesByAssociation().ToDictionary(kvp => kvp.Key, kvp => kvp.Value),
             this.AssociationTypesByRole().ToDictionary(kvp => kvp.Key, kvp => kvp.Value));
 
-    private IEnumerable<KeyValuePair<IObject, ISet<IRoleType>>> RoleTypesByAssociation()
+    private IEnumerable<KeyValuePair<IObject, ISet<RoleType>>> RoleTypesByAssociation()
     {
         foreach (var strategy in this.changedRoleTypes)
         {
@@ -73,12 +73,12 @@ internal sealed class ChangeLog
             var changedRoleTypes = strategy.CheckpointRoleTypes;
             if (changedRoleTypes != null)
             {
-                yield return new KeyValuePair<IObject, ISet<IRoleType>>(strategy.GetObject(), changedRoleTypes);
+                yield return new KeyValuePair<IObject, ISet<RoleType>>(strategy.GetObject(), changedRoleTypes);
             }
         }
     }
 
-    private IEnumerable<KeyValuePair<IObject, ISet<IAssociationType>>> AssociationTypesByRole()
+    private IEnumerable<KeyValuePair<IObject, ISet<AssociationType>>> AssociationTypesByRole()
     {
         foreach (var strategy in this.changedAssociationTypes)
         {
@@ -90,7 +90,7 @@ internal sealed class ChangeLog
             var changedAssociationTypes = strategy.CheckpointAssociationTypes;
             if (changedAssociationTypes != null)
             {
-                yield return new KeyValuePair<IObject, ISet<IAssociationType>>(strategy.GetObject(), changedAssociationTypes);
+                yield return new KeyValuePair<IObject, ISet<AssociationType>>(strategy.GetObject(), changedAssociationTypes);
             }
         }
     }

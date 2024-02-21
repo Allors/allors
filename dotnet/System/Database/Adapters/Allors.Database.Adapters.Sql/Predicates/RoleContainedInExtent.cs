@@ -10,9 +10,9 @@ using Allors.Database.Meta;
 internal sealed class RoleContainedInExtent : ContainedIn
 {
     private readonly SqlExtent inExtent;
-    private readonly IRoleType role;
+    private readonly RoleType role;
 
-    internal RoleContainedInExtent(ExtentFiltered extent, IRoleType role, Allors.Database.Extent inExtent)
+    internal RoleContainedInExtent(ExtentFiltered extent, RoleType role, Allors.Database.Extent inExtent)
     {
         extent.CheckRole(role);
         PredicateAssertions.ValidateRoleContainedIn(role, inExtent);

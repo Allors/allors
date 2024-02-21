@@ -9,10 +9,10 @@ using Allors.Database.Meta;
 
 internal sealed class AssociationInstanceOf : Predicate
 {
-    private readonly IAssociationType association;
+    private readonly AssociationType association;
     private readonly IObjectType[] instanceClasses;
 
-    internal AssociationInstanceOf(ExtentFiltered extent, IAssociationType association, IObjectType instanceType,
+    internal AssociationInstanceOf(ExtentFiltered extent, AssociationType association, IObjectType instanceType,
         IObjectType[] instanceClasses)
     {
         extent.CheckAssociation(association);

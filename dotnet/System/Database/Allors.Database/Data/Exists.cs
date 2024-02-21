@@ -27,13 +27,13 @@ public class Exists : IPropertyPredicate
 
         if (relationEndType != null)
         {
-            if (relationEndType is IRoleType roleType)
+            if (relationEndType is RoleType roleType)
             {
                 compositePredicate.AddExists(roleType);
             }
             else
             {
-                var associationType = (IAssociationType)relationEndType;
+                var associationType = (AssociationType)relationEndType;
                 compositePredicate.AddExists(associationType);
             }
         }

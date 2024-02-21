@@ -30,7 +30,7 @@ public class ContainedIn : IPropertyPredicate
         {
             var objects = this.Parameter != null ? transaction.GetObjects(arguments.ResolveObjects(this.Parameter)) : this.Objects;
 
-            if (this.RelationEndType is IRoleType roleType)
+            if (this.RelationEndType is RoleType roleType)
             {
                 if (objects != null)
                 {
@@ -43,7 +43,7 @@ public class ContainedIn : IPropertyPredicate
             }
             else
             {
-                var associationType = (IAssociationType)this.RelationEndType;
+                var associationType = (AssociationType)this.RelationEndType;
                 if (objects != null)
                 {
                     compositePredicate.AddContainedIn(associationType, objects);

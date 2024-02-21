@@ -75,14 +75,14 @@ internal abstract class CompositePredicate : Predicate, ICompositePredicate
         return allFilter;
     }
 
-    public ICompositePredicate AddBetween(IRoleType role, object firstValue, object secondValue)
+    public ICompositePredicate AddBetween(RoleType role, object firstValue, object secondValue)
     {
         this.Extent.FlushCache();
-        if (firstValue is IRoleType betweenRoleA && secondValue is IRoleType betweenRoleB)
+        if (firstValue is RoleType betweenRoleA && secondValue is RoleType betweenRoleB)
         {
             this.Filters.Add(new RoleBetweenRole(this.Extent, role, betweenRoleA, betweenRoleB));
         }
-        else if (firstValue is IAssociationType betweenAssociationA && secondValue is IAssociationType betweenAssociationB)
+        else if (firstValue is AssociationType betweenAssociationA && secondValue is AssociationType betweenAssociationB)
         {
             throw new NotImplementedException();
         }
@@ -94,42 +94,42 @@ internal abstract class CompositePredicate : Predicate, ICompositePredicate
         return this;
     }
 
-    public ICompositePredicate AddContainedIn(IRoleType role, Allors.Database.Extent containingExtent)
+    public ICompositePredicate AddContainedIn(RoleType role, Allors.Database.Extent containingExtent)
     {
         this.Extent.FlushCache();
         this.Filters.Add(new RoleContainedInExtent(this.Extent, role, containingExtent));
         return this;
     }
 
-    public ICompositePredicate AddContainedIn(IRoleType role, IEnumerable<IObject> containingEnumerable)
+    public ICompositePredicate AddContainedIn(RoleType role, IEnumerable<IObject> containingEnumerable)
     {
         this.Extent.FlushCache();
         this.Filters.Add(new RoleContainedInEnumerable(this.Extent, role, containingEnumerable));
         return this;
     }
 
-    public ICompositePredicate AddContainedIn(IAssociationType association, Allors.Database.Extent containingExtent)
+    public ICompositePredicate AddContainedIn(AssociationType association, Allors.Database.Extent containingExtent)
     {
         this.Extent.FlushCache();
         this.Filters.Add(new AssociationContainedInExtent(this.Extent, association, containingExtent));
         return this;
     }
 
-    public ICompositePredicate AddContainedIn(IAssociationType association, IEnumerable<IObject> containingEnumerable)
+    public ICompositePredicate AddContainedIn(AssociationType association, IEnumerable<IObject> containingEnumerable)
     {
         this.Extent.FlushCache();
         this.Filters.Add(new AssociationContainedInEnumerable(this.Extent, association, containingEnumerable));
         return this;
     }
 
-    public ICompositePredicate AddContains(IRoleType role, IObject containedObject)
+    public ICompositePredicate AddContains(RoleType role, IObject containedObject)
     {
         this.Extent.FlushCache();
         this.Filters.Add(new RoleContains(this.Extent, role, containedObject));
         return this;
     }
 
-    public ICompositePredicate AddContains(IAssociationType association, IObject containedObject)
+    public ICompositePredicate AddContains(AssociationType association, IObject containedObject)
     {
         this.Extent.FlushCache();
         this.Filters.Add(new AssociationContains(this.Extent, association, containedObject));
@@ -143,14 +143,14 @@ internal abstract class CompositePredicate : Predicate, ICompositePredicate
         return this;
     }
 
-    public ICompositePredicate AddEquals(IRoleType role, object obj)
+    public ICompositePredicate AddEquals(RoleType role, object obj)
     {
         this.Extent.FlushCache();
-        if (obj is IRoleType equalsRole)
+        if (obj is RoleType equalsRole)
         {
             this.Filters.Add(new RoleEqualsRole(this.Extent, role, equalsRole));
         }
-        else if (obj is IAssociationType equalsAssociation)
+        else if (obj is AssociationType equalsAssociation)
         {
             throw new NotImplementedException();
         }
@@ -162,35 +162,35 @@ internal abstract class CompositePredicate : Predicate, ICompositePredicate
         return this;
     }
 
-    public ICompositePredicate AddEquals(IAssociationType association, IObject allorsObject)
+    public ICompositePredicate AddEquals(AssociationType association, IObject allorsObject)
     {
         this.Extent.FlushCache();
         this.Filters.Add(new AssociationEquals(this.Extent, association, allorsObject));
         return this;
     }
 
-    public ICompositePredicate AddExists(IRoleType role)
+    public ICompositePredicate AddExists(RoleType role)
     {
         this.Extent.FlushCache();
         this.Filters.Add(new RoleExists(this.Extent, role));
         return this;
     }
 
-    public ICompositePredicate AddExists(IAssociationType association)
+    public ICompositePredicate AddExists(AssociationType association)
     {
         this.Extent.FlushCache();
         this.Filters.Add(new AssociationExists(this.Extent, association));
         return this;
     }
 
-    public ICompositePredicate AddGreaterThan(IRoleType role, object value)
+    public ICompositePredicate AddGreaterThan(RoleType role, object value)
     {
         this.Extent.FlushCache();
-        if (value is IRoleType greaterThanRole)
+        if (value is RoleType greaterThanRole)
         {
             this.Filters.Add(new RoleGreaterThanRole(this.Extent, role, greaterThanRole));
         }
-        else if (value is IAssociationType greaterThanAssociation)
+        else if (value is AssociationType greaterThanAssociation)
         {
             throw new NotImplementedException();
         }
@@ -209,28 +209,28 @@ internal abstract class CompositePredicate : Predicate, ICompositePredicate
         return this;
     }
 
-    public ICompositePredicate AddInstanceof(IRoleType role, IComposite type)
+    public ICompositePredicate AddInstanceof(RoleType role, IComposite type)
     {
         this.Extent.FlushCache();
         this.Filters.Add(new RoleInstanceof(this.Extent, role, type, GetConcreteSubClasses(type)));
         return this;
     }
 
-    public ICompositePredicate AddInstanceof(IAssociationType association, IComposite type)
+    public ICompositePredicate AddInstanceof(AssociationType association, IComposite type)
     {
         this.Extent.FlushCache();
         this.Filters.Add(new AssociationInstanceOf(this.Extent, association, type, GetConcreteSubClasses(type)));
         return this;
     }
 
-    public ICompositePredicate AddLessThan(IRoleType role, object value)
+    public ICompositePredicate AddLessThan(RoleType role, object value)
     {
         this.Extent.FlushCache();
-        if (value is IRoleType lessThanRole)
+        if (value is RoleType lessThanRole)
         {
             this.Filters.Add(new RoleLessThanRole(this.Extent, role, lessThanRole));
         }
-        else if (value is IAssociationType lessThanAssociation)
+        else if (value is AssociationType lessThanAssociation)
         {
             throw new NotImplementedException();
         }
@@ -242,7 +242,7 @@ internal abstract class CompositePredicate : Predicate, ICompositePredicate
         return this;
     }
 
-    public ICompositePredicate AddLike(IRoleType role, string value)
+    public ICompositePredicate AddLike(RoleType role, string value)
     {
         this.Extent.FlushCache();
         this.Filters.Add(new RoleLike(this.Extent, role, value));

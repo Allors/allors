@@ -20,12 +20,12 @@ public class PredicateAssertions
     /// </summary>
     /// <param name="association">The association.</param>
     /// <param name="extent">The extent.</param>
-    public static void AssertAssociationContainedIn(IAssociationType association, Extent extent)
+    public static void AssertAssociationContainedIn(AssociationType association, Extent extent)
     {
         // TODO: ?
     }
 
-    public static void AssertAssociationContainedIn(IAssociationType association, IEnumerable<IObject> enumerable)
+    public static void AssertAssociationContainedIn(AssociationType association, IEnumerable<IObject> enumerable)
     {
         // TODO: ?
     }
@@ -36,7 +36,7 @@ public class PredicateAssertions
     /// </summary>
     /// <param name="association">The association.</param>
     /// <param name="allorsObject">The allors object.</param>
-    public static void AssertAssociationContains(IAssociationType association, IObject allorsObject)
+    public static void AssertAssociationContains(AssociationType association, IObject allorsObject)
     {
         if (!association.IsMany)
         {
@@ -56,7 +56,7 @@ public class PredicateAssertions
     /// </summary>
     /// <param name="association">The association.</param>
     /// <param name="allorsObject">The allors object.</param>
-    public static void AssertAssociationEquals(IAssociationType association, IObject allorsObject)
+    public static void AssertAssociationEquals(AssociationType association, IObject allorsObject)
     {
         if (!association.IsOne)
         {
@@ -76,7 +76,7 @@ public class PredicateAssertions
     ///     <see cref="ICompositePredicate#AddExists" />.
     /// </summary>
     /// <param name="association">The association.</param>
-    public static void ValidateAssociationExists(IAssociationType association)
+    public static void ValidateAssociationExists(AssociationType association)
     {
         // TODO: ?
     }
@@ -87,7 +87,7 @@ public class PredicateAssertions
     /// </summary>
     /// <param name="association">The association.</param>
     /// <param name="objectType">The object type.</param>
-    public static void ValidateAssociationInstanceof(IAssociationType association, IObjectType objectType)
+    public static void ValidateAssociationInstanceof(AssociationType association, IObjectType objectType)
     {
         if (objectType is Unit)
         {
@@ -122,7 +122,7 @@ public class PredicateAssertions
     /// <param name="role">The role .</param>
     /// <param name="firstObject">The first object.</param>
     /// <param name="secondObject">The second object.</param>
-    public static void ValidateRoleBetween(IRoleType role, object firstObject, object secondObject)
+    public static void ValidateRoleBetween(RoleType role, object firstObject, object secondObject)
     {
         if (role.ObjectType is IComposite)
         {
@@ -135,8 +135,8 @@ public class PredicateAssertions
                 "AddBetween() requires a first and second object, use AddLessThan() or AddGreaterThan() instead.");
         }
 
-        var firstRole = firstObject as IRoleType;
-        var secondRole = secondObject as IRoleType;
+        var firstRole = firstObject as RoleType;
+        var secondRole = secondObject as RoleType;
         if ((firstRole != null && !(firstRole.ObjectType is Unit)) ||
             (secondRole != null && !(secondRole.ObjectType is Unit)))
         {
@@ -150,7 +150,7 @@ public class PredicateAssertions
     /// </summary>
     /// <param name="role">The role .</param>
     /// <param name="extent">The extent.</param>
-    public static void ValidateRoleContainedIn(IRoleType role, Extent extent)
+    public static void ValidateRoleContainedIn(RoleType role, Extent extent)
     {
         if (role.ObjectType is Unit)
         {
@@ -163,7 +163,7 @@ public class PredicateAssertions
         }
     }
 
-    public static void ValidateRoleContainedIn(IRoleType role, IEnumerable<IObject> enumerable)
+    public static void ValidateRoleContainedIn(RoleType role, IEnumerable<IObject> enumerable)
     {
         if (role.ObjectType is Unit)
         {
@@ -182,7 +182,7 @@ public class PredicateAssertions
     /// </summary>
     /// <param name="role">The role .</param>
     /// <param name="allorsObject">The allors object.</param>
-    public static void ValidateRoleContains(IRoleType role, IObject allorsObject)
+    public static void ValidateRoleContains(RoleType role, IObject allorsObject)
     {
         if (role.IsOne)
         {
@@ -201,7 +201,7 @@ public class PredicateAssertions
     /// </summary>
     /// <param name="role">The role .</param>
     /// <param name="compareObject">The compare object.</param>
-    public static void ValidateRoleEquals(IRoleType role, object compareObject)
+    public static void ValidateRoleEquals(RoleType role, object compareObject)
     {
         if (role.IsMany)
         {
@@ -214,7 +214,7 @@ public class PredicateAssertions
                 "AddEquals() requires a non-null value or object, use AddNot().AddExists() instead.");
         }
 
-        if (compareObject is IRoleType compareRole && compareRole.ObjectType is IComposite)
+        if (compareObject is RoleType compareRole && compareRole.ObjectType is IComposite)
         {
             throw new ArgumentException("AddRoleEqual() for composites can only be used with objects (not other roles).");
         }
@@ -227,7 +227,7 @@ public class PredicateAssertions
     /// </summary>
     /// <param name="role">The role .</param>
     /// <param name="compareObject">The compare object.</param>
-    public static void ValidateRoleIn(IRoleType role, object compareObject)
+    public static void ValidateRoleIn(RoleType role, object compareObject)
     {
         if (role.IsMany)
         {
@@ -239,7 +239,7 @@ public class PredicateAssertions
             throw new ArgumentException("AddRoleIn() requires a non-null list, use AddNot().AddExists() instead.");
         }
 
-        if (compareObject is IRoleType compareRole && compareRole.ObjectType is IComposite)
+        if (compareObject is RoleType compareRole && compareRole.ObjectType is IComposite)
         {
             throw new ArgumentException("AddRoleEqual() for composites can only be used with objects (not other roles).");
         }
@@ -250,7 +250,7 @@ public class PredicateAssertions
     ///     <see cref="ICompositePredicate#Exists" />.
     /// </summary>
     /// <param name="role">The role .</param>
-    public static void ValidateRoleExists(IRoleType role)
+    public static void ValidateRoleExists(RoleType role)
     {
         // TODO: ?
     }
@@ -261,7 +261,7 @@ public class PredicateAssertions
     /// </summary>
     /// <param name="role">The role .</param>
     /// <param name="unit">The unit .</param>
-    public static void ValidateRoleGreaterThan(IRoleType role, object unit)
+    public static void ValidateRoleGreaterThan(RoleType role, object unit)
     {
         if (role.ObjectType is IComposite)
         {
@@ -273,7 +273,7 @@ public class PredicateAssertions
             throw new ArgumentException("AddGreaterThan() requires a non-null value.");
         }
 
-        if (unit is IRoleType compareRole && compareRole.ObjectType is IComposite)
+        if (unit is RoleType compareRole && compareRole.ObjectType is IComposite)
         {
             throw new ArgumentException("AAddGreaterThan() can only be used with roles having unit types.");
         }
@@ -285,7 +285,7 @@ public class PredicateAssertions
     /// </summary>
     /// <param name="role">The role .</param>
     /// <param name="objectType">Type object type.</param>
-    public static void ValidateRoleInstanceOf(IRoleType role, IObjectType objectType)
+    public static void ValidateRoleInstanceOf(RoleType role, IObjectType objectType)
     {
         if (objectType is Unit)
         {
@@ -304,7 +304,7 @@ public class PredicateAssertions
     /// </summary>
     /// <param name="role">The role .</param>
     /// <param name="unit">The unit .</param>
-    public static void ValidateRoleLessThan(IRoleType role, object unit)
+    public static void ValidateRoleLessThan(RoleType role, object unit)
     {
         if (role.ObjectType is IComposite)
         {
@@ -316,7 +316,7 @@ public class PredicateAssertions
             throw new ArgumentException("AddLessThan() requires a value.");
         }
 
-        if (unit is IRoleType compareRole && compareRole.ObjectType is IComposite)
+        if (unit is RoleType compareRole && compareRole.ObjectType is IComposite)
         {
             throw new ArgumentException("AddLessThan() can only be used with roles having unit types.");
         }
@@ -328,7 +328,7 @@ public class PredicateAssertions
     /// </summary>
     /// <param name="role">The role .</param>
     /// <param name="unit">The unit .</param>
-    public static void ValidateRoleLikeFilter(IRoleType role, string unit)
+    public static void ValidateRoleLikeFilter(RoleType role, string unit)
     {
         if (!(role.ObjectType is Unit unitType) || !unitType.IsString)
         {

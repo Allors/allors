@@ -26,16 +26,16 @@ internal class Prefetch
     {
         var leafs = new HashSet<long>();
 
-        var nestedObjectIdsByRoleType = new Dictionary<IRoleType, HashSet<long>>();
+        var nestedObjectIdsByRoleType = new Dictionary<RoleType, HashSet<long>>();
 
         // Phase 1
         var unitRoles = false;
         foreach (var prefetchRule in this.prefetchPolicy)
         {
             var relationEndType = prefetchRule.RelationEndType;
-            if (relationEndType is IRoleType)
+            if (relationEndType is RoleType)
             {
-                var roleType = (IRoleType)relationEndType;
+                var roleType = (RoleType)relationEndType;
                 var objectType = roleType.ObjectType;
                 if (objectType.IsUnit)
                 {
@@ -43,7 +43,7 @@ internal class Prefetch
                     {
                         unitRoles = true;
 
-                        var referencesByClass = new Dictionary<IClass, List<Reference>>();
+                        var referencesByClass = new Dictionary<Class, List<Reference>>();
                         foreach (var reference in this.references)
                         {
                             if (!referencesByClass.TryGetValue(reference.Class, out var classedReferences))
@@ -112,7 +112,7 @@ internal class Prefetch
             }
             else
             {
-                var associationType = (IAssociationType)relationEndType;
+                var associationType = (AssociationType)relationEndType;
                 var relationType = associationType.RelationType;
                 var roleType = relationType.RoleType;
 
@@ -162,9 +162,9 @@ internal class Prefetch
         foreach (var prefetchRule in this.prefetchPolicy)
         {
             var relationEndType = prefetchRule.RelationEndType;
-            if (relationEndType is IRoleType)
+            if (relationEndType is RoleType)
             {
-                var roleType = (IRoleType)relationEndType;
+                var roleType = (RoleType)relationEndType;
                 var objectType = roleType.ObjectType;
                 if (!objectType.IsUnit)
                 {
@@ -181,7 +181,7 @@ internal class Prefetch
             }
             else
             {
-                var associationType = (IAssociationType)relationEndType;
+                var associationType = (AssociationType)relationEndType;
                 var relationType = associationType.RelationType;
                 var roleType = relationType.RoleType;
 

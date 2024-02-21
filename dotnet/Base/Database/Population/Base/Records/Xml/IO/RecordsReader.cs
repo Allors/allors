@@ -20,9 +20,9 @@
 
         public MetaPopulation MetaPopulation { get; }
 
-        public IDictionary<IClass, Record[]> Read(Stream stream)
+        public IDictionary<Class, Record[]> Read(Stream stream)
         {
-            var recordsByClass = new Dictionary<IClass, Record[]>();
+            var recordsByClass = new Dictionary<Class, Record[]>();
 
             XDocument document = XDocument.Load(stream);
             var documentElement = document.Elements().First();
@@ -34,13 +34,13 @@
                                   .Elements()
                                   .Select(recordElement =>
                                   {
-                                      var valueByRoleType = new Dictionary<IRoleType, object>(recordElement.Elements()
+                                      var valueByRoleType = new Dictionary<RoleType, object>(recordElement.Elements()
                                           .Select(roleElement =>
                                           {
                                               var roleType = @class.RoleTypes.First(roleType => roleType.Name.Equals(roleElement.Name.LocalName, StringComparison.OrdinalIgnoreCase));
                                               string roleElementValue = roleElement.Value;
                                               var value = ReadString(roleElementValue, roleType.ObjectType.Tag);
-                                              return new KeyValuePair<IRoleType, Object>(roleType, value);
+                                              return new KeyValuePair<RoleType, Object>(roleType, value);
                                           }));
 
                                       var handle = recordElement.Attributes()

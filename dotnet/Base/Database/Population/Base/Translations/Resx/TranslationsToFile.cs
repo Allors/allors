@@ -10,19 +10,19 @@
     public partial class TranslationsToFile
     {
         private readonly DirectoryInfo directoryInfo;
-        private readonly IRoleType roleType;
+        private readonly RoleType roleType;
 
         public TranslationsToFile(
             DirectoryInfo directoryInfo,
-            IDictionary<IClass, IDictionary<string, Translations>> translationsByIsoCodeByClass,
-            IRoleType roleType)
+            IDictionary<Class, IDictionary<string, Translations>> translationsByIsoCodeByClass,
+            RoleType roleType)
         {
             this.directoryInfo = new DirectoryInfo(Path.Combine(directoryInfo.FullName, "Translations"));
             this.roleType = roleType;
             this.TranslationsByIsoCodeByClass = translationsByIsoCodeByClass;
         }
 
-        public IDictionary<IClass, IDictionary<string, Translations>> TranslationsByIsoCodeByClass { get; }
+        public IDictionary<Class, IDictionary<string, Translations>> TranslationsByIsoCodeByClass { get; }
 
         public void Roundtrip()
         {

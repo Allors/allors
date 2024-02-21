@@ -13,11 +13,11 @@ using Allors.Database.Meta;
 /// </summary>
 public interface ICache
 {
-    ICachedObject GetOrCreateCachedObject(IClass concreteClass, long objectId, long version);
+    ICachedObject GetOrCreateCachedObject(Class concreteClass, long objectId, long version);
 
-    IClass GetObjectType(long objectId);
+    Class GetObjectType(long objectId);
 
-    void SetObjectType(long objectId, IClass objectType);
+    void SetObjectType(long objectId, Class objectType);
 
     void OnCommit(IList<long> accessedObjectIds, IList<long> changedObjectIds);
 

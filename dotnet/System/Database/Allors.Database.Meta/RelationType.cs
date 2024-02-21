@@ -19,10 +19,10 @@ public sealed class RelationType : IMetaIdentifiableObject, IComparable
 {
     private string[] derivedWorkspaceNames;
 
-    private IAssociationType associationType;
-    private IRoleType roleType;
+    private AssociationType associationType;
+    private RoleType roleType;
 
-    public RelationType(MetaPopulation metaPopulation, Guid id, Multiplicity? assignedMultiplicity, bool isDerived, AssociationType associationType, IRoleType roleType)
+    public RelationType(MetaPopulation metaPopulation, Guid id, Multiplicity? assignedMultiplicity, bool isDerived, AssociationType associationType, RoleType roleType)
     {
         this.Attributes = new MetaExtension();
         this.MetaPopulation = metaPopulation;
@@ -59,9 +59,9 @@ public sealed class RelationType : IMetaIdentifiableObject, IComparable
 
     public Multiplicity Multiplicity { get; }
 
-    public IAssociationType AssociationType { get => this.associationType; set => this.associationType = value; }
+    public AssociationType AssociationType { get => this.associationType; set => this.associationType = value; }
 
-    public IRoleType RoleType { get => this.roleType; set => this.roleType = value; }
+    public RoleType RoleType { get => this.roleType; set => this.roleType = value; }
 
     public string Name => this.associationType.ObjectType + this.roleType.SingularName;
 

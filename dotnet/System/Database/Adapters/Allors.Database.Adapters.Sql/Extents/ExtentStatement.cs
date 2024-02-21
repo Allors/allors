@@ -10,20 +10,20 @@ using Allors.Database.Meta;
 
 internal abstract class ExtentStatement
 {
-    private readonly List<IAssociationType> referenceAssociationInstances;
-    private readonly List<IAssociationType> referenceAssociations;
-    private readonly List<IRoleType> referenceRoleInstances;
-    private readonly List<IRoleType> referenceRoles;
+    private readonly List<AssociationType> referenceAssociationInstances;
+    private readonly List<AssociationType> referenceAssociations;
+    private readonly List<RoleType> referenceRoleInstances;
+    private readonly List<RoleType> referenceRoles;
 
     protected ExtentStatement(SqlExtent extent)
     {
         this.Extent = extent;
 
-        this.referenceRoles = new List<IRoleType>();
-        this.referenceAssociations = new List<IAssociationType>();
+        this.referenceRoles = new List<RoleType>();
+        this.referenceAssociations = new List<AssociationType>();
 
-        this.referenceRoleInstances = new List<IRoleType>();
-        this.referenceAssociationInstances = new List<IAssociationType>();
+        this.referenceRoleInstances = new List<RoleType>();
+        this.referenceAssociationInstances = new List<AssociationType>();
     }
 
     internal Mapping Mapping => this.Transaction.Database.Mapping;
@@ -176,15 +176,15 @@ internal abstract class ExtentStatement
 
     internal abstract string CreateAlias();
 
-    internal abstract ExtentStatement CreateChild(SqlExtent extent, IAssociationType association);
+    internal abstract ExtentStatement CreateChild(SqlExtent extent, AssociationType association);
 
-    internal abstract ExtentStatement CreateChild(SqlExtent extent, IRoleType role);
+    internal abstract ExtentStatement CreateChild(SqlExtent extent, RoleType role);
 
-    internal string GetJoinName(IAssociationType association) => association.SingularFullName + "_AC";
+    internal string GetJoinName(AssociationType association) => association.SingularFullName + "_AC";
 
-    internal string GetJoinName(IRoleType role) => role.SingularFullName + "_RC";
+    internal string GetJoinName(RoleType role) => role.SingularFullName + "_RC";
 
-    internal void UseAssociation(IAssociationType association)
+    internal void UseAssociation(AssociationType association)
     {
         if (!association.ObjectType.IsUnit && !this.referenceAssociations.Contains(association))
         {
@@ -192,7 +192,7 @@ internal abstract class ExtentStatement
         }
     }
 
-    internal void UseAssociationInstance(IAssociationType association)
+    internal void UseAssociationInstance(AssociationType association)
     {
         if (!this.referenceAssociationInstances.Contains(association))
         {
@@ -200,7 +200,7 @@ internal abstract class ExtentStatement
         }
     }
 
-    internal void UseRole(IRoleType role)
+    internal void UseRole(RoleType role)
     {
         if (!role.ObjectType.IsUnit && !this.referenceRoles.Contains(role))
         {
@@ -208,7 +208,7 @@ internal abstract class ExtentStatement
         }
     }
 
-    internal void UseRoleInstance(IRoleType role)
+    internal void UseRoleInstance(RoleType role)
     {
         if (!this.referenceRoleInstances.Contains(role))
         {

@@ -18,7 +18,7 @@ namespace Allors.Database.Domain
 
         public ITransaction Transaction { get; }
 
-        public Permission Get(IClass @class, IRoleType roleType, Operations operation)
+        public Permission Get(Class @class, RoleType roleType, Operations operation)
         {
             var id = operation switch
             {
@@ -32,7 +32,7 @@ namespace Allors.Database.Domain
         }
 
         // TODO: Make extension method on Class
-        public Permission Get(IClass @class, MethodType methodType)
+        public Permission Get(Class @class, MethodType methodType)
         {
             var id = @class.ExecutePermissionIdByMethodTypeId()[methodType.Id];
             return (Permission)this.Transaction.Instantiate(id);

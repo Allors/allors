@@ -15,7 +15,7 @@ public sealed class SqlRemoveCompositeRoleEvent : Event
     {
     }
 
-    public IRoleType RoleType { get; set; }
+    public RoleType RoleType { get; set; }
 
     public CompositeRelation[] Relations { get; set; }
 

@@ -15,7 +15,7 @@ public class Equals : IPropertyPredicate
 
     public object Value { get; set; }
 
-    public IRoleType Path { get; set; }
+    public RoleType Path { get; set; }
 
     public string Parameter { get; set; }
 
@@ -42,7 +42,7 @@ public class Equals : IPropertyPredicate
                 break;
             }
 
-            case IRoleType roleType when roleType.ObjectType.IsUnit:
+            case RoleType roleType when roleType.ObjectType.IsUnit:
             {
                 var equals = this.Path ??
                              (this.Parameter != null ? arguments.ResolveUnit(roleType.ObjectType.Tag, this.Parameter) : this.Value);
@@ -54,7 +54,7 @@ public class Equals : IPropertyPredicate
                 break;
             }
 
-            case IRoleType roleType:
+            case RoleType roleType:
             {
                 var equals = this.Parameter != null ? transaction.GetObject(arguments.ResolveObject(this.Parameter)) : this.Object;
                 if (equals != null)
@@ -66,7 +66,7 @@ public class Equals : IPropertyPredicate
             }
             default:
             {
-                var associationType = (IAssociationType)this.RelationEndType;
+                var associationType = (AssociationType)this.RelationEndType;
                 var equals = this.Parameter != null ? transaction.GetObject(arguments.ResolveObject(this.Parameter)) : this.Object;
                 if (equals != null)
                 {

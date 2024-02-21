@@ -11,9 +11,9 @@ namespace Allors.Database.Domain
 
     public partial class LocalisedTextAccessor
     {
-        private readonly IRoleType roleType;
+        private readonly RoleType roleType;
 
-        public LocalisedTextAccessor(IRoleType roleType) => this.roleType = roleType;
+        public LocalisedTextAccessor(RoleType roleType) => this.roleType = roleType;
 
         public string Get(IObject @object, Locale locale) => @object
             ?.Strategy.GetCompositesRole<LocalisedText>(this.roleType)

@@ -13,21 +13,21 @@ using Allors.Database.Meta;
 
 public sealed class Strategy : IStrategy
 {
-    private readonly Dictionary<IAssociationType, Strategy> compositeAssociationByAssociationType;
-    private readonly Dictionary<IRoleType, Strategy> compositeRoleByRoleType;
-    private readonly Dictionary<IAssociationType, HashSet<Strategy>> compositesAssociationByAssociationType;
-    private readonly Dictionary<IRoleType, HashSet<Strategy>> compositesRoleByRoleType;
-    private readonly Dictionary<IRoleType, object> unitRoleByRoleType;
+    private readonly Dictionary<AssociationType, Strategy> compositeAssociationByAssociationType;
+    private readonly Dictionary<RoleType, Strategy> compositeRoleByRoleType;
+    private readonly Dictionary<AssociationType, HashSet<Strategy>> compositesAssociationByAssociationType;
+    private readonly Dictionary<RoleType, HashSet<Strategy>> compositesRoleByRoleType;
+    private readonly Dictionary<RoleType, object> unitRoleByRoleType;
     private WeakReference allorizedObjectWeakReference;
     private bool isDeletedOnRollback;
-    private Dictionary<IAssociationType, Strategy> rollbackCompositeAssociationByAssociationType;
-    private Dictionary<IRoleType, Strategy> rollbackCompositeRoleByRoleType;
-    private Dictionary<IAssociationType, HashSet<Strategy>> rollbackCompositesAssociationByAssociationType;
-    private Dictionary<IRoleType, HashSet<Strategy>> rollbackCompositesRoleByRoleType;
+    private Dictionary<AssociationType, Strategy> rollbackCompositeAssociationByAssociationType;
+    private Dictionary<RoleType, Strategy> rollbackCompositeRoleByRoleType;
+    private Dictionary<AssociationType, HashSet<Strategy>> rollbackCompositesAssociationByAssociationType;
+    private Dictionary<RoleType, HashSet<Strategy>> rollbackCompositesRoleByRoleType;
 
-    private Dictionary<IRoleType, object> rollbackUnitRoleByRoleType;
+    private Dictionary<RoleType, object> rollbackUnitRoleByRoleType;
 
-    internal Strategy(Transaction transaction, IClass objectType, long objectId, long version)
+    internal Strategy(Transaction transaction, Class objectType, long objectId, long version)
     {
         this.Transaction = transaction;
         this.UncheckedObjectType = objectType;
@@ -39,11 +39,11 @@ public sealed class Strategy : IStrategy
 
         this.ObjectVersion = version;
 
-        this.unitRoleByRoleType = new Dictionary<IRoleType, object>();
-        this.compositeRoleByRoleType = new Dictionary<IRoleType, Strategy>();
-        this.compositesRoleByRoleType = new Dictionary<IRoleType, HashSet<Strategy>>();
-        this.compositeAssociationByAssociationType = new Dictionary<IAssociationType, Strategy>();
-        this.compositesAssociationByAssociationType = new Dictionary<IAssociationType, HashSet<Strategy>>();
+        this.unitRoleByRoleType = new Dictionary<RoleType, object>();
+        this.compositeRoleByRoleType = new Dictionary<RoleType, Strategy>();
+        this.compositesRoleByRoleType = new Dictionary<RoleType, HashSet<Strategy>>();
+        this.compositeAssociationByAssociationType = new Dictionary<AssociationType, Strategy>();
+        this.compositesAssociationByAssociationType = new Dictionary<AssociationType, HashSet<Strategy>>();
 
         this.rollbackUnitRoleByRoleType = null;
         this.rollbackCompositeRoleByRoleType = null;
@@ -52,26 +52,26 @@ public sealed class Strategy : IStrategy
         this.rollbackCompositesAssociationByAssociationType = null;
     }
 
-    internal IClass UncheckedObjectType { get; }
+    internal Class UncheckedObjectType { get; }
 
     internal Transaction Transaction { get; }
 
     private ChangeLog ChangeLog => this.Transaction.ChangeLog;
 
-    private Dictionary<IRoleType, object> RollbackUnitRoleByRoleType =>
-        this.rollbackUnitRoleByRoleType ??= new Dictionary<IRoleType, object>();
+    private Dictionary<RoleType, object> RollbackUnitRoleByRoleType =>
+        this.rollbackUnitRoleByRoleType ??= new Dictionary<RoleType, object>();
 
-    private Dictionary<IRoleType, Strategy> RollbackCompositeRoleByRoleType =>
-        this.rollbackCompositeRoleByRoleType ??= new Dictionary<IRoleType, Strategy>();
+    private Dictionary<RoleType, Strategy> RollbackCompositeRoleByRoleType =>
+        this.rollbackCompositeRoleByRoleType ??= new Dictionary<RoleType, Strategy>();
 
-    private Dictionary<IRoleType, HashSet<Strategy>> RollbackCompositesRoleByRoleType =>
-        this.rollbackCompositesRoleByRoleType ??= new Dictionary<IRoleType, HashSet<Strategy>>();
+    private Dictionary<RoleType, HashSet<Strategy>> RollbackCompositesRoleByRoleType =>
+        this.rollbackCompositesRoleByRoleType ??= new Dictionary<RoleType, HashSet<Strategy>>();
 
-    private Dictionary<IAssociationType, Strategy> RollbackCompositeAssociationByAssociationType =>
-        this.rollbackCompositeAssociationByAssociationType ??= new Dictionary<IAssociationType, Strategy>();
+    private Dictionary<AssociationType, Strategy> RollbackCompositeAssociationByAssociationType =>
+        this.rollbackCompositeAssociationByAssociationType ??= new Dictionary<AssociationType, Strategy>();
 
-    private Dictionary<IAssociationType, HashSet<Strategy>> RollbackCompositesAssociationByAssociationType =>
-        this.rollbackCompositesAssociationByAssociationType ??= new Dictionary<IAssociationType, HashSet<Strategy>>();
+    private Dictionary<AssociationType, HashSet<Strategy>> RollbackCompositesAssociationByAssociationType =>
+        this.rollbackCompositesAssociationByAssociationType ??= new Dictionary<AssociationType, HashSet<Strategy>>();
 
     public bool IsDeleted { get; private set; }
 
@@ -81,7 +81,7 @@ public sealed class Strategy : IStrategy
 
     public long ObjectVersion { get; private set; }
 
-    public IClass Class
+    public Class Class
     {
         get
         {
@@ -92,7 +92,7 @@ public sealed class Strategy : IStrategy
 
     ITransaction IStrategy.Transaction => this.Transaction;
 
-    public object GetRole(IRoleType roleType) =>
+    public object GetRole(RoleType roleType) =>
         roleType switch
         {
             { } unitRole when unitRole.ObjectType.IsUnit => this.GetUnitRole(roleType),
@@ -100,7 +100,7 @@ public sealed class Strategy : IStrategy
             _ => this.GetCompositesRole<IObject>(roleType),
         };
 
-    public void SetRole(IRoleType roleType, object value)
+    public void SetRole(RoleType roleType, object value)
     {
         switch (roleType)
         {
@@ -116,7 +116,7 @@ public sealed class Strategy : IStrategy
         }
     }
 
-    public void RemoveRole(IRoleType roleType)
+    public void RemoveRole(RoleType roleType)
     {
         switch (roleType)
         {
@@ -132,7 +132,7 @@ public sealed class Strategy : IStrategy
         }
     }
 
-    public bool ExistRole(IRoleType roleType) =>
+    public bool ExistRole(RoleType roleType) =>
         roleType switch
         {
             { } unitRole when unitRole.ObjectType.IsUnit => this.ExistUnitRole(roleType),
@@ -140,13 +140,13 @@ public sealed class Strategy : IStrategy
             _ => this.ExistCompositesRole(roleType),
         };
 
-    public object GetUnitRole(IRoleType roleType)
+    public object GetUnitRole(RoleType roleType)
     {
         this.AssertNotDeleted();
         return this.GetInternalizedUnitRole(roleType);
     }
 
-    public void SetUnitRole(IRoleType roleType, object role)
+    public void SetUnitRole(RoleType roleType, object role)
     {
         this.AssertNotDeleted();
         this.Transaction.Database.UnitRoleChecks(this, roleType);
@@ -177,22 +177,22 @@ public sealed class Strategy : IStrategy
         }
     }
 
-    public void RemoveUnitRole(IRoleType roleType) => this.SetUnitRole(roleType, null);
+    public void RemoveUnitRole(RoleType roleType) => this.SetUnitRole(roleType, null);
 
-    public bool ExistUnitRole(IRoleType roleType)
+    public bool ExistUnitRole(RoleType roleType)
     {
         this.AssertNotDeleted();
         return this.unitRoleByRoleType.ContainsKey(roleType);
     }
 
-    public IObject GetCompositeRole(IRoleType roleType)
+    public IObject GetCompositeRole(RoleType roleType)
     {
         this.AssertNotDeleted();
         this.compositeRoleByRoleType.TryGetValue(roleType, out var strategy);
         return strategy?.GetObject();
     }
 
-    public void SetCompositeRole(IRoleType roleType, IObject newRole)
+    public void SetCompositeRole(RoleType roleType, IObject newRole)
     {
         if (newRole == null)
         {
@@ -210,7 +210,7 @@ public sealed class Strategy : IStrategy
         }
     }
 
-    public void RemoveCompositeRole(IRoleType roleType)
+    public void RemoveCompositeRole(RoleType roleType)
     {
         if (roleType.AssociationType.IsOne)
         {
@@ -224,13 +224,13 @@ public sealed class Strategy : IStrategy
         }
     }
 
-    public bool ExistCompositeRole(IRoleType roleType)
+    public bool ExistCompositeRole(RoleType roleType)
     {
         this.AssertNotDeleted();
         return this.compositeRoleByRoleType.ContainsKey(roleType);
     }
 
-    public IEnumerable<T> GetCompositesRole<T>(IRoleType roleType) where T : IObject
+    public IEnumerable<T> GetCompositesRole<T>(RoleType roleType) where T : IObject
     {
         this.AssertNotDeleted();
 
@@ -247,7 +247,7 @@ public sealed class Strategy : IStrategy
         }
     }
 
-    public void SetCompositesRole(IRoleType roleType, IEnumerable<IObject> roles)
+    public void SetCompositesRole(RoleType roleType, IEnumerable<IObject> roles)
     {
         if (roles == null || (roles is ICollection<IObject> collection && collection.Count == 0))
         {
@@ -271,7 +271,7 @@ public sealed class Strategy : IStrategy
         }
     }
 
-    public void AddCompositesRole(IRoleType roleType, IObject role)
+    public void AddCompositesRole(RoleType roleType, IObject role)
     {
         this.AssertNotDeleted();
         if (role == null)
@@ -291,7 +291,7 @@ public sealed class Strategy : IStrategy
         }
     }
 
-    public void RemoveCompositesRole(IRoleType roleType, IObject role)
+    public void RemoveCompositesRole(RoleType roleType, IObject role)
     {
         this.AssertNotDeleted();
 
@@ -312,7 +312,7 @@ public sealed class Strategy : IStrategy
         }
     }
 
-    public void RemoveCompositesRole(IRoleType roleType)
+    public void RemoveCompositesRole(RoleType roleType)
     {
         this.AssertNotDeleted();
 
@@ -326,31 +326,31 @@ public sealed class Strategy : IStrategy
         }
     }
 
-    public bool ExistCompositesRole(IRoleType roleType)
+    public bool ExistCompositesRole(RoleType roleType)
     {
         this.AssertNotDeleted();
         this.compositesRoleByRoleType.TryGetValue(roleType, out var roleStrategies);
         return roleStrategies != null;
     }
 
-    public object GetAssociation(IAssociationType associationType) => associationType.IsMany
+    public object GetAssociation(AssociationType associationType) => associationType.IsMany
         ? this.GetCompositesAssociation<IObject>(associationType)
         : this.GetCompositeAssociation(associationType);
 
-    public bool ExistAssociation(IAssociationType associationType) => associationType.IsMany
+    public bool ExistAssociation(AssociationType associationType) => associationType.IsMany
         ? this.ExistCompositesAssociation(associationType)
         : this.ExistCompositeAssociation(associationType);
 
-    public IObject GetCompositeAssociation(IAssociationType associationType)
+    public IObject GetCompositeAssociation(AssociationType associationType)
     {
         this.AssertNotDeleted();
         this.compositeAssociationByAssociationType.TryGetValue(associationType, out var strategy);
         return strategy?.GetObject();
     }
 
-    public bool ExistCompositeAssociation(IAssociationType associationType) => this.GetCompositeAssociation(associationType) != null;
+    public bool ExistCompositeAssociation(AssociationType associationType) => this.GetCompositeAssociation(associationType) != null;
 
-    public IEnumerable<T> GetCompositesAssociation<T>(IAssociationType associationType) where T : IObject
+    public IEnumerable<T> GetCompositesAssociation<T>(AssociationType associationType) where T : IObject
     {
         this.AssertNotDeleted();
 
@@ -367,7 +367,7 @@ public sealed class Strategy : IStrategy
         }
     }
 
-    public bool ExistCompositesAssociation(IAssociationType associationType)
+    public bool ExistCompositesAssociation(AssociationType associationType)
     {
         this.AssertNotDeleted();
         this.compositesAssociationByAssociationType.TryGetValue(associationType, out var strategies);
@@ -609,13 +609,13 @@ public sealed class Strategy : IStrategy
         this.IsNewInTransaction = false;
     }
 
-    internal object GetInternalizedUnitRole(IRoleType roleType)
+    internal object GetInternalizedUnitRole(RoleType roleType)
     {
         this.unitRoleByRoleType.TryGetValue(roleType, out var unitRole);
         return unitRole;
     }
 
-    internal void SetCompositeRoleOne2One(IRoleType roleType, Strategy @new)
+    internal void SetCompositeRoleOne2One(RoleType roleType, Strategy @new)
     {
         this.AssertNotDeleted();
         this.Transaction.Database.CompositeRoleChecks(this, roleType, @new);
@@ -661,7 +661,7 @@ public sealed class Strategy : IStrategy
         }
     }
 
-    internal void SetCompositeRoleMany2One(IRoleType roleType, Strategy @new)
+    internal void SetCompositeRoleMany2One(RoleType roleType, Strategy @new)
     {
         this.AssertNotDeleted();
         this.Transaction.Database.CompositeRoleChecks(this, roleType, @new);
@@ -707,7 +707,7 @@ public sealed class Strategy : IStrategy
         }
     }
 
-    internal void SetCompositesRolesOne2Many(IRoleType roleType, IEnumerable<Strategy> roles)
+    internal void SetCompositesRolesOne2Many(RoleType roleType, IEnumerable<Strategy> roles)
     {
         this.AssertNotDeleted();
 
@@ -743,7 +743,7 @@ public sealed class Strategy : IStrategy
         }
     }
 
-    internal void SetCompositesRolesMany2Many(IRoleType roleType, IEnumerable<Strategy> roles)
+    internal void SetCompositesRolesMany2Many(RoleType roleType, IEnumerable<Strategy> roles)
     {
         this.AssertNotDeleted();
 
@@ -779,7 +779,7 @@ public sealed class Strategy : IStrategy
         }
     }
 
-    internal void FillRoleForBackup(Dictionary<IRoleType, List<Strategy>> strategiesByRoleType)
+    internal void FillRoleForBackup(Dictionary<RoleType, List<Strategy>> strategiesByRoleType)
     {
         if (this.IsDeleted)
         {
@@ -835,7 +835,7 @@ public sealed class Strategy : IStrategy
         }
     }
 
-    internal void BackupUnit(XmlWriter writer, IRoleType roleType)
+    internal void BackupUnit(XmlWriter writer, RoleType roleType)
     {
         var unitType = (Unit)roleType.ObjectType;
         var value = XmlBackup.WriteString(unitType.Tag, this.unitRoleByRoleType[roleType]);
@@ -846,7 +846,7 @@ public sealed class Strategy : IStrategy
         writer.WriteEndElement();
     }
 
-    internal void BackupComposites(XmlWriter writer, IRoleType roleType)
+    internal void BackupComposites(XmlWriter writer, RoleType roleType)
     {
         writer.WriteStartElement(XmlBackup.Relation);
         writer.WriteAttributeString(XmlBackup.Association, this.ObjectId.ToString());
@@ -867,7 +867,7 @@ public sealed class Strategy : IStrategy
         writer.WriteEndElement();
     }
 
-    internal void BackupComposite(XmlWriter writer, IRoleType roleType)
+    internal void BackupComposite(XmlWriter writer, RoleType roleType)
     {
         writer.WriteStartElement(XmlBackup.Relation);
         writer.WriteAttributeString(XmlBackup.Association, this.ObjectId.ToString());
@@ -878,19 +878,19 @@ public sealed class Strategy : IStrategy
         writer.WriteEndElement();
     }
 
-    internal bool ShouldTrim(IRoleType roleType, object originalRole)
+    internal bool ShouldTrim(RoleType roleType, object originalRole)
     {
         var role = this.GetInternalizedUnitRole(roleType);
         return Equals(role, originalRole);
     }
 
-    internal bool ShouldTrim(IRoleType roleType, Strategy originalRole)
+    internal bool ShouldTrim(RoleType roleType, Strategy originalRole)
     {
         this.compositeRoleByRoleType.TryGetValue(roleType, out var role);
         return Equals(role, originalRole);
     }
 
-    internal bool ShouldTrim(IRoleType roleType, Strategy[] originalRole)
+    internal bool ShouldTrim(RoleType roleType, Strategy[] originalRole)
     {
         this.compositesRoleByRoleType.TryGetValue(roleType, out var role);
 
@@ -907,13 +907,13 @@ public sealed class Strategy : IStrategy
         return role.SetEquals(originalRole);
     }
 
-    internal bool ShouldTrim(IAssociationType associationType, Strategy originalAssociation)
+    internal bool ShouldTrim(AssociationType associationType, Strategy originalAssociation)
     {
         this.compositeAssociationByAssociationType.TryGetValue(associationType, out var association);
         return Equals(association, originalAssociation);
     }
 
-    internal bool ShouldTrim(IAssociationType associationType, Strategy[] originalAssociation)
+    internal bool ShouldTrim(AssociationType associationType, Strategy[] originalAssociation)
     {
         this.compositesAssociationByAssociationType.TryGetValue(associationType, out var association);
 
@@ -930,7 +930,7 @@ public sealed class Strategy : IStrategy
         return association.SetEquals(originalAssociation);
     }
 
-    private void Backup(IRoleType roleType)
+    private void Backup(RoleType roleType)
     {
         if (roleType.IsMany)
         {
@@ -963,7 +963,7 @@ public sealed class Strategy : IStrategy
         }
     }
 
-    private void Backup(IAssociationType associationType)
+    private void Backup(AssociationType associationType)
     {
         if (associationType.IsMany)
         {
@@ -988,7 +988,7 @@ public sealed class Strategy : IStrategy
         }
     }
 
-    private void RemoveCompositeRoleOne2One(IRoleType roleType)
+    private void RemoveCompositeRoleOne2One(RoleType roleType)
     {
         this.AssertNotDeleted();
         this.Transaction.Database.CompositeRoleChecks(this, roleType);
@@ -1012,7 +1012,7 @@ public sealed class Strategy : IStrategy
         }
     }
 
-    private void RemoveCompositeRoleMany2One(IRoleType roleType)
+    private void RemoveCompositeRoleMany2One(RoleType roleType)
     {
         this.AssertNotDeleted();
         this.Transaction.Database.CompositeRoleChecks(this, roleType);
@@ -1042,7 +1042,7 @@ public sealed class Strategy : IStrategy
         }
     }
 
-    private void AddCompositeRoleMany2Many(IRoleType roleType, Strategy add)
+    private void AddCompositeRoleMany2Many(RoleType roleType, Strategy add)
     {
         this.compositesRoleByRoleType.TryGetValue(roleType, out var previousRole);
         if (previousRole?.Contains(add) == true)
@@ -1079,7 +1079,7 @@ public sealed class Strategy : IStrategy
         addAssociation.Add(this);
     }
 
-    private void AddCompositeRoleOne2Many(IRoleType roleType, Strategy add)
+    private void AddCompositeRoleOne2Many(RoleType roleType, Strategy add)
     {
         this.compositesRoleByRoleType.TryGetValue(roleType, out var previousRole);
         if (previousRole?.Contains(add) == true)
@@ -1135,7 +1135,7 @@ public sealed class Strategy : IStrategy
         add.compositeAssociationByAssociationType[associationType] = this;
     }
 
-    private void RemoveCompositeRoleMany2Many(IRoleType roleType, Strategy remove)
+    private void RemoveCompositeRoleMany2Many(RoleType roleType, Strategy remove)
     {
         this.compositesRoleByRoleType.TryGetValue(roleType, out var roleStrategies);
         if (roleStrategies?.Contains(remove) != true)
@@ -1168,7 +1168,7 @@ public sealed class Strategy : IStrategy
         }
     }
 
-    private void RemoveCompositeRoleOne2Many(IRoleType roleType, Strategy roleToRemove)
+    private void RemoveCompositeRoleOne2Many(RoleType roleType, Strategy roleToRemove)
     {
         this.compositesRoleByRoleType.TryGetValue(roleType, out var role);
         if (role?.Contains(roleToRemove) != true)
@@ -1197,7 +1197,7 @@ public sealed class Strategy : IStrategy
         roleToRemove.compositeAssociationByAssociationType.Remove(associationType);
     }
 
-    private void RemoveCompositeRolesMany2Many(IRoleType roleType)
+    private void RemoveCompositeRolesMany2Many(RoleType roleType)
     {
         this.compositesRoleByRoleType.TryGetValue(roleType, out var previousRoleStrategies);
         if (previousRoleStrategies != null)
@@ -1214,7 +1214,7 @@ public sealed class Strategy : IStrategy
         }
     }
 
-    private void RemoveCompositeRolesOne2Many(IRoleType roleType)
+    private void RemoveCompositeRolesOne2Many(RoleType roleType)
     {
         // TODO: Optimize
         this.compositesRoleByRoleType.TryGetValue(roleType, out var previousRoleStrategies);

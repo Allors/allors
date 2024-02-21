@@ -29,13 +29,13 @@ public class Instanceof : IPropertyPredicate
 
         if (this.RelationEndType != null)
         {
-            if (this.RelationEndType is IRoleType roleType)
+            if (this.RelationEndType is RoleType roleType)
             {
                 compositePredicate.AddInstanceof(roleType, composite);
             }
             else
             {
-                var associationType = (IAssociationType)this.RelationEndType;
+                var associationType = (AssociationType)this.RelationEndType;
                 compositePredicate.AddInstanceof(associationType, composite);
             }
         }

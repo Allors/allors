@@ -16,14 +16,14 @@ using Allors.Database.Security;
 
 public class PushResponseBuilder
 {
-    private readonly IReadOnlySet<IClass> allowedClasses;
-    private readonly Func<IClass, IObject> build;
+    private readonly IReadOnlySet<Class> allowedClasses;
+    private readonly Func<Class, IObject> build;
     private readonly Func<IValidation> derive;
     private readonly MetaPopulation metaPopulation;
     private readonly ITransaction transaction;
     private readonly IUnitConvert unitConvert;
 
-    public PushResponseBuilder(ITransaction transaction, Func<IValidation> derive, MetaPopulation metaPopulation, IAccessControl accessControl, IReadOnlySet<IClass> allowedClasses, Func<IClass, IObject> build, IUnitConvert unitConvert)
+    public PushResponseBuilder(ITransaction transaction, Func<IValidation> derive, MetaPopulation metaPopulation, IAccessControl accessControl, IReadOnlySet<Class> allowedClasses, Func<Class, IObject> build, IUnitConvert unitConvert)
     {
         this.transaction = transaction;
         this.derive = derive;
@@ -47,7 +47,7 @@ public class PushResponseBuilder
                 x => x.w,
                 x =>
                 {
-                    var cls = (IClass)this.metaPopulation.FindByTag(x.t);
+                    var cls = (Class)this.metaPopulation.FindByTag(x.t);
                     if (this.allowedClasses?.Contains(cls) == true)
                     {
                         return this.build(cls);

@@ -12,7 +12,7 @@ using System.Linq;
 using Embedded;
 using Embedded.Meta;
 
-public sealed class Domain : EmbeddedObject, IDomain
+public sealed class Domain : EmbeddedObject, IMetaIdentifiableObject, IComparable
 {
     public Domain(IEmbeddedPopulation embeddedPopulation, EmbeddedObjectType embeddedObjectType)
      : base(embeddedPopulation, embeddedObjectType)
@@ -34,9 +34,9 @@ public sealed class Domain : EmbeddedObject, IDomain
 
     public string Name { get; set;  }
 
-    public IReadOnlyList<IDomain> DirectSuperdomains { get; set;  }
+    public IReadOnlyList<Domain> DirectSuperdomains { get; set;  }
 
-    public IReadOnlyList<IDomain> Superdomains { get; private set; }
+    public IReadOnlyList<Domain> Superdomains { get; private set; }
 
     public IEnumerable<string> WorkspaceNames => this.MetaPopulation.WorkspaceNames;
 

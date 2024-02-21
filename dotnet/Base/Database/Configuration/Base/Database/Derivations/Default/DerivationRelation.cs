@@ -11,13 +11,13 @@ namespace Allors.Database.Configuration.Derivations.Default
 
     public class DerivationRelation : IDerivationRelation
     {
-        public DerivationRelation(IObject association, IRoleType roleType)
+        public DerivationRelation(IObject association, RoleType roleType)
         {
             this.Association = association;
             this.RelationType = roleType.RelationType;
         }
 
-        public DerivationRelation(IObject role, IAssociationType associationType)
+        public DerivationRelation(IObject role, AssociationType associationType)
         {
             this.Role = role;
             this.RelationType = associationType.RelationType;
@@ -29,7 +29,7 @@ namespace Allors.Database.Configuration.Derivations.Default
 
         public IObject Role { get; }
 
-        public static DerivationRelation[] Create(IObject association, params IRoleType[] roleTypes)
+        public static DerivationRelation[] Create(IObject association, params RoleType[] roleTypes)
         {
             var derivationRoles = new DerivationRelation[roleTypes.Length];
             for (var i = 0; i < derivationRoles.Length; i++)
@@ -40,7 +40,7 @@ namespace Allors.Database.Configuration.Derivations.Default
             return derivationRoles;
         }
 
-        public static DerivationRelation[] Create(IObject role, params IAssociationType[] associationTypes)
+        public static DerivationRelation[] Create(IObject role, params AssociationType[] associationTypes)
         {
             var derivationRoles = new DerivationRelation[associationTypes.Length];
             for (var i = 0; i < derivationRoles.Length; i++)

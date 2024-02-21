@@ -11,25 +11,25 @@ internal class ExtentStatementChild : ExtentStatement
 {
     private readonly ExtentStatementRoot root;
 
-    internal ExtentStatementChild(ExtentStatementRoot root, SqlExtent extent, IRoleType roleType)
+    internal ExtentStatementChild(ExtentStatementRoot root, SqlExtent extent, RoleType roleType)
         : base(extent)
     {
         this.root = root;
         this.RoleType = roleType;
     }
 
-    internal ExtentStatementChild(ExtentStatementRoot root, SqlExtent extent, IAssociationType associationType)
+    internal ExtentStatementChild(ExtentStatementRoot root, SqlExtent extent, AssociationType associationType)
         : base(extent)
     {
         this.root = root;
         this.AssociationType = associationType;
     }
 
-    internal IAssociationType AssociationType { get; }
+    internal AssociationType AssociationType { get; }
 
     internal override bool IsRoot => false;
 
-    internal IRoleType RoleType { get; }
+    internal RoleType RoleType { get; }
 
     public override string ToString() => this.root.ToString();
 
@@ -39,8 +39,8 @@ internal class ExtentStatementChild : ExtentStatement
 
     internal override string CreateAlias() => this.root.CreateAlias();
 
-    internal override ExtentStatement CreateChild(SqlExtent extent, IAssociationType association) =>
+    internal override ExtentStatement CreateChild(SqlExtent extent, AssociationType association) =>
         new ExtentStatementChild(this.root, extent, association);
 
-    internal override ExtentStatement CreateChild(SqlExtent extent, IRoleType role) => new ExtentStatementChild(this.root, extent, role);
+    internal override ExtentStatement CreateChild(SqlExtent extent, RoleType role) => new ExtentStatementChild(this.root, extent, role);
 }

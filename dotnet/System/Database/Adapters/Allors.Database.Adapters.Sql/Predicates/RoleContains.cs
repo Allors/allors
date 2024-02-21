@@ -13,9 +13,9 @@ using Allors.Database.Meta;
 internal sealed class RoleContains : Predicate
 {
     private readonly IObject allorsObject;
-    private readonly IRoleType role;
+    private readonly RoleType role;
 
-    internal RoleContains(ExtentFiltered extent, IRoleType role, IObject allorsObject)
+    internal RoleContains(ExtentFiltered extent, RoleType role, IObject allorsObject)
     {
         extent.CheckRole(role);
         PredicateAssertions.ValidateRoleContains(role, allorsObject);

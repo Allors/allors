@@ -16720,7 +16720,7 @@ public abstract class ExtentTest : IDisposable
                 var inExtent = this.Transaction.Extent(m.C1);
 
                 var extent = this.Transaction.Extent(m.C2);
-                extent.Filter.AddContainedIn(((IRoleType)m.C1.I12AllorsBoolean).AssociationType, inExtent);
+                extent.Filter.AddContainedIn(((RoleType)m.C1.I12AllorsBoolean).AssociationType, inExtent);
                 extent.ToArray();
             }
             catch (ArgumentException)

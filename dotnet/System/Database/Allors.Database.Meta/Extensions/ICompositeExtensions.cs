@@ -27,9 +27,9 @@ public static class ICompositeExtensions
         @this.Supertypes = supertypes.ToArray();
     }
 
-    internal static void InitializeRoleTypes(this IComposite @this, Dictionary<IComposite, HashSet<IRoleType>> roleTypesByAssociationObjectType)
+    internal static void InitializeRoleTypes(this IComposite @this, Dictionary<IComposite, HashSet<RoleType>> roleTypesByAssociationObjectType)
     {
-        var roleTypes = new HashSet<IRoleType>();
+        var roleTypes = new HashSet<RoleType>();
 
         if (roleTypesByAssociationObjectType.TryGetValue(@this, out var directRoleTypes))
         {
@@ -47,9 +47,9 @@ public static class ICompositeExtensions
         @this.RoleTypes = roleTypes.ToArray();
     }
 
-    internal static void InitializeAssociationTypes(this IComposite @this, Dictionary<IObjectType, HashSet<IAssociationType>> relationTypesByRoleObjectType)
+    internal static void InitializeAssociationTypes(this IComposite @this, Dictionary<IObjectType, HashSet<AssociationType>> relationTypesByRoleObjectType)
     {
-        var associationTypes = new HashSet<IAssociationType>();
+        var associationTypes = new HashSet<AssociationType>();
 
         if (relationTypesByRoleObjectType.TryGetValue(@this, out var classAssociationTypes))
         {
@@ -87,13 +87,13 @@ public static class ICompositeExtensions
         @this.MethodTypes = methodTypes.ToArray();
     }
 
-    internal static void InitializeCompositeRoleTypes(this IComposite @this, Dictionary<IComposite, HashSet<ICompositeRoleType>> compositeRoleTypesByComposite)
+    internal static void InitializeCompositeRoleTypes(this IComposite @this, Dictionary<IComposite, HashSet<CompositeRoleType>> compositeRoleTypesByComposite)
     {
         var compositeRoleTypes = compositeRoleTypesByComposite[@this];
         @this.CompositeRoleTypeByRoleType = compositeRoleTypes.ToDictionary(v => v.RoleType, v => v);
     }
 
-    internal static void InitializeCompositeMethodTypes(this IComposite @this, Dictionary<IComposite, HashSet<ICompositeMethodType>> compositeMethodTypesByComposite)
+    internal static void InitializeCompositeMethodTypes(this IComposite @this, Dictionary<IComposite, HashSet<CompositeMethodType>> compositeMethodTypesByComposite)
     {
         var compositeMethodTypes = compositeMethodTypesByComposite[@this];
         @this.CompositeMethodTypeByMethodType = compositeMethodTypes.ToDictionary(v => v.MethodType, v => v);

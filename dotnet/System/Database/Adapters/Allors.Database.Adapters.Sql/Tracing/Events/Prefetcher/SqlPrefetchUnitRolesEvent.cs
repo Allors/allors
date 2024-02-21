@@ -17,9 +17,9 @@ public sealed class SqlPrefetchUnitRolesEvent : Event
 
     public Reference[] Associations { get; set; }
 
-    public IClass Class { get; set; }
+    public Class Class { get; set; }
 
-    public IRoleType RoleType { get; set; }
+    public RoleType RoleType { get; set; }
 
     protected override void ToString(StringBuilder builder) => _ = builder
         .Append('[')

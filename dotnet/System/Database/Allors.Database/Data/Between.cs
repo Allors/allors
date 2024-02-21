@@ -11,15 +11,15 @@ using Allors.Database.Meta;
 
 public class Between : IRolePredicate
 {
-    public Between(IRoleType roleType = null) => this.RoleType = roleType;
+    public Between(RoleType roleType = null) => this.RoleType = roleType;
 
     public IEnumerable<object> Values { get; set; }
 
-    public IEnumerable<IRoleType> Paths { get; set; }
+    public IEnumerable<RoleType> Paths { get; set; }
 
     public string Parameter { get; set; }
 
-    public IRoleType RoleType { get; set; }
+    public RoleType RoleType { get; set; }
 
     bool IPredicate.ShouldTreeShake(IArguments arguments) => ((IPredicate)this).HasMissingArguments(arguments);
 

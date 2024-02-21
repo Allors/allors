@@ -9,10 +9,10 @@ using Allors.Database.Meta;
 
 internal sealed class AssociationContainedInExtent : Predicate
 {
-    private readonly IAssociationType associationType;
+    private readonly AssociationType associationType;
     private readonly Allors.Database.Extent containingExtent;
 
-    internal AssociationContainedInExtent(ExtentFiltered extent, IAssociationType associationType, Allors.Database.Extent containingExtent)
+    internal AssociationContainedInExtent(ExtentFiltered extent, AssociationType associationType, Allors.Database.Extent containingExtent)
     {
         extent.CheckForAssociationType(associationType);
         PredicateAssertions.AssertAssociationContainedIn(associationType, containingExtent);

@@ -19,12 +19,12 @@ namespace Allors.Database.Configuration.Derivations.Default
         {
         }
 
-        public DerivationErrorRequired(IValidation validation, IObject association, IRoleType roleType) :
+        public DerivationErrorRequired(IValidation validation, IObject association, RoleType roleType) :
             this(validation, new DerivationRelation(association, roleType))
         {
         }
 
-        public DerivationErrorRequired(IValidation validation, IObject role, IAssociationType associationType) :
+        public DerivationErrorRequired(IValidation validation, IObject role, AssociationType associationType) :
             this(validation, new DerivationRelation(role, associationType))
         {
         }

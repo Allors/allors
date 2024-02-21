@@ -22,12 +22,12 @@ namespace Allors.Database.Configuration.Derivations.Default
         {
         }
 
-        public DerivationErrorUnique(IValidation validation, IObject association, params IRoleType[] roleTypes) :
+        public DerivationErrorUnique(IValidation validation, IObject association, params RoleType[] roleTypes) :
             this(validation, roleTypes.Select(v => new DerivationRelation(association, v)).Cast<IDerivationRelation>().ToArray())
         {
         }
 
-        public DerivationErrorUnique(IValidation validation, IObject association, IRoleType roleType) :
+        public DerivationErrorUnique(IValidation validation, IObject association, RoleType roleType) :
             this(validation, new DerivationRelation(association, roleType))
         {
         }

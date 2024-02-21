@@ -10,10 +10,10 @@ using Allors.Database.Meta;
 
 internal sealed class AssociationContains : Predicate
 {
-    private readonly IAssociationType associationType;
+    private readonly AssociationType associationType;
     private readonly IObject containedObject;
 
-    internal AssociationContains(ExtentFiltered extent, IAssociationType associationType, IObject containedObject)
+    internal AssociationContains(ExtentFiltered extent, AssociationType associationType, IObject containedObject)
     {
         extent.CheckForAssociationType(associationType);
         PredicateAssertions.AssertAssociationContains(associationType, containedObject);

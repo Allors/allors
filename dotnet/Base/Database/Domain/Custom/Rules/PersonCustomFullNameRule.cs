@@ -32,13 +32,13 @@ namespace Allors.Database.Domain
 
         private class CustomRolePattern : IRolePattern
         {
-            public CustomRolePattern(IRoleType roleType) => this.RoleType = roleType;
+            public CustomRolePattern(RoleType roleType) => this.RoleType = roleType;
 
             public IEnumerable<Node> Tree => null;
 
             public IComposite OfType => null;
 
-            public IRoleType RoleType { get; }
+            public RoleType RoleType { get; }
         }
     }
 }

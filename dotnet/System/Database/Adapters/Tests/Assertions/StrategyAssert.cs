@@ -12,7 +12,7 @@ using Xunit;
 
 public class StrategyAssert
 {
-    public static void AssociationExistHasException(IObject allorsObject, IAssociationType associationType)
+    public static void AssociationExistHasException(IObject allorsObject, AssociationType associationType)
     {
         var exceptionOccured = false;
         try
@@ -37,7 +37,7 @@ public class StrategyAssert
         }
     }
 
-    public static void AssociationGetHasException(IObject allorsObject, IAssociationType associationType)
+    public static void AssociationGetHasException(IObject allorsObject, AssociationType associationType)
     {
         var exceptionOccured = false;
         try
@@ -62,7 +62,7 @@ public class StrategyAssert
         }
     }
 
-    public static void AssociationsExistExclusive(IObject allorsObject, params IAssociationType[] associationTypes)
+    public static void AssociationsExistExclusive(IObject allorsObject, params AssociationType[] associationTypes)
     {
         foreach (var associationType in associationTypes)
         {
@@ -91,7 +91,7 @@ public class StrategyAssert
         }
     }
 
-    public static void RoleExistHasException(IObject allorsObject, IRoleType roleType)
+    public static void RoleExistHasException(IObject allorsObject, RoleType roleType)
     {
         var exceptionOccured = false;
         try
@@ -116,7 +116,7 @@ public class StrategyAssert
         }
     }
 
-    public static void RoleGetHasException(IObject allorsObject, IRoleType roleType)
+    public static void RoleGetHasException(IObject allorsObject, RoleType roleType)
     {
         var exceptionOccured = false;
         try
@@ -141,7 +141,7 @@ public class StrategyAssert
         }
     }
 
-    public static void RolesExistExclusive(IObject allorsObject, params IRoleType[] roleTypes)
+    public static void RolesExistExclusive(IObject allorsObject, params RoleType[] roleTypes)
     {
         foreach (var roleType in roleTypes)
         {

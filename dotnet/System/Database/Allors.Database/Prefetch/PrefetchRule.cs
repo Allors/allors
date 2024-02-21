@@ -18,7 +18,7 @@ public sealed class PrefetchRule
             throw new ArgumentNullException("relationEndType");
         }
 
-        if (prefetchPolicy != null && relationEndType is IRoleType roleType && roleType.ObjectType.IsUnit)
+        if (prefetchPolicy != null && relationEndType is RoleType roleType && roleType.ObjectType.IsUnit)
         {
             throw new ArgumentException("prefetchPolicy");
         }

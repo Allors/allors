@@ -14,6 +14,6 @@ namespace Allors.Database.Configuration
 
         public ObjectBuilderService(ITransaction transaction) => this.Transaction = transaction;
 
-        public IObject Build(IClass @class) => this.Transaction.Build(@class);
+        public IObject Build(Class @class) => this.Transaction.Build(@class);
     }
 }

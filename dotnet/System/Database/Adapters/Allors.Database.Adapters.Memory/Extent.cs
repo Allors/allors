@@ -50,9 +50,9 @@ public abstract class Extent : Allors.Database.Extent
 
     protected List<Strategy> Strategies { get; set; }
 
-    public override Allors.Database.Extent AddSort(IRoleType roleType) => this.AddSort(roleType, SortDirection.Ascending);
+    public override Allors.Database.Extent AddSort(RoleType roleType) => this.AddSort(roleType, SortDirection.Ascending);
 
-    public override Allors.Database.Extent AddSort(IRoleType roleType, SortDirection direction)
+    public override Allors.Database.Extent AddSort(RoleType roleType, SortDirection direction)
     {
         if (this.Sorter == null)
         {

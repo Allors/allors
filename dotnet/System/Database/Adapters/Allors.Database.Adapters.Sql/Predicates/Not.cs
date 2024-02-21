@@ -57,15 +57,15 @@ internal sealed class Not : Predicate, ICompositePredicate
         return (ICompositePredicate)this.filter;
     }
 
-    public ICompositePredicate AddBetween(IRoleType role, object firstValue, object secondValue)
+    public ICompositePredicate AddBetween(RoleType role, object firstValue, object secondValue)
     {
         this.CheckUnarity();
         this.extent.FlushCache();
-        if (firstValue is IRoleType betweenRoleA && secondValue is IRoleType betweenRoleB)
+        if (firstValue is RoleType betweenRoleA && secondValue is RoleType betweenRoleB)
         {
             this.filter = new RoleBetweenRole(this.extent, role, betweenRoleA, betweenRoleB);
         }
-        else if (firstValue is IAssociationType betweenAssociationA && secondValue is IAssociationType betweenAssociationB)
+        else if (firstValue is AssociationType betweenAssociationA && secondValue is AssociationType betweenAssociationB)
         {
             throw new NotImplementedException();
         }
@@ -77,7 +77,7 @@ internal sealed class Not : Predicate, ICompositePredicate
         return this;
     }
 
-    public ICompositePredicate AddContainedIn(IRoleType role, Allors.Database.Extent containingExtent)
+    public ICompositePredicate AddContainedIn(RoleType role, Allors.Database.Extent containingExtent)
     {
         this.CheckUnarity();
         this.extent.FlushCache();
@@ -85,7 +85,7 @@ internal sealed class Not : Predicate, ICompositePredicate
         return this;
     }
 
-    public ICompositePredicate AddContainedIn(IRoleType role, IEnumerable<IObject> containingEnumerable)
+    public ICompositePredicate AddContainedIn(RoleType role, IEnumerable<IObject> containingEnumerable)
     {
         this.CheckUnarity();
         this.extent.FlushCache();
@@ -93,7 +93,7 @@ internal sealed class Not : Predicate, ICompositePredicate
         return this;
     }
 
-    public ICompositePredicate AddContainedIn(IAssociationType association, Allors.Database.Extent containingExtent)
+    public ICompositePredicate AddContainedIn(AssociationType association, Allors.Database.Extent containingExtent)
     {
         this.CheckUnarity();
         this.extent.FlushCache();
@@ -101,7 +101,7 @@ internal sealed class Not : Predicate, ICompositePredicate
         return this;
     }
 
-    public ICompositePredicate AddContainedIn(IAssociationType association, IEnumerable<IObject> containingEnumerable)
+    public ICompositePredicate AddContainedIn(AssociationType association, IEnumerable<IObject> containingEnumerable)
     {
         this.CheckUnarity();
         this.extent.FlushCache();
@@ -109,7 +109,7 @@ internal sealed class Not : Predicate, ICompositePredicate
         return this;
     }
 
-    public ICompositePredicate AddContains(IRoleType role, IObject containedObject)
+    public ICompositePredicate AddContains(RoleType role, IObject containedObject)
     {
         this.CheckUnarity();
         this.extent.FlushCache();
@@ -117,7 +117,7 @@ internal sealed class Not : Predicate, ICompositePredicate
         return this;
     }
 
-    public ICompositePredicate AddContains(IAssociationType association, IObject containedObject)
+    public ICompositePredicate AddContains(AssociationType association, IObject containedObject)
     {
         this.CheckUnarity();
         this.extent.FlushCache();
@@ -133,15 +133,15 @@ internal sealed class Not : Predicate, ICompositePredicate
         return this;
     }
 
-    public ICompositePredicate AddEquals(IRoleType role, object obj)
+    public ICompositePredicate AddEquals(RoleType role, object obj)
     {
         this.CheckUnarity();
         this.extent.FlushCache();
-        if (obj is IRoleType equalsRole)
+        if (obj is RoleType equalsRole)
         {
             this.filter = new RoleEqualsRole(this.extent, role, equalsRole);
         }
-        else if (obj is IAssociationType equalsAssociation)
+        else if (obj is AssociationType equalsAssociation)
         {
             throw new NotImplementedException();
         }
@@ -153,7 +153,7 @@ internal sealed class Not : Predicate, ICompositePredicate
         return this;
     }
 
-    public ICompositePredicate AddEquals(IAssociationType association, IObject allorsObject)
+    public ICompositePredicate AddEquals(AssociationType association, IObject allorsObject)
     {
         this.CheckUnarity();
         this.extent.FlushCache();
@@ -161,7 +161,7 @@ internal sealed class Not : Predicate, ICompositePredicate
         return this;
     }
 
-    public ICompositePredicate AddExists(IRoleType role)
+    public ICompositePredicate AddExists(RoleType role)
     {
         this.CheckUnarity();
         this.extent.FlushCache();
@@ -169,7 +169,7 @@ internal sealed class Not : Predicate, ICompositePredicate
         return this;
     }
 
-    public ICompositePredicate AddExists(IAssociationType association)
+    public ICompositePredicate AddExists(AssociationType association)
     {
         this.CheckUnarity();
         this.extent.FlushCache();
@@ -177,15 +177,15 @@ internal sealed class Not : Predicate, ICompositePredicate
         return this;
     }
 
-    public ICompositePredicate AddGreaterThan(IRoleType role, object value)
+    public ICompositePredicate AddGreaterThan(RoleType role, object value)
     {
         this.CheckUnarity();
         this.extent.FlushCache();
-        if (value is IRoleType greaterThanRole)
+        if (value is RoleType greaterThanRole)
         {
             this.filter = new RoleGreaterThanRole(this.extent, role, greaterThanRole);
         }
-        else if (value is IAssociationType greaterThanAssociation)
+        else if (value is AssociationType greaterThanAssociation)
         {
             throw new NotImplementedException();
         }
@@ -205,7 +205,7 @@ internal sealed class Not : Predicate, ICompositePredicate
         return this;
     }
 
-    public ICompositePredicate AddInstanceof(IRoleType role, IComposite type)
+    public ICompositePredicate AddInstanceof(RoleType role, IComposite type)
     {
         this.CheckUnarity();
         this.extent.FlushCache();
@@ -213,7 +213,7 @@ internal sealed class Not : Predicate, ICompositePredicate
         return this;
     }
 
-    public ICompositePredicate AddInstanceof(IAssociationType association, IComposite type)
+    public ICompositePredicate AddInstanceof(AssociationType association, IComposite type)
     {
         this.CheckUnarity();
         this.extent.FlushCache();
@@ -221,15 +221,15 @@ internal sealed class Not : Predicate, ICompositePredicate
         return this;
     }
 
-    public ICompositePredicate AddLessThan(IRoleType role, object value)
+    public ICompositePredicate AddLessThan(RoleType role, object value)
     {
         this.CheckUnarity();
         this.extent.FlushCache();
-        if (value is IRoleType lessThanRole)
+        if (value is RoleType lessThanRole)
         {
             this.filter = new RoleLessThanRole(this.extent, role, lessThanRole);
         }
-        else if (value is IAssociationType lessThanAssociation)
+        else if (value is AssociationType lessThanAssociation)
         {
             throw new NotImplementedException();
         }
@@ -241,7 +241,7 @@ internal sealed class Not : Predicate, ICompositePredicate
         return this;
     }
 
-    public ICompositePredicate AddLike(IRoleType role, string value)
+    public ICompositePredicate AddLike(RoleType role, string value)
     {
         this.CheckUnarity();
         this.extent.FlushCache();

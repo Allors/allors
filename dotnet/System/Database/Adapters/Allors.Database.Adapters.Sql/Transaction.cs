@@ -91,7 +91,7 @@ public sealed class Transaction : ITransaction
     {
         var objectType = this.Database.ObjectFactory.GetObjectType(typeof(T));
 
-        if (objectType is not IClass @class)
+        if (objectType is not Class @class)
         {
             throw new ArgumentException("IObjectType should be a class");
         }
@@ -107,7 +107,7 @@ public sealed class Transaction : ITransaction
     {
         var objectType = this.Database.ObjectFactory.GetObjectType(typeof(T));
 
-        if (objectType is not IClass @class)
+        if (objectType is not Class @class)
         {
             throw new ArgumentException("IObjectType should be a class");
         }
@@ -132,7 +132,7 @@ public sealed class Transaction : ITransaction
     {
         var objectType = this.Database.ObjectFactory.GetObjectType(typeof(T));
 
-        if (objectType is not IClass @class)
+        if (objectType is not Class @class)
         {
             throw new ArgumentException("IObjectType should be a class");
         }
@@ -158,7 +158,7 @@ public sealed class Transaction : ITransaction
         return newObject;
     }
 
-    public IObject Build(IClass @class)
+    public IObject Build(Class @class)
     {
         var newObject = this.CreateWithoutOnBuild(@class);
         newObject.OnBuild();
@@ -166,7 +166,7 @@ public sealed class Transaction : ITransaction
         return newObject;
     }
 
-    public IObject Build(IClass @class, params Action<IObject>[] builders)
+    public IObject Build(Class @class, params Action<IObject>[] builders)
     {
         var newObject = this.CreateWithoutOnBuild(@class);
 
@@ -184,7 +184,7 @@ public sealed class Transaction : ITransaction
         return newObject;
     }
 
-    public IObject Build(IClass @class, IEnumerable<Action<IObject>> builders, params Action<IObject>[] extraBuilders)
+    public IObject Build(Class @class, IEnumerable<Action<IObject>> builders, params Action<IObject>[] extraBuilders)
     {
         var newObject = this.CreateWithoutOnBuild(@class);
 
@@ -207,7 +207,7 @@ public sealed class Transaction : ITransaction
         return newObject;
     }
 
-    public IObject[] Build(IClass @class, int count)
+    public IObject[] Build(Class @class, int count)
     {
         if (!@class.IsClass)
         {
@@ -238,7 +238,7 @@ public sealed class Transaction : ITransaction
     {
         var objectType = this.Database.ObjectFactory.GetObjectType(typeof(TObject));
 
-        if (objectType is not IClass @class)
+        if (objectType is not Class @class)
         {
             throw new ArgumentException("IObjectType should be a class");
         }
@@ -465,8 +465,8 @@ public sealed class Transaction : ITransaction
                     this.State.ReferenceByObjectId[reference.ObjectId] = reference;
                 }
 
-                this.State.AssociationByRoleByAssociationType = new Dictionary<IAssociationType, Dictionary<Reference, Reference>>();
-                this.State.AssociationsByRoleByAssociationType = new Dictionary<IAssociationType, Dictionary<Reference, long[]>>();
+                this.State.AssociationByRoleByAssociationType = new Dictionary<AssociationType, Dictionary<Reference, Reference>>();
+                this.State.AssociationsByRoleByAssociationType = new Dictionary<AssociationType, Dictionary<Reference, long[]>>();
 
                 this.State.ChangeLog.Reset();
 
@@ -513,8 +513,8 @@ public sealed class Transaction : ITransaction
                 this.State.ModifiedRolesByReference = null;
                 this.State.TriggersFlushRolesByAssociationType = null;
 
-                this.State.AssociationByRoleByAssociationType = new Dictionary<IAssociationType, Dictionary<Reference, Reference>>();
-                this.State.AssociationsByRoleByAssociationType = new Dictionary<IAssociationType, Dictionary<Reference, long[]>>();
+                this.State.AssociationByRoleByAssociationType = new Dictionary<AssociationType, Dictionary<Reference, Reference>>();
+                this.State.AssociationsByRoleByAssociationType = new Dictionary<AssociationType, Dictionary<Reference, long[]>>();
 
                 this.State.ChangeLog.Reset();
 
@@ -532,7 +532,7 @@ public sealed class Transaction : ITransaction
 
     public void Dispose() => this.Rollback();
 
-    private IObject CreateWithoutOnBuild(IClass objectType)
+    private IObject CreateWithoutOnBuild(Class objectType)
     {
         var reference = this.Commands.CreateObject(objectType);
         this.State.ReferenceByObjectId[reference.ObjectId] = reference;
@@ -549,7 +549,7 @@ public sealed class Transaction : ITransaction
     internal Reference[] GetOrCreateReferencesForExistingObjects(IEnumerable<long> objectIds) =>
         this.State.GetOrCreateReferencesForExistingObjects(objectIds, this);
 
-    internal long[] GetAssociations(Strategy roleStrategy, IAssociationType associationType)
+    internal long[] GetAssociations(Strategy roleStrategy, AssociationType associationType)
     {
         var associationsByRole = this.State.GetAssociationsByRole(associationType);
 
@@ -563,7 +563,7 @@ public sealed class Transaction : ITransaction
         return associations;
     }
 
-    internal void RemoveAssociation(Reference association, Reference role, IAssociationType associationType)
+    internal void RemoveAssociation(Reference association, Reference role, AssociationType associationType)
     {
         var associationsByRole = this.State.GetAssociationsByRole(associationType);
 

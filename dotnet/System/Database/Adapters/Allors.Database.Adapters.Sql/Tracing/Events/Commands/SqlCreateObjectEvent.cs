@@ -15,7 +15,7 @@ public sealed class SqlCreateObjectEvent : Event
     {
     }
 
-    public IClass Class { get; set; }
+    public Class Class { get; set; }
 
     protected override void ToString(StringBuilder builder) => _ = builder
         .Append('[')

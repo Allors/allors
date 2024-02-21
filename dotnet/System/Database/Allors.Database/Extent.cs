@@ -260,7 +260,7 @@ public abstract class Extent : IList, IEnumerable<IObject>
     /// </summary>
     /// <param name="roleType">The role type by which to sort.</param>
     /// <returns>The current extent.</returns>
-    public abstract Extent AddSort(IRoleType roleType);
+    public abstract Extent AddSort(RoleType roleType);
 
     /// <summary>
     ///     Adds sorting based on the specified role type and direction.
@@ -268,7 +268,7 @@ public abstract class Extent : IList, IEnumerable<IObject>
     /// <param name="roleType">The role type by which to sort.</param>
     /// <param name="direction">The sort direction.</param>
     /// <returns>The current extent.</returns>
-    public abstract Extent AddSort(IRoleType roleType, SortDirection direction);
+    public abstract Extent AddSort(RoleType roleType, SortDirection direction);
 
     /// <summary>
     ///     Adds sorting based on the specified sort specification.
@@ -350,7 +350,7 @@ public abstract class Extent : IList, IEnumerable<IObject>
         /// </summary>
         /// <param name="roleType">The role type by which to sort.</param>
         /// <returns>The current extent.</returns>
-        public override Extent AddSort(IRoleType roleType) =>
+        public override Extent AddSort(RoleType roleType) =>
             throw new NotSupportedException("A converted extent does not support sorting");
 
         /// <summary>
@@ -359,7 +359,7 @@ public abstract class Extent : IList, IEnumerable<IObject>
         /// <param name="roleType">The role type by which to sort.</param>
         /// <param name="direction">The sort direction.</param>
         /// <returns>The current extent.</returns>
-        public override Extent AddSort(IRoleType roleType, SortDirection direction) =>
+        public override Extent AddSort(RoleType roleType, SortDirection direction) =>
             throw new NotSupportedException("A converted extent does not support sorting");
 
         /// <summary>

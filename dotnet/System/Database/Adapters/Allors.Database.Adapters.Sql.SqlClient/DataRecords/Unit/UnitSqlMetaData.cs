@@ -12,7 +12,7 @@ using Microsoft.Data.SqlClient.Server;
 
 internal class UnitSqlMetaData
 {
-    internal static SqlMetaData Get(string name, IRoleType roleType)
+    internal static SqlMetaData Get(string name, RoleType roleType)
     {
         var unit = (Unit)roleType.ObjectType;
         switch (unit.Tag)

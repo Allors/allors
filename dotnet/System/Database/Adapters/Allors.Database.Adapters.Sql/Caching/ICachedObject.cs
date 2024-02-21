@@ -11,9 +11,9 @@ public interface ICachedObject
 {
     long Version { get; }
 
-    bool Contains(IRoleType roleType);
+    bool Contains(RoleType roleType);
 
-    bool TryGetValue(IRoleType roleType, out object value);
+    bool TryGetValue(RoleType roleType, out object value);
 
-    void SetValue(IRoleType roleType, object value);
+    void SetValue(RoleType roleType, object value);
 }

@@ -16,31 +16,31 @@ public interface IValidation
 
     void AddError(IDerivationError derivationError);
 
-    void AddError(IObject association, IRoleType roleType, string errorCode);
+    void AddError(IObject association, RoleType roleType, string errorCode);
 
-    void AddError(IObject role, IAssociationType associationType, string errorCode);
+    void AddError(IObject role, AssociationType associationType, string errorCode);
 
     void AddError(string errorCode);
 
-    void AssertExists(IObject association, IRoleType roleType);
+    void AssertExists(IObject association, RoleType roleType);
 
-    void AssertNotExists(IObject association, IRoleType roleType);
+    void AssertNotExists(IObject association, RoleType roleType);
 
-    void AssertNonEmptyString(IObject association, IRoleType roleType);
+    void AssertNonEmptyString(IObject association, RoleType roleType);
 
-    void AssertNonWhiteSpaceString(IObject association, IRoleType roleType);
+    void AssertNonWhiteSpaceString(IObject association, RoleType roleType);
     
-    void AssertExistsNonEmptyString(IObject association, IRoleType roleType);
+    void AssertExistsNonEmptyString(IObject association, RoleType roleType);
 
-    void AssertIsUnique(IChangeSet changeSet, IObject association, IRoleType roleType);
+    void AssertIsUnique(IChangeSet changeSet, IObject association, RoleType roleType);
 
-    void AssertIsUnique(IChangeSet changeSet, IObject association, IComposite objectType, params IRoleType[] roleTypes);
+    void AssertIsUnique(IChangeSet changeSet, IObject association, IComposite objectType, params RoleType[] roleTypes);
 
-    void AssertAtLeastOne(IObject association, params IRoleType[] roleTypes);
+    void AssertAtLeastOne(IObject association, params RoleType[] roleTypes);
 
-    void AssertExistsAtMostOne(IObject association, params IRoleType[] roleTypes);
+    void AssertExistsAtMostOne(IObject association, params RoleType[] roleTypes);
 
-    void AssertAreEqual(IObject association, IRoleType roleType, IRoleType otherRoleType);
+    void AssertAreEqual(IObject association, RoleType roleType, RoleType otherRoleType);
 
-    void AssertExists(IObject role, IAssociationType associationType);
+    void AssertExists(IObject role, AssociationType associationType);
 }

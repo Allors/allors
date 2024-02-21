@@ -21,7 +21,7 @@ internal sealed class Program
     private static int Main()
     {
         var metaPopulation = MetaBuilder.Build();
-        var model = new Model(metaPopulation, new ReadOnlyDictionary<IClass, Record[]>(new Dictionary<IClass, Record[]>()));
+        var model = new Model(metaPopulation, new ReadOnlyDictionary<Class, Record[]>(new Dictionary<Class, Record[]>()));
 
         string[,] config = { { "Templates/adapters.cs.stg", "Domain/Generated" } };
 

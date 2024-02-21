@@ -10,9 +10,9 @@ using Allors.Database.Meta;
 internal sealed class RoleLike : Predicate
 {
     private readonly string like;
-    private readonly IRoleType role;
+    private readonly RoleType role;
 
-    internal RoleLike(ExtentFiltered extent, IRoleType role, string like)
+    internal RoleLike(ExtentFiltered extent, RoleType role, string like)
     {
         extent.CheckRole(role);
         PredicateAssertions.ValidateRoleLikeFilter(role, like);

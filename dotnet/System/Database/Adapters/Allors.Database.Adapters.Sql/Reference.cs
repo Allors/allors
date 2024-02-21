@@ -18,7 +18,7 @@ namespace Allors.Database.Adapters.Sql
 
         private Strategy strategy;
 
-        internal Reference(Transaction transaction, IClass @class, long objectId, bool isNew)
+        internal Reference(Transaction transaction, Class @class, long objectId, bool isNew)
         {
             this.Transaction = transaction;
             this.Class = @class;
@@ -33,7 +33,7 @@ namespace Allors.Database.Adapters.Sql
             }
         }
 
-        internal Reference(Transaction transaction, IClass @class, long objectId, long version)
+        internal Reference(Transaction transaction, Class @class, long objectId, long version)
             : this(transaction, @class, objectId, false)
         {
             this.version = version;
@@ -53,7 +53,7 @@ namespace Allors.Database.Adapters.Sql
 
         internal Transaction Transaction { get; }
 
-        internal IClass Class { get; }
+        internal Class Class { get; }
 
         public long ObjectId { get; }
 

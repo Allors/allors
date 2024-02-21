@@ -11,13 +11,13 @@ using System;
 
 public class MethodInvocation
 {
-    public MethodInvocation(IClass @class, MethodType methodType)
+    public MethodInvocation(Class @class, MethodType methodType)
     {
         this.Class = @class;
         this.MethodType = methodType;
     }
 
-    public IClass Class { get; }
+    public Class Class { get; }
 
     public MethodType MethodType { get; }
 

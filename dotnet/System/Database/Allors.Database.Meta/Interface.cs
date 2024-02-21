@@ -24,8 +24,8 @@ public sealed class Interface : EmbeddedObject, IComposite
     private IReadOnlyList<IComposite> composites;
     private IReadOnlyList<IComposite> directSubtypes;
     private IReadOnlyList<IComposite> subtypes;
-    private IReadOnlyList<IClass> subclasses;
-    private IClass exclusiveClass;
+    private IReadOnlyList<Class> subclasses;
+    private Class exclusiveClass;
 
     public Interface(MetaPopulation metaPopulation, EmbeddedObjectType embeddedObjectType)
         : base(metaPopulation, embeddedObjectType)
@@ -42,15 +42,15 @@ public sealed class Interface : EmbeddedObject, IComposite
         metaPopulation.OnCreated(this);
     }
     
-    private IReadOnlyList<IAssociationType> associationTypes;
-    private IReadOnlyList<IRoleType> roleTypes;
+    private IReadOnlyList<AssociationType> associationTypes;
+    private IReadOnlyList<RoleType> roleTypes;
     private IReadOnlyList<MethodType> methodTypes;
     private IReadOnlyList<Interface> supertypes;
 
-    private IReadOnlyDictionary<IRoleType, ICompositeRoleType> compositeRoleTypeByRoleType;
-    private IReadOnlyDictionary<MethodType, ICompositeMethodType> compositeMethodTypeByMethodType;
+    private IReadOnlyDictionary<RoleType, CompositeRoleType> compositeRoleTypeByRoleType;
+    private IReadOnlyDictionary<MethodType, CompositeMethodType> compositeMethodTypeByMethodType;
 
-    private IRoleType derivedKeyRoleType;
+    private RoleType derivedKeyRoleType;
 
     public dynamic Attributes { get; }
 
@@ -105,25 +105,25 @@ public sealed class Interface : EmbeddedObject, IComposite
         set => this.supertypes = value;
     }
 
-    public IReadOnlyList<IAssociationType> AssociationTypes
+    public IReadOnlyList<AssociationType> AssociationTypes
     {
         get => this.associationTypes;
         set => this.associationTypes = value;
     }
 
-    public IReadOnlyList<IRoleType> RoleTypes
+    public IReadOnlyList<RoleType> RoleTypes
     {
         get => this.roleTypes;
         set => this.roleTypes = value;
     }
 
-    public IReadOnlyDictionary<IRoleType, ICompositeRoleType> CompositeRoleTypeByRoleType
+    public IReadOnlyDictionary<RoleType, CompositeRoleType> CompositeRoleTypeByRoleType
     {
         get => this.compositeRoleTypeByRoleType;
         set => this.compositeRoleTypeByRoleType = value;
     }
 
-    public IRoleType KeyRoleType => this.derivedKeyRoleType;
+    public RoleType KeyRoleType => this.derivedKeyRoleType;
 
     public IReadOnlyList<MethodType> MethodTypes
     {
@@ -131,13 +131,13 @@ public sealed class Interface : EmbeddedObject, IComposite
         set => this.methodTypes = value;
     }
 
-    public IRoleType DerivedKeyRoleType
+    public RoleType DerivedKeyRoleType
     {
         get => this.derivedKeyRoleType;
         set => this.derivedKeyRoleType = value;
     }
 
-    public IReadOnlyDictionary<MethodType, ICompositeMethodType> CompositeMethodTypeByMethodType
+    public IReadOnlyDictionary<MethodType, CompositeMethodType> CompositeMethodTypeByMethodType
     {
         get => this.compositeMethodTypeByMethodType;
         set => this.compositeMethodTypeByMethodType = value;
@@ -154,11 +154,11 @@ public sealed class Interface : EmbeddedObject, IComposite
 
     public IReadOnlyList<IComposite> Composites => this.composites;
 
-    public IReadOnlyList<IClass> Classes => this.subclasses;
+    public IReadOnlyList<Class> Classes => this.subclasses;
 
     public IReadOnlyList<IComposite> Subtypes => this.subtypes;
 
-    public IClass ExclusiveClass => this.exclusiveClass;
+    public Class ExclusiveClass => this.exclusiveClass;
 
     public IEnumerable<string> WorkspaceNames => this.derivedWorkspaceNames;
 
@@ -187,7 +187,7 @@ public sealed class Interface : EmbeddedObject, IComposite
     public void InitializeSubclasses()
     {
         var subclasses = new HashSet<Class>();
-        foreach (var subType in this.subtypes.OfType<IClass>())
+        foreach (var subType in this.subtypes.OfType<Class>())
         {
             subclasses.Add((Class)subType);
         }

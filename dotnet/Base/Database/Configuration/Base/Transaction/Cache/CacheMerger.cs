@@ -14,15 +14,15 @@ namespace Allors.Database.Domain
         private readonly Cache<TKey, TObject> cache;
         private readonly Action<TObject>? defaults;
         private readonly ITransaction transaction;
-        private readonly IClass @class;
-        private readonly IRoleType roleType;
+        private readonly Class @class;
+        private readonly RoleType roleType;
 
         internal CacheMerger(Cache<TKey, TObject> cache, Action<TObject>? defaults)
         {
             this.cache = cache;
             this.defaults = defaults;
             this.transaction = cache.Transaction;
-            this.@class = (IClass)this.transaction.Database.ObjectFactory.GetObjectType(typeof(TObject));
+            this.@class = (Class)this.transaction.Database.ObjectFactory.GetObjectType(typeof(TObject));
             this.roleType = this.cache.RoleType;
         }
 

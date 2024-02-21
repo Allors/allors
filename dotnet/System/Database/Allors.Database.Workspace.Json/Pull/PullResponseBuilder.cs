@@ -35,7 +35,7 @@ public class PullResponseBuilder
     public PullResponseBuilder(
         ITransaction transaction,
         IAccessControl accessControl,
-        IReadOnlySet<IClass> allowedClasses,
+        IReadOnlySet<Class> allowedClasses,
         IPreparedSelects preparedSelects,
         IPreparedExtents preparedExtents,
         IUnitConvert unitConvert,
@@ -61,7 +61,7 @@ public class PullResponseBuilder
 
     public IAccessControl AccessControl { get; }
 
-    public IReadOnlySet<IClass> AllowedClasses { get; }
+    public IReadOnlySet<Class> AllowedClasses { get; }
 
     public IPreparedSelects PreparedSelects { get; }
 

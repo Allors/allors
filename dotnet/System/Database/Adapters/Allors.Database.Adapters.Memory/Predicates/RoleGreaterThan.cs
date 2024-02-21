@@ -15,9 +15,9 @@ internal sealed class RoleGreaterThan : Predicate
 {
     private readonly object compare;
     private readonly ExtentFiltered extent;
-    private readonly IRoleType roleType;
+    private readonly RoleType roleType;
 
-    internal RoleGreaterThan(ExtentFiltered extent, IRoleType roleType, object compare)
+    internal RoleGreaterThan(ExtentFiltered extent, RoleType roleType, object compare)
     {
         extent.CheckForRoleType(roleType);
         PredicateAssertions.ValidateRoleGreaterThan(roleType, compare);
@@ -31,7 +31,7 @@ internal sealed class RoleGreaterThan : Predicate
     {
         var compareValue = this.compare;
 
-        if (this.compare is IRoleType compareRole)
+        if (this.compare is RoleType compareRole)
         {
             compareValue = strategy.GetInternalizedUnitRole(compareRole);
         }

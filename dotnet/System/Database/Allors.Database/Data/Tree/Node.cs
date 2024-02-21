@@ -124,11 +124,11 @@ public class Node : IVisitable
         {
             IComposite addedComposite = null;
 
-            if (node.RelationEndType is IRoleType roleType)
+            if (node.RelationEndType is RoleType roleType)
             {
                 addedComposite = roleType.AssociationType.ObjectType;
             }
-            else if (node.RelationEndType is IAssociationType associationType)
+            else if (node.RelationEndType is AssociationType associationType)
             {
                 addedComposite = (IComposite)associationType.RoleType.ObjectType;
             }

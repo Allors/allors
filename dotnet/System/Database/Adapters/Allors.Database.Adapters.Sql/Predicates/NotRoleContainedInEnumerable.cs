@@ -12,9 +12,9 @@ using Allors.Database.Meta;
 internal sealed class NotRoleContainedInEnumerable : ContainedIn
 {
     private readonly IEnumerable<IObject> enumerable;
-    private readonly IRoleType role;
+    private readonly RoleType role;
 
-    internal NotRoleContainedInEnumerable(ExtentFiltered extent, IRoleType role, IEnumerable<IObject> enumerable)
+    internal NotRoleContainedInEnumerable(ExtentFiltered extent, RoleType role, IEnumerable<IObject> enumerable)
     {
         extent.CheckRole(role);
         PredicateAssertions.ValidateRoleContainedIn(role, enumerable);

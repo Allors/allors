@@ -9,15 +9,15 @@ using Allors.Database.Meta;
 
 public class LessThan : IRolePredicate
 {
-    public LessThan(IRoleType roleType = null) => this.RoleType = roleType;
+    public LessThan(RoleType roleType = null) => this.RoleType = roleType;
 
     public object Value { get; set; }
 
-    public IRoleType Path { get; set; }
+    public RoleType Path { get; set; }
 
     public string Parameter { get; set; }
 
-    public IRoleType RoleType { get; set; }
+    public RoleType RoleType { get; set; }
 
     bool IPredicate.ShouldTreeShake(IArguments arguments) => ((IPredicate)this).HasMissingArguments(arguments);
 

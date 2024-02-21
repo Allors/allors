@@ -5,7 +5,7 @@ using Allors.Database.Meta.Extensions;
 
 public class CompositeRoleTypeModel : IMetaExtensibleModel
 {
-    public CompositeRoleTypeModel(Model model, ICompositeRoleType compositeRoleType)
+    public CompositeRoleTypeModel(Model model, CompositeRoleType compositeRoleType)
     {
         this.Model = model;
         this.CompositeRoleType = compositeRoleType;
@@ -17,7 +17,7 @@ public class CompositeRoleTypeModel : IMetaExtensibleModel
 
     public dynamic Extensions => this.MetaExtensible.Attributes;
 
-    public ICompositeRoleType CompositeRoleType { get; }
+    public CompositeRoleType CompositeRoleType { get; }
 
     public RoleTypeModel RoleType => this.Model.Map(this.CompositeRoleType.RoleType);
 

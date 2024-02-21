@@ -17,7 +17,7 @@ namespace Allors.Workspace.Adapters.Direct
     using Meta;
     using Shared.Ranges;
     using AccessControl = AccessControl;
-    using IRoleType = Database.Meta.IRoleType;
+    using IRoleType = Database.Meta.RoleType;
 
     public class Connection : Adapters.Connection
     {
@@ -83,7 +83,7 @@ namespace Allors.Workspace.Adapters.Direct
 
         public override long GetPermission(IClass workspaceClass, IOperandType operandType, Operations operation)
         {
-            var @class = (Database.Meta.IClass)this.Database.MetaPopulation.FindByTag(workspaceClass.Tag);
+            var @class = (Database.Meta.Class)this.Database.MetaPopulation.FindByTag(workspaceClass.Tag);
             var operandId = this.Database.MetaPopulation.FindByTag(operandType.OperandTag).Id;
 
             long permission;

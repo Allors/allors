@@ -10,7 +10,7 @@ using Allors.Database.Meta;
 
 public static class RoleAssertions
 {
-    public static void UnitRoleChecks(this IRoleType roleType, IStrategy strategy)
+    public static void UnitRoleChecks(this RoleType roleType, IStrategy strategy)
     {
         if (!roleType.AssociationType.ObjectType.IsAssignableFrom(strategy.Class))
         {
@@ -23,9 +23,9 @@ public static class RoleAssertions
         }
     }
 
-    public static void CompositeRoleChecks(this IRoleType roleType, IStrategy strategy) => CompositeSharedChecks(roleType, strategy, null);
+    public static void CompositeRoleChecks(this RoleType roleType, IStrategy strategy) => CompositeSharedChecks(roleType, strategy, null);
 
-    public static void CompositeRoleChecks(this IRoleType roleType, IStrategy strategy, IObject role)
+    public static void CompositeRoleChecks(this RoleType roleType, IStrategy strategy, IObject role)
     {
         CompositeSharedChecks(roleType, strategy, role);
         if (!roleType.IsOne)
@@ -34,7 +34,7 @@ public static class RoleAssertions
         }
     }
 
-    public static void CompositeRolesChecks(this IRoleType roleType, IStrategy strategy)
+    public static void CompositeRolesChecks(this RoleType roleType, IStrategy strategy)
     {
         CompositeSharedChecks(roleType, strategy, null);
         if (!roleType.IsMany)
@@ -43,7 +43,7 @@ public static class RoleAssertions
         }
     }
 
-    public static void CompositeRolesChecks(this IRoleType roleType, IStrategy strategy, IObject role)
+    public static void CompositeRolesChecks(this RoleType roleType, IStrategy strategy, IObject role)
     {
         CompositeSharedChecks(roleType, strategy, role);
         if (!roleType.IsMany)
@@ -52,7 +52,7 @@ public static class RoleAssertions
         }
     }
 
-    private static void CompositeSharedChecks(this IRoleType roleType, IStrategy strategy, IObject role)
+    private static void CompositeSharedChecks(this RoleType roleType, IStrategy strategy, IObject role)
     {
         if (!roleType.AssociationType.ObjectType.IsAssignableFrom(strategy.Class))
         {

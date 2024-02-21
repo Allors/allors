@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using Meta;
 
 public record Translations(
-    IClass Class,
+    Class Class,
     string IsoCode,
     IDictionary<string, string> ValueByKey);
 
 
 public record Translation(
-    IClass Class,
+    Class Class,
     string IsoCode,
     string Key,
     string Value);

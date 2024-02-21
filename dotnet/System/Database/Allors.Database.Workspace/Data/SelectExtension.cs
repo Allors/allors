@@ -28,7 +28,7 @@ public static class SelectExtension
     {
         var acl = acls[@object];
         // TODO: Access check for AssociationType
-        if (@this.RelationEndType is IAssociationType || acl.CanRead((IRoleType)@this.RelationEndType))
+        if (@this.RelationEndType is AssociationType || acl.CanRead((RoleType)@this.RelationEndType))
         {
             if (@this.ExistNext)
             {
@@ -83,7 +83,7 @@ public static class SelectExtension
         if (@this.ExistNext)
         {
             // TODO: Access check for AssociationType
-            if (@this.RelationEndType is IAssociationType || acl.CanRead((IRoleType)@this.RelationEndType))
+            if (@this.RelationEndType is AssociationType || acl.CanRead((RoleType)@this.RelationEndType))
             {
                 if (@this.RelationEndType.Get(@object.Strategy) is IObject property)
                 {
@@ -95,7 +95,7 @@ public static class SelectExtension
             return false;
         }
 
-        if (@this.RelationEndType is IRoleType roleType && acl.CanWrite(roleType))
+        if (@this.RelationEndType is RoleType roleType && acl.CanWrite(roleType))
         {
             roleType.Set(@object.Strategy, value);
             return true;
@@ -108,7 +108,7 @@ public static class SelectExtension
     {
         var acl = acls[@object];
 
-        if (@this.RelationEndType is IRoleType roleType)
+        if (@this.RelationEndType is RoleType roleType)
         {
             if (roleType.IsMany)
             {
@@ -120,7 +120,7 @@ public static class SelectExtension
                 var role = roleType.Get(@object.Strategy);
                 if (role == null && acl.CanWrite(roleType))
                 {
-                    role = @object.Strategy.Transaction.Build((IClass)roleType.ObjectType);
+                    role = @object.Strategy.Transaction.Build((Class)roleType.ObjectType);
                     roleType.Set(@object.Strategy, role);
                 }
 
@@ -132,7 +132,7 @@ public static class SelectExtension
         }
         else
         {
-            var associationType = (IAssociationType)@this.RelationEndType;
+            var associationType = (AssociationType)@this.RelationEndType;
             if (associationType.IsMany)
             {
                 throw new NotSupportedException("AssociationType with multiplicity many");

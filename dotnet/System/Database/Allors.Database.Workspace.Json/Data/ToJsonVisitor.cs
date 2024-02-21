@@ -84,8 +84,8 @@ public class ToJsonVisitor : IVisitor
         var predicate = new Predicate
         {
             k = PredicateKind.ContainedIn,
-            a = (visited.RelationEndType as IAssociationType)?.RelationType.Tag,
-            r = (visited.RelationEndType as IRoleType)?.RelationType.Tag,
+            a = (visited.RelationEndType as AssociationType)?.RelationType.Tag,
+            r = (visited.RelationEndType as RoleType)?.RelationType.Tag,
             vs = visited.Objects?.Select(v => v.Id.ToString()).ToArray(),
             p = visited.Parameter,
         };
@@ -104,8 +104,8 @@ public class ToJsonVisitor : IVisitor
         var predicate = new Predicate
         {
             k = PredicateKind.Contains,
-            a = (visited.RelationEndType as IAssociationType)?.RelationType.Tag,
-            r = (visited.RelationEndType as IRoleType)?.RelationType.Tag,
+            a = (visited.RelationEndType as AssociationType)?.RelationType.Tag,
+            r = (visited.RelationEndType as RoleType)?.RelationType.Tag,
             ob = visited.Object?.Id,
             p = visited.Parameter,
         };
@@ -118,8 +118,8 @@ public class ToJsonVisitor : IVisitor
         var predicate = new Predicate
         {
             k = PredicateKind.Equals,
-            a = (visited.RelationEndType as IAssociationType)?.RelationType.Tag,
-            r = (visited.RelationEndType as IRoleType)?.RelationType.Tag,
+            a = (visited.RelationEndType as AssociationType)?.RelationType.Tag,
+            r = (visited.RelationEndType as RoleType)?.RelationType.Tag,
             ob = visited.Object?.Id,
             v = this.unitConvert.ToJson(visited.Value),
             pa = visited.Path?.RelationType.Tag,
@@ -165,8 +165,8 @@ public class ToJsonVisitor : IVisitor
         var predicate = new Predicate
         {
             k = PredicateKind.Exists,
-            a = (visited.RelationEndType as IAssociationType)?.RelationType.Tag,
-            r = (visited.RelationEndType as IRoleType)?.RelationType.Tag,
+            a = (visited.RelationEndType as AssociationType)?.RelationType.Tag,
+            r = (visited.RelationEndType as RoleType)?.RelationType.Tag,
             p = visited.Parameter,
         };
 
@@ -195,8 +195,8 @@ public class ToJsonVisitor : IVisitor
     {
         var select = new Select
         {
-            a = (visited.RelationEndType as IAssociationType)?.RelationType.Tag,
-            r = (visited.RelationEndType as IRoleType)?.RelationType.Tag,
+            a = (visited.RelationEndType as AssociationType)?.RelationType.Tag,
+            r = (visited.RelationEndType as RoleType)?.RelationType.Tag,
             o = visited.OfType?.Tag,
         };
 
@@ -241,8 +241,8 @@ public class ToJsonVisitor : IVisitor
         {
             k = PredicateKind.InstanceOf,
             o = visited.ObjectType?.Tag,
-            a = (visited.RelationEndType as IAssociationType)?.RelationType.Tag,
-            r = (visited.RelationEndType as IRoleType)?.RelationType.Tag,
+            a = (visited.RelationEndType as AssociationType)?.RelationType.Tag,
+            r = (visited.RelationEndType as RoleType)?.RelationType.Tag,
         };
 
         this.predicates.Push(predicate);
@@ -310,7 +310,7 @@ public class ToJsonVisitor : IVisitor
     {
         var node = new Node
         {
-            a = (visited.RelationEndType as IAssociationType)?.RelationType.Tag, r = (visited.RelationEndType as IRoleType)?.RelationType.Tag,
+            a = (visited.RelationEndType as AssociationType)?.RelationType.Tag, r = (visited.RelationEndType as RoleType)?.RelationType.Tag,
         };
 
         this.nodes.Push(node);

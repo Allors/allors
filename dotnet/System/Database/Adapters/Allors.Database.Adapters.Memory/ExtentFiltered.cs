@@ -21,7 +21,7 @@ internal sealed class ExtentFiltered : Extent
 
     public override IComposite ObjectType { get; }
 
-    internal void CheckForAssociationType(IAssociationType association)
+    internal void CheckForAssociationType(AssociationType association)
     {
         if (!this.Transaction.Database.MetaCache.GetAssociationTypesByComposite(this.ObjectType).Contains(association))
         {
@@ -29,7 +29,7 @@ internal sealed class ExtentFiltered : Extent
         }
     }
 
-    internal void CheckForRoleType(IRoleType roleType)
+    internal void CheckForRoleType(RoleType roleType)
     {
         if (!this.Transaction.Database.MetaCache.GetRoleTypesByComposite(this.ObjectType).Contains(roleType))
         {

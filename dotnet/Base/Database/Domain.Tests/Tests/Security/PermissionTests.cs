@@ -74,7 +74,7 @@ namespace Allors.Database.Domain.Tests
 
             var permissions = this.Transaction.Extent<Permission>().ToArray();
 
-            Assert.Empty(permissions.Where(v => v.OperandType is IAssociationType associationType && associationType.RoleType.ObjectType.IsUnit));
+            Assert.Empty(permissions.Where(v => v.OperandType is AssociationType associationType && associationType.RoleType.ObjectType.IsUnit));
         }
 
         [Fact]

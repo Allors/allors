@@ -11,21 +11,21 @@ using Allors.Database.Meta;
 
 internal sealed class ChangeLog
 {
-    private readonly Dictionary<Strategy, ISet<IAssociationType>> associationTypesByRole;
+    private readonly Dictionary<Strategy, ISet<AssociationType>> associationTypesByRole;
     private readonly HashSet<Strategy> created;
     private readonly HashSet<IStrategy> deleted;
 
     private readonly Dictionary<Strategy, Original> originalByStrategy;
 
-    private readonly Dictionary<Strategy, ISet<IRoleType>> roleTypesByAssociation;
+    private readonly Dictionary<Strategy, ISet<RoleType>> roleTypesByAssociation;
 
     internal ChangeLog()
     {
         this.created = new HashSet<Strategy>();
         this.deleted = new HashSet<IStrategy>();
 
-        this.roleTypesByAssociation = new Dictionary<Strategy, ISet<IRoleType>>();
-        this.associationTypesByRole = new Dictionary<Strategy, ISet<IAssociationType>>();
+        this.roleTypesByAssociation = new Dictionary<Strategy, ISet<RoleType>>();
+        this.associationTypesByRole = new Dictionary<Strategy, ISet<AssociationType>>();
 
         this.originalByStrategy = new Dictionary<Strategy, Original>();
     }
@@ -34,14 +34,14 @@ internal sealed class ChangeLog
 
     internal void OnDeleted(Strategy strategy) => this.deleted.Add(strategy);
 
-    internal void OnChangingUnitRole(Strategy association, IRoleType roleType, object previousRole)
+    internal void OnChangingUnitRole(Strategy association, RoleType roleType, object previousRole)
     {
         this.Original(association).OnChangingUnitRole(roleType, previousRole);
 
         this.RoleTypes(association).Add(roleType);
     }
 
-    internal void OnChangingCompositeRole(Strategy association, IRoleType roleType, Strategy newRole, Strategy previousRole)
+    internal void OnChangingCompositeRole(Strategy association, RoleType roleType, Strategy newRole, Strategy previousRole)
     {
         this.Original(association).OnChangingCompositeRole(roleType, previousRole);
 
@@ -58,7 +58,7 @@ internal sealed class ChangeLog
         this.RoleTypes(association).Add(roleType);
     }
 
-    internal void OnChangingCompositesRole(Strategy association, IRoleType roleType, Strategy changedRole,
+    internal void OnChangingCompositesRole(Strategy association, RoleType roleType, Strategy changedRole,
         IEnumerable<Strategy> previousRole)
     {
         this.Original(association).OnChangingCompositesRole(roleType, previousRole);
@@ -71,10 +71,10 @@ internal sealed class ChangeLog
         this.RoleTypes(association).Add(roleType);
     }
 
-    internal void OnChangingCompositeAssociation(Strategy role, IAssociationType associationType, Strategy previousAssociation)
+    internal void OnChangingCompositeAssociation(Strategy role, AssociationType associationType, Strategy previousAssociation)
         => this.Original(role).OnChangingCompositeAssociation(associationType, previousAssociation);
 
-    internal void OnChangingCompositesAssociation(Strategy role, IAssociationType roleType, IEnumerable<Strategy> previousAssociation)
+    internal void OnChangingCompositesAssociation(Strategy role, AssociationType roleType, IEnumerable<Strategy> previousAssociation)
         => this.Original(role).OnChangingCompositesAssociation(roleType, previousAssociation);
 
     internal ChangeSet Checkpoint() =>
@@ -84,22 +84,22 @@ internal sealed class ChangeLog
             this.RoleTypesByAssociation().ToDictionary(kvp => kvp.Key, kvp => kvp.Value),
             this.AssociationTypesByRole().ToDictionary(kvp => kvp.Key, kvp => kvp.Value));
 
-    private ISet<IRoleType> RoleTypes(Strategy associationId)
+    private ISet<RoleType> RoleTypes(Strategy associationId)
     {
         if (!this.roleTypesByAssociation.TryGetValue(associationId, out var roleTypes))
         {
-            roleTypes = new HashSet<IRoleType>();
+            roleTypes = new HashSet<RoleType>();
             this.roleTypesByAssociation[associationId] = roleTypes;
         }
 
         return roleTypes;
     }
 
-    private ISet<IAssociationType> AssociationTypes(Strategy roleId)
+    private ISet<AssociationType> AssociationTypes(Strategy roleId)
     {
         if (!this.associationTypesByRole.TryGetValue(roleId, out var associationTypes))
         {
-            associationTypes = new HashSet<IAssociationType>();
+            associationTypes = new HashSet<AssociationType>();
             this.associationTypesByRole[roleId] = associationTypes;
         }
 
@@ -118,7 +118,7 @@ internal sealed class ChangeLog
         return original;
     }
 
-    private IEnumerable<KeyValuePair<IObject, ISet<IRoleType>>> RoleTypesByAssociation()
+    private IEnumerable<KeyValuePair<IObject, ISet<RoleType>>> RoleTypesByAssociation()
     {
         foreach (var kvp in this.roleTypesByAssociation)
         {
@@ -138,11 +138,11 @@ internal sealed class ChangeLog
             }
 
             var @object = strategy.GetObject();
-            yield return new KeyValuePair<IObject, ISet<IRoleType>>(@object, roleTypes);
+            yield return new KeyValuePair<IObject, ISet<RoleType>>(@object, roleTypes);
         }
     }
 
-    private IEnumerable<KeyValuePair<IObject, ISet<IAssociationType>>> AssociationTypesByRole()
+    private IEnumerable<KeyValuePair<IObject, ISet<AssociationType>>> AssociationTypesByRole()
     {
         foreach (var kvp in this.associationTypesByRole)
         {
@@ -162,7 +162,7 @@ internal sealed class ChangeLog
             }
 
             var @object = strategy.GetObject();
-            yield return new KeyValuePair<IObject, ISet<IAssociationType>>(@object, associationTypes);
+            yield return new KeyValuePair<IObject, ISet<AssociationType>>(@object, associationTypes);
         }
     }
 }

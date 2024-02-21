@@ -17,7 +17,7 @@ internal sealed class TraceablePrefetcher : Prefetcher
 
     public TraceablePrefetcher(Transaction transaction) : base(transaction) => this.sink = transaction.Database.Sink;
 
-    internal override void PrefetchUnitRoles(IClass @class, HashSet<Reference> associations, IRoleType anyRoleType)
+    internal override void PrefetchUnitRoles(Class @class, HashSet<Reference> associations, RoleType anyRoleType)
     {
         var @event = new SqlPrefetchUnitRolesEvent(this.Transaction)
         {
@@ -30,7 +30,7 @@ internal sealed class TraceablePrefetcher : Prefetcher
         this.sink.OnAfter(@event);
     }
 
-    internal override void PrefetchCompositeRoleObjectTable(HashSet<Reference> associations, IRoleType roleType,
+    internal override void PrefetchCompositeRoleObjectTable(HashSet<Reference> associations, RoleType roleType,
         HashSet<long> nestedObjectIds, HashSet<long> leafs)
     {
         var @event = new SqlPrefetchCompositeRoleObjectTableEvent(this.Transaction)
@@ -47,7 +47,7 @@ internal sealed class TraceablePrefetcher : Prefetcher
         this.sink.OnAfter(@event);
     }
 
-    internal override void PrefetchCompositeRoleRelationTable(HashSet<Reference> associations, IRoleType roleType,
+    internal override void PrefetchCompositeRoleRelationTable(HashSet<Reference> associations, RoleType roleType,
         HashSet<long> nestedObjectIds, HashSet<long> leafs)
     {
         var @event = new SqlPrefetchCompositeRoleRelationTableEvent(this.Transaction)
@@ -64,7 +64,7 @@ internal sealed class TraceablePrefetcher : Prefetcher
         this.sink.OnAfter(@event);
     }
 
-    internal override void PrefetchCompositesRoleObjectTable(HashSet<Reference> associations, IRoleType roleType,
+    internal override void PrefetchCompositesRoleObjectTable(HashSet<Reference> associations, RoleType roleType,
         HashSet<long> nestedObjectIds, HashSet<long> leafs)
     {
         var @event = new SqlPrefetchCompositesRoleObjectTableEvent(this.Transaction)
@@ -81,7 +81,7 @@ internal sealed class TraceablePrefetcher : Prefetcher
         this.sink.OnAfter(@event);
     }
 
-    internal override void PrefetchCompositesRoleRelationTable(HashSet<Reference> associations, IRoleType roleType,
+    internal override void PrefetchCompositesRoleRelationTable(HashSet<Reference> associations, RoleType roleType,
         HashSet<long> nestedObjectIds, HashSet<long> leafs)
     {
         var @event = new SqlPrefetchCompositesRoleRelationTableEvent(this.Transaction)
@@ -99,7 +99,7 @@ internal sealed class TraceablePrefetcher : Prefetcher
     }
 
 
-    internal override void PrefetchCompositeAssociationObjectTable(HashSet<Reference> roles, IAssociationType associationType,
+    internal override void PrefetchCompositeAssociationObjectTable(HashSet<Reference> roles, AssociationType associationType,
         HashSet<long> nestedObjectIds, HashSet<long> leafs)
     {
         var @event = new SqlPrefetchCompositeAssociationObjectTableEvent(this.Transaction)
@@ -116,7 +116,7 @@ internal sealed class TraceablePrefetcher : Prefetcher
         this.sink.OnAfter(@event);
     }
 
-    internal override void PrefetchCompositeAssociationRelationTable(HashSet<Reference> roles, IAssociationType associationType,
+    internal override void PrefetchCompositeAssociationRelationTable(HashSet<Reference> roles, AssociationType associationType,
         HashSet<long> nestedObjectIds, HashSet<long> leafs)
     {
         var @event = new SqlPrefetchCompositeAssociationRelationTableEvent(this.Transaction)
@@ -133,7 +133,7 @@ internal sealed class TraceablePrefetcher : Prefetcher
         this.sink.OnAfter(@event);
     }
 
-    internal override void PrefetchCompositesAssociationObjectTable(HashSet<Reference> roles, IAssociationType associationType,
+    internal override void PrefetchCompositesAssociationObjectTable(HashSet<Reference> roles, AssociationType associationType,
         HashSet<long> nestedObjectIds, HashSet<long> leafs)
     {
         var @event = new SqlPrefetchCompositesAssociationObjectTableEvent(this.Transaction)
@@ -150,7 +150,7 @@ internal sealed class TraceablePrefetcher : Prefetcher
         this.sink.OnAfter(@event);
     }
 
-    internal override void PrefetchCompositesAssociationRelationTable(HashSet<Reference> roles, IAssociationType associationType,
+    internal override void PrefetchCompositesAssociationRelationTable(HashSet<Reference> roles, AssociationType associationType,
         HashSet<long> nestedObjectIds, HashSet<long> leafs)
     {
         var @event = new SqlPrefetchCompositesAssociationRelationTableEvent(this.Transaction)

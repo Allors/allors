@@ -48,19 +48,19 @@ public class Mapping : Sql.Mapping
     private readonly IDictionary<RelationType, string> columnNameByRelationType;
     private readonly IDictionary<RelationType, string> procedureNameForAddRoleByRelationType;
     private readonly IDictionary<RelationType, string> procedureNameForClearRoleByRelationType;
-    private readonly IDictionary<IClass, string> procedureNameForCreateObjectByClass;
-    private readonly IDictionary<IClass, string> procedureNameForCreateObjectsByClass;
-    private readonly IDictionary<IClass, string> procedureNameForDeleteObjectByClass;
+    private readonly IDictionary<Class, string> procedureNameForCreateObjectByClass;
+    private readonly IDictionary<Class, string> procedureNameForCreateObjectsByClass;
+    private readonly IDictionary<Class, string> procedureNameForDeleteObjectByClass;
     private readonly IDictionary<RelationType, string> procedureNameForGetAssociationByRelationType;
     private readonly IDictionary<RelationType, string> procedureNameForGetRoleByRelationType;
-    private readonly IDictionary<IClass, string> procedureNameForGetUnitRolesByClass;
+    private readonly IDictionary<Class, string> procedureNameForGetUnitRolesByClass;
     private readonly IDictionary<RelationType, string> procedureNameForPrefetchAssociationByRelationType;
     private readonly IDictionary<RelationType, string> procedureNameForPrefetchRoleByRelationType;
-    private readonly IDictionary<IClass, string> procedureNameForPrefetchUnitRolesByClass;
+    private readonly IDictionary<Class, string> procedureNameForPrefetchUnitRolesByClass;
     private readonly IDictionary<RelationType, string> procedureNameForRemoveRoleByRelationType;
     private readonly IDictionary<RelationType, string> procedureNameForSetRoleByRelationType;
-    private readonly IDictionary<IClass, IDictionary<RelationType, string>> procedureNameForSetUnitRoleByRelationTypeByClass;
-    private readonly IDictionary<IClass, string> tableNameForObjectByClass;
+    private readonly IDictionary<Class, IDictionary<RelationType, string>> procedureNameForSetUnitRoleByRelationTypeByClass;
+    private readonly IDictionary<Class, string> tableNameForObjectByClass;
 
     private readonly IDictionary<RelationType, string> tableNameForRelationByRelationType;
 
@@ -265,9 +265,9 @@ public class Mapping : Sql.Mapping
         // Tables
         // ------
         this.TableNameForObjects = $"{database.SchemaName}._o";
-        this.tableNameForObjectByClass = new Dictionary<IClass, string>();
+        this.tableNameForObjectByClass = new Dictionary<Class, string>();
         this.columnNameByRelationType = new Dictionary<RelationType, string>();
-        this.ParamNameByRoleType = new Dictionary<IRoleType, string>();
+        this.ParamNameByRoleType = new Dictionary<RoleType, string>();
 
         foreach (var @class in this.Database.MetaPopulation.Classes)
         {
@@ -317,13 +317,13 @@ public class Mapping : Sql.Mapping
         // ----------
         this.ProcedureDefinitionByName = new Dictionary<string, string>();
 
-        this.procedureNameForCreateObjectByClass = new Dictionary<IClass, string>();
-        this.procedureNameForCreateObjectsByClass = new Dictionary<IClass, string>();
-        this.procedureNameForDeleteObjectByClass = new Dictionary<IClass, string>();
+        this.procedureNameForCreateObjectByClass = new Dictionary<Class, string>();
+        this.procedureNameForCreateObjectsByClass = new Dictionary<Class, string>();
+        this.procedureNameForDeleteObjectByClass = new Dictionary<Class, string>();
 
-        this.procedureNameForGetUnitRolesByClass = new Dictionary<IClass, string>();
-        this.procedureNameForPrefetchUnitRolesByClass = new Dictionary<IClass, string>();
-        this.procedureNameForSetUnitRoleByRelationTypeByClass = new Dictionary<IClass, IDictionary<RelationType, string>>();
+        this.procedureNameForGetUnitRolesByClass = new Dictionary<Class, string>();
+        this.procedureNameForPrefetchUnitRolesByClass = new Dictionary<Class, string>();
+        this.procedureNameForSetUnitRoleByRelationTypeByClass = new Dictionary<Class, IDictionary<RelationType, string>>();
 
         this.procedureNameForGetRoleByRelationType = new Dictionary<RelationType, string>();
         this.procedureNameForPrefetchRoleByRelationType = new Dictionary<RelationType, string>();
@@ -446,19 +446,19 @@ public class Mapping : Sql.Mapping
     public override string ParamInvocationNameForClass => this.ParamNameForClass;
 
     public override string TableNameForObjects { get; }
-    public override IDictionary<IClass, string> TableNameForObjectByClass => this.tableNameForObjectByClass;
+    public override IDictionary<Class, string> TableNameForObjectByClass => this.tableNameForObjectByClass;
 
     public override IDictionary<RelationType, string> ColumnNameByRelationType => this.columnNameByRelationType;
 
-    public override IDictionary<IRoleType, string> ParamInvocationNameByRoleType => this.ParamNameByRoleType;
+    public override IDictionary<RoleType, string> ParamInvocationNameByRoleType => this.ParamNameByRoleType;
 
-    public override IDictionary<IClass, string> ProcedureNameForDeleteObjectByClass => this.procedureNameForDeleteObjectByClass;
+    public override IDictionary<Class, string> ProcedureNameForDeleteObjectByClass => this.procedureNameForDeleteObjectByClass;
 
-    public override IDictionary<IClass, string> ProcedureNameForCreateObjectsByClass => this.procedureNameForCreateObjectsByClass;
+    public override IDictionary<Class, string> ProcedureNameForCreateObjectsByClass => this.procedureNameForCreateObjectsByClass;
 
-    public override IDictionary<IClass, string> ProcedureNameForGetUnitRolesByClass => this.procedureNameForGetUnitRolesByClass;
+    public override IDictionary<Class, string> ProcedureNameForGetUnitRolesByClass => this.procedureNameForGetUnitRolesByClass;
 
-    public override IDictionary<IClass, IDictionary<RelationType, string>> ProcedureNameForSetUnitRoleByRelationTypeByClass =>
+    public override IDictionary<Class, IDictionary<RelationType, string>> ProcedureNameForSetUnitRoleByRelationTypeByClass =>
         this.procedureNameForSetUnitRoleByRelationTypeByClass;
 
     public override IDictionary<RelationType, string> ProcedureNameForGetRoleByRelationType => this.procedureNameForGetRoleByRelationType;
@@ -476,7 +476,7 @@ public class Mapping : Sql.Mapping
     public override IDictionary<RelationType, string> ProcedureNameForGetAssociationByRelationType =>
         this.procedureNameForGetAssociationByRelationType;
 
-    public override IDictionary<IClass, string> ProcedureNameForCreateObjectByClass => this.procedureNameForCreateObjectByClass;
+    public override IDictionary<Class, string> ProcedureNameForCreateObjectByClass => this.procedureNameForCreateObjectByClass;
 
     public override string ProcedureNameForInstantiate { get; }
 
@@ -484,7 +484,7 @@ public class Mapping : Sql.Mapping
 
     public override string ProcedureNameForUpdateVersion { get; }
 
-    public override IDictionary<IClass, string> ProcedureNameForPrefetchUnitRolesByClass => this.procedureNameForPrefetchUnitRolesByClass;
+    public override IDictionary<Class, string> ProcedureNameForPrefetchUnitRolesByClass => this.procedureNameForPrefetchUnitRolesByClass;
 
     public override IDictionary<RelationType, string> ProcedureNameForPrefetchRoleByRelationType =>
         this.procedureNameForPrefetchRoleByRelationType;
@@ -502,7 +502,7 @@ public class Mapping : Sql.Mapping
     internal string ParamNameForCompositeRole { get; }
     internal string ParamNameForCount { get; }
     internal string ParamNameForTableType { get; }
-    internal IDictionary<IRoleType, string> ParamNameByRoleType { get; }
+    internal IDictionary<RoleType, string> ParamNameByRoleType { get; }
 
     internal string TableTypeNameForObject { get; }
     private string TableTypeNameForVersionedObject { get; }
@@ -545,7 +545,7 @@ public class Mapping : Sql.Mapping
 
     protected internal Database Database { get; }
 
-    public string GetTableTypeNameForRelation(IRoleType roleType)
+    public string GetTableTypeNameForRelation(RoleType roleType)
     {
         var unitTypeTag = ((Unit)roleType.ObjectType).Tag;
         return unitTypeTag switch
@@ -562,7 +562,7 @@ public class Mapping : Sql.Mapping
         };
     }
 
-    public string GetTableTypeNameForIn(IRoleType roleType)
+    public string GetTableTypeNameForIn(RoleType roleType)
     {
         var unitTypeTag = ((Unit)roleType.ObjectType).Tag;
         return unitTypeTag switch
@@ -590,7 +590,7 @@ public class Mapping : Sql.Mapping
         return name;
     }
 
-    internal string GetSqlType(IRoleType roleType)
+    internal string GetSqlType(RoleType roleType)
     {
         var unit = (Unit)roleType.ObjectType;
         switch (unit.Tag)
@@ -634,7 +634,7 @@ public class Mapping : Sql.Mapping
         }
     }
 
-    internal SqlDbType GetSqlDbType(IRoleType roleType)
+    internal SqlDbType GetSqlDbType(RoleType roleType)
     {
         var unit = (Unit)roleType.ObjectType;
         return unit.Tag switch
@@ -651,7 +651,7 @@ public class Mapping : Sql.Mapping
         };
     }
 
-    private void RestoreObjects(IClass @class)
+    private void RestoreObjects(Class @class)
     {
         var table = this.tableNameForObjectByClass[@class];
         var name = $"{this.Database.SchemaName}.{ProcedurePrefixForRestore}{@class.SingularName.ToLowerInvariant()}";
@@ -671,7 +671,7 @@ END";
         this.ProcedureDefinitionByName.Add(name, definition);
     }
 
-    private void CreateObject(IClass @class)
+    private void CreateObject(Class @class)
     {
         var table = this.tableNameForObjectByClass[@class];
         var name = $"{this.Database.SchemaName}.{ProcedurePrefixForCreateObject}{@class.SingularName.ToLowerInvariant()}";
@@ -699,7 +699,7 @@ END";
         this.ProcedureDefinitionByName.Add(name, definition);
     }
 
-    private void CreateObjects(IClass @class)
+    private void CreateObjects(Class @class)
     {
         var table = this.tableNameForObjectByClass[@class.ExclusiveClass];
         var name = $"{this.Database.SchemaName}.{ProcedurePrefixForCreateObjects}{@class.SingularName.ToLowerInvariant()}";
@@ -737,7 +737,7 @@ END";
         this.ProcedureDefinitionByName.Add(name, definition);
     }
 
-    private void DeleteObject(IClass @class)
+    private void DeleteObject(Class @class)
     {
         var table = this.tableNameForObjectByClass[@class.ExclusiveClass];
         var name = $"{this.Database.SchemaName}.{ProcedurePrefixForDeleteObject}{@class.SingularName.ToLowerInvariant()}";
@@ -758,7 +758,7 @@ END";
         this.ProcedureDefinitionByName.Add(name, definition);
     }
 
-    private void GetUnitRoles(IClass @class)
+    private void GetUnitRoles(Class @class)
     {
         var sortedUnitRoleTypes = this.Database.GetSortedUnitRolesByObjectType(@class);
         var table = this.tableNameForObjectByClass[@class.ExclusiveClass];
@@ -780,7 +780,7 @@ END
         this.ProcedureDefinitionByName.Add(name, definition);
     }
 
-    private void PrefetchUnitRoles(IClass @class)
+    private void PrefetchUnitRoles(Class @class)
     {
         var sortedUnitRoleTypes = this.Database.GetSortedUnitRolesByObjectType(@class);
         var table = this.tableNameForObjectByClass[@class.ExclusiveClass];
@@ -801,7 +801,7 @@ END";
         this.ProcedureDefinitionByName.Add(name, definition);
     }
 
-    private void GetCompositesRoleObjectTable(IAssociationType associationType, IClass @class)
+    private void GetCompositesRoleObjectTable(AssociationType associationType, Class @class)
     {
         var relationType = associationType.RelationType;
         var table = this.tableNameForObjectByClass[@class];
@@ -823,7 +823,7 @@ END";
         this.ProcedureDefinitionByName.Add(name, definition);
     }
 
-    private void PrefetchCompositesRoleObjectTable(IAssociationType associationType, IClass @class)
+    private void PrefetchCompositesRoleObjectTable(AssociationType associationType, Class @class)
     {
         var relationType = associationType.RelationType;
         var table = this.tableNameForObjectByClass[@class];
@@ -845,7 +845,7 @@ END";
         this.ProcedureDefinitionByName.Add(name, definition);
     }
 
-    private void GetCompositeAssociationObjectTable(IAssociationType associationType, IClass @class)
+    private void GetCompositeAssociationObjectTable(AssociationType associationType, Class @class)
     {
         var relationType = associationType.RelationType;
         var table = this.tableNameForObjectByClass[@class];
@@ -867,7 +867,7 @@ END";
         this.ProcedureDefinitionByName.Add(name, definition);
     }
 
-    private void PrefetchCompositeAssociationObjectTable(IAssociationType associationType, IClass @class)
+    private void PrefetchCompositeAssociationObjectTable(AssociationType associationType, Class @class)
     {
         var relationType = associationType.RelationType;
         var table = this.tableNameForObjectByClass[@class];
@@ -889,7 +889,7 @@ END";
         this.ProcedureDefinitionByName.Add(name, definition);
     }
 
-    private void AddCompositeRoleObjectTable(IAssociationType associationType, IClass @class)
+    private void AddCompositeRoleObjectTable(AssociationType associationType, Class @class)
     {
         var relationType = associationType.RelationType;
         var table = this.tableNameForObjectByClass[@class];
@@ -913,7 +913,7 @@ END";
         this.ProcedureDefinitionByName.Add(name, definition);
     }
 
-    private void RemoveCompositeRoleObjectTable(IAssociationType associationType, IClass @class)
+    private void RemoveCompositeRoleObjectTable(AssociationType associationType, Class @class)
     {
         var relationType = associationType.RelationType;
         var table = this.tableNameForObjectByClass[@class];
@@ -939,7 +939,7 @@ END";
         this.ProcedureDefinitionByName.Add(name, definition);
     }
 
-    private void ClearCompositeRoleObjectTable(IAssociationType associationType, IClass @class)
+    private void ClearCompositeRoleObjectTable(AssociationType associationType, Class @class)
     {
         var relationType = associationType.RelationType;
         var name =
@@ -962,7 +962,7 @@ END";
         this.ProcedureDefinitionByName.Add(name, definition);
     }
 
-    private void SetUnitRoleType(IRoleType roleType, IClass @class)
+    private void SetUnitRoleType(RoleType roleType, Class @class)
     {
         if (!this.procedureNameForSetUnitRoleByRelationTypeByClass.TryGetValue(@class, out var procedureNameForSetUnitRoleByRelationType))
         {
@@ -1005,7 +1005,7 @@ END";
         this.ProcedureDefinitionByName.Add(name, definition);
     }
 
-    private void GetCompositeRoleObjectTable(IRoleType roleType, IClass @class)
+    private void GetCompositeRoleObjectTable(RoleType roleType, Class @class)
     {
         var relationType = roleType.RelationType;
         var table = this.tableNameForObjectByClass[@class];
@@ -1027,7 +1027,7 @@ END";
         this.ProcedureDefinitionByName.Add(name, definition);
     }
 
-    private void PrefetchCompositeRoleObjectTable(IRoleType roleType, IClass @class)
+    private void PrefetchCompositeRoleObjectTable(RoleType roleType, Class @class)
     {
         var relationType = roleType.RelationType;
         var table = this.tableNameForObjectByClass[@class];
@@ -1049,7 +1049,7 @@ END";
         this.ProcedureDefinitionByName.Add(name, definition);
     }
 
-    private void GetCompositeAssociationOne2OneObjectTable(IRoleType roleType, IClass @class)
+    private void GetCompositeAssociationOne2OneObjectTable(RoleType roleType, Class @class)
     {
         var relationType = roleType.RelationType;
         var table = this.tableNameForObjectByClass[@class];
@@ -1071,7 +1071,7 @@ END";
         this.ProcedureDefinitionByName.Add(name, definition);
     }
 
-    private void PrefetchCompositeAssociationObjectTable(IRoleType roleType, IClass @class)
+    private void PrefetchCompositeAssociationObjectTable(RoleType roleType, Class @class)
     {
         var table = this.tableNameForObjectByClass[@class];
         var name =
@@ -1092,7 +1092,7 @@ END";
         this.ProcedureDefinitionByName.Add(name, definition);
     }
 
-    private void GetCompositesAssociationMany2OneObjectTable(IRoleType roleType, IClass @class)
+    private void GetCompositesAssociationMany2OneObjectTable(RoleType roleType, Class @class)
     {
         var relationType = roleType.RelationType;
         var table = this.tableNameForObjectByClass[@class];
@@ -1114,7 +1114,7 @@ END";
         this.ProcedureDefinitionByName.Add(name, definition);
     }
 
-    private void PrefetchCompositesAssociationMany2OneObjectTable(IRoleType roleType, IClass @class)
+    private void PrefetchCompositesAssociationMany2OneObjectTable(RoleType roleType, Class @class)
     {
         var relationType = roleType.RelationType;
         var table = this.tableNameForObjectByClass[@class];
@@ -1136,7 +1136,7 @@ END";
         this.ProcedureDefinitionByName.Add(name, definition);
     }
 
-    private void SetCompositeRole(IRoleType roleType, IClass @class)
+    private void SetCompositeRole(RoleType roleType, Class @class)
     {
         var relationType = roleType.RelationType;
         var table = this.tableNameForObjectByClass[@class];
@@ -1159,7 +1159,7 @@ END";
         this.ProcedureDefinitionByName.Add(name, definition);
     }
 
-    private void ClearCompositeRole(IRoleType roleType, IClass @class)
+    private void ClearCompositeRole(RoleType roleType, Class @class)
     {
         var relationType = roleType.RelationType;
         var table = this.tableNameForObjectByClass[@class];

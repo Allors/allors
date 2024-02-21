@@ -14,7 +14,7 @@ using Microsoft.Data.SqlClient;
 
 public class Restore
 {
-    private readonly Dictionary<long, IClass> classByObjectId;
+    private readonly Dictionary<long, Class> classByObjectId;
     private readonly SqlConnection connection;
     private readonly Database database;
     private readonly ObjectNotRestoredEventHandler objectNotRestored;
@@ -28,7 +28,7 @@ public class Restore
         this.objectNotRestored = objectNotRestored;
         this.relationNotRestored = relationNotRestored;
 
-        this.classByObjectId = new Dictionary<long, IClass>();
+        this.classByObjectId = new Dictionary<long, Class>();
     }
 
     public void Execute(XmlReader reader)
@@ -225,8 +225,8 @@ where c = '{@class.Id}'";
 
     private void RestoreUnitRelations(XmlReader reader, RelationType relationType)
     {
-        var allowedClasses = new HashSet<IClass>(relationType.AssociationType.ObjectType.Classes);
-        var unitRelationsByClass = new Dictionary<IClass, List<UnitRelation>>();
+        var allowedClasses = new HashSet<Class>(relationType.AssociationType.ObjectType.Classes);
+        var unitRelationsByClass = new Dictionary<Class, List<UnitRelation>>();
 
         var skip = false;
         while (skip || reader.Read())

@@ -125,7 +125,7 @@ public class Database : IDatabase
         return concreteClasses.Contains(concreteClass);
     }
 
-    public void UnitRoleChecks(IStrategy strategy, IRoleType roleType)
+    public void UnitRoleChecks(IStrategy strategy, RoleType roleType)
     {
         if (!this.ContainsClass(roleType.AssociationType.ObjectType, strategy.Class))
         {
@@ -138,9 +138,9 @@ public class Database : IDatabase
         }
     }
 
-    public void CompositeRoleChecks(IStrategy strategy, IRoleType roleType) => this.CompositeSharedChecks(strategy, roleType, null);
+    public void CompositeRoleChecks(IStrategy strategy, RoleType roleType) => this.CompositeSharedChecks(strategy, roleType, null);
 
-    public void CompositeRoleChecks(IStrategy strategy, IRoleType roleType, Strategy roleStrategy)
+    public void CompositeRoleChecks(IStrategy strategy, RoleType roleType, Strategy roleStrategy)
     {
         this.CompositeSharedChecks(strategy, roleType, roleStrategy);
         if (!roleType.IsOne)
@@ -149,7 +149,7 @@ public class Database : IDatabase
         }
     }
 
-    public Strategy CompositeRolesChecks(IStrategy strategy, IRoleType roleType, Strategy roleStrategy)
+    public Strategy CompositeRolesChecks(IStrategy strategy, RoleType roleType, Strategy roleStrategy)
     {
         this.CompositeSharedChecks(strategy, roleType, roleStrategy);
         if (!roleType.IsMany)
@@ -186,7 +186,7 @@ public class Database : IDatabase
         }
     }
 
-    private void CompositeSharedChecks(IStrategy strategy, IRoleType roleType, Strategy roleStrategy)
+    private void CompositeSharedChecks(IStrategy strategy, RoleType roleType, Strategy roleStrategy)
     {
         if (!this.ContainsClass(roleType.AssociationType.ObjectType, strategy.Class))
         {

@@ -11,10 +11,10 @@ using Allors.Database.Meta;
 
 internal sealed class AssociationContainedInEnumerable : ContainedIn
 {
-    private readonly IAssociationType association;
+    private readonly AssociationType association;
     private readonly IEnumerable<IObject> enumerable;
 
-    internal AssociationContainedInEnumerable(ExtentFiltered extent, IAssociationType association, IEnumerable<IObject> enumerable)
+    internal AssociationContainedInEnumerable(ExtentFiltered extent, AssociationType association, IEnumerable<IObject> enumerable)
     {
         extent.CheckAssociation(association);
         PredicateAssertions.AssertAssociationContainedIn(association, this.enumerable);

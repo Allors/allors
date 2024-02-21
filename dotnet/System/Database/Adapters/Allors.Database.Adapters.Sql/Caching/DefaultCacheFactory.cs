@@ -12,7 +12,7 @@ using Allors.Database.Meta;
 /// </summary>
 public sealed class DefaultCacheFactory : ICacheFactory
 {
-    public IClass[] ExcludedClasses { get; set; }
+    public Class[] ExcludedClasses { get; set; }
 
     public ICache CreateCache() => new DefaultCache(this.ExcludedClasses);
 }

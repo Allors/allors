@@ -99,7 +99,7 @@ internal class CompositesRole
         }
     }
 
-    internal void Flush(Flush flush, Strategy strategy, IRoleType roleType)
+    internal void Flush(Flush flush, Strategy strategy, RoleType roleType)
     {
         if (this.Count == 0)
         {

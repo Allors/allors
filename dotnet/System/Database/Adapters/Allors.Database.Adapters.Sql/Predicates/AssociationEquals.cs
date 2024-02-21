@@ -10,9 +10,9 @@ using Allors.Database.Meta;
 internal sealed class AssociationEquals : Predicate
 {
     private readonly IObject allorsObject;
-    private readonly IAssociationType association;
+    private readonly AssociationType association;
 
-    internal AssociationEquals(ExtentFiltered extent, IAssociationType association, IObject allorsObject)
+    internal AssociationEquals(ExtentFiltered extent, AssociationType association, IObject allorsObject)
     {
         extent.CheckAssociation(association);
         PredicateAssertions.AssertAssociationEquals(association, allorsObject);

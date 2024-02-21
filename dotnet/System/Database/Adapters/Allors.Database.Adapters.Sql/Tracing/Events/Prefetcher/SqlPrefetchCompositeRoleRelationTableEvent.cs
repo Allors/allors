@@ -17,7 +17,7 @@ public sealed class SqlPrefetchCompositeRoleRelationTableEvent : Event
 
     public Reference[] Associations { get; set; }
 
-    public IRoleType RoleType { get; set; }
+    public RoleType RoleType { get; set; }
 
     public long[] NestedObjectIds { get; set; }
 

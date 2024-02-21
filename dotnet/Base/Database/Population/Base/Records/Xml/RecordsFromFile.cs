@@ -18,7 +18,7 @@
 
             if (!this.fileInfo.Exists)
             {
-                this.RecordsByClass = new Dictionary<IClass, Record[]>();
+                this.RecordsByClass = new Dictionary<Class, Record[]>();
             }
             else
             {
@@ -28,6 +28,6 @@
             }
         }
 
-        public IDictionary<IClass, Record[]> RecordsByClass { get; }
+        public IDictionary<Class, Record[]> RecordsByClass { get; }
     }
 }

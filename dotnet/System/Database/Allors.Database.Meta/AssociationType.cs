@@ -13,7 +13,7 @@ using System;
 ///     This is also called the 'active', 'controlling' or 'owning' side.
 ///     AssociationTypes can only have composite <see cref="ObjectType" />s.
 /// </summary>
-public sealed class AssociationType : IComparable, IAssociationType
+public sealed class AssociationType : IComparable, IRelationEndType
 {
     private readonly IComposite objectType;
     private RelationType relationType;
@@ -33,9 +33,9 @@ public sealed class AssociationType : IComparable, IAssociationType
 
     IObjectType IRelationEndType.ObjectType => this.objectType;
 
-    IComposite IAssociationType.ObjectType => this.objectType;
+    public IComposite ObjectType => this.objectType;
     
-    public IRoleType RoleType => this.relationType.RoleType;
+    public RoleType RoleType => this.relationType.RoleType;
     
     public RelationType RelationType
     {
@@ -43,19 +43,15 @@ public sealed class AssociationType : IComparable, IAssociationType
         set => this.relationType = value;
     }
 
-    string IRelationEndType.Name => this.Name;
+    public string Name => this.IsMany ? this.PluralName : this.SingularName;
 
-    private string Name => this.IsMany ? this.PluralName : this.SingularName;
-
-    string IRelationEndType.SingularFullName => this.SingularName;
+    public string SingularFullName => this.SingularName;
 
     public string SingularName => this.objectType.SingularName + Where + this.relationType.RoleType.SingularName;
 
-    string IRelationEndType.PluralName => this.objectType.PluralName + Where + this.relationType.RoleType.SingularName;
+    public string PluralFullName => this.PluralName;
 
-    string IRelationEndType.PluralFullName => this.PluralName;
-
-    private string PluralName => this.objectType.PluralName + Where + this.relationType.RoleType.SingularName;
+    public string PluralName => this.objectType.PluralName + Where + this.relationType.RoleType.SingularName;
     
     bool IRelationEndType.IsOne => !this.IsMany;
 
@@ -70,7 +66,7 @@ public sealed class AssociationType : IComparable, IAssociationType
 
     private string ValidationName => "association type " + this.Name;
 
-    private bool IsMany =>
+    public bool IsMany =>
         this.relationType.Multiplicity switch
         {
             Multiplicity.ManyToOne => true,

@@ -1,8 +1,8 @@
 ﻿namespace Allors.Database.Meta;
 
-public sealed class CompositeRoleType : ICompositeRoleType
+public sealed class CompositeRoleType : IMetaExtensible
 {
-    public CompositeRoleType(IComposite composite, IRoleType roleType)
+    public CompositeRoleType(IComposite composite, RoleType roleType)
     {
         this.Attributes = new MetaExtension();
         this.Composite = composite;
@@ -13,5 +13,5 @@ public sealed class CompositeRoleType : ICompositeRoleType
 
     public IComposite Composite { get; }
 
-    public IRoleType RoleType { get; }
+    public RoleType RoleType { get; }
 }

@@ -13,7 +13,7 @@ using Allors.Database.Meta;
 
 public class Objects : IEnumerable<object[]>
 {
-    private readonly Dictionary<long, IClass> classByObjectId;
+    private readonly Dictionary<long, Class> classByObjectId;
     private readonly Database database;
     private readonly Action<Guid, long> onObjectNotRestored;
     private readonly XmlReader reader;
@@ -21,7 +21,7 @@ public class Objects : IEnumerable<object[]>
     public Objects(
         Database database,
         Action<Guid, long> onObjectNotRestored,
-        Dictionary<long, IClass> classByObjectId,
+        Dictionary<long, Class> classByObjectId,
         XmlReader reader)
     {
         this.database = database;
@@ -64,7 +64,7 @@ public class Objects : IEnumerable<object[]>
                                     ? XmlBackup.EnsureVersion(long.Parse(objectArray[1]))
                                     : (long)Allors.Version.DatabaseInitial;
 
-                                if (objectType is IClass @class)
+                                if (objectType is Class @class)
                                 {
                                     this.classByObjectId[objectId] = @class;
                                     yield return new object[] { objectId, @class.Id, objectVersion };

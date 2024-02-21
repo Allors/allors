@@ -11,15 +11,15 @@ namespace Allors.Database.Configuration
 
     public class WorkspaceMask : IWorkspaceMask
     {
-        private readonly Dictionary<IClass, IRoleType> masks;
+        private readonly Dictionary<Class, RoleType> masks;
 
         public WorkspaceMask(IMetaIndex m) =>
-            this.masks = new Dictionary<IClass, IRoleType>
+            this.masks = new Dictionary<Class, RoleType>
             {
                 { m.TrimFrom, m.TrimFrom.Name },
                 { m.TrimTo, m.TrimTo.Name },
             };
 
-        public IDictionary<IClass, IRoleType> GetMasks(string workspaceName) => this.masks;
+        public IDictionary<Class, RoleType> GetMasks(string workspaceName) => this.masks;
     }
 }

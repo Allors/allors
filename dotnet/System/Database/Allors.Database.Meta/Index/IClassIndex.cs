@@ -8,5 +8,5 @@ namespace Allors.Database.Meta;
 
 public interface IClassIndex
 {
-    IClass Meta { get; }
+    Class Meta { get; }
 }

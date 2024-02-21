@@ -15,28 +15,28 @@ namespace Allors.Database.Domain.Derivations.Rules
 
     public class AssociationPattern<T> : AssociationPattern where T : IComposite
     {
-        public AssociationPattern(T objectType, IAssociationType associationType) : base(associationType, objectType)
+        public AssociationPattern(T objectType, AssociationType associationType) : base(associationType, objectType)
         {
         }
 
-        public AssociationPattern(T objectType, IAssociationType associationType, Func<T, Node> node) : base(associationType, objectType) => this.Tree = [node(objectType)];
+        public AssociationPattern(T objectType, AssociationType associationType, Func<T, Node> node) : base(associationType, objectType) => this.Tree = [node(objectType)];
 
-        public AssociationPattern(T objectType, IAssociationType associationType, Func<T, IEnumerable<Node>> tree) : base(associationType, objectType) => this.Tree = tree(objectType).ToArray();
+        public AssociationPattern(T objectType, AssociationType associationType, Func<T, IEnumerable<Node>> tree) : base(associationType, objectType) => this.Tree = tree(objectType).ToArray();
 
-        public AssociationPattern(T objectType, IAssociationType associationType, Expression<Func<T, IComposite>> path) : base(associationType, objectType) => this.Tree = [path.Node(objectType.MetaPopulation)];
+        public AssociationPattern(T objectType, AssociationType associationType, Expression<Func<T, IComposite>> path) : base(associationType, objectType) => this.Tree = [path.Node(objectType.MetaPopulation)];
 
-        public AssociationPattern(T objectType, IAssociationType associationType, Expression<Func<T, IRelationEndType>> path) : base(associationType, objectType) => this.Tree = [path.Node(objectType.MetaPopulation)];
+        public AssociationPattern(T objectType, AssociationType associationType, Expression<Func<T, IRelationEndType>> path) : base(associationType, objectType) => this.Tree = [path.Node(objectType.MetaPopulation)];
 
-        public AssociationPattern(T objectType, Func<T, IAssociationType> associationType) : base(associationType(objectType), objectType)
+        public AssociationPattern(T objectType, Func<T, AssociationType> associationType) : base(associationType(objectType), objectType)
         {
         }
 
-        public AssociationPattern(T objectType, Func<T, IAssociationType> associationType, Func<T, Node> node) : base(associationType(objectType), objectType) => this.Tree = [node(objectType)];
+        public AssociationPattern(T objectType, Func<T, AssociationType> associationType, Func<T, Node> node) : base(associationType(objectType), objectType) => this.Tree = [node(objectType)];
 
-        public AssociationPattern(T objectType, Func<T, IAssociationType> associationType, Func<T, IEnumerable<Node>> tree) : base(associationType(objectType), objectType) => this.Tree = tree(objectType).ToArray();
+        public AssociationPattern(T objectType, Func<T, AssociationType> associationType, Func<T, IEnumerable<Node>> tree) : base(associationType(objectType), objectType) => this.Tree = tree(objectType).ToArray();
 
-        public AssociationPattern(T objectType, Func<T, IAssociationType> associationType, Expression<Func<T, IComposite>> path) : base(associationType(objectType), objectType) => this.Tree = [path.Node(objectType.MetaPopulation)];
+        public AssociationPattern(T objectType, Func<T, AssociationType> associationType, Expression<Func<T, IComposite>> path) : base(associationType(objectType), objectType) => this.Tree = [path.Node(objectType.MetaPopulation)];
 
-        public AssociationPattern(T objectType, Func<T, IAssociationType> associationType, Expression<Func<T, IRelationEndType>> path) : base(associationType(objectType), objectType) => this.Tree = [path.Node(objectType.MetaPopulation)];
+        public AssociationPattern(T objectType, Func<T, AssociationType> associationType, Expression<Func<T, IRelationEndType>> path) : base(associationType(objectType), objectType) => this.Tree = [path.Node(objectType.MetaPopulation)];
     }
 }

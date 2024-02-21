@@ -6,18 +6,19 @@
 
 namespace Allors.Database.Meta;
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Allors.Graph;
 using Text;
 
-public sealed class RoleType : IRoleType
+public sealed class RoleType : IRelationEndType, IComparable
 {
     private readonly IObjectType objectType;
 
     private RelationType relationType;
     private string singularName;
-    private ICompositeRoleType compositeRoleType;
+    private CompositeRoleType compositeRoleType;
 
     /// <summary>
     ///     The maximum size value.
@@ -40,15 +41,15 @@ public sealed class RoleType : IRoleType
         set => this.relationType = value;
     }
 
-    public ICompositeRoleType CompositeRoleType
+    public CompositeRoleType CompositeRoleType
     {
         get => this.compositeRoleType;
         set => this.compositeRoleType = value;
     }
 
-    public IReadOnlyDictionary<IComposite, ICompositeRoleType> CompositeRoleTypeByComposite { get; private set; }
+    public IReadOnlyDictionary<IComposite, CompositeRoleType> CompositeRoleTypeByComposite { get; private set; }
 
-    IAssociationType IRoleType.AssociationType => this.relationType.AssociationType;
+    public AssociationType AssociationType => this.relationType.AssociationType;
 
     public string AssignedSingularName { get; }
 
@@ -56,7 +57,7 @@ public sealed class RoleType : IRoleType
 
     private string ValidationName => "RoleType: " + this.relationType.Name;
 
-    IObjectType IRelationEndType.ObjectType => this.objectType;
+    public IObjectType ObjectType => this.objectType;
 
     public string SingularName
     {
@@ -182,14 +183,14 @@ public sealed class RoleType : IRoleType
         }
     }
 
-    public void InitializeCompositeRoleTypes(Dictionary<IComposite, HashSet<ICompositeRoleType>> compositeRoleTypesByComposite)
+    public void InitializeCompositeRoleTypes(Dictionary<IComposite, HashSet<CompositeRoleType>> compositeRoleTypesByComposite)
     {
         var composite = this.relationType.AssociationType.ObjectType;
         compositeRoleTypesByComposite[composite].Add(this.compositeRoleType);
 
         var dictionary = composite.Subtypes.ToDictionary(v => v, v =>
         {
-            var compositeRoleType = (ICompositeRoleType)new CompositeRoleType(v, this);
+            var compositeRoleType = (CompositeRoleType)new CompositeRoleType(v, this);
             compositeRoleTypesByComposite[v].Add(compositeRoleType);
             return compositeRoleType;
         });

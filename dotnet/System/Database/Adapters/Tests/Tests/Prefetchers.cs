@@ -10,11 +10,11 @@ using Allors.Database.Meta;
 
 public class Prefetchers
 {
-    private readonly Dictionary<IClass, PrefetchPolicy> prefetchPolicyByClass;
+    private readonly Dictionary<Class, PrefetchPolicy> prefetchPolicyByClass;
 
-    public Prefetchers() => this.prefetchPolicyByClass = new Dictionary<IClass, PrefetchPolicy>();
+    public Prefetchers() => this.prefetchPolicyByClass = new Dictionary<Class, PrefetchPolicy>();
 
-    public PrefetchPolicy this[IClass @class] // Indexer declaration
+    public PrefetchPolicy this[Class @class] // Indexer declaration
     {
         get
         {

@@ -8,5 +8,5 @@ namespace Allors.Database.Meta;
 
 public interface IAssociationTypeIndex
 {
-    IAssociationType Meta { get; }
+    AssociationType Meta { get; }
 }

@@ -12,9 +12,9 @@ namespace Allors.Database.Configuration.Derivations.Default
 
     public class AccumulatedChangeSet : IAccumulatedChangeSet
     {
-        private IDictionary<IRoleType, ISet<IObject>> associationsByRoleType;
+        private IDictionary<RoleType, ISet<IObject>> associationsByRoleType;
 
-        private IDictionary<IAssociationType, ISet<IObject>> rolesByAssociationType;
+        private IDictionary<AssociationType, ISet<IObject>> rolesByAssociationType;
 
         internal AccumulatedChangeSet()
         {
@@ -22,8 +22,8 @@ namespace Allors.Database.Configuration.Derivations.Default
             this.Deleted = new HashSet<IStrategy>();
             this.Associations = new HashSet<IObject>();
             this.Roles = new HashSet<IObject>();
-            this.RoleTypesByAssociation = new Dictionary<IObject, ISet<IRoleType>>();
-            this.AssociationTypesByRole = new Dictionary<IObject, ISet<IAssociationType>>();
+            this.RoleTypesByAssociation = new Dictionary<IObject, ISet<RoleType>>();
+            this.AssociationTypesByRole = new Dictionary<IObject, ISet<AssociationType>>();
         }
 
         public ISet<IObject> Created { get; }
@@ -34,17 +34,17 @@ namespace Allors.Database.Configuration.Derivations.Default
 
         public ISet<IObject> Roles { get; }
 
-        public IDictionary<IObject, ISet<IRoleType>> RoleTypesByAssociation { get; }
+        public IDictionary<IObject, ISet<RoleType>> RoleTypesByAssociation { get; }
 
-        public IDictionary<IObject, ISet<IAssociationType>> AssociationTypesByRole { get; }
+        public IDictionary<IObject, ISet<AssociationType>> AssociationTypesByRole { get; }
 
-        public IDictionary<IRoleType, ISet<IObject>> AssociationsByRoleType => this.associationsByRoleType ??=
+        public IDictionary<RoleType, ISet<IObject>> AssociationsByRoleType => this.associationsByRoleType ??=
             (from kvp in this.RoleTypesByAssociation
              from value in kvp.Value
              group kvp.Key by value)
                  .ToDictionary(grp => grp.Key, grp => new HashSet<IObject>(grp) as ISet<IObject>);
 
-        public IDictionary<IAssociationType, ISet<IObject>> RolesByAssociationType => this.rolesByAssociationType ??=
+        public IDictionary<AssociationType, ISet<IObject>> RolesByAssociationType => this.rolesByAssociationType ??=
             (from kvp in this.AssociationTypesByRole
              from value in kvp.Value
              group kvp.Key by value)
@@ -65,7 +65,7 @@ namespace Allors.Database.Configuration.Derivations.Default
                 }
                 else
                 {
-                    this.RoleTypesByAssociation[kvp.Key] = new HashSet<IRoleType>(changeSet.RoleTypesByAssociation[kvp.Key]);
+                    this.RoleTypesByAssociation[kvp.Key] = new HashSet<RoleType>(changeSet.RoleTypesByAssociation[kvp.Key]);
                 }
             }
 
@@ -77,7 +77,7 @@ namespace Allors.Database.Configuration.Derivations.Default
                 }
                 else
                 {
-                    this.AssociationTypesByRole[kvp.Key] = new HashSet<IAssociationType>(changeSet.AssociationTypesByRole[kvp.Key]);
+                    this.AssociationTypesByRole[kvp.Key] = new HashSet<AssociationType>(changeSet.AssociationTypesByRole[kvp.Key]);
                 }
             }
 

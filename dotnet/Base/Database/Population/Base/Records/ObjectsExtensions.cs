@@ -7,7 +7,7 @@ using Meta;
 
 public static class ObjectsExtensions
 {
-    public static IDictionary<IClass, Record[]> ToRecordsByClass(this IEnumerable<IObject> objects, IRecordRoundtripStrategy recordRoundtripStrategy)
+    public static IDictionary<Class, Record[]> ToRecordsByClass(this IEnumerable<IObject> objects, IRecordRoundtripStrategy recordRoundtripStrategy)
     {
         var handleResolver = recordRoundtripStrategy.HandleResolver();
         var roleFilter = recordRoundtripStrategy.RoleFilter();

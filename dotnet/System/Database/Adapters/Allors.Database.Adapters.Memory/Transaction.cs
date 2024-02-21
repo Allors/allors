@@ -131,7 +131,7 @@ public class Transaction : ITransaction
     {
         var objectType = this.Database.ObjectFactory.GetObjectType(typeof(T));
 
-        if (objectType is not IClass @class)
+        if (objectType is not Class @class)
         {
             throw new ArgumentException("IObjectType should be a class");
         }
@@ -147,7 +147,7 @@ public class Transaction : ITransaction
     {
         var objectType = this.Database.ObjectFactory.GetObjectType(typeof(T));
 
-        if (objectType is not IClass @class)
+        if (objectType is not Class @class)
         {
             throw new ArgumentException("IObjectType should be a class");
         }
@@ -172,7 +172,7 @@ public class Transaction : ITransaction
     {
         var objectType = this.Database.ObjectFactory.GetObjectType(typeof(T));
 
-        if (objectType is not IClass @class)
+        if (objectType is not Class @class)
         {
             throw new ArgumentException("IObjectType should be a class");
         }
@@ -198,7 +198,7 @@ public class Transaction : ITransaction
         return newObject;
     }
 
-    public virtual IObject Build(IClass @class)
+    public virtual IObject Build(Class @class)
     {
         var newObject = this.CreateWithoutOnBuild(@class);
         newObject.OnBuild();
@@ -206,7 +206,7 @@ public class Transaction : ITransaction
         return newObject;
     }
 
-    public IObject Build(IClass @class, params Action<IObject>[] builders)
+    public IObject Build(Class @class, params Action<IObject>[] builders)
     {
         var newObject = this.CreateWithoutOnBuild(@class);
 
@@ -224,7 +224,7 @@ public class Transaction : ITransaction
         return newObject;
     }
 
-    public IObject Build(IClass @class, IEnumerable<Action<IObject>> builders, params Action<IObject>[] extraBuilders)
+    public IObject Build(Class @class, IEnumerable<Action<IObject>> builders, params Action<IObject>[] extraBuilders)
     {
         var newObject = this.CreateWithoutOnBuild(@class);
 
@@ -247,7 +247,7 @@ public class Transaction : ITransaction
         return newObject;
     }
 
-    public IObject[] Build(IClass @class, int count)
+    public IObject[] Build(Class @class, int count)
     {
         var arrayType = this.Database.ObjectFactory.GetType(@class);
         var allorsObjects = (IObject[])Array.CreateInstance(arrayType, count);
@@ -266,7 +266,7 @@ public class Transaction : ITransaction
     {
         var objectType = this.Database.ObjectFactory.GetObjectType(typeof(TObject));
 
-        if (objectType is not IClass @class)
+        if (objectType is not Class @class)
         {
             throw new ArgumentException("IObjectType should be a class");
         }
@@ -393,7 +393,7 @@ public class Transaction : ITransaction
         return new ExtentOperation(this, firstExtent, secondExtent, ExtentOperationType.Except);
     }
 
-    private IObject CreateWithoutOnBuild(IClass objectType)
+    private IObject CreateWithoutOnBuild(Class objectType)
     {
         var strategy = new Strategy(this, objectType, ++this.currentId, Allors.Version.DatabaseInitial);
         this.AddStrategy(strategy);
@@ -407,7 +407,7 @@ public class Transaction : ITransaction
 
     internal Type GetTypeForObjectType(IObjectType objectType) => this.Database.ObjectFactory.GetType(objectType);
 
-    internal virtual Strategy InsertStrategy(IClass objectType, long objectId, long objectVersion)
+    internal virtual Strategy InsertStrategy(Class objectType, long objectId, long objectVersion)
     {
         var strategy = this.GetStrategy(objectId);
         if (strategy != null)
@@ -469,7 +469,7 @@ public class Transaction : ITransaction
         {
             var sortedClassAndSubclassList = new List<IObjectType>();
 
-            if (type is IClass)
+            if (type is Class)
             {
                 sortedClassAndSubclassList.Add(type);
             }

@@ -17,7 +17,7 @@ public sealed class SqlPrefetchCompositesAssociationObjectTableEvent : Event
 
     public Reference[] Roles { get; set; }
 
-    public IAssociationType AssociationType { get; set; }
+    public AssociationType AssociationType { get; set; }
 
     public long[] NestedObjectIds { get; set; }
 

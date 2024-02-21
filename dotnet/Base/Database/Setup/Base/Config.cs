@@ -20,7 +20,7 @@ namespace Allors.Database.Domain
 
         public bool SetupAccounting { get; set; } = true;
 
-        public IDictionary<IClass, Record[]> RecordsByClass { get; set; }
+        public IDictionary<Class, Record[]> RecordsByClass { get; set; }
 
         public ITranslation Translation { get; set; }
     }

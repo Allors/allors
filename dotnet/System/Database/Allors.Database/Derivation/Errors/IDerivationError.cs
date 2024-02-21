@@ -11,7 +11,7 @@ public interface IDerivationError
 {
     IDerivationRelation[] Relations { get; }
 
-    IRoleType[] RoleTypes { get; }
+    RoleType[] RoleTypes { get; }
 
     string ErrorCode { get; }
 }

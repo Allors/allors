@@ -12,9 +12,9 @@ internal sealed class RoleLike : Predicate
 {
     private readonly bool isEmpty;
     private readonly Regex regex;
-    private readonly IRoleType roleType;
+    private readonly RoleType roleType;
 
-    internal RoleLike(ExtentFiltered extent, IRoleType roleType, string like)
+    internal RoleLike(ExtentFiltered extent, RoleType roleType, string like)
     {
         extent.CheckForRoleType(roleType);
         PredicateAssertions.ValidateRoleLikeFilter(roleType, like);

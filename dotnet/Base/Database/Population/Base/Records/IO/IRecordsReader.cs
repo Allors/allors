@@ -6,5 +6,5 @@ using Meta;
 
 public interface IRecordsReader
 {
-    IDictionary<IClass, Record[]> Read(Stream stream);
+    IDictionary<Class, Record[]> Read(Stream stream);
 }

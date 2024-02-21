@@ -25,19 +25,19 @@ namespace Allors.Database.Configuration.Derivations.Default
 
         public void AddError(IDerivationError derivationError) => this.errors.Add(derivationError);
 
-        public void AddError(IObject association, IRoleType roleType, string errorCode)
+        public void AddError(IObject association, RoleType roleType, string errorCode)
         {
             var error = new DerivationErrorGeneric(this, new DerivationRelation(association, roleType), errorCode);
             this.AddError(error);
         }
 
-        public void AddError(IObject role, IAssociationType associationType, string errorCode)
+        public void AddError(IObject role, AssociationType associationType, string errorCode)
         {
             var error = new DerivationErrorGeneric(this, new DerivationRelation(role, associationType), errorCode);
             this.AddError(error);
         }
 
-        public void AssertExists(IObject association, IRoleType roleType)
+        public void AssertExists(IObject association, RoleType roleType)
         {
             if (!association.Strategy.ExistRole(roleType))
             {
@@ -45,7 +45,7 @@ namespace Allors.Database.Configuration.Derivations.Default
             }
         }
 
-        public void AssertNotExists(IObject association, IRoleType roleType)
+        public void AssertNotExists(IObject association, RoleType roleType)
         {
             if (association.Strategy.ExistRole(roleType))
             {
@@ -53,7 +53,7 @@ namespace Allors.Database.Configuration.Derivations.Default
             }
         }
 
-        public void AssertNonEmptyString(IObject association, IRoleType roleType)
+        public void AssertNonEmptyString(IObject association, RoleType roleType)
         {
             if (association.Strategy.ExistRole(roleType) && association.Strategy.GetUnitRole(roleType).Equals(string.Empty))
             {
@@ -61,7 +61,7 @@ namespace Allors.Database.Configuration.Derivations.Default
             }
         }
 
-        public void AssertNonWhiteSpaceString(IObject association, IRoleType roleType)
+        public void AssertNonWhiteSpaceString(IObject association, RoleType roleType)
         {
             if (string.IsNullOrWhiteSpace(association.Strategy.GetUnitRole(roleType) as string))
             {
@@ -69,13 +69,13 @@ namespace Allors.Database.Configuration.Derivations.Default
             }
         }
 
-        public void AssertExistsNonEmptyString(IObject association, IRoleType roleType)
+        public void AssertExistsNonEmptyString(IObject association, RoleType roleType)
         {
             this.AssertExists(association, roleType);
             this.AssertNonEmptyString(association, roleType);
         }
 
-        public void AssertIsUnique(IChangeSet changeSet, IObject association, IRoleType roleType)
+        public void AssertIsUnique(IChangeSet changeSet, IObject association, RoleType roleType)
         {
             if (changeSet.RoleTypesByAssociation.TryGetValue(association, out var changedRoleTypes) && changedRoleTypes.Contains(roleType))
             {
@@ -95,7 +95,7 @@ namespace Allors.Database.Configuration.Derivations.Default
             }
         }
 
-        public void AssertIsUnique(IChangeSet changeSet, IObject association, IComposite objectType, params IRoleType[] roleTypes)
+        public void AssertIsUnique(IChangeSet changeSet, IObject association, IComposite objectType, params RoleType[] roleTypes)
         {
             if (changeSet.RoleTypesByAssociation.TryGetValue(association, out var changedRoleTypes) && changedRoleTypes.Intersect(roleTypes).Any())
             {
@@ -126,7 +126,7 @@ namespace Allors.Database.Configuration.Derivations.Default
             }
         }
 
-        public void AssertAtLeastOne(IObject association, params IRoleType[] roleTypes)
+        public void AssertAtLeastOne(IObject association, params RoleType[] roleTypes)
         {
             if (roleTypes.Any(association.Strategy.ExistRole))
             {
@@ -136,7 +136,7 @@ namespace Allors.Database.Configuration.Derivations.Default
             this.AddError(new DerivationErrorAtLeastOne(this, DerivationRelation.Create(association, roleTypes)));
         }
 
-        public void AssertExistsAtMostOne(IObject association, params IRoleType[] roleTypes)
+        public void AssertExistsAtMostOne(IObject association, params RoleType[] roleTypes)
         {
             var count = 0;
             foreach (var roleType in roleTypes)
@@ -153,7 +153,7 @@ namespace Allors.Database.Configuration.Derivations.Default
             }
         }
 
-        public void AssertAreEqual(IObject association, IRoleType roleType, IRoleType otherRoleType)
+        public void AssertAreEqual(IObject association, RoleType roleType, RoleType otherRoleType)
         {
             var value = association.Strategy.GetRole(roleType);
             var otherValue = association.Strategy.GetRole(otherRoleType);
@@ -174,7 +174,7 @@ namespace Allors.Database.Configuration.Derivations.Default
             }
         }
 
-        public void AssertExists(IObject role, IAssociationType associationType)
+        public void AssertExists(IObject role, AssociationType associationType)
         {
             if (!role.Strategy.ExistAssociation(associationType))
             {

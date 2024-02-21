@@ -9,9 +9,9 @@ using Allors.Database.Meta;
 
 internal sealed class AssociationExists : Predicate
 {
-    private readonly IAssociationType associationType;
+    private readonly AssociationType associationType;
 
-    internal AssociationExists(ExtentFiltered extent, IAssociationType associationType)
+    internal AssociationExists(ExtentFiltered extent, AssociationType associationType)
     {
         extent.CheckForAssociationType(associationType);
         PredicateAssertions.ValidateAssociationExists(associationType);

@@ -68,7 +68,7 @@ namespace Allors.Database.Domain.Tests
             get
             {
                 var aclMock = new Mock<IAccessControlList>();
-                aclMock.Setup(acl => acl.CanRead(It.IsAny<IRoleType>())).Returns(true);
+                aclMock.Setup(acl => acl.CanRead(It.IsAny<RoleType>())).Returns(true);
                 var aclsMock = new Mock<IAccessControl>();
                 aclsMock.Setup(acls => acls[It.IsAny<IObject>()]).Returns(aclMock.Object);
                 return aclsMock;
@@ -109,7 +109,7 @@ namespace Allors.Database.Domain.Tests
             return ms.ToArray();
         }
 
-        protected Permission FindPermission(IRoleType roleType, Operations operation)
+        protected Permission FindPermission(RoleType roleType, Operations operation)
         {
             var objectType = (Class)roleType.AssociationType.ObjectType;
             return this.Transaction.Scoped<PermissionByMeta>().Get(objectType, roleType, operation);

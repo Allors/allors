@@ -77,13 +77,13 @@ public class Command : ICommand
     public void ObjectParameter(long objectId) =>
         this.GetOrCreateParameter(this.mapping.ParamInvocationNameForObject, Mapping.SqlDbTypeForObject).Value = objectId;
 
-    public void AddTypeParameter(IClass @class) =>
+    public void AddTypeParameter(Class @class) =>
         this.GetOrCreateParameter(this.mapping.ParamInvocationNameForClass, Mapping.SqlDbTypeForClass).Value = @class.Id;
 
     public void AddCountParameter(int count) =>
         this.GetOrCreateParameter(this.mapping.ParamNameForCount, Mapping.SqlDbTypeForCount).Value = count;
 
-    public void AddUnitRoleParameter(IRoleType roleType, object unit) =>
+    public void AddUnitRoleParameter(RoleType roleType, object unit) =>
         this.GetOrCreateParameter(this.mapping.ParamNameByRoleType[roleType], this.mapping.GetSqlDbType(roleType)).Value =
             unit ?? DBNull.Value;
 
@@ -97,7 +97,7 @@ public class Command : ICommand
         this.GetOrCreateTableParameter(this.mapping.ParamNameForTableType, this.mapping.TableTypeNameForObject).Value =
             new ObjectDataRecord(this.mapping, objectIds);
 
-    public void UnitTableParameter(IRoleType roleType, IEnumerable<UnitRelation> relations) =>
+    public void UnitTableParameter(RoleType roleType, IEnumerable<UnitRelation> relations) =>
         this.GetOrCreateTableParameter(this.mapping.ParamNameForTableType, this.mapping.GetTableTypeNameForRelation(roleType)).Value =
             new UnitRoleDataRecords(this.mapping, roleType, relations);
 

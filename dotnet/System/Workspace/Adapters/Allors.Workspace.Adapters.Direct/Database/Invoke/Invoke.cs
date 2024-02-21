@@ -32,7 +32,7 @@ namespace Allors.Workspace.Adapters.Direct
 
         private ITransaction Transaction { get; }
 
-        private IReadOnlySet<IClass> AllowedClasses { get; }
+        private IReadOnlySet<Class> AllowedClasses { get; }
 
         private IAccessControl AccessControl { get; }
 

@@ -9,8 +9,8 @@ namespace Allors.Database.Domain
 
     public interface IClassById
     {
-        IClass Get(long id);
+        Class Get(long id);
 
-        void Set(long id, IClass @class);
+        void Set(long id, Class @class);
     }
 }

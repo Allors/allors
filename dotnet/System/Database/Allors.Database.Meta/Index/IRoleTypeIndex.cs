@@ -8,5 +8,5 @@ namespace Allors.Database.Meta;
 
 public interface IRoleTypeIndex
 {
-    IRoleType Meta { get; }
+    RoleType Meta { get; }
 }

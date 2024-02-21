@@ -58,7 +58,7 @@ public class Backup
     {
         var mapping = this.database.Mapping;
 
-        var concreteCompositeType = new List<IClass>(this.database.MetaPopulation.Classes);
+        var concreteCompositeType = new List<Class>(this.database.MetaPopulation.Classes);
         concreteCompositeType.Sort();
         foreach (var type in concreteCompositeType)
         {
@@ -149,7 +149,7 @@ public class Backup
                         sql += "SELECT " + Mapping.ColumnNameForObject + " As " + Mapping.ColumnNameForAssociation + ", " +
                                this.database.Mapping.ColumnNameByRelationType[roleType.RelationType] + " As " + Mapping.ColumnNameForRole +
                                "\n";
-                        sql += "FROM " + this.database.Mapping.TableNameForObjectByClass[(IClass)exclusiveRootClass] + "\n";
+                        sql += "FROM " + this.database.Mapping.TableNameForObjectByClass[(Class)exclusiveRootClass] + "\n";
                         sql += "WHERE " + this.database.Mapping.ColumnNameByRelationType[roleType.RelationType] + " IS NOT NULL\n";
                     }
 

@@ -4,11 +4,11 @@ using Allors.Database.Meta;
 
 public class AssociationTypeModel : RelationEndTypeModel
 {
-    public AssociationTypeModel(Model model, IAssociationType associationType)
+    public AssociationTypeModel(Model model, AssociationType associationType)
         : base(model) =>
         this.AssociationType = associationType;
 
-    public IAssociationType AssociationType { get; }
+    public AssociationType AssociationType { get; }
 
     protected override IRelationEndType RelationEndType => this.AssociationType;
 

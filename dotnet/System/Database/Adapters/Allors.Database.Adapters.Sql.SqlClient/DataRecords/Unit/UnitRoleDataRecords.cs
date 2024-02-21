@@ -16,9 +16,9 @@ internal class UnitRoleDataRecords : IEnumerable<SqlDataRecord>
 {
     private readonly Mapping mapping;
     private readonly IEnumerable<UnitRelation> relations;
-    private readonly IRoleType roleType;
+    private readonly RoleType roleType;
 
-    internal UnitRoleDataRecords(Mapping mapping, IRoleType roleType, IEnumerable<UnitRelation> relations)
+    internal UnitRoleDataRecords(Mapping mapping, RoleType roleType, IEnumerable<UnitRelation> relations)
     {
         this.mapping = mapping;
         this.roleType = roleType;

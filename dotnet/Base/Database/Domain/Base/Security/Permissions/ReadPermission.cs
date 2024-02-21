@@ -12,10 +12,10 @@ namespace Allors.Database.Domain
 
     public partial class ReadPermission : IReadPermission
     {
-        IClass IPermission.Class => this.Class;
-        public IClass Class
+        Class IPermission.Class => this.Class;
+        public Class Class
         {
-            get => (IClass)this.Transaction().Database.MetaPopulation.FindById(this.ClassPointer);
+            get => (Class)this.Transaction().Database.MetaPopulation.FindById(this.ClassPointer);
 
             set
             {

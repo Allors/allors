@@ -13,10 +13,10 @@ using Allors.Database.Meta;
 
 internal sealed class RoleEqualsRole : Predicate
 {
-    private readonly IRoleType equalsRole;
-    private readonly IRoleType role;
+    private readonly RoleType equalsRole;
+    private readonly RoleType role;
 
-    internal RoleEqualsRole(ExtentFiltered extent, IRoleType role, IRoleType equalsRole)
+    internal RoleEqualsRole(ExtentFiltered extent, RoleType role, RoleType equalsRole)
     {
         extent.CheckRole(role);
         PredicateAssertions.ValidateRoleEquals(role, equalsRole);

@@ -109,7 +109,7 @@ namespace Allors.Database.Domain
 
         private void BaseOnCreated(IObject @object)
         {
-            IClass @class = @object.Strategy.Class;
+            Class @class = @object.Strategy.Class;
             if (@class.KeyRoleType != null)
             {
                 if (this.Config.Translation.ResourceSetByCultureInfoByRoleTypeByClass.TryGetValue(@class, out var resourceSetByCultureInfoByRoleType))

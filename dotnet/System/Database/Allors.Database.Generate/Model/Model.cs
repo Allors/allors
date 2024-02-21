@@ -11,7 +11,7 @@ public partial class Model
     private readonly Dictionary<Record, RecordModel> recordMapping;
     private readonly Dictionary<Handle, HandleModel> handleMapping;
 
-    public Model(MetaPopulation metaPopulation, IDictionary<IClass, Record[]> recordsByClass)
+    public Model(MetaPopulation metaPopulation, IDictionary<Class, Record[]> recordsByClass)
     {
         this.MetaPopulation = metaPopulation;
         this.RecordsByClass = recordsByClass;
@@ -67,7 +67,7 @@ public partial class Model
 
     public MetaPopulation MetaPopulation { get; }
 
-    public IDictionary<IClass, Record[]> RecordsByClass { get; }
+    public IDictionary<Class, Record[]> RecordsByClass { get; }
 
     public IEnumerable<DomainModel> Domains => this.MetaPopulation.Domains.Select(this.Map);
 
@@ -161,7 +161,7 @@ public partial class Model
 
     public MetaIdentifiableObjectModel Map(IMetaIdentifiableObject v) => v != null ? (MetaIdentifiableObjectModel)this.mapping[v] : null;
 
-    public DomainModel Map(IDomain v) => v != null ? (DomainModel)this.mapping[v] : null;
+    public DomainModel Map(Domain v) => v != null ? (DomainModel)this.mapping[v] : null;
 
     public ObjectTypeModel Map(IObjectType v) => v != null ? (ObjectTypeModel)this.mapping[v] : null;
 
@@ -171,15 +171,15 @@ public partial class Model
 
     public InterfaceModel Map(Interface v) => v != null ? (InterfaceModel)this.mapping[v] : null;
 
-    public ClassModel Map(IClass v) => v != null ? (ClassModel)this.mapping[v] : null;
+    public ClassModel Map(Class v) => v != null ? (ClassModel)this.mapping[v] : null;
 
     public RelationTypeModel Map(RelationType v) => v != null ? (RelationTypeModel)this.mapping[v] : null;
 
-    public AssociationTypeModel Map(IAssociationType v) => v != null ? (AssociationTypeModel)this.mapping[v] : null;
+    public AssociationTypeModel Map(AssociationType v) => v != null ? (AssociationTypeModel)this.mapping[v] : null;
 
-    public RoleTypeModel Map(IRoleType v) => v != null ? (RoleTypeModel)this.mapping[v] : null;
+    public RoleTypeModel Map(RoleType v) => v != null ? (RoleTypeModel)this.mapping[v] : null;
 
-    public CompositeRoleTypeModel Map(ICompositeRoleType v) => v != null ? (CompositeRoleTypeModel)this.mapping[v] : null;
+    public CompositeRoleTypeModel Map(CompositeRoleType v) => v != null ? (CompositeRoleTypeModel)this.mapping[v] : null;
 
     public MethodTypeModel Map(MethodType v) => v != null ? (MethodTypeModel)this.mapping[v] : null;
 

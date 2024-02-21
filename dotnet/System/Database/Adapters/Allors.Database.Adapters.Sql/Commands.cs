@@ -15,27 +15,27 @@ using Allors.Database.Meta;
 public abstract class Commands
 {
     private readonly IConnection connection;
-    private Dictionary<IRoleType, ICommand> addCompositeRoleByRoleType;
-    private Dictionary<IRoleType, ICommand> clearCompositeAndCompositesRoleByRoleType;
+    private Dictionary<RoleType, ICommand> addCompositeRoleByRoleType;
+    private Dictionary<RoleType, ICommand> clearCompositeAndCompositesRoleByRoleType;
 
-    private Dictionary<IClass, ICommand> createObjectByClass;
-    private Dictionary<IClass, ICommand> createObjectsByClass;
-    private Dictionary<IClass, ICommand> deleteObjectByClass;
-    private Dictionary<IAssociationType, ICommand> getCompositeAssociationByAssociationType;
-    private Dictionary<IRoleType, ICommand> getCompositeRoleByRoleType;
-    private Dictionary<IAssociationType, ICommand> getCompositesAssociationByAssociationType;
-    private Dictionary<IRoleType, ICommand> getCompositesRoleByRoleType;
+    private Dictionary<Class, ICommand> createObjectByClass;
+    private Dictionary<Class, ICommand> createObjectsByClass;
+    private Dictionary<Class, ICommand> deleteObjectByClass;
+    private Dictionary<AssociationType, ICommand> getCompositeAssociationByAssociationType;
+    private Dictionary<RoleType, ICommand> getCompositeRoleByRoleType;
+    private Dictionary<AssociationType, ICommand> getCompositesAssociationByAssociationType;
+    private Dictionary<RoleType, ICommand> getCompositesRoleByRoleType;
 
-    private Dictionary<IClass, ICommand> getUnitRolesByClass;
+    private Dictionary<Class, ICommand> getUnitRolesByClass;
 
     private ICommand getVersion;
 
     private ICommand instantiateObject;
     private ICommand instantiateObjects;
-    private Dictionary<IRoleType, ICommand> removeCompositeRoleByRoleType;
-    private Dictionary<IRoleType, ICommand> setCompositeRoleByRoleType;
-    private Dictionary<IClass, Dictionary<IRoleType, ICommand>> setUnitRoleByRoleTypeByClass;
-    private Dictionary<IClass, Dictionary<IList<IRoleType>, ICommand>> setUnitRolesByRoleTypeByClass;
+    private Dictionary<RoleType, ICommand> removeCompositeRoleByRoleType;
+    private Dictionary<RoleType, ICommand> setCompositeRoleByRoleType;
+    private Dictionary<Class, Dictionary<RoleType, ICommand>> setUnitRoleByRoleTypeByClass;
+    private Dictionary<Class, Dictionary<IList<RoleType>, ICommand>> setUnitRolesByRoleTypeByClass;
     private ICommand updateVersions;
 
     protected Commands(Transaction transaction, IConnection connection)
@@ -75,7 +75,7 @@ public abstract class Commands
 
     internal virtual void DeleteObject(Strategy strategy)
     {
-        this.deleteObjectByClass ??= new Dictionary<IClass, ICommand>();
+        this.deleteObjectByClass ??= new Dictionary<Class, ICommand>();
 
         var @class = strategy.Class;
 
@@ -94,7 +94,7 @@ public abstract class Commands
 
     internal virtual void GetUnitRoles(Strategy strategy)
     {
-        this.getUnitRolesByClass ??= new Dictionary<IClass, ICommand>();
+        this.getUnitRolesByClass ??= new Dictionary<Class, ICommand>();
 
         var reference = strategy.Reference;
         var @class = reference.Class;
@@ -178,13 +178,13 @@ public abstract class Commands
         }
     }
 
-    internal virtual void SetUnitRole(List<UnitRelation> relations, IClass exclusiveRootClass, IRoleType roleType)
+    internal virtual void SetUnitRole(List<UnitRelation> relations, Class exclusiveRootClass, RoleType roleType)
     {
-        this.setUnitRoleByRoleTypeByClass ??= new Dictionary<IClass, Dictionary<IRoleType, ICommand>>();
+        this.setUnitRoleByRoleTypeByClass ??= new Dictionary<Class, Dictionary<RoleType, ICommand>>();
 
         if (!this.setUnitRoleByRoleTypeByClass.TryGetValue(exclusiveRootClass, out var commandByRoleType))
         {
-            commandByRoleType = new Dictionary<IRoleType, ICommand>();
+            commandByRoleType = new Dictionary<RoleType, ICommand>();
             this.setUnitRoleByRoleTypeByClass.Add(exclusiveRootClass, commandByRoleType);
         }
 
@@ -201,15 +201,15 @@ public abstract class Commands
         command.ExecuteNonQuery();
     }
 
-    internal virtual void SetUnitRoles(Strategy strategy, List<IRoleType> sortedRoleTypes)
+    internal virtual void SetUnitRoles(Strategy strategy, List<RoleType> sortedRoleTypes)
     {
-        this.setUnitRolesByRoleTypeByClass ??= new Dictionary<IClass, Dictionary<IList<IRoleType>, ICommand>>();
+        this.setUnitRolesByRoleTypeByClass ??= new Dictionary<Class, Dictionary<IList<RoleType>, ICommand>>();
 
         var exclusiveRootClass = strategy.Reference.Class.ExclusiveClass;
 
         if (!this.setUnitRolesByRoleTypeByClass.TryGetValue(exclusiveRootClass, out var setUnitRoleByRoleType))
         {
-            setUnitRoleByRoleType = new Dictionary<IList<IRoleType>, ICommand>(new SortedRoleTypeComparer());
+            setUnitRoleByRoleType = new Dictionary<IList<RoleType>, ICommand>(new SortedRoleTypeComparer());
             this.setUnitRolesByRoleTypeByClass.Add(exclusiveRootClass, setUnitRoleByRoleType);
         }
 
@@ -260,9 +260,9 @@ public abstract class Commands
         }
     }
 
-    internal virtual void GetCompositeRole(Strategy strategy, IRoleType roleType)
+    internal virtual void GetCompositeRole(Strategy strategy, RoleType roleType)
     {
-        this.getCompositeRoleByRoleType ??= new Dictionary<IRoleType, ICommand>();
+        this.getCompositeRoleByRoleType ??= new Dictionary<RoleType, ICommand>();
 
         var reference = strategy.Reference;
 
@@ -290,9 +290,9 @@ public abstract class Commands
         }
     }
 
-    internal virtual void SetCompositeRole(List<CompositeRelation> relations, IRoleType roleType)
+    internal virtual void SetCompositeRole(List<CompositeRelation> relations, RoleType roleType)
     {
-        this.setCompositeRoleByRoleType ??= new Dictionary<IRoleType, ICommand>();
+        this.setCompositeRoleByRoleType ??= new Dictionary<RoleType, ICommand>();
 
         if (!this.setCompositeRoleByRoleType.TryGetValue(roleType, out var command))
         {
@@ -309,9 +309,9 @@ public abstract class Commands
         command.ExecuteNonQuery();
     }
 
-    internal virtual void GetCompositesRole(Strategy strategy, IRoleType roleType)
+    internal virtual void GetCompositesRole(Strategy strategy, RoleType roleType)
     {
-        this.getCompositesRoleByRoleType ??= new Dictionary<IRoleType, ICommand>();
+        this.getCompositesRoleByRoleType ??= new Dictionary<RoleType, ICommand>();
 
         var reference = strategy.Reference;
 
@@ -350,9 +350,9 @@ public abstract class Commands
         strategy.CachedObject.SetValue(roleType, objectIds.ToArray());
     }
 
-    internal virtual void AddCompositeRole(List<CompositeRelation> relations, IRoleType roleType)
+    internal virtual void AddCompositeRole(List<CompositeRelation> relations, RoleType roleType)
     {
-        this.addCompositeRoleByRoleType ??= new Dictionary<IRoleType, ICommand>();
+        this.addCompositeRoleByRoleType ??= new Dictionary<RoleType, ICommand>();
 
         if (!this.addCompositeRoleByRoleType.TryGetValue(roleType, out var command))
         {
@@ -368,9 +368,9 @@ public abstract class Commands
         command.ExecuteNonQuery();
     }
 
-    internal virtual void RemoveCompositeRole(List<CompositeRelation> relations, IRoleType roleType)
+    internal virtual void RemoveCompositeRole(List<CompositeRelation> relations, RoleType roleType)
     {
-        this.removeCompositeRoleByRoleType ??= new Dictionary<IRoleType, ICommand>();
+        this.removeCompositeRoleByRoleType ??= new Dictionary<RoleType, ICommand>();
 
         if (!this.removeCompositeRoleByRoleType.TryGetValue(roleType, out var command))
         {
@@ -386,9 +386,9 @@ public abstract class Commands
         command.ExecuteNonQuery();
     }
 
-    internal virtual void ClearCompositeAndCompositesRole(IList<long> associations, IRoleType roleType)
+    internal virtual void ClearCompositeAndCompositesRole(IList<long> associations, RoleType roleType)
     {
-        this.clearCompositeAndCompositesRoleByRoleType ??= new Dictionary<IRoleType, ICommand>();
+        this.clearCompositeAndCompositesRoleByRoleType ??= new Dictionary<RoleType, ICommand>();
 
         var sql = this.Database.Mapping.ProcedureNameForClearRoleByRelationType[roleType.RelationType];
 
@@ -405,9 +405,9 @@ public abstract class Commands
         command.ExecuteNonQuery();
     }
 
-    internal virtual Reference GetCompositeAssociation(Reference role, IAssociationType associationType)
+    internal virtual Reference GetCompositeAssociation(Reference role, AssociationType associationType)
     {
-        this.getCompositeAssociationByAssociationType ??= new Dictionary<IAssociationType, ICommand>();
+        this.getCompositeAssociationByAssociationType ??= new Dictionary<AssociationType, ICommand>();
 
         Reference associationObject = null;
 
@@ -438,9 +438,9 @@ public abstract class Commands
         return associationObject;
     }
 
-    internal virtual long[] GetCompositesAssociation(Strategy role, IAssociationType associationType)
+    internal virtual long[] GetCompositesAssociation(Strategy role, AssociationType associationType)
     {
-        this.getCompositesAssociationByAssociationType ??= new Dictionary<IAssociationType, ICommand>();
+        this.getCompositesAssociationByAssociationType ??= new Dictionary<AssociationType, ICommand>();
 
         if (!this.getCompositesAssociationByAssociationType.TryGetValue(associationType, out var command))
         {
@@ -467,9 +467,9 @@ public abstract class Commands
         return [.. objectIds];
     }
 
-    internal virtual Reference CreateObject(IClass @class)
+    internal virtual Reference CreateObject(Class @class)
     {
-        this.createObjectByClass ??= new Dictionary<IClass, ICommand>();
+        this.createObjectByClass ??= new Dictionary<Class, ICommand>();
 
         if (!this.createObjectByClass.TryGetValue(@class, out var command))
         {
@@ -487,9 +487,9 @@ public abstract class Commands
         return this.Transaction.State.CreateReferenceForNewObject(@class, objectId, this.Transaction);
     }
 
-    internal virtual IList<Reference> CreateObjects(IClass @class, int count)
+    internal virtual IList<Reference> CreateObjects(Class @class, int count)
     {
-        this.createObjectsByClass ??= new Dictionary<IClass, ICommand>();
+        this.createObjectsByClass ??= new Dictionary<Class, ICommand>();
 
         if (!this.createObjectsByClass.TryGetValue(@class, out var command))
         {
@@ -551,7 +551,7 @@ WHERE {Mapping.ColumnNameForObject}={this.Database.Mapping.ParamInvocationNameFo
                 var classId = reader.GetGuid(0);
                 var version = reader.GetInt64(1);
 
-                var type = (IClass)this.Database.MetaPopulation.FindById(classId);
+                var type = (Class)this.Database.MetaPopulation.FindById(classId);
                 return this.Transaction.State.GetOrCreateReferenceForExistingObject(type, objectId, version, this.Transaction);
             }
 
@@ -582,7 +582,7 @@ WHERE {Mapping.ColumnNameForObject}={this.Database.Mapping.ParamInvocationNameFo
                 var version = reader.GetInt64(2);
 
                 var objectId = long.Parse(objectIdString);
-                var type = (IClass)this.Database.ObjectFactory.GetObjectType(classId);
+                var type = (Class)this.Database.ObjectFactory.GetObjectType(classId);
 
                 yield return this.Transaction.State.GetOrCreateReferenceForExistingObject(type, objectId, version, this.Transaction);
             }
@@ -637,9 +637,9 @@ WHERE {Mapping.ColumnNameForObject}={this.Database.Mapping.ParamInvocationNameFo
         command.ExecuteNonQuery();
     }
 
-    private class SortedRoleTypeComparer : IEqualityComparer<IList<IRoleType>>
+    private class SortedRoleTypeComparer : IEqualityComparer<IList<RoleType>>
     {
-        public bool Equals(IList<IRoleType> x, IList<IRoleType> y)
+        public bool Equals(IList<RoleType> x, IList<RoleType> y)
         {
             if (x.Count == y.Count)
             {
@@ -657,7 +657,7 @@ WHERE {Mapping.ColumnNameForObject}={this.Database.Mapping.ParamInvocationNameFo
             return false;
         }
 
-        public int GetHashCode(IList<IRoleType> roleTypes)
+        public int GetHashCode(IList<RoleType> roleTypes)
         {
             var hashCode = 0;
             foreach (var roleType in roleTypes)

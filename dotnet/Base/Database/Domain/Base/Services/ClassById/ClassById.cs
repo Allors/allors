@@ -10,16 +10,16 @@ namespace Allors.Database.Domain
 
     public class ClassById : IClassById
     {
-        private readonly ConcurrentDictionary<long, IClass> classById;
+        private readonly ConcurrentDictionary<long, Class> classById;
 
-        public ClassById() => this.classById = new ConcurrentDictionary<long, IClass>();
+        public ClassById() => this.classById = new ConcurrentDictionary<long, Class>();
 
-        public IClass Get(long id)
+        public Class Get(long id)
         {
             this.classById.TryGetValue(id, out var @class);
             return @class;
         }
 
-        public void Set(long id, IClass @class) => this.classById[id] = @class;
+        public void Set(long id, Class @class) => this.classById[id] = @class;
     }
 }

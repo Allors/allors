@@ -13,7 +13,7 @@ namespace Allors.Workspace.Adapters.Direct
     using Database.Security;
     using Database.Services;
     using Protocol.Direct;
-    using IClass = Database.Meta.IClass;
+    using IClass = Database.Meta.Class;
     using IComposite = Database.Meta.IComposite;
     using IStrategy = IStrategy;
 

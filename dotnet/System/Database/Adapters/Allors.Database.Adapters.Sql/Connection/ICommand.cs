@@ -15,11 +15,11 @@ public interface ICommand : IDisposable
 
     void ObjectParameter(long objectId);
 
-    void AddTypeParameter(IClass @class);
+    void AddTypeParameter(Class @class);
 
     void AddCountParameter(int count);
 
-    void AddUnitRoleParameter(IRoleType roleType, object unit);
+    void AddUnitRoleParameter(RoleType roleType, object unit);
 
     void AddCompositeRoleParameter(long objectId);
 
@@ -29,7 +29,7 @@ public interface ICommand : IDisposable
 
     void ObjectTableParameter(IEnumerable<long> objectIds);
 
-    void UnitTableParameter(IRoleType roleType, IEnumerable<UnitRelation> relations);
+    void UnitTableParameter(RoleType roleType, IEnumerable<UnitRelation> relations);
 
     void AddCompositeRoleTableParameter(IEnumerable<CompositeRelation> relations);
 

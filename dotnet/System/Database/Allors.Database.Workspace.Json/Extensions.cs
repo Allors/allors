@@ -15,10 +15,10 @@ public static class Extensions
 {
     public static IComposite FindComposite(this MetaPopulation @this, string tag) => tag != null ? (IComposite)@this.FindByTag(tag) : null;
 
-    public static IAssociationType FindAssociationType(this MetaPopulation @this, string tag) =>
+    public static AssociationType FindAssociationType(this MetaPopulation @this, string tag) =>
         tag != null ? ((RelationType)@this.FindByTag(tag)).AssociationType : null;
 
-    public static IRoleType FindRoleType(this MetaPopulation @this, string tag) =>
+    public static RoleType FindRoleType(this MetaPopulation @this, string tag) =>
         tag != null ? ((RelationType)@this.FindByTag(tag)).RoleType : null;
 
     public static Pull[] FromJson(this Allors.Protocol.Json.Data.Pull[] pulls, ITransaction transaction, IUnitConvert unitConvert)

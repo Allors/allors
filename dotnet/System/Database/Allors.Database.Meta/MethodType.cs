@@ -38,9 +38,9 @@ public sealed class MethodType : EmbeddedObject, IComparable, IMetaIdentifiableO
 
     public string Tag { get; set; }
     
-    public ICompositeMethodType CompositeMethodType { get; set; }
+    public CompositeMethodType CompositeMethodType { get; set; }
 
-    public IReadOnlyDictionary<IComposite, ICompositeMethodType> CompositeMethodTypeByComposite { get; private set; }
+    public IReadOnlyDictionary<IComposite, CompositeMethodType> CompositeMethodTypeByComposite { get; private set; }
 
     public IComposite ObjectType { get; set; }
 
@@ -93,14 +93,14 @@ public sealed class MethodType : EmbeddedObject, IComparable, IMetaIdentifiableO
                 .ToArray()
             : Array.Empty<string>();
 
-    public void InitializeCompositeMethodTypes(Dictionary<IComposite, HashSet<ICompositeMethodType>> compositeMethodTypesByComposite)
+    public void InitializeCompositeMethodTypes(Dictionary<IComposite, HashSet<CompositeMethodType>> compositeMethodTypesByComposite)
     {
         var composite = this.ObjectType;
         compositeMethodTypesByComposite[composite].Add(this.CompositeMethodType);
 
         var dictionary = composite.Subtypes.ToDictionary(v => v, v =>
         {
-            var compositeMethodType = (ICompositeMethodType)new CompositeMethodType(v, this);
+            var compositeMethodType = (CompositeMethodType)new CompositeMethodType(v, this);
             compositeMethodTypesByComposite[v].Add(compositeMethodType);
             return compositeMethodType;
         });

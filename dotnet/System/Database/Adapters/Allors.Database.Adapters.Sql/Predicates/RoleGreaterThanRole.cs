@@ -9,10 +9,10 @@ using Allors.Database.Meta;
 
 internal sealed class RoleGreaterThanRole : Predicate
 {
-    private readonly IRoleType greaterThanRole;
-    private readonly IRoleType role;
+    private readonly RoleType greaterThanRole;
+    private readonly RoleType role;
 
-    internal RoleGreaterThanRole(ExtentFiltered extent, IRoleType role, IRoleType greaterThanRole)
+    internal RoleGreaterThanRole(ExtentFiltered extent, RoleType role, RoleType greaterThanRole)
     {
         extent.CheckRole(role);
         PredicateAssertions.ValidateRoleGreaterThan(role, greaterThanRole);

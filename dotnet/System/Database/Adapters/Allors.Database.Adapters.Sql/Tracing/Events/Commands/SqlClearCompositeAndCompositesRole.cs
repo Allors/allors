@@ -15,7 +15,7 @@ public sealed class SqlClearCompositeAndCompositesRole : Event
     {
     }
 
-    public IRoleType RoleType { get; set; }
+    public RoleType RoleType { get; set; }
 
     public long[] AssociationIds { get; set; }
 

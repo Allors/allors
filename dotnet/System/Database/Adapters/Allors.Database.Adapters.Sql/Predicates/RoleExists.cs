@@ -9,9 +9,9 @@ using Allors.Database.Meta;
 
 internal sealed class RoleExists : Predicate
 {
-    private readonly IRoleType role;
+    private readonly RoleType role;
 
-    internal RoleExists(ExtentFiltered extent, IRoleType role)
+    internal RoleExists(ExtentFiltered extent, RoleType role)
     {
         extent.CheckRole(role);
         PredicateAssertions.ValidateRoleExists(role);

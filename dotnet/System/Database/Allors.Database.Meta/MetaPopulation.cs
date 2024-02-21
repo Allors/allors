@@ -15,7 +15,7 @@ using Embedded;
 public sealed class MetaPopulation : EmbeddedPopulation, IEmbeddedPopulation
 {
     internal static readonly IReadOnlyList<IComposite> EmptyComposites = Array.Empty<IComposite>();
-    internal static readonly IReadOnlyList<IDomain> EmptyDomains = Array.Empty<IDomain>();
+    internal static readonly IReadOnlyList<Domain> EmptyDomains = Array.Empty<Domain>();
 
     private IList<IMetaIdentifiableObject> metaObjects;
 
@@ -27,8 +27,8 @@ public sealed class MetaPopulation : EmbeddedPopulation, IEmbeddedPopulation
 
     private bool initialized;
 
-    private IReadOnlyList<IDomain> domains;
-    private IReadOnlyList<IClass> classes;
+    private IReadOnlyList<Domain> domains;
+    private IReadOnlyList<Class> classes;
     private IReadOnlyList<RelationType> relationTypes;
     private IReadOnlyList<Interface> interfaces;
     private IReadOnlyList<IComposite> composites;
@@ -53,13 +53,13 @@ public sealed class MetaPopulation : EmbeddedPopulation, IEmbeddedPopulation
 
     public IReadOnlyList<string> WorkspaceNames => this.derivedWorkspaceNames;
 
-    public IReadOnlyList<IDomain> Domains
+    public IReadOnlyList<Domain> Domains
     {
         get => this.domains;
         set => this.domains = value;
     }
 
-    public IReadOnlyList<IClass> Classes
+    public IReadOnlyList<Class> Classes
     {
         get => this.classes;
         set => this.classes = value;
@@ -226,11 +226,11 @@ public sealed class MetaPopulation : EmbeddedPopulation, IEmbeddedPopulation
         // RoleTypes & AssociationTypes
         var roleTypesByAssociationTypeObjectType = this.relationTypes
             .GroupBy(v => v.AssociationType.ObjectType)
-            .ToDictionary(g => (IComposite)g.Key, g => new HashSet<IRoleType>(g.Select(v => v.RoleType)));
+            .ToDictionary(g => (IComposite)g.Key, g => new HashSet<RoleType>(g.Select(v => v.RoleType)));
 
         var associationTypesByRoleTypeObjectType = this.relationTypes
             .GroupBy(v => v.RoleType.ObjectType)
-            .ToDictionary(g => (IObjectType)g.Key, g => new HashSet<IAssociationType>(g.Select(v => v.AssociationType)));
+            .ToDictionary(g => (IObjectType)g.Key, g => new HashSet<AssociationType>(g.Select(v => v.AssociationType)));
 
         // RoleTypes
         foreach (IComposite composite in this.composites)
@@ -255,7 +255,7 @@ public sealed class MetaPopulation : EmbeddedPopulation, IEmbeddedPopulation
         }
 
         // Composite RoleTypes
-        var compositeRoleTypesByComposite = this.composites.ToDictionary(v => (IComposite)v, v => new HashSet<ICompositeRoleType>());
+        var compositeRoleTypesByComposite = this.composites.ToDictionary(v => (IComposite)v, v => new HashSet<CompositeRoleType>());
         foreach (var relationType in this.relationTypes)
         {
             relationType.RoleType.InitializeCompositeRoleTypes(compositeRoleTypesByComposite);
@@ -267,7 +267,7 @@ public sealed class MetaPopulation : EmbeddedPopulation, IEmbeddedPopulation
         }
 
         // Composite MethodTypes
-        var compositeMethodTypesByComposite = this.composites.ToDictionary(v => (IComposite)v, v => new HashSet<ICompositeMethodType>());
+        var compositeMethodTypesByComposite = this.composites.ToDictionary(v => (IComposite)v, v => new HashSet<CompositeMethodType>());
         foreach (var methodType in this.methodTypes)
         {
             methodType.InitializeCompositeMethodTypes(compositeMethodTypesByComposite);

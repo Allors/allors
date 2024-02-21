@@ -209,11 +209,11 @@ namespace Allors.Workspace.Protocol.Direct
                 _ => throw new ArgumentException("Invalid property type")
             };
 
-        private Database.Meta.IAssociationType Visit(IAssociationType ws) => ws != null ? ((RelationType)this.metaPopulation.FindByTag(ws.OperandTag)).AssociationType : null;
+        private Database.Meta.AssociationType Visit(IAssociationType ws) => ws != null ? ((RelationType)this.metaPopulation.FindByTag(ws.OperandTag)).AssociationType : null;
 
-        private Database.Meta.IRoleType Visit(IRoleType ws) => ws != null ? ((RelationType)this.metaPopulation.FindByTag(ws.OperandTag)).RoleType : null;
+        private Database.Meta.RoleType Visit(IRoleType ws) => ws != null ? ((RelationType)this.metaPopulation.FindByTag(ws.OperandTag)).RoleType : null;
 
-        private Database.Meta.IRoleType[] Visit(IEnumerable<IRoleType> ws) => ws?.Select(v => ((RelationType)this.metaPopulation.FindByTag(v.OperandTag)).RoleType).ToArray();
+        private Database.Meta.RoleType[] Visit(IEnumerable<IRoleType> ws) => ws?.Select(v => ((RelationType)this.metaPopulation.FindByTag(v.OperandTag)).RoleType).ToArray();
 
         private Database.IObject[] Visit(IEnumerable<IStrategy> ws) => ws != null ? this.transaction.Instantiate(ws.Select(v => v.Id)) : null;
 

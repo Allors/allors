@@ -16,7 +16,7 @@ namespace Allors.Database.Configuration
     using System.Reflection;
 public class MethodService : IMethodService
     {
-        private readonly ConcurrentDictionary<IClass, ConcurrentDictionary<MethodType, Action<object, object>[]>> actionsByMethodTypeByClass; 
+        private readonly ConcurrentDictionary<Class, ConcurrentDictionary<MethodType, Action<object, object>[]>> actionsByMethodTypeByClass; 
 
         public MethodService(MetaPopulation metaPopulation, Assembly assembly)
         {
@@ -32,12 +32,12 @@ public class MethodService : IMethodService
                 .ToDictionary(v => v.Key, v => v.ToArray());
             
             this.MethodCompiler = new MethodCompiler(metaPopulation, extensionMethodsByInterface);
-            this.actionsByMethodTypeByClass = new ConcurrentDictionary<IClass, ConcurrentDictionary<MethodType, Action<object, object>[]>>();
+            this.actionsByMethodTypeByClass = new ConcurrentDictionary<Class, ConcurrentDictionary<MethodType, Action<object, object>[]>>();
         }
 
         public MethodCompiler MethodCompiler { get; set; }
 
-        public Action<object, object>[] Get(IClass @class, MethodType methodType)
+        public Action<object, object>[] Get(Class @class, MethodType methodType)
         {
             if (!this.actionsByMethodTypeByClass.TryGetValue(@class, out var actionsByMethodType))
             {

@@ -12,7 +12,7 @@ using System.Collections.Generic;
 
 public static class IRoleTypeExtensions
 {
-    public static object Get(this IRoleType @this, IStrategy strategy, IComposite ofType = null)
+    public static object Get(this RoleType @this, IStrategy strategy, IComposite ofType = null)
     {
         var role = strategy.GetRole(@this);
 
@@ -30,7 +30,7 @@ public static class IRoleTypeExtensions
         return extent.Where(v => ofType.IsAssignableFrom(v.Strategy.Class));
     }
 
-    public static void Set(this IRoleType @this, IStrategy strategy, object value)
+    public static void Set(this RoleType @this, IStrategy strategy, object value)
     {
         strategy.SetRole(@this, value);
     }

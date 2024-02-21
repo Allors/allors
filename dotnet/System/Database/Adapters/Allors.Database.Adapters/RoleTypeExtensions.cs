@@ -22,7 +22,7 @@ public static class RoleTypeExtensions
     /// <returns>
     ///     The normalized unit.
     /// </returns>
-    public static object Normalize(this IRoleType roleType, object unit)
+    public static object Normalize(this RoleType roleType, object unit)
     {
         if (unit == null)
         {

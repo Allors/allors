@@ -12,12 +12,12 @@ internal class Flush
 {
     private const int BatchSize = 1000;
     private readonly Transaction transaction;
-    private Dictionary<IRoleType, List<CompositeRelation>> addCompositeRoleRelationsByRoleType;
-    private Dictionary<IRoleType, IList<long>> clearCompositeAndCompositesRoleRelationsByRoleType;
-    private Dictionary<IRoleType, List<CompositeRelation>> removeCompositeRoleRelationsByRoleType;
-    private Dictionary<IRoleType, List<CompositeRelation>> setCompositeRoleRelationsByRoleType;
+    private Dictionary<RoleType, List<CompositeRelation>> addCompositeRoleRelationsByRoleType;
+    private Dictionary<RoleType, IList<long>> clearCompositeAndCompositesRoleRelationsByRoleType;
+    private Dictionary<RoleType, List<CompositeRelation>> removeCompositeRoleRelationsByRoleType;
+    private Dictionary<RoleType, List<CompositeRelation>> setCompositeRoleRelationsByRoleType;
 
-    private Dictionary<IClass, Dictionary<IRoleType, List<UnitRelation>>> setUnitRoleRelationsByRoleTypeByExclusiveClass;
+    private Dictionary<Class, Dictionary<RoleType, List<UnitRelation>>> setUnitRoleRelationsByRoleTypeByExclusiveClass;
 
     internal Flush(Transaction transaction, Dictionary<Reference, Strategy> unsyncedRolesByReference)
     {
@@ -112,18 +112,18 @@ internal class Flush
         this.clearCompositeAndCompositesRoleRelationsByRoleType = null;
     }
 
-    internal void SetUnitRole(Reference association, IRoleType roleType, object role)
+    internal void SetUnitRole(Reference association, RoleType roleType, object role)
     {
         if (this.setUnitRoleRelationsByRoleTypeByExclusiveClass == null)
         {
-            this.setUnitRoleRelationsByRoleTypeByExclusiveClass = new Dictionary<IClass, Dictionary<IRoleType, List<UnitRelation>>>();
+            this.setUnitRoleRelationsByRoleTypeByExclusiveClass = new Dictionary<Class, Dictionary<RoleType, List<UnitRelation>>>();
         }
 
         var exclusiveClass = association.Class.ExclusiveClass;
 
         if (!this.setUnitRoleRelationsByRoleTypeByExclusiveClass.TryGetValue(exclusiveClass, out var setUnitRoleRelationsByRoleType))
         {
-            setUnitRoleRelationsByRoleType = new Dictionary<IRoleType, List<UnitRelation>>();
+            setUnitRoleRelationsByRoleType = new Dictionary<RoleType, List<UnitRelation>>();
             this.setUnitRoleRelationsByRoleTypeByExclusiveClass[exclusiveClass] = setUnitRoleRelationsByRoleType;
         }
 
@@ -143,11 +143,11 @@ internal class Flush
         }
     }
 
-    internal void SetCompositeRole(Reference association, IRoleType roleType, long role)
+    internal void SetCompositeRole(Reference association, RoleType roleType, long role)
     {
         if (this.setCompositeRoleRelationsByRoleType == null)
         {
-            this.setCompositeRoleRelationsByRoleType = new Dictionary<IRoleType, List<CompositeRelation>>();
+            this.setCompositeRoleRelationsByRoleType = new Dictionary<RoleType, List<CompositeRelation>>();
         }
 
         if (!this.setCompositeRoleRelationsByRoleType.TryGetValue(roleType, out var relations))
@@ -165,11 +165,11 @@ internal class Flush
         }
     }
 
-    internal void AddCompositeRole(Reference association, IRoleType roleType, HashSet<long> added)
+    internal void AddCompositeRole(Reference association, RoleType roleType, HashSet<long> added)
     {
         if (this.addCompositeRoleRelationsByRoleType == null)
         {
-            this.addCompositeRoleRelationsByRoleType = new Dictionary<IRoleType, List<CompositeRelation>>();
+            this.addCompositeRoleRelationsByRoleType = new Dictionary<RoleType, List<CompositeRelation>>();
         }
 
         if (!this.addCompositeRoleRelationsByRoleType.TryGetValue(roleType, out var relations))
@@ -190,11 +190,11 @@ internal class Flush
         }
     }
 
-    internal void RemoveCompositeRole(Reference association, IRoleType roleType, HashSet<long> removed)
+    internal void RemoveCompositeRole(Reference association, RoleType roleType, HashSet<long> removed)
     {
         if (this.removeCompositeRoleRelationsByRoleType == null)
         {
-            this.removeCompositeRoleRelationsByRoleType = new Dictionary<IRoleType, List<CompositeRelation>>();
+            this.removeCompositeRoleRelationsByRoleType = new Dictionary<RoleType, List<CompositeRelation>>();
         }
 
         if (!this.removeCompositeRoleRelationsByRoleType.TryGetValue(roleType, out var relations))
@@ -215,11 +215,11 @@ internal class Flush
         }
     }
 
-    internal void ClearCompositeAndCompositesRole(Reference association, IRoleType roleType)
+    internal void ClearCompositeAndCompositesRole(Reference association, RoleType roleType)
     {
         if (this.clearCompositeAndCompositesRoleRelationsByRoleType == null)
         {
-            this.clearCompositeAndCompositesRoleRelationsByRoleType = new Dictionary<IRoleType, IList<long>>();
+            this.clearCompositeAndCompositesRoleRelationsByRoleType = new Dictionary<RoleType, IList<long>>();
         }
 
         if (!this.clearCompositeAndCompositesRoleRelationsByRoleType.TryGetValue(roleType, out var relations))

@@ -19,27 +19,27 @@
 
         public MetaPopulation MetaPopulation { get; }
 
-        public void Write(Stream stream, IDictionary<IClass, Record[]> recordsByClass)
+        public void Write(Stream stream, IDictionary<Class, Record[]> recordsByClass)
         {
             var document = this.Write(recordsByClass);
             document.Save(stream);
         }
 
-        private XDocument Write(IDictionary<IClass, Record[]> recordsByClass)
+        private XDocument Write(IDictionary<Class, Record[]> recordsByClass)
         {
             return new XDocument(new XElement("population",
                 recordsByClass
                     .OrderBy(v => v.Key.SingularName, StringComparer.OrdinalIgnoreCase)
                     .Select(Class)));
 
-            XElement Class(KeyValuePair<IClass, Record[]> grouping) => new(grouping.Key.PluralName.ToCamelCase(),
+            XElement Class(KeyValuePair<Class, Record[]> grouping) => new(grouping.Key.PluralName.ToCamelCase(),
                 (grouping
                     .Key.KeyRoleType.ObjectType.Tag == UnitTags.String ?
                         grouping.Value.OrderBy(v => (string)v.ValueByRoleType[grouping.Key.KeyRoleType], StringComparer.OrdinalIgnoreCase) :
                         grouping.Value.OrderBy(v => v.ValueByRoleType[grouping.Key.KeyRoleType]))
                     .Select(Object(grouping.Key)));
 
-            Func<Record, XElement> Object(IClass @class) => record => new XElement(@class.SingularName.ToCamelCase(),
+            Func<Record, XElement> Object(Class @class) => record => new XElement(@class.SingularName.ToCamelCase(),
                 Handle(record),
                 record.ValueByRoleType
                     .Keys
@@ -48,11 +48,11 @@
 
             XAttribute Handle(Record record) => record.Handle != null ? new XAttribute(RecordsReader.HandleAttributeName, record.Handle.Name) : null;
 
-            Func<IRoleType, XElement> Role(Record strategy) => roleType => new XElement(roleType.Name.ToCamelCase(),
+            Func<RoleType, XElement> Role(Record strategy) => roleType => new XElement(roleType.Name.ToCamelCase(),
                 this.WriteString(roleType, strategy.ValueByRoleType[roleType]));
         }
 
-        public string WriteString(IRoleType roleType, object unit) =>
+        public string WriteString(RoleType roleType, object unit) =>
             roleType.ObjectType.Tag switch
             {
                 UnitTags.String => (string)unit,

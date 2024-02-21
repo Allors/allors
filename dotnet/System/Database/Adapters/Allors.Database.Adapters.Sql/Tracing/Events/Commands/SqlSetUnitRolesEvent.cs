@@ -18,7 +18,7 @@ public sealed class SqlSetUnitRolesEvent : Event
 
     public Strategy Strategy { get; set; }
 
-    public IRoleType[] RoleTypes { get; set; }
+    public RoleType[] RoleTypes { get; set; }
 
     protected override void ToString(StringBuilder builder) => _ = builder
         .Append('[')

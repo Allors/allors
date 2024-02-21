@@ -24,7 +24,7 @@ namespace Allors.Workspace.Adapters.Direct.Tests
     using Database.Population.Resx;
     using Configuration = Allors.Workspace.Adapters.Direct.Configuration;
     using Connection = Direct.Connection;
-    using IClass = Database.Meta.IClass;
+    using IClass = Database.Meta.Class;
     using IWorkspaceServices = Allors.Workspace.IWorkspaceServices;
     using Person = Allors.Workspace.Domain.Person;
     using Task = System.Threading.Tasks.Task;

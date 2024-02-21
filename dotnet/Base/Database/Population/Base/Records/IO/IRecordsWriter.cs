@@ -6,5 +6,5 @@ using Meta;
 
 public interface IRecordsWriter
 {
-    void Write(Stream stream, IDictionary<IClass, Record[]> recordsByClass);
+    void Write(Stream stream, IDictionary<Class, Record[]> recordsByClass);
 }

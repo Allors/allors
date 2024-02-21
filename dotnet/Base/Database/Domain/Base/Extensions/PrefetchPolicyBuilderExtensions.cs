@@ -30,7 +30,7 @@ namespace Allors.Database.Domain
             return @this;
         }
 
-        public static PrefetchPolicyBuilder WithWorkspaceRules(this PrefetchPolicyBuilder @this, M m, IEnumerable<IRoleType> roleTypes)
+        public static PrefetchPolicyBuilder WithWorkspaceRules(this PrefetchPolicyBuilder @this, M m, IEnumerable<RoleType> roleTypes)
         {
             @this.WithSecurityRules(m);
 

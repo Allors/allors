@@ -14,12 +14,12 @@ namespace Allors.Database.Domain
     {
         private readonly ISecurity security;
         private readonly IUser user;
-        private readonly IDictionary<IClass, IRoleType> masks;
+        private readonly IDictionary<Class, RoleType> masks;
         private readonly string workspaceName;
 
         private readonly Dictionary<IObject, IAccessControlList> aclByObject;
 
-        public WorkspaceAccessControl(ISecurity security, IUser user, IDictionary<IClass, IRoleType> masks, string workspaceName)
+        public WorkspaceAccessControl(ISecurity security, IUser user, IDictionary<Class, RoleType> masks, string workspaceName)
         {
             this.security = security;
             this.user = user;

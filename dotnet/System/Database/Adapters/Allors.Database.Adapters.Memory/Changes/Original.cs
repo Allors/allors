@@ -15,19 +15,19 @@ internal sealed class Original
 
     internal Strategy Strategy { get; }
 
-    internal Dictionary<IRoleType, object> OriginalUnitRoleByRoleType { get; private set; }
+    internal Dictionary<RoleType, object> OriginalUnitRoleByRoleType { get; private set; }
 
-    internal Dictionary<IRoleType, Strategy> OriginalCompositeRoleByRoleType { get; private set; }
+    internal Dictionary<RoleType, Strategy> OriginalCompositeRoleByRoleType { get; private set; }
 
-    internal Dictionary<IRoleType, Strategy[]> OriginalCompositesRoleByRoleType { get; private set; }
+    internal Dictionary<RoleType, Strategy[]> OriginalCompositesRoleByRoleType { get; private set; }
 
-    internal Dictionary<IAssociationType, Strategy> OriginalCompositeAssociationByRoleType { get; private set; }
+    internal Dictionary<AssociationType, Strategy> OriginalCompositeAssociationByRoleType { get; private set; }
 
-    internal Dictionary<IAssociationType, Strategy[]> OriginalCompositesAssociationByRoleType { get; private set; }
+    internal Dictionary<AssociationType, Strategy[]> OriginalCompositesAssociationByRoleType { get; private set; }
 
-    internal void OnChangingUnitRole(IRoleType roleType, object previousRole)
+    internal void OnChangingUnitRole(RoleType roleType, object previousRole)
     {
-        this.OriginalUnitRoleByRoleType ??= new Dictionary<IRoleType, object>();
+        this.OriginalUnitRoleByRoleType ??= new Dictionary<RoleType, object>();
 
         if (!this.OriginalUnitRoleByRoleType.ContainsKey(roleType))
         {
@@ -35,9 +35,9 @@ internal sealed class Original
         }
     }
 
-    internal void OnChangingCompositeRole(IRoleType roleType, Strategy previousRole)
+    internal void OnChangingCompositeRole(RoleType roleType, Strategy previousRole)
     {
-        this.OriginalCompositeRoleByRoleType ??= new Dictionary<IRoleType, Strategy>();
+        this.OriginalCompositeRoleByRoleType ??= new Dictionary<RoleType, Strategy>();
 
         if (!this.OriginalCompositeRoleByRoleType.ContainsKey(roleType))
         {
@@ -45,9 +45,9 @@ internal sealed class Original
         }
     }
 
-    internal void OnChangingCompositesRole(IRoleType roleType, IEnumerable<Strategy> previousRoles)
+    internal void OnChangingCompositesRole(RoleType roleType, IEnumerable<Strategy> previousRoles)
     {
-        this.OriginalCompositesRoleByRoleType ??= new Dictionary<IRoleType, Strategy[]>();
+        this.OriginalCompositesRoleByRoleType ??= new Dictionary<RoleType, Strategy[]>();
 
         if (!this.OriginalCompositesRoleByRoleType.ContainsKey(roleType))
         {
@@ -55,9 +55,9 @@ internal sealed class Original
         }
     }
 
-    internal void OnChangingCompositeAssociation(IAssociationType associationType, Strategy previousAssociation)
+    internal void OnChangingCompositeAssociation(AssociationType associationType, Strategy previousAssociation)
     {
-        this.OriginalCompositeAssociationByRoleType ??= new Dictionary<IAssociationType, Strategy>();
+        this.OriginalCompositeAssociationByRoleType ??= new Dictionary<AssociationType, Strategy>();
 
         if (!this.OriginalCompositeAssociationByRoleType.ContainsKey(associationType))
         {
@@ -65,9 +65,9 @@ internal sealed class Original
         }
     }
 
-    internal void OnChangingCompositesAssociation(IAssociationType associationType, IEnumerable<Strategy> previousAssociations)
+    internal void OnChangingCompositesAssociation(AssociationType associationType, IEnumerable<Strategy> previousAssociations)
     {
-        this.OriginalCompositesAssociationByRoleType ??= new Dictionary<IAssociationType, Strategy[]>();
+        this.OriginalCompositesAssociationByRoleType ??= new Dictionary<AssociationType, Strategy[]>();
 
         if (!this.OriginalCompositesAssociationByRoleType.ContainsKey(associationType))
         {
@@ -75,7 +75,7 @@ internal sealed class Original
         }
     }
 
-    public void Trim(ISet<IRoleType> roleTypes)
+    public void Trim(ISet<RoleType> roleTypes)
     {
         foreach (var roleType in roleTypes.ToArray())
         {
@@ -106,7 +106,7 @@ internal sealed class Original
         }
     }
 
-    public void Trim(ISet<IAssociationType> associationTypes)
+    public void Trim(ISet<AssociationType> associationTypes)
     {
         foreach (var associationType in associationTypes.ToArray())
         {

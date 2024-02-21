@@ -45,10 +45,10 @@ internal class ExtentStatementRoot : ExtentStatement
 
     internal override string CreateAlias() => "alias" + this.aliasIndex++;
 
-    internal override ExtentStatement CreateChild(SqlExtent extent, IAssociationType association) =>
+    internal override ExtentStatement CreateChild(SqlExtent extent, AssociationType association) =>
         new ExtentStatementChild(this, extent, association);
 
-    internal override ExtentStatement CreateChild(SqlExtent extent, IRoleType role) => new ExtentStatementChild(this, extent, role);
+    internal override ExtentStatement CreateChild(SqlExtent extent, RoleType role) => new ExtentStatementChild(this, extent, role);
 
     internal ICommand CreateDbCommand(string alias)
     {

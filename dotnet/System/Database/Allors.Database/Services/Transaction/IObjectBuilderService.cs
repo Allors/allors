@@ -9,5 +9,5 @@ using Allors.Database.Meta;
 
 public interface IObjectBuilderService
 {
-    IObject Build(IClass @class);
+    IObject Build(Class @class);
 }

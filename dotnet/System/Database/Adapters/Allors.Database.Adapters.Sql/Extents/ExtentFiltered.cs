@@ -17,14 +17,14 @@ internal class ExtentFiltered : SqlExtent
 
     private AndPredicate filter;
 
-    internal ExtentFiltered(Transaction transaction, Strategy strategy, IRoleType roleType)
+    internal ExtentFiltered(Transaction transaction, Strategy strategy, RoleType roleType)
         : this(transaction, (IComposite)roleType.ObjectType)
     {
         this.Strategy = strategy;
         this.RoleType = roleType;
     }
 
-    internal ExtentFiltered(Transaction transaction, Strategy strategy, IAssociationType associationType)
+    internal ExtentFiltered(Transaction transaction, Strategy strategy, AssociationType associationType)
         : this(transaction, associationType.ObjectType)
     {
         this.Strategy = strategy;
@@ -52,9 +52,9 @@ internal class ExtentFiltered : SqlExtent
 
     internal override Transaction Transaction => this.transaction;
 
-    internal IAssociationType AssociationType { get; private set; }
+    internal AssociationType AssociationType { get; private set; }
 
-    internal IRoleType RoleType { get; private set; }
+    internal RoleType RoleType { get; private set; }
 
     internal Strategy Strategy { get; private set; }
 
@@ -76,7 +76,7 @@ internal class ExtentFiltered : SqlExtent
         return null;
     }
 
-    internal void CheckAssociation(IAssociationType associationType)
+    internal void CheckAssociation(AssociationType associationType)
     {
         if (!this.objectType.AssociationTypes.Contains(associationType))
         {
@@ -84,7 +84,7 @@ internal class ExtentFiltered : SqlExtent
         }
     }
 
-    internal void CheckRole(IRoleType roleType)
+    internal void CheckRole(RoleType roleType)
     {
         if (!this.objectType.RoleTypes.Contains(roleType))
         {

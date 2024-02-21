@@ -14,7 +14,7 @@ namespace Allors.Database.Configuration
     public class PrefetchPolicyCache : IPrefetchPolicyCache
     {
         private readonly M m;
-        private readonly IDictionary<string, IDictionary<IClass, PrefetchPolicy>> prefetchPolicyByClassByWorkspace;
+        private readonly IDictionary<string, IDictionary<Class, PrefetchPolicy>> prefetchPolicyByClassByWorkspace;
 
         public PrefetchPolicyCache(IDatabase database, IMetaCache metaCache)
         {
@@ -26,12 +26,12 @@ namespace Allors.Database.Configuration
 
             this.Security = new PrefetchPolicyBuilder().WithSecurityRules(this.m).Build();
 
-            this.prefetchPolicyByClassByWorkspace = new Dictionary<string, IDictionary<IClass, PrefetchPolicy>>();
+            this.prefetchPolicyByClassByWorkspace = new Dictionary<string, IDictionary<Class, PrefetchPolicy>>();
             foreach (var workspaceName in ((MetaPopulation)this.m).WorkspaceNames)
             {
                 var roleTypesByClass = metaCache.GetWorkspaceRoleTypesByClass(workspaceName);
 
-                var prefetchPolicyByClass = new Dictionary<IClass, PrefetchPolicy>();
+                var prefetchPolicyByClass = new Dictionary<Class, PrefetchPolicy>();
                 foreach (var @class in metaCache.GetWorkspaceClasses(workspaceName))
                 {
                     var prefetchPolicyBuilder = new PrefetchPolicyBuilder();
@@ -48,7 +48,7 @@ namespace Allors.Database.Configuration
 
         public PrefetchPolicy Security { get; }
 
-        public IDictionary<IClass, PrefetchPolicy> WorkspacePrefetchPolicyByClass(string workspaceName) => this.prefetchPolicyByClassByWorkspace[workspaceName];
+        public IDictionary<Class, PrefetchPolicy> WorkspacePrefetchPolicyByClass(string workspaceName) => this.prefetchPolicyByClassByWorkspace[workspaceName];
 
         public PrefetchPolicy ForNodes(Node[] nodes)
         {

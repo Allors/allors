@@ -58,7 +58,7 @@ internal class Backup
     {
         var mapping = this.database.Mapping;
 
-        var concreteCompositeType = new List<IClass>(this.database.MetaPopulation.Classes);
+        var concreteCompositeType = new List<Class>(this.database.MetaPopulation.Classes);
         concreteCompositeType.Sort();
         foreach (var type in concreteCompositeType)
         {
@@ -149,7 +149,7 @@ internal class Backup
                         sql +=
                             $"SELECT {Sql.Mapping.ColumnNameForObject} As {Sql.Mapping.ColumnNameForAssociation}, {this.database.Mapping.ColumnNameByRelationType[roleType.RelationType]} As {Sql.Mapping.ColumnNameForRole}\n";
                         sql +=
-                            $"FROM {this.database.Mapping.TableNameForObjectByClass[(IClass)exclusiveRootClass]}\n";
+                            $"FROM {this.database.Mapping.TableNameForObjectByClass[(Class)exclusiveRootClass]}\n";
                         sql +=
                             $"WHERE {this.database.Mapping.ColumnNameByRelationType[roleType.RelationType]} IS NOT NULL\n";
                     }

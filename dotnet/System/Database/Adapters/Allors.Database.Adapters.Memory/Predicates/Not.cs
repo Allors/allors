@@ -26,7 +26,7 @@ internal sealed class Not : Predicate, ICompositePredicate
         return (ICompositePredicate)this.predicate;
     }
 
-    public ICompositePredicate AddBetween(IRoleType role, object firstValue, object secondValue)
+    public ICompositePredicate AddBetween(RoleType role, object firstValue, object secondValue)
     {
         this.CheckUnarity();
         this.predicate = new RoleBetween(this.extent, role, firstValue, secondValue);
@@ -34,7 +34,7 @@ internal sealed class Not : Predicate, ICompositePredicate
         return this;
     }
 
-    public ICompositePredicate AddContainedIn(IRoleType role, Allors.Database.Extent containingExtent)
+    public ICompositePredicate AddContainedIn(RoleType role, Allors.Database.Extent containingExtent)
     {
         this.CheckUnarity();
         if (role.IsMany)
@@ -50,7 +50,7 @@ internal sealed class Not : Predicate, ICompositePredicate
         return this;
     }
 
-    public ICompositePredicate AddContainedIn(IRoleType role, IEnumerable<IObject> containingEnumerable)
+    public ICompositePredicate AddContainedIn(RoleType role, IEnumerable<IObject> containingEnumerable)
     {
         this.CheckUnarity();
         if (role.IsMany)
@@ -66,7 +66,7 @@ internal sealed class Not : Predicate, ICompositePredicate
         return this;
     }
 
-    public ICompositePredicate AddContainedIn(IAssociationType association, Allors.Database.Extent containingExtent)
+    public ICompositePredicate AddContainedIn(AssociationType association, Allors.Database.Extent containingExtent)
     {
         this.CheckUnarity();
         this.predicate = new AssociationContainedInExtent(this.extent, association, containingExtent);
@@ -74,7 +74,7 @@ internal sealed class Not : Predicate, ICompositePredicate
         return this;
     }
 
-    public ICompositePredicate AddContainedIn(IAssociationType association, IEnumerable<IObject> containingEnumerable)
+    public ICompositePredicate AddContainedIn(AssociationType association, IEnumerable<IObject> containingEnumerable)
     {
         this.CheckUnarity();
         this.predicate = new AssociationContainedInEnumerable(this.extent, association, containingEnumerable);
@@ -82,7 +82,7 @@ internal sealed class Not : Predicate, ICompositePredicate
         return this;
     }
 
-    public ICompositePredicate AddContains(IRoleType role, IObject containedObject)
+    public ICompositePredicate AddContains(RoleType role, IObject containedObject)
     {
         this.CheckUnarity();
         this.predicate = new RoleContains(this.extent, role, containedObject);
@@ -90,7 +90,7 @@ internal sealed class Not : Predicate, ICompositePredicate
         return this;
     }
 
-    public ICompositePredicate AddContains(IAssociationType association, IObject containedObject)
+    public ICompositePredicate AddContains(AssociationType association, IObject containedObject)
     {
         this.CheckUnarity();
         this.predicate = new AssociationContains(this.extent, association, containedObject);
@@ -106,7 +106,7 @@ internal sealed class Not : Predicate, ICompositePredicate
         return this;
     }
 
-    public ICompositePredicate AddEquals(IRoleType role, object obj)
+    public ICompositePredicate AddEquals(RoleType role, object obj)
     {
         this.CheckUnarity();
         if (role.ObjectType is Unit)
@@ -122,7 +122,7 @@ internal sealed class Not : Predicate, ICompositePredicate
         return this;
     }
 
-    public ICompositePredicate AddEquals(IAssociationType association, IObject allorsObject)
+    public ICompositePredicate AddEquals(AssociationType association, IObject allorsObject)
     {
         this.CheckUnarity();
         this.predicate = new AssociationEquals(this.extent, association, allorsObject);
@@ -130,7 +130,7 @@ internal sealed class Not : Predicate, ICompositePredicate
         return this;
     }
 
-    public ICompositePredicate AddExists(IRoleType role)
+    public ICompositePredicate AddExists(RoleType role)
     {
         this.CheckUnarity();
         this.predicate = new RoleExists(this.extent, role);
@@ -138,7 +138,7 @@ internal sealed class Not : Predicate, ICompositePredicate
         return this;
     }
 
-    public ICompositePredicate AddExists(IAssociationType association)
+    public ICompositePredicate AddExists(AssociationType association)
     {
         this.CheckUnarity();
         this.predicate = new AssociationExists(this.extent, association);
@@ -146,7 +146,7 @@ internal sealed class Not : Predicate, ICompositePredicate
         return this;
     }
 
-    public ICompositePredicate AddGreaterThan(IRoleType role, object value)
+    public ICompositePredicate AddGreaterThan(RoleType role, object value)
     {
         this.CheckUnarity();
         this.predicate = new RoleGreaterThan(this.extent, role, value);
@@ -162,7 +162,7 @@ internal sealed class Not : Predicate, ICompositePredicate
         return this;
     }
 
-    public ICompositePredicate AddInstanceof(IRoleType role, IComposite type)
+    public ICompositePredicate AddInstanceof(RoleType role, IComposite type)
     {
         this.CheckUnarity();
         this.predicate = new RoleInstanceof(this.extent, role, type);
@@ -170,7 +170,7 @@ internal sealed class Not : Predicate, ICompositePredicate
         return this;
     }
 
-    public ICompositePredicate AddInstanceof(IAssociationType association, IComposite type)
+    public ICompositePredicate AddInstanceof(AssociationType association, IComposite type)
     {
         this.CheckUnarity();
         this.predicate = new AssociationInstanceOf(this.extent, association, type);
@@ -178,7 +178,7 @@ internal sealed class Not : Predicate, ICompositePredicate
         return this;
     }
 
-    public ICompositePredicate AddLessThan(IRoleType role, object value)
+    public ICompositePredicate AddLessThan(RoleType role, object value)
     {
         this.CheckUnarity();
         this.predicate = new RoleLessThan(this.extent, role, value);
@@ -186,7 +186,7 @@ internal sealed class Not : Predicate, ICompositePredicate
         return this;
     }
 
-    public ICompositePredicate AddLike(IRoleType role, string value)
+    public ICompositePredicate AddLike(RoleType role, string value)
     {
         this.CheckUnarity();
         this.predicate = new RoleLike(this.extent, role, value);

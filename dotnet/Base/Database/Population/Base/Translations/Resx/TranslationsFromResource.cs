@@ -21,9 +21,9 @@
 
             var assembly = Assembly.GetExecutingAssembly();
 
-            this.ResourceSetByCultureInfoByRoleTypeByClass = new Dictionary<IClass, IDictionary<IRoleType, IDictionary<CultureInfo, ResourceSet>>>();
+            this.ResourceSetByCultureInfoByRoleTypeByClass = new Dictionary<Class, IDictionary<RoleType, IDictionary<CultureInfo, ResourceSet>>>();
 
-            foreach ((String baseName, IClass @class, IRoleType roleType) in assembly.GetManifestResourceNames()
+            foreach ((String baseName, Class @class, RoleType roleType) in assembly.GetManifestResourceNames()
                 .Where(v => v.Contains(Translations, StringComparison.OrdinalIgnoreCase) && v.EndsWith(ResourcesExtension, StringComparison.OrdinalIgnoreCase))
                 .Select(v =>
                 {
@@ -38,12 +38,12 @@
                     var @class = metaPopulation.Classes.First(w => w.SingularName.Equals(className, StringComparison.OrdinalIgnoreCase));
                     var roleType = @class.RoleTypes.First(w => w.SingularName.Equals(roleName, StringComparison.OrdinalIgnoreCase));
 
-                    return new Tuple<String, IClass, IRoleType>(baseName, @class, roleType);
+                    return new Tuple<String, Class, RoleType>(baseName, @class, roleType);
                 }))
             {
                 if (!this.ResourceSetByCultureInfoByRoleTypeByClass.TryGetValue(@class, out var resourceSetByCultureInfoByRoleType))
                 {
-                    resourceSetByCultureInfoByRoleType = new Dictionary<IRoleType, IDictionary<CultureInfo, ResourceSet>>();
+                    resourceSetByCultureInfoByRoleType = new Dictionary<RoleType, IDictionary<CultureInfo, ResourceSet>>();
                     this.ResourceSetByCultureInfoByRoleTypeByClass.Add(@class, resourceSetByCultureInfoByRoleType);
                 }
 
@@ -59,6 +59,6 @@
 
         public ITranslationConfiguration Configuration { get; }
 
-        public IDictionary<IClass, IDictionary<IRoleType, IDictionary<CultureInfo, ResourceSet>>> ResourceSetByCultureInfoByRoleTypeByClass { get; }
+        public IDictionary<Class, IDictionary<RoleType, IDictionary<CultureInfo, ResourceSet>>> ResourceSetByCultureInfoByRoleTypeByClass { get; }
     }
 }

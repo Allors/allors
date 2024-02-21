@@ -85,7 +85,7 @@ public class ObjectFactory : IObjectFactory
             this.objectTypeByType[type] = objectType;
             this.objectTypeByObjectTypeId[objectType.Id] = objectType;
 
-            if (objectType is IClass)
+            if (objectType is Class)
             {
                 var parameterTypes = new[] { typeof(IStrategy) };
                 var constructor = type.GetTypeInfo().GetConstructor(parameterTypes);

@@ -12,10 +12,10 @@ using Allors.Database.Meta;
 public sealed class ExtentSort : IComparer<Strategy>
 {
     private readonly SortDirection direction;
-    private readonly IRoleType roleType;
+    private readonly RoleType roleType;
     private ExtentSort subSorter;
 
-    internal ExtentSort(IRoleType roleType, SortDirection direction)
+    internal ExtentSort(RoleType roleType, SortDirection direction)
     {
         this.roleType = roleType;
         this.direction = direction;
@@ -69,7 +69,7 @@ public sealed class ExtentSort : IComparer<Strategy>
         return thatResult;
     }
 
-    internal void AddSort(IRoleType subSortRoleType, SortDirection subSortDirection)
+    internal void AddSort(RoleType subSortRoleType, SortDirection subSortDirection)
     {
         if (this.subSorter == null)
         {

@@ -15,17 +15,17 @@ using Allors.Database.Meta;
 public sealed class DefaultCache : ICache
 {
     private readonly ConcurrentDictionary<long, DefaultCachedObject> cachedObjectByObjectId;
-    private readonly HashSet<IClass> excludedClasses;
-    private readonly ConcurrentDictionary<long, IClass> objectTypeByObjectId;
+    private readonly HashSet<Class> excludedClasses;
+    private readonly ConcurrentDictionary<long, Class> objectTypeByObjectId;
 
-    internal DefaultCache(IClass[] excludedClasses)
+    internal DefaultCache(Class[] excludedClasses)
     {
         this.cachedObjectByObjectId = new ConcurrentDictionary<long, DefaultCachedObject>();
-        this.objectTypeByObjectId = new ConcurrentDictionary<long, IClass>();
+        this.objectTypeByObjectId = new ConcurrentDictionary<long, Class>();
 
         if (excludedClasses != null)
         {
-            this.excludedClasses = new HashSet<IClass>();
+            this.excludedClasses = new HashSet<Class>();
             foreach (var transientObjectType in excludedClasses)
             {
                 foreach (var transientClass in transientObjectType.Classes)
@@ -50,7 +50,7 @@ public sealed class DefaultCache : ICache
         this.objectTypeByObjectId.Clear();
     }
 
-    public ICachedObject GetOrCreateCachedObject(IClass concreteClass, long objectId, long version)
+    public ICachedObject GetOrCreateCachedObject(Class concreteClass, long objectId, long version)
     {
         if (this.excludedClasses != null && this.excludedClasses.Contains(concreteClass))
         {
@@ -74,13 +74,13 @@ public sealed class DefaultCache : ICache
         return cachedObject;
     }
 
-    public IClass GetObjectType(long objectId)
+    public Class GetObjectType(long objectId)
     {
         this.objectTypeByObjectId.TryGetValue(objectId, out var objectType);
         return objectType;
     }
 
-    public void SetObjectType(long objectId, IClass objectType) => this.objectTypeByObjectId[objectId] = objectType;
+    public void SetObjectType(long objectId, Class objectType) => this.objectTypeByObjectId[objectId] = objectType;
 
     public void OnCommit(IList<long> accessedObjectIds, IList<long> changedObjectIds)
     {

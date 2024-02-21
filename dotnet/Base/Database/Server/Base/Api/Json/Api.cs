@@ -67,9 +67,9 @@ namespace Allors.Database.Protocol.Json
 
         public IAccessControl AccessControl { get; }
 
-        public IReadOnlySet<IClass> AllowedClasses { get; }
+        public IReadOnlySet<Class> AllowedClasses { get; }
 
-        public IDictionary<IClass, IReadOnlySet<IRoleType>> RoleTypesByClass { get; }
+        public IDictionary<Class, IReadOnlySet<RoleType>> RoleTypesByClass { get; }
 
         public M M { get; }
 
@@ -77,7 +77,7 @@ namespace Allors.Database.Protocol.Json
 
         public IPreparedExtents PreparedExtents { get; }
 
-        public Func<IClass, IObject> Build { get; }
+        public Func<Class, IObject> Build { get; }
 
         public Func<IValidation> Derive { get; }
 

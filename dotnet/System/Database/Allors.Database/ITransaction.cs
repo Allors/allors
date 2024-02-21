@@ -116,21 +116,21 @@ public interface ITransaction : IDisposable
     /// </summary>
     /// <param name="class">The IObjectType.</param>
     /// <returns>a new <see cref="IObject" />.</returns>
-    IObject Build(IClass @class);
+    IObject Build(Class @class);
 
     /// <summary>
     ///     Creates an Allors Object and execute builders.
     /// </summary>
     /// <param name="class">The IObjectType.</param>
     /// <returns>a new <see cref="IObject" />.</returns>
-    IObject Build(IClass @class, params Action<IObject>[] builders);
+    IObject Build(Class @class, params Action<IObject>[] builders);
 
     /// <summary>
     ///     Creates an Allors Object and execute builders.
     /// </summary>
     /// <param name="class">The IObjectType.</param>
     /// <returns>a new <see cref="IObject" />.</returns>
-    IObject Build(IClass @class, IEnumerable<Action<IObject>> builders, params Action<IObject>[] extraBuilders);
+    IObject Build(Class @class, IEnumerable<Action<IObject>> builders, params Action<IObject>[] extraBuilders);
 
     /// <summary>
     ///     Creates a specified amount of AllorsObjects.
@@ -138,7 +138,7 @@ public interface ITransaction : IDisposable
     /// <param name="class">The IObjectType.</param>
     /// <param name="count">The count.</param>
     /// <returns>The created objects.</returns>
-    IObject[] Build(IClass @class, int count);
+    IObject[] Build(Class @class, int count);
 
     /// <summary>
     ///     Creates a specified amount of AllorsObjects.

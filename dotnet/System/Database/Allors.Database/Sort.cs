@@ -9,7 +9,7 @@ using Allors.Database.Meta;
 
 public class Sort
 {
-    public IRoleType RoleType { get; set; }
+    public RoleType RoleType { get; set; }
 
     public SortDirection Direction { get; set; }
 }

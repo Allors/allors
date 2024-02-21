@@ -84,14 +84,14 @@ public static class ExpressionExtensions
                 }
             }
 
-            if (memberExpression.Type.GetInterfaces().Contains(typeof(IRoleType)))
+            if (memberExpression.Type.GetInterfaces().Contains(typeof(RoleType)))
             {
                 var name = memberExpression.Member.Name;
                 var relationEndType = composite.RoleTypes.First(v => v.Name.Equals(name));
                 AddPath(relationEndType);
             }
 
-            if (memberExpression.Type.GetInterfaces().Contains(typeof(IAssociationType)))
+            if (memberExpression.Type.GetInterfaces().Contains(typeof(AssociationType)))
             {
                 var name = memberExpression.Member.Name;
                 var relationEndType = composite.AssociationTypes.First(v =>

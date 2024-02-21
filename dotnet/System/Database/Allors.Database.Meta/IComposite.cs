@@ -20,23 +20,23 @@ public interface IComposite : IObjectType
 
     IReadOnlyList<IComposite> Composites { get; }
 
-    IReadOnlyList<IClass> Classes { get; }
+    IReadOnlyList<Class> Classes { get; }
 
-    IClass ExclusiveClass { get; }
+    Class ExclusiveClass { get; }
 
-    IReadOnlyList<IAssociationType> AssociationTypes { get; internal set; }
+    IReadOnlyList<AssociationType> AssociationTypes { get; internal set; }
 
-    IReadOnlyList<IRoleType> RoleTypes { get; internal set; }
+    IReadOnlyList<RoleType> RoleTypes { get; internal set; }
 
-    IReadOnlyDictionary<IRoleType, ICompositeRoleType> CompositeRoleTypeByRoleType { get; internal set; }
+    IReadOnlyDictionary<RoleType, CompositeRoleType> CompositeRoleTypeByRoleType { get; internal set; }
 
-    IRoleType KeyRoleType { get; }
+    RoleType KeyRoleType { get; }
 
     IReadOnlyList<MethodType> MethodTypes { get; internal set; }
 
-    IReadOnlyDictionary<MethodType, ICompositeMethodType> CompositeMethodTypeByMethodType { get; internal set; }
+    IReadOnlyDictionary<MethodType, CompositeMethodType> CompositeMethodTypeByMethodType { get; internal set; }
 
     bool IsAssignableFrom(IComposite objectType);
 
-    internal IRoleType DerivedKeyRoleType { get; set; }
+    internal RoleType DerivedKeyRoleType { get; set; }
 }

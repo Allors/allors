@@ -12,9 +12,9 @@ internal sealed class RoleUnitEquals : Predicate
 {
     private readonly object equals;
     private readonly ExtentFiltered extent;
-    private readonly IRoleType roleType;
+    private readonly RoleType roleType;
 
-    internal RoleUnitEquals(ExtentFiltered extent, IRoleType roleType, object equals)
+    internal RoleUnitEquals(ExtentFiltered extent, RoleType roleType, object equals)
     {
         extent.CheckForRoleType(roleType);
         PredicateAssertions.ValidateRoleEquals(roleType, equals);
@@ -49,9 +49,9 @@ internal sealed class RoleUnitEquals : Predicate
 
         var equalsValue = this.equals;
 
-        if (this.equals is IRoleType)
+        if (this.equals is RoleType)
         {
-            var equalsRole = (IRoleType)this.equals;
+            var equalsRole = (RoleType)this.equals;
             equalsValue = strategy.GetInternalizedUnitRole(equalsRole);
         }
         else if (this.roleType.ObjectType is Unit)

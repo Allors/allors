@@ -17,7 +17,7 @@ public sealed class SqlGetCompositeRoleEvent : Event
 
     public Strategy Strategy { get; set; }
 
-    public IRoleType RoleType { get; set; }
+    public RoleType RoleType { get; set; }
 
     protected override void ToString(StringBuilder builder) => _ = builder
         .Append('[')

@@ -9,5 +9,5 @@ public interface ITranslation
 {
     ITranslationConfiguration Configuration { get; }
 
-    IDictionary<IClass, IDictionary<IRoleType, IDictionary<CultureInfo, ResourceSet>>> ResourceSetByCultureInfoByRoleTypeByClass { get; }
+    IDictionary<Class, IDictionary<RoleType, IDictionary<CultureInfo, ResourceSet>>> ResourceSetByCultureInfoByRoleTypeByClass { get; }
 }

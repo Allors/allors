@@ -12,13 +12,13 @@ using Allors.Database.Meta;
 
 public static class IChangeSetExtensions
 {
-    private static readonly ISet<IRoleType> EmptyRoleTypeSet = new EmptySet<IRoleType>();
+    private static readonly ISet<RoleType> EmptyRoleTypeSet = new EmptySet<RoleType>();
 
-    private static readonly ISet<IAssociationType> EmptyAssociationTypeSet = new EmptySet<IAssociationType>();
+    private static readonly ISet<AssociationType> EmptyAssociationTypeSet = new EmptySet<AssociationType>();
 
-    public static ISet<IRoleType> GetRoleTypes(this IChangeSet @this, IObject association) =>
+    public static ISet<RoleType> GetRoleTypes(this IChangeSet @this, IObject association) =>
         @this.RoleTypesByAssociation.TryGetValue(association, out var roleTypes) ? roleTypes : EmptyRoleTypeSet;
 
-    public static ISet<IAssociationType> GetAssociationTypes(this IChangeSet @this, IObject role) =>
+    public static ISet<AssociationType> GetAssociationTypes(this IChangeSet @this, IObject role) =>
         @this.AssociationTypesByRole.TryGetValue(role, out var associationTypes) ? associationTypes : EmptyAssociationTypeSet;
 }

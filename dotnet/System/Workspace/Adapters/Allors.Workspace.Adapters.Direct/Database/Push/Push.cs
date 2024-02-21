@@ -43,11 +43,11 @@ namespace Allors.Workspace.Adapters.Direct
 
         private ITransaction Transaction { get; }
 
-        private IReadOnlySet<IClass> AllowedClasses { get; }
+        private IReadOnlySet<Class> AllowedClasses { get; }
 
         private MetaPopulation M { get; }
 
-        private Func<IClass, IObject> Build { get; }
+        private Func<Class, IObject> Build { get; }
 
         private Func<IValidation> Derive { get; }
 
@@ -62,7 +62,7 @@ namespace Allors.Workspace.Adapters.Direct
                     v =>
                     {
                         var local = (Strategy)v;
-                        var cls = (IClass)metaPopulation.FindByTag(v.Class.Tag);
+                        var cls = (Class)metaPopulation.FindByTag(v.Class.Tag);
                         if (this.AllowedClasses?.Contains(cls) == true)
                         {
                             var newObject = this.Build(cls);

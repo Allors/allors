@@ -10,12 +10,12 @@ public static class IRelationEndTypeExtensions
 {
     public static object Get(this IRelationEndType @this, IStrategy strategy, IComposite ofType = null)
     {
-        if (@this is IRoleType roleType)
+        if (@this is RoleType roleType)
         {
             return roleType.Get(strategy, ofType);
         }
 
-        var associationType = (IAssociationType)@this;
+        var associationType = (AssociationType)@this;
         return associationType.Get(strategy, ofType);
     }
 }

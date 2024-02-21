@@ -11,9 +11,9 @@
     public class RecordRoundtripStrategy : IRecordRoundtripStrategy
     {
         private readonly IDatabase database;
-        private readonly IDictionary<IClass, Record[]> existingRecordsByClass;
+        private readonly IDictionary<Class, Record[]> existingRecordsByClass;
 
-        public RecordRoundtripStrategy(IDatabase database, IDictionary<IClass, Record[]> existingRecordsByClass)
+        public RecordRoundtripStrategy(IDatabase database, IDictionary<Class, Record[]> existingRecordsByClass)
         {
             this.database = database;
             this.existingRecordsByClass = existingRecordsByClass;
@@ -53,7 +53,7 @@
             };
         }
 
-        public Func<IStrategy, IRoleType, bool> RoleFilter() => (strategy, roleType) =>
+        public Func<IStrategy, RoleType, bool> RoleFilter() => (strategy, roleType) =>
             strategy.ExistRole(roleType) &&
             roleType.ObjectType.IsUnit &&
             !roleType.RelationType.IsDerived &&

@@ -20,7 +20,7 @@ public abstract class Database : IDatabase
 
     private readonly Dictionary<IObjectType, HashSet<IObjectType>> concreteClassesByObjectType;
 
-    private readonly Dictionary<IObjectType, IRoleType[]> sortedUnitRolesByObjectType;
+    private readonly Dictionary<IObjectType, RoleType[]> sortedUnitRolesByObjectType;
 
     private ICacheFactory cacheFactory;
 
@@ -47,7 +47,7 @@ public abstract class Database : IDatabase
         this.CommandTimeout = configuration.CommandTimeout;
         this.IsolationLevel = configuration.IsolationLevel;
 
-        this.sortedUnitRolesByObjectType = new Dictionary<IObjectType, IRoleType[]>();
+        this.sortedUnitRolesByObjectType = new Dictionary<IObjectType, RoleType[]>();
 
         this.CacheFactory = configuration.CacheFactory;
         this.Cache = this.CacheFactory.CreateCache();
@@ -157,11 +157,11 @@ public abstract class Database : IDatabase
 
     internal Type GetDomainType(IObjectType objectType) => this.ObjectFactory.GetType(objectType);
 
-    public IRoleType[] GetSortedUnitRolesByObjectType(IObjectType objectType)
+    public RoleType[] GetSortedUnitRolesByObjectType(IObjectType objectType)
     {
         if (!this.sortedUnitRolesByObjectType.TryGetValue(objectType, out var sortedUnitRoles))
         {
-            var sortedUnitRoleList = new List<IRoleType>(((IComposite)objectType).RoleTypes.Where(r => r.ObjectType.IsUnit));
+            var sortedUnitRoleList = new List<RoleType>(((IComposite)objectType).RoleTypes.Where(r => r.ObjectType.IsUnit));
             sortedUnitRoleList.Sort();
             sortedUnitRoles = [.. sortedUnitRoleList];
             this.sortedUnitRolesByObjectType[objectType] = sortedUnitRoles;

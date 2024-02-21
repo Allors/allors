@@ -94,7 +94,7 @@ public class Backup
         this.writer.WriteStartElement(XmlBackup.Relations);
         this.writer.WriteStartElement(XmlBackup.Database);
 
-        var sortedStrategiesByRoleType = new Dictionary<IRoleType, List<Strategy>>();
+        var sortedStrategiesByRoleType = new Dictionary<RoleType, List<Strategy>>();
         foreach (var dictionaryEntry in this.sortedNonDeletedStrategiesByObjectType)
         {
             foreach (var strategy in dictionaryEntry.Value)

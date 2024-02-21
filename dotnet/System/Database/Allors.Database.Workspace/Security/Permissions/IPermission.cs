@@ -9,7 +9,7 @@ using Allors.Database.Meta;
 
 public interface IPermission : IObject
 {
-    IClass Class { get; }
+    Class Class { get; }
 
     bool InWorkspace(string workspaceName);
 }

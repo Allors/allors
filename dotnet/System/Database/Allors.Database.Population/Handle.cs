@@ -3,6 +3,6 @@
 using Meta;
 
 public record Handle(
-    IRoleType RoleType, 
+    RoleType RoleType, 
     string Name, 
     object Value);

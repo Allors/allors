@@ -11,19 +11,19 @@ using Allors.Database.Meta;
 
 public interface IMetaCache
 {
-    Type GetBuilderType(IClass @class);
+    Type GetBuilderType(Class @class);
 
     IReadOnlySet<Interface> GetSupertypesByComposite(IComposite composite);
 
-    IReadOnlySet<IAssociationType> GetAssociationTypesByComposite(IComposite composite);
+    IReadOnlySet<AssociationType> GetAssociationTypesByComposite(IComposite composite);
 
-    IReadOnlySet<IRoleType> GetRoleTypesByComposite(IComposite composite);
+    IReadOnlySet<RoleType> GetRoleTypesByComposite(IComposite composite);
 
-    IReadOnlySet<IRoleType> GetRequiredRoleTypesByComposite(IComposite composite);
+    IReadOnlySet<RoleType> GetRequiredRoleTypesByComposite(IComposite composite);
 
-    IReadOnlySet<ICompositeRoleType> GetRequiredCompositeRoleTypesByClass(IClass @class);
+    IReadOnlySet<CompositeRoleType> GetRequiredCompositeRoleTypesByClass(Class @class);
 
-    IReadOnlySet<IClass> GetWorkspaceClasses(string workspaceName);
+    IReadOnlySet<Class> GetWorkspaceClasses(string workspaceName);
 
-    IDictionary<IClass, IReadOnlySet<IRoleType>> GetWorkspaceRoleTypesByClass(string workspaceName);
+    IDictionary<Class, IReadOnlySet<RoleType>> GetWorkspaceRoleTypesByClass(string workspaceName);
 }

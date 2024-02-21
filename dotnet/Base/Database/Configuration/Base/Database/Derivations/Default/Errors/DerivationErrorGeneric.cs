@@ -21,7 +21,7 @@ namespace Allors.Database.Configuration.Derivations.Default
         {
         }
 
-        public DerivationErrorGeneric(IValidation validation, IObject association, IRoleType roleType, string message)
+        public DerivationErrorGeneric(IValidation validation, IObject association, RoleType roleType, string message)
             : this(validation, new DerivationRelation(association, roleType), message)
         {
         }

@@ -16,11 +16,11 @@ using Allors.Database.Security;
 public class InvokeResponseBuilder
 {
     private readonly IAccessControl accessControl;
-    private readonly IReadOnlySet<IClass> allowedClasses;
+    private readonly IReadOnlySet<Class> allowedClasses;
     private readonly Func<IValidation> derive;
     private readonly ITransaction transaction;
 
-    public InvokeResponseBuilder(ITransaction transaction, Func<IValidation> derive, IAccessControl accessControl, IReadOnlySet<IClass> allowedClasses)
+    public InvokeResponseBuilder(ITransaction transaction, Func<IValidation> derive, IAccessControl accessControl, IReadOnlySet<Class> allowedClasses)
     {
         this.transaction = transaction;
         this.derive = derive;

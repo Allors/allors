@@ -60,15 +60,15 @@ namespace Allors.Database.Domain.Tests
 
         private class WorkspaceMask : IWorkspaceMask
         {
-            private readonly Dictionary<IClass, IRoleType> masks;
+            private readonly Dictionary<Class, RoleType> masks;
 
             public WorkspaceMask(M m) =>
-                this.masks = new Dictionary<IClass, IRoleType>
+                this.masks = new Dictionary<Class, RoleType>
                 {
                     { m.Organization, m.Organization.Name },
                 };
 
-            public IDictionary<IClass, IRoleType> GetMasks(string workspaceName) => this.masks;
+            public IDictionary<Class, RoleType> GetMasks(string workspaceName) => this.masks;
         }
     }
 }

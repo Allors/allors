@@ -1,6 +1,6 @@
 ﻿namespace Allors.Database.Meta;
 
-public sealed class CompositeMethodType : ICompositeMethodType
+public sealed class CompositeMethodType : IMetaExtensible
 {
     public CompositeMethodType(IComposite composite, MethodType methodType)
     {

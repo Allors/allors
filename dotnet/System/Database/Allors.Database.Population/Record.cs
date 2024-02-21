@@ -4,6 +4,6 @@ using System.Collections.Generic;
 using Meta;
 
 public record Record(
-    IClass Class,
+    Class Class,
     Handle Handle,
-    IDictionary<IRoleType, object> ValueByRoleType);
+    IDictionary<RoleType, object> ValueByRoleType);
