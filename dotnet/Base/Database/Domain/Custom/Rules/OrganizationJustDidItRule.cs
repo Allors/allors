@@ -14,7 +14,7 @@ namespace Allors.Database.Domain
 
     public class OrganizationJustDidItRule : Rule
     {
-        public OrganizationJustDidItRule(M m)
+        public OrganizationJustDidItRule(IMetaIndex m)
             : base(m, new Guid("69C87CD7-52DE-45ED-8709-898A3A701A71")) =>
             this.Patterns =
             [

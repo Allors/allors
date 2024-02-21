@@ -14,7 +14,7 @@ namespace Allors.Database.Domain
 
     public class SecurityTokenFingerprintRule : Rule
     {
-        public SecurityTokenFingerprintRule(M m) : base(m, new Guid("0C788305-AD7E-4722-B03C-83B5DE3E881A")) =>
+        public SecurityTokenFingerprintRule(IMetaIndex m) : base(m, new Guid("0C788305-AD7E-4722-B03C-83B5DE3E881A")) =>
             this.Patterns =
             [
                 m.SecurityToken.RolePattern(v=>v.Grants),

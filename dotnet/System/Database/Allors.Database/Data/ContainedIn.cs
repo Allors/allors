@@ -10,7 +10,7 @@ using Allors.Database.Meta;
 
 public class ContainedIn : IPropertyPredicate
 {
-    public ContainedIn(IRelationEndType relationEndType = null) => this.RelationEndType = relationEndType;
+    public ContainedIn(RelationEndType relationEndType = null) => this.RelationEndType = relationEndType;
 
     public IExtent Extent { get; set; }
 
@@ -18,7 +18,7 @@ public class ContainedIn : IPropertyPredicate
 
     public string Parameter { get; set; }
 
-    public IRelationEndType RelationEndType { get; set; }
+    public RelationEndType RelationEndType { get; set; }
 
     bool IPredicate.ShouldTreeShake(IArguments arguments) => this.HasMissingArguments(arguments);
 

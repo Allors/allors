@@ -9,13 +9,13 @@ using Allors.Database.Meta;
 
 public class Instanceof : IPropertyPredicate
 {
-    public Instanceof(IRelationEndType relationEndType = null) => this.RelationEndType = relationEndType;
+    public Instanceof(RelationEndType relationEndType = null) => this.RelationEndType = relationEndType;
 
     public string Parameter { get; set; }
 
     public IComposite ObjectType { get; set; }
 
-    public IRelationEndType RelationEndType { get; set; }
+    public RelationEndType RelationEndType { get; set; }
 
     bool IPredicate.ShouldTreeShake(IArguments arguments) => ((IPredicate)this).HasMissingArguments(arguments);
 

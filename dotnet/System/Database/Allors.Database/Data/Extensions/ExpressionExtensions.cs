@@ -28,7 +28,7 @@ internal class MemberExpressionsVisitor : ExpressionVisitor
 
 public static class ExpressionExtensions
 {
-    public static Node Node<T>(this Expression<Func<T, IRelationEndType>> @this, MetaPopulation metaPopulation) where T : IComposite
+    public static Node Node<T>(this Expression<Func<T, RelationEndType>> @this, MetaPopulation metaPopulation) where T : IComposite
     {
         var visitor = new MemberExpressionsVisitor();
         visitor.Visit(@this);
@@ -49,7 +49,7 @@ public static class ExpressionExtensions
         Node path = null;
         Node currentPath = null;
 
-        void AddPath(IRelationEndType relationEndType)
+        void AddPath(RelationEndType relationEndType)
         {
             var newNode = new Node(relationEndType);
 

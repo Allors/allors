@@ -130,7 +130,7 @@ public class FromJsonVisitor : IVisitor
         var select = new Select
         {
             RelationEndType =
-                (IRelationEndType)this.fromJson.MetaPopulation.FindAssociationType(visited.a) ??
+                (RelationEndType)this.fromJson.MetaPopulation.FindAssociationType(visited.a) ??
                 this.fromJson.MetaPopulation.FindRoleType(visited.r),
             OfType = this.fromJson.MetaPopulation.FindComposite(visited.o),
         };
@@ -156,7 +156,7 @@ public class FromJsonVisitor : IVisitor
 
     public void VisitNode(Allors.Protocol.Json.Data.Node visited)
     {
-        var relationEndType = (IRelationEndType)this.fromJson.MetaPopulation.FindAssociationType(visited.a) ??
+        var relationEndType = (RelationEndType)this.fromJson.MetaPopulation.FindAssociationType(visited.a) ??
                            this.fromJson.MetaPopulation.FindRoleType(visited.r);
         var node = new Node(relationEndType);
 
@@ -232,7 +232,7 @@ public class FromJsonVisitor : IVisitor
             default:
                 var associationType = this.fromJson.MetaPopulation.FindAssociationType(visited.a);
                 var roleType = this.fromJson.MetaPopulation.FindRoleType(visited.r);
-                var relationEndType = (IRelationEndType)associationType ?? roleType;
+                var relationEndType = (RelationEndType)associationType ?? roleType;
 
                 switch (visited.k)
                 {

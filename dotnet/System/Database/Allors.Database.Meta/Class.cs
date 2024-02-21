@@ -75,6 +75,8 @@ public sealed class Class : EmbeddedObject, IComposite
 
     public bool IsClass => true;
 
+    public static implicit operator Class(IClassIndex index) => index.Meta;
+
     public override bool Equals(object other) => this.Id.Equals((other as IMetaIdentifiableObject)?.Id);
 
     public override int GetHashCode() => this.Id.GetHashCode();

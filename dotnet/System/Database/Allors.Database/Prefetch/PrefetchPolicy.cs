@@ -52,7 +52,7 @@ public sealed class PrefetchPolicy : IEnumerable<PrefetchRule>
         return new PrefetchPolicy(rules) { AllowCompilation = false };
     }
 
-    public static implicit operator PrefetchPolicy(IRelationEndType[] relationEndTypes)
+    public static implicit operator PrefetchPolicy(RelationEndType[] relationEndTypes)
     {
         var rules = relationEndTypes.Select(x => new PrefetchRule(x, null)).ToArray();
         return new PrefetchPolicy(rules) { AllowCompilation = false };

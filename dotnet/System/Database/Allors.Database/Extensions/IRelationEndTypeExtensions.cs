@@ -8,7 +8,7 @@ namespace Allors.Database.Meta;
 
 public static class IRelationEndTypeExtensions
 {
-    public static object Get(this IRelationEndType @this, IStrategy strategy, IComposite ofType = null)
+    public static object Get(this RelationEndType @this, IStrategy strategy, IComposite ofType = null)
     {
         if (@this is RoleType roleType)
         {

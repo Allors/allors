@@ -22,7 +22,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void InterfaceAssociation()
         {
-            Expression<Func<MetaUser, IRelationEndType>> expression = v => v.Logins;
+            Expression<Func<MetaUser, RelationEndType>> expression = v => v.Logins;
 
             var path = expression.Node(this.M);
 
@@ -33,7 +33,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void ClassAssociation()
         {
-            Expression<Func<MetaPerson, IRelationEndType>> expression = v => v.OrganizationWhereEmployee;
+            Expression<Func<MetaPerson, RelationEndType>> expression = v => v.OrganizationWhereEmployee;
 
             var path = expression.Node(this.M);
 
@@ -44,7 +44,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void ClassAssociationClassRole()
         {
-            Expression<Func<MetaPerson, IRelationEndType>> expression = v => v.OrganizationWhereEmployee.ObjectType.Information;
+            Expression<Func<MetaPerson, RelationEndType>> expression = v => v.OrganizationWhereEmployee.ObjectType.Information;
 
             var path = expression.Node(this.M);
 
@@ -59,7 +59,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void ClassRole()
         {
-            Expression<Func<MetaOrganization, IRelationEndType>> expression = v => v.Name;
+            Expression<Func<MetaOrganization, RelationEndType>> expression = v => v.Name;
 
             var path = expression.Node(this.M);
 
@@ -82,7 +82,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void ClassRoleClassRole()
         {
-            Expression<Func<MetaOrganization, IRelationEndType>> expression = v => v.Employees.ObjectType.FirstName;
+            Expression<Func<MetaOrganization, RelationEndType>> expression = v => v.Employees.ObjectType.FirstName;
 
             var path = expression.Node(this.M);
 
@@ -98,7 +98,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void ClassRoleInterfaceAsClassRole()
         {
-            Expression<Func<MetaUserGroup, IRelationEndType>> expression = v => v.Members.ObjectType.AsPerson.FirstName;
+            Expression<Func<MetaUserGroup, RelationEndType>> expression = v => v.Members.ObjectType.AsPerson.FirstName;
 
             var path = expression.Node(this.M);
 

@@ -9,13 +9,13 @@ using Allors.Database.Meta;
 
 public class Contains : IPropertyPredicate
 {
-    public Contains(IRelationEndType relationEndType = null) => this.RelationEndType = relationEndType;
+    public Contains(RelationEndType relationEndType = null) => this.RelationEndType = relationEndType;
 
     public IObject Object { get; set; }
 
     public string Parameter { get; set; }
 
-    public IRelationEndType RelationEndType { get; set; }
+    public RelationEndType RelationEndType { get; set; }
 
     bool IPredicate.ShouldTreeShake(IArguments arguments) => ((IPredicate)this).HasMissingArguments(arguments);
 

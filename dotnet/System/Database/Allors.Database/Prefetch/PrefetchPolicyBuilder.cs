@@ -16,14 +16,14 @@ public sealed class PrefetchPolicyBuilder
 
     public PrefetchPolicyBuilder() => this.rules = new List<PrefetchRule>();
 
-    public PrefetchPolicyBuilder WithRule(IRelationEndType relationEndType)
+    public PrefetchPolicyBuilder WithRule(RelationEndType relationEndType)
     {
         var rule = new PrefetchRule(relationEndType, null);
         this.rules.Add(rule);
         return this;
     }
 
-    public PrefetchPolicyBuilder WithRule(IRelationEndType relationEndType, PrefetchPolicy prefetch)
+    public PrefetchPolicyBuilder WithRule(RelationEndType relationEndType, PrefetchPolicy prefetch)
     {
         var rule = new PrefetchRule(relationEndType, prefetch);
         this.rules.Add(rule);

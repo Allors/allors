@@ -10,7 +10,7 @@ public class RoleTypeModel : RelationEndTypeModel
 
     public RoleType RoleType { get; }
 
-    protected override IRelationEndType RelationEndType => this.RoleType;
+    protected override RelationEndType RelationEndType => this.RoleType;
 
     // IRoleType
     public AssociationTypeModel AssociationType => this.Model.Map(this.RoleType.AssociationType);

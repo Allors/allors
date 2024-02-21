@@ -14,7 +14,7 @@ namespace Allors.Database.Domain
 
     public class OrganizationEmployementRule : Rule
     {
-        public OrganizationEmployementRule(M m) : base(m, new Guid("4B144553-5EED-4B52-BFB3-FACE609C6341")) =>
+        public OrganizationEmployementRule(IMetaIndex m) : base(m, new Guid("4B144553-5EED-4B52-BFB3-FACE609C6341")) =>
             this.Patterns =
             [
                 m.Employment.RolePattern(v => v.FromDate, v => v.Employer, m.Organization),

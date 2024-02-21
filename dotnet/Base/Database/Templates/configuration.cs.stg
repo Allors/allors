@@ -34,7 +34,7 @@ namespace Allors.Database.Domain
 
     public sealed class MetaIndex : IMetaIndex
     {
-		private readonly IMetaPopulation meta;
+		private readonly MetaPopulation meta;
 
 		// Units
 $meta.units:{objectType|$metaObjectType_Field()$}; separator="\n"$
@@ -109,23 +109,23 @@ $meta.relationTypes:{relationType|$metaRoleType_Type()$}; separator="\n"$
 >>
 
 metaUnit_Init() ::= <<
-			this._$objectType.SingularName$ = new $objectType.SingularName$Index { Meta = (IUnit)meta.FindById(MetaIds.$objectType.SingularName$) };
+			this._$objectType.SingularName$ = new $objectType.SingularName$Index { Meta = (Unit)meta.FindById(MetaIds.$objectType.SingularName$) };
 >>
 
 metaInterface_Init() ::= <<
-			this._$objectType.SingularName$ = new $objectType.SingularName$Index { Meta = (IInterface)meta.FindById(MetaIds.$objectType.SingularName$) };
+			this._$objectType.SingularName$ = new $objectType.SingularName$Index { Meta = (Interface)meta.FindById(MetaIds.$objectType.SingularName$) };
 >>
 
 metaClass_Init() ::= <<
-			this._$objectType.SingularName$ = new $objectType.SingularName$Index { Meta = (IClass)meta.FindById(MetaIds.$objectType.SingularName$) };
+			this._$objectType.SingularName$ = new $objectType.SingularName$Index { Meta = (Class)meta.FindById(MetaIds.$objectType.SingularName$) };
 >>
 
 metaRoleType_Init() ::= <<
-			this._$relationType.RoleType.FullName$ = new $relationType.RoleType.FullName$Index { Meta = ((IRelationType)meta.FindById(MetaIds.$relationType.RoleType.FullName$)).RoleType };
+			this._$relationType.RoleType.FullName$ = new $relationType.RoleType.FullName$Index { Meta = ((RelationType)meta.FindById(MetaIds.$relationType.RoleType.FullName$)).RoleType };
 >>
 
 metaAssociationType_Init() ::= <<
-			this._$relationType.AssociationType.Name$ = new $relationType.AssociationType.Name$Index { Meta = ((IRelationType)meta.FindById(MetaIds.$relationType.RoleType.FullName$)).AssociationType };
+			this._$relationType.AssociationType.Name$ = new $relationType.AssociationType.Name$Index { Meta = ((RelationType)meta.FindById(MetaIds.$relationType.RoleType.FullName$)).AssociationType };
 >>
 
 metaInterface_Init_Properties() ::= <<
@@ -193,7 +193,7 @@ metaAssociationType_Property() ::= <<
 metaUnit_Type() ::= <<
 	public class $unit.SingularName$Index : I$unit.SingularName$Index 
 	{
-		public IUnit Meta { get; internal set; }
+		public Unit Meta { get; internal set; }
 	}
 
 >>
@@ -201,7 +201,7 @@ metaUnit_Type() ::= <<
 metaInterface_Type() ::= <<
 	public class $interface.SingularName$Index : I$interface.SingularName$Index
 	{
-		public IInterface Meta { get; internal set; }
+		public Interface Meta { get; internal set; }
 
 $interface.Subtypes:{subtype|$metaObjectType_Subtype()$}; separator="\n"$
 $interface.RoleTypes:{roleType|$metaObjectType_RoleType()$}; separator="\n"$
@@ -213,7 +213,7 @@ $interface.AssociationTypes:{associationType|$metaObjectType_AssociationType()$}
 metaClass_Type() ::= <<
 	public class $class.SingularName$Index : I$class.SingularName$Index
 	{
-		public IClass Meta { get; internal set; }
+		public Class Meta { get; internal set; }
 
 $class.RoleTypes:{roleType|$metaObjectType_RoleType()$}; separator="\n"$
 $class.AssociationTypes:{associationType|$metaObjectType_AssociationType()$}; separator="\n"$
@@ -238,7 +238,7 @@ metaObjectType_AssociationType() ::= <<
 metaRoleType_Type() ::= <<
 	public class $relationType.RoleType.FullName$Index : I$relationType.RoleType.FullName$Index
 	{
-		public IRoleType Meta { get; internal set; }
+		public RoleType Meta { get; internal set; }
 
 $if(relationType.RoleType.ObjectType.IsComposite)$	
 	public I$relationType.RoleType.ObjectType$Index ObjectType { get; internal set; }
@@ -251,7 +251,7 @@ $endif$
 metaAssociationType_Type() ::= <<
 	public class $relationType.AssociationType.Name$Index : I$relationType.AssociationType.Name$Index
 	{
-		public IAssociationType Meta { get; internal set; }
+		public AssociationType Meta { get; internal set; }
 
 		public I$relationType.AssociationType.ObjectType$Index ObjectType { get; internal set; }
 

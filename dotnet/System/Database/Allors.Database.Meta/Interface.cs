@@ -78,6 +78,8 @@ public sealed class Interface : EmbeddedObject, IComposite
 
     public bool IsClass => false;
 
+    public static implicit operator Interface(IInterfaceIndex index) => index.Meta;
+
     public override bool Equals(object other) => this.Id.Equals((other as IMetaIdentifiableObject)?.Id);
 
     public override int GetHashCode() => this.Id.GetHashCode();

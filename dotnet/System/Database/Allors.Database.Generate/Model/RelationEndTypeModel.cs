@@ -34,6 +34,6 @@ public abstract class RelationEndTypeModel
 
     public bool IsMany => this.RelationEndType.IsMany;
 
-    protected abstract IRelationEndType RelationEndType { get; }
+    protected abstract RelationEndType RelationEndType { get; }
 
 }

@@ -9,5 +9,5 @@ using Allors.Database.Meta;
 
 public interface IPropertyPredicate : IPredicate
 {
-    IRelationEndType RelationEndType { get; set; }
+    RelationEndType RelationEndType { get; set; }
 }

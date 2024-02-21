@@ -11,7 +11,7 @@ using Allors.Database.Meta;
 
 public sealed class PrefetchRule
 {
-    public PrefetchRule(IRelationEndType relationEndType, PrefetchPolicy prefetchPolicy)
+    public PrefetchRule(RelationEndType relationEndType, PrefetchPolicy prefetchPolicy)
     {
         if (relationEndType == null)
         {
@@ -27,7 +27,7 @@ public sealed class PrefetchRule
         this.PrefetchPolicy = prefetchPolicy;
     }
 
-    public IRelationEndType RelationEndType { get; }
+    public RelationEndType RelationEndType { get; }
 
     public PrefetchPolicy PrefetchPolicy { get; }
 

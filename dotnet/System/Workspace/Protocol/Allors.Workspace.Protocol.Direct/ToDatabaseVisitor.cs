@@ -200,7 +200,7 @@ namespace Allors.Workspace.Protocol.Direct
 
         private IComposite Visit(Meta.IComposite ws) => ws != null ? (IComposite)this.metaPopulation.FindByTag(ws.Tag) : null;
 
-        private IRelationEndType Visit(Meta.IRelationEndType ws) =>
+        private RelationEndType Visit(Meta.IRelationEndType ws) =>
             ws switch
             {
                 IAssociationType associationType => this.Visit(associationType),

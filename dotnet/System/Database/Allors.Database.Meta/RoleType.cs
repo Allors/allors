@@ -12,7 +12,7 @@ using System.Linq;
 using Allors.Graph;
 using Text;
 
-public sealed class RoleType : IRelationEndType, IComparable
+public sealed class RoleType : RelationEndType, IComparable
 {
     private readonly IObjectType objectType;
 
@@ -27,13 +27,10 @@ public sealed class RoleType : IRelationEndType, IComparable
 
     public RoleType(IObjectType objectType, string assignedSingularName, string assignedPluralName)
     {
-        this.Attributes = new MetaExtension();
         this.objectType = objectType;
         this.AssignedSingularName = !string.IsNullOrEmpty(assignedSingularName) ? assignedSingularName : null;
         this.AssignedPluralName = !string.IsNullOrEmpty(assignedPluralName) ? assignedPluralName : null;
     }
-
-    public dynamic Attributes { get; }
 
     public RelationType RelationType
     {
@@ -57,9 +54,9 @@ public sealed class RoleType : IRelationEndType, IComparable
 
     private string ValidationName => "RoleType: " + this.relationType.Name;
 
-    public IObjectType ObjectType => this.objectType;
+    public override IObjectType ObjectType => this.objectType;
 
-    public string SingularName
+    public override string SingularName
     {
         get => this.singularName;
         set => this.singularName = value;
@@ -69,26 +66,26 @@ public sealed class RoleType : IRelationEndType, IComparable
     ///     Gets the full singular name.
     /// </summary>
     /// <value>The full singular name.</value>
-    public string SingularFullName => this.relationType.AssociationType.ObjectType + this.SingularName;
+    public override string SingularFullName => this.relationType.AssociationType.ObjectType + this.SingularName;
 
-    public string PluralName
+    public override string PluralName
     {
         get => this.AssignedPluralName ?? (this.AssignedSingularName != null
             ? Pluralizer.Pluralize(this.AssignedSingularName)
-            : ((IRelationEndType)this).ObjectType.PluralName);
+            : ((RelationEndType)this).ObjectType.PluralName);
     }
 
     /// <summary>
     ///     Gets the full plural name.
     /// </summary>
     /// <value>The full plural name.</value>
-    public string PluralFullName => this.relationType.AssociationType.ObjectType + this.PluralName;
+    public override string PluralFullName => this.relationType.AssociationType.ObjectType + this.PluralName;
 
-    public string Name => this.IsMany ? this.PluralName : this.SingularName;
+    public override string Name => this.IsMany ? this.PluralName : this.SingularName;
 
     public string FullName => this.IsMany ? this.PluralFullName : this.SingularFullName;
 
-    public bool IsMany =>
+    public override bool IsMany =>
         this.relationType.Multiplicity switch
         {
             Multiplicity.OneToMany => true,
@@ -100,13 +97,15 @@ public sealed class RoleType : IRelationEndType, IComparable
     ///     Gets a value indicating whether this state has a multiplicity of one.
     /// </summary>
     /// <value><c>true</c> if this state is one; otherwise, <c>false</c>.</value>
-    public bool IsOne => !this.IsMany;
+    public override bool IsOne => !this.IsMany;
 
     public int? Size { get; set; }
 
     public int? Precision { get; set; }
 
     public int? Scale { get; set; }
+
+    public static implicit operator RoleType(IRoleTypeIndex index) => index.Meta;
 
     public int CompareTo(object other) => this.relationType.Id.CompareTo((other as RoleType)?.relationType.Id);
 
@@ -162,7 +161,7 @@ public sealed class RoleType : IRelationEndType, IComparable
     ///     Validates the state.
     /// </summary>
     /// <param name="validationLog">The validation.</param>
-    public void Validate(ValidationLog validationLog)
+    public override void Validate(ValidationLog validationLog)
     {
         if (this.objectType == null)
         {
@@ -185,7 +184,7 @@ public sealed class RoleType : IRelationEndType, IComparable
 
     public void InitializeCompositeRoleTypes(Dictionary<IComposite, HashSet<CompositeRoleType>> compositeRoleTypesByComposite)
     {
-        var composite = this.relationType.AssociationType.ObjectType;
+        var composite = this.relationType.AssociationType.ObjectTypeAsComposite;
         compositeRoleTypesByComposite[composite].Add(this.compositeRoleType);
 
         var dictionary = composite.Subtypes.ToDictionary(v => v, v =>
@@ -202,7 +201,7 @@ public sealed class RoleType : IRelationEndType, IComparable
 
     public void DeriveIsRequired()
     {
-        var composites = new Graph<IComposite>(this.relationType.AssociationType.ObjectType.Composites, v => v.DirectSubtypes).Reverse();
+        var composites = new Graph<IComposite>(this.relationType.AssociationType.ObjectTypeAsComposite.Composites, v => v.DirectSubtypes).Reverse();
 
         bool previousRequired = false;
         foreach (var composite in composites)
@@ -219,7 +218,7 @@ public sealed class RoleType : IRelationEndType, IComparable
 
     public void DeriveIsUnique()
     {
-        var composites = new Graph<IComposite>(this.relationType.AssociationType.ObjectType.Composites, v => v.DirectSubtypes).Reverse();
+        var composites = new Graph<IComposite>(this.relationType.AssociationType.ObjectTypeAsComposite.Composites, v => v.DirectSubtypes).Reverse();
 
         bool previousUnique = false;
         foreach (var composite in composites)

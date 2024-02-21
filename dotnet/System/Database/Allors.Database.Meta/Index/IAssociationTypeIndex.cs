@@ -6,7 +6,7 @@
 
 namespace Allors.Database.Meta;
 
-public interface IAssociationTypeIndex
+public abstract class IAssociationTypeIndex
 {
-    AssociationType Meta { get; }
+    public abstract AssociationType Meta { get; }
 }

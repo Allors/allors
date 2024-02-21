@@ -175,7 +175,7 @@ $class.Objects:{object|$class_Object()$}; separator="\n"$
 
 		public IMetaIndex M => m;
 
-		public Allors.Database.Meta.Meta$class.SingularName$ Meta => m.$class.SingularName$;
+		public I$class.SingularName$Index Meta => m.$class.SingularName$;
 
 		public long Id
 		{
@@ -628,41 +628,15 @@ namespace Allors.Database.Domain
 {
     using Meta;
 
-    public interface IUnits : IMetaPopulationIndex
+    public class IMetaIndex(MetaPopulation meta) : IMetaPopulationIndex
     {
+		public override MetaPopulation Meta => meta;
+
 $meta.units:{objectType|$metaObjectType_Property()$}; separator="\n"$
-    }
-
-    public interface IInterfaces : IMetaPopulationIndex
-    {
 $meta.interfaces:{objectType|$metaObjectType_Property()$}; separator="\n"$
-    }
-
-    public interface IClasses : IMetaPopulationIndex
-    {
 $meta.classes:{objectType|$metaObjectType_Property()$}; separator="\n"$
-    }
-
-    public interface IRoleTypes : IMetaPopulationIndex
-    {
 $meta.relationTypes:{relationType|$metaRoleType_Property()$}; separator="\n"$
-    }
-
-    public interface IAssociationTypes : IMetaPopulationIndex
-    {
 $meta.relationTypes:{relationType|$metaAssociationType_Property()$}; separator="\n"$
-    }
-
-	public interface IComposites : IClasses, IInterfaces
-    {
-    }
-
-    public interface IObjectTypes : IComposites, IUnits
-    {
-    }
-
-    public interface IMetaIndex : IObjectTypes, IRoleTypes, IAssociationTypes
-    {
     }
 
 $meta.units:{unit|$metaUnit_Type()$}; separator="\n"$
@@ -674,30 +648,33 @@ $meta.relationTypes:{relationType|$metaRoleType_Type()$}; separator="\n"$
 >>
 
 metaObjectType_Property() ::= <<
-		I$objectType.SingularName$Index $objectType.SingularName$ { get; }
+		public I$objectType.SingularName$Index $objectType.SingularName$ { get; set; }
 
 >>
 
 metaRoleType_Property() ::= <<
-		I$relationType.RoleType.FullName$Index $relationType.RoleType.FullName$ { get; }
+		public I$relationType.RoleType.FullName$Index $relationType.RoleType.FullName$ { get; set; }
 
 >>
 
 metaAssociationType_Property() ::= <<
-		I$relationType.AssociationType.Name$Index $relationType.AssociationType.Name$ { get; }
+		public I$relationType.AssociationType.Name$Index $relationType.AssociationType.Name$ { get; set; }
 
 >>
 
 metaUnit_Type() ::= <<
-	public interface I$unit.SingularName$Index : IUnitIndex 
+	public class I$unit.SingularName$Index(Unit meta) : IUnitIndex 
 	{
+		public override Unit Meta => meta;
 	}
 
 >>
 
 metaInterface_Type() ::= <<
-	public interface I$interface.SingularName$Index : IInterfaceIndex
+	public class I$interface.SingularName$Index(Interface meta) : IInterfaceIndex
 	{
+		public override Interface Meta => meta;
+
 $interface.Subtypes:{subtype|$metaObjectType_Subtype()$}; separator="\n"$
 $interface.RoleTypes:{roleType|$metaObjectType_RoleType()$}; separator="\n"$
 $interface.AssociationTypes:{associationType|$metaObjectType_AssociationType()$}; separator="\n"$
@@ -706,8 +683,10 @@ $interface.AssociationTypes:{associationType|$metaObjectType_AssociationType()$}
 >>
 
 metaClass_Type() ::= <<
-	public interface I$class.SingularName$Index : IClassIndex
+	public class I$class.SingularName$Index(Class meta) : IClassIndex
 	{
+		public override Class Meta => meta;
+
 $class.RoleTypes:{roleType|$metaObjectType_RoleType()$}; separator="\n"$
 $class.AssociationTypes:{associationType|$metaObjectType_AssociationType()$}; separator="\n"$
 	}
@@ -715,34 +694,38 @@ $class.AssociationTypes:{associationType|$metaObjectType_AssociationType()$}; se
 >>
 
 metaObjectType_Subtype() ::= <<
-		I$subtype.SingularName$Index As$subtype.SingularName$ { get; }
+		public I$subtype.SingularName$Index As$subtype.SingularName$ { get; set; }
 >>
 
 metaObjectType_RoleType() ::= <<
-		I$roleType.FullName$Index $roleType.Name$ { get; }
+		public I$roleType.FullName$Index $roleType.Name$ { get; set; }
 >>
 
 metaObjectType_AssociationType() ::= <<
-		I$associationType.Name$Index $associationType.Name$ { get; }
+		public I$associationType.Name$Index $associationType.Name$ { get; set; }
 >>
 
 metaRoleType_Type() ::= <<
-	public interface I$relationType.RoleType.FullName$Index : IRoleTypeIndex
+	public class I$relationType.RoleType.FullName$Index(RoleType meta) : IRoleTypeIndex
 	{
-$if(relationType.RoleType.ObjectType.IsComposite)$	
-		I$relationType.RoleType.ObjectType$Index ObjectType { get; }
+        	public override RoleType Meta => meta;
 
-		I$relationType.AssociationType.Name$Index AssociationType { get; }
+$if(relationType.RoleType.ObjectType.IsComposite)$	
+		public I$relationType.RoleType.ObjectType$Index ObjectType { get; set; }
+
+		public I$relationType.AssociationType.Name$Index AssociationType { get; set; }
 $endif$
 	}
 >>
 
 metaAssociationType_Type() ::= <<
-	public interface I$relationType.AssociationType.Name$Index : IAssociationTypeIndex
+	public class I$relationType.AssociationType.Name$Index(AssociationType meta) : IAssociationTypeIndex
 	{
-		I$relationType.AssociationType.ObjectType$Index ObjectType { get; }
+		public override AssociationType Meta => meta;
 
-		I$relationType.RoleType.FullName$Index RoleType { get; }
+		public I$relationType.AssociationType.ObjectType$Index ObjectType { get; set; }
+
+		public I$relationType.RoleType.FullName$Index RoleType { get; set; }
 	}
 
 >>

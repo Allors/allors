@@ -9,11 +9,11 @@ using Allors.Database.Meta;
 
 public class Exists : IPropertyPredicate
 {
-    public Exists(IRelationEndType relationEndType = null) => this.RelationEndType = relationEndType;
+    public Exists(RelationEndType relationEndType = null) => this.RelationEndType = relationEndType;
 
     public string Parameter { get; set; }
 
-    public IRelationEndType RelationEndType { get; set; }
+    public RelationEndType RelationEndType { get; set; }
 
     bool IPredicate.ShouldTreeShake(IArguments arguments) => ((IPredicate)this).HasMissingArguments(arguments);
 
@@ -22,7 +22,7 @@ public class Exists : IPropertyPredicate
     void IPredicate.Build(ITransaction transaction, IArguments arguments, Database.ICompositePredicate compositePredicate)
     {
         var relationEndType = this.Parameter != null
-            ? (IRelationEndType)transaction.GetMetaObject(arguments.ResolveMetaObject(this.Parameter))
+            ? (RelationEndType)transaction.GetMetaObject(arguments.ResolveMetaObject(this.Parameter))
             : this.RelationEndType;
 
         if (relationEndType != null)

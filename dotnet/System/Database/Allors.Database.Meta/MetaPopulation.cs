@@ -104,6 +104,8 @@ public sealed class MetaPopulation : EmbeddedPopulation, IEmbeddedPopulation
         }
     }
 
+    public static implicit operator MetaPopulation(IMetaPopulationIndex index) => index.Meta;
+
     public IMetaIdentifiableObject FindById(Guid id)
     {
         this.metaIdentifiableObjectById.TryGetValue(id, out var metaObject);

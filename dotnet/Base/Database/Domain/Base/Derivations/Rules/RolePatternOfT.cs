@@ -21,7 +21,7 @@ namespace Allors.Database.Domain.Derivations.Rules
 
         public RolePattern(T objectType, RoleType roleType, Func<T, IEnumerable<Node>> path) : base(roleType, objectType) => this.Tree = path(objectType).ToArray();
 
-        public RolePattern(T objectType, RoleType roleType, Expression<Func<T, IRelationEndType>> step) : base(roleType, objectType) => this.Tree = [step?.Node(objectType.MetaPopulation)];
+        public RolePattern(T objectType, RoleType roleType, Expression<Func<T, RelationEndType>> step) : base(roleType, objectType) => this.Tree = [step?.Node(objectType.MetaPopulation)];
 
         public RolePattern(T objectType, RoleType roleType, Expression<Func<T, IComposite>> step) : base(roleType, objectType) => this.Tree = [step?.Node(objectType.MetaPopulation)];
 
@@ -31,7 +31,7 @@ namespace Allors.Database.Domain.Derivations.Rules
 
         public RolePattern(T objectType, Func<T, RoleType> role, Func<T, IEnumerable<Node>> path) : base(role(objectType), objectType) => this.Tree = path(objectType).ToArray();
 
-        public RolePattern(T objectType, Func<T, RoleType> role, Expression<Func<T, IRelationEndType>> step) : base(role(objectType), objectType) => this.Tree = [step?.Node(objectType.MetaPopulation)];
+        public RolePattern(T objectType, Func<T, RoleType> role, Expression<Func<T, RelationEndType>> step) : base(role(objectType), objectType) => this.Tree = [step?.Node(objectType.MetaPopulation)];
 
         public RolePattern(T objectType, Func<T, RoleType> role, Expression<Func<T, IComposite>> step) : base(role(objectType), objectType) => this.Tree = [step?.Node(objectType.MetaPopulation)];
     }

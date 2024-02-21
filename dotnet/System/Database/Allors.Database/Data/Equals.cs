@@ -9,7 +9,7 @@ using Allors.Database.Meta;
 
 public class Equals : IPropertyPredicate
 {
-    public Equals(IRelationEndType relationEndType = null) => this.RelationEndType = relationEndType;
+    public Equals(RelationEndType relationEndType = null) => this.RelationEndType = relationEndType;
 
     public IObject Object { get; set; }
 
@@ -20,7 +20,7 @@ public class Equals : IPropertyPredicate
     public string Parameter { get; set; }
 
     /// <inheritdoc />
-    public IRelationEndType RelationEndType { get; set; }
+    public RelationEndType RelationEndType { get; set; }
 
     bool IPredicate.ShouldTreeShake(IArguments arguments) => ((IPredicate)this).HasMissingArguments(arguments);
 

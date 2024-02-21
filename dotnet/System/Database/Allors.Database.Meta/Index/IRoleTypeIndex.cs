@@ -6,7 +6,7 @@
 
 namespace Allors.Database.Meta;
 
-public interface IRoleTypeIndex
+public abstract class IRoleTypeIndex
 {
-    RoleType Meta { get; }
+    public abstract RoleType Meta { get; }
 }

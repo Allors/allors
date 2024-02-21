@@ -13,7 +13,7 @@ using System;
 ///     This is also called the 'active', 'controlling' or 'owning' side.
 ///     AssociationTypes can only have composite <see cref="ObjectType" />s.
 /// </summary>
-public sealed class AssociationType : IComparable, IRelationEndType
+public sealed class AssociationType : RelationEndType, IComparable 
 {
     private readonly IComposite objectType;
     private RelationType relationType;
@@ -25,15 +25,12 @@ public sealed class AssociationType : IComparable, IRelationEndType
 
     public AssociationType(IComposite objectType)
     {
-        this.Attributes = new MetaExtension();
         this.objectType = objectType;
     }
 
-    public dynamic Attributes { get; }
+    public override IObjectType ObjectType => this.objectType;
 
-    IObjectType IRelationEndType.ObjectType => this.objectType;
-
-    public IComposite ObjectType => this.objectType;
+    public IComposite ObjectTypeAsComposite => this.objectType;
     
     public RoleType RoleType => this.relationType.RoleType;
     
@@ -43,36 +40,32 @@ public sealed class AssociationType : IComparable, IRelationEndType
         set => this.relationType = value;
     }
 
-    public string Name => this.IsMany ? this.PluralName : this.SingularName;
+    public override string Name => this.IsMany ? this.PluralName : this.SingularName;
 
-    public string SingularFullName => this.SingularName;
+    public override string SingularFullName => this.SingularName;
 
-    public string SingularName => this.objectType.SingularName + Where + this.relationType.RoleType.SingularName;
+    public override string SingularName
+    {
+        get => this.objectType.SingularName + Where + this.relationType.RoleType.SingularName;
+        set => throw new NotSupportedException();
+    }
 
-    public string PluralFullName => this.PluralName;
+    public override string PluralFullName => this.PluralName;
 
-    public string PluralName => this.objectType.PluralName + Where + this.relationType.RoleType.SingularName;
+    public override string PluralName => this.objectType.PluralName + Where + this.relationType.RoleType.SingularName;
     
-    bool IRelationEndType.IsOne => !this.IsMany;
-
-    bool IRelationEndType.IsMany =>
-        this.relationType.Multiplicity switch
-        {
-            Multiplicity.ManyToOne => true,
-            Multiplicity.ManyToMany => true,
-            _ => false,
-        };
-
-
+    public override bool IsOne => !this.IsMany;
     private string ValidationName => "association type " + this.Name;
 
-    public bool IsMany =>
+    public override bool IsMany =>
         this.relationType.Multiplicity switch
         {
             Multiplicity.ManyToOne => true,
             Multiplicity.ManyToMany => true,
             _ => false,
         };
+
+    public static implicit operator AssociationType(IAssociationTypeIndex index) => index.Meta;
 
     public int CompareTo(object other) => this.relationType.Id.CompareTo((other as AssociationType)?.relationType.Id);
 
@@ -82,7 +75,7 @@ public sealed class AssociationType : IComparable, IRelationEndType
 
     public override string ToString() => $"{this.relationType.RoleType.ObjectType.SingularName}.{this.Name}";
 
-    public void Validate(ValidationLog validationLog)
+    public override void Validate(ValidationLog validationLog)
     {
         if (this.objectType == null)
         {

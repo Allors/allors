@@ -10,7 +10,7 @@ using Allors.Database.Meta;
 
 public static class IRelationEndTypesExtensions
 {
-    public static Node Path(this IRelationEndType[] @this)
+    public static Node Path(this RelationEndType[] @this)
     {
         if (@this == null)
         {

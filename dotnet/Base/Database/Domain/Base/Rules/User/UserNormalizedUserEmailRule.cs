@@ -14,7 +14,7 @@ namespace Allors.Database.Domain
 
     public class UserNormalizedUserEmailRule : Rule
     {
-        public UserNormalizedUserEmailRule(M m) : base(m, new Guid("904187C3-773E-47BC-A2EA-EF45ECA78FD2")) =>
+        public UserNormalizedUserEmailRule(IMetaIndex m) : base(m, new Guid("904187C3-773E-47BC-A2EA-EF45ECA78FD2")) =>
                this.Patterns =
                [
                 m.User.RolePattern(v=>v.UserEmail),

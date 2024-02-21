@@ -40,7 +40,7 @@ public sealed class RelationType : IMetaIdentifiableObject, IComparable
         this.roleType.RelationType = this;
         this.roleType.SingularName = this.roleType.AssignedSingularName ?? this.roleType.ObjectType.SingularName;
 
-        this.roleType.CompositeRoleType = new CompositeRoleType(this.associationType.ObjectType, this.roleType);
+        this.roleType.CompositeRoleType = new CompositeRoleType(this.associationType.ObjectTypeAsComposite, this.roleType);
 
         this.MetaPopulation.OnCreated(this);
     }
@@ -86,7 +86,7 @@ public sealed class RelationType : IMetaIdentifiableObject, IComparable
         {
             if (this.associationType?.ObjectType != null && this.roleType?.ObjectType != null)
             {
-                return this.associationType.ObjectType.ExclusiveClass != null && this.roleType.ObjectType is IComposite roleCompositeType && roleCompositeType.ExclusiveClass != null;
+                return this.associationType.ObjectTypeAsComposite.ExclusiveClass != null && this.roleType.ObjectType is IComposite roleCompositeType && roleCompositeType.ExclusiveClass != null;
             }
 
             return false;
@@ -116,7 +116,7 @@ public sealed class RelationType : IMetaIdentifiableObject, IComparable
     public void DeriveWorkspaceNames() =>
         this.derivedWorkspaceNames = this.AssignedWorkspaceNames != null
             ? this.AssignedWorkspaceNames
-                .Intersect(this.associationType.ObjectType.Classes.SelectMany(v => v.WorkspaceNames))
+                .Intersect(this.associationType.ObjectTypeAsComposite.Classes.SelectMany(v => v.WorkspaceNames))
                 .Intersect(this.roleType.ObjectType switch
                 {
                     Unit unit => unit.WorkspaceNames,

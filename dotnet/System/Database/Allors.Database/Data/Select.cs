@@ -14,11 +14,11 @@ public class Select : IVisitable
     {
     }
 
-    public Select(params IRelationEndType[] relationEndTypes) : this(relationEndTypes, 0)
+    public Select(params RelationEndType[] relationEndTypes) : this(relationEndTypes, 0)
     {
     }
 
-    private Select(IRelationEndType[] relationEndTypes, int index)
+    private Select(RelationEndType[] relationEndTypes, int index)
     {
         if (relationEndTypes?.Length > 0)
         {
@@ -34,7 +34,7 @@ public class Select : IVisitable
 
     public Node[] Include { get; set; }
 
-    public IRelationEndType RelationEndType { get; set; }
+    public RelationEndType RelationEndType { get; set; }
 
     public IComposite OfType { get; set; }
 
@@ -98,7 +98,7 @@ public class Select : IVisitable
         return select != null;
     }
 
-    private static IRelationEndType Resolve(IComposite composite, string propertyName)
+    private static RelationEndType Resolve(IComposite composite, string propertyName)
     {
         var lowerCasePropertyName = propertyName.ToLowerInvariant();
 

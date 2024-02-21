@@ -15,7 +15,7 @@ public interface IPrefetchPolicyCache
 
     PrefetchPolicy Security { get; }
 
-    PrefetchPolicy ForDependency(IComposite composite, ISet<IRelationEndType> relationEndTypes);
+    PrefetchPolicy ForDependency(IComposite composite, ISet<RelationEndType> relationEndTypes);
 
     IDictionary<Class, PrefetchPolicy> WorkspacePrefetchPolicyByClass(string workspaceName);
 

@@ -13,12 +13,12 @@ using Allors.Database.Meta;
 
 public class Node : IVisitable
 {
-    public Node(IRelationEndType relationEndType, Node node)
+    public Node(RelationEndType relationEndType, Node node)
         : this(relationEndType, node != null ? [node] : null)
     {
     }
 
-    public Node(IRelationEndType relationEndType, IEnumerable<Node> nodes = null)
+    public Node(RelationEndType relationEndType, IEnumerable<Node> nodes = null)
     {
         this.RelationEndType = relationEndType;
 
@@ -30,7 +30,7 @@ public class Node : IVisitable
         this.Nodes ??= Array.Empty<Node>();
     }
 
-    public IRelationEndType RelationEndType { get; }
+    public RelationEndType RelationEndType { get; }
 
     public Node[] Nodes { get; private set; }
 
@@ -90,7 +90,7 @@ public class Node : IVisitable
         }
     }
 
-    public Node Add(IEnumerable<IRelationEndType> relationEndTypes)
+    public Node Add(IEnumerable<RelationEndType> relationEndTypes)
     {
         foreach (var relationEndType in relationEndTypes)
         {
@@ -100,14 +100,14 @@ public class Node : IVisitable
         return this;
     }
 
-    public Node Add(IRelationEndType relationEndType)
+    public Node Add(RelationEndType relationEndType)
     {
         var treeNode = new Node(relationEndType);
         this.Add(treeNode);
         return this;
     }
 
-    public Node Add(IRelationEndType relationEndType, Node[] subTree)
+    public Node Add(RelationEndType relationEndType, Node[] subTree)
     {
         var treeNode = new Node(relationEndType, subTree);
         this.Add(treeNode);
@@ -126,7 +126,7 @@ public class Node : IVisitable
 
             if (node.RelationEndType is RoleType roleType)
             {
-                addedComposite = roleType.AssociationType.ObjectType;
+                addedComposite = roleType.AssociationType.ObjectTypeAsComposite;
             }
             else if (node.RelationEndType is AssociationType associationType)
             {
