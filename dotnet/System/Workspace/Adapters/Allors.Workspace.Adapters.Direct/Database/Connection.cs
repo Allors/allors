@@ -41,7 +41,7 @@ namespace Allors.Workspace.Adapters.Direct
 
         public IDatabaseServices DatabaseServices => this.Database.Services;
 
-        public Database.Meta.IMetaPopulation MetaPopulation => this.Database.MetaPopulation;
+        public Database.Meta.MetaPopulation MetaPopulation => this.Database.MetaPopulation;
 
         public ITransaction CreateTransaction()
         {

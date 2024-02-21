@@ -38,10 +38,10 @@ namespace Allors.Database.Domain
 
         public IOperandType OperandType => this.MethodType;
 
-        IMethodType IExecutePermission.MethodType => this.MethodType;
-        public IMethodType MethodType
+        MethodType IExecutePermission.MethodType => this.MethodType;
+        public MethodType MethodType
         {
-            get => (IMethodType)this.Transaction().Database.MetaPopulation.FindById(this.MethodTypePointer);
+            get => (MethodType)this.Transaction().Database.MetaPopulation.FindById(this.MethodTypePointer);
 
             set
             {

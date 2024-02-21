@@ -437,7 +437,7 @@ public class FromJsonVisitor : IVisitor
         {
             SortDirection = visited.d ?? SortDirection.Ascending,
             RoleType = !string.IsNullOrWhiteSpace(visited.r)
-                ? ((IRelationType)this.fromJson.MetaPopulation.FindByTag(visited.r)).RoleType
+                ? ((RelationType)this.fromJson.MetaPopulation.FindByTag(visited.r)).RoleType
                 : null,
         };
 

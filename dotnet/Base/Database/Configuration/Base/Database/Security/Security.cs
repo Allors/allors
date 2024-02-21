@@ -53,7 +53,7 @@ namespace Allors.Database.Configuration
                 .WithRule(m.Revocation.DeniedPermissions)
                 .Build();
 
-            this.permissionIdsByWorkspaceName = ((IMetaPopulation)m).WorkspaceNames
+            this.permissionIdsByWorkspaceName = ((MetaPopulation)m).WorkspaceNames
                 .ToDictionary(v => v, v => new HashSet<long>(metaCache.GetWorkspaceClasses(v).SelectMany(w =>
                 {
                     var @class = w;

@@ -24,7 +24,7 @@ public sealed class Domain : EmbeddedObject, IDomain
 
     public dynamic Attributes { get; }
 
-    IMetaPopulation IMetaIdentifiableObject.MetaPopulation => this.MetaPopulation;
+    MetaPopulation IMetaIdentifiableObject.MetaPopulation => this.MetaPopulation;
 
     public MetaPopulation MetaPopulation { get; }
     

@@ -18,7 +18,7 @@ public class MethodCompiler
     private readonly Dictionary<Type, MethodInfo[]> extensionMethodsByInterface;
     private readonly List<IDomain> sortedDomains;
 
-    public MethodCompiler(IMetaPopulation metaPopulation, Dictionary<Type, MethodInfo[]> extensionMethodsByInterface)
+    public MethodCompiler(MetaPopulation metaPopulation, Dictionary<Type, MethodInfo[]> extensionMethodsByInterface)
     {
         this.extensionMethodsByInterface = extensionMethodsByInterface;
         this.sortedDomains = new List<IDomain>(metaPopulation.Domains);
@@ -27,11 +27,11 @@ public class MethodCompiler
         this.actionByMethodInfoByType = new ConcurrentDictionary<Type, Dictionary<MethodInfo, Action<object, object>>>();
     }
 
-    public Action<object, object>[] Compile(IClass @class, IMethodType methodType)
+    public Action<object, object>[] Compile(IClass @class, MethodType methodType)
     {
         var actions = new List<Action<object, object>>();
 
-        var interfaces = new List<IInterface>(@class.Supertypes);
+        var interfaces = new List<Interface>(@class.Supertypes);
 
         interfaces.Sort(
             (a, b) =>

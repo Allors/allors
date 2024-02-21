@@ -39,7 +39,7 @@ internal sealed class AssociationInstanceOf : Predicate
 
         var metaCache = strategy.Transaction.Database.MetaCache;
 
-        return this.objectType is IInterface @interface && metaCache.GetSupertypesByComposite(associationObjectType).Contains(@interface)
+        return this.objectType is Interface @interface && metaCache.GetSupertypesByComposite(associationObjectType).Contains(@interface)
             ? ThreeValuedLogic.True
             : ThreeValuedLogic.False;
     }

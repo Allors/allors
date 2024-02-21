@@ -23,7 +23,7 @@ internal sealed class RoleUnitEquals : Predicate
         this.roleType = roleType;
         if (equals is Enum)
         {
-            if (roleType.ObjectType is IUnit unitType && unitType.IsInteger)
+            if (roleType.ObjectType is Unit unitType && unitType.IsInteger)
             {
                 this.equals = (int)equals;
             }
@@ -54,7 +54,7 @@ internal sealed class RoleUnitEquals : Predicate
             var equalsRole = (IRoleType)this.equals;
             equalsValue = strategy.GetInternalizedUnitRole(equalsRole);
         }
-        else if (this.roleType.ObjectType is IUnit)
+        else if (this.roleType.ObjectType is Unit)
         {
             equalsValue = this.roleType.Normalize(this.equals);
         }

@@ -49,7 +49,7 @@ public class ObjectFactory : IObjectFactory
     /// <param name="namespace">
     ///     The namespace.
     /// </param>
-    public ObjectFactory(IMetaPopulation metaPopulation, Type instance)
+    public ObjectFactory(MetaPopulation metaPopulation, Type instance)
     {
         this.Assembly = instance.GetTypeInfo().Assembly;
 
@@ -108,7 +108,7 @@ public class ObjectFactory : IObjectFactory
     /// <summary>
     ///     Gets the domain.
     /// </summary>
-    public IMetaPopulation MetaPopulation { get; }
+    public MetaPopulation MetaPopulation { get; }
 
     /// <summary>
     ///     Creates a new <see cref="IObject" /> given the <see cref="IStrategy" />.

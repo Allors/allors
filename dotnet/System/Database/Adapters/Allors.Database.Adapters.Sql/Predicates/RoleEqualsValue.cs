@@ -20,7 +20,7 @@ internal sealed class RoleEqualsValue : Predicate
         this.roleType = roleType;
         if (obj is Enum enumeration)
         {
-            if (((IUnit)roleType.ObjectType).IsInteger)
+            if (((Unit)roleType.ObjectType).IsInteger)
             {
                 this.obj = Convert.ToInt32(enumeration);
             }

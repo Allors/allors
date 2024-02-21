@@ -123,7 +123,7 @@ public abstract class Commands
                     object unit = null;
                     if (!reader.IsDBNull(i))
                     {
-                        switch (((IUnit)roleType.ObjectType).Tag)
+                        switch (((Unit)roleType.ObjectType).Tag)
                         {
                             case UnitTags.String:
                                 unit = reader.GetString(i);

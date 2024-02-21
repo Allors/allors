@@ -58,7 +58,7 @@ public class Database : IDatabase
 
     public IObjectFactory ObjectFactory { get; }
 
-    public IMetaPopulation MetaPopulation { get; }
+    public MetaPopulation MetaPopulation { get; }
 
     public IDatabaseServices Services { get; }
 

@@ -4,10 +4,10 @@ using Allors.Database.Meta;
 
 public class UnitModel : ObjectTypeModel
 {
-    public UnitModel(Model model, IUnit unit)
+    public UnitModel(Model model, Unit unit)
         : base(model) => this.Unit = unit;
 
-    public IUnit Unit { get; }
+    public Unit Unit { get; }
 
     public override IMetaIdentifiableObject MetaObject => this.Unit;
 

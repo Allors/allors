@@ -4,5 +4,5 @@ public interface ICompositeMethodType : IMetaExtensible
 {
     public IComposite Composite { get; }
 
-    public IMethodType MethodType{ get; }
+    public MethodType MethodType{ get; }
 }

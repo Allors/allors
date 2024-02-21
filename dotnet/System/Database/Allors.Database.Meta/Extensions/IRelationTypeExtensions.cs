@@ -2,7 +2,7 @@
 
 public static class IRelationTypeExtensions
 {
-    public static string MediaType(this IRelationType @this) => @this.Attributes.MediaType;
+    public static string MediaType(this RelationType @this) => @this.Attributes.MediaType;
 
-    public static bool IsIndexed(this IRelationType @this) => @this.Attributes.IsIndexed ?? false;
+    public static bool IsIndexed(this RelationType @this) => @this.Attributes.IsIndexed ?? false;
 }

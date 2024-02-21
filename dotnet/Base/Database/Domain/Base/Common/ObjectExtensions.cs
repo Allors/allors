@@ -20,7 +20,7 @@ namespace Allors.Database.Domain
             {
                 var roleType = compositeRoleType.RoleType;
 
-                if (roleType.ObjectType is IUnit unit && !@this.Strategy.ExistRole(roleType))
+                if (roleType.ObjectType is Unit unit && !@this.Strategy.ExistRole(roleType))
                 {
                     switch (unit.Tag)
                     {

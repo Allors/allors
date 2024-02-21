@@ -12,12 +12,12 @@
 
     public class RecordsWriter : IRecordsWriter
     {
-        public RecordsWriter(IMetaPopulation metaPopulation)
+        public RecordsWriter(MetaPopulation metaPopulation)
         {
             this.MetaPopulation = metaPopulation;
         }
 
-        public IMetaPopulation MetaPopulation { get; }
+        public MetaPopulation MetaPopulation { get; }
 
         public void Write(Stream stream, IDictionary<IClass, Record[]> recordsByClass)
         {

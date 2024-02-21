@@ -9,7 +9,7 @@ using Allors.Database.Meta;
 
 public interface IDerivationRelation
 {
-    IRelationType RelationType { get; }
+    RelationType RelationType { get; }
 
     IObject Association { get; }
 

@@ -13,7 +13,7 @@ namespace Allors.Database.Meta;
 /// </summary>
 public interface IAssociationType : IRelationEndType
 {
-    IRelationType RelationType { get; internal set; }
+    RelationType RelationType { get; internal set; }
 
     IRoleType RoleType { get; }
 

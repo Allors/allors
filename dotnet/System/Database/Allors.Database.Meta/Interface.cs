@@ -13,7 +13,7 @@ using Allors.Embedded;
 using Allors.Embedded.Meta;
 using Text;
 
-public sealed class Interface : EmbeddedObject, IInterface
+public sealed class Interface : EmbeddedObject, IComposite
 {
     private readonly IEmbeddedUnitRole<string> singularName;
     private readonly IEmbeddedUnitRole<string> assignedPluralName;
@@ -37,24 +37,24 @@ public sealed class Interface : EmbeddedObject, IInterface
         this.assignedPluralName = this.EmbeddedPopulation.EmbeddedGetUnitRole<string>(this, metaPopulation.EmbeddedRoleTypes.ObjectTypeAssignedPluralName);
         this.pluralName = this.EmbeddedPopulation.EmbeddedGetUnitRole<string>(this, metaPopulation.EmbeddedRoleTypes.ObjectTypePluralName);
         
-        this.DirectSupertypes = Array.Empty<IInterface>();
+        this.DirectSupertypes = Array.Empty<Interface>();
 
         metaPopulation.OnCreated(this);
     }
     
     private IReadOnlyList<IAssociationType> associationTypes;
     private IReadOnlyList<IRoleType> roleTypes;
-    private IReadOnlyList<IMethodType> methodTypes;
-    private IReadOnlyList<IInterface> supertypes;
+    private IReadOnlyList<MethodType> methodTypes;
+    private IReadOnlyList<Interface> supertypes;
 
     private IReadOnlyDictionary<IRoleType, ICompositeRoleType> compositeRoleTypeByRoleType;
-    private IReadOnlyDictionary<IMethodType, ICompositeMethodType> compositeMethodTypeByMethodType;
+    private IReadOnlyDictionary<MethodType, ICompositeMethodType> compositeMethodTypeByMethodType;
 
     private IRoleType derivedKeyRoleType;
 
     public dynamic Attributes { get; }
 
-    IMetaPopulation IMetaIdentifiableObject.MetaPopulation => this.MetaPopulation;
+    MetaPopulation IMetaIdentifiableObject.MetaPopulation => this.MetaPopulation;
 
     public MetaPopulation MetaPopulation { get; }
 
@@ -97,9 +97,9 @@ public sealed class Interface : EmbeddedObject, IInterface
         return this.Tag;
     }
 
-    public IReadOnlyList<IInterface> DirectSupertypes { get; set; }
+    public IReadOnlyList<Interface> DirectSupertypes { get; set; }
 
-    public IReadOnlyList<IInterface> Supertypes
+    public IReadOnlyList<Interface> Supertypes
     {
         get => this.supertypes;
         set => this.supertypes = value;
@@ -125,7 +125,7 @@ public sealed class Interface : EmbeddedObject, IInterface
 
     public IRoleType KeyRoleType => this.derivedKeyRoleType;
 
-    public IReadOnlyList<IMethodType> MethodTypes
+    public IReadOnlyList<MethodType> MethodTypes
     {
         get => this.methodTypes;
         set => this.methodTypes = value;
@@ -137,7 +137,7 @@ public sealed class Interface : EmbeddedObject, IInterface
         set => this.derivedKeyRoleType = value;
     }
 
-    public IReadOnlyDictionary<IMethodType, ICompositeMethodType> CompositeMethodTypeByMethodType
+    public IReadOnlyDictionary<MethodType, ICompositeMethodType> CompositeMethodTypeByMethodType
     {
         get => this.compositeMethodTypeByMethodType;
         set => this.compositeMethodTypeByMethodType = value;
@@ -166,9 +166,9 @@ public sealed class Interface : EmbeddedObject, IInterface
         this.Equals(objectType) || this.subtypes.Contains(objectType);
 
     public void DeriveWorkspaceNames() =>
-        this.derivedWorkspaceNames = ((IInterface)this)
+        this.derivedWorkspaceNames = ((Interface)this)
             .RoleTypes.SelectMany(v => v.RelationType.WorkspaceNames)
-            .Union(((IInterface)this).AssociationTypes.SelectMany(v => v.RelationType.WorkspaceNames))
+            .Union(((Interface)this).AssociationTypes.SelectMany(v => v.RelationType.WorkspaceNames))
             .Union(this.MethodTypes.SelectMany(v => v.WorkspaceNames))
             .ToArray();
 

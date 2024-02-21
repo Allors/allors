@@ -29,7 +29,7 @@ public static class RoleTypeExtensions
             return null;
         }
 
-        var unitType = (IUnit)roleType.ObjectType;
+        var unitType = (Unit)roleType.ObjectType;
         var unitTypeTag = unitType.Tag;
 
         var normalizedUnit = unit;

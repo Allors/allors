@@ -109,7 +109,7 @@ internal sealed class Not : Predicate, ICompositePredicate
     public ICompositePredicate AddEquals(IRoleType role, object obj)
     {
         this.CheckUnarity();
-        if (role.ObjectType is IUnit)
+        if (role.ObjectType is Unit)
         {
             this.predicate = new RoleUnitEquals(this.extent, role, obj);
         }

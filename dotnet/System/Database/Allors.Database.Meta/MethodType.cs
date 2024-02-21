@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Embedded.Meta;
 
-public sealed class MethodType : EmbeddedObject, IComparable, IMethodType
+public sealed class MethodType : EmbeddedObject, IComparable, IMetaIdentifiableObject, IOperandType
 {
     private string[] derivedWorkspaceNames;
 
@@ -30,7 +30,7 @@ public sealed class MethodType : EmbeddedObject, IComparable, IMethodType
 
     public dynamic Attributes { get; }
 
-    IMetaPopulation IMetaIdentifiableObject.MetaPopulation => this.MetaPopulation;
+    MetaPopulation IMetaIdentifiableObject.MetaPopulation => this.MetaPopulation;
 
     public MetaPopulation MetaPopulation { get; }
 
@@ -41,8 +41,6 @@ public sealed class MethodType : EmbeddedObject, IComparable, IMethodType
     public ICompositeMethodType CompositeMethodType { get; set; }
 
     public IReadOnlyDictionary<IComposite, ICompositeMethodType> CompositeMethodTypeByComposite { get; private set; }
-
-    IComposite IMethodType.ObjectType => this.ObjectType;
 
     public IComposite ObjectType { get; set; }
 

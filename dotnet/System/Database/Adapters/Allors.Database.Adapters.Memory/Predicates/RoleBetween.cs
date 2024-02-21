@@ -36,7 +36,7 @@ internal sealed class RoleBetween : Predicate
         {
             firstValue = strategy.GetInternalizedUnitRole(firstRole);
         }
-        else if (this.roleType.ObjectType is IUnit)
+        else if (this.roleType.ObjectType is Unit)
         {
             firstValue = this.roleType.Normalize(this.first);
         }
@@ -45,7 +45,7 @@ internal sealed class RoleBetween : Predicate
         {
             secondValue = strategy.GetInternalizedUnitRole(secondRole);
         }
-        else if (this.roleType.ObjectType is IUnit)
+        else if (this.roleType.ObjectType is Unit)
         {
             secondValue = this.roleType.Normalize(this.second);
         }

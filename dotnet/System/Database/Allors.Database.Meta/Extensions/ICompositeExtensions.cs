@@ -22,7 +22,7 @@ public static class ICompositeExtensions
 
     internal static void InitializeSupertypes(this IComposite @this)
     {
-        var supertypes = new HashSet<IInterface>();
+        var supertypes = new HashSet<Interface>();
         @this.InitializeSupertypesRecursively(@this, supertypes);
         @this.Supertypes = supertypes.ToArray();
     }
@@ -67,9 +67,9 @@ public static class ICompositeExtensions
         @this.AssociationTypes = associationTypes.ToArray();
     }
 
-    internal static void InitializeMethodTypes(this IComposite @this, Dictionary<IComposite, HashSet<IMethodType>> methodTypeByClass)
+    internal static void InitializeMethodTypes(this IComposite @this, Dictionary<IComposite, HashSet<MethodType>> methodTypeByClass)
     {
-        var methodTypes = new HashSet<IMethodType>();
+        var methodTypes = new HashSet<MethodType>();
 
         if (methodTypeByClass.TryGetValue(@this, out var directMethodTypes))
         {
@@ -99,7 +99,7 @@ public static class ICompositeExtensions
         @this.CompositeMethodTypeByMethodType = compositeMethodTypes.ToDictionary(v => v.MethodType, v => v);
     }
 
-    internal static void InitializeSupertypesRecursively(this IComposite @this, IObjectType type, ISet<IInterface> superTypes)
+    internal static void InitializeSupertypesRecursively(this IComposite @this, IObjectType type, ISet<Interface> superTypes)
     {
         foreach (var directSupertype in @this.DirectSupertypes.Cast<Interface>())
         {

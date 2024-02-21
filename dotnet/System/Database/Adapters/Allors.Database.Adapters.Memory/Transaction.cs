@@ -474,9 +474,9 @@ public class Transaction : ITransaction
                 sortedClassAndSubclassList.Add(type);
             }
 
-            if (type is IInterface)
+            if (type is Interface)
             {
-                foreach (var subClass in ((IInterface)type).Classes)
+                foreach (var subClass in ((Interface)type).Classes)
                 {
                     sortedClassAndSubclassList.Add(subClass);
                 }

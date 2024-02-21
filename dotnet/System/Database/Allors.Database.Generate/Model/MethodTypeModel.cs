@@ -4,10 +4,10 @@ using Allors.Database.Meta;
 
 public class MethodTypeModel : MetaIdentifiableObjectModel
 {
-    public MethodTypeModel(Model model, IMethodType methodType)
+    public MethodTypeModel(Model model, MethodType methodType)
         : base(model) => this.MethodType = methodType;
 
-    public IMethodType MethodType { get; }
+    public MethodType MethodType { get; }
 
     public override IMetaIdentifiableObject MetaObject => this.MethodType;
 

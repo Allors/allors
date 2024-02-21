@@ -11,7 +11,7 @@ using System;
 
 public class MethodInvocation
 {
-    public MethodInvocation(IClass @class, IMethodType methodType)
+    public MethodInvocation(IClass @class, MethodType methodType)
     {
         this.Class = @class;
         this.MethodType = methodType;
@@ -19,7 +19,7 @@ public class MethodInvocation
 
     public IClass Class { get; }
 
-    public IMethodType MethodType { get; }
+    public MethodType MethodType { get; }
 
     //[DebuggerStepThrough]
     public void Execute(Method method)

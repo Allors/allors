@@ -11,5 +11,5 @@ namespace Allors.Database.Services;
 
 public interface IMethodService
 {
-    Action<object, object>[] Get(IClass @class, IMethodType methodType);
+    Action<object, object>[] Get(IClass @class, MethodType methodType);
 }

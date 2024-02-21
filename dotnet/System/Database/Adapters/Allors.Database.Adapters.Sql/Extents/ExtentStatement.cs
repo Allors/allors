@@ -151,7 +151,7 @@ internal abstract class ExtentStatement
             else
             {
                 var first = true;
-                foreach (var subClass in ((IInterface)this.Type).Classes)
+                foreach (var subClass in ((Interface)this.Type).Classes)
                 {
                     if (first)
                     {

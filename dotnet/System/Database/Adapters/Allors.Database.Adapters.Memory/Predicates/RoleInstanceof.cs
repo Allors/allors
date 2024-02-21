@@ -39,7 +39,7 @@ internal sealed class RoleInstanceof : Predicate
 
         var metaCache = strategy.Transaction.Database.MetaCache;
 
-        return this.objectType is IInterface @interface && metaCache.GetSupertypesByComposite(roleObjectType).Contains(@interface)
+        return this.objectType is Interface @interface && metaCache.GetSupertypesByComposite(roleObjectType).Contains(@interface)
             ? ThreeValuedLogic.True
             : ThreeValuedLogic.False;
     }

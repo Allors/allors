@@ -12,7 +12,7 @@ namespace Allors.Database.Domain
 
     public static partial class PrefetchPolicyBuilderExtensions
     {
-        public static PrefetchPolicyBuilder WithSecurityRules(this PrefetchPolicyBuilder @this, M m)
+        public static PrefetchPolicyBuilder WithSecurityRules(this PrefetchPolicyBuilder @this, IMetaIndex m)
         {
             // Object
             @this.WithRule(m.Object.SecurityTokens);

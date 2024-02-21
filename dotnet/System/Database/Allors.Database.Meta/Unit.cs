@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using Embedded;
 using Embedded.Meta;
 
-public sealed class Unit : EmbeddedObject, IUnit
+public sealed class Unit : EmbeddedObject, IObjectType
 {
     private readonly IEmbeddedUnitRole<string> singularName;
     private readonly IEmbeddedUnitRole<string> assignedPluralName;
@@ -32,7 +32,7 @@ public sealed class Unit : EmbeddedObject, IUnit
 
     public dynamic Attributes { get; }
 
-    IMetaPopulation IMetaIdentifiableObject.MetaPopulation => this.MetaPopulation;
+    MetaPopulation IMetaIdentifiableObject.MetaPopulation => this.MetaPopulation;
 
     public MetaPopulation MetaPopulation { get; }
 

@@ -13,7 +13,7 @@
     {
         private const string RecordsXmlFileName = "Records.xml";
 
-        public RecordsFromResource(IMetaPopulation metaPopulation)
+        public RecordsFromResource(MetaPopulation metaPopulation)
         {
             var assembly = Assembly.GetExecutingAssembly();
 

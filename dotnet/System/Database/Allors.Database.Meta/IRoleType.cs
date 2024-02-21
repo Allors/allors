@@ -22,7 +22,7 @@ public interface IRoleType : IRelationEndType, IComparable
 
     IAssociationType AssociationType { get; }
 
-    IRelationType RelationType { get; internal set; }
+    RelationType RelationType { get; internal set; }
 
     string AssignedSingularName { get; }
 

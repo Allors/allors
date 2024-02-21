@@ -15,7 +15,7 @@ public sealed class RoleType : IRoleType
 {
     private readonly IObjectType objectType;
 
-    private IRelationType relationType;
+    private RelationType relationType;
     private string singularName;
     private ICompositeRoleType compositeRoleType;
 
@@ -34,7 +34,7 @@ public sealed class RoleType : IRoleType
 
     public dynamic Attributes { get; }
 
-    public IRelationType RelationType
+    public RelationType RelationType
     {
         get => this.relationType;
         set => this.relationType = value;
@@ -120,7 +120,7 @@ public sealed class RoleType : IRoleType
     /// </summary>
     public void DeriveScaleAndSize()
     {
-        if (this.objectType is IUnit unitType)
+        if (this.objectType is Unit unitType)
         {
             switch (unitType.Tag)
             {

@@ -383,7 +383,7 @@ public sealed class Strategy : IStrategy
         {
             if (this.ExistRole(roleType))
             {
-                if (roleType.ObjectType is IUnit)
+                if (roleType.ObjectType is Unit)
                 {
                     this.RemoveUnitRole(roleType);
                 }
@@ -837,7 +837,7 @@ public sealed class Strategy : IStrategy
 
     internal void BackupUnit(XmlWriter writer, IRoleType roleType)
     {
-        var unitType = (IUnit)roleType.ObjectType;
+        var unitType = (Unit)roleType.ObjectType;
         var value = XmlBackup.WriteString(unitType.Tag, this.unitRoleByRoleType[roleType]);
 
         writer.WriteStartElement(XmlBackup.Relation);

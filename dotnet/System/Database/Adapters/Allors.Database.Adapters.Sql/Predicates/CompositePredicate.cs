@@ -269,7 +269,7 @@ internal abstract class CompositePredicate : Predicate, ICompositePredicate
     {
         if (type.IsInterface)
         {
-            return ((IInterface)type).Classes.ToArray();
+            return ((Interface)type).Classes.ToArray();
         }
 
         var concreteSubclasses = new IObjectType[1];

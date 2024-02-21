@@ -12,7 +12,7 @@ using System.Linq;
 using Allors.Embedded.Domain.Memory;
 using Embedded;
 
-public sealed class MetaPopulation : EmbeddedPopulation, IMetaPopulation
+public sealed class MetaPopulation : EmbeddedPopulation, IEmbeddedPopulation
 {
     internal static readonly IReadOnlyList<IComposite> EmptyComposites = Array.Empty<IComposite>();
     internal static readonly IReadOnlyList<IDomain> EmptyDomains = Array.Empty<IDomain>();
@@ -29,11 +29,11 @@ public sealed class MetaPopulation : EmbeddedPopulation, IMetaPopulation
 
     private IReadOnlyList<IDomain> domains;
     private IReadOnlyList<IClass> classes;
-    private IReadOnlyList<IRelationType> relationTypes;
-    private IReadOnlyList<IInterface> interfaces;
+    private IReadOnlyList<RelationType> relationTypes;
+    private IReadOnlyList<Interface> interfaces;
     private IReadOnlyList<IComposite> composites;
-    private IReadOnlyList<IUnit> units;
-    private IReadOnlyList<IMethodType> methodTypes;
+    private IReadOnlyList<Unit> units;
+    private IReadOnlyList<MethodType> methodTypes;
 
     public MetaPopulation()
     {
@@ -65,13 +65,13 @@ public sealed class MetaPopulation : EmbeddedPopulation, IMetaPopulation
         set => this.classes = value;
     }
 
-    public IReadOnlyList<IRelationType> RelationTypes
+    public IReadOnlyList<RelationType> RelationTypes
     {
         get => this.relationTypes;
         set => this.relationTypes = value;
     }
 
-    public IReadOnlyList<IInterface> Interfaces
+    public IReadOnlyList<Interface> Interfaces
     {
         get => this.interfaces;
         set => this.interfaces = value;
@@ -83,13 +83,13 @@ public sealed class MetaPopulation : EmbeddedPopulation, IMetaPopulation
         set => this.composites = value;
     }
 
-    public IReadOnlyList<IUnit> Units
+    public IReadOnlyList<Unit> Units
     {
         get => this.units;
         set => this.units = value;
     }
 
-    public IReadOnlyList<IMethodType> MethodTypes
+    public IReadOnlyList<MethodType> MethodTypes
     {
         get => this.methodTypes;
         set => this.methodTypes = value;
@@ -104,16 +104,12 @@ public sealed class MetaPopulation : EmbeddedPopulation, IMetaPopulation
         }
     }
 
-    IMetaIdentifiableObject IMetaPopulation.FindById(Guid id) => this.FindById(id);
-
     public IMetaIdentifiableObject FindById(Guid id)
     {
         this.metaIdentifiableObjectById.TryGetValue(id, out var metaObject);
 
         return metaObject;
     }
-
-    IMetaIdentifiableObject IMetaPopulation.FindByTag(string tag) => this.FindByTag(tag);
 
     public IMetaIdentifiableObject FindByTag(string tag)
     {
@@ -122,17 +118,13 @@ public sealed class MetaPopulation : EmbeddedPopulation, IMetaPopulation
         return metaObject;
     }
 
-    IComposite IMetaPopulation.FindCompositeByName(string name) => this.FindCompositeByName(name);
-
     public IComposite FindCompositeByName(string name)
     {
         this.compositeByLowercaseName.TryGetValue(name.ToLowerInvariant(), out var composite);
         return composite;
     }
 
-    IValidationLog IMetaPopulation.Validate() => this.Validate();
-
-    public ValidationLog Validate()
+    public IValidationLog Validate()
     {
         var log = new ValidationLog();
 
@@ -255,7 +247,7 @@ public sealed class MetaPopulation : EmbeddedPopulation, IMetaPopulation
         // MethodTypes
         var methodTypeByClass = this.methodTypes
             .GroupBy(v => v.ObjectType)
-            .ToDictionary(g => (IComposite)g.Key, g => new HashSet<IMethodType>(g));
+            .ToDictionary(g => (IComposite)g.Key, g => new HashSet<MethodType>(g));
 
         foreach (IComposite composite in this.composites)
         {

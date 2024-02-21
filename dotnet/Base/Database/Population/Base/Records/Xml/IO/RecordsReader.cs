@@ -13,12 +13,12 @@
     {
         public const string HandleAttributeName = "handle";
 
-        public RecordsReader(IMetaPopulation metaPopulation)
+        public RecordsReader(MetaPopulation metaPopulation)
         {
             this.MetaPopulation = metaPopulation;
         }
 
-        public IMetaPopulation MetaPopulation { get; }
+        public MetaPopulation MetaPopulation { get; }
 
         public IDictionary<IClass, Record[]> Read(Stream stream)
         {

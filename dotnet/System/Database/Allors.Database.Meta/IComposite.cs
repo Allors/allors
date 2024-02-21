@@ -10,9 +10,9 @@ using System.Collections.Generic;
 
 public interface IComposite : IObjectType
 {
-    IReadOnlyList<IInterface> DirectSupertypes { get; set; }
+    IReadOnlyList<Interface> DirectSupertypes { get; set; }
 
-    IReadOnlyList<IInterface> Supertypes { get; internal set; }
+    IReadOnlyList<Interface> Supertypes { get; internal set; }
 
     IReadOnlyList<IComposite> DirectSubtypes { get; }
 
@@ -32,9 +32,9 @@ public interface IComposite : IObjectType
 
     IRoleType KeyRoleType { get; }
 
-    IReadOnlyList<IMethodType> MethodTypes { get; internal set; }
+    IReadOnlyList<MethodType> MethodTypes { get; internal set; }
 
-    IReadOnlyDictionary<IMethodType, ICompositeMethodType> CompositeMethodTypeByMethodType { get; internal set; }
+    IReadOnlyDictionary<MethodType, ICompositeMethodType> CompositeMethodTypeByMethodType { get; internal set; }
 
     bool IsAssignableFrom(IComposite objectType);
 

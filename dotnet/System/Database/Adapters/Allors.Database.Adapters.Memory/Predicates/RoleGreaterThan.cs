@@ -35,7 +35,7 @@ internal sealed class RoleGreaterThan : Predicate
         {
             compareValue = strategy.GetInternalizedUnitRole(compareRole);
         }
-        else if (this.roleType.ObjectType is IUnit)
+        else if (this.roleType.ObjectType is Unit)
         {
             compareValue = this.roleType.Normalize(this.compare);
         }

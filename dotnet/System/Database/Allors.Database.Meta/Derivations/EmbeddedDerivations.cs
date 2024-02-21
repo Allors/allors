@@ -12,7 +12,7 @@ using Embedded;
 
 public class EmbeddedDerivations
 {
-    public EmbeddedDerivations(IMetaPopulation meta)
+    public EmbeddedDerivations(MetaPopulation meta)
     {
         meta.EmbeddedDerivationById[nameof(ObjectTypePluralNameDerivation)] = new ObjectTypePluralNameDerivation();
     }

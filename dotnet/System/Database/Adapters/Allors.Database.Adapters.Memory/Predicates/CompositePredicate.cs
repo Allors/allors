@@ -118,7 +118,7 @@ internal abstract class CompositePredicate : Predicate, ICompositePredicate
 
     public ICompositePredicate AddEquals(IRoleType role, object obj)
     {
-        if (role.ObjectType is IUnit)
+        if (role.ObjectType is Unit)
         {
             this.Filters.Add(new RoleUnitEquals(this.extent, role, obj));
         }

@@ -106,7 +106,7 @@ public abstract class Database : IDatabase
 
     public IObjectFactory ObjectFactory { get; }
 
-    public IMetaPopulation MetaPopulation { get; }
+    public MetaPopulation MetaPopulation { get; }
 
     public bool IsShared => true;
 
@@ -147,7 +147,7 @@ public abstract class Database : IDatabase
 
         if (!this.concreteClassesByObjectType.TryGetValue(container, out var concreteClasses))
         {
-            concreteClasses = new HashSet<IObjectType>(((IInterface)container).Classes);
+            concreteClasses = new HashSet<IObjectType>(((Interface)container).Classes);
             this.concreteClassesByObjectType[container] = concreteClasses;
         }
 

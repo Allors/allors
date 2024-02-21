@@ -40,7 +40,7 @@ public interface IDatabase
     /// <summary>
     ///     Gets the meta domain of this population.
     /// </summary>
-    IMetaPopulation MetaPopulation { get; }
+    MetaPopulation MetaPopulation { get; }
 
     IDatabaseServices Services { get; }
 

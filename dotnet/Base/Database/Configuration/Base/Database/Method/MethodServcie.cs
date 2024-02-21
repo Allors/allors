@@ -16,9 +16,9 @@ namespace Allors.Database.Configuration
     using System.Reflection;
 public class MethodService : IMethodService
     {
-        private readonly ConcurrentDictionary<IClass, ConcurrentDictionary<IMethodType, Action<object, object>[]>> actionsByMethodTypeByClass; 
+        private readonly ConcurrentDictionary<IClass, ConcurrentDictionary<MethodType, Action<object, object>[]>> actionsByMethodTypeByClass; 
 
-        public MethodService(IMetaPopulation metaPopulation, Assembly assembly)
+        public MethodService(MetaPopulation metaPopulation, Assembly assembly)
         {
             var extensionMethodsByInterface = (from type in assembly.ExportedTypes
                     where type.GetTypeInfo().IsSealed && !type.GetTypeInfo().IsGenericType && !type.IsNested
@@ -32,16 +32,16 @@ public class MethodService : IMethodService
                 .ToDictionary(v => v.Key, v => v.ToArray());
             
             this.MethodCompiler = new MethodCompiler(metaPopulation, extensionMethodsByInterface);
-            this.actionsByMethodTypeByClass = new ConcurrentDictionary<IClass, ConcurrentDictionary<IMethodType, Action<object, object>[]>>();
+            this.actionsByMethodTypeByClass = new ConcurrentDictionary<IClass, ConcurrentDictionary<MethodType, Action<object, object>[]>>();
         }
 
         public MethodCompiler MethodCompiler { get; set; }
 
-        public Action<object, object>[] Get(IClass @class, IMethodType methodType)
+        public Action<object, object>[] Get(IClass @class, MethodType methodType)
         {
             if (!this.actionsByMethodTypeByClass.TryGetValue(@class, out var actionsByMethodType))
             {
-                actionsByMethodType = new ConcurrentDictionary<IMethodType, Action<object, object>[]>();
+                actionsByMethodType = new ConcurrentDictionary<MethodType, Action<object, object>[]>();
                 this.actionsByMethodTypeByClass[@class] = actionsByMethodType;
             }
 

@@ -18,7 +18,7 @@ public sealed class Class : EmbeddedObject, IClass
     private readonly IEmbeddedUnitRole<string> assignedPluralName;
     private readonly IEmbeddedUnitRole<string> pluralName;
 
-    private ConcurrentDictionary<IMethodType, Action<object, object>[]> actionsByMethodType;
+    private ConcurrentDictionary<MethodType, Action<object, object>[]> actionsByMethodType;
 
     public Class(MetaPopulation metaPopulation, EmbeddedObjectType embeddedObjectType)
         : base(metaPopulation, embeddedObjectType)
@@ -41,17 +41,17 @@ public sealed class Class : EmbeddedObject, IClass
 
     private IReadOnlyList<IAssociationType> associationTypes;
     private IReadOnlyList<IRoleType> roleTypes;
-    private IReadOnlyList<IMethodType> methodTypes;
-    private IReadOnlyList<IInterface> supertypes;
+    private IReadOnlyList<MethodType> methodTypes;
+    private IReadOnlyList<Interface> supertypes;
 
     private IReadOnlyDictionary<IRoleType, ICompositeRoleType> compositeRoleTypeByRoleType;
-    private IReadOnlyDictionary<IMethodType, ICompositeMethodType> compositeMethodTypeByMethodType;
+    private IReadOnlyDictionary<MethodType, ICompositeMethodType> compositeMethodTypeByMethodType;
 
     private IRoleType derivedKeyRoleType;
 
     public dynamic Attributes { get; }
 
-    IMetaPopulation IMetaIdentifiableObject.MetaPopulation => this.MetaPopulation;
+    MetaPopulation IMetaIdentifiableObject.MetaPopulation => this.MetaPopulation;
 
     public MetaPopulation MetaPopulation { get; }
     
@@ -94,9 +94,9 @@ public sealed class Class : EmbeddedObject, IClass
         return this.Tag;
     }
 
-    public IReadOnlyList<IInterface> DirectSupertypes { get; set; }
+    public IReadOnlyList<Interface> DirectSupertypes { get; set; }
 
-    public IReadOnlyList<IInterface> Supertypes
+    public IReadOnlyList<Interface> Supertypes
     {
         get => this.supertypes;
         set => this.supertypes = value;
@@ -122,7 +122,7 @@ public sealed class Class : EmbeddedObject, IClass
 
     public IRoleType KeyRoleType => this.derivedKeyRoleType;
 
-    public IReadOnlyList<IMethodType> MethodTypes
+    public IReadOnlyList<MethodType> MethodTypes
     {
         get => this.methodTypes;
         set => this.methodTypes = value;
@@ -134,7 +134,7 @@ public sealed class Class : EmbeddedObject, IClass
         set => this.derivedKeyRoleType = value;
     }
 
-    public IReadOnlyDictionary<IMethodType, ICompositeMethodType> CompositeMethodTypeByMethodType
+    public IReadOnlyDictionary<MethodType, ICompositeMethodType> CompositeMethodTypeByMethodType
     {
         get => this.compositeMethodTypeByMethodType;
         set => this.compositeMethodTypeByMethodType = value;

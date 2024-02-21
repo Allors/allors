@@ -13,13 +13,13 @@ using Extent = Allors.Protocol.Json.Data.Extent;
 
 public static class Extensions
 {
-    public static IComposite FindComposite(this IMetaPopulation @this, string tag) => tag != null ? (IComposite)@this.FindByTag(tag) : null;
+    public static IComposite FindComposite(this MetaPopulation @this, string tag) => tag != null ? (IComposite)@this.FindByTag(tag) : null;
 
-    public static IAssociationType FindAssociationType(this IMetaPopulation @this, string tag) =>
-        tag != null ? ((IRelationType)@this.FindByTag(tag)).AssociationType : null;
+    public static IAssociationType FindAssociationType(this MetaPopulation @this, string tag) =>
+        tag != null ? ((RelationType)@this.FindByTag(tag)).AssociationType : null;
 
-    public static IRoleType FindRoleType(this IMetaPopulation @this, string tag) =>
-        tag != null ? ((IRelationType)@this.FindByTag(tag)).RoleType : null;
+    public static IRoleType FindRoleType(this MetaPopulation @this, string tag) =>
+        tag != null ? ((RelationType)@this.FindByTag(tag)).RoleType : null;
 
     public static Pull[] FromJson(this Allors.Protocol.Json.Data.Pull[] pulls, ITransaction transaction, IUnitConvert unitConvert)
     {

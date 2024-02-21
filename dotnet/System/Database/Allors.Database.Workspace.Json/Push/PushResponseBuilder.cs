@@ -19,11 +19,11 @@ public class PushResponseBuilder
     private readonly IReadOnlySet<IClass> allowedClasses;
     private readonly Func<IClass, IObject> build;
     private readonly Func<IValidation> derive;
-    private readonly IMetaPopulation metaPopulation;
+    private readonly MetaPopulation metaPopulation;
     private readonly ITransaction transaction;
     private readonly IUnitConvert unitConvert;
 
-    public PushResponseBuilder(ITransaction transaction, Func<IValidation> derive, IMetaPopulation metaPopulation, IAccessControl accessControl, IReadOnlySet<IClass> allowedClasses, Func<IClass, IObject> build, IUnitConvert unitConvert)
+    public PushResponseBuilder(ITransaction transaction, Func<IValidation> derive, MetaPopulation metaPopulation, IAccessControl accessControl, IReadOnlySet<IClass> allowedClasses, Func<IClass, IObject> build, IUnitConvert unitConvert)
     {
         this.transaction = transaction;
         this.derive = derive;
@@ -188,14 +188,14 @@ public class PushResponseBuilder
             var roleTypes = composite.RoleTypes.Where(v => v.RelationType.WorkspaceNames.Any());
             var acl = this.AccessControl[obj];
 
-            var roleType = ((IRelationType)this.metaPopulation.FindByTag(pushRequestRole.t)).RoleType;
+            var roleType = ((RelationType)this.metaPopulation.FindByTag(pushRequestRole.t)).RoleType;
             if (roleType != null)
             {
                 if (acl.CanWrite(roleType))
                 {
                     if (roleType.ObjectType.IsUnit)
                     {
-                        var unitType = (IUnit)roleType.ObjectType;
+                        var unitType = (Unit)roleType.ObjectType;
                         var role = this.unitConvert.UnitFromJson(unitType.Tag, pushRequestRole.u);
                         obj.Strategy.SetUnitRole(roleType, role);
                     }

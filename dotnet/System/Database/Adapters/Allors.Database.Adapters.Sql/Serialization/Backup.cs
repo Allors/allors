@@ -109,7 +109,7 @@ public class Backup
     {
         var exclusiveRootClassesByObjectType = new Dictionary<IObjectType, HashSet<IObjectType>>();
 
-        var relations = new List<IRelationType>(this.database.MetaPopulation.RelationTypes);
+        var relations = new List<RelationType>(this.database.MetaPopulation.RelationTypes);
         relations.Sort();
 
         foreach (var relation in relations)
@@ -213,7 +213,7 @@ public class Backup
 
                                     if (roleType.ObjectType.IsUnit)
                                     {
-                                        var unitTypeTag = ((IUnit)roleType.ObjectType).Tag;
+                                        var unitTypeTag = ((Unit)roleType.ObjectType).Tag;
                                         var r = command.GetValue(reader, unitTypeTag, 1);
                                         var content = XmlBackup.WriteString(unitTypeTag, r);
                                         relationTypeOneXmlWriter.Write(a, content);

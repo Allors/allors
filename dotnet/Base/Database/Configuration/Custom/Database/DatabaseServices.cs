@@ -64,11 +64,11 @@ namespace Allors.Database.Configuration
         public virtual void OnInit(IDatabase database)
         {
             this.Database = database;
-            this.M = (M)this.Database.MetaPopulation;
+            this.M = new MetaIndex(this.Database.MetaPopulation);
             this.metaCache = new MetaCache(this.Database);
         }
 
-        public M M { get; private set; }
+        public IMetaIndex M { get; private set; }
 
         public ITransactionServices CreateTransactionServices() => new TransactionServices();
 
@@ -81,14 +81,14 @@ namespace Allors.Database.Configuration
                 { } type when type == typeof(ISecurity) => (T)(this.security ??= new Security(this)),
                 { } type when type == typeof(IPrefetchPolicyCache) => (T)(this.prefetchPolicyCache ??= new PrefetchPolicyCache(this.Database, this.metaCache)),
                 // Core
-                { } type when type == typeof(M) => (T)(object)this.M,
+                { } type when type == typeof(IMetaIndex) => (T)this.M,
                 { } type when type == typeof(IClassById) => (T)(this.classById ??= new ClassById()),
                 { } type when type == typeof(IVersionedIdByStrategy) => (T)(this.versionedIdByStrategy ??= new VersionedIdByStrategy()),
                 { } type when type == typeof(IPreparedSelects) => (T)(this.preparedSelects ??= new PreparedSelects(this.Database)),
                 { } type when type == typeof(IPreparedExtents) => (T)(this.preparedExtents ??= new PreparedExtents(this.Database)),
                 { } type when type == typeof(ITreeCache) => (T)(this.treeCache ??= new TreeCache()),
                 { } type when type == typeof(IPermissions) => (T)(this.permissions ??= new Permissions()),
-                { } type when type == typeof(IMethodService) => (T)(this.methodService ??= new MethodService(this.M, this.Database.ObjectFactory.Assembly)),
+                { } type when type == typeof(IMethodService) => (T)(this.methodService ??= new MethodService(this.Database.MetaPopulation, this.Database.ObjectFactory.Assembly)),
                 { } type when type == typeof(ITime) => (T)(this.time ??= new Time()),
                 { } type when type == typeof(IDatabaseCaches) => (T)(this.databaseCaches ??= new DatabaseCaches()),
                 { } type when type == typeof(IPasswordHasher) => (T)(this.passwordHasher ??= this.CreatePasswordHasher()),

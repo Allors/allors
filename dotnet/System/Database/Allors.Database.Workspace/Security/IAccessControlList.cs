@@ -21,7 +21,7 @@ public interface IAccessControlList
 
     bool CanWrite(IRoleType roleType);
 
-    bool CanExecute(IMethodType methodType);
+    bool CanExecute(MethodType methodType);
 
     bool IsMasked();
 }

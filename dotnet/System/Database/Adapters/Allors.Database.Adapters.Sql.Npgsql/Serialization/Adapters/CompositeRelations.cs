@@ -18,11 +18,11 @@ internal class CompositeRelations : IEnumerable<CompositeRelation>
     private readonly Database database;
     private readonly Action<Guid, long, string> onRelationNotRestored;
     private readonly XmlReader reader;
-    private readonly IRelationType relationType;
+    private readonly RelationType relationType;
 
     public CompositeRelations(
         Database database,
-        IRelationType relationType,
+        RelationType relationType,
         Action<XmlReader, Guid> canNotRestoreCompositeRole,
         Action<Guid, long, string> onRelationNotRestored,
         Dictionary<long, IClass> classByObjectId,

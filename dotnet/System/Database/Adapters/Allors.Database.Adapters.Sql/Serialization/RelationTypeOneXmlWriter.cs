@@ -11,7 +11,7 @@ using System.Xml;
 using Allors.Database.Meta;
 
 /// <summary>
-///     Writes all relations from a <see cref="IRelationType" /> with a Role
+///     Writes all relations from a <see cref="RelationType" /> with a Role
 ///     with multiplicity of one  to the <see cref="XmlWriter" /> during a <see cref="IDatabase#Backup" />.
 /// </summary>
 internal class RelationTypeOneXmlWriter : IDisposable
@@ -19,7 +19,7 @@ internal class RelationTypeOneXmlWriter : IDisposable
     /// <summary>
     ///     The <see cref="relationType" />.
     /// </summary>
-    private readonly IRelationType relationType;
+    private readonly RelationType relationType;
 
     /// <summary>
     ///     The <see cref="xmlWriter" />.
@@ -41,7 +41,7 @@ internal class RelationTypeOneXmlWriter : IDisposable
     /// </summary>
     /// <param name="relationType">Type of the relation.</param>
     /// <param name="xmlWriter">The XML writer.</param>
-    internal RelationTypeOneXmlWriter(IRelationType relationType, XmlWriter xmlWriter)
+    internal RelationTypeOneXmlWriter(RelationType relationType, XmlWriter xmlWriter)
     {
         this.relationType = relationType;
         this.xmlWriter = xmlWriter;

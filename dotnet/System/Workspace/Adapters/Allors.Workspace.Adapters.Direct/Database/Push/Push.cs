@@ -45,7 +45,7 @@ namespace Allors.Workspace.Adapters.Direct
 
         private IReadOnlySet<IClass> AllowedClasses { get; }
 
-        private IMetaPopulation M { get; }
+        private MetaPopulation M { get; }
 
         private Func<IClass, IObject> Build { get; }
 
@@ -151,7 +151,7 @@ namespace Allors.Workspace.Adapters.Direct
             foreach (var keyValuePair in local.ChangesByRelationType)
             {
                 var relationType = keyValuePair.Key;
-                var roleType = ((IRelationType)this.M.FindByTag(relationType.Tag)).RoleType;
+                var roleType = ((RelationType)this.M.FindByTag(relationType.Tag)).RoleType;
 
                 if (acl.CanWrite(roleType))
                 {

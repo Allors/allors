@@ -89,7 +89,7 @@ public class PredicateAssertions
     /// <param name="objectType">The object type.</param>
     public static void ValidateAssociationInstanceof(IAssociationType association, IObjectType objectType)
     {
-        if (objectType is IUnit)
+        if (objectType is Unit)
         {
             throw new ArgumentException("AddInstanceof() can only be used with a composite type.");
         }
@@ -108,7 +108,7 @@ public class PredicateAssertions
     /// <param name="objectType">The object type.</param>
     public static void ValidateInstanceof(IObjectType objectType)
     {
-        if (objectType is IUnit)
+        if (objectType is Unit)
         {
             throw new ArgumentException("AddInstanceOf() can only be used with composite types.");
         }
@@ -137,8 +137,8 @@ public class PredicateAssertions
 
         var firstRole = firstObject as IRoleType;
         var secondRole = secondObject as IRoleType;
-        if ((firstRole != null && !(firstRole.ObjectType is IUnit)) ||
-            (secondRole != null && !(secondRole.ObjectType is IUnit)))
+        if ((firstRole != null && !(firstRole.ObjectType is Unit)) ||
+            (secondRole != null && !(secondRole.ObjectType is Unit)))
         {
             throw new ArgumentException("AddBetween() can only be used with roles having unit types.");
         }
@@ -152,7 +152,7 @@ public class PredicateAssertions
     /// <param name="extent">The extent.</param>
     public static void ValidateRoleContainedIn(IRoleType role, Extent extent)
     {
-        if (role.ObjectType is IUnit)
+        if (role.ObjectType is Unit)
         {
             throw new ArgumentException("AddContainedIn() can only be used with composite types.");
         }
@@ -165,7 +165,7 @@ public class PredicateAssertions
 
     public static void ValidateRoleContainedIn(IRoleType role, IEnumerable<IObject> enumerable)
     {
-        if (role.ObjectType is IUnit)
+        if (role.ObjectType is Unit)
         {
             throw new ArgumentException("AddContainedIn() can only be used with composite types.");
         }
@@ -287,7 +287,7 @@ public class PredicateAssertions
     /// <param name="objectType">Type object type.</param>
     public static void ValidateRoleInstanceOf(IRoleType role, IObjectType objectType)
     {
-        if (objectType is IUnit)
+        if (objectType is Unit)
         {
             throw new ArgumentException("AddInstanceOf() can only be used with composite types.");
         }
@@ -330,7 +330,7 @@ public class PredicateAssertions
     /// <param name="unit">The unit .</param>
     public static void ValidateRoleLikeFilter(IRoleType role, string unit)
     {
-        if (!(role.ObjectType is IUnit unitType) || !unitType.IsString)
+        if (!(role.ObjectType is Unit unitType) || !unitType.IsString)
         {
             throw new ArgumentException("AddLike() can only be used with String.");
         }

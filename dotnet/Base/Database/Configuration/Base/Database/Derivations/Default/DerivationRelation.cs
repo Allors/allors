@@ -23,7 +23,7 @@ namespace Allors.Database.Configuration.Derivations.Default
             this.RelationType = associationType.RelationType;
         }
 
-        public IRelationType RelationType { get; }
+        public RelationType RelationType { get; }
 
         public IObject Association { get; }
 

@@ -14,7 +14,7 @@
         private const string Translations = ".translations.";
         private const string ResourcesExtension = ".resources";
 
-        public TranslationsFromResource(IMetaPopulation metaPopulation, ITranslationConfiguration configuration)
+        public TranslationsFromResource(MetaPopulation metaPopulation, ITranslationConfiguration configuration)
         {
             this.Configuration = configuration;
             CultureInfo[] cultureInfos = [CultureInfo.InvariantCulture, .. configuration.AdditionalCultureInfos];

@@ -163,17 +163,17 @@ namespace Allors.Database.Domain
 	public partial class $class.SingularName$ : Allors.Database.IObject $class.directSupertypes:{directSupertype|, $directSupertype.SingularName$}$
 	{
 		private readonly IStrategy strategy;
-		private readonly Allors.Database.Meta.M m;
+		private readonly IMetaIndex m;
 
 $class.Objects:{object|$class_Object()$}; separator="\n"$
 
 		public $class.SingularName$(Allors.Database.IStrategy strategy)
 		{
 			this.strategy = strategy;
-            this.m = strategy.Transaction.Database.Services.Get<Allors.Database.Meta.M>();
+            this.m = strategy.Transaction.Database.Services.Get<IMetaIndex>();
 		}
 
-		public Allors.Database.Meta.M M => m;
+		public IMetaIndex M => m;
 
 		public Allors.Database.Meta.Meta$class.SingularName$ Meta => m.$class.SingularName$;
 
@@ -255,7 +255,7 @@ treeBuilderAssociationType_Build() ::= <<
 >>
 
 nodeBuilderRoleType() ::= <<
-	public record $roleType.FullName$NodeBuilder(Allors.Database.Meta.M M) : Allors.Database.Data.INodeBuilder
+	public record $roleType.FullName$NodeBuilder(IMetaIndex M) : Allors.Database.Data.INodeBuilder
 	{
 $if(roleType.ObjectType.IsComposite)$
 		public $roleType.ObjectType.SingularName$TreeBuilder $roleType.ObjectType.SingularName$ { get; init; }
@@ -299,7 +299,7 @@ nodeBuilderRoleTypeSubtype_Build() ::= <<
 >>
 
 nodeBuilderAssociationType() ::= <<
-	public record $associationType.Name$NodeBuilder(Allors.Database.Meta.M M) : Allors.Database.Data.INodeBuilder
+	public record $associationType.Name$NodeBuilder(IMetaIndex M) : Allors.Database.Data.INodeBuilder
 	{
 		public $associationType.ObjectType.SingularName$TreeBuilder $associationType.ObjectType.SingularName$ { get; init; }
 $associationType.ObjectType.Subtypes:{subtype|$nodeBuilderAssociationTypeSubtype_Declaration()$}; separator="\n"$

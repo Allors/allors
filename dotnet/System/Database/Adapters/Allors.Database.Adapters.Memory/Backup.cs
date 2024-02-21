@@ -110,7 +110,7 @@ public class Backup
             strategies.Sort(strategySorter);
         }
 
-        var sortedRelationTypes = new List<IRelationType>(((IDatabase)this.transaction.Database).MetaPopulation.RelationTypes);
+        var sortedRelationTypes = new List<RelationType>(((IDatabase)this.transaction.Database).MetaPopulation.RelationTypes);
         sortedRelationTypes.Sort();
         foreach (var relationType in sortedRelationTypes)
         {
@@ -120,13 +120,13 @@ public class Backup
 
             if (strategies != null)
             {
-                this.writer.WriteStartElement(roleType.ObjectType is IUnit
+                this.writer.WriteStartElement(roleType.ObjectType is Unit
                     ? XmlBackup.RelationTypeUnit
                     : XmlBackup.RelationTypeComposite);
 
                 this.writer.WriteAttributeString(XmlBackup.Id, relationType.Id.ToString("N").ToLowerInvariant());
 
-                if (roleType.ObjectType is IUnit)
+                if (roleType.ObjectType is Unit)
                 {
                     foreach (var strategy in strategies)
                     {

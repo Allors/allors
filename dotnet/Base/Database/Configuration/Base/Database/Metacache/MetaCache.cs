@@ -15,12 +15,12 @@ namespace Allors.Database.Configuration
     public class MetaCache : IMetaCache
     {
         // TODO: Use EmptySet
-        private static readonly IReadOnlySet<IInterface> EmptyInterfaceSet = new HashSet<IInterface>();
+        private static readonly IReadOnlySet<Interface> EmptyInterfaceSet = new HashSet<Interface>();
         private static readonly IReadOnlySet<IAssociationType> EmptyAssociationTypeSet = new HashSet<IAssociationType>();
         private static readonly IReadOnlySet<IRoleType> EmptyRoleTypeSet = new HashSet<IRoleType>();
         private static readonly IReadOnlySet<ICompositeRoleType> EmptyCompositeRoleTypeSet = new HashSet<ICompositeRoleType>();
 
-        private readonly IDictionary<IComposite, IReadOnlySet<IInterface>> supertypesByComposite;
+        private readonly IDictionary<IComposite, IReadOnlySet<Interface>> supertypesByComposite;
         private readonly IDictionary<IComposite, IReadOnlySet<IAssociationType>> associationTypesByComposite;
         private readonly IDictionary<IComposite, IReadOnlySet<IRoleType>> roleTypesByComposite;
         private readonly IDictionary<IComposite, IReadOnlySet<IRoleType>> requiredRoleTypesByComposite;
@@ -35,7 +35,7 @@ namespace Allors.Database.Configuration
             var assembly = database.ObjectFactory.Assembly;
 
             this.supertypesByComposite = metaPopulation.Composites
-                .ToDictionary(v => v, v => (IReadOnlySet<IInterface>)new HashSet<IInterface>(v.Supertypes));
+                .ToDictionary(v => v, v => (IReadOnlySet<Interface>)new HashSet<Interface>(v.Supertypes));
 
             this.associationTypesByComposite = metaPopulation.Composites
                 .ToDictionary(v => v, v => (IReadOnlySet<IAssociationType>)new HashSet<IAssociationType>(v.AssociationTypes));
@@ -75,7 +75,7 @@ namespace Allors.Database.Configuration
 
         public Type GetBuilderType(IClass @class) => this.builderTypeByClass[@class];
 
-        public IReadOnlySet<IInterface> GetSupertypesByComposite(IComposite composite)
+        public IReadOnlySet<Interface> GetSupertypesByComposite(IComposite composite)
         {
             return this.supertypesByComposite.TryGetValue(composite, out var supertype) ? supertype : EmptyInterfaceSet;
         }

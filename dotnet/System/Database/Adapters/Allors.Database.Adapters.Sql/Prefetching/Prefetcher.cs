@@ -121,7 +121,7 @@ internal abstract class Prefetcher
                     object unit = null;
                     if (!reader.IsDBNull(index))
                     {
-                        switch (((IUnit)roleType.ObjectType).Tag)
+                        switch (((Unit)roleType.ObjectType).Tag)
                         {
                             case UnitTags.String:
                                 unit = reader.GetString(index);

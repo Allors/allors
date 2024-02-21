@@ -320,7 +320,7 @@ CREATE SCHEMA " + this.database.SchemaName;
                         {
                             if (roleType.ObjectType.IsUnit)
                             {
-                                var unit = (IUnit)roleType.ObjectType;
+                                var unit = (Unit)roleType.ObjectType;
                                 if (unit.IsString || unit.IsBinary)
                                 {
                                     if (roleType.Size == -1 || roleType.Size > 4000)
@@ -397,7 +397,7 @@ CREATE SCHEMA " + this.database.SchemaName;
         }
     }
 
-    private void CreateIndex(NpgsqlConnection connection, string indexName, IRelationType relationType, string tableName)
+    private void CreateIndex(NpgsqlConnection connection, string indexName, RelationType relationType, string tableName)
     {
         var sql = new StringBuilder();
         sql.Append("CREATE INDEX " + indexName + "\n");

@@ -10,10 +10,10 @@
     public partial class RecordsToFile
     {
         private readonly FileInfo fileInfo;
-        private readonly IMetaPopulation metaPopulation;
+        private readonly MetaPopulation metaPopulation;
         private readonly IRecordRoundtripStrategy recordRoundtripStrategy;
 
-        public RecordsToFile(FileInfo fileInfo, IMetaPopulation metaPopulation, IRecordRoundtripStrategy recordRoundtripStrategy)
+        public RecordsToFile(FileInfo fileInfo, MetaPopulation metaPopulation, IRecordRoundtripStrategy recordRoundtripStrategy)
         {
             this.fileInfo = fileInfo;
             this.metaPopulation = metaPopulation;

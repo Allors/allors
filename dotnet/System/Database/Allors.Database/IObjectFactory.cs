@@ -29,7 +29,7 @@ public interface IObjectFactory
     ///     Gets the domain.
     /// </summary>
     /// <value>The domain.</value>
-    IMetaPopulation MetaPopulation { get; }
+    MetaPopulation MetaPopulation { get; }
 
     /// <summary>
     ///     Create a new IObject state.

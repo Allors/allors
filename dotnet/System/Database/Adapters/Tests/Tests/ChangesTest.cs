@@ -69,7 +69,7 @@ public abstract class ChangesTest : IDisposable
             init();
             var m = this.Transaction.Database.Context().M;
 
-            foreach (var @class in ((IMetaPopulation)m).Classes)
+            foreach (var @class in ((MetaPopulation)m).Classes)
             {
                 dynamic newObject = this.Transaction.Build(@class);
                 Assert.True(newObject.onPostBuild);
@@ -85,7 +85,7 @@ public abstract class ChangesTest : IDisposable
             init();
             var m = this.Transaction.Database.Context().M;
 
-            foreach (var @class in ((IMetaPopulation)m).Classes)
+            foreach (var @class in ((MetaPopulation)m).Classes)
             {
                 {
                     var newObjects = this.Transaction.Build(@class, 2);

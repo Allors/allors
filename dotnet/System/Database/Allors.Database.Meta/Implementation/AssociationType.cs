@@ -16,7 +16,7 @@ using System;
 public sealed class AssociationType : IComparable, IAssociationType
 {
     private readonly IComposite objectType;
-    private IRelationType relationType;
+    private RelationType relationType;
 
     /// <summary>
     ///     Used to create property names.
@@ -37,7 +37,7 @@ public sealed class AssociationType : IComparable, IAssociationType
     
     public IRoleType RoleType => this.relationType.RoleType;
     
-    public IRelationType RelationType
+    public RelationType RelationType
     {
         get => this.relationType;
         set => this.relationType = value;

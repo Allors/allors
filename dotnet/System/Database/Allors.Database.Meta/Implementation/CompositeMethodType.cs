@@ -13,5 +13,5 @@ public sealed class CompositeMethodType : ICompositeMethodType
 
     public IComposite Composite { get; }
 
-    public IMethodType MethodType { get; }
+    public MethodType MethodType { get; }
 }

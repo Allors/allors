@@ -14,7 +14,7 @@ internal class UnitSqlMetaData
 {
     internal static SqlMetaData Get(string name, IRoleType roleType)
     {
-        var unit = (IUnit)roleType.ObjectType;
+        var unit = (Unit)roleType.ObjectType;
         switch (unit.Tag)
         {
             case UnitTags.String:

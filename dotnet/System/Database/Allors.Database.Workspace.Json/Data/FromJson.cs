@@ -25,7 +25,7 @@ public class FromJson
         this.resolvers = new List<IResolver>();
     }
 
-    public IMetaPopulation MetaPopulation { get; }
+    public MetaPopulation MetaPopulation { get; }
 
     public IUnitConvert UnitConvert { get; }
 

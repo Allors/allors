@@ -9,5 +9,5 @@ using Allors.Database.Meta;
 
 public interface IReadPermission : IPermission
 {
-    IRelationType RelationType { get; }
+    RelationType RelationType { get; }
 }

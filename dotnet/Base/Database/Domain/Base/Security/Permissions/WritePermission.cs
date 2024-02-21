@@ -38,10 +38,10 @@ namespace Allors.Database.Domain
 
         public IOperandType OperandType => this.RelationType.RoleType;
 
-        IRelationType IWritePermission.RelationType => this.RelationType;
-        public IRelationType RelationType
+        RelationType IWritePermission.RelationType => this.RelationType;
+        public RelationType RelationType
         {
-            get => (IRelationType)this.Transaction().Database.MetaPopulation.FindById(this.RelationTypePointer);
+            get => (RelationType)this.Transaction().Database.MetaPopulation.FindById(this.RelationTypePointer);
 
             set
             {

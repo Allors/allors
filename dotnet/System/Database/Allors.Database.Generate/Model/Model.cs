@@ -11,7 +11,7 @@ public partial class Model
     private readonly Dictionary<Record, RecordModel> recordMapping;
     private readonly Dictionary<Handle, HandleModel> handleMapping;
 
-    public Model(IMetaPopulation metaPopulation, IDictionary<IClass, Record[]> recordsByClass)
+    public Model(MetaPopulation metaPopulation, IDictionary<IClass, Record[]> recordsByClass)
     {
         this.MetaPopulation = metaPopulation;
         this.RecordsByClass = recordsByClass;
@@ -65,7 +65,7 @@ public partial class Model
             .ToDictionary(v => v, v => new HandleModel(this, v));
     }
 
-    public IMetaPopulation MetaPopulation { get; }
+    public MetaPopulation MetaPopulation { get; }
 
     public IDictionary<IClass, Record[]> RecordsByClass { get; }
 
@@ -165,15 +165,15 @@ public partial class Model
 
     public ObjectTypeModel Map(IObjectType v) => v != null ? (ObjectTypeModel)this.mapping[v] : null;
 
-    public UnitModel Map(IUnit v) => v != null ? (UnitModel)this.mapping[v] : null;
+    public UnitModel Map(Unit v) => v != null ? (UnitModel)this.mapping[v] : null;
 
     public CompositeModel Map(IComposite v) => v != null ? (CompositeModel)this.mapping[v] : null;
 
-    public InterfaceModel Map(IInterface v) => v != null ? (InterfaceModel)this.mapping[v] : null;
+    public InterfaceModel Map(Interface v) => v != null ? (InterfaceModel)this.mapping[v] : null;
 
     public ClassModel Map(IClass v) => v != null ? (ClassModel)this.mapping[v] : null;
 
-    public RelationTypeModel Map(IRelationType v) => v != null ? (RelationTypeModel)this.mapping[v] : null;
+    public RelationTypeModel Map(RelationType v) => v != null ? (RelationTypeModel)this.mapping[v] : null;
 
     public AssociationTypeModel Map(IAssociationType v) => v != null ? (AssociationTypeModel)this.mapping[v] : null;
 
@@ -181,7 +181,7 @@ public partial class Model
 
     public CompositeRoleTypeModel Map(ICompositeRoleType v) => v != null ? (CompositeRoleTypeModel)this.mapping[v] : null;
 
-    public MethodTypeModel Map(IMethodType v) => v != null ? (MethodTypeModel)this.mapping[v] : null;
+    public MethodTypeModel Map(MethodType v) => v != null ? (MethodTypeModel)this.mapping[v] : null;
 
     public RecordModel Map(Record v) => v != null ? this.recordMapping[v] : null;
 

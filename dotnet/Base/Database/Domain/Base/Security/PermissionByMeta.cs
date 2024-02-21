@@ -32,7 +32,7 @@ namespace Allors.Database.Domain
         }
 
         // TODO: Make extension method on Class
-        public Permission Get(IClass @class, IMethodType methodType)
+        public Permission Get(IClass @class, MethodType methodType)
         {
             var id = @class.ExecutePermissionIdByMethodTypeId()[methodType.Id];
             return (Permission)this.Transaction.Instantiate(id);

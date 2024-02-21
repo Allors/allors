@@ -250,7 +250,7 @@ public class Restore
                             }
 
                             var relationTypeId = new Guid(relationTypeIdString);
-                            var relationType = (IRelationType)this.transaction.Database.MetaPopulation.FindById(relationTypeId);
+                            var relationType = (RelationType)this.transaction.Database.MetaPopulation.FindById(relationTypeId);
 
                             if (this.reader.Name.Equals(XmlBackup.RelationTypeUnit))
                             {
@@ -265,7 +265,7 @@ public class Restore
                             }
                             else if (this.reader.Name.Equals(XmlBackup.RelationTypeComposite))
                             {
-                                if (relationType == null || relationType.RoleType.ObjectType is IUnit)
+                                if (relationType == null || relationType.RoleType.ObjectType is Unit)
                                 {
                                     this.CantRestoreCompositeRole(relationTypeId);
                                 }
@@ -296,7 +296,7 @@ public class Restore
         }
     }
 
-    private void RestoreUnitRelations(IRelationType relationType)
+    private void RestoreUnitRelations(RelationType relationType)
     {
         var skip = false;
         while (skip || this.reader.Read())
@@ -334,7 +334,7 @@ public class Restore
                                 this.transaction.Database.UnitRoleChecks(strategy, relationType.RoleType);
                                 if (this.reader.IsEmptyElement)
                                 {
-                                    var unitType = (IUnit)relationType.RoleType.ObjectType;
+                                    var unitType = (Unit)relationType.RoleType.ObjectType;
                                     switch (unitType.Tag)
                                     {
                                         case UnitTags.String:
@@ -348,7 +348,7 @@ public class Restore
                                 }
                                 else
                                 {
-                                    var unitType = (IUnit)relationType.RoleType.ObjectType;
+                                    var unitType = (Unit)relationType.RoleType.ObjectType;
                                     var unitTypeTag = unitType.Tag;
 
                                     var unit = XmlBackup.ReadString(value, unitTypeTag);
@@ -380,7 +380,7 @@ public class Restore
         }
     }
 
-    private void RestoreCompositeRelations(IRelationType relationType)
+    private void RestoreCompositeRelations(RelationType relationType)
     {
         var skip = false;
         while (skip || this.reader.Read())

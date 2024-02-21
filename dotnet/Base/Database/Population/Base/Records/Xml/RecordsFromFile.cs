@@ -9,9 +9,9 @@
     public partial class RecordsFromFile
     {
         private readonly FileInfo fileInfo;
-        private readonly IMetaPopulation metaPopulation;
+        private readonly MetaPopulation metaPopulation;
 
-        public RecordsFromFile(FileInfo fileInfo, IMetaPopulation metaPopulation)
+        public RecordsFromFile(FileInfo fileInfo, MetaPopulation metaPopulation)
         {
             this.fileInfo = fileInfo;
             this.metaPopulation = metaPopulation;

@@ -9,5 +9,5 @@ using Allors.Database.Meta;
 
 public interface IExecutePermission : IPermission
 {
-    IMethodType MethodType { get; }
+    MethodType MethodType { get; }
 }

@@ -13,7 +13,7 @@ using System.Collections.Generic;
 /// </summary>
 public interface IMetaIdentifiableObject : IMetaExtensible
 {
-    IMetaPopulation MetaPopulation { get; }
+    MetaPopulation MetaPopulation { get; }
 
     IEnumerable<string> WorkspaceNames { get; }
 

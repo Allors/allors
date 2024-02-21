@@ -199,7 +199,7 @@ where c = '{@class.Id}'";
                             }
 
                             var relationTypeId = new Guid(relationTypeIdString);
-                            var relationType = (IRelationType)this.database.MetaPopulation.FindById(relationTypeId);
+                            var relationType = (RelationType)this.database.MetaPopulation.FindById(relationTypeId);
 
                             if (reader.Name.Equals(XmlBackup.RelationTypeUnit))
                             {
@@ -214,7 +214,7 @@ where c = '{@class.Id}'";
                             }
                             else if (reader.Name.Equals(XmlBackup.RelationTypeComposite))
                             {
-                                if (relationType == null || relationType.RoleType.ObjectType is IUnit)
+                                if (relationType == null || relationType.RoleType.ObjectType is Unit)
                                 {
                                     this.CantRestoreCompositeRole(reader.ReadSubtree(), relationTypeId);
                                 }
@@ -231,7 +231,7 @@ where c = '{@class.Id}'";
         }
     }
 
-    private void RestoreUnitRelations(XmlReader reader, IRelationType relationType)
+    private void RestoreUnitRelations(XmlReader reader, RelationType relationType)
     {
         var allowedClasses = new HashSet<IClass>(relationType.AssociationType.ObjectType.Classes);
         var unitRelationsByClass = new Dictionary<IClass, List<UnitRelation>>();
@@ -275,7 +275,7 @@ where c = '{@class.Id}'";
                                 object unit = null;
                                 if (reader.IsEmptyElement)
                                 {
-                                    var unitType = (IUnit)relationType.RoleType.ObjectType;
+                                    var unitType = (Unit)relationType.RoleType.ObjectType;
                                     unit = unitType.Tag switch
                                     {
                                         UnitTags.String => string.Empty,
@@ -285,7 +285,7 @@ where c = '{@class.Id}'";
                                 }
                                 else
                                 {
-                                    var unitType = (IUnit)relationType.RoleType.ObjectType;
+                                    var unitType = (Unit)relationType.RoleType.ObjectType;
                                     var unitTypeTag = unitType.Tag;
                                     unit = XmlBackup.ReadString(value, unitTypeTag);
                                 }
@@ -329,7 +329,7 @@ where c = '{@class.Id}'";
         }
     }
 
-    private void RestoreCompositeRelations(XmlReader reader, IRelationType relationType)
+    private void RestoreCompositeRelations(XmlReader reader, RelationType relationType)
     {
         var con = this.database.ConnectionFactory.Create();
         try
