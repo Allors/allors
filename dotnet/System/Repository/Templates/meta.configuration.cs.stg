@@ -246,7 +246,17 @@ $composite.DefinedProperties:{property|$build_relation(property)$}; separator="\
 >>
 
 build_relation(property) ::= <<
-            relationTypes.$property.DefiningType.SingularName$$property.RoleName$ = new Meta$property.DefiningType.SingularName$$property.RoleName$(meta, Ids.$property.DefiningType.SingularName$$property.RoleName$, $if(property.AssignedMultiplicity)$Allors.Multiplicity.$property.AssignedMultiplicity$$else$null$endif$, $if(property.AttributeByName.Derived)$$property.AttributeByName.Derived.Value$$else$false$endif$);
+            {
+                var relationType = new Meta$property.DefiningType.SingularName$$property.RoleName$(meta, Ids.$property.DefiningType.SingularName$$property.RoleName$, $if(property.AssignedMultiplicity)$Allors.Multiplicity.$property.AssignedMultiplicity$$else$null$endif$, $if(property.AttributeByName.Derived)$$property.AttributeByName.Derived.Value$$else$false$endif$);
+                $property.RelationTypeExtensionAttributes:{attribute|relationType.Attributes.$attribute.Name$ = $attribute.Value$;}; separator="\n"$
+                $property.AssociationTypeExtensionAttributes:{attribute|relationType.AssociationType.Attributes.$attribute.Name$ = $attribute.Value$;}; separator="\n"$ 
+                $property.RoleTypeExtensionAttributes:{attribute|relationType.RoleType.Attributes.$attribute.Name$ = $attribute.Value$;}; separator="\n"$
+                $property.CompositeRoleTypeExtensionAttributes:{attribute|relationType.RoleType.CompositeRoleType.Attributes.$attribute.Name$ = $attribute.Value$;}; separator="\n"$  
+                $if(property.AttributeByName.Size)$relationType.RoleType.Size = $property.AttributeByName.Size.Value$;$endif$
+                $if(property.AttributeByName.Precision)$relationType.RoleType.Precision = $property.AttributeByName.Precision.Value$;$endif$
+                $if(property.AttributeByName.Scale)$relationType.RoleType.Scale = $property.AttributeByName.Scale.Value$;$endif$
+                relationTypes.$property.DefiningType.SingularName$$property.RoleName$ = relationType; 
+            }
 >>
 
 assign_properties(composite) ::= <<
