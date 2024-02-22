@@ -13,7 +13,7 @@ namespace Allors.Database.Configuration
     {
         private readonly Dictionary<Class, RoleType> masks;
 
-        public WorkspaceMask(MetaIndex m) =>
+        public WorkspaceMask(IMetaIndex m) =>
             this.masks = new Dictionary<Class, RoleType>
             {
                 { m.TrimFrom, m.TrimFrom.Name },

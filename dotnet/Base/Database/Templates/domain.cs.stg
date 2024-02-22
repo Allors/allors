@@ -163,17 +163,17 @@ namespace Allors.Database.Domain
 	public partial class $class.SingularName$ : Allors.Database.IObject $class.directSupertypes:{directSupertype|, $directSupertype.SingularName$}$
 	{
 		private readonly IStrategy strategy;
-		private readonly MetaIndex m;
+		private readonly IMetaIndex m;
 
 $class.Objects:{object|$class_Object()$}; separator="\n"$
 
 		public $class.SingularName$(Allors.Database.IStrategy strategy)
 		{
 			this.strategy = strategy;
-            this.m = strategy.Transaction.Database.Services.Get<MetaIndex>();
+            this.m = strategy.Transaction.Database.Services.Get<IMetaIndex>();
 		}
 
-		public MetaIndex M => m;
+		public IMetaIndex M => m;
 
 		public $class.SingularName$Index Meta => m.$class.SingularName$;
 
@@ -255,7 +255,7 @@ treeBuilderAssociationType_Build() ::= <<
 >>
 
 nodeBuilderRoleType() ::= <<
-	public record $roleType.FullName$NodeBuilder(MetaIndex M) : Allors.Database.Data.INodeBuilder
+	public record $roleType.FullName$NodeBuilder(IMetaIndex M) : Allors.Database.Data.INodeBuilder
 	{
 $if(roleType.ObjectType.IsComposite)$
 		public $roleType.ObjectType.SingularName$TreeBuilder $roleType.ObjectType.SingularName$ { get; init; }
@@ -299,7 +299,7 @@ nodeBuilderRoleTypeSubtype_Build() ::= <<
 >>
 
 nodeBuilderAssociationType() ::= <<
-	public record $associationType.Name$NodeBuilder(MetaIndex M) : Allors.Database.Data.INodeBuilder
+	public record $associationType.Name$NodeBuilder(IMetaIndex M) : Allors.Database.Data.INodeBuilder
 	{
 		public $associationType.ObjectType.SingularName$TreeBuilder $associationType.ObjectType.SingularName$ { get; init; }
 $associationType.ObjectType.Subtypes:{subtype|$nodeBuilderAssociationTypeSubtype_Declaration()$}; separator="\n"$
@@ -513,7 +513,7 @@ $if(methodType.ObjectType.IsClass)$
 		{
 			get
 			{
-			    var m = this.Object.Strategy.Transaction.Database.Services.Get<MetaIndex>();
+			    var m = this.Object.Strategy.Transaction.Database.Services.Get<IMetaIndex>();
 				return new Allors.Database.Meta.MethodInvocation(m.$methodType.ObjectType.SingularName$, m.$methodType.ObjectType.SingularName$.$methodType.Name$);
 			}
 		}
@@ -543,7 +543,7 @@ methodTypeLeafClass() ::= <<
 		{
 			get
 			{
-			    var m = this.Object.Strategy.Transaction.Database.Services.Get<MetaIndex>();
+			    var m = this.Object.Strategy.Transaction.Database.Services.Get<IMetaIndex>();
 				return new Allors.Database.Meta.MethodInvocation(m.$class.SingularName$, m.$class.SingularName$.$methodType.Name$);
 			}
 		}
@@ -611,6 +611,9 @@ $meta.classes:{objectType|$metaObjectType_Id()$}; separator="\n"$
 	
 		// RelationTypes
 $meta.relationTypes:{relationType|$metaRelationType_Id()$}; separator="\n"$
+
+		// MethodTypes
+$meta.methodTypes:{methodType|$metaMethodType_Id()$}; separator="\n"$
     }
 }
 >>
@@ -623,15 +626,17 @@ metaRelationType_Id() ::= <<
 		public static readonly Guid $relationType.RoleType.FullName$ = new Guid("$relationType.Id$");
 >>
 
+metaMethodType_Id() ::= <<
+		public static readonly Guid $methodType.FullName$ = new Guid("$methodType.Id$");
+>>
+
 metaIndex(meta) ::= <<
 namespace Allors.Database.Domain
 {
     using Meta;
 
-    public class MetaIndex(MetaPopulation meta) : IMetaPopulationIndex
+    public interface IMetaIndex : IMetaPopulationIndex
     {
-		public override MetaPopulation MetaPopulation => meta;
-
 $meta.units:{objectType|$metaObjectType_Property()$}; separator="\n"$
 $meta.interfaces:{objectType|$metaObjectType_Property()$}; separator="\n"$
 $meta.classes:{objectType|$metaObjectType_Property()$}; separator="\n"$
@@ -650,22 +655,22 @@ $meta.methodTypes:{methodType|$metaMethodType_Type()$}; separator="\n"$
 >>
 
 metaObjectType_Property() ::= <<
-		public $objectType.SingularName$Index $objectType.SingularName$ { get; set; }
+		$objectType.SingularName$Index $objectType.SingularName$ { get; set; }
 
 >>
 
 metaRoleType_Property() ::= <<
-		public $relationType.RoleType.FullName$Index $relationType.RoleType.FullName$ { get; set; }
+		$relationType.RoleType.FullName$Index $relationType.RoleType.FullName$ { get; set; }
 
 >>
 
 metaAssociationType_Property() ::= <<
-		public $relationType.AssociationType.Name$Index $relationType.AssociationType.Name$ { get; set; }
+		$relationType.AssociationType.Name$Index $relationType.AssociationType.Name$ { get; set; }
 
 >>
 
 metaMethodType_Property() ::= <<
-		public $methodType.FullName$Index $methodType.FullName$ { get; set; }
+		$methodType.FullName$Index $methodType.FullName$ { get; set; }
 
 >>
 

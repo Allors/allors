@@ -1,4 +1,4 @@
-// <copyright file="Prefetcher.cs" company="Allors bv">
+﻿// <copyright file="Prefetcher.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -477,8 +477,8 @@ internal abstract class Prefetcher
                     if (associationIdValue != null && associationIdValue != DBNull.Value)
                     {
                         var associationId = (long)associationIdValue;
-                        association = associationType.ObjectType.ExclusiveClass != null
-                            ? this.Transaction.State.GetOrCreateReferenceForExistingObject(associationType.ObjectType.ExclusiveClass,
+                        association = associationType.Composite.ExclusiveClass != null
+                            ? this.Transaction.State.GetOrCreateReferenceForExistingObject(associationType.Composite.ExclusiveClass,
                                 associationId, this.Transaction)
                             : this.Transaction.State.GetOrCreateReferenceForExistingObject(associationId, this.Transaction);
 
@@ -541,8 +541,8 @@ internal abstract class Prefetcher
 
                 if (prefetchedAssociationByRole.TryGetValue(role, out var associationId))
                 {
-                    association = associationType.ObjectType.ExclusiveClass != null
-                        ? this.Transaction.State.GetOrCreateReferenceForExistingObject(associationType.ObjectType.ExclusiveClass,
+                    association = associationType.Composite.ExclusiveClass != null
+                        ? this.Transaction.State.GetOrCreateReferenceForExistingObject(associationType.Composite.ExclusiveClass,
                             associationId, this.Transaction)
                         : this.Transaction.State.GetOrCreateReferenceForExistingObject(associationId, this.Transaction);
 
@@ -603,9 +603,9 @@ internal abstract class Prefetcher
                     var associationId = (long)associationIdValue;
                     associations.Add(associationId);
 
-                    if (associationType.ObjectType.ExclusiveClass != null)
+                    if (associationType.Composite.ExclusiveClass != null)
                     {
-                        this.Transaction.State.GetOrCreateReferenceForExistingObject(associationType.ObjectType.ExclusiveClass,
+                        this.Transaction.State.GetOrCreateReferenceForExistingObject(associationType.Composite.ExclusiveClass,
                             associationId, this.Transaction);
                     }
                     else
@@ -688,9 +688,9 @@ internal abstract class Prefetcher
 
         foreach (var associationId in prefetchedAssociations)
         {
-            if (associationType.ObjectType.ExclusiveClass != null)
+            if (associationType.Composite.ExclusiveClass != null)
             {
-                this.Transaction.State.GetOrCreateReferenceForExistingObject(associationType.ObjectType.ExclusiveClass, associationId,
+                this.Transaction.State.GetOrCreateReferenceForExistingObject(associationType.Composite.ExclusiveClass, associationId,
                     this.Transaction);
             }
             else

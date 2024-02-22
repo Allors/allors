@@ -14,7 +14,7 @@ namespace Allors.Database.Domain
 
     public class NotificationListRule : Rule
     {
-        public NotificationListRule(MetaIndex m) : base(m, new Guid("e8071e5b-18a4-4a52-8b22-09a75c3dbf72")) =>
+        public NotificationListRule(IMetaIndex m) : base(m, new Guid("e8071e5b-18a4-4a52-8b22-09a75c3dbf72")) =>
             this.Patterns =
             [
                 m.NotificationList.RolePattern(v=>v.Notifications),

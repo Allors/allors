@@ -1,4 +1,4 @@
-// <copyright file="RoleAssertions.cs" company="Allors bv">
+﻿// <copyright file="RoleAssertions.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -12,7 +12,7 @@ public static class RoleAssertions
 {
     public static void UnitRoleChecks(this RoleType roleType, IStrategy strategy)
     {
-        if (!roleType.AssociationType.ObjectType.IsAssignableFrom(strategy.Class))
+        if (!roleType.AssociationType.Composite.IsAssignableFrom(strategy.Class))
         {
             throw new ArgumentException(strategy.Class + " is not a valid association object type for " + roleType + ".");
         }
@@ -54,7 +54,7 @@ public static class RoleAssertions
 
     private static void CompositeSharedChecks(this RoleType roleType, IStrategy strategy, IObject role)
     {
-        if (!roleType.AssociationType.ObjectType.IsAssignableFrom(strategy.Class))
+        if (!roleType.AssociationType.Composite.IsAssignableFrom(strategy.Class))
         {
             throw new ArgumentException(strategy.Class + " has no roleType with role " + roleType + ".");
         }

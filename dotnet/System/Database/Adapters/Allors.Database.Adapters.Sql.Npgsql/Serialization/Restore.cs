@@ -233,7 +233,7 @@ where c = '{@class.Id}'";
 
     private void RestoreUnitRelations(XmlReader reader, RelationType relationType)
     {
-        var allowedClasses = new HashSet<Class>(relationType.AssociationType.ObjectType.Classes);
+        var allowedClasses = new HashSet<Class>(relationType.AssociationType.Composite.Classes);
         var unitRelationsByClass = new Dictionary<Class, List<UnitRelation>>();
 
         var skip = false;

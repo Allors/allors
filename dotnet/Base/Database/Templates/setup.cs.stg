@@ -61,7 +61,7 @@ objectType_Plural() ::= <<
 		{
 		}
 
-		public Allors.Database.Meta.Meta$objectType.SingularName$ Meta
+		public $objectType.SingularName$Index Meta
 		{
 			get
 			{
@@ -69,7 +69,7 @@ objectType_Plural() ::= <<
 			}
 		}
 
-		public override Allors.Database.Meta.$if(objectType.IsClass)$IClass$else$IInterface$endif$ ObjectType
+		public override Allors.Database.Meta.$if(objectType.IsClass)$Class$else$Interface$endif$ ObjectType
 		{
 			get
 			{

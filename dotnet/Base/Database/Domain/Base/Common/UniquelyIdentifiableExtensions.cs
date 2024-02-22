@@ -14,7 +14,7 @@ namespace Allors.Database.Domain
         {
             if (!@this.ExistUniqueId)
             {
-                @this.Strategy.SetUnitRole(@this.Transaction().Database.Services.Get<MetaIndex>().UniquelyIdentifiable.UniqueId, Guid.NewGuid());
+                @this.Strategy.SetUnitRole(@this.Transaction().Database.Services.Get<IMetaIndex>().UniquelyIdentifiable.UniqueId, Guid.NewGuid());
             }
         }
     }

@@ -37,10 +37,10 @@ namespace Allors.Database.Configuration.Derivations.Default
 
                     var patternClasses = pattern switch
                     {
-                        IRolePattern { OfType: null } rolePattern => [.. rolePattern.RoleType.AssociationType.ObjectType.Classes],
+                        IRolePattern { OfType: null } rolePattern => [.. rolePattern.RoleType.AssociationType.Composite.Classes],
                         IRolePattern { OfType: not null } rolePattern => [.. rolePattern.OfType.Classes],
 
-                        IAssociationPattern { OfType: null } associationPattern => (associationPattern.AssociationType.RoleType.ObjectType as IComposite)?.Classes.ToArray() ?? Array.Empty<Class>(),
+                        IAssociationPattern { OfType: null } associationPattern => (associationPattern.AssociationType.RoleType.ObjectType as Composite)?.Classes.ToArray() ?? Array.Empty<Class>(),
                         IAssociationPattern { OfType: not null } associationPattern => [.. associationPattern.OfType.Classes],
 
                         _ => Array.Empty<Class>(),

@@ -29,7 +29,7 @@ namespace Allors.Database.Configuration
         public Security(DatabaseServices databaseServices)
         {
             var database = databaseServices.Database;
-            var m = database.Services.Get<M>();
+            var m = database.Services.Get<IMetaIndex>();
             var metaCache = databaseServices.Get<IMetaCache>();
 
             this.databaseVersionedSecurityTokens = new ConcurrentDictionary<long, IVersionedSecurityToken>();
@@ -53,7 +53,7 @@ namespace Allors.Database.Configuration
                 .WithRule(m.Revocation.DeniedPermissions)
                 .Build();
 
-            this.permissionIdsByWorkspaceName = ((MetaPopulation)m).WorkspaceNames
+            this.permissionIdsByWorkspaceName = m.MetaPopulation.WorkspaceNames
                 .ToDictionary(v => v, v => new HashSet<long>(metaCache.GetWorkspaceClasses(v).SelectMany(w =>
                 {
                     var @class = w;

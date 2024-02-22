@@ -14,7 +14,7 @@ namespace Allors.Database.Domain
 
     public class PersonOwningRule : Rule
     {
-        public PersonOwningRule(MetaIndex m) : base(m, new Guid("31564037-C654-45AA-BC2B-69735A93F227")) =>
+        public PersonOwningRule(IMetaIndex m) : base(m, new Guid("31564037-C654-45AA-BC2B-69735A93F227")) =>
             this.Patterns =
             [
                 m.Person.AssociationPattern(v => v.OrganizationsWhereOwner),

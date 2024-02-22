@@ -116,7 +116,7 @@ internal class Backup
         {
             var associationType = relation.AssociationType;
 
-            if (associationType.ObjectType.Classes.Count > 0)
+            if (associationType.Composite.Classes.Count > 0)
             {
                 var roleType = relation.RoleType;
 
@@ -126,7 +126,7 @@ internal class Backup
                     if (!exclusiveRootClassesByObjectType.TryGetValue(associationType.ObjectType, out var exclusiveRootClasses))
                     {
                         exclusiveRootClasses = new HashSet<IObjectType>();
-                        foreach (var concreteClass in associationType.ObjectType.Classes)
+                        foreach (var concreteClass in associationType.Composite.Classes)
                         {
                             exclusiveRootClasses.Add(concreteClass.ExclusiveClass);
                         }
@@ -170,7 +170,7 @@ internal class Backup
                         sql +=
                             $"SELECT {Sql.Mapping.ColumnNameForObject} As {Sql.Mapping.ColumnNameForAssociation}, {this.database.Mapping.ColumnNameByRelationType[roleType.RelationType]} As {Sql.Mapping.ColumnNameForRole}\n";
                         sql +=
-                            $"FROM {this.database.Mapping.TableNameForObjectByClass[associationType.ObjectType.ExclusiveClass]}\n";
+                            $"FROM {this.database.Mapping.TableNameForObjectByClass[associationType.Composite.ExclusiveClass]}\n";
                         sql +=
                             $"WHERE {this.database.Mapping.ColumnNameByRelationType[roleType.RelationType]} IS NOT NULL\n";
                         sql += $"ORDER BY {Sql.Mapping.ColumnNameForAssociation}";

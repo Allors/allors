@@ -410,7 +410,7 @@ public class Restore
 
                             if (association == null ||
                                 !this.transaction.Database.ContainsClass(
-                                    relationType.AssociationType.ObjectType, association.UncheckedObjectType) ||
+                                    relationType.AssociationType.Composite, association.UncheckedObjectType) ||
                                 (relationType.RoleType.IsOne && roleIdStringArray.Length != 1))
                             {
                                 foreach (var roleId in roleIdStringArray)

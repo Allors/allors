@@ -9,6 +9,7 @@ namespace Allors.Database.Configuration
     using System.Collections.Concurrent;
     using System.Linq;
     using Data;
+    using Domain;
     using Meta;
     using Services;
     using PersistentPreparedExtent = Domain.PersistentPreparedExtent;
@@ -31,7 +32,7 @@ namespace Allors.Database.Configuration
         {
             if (id == OrganizationByName)
             {
-                var m = this.Database.Services.Get<M>();
+                var m = this.Database.Services.Get<IMetaIndex>();
                 return new Extent(m.Organization) { Predicate = new Equals(m.Organization.Name) { Parameter = "name" } };
             }
 
@@ -40,7 +41,7 @@ namespace Allors.Database.Configuration
                 var transaction = this.Database.CreateTransaction();
                 try
                 {
-                    var m = transaction.Database.Services.Get<M>();
+                    var m = transaction.Database.Services.Get<IMetaIndex>();
 
                     var filter = new Extent(m.PersistentPreparedExtent)
                     {

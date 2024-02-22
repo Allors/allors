@@ -6,7 +6,7 @@
 
 namespace Allors.Database.Meta;
 
-public abstract class IMetaPopulationIndex
+public interface IMetaPopulationIndex
 {
-    public abstract MetaPopulation MetaPopulation { get; }
+    MetaPopulation MetaPopulation { get; }
 }

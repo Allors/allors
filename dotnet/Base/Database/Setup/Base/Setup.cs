@@ -38,7 +38,7 @@ namespace Allors.Database.Domain
 
         public Config Config { get; }
 
-        public M M { get; set; }
+        public IMetaIndex M { get; set; }
 
         public void Apply()
         {

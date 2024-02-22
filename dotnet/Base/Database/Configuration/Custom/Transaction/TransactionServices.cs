@@ -54,7 +54,7 @@ namespace Allors.Database.Configuration
         {
             this.Transaction = transaction;
             transaction.Database.Services.Get<IPermissions>().Load(transaction);
-            this.caches = new Caches(transaction, this.DatabaseServices.Get<M>());
+            this.caches = new Caches(transaction, this.DatabaseServices.Get<IMetaIndex>());
         }
 
         private void OnUserChanged(object sender, EventArgs e)

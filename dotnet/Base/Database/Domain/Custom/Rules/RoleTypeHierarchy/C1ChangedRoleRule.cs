@@ -14,7 +14,7 @@ namespace Allors.Database.Domain
 
     public class C1ChangedRoleRule : Rule
     {
-        public C1ChangedRoleRule(MetaIndex m) : base(m, new Guid("84343F1E-7224-41CE-9B4C-69883417115F")) =>
+        public C1ChangedRoleRule(IMetaIndex m) : base(m, new Guid("84343F1E-7224-41CE-9B4C-69883417115F")) =>
             this.Patterns = new[]
             {
                 new RolePattern(m.S12.ChangedRolePingC1, m.C1),

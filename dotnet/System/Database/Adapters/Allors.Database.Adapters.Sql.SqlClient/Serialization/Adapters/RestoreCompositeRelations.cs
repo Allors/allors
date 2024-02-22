@@ -38,7 +38,7 @@ internal class RestoreCompositeRelations : IEnumerable<CompositeRelation>
 
     public IEnumerator<CompositeRelation> GetEnumerator()
     {
-        var allowedAssociationClasses = new HashSet<Class>(this.relationType.AssociationType.ObjectType.Classes);
+        var allowedAssociationClasses = new HashSet<Class>(this.relationType.AssociationType.Composite.Classes);
         var allowedRoleClasses = new HashSet<Class>(((Composite)this.relationType.RoleType.ObjectType).Classes);
 
         var skip = false;

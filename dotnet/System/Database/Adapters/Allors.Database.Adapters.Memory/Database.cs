@@ -127,7 +127,7 @@ public class Database : IDatabase
 
     public void UnitRoleChecks(IStrategy strategy, RoleType roleType)
     {
-        if (!this.ContainsClass(roleType.AssociationType.ObjectType, strategy.Class))
+        if (!this.ContainsClass(roleType.AssociationType.Composite, strategy.Class))
         {
             throw new ArgumentException(strategy.Class + " is not a valid association object type for " + roleType + ".");
         }
@@ -188,7 +188,7 @@ public class Database : IDatabase
 
     private void CompositeSharedChecks(IStrategy strategy, RoleType roleType, Strategy roleStrategy)
     {
-        if (!this.ContainsClass(roleType.AssociationType.ObjectType, strategy.Class))
+        if (!this.ContainsClass(roleType.AssociationType.Composite, strategy.Class))
         {
             throw new ArgumentException(strategy.Class + " has no roleType with role " + roleType + ".");
         }

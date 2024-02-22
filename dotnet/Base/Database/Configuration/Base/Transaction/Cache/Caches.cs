@@ -12,7 +12,7 @@ namespace Allors.Database.Domain
     {
         private readonly IDictionary<Composite, IDictionary<RoleType, object>> cacheByRoleTypeByObjectType;
       
-        public Caches(ITransaction transaction, MetaIndex m)
+        public Caches(ITransaction transaction, IMetaIndex m)
         {
             this.Transaction = transaction;
             this.M = m;
@@ -21,7 +21,7 @@ namespace Allors.Database.Domain
 
         public ITransaction Transaction { get; }
 
-        public MetaIndex M { get; }
+        public IMetaIndex M { get; }
         
         public ICache<TKey, TObject> Get<TKey, TObject>(Composite objectType, RoleType roleType) where TObject : class, IObject
         {
