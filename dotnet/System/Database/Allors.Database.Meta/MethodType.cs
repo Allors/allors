@@ -69,6 +69,8 @@ public sealed class MethodType : EmbeddedObject, IComparable, IMetaIdentifiableO
         }
     }
 
+    public static implicit operator MethodType(IMethodTypeIndex index) => index.MethodType;
+
     public int CompareTo(object other) => this.Id.CompareTo((other as MethodType)?.Id);
 
     public override bool Equals(object other) => this.Id.Equals((other as MethodType)?.Id);

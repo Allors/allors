@@ -543,7 +543,7 @@ methodTypeLeafClass() ::= <<
 		{
 			get
 			{
-			    var m = this.Object.Strategy.Transaction.Database.Services.Get<Allors.Database.Meta.M>();;
+			    var m = this.Object.Strategy.Transaction.Database.Services.Get<IMetaIndex>();
 				return new Allors.Database.Meta.MethodInvocation(m.$class.SingularName$, m.$class.SingularName$.$methodType.Name$);
 			}
 		}
@@ -637,13 +637,15 @@ $meta.interfaces:{objectType|$metaObjectType_Property()$}; separator="\n"$
 $meta.classes:{objectType|$metaObjectType_Property()$}; separator="\n"$
 $meta.relationTypes:{relationType|$metaRoleType_Property()$}; separator="\n"$
 $meta.relationTypes:{relationType|$metaAssociationType_Property()$}; separator="\n"$
+$meta.methodTypes:{methodType|$metaMethodType_Property()$}; separator="\n"$
     }
 
 $meta.units:{unit|$metaUnit_Type()$}; separator="\n"$
 $meta.interfaces:{interface|$metaInterface_Type()$}; separator="\n"$
 $meta.classes:{class|$metaClass_Type()$}; separator="\n"$
-$meta.relationTypes:{relationType|$metaAssociationType_Type()$}; separator="\n"$
 $meta.relationTypes:{relationType|$metaRoleType_Type()$}; separator="\n"$
+$meta.relationTypes:{relationType|$metaAssociationType_Type()$}; separator="\n"$
+$meta.methodTypes:{methodType|$metaMethodType_Type()$}; separator="\n"$
 }
 >>
 
@@ -659,6 +661,11 @@ metaRoleType_Property() ::= <<
 
 metaAssociationType_Property() ::= <<
 		public I$relationType.AssociationType.Name$Index $relationType.AssociationType.Name$ { get; set; }
+
+>>
+
+metaMethodType_Property() ::= <<
+		public I$methodType.FullName$Index $methodType.FullName$ { get; set; }
 
 >>
 
@@ -680,6 +687,7 @@ metaInterface_Type() ::= <<
 $interface.Subtypes:{subtype|$metaObjectType_Subtype()$}; separator="\n"$
 $interface.RoleTypes:{roleType|$metaObjectType_RoleType()$}; separator="\n"$
 $interface.AssociationTypes:{associationType|$metaObjectType_AssociationType()$}; separator="\n"$
+$interface.MethodTypes:{methodType|$metaObjectType_MethodType()$}; separator="\n"$
 	}
 
 >>
@@ -693,6 +701,7 @@ metaClass_Type() ::= <<
 
 $class.RoleTypes:{roleType|$metaObjectType_RoleType()$}; separator="\n"$
 $class.AssociationTypes:{associationType|$metaObjectType_AssociationType()$}; separator="\n"$
+$class.MethodTypes:{methodType|$metaObjectType_MethodType()$}; separator="\n"$
 	}
 
 >>
@@ -707,6 +716,10 @@ metaObjectType_RoleType() ::= <<
 
 metaObjectType_AssociationType() ::= <<
 		public I$associationType.Name$Index $associationType.Name$ { get; set; }
+>>
+
+metaObjectType_MethodType() ::= <<
+		public I$methodType.FullName$Index $methodType.Name$ { get; set; }
 >>
 
 metaRoleType_Type() ::= <<
@@ -734,6 +747,16 @@ metaAssociationType_Type() ::= <<
 		public I$relationType.AssociationType.ObjectType$Index ObjectType { get; set; }
 
 		public I$relationType.RoleType.FullName$Index RoleType { get; set; }
+	}
+
+>>
+
+metaMethodType_Type() ::= <<
+	public class I$methodType.FullName$Index(MethodType meta) : IMethodTypeIndex
+	{
+		public override MethodType MethodType => meta;
+
+		public I$methodType.ObjectType$Index ObjectType { get; set; }
 	}
 
 >>
