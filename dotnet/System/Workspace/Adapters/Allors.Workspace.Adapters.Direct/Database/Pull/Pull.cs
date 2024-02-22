@@ -10,11 +10,11 @@ namespace Allors.Workspace.Adapters.Direct
     using Database;
     using Database.Data;
     using Database.Domain;
+    using Database.Meta;
     using Database.Security;
     using Database.Services;
     using Protocol.Direct;
     using IClass = Database.Meta.Class;
-    using IComposite = Database.Meta.IComposite;
     using IStrategy = IStrategy;
 
     public class Pull : Result, IPullResultInternals
@@ -64,7 +64,7 @@ namespace Allors.Workspace.Adapters.Direct
 
         public IPrefetchPolicyCache PrefetchPolicyCache { get; }
 
-        public void AddCollection(string name, IComposite objectType, in IEnumerable<Database.IObject> collection, Node[] tree)
+        public void AddCollection(string name, Composite objectType, in IEnumerable<Database.IObject> collection, Node[] tree)
         {
             switch (collection)
             {

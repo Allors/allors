@@ -41,7 +41,7 @@ internal sealed class RoleEqualsRole : Predicate
                                  schema.ColumnNameByRelationType[this.equalsRole.RelationType]);
             }
         }
-        else if (((IComposite)this.role.ObjectType).ExclusiveClass != null && ((IComposite)this.equalsRole.ObjectType).ExclusiveClass != null)
+        else if (((Composite)this.role.ObjectType).ExclusiveClass != null && ((Composite)this.equalsRole.ObjectType).ExclusiveClass != null)
         {
             statement.Append(" " + alias + "." + schema.ColumnNameByRelationType[this.role.RelationType] + "=" + alias + "." +
                              schema.ColumnNameByRelationType[this.equalsRole.RelationType]);

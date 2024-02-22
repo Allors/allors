@@ -17,7 +17,7 @@ public static class RoleAssertions
             throw new ArgumentException(strategy.Class + " is not a valid association object type for " + roleType + ".");
         }
 
-        if (roleType.ObjectType is IComposite)
+        if (roleType.ObjectType is Composite)
         {
             throw new ArgumentException(roleType.ObjectType + " on roleType " + roleType + " is not a unit type.");
         }
@@ -71,7 +71,7 @@ public static class RoleAssertions
                 throw new ArgumentException(roleType + " on object " + strategy + " is removed.");
             }
 
-            if (!(roleType.ObjectType is IComposite compositeType))
+            if (!(roleType.ObjectType is Composite compositeType))
             {
                 throw new ArgumentException(role + " has no CompositeType");
             }

@@ -11,6 +11,6 @@ namespace Allors.Database.Domain
     {
         ITransaction Transaction { get; }
 
-        IComposite ObjectType { get; }
+        Composite ObjectType { get; }
     }
 }

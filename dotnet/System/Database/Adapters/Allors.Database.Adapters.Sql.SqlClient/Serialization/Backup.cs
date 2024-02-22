@@ -181,7 +181,7 @@ internal class Backup
                         sql +=
                             $"SELECT {this.database.Mapping.ColumnNameByRelationType[associationType.RelationType]} As {Sql.Mapping.ColumnNameForAssociation}, {Sql.Mapping.ColumnNameForObject} As {Sql.Mapping.ColumnNameForRole}\n";
                         sql +=
-                            $"FROM {this.database.Mapping.TableNameForObjectByClass[((IComposite)roleType.ObjectType).ExclusiveClass]}\n";
+                            $"FROM {this.database.Mapping.TableNameForObjectByClass[((Composite)roleType.ObjectType).ExclusiveClass]}\n";
                         sql +=
                             $"WHERE {this.database.Mapping.ColumnNameByRelationType[associationType.RelationType]} IS NOT NULL\n";
                         sql += $"ORDER BY {Sql.Mapping.ColumnNameForAssociation},{Sql.Mapping.ColumnNameForRole}";

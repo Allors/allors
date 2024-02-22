@@ -34,7 +34,7 @@ public interface IValidation
 
     void AssertIsUnique(IChangeSet changeSet, IObject association, RoleType roleType);
 
-    void AssertIsUnique(IChangeSet changeSet, IObject association, IComposite objectType, params RoleType[] roleTypes);
+    void AssertIsUnique(IChangeSet changeSet, IObject association, Composite objectType, params RoleType[] roleTypes);
 
     void AssertAtLeastOne(IObject association, params RoleType[] roleTypes);
 

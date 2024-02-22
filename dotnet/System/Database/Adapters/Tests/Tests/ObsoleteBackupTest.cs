@@ -1228,7 +1228,7 @@ public abstract class ObsoleteBackupTest : IDisposable
         }
     }
 
-    private IObject[] GetExtent(ITransaction transaction, IComposite objectType) => transaction.Extent(objectType);
+    private IObject[] GetExtent(ITransaction transaction, Composite objectType) => transaction.Extent(objectType);
 
     #region population
     private C1 c1A;

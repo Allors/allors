@@ -182,7 +182,7 @@ public class PushResponseBuilder
         var countOutstandingRoles = 0;
         foreach (var pushRequestRole in pushRequestRoles)
         {
-            var composite = (IComposite)obj.Strategy.Class;
+            var composite = (Composite)obj.Strategy.Class;
 
             // TODO: Cache and filter for workspace
             var roleTypes = composite.RoleTypes.Where(v => v.RelationType.WorkspaceNames.Any());

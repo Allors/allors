@@ -9,10 +9,10 @@ using Allors.Database.Meta;
 
 internal sealed class RoleInstanceof : Predicate
 {
-    private readonly IComposite objectType;
+    private readonly Composite objectType;
     private readonly RoleType roleType;
 
-    internal RoleInstanceof(ExtentFiltered extent, RoleType roleType, IComposite objectType)
+    internal RoleInstanceof(ExtentFiltered extent, RoleType roleType, Composite objectType)
     {
         extent.CheckForRoleType(roleType);
         PredicateAssertions.ValidateRoleInstanceOf(roleType, objectType);

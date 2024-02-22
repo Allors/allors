@@ -414,9 +414,9 @@ public sealed class Transaction : ITransaction
         }
     }
 
-    public Extent<T> Extent<T>() where T : IObject => this.Extent((IComposite)this.Database.ObjectFactory.GetObjectType(typeof(T)));
+    public Extent<T> Extent<T>() where T : IObject => this.Extent((Composite)this.Database.ObjectFactory.GetObjectType(typeof(T)));
 
-    public Allors.Database.Extent Extent(IComposite type) => new ExtentFiltered(this, type);
+    public Allors.Database.Extent Extent(Composite type) => new ExtentFiltered(this, type);
 
     public Allors.Database.Extent Union(Allors.Database.Extent firstOperand, Allors.Database.Extent secondOperand) =>
         new ExtentOperation(((Extent)firstOperand).ContainedInExtent, ((Extent)secondOperand).ContainedInExtent, ExtentOperations.Union);

@@ -70,7 +70,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void ClassRoleOfType()
         {
-            Expression<Func<MetaUserGroup, IComposite>> expression = v => v.Members.ObjectType.AsPerson;
+            Expression<Func<MetaUserGroup, Composite>> expression = v => v.Members.ObjectType.AsPerson;
 
             var path = expression.Node(this.M);
 

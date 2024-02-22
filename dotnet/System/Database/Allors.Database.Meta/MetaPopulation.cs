@@ -14,14 +14,14 @@ using Embedded;
 
 public sealed class MetaPopulation : EmbeddedPopulation, IEmbeddedPopulation
 {
-    internal static readonly IReadOnlyList<IComposite> EmptyComposites = Array.Empty<IComposite>();
+    internal static readonly IReadOnlyList<Composite> EmptyComposites = Array.Empty<Composite>();
     internal static readonly IReadOnlyList<Domain> EmptyDomains = Array.Empty<Domain>();
 
     private IList<IMetaIdentifiableObject> metaObjects;
 
     private Dictionary<Guid, IMetaIdentifiableObject> metaIdentifiableObjectById;
     private Dictionary<string, IMetaIdentifiableObject> metaIdentifiableObjectByTag;
-    private Dictionary<string, IComposite> compositeByLowercaseName;
+    private Dictionary<string, Composite> compositeByLowercaseName;
 
     private string[] derivedWorkspaceNames;
 
@@ -31,7 +31,7 @@ public sealed class MetaPopulation : EmbeddedPopulation, IEmbeddedPopulation
     private IReadOnlyList<Class> classes;
     private IReadOnlyList<RelationType> relationTypes;
     private IReadOnlyList<Interface> interfaces;
-    private IReadOnlyList<IComposite> composites;
+    private IReadOnlyList<Composite> composites;
     private IReadOnlyList<Unit> units;
     private IReadOnlyList<MethodType> methodTypes;
 
@@ -77,7 +77,7 @@ public sealed class MetaPopulation : EmbeddedPopulation, IEmbeddedPopulation
         set => this.interfaces = value;
     }
 
-    public IReadOnlyList<IComposite> Composites
+    public IReadOnlyList<Composite> Composites
     {
         get => this.composites;
         set => this.composites = value;
@@ -120,7 +120,7 @@ public sealed class MetaPopulation : EmbeddedPopulation, IEmbeddedPopulation
         return metaObject;
     }
 
-    public IComposite FindCompositeByName(string name)
+    public Composite FindCompositeByName(string name)
     {
         this.compositeByLowercaseName.TryGetValue(name.ToLowerInvariant(), out var composite);
         return composite;
@@ -181,7 +181,7 @@ public sealed class MetaPopulation : EmbeddedPopulation, IEmbeddedPopulation
         this.relationTypes = this.metaObjects.OfType<RelationType>().ToArray();
         this.methodTypes = this.metaObjects.OfType<MethodType>().ToArray();
 
-        this.composites = this.classes.Cast<IComposite>().Union(this.interfaces.Cast<IComposite>()).ToArray();
+        this.composites = this.classes.Cast<Composite>().Union(this.interfaces.Cast<Composite>()).ToArray();
 
         // Domains
         foreach (var domain in this.domains)
@@ -196,7 +196,7 @@ public sealed class MetaPopulation : EmbeddedPopulation, IEmbeddedPopulation
         }
 
         // Supertypes
-        foreach (IComposite type in this.composites)
+        foreach (Composite type in this.composites)
         {
             type.InitializeSupertypes();
         }
@@ -228,20 +228,20 @@ public sealed class MetaPopulation : EmbeddedPopulation, IEmbeddedPopulation
         // RoleTypes & AssociationTypes
         var roleTypesByAssociationTypeObjectType = this.relationTypes
             .GroupBy(v => v.AssociationType.ObjectType)
-            .ToDictionary(g => (IComposite)g.Key, g => new HashSet<RoleType>(g.Select(v => v.RoleType)));
+            .ToDictionary(g => (Composite)g.Key, g => new HashSet<RoleType>(g.Select(v => v.RoleType)));
 
         var associationTypesByRoleTypeObjectType = this.relationTypes
             .GroupBy(v => v.RoleType.ObjectType)
             .ToDictionary(g => (IObjectType)g.Key, g => new HashSet<AssociationType>(g.Select(v => v.AssociationType)));
 
         // RoleTypes
-        foreach (IComposite composite in this.composites)
+        foreach (Composite composite in this.composites)
         {
             composite.InitializeRoleTypes(roleTypesByAssociationTypeObjectType);
         }
 
         // AssociationTypes
-        foreach (IComposite composite in this.composites)
+        foreach (Composite composite in this.composites)
         {
             composite.InitializeAssociationTypes(associationTypesByRoleTypeObjectType);
         }
@@ -249,33 +249,33 @@ public sealed class MetaPopulation : EmbeddedPopulation, IEmbeddedPopulation
         // MethodTypes
         var methodTypeByClass = this.methodTypes
             .GroupBy(v => v.ObjectType)
-            .ToDictionary(g => (IComposite)g.Key, g => new HashSet<MethodType>(g));
+            .ToDictionary(g => (Composite)g.Key, g => new HashSet<MethodType>(g));
 
-        foreach (IComposite composite in this.composites)
+        foreach (Composite composite in this.composites)
         {
             composite.InitializeMethodTypes(methodTypeByClass);
         }
 
         // Composite RoleTypes
-        var compositeRoleTypesByComposite = this.composites.ToDictionary(v => (IComposite)v, v => new HashSet<CompositeRoleType>());
+        var compositeRoleTypesByComposite = this.composites.ToDictionary(v => (Composite)v, v => new HashSet<CompositeRoleType>());
         foreach (var relationType in this.relationTypes)
         {
             relationType.RoleType.InitializeCompositeRoleTypes(compositeRoleTypesByComposite);
         }
 
-        foreach (IComposite composite in this.composites)
+        foreach (Composite composite in this.composites)
         {
             composite.InitializeCompositeRoleTypes(compositeRoleTypesByComposite);
         }
 
         // Composite MethodTypes
-        var compositeMethodTypesByComposite = this.composites.ToDictionary(v => (IComposite)v, v => new HashSet<CompositeMethodType>());
+        var compositeMethodTypesByComposite = this.composites.ToDictionary(v => (Composite)v, v => new HashSet<CompositeMethodType>());
         foreach (var methodType in this.methodTypes)
         {
             methodType.InitializeCompositeMethodTypes(compositeMethodTypesByComposite);
         }
 
-        foreach (IComposite composite in this.composites)
+        foreach (Composite composite in this.composites)
         {
             composite.InitializeCompositeMethodTypes(compositeMethodTypesByComposite);
         }
@@ -321,7 +321,7 @@ public sealed class MetaPopulation : EmbeddedPopulation, IEmbeddedPopulation
             roleType.DeriveIsUnique();
         }
 
-        foreach (IComposite composite in this.composites)
+        foreach (Composite composite in this.composites)
         {
             composite.DeriveKeyRoleType();
         }

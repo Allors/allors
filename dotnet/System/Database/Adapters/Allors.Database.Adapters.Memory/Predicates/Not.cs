@@ -154,7 +154,7 @@ internal sealed class Not : Predicate, ICompositePredicate
         return this;
     }
 
-    public ICompositePredicate AddInstanceof(IComposite type)
+    public ICompositePredicate AddInstanceof(Composite type)
     {
         this.CheckUnarity();
         this.predicate = new Instanceof(type);
@@ -162,7 +162,7 @@ internal sealed class Not : Predicate, ICompositePredicate
         return this;
     }
 
-    public ICompositePredicate AddInstanceof(RoleType role, IComposite type)
+    public ICompositePredicate AddInstanceof(RoleType role, Composite type)
     {
         this.CheckUnarity();
         this.predicate = new RoleInstanceof(this.extent, role, type);
@@ -170,7 +170,7 @@ internal sealed class Not : Predicate, ICompositePredicate
         return this;
     }
 
-    public ICompositePredicate AddInstanceof(AssociationType association, IComposite type)
+    public ICompositePredicate AddInstanceof(AssociationType association, Composite type)
     {
         this.CheckUnarity();
         this.predicate = new AssociationInstanceOf(this.extent, association, type);

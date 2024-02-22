@@ -56,7 +56,7 @@ internal abstract class ExtentStatement
                 }
                 else if (role.IsMany)
                 {
-                    this.Append(" LEFT OUTER JOIN " + this.Mapping.TableNameForObjectByClass[((IComposite)role.ObjectType).ExclusiveClass] +
+                    this.Append(" LEFT OUTER JOIN " + this.Mapping.TableNameForObjectByClass[((Composite)role.ObjectType).ExclusiveClass] +
                                 " " + role.SingularFullName + "_R");
                     this.Append(" ON " + alias + "." + Mapping.ColumnNameForObject + "=" + role.SingularFullName + "_R." +
                                 this.Mapping.ColumnNameByRelationType[relationType]);

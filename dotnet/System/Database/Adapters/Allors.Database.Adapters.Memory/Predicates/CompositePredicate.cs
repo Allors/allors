@@ -159,21 +159,21 @@ internal abstract class CompositePredicate : Predicate, ICompositePredicate
         return this;
     }
 
-    public ICompositePredicate AddInstanceof(IComposite type)
+    public ICompositePredicate AddInstanceof(Composite type)
     {
         this.Filters.Add(new Instanceof(type));
         this.extent.Invalidate();
         return this;
     }
 
-    public ICompositePredicate AddInstanceof(RoleType role, IComposite type)
+    public ICompositePredicate AddInstanceof(RoleType role, Composite type)
     {
         this.Filters.Add(new RoleInstanceof(this.extent, role, type));
         this.extent.Invalidate();
         return this;
     }
 
-    public ICompositePredicate AddInstanceof(AssociationType association, IComposite type)
+    public ICompositePredicate AddInstanceof(AssociationType association, Composite type)
     {
         this.Filters.Add(new AssociationInstanceOf(this.extent, association, type));
         this.extent.Invalidate();

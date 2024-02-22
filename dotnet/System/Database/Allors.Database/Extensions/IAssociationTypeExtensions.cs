@@ -11,7 +11,7 @@ namespace Allors.Database.Meta;
 
 public static class IAssociationTypeExtensions
 {
-    public static object Get(this AssociationType @this, IStrategy strategy, IComposite ofType = null)
+    public static object Get(this AssociationType @this, IStrategy strategy, Composite ofType = null)
     {
         var association = strategy.GetAssociation(@this);
 

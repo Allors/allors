@@ -12,13 +12,13 @@ using Allors.Database.Meta;
 
 internal class ExtentFiltered : SqlExtent
 {
-    private readonly IComposite objectType;
+    private readonly Composite objectType;
     private readonly Transaction transaction;
 
     private AndPredicate filter;
 
     internal ExtentFiltered(Transaction transaction, Strategy strategy, RoleType roleType)
-        : this(transaction, (IComposite)roleType.ObjectType)
+        : this(transaction, (Composite)roleType.ObjectType)
     {
         this.Strategy = strategy;
         this.RoleType = roleType;
@@ -31,7 +31,7 @@ internal class ExtentFiltered : SqlExtent
         this.AssociationType = associationType;
     }
 
-    internal ExtentFiltered(Transaction transaction, IComposite objectType)
+    internal ExtentFiltered(Transaction transaction, Composite objectType)
     {
         this.transaction = transaction;
         this.objectType = objectType;
@@ -48,7 +48,7 @@ internal class ExtentFiltered : SqlExtent
 
     internal Mapping Mapping => this.transaction.Database.Mapping;
 
-    public override IComposite ObjectType => this.objectType;
+    public override Composite ObjectType => this.objectType;
 
     internal override Transaction Transaction => this.transaction;
 
@@ -287,7 +287,7 @@ internal class ExtentFiltered : SqlExtent
                     var inRole = inStatement.RoleType;
                     var inIRelationType = inRole.RelationType;
 
-                    if (!((IComposite)inRole.ObjectType).Classes.Contains(rootClass))
+                    if (!((Composite)inRole.ObjectType).Classes.Contains(rootClass))
                     {
                         continue;
                     }

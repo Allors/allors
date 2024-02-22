@@ -100,11 +100,11 @@ namespace Allors.Workspace.Adapters.Direct
 
                                 paged = paged.ToArray();
 
-                                response.AddCollection(name, (IComposite)select.GetObjectType() ?? extent.ObjectType, paged, include);
+                                response.AddCollection(name, (Composite)select.GetObjectType() ?? extent.ObjectType, paged, include);
                             }
                             else
                             {
-                                response.AddCollection(name, (IComposite)select.GetObjectType() ?? extent.ObjectType, objects, include);
+                                response.AddCollection(name, (Composite)select.GetObjectType() ?? extent.ObjectType, objects, include);
                             }
                         }
                         else

@@ -149,7 +149,7 @@ public interface ICompositePredicate
     /// </summary>
     /// <param name="objectType">the IObjectType.</param>
     /// <returns>the composing CompositePredicate.</returns>
-    ICompositePredicate AddInstanceof(IComposite objectType);
+    ICompositePredicate AddInstanceof(Composite objectType);
 
     /// <summary>
     ///     Adds a Predicate that evaluates to true if the role of the object under evaluation is an state of the IObjectType.
@@ -157,7 +157,7 @@ public interface ICompositePredicate
     /// <param name="role">the RoleType .</param>
     /// <param name="objectType">the IObjectType.</param>
     /// <returns>the composing CompositePredicate.</returns>
-    ICompositePredicate AddInstanceof(RoleType role, IComposite objectType);
+    ICompositePredicate AddInstanceof(RoleType role, Composite objectType);
 
     /// <summary>
     ///     Adds a Predicate that evaluates to true if the association of the object under evaluation is an state of the
@@ -166,7 +166,7 @@ public interface ICompositePredicate
     /// <param name="association">the AssociationType.</param>
     /// <param name="objectType">the IObjectType.</param>
     /// <returns>the composing CompositePredicate.</returns>
-    ICompositePredicate AddInstanceof(AssociationType association, IComposite objectType);
+    ICompositePredicate AddInstanceof(AssociationType association, Composite objectType);
 
     /// <summary>
     ///     Adds a Predicate that evaluates to true if the role of the object under evaluation is less than the object.

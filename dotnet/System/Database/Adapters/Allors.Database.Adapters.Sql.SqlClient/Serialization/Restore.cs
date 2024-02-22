@@ -195,7 +195,7 @@ where c = '{@class.Id}'";
 
                             if (reader.Name.Equals(XmlBackup.RelationTypeUnit))
                             {
-                                if (relationType == null || relationType.RoleType.ObjectType is IComposite)
+                                if (relationType == null || relationType.RoleType.ObjectType is Composite)
                                 {
                                     this.CantRestoreUnitRole(reader.ReadSubtree(), relationTypeId);
                                 }

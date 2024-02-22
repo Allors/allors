@@ -167,7 +167,7 @@ public partial class Model
 
     public UnitModel Map(Unit v) => v != null ? (UnitModel)this.mapping[v] : null;
 
-    public CompositeModel Map(IComposite v) => v != null ? (CompositeModel)this.mapping[v] : null;
+    public CompositeModel Map(Composite v) => v != null ? (CompositeModel)this.mapping[v] : null;
 
     public InterfaceModel Map(Interface v) => v != null ? (InterfaceModel)this.mapping[v] : null;
 

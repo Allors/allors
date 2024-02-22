@@ -18,7 +18,7 @@ namespace Allors.Database.Domain
 
         public M M { get; }
 
-        public abstract IComposite ObjectType { get; }
+        public abstract Composite ObjectType { get; }
 
         public ITransaction Transaction { get; private set; }
 

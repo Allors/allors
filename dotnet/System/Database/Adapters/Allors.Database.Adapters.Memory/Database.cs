@@ -100,7 +100,7 @@ public class Database : IDatabase
 
     public ITransaction CreateDatabaseTransaction() => this.Transaction;
 
-    public bool ContainsClass(IComposite objectType, IObjectType concreteClass)
+    public bool ContainsClass(Composite objectType, IObjectType concreteClass)
     {
         if (!this.concreteClassesByObjectType.TryGetValue(objectType, out var concreteClassOrClasses))
         {
@@ -132,7 +132,7 @@ public class Database : IDatabase
             throw new ArgumentException(strategy.Class + " is not a valid association object type for " + roleType + ".");
         }
 
-        if (roleType.ObjectType is IComposite)
+        if (roleType.ObjectType is Composite)
         {
             throw new ArgumentException(roleType.ObjectType + " on roleType " + roleType + " is not a unit type.");
         }
@@ -205,7 +205,7 @@ public class Database : IDatabase
                 throw new ArgumentException(roleType + " on object " + strategy + " is removed.");
             }
 
-            if (!(roleType.ObjectType is IComposite compositeType))
+            if (!(roleType.ObjectType is Composite compositeType))
             {
                 throw new ArgumentException(roleStrategy + " has no CompositeType");
             }

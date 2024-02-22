@@ -13,10 +13,10 @@ using Allors.Database.Meta;
 
 public static class ICompositeExtensions
 {
-    public static IEnumerable<Node> Nodes<T>(this T @this, params Func<T, Node>[] children) where T : IComposite =>
+    public static IEnumerable<Node> Nodes<T>(this T @this, params Func<T, Node>[] children) where T : Composite =>
         children.Select(v => v(@this));
 
-    public static IEnumerable<Node> Nodes<T>(this T @this, Func<T, IEnumerable<Node>> children) where T : IComposite => children(@this);
+    public static IEnumerable<Node> Nodes<T>(this T @this, Func<T, IEnumerable<Node>> children) where T : Composite => children(@this);
 
-    public static Node Node<T>(this T @this, Func<T, Node> child) where T : IComposite => child(@this);
+    public static Node Node<T>(this T @this, Func<T, Node> child) where T : Composite => child(@this);
 }

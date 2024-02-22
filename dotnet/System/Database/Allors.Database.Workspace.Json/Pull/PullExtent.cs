@@ -128,7 +128,7 @@ public class PullExtent
                 }
 
                 name ??= dataExtent.ObjectType.PluralName;
-                response.AddCollection(name, (IComposite)select.GetObjectType() ?? dataExtent.ObjectType, objects, include);
+                response.AddCollection(name, (Composite)select.GetObjectType() ?? dataExtent.ObjectType, objects, include);
             }
             else
             {

@@ -198,7 +198,7 @@ namespace Allors.Workspace.Protocol.Direct
 
         private IObjectType Visit(Meta.IObjectType ws) => ws != null ? (IObjectType)this.metaPopulation.FindByTag(ws.Tag) : null;
 
-        private IComposite Visit(Meta.IComposite ws) => ws != null ? (IComposite)this.metaPopulation.FindByTag(ws.Tag) : null;
+        private Composite Visit(Meta.IComposite ws) => ws != null ? (Composite)this.metaPopulation.FindByTag(ws.Tag) : null;
 
         private RelationEndType Visit(Meta.IRelationEndType ws) =>
             ws switch

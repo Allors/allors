@@ -179,7 +179,7 @@ public class Backup
                         sql += "SELECT " + this.database.Mapping.ColumnNameByRelationType[associationType.RelationType] + " As " +
                                Mapping.ColumnNameForAssociation + ", " + Mapping.ColumnNameForObject + " As " + Mapping.ColumnNameForRole +
                                "\n";
-                        sql += "FROM " + this.database.Mapping.TableNameForObjectByClass[((IComposite)roleType.ObjectType).ExclusiveClass] +
+                        sql += "FROM " + this.database.Mapping.TableNameForObjectByClass[((Composite)roleType.ObjectType).ExclusiveClass] +
                                "\n";
                         sql += "WHERE " + this.database.Mapping.ColumnNameByRelationType[associationType.RelationType] + " IS NOT NULL\n";
                         sql += "ORDER BY " + Mapping.ColumnNameForAssociation + "," + Mapping.ColumnNameForRole;

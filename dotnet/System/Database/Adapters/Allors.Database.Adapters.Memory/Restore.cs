@@ -254,7 +254,7 @@ public class Restore
 
                             if (this.reader.Name.Equals(XmlBackup.RelationTypeUnit))
                             {
-                                if (relationType == null || relationType.RoleType.ObjectType is IComposite)
+                                if (relationType == null || relationType.RoleType.ObjectType is Composite)
                                 {
                                     this.CantRestoreUnitRole(relationTypeId);
                                 }
@@ -423,7 +423,7 @@ public class Restore
                                 var roleIdString = long.Parse(roleIdStringArray[0]);
                                 var roleStrategy = this.RestoreInstantiateStrategy(roleIdString);
                                 if (roleStrategy == null ||
-                                    !this.transaction.Database.ContainsClass((IComposite)relationType.RoleType.ObjectType,
+                                    !this.transaction.Database.ContainsClass((Composite)relationType.RoleType.ObjectType,
                                         roleStrategy.UncheckedObjectType))
                                 {
                                     this.transaction.Database.OnRelationNotRestored(relationType.Id, associationId, roleIdStringArray[0]);
@@ -446,7 +446,7 @@ public class Restore
                                     var role = this.RestoreInstantiateStrategy(roleId);
                                     if (role == null ||
                                         !this.transaction.Database.ContainsClass(
-                                            (IComposite)relationType.RoleType.ObjectType,
+                                            (Composite)relationType.RoleType.ObjectType,
                                             role.UncheckedObjectType))
                                     {
                                         this.transaction.Database.OnRelationNotRestored(relationType.Id, associationId, roleId.ToString());

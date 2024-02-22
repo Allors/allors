@@ -74,10 +74,10 @@ public class PullResponseBuilder
         this.errors.Add(validation);
     }
 
-    public void AddCollection(string name, IComposite objectType, in IEnumerable<IObject> collection) =>
+    public void AddCollection(string name, Composite objectType, in IEnumerable<IObject> collection) =>
         this.AddCollectionInternal(name, objectType, collection, null);
 
-    public void AddCollection(string name, IComposite objectType, in IEnumerable<IObject> collection, Node[] tree)
+    public void AddCollection(string name, Composite objectType, in IEnumerable<IObject> collection, Node[] tree)
     {
         switch (collection)
         {
@@ -124,7 +124,7 @@ public class PullResponseBuilder
         tree?.Resolve(@object, this.AccessControl, this.Add, this.prefetchPolicyCache, this.Transaction);
     }
 
-    private void AddCollectionInternal(string name, IComposite objectType, in IEnumerable<IObject> enumerable, Node[] tree)
+    private void AddCollectionInternal(string name, Composite objectType, in IEnumerable<IObject> enumerable, Node[] tree)
     {
         var collection = enumerable as ICollection<IObject> ?? enumerable.ToArray();
 

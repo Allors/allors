@@ -124,7 +124,7 @@ public class PredicateAssertions
     /// <param name="secondObject">The second object.</param>
     public static void ValidateRoleBetween(RoleType role, object firstObject, object secondObject)
     {
-        if (role.ObjectType is IComposite)
+        if (role.ObjectType is Composite)
         {
             throw new ArgumentException("AddBetween() can only be used with unit types.");
         }
@@ -214,7 +214,7 @@ public class PredicateAssertions
                 "AddEquals() requires a non-null value or object, use AddNot().AddExists() instead.");
         }
 
-        if (compareObject is RoleType compareRole && compareRole.ObjectType is IComposite)
+        if (compareObject is RoleType compareRole && compareRole.ObjectType is Composite)
         {
             throw new ArgumentException("AddRoleEqual() for composites can only be used with objects (not other roles).");
         }
@@ -239,7 +239,7 @@ public class PredicateAssertions
             throw new ArgumentException("AddRoleIn() requires a non-null list, use AddNot().AddExists() instead.");
         }
 
-        if (compareObject is RoleType compareRole && compareRole.ObjectType is IComposite)
+        if (compareObject is RoleType compareRole && compareRole.ObjectType is Composite)
         {
             throw new ArgumentException("AddRoleEqual() for composites can only be used with objects (not other roles).");
         }
@@ -263,7 +263,7 @@ public class PredicateAssertions
     /// <param name="unit">The unit .</param>
     public static void ValidateRoleGreaterThan(RoleType role, object unit)
     {
-        if (role.ObjectType is IComposite)
+        if (role.ObjectType is Composite)
         {
             throw new ArgumentException("AddGreaterThan() can only be used with unit types.");
         }
@@ -273,7 +273,7 @@ public class PredicateAssertions
             throw new ArgumentException("AddGreaterThan() requires a non-null value.");
         }
 
-        if (unit is RoleType compareRole && compareRole.ObjectType is IComposite)
+        if (unit is RoleType compareRole && compareRole.ObjectType is Composite)
         {
             throw new ArgumentException("AAddGreaterThan() can only be used with roles having unit types.");
         }
@@ -306,7 +306,7 @@ public class PredicateAssertions
     /// <param name="unit">The unit .</param>
     public static void ValidateRoleLessThan(RoleType role, object unit)
     {
-        if (role.ObjectType is IComposite)
+        if (role.ObjectType is Composite)
         {
             throw new ArgumentException("AddLessThan() can only be used with unit types.");
         }
@@ -316,7 +316,7 @@ public class PredicateAssertions
             throw new ArgumentException("AddLessThan() requires a value.");
         }
 
-        if (unit is RoleType compareRole && compareRole.ObjectType is IComposite)
+        if (unit is RoleType compareRole && compareRole.ObjectType is Composite)
         {
             throw new ArgumentException("AddLessThan() can only be used with roles having unit types.");
         }

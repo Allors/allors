@@ -61,7 +61,7 @@ public class FromJsonVisitor : IVisitor
                     throw new Exception("Unknown object type for " + visited.k);
                 }
 
-                var objectType = (IComposite)this.fromJson.MetaPopulation.FindByTag(visited.t);
+                var objectType = (Composite)this.fromJson.MetaPopulation.FindByTag(visited.t);
                 var extent = new Data.Extent(objectType);
                 sortable = extent;
 
@@ -240,7 +240,7 @@ public class FromJsonVisitor : IVisitor
 
                         var instanceOf = new Instanceof(relationEndType)
                         {
-                            ObjectType = visited.o != null ? (IComposite)this.fromJson.MetaPopulation.FindByTag(visited.o) : null,
+                            ObjectType = visited.o != null ? (Composite)this.fromJson.MetaPopulation.FindByTag(visited.o) : null,
                             Parameter = visited.p,
                         };
 

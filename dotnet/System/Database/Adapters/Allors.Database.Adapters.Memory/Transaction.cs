@@ -369,7 +369,7 @@ public class Transaction : ITransaction
 
     public Extent<T> Extent<T>() where T : IObject
     {
-        if (!(this.Database.ObjectFactory.GetObjectType(typeof(T)) is IComposite compositeType))
+        if (!(this.Database.ObjectFactory.GetObjectType(typeof(T)) is Composite compositeType))
         {
             throw new Exception("type should be a CompositeType");
         }
@@ -377,7 +377,7 @@ public class Transaction : ITransaction
         return this.Extent(compositeType);
     }
 
-    public virtual Allors.Database.Extent Extent(IComposite objectType) => new ExtentFiltered(this, objectType);
+    public virtual Allors.Database.Extent Extent(Composite objectType) => new ExtentFiltered(this, objectType);
 
     public virtual Allors.Database.Extent Union(Allors.Database.Extent firstOperand, Allors.Database.Extent secondOperand) =>
         new ExtentOperation(this, (Extent)firstOperand, (Extent)secondOperand, ExtentOperationType.Union);

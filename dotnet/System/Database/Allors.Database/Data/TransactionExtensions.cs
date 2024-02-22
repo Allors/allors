@@ -14,7 +14,7 @@ internal static class TransactionExtensions
     internal static IMetaIdentifiableObject GetMetaObject(this ITransaction @this, object value) =>
         value switch
         {
-            IComposite metaObject => metaObject,
+            Composite metaObject => metaObject,
             string idAsString when Guid.TryParse(idAsString, out var idFromString) => @this.Database.MetaPopulation.FindById(idFromString),
             Guid idAsGuid => @this.Database.MetaPopulation.FindById(idAsGuid),
             string tag => @this.Database.MetaPopulation.FindByTag(tag),

@@ -34,7 +34,7 @@ public class Node : IVisitable
 
     public Node[] Nodes { get; private set; }
 
-    public IComposite OfType { get; set; }
+    public Composite OfType { get; set; }
 
     public void Accept(IVisitor visitor) => visitor.VisitNode(this);
 
@@ -118,11 +118,11 @@ public class Node : IVisitable
 
     private Node AssertAssignable(Node node)
     {
-        var composite = this.OfType ?? this.RelationEndType.ObjectType as IComposite;
+        var composite = this.OfType ?? this.RelationEndType.ObjectType as Composite;
 
         if (composite != null)
         {
-            IComposite addedComposite = null;
+            Composite addedComposite = null;
 
             if (node.RelationEndType is RoleType roleType)
             {
@@ -130,7 +130,7 @@ public class Node : IVisitable
             }
             else if (node.RelationEndType is AssociationType associationType)
             {
-                addedComposite = (IComposite)associationType.RoleType.ObjectType;
+                addedComposite = (Composite)associationType.RoleType.ObjectType;
             }
 
             if (addedComposite == null ||

@@ -161,7 +161,7 @@ public abstract class Database : IDatabase
     {
         if (!this.sortedUnitRolesByObjectType.TryGetValue(objectType, out var sortedUnitRoles))
         {
-            var sortedUnitRoleList = new List<RoleType>(((IComposite)objectType).RoleTypes.Where(r => r.ObjectType.IsUnit));
+            var sortedUnitRoleList = new List<RoleType>(((Composite)objectType).RoleTypes.Where(r => r.ObjectType.IsUnit));
             sortedUnitRoleList.Sort();
             sortedUnitRoles = [.. sortedUnitRoleList];
             this.sortedUnitRolesByObjectType[objectType] = sortedUnitRoles;

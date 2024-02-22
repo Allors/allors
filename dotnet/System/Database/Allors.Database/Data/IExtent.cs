@@ -9,7 +9,7 @@ using Allors.Database.Meta;
 
 public interface IExtent : IVisitable
 {
-    IComposite ObjectType { get; }
+    Composite ObjectType { get; }
 
     Sort[] Sorting { get; set; }
 

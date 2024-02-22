@@ -13,13 +13,13 @@ internal sealed class ExtentFiltered : Extent
 {
     private And filter;
 
-    internal ExtentFiltered(Transaction transaction, IComposite objectType)
+    internal ExtentFiltered(Transaction transaction, Composite objectType)
         : base(transaction) =>
         this.ObjectType = objectType;
 
     public override ICompositePredicate Filter => this.filter ??= new And(this);
 
-    public override IComposite ObjectType { get; }
+    public override Composite ObjectType { get; }
 
     internal void CheckForAssociationType(AssociationType association)
     {

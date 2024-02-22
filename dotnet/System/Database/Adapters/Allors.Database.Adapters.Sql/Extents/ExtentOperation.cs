@@ -34,7 +34,7 @@ internal class ExtentOperation : SqlExtent
 
     internal override Transaction Transaction => this.first.Transaction;
 
-    public override IComposite ObjectType => this.first.ObjectType;
+    public override Composite ObjectType => this.first.ObjectType;
 
     internal override string BuildSql(ExtentStatement statement)
     {

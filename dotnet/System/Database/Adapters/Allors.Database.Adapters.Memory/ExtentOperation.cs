@@ -34,7 +34,7 @@ internal sealed class ExtentOperation : Extent
 
     public override ICompositePredicate Filter => null;
 
-    public override IComposite ObjectType => this.firstOperand.ObjectType;
+    public override Composite ObjectType => this.firstOperand.ObjectType;
 
     protected override void Evaluate()
     {

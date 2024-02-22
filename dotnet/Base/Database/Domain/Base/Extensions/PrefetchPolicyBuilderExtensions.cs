@@ -78,7 +78,7 @@ namespace Allors.Database.Domain
                 @this.WithRule(treeNode.RelationEndType, nestedPrefetchPolicy);
             }
 
-            if (treeNode.RelationEndType.ObjectType is IComposite)
+            if (treeNode.RelationEndType.ObjectType is Composite)
             {
                 @this.WithSecurityRules(m);
             }

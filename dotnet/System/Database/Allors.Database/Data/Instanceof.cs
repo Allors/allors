@@ -13,7 +13,7 @@ public class Instanceof : IPropertyPredicate
 
     public string Parameter { get; set; }
 
-    public IComposite ObjectType { get; set; }
+    public Composite ObjectType { get; set; }
 
     public RelationEndType RelationEndType { get; set; }
 
@@ -24,7 +24,7 @@ public class Instanceof : IPropertyPredicate
     void IPredicate.Build(ITransaction transaction, IArguments arguments, Database.ICompositePredicate compositePredicate)
     {
         var composite = this.Parameter != null
-            ? (IComposite)transaction.GetMetaObject(arguments.ResolveMetaObject(this.Parameter))
+            ? (Composite)transaction.GetMetaObject(arguments.ResolveMetaObject(this.Parameter))
             : this.ObjectType;
 
         if (this.RelationEndType != null)

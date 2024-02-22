@@ -9,11 +9,11 @@ using Allors.Database.Meta;
 
 public class Extent : IExtent, IPredicateContainer
 {
-    public Extent(IComposite objectType) => this.ObjectType = objectType;
+    public Extent(Composite objectType) => this.ObjectType = objectType;
 
     public IPredicate Predicate { get; set; }
 
-    public IComposite ObjectType { get; set; }
+    public Composite ObjectType { get; set; }
 
     public Sort[] Sorting { get; set; }
 

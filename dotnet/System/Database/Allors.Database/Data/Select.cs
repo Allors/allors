@@ -36,7 +36,7 @@ public class Select : IVisitable
 
     public RelationEndType RelationEndType { get; set; }
 
-    public IComposite OfType { get; set; }
+    public Composite OfType { get; set; }
 
     public Select Next { get; set; }
 
@@ -91,14 +91,14 @@ public class Select : IVisitable
         }
     }
 
-    public static bool TryParse(IComposite composite, string selectString, out Select select)
+    public static bool TryParse(Composite composite, string selectString, out Select select)
     {
         var relationEndType = Resolve(composite, selectString);
         select = relationEndType == null ? null : new Select(relationEndType);
         return select != null;
     }
 
-    private static RelationEndType Resolve(IComposite composite, string propertyName)
+    private static RelationEndType Resolve(Composite composite, string propertyName)
     {
         var lowerCasePropertyName = propertyName.ToLowerInvariant();
 

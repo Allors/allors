@@ -36,7 +36,7 @@ namespace Allors.Database.Domain
 
             public IEnumerable<Node> Tree => null;
 
-            public IComposite OfType => null;
+            public Composite OfType => null;
 
             public RoleType RoleType { get; }
         }

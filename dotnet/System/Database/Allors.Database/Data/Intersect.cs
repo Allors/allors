@@ -12,7 +12,7 @@ public class Intersect : IExtentOperator
 {
     public Intersect(params IExtent[] operands) => this.Operands = operands;
 
-    public IComposite ObjectType => this.Operands?[0].ObjectType;
+    public Composite ObjectType => this.Operands?[0].ObjectType;
 
     public IExtent[] Operands { get; set; }
 

@@ -2,7 +2,7 @@
 
 public sealed class CompositeRoleType : IMetaExtensible
 {
-    public CompositeRoleType(IComposite composite, RoleType roleType)
+    public CompositeRoleType(Composite composite, RoleType roleType)
     {
         this.Attributes = new MetaExtension();
         this.Composite = composite;
@@ -11,7 +11,7 @@ public sealed class CompositeRoleType : IMetaExtensible
 
     public dynamic Attributes { get; }
 
-    public IComposite Composite { get; }
+    public Composite Composite { get; }
 
     public RoleType RoleType { get; }
 }

@@ -86,7 +86,7 @@ public sealed class RelationType : IMetaIdentifiableObject, IComparable
         {
             if (this.associationType?.ObjectType != null && this.roleType?.ObjectType != null)
             {
-                return this.associationType.ObjectTypeAsComposite.ExclusiveClass != null && this.roleType.ObjectType is IComposite roleCompositeType && roleCompositeType.ExclusiveClass != null;
+                return this.associationType.ObjectTypeAsComposite.ExclusiveClass != null && this.roleType.ObjectType is Composite roleCompositeType && roleCompositeType.ExclusiveClass != null;
             }
 
             return false;

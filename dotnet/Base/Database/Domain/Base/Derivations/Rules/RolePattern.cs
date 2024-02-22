@@ -13,7 +13,7 @@ namespace Allors.Database.Domain.Derivations.Rules
 
     public class RolePattern : IRolePattern
     {
-        public RolePattern(RoleType roleType, IComposite ofType = null) 
+        public RolePattern(RoleType roleType, Composite ofType = null) 
         {
             this.RoleType = roleType;
             this.OfType = !this.RoleType.AssociationType.ObjectType.Equals(ofType) ? ofType : null;
@@ -21,7 +21,7 @@ namespace Allors.Database.Domain.Derivations.Rules
 
         public IEnumerable<Node> Tree { get; set; }
 
-        public IComposite OfType { get; set; }
+        public Composite OfType { get; set; }
         
         public RoleType RoleType { get; }
     }

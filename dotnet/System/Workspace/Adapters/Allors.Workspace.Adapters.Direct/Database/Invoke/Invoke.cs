@@ -109,7 +109,7 @@ namespace Allors.Workspace.Adapters.Direct
                 return true;
             }
 
-            var composite = (IComposite)obj.Strategy.Class;
+            var composite = (Composite)obj.Strategy.Class;
 
             // TODO: Cache and filter for workspace
             var methodTypes = composite.MethodTypes.Where(v => v.WorkspaceNames.Any());

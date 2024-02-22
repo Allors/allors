@@ -52,7 +52,7 @@ public interface ITransaction : IDisposable
     /// </summary>
     /// <param name="objectType">The @class.</param>
     /// <returns>The extent.</returns>
-    Extent Extent(IComposite objectType);
+    Extent Extent(Composite objectType);
 
     /// <summary>
     ///     Creates an Extent that is the exception of its two operands.

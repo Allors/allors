@@ -12,7 +12,7 @@ using System.Collections.Generic;
 
 public static class IRoleTypeExtensions
 {
-    public static object Get(this RoleType @this, IStrategy strategy, IComposite ofType = null)
+    public static object Get(this RoleType @this, IStrategy strategy, Composite ofType = null)
     {
         var role = strategy.GetRole(@this);
 

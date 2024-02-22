@@ -11,8 +11,8 @@ namespace Allors.Database.Domain
     // TODO: Remove
     public interface ITreeCache
     {
-        Node[] Get(IComposite composite);
+        Node[] Get(Composite composite);
 
-        void Set(IComposite composite, Node[] tree);
+        void Set(Composite composite, Node[] tree);
     }
 }

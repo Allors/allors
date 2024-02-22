@@ -15,7 +15,7 @@ using System;
 /// </summary>
 public sealed class AssociationType : RelationEndType, IComparable 
 {
-    private readonly IComposite objectType;
+    private readonly Composite objectType;
     private RelationType relationType;
 
     /// <summary>
@@ -23,14 +23,14 @@ public sealed class AssociationType : RelationEndType, IComparable
     /// </summary>
     private const string Where = "Where";
 
-    public AssociationType(IComposite objectType)
+    public AssociationType(Composite objectType)
     {
         this.objectType = objectType;
     }
 
     public override IObjectType ObjectType => this.objectType;
 
-    public IComposite ObjectTypeAsComposite => this.objectType;
+    public Composite ObjectTypeAsComposite => this.objectType;
     
     public RoleType RoleType => this.relationType.RoleType;
     

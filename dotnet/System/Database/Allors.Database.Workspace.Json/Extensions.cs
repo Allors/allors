@@ -13,7 +13,7 @@ using Extent = Allors.Protocol.Json.Data.Extent;
 
 public static class Extensions
 {
-    public static IComposite FindComposite(this MetaPopulation @this, string tag) => tag != null ? (IComposite)@this.FindByTag(tag) : null;
+    public static Composite FindComposite(this MetaPopulation @this, string tag) => tag != null ? (Composite)@this.FindByTag(tag) : null;
 
     public static AssociationType FindAssociationType(this MetaPopulation @this, string tag) =>
         tag != null ? ((RelationType)@this.FindByTag(tag)).AssociationType : null;

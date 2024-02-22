@@ -14,5 +14,5 @@ public interface IPattern
 {
     IEnumerable<Node> Tree { get; }
 
-    IComposite OfType { get; }
+    Composite OfType { get; }
 }

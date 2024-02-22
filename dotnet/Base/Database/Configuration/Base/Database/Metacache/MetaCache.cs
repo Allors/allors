@@ -20,10 +20,10 @@ namespace Allors.Database.Configuration
         private static readonly IReadOnlySet<RoleType> EmptyRoleTypeSet = new HashSet<RoleType>();
         private static readonly IReadOnlySet<CompositeRoleType> EmptyCompositeRoleTypeSet = new HashSet<CompositeRoleType>();
 
-        private readonly IDictionary<IComposite, IReadOnlySet<Interface>> supertypesByComposite;
-        private readonly IDictionary<IComposite, IReadOnlySet<AssociationType>> associationTypesByComposite;
-        private readonly IDictionary<IComposite, IReadOnlySet<RoleType>> roleTypesByComposite;
-        private readonly IDictionary<IComposite, IReadOnlySet<RoleType>> requiredRoleTypesByComposite;
+        private readonly IDictionary<Composite, IReadOnlySet<Interface>> supertypesByComposite;
+        private readonly IDictionary<Composite, IReadOnlySet<AssociationType>> associationTypesByComposite;
+        private readonly IDictionary<Composite, IReadOnlySet<RoleType>> roleTypesByComposite;
+        private readonly IDictionary<Composite, IReadOnlySet<RoleType>> requiredRoleTypesByComposite;
         private readonly IDictionary<Class, IReadOnlySet<CompositeRoleType>> requiredCompositeRoleTypesByClass;
         private readonly IDictionary<Class, Type> builderTypeByClass;
         private readonly IDictionary<string, IReadOnlySet<Class>> classesByWorkspaceName;
@@ -75,22 +75,22 @@ namespace Allors.Database.Configuration
 
         public Type GetBuilderType(Class @class) => this.builderTypeByClass[@class];
 
-        public IReadOnlySet<Interface> GetSupertypesByComposite(IComposite composite)
+        public IReadOnlySet<Interface> GetSupertypesByComposite(Composite composite)
         {
             return this.supertypesByComposite.TryGetValue(composite, out var supertype) ? supertype : EmptyInterfaceSet;
         }
 
-        public IReadOnlySet<AssociationType> GetAssociationTypesByComposite(IComposite composite)
+        public IReadOnlySet<AssociationType> GetAssociationTypesByComposite(Composite composite)
         {
             return this.associationTypesByComposite.TryGetValue(composite, out var associationTypes) ? associationTypes : EmptyAssociationTypeSet;
         }
 
-        public IReadOnlySet<RoleType> GetRoleTypesByComposite(IComposite composite)
+        public IReadOnlySet<RoleType> GetRoleTypesByComposite(Composite composite)
         {
             return this.roleTypesByComposite.TryGetValue(composite, out var roleTypes) ? roleTypes : EmptyRoleTypeSet;
         }
 
-        public IReadOnlySet<RoleType> GetRequiredRoleTypesByComposite(IComposite composite)
+        public IReadOnlySet<RoleType> GetRequiredRoleTypesByComposite(Composite composite)
         {
             return this.requiredRoleTypesByComposite.TryGetValue(composite, out var requiredRoleTypes) ? requiredRoleTypes : EmptyRoleTypeSet;
         }

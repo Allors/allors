@@ -11,6 +11,6 @@ namespace Allors.Database.Domain
     {
         IMetaIndex M { get; }
 
-        ICache<TKey, TObject> Get<TKey, TObject>(IComposite objectType, RoleType roleType) where TObject : class, IObject;
+        ICache<TKey, TObject> Get<TKey, TObject>(Composite objectType, RoleType roleType) where TObject : class, IObject;
     }
 }

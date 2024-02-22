@@ -75,7 +75,7 @@ namespace Allors.Database.Domain
         /// </summary>
         /// <param name="dependent"></param>
         /// <param name="dependee"></param>
-        public void AddDependency(IComposite dependent, IComposite dependee)
+        public void AddDependency(Composite dependent, Composite dependee)
         {
             foreach (var dependentClass in dependent.Classes)
             {

@@ -33,7 +33,7 @@ public class PullInstantiate
 
         var @class = @object.Strategy?.Class;
 
-        if (@class != null && this.pull.ObjectType is IComposite objectType && !objectType.IsAssignableFrom(@class))
+        if (@class != null && this.pull.ObjectType is Composite objectType && !objectType.IsAssignableFrom(@class))
         {
             return;
         }
@@ -110,7 +110,7 @@ public class PullInstantiate
                                     objects = Array.Empty<IObject>();
                                 }
 
-                                response.AddCollection(name, (IComposite)select.GetObjectType() ?? @class, objects, include);
+                                response.AddCollection(name, (Composite)select.GetObjectType() ?? @class, objects, include);
                             }
                         }
                         else

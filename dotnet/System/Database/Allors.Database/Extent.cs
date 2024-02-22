@@ -34,7 +34,7 @@ public abstract class Extent : IList, IEnumerable<IObject>
     ///     Gets the object type of this extent.
     /// </summary>
     /// <value>The type of the Extent.</value>
-    public abstract IComposite ObjectType { get; }
+    public abstract Composite ObjectType { get; }
 
     /// <summary>
     ///     Gets the <see cref="IObject" /> at the specified index.
@@ -343,7 +343,7 @@ public abstract class Extent : IList, IEnumerable<IObject>
         ///     Gets the object type of this extent.
         /// </summary>
         /// <value>The type of the Extent.</value>
-        public override IComposite ObjectType => null;
+        public override Composite ObjectType => null;
 
         /// <summary>
         ///     Adds sorting based on the specified relation type..

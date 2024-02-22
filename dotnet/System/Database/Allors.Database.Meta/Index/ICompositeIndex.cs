@@ -8,5 +8,5 @@ namespace Allors.Database.Meta;
 
 public abstract class ICompositeIndex
 {
-    public abstract IComposite Composite { get; }
+    public abstract Composite Composite { get; }
 }

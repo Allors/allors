@@ -2,7 +2,7 @@
 
 public sealed class CompositeMethodType : IMetaExtensible
 {
-    public CompositeMethodType(IComposite composite, MethodType methodType)
+    public CompositeMethodType(Composite composite, MethodType methodType)
     {
         this.Attributes = new MetaExtension();
         this.Composite = composite;
@@ -11,7 +11,7 @@ public sealed class CompositeMethodType : IMetaExtensible
 
     public dynamic Attributes { get; }
 
-    public IComposite Composite { get; }
+    public Composite Composite { get; }
 
     public MethodType MethodType { get; }
 }
