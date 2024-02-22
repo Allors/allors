@@ -9,7 +9,7 @@ namespace Allors.Database.Domain
 
     public interface ICaches
     {
-        IMetaIndex M { get; }
+        MetaIndex M { get; }
 
         ICache<TKey, TObject> Get<TKey, TObject>(Composite objectType, RoleType roleType) where TObject : class, IObject;
     }

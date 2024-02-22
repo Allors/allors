@@ -184,7 +184,7 @@ public sealed class RoleType : RelationEndType, IComparable
 
     public void InitializeCompositeRoleTypes(Dictionary<Composite, HashSet<CompositeRoleType>> compositeRoleTypesByComposite)
     {
-        var composite = this.relationType.AssociationType.ObjectTypeAsComposite;
+        var composite = this.relationType.AssociationType.Composite;
         compositeRoleTypesByComposite[composite].Add(this.compositeRoleType);
 
         var dictionary = composite.Subtypes.ToDictionary(v => v, v =>
@@ -201,7 +201,7 @@ public sealed class RoleType : RelationEndType, IComparable
 
     public void DeriveIsRequired()
     {
-        var composites = new Graph<Composite>(this.relationType.AssociationType.ObjectTypeAsComposite.Composites, v => v.DirectSubtypes).Reverse();
+        var composites = new Graph<Composite>(this.relationType.AssociationType.Composite.Composites, v => v.DirectSubtypes).Reverse();
 
         bool previousRequired = false;
         foreach (var composite in composites)
@@ -218,7 +218,7 @@ public sealed class RoleType : RelationEndType, IComparable
 
     public void DeriveIsUnique()
     {
-        var composites = new Graph<Composite>(this.relationType.AssociationType.ObjectTypeAsComposite.Composites, v => v.DirectSubtypes).Reverse();
+        var composites = new Graph<Composite>(this.relationType.AssociationType.Composite.Composites, v => v.DirectSubtypes).Reverse();
 
         bool previousUnique = false;
         foreach (var composite in composites)

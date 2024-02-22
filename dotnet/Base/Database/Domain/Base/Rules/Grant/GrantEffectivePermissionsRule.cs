@@ -14,7 +14,7 @@ namespace Allors.Database.Domain
 
     public class GrantEffectivePermissionsRule : Rule
     {
-        public GrantEffectivePermissionsRule(IMetaIndex m) : base(m, new Guid("1F897B84-EF92-4E94-8877-3501D56D426B"))
+        public GrantEffectivePermissionsRule(MetaIndex m) : base(m, new Guid("1F897B84-EF92-4E94-8877-3501D56D426B"))
         {
             var tree = new GrantTreeBuilder
             {

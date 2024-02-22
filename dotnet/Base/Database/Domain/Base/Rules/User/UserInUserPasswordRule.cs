@@ -14,7 +14,7 @@ namespace Allors.Database.Domain
 
     public class UserInUserPasswordRule : Rule
     {
-        public UserInUserPasswordRule(IMetaIndex m) : base(m, new Guid("AF93DA46-1C9A-47C4-9E5F-6A04751F5259")) =>
+        public UserInUserPasswordRule(MetaIndex m) : base(m, new Guid("AF93DA46-1C9A-47C4-9E5F-6A04751F5259")) =>
             this.Patterns =
             [
                 m.User.RolePattern(v=>v.InExistingUserPassword),
@@ -26,7 +26,7 @@ namespace Allors.Database.Domain
             foreach (var @this in matches.Cast<User>())
             {
                 var passwordHasher = @this.Transaction().Database.Services.Get<IPasswordHasher>();
-                var m = @this.Transaction().Database.Services.Get<IMetaIndex>();
+                var m = @this.Transaction().Database.Services.Get<MetaIndex>();
 
                 try
                 {

@@ -14,7 +14,7 @@ namespace Allors.Database.Domain
 
     public class RoleMany2ManyRule : Rule
     {
-        public RoleMany2ManyRule(IMetaIndex m) : base(m, new Guid("4383159F-258D-4FCB-833C-55D2B91109A1")) =>
+        public RoleMany2ManyRule(MetaIndex m) : base(m, new Guid("4383159F-258D-4FCB-833C-55D2B91109A1")) =>
             this.Patterns = new[]
             {
                 m.CC.RolePattern(v=>v.Assigned, v=>v.BBsWhereMany2Many.ObjectType.AAsWhereMany2Many),

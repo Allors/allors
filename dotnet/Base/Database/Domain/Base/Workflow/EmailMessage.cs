@@ -11,7 +11,7 @@ namespace Allors.Database.Domain
     {
         public static void Send(ITransaction transaction, string defaultSender)
         {
-            var m = transaction.Database.Services.Get<IMetaIndex>();
+            var m = transaction.Database.Services.Get<MetaIndex>();
 
             var mailer = transaction.Database.Services.Get<IMailer>();
             var emailMessages = transaction.Extent<EmailMessage>();

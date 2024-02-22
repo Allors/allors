@@ -79,7 +79,7 @@ namespace Allors.Database.Configuration.Derivations.Default
         {
             if (changeSet.RoleTypesByAssociation.TryGetValue(association, out var changedRoleTypes) && changedRoleTypes.Contains(roleType))
             {
-                var objectType = roleType.AssociationType.ObjectType;
+                var objectType = roleType.AssociationType.Composite;
                 var role = association.Strategy.GetRole(roleType);
 
                 if (role != null)
@@ -95,7 +95,7 @@ namespace Allors.Database.Configuration.Derivations.Default
             }
         }
 
-        public void AssertIsUnique(IChangeSet changeSet, IObject association, IComposite objectType, params RoleType[] roleTypes)
+        public void AssertIsUnique(IChangeSet changeSet, IObject association, Composite objectType, params RoleType[] roleTypes)
         {
             if (changeSet.RoleTypesByAssociation.TryGetValue(association, out var changedRoleTypes) && changedRoleTypes.Intersect(roleTypes).Any())
             {

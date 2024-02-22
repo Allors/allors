@@ -13,12 +13,12 @@ namespace Allors.Database.Configuration
 
     public class PrefetchPolicyCache : IPrefetchPolicyCache
     {
-        private readonly M m;
+        private readonly MetaIndex m;
         private readonly IDictionary<string, IDictionary<Class, PrefetchPolicy>> prefetchPolicyByClassByWorkspace;
 
         public PrefetchPolicyCache(IDatabase database, IMetaCache metaCache)
         {
-            this.m = database.Services.Get<M>();
+            this.m = database.Services.Get<MetaIndex>();
 
             this.PermissionsWithClass = new PrefetchPolicyBuilder()
                     .WithRule(this.m.Permission.ClassPointer)
@@ -70,7 +70,7 @@ namespace Allors.Database.Configuration
             return builder.Build();
         }
 
-        public PrefetchPolicy ForDependency(IComposite composite, ISet<IRelationEndType> relationEndTypes)
+        public PrefetchPolicy ForDependency(Composite composite, ISet<RelationEndType> relationEndTypes)
         {
             var builder = new PrefetchPolicyBuilder();
             builder.WithSecurityRules(this.m);

@@ -14,7 +14,7 @@ namespace Allors.Database.Domain
 
     public static class Rules
     {
-        public static Rule[] Create(IMetaIndex m)
+        public static Rule[] Create(MetaIndex m)
         {
             var assembly = typeof(Rules).Assembly;
 

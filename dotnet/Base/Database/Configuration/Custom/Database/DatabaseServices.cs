@@ -68,7 +68,7 @@ namespace Allors.Database.Configuration
             this.metaCache = new MetaCache(this.Database);
         }
 
-        public IMetaIndex M { get; private set; }
+        public MetaIndex M { get; private set; }
 
         public ITransactionServices CreateTransactionServices() => new TransactionServices();
 
@@ -81,7 +81,7 @@ namespace Allors.Database.Configuration
                 { } type when type == typeof(ISecurity) => (T)(this.security ??= new Security(this)),
                 { } type when type == typeof(IPrefetchPolicyCache) => (T)(this.prefetchPolicyCache ??= new PrefetchPolicyCache(this.Database, this.metaCache)),
                 // Core
-                { } type when type == typeof(IMetaIndex) => (T)this.M,
+                { } type when type == typeof(MetaIndex) => (T)this.M,
                 { } type when type == typeof(IClassById) => (T)(this.classById ??= new ClassById()),
                 { } type when type == typeof(IVersionedIdByStrategy) => (T)(this.versionedIdByStrategy ??= new VersionedIdByStrategy()),
                 { } type when type == typeof(IPreparedSelects) => (T)(this.preparedSelects ??= new PreparedSelects(this.Database)),

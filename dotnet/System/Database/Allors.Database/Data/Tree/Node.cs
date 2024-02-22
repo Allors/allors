@@ -126,7 +126,7 @@ public class Node : IVisitable
 
             if (node.RelationEndType is RoleType roleType)
             {
-                addedComposite = roleType.AssociationType.ObjectTypeAsComposite;
+                addedComposite = roleType.AssociationType.Composite;
             }
             else if (node.RelationEndType is AssociationType associationType)
             {

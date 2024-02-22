@@ -14,7 +14,7 @@ namespace Allors.Database.Domain
 
     public class OrganizationPostDeriveRule : Rule
     {
-        public OrganizationPostDeriveRule(IMetaIndex m) 
+        public OrganizationPostDeriveRule(MetaIndex m) 
             : base(m, new Guid("755E60CF-1D5E-4D24-8FDE-396FF7C3030B")) =>
             this.Patterns =
             [

@@ -30,7 +30,7 @@ public sealed class AssociationType : RelationEndType, IComparable
 
     public override IObjectType ObjectType => this.objectType;
 
-    public Composite ObjectTypeAsComposite => this.objectType;
+    public Composite Composite => this.objectType;
     
     public RoleType RoleType => this.relationType.RoleType;
     

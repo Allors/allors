@@ -1,4 +1,4 @@
-// <copyright file="TreeCache.cs" company="Allors bv">
+﻿// <copyright file="TreeCache.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -12,12 +12,12 @@ namespace Allors.Database.Configuration
 
     public class TreeCache : ITreeCache
     {
-        private readonly ConcurrentDictionary<IComposite, Node[]> trees;
+        private readonly ConcurrentDictionary<Composite, Node[]> trees;
 
-        public TreeCache() => this.trees = new ConcurrentDictionary<IComposite, Node[]>();
+        public TreeCache() => this.trees = new ConcurrentDictionary<Composite, Node[]>();
 
-        public Node[] Get(IComposite type) => this.trees.TryGetValue(type, out var tree) ? tree : null;
+        public Node[] Get(Composite type) => this.trees.TryGetValue(type, out var tree) ? tree : null;
 
-        public void Set(IComposite type, Node[] tree) => this.trees[type] = tree;
+        public void Set(Composite type, Node[] tree) => this.trees[type] = tree;
     }
 }

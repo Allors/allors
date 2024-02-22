@@ -13,13 +13,13 @@ namespace Allors.Database.Domain.Derivations.Rules
 
     public abstract class Rule : IRule
     {
-        protected Rule(IMetaIndex m, Guid id)
+        protected Rule(MetaIndex m, Guid id)
         {
             this.M = m;
             this.Id = id;
         }
 
-        public IMetaIndex M { get; }
+        public MetaIndex M { get; }
 
         public Guid Id { get; }
 

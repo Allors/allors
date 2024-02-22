@@ -10,20 +10,20 @@ namespace Allors.Database.Domain
 
     public class Caches : ICaches
     {
-        private readonly IDictionary<IComposite, IDictionary<RoleType, object>> cacheByRoleTypeByObjectType;
+        private readonly IDictionary<Composite, IDictionary<RoleType, object>> cacheByRoleTypeByObjectType;
       
-        public Caches(ITransaction transaction, M m)
+        public Caches(ITransaction transaction, MetaIndex m)
         {
             this.Transaction = transaction;
             this.M = m;
-            this.cacheByRoleTypeByObjectType = new Dictionary<IComposite, IDictionary<RoleType, object>>();
+            this.cacheByRoleTypeByObjectType = new Dictionary<Composite, IDictionary<RoleType, object>>();
         }
 
         public ITransaction Transaction { get; }
 
-        public M M { get; }
+        public MetaIndex M { get; }
         
-        public ICache<TKey, TObject> Get<TKey, TObject>(IComposite objectType, RoleType roleType) where TObject : class, IObject
+        public ICache<TKey, TObject> Get<TKey, TObject>(Composite objectType, RoleType roleType) where TObject : class, IObject
         {
             if (!this.cacheByRoleTypeByObjectType.TryGetValue(objectType, out var cacheByRoleType))
             {
