@@ -2,7 +2,7 @@
 
 TemplateId() ::= <<17ED40F8-BDF8-4A7C-9AE9-1C4D2AD6BA2B>>
 TemplateName() ::= <<Allors C# Domain>>
-TemplateVersion() ::= <<3.0.3>>
+TemplateVersion() ::= <<3.0.4>>
 TemplateAllors() ::= <<1.0>>
 TemplateConfiguration(meta) ::= <<
 $!
@@ -630,7 +630,7 @@ namespace Allors.Database.Domain
 
     public class IMetaIndex(MetaPopulation meta) : IMetaPopulationIndex
     {
-		public override MetaPopulation Meta => meta;
+		public override MetaPopulation MetaPopulation => meta;
 
 $meta.units:{objectType|$metaObjectType_Property()$}; separator="\n"$
 $meta.interfaces:{objectType|$metaObjectType_Property()$}; separator="\n"$
@@ -665,7 +665,7 @@ metaAssociationType_Property() ::= <<
 metaUnit_Type() ::= <<
 	public class I$unit.SingularName$Index(Unit meta) : IUnitIndex 
 	{
-		public override Unit Meta => meta;
+		public override Unit Unit => meta;
 	}
 
 >>
@@ -673,7 +673,9 @@ metaUnit_Type() ::= <<
 metaInterface_Type() ::= <<
 	public class I$interface.SingularName$Index(Interface meta) : IInterfaceIndex
 	{
-		public override Interface Meta => meta;
+		public override Composite Composite => meta;
+
+		public override Interface Interface => meta;
 
 $interface.Subtypes:{subtype|$metaObjectType_Subtype()$}; separator="\n"$
 $interface.RoleTypes:{roleType|$metaObjectType_RoleType()$}; separator="\n"$
@@ -685,7 +687,9 @@ $interface.AssociationTypes:{associationType|$metaObjectType_AssociationType()$}
 metaClass_Type() ::= <<
 	public class I$class.SingularName$Index(Class meta) : IClassIndex
 	{
-		public override Class Meta => meta;
+		public override Composite Composite => meta;
+		
+		public override Class Interface => meta;
 
 $class.RoleTypes:{roleType|$metaObjectType_RoleType()$}; separator="\n"$
 $class.AssociationTypes:{associationType|$metaObjectType_AssociationType()$}; separator="\n"$
@@ -708,7 +712,7 @@ metaObjectType_AssociationType() ::= <<
 metaRoleType_Type() ::= <<
 	public class I$relationType.RoleType.FullName$Index(RoleType meta) : IRoleTypeIndex
 	{
-        	public override RoleType Meta => meta;
+        	public override RoleType RoleType => meta;
 
 $if(relationType.RoleType.ObjectType.IsComposite)$	
 		public I$relationType.RoleType.ObjectType$Index ObjectType { get; set; }
@@ -721,7 +725,7 @@ $endif$
 metaAssociationType_Type() ::= <<
 	public class I$relationType.AssociationType.Name$Index(AssociationType meta) : IAssociationTypeIndex
 	{
-		public override AssociationType Meta => meta;
+		public override AssociationType AssociationType => meta;
 
 		public I$relationType.AssociationType.ObjectType$Index ObjectType { get; set; }
 

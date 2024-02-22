@@ -8,5 +8,5 @@ namespace Allors.Database.Meta;
 
 public abstract class IMetaPopulationIndex
 {
-    public abstract MetaPopulation Meta { get; }
+    public abstract MetaPopulation MetaPopulation { get; }
 }

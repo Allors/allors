@@ -21,10 +21,10 @@ namespace Allors.Database.Domain.Derivations.Rules
             this.OfType = !this.AssociationType.RoleType.ObjectType.Equals(ofType) ? ofType : null;
         }
 
-        public IEnumerable<Node> Tree { get; set; }
-
-        public IComposite OfType { get; set; }
-
         public AssociationType AssociationType { get; }
+
+        public IComposite OfType { get; }
+
+        public IEnumerable<Node> Tree { get; set; }
     }
 }

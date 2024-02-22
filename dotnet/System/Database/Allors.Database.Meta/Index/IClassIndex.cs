@@ -6,7 +6,7 @@
 
 namespace Allors.Database.Meta;
 
-public abstract class IClassIndex
+public abstract class IClassIndex : ICompositeIndex
 {
-    public abstract Class Meta { get; }
+    public abstract Class Class { get; }
 }

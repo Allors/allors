@@ -104,7 +104,7 @@ public sealed class MetaPopulation : EmbeddedPopulation, IEmbeddedPopulation
         }
     }
 
-    public static implicit operator MetaPopulation(IMetaPopulationIndex index) => index.Meta;
+    public static implicit operator MetaPopulation(IMetaPopulationIndex index) => index.MetaPopulation;
 
     public IMetaIdentifiableObject FindById(Guid id)
     {

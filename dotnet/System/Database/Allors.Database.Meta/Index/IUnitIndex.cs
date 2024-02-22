@@ -8,5 +8,5 @@ namespace Allors.Database.Meta;
 
 public abstract class IUnitIndex
 {
-    public abstract Unit Meta { get; }
+    public abstract Unit Unit { get; }
 }

@@ -78,7 +78,7 @@ public sealed class Interface : EmbeddedObject, IComposite
 
     public bool IsClass => false;
 
-    public static implicit operator Interface(IInterfaceIndex index) => index.Meta;
+    public static implicit operator Interface(IInterfaceIndex index) => index.Interface;
 
     public override bool Equals(object other) => this.Id.Equals((other as IMetaIdentifiableObject)?.Id);
 

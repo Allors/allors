@@ -56,7 +56,7 @@ public sealed class Unit : EmbeddedObject, IObjectType
 
     public bool IsClass => false;
 
-    public static implicit operator Unit(IUnitIndex index) => index.Meta;
+    public static implicit operator Unit(IUnitIndex index) => index.Unit;
 
     public override bool Equals(object other) => this.Id.Equals((other as IMetaIdentifiableObject)?.Id);
 
