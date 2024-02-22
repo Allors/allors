@@ -34,6 +34,8 @@ public abstract class RelationEndType : IOperandType
 
     public abstract bool IsMany { get; }
 
+    public static implicit operator RelationEndType(IRelationEndTypeIndex index) => index.RelationEndType;
+
     public static implicit operator RelationEndType(IAssociationTypeIndex index) => index.AssociationType;
 
     public static implicit operator RelationEndType(IRoleTypeIndex index) => index.RoleType;

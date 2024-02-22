@@ -1,4 +1,4 @@
-// <copyright file="IRelationEndTypesExtensions.cs" company="Allors bv">
+﻿// <copyright file="IRelationEndTypesExtensions.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -8,9 +8,9 @@ namespace Allors.Database.Data;
 
 using Allors.Database.Meta;
 
-public static class IRelationEndTypesExtensions
+public static class IRelationEndTypesIndexExtensions
 {
-    public static Node Path(this RelationEndType[] @this)
+    public static Node Path(this IRelationEndTypeIndex[] @this)
     {
         if (@this == null)
         {

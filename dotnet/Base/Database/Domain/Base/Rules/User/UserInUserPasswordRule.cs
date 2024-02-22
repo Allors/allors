@@ -26,7 +26,7 @@ namespace Allors.Database.Domain
             foreach (var @this in matches.Cast<User>())
             {
                 var passwordHasher = @this.Transaction().Database.Services.Get<IPasswordHasher>();
-                var m = @this.Transaction().Database.Services.Get<M>();
+                var m = @this.Transaction().Database.Services.Get<IMetaIndex>();
 
                 try
                 {
