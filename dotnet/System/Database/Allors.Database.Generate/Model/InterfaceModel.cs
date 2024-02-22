@@ -9,6 +9,6 @@ public class InterfaceModel : CompositeModel
 
     public Interface Interface { get; }
     public override IMetaIdentifiableObject MetaObject => this.Interface;
-    protected override IObjectType ObjectType => this.Interface;
+    protected override ObjectType ObjectType => this.Interface;
     protected override Composite Composite => this.Interface;
 }

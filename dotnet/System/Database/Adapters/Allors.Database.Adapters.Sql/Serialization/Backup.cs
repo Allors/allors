@@ -107,7 +107,7 @@ public class Backup
 
     protected void BackupRelations(ManagementTransaction transaction)
     {
-        var exclusiveRootClassesByObjectType = new Dictionary<IObjectType, HashSet<IObjectType>>();
+        var exclusiveRootClassesByObjectType = new Dictionary<ObjectType, HashSet<ObjectType>>();
 
         var relations = new List<RelationType>(this.database.MetaPopulation.RelationTypes);
         relations.Sort();
@@ -125,7 +125,7 @@ public class Backup
                 {
                     if (!exclusiveRootClassesByObjectType.TryGetValue(associationType.ObjectType, out var exclusiveRootClasses))
                     {
-                        exclusiveRootClasses = new HashSet<IObjectType>();
+                        exclusiveRootClasses = new HashSet<ObjectType>();
                         foreach (var concreteClass in associationType.Composite.Classes)
                         {
                             exclusiveRootClasses.Add(concreteClass.ExclusiveClass);

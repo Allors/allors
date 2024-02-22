@@ -32,7 +32,7 @@ namespace Allors.Database.Server.Controllers
         [HttpPost]
         public IActionResult Pull(CancellationToken cancellationToken)
         {
-            var m = this.Transaction.Database.Services.Get<M>();
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             var api = new Api(this.Transaction, this.WorkspaceService.Name, cancellationToken);
             var response = api.CreatePullResponseBuilder();

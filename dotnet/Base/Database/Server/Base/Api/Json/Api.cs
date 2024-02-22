@@ -1,4 +1,4 @@
-// <copyright file="PullExtent.cs" company="Allors bv">
+﻿// <copyright file="PullExtent.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -40,7 +40,7 @@ namespace Allors.Database.Protocol.Json
             this.AccessControl = transactionServices.Get<IWorkspaceAclsService>().Create(this.WorkspaceName);
             this.AllowedClasses = metaCache.GetWorkspaceClasses(this.WorkspaceName);
             this.RoleTypesByClass = metaCache.GetWorkspaceRoleTypesByClass(this.WorkspaceName);
-            this.M = databaseServices.Get<M>();
+            this.M = databaseServices.Get<IMetaIndex>();
             this.PreparedSelects = databaseServices.Get<IPreparedSelects>();
             this.PreparedExtents = databaseServices.Get<IPreparedExtents>();
             this.Build = @class => transaction.Build(@class);
@@ -71,7 +71,7 @@ namespace Allors.Database.Protocol.Json
 
         public IDictionary<Class, IReadOnlySet<RoleType>> RoleTypesByClass { get; }
 
-        public M M { get; }
+        public IMetaIndex M { get; }
 
         public IPreparedSelects PreparedSelects { get; }
 
@@ -122,7 +122,7 @@ namespace Allors.Database.Protocol.Json
             var @event = this.Sink?.OnPush(this.Transaction, pushRequest);
             this.Sink?.OnBefore(@event);
 
-            var pushResponseBuilder = new PushResponseBuilder(this.Transaction, this.Derive, this.M, this.AccessControl, this.AllowedClasses, this.Build, this.UnitConvert);
+            var pushResponseBuilder = new PushResponseBuilder(this.Transaction, this.Derive, this.M.MetaPopulation, this.AccessControl, this.AllowedClasses, this.Build, this.UnitConvert);
             var pushResponse = pushResponseBuilder.Build(pushRequest);
 
             if (@event != null)

@@ -21,15 +21,15 @@ public class EmbeddedDerivations
     {
         public void EmbeddedDerive(IEmbeddedChangeSet changeSet)
         {
-            var singularNames = changeSet.EmbeddedChangedRoles<IObjectType>(nameof(IObjectType.SingularName));
-            var assignedPluralNames = changeSet.EmbeddedChangedRoles<IObjectType>(nameof(IObjectType.AssignedPluralName));
+            var singularNames = changeSet.EmbeddedChangedRoles<ObjectType>(nameof(ObjectType.SingularName));
+            var assignedPluralNames = changeSet.EmbeddedChangedRoles<ObjectType>(nameof(ObjectType.AssignedPluralName));
 
             if (singularNames.Any() || assignedPluralNames.Any())
             {
                 var objectTypes = singularNames
                     .Union(assignedPluralNames)
                     .Select(v => v.Key)
-                    .OfType<IObjectType>()
+                    .OfType<ObjectType>()
                     .Distinct(); ;
 
                 foreach (var @this in objectTypes)

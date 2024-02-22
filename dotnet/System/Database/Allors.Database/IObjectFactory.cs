@@ -38,7 +38,7 @@ public interface IObjectFactory
     /// <returns>a new state.</returns>
     IObject Create(IStrategy strategy);
 
-    IObjectType GetObjectType<T>();
+    ObjectType GetObjectType<T>();
 
     /// <summary>
     ///     Gets the IObjectType for the specified Type.
@@ -46,7 +46,7 @@ public interface IObjectFactory
     /// </summary>
     /// <param name="type">The type.</param>
     /// <returns>The object type.</returns>
-    IObjectType GetObjectType(Type type);
+    ObjectType GetObjectType(Type type);
 
     /// <summary>
     ///     Gets the IObjectType with the specified id.
@@ -55,14 +55,14 @@ public interface IObjectFactory
     ///     The object type id.
     /// </param>
     /// <returns>
-    ///     The <see cref="IObjectType" />.
+    ///     The <see cref="ObjectType" />.
     /// </returns>
-    IObjectType GetObjectType(Guid objectTypeId);
+    ObjectType GetObjectType(Guid objectTypeId);
 
     /// <summary>
     ///     Gets the Type for the specified IObjectType.
     /// </summary>
     /// <param name="objectType">The object type.</param>
     /// <returns>The type.</returns>
-    Type GetType(IObjectType objectType);
+    Type GetType(ObjectType objectType);
 }

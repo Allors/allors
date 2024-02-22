@@ -82,12 +82,12 @@ public class PredicateAssertions
     }
 
     /// <summary>
-    ///     Asserts that the <see cref="AssociationType" /> and the <see cref="IObjectType" /> are compatible with
+    ///     Asserts that the <see cref="AssociationType" /> and the <see cref="ObjectType" /> are compatible with
     ///     <see cref="ICompositePredicate#AddInstanceof" />.
     /// </summary>
     /// <param name="association">The association.</param>
     /// <param name="objectType">The object type.</param>
-    public static void ValidateAssociationInstanceof(AssociationType association, IObjectType objectType)
+    public static void ValidateAssociationInstanceof(AssociationType association, ObjectType objectType)
     {
         if (objectType is Unit)
         {
@@ -102,11 +102,11 @@ public class PredicateAssertions
     }
 
     /// <summary>
-    ///     Asserts that the <see cref="IObjectType" /> is compatible with
+    ///     Asserts that the <see cref="ObjectType" /> is compatible with
     ///     <see cref="ICompositePredicate#AddInstanceof" />.
     /// </summary>
     /// <param name="objectType">The object type.</param>
-    public static void ValidateInstanceof(IObjectType objectType)
+    public static void ValidateInstanceof(ObjectType objectType)
     {
         if (objectType is Unit)
         {
@@ -280,12 +280,12 @@ public class PredicateAssertions
     }
 
     /// <summary>
-    ///     Asserts that the <see cref="RoleType" /> and the <see cref="IObjectType" /> are compatible with
+    ///     Asserts that the <see cref="RoleType" /> and the <see cref="ObjectType" /> are compatible with
     ///     <see cref="ICompositePredicate#AddInstanceOf" />.
     /// </summary>
     /// <param name="role">The role .</param>
     /// <param name="objectType">Type object type.</param>
-    public static void ValidateRoleInstanceOf(RoleType role, IObjectType objectType)
+    public static void ValidateRoleInstanceOf(RoleType role, ObjectType objectType)
     {
         if (objectType is Unit)
         {

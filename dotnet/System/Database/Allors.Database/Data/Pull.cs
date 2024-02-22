@@ -14,7 +14,7 @@ public class Pull : IVisitable
 
     public IExtent Extent { get; set; }
 
-    public IObjectType ObjectType { get; set; }
+    public ObjectType ObjectType { get; set; }
 
     public IObject Object { get; set; }
 

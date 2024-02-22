@@ -265,14 +265,14 @@ internal abstract class CompositePredicate : Predicate, ICompositePredicate
         return anyFilter;
     }
 
-    internal static IObjectType[] GetConcreteSubClasses(IObjectType type)
+    internal static ObjectType[] GetConcreteSubClasses(ObjectType type)
     {
         if (type.IsInterface)
         {
             return ((Interface)type).Classes.ToArray();
         }
 
-        var concreteSubclasses = new IObjectType[1];
+        var concreteSubclasses = new ObjectType[1];
         concreteSubclasses[0] = type;
         return concreteSubclasses;
     }

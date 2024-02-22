@@ -48,7 +48,7 @@ public interface ITransaction : IDisposable
     Extent<T> Extent<T>() where T : IObject;
 
     /// <summary>
-    ///     Creates an Extent for the specified <see cref="IObjectType" />.
+    ///     Creates an Extent for the specified <see cref="ObjectType" />.
     /// </summary>
     /// <param name="objectType">The @class.</param>
     /// <returns>The extent.</returns>

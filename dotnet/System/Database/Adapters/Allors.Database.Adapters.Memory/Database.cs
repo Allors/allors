@@ -14,7 +14,7 @@ using Allors.Database.Meta;
 
 public class Database : IDatabase
 {
-    private readonly Dictionary<IObjectType, object> concreteClassesByObjectType;
+    private readonly Dictionary<ObjectType, object> concreteClassesByObjectType;
     private Transaction transaction;
 
     public Database(IDatabaseServices services, Configuration configuration)
@@ -33,7 +33,7 @@ public class Database : IDatabase
 
         this.MetaPopulation = this.ObjectFactory.MetaPopulation;
 
-        this.concreteClassesByObjectType = new Dictionary<IObjectType, object>();
+        this.concreteClassesByObjectType = new Dictionary<ObjectType, object>();
 
         this.Id = string.IsNullOrWhiteSpace(configuration.Id) ? Guid.NewGuid().ToString("N").ToLowerInvariant() : configuration.Id;
 
@@ -100,7 +100,7 @@ public class Database : IDatabase
 
     public ITransaction CreateDatabaseTransaction() => this.Transaction;
 
-    public bool ContainsClass(Composite objectType, IObjectType concreteClass)
+    public bool ContainsClass(Composite objectType, ObjectType concreteClass)
     {
         if (!this.concreteClassesByObjectType.TryGetValue(objectType, out var concreteClassOrClasses))
         {
@@ -111,17 +111,17 @@ public class Database : IDatabase
             }
             else
             {
-                concreteClassOrClasses = new HashSet<IObjectType>(objectType.Classes);
+                concreteClassOrClasses = new HashSet<ObjectType>(objectType.Classes);
                 this.concreteClassesByObjectType[objectType] = concreteClassOrClasses;
             }
         }
 
-        if (concreteClassOrClasses is IObjectType)
+        if (concreteClassOrClasses is ObjectType)
         {
             return concreteClass.Equals(concreteClassOrClasses);
         }
 
-        var concreteClasses = (HashSet<IObjectType>)concreteClassOrClasses;
+        var concreteClasses = (HashSet<ObjectType>)concreteClassOrClasses;
         return concreteClasses.Contains(concreteClass);
     }
 

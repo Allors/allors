@@ -54,9 +54,10 @@ namespace Allors.Database.Configuration
 
         private IWorkspaceMask workspaceMask;
 
-        protected DatabaseServices(Engine engine)
+        protected DatabaseServices(Engine engine, IMetaIndex metaIndex)
         {
             this.Engine = engine;
+            this.M = metaIndex;
         }
 
         internal IDatabase Database { get; private set; }
@@ -64,7 +65,6 @@ namespace Allors.Database.Configuration
         public virtual void OnInit(IDatabase database)
         {
             this.Database = database;
-            this.M = new MetaIndex(this.Database.MetaPopulation);
             this.metaCache = new MetaCache(this.Database);
         }
 

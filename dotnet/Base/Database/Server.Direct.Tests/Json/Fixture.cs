@@ -18,12 +18,15 @@ namespace Tests
 
         public Fixture()
         {
-            this.M = MetaBuilder.Build();
+            this.MetaPopulation = MetaBuilder.Build();
+            this.M = new MetaIndex(this.MetaPopulation);
             var rules = Rules.Create(this.M);
             this.Engine = new Engine(rules);
         }
 
-        public M M { get; set; }
+        public MetaPopulation MetaPopulation { get; set; }
+
+        public IMetaIndex M { get; set; }
 
         public Engine Engine { get; set; }
 

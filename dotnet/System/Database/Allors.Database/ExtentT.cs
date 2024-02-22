@@ -55,7 +55,7 @@ public class Extent<T> : IList, IList<T> where T : IObject // Extent<T> must als
     ///     Gets the type.
     /// </summary>
     /// <value>The type of the Extent.</value>
-    public IObjectType ObjectType => this.BaseExtent.ObjectType;
+    public ObjectType ObjectType => this.BaseExtent.ObjectType;
 
     /// <summary>
     ///     Gets the number of elements contained in the <see cref="T:System.Collections.Generic.ICollection`1"></see>.

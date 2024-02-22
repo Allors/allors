@@ -45,10 +45,11 @@ namespace Allors.Server.Tests
             var configuration = configurationBuilder.Build();
 
             var metaPopulation = new MetaBuilder().Build();
-            var rules = Rules.Create(metaPopulation);
+            var metaIndex = new MetaIndex(metaPopulation);
+            var rules = Rules.Create(metaIndex);
             var engine = new Engine(rules);
             var database = new Database(
-                new DefaultDatabaseServices(engine),
+                new DefaultDatabaseServices(engine, metaIndex),
                 new Configuration
                 {
                     ConnectionString = configuration["ConnectionStrings:DefaultConnection"],
@@ -70,7 +71,7 @@ namespace Allors.Server.Tests
             this.Transaction = database.CreateTransaction();
         }
 
-        public M M => this.Transaction.Database.Services.Get<M>();
+        public IMetaIndex M => this.Transaction.Database.Services.Get<IMetaIndex>();
 
         public IConfigurationRoot Configuration { get; set; }
 

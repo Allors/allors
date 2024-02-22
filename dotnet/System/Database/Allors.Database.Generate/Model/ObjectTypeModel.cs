@@ -10,7 +10,7 @@ public abstract class ObjectTypeModel : MetaIdentifiableObjectModel
     {
     }
 
-    protected abstract IObjectType ObjectType { get; }
+    protected abstract ObjectType ObjectType { get; }
 
     // IMetaIdentifiableObject
     public Guid Id => this.ObjectType.Id;

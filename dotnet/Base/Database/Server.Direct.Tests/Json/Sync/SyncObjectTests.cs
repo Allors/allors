@@ -60,7 +60,7 @@ namespace Tests
             var syncObject = syncResponse.o[0];
 
             Assert.Equal(person.Id, syncObject.i);
-            Assert.Equal(this.M.Person.Tag, syncObject.c);
+            Assert.Equal(this.M.Person.Composite.Tag, syncObject.c);
             Assert.Equal(person.Strategy.ObjectVersion, syncObject.v);
         }
 

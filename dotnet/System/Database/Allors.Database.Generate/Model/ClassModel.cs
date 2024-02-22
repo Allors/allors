@@ -11,7 +11,7 @@ public sealed class ClassModel : CompositeModel
     public ClassModel(Model model, Class @class)
         : base(model) => this.Class = @class;
 
-    protected override IObjectType ObjectType => this.Class;
+    protected override ObjectType ObjectType => this.Class;
 
     protected override Composite Composite => this.Class;
 

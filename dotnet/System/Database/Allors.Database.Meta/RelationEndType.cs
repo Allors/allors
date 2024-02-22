@@ -18,7 +18,7 @@ public abstract class RelationEndType : IOperandType
 
     public dynamic Attributes { get; }
 
-    public abstract IObjectType ObjectType { get; }
+    public abstract ObjectType ObjectType { get; }
 
     public abstract string Name { get; }
 

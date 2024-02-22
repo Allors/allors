@@ -11,7 +11,7 @@ namespace Allors.Database.Domain
 
     public static class IObjectTypeExtensions
     {
-        public static IObjects GetObjects(this IObjectType objectType, ITransaction transaction)
+        public static IObjects GetObjects(this ObjectType objectType, ITransaction transaction)
         {
             var objectFactory = transaction.Database.ObjectFactory;
             var type = typeof(Setup).Assembly.GetType(objectFactory.Namespace + "." + objectType.PluralName);

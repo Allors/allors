@@ -62,7 +62,7 @@ namespace Allors.Database.Domain.Tests
         {
             private readonly Dictionary<Class, RoleType> masks;
 
-            public WorkspaceMask(M m) =>
+            public WorkspaceMask(IMetaIndex m) =>
                 this.masks = new Dictionary<Class, RoleType>
                 {
                     { m.Organization, m.Organization.Name },

@@ -12,7 +12,7 @@ namespace Allors.Database.Configuration
 
     public class DefaultDatabaseServices : DatabaseServices
     {
-        public DefaultDatabaseServices(Engine engine) : base(engine) { }
+        public DefaultDatabaseServices(Engine engine, IMetaIndex metaIndex) : base(engine, metaIndex) { }
 
         protected override IPasswordHasher CreatePasswordHasher() => new PasswordHasher();
 

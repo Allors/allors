@@ -18,9 +18,9 @@ public abstract class Database : IDatabase
 {
     public static readonly IsolationLevel DefaultIsolationLevel = System.Data.IsolationLevel.Snapshot;
 
-    private readonly Dictionary<IObjectType, HashSet<IObjectType>> concreteClassesByObjectType;
+    private readonly Dictionary<ObjectType, HashSet<ObjectType>> concreteClassesByObjectType;
 
-    private readonly Dictionary<IObjectType, RoleType[]> sortedUnitRolesByObjectType;
+    private readonly Dictionary<ObjectType, RoleType[]> sortedUnitRolesByObjectType;
 
     private ICacheFactory cacheFactory;
 
@@ -42,12 +42,12 @@ public abstract class Database : IDatabase
 
         this.ConnectionString = configuration.ConnectionString;
 
-        this.concreteClassesByObjectType = new Dictionary<IObjectType, HashSet<IObjectType>>();
+        this.concreteClassesByObjectType = new Dictionary<ObjectType, HashSet<ObjectType>>();
 
         this.CommandTimeout = configuration.CommandTimeout;
         this.IsolationLevel = configuration.IsolationLevel;
 
-        this.sortedUnitRolesByObjectType = new Dictionary<IObjectType, RoleType[]>();
+        this.sortedUnitRolesByObjectType = new Dictionary<ObjectType, RoleType[]>();
 
         this.CacheFactory = configuration.CacheFactory;
         this.Cache = this.CacheFactory.CreateCache();
@@ -138,7 +138,7 @@ public abstract class Database : IDatabase
 
     public override string ToString() => "Population[driver=Sql, type=Connected, id=" + this.GetHashCode() + "]";
 
-    public bool ContainsClass(IObjectType container, IObjectType containee)
+    public bool ContainsClass(ObjectType container, ObjectType containee)
     {
         if (container.IsClass)
         {
@@ -147,7 +147,7 @@ public abstract class Database : IDatabase
 
         if (!this.concreteClassesByObjectType.TryGetValue(container, out var concreteClasses))
         {
-            concreteClasses = new HashSet<IObjectType>(((Interface)container).Classes);
+            concreteClasses = new HashSet<ObjectType>(((Interface)container).Classes);
             this.concreteClassesByObjectType[container] = concreteClasses;
         }
 
@@ -155,9 +155,9 @@ public abstract class Database : IDatabase
     }
 
 
-    internal Type GetDomainType(IObjectType objectType) => this.ObjectFactory.GetType(objectType);
+    internal Type GetDomainType(ObjectType objectType) => this.ObjectFactory.GetType(objectType);
 
-    public RoleType[] GetSortedUnitRolesByObjectType(IObjectType objectType)
+    public RoleType[] GetSortedUnitRolesByObjectType(ObjectType objectType)
     {
         if (!this.sortedUnitRolesByObjectType.TryGetValue(objectType, out var sortedUnitRoles))
         {

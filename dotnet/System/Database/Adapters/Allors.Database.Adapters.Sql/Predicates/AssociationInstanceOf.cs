@@ -10,10 +10,10 @@ using Allors.Database.Meta;
 internal sealed class AssociationInstanceOf : Predicate
 {
     private readonly AssociationType association;
-    private readonly IObjectType[] instanceClasses;
+    private readonly ObjectType[] instanceClasses;
 
-    internal AssociationInstanceOf(ExtentFiltered extent, AssociationType association, IObjectType instanceType,
-        IObjectType[] instanceClasses)
+    internal AssociationInstanceOf(ExtentFiltered extent, AssociationType association, ObjectType instanceType,
+        ObjectType[] instanceClasses)
     {
         extent.CheckAssociation(association);
         PredicateAssertions.ValidateAssociationInstanceof(association, instanceType);

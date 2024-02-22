@@ -377,7 +377,7 @@ public class FromJsonVisitor : IVisitor
         var pull = new Pull
         {
             ExtentRef = visited.er,
-            ObjectType = !string.IsNullOrWhiteSpace(visited.t) ? (IObjectType)this.fromJson.MetaPopulation.FindByTag(visited.t) : null,
+            ObjectType = !string.IsNullOrWhiteSpace(visited.t) ? (ObjectType)this.fromJson.MetaPopulation.FindByTag(visited.t) : null,
             Arguments = visited.a != null ? new Arguments(visited.a, this.fromJson.UnitConvert) : null,
         };
 

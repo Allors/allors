@@ -25,7 +25,7 @@ public class ValidationLog : IValidationLog
     private readonly HashSet<Guid> ids;
 
     /// <summary>
-    ///     The set of all <see cref="IObjectType" /> names.
+    ///     The set of all <see cref="ObjectType" /> names.
     /// </summary>
     private readonly HashSet<string> objectTypeNames;
 

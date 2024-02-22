@@ -11,7 +11,7 @@ public class UnitModel : ObjectTypeModel
 
     public override IMetaIdentifiableObject MetaObject => this.Unit;
 
-    protected override IObjectType ObjectType => this.Unit;
+    protected override ObjectType ObjectType => this.Unit;
 
     // IUnit
     public bool IsBinary => this.Unit.IsBinary;

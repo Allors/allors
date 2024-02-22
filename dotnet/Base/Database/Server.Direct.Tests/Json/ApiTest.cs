@@ -41,17 +41,18 @@ namespace Tests
             var configuration = configurationBuilder.Build();
 
             var metaPopulation = new MetaBuilder().Build();
-            var rules = Rules.Create(metaPopulation);
+            var metaIndex = new MetaIndex(metaPopulation);
+            var rules = Rules.Create(metaIndex);
             var engine = new Engine(rules);
             var database = new Database(
-                new DefaultDatabaseServices(engine),
+                new DefaultDatabaseServices(engine, metaIndex),
                 new Configuration
                 {
                     ConnectionString = configuration["ConnectionStrings:DefaultConnection"],
                     ObjectFactory = new ObjectFactory(metaPopulation, typeof(C1)),
                 });
 
-            this.M = metaPopulation;
+            this.M = metaIndex;
 
             var recordsFromResource = new RecordsFromResource(database.MetaPopulation);
             this.Config = new Config
@@ -64,7 +65,7 @@ namespace Tests
             this.Setup(database, populate);
         }
 
-        public M M { get; }
+        public IMetaIndex M { get; }
 
         public virtual Config Config { get; }
 

@@ -8,7 +8,7 @@ namespace Allors.Database.Meta;
 
 public static class IObjectTypeExtensions
 {
-    internal static string ValidationName(this IObjectType @this)
+    internal static string ValidationName(this ObjectType @this)
     {
         if (!string.IsNullOrEmpty(@this.SingularName))
         {
@@ -18,7 +18,7 @@ public static class IObjectTypeExtensions
         return "object type " + @this.Id;
     }
 
-    internal static void ValidateObjectType(this IObjectType @this, ValidationLog validationLog)
+    internal static void ValidateObjectType(this ObjectType @this, ValidationLog validationLog)
     {
         if (!string.IsNullOrEmpty(@this.SingularName))
         {

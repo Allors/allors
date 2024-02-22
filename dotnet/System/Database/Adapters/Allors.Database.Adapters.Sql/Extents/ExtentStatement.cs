@@ -36,9 +36,9 @@ internal abstract class ExtentStatement
 
     internal abstract bool IsRoot { get; }
 
-    protected IObjectType Type => this.Extent.ObjectType;
+    protected ObjectType Type => this.Extent.ObjectType;
 
-    internal void AddJoins(IObjectType rootClass, string alias)
+    internal void AddJoins(ObjectType rootClass, string alias)
     {
         foreach (var role in this.referenceRoles)
         {
@@ -137,7 +137,7 @@ internal abstract class ExtentStatement
 
     internal abstract string AddParameter(object obj);
 
-    internal bool AddWhere(IObjectType rootClass, string alias)
+    internal bool AddWhere(ObjectType rootClass, string alias)
     {
         var useWhere = this.Extent.ObjectType.ExclusiveClass == null;
 

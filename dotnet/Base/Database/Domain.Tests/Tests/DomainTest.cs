@@ -26,13 +26,14 @@ namespace Allors.Database.Domain.Tests
         public DomainTest(Fixture fixture, bool populate = true)
         {
             var database = new Database(
-                new TestDatabaseServices(fixture.Engine),
+                new TestDatabaseServices(fixture.Engine, fixture.MetaIndex),
                 new Configuration
                 {
                     ObjectFactory = new ObjectFactory(fixture.MetaPopulation, typeof(User)),
                 });
 
-            this.M = database.Services.Get<M>();
+            this.MetaPopulation = fixture.MetaPopulation;
+            this.M = fixture.MetaIndex;
             
             this.Config = new Config
             {
@@ -44,7 +45,9 @@ namespace Allors.Database.Domain.Tests
             this.Setup(database, populate);
         }
 
-        public M M { get; }
+        public MetaPopulation MetaPopulation { get; }
+
+        public IMetaIndex M { get; }
 
         public virtual Config Config { get; }
 

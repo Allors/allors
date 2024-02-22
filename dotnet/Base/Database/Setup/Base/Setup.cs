@@ -16,18 +16,18 @@ namespace Allors.Database.Domain
     {
         private readonly ITransaction transaction;
 
-        private readonly Dictionary<IObjectType, IObjects> objectsByObjectType;
+        private readonly Dictionary<ObjectType, IObjects> objectsByObjectType;
         private readonly Graph<IObjects> objectsGraph;
 
         public Setup(IDatabase database, Config config)
         {
             this.Config = config;
 
-            this.M = database.Services.Get<M>();
+            this.M = database.Services.Get<IMetaIndex>();
 
             this.transaction = database.CreateTransaction();
 
-            this.objectsByObjectType = new Dictionary<IObjectType, IObjects>();
+            this.objectsByObjectType = new Dictionary<ObjectType, IObjects>();
             foreach (var objectType in this.transaction.Database.MetaPopulation.Composites)
             {
                 this.objectsByObjectType[objectType] = objectType.GetObjects(transaction);

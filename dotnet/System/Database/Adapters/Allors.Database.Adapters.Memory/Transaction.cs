@@ -15,11 +15,11 @@ public class Transaction : ITransaction
 {
     private static readonly HashSet<Strategy> EmptyStrategies = new();
 
-    private readonly Dictionary<IObjectType, IObjectType[]> concreteClassesByObjectType;
+    private readonly Dictionary<ObjectType, ObjectType[]> concreteClassesByObjectType;
     private bool busyCommittingOrRollingBack;
 
     private long currentId;
-    private Dictionary<IObjectType, HashSet<Strategy>> strategiesByObjectType;
+    private Dictionary<ObjectType, HashSet<Strategy>> strategiesByObjectType;
 
     private Dictionary<long, Strategy> strategyByObjectId;
 
@@ -32,7 +32,7 @@ public class Transaction : ITransaction
 
         this.busyCommittingOrRollingBack = false;
 
-        this.concreteClassesByObjectType = new Dictionary<IObjectType, IObjectType[]>();
+        this.concreteClassesByObjectType = new Dictionary<ObjectType, ObjectType[]>();
         this.scopedByType = new Dictionary<Type, object>();
 
         this.ChangeLog = new ChangeLog();
@@ -405,7 +405,7 @@ public class Transaction : ITransaction
 
     internal void Init() => this.Reset();
 
-    internal Type GetTypeForObjectType(IObjectType objectType) => this.Database.ObjectFactory.GetType(objectType);
+    internal Type GetTypeForObjectType(ObjectType objectType) => this.Database.ObjectFactory.GetType(objectType);
 
     internal virtual Strategy InsertStrategy(Class objectType, long objectId, long objectVersion)
     {
@@ -463,11 +463,11 @@ public class Transaction : ITransaction
         strategies.Add(strategy);
     }
 
-    internal virtual HashSet<Strategy> GetStrategiesForExtentIncludingDeleted(IObjectType type)
+    internal virtual HashSet<Strategy> GetStrategiesForExtentIncludingDeleted(ObjectType type)
     {
         if (!this.concreteClassesByObjectType.TryGetValue(type, out var concreteClasses))
         {
-            var sortedClassAndSubclassList = new List<IObjectType>();
+            var sortedClassAndSubclassList = new List<ObjectType>();
 
             if (type is Class)
             {
@@ -522,7 +522,7 @@ public class Transaction : ITransaction
 
     internal void Backup(XmlWriter writer)
     {
-        var sortedNonDeletedStrategiesByObjectType = new Dictionary<IObjectType, List<Strategy>>();
+        var sortedNonDeletedStrategiesByObjectType = new Dictionary<ObjectType, List<Strategy>>();
         foreach (var dictionaryEntry in this.strategyByObjectId)
         {
             var strategy = dictionaryEntry.Value;
@@ -554,6 +554,6 @@ public class Transaction : ITransaction
     {
         // Strategies
         this.strategyByObjectId = new Dictionary<long, Strategy>();
-        this.strategiesByObjectType = new Dictionary<IObjectType, HashSet<Strategy>>();
+        this.strategiesByObjectType = new Dictionary<ObjectType, HashSet<Strategy>>();
     }
 }

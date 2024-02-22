@@ -9,9 +9,9 @@ using Allors.Database.Meta;
 
 internal sealed class Instanceof : Predicate
 {
-    private readonly IObjectType objectType;
+    private readonly ObjectType objectType;
 
-    internal Instanceof(IObjectType objectType)
+    internal Instanceof(ObjectType objectType)
     {
         PredicateAssertions.ValidateInstanceof(objectType);
 

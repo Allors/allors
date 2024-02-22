@@ -118,7 +118,7 @@ public sealed class Interface : Composite
 
     public void InitializeExclusiveSubclass() => this.exclusiveClass = this.subclasses.Count == 1 ? this.subclasses.First() : null;
 
-    private void InitializeSubtypesRecursively(IObjectType type, ISet<Composite> subtypes)
+    private void InitializeSubtypesRecursively(ObjectType type, ISet<Composite> subtypes)
     {
         foreach (var directSubtype in this.DirectSubtypes.Cast<Composite>())
         {

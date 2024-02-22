@@ -17134,7 +17134,7 @@ public abstract class ExtentTest : IDisposable
         this.c4D = population.C4D;
     }
 
-    private static Unit GetAllorsString(IObjectType objectType) => (Unit)objectType.MetaPopulation.FindById(UnitIds.String);
+    private static Unit GetAllorsString(ObjectType objectType) => (Unit)objectType.MetaPopulation.FindById(UnitIds.String);
 
     private void AssertC1(Extent extent, bool assert0, bool assert1, bool assert2, bool assert3)
     {

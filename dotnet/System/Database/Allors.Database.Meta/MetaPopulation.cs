@@ -230,7 +230,7 @@ public sealed class MetaPopulation : EmbeddedPopulation, IEmbeddedPopulation
 
         var associationTypesByRoleTypeObjectType = this.relationTypes
             .GroupBy(v => v.RoleType.ObjectType)
-            .ToDictionary(g => (IObjectType)g.Key, g => new HashSet<AssociationType>(g.Select(v => v.AssociationType)));
+            .ToDictionary(g => (ObjectType)g.Key, g => new HashSet<AssociationType>(g.Select(v => v.AssociationType)));
 
         // RoleTypes
         foreach (Composite composite in this.composites)

@@ -83,9 +83,10 @@ namespace Commands
                 if (this.database == null)
                 {
                     var metaPopulation = new MetaBuilder().Build();
-                    var engine = new Engine(Rules.Create(metaPopulation));
+                    var metaIndex = new MetaIndex(metaPopulation);
+                    var engine = new Engine(Rules.Create(metaIndex));
                     var objectFactory = new ObjectFactory(metaPopulation, typeof(User));
-                    var databaseBuilder = new DatabaseBuilder(new DefaultDatabaseServices(engine), this.Configuration, objectFactory, this.IsolationLevel, this.CommandTimeout);
+                    var databaseBuilder = new DatabaseBuilder(new DefaultDatabaseServices(engine, metaIndex), this.Configuration, objectFactory, this.IsolationLevel, this.CommandTimeout);
                     this.database = databaseBuilder.Build();
                 }
 
@@ -93,7 +94,7 @@ namespace Commands
             }
         }
 
-        public M M => this.Database.Services.Get<M>();
+        public IMetaIndex M => this.Database.Services.Get<IMetaIndex>();
 
         public static int Main(string[] args)
         {

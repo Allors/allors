@@ -28,7 +28,7 @@ namespace Commands
         public int OnExecute(CommandLineApplication app)
         {
             var database = this.Parent.Database;
-            var m = database.Services.Get<M>();
+            var m = database.Services.Get<IMetaIndex>();
 
             this.Logger.Info("Begin");
 

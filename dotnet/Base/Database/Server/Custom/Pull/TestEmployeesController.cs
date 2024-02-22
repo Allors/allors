@@ -37,7 +37,7 @@ namespace Allors.Database.Server.Controllers
             var api = new Api(this.Transaction, this.WorkspaceService.Name, cancellationToken);
             var response = api.CreatePullResponseBuilder();
 
-            var m = this.Transaction.Database.Services.Get<M>();
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
             var organisation = this.Transaction.Extent<Organization>().FindBy(m.Organization.Owner, this.Transaction.Services.Get<IUserService>().User);
 
             response.AddObject("root", organisation,

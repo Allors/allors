@@ -1,4 +1,4 @@
-// <copyright file="PushTests.cs" company="Allors bv">
+﻿// <copyright file="PushTests.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -52,7 +52,7 @@ namespace Tests
                         [
                             new PushRequestRole
                             {
-                                t = this.M.WorkspaceXObject1.WorkspaceXString.RelationType.Tag,
+                                t = this.M.WorkspaceXObject1.WorkspaceXString.RoleType.RelationType.Tag,
                                 u = "x string",
                             },
                         ],
@@ -87,7 +87,7 @@ namespace Tests
                         [
                             new PushRequestRole
                             {
-                                t = this.M.WorkspaceXObject1.WorkspaceXString.RelationType.Tag,
+                                t = this.M.WorkspaceXObject1.WorkspaceXString.RoleType.RelationType.Tag,
                                 u = "x string",
                             },
                         ],

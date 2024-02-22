@@ -19,11 +19,14 @@ namespace Allors.Database.Domain.Tests
         public Fixture()
         {
             this.MetaPopulation = MetaBuilder.Build();
-            var rules = Rules.Create(this.MetaPopulation);
+            var rules = Rules.Create(this.MetaIndex);
+            this.MetaIndex = new MetaIndex(this.MetaPopulation);
             this.Engine = new Engine(rules);
         }
 
-        public M MetaPopulation { get; set; }
+        public MetaPopulation MetaPopulation { get; set; }
+
+        public MetaIndex MetaIndex { get; set; }
 
         public Engine Engine { get; set; }
 

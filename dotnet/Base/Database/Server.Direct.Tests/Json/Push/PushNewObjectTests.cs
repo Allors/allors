@@ -1,4 +1,4 @@
-// <copyright file="PushTests.cs" company="Allors bv">
+﻿// <copyright file="PushTests.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -22,7 +22,7 @@ namespace Tests
 
             var pushRequest = new PushRequest
             {
-                n = [new PushRequestNewObject { t = this.M.WorkspaceXObject1.Tag, w = -1 },],
+                n = [new PushRequestNewObject { t = this.M.WorkspaceXObject1.Composite.Tag, w = -1 },],
             };
 
             var api = new Api(this.Transaction, "X", CancellationToken.None);
@@ -42,7 +42,7 @@ namespace Tests
 
             var pushRequest = new PushRequest
             {
-                n = [new PushRequestNewObject { t = this.M.WorkspaceXObject1.Tag, w = -1 },],
+                n = [new PushRequestNewObject { t = this.M.WorkspaceXObject1.Composite.Tag, w = -1 },],
             };
 
             var api = new Api(this.Transaction, "Y", CancellationToken.None);
@@ -59,7 +59,7 @@ namespace Tests
 
             var pushRequest = new PushRequest
             {
-                n = [new PushRequestNewObject { t = this.M.WorkspaceXObject1.Tag, w = -1 },],
+                n = [new PushRequestNewObject { t = this.M.WorkspaceXObject1.Composite.Tag, w = -1 },],
             };
 
             var api = new Api(this.Transaction, "None", CancellationToken.None);
@@ -75,7 +75,7 @@ namespace Tests
 
             var pushRequest = new PushRequest
             {
-                n = [new PushRequestNewObject { t = this.M.WorkspaceYObject1.Tag, w = -1 },],
+                n = [new PushRequestNewObject { t = this.M.WorkspaceYObject1.Composite.Tag, w = -1 },],
             };
 
             var api = new Api(this.Transaction, "None", CancellationToken.None);
@@ -92,7 +92,7 @@ namespace Tests
 
             var pushRequest = new PushRequest
             {
-                n = [new PushRequestNewObject { t = this.M.WorkspaceNoneObject1.Tag, w = -1 },],
+                n = [new PushRequestNewObject { t = this.M.WorkspaceNoneObject1.Composite.Tag, w = -1 },],
             };
 
             var api = new Api(this.Transaction, "X", CancellationToken.None);
@@ -109,7 +109,7 @@ namespace Tests
 
             var pushRequest = new PushRequest
             {
-                n = [new PushRequestNewObject { t = this.M.WorkspaceNoneObject1.Tag, w = -1 },],
+                n = [new PushRequestNewObject { t = this.M.WorkspaceNoneObject1.Composite.Tag, w = -1 },],
             };
 
             var api = new Api(this.Transaction, "Y", CancellationToken.None);
@@ -126,7 +126,7 @@ namespace Tests
 
             var pushRequest = new PushRequest
             {
-                n = [new PushRequestNewObject { t = this.M.WorkspaceNoneObject1.Tag, w = -1 },],
+                n = [new PushRequestNewObject { t = this.M.WorkspaceNoneObject1.Composite.Tag, w = -1 },],
             };
 
             var api = new Api(this.Transaction, "None", CancellationToken.None);

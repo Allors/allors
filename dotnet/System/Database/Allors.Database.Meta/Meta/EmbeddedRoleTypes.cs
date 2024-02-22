@@ -12,9 +12,9 @@ public class EmbeddedRoleTypes
 {
     public EmbeddedRoleTypes(EmbeddedMeta meta)
     {
-        this.ObjectTypeSingularName = meta.AddUnit<IObjectType, string>(nameof(IObjectType.SingularName));
-        this.ObjectTypeAssignedPluralName = meta.AddUnit<IObjectType, string>(nameof(IObjectType.AssignedPluralName));
-        this.ObjectTypePluralName = meta.AddUnit<IObjectType, string>(nameof(IObjectType.PluralName));
+        this.ObjectTypeSingularName = meta.AddUnit<ObjectType, string>(nameof(ObjectType.SingularName));
+        this.ObjectTypeAssignedPluralName = meta.AddUnit<ObjectType, string>(nameof(ObjectType.AssignedPluralName));
+        this.ObjectTypePluralName = meta.AddUnit<ObjectType, string>(nameof(ObjectType.PluralName));
     }
 
     public EmbeddedRoleType ObjectTypeSingularName { get; set; }

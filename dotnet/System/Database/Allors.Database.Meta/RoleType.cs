@@ -14,7 +14,7 @@ using Text;
 
 public sealed class RoleType : RelationEndType, IComparable
 {
-    private readonly IObjectType objectType;
+    private readonly ObjectType objectType;
 
     private RelationType relationType;
     private string singularName;
@@ -25,7 +25,7 @@ public sealed class RoleType : RelationEndType, IComparable
     /// </summary>
     public const int MaximumSize = -1;
 
-    public RoleType(IObjectType objectType, string assignedSingularName, string assignedPluralName)
+    public RoleType(ObjectType objectType, string assignedSingularName, string assignedPluralName)
     {
         this.objectType = objectType;
         this.AssignedSingularName = !string.IsNullOrEmpty(assignedSingularName) ? assignedSingularName : null;
@@ -54,7 +54,7 @@ public sealed class RoleType : RelationEndType, IComparable
 
     private string ValidationName => "RoleType: " + this.relationType.Name;
 
-    public override IObjectType ObjectType => this.objectType;
+    public override ObjectType ObjectType => this.objectType;
 
     public override string SingularName
     {

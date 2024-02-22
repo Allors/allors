@@ -196,7 +196,7 @@ namespace Allors.Workspace.Protocol.Direct
             };
         }).ToArray();
 
-        private IObjectType Visit(Meta.IObjectType ws) => ws != null ? (IObjectType)this.metaPopulation.FindByTag(ws.Tag) : null;
+        private ObjectType Visit(Meta.IObjectType ws) => ws != null ? (ObjectType)this.metaPopulation.FindByTag(ws.Tag) : null;
 
         private Composite Visit(Meta.IComposite ws) => ws != null ? (Composite)this.metaPopulation.FindByTag(ws.Tag) : null;
 

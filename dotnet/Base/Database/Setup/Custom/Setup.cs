@@ -231,7 +231,7 @@ namespace Allors.Database.Domain
                 var toTrimmed = BuildTrimTo("Trimmed1");
                 var toUntrimmed = BuildTrimTo("Untrimmed1");
 
-                var m = this.transaction.Database.Services.Get<M>();
+                var m = this.transaction.Database.Services.Get<IMetaIndex>();
 
                 // Denied Permissions
                 var fromTrimPermission = this.transaction.Extent<Permission>().First(v => v.Operation == Operations.Read && v.OperandType.Equals(m.TrimFrom.Name));

@@ -33,7 +33,7 @@
         {
             var m = this.database.MetaPopulation;
 
-            var excluded = new HashSet<IObjectType>
+            var excluded = new HashSet<ObjectType>
             {
                 // Remove Magic Strings
                 m.FindCompositeByName("Country"), 

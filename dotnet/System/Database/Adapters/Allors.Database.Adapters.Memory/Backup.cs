@@ -11,11 +11,11 @@ using Allors.Database.Meta;
 
 public class Backup
 {
-    private readonly Dictionary<IObjectType, List<Strategy>> sortedNonDeletedStrategiesByObjectType;
+    private readonly Dictionary<ObjectType, List<Strategy>> sortedNonDeletedStrategiesByObjectType;
     private readonly Transaction transaction;
     private readonly XmlWriter writer;
 
-    public Backup(Transaction transaction, XmlWriter writer, Dictionary<IObjectType, List<Strategy>> sortedNonDeletedStrategiesByObjectType)
+    public Backup(Transaction transaction, XmlWriter writer, Dictionary<ObjectType, List<Strategy>> sortedNonDeletedStrategiesByObjectType)
     {
         this.transaction = transaction;
         this.writer = writer;
@@ -58,7 +58,7 @@ public class Backup
         this.writer.WriteStartElement(XmlBackup.Objects);
         this.writer.WriteStartElement(XmlBackup.Database);
 
-        var sortedObjectTypes = new List<IObjectType>(this.sortedNonDeletedStrategiesByObjectType.Keys);
+        var sortedObjectTypes = new List<ObjectType>(this.sortedNonDeletedStrategiesByObjectType.Keys);
         sortedObjectTypes.Sort();
 
         foreach (var objectType in sortedObjectTypes)

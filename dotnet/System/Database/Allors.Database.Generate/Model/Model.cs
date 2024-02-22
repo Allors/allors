@@ -163,7 +163,7 @@ public partial class Model
 
     public DomainModel Map(Domain v) => v != null ? (DomainModel)this.mapping[v] : null;
 
-    public ObjectTypeModel Map(IObjectType v) => v != null ? (ObjectTypeModel)this.mapping[v] : null;
+    public ObjectTypeModel Map(ObjectType v) => v != null ? (ObjectTypeModel)this.mapping[v] : null;
 
     public UnitModel Map(Unit v) => v != null ? (UnitModel)this.mapping[v] : null;
 

@@ -1,4 +1,4 @@
-// <copyright file="SyncTests.cs" company="Allors bv">
+﻿// <copyright file="SyncTests.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -48,7 +48,7 @@ namespace Tests
                     {
                         i = this.x1.Id,
                         v = this.x1.Strategy.ObjectVersion,
-                        m = this.M.WorkspaceXObject1.DoX.Tag,
+                        m = this.M.WorkspaceXObject1.DoX.MethodType.Tag,
                     },
                 ],
             };
@@ -72,7 +72,7 @@ namespace Tests
                     {
                         i = this.x1.Id,
                         v = this.x1.Strategy.ObjectVersion,
-                        m = this.M.WorkspaceXObject1.DoX.Tag,
+                        m = this.M.WorkspaceXObject1.DoX.MethodType.Tag,
                     },
                 ],
             };
@@ -102,7 +102,7 @@ namespace Tests
                     {
                         i = this.x1.Id,
                         v = this.x1.Strategy.ObjectVersion,
-                        m = this.M.WorkspaceXObject1.DoX.Tag,
+                        m = this.M.WorkspaceXObject1.DoX.MethodType.Tag,
                     },
                 ],
             };

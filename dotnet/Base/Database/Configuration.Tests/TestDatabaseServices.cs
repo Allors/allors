@@ -12,7 +12,7 @@ namespace Allors.Database.Configuration
 
     public class TestDatabaseServices : DatabaseServices
     {
-        public TestDatabaseServices(Engine engine) : base(engine) { }
+        public TestDatabaseServices(Engine engine, IMetaIndex metaIndex) : base(engine, metaIndex) { }
 
         protected override IPasswordHasher CreatePasswordHasher() => new TestPasswordHasher();
 

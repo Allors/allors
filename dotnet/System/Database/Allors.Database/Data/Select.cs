@@ -59,7 +59,7 @@ public class Select : IVisitable
 
     public void Accept(IVisitor visitor) => visitor.VisitSelect(this);
 
-    public IObjectType GetObjectType()
+    public ObjectType GetObjectType()
     {
         if (this.ExistNext)
         {

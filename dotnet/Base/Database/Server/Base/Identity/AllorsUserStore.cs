@@ -165,7 +165,7 @@ namespace Allors.Security
 
         public async Task<IdentityUser> FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken)
         {
-            var m = this.database.Services.Get<M>();
+            var m = this.database.Services.Get<IMetaIndex>();
 
             cancellationToken.ThrowIfCancellationRequested();
             using var transaction = this.database.CreateTransaction();
@@ -220,7 +220,7 @@ namespace Allors.Security
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            var m = this.database.Services.Get<M>();
+            var m = this.database.Services.Get<IMetaIndex>();
 
             using var transaction = this.database.CreateTransaction();
             var extent = transaction.Extent<Login>();
@@ -244,7 +244,7 @@ namespace Allors.Security
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            var m = this.database.Services.Get<M>();
+            var m = this.database.Services.Get<IMetaIndex>();
 
             using var transaction = this.database.CreateTransaction();
             var extent = transaction.Extent<Login>();
@@ -295,7 +295,7 @@ namespace Allors.Security
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            var m = this.database.Services.Get<M>();
+            var m = this.database.Services.Get<IMetaIndex>();
 
             using var transaction = this.database.CreateTransaction();
             var user = transaction.Extent<User>().FindBy(m.User.NormalizedUserEmail, normalizedEmail);

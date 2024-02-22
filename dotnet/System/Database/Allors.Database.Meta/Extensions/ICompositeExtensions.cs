@@ -47,7 +47,7 @@ public static class ICompositeExtensions
         @this.RoleTypes = roleTypes.ToArray();
     }
 
-    internal static void InitializeAssociationTypes(this Composite @this, Dictionary<IObjectType, HashSet<AssociationType>> relationTypesByRoleObjectType)
+    internal static void InitializeAssociationTypes(this Composite @this, Dictionary<ObjectType, HashSet<AssociationType>> relationTypesByRoleObjectType)
     {
         var associationTypes = new HashSet<AssociationType>();
 
@@ -99,7 +99,7 @@ public static class ICompositeExtensions
         @this.CompositeMethodTypeByMethodType = compositeMethodTypes.ToDictionary(v => v.MethodType, v => v);
     }
 
-    internal static void InitializeSupertypesRecursively(this Composite @this, IObjectType type, ISet<Interface> superTypes)
+    internal static void InitializeSupertypesRecursively(this Composite @this, ObjectType type, ISet<Interface> superTypes)
     {
         foreach (var directSupertype in @this.DirectSupertypes.Cast<Interface>())
         {
