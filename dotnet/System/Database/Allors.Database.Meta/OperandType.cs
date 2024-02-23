@@ -24,13 +24,13 @@ public abstract class OperandType : EmbeddedObject, IMetaExtensible
 
     public dynamic Attributes { get; }
 
-    public static implicit operator OperandType(IOperandTypeIndex index) => index.OperandType;
+    public static implicit operator OperandType(OperandTypeIndex index) => index.OperandType;
 
-    public static implicit operator OperandType(IMethodTypeIndex index) => index.MethodType;
+    public static implicit operator OperandType(MethodTypeIndex index) => index.MethodType;
 
-    public static implicit operator OperandType(IRelationEndTypeIndex index) => index.RelationEndType;
+    public static implicit operator OperandType(RelationEndTypeIndex index) => index.RelationEndType;
 
-    public static implicit operator OperandType(IAssociationTypeIndex index) => index.AssociationType;
+    public static implicit operator OperandType(AssociationTypeIndex index) => index.AssociationType;
 
-    public static implicit operator OperandType(IRoleTypeIndex index) => index.RoleType;
+    public static implicit operator OperandType(RoleTypeIndex index) => index.RoleType;
 }

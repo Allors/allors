@@ -1,4 +1,4 @@
-﻿// <copyright file="IRoleTypeIndex.cs" company="Allors bv">
+﻿// <copyright file="AssociationTypeIndex.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -6,7 +6,7 @@
 
 namespace Allors.Database.Meta;
 
-public abstract class IOperandTypeIndex
+public abstract class AssociationTypeIndex : RelationEndTypeIndex
 {
-    public abstract OperandType OperandType { get; }
+    public abstract AssociationType AssociationType { get; }
 }

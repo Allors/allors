@@ -13,11 +13,11 @@ using Allors.Database.Meta;
 
 public static class IRelationEndTypeIndexExtensions
 {
-    public static Node Node<T>(this T @this) where T : IRelationEndTypeIndex => new(@this);
+    public static Node Node<T>(this T @this) where T : RelationEndTypeIndex => new(@this);
 
-    public static Node Node<T>(this T @this, Func<T, Node> child) where T : IRelationEndTypeIndex => new(@this, [child(@this)]);
+    public static Node Node<T>(this T @this, Func<T, Node> child) where T : RelationEndTypeIndex => new(@this, [child(@this)]);
 
-    public static Node Node<T>(this T @this, params Func<T, Node>[] children) where T : IRelationEndTypeIndex => new(@this, children.Select(v => v(@this)));
+    public static Node Node<T>(this T @this, params Func<T, Node>[] children) where T : RelationEndTypeIndex => new(@this, children.Select(v => v(@this)));
 
-    public static Node Node<T>(this T @this, Func<T, IEnumerable<Node>> children) where T : IRelationEndTypeIndex => new(@this, children(@this));
+    public static Node Node<T>(this T @this, Func<T, IEnumerable<Node>> children) where T : RelationEndTypeIndex => new(@this, children(@this));
 }

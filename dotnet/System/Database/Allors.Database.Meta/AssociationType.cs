@@ -74,7 +74,7 @@ public sealed class AssociationType : RelationEndType, IComparable
             _ => false,
         };
 
-    public static implicit operator AssociationType(IAssociationTypeIndex index) => index.AssociationType;
+    public static implicit operator AssociationType(AssociationTypeIndex index) => index.AssociationType;
 
     public int CompareTo(object other) => this.relationType.Id.CompareTo((other as AssociationType)?.relationType.Id);
 

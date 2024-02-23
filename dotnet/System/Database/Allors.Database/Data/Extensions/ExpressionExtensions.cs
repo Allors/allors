@@ -29,7 +29,7 @@ internal class MemberExpressionsVisitor : ExpressionVisitor
 
 public static class ExpressionExtensions
 {
-    public static Node Node<T>(this Expression<Func<T, IRelationEndTypeIndex>> @this, MetaPopulation metaPopulation) where T : ICompositeIndex
+    public static Node Node<T>(this Expression<Func<T, RelationEndTypeIndex>> @this, MetaPopulation metaPopulation) where T : CompositeIndex
     {
         var visitor = new MemberExpressionsVisitor();
         visitor.Visit(@this);
@@ -37,7 +37,7 @@ public static class ExpressionExtensions
         return Node<T>(metaPopulation, visitor);
     }
 
-    public static Node Node<T>(this Expression<Func<T, ICompositeIndex>> @this, MetaPopulation metaPopulation) where T : ICompositeIndex
+    public static Node Node<T>(this Expression<Func<T, CompositeIndex>> @this, MetaPopulation metaPopulation) where T : CompositeIndex
     {
         var visitor = new MemberExpressionsVisitor();
         visitor.Visit(@this);
@@ -45,7 +45,7 @@ public static class ExpressionExtensions
         return Node<T>(metaPopulation, visitor);
     }
 
-    private static Node Node<T>(MetaPopulation metaPopulation, MemberExpressionsVisitor visitor) where T : ICompositeIndex
+    private static Node Node<T>(MetaPopulation metaPopulation, MemberExpressionsVisitor visitor) where T : CompositeIndex
     {
         Node path = null;
         Node currentPath = null;
@@ -78,7 +78,7 @@ public static class ExpressionExtensions
 
         foreach (var memberExpression in visitor.MemberExpressions)
         {
-            if (memberExpression.Type.IsSubclassOf(typeof(ICompositeIndex)))
+            if (memberExpression.Type.IsSubclassOf(typeof(CompositeIndex)))
             {
                 var propertyInfo = (PropertyInfo)memberExpression.Member;
                 var relationEndType = propertyInfo.PropertyType;
@@ -91,14 +91,14 @@ public static class ExpressionExtensions
                 }
             }
 
-            if (memberExpression.Type.IsSubclassOf(typeof(IRoleTypeIndex)))
+            if (memberExpression.Type.IsSubclassOf(typeof(RoleTypeIndex)))
             {
                 var name = memberExpression.Member.Name;
                 var relationEndType = composite.RoleTypes.First(v => v.Name.Equals(name));
                 AddPath(relationEndType);
             }
 
-            if (memberExpression.Type.IsSubclassOf(typeof(IAssociationTypeIndex)))
+            if (memberExpression.Type.IsSubclassOf(typeof(AssociationTypeIndex)))
             {
                 var name = memberExpression.Member.Name;
 

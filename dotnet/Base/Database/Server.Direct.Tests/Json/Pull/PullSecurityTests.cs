@@ -162,7 +162,7 @@ namespace Tests
 
             var data = this.Transaction.Build<Data>(v => v.String = "First");
             var permissions = this.Transaction.Extent<Permission>();
-            var permission = permissions.First(v => Equals(v.Class, this.M.Data) && v.InWorkspace("Default"));
+            var permission = permissions.First(v => Equals(v.Class, (Class)this.M.Data) && v.InWorkspace("Default"));
             var revocation = this.Transaction.Build<Revocation>(v => v.AddDeniedPermission(permission));
             data.AddRevocation(revocation);
 

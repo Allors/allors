@@ -2,7 +2,7 @@
 
 TemplateId() ::= <<17ED40F8-BDF8-4A7C-9AE9-1C4D2AD6BA2B>>
 TemplateName() ::= <<Allors C# Domain>>
-TemplateVersion() ::= <<3.0.4>>
+TemplateVersion() ::= <<3.0.5>>
 TemplateAllors() ::= <<1.0>>
 TemplateConfiguration(meta) ::= <<
 $!
@@ -675,7 +675,7 @@ metaMethodType_Property() ::= <<
 >>
 
 metaUnit_Type() ::= <<
-	public class $unit.SingularName$Index(Unit meta) : IUnitIndex 
+	public class $unit.SingularName$Index(Unit meta) : UnitIndex 
 	{
 		public override Unit Unit => meta;
 	}
@@ -683,7 +683,7 @@ metaUnit_Type() ::= <<
 >>
 
 metaInterface_Type() ::= <<
-	public class $interface.SingularName$Index(Interface meta) : IInterfaceIndex
+	public class $interface.SingularName$Index(Interface meta) : InterfaceIndex
 	{
 		public override Composite Composite => meta;
 
@@ -698,7 +698,7 @@ $interface.MethodTypes:{methodType|$metaObjectType_MethodType()$}; separator="\n
 >>
 
 metaClass_Type() ::= <<
-	public class $class.SingularName$Index(Class meta) : IClassIndex
+	public class $class.SingularName$Index(Class meta) : ClassIndex
 	{
 		public override Composite Composite => meta;
 		
@@ -728,7 +728,7 @@ metaObjectType_MethodType() ::= <<
 >>
 
 metaRoleType_Type() ::= <<
-	public class $relationType.RoleType.FullName$Index(RoleType meta) : IRoleTypeIndex
+	public class $relationType.RoleType.FullName$Index(RoleType meta) : RoleTypeIndex
 	{
 	    public override OperandType OperandType => meta;
 
@@ -745,7 +745,7 @@ $endif$
 >>
 
 metaAssociationType_Type() ::= <<
-	public class $relationType.AssociationType.Name$Index(AssociationType meta) : IAssociationTypeIndex
+	public class $relationType.AssociationType.Name$Index(AssociationType meta) : AssociationTypeIndex
 	{
 	    public override OperandType OperandType => meta;
 
@@ -761,7 +761,7 @@ metaAssociationType_Type() ::= <<
 >>
 
 metaMethodType_Type() ::= <<
-	public class $methodType.FullName$Index(MethodType meta) : IMethodTypeIndex
+	public class $methodType.FullName$Index(MethodType meta) : MethodTypeIndex
 	{
 	    public override OperandType OperandType => meta;
 

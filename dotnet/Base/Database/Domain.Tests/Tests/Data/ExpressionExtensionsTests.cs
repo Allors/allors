@@ -22,7 +22,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void InterfaceAssociation()
         {
-            Expression<Func<UserIndex, IRelationEndTypeIndex>> expression = v => v.Logins;
+            Expression<Func<UserIndex, RelationEndTypeIndex>> expression = v => v.Logins;
 
             var path = expression.Node(this.MetaPopulation);
 
@@ -33,7 +33,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void ClassAssociation()
         {
-            Expression<Func<PersonIndex, IRelationEndTypeIndex>> expression = v => v.OrganizationWhereEmployee;
+            Expression<Func<PersonIndex, RelationEndTypeIndex>> expression = v => v.OrganizationWhereEmployee;
 
             var path = expression.Node(this.MetaPopulation);
 
@@ -44,7 +44,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void ClassAssociationClassRole()
         {
-            Expression<Func<PersonIndex, IRelationEndTypeIndex>> expression = v => v.OrganizationWhereEmployee.ObjectType.Information;
+            Expression<Func<PersonIndex, RelationEndTypeIndex>> expression = v => v.OrganizationWhereEmployee.ObjectType.Information;
 
             var path = expression.Node(this.MetaPopulation);
 
@@ -59,7 +59,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void ClassRole()
         {
-            Expression<Func<OrganizationIndex, IRelationEndTypeIndex>> expression = v => v.Name;
+            Expression<Func<OrganizationIndex, RelationEndTypeIndex>> expression = v => v.Name;
 
             var path = expression.Node(this.MetaPopulation);
 
@@ -70,7 +70,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void ClassRoleOfType()
         {
-            Expression<Func<UserGroupIndex, ICompositeIndex>> expression = v => v.Members.ObjectType.AsPerson;
+            Expression<Func<UserGroupIndex, CompositeIndex>> expression = v => v.Members.ObjectType.AsPerson;
 
             var path = expression.Node(this.MetaPopulation);
 
@@ -82,7 +82,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void ClassRoleClassRole()
         {
-            Expression<Func<OrganizationIndex, IRelationEndTypeIndex>> expression = v => v.Employees.ObjectType.FirstName;
+            Expression<Func<OrganizationIndex, RelationEndTypeIndex>> expression = v => v.Employees.ObjectType.FirstName;
 
             var path = expression.Node(this.MetaPopulation);
 
@@ -98,7 +98,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void ClassRoleInterfaceAsClassRole()
         {
-            Expression<Func<UserGroupIndex, IRelationEndTypeIndex>> expression = v => v.Members.ObjectType.AsPerson.FirstName;
+            Expression<Func<UserGroupIndex, RelationEndTypeIndex>> expression = v => v.Members.ObjectType.AsPerson.FirstName;
 
             var path = expression.Node(this.MetaPopulation);
 

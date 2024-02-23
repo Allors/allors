@@ -1,4 +1,4 @@
-﻿// <copyright file="IUnitIndex.cs" company="Allors bv">
+﻿// <copyright file="RoleTypeIndex.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -6,7 +6,7 @@
 
 namespace Allors.Database.Meta;
 
-public abstract class IUnitIndex
+public abstract class RoleTypeIndex : RelationEndTypeIndex
 {
-    public abstract Unit Unit { get; }
+    public abstract RoleType RoleType { get; }
 }

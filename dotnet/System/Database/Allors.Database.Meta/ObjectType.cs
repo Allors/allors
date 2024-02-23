@@ -56,13 +56,13 @@ public abstract class ObjectType : OperandType, IMetaIdentifiableObject, ICompar
 
     public abstract bool IsClass { get; }
 
-    public static implicit operator ObjectType(IUnitIndex index) => index.Unit;
+    public static implicit operator ObjectType(UnitIndex index) => index.Unit;
 
-    public static implicit operator ObjectType(ICompositeIndex index) => index.Composite;
+    public static implicit operator ObjectType(CompositeIndex index) => index.Composite;
 
-    public static implicit operator ObjectType(IInterfaceIndex index) => index.Interface;
+    public static implicit operator ObjectType(InterfaceIndex index) => index.Interface;
 
-    public static implicit operator ObjectType(IClassIndex index) => index.Class;
+    public static implicit operator ObjectType(ClassIndex index) => index.Class;
 
     public int CompareTo(ObjectType other)
     {

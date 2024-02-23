@@ -1,4 +1,4 @@
-﻿// <copyright file="IClassIndex.cs" company="Allors bv">
+﻿// <copyright file="InterfaceIndex.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -6,7 +6,7 @@
 
 namespace Allors.Database.Meta;
 
-public abstract class ICompositeIndex
+public abstract class InterfaceIndex : CompositeIndex
 {
-    public abstract Composite Composite { get; }
+    public abstract Interface Interface { get; }
 }

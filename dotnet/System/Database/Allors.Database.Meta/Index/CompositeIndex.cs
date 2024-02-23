@@ -1,4 +1,4 @@
-﻿// <copyright file="IRoleTypeIndex.cs" company="Allors bv">
+﻿// <copyright file="ClassIndex.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -6,7 +6,7 @@
 
 namespace Allors.Database.Meta;
 
-public abstract class IRoleTypeIndex : IRelationEndTypeIndex
+public abstract class CompositeIndex
 {
-    public abstract RoleType RoleType { get; }
+    public abstract Composite Composite { get; }
 }
