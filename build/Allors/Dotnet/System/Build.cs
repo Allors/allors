@@ -47,10 +47,6 @@ partial class Build
                 .SetApplicationArguments(
                     $"{Paths.AllorsDotnetSystemDatabaseAdaptersRepository} {Paths.AllorsDotnetSystemRepositoryTemplatesMetaConfigurationCs} {Paths.AllorsDotnetSystemDatabaseAdaptersMetaConfigurationGenerated}"));
             DotNetRun(s => s
-                .SetProjectFile(Paths.AllorsDotnetSystemRepositoryGenerate)
-                .SetApplicationArguments(
-                    $"{Paths.AllorsDotnetSystemDatabaseAdaptersRepository} {Paths.AllorsDotnetSystemRepositoryTemplatesMetaCs} {Paths.AllorsDotnetSystemDatabaseAdaptersMetaGenerated}"));
-            DotNetRun(s => s
                 .SetProcessWorkingDirectory(Paths.AllorsDotnetSystemDatabaseAdapters)
                 .SetProjectFile(Paths.AllorsDotnetSystemDatabaseAdaptersGenerate));
         });
