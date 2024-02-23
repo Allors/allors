@@ -9,7 +9,6 @@ public partial class Paths
     public AbsolutePath AllorsDotnetSystemRepository => AllorsDotnetSystem / "Repository";
     public AbsolutePath AllorsDotnetSystemRepositoryModelTests => AllorsDotnetSystemRepository / "Allors.Repository.Model.Tests";
     public AbsolutePath AllorsDotnetSystemRepositoryTemplates => AllorsDotnetSystemRepository / "Templates";
-    public AbsolutePath AllorsDotnetSystemRepositoryTemplatesMetaCs => AllorsDotnetSystemRepositoryTemplates / "meta.cs.stg";
     public AbsolutePath AllorsDotnetSystemRepositoryTemplatesMetaConfigurationCs => AllorsDotnetSystemRepositoryTemplates / "meta.configuration.cs.stg";
     public AbsolutePath AllorsDotnetSystemRepositoryTemplatesMetaExtensionsCs => AllorsDotnetSystemRepositoryTemplates / "meta.extensions.cs.stg";
     public AbsolutePath AllorsDotnetSystemRepositoryGenerate => AllorsDotnetSystemRepository / "Generate/Generate.csproj";

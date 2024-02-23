@@ -16,7 +16,7 @@
     <ProjectReference Include="..\..\..\System\Database\Adapters\Allors.Database.Builder\Allors.Database.Builder.csproj" />
     <ProjectReference Include="..\Configuration\Configuration.csproj" />
     <ProjectReference Include="..\Population\Population.csproj" />
-    <ProjectReference Include="..\Meta.Configuration\Meta.Configuration.csproj" />
+    <ProjectReference Include="..\Meta\Meta.csproj" />
     <ProjectReference Include="..\Setup\Setup.csproj" />
   </ItemGroup>
 

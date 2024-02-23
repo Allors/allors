@@ -16,7 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Server\Server.csproj" />
     <ProjectReference Include="..\Domain\Domain.csproj" />
-    <ProjectReference Include="..\Meta.Domain\Meta.Domain.csproj" />
+    <ProjectReference Include="..\Meta\Meta.csproj" />
     <ProjectReference Include="..\Setup\Setup.csproj" />
   </ItemGroup>
 
