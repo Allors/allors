@@ -8,6 +8,6 @@
     <ProjectReference Include="..\..\Allors.Database.Generate\Allors.Database.Generate.csproj" />
     <ProjectReference Include="..\..\Allors.Database.Population\Allors.Database.Population.csproj" />
     <ProjectReference Include="..\..\Allors.Database\Allors.Database.csproj" />
-    <ProjectReference Include="..\Meta.Configuration\Meta.Configuration.csproj" />
+    <ProjectReference Include="..\Meta\Meta.csproj" />
   </ItemGroup>
 </Project>

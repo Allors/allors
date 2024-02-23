@@ -21,7 +21,6 @@ public partial class Paths
     public AbsolutePath AllorsDotnetSystemDatabaseAdapters => AllorsDotnetSystemDatabase / "Adapters";
     public AbsolutePath AllorsDotnetSystemDatabaseAdaptersRepository => AllorsDotnetSystemDatabaseAdapters / "Repository/Repository.csproj";
     public AbsolutePath AllorsDotnetSystemDatabaseAdaptersMetaGenerated => AllorsDotnetSystemDatabaseAdapters / "Meta/Generated";
-    public AbsolutePath AllorsDotnetSystemDatabaseAdaptersMetaConfigurationGenerated => AllorsDotnetSystemDatabaseAdapters / "Meta.Configuration/Generated";
     public AbsolutePath AllorsDotnetSystemDatabaseAdaptersGenerate => AllorsDotnetSystemDatabaseAdapters / "Generate/Generate.csproj";
     public AbsolutePath AllorsDotnetSystemDatabaseAdaptersTests => AllorsDotnetSystemDatabaseAdapters / "Tests/Tests.csproj";
 
