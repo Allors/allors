@@ -6,19 +6,19 @@
 
 namespace Allors.Database.Meta;
 
+using Embedded.Meta;
+
 /// <summary>
 ///     A <see cref="RelationEndType" /> can be a <see cref="AssociationType" /> or a <see cref="RoleType" />.
 /// </summary>
-public abstract class RelationEndType : IOperandType
+public abstract class RelationEndType : OperandType
 {
-    protected RelationEndType()
+    protected RelationEndType(MetaPopulation metaPopulation, EmbeddedObjectType embeddedObjectType)
+        : base(metaPopulation, embeddedObjectType)
     {
-        this.Attributes = new MetaExtension();
     }
 
-    public dynamic Attributes { get; }
-
-    public abstract ObjectType ObjectType { get; }
+    public abstract ObjectType ObjectType { get; set; }
 
     public abstract string Name { get; }
 

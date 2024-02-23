@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using Allors.Embedded;
 using Embedded.Meta;
 
-public abstract class ObjectType : EmbeddedObject, IMetaIdentifiableObject, IComparable<ObjectType>
+public abstract class ObjectType : OperandType, IMetaIdentifiableObject, IComparable<ObjectType>
 {
     private readonly IEmbeddedUnitRole<string> singularName;
     private readonly IEmbeddedUnitRole<string> assignedPluralName;

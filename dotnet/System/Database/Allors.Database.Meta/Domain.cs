@@ -55,10 +55,6 @@ public sealed class Domain : EmbeddedObject, IMetaIdentifiableObject, IComparabl
 
     public int CompareTo(object other) => this.Id.CompareTo((other as Domain)?.Id);
 
-    public override bool Equals(object other) => this.Id.Equals((other as Domain)?.Id);
-
-    public override int GetHashCode() => this.Id.GetHashCode();
-
     public override string ToString()
     {
         return !string.IsNullOrEmpty(this.Name) ? this.Name : this.Tag;

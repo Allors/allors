@@ -9,12 +9,13 @@ namespace Allors.Database.Meta;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Allors.Embedded.Meta;
 using Allors.Graph;
 using Text;
 
 public sealed class RoleType : RelationEndType, IComparable
 {
-    private readonly ObjectType objectType;
+    private ObjectType objectType;
 
     private RelationType relationType;
     private string singularName;
@@ -25,11 +26,9 @@ public sealed class RoleType : RelationEndType, IComparable
     /// </summary>
     public const int MaximumSize = -1;
 
-    public RoleType(ObjectType objectType, string assignedSingularName, string assignedPluralName)
+    public RoleType(MetaPopulation metaPopulation, EmbeddedObjectType embeddedObjectType)
+        : base(metaPopulation, embeddedObjectType)
     {
-        this.objectType = objectType;
-        this.AssignedSingularName = !string.IsNullOrEmpty(assignedSingularName) ? assignedSingularName : null;
-        this.AssignedPluralName = !string.IsNullOrEmpty(assignedPluralName) ? assignedPluralName : null;
     }
 
     public RelationType RelationType
@@ -48,13 +47,17 @@ public sealed class RoleType : RelationEndType, IComparable
 
     public AssociationType AssociationType => this.relationType.AssociationType;
 
-    public string AssignedSingularName { get; }
+    public string AssignedSingularName { get; set; }
 
-    public string AssignedPluralName { get; }
+    public string AssignedPluralName { get; set; }
 
     private string ValidationName => "RoleType: " + this.relationType.Name;
 
-    public override ObjectType ObjectType => this.objectType;
+    public override ObjectType ObjectType
+    {
+        get { return this.objectType; }
+        set { this.objectType = value; }
+    }
 
     public override string SingularName
     {
@@ -108,12 +111,6 @@ public sealed class RoleType : RelationEndType, IComparable
     public static implicit operator RoleType(IRoleTypeIndex index) => index.RoleType;
 
     public int CompareTo(object other) => this.relationType.Id.CompareTo((other as RoleType)?.relationType.Id);
-
-    public override bool Equals(object other) => this.relationType.Id.Equals((other as RoleType)?.relationType.Id);
-
-    public override int GetHashCode() => this.relationType.Id.GetHashCode();
-
-    public override string ToString() => $"{this.relationType.AssociationType.ObjectType.SingularName}.{this.Name}";
 
     /// <summary>
     ///     Derive multiplicity, scale and size.

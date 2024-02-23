@@ -7,15 +7,16 @@
 namespace Allors.Database.Meta;
 
 using System;
+using Embedded.Meta;
 
 /// <summary>
 ///     An <see cref="AssociationType" /> defines the association side of a relation.
 ///     This is also called the 'active', 'controlling' or 'owning' side.
 ///     AssociationTypes can only have composite <see cref="ObjectType" />s.
 /// </summary>
-public sealed class AssociationType : RelationEndType, IComparable 
+public sealed class AssociationType : RelationEndType, IComparable
 {
-    private readonly Composite objectType;
+    private Composite objectType;
     private RelationType relationType;
 
     /// <summary>
@@ -23,17 +24,25 @@ public sealed class AssociationType : RelationEndType, IComparable
     /// </summary>
     private const string Where = "Where";
 
-    public AssociationType(Composite objectType)
+    public AssociationType(MetaPopulation metaPopulation, EmbeddedObjectType embeddedObjectType)
+        : base(metaPopulation, embeddedObjectType)
     {
-        this.objectType = objectType;
     }
 
-    public override ObjectType ObjectType => this.objectType;
+    public override ObjectType ObjectType
+    {
+        get => this.Composite;
+        set => this.Composite = (Composite)value;
+    }
 
-    public Composite Composite => this.objectType;
-    
+    public Composite Composite
+    {
+        get { return this.objectType; }
+        set { this.objectType = value; }
+    }
+
     public RoleType RoleType => this.relationType.RoleType;
-    
+
     public RelationType RelationType
     {
         get => this.relationType;
@@ -53,7 +62,7 @@ public sealed class AssociationType : RelationEndType, IComparable
     public override string PluralFullName => this.PluralName;
 
     public override string PluralName => this.objectType.PluralName + Where + this.relationType.RoleType.SingularName;
-    
+
     public override bool IsOne => !this.IsMany;
     private string ValidationName => "association type " + this.Name;
 
@@ -68,10 +77,6 @@ public sealed class AssociationType : RelationEndType, IComparable
     public static implicit operator AssociationType(IAssociationTypeIndex index) => index.AssociationType;
 
     public int CompareTo(object other) => this.relationType.Id.CompareTo((other as AssociationType)?.relationType.Id);
-
-    public override bool Equals(object other) => this.relationType.Id.Equals((other as AssociationType)?.relationType.Id);
-
-    public override int GetHashCode() => this.relationType.Id.GetHashCode();
 
     public override string ToString() => $"{this.relationType.RoleType.ObjectType.SingularName}.{this.Name}";
 

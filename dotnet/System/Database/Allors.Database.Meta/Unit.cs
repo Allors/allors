@@ -29,10 +29,6 @@ public sealed class Unit : ObjectType
 
     public static implicit operator Unit(IUnitIndex index) => index.Unit;
 
-    public override bool Equals(object other) => this.Id.Equals((other as IMetaIdentifiableObject)?.Id);
-
-    public override int GetHashCode() => this.Id.GetHashCode();
-
     public override string ToString()
     {
         if (!string.IsNullOrEmpty(this.SingularName))

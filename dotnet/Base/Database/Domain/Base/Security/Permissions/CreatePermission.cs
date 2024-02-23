@@ -36,7 +36,7 @@ namespace Allors.Database.Domain
 
         public bool ExistOperation => true;
 
-        public IOperandType OperandType => null;
+        public OperandType OperandType => null;
 
         public Operations Operation => Operations.Create;
 

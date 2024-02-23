@@ -6,7 +6,7 @@
 
 namespace Allors.Database.Meta;
 
-public abstract class IRelationEndTypeIndex
+public abstract class IRelationEndTypeIndex : IOperandTypeIndex
 {
     public abstract RelationEndType RelationEndType { get; }
 }

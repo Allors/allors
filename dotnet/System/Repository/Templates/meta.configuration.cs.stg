@@ -1,4 +1,4 @@
-﻿group AllorsCSharpRepository;
+group AllorsCSharpRepository;
 
 TemplateId() ::= <<14F49218-A676-43ba-9CBD-B8FFA059D1BF>>
 TemplateName() ::= <<Allors C# Meta>>
@@ -261,7 +261,19 @@ $composite.DefinedProperties:{property|$build_relation(property)$}; separator="\
 
 build_relation(property) ::= <<
             {
-                var relationType = new RelationType(meta, Ids.$property.DefiningType.SingularName$$property.RoleName$, $if(property.AssignedMultiplicity)$Allors.Multiplicity.$property.AssignedMultiplicity$$else$null$endif$, $if(property.AttributeByName.Derived)$$property.AttributeByName.Derived.Value$$else$false$endif$, new AssociationType(objectTypes.$property.DefiningType.SingularName$), new RoleType(objectTypes.$property.ObjectType.SingularName$, $if(property.AssignedRoleSingularName)$"$property.RoleSingularName$"$else$null$endif$, $if(property.AssignedRolePluralName)$"$property.RolePluralName$"$else$null$endif$));
+                var roleType = meta.Create<RoleType>(v=>
+                {
+                    v.ObjectType = objectTypes.$property.ObjectType.SingularName$;
+$if(property.AssignedRoleSingularName)$                 v.AssignedSingularName = "$property.RoleSingularName$";$endif$
+$if(property.AssignedRolePluralName)$                   v.AssignedPluralName = "$property.RolePluralName$";$endif$
+                });
+
+                var associationType = meta.Create<AssociationType>(v=>
+                {
+                    v.Composite = objectTypes.$property.DefiningType.SingularName$;
+                });
+
+                var relationType = new RelationType(meta, Ids.$property.DefiningType.SingularName$$property.RoleName$, $if(property.AssignedMultiplicity)$Allors.Multiplicity.$property.AssignedMultiplicity$$else$null$endif$, $if(property.AttributeByName.Derived)$$property.AttributeByName.Derived.Value$$else$false$endif$, associationType, roleType);
                 $property.RelationTypeExtensionAttributes:{attribute|relationType.Attributes.$attribute.Name$ = $attribute.Value$;}; separator="\n"$
                 $property.AssociationTypeExtensionAttributes:{attribute|relationType.AssociationType.Attributes.$attribute.Name$ = $attribute.Value$;}; separator="\n"$ 
                 $property.RoleTypeExtensionAttributes:{attribute|relationType.RoleType.Attributes.$attribute.Name$ = $attribute.Value$;}; separator="\n"$

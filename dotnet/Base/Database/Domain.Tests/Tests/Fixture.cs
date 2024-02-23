@@ -19,6 +19,7 @@ namespace Allors.Database.Domain.Tests
         public Fixture()
         {
             this.MetaPopulation = MetaBuilder.Build();
+            this.MetaIndex = new MetaIndex(this.MetaPopulation);
             var rules = Rules.Create(this.MetaIndex);
             this.MetaIndex = new MetaIndex(this.MetaPopulation);
             this.Engine = new Engine(rules);

@@ -29,17 +29,11 @@ public sealed class Interface : Composite
         metaPopulation.OnCreated(this);
     }
     
-    private RoleType derivedKeyRoleType;
-    
     public override bool IsInterface => true;
 
     public override bool IsClass => false;
 
     public static implicit operator Interface(IInterfaceIndex index) => index.Interface;
-
-    public override bool Equals(object other) => this.Id.Equals((other as IMetaIdentifiableObject)?.Id);
-
-    public override int GetHashCode() => this.Id.GetHashCode();
 
     public override string ToString()
     {
@@ -51,21 +45,12 @@ public sealed class Interface : Composite
         return this.Tag;
     }
 
-    public override RoleType KeyRoleType => this.derivedKeyRoleType;
-
-    public RoleType DerivedKeyRoleType
-    {
-        get => this.derivedKeyRoleType;
-        set => this.derivedKeyRoleType = value;
-    }
-
     public override void Validate(ValidationLog validationLog)
     {
         this.ValidateObjectType(validationLog);
         this.ValidateComposite(validationLog);
     }
-
-
+    
     public override IReadOnlyList<Composite> DirectSubtypes => this.directSubtypes;
 
     public override IReadOnlyList<Composite> Composites => this.composites;

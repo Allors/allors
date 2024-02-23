@@ -13,6 +13,8 @@ using Embedded.Meta;
 
 public abstract class Composite : ObjectType
 {
+    private RoleType derivedKeyRoleType;
+
     protected Composite(MetaPopulation metaPopulation, EmbeddedObjectType embeddedObjectType) 
         : base(metaPopulation, embeddedObjectType)
     {
@@ -43,15 +45,19 @@ public abstract class Composite : ObjectType
 
     public IReadOnlyDictionary<RoleType, CompositeRoleType> CompositeRoleTypeByRoleType { get; internal set; }
 
-    public abstract RoleType KeyRoleType { get; }
-
     public IReadOnlyList<MethodType> MethodTypes { get; internal set; }
 
     public IReadOnlyDictionary<MethodType, CompositeMethodType> CompositeMethodTypeByMethodType { get; internal set; }
 
-    public abstract bool IsAssignableFrom(Composite objectType);
+    public RoleType KeyRoleType => this.derivedKeyRoleType;
 
-    internal RoleType DerivedKeyRoleType { get; set; }
+    internal RoleType DerivedKeyRoleType
+    {
+        get => this.derivedKeyRoleType;
+        set => this.derivedKeyRoleType = value;
+    }
+
+    public abstract bool IsAssignableFrom(Composite objectType);
 
     public static implicit operator Composite(ICompositeIndex index) => index.Composite;
 

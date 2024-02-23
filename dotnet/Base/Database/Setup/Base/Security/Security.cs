@@ -15,10 +15,10 @@ namespace Allors.Database.Domain
     {
         private static readonly Operations[] ReadWriteExecute = [Operations.Read, Operations.Write, Operations.Execute];
 
-        private readonly Dictionary<Guid, Dictionary<IOperandType, Permission>> deniablePermissionByOperandTypeByObjectTypeId;
-        private readonly Dictionary<Guid, Dictionary<IOperandType, Permission>> executePermissionsByObjectTypeId;
-        private readonly Dictionary<Guid, Dictionary<IOperandType, Permission>> readPermissionsByObjectTypeId;
-        private readonly Dictionary<Guid, Dictionary<IOperandType, Permission>> writePermissionsByObjectTypeId;
+        private readonly Dictionary<Guid, Dictionary<OperandType, Permission>> deniablePermissionByOperandTypeByObjectTypeId;
+        private readonly Dictionary<Guid, Dictionary<OperandType, Permission>> executePermissionsByObjectTypeId;
+        private readonly Dictionary<Guid, Dictionary<OperandType, Permission>> readPermissionsByObjectTypeId;
+        private readonly Dictionary<Guid, Dictionary<OperandType, Permission>> writePermissionsByObjectTypeId;
 
         private readonly Dictionary<Guid, Role> roleById;
         private readonly ITransaction transaction;
@@ -50,11 +50,11 @@ namespace Allors.Database.Domain
                 this.roleById[role.UniqueId] = role;
             }
 
-            this.readPermissionsByObjectTypeId = new Dictionary<Guid, Dictionary<IOperandType, Permission>>();
-            this.writePermissionsByObjectTypeId = new Dictionary<Guid, Dictionary<IOperandType, Permission>>();
-            this.executePermissionsByObjectTypeId = new Dictionary<Guid, Dictionary<IOperandType, Permission>>();
+            this.readPermissionsByObjectTypeId = new Dictionary<Guid, Dictionary<OperandType, Permission>>();
+            this.writePermissionsByObjectTypeId = new Dictionary<Guid, Dictionary<OperandType, Permission>>();
+            this.executePermissionsByObjectTypeId = new Dictionary<Guid, Dictionary<OperandType, Permission>>();
 
-            this.deniablePermissionByOperandTypeByObjectTypeId = new Dictionary<Guid, Dictionary<IOperandType, Permission>>();
+            this.deniablePermissionByOperandTypeByObjectTypeId = new Dictionary<Guid, Dictionary<OperandType, Permission>>();
 
             foreach (var permission in transaction.Extent<ReadPermission>().Cast<Permission>().Union(transaction.Extent<WritePermission>()).Union(transaction.Extent<ExecutePermission>()))
             {
@@ -71,14 +71,14 @@ namespace Allors.Database.Domain
 
                     if (!this.deniablePermissionByOperandTypeByObjectTypeId.TryGetValue(objectId, out var deniablePermissionByOperandTypeId))
                     {
-                        deniablePermissionByOperandTypeId = new Dictionary<IOperandType, Permission>();
+                        deniablePermissionByOperandTypeId = new Dictionary<OperandType, Permission>();
                         this.deniablePermissionByOperandTypeByObjectTypeId[objectId] = deniablePermissionByOperandTypeId;
                     }
 
                     deniablePermissionByOperandTypeId.Add(operandType, permission);
                 }
 
-                Dictionary<Guid, Dictionary<IOperandType, Permission>> permissionByOperandTypeByObjectTypeId =
+                Dictionary<Guid, Dictionary<OperandType, Permission>> permissionByOperandTypeByObjectTypeId =
                     permission.Operation switch
                     {
                         Operations.Read => this.readPermissionsByObjectTypeId,
@@ -89,7 +89,7 @@ namespace Allors.Database.Domain
 
                 if (!permissionByOperandTypeByObjectTypeId.TryGetValue(objectId, out var permissionByOperandType))
                 {
-                    permissionByOperandType = new Dictionary<IOperandType, Permission>();
+                    permissionByOperandType = new Dictionary<OperandType, Permission>();
                     permissionByOperandTypeByObjectTypeId[objectId] = permissionByOperandType;
                 }
 
@@ -130,7 +130,7 @@ namespace Allors.Database.Domain
             {
                 foreach (var operation in operations ?? ReadWriteExecute)
                 {
-                    Dictionary<IOperandType, Permission> permissionByOperandType;
+                    Dictionary<OperandType, Permission> permissionByOperandType;
                     switch (operation)
                     {
                     case Operations.Read:
@@ -160,13 +160,13 @@ namespace Allors.Database.Domain
             }
         }
 
-        public void Grant(Guid roleId, ObjectType objectType, IOperandType operandType, params Operations[] operations)
+        public void Grant(Guid roleId, ObjectType objectType, OperandType operandType, params Operations[] operations)
         {
             if (this.roleById.TryGetValue(roleId, out var role))
             {
                 foreach (var operation in operations ?? ReadWriteExecute)
                 {
-                    Dictionary<IOperandType, Permission> permissionByOperandType;
+                    Dictionary<OperandType, Permission> permissionByOperandType;
                     switch (operation)
                     {
                     case Operations.Read:
@@ -197,13 +197,13 @@ namespace Allors.Database.Domain
 
         public void GrantCreator(ObjectType objectType, params Operations[] operations) => this.Grant(Role.CreatorId, objectType, operations);
 
-        public void GrantExcept(Guid roleId, ObjectType objectType, ICollection<IOperandType> excepts, params Operations[] operations)
+        public void GrantExcept(Guid roleId, ObjectType objectType, ICollection<OperandType> excepts, params Operations[] operations)
         {
             if (this.roleById.TryGetValue(roleId, out var role))
             {
                 foreach (var operation in operations ?? ReadWriteExecute)
                 {
-                    Dictionary<IOperandType, Permission> permissionByOperandType;
+                    Dictionary<OperandType, Permission> permissionByOperandType;
                     switch (operation)
                     {
                     case Operations.Read:
@@ -263,7 +263,7 @@ namespace Allors.Database.Domain
             {
                 foreach (var operation in operations ?? ReadWriteExecute)
                 {
-                    Dictionary<IOperandType, Permission> permissionByOperandType;
+                    Dictionary<OperandType, Permission> permissionByOperandType;
                     switch (operation)
                     {
                         case Operations.Read:
@@ -293,9 +293,9 @@ namespace Allors.Database.Domain
             }
         }
 
-        public void Deny(ObjectType objectType, ObjectState objectState, params IOperandType[] operandTypes) => this.Deny(objectType, objectState, (IEnumerable<IOperandType>)operandTypes);
+        public void Deny(ObjectType objectType, ObjectState objectState, params OperandType[] operandTypes) => this.Deny(objectType, objectState, (IEnumerable<OperandType>)operandTypes);
 
-        public void Deny(ObjectType objectType, ObjectState objectState, IEnumerable<IOperandType> operandTypes)
+        public void Deny(ObjectType objectType, ObjectState objectState, IEnumerable<OperandType> operandTypes)
         {
             if (objectState != null)
             {
@@ -312,14 +312,14 @@ namespace Allors.Database.Domain
             }
         }
 
-        public void DenyExcept(ObjectType objectType, ObjectState objectState, IEnumerable<IOperandType> excepts, params Operations[] operations)
+        public void DenyExcept(ObjectType objectType, ObjectState objectState, IEnumerable<OperandType> excepts, params Operations[] operations)
         {
             if (objectState != null)
             {
 
                 foreach (var operation in operations ?? ReadWriteExecute)
                 {
-                    Dictionary<IOperandType, Permission> permissionByOperandType;
+                    Dictionary<OperandType, Permission> permissionByOperandType;
                     switch (operation)
                     {
                         case Operations.Read:
@@ -349,13 +349,13 @@ namespace Allors.Database.Domain
             }
         }
 
-        public void Grant(ObjectType objectType, ObjectState objectState, IEnumerable<IOperandType> grants, params Operations[] operations)
+        public void Grant(ObjectType objectType, ObjectState objectState, IEnumerable<OperandType> grants, params Operations[] operations)
         {
             if (objectState != null)
             {
                 foreach (var operation in operations ?? ReadWriteExecute)
                 {
-                    Dictionary<IOperandType, Permission> permissionByOperandType;
+                    Dictionary<OperandType, Permission> permissionByOperandType;
                     switch (operation)
                     {
                         case Operations.Read:

@@ -11,15 +11,15 @@ namespace Allors.Database.Domain
     {
         public void GrantOperations(ObjectType objectType, params Operations[] operations) => this.Grant(Role.OperationsId, objectType, operations);
 
-        public void GrantOperations(ObjectType objectType, IOperandType operandType, params Operations[] operations) => this.Grant(Role.OperationsId, objectType, operandType, operations);
+        public void GrantOperations(ObjectType objectType, OperandType operandType, params Operations[] operations) => this.Grant(Role.OperationsId, objectType, operandType, operations);
 
         public void GrantProcurement(ObjectType objectType, params Operations[] operations) => this.Grant(Role.ProcurementId, objectType, operations);
 
-        public void GrantProcurement(ObjectType objectType, IOperandType operandType, params Operations[] operations) => this.Grant(Role.ProcurementId, objectType, operandType, operations);
+        public void GrantProcurement(ObjectType objectType, OperandType operandType, params Operations[] operations) => this.Grant(Role.ProcurementId, objectType, operandType, operations);
 
         public void GrantSales(ObjectType objectType, params Operations[] operations) => this.Grant(Role.SalesId, objectType, operations);
 
-        public void GrantSales(ObjectType objectType, IOperandType operandType, params Operations[] operations) => this.Grant(Role.SalesId, objectType, operandType, operations);
+        public void GrantSales(ObjectType objectType, OperandType operandType, params Operations[] operations) => this.Grant(Role.SalesId, objectType, operandType, operations);
 
         private void CustomOnPostSetup()
         {

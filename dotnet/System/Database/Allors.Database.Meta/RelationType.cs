@@ -97,10 +97,6 @@ public sealed class RelationType : IMetaIdentifiableObject, IComparable
 
     public int CompareTo(object other) => this.Id.CompareTo((other as RelationType)?.Id);
 
-    public override bool Equals(object other) => this.Id.Equals((other as RelationType)?.Id);
-
-    public override int GetHashCode() => this.Id.GetHashCode();
-
     public override string ToString()
     {
         try

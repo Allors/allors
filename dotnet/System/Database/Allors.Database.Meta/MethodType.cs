@@ -10,29 +10,20 @@ using System.Collections.Generic;
 using System.Linq;
 using Embedded.Meta;
 
-public sealed class MethodType : EmbeddedObject, IComparable, IMetaIdentifiableObject, IOperandType
+public sealed class MethodType : OperandType, IComparable, IMetaIdentifiableObject 
 {
     private string[] derivedWorkspaceNames;
 
     public MethodType(MetaPopulation metaPopulation, EmbeddedObjectType embeddedObjectType)
         : base(metaPopulation, embeddedObjectType)
     {
-        this.MetaPopulation = metaPopulation;
-
-        this.Attributes = new MetaExtension();
-      
+     
         this.AssignedWorkspaceNames = Array.Empty<string>();
 
         //this.CompositeMethodType = new CompositeMethodType(objectType, this);
 
         this.MetaPopulation.OnCreated(this);
     }
-
-    public dynamic Attributes { get; }
-
-    MetaPopulation IMetaIdentifiableObject.MetaPopulation => this.MetaPopulation;
-
-    public MetaPopulation MetaPopulation { get; }
 
     public Guid Id { get; set; }
 
@@ -72,10 +63,6 @@ public sealed class MethodType : EmbeddedObject, IComparable, IMetaIdentifiableO
     public static implicit operator MethodType(IMethodTypeIndex index) => index.MethodType;
 
     public int CompareTo(object other) => this.Id.CompareTo((other as MethodType)?.Id);
-
-    public override bool Equals(object other) => this.Id.Equals((other as MethodType)?.Id);
-
-    public override int GetHashCode() => this.Id.GetHashCode();
 
     public override string ToString() => this.Name;
 

@@ -1,4 +1,4 @@
-// <copyright file="AccessControlTests.cs" company="Allors bv">
+﻿// <copyright file="AccessControlTests.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -7,7 +7,9 @@
 namespace Allors.Database.Domain.Tests
 {
     using System.Collections;
+    using System.Collections.Generic;
     using Allors.Database.Configuration.Derivations.Default;
+    using Meta;
     using Xunit;
 
     public class AccessControlTests : DomainTest, IClassFixture<Fixture>
@@ -35,7 +37,7 @@ namespace Allors.Database.Domain.Tests
 
             Assert.Single(derivationError.Relations);
             Assert.Equal(typeof(DerivationErrorRequired), derivationError.GetType());
-            Assert.Equal(this.M.Grant.Role.RelationType, derivationError.Relations[0].RelationType);
+            Assert.Equal(this.M.Grant.Role.RoleType.RelationType, derivationError.Relations[0].RelationType);
         }
 
         [Fact]
@@ -56,8 +58,8 @@ namespace Allors.Database.Domain.Tests
 
             Assert.Equal(2, derivationError.Relations.Length);
             Assert.Equal(typeof(DerivationErrorAtLeastOne), derivationError.GetType());
-            Assert.True(new ArrayList(derivationError.RoleTypes).Contains(this.M.Grant.Subjects));
-            Assert.True(new ArrayList(derivationError.RoleTypes).Contains(this.M.Grant.SubjectGroups));
+            Assert.Contains(this.M.Grant.Subjects, new List<RoleType>(derivationError.RoleTypes));
+            Assert.Contains(this.M.Grant.SubjectGroups, new List<RoleType>(derivationError.RoleTypes));
         }
     }
 }

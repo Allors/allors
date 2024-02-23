@@ -10,6 +10,7 @@ namespace Allors.Database.Domain.Tests
 {
     using System.Linq;
     using Allors.Database.Data;
+    using Meta;
     using Xunit;
 
     public class NodeTests : DomainTest, IClassFixture<Fixture>
@@ -57,12 +58,12 @@ namespace Allors.Database.Domain.Tests
             Assert.Equal(m.UserGroup.Members, node.RelationEndType);
             Assert.Equal(2, node.Nodes.Length);
 
-            var uniqueIdChild = node.Nodes.First(v => v.RelationEndType.Equals(m.User.UniqueId));
+            var uniqueIdChild = node.Nodes.First(v => v.RelationEndType.Equals((RelationEndType)m.User.UniqueId));
 
             Assert.NotNull(uniqueIdChild);
             Assert.Empty(uniqueIdChild.Nodes);
 
-            var securityTokens = node.Nodes.First(v => v.RelationEndType.Equals(m.User.SecurityTokens));
+            var securityTokens = node.Nodes.First(v => v.RelationEndType.Equals((RelationEndType)m.User.SecurityTokens));
 
             Assert.NotNull(securityTokens);
             Assert.Empty(securityTokens.Nodes);
@@ -81,12 +82,12 @@ namespace Allors.Database.Domain.Tests
             Assert.Equal(m.UserGroup.Members, node.RelationEndType);
             Assert.Equal(2, node.Nodes.Length);
 
-            var uniqueIdChild = node.Nodes.First(v => v.RelationEndType.Equals(m.User.UniqueId));
+            var uniqueIdChild = node.Nodes.First(v => v.RelationEndType.Equals((RelationEndType)m.User.UniqueId));
 
             Assert.NotNull(uniqueIdChild);
             Assert.Empty(uniqueIdChild.Nodes);
 
-            var securityTokens = node.Nodes.First(v => v.RelationEndType.Equals(m.User.SecurityTokens));
+            var securityTokens = node.Nodes.First(v => v.RelationEndType.Equals((RelationEndType)m.User.SecurityTokens));
 
             Assert.NotNull(securityTokens);
             Assert.Empty(securityTokens.Nodes);

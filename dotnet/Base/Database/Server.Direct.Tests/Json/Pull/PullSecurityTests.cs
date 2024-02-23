@@ -12,6 +12,7 @@ namespace Tests
     using Allors;
     using Allors.Database.Data;
     using Allors.Database.Domain;
+    using Allors.Database.Meta;
     using Allors.Database.Protocol.Json;
     using Allors.Protocol.Json;
     using Allors.Protocol.Json.Api.Pull;
@@ -225,9 +226,9 @@ namespace Tests
 
             var pullResponseObject = pullResponse.p[0];
 
-            var databaseWrite = this.Transaction.Extent<Permission>().First(v => v.Operation == Operations.Write && v.OperandType.Equals(m.Denied.DatabaseProperty));
-            var defaultWorkspaceWrite = this.Transaction.Extent<Permission>().First(v => v.Operation == Operations.Write && v.OperandType.Equals(m.Denied.DefaultWorkspaceProperty) && v.Operation == Operations.Write);
-            var workspaceXWrite = this.Transaction.Extent<Permission>().First(v => v.Operation == Operations.Write && v.OperandType.Equals(m.Denied.WorkspaceXProperty) && v.Operation == Operations.Write);
+            var databaseWrite = this.Transaction.Extent<Permission>().First(v => v.Operation == Operations.Write && v.OperandType.Equals((OperandType)m.Denied.DatabaseProperty));
+            var defaultWorkspaceWrite = this.Transaction.Extent<Permission>().First(v => v.Operation == Operations.Write && v.OperandType.Equals((OperandType)m.Denied.DefaultWorkspaceProperty) && v.Operation == Operations.Write);
+            var workspaceXWrite = this.Transaction.Extent<Permission>().First(v => v.Operation == Operations.Write && v.OperandType.Equals((OperandType)m.Denied.WorkspaceXProperty) && v.Operation == Operations.Write);
 
             // TODO: Koen
             //Assert.Single(pullResponseObject.d);

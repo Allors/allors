@@ -8,6 +8,7 @@ namespace Allors.Database.Data;
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -66,16 +67,22 @@ public static class ExpressionExtensions
         }
 
         var root = visitor.MemberExpressions[0].Member.DeclaringType;
-        var compositeName = root.Name.Substring(4);
+        var compositeName = root.Name.Substring(0, root.Name.Length - "Index".Length);
+
+        if (compositeName == "CC")
+        {
+            Debugger.Break();
+        }
+
         var composite = metaPopulation.FindCompositeByName(compositeName);
 
         foreach (var memberExpression in visitor.MemberExpressions)
         {
-            if (memberExpression.Type.GetInterfaces().Contains(typeof(Composite)))
+            if (memberExpression.Type.IsSubclassOf(typeof(ICompositeIndex)))
             {
                 var propertyInfo = (PropertyInfo)memberExpression.Member;
                 var relationEndType = propertyInfo.PropertyType;
-                var propertyName = relationEndType.Name.Substring(4);
+                var propertyName = relationEndType.Name.Substring(0, relationEndType.Name.Length - "Index".Length);
                 composite = metaPopulation.FindCompositeByName(propertyName);
 
                 if (currentPath != null && !currentPath.RelationEndType.ObjectType.Equals(composite))
@@ -84,16 +91,22 @@ public static class ExpressionExtensions
                 }
             }
 
-            if (memberExpression.Type.GetInterfaces().Contains(typeof(RoleType)))
+            if (memberExpression.Type.IsSubclassOf(typeof(IRoleTypeIndex)))
             {
                 var name = memberExpression.Member.Name;
                 var relationEndType = composite.RoleTypes.First(v => v.Name.Equals(name));
                 AddPath(relationEndType);
             }
 
-            if (memberExpression.Type.GetInterfaces().Contains(typeof(AssociationType)))
+            if (memberExpression.Type.IsSubclassOf(typeof(IAssociationTypeIndex)))
             {
                 var name = memberExpression.Member.Name;
+
+                if (name == "AAsWhereMany2Many")
+                {
+                    Debugger.Break();
+                }
+
                 var relationEndType = composite.AssociationTypes.First(v =>
                 {
                     return v.Name.Equals(name);

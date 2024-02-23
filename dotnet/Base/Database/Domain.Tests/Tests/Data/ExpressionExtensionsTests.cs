@@ -22,9 +22,9 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void InterfaceAssociation()
         {
-            Expression<Func<UserIndex, RelationEndType>> expression = v => v.Logins;
+            Expression<Func<UserIndex, IRelationEndTypeIndex>> expression = v => v.Logins;
 
-            var path = expression.Node(this.M);
+            var path = expression.Node(this.MetaPopulation);
 
             Assert.Equal(this.M.User.Logins, path.RelationEndType);
             Assert.Empty(path.Nodes);
@@ -33,9 +33,9 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void ClassAssociation()
         {
-            Expression<Func<PersonIndex, RelationEndType>> expression = v => v.OrganizationWhereEmployee;
+            Expression<Func<PersonIndex, IRelationEndTypeIndex>> expression = v => v.OrganizationWhereEmployee;
 
-            var path = expression.Node(this.M);
+            var path = expression.Node(this.MetaPopulation);
 
             Assert.Equal(this.M.Person.OrganizationWhereEmployee, path.RelationEndType);
             Assert.Empty(path.Nodes);
@@ -44,9 +44,9 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void ClassAssociationClassRole()
         {
-            Expression<Func<PersonIndex, RelationEndType>> expression = v => v.OrganizationWhereEmployee.ObjectType.Information;
+            Expression<Func<PersonIndex, IRelationEndTypeIndex>> expression = v => v.OrganizationWhereEmployee.ObjectType.Information;
 
-            var path = expression.Node(this.M);
+            var path = expression.Node(this.MetaPopulation);
 
             Assert.Equal(this.M.Person.OrganizationWhereEmployee, path.RelationEndType);
 
@@ -59,9 +59,9 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void ClassRole()
         {
-            Expression<Func<OrganizationIndex, RelationEndType>> expression = v => v.Name;
+            Expression<Func<OrganizationIndex, IRelationEndTypeIndex>> expression = v => v.Name;
 
-            var path = expression.Node(this.M);
+            var path = expression.Node(this.MetaPopulation);
 
             Assert.Equal(this.M.Organization.Name, path.RelationEndType);
             Assert.Empty(path.Nodes);
@@ -70,9 +70,9 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void ClassRoleOfType()
         {
-            Expression<Func<UserGroupIndex, Composite>> expression = v => v.Members.ObjectType.AsPerson;
+            Expression<Func<UserGroupIndex, ICompositeIndex>> expression = v => v.Members.ObjectType.AsPerson;
 
-            var path = expression.Node(this.M);
+            var path = expression.Node(this.MetaPopulation);
 
             Assert.Equal(this.M.UserGroup.Members, path.RelationEndType);
             Assert.Equal(this.M.Person, path.OfType);
@@ -82,9 +82,9 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void ClassRoleClassRole()
         {
-            Expression<Func<OrganizationIndex, RelationEndType>> expression = v => v.Employees.ObjectType.FirstName;
+            Expression<Func<OrganizationIndex, IRelationEndTypeIndex>> expression = v => v.Employees.ObjectType.FirstName;
 
-            var path = expression.Node(this.M);
+            var path = expression.Node(this.MetaPopulation);
 
             Assert.Equal(this.M.Organization.Employees, path.RelationEndType);
 
@@ -98,9 +98,9 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void ClassRoleInterfaceAsClassRole()
         {
-            Expression<Func<UserGroupIndex, RelationEndType>> expression = v => v.Members.ObjectType.AsPerson.FirstName;
+            Expression<Func<UserGroupIndex, IRelationEndTypeIndex>> expression = v => v.Members.ObjectType.AsPerson.FirstName;
 
-            var path = expression.Node(this.M);
+            var path = expression.Node(this.MetaPopulation);
 
             Assert.Equal(this.M.UserGroup.Members, path.RelationEndType);
 

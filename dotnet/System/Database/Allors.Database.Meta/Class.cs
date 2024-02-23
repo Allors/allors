@@ -7,14 +7,11 @@
 namespace Allors.Database.Meta;
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using Allors.Embedded.Meta;
 
 public sealed class Class : Composite
 {
-    private ConcurrentDictionary<MethodType, Action<object, object>[]> actionsByMethodType;
-
     public Class(MetaPopulation metaPopulation, EmbeddedObjectType embeddedObjectType)
         : base(metaPopulation, embeddedObjectType)
     {
@@ -26,17 +23,11 @@ public sealed class Class : Composite
         this.MetaPopulation.OnCreated(this);
     }
 
-    private RoleType derivedKeyRoleType;
-
     public override bool IsInterface => false;
 
     public override bool IsClass => true;
 
     public static implicit operator Class(IClassIndex index) => index.Class;
-
-    public override bool Equals(object other) => this.Id.Equals((other as IMetaIdentifiableObject)?.Id);
-
-    public override int GetHashCode() => this.Id.GetHashCode();
 
     public override string ToString()
     {
@@ -46,14 +37,6 @@ public sealed class Class : Composite
         }
 
         return this.Tag;
-    }
-
-    public override RoleType KeyRoleType => this.derivedKeyRoleType;
-
-    public RoleType DerivedKeyRoleType
-    {
-        get => this.derivedKeyRoleType;
-        set => this.derivedKeyRoleType = value;
     }
 
     public override void Validate(ValidationLog validationLog)

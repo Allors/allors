@@ -6,7 +6,7 @@
 
 namespace Allors.Database.Meta;
 
-public abstract class IMethodTypeIndex : IOperandTypeIndex
+public abstract class IOperandTypeIndex
 {
-    public abstract MethodType MethodType { get; }
+    public abstract OperandType OperandType { get; }
 }

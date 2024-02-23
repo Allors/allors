@@ -32,31 +32,14 @@ namespace Allors.Database.Domain
 {
     using Meta;
 
-  	public sealed class MetaIndex(MetaPopulation meta) : IMetaIndex
+  	public sealed class MetaIndex : IMetaIndex
     {
-		public  MetaPopulation MetaPopulation => meta;
+		public  MetaPopulation MetaPopulation { get; }
 
-$meta.units:{objectType|$metaObjectType_Property()$}; separator="\n"$
-$meta.interfaces:{objectType|$metaObjectType_Property()$}; separator="\n"$
-$meta.classes:{objectType|$metaObjectType_Property()$}; separator="\n"$
-$meta.relationTypes:{relationType|$metaRoleType_Property()$}; separator="\n"$
-$meta.relationTypes:{relationType|$metaAssociationType_Property()$}; separator="\n"$
-$meta.methodTypes:{methodType|$metaMethodType_Property()$}; separator="\n"$
-    }
-
-    public sealed class MetaIndexBuilder 
-    {
-		private readonly MetaPopulation meta;
-		private readonly MetaIndex index;
-
-		public MetaIndexBuilder(MetaPopulation meta)
+		public MetaIndex(MetaPopulation meta)
 		{
-			this.meta = meta;
-			this.index = new MetaIndex(meta);
-		}
+			this.MetaPopulation = meta;
 
-		public void Build()
-		{
 			// Units
 $meta.units:{objectType|$metaUnit_Init()$}; separator="\n"$
 
@@ -90,6 +73,13 @@ $meta.relationTypes:{relationType|$metaAssociationType_Init_Properties()$}; sepa
 			// MethodType Properties
 $meta.methodTypes:{methodType|$metaMethodType_Init_Properties()$}; separator="\n"$
 		}
+
+$meta.units:{objectType|$metaObjectType_Property()$}; separator="\n"$
+$meta.interfaces:{objectType|$metaObjectType_Property()$}; separator="\n"$
+$meta.classes:{objectType|$metaObjectType_Property()$}; separator="\n"$
+$meta.relationTypes:{relationType|$metaRoleType_Property()$}; separator="\n"$
+$meta.relationTypes:{relationType|$metaAssociationType_Property()$}; separator="\n"$
+$meta.methodTypes:{methodType|$metaMethodType_Property()$}; separator="\n"$
     }
 }
 >>
@@ -115,27 +105,27 @@ metaMethodType_Property() ::= <<
 >>
 
 metaUnit_Init() ::= <<
-			index.$objectType.SingularName$ = new $objectType.SingularName$Index((Unit)meta.FindById(MetaIds.$objectType.SingularName$));
+			this.$objectType.SingularName$ = new $objectType.SingularName$Index((Unit)meta.FindById(MetaIds.$objectType.SingularName$));
 >>
 
 metaInterface_Init() ::= <<
-			index.$objectType.SingularName$ = new $objectType.SingularName$Index((Interface)meta.FindById(MetaIds.$objectType.SingularName$));
+			this.$objectType.SingularName$ = new $objectType.SingularName$Index((Interface)meta.FindById(MetaIds.$objectType.SingularName$));
 >>
 
 metaClass_Init() ::= <<
-			index.$objectType.SingularName$ = new $objectType.SingularName$Index((Class)meta.FindById(MetaIds.$objectType.SingularName$));
+			this.$objectType.SingularName$ = new $objectType.SingularName$Index((Class)meta.FindById(MetaIds.$objectType.SingularName$));
 >>
 
 metaRoleType_Init() ::= <<
-			index.$relationType.RoleType.FullName$ = new $relationType.RoleType.FullName$Index(((RelationType)meta.FindById(MetaIds.$relationType.RoleType.FullName$)).RoleType);
+			this.$relationType.RoleType.FullName$ = new $relationType.RoleType.FullName$Index(((RelationType)meta.FindById(MetaIds.$relationType.RoleType.FullName$)).RoleType);
 >>
 
 metaAssociationType_Init() ::= <<
-			index.$relationType.AssociationType.Name$ = new $relationType.AssociationType.Name$Index(((RelationType)meta.FindById(MetaIds.$relationType.RoleType.FullName$)).AssociationType);
+			this.$relationType.AssociationType.Name$ = new $relationType.AssociationType.Name$Index(((RelationType)meta.FindById(MetaIds.$relationType.RoleType.FullName$)).AssociationType);
 >>
 
 metaMethodType_Init() ::= <<
-			index.$methodType.FullName$ = new $methodType.FullName$Index((MethodType)meta.FindById(MetaIds.$methodType.FullName$));
+			this.$methodType.FullName$ = new $methodType.FullName$Index((MethodType)meta.FindById(MetaIds.$methodType.FullName$));
 >>
 
 metaInterface_Init_Properties() ::= <<
@@ -153,34 +143,34 @@ $objectType.MethodTypes:{methodType|$metaObjectType_Init_Properties_MethodType()
 
 metaRoleType_Init_Properties() ::= <<
 $if(relationType.RoleType.ObjectType.IsComposite)$
-			index.$relationType.RoleType.FullName$.ObjectType = index.$relationType.RoleType.ObjectType.SingularName$;
-			index.$relationType.RoleType.FullName$.AssociationType = index.$relationType.AssociationType.Name$;
+			this.$relationType.RoleType.FullName$.ObjectType = this.$relationType.RoleType.ObjectType.SingularName$;
+			this.$relationType.RoleType.FullName$.AssociationType = this.$relationType.AssociationType.Name$;
 $endif$
 >>
 
 metaAssociationType_Init_Properties() ::= <<
-			index.$relationType.AssociationType.Name$.ObjectType = index.$relationType.AssociationType.ObjectType.SingularName$;
-			index.$relationType.AssociationType.Name$.RoleType = index.$relationType.RoleType.FullName$;
+			this.$relationType.AssociationType.Name$.ObjectType = this.$relationType.AssociationType.ObjectType.SingularName$;
+			this.$relationType.AssociationType.Name$.RoleType = this.$relationType.RoleType.FullName$;
 >>
 
 metaMethodType_Init_Properties() ::= <<
-			index.$methodType.FullName$.ObjectType = index.$methodType.ObjectType.SingularName$;
+			this.$methodType.FullName$.ObjectType = this.$methodType.ObjectType.SingularName$;
 >>
 
 metaInterface_Init_Properties_Subtype() ::= <<
-			index.$objectType.SingularName$.As$subtype.SingularName$ = index.$subtype.SingularName$;
+			this.$objectType.SingularName$.As$subtype.SingularName$ = this.$subtype.SingularName$;
 >>
 
 metaObjectType_Init_Properties_RoleType() ::= <<
-			index.$objectType.SingularName$.$roleType.Name$ = index.$roleType.FullName$;
+			this.$objectType.SingularName$.$roleType.Name$ = this.$roleType.FullName$;
 >>
 
 metaObjectType_Init_Properties_AssociationType() ::= <<
-			index.$objectType.SingularName$.$associationType.Name$ = index.$associationType.Name$;
+			this.$objectType.SingularName$.$associationType.Name$ = this.$associationType.Name$;
 >>
 
 metaObjectType_Init_Properties_MethodType() ::= <<
-			index.$objectType.SingularName$.$methodType.Name$ = index.$methodType.FullName$;
+			this.$objectType.SingularName$.$methodType.Name$ = this.$methodType.FullName$;
 >>
 
 boolean(value) ::= "$if(value)$true$else$false$endif$"
