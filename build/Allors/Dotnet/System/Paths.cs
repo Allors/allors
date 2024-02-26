@@ -19,10 +19,11 @@ public partial class Paths
 
     public AbsolutePath AllorsDotnetSystemDatabase => AllorsDotnetSystem / "Database";
     public AbsolutePath AllorsDotnetSystemDatabaseAdapters => AllorsDotnetSystemDatabase / "Adapters";
-    public AbsolutePath AllorsDotnetSystemDatabaseAdaptersRepository => AllorsDotnetSystemDatabaseAdapters / "Repository/Repository.csproj";
-    public AbsolutePath AllorsDotnetSystemDatabaseAdaptersMetaGenerated => AllorsDotnetSystemDatabaseAdapters / "Meta/Generated";
-    public AbsolutePath AllorsDotnetSystemDatabaseAdaptersGenerate => AllorsDotnetSystemDatabaseAdapters / "Generate/Generate.csproj";
-    public AbsolutePath AllorsDotnetSystemDatabaseAdaptersTests => AllorsDotnetSystemDatabaseAdapters / "Tests/Tests.csproj";
+    public AbsolutePath AllorsDotnetSystemDatabaseTestsAdapters => AllorsDotnetSystemDatabaseAdapters / "Tests";
+    public AbsolutePath AllorsDotnetSystemDatabaseTestsAdaptersRepository => AllorsDotnetSystemDatabaseTestsAdapters / "Repository/Repository.csproj";
+    public AbsolutePath AllorsDotnetSystemDatabaseTestsAdaptersAllorsAdaptersGenerated => AllorsDotnetSystemDatabaseTestsAdapters / "Allors.Adapters/Generated";
+    public AbsolutePath AllorsDotnetSystemDatabaseTestsAdaptersGenerate => AllorsDotnetSystemDatabaseTestsAdapters / "Generate/Generate.csproj";
+    public AbsolutePath AllorsDotnetSystemDatabaseTestsAdaptersTests => AllorsDotnetSystemDatabaseTestsAdapters / "Tests/Tests.csproj";
 
     public AbsolutePath AllorsDotnetSystemWorkspace => AllorsDotnetSystem / "Workspace";
     public AbsolutePath AllorsDotnetSystemWorkspaceSignalsTests => AllorsDotnetSystemWorkspace / "Allors.Workspace.Signals.Tests";

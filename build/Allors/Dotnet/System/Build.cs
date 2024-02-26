@@ -45,16 +45,16 @@ partial class Build
             DotNetRun(s => s
                 .SetProjectFile(Paths.AllorsDotnetSystemRepositoryGenerate)
                 .SetApplicationArguments(
-                    $"{Paths.AllorsDotnetSystemDatabaseAdaptersRepository} {Paths.AllorsDotnetSystemRepositoryTemplatesMetaConfigurationCs} {Paths.AllorsDotnetSystemDatabaseAdaptersMetaGenerated}"));
+                    $"{Paths.AllorsDotnetSystemDatabaseTestsAdaptersRepository} {Paths.AllorsDotnetSystemRepositoryTemplatesMetaConfigurationCs} {Paths.AllorsDotnetSystemDatabaseTestsAdaptersAllorsAdaptersGenerated}"));
             DotNetRun(s => s
-                .SetProcessWorkingDirectory(Paths.AllorsDotnetSystemDatabaseAdapters)
-                .SetProjectFile(Paths.AllorsDotnetSystemDatabaseAdaptersGenerate));
+                .SetProcessWorkingDirectory(Paths.AllorsDotnetSystemDatabaseTestsAdapters)
+                .SetProjectFile(Paths.AllorsDotnetSystemDatabaseTestsAdaptersGenerate));
         });
 
     private Target AllorsDotnetSystemDatabaseAdaptersTestMemory => _ => _
         .DependsOn(AllorsDotnetSystemAdaptersGenerate)
         .Executes(() => DotNetTest(s => s
-            .SetProjectFile(Paths.AllorsDotnetSystemDatabaseAdaptersTests)
+            .SetProjectFile(Paths.AllorsDotnetSystemDatabaseTestsAdaptersTests)
             .SetFilter("FullyQualifiedName~Allors.Database.Adapters.Memory")
             .AddLoggers("trx;LogFileName=AllorsDotnetSystemDatabaseAdaptersTestMemory.trx")
             .SetResultsDirectory(Paths.ArtifactsTests)));
@@ -66,7 +66,7 @@ partial class Build
             using (new SqlLocalDB())
             {
                 DotNetTest(s => s
-                    .SetProjectFile(Paths.AllorsDotnetSystemDatabaseAdaptersTests)
+                    .SetProjectFile(Paths.AllorsDotnetSystemDatabaseTestsAdaptersTests)
                     .SetFilter("FullyQualifiedName~Allors.Database.Adapters.Sql.SqlClient")
                     .AddLoggers("trx;LogFileName=AllorsDotnetSystemDatabaseAdaptersSqlClientTests.trx")
                     .SetResultsDirectory(Paths.ArtifactsTests));
@@ -78,7 +78,7 @@ partial class Build
         .Executes(() =>
         {
             DotNetTest(s => s
-                 .SetProjectFile(Paths.AllorsDotnetSystemDatabaseAdaptersTests)
+                 .SetProjectFile(Paths.AllorsDotnetSystemDatabaseTestsAdaptersTests)
                  .SetFilter("FullyQualifiedName~Allors.Database.Adapters.Sql.Npgsql")
                  .AddLoggers("trx;LogFileName=AllorsDotnetSystemDatabaseAdaptersNpgsqlTests.trx")
                  .SetResultsDirectory(Paths.ArtifactsTests));
