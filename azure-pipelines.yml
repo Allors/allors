@@ -4,8 +4,10 @@ trigger:
 - issue/*
 
 variables:
-  ConnectionStrings__npgsql: "Server=localhost; Database=postgres; User Id=postgres; Password=root;"
-  ConnectionStrings__sqlclient: "Server=(localdb)\\MSSQLLocalDB; Database=master; Integrated Security=true;"
+  ConnectionStrings__npgsql-create: "Server=localhost; Database=postgres; User Id=postgres; Password=root; Pooling=false;"
+  ConnectionStrings__npgsql: "Server=localhost; Database=[database]; User Id=postgres; Password=root; Pooling=false; Enlist=false; CommandTimeout=300;"
+  ConnectionStrings__sqlclient-create: "Server=(localdb)\\MSSQLLocalDB; Database=master; Integrated Security=true; Pooling=false;"
+  ConnectionStrings__sqlclient: "Server=(localdb)\\MSSQLLocalDB; Database=[database]; Integrated Security=true; Pooling=false;"
   adapter: "sqlclient"
   ConnectionStrings__DefaultConnection: "server=(localdb)\\MSSQLLocalDB; database=base; Integrated Security=SSPI; TrustServerCertificate=True; Pooling=false"
 
