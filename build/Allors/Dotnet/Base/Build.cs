@@ -20,7 +20,7 @@ partial class Build
             DotNetRun(s => s
                 .SetProjectFile(Paths.AllorsDotnetSystemRepositoryGenerate)
                 .SetApplicationArguments(
-                    $"{Paths.AllorsDotnetBaseRepository} {Paths.AllorsDotnetSystemRepositoryTemplatesMetaConfigurationCs} {Paths.AllorsDotnetBaseDatabaseMetaGenerated}"));
+                    $"{Paths.AllorsDotnetBaseRepository} {Paths.AllorsDotnetSystemRepositoryTemplatesMetaConfigurationCs} {Paths.AllorsDotnetBaseDatabaseAllorsDatabaseGenerated}"));
             DotNetRun(s => s
                 .SetProjectFile(Paths.AllorsDotnetSystemRepositoryGenerate)
                 .SetApplicationArguments(
