@@ -1,4 +1,4 @@
-// <copyright file="RoleUnitEquals.cs" company="Allors bv">
+﻿// <copyright file="RoleUnitEquals.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -49,9 +49,13 @@ internal sealed class RoleUnitEquals : Predicate
 
         var equalsValue = this.equals;
 
-        if (this.equals is RoleType)
+        if (this.equals is RoleType type)
         {
-            var equalsRole = (RoleType)this.equals;
+            equalsValue = strategy.GetInternalizedUnitRole(type);
+        }
+        else if (this.equals is RoleTypeIndex index)
+        {
+            var equalsRole = index.RoleType;
             equalsValue = strategy.GetInternalizedUnitRole(equalsRole);
         }
         else if (this.roleType.ObjectType is Unit)

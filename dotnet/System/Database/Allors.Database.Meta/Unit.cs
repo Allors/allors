@@ -27,7 +27,7 @@ public sealed class Unit : ObjectType
 
     public override bool IsClass => false;
 
-    public static implicit operator Unit(UnitIndex index) => index.Unit;
+    public static implicit operator Unit(UnitIndex index) => index?.Unit;
 
     public override string ToString()
     {

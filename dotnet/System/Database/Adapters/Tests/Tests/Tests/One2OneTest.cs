@@ -28,17 +28,17 @@ public abstract class One2OneTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             foreach (var mark in this.Markers)
             {
                 for (var run = 0; run < Settings.NumberOfRuns; run++)
                 {
-                    var from = C1.Create(this.Transaction);
-                    var fromAnother = C1.Create(this.Transaction);
+                    var from = this.Transaction.Build<C1>();
+                    var fromAnother = this.Transaction.Build<C1>();
 
-                    var to = C1.Create(this.Transaction);
-                    var toAnother = C1.Create(this.Transaction);
+                    var to = this.Transaction.Build<C1>();
+                    var toAnother = this.Transaction.Build<C1>();
 
                     // To 1 and back
                     // Get
@@ -503,11 +503,11 @@ public abstract class One2OneTest : IDisposable
                     Assert.Null(from.C1C1one2one);
                     Assert.Null(from.C1C1one2one);
 
-                    from = C1.Create(this.Transaction);
-                    fromAnother = C1.Create(this.Transaction);
+                    from = this.Transaction.Build<C1>();
+                    fromAnother = this.Transaction.Build<C1>();
 
-                    to = C1.Create(this.Transaction);
-                    toAnother = C1.Create(this.Transaction);
+                    to = this.Transaction.Build<C1>();
+                    toAnother = this.Transaction.Build<C1>();
 
                     mark();
                     Assert.Null(from.C1C1one2one);
@@ -538,9 +538,9 @@ public abstract class One2OneTest : IDisposable
                     Assert.Null(to.C1WhereC1C1one2one);
 
                     // New - Middle - To
-                    from = C1.Create(this.Transaction);
-                    var middle = C1.Create(this.Transaction);
-                    to = C1.Create(this.Transaction);
+                    from = this.Transaction.Build<C1>();
+                    var middle = this.Transaction.Build<C1>();
+                    to = this.Transaction.Build<C1>();
 
                     from.C1C1one2one = middle;
                     middle.C1C1one2one = to;
@@ -560,15 +560,15 @@ public abstract class One2OneTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             foreach (var mark in this.Markers)
             {
-                var from = C1.Create(this.Transaction);
-                var fromAnother = C1.Create(this.Transaction);
+                var from = this.Transaction.Build<C1>();
+                var fromAnother = this.Transaction.Build<C1>();
 
-                var to = C2.Create(this.Transaction);
-                var toAnother = C2.Create(this.Transaction);
+                var to = this.Transaction.Build<C2>();
+                var toAnother = this.Transaction.Build<C2>();
 
                 // To 1 and back
                 mark();
@@ -653,15 +653,15 @@ public abstract class One2OneTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             foreach (var mark in this.Markers)
             {
-                var from = C1.Create(this.Transaction);
-                var fromAnother = C1.Create(this.Transaction);
+                var from = this.Transaction.Build<C1>();
+                var fromAnother = this.Transaction.Build<C1>();
 
-                var to = C1.Create(this.Transaction);
-                var toAnother = C1.Create(this.Transaction);
+                var to = this.Transaction.Build<C1>();
+                var toAnother = this.Transaction.Build<C1>();
 
                 // To 1 and back
                 mark();
@@ -746,15 +746,15 @@ public abstract class One2OneTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             foreach (var mark in this.Markers)
             {
-                var from = C1.Create(this.Transaction);
-                var fromAnother = C1.Create(this.Transaction);
+                var from = this.Transaction.Build<C1>();
+                var fromAnother = this.Transaction.Build<C1>();
 
-                var to = C2.Create(this.Transaction);
-                var toAnother = C2.Create(this.Transaction);
+                var to = this.Transaction.Build<C2>();
+                var toAnother = this.Transaction.Build<C2>();
 
                 // To 1 and back
                 mark();
@@ -839,15 +839,15 @@ public abstract class One2OneTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             foreach (var mark in this.Markers)
             {
-                var from = C3.Create(this.Transaction);
-                var fromAnother = C3.Create(this.Transaction);
+                var from = this.Transaction.Build<C3>();
+                var fromAnother = this.Transaction.Build<C3>();
 
-                var to = C4.Create(this.Transaction);
-                var toAnother = C4.Create(this.Transaction);
+                var to = this.Transaction.Build<C4>();
+                var toAnother = this.Transaction.Build<C4>();
 
                 // To 1 and back
                 mark();
@@ -934,18 +934,18 @@ public abstract class One2OneTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             foreach (var mark in this.Markers)
             {
                 var nrOfRuns = Settings.NumberOfRuns;
                 for (var i = 0; i < nrOfRuns; i++)
                 {
-                    var from = C1.Create(this.Transaction);
-                    var fromAnother = C1.Create(this.Transaction);
+                    var from = this.Transaction.Build<C1>();
+                    var fromAnother = this.Transaction.Build<C1>();
 
-                    var to = C1.Create(this.Transaction);
-                    var toAnother = C2.Create(this.Transaction);
+                    var to = this.Transaction.Build<C1>();
+                    var toAnother = this.Transaction.Build<C2>();
 
                     // To 1 and back
                     // Get
@@ -1373,14 +1373,14 @@ public abstract class One2OneTest : IDisposable
 
                 for (var i = 0; i < nrOfRuns; i++)
                 {
-                    var from = C1.Create(this.Transaction);
+                    var from = this.Transaction.Build<C1>();
                     mark();
-                    var fromAnother = C1.Create(this.Transaction);
+                    var fromAnother = this.Transaction.Build<C1>();
                     mark();
 
-                    var to = C1.Create(this.Transaction);
+                    var to = this.Transaction.Build<C1>();
                     mark();
-                    var toAnother = C2.Create(this.Transaction);
+                    var toAnother = this.Transaction.Build<C2>();
                     mark();
 
                     // To 1 and back
@@ -2065,15 +2065,15 @@ public abstract class One2OneTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             foreach (var mark in this.Markers)
             {
-                var from = C1.Create(this.Transaction);
-                var fromAnother = C1.Create(this.Transaction);
+                var from = this.Transaction.Build<C1>();
+                var fromAnother = this.Transaction.Build<C1>();
 
-                var to = C1.Create(this.Transaction);
-                var toAnother = C1.Create(this.Transaction);
+                var to = this.Transaction.Build<C1>();
+                var toAnother = this.Transaction.Build<C1>();
 
                 // To 1 and back
                 mark();
@@ -2150,9 +2150,9 @@ public abstract class One2OneTest : IDisposable
                 Assert.Null(from.C1C1one2one);
 
                 // New - Middle - To
-                from = C1.Create(this.Transaction);
-                var middle = C1.Create(this.Transaction);
-                to = C1.Create(this.Transaction);
+                from = this.Transaction.Build<C1>();
+                var middle = this.Transaction.Build<C1>();
+                to = this.Transaction.Build<C1>();
 
                 from.I1I1one2one = middle;
                 middle.I1I1one2one = to;
@@ -2171,15 +2171,15 @@ public abstract class One2OneTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             foreach (var mark in this.Markers)
             {
-                var from = C1.Create(this.Transaction);
-                var fromAnother = C1.Create(this.Transaction);
+                var from = this.Transaction.Build<C1>();
+                var fromAnother = this.Transaction.Build<C1>();
 
-                var to = C2.Create(this.Transaction);
-                var toAnother = C2.Create(this.Transaction);
+                var to = this.Transaction.Build<C2>();
+                var toAnother = this.Transaction.Build<C2>();
 
                 // To 1 and back
                 mark();
@@ -2264,17 +2264,17 @@ public abstract class One2OneTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             foreach (var mark in this.Markers)
             {
                 for (var i = 0; i < Settings.NumberOfRuns; i++)
                 {
-                    var from = C1.Create(this.Transaction);
-                    var fromAnother = C1.Create(this.Transaction);
+                    var from = this.Transaction.Build<C1>();
+                    var fromAnother = this.Transaction.Build<C1>();
 
-                    var to = C3.Create(this.Transaction);
-                    var toAnother = C4.Create(this.Transaction);
+                    var to = this.Transaction.Build<C3>();
+                    var toAnother = this.Transaction.Build<C4>();
 
                     // To 1 and back
                     // Get
@@ -2709,15 +2709,15 @@ public abstract class One2OneTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             foreach (var mark in this.Markers)
             {
-                var from = C3.Create(this.Transaction);
-                var fromAnother = C3.Create(this.Transaction);
+                var from = this.Transaction.Build<C3>();
+                var fromAnother = this.Transaction.Build<C3>();
 
-                var to = C4.Create(this.Transaction);
-                var toAnother = C4.Create(this.Transaction);
+                var to = this.Transaction.Build<C4>();
+                var toAnother = this.Transaction.Build<C4>();
 
                 // To 1 and back
                 mark();
@@ -2802,21 +2802,21 @@ public abstract class One2OneTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             foreach (var mark in this.Markers)
             {
-                var c1a = C1.Create(this.Transaction);
-                var c1b = C1.Create(this.Transaction);
+                var c1a = this.Transaction.Build<C1>();
+                var c1b = this.Transaction.Build<C1>();
 
-                var c2a = C2.Create(this.Transaction);
-                var c2b = C2.Create(this.Transaction);
+                var c2a = this.Transaction.Build<C2>();
+                var c2b = this.Transaction.Build<C2>();
 
-                var c3a = C3.Create(this.Transaction);
-                var c3b = C3.Create(this.Transaction);
+                var c3a = this.Transaction.Build<C3>();
+                var c3b = this.Transaction.Build<C3>();
 
-                var c4a = C4.Create(this.Transaction);
-                var c4b = C4.Create(this.Transaction);
+                var c4a = this.Transaction.Build<C4>();
+                var c4b = this.Transaction.Build<C4>();
 
                 // Illegal Role
                 var exceptionThrown = false;

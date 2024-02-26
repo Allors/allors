@@ -22,6 +22,8 @@ public abstract class ChangesTest : IDisposable
 
     protected Action[] Inits => this.Profile.Inits;
 
+    public IMetaIndex M => this.Transaction.Database.Services.Get<IMetaIndex>();
+
     public abstract void Dispose();
 
     [Fact]
@@ -37,7 +39,7 @@ public abstract class ChangesTest : IDisposable
             this.Transaction.Commit();
 
             a = (C1)this.Transaction.Instantiate(a);
-            var b = C2.Create(this.Transaction);
+            var b = this.Transaction.Build<C2>();
             this.Transaction.Instantiate(c);
 
             var changes = this.Transaction.Checkpoint();
@@ -51,7 +53,7 @@ public abstract class ChangesTest : IDisposable
 
             Assert.Empty(changes.Created);
 
-            b = C2.Create(this.Transaction);
+            b = this.Transaction.Build<C2>();
 
             this.Transaction.Commit();
 
@@ -67,13 +69,9 @@ public abstract class ChangesTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
-
-            foreach (var @class in ((MetaPopulation)m).Classes)
-            {
-                dynamic newObject = this.Transaction.Build(@class);
-                Assert.True(newObject.onPostBuild);
-            }
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
+            dynamic newObject = this.Transaction.Build(m.C1);
+            Assert.True(newObject.onPostBuild);
         }
     }
 
@@ -83,17 +81,12 @@ public abstract class ChangesTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
-            foreach (var @class in ((MetaPopulation)m).Classes)
+            var newObjects = this.Transaction.Build(m.C1, 2);
+            foreach (dynamic newObject in newObjects)
             {
-                {
-                    var newObjects = this.Transaction.Build(@class, 2);
-                    foreach (dynamic newObject in newObjects)
-                    {
-                        Assert.True(newObject.onPostBuild);
-                    }
-                }
+                Assert.True(newObject.onPostBuild);
             }
         }
     }
@@ -104,7 +97,7 @@ public abstract class ChangesTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             var newObject = this.Transaction.Build<C1>();
             Assert.True(newObject.onPostBuild);
@@ -118,7 +111,7 @@ public abstract class ChangesTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             Action<C1> nullBuilder = null;
             Action<C1> builderA = v => v.Name += "A";
@@ -143,7 +136,7 @@ public abstract class ChangesTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             Action<C1> nullBuilder = null;
             Action<C1> builderA = v => v.Name += "A";
@@ -175,7 +168,7 @@ public abstract class ChangesTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             Action<C1> nullBuilder = null;
             Action<C1> builderA = v => v.Name += "A";
@@ -267,7 +260,7 @@ public abstract class ChangesTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             Action<C1> nullBuilder = null;
 
@@ -353,7 +346,7 @@ public abstract class ChangesTest : IDisposable
     //    foreach (var init in this.Inits)
     //    {
     //        init();
-    //        var m = this.Transaction.Database.Context().M;
+    //        var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
     //        Action<C1> nullBuilder = null;
     //        Action<C1> builderA = v => v.Name = "A";
@@ -467,14 +460,14 @@ public abstract class ChangesTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             var a = (C1)this.Transaction.Build(m.C1);
             var c = this.Transaction.Build(m.C3);
             this.Transaction.Commit();
 
             a = (C1)this.Transaction.Instantiate(a);
-            var b = C2.Create(this.Transaction);
+            var b = this.Transaction.Build<C2>();
             this.Transaction.Instantiate(c);
 
             a.RemoveC1AllorsString();
@@ -680,14 +673,14 @@ public abstract class ChangesTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             var a = (C1)this.Transaction.Build(m.C1);
             var c = this.Transaction.Build(m.C3);
             this.Transaction.Commit();
 
             a = (C1)this.Transaction.Instantiate(a);
-            var b = C2.Create(this.Transaction);
+            var b = this.Transaction.Build<C2>();
             this.Transaction.Instantiate(c);
 
             a.RemoveC1AllorsBoolean();
@@ -872,7 +865,7 @@ public abstract class ChangesTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             var c1a = (C1)this.Transaction.Build(m.C1);
             var c1b = (C1)this.Transaction.Build(m.C1);
@@ -982,12 +975,12 @@ public abstract class ChangesTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             var c1a = (C1)this.Transaction.Build(m.C1);
             var c1b = (C1)this.Transaction.Build(m.C1);
             var c2a = (C2)this.Transaction.Build(m.C2);
-            var c2b = C2.Create(this.Transaction);
+            var c2b = this.Transaction.Build<C2>();
 
             c1a.Name = "c1a";
             c1b.Name = "c1b";
@@ -1092,12 +1085,12 @@ public abstract class ChangesTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             var c1a = (C1)this.Transaction.Build(m.C1);
             var c1b = (C1)this.Transaction.Build(m.C1);
             var c2a = (C2)this.Transaction.Build(m.C2);
-            var c2b = C2.Create(this.Transaction);
+            var c2b = this.Transaction.Build<C2>();
 
             c1a.Name = "c1a";
             c1b.Name = "c1b";
@@ -1264,12 +1257,12 @@ public abstract class ChangesTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             var c1a = (C1)this.Transaction.Build(m.C1);
             var c1b = (C1)this.Transaction.Build(m.C1);
             var c2a = (C2)this.Transaction.Build(m.C2);
-            var c2b = C2.Create(this.Transaction);
+            var c2b = this.Transaction.Build<C2>();
 
             c1a.Name = "c1a";
             c1b.Name = "c1b";
@@ -1432,14 +1425,14 @@ public abstract class ChangesTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             var a = (C1)this.Transaction.Build(m.C1);
             var c = this.Transaction.Build(m.C3);
             this.Transaction.Commit();
 
             a = (C1)this.Transaction.Instantiate(a);
-            var b = C2.Create(this.Transaction);
+            var b = this.Transaction.Build<C2>();
             this.Transaction.Instantiate(c);
 
             a.Strategy.Delete();

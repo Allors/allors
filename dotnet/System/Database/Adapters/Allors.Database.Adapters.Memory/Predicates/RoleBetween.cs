@@ -1,4 +1,4 @@
-// <copyright file="RoleBetween.cs" company="Allors bv">
+﻿// <copyright file="RoleBetween.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -36,6 +36,10 @@ internal sealed class RoleBetween : Predicate
         {
             firstValue = strategy.GetInternalizedUnitRole(firstRole);
         }
+        else if (this.first is RoleTypeIndex firstRoleIndex)
+        {
+            firstValue = strategy.GetInternalizedUnitRole(firstRoleIndex.RoleType);
+        }
         else if (this.roleType.ObjectType is Unit)
         {
             firstValue = this.roleType.Normalize(this.first);
@@ -44,6 +48,10 @@ internal sealed class RoleBetween : Predicate
         if (this.second is RoleType secondRole)
         {
             secondValue = strategy.GetInternalizedUnitRole(secondRole);
+        }
+        else if (this.second is RoleTypeIndex secondRoleIndex)
+        {
+            secondValue = strategy.GetInternalizedUnitRole(secondRoleIndex.RoleType);
         }
         else if (this.roleType.ObjectType is Unit)
         {

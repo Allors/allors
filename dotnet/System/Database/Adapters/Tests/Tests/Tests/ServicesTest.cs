@@ -1,4 +1,4 @@
-// <copyright file="ServicesTest.cs" company="Allors bv">
+﻿// <copyright file="ServicesTest.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -33,7 +33,7 @@ public abstract class ServicesTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             var c1 = this.Transaction.Build<C1>();
             var strategy = c1.Strategy;
@@ -51,7 +51,7 @@ public abstract class ServicesTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             int[] runs = [1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048];
 
@@ -97,9 +97,9 @@ public abstract class ServicesTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
-            var c1A = C1.Create(this.Transaction);
+            var c1A = this.Transaction.Build<C1>();
 
             this.Transaction.Commit();
 
@@ -121,12 +121,12 @@ public abstract class ServicesTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
-            var c1A = C1.Create(this.Transaction);
+            var c1A = this.Transaction.Build<C1>();
 
-            var c2A = C2.Create(this.Transaction);
-            var c2B = C2.Create(this.Transaction);
+            var c2A = this.Transaction.Build<C2>();
+            var c2B = this.Transaction.Build<C2>();
 
             this.Transaction.Commit();
 
@@ -148,12 +148,12 @@ public abstract class ServicesTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
-            var c1A = C1.Create(this.Transaction);
+            var c1A = this.Transaction.Build<C1>();
 
-            var c2A = C2.Create(this.Transaction);
-            var c2B = C2.Create(this.Transaction);
+            var c2A = this.Transaction.Build<C2>();
+            var c2B = this.Transaction.Build<C2>();
 
             this.Transaction.Commit();
 
@@ -176,10 +176,10 @@ public abstract class ServicesTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Object
-            var anObject = C1.Create(this.Transaction);
+            var anObject = this.Transaction.Build<C1>();
 
             anObject.Strategy.Delete();
             Assert.True(anObject.Strategy.IsDeleted);
@@ -188,7 +188,7 @@ public abstract class ServicesTest : IDisposable
 
             //// Commit & Rollback
 
-            anObject = C1.Create(this.Transaction);
+            anObject = this.Transaction.Build<C1>();
             anObject.Strategy.Delete();
             Assert.True(anObject.Strategy.IsDeleted);
 
@@ -199,22 +199,22 @@ public abstract class ServicesTest : IDisposable
             Assert.True(anObject.Strategy.IsDeleted);
 
             // instantiate
-            anObject = C1.Create(this.Transaction);
+            anObject = this.Transaction.Build<C1>();
             var id = anObject.Strategy.ObjectId;
             anObject.Strategy.Delete();
             Assert.True(anObject.Strategy.IsDeleted);
 
             this.Transaction.Commit();
-            anObject = C1.Instantiate(this.Transaction, id);
+            anObject = (C1)this.Transaction.Instantiate(id);
             Assert.Null(anObject);
 
             this.Transaction.Commit();
-            anObject = C1.Instantiate(this.Transaction, id);
+            anObject = (C1)this.Transaction.Instantiate(id);
             Assert.Null(anObject);
 
             //// Commit + Commit + Commit
 
-            anObject = C1.Create(this.Transaction);
+            anObject = this.Transaction.Build<C1>();
 
             this.Transaction.Commit();
 
@@ -228,7 +228,7 @@ public abstract class ServicesTest : IDisposable
             Assert.True(anObject.Strategy.IsDeleted);
 
             // instantiate
-            anObject = C1.Create(this.Transaction);
+            anObject = this.Transaction.Build<C1>();
             id = anObject.Strategy.ObjectId;
 
             this.Transaction.Commit();
@@ -237,16 +237,16 @@ public abstract class ServicesTest : IDisposable
             Assert.True(anObject.Strategy.IsDeleted);
 
             this.Transaction.Commit();
-            anObject = C1.Instantiate(this.Transaction, id);
+            anObject = (C1)this.Transaction.Instantiate(id);
             Assert.Null(anObject);
 
             this.Transaction.Commit();
-            anObject = C1.Instantiate(this.Transaction, id);
+            anObject = (C1)this.Transaction.Instantiate(id);
             Assert.Null(anObject);
 
             //// Nothing + Commit + Rollback
 
-            anObject = C1.Create(this.Transaction);
+            anObject = this.Transaction.Build<C1>();
 
             anObject.Strategy.Delete();
             Assert.True(anObject.Strategy.IsDeleted);
@@ -258,23 +258,23 @@ public abstract class ServicesTest : IDisposable
             Assert.True(anObject.Strategy.IsDeleted);
 
             // instantiate
-            anObject = C1.Create(this.Transaction);
+            anObject = this.Transaction.Build<C1>();
             id = anObject.Strategy.ObjectId;
 
             anObject.Strategy.Delete();
             Assert.True(anObject.Strategy.IsDeleted);
 
             this.Transaction.Commit();
-            anObject = C1.Instantiate(this.Transaction, id);
+            anObject = (C1)this.Transaction.Instantiate(id);
             Assert.Null(anObject);
 
             this.Transaction.Rollback();
-            anObject = C1.Instantiate(this.Transaction, id);
+            anObject = (C1)this.Transaction.Instantiate(id);
             Assert.Null(anObject);
 
             //// Commit + Commit + Rollback
 
-            anObject = C1.Create(this.Transaction);
+            anObject = this.Transaction.Build<C1>();
 
             this.Transaction.Commit();
 
@@ -288,7 +288,7 @@ public abstract class ServicesTest : IDisposable
             Assert.True(anObject.Strategy.IsDeleted);
 
             // instantiate
-            anObject = C1.Create(this.Transaction);
+            anObject = this.Transaction.Build<C1>();
             id = anObject.Strategy.ObjectId;
 
             this.Transaction.Commit();
@@ -297,16 +297,16 @@ public abstract class ServicesTest : IDisposable
             Assert.True(anObject.Strategy.IsDeleted);
 
             this.Transaction.Commit();
-            anObject = C1.Instantiate(this.Transaction, id);
+            anObject = (C1)this.Transaction.Instantiate(id);
             Assert.Null(anObject);
 
             this.Transaction.Rollback();
-            anObject = C1.Instantiate(this.Transaction, id);
+            anObject = (C1)this.Transaction.Instantiate(id);
             Assert.Null(anObject);
 
             //// Nothing + Rollback + Rollback
 
-            anObject = C1.Create(this.Transaction);
+            anObject = this.Transaction.Build<C1>();
             anObject.Strategy.Delete();
             Assert.True(anObject.Strategy.IsDeleted);
 
@@ -317,23 +317,23 @@ public abstract class ServicesTest : IDisposable
             Assert.True(anObject.Strategy.IsDeleted);
 
             // instantiate
-            anObject = C1.Create(this.Transaction);
+            anObject = this.Transaction.Build<C1>();
             id = anObject.Strategy.ObjectId;
 
             anObject.Strategy.Delete();
             Assert.True(anObject.Strategy.IsDeleted);
 
             this.Transaction.Rollback();
-            anObject = C1.Instantiate(this.Transaction, id);
+            anObject = (C1)this.Transaction.Instantiate(id);
             Assert.Null(anObject);
 
             this.Transaction.Rollback();
-            anObject = C1.Instantiate(this.Transaction, id);
+            anObject = (C1)this.Transaction.Instantiate(id);
             Assert.Null(anObject);
 
             //// Commit + Rollback + Rollback
 
-            anObject = C1.Create(this.Transaction);
+            anObject = this.Transaction.Build<C1>();
 
             this.Transaction.Commit();
 
@@ -347,7 +347,7 @@ public abstract class ServicesTest : IDisposable
             Assert.False(anObject.Strategy.IsDeleted);
 
             // instantiate
-            anObject = C1.Create(this.Transaction);
+            anObject = this.Transaction.Build<C1>();
             id = anObject.Strategy.ObjectId;
 
             this.Transaction.Commit();
@@ -356,16 +356,16 @@ public abstract class ServicesTest : IDisposable
             Assert.True(anObject.Strategy.IsDeleted);
 
             this.Transaction.Rollback();
-            anObject = C1.Instantiate(this.Transaction, id);
+            anObject = (C1)this.Transaction.Instantiate(id);
             Assert.False(anObject.Strategy.IsDeleted);
 
             this.Transaction.Rollback();
-            anObject = C1.Instantiate(this.Transaction, id);
+            anObject = (C1)this.Transaction.Instantiate(id);
             Assert.False(anObject.Strategy.IsDeleted);
 
             //// Nothing + Rollback + Commit
 
-            anObject = C1.Create(this.Transaction);
+            anObject = this.Transaction.Build<C1>();
 
             anObject.Strategy.Delete();
             Assert.True(anObject.Strategy.IsDeleted);
@@ -377,23 +377,23 @@ public abstract class ServicesTest : IDisposable
             Assert.True(anObject.Strategy.IsDeleted);
 
             // instantiate
-            anObject = C1.Create(this.Transaction);
+            anObject = this.Transaction.Build<C1>();
             id = anObject.Strategy.ObjectId;
 
             anObject.Strategy.Delete();
             Assert.True(anObject.Strategy.IsDeleted);
 
             this.Transaction.Rollback();
-            anObject = C1.Instantiate(this.Transaction, id);
+            anObject = (C1)this.Transaction.Instantiate(id);
             Assert.Null(anObject);
 
             this.Transaction.Rollback();
-            anObject = C1.Instantiate(this.Transaction, id);
+            anObject = (C1)this.Transaction.Instantiate(id);
             Assert.Null(anObject);
 
             //// Commit + Rollback + Commit
 
-            anObject = C1.Create(this.Transaction);
+            anObject = this.Transaction.Build<C1>();
 
             this.Transaction.Commit();
 
@@ -407,7 +407,7 @@ public abstract class ServicesTest : IDisposable
             Assert.False(anObject.Strategy.IsDeleted);
 
             // instantiate
-            anObject = C1.Create(this.Transaction);
+            anObject = this.Transaction.Build<C1>();
             id = anObject.Strategy.ObjectId;
 
             this.Transaction.Commit();
@@ -416,11 +416,11 @@ public abstract class ServicesTest : IDisposable
             Assert.True(anObject.Strategy.IsDeleted);
 
             this.Transaction.Rollback();
-            anObject = C1.Instantiate(this.Transaction, id);
+            anObject = (C1)this.Transaction.Instantiate(id);
             Assert.False(anObject.Strategy.IsDeleted);
 
             this.Transaction.Rollback();
-            anObject = C1.Instantiate(this.Transaction, id);
+            anObject = (C1)this.Transaction.Instantiate(id);
             Assert.False(anObject.Strategy.IsDeleted);
 
             // Clean up
@@ -435,7 +435,7 @@ public abstract class ServicesTest : IDisposable
             // Strategy
             if (this.Transaction is ITransaction databaseTransaction)
             {
-                var aStrategy = C1.Create(this.Transaction).Strategy;
+                var aStrategy = this.Transaction.Build<C1>().Strategy;
 
                 aStrategy.Delete();
                 Assert.True(aStrategy.IsDeleted);
@@ -444,7 +444,7 @@ public abstract class ServicesTest : IDisposable
 
                 //// Commit & Rollback
 
-                aStrategy = C1.Create(databaseTransaction).Strategy;
+                aStrategy = databaseTransaction.Build<C1>().Strategy;
                 aStrategy.Delete();
                 Assert.True(aStrategy.IsDeleted);
 
@@ -455,7 +455,7 @@ public abstract class ServicesTest : IDisposable
                 Assert.True(aStrategy.IsDeleted);
 
                 // instantiate
-                aStrategy = C1.Create(databaseTransaction).Strategy;
+                aStrategy = databaseTransaction.Build<C1>().Strategy;
                 id = aStrategy.ObjectId;
                 aStrategy.Delete();
                 Assert.True(aStrategy.IsDeleted);
@@ -470,7 +470,7 @@ public abstract class ServicesTest : IDisposable
 
                 //// Commit + Commit + Commit
 
-                aStrategy = C1.Create(databaseTransaction).Strategy;
+                aStrategy = databaseTransaction.Build<C1>().Strategy;
 
                 databaseTransaction.Commit();
 
@@ -484,7 +484,7 @@ public abstract class ServicesTest : IDisposable
                 Assert.True(aStrategy.IsDeleted);
 
                 // instantiate
-                aStrategy = C1.Create(databaseTransaction).Strategy;
+                aStrategy = databaseTransaction.Build<C1>().Strategy;
                 id = aStrategy.ObjectId;
 
                 databaseTransaction.Commit();
@@ -502,7 +502,7 @@ public abstract class ServicesTest : IDisposable
 
                 //// Nothing + Commit + Rollback
 
-                aStrategy = C1.Create(databaseTransaction).Strategy;
+                aStrategy = databaseTransaction.Build<C1>().Strategy;
 
                 aStrategy.Delete();
                 Assert.True(aStrategy.IsDeleted);
@@ -514,7 +514,7 @@ public abstract class ServicesTest : IDisposable
                 Assert.True(aStrategy.IsDeleted);
 
                 // instantiate
-                aStrategy = C1.Create(databaseTransaction).Strategy;
+                aStrategy = databaseTransaction.Build<C1>().Strategy;
                 id = aStrategy.ObjectId;
 
                 aStrategy.Delete();
@@ -530,7 +530,7 @@ public abstract class ServicesTest : IDisposable
 
                 //// Commit + Commit + Rollback
 
-                aStrategy = C1.Create(databaseTransaction).Strategy;
+                aStrategy = databaseTransaction.Build<C1>().Strategy;
 
                 databaseTransaction.Commit();
 
@@ -544,7 +544,7 @@ public abstract class ServicesTest : IDisposable
                 Assert.True(aStrategy.IsDeleted);
 
                 // instantiate
-                aStrategy = C1.Create(databaseTransaction).Strategy;
+                aStrategy = databaseTransaction.Build<C1>().Strategy;
                 id = aStrategy.ObjectId;
 
                 databaseTransaction.Commit();
@@ -562,7 +562,7 @@ public abstract class ServicesTest : IDisposable
 
                 //// Nothing + Rollback + Rollback
 
-                aStrategy = C1.Create(databaseTransaction).Strategy;
+                aStrategy = databaseTransaction.Build<C1>().Strategy;
                 aStrategy.Delete();
                 Assert.True(aStrategy.IsDeleted);
 
@@ -573,7 +573,7 @@ public abstract class ServicesTest : IDisposable
                 Assert.True(aStrategy.IsDeleted);
 
                 // instantiate
-                aStrategy = C1.Create(databaseTransaction).Strategy;
+                aStrategy = databaseTransaction.Build<C1>().Strategy;
                 id = aStrategy.ObjectId;
 
                 aStrategy.Delete();
@@ -589,7 +589,7 @@ public abstract class ServicesTest : IDisposable
 
                 //// Commit + Rollback + Rollback
 
-                aStrategy = C1.Create(databaseTransaction).Strategy;
+                aStrategy = databaseTransaction.Build<C1>().Strategy;
 
                 databaseTransaction.Commit();
 
@@ -603,7 +603,7 @@ public abstract class ServicesTest : IDisposable
                 Assert.False(aStrategy.IsDeleted);
 
                 // instantiate
-                aStrategy = C1.Create(databaseTransaction).Strategy;
+                aStrategy = databaseTransaction.Build<C1>().Strategy;
                 id = aStrategy.ObjectId;
 
                 databaseTransaction.Commit();
@@ -621,7 +621,7 @@ public abstract class ServicesTest : IDisposable
 
                 //// Nothing + Rollback + Commit
 
-                aStrategy = C1.Create(databaseTransaction).Strategy;
+                aStrategy = databaseTransaction.Build<C1>().Strategy;
 
                 aStrategy.Delete();
                 Assert.True(aStrategy.IsDeleted);
@@ -633,7 +633,7 @@ public abstract class ServicesTest : IDisposable
                 Assert.True(aStrategy.IsDeleted);
 
                 // instantiate
-                aStrategy = C1.Create(databaseTransaction).Strategy;
+                aStrategy = databaseTransaction.Build<C1>().Strategy;
                 id = aStrategy.ObjectId;
 
                 aStrategy.Delete();
@@ -649,7 +649,7 @@ public abstract class ServicesTest : IDisposable
 
                 //// Commit + Rollback + Commit
 
-                aStrategy = C1.Create(databaseTransaction).Strategy;
+                aStrategy = databaseTransaction.Build<C1>().Strategy;
 
                 databaseTransaction.Commit();
 
@@ -663,7 +663,7 @@ public abstract class ServicesTest : IDisposable
                 Assert.False(aStrategy.IsDeleted);
 
                 // instantiate
-                aStrategy = C1.Create(databaseTransaction).Strategy;
+                aStrategy = databaseTransaction.Build<C1>().Strategy;
                 id = aStrategy.ObjectId;
 
                 databaseTransaction.Commit();
@@ -691,21 +691,21 @@ public abstract class ServicesTest : IDisposable
 
             //// Units
 
-            anObject = C1.Create(this.Transaction);
+            anObject = this.Transaction.Build<C1>();
             anObject.C1AllorsString = "a";
             anObject.Strategy.Delete();
 
             StrategyAssert.RoleExistHasException(anObject, m.C1.C1AllorsString);
 
-            anObject = C1.Create(this.Transaction);
+            anObject = this.Transaction.Build<C1>();
             anObject.C1AllorsString = "a";
             anObject.Strategy.Delete();
 
             StrategyAssert.RoleGetHasException(anObject, m.C1.C1AllorsString);
 
-            var secondObject = C1.Create(this.Transaction);
+            var secondObject = this.Transaction.Build<C1>();
             secondObject.C1AllorsString = "b";
-            var thirdObject = C1.Create(this.Transaction);
+            var thirdObject = this.Transaction.Build<C1>();
             thirdObject.C1AllorsString = "c";
 
             Assert.Equal(2, this.GetExtent(m.C1).Length);
@@ -718,7 +718,7 @@ public abstract class ServicesTest : IDisposable
 
             //// Cached
 
-            anObject = C1.Create(this.Transaction);
+            anObject = this.Transaction.Build<C1>();
             anObject.C1AllorsString = "a";
 
             AllorsTestUtils.ForceRoleCaching(anObject);
@@ -727,7 +727,7 @@ public abstract class ServicesTest : IDisposable
 
             StrategyAssert.RoleExistHasException(anObject, m.C1.C1AllorsString);
 
-            anObject = C1.Create(this.Transaction);
+            anObject = this.Transaction.Build<C1>();
             anObject.C1AllorsString = "a";
 
             AllorsTestUtils.ForceRoleCaching(anObject);
@@ -736,9 +736,9 @@ public abstract class ServicesTest : IDisposable
 
             StrategyAssert.RoleGetHasException(anObject, m.C1.C1AllorsString);
 
-            secondObject = C1.Create(this.Transaction);
+            secondObject = this.Transaction.Build<C1>();
             secondObject.C1AllorsString = "b";
-            thirdObject = C1.Create(this.Transaction);
+            thirdObject = this.Transaction.Build<C1>();
             thirdObject.C1AllorsString = "c";
 
             Assert.Equal(2, this.GetExtent(m.C1).Length);
@@ -755,7 +755,7 @@ public abstract class ServicesTest : IDisposable
 
             //// Commit
 
-            anObject = C1.Create(this.Transaction);
+            anObject = this.Transaction.Build<C1>();
             anObject.C1AllorsString = "a";
             anObject.Strategy.Delete();
 
@@ -763,7 +763,7 @@ public abstract class ServicesTest : IDisposable
 
             StrategyAssert.RoleExistHasException(anObject, m.C1.C1AllorsString);
 
-            anObject = C1.Create(this.Transaction);
+            anObject = this.Transaction.Build<C1>();
             anObject.C1AllorsString = "a";
             anObject.Strategy.Delete();
 
@@ -771,9 +771,9 @@ public abstract class ServicesTest : IDisposable
 
             StrategyAssert.RoleGetHasException(anObject, m.C1.C1AllorsString);
 
-            secondObject = C1.Create(this.Transaction);
+            secondObject = this.Transaction.Build<C1>();
             secondObject.C1AllorsString = "b";
-            thirdObject = C1.Create(this.Transaction);
+            thirdObject = this.Transaction.Build<C1>();
             thirdObject.C1AllorsString = "c";
 
             Assert.Equal(2, this.GetExtent(m.C1).Length);
@@ -790,7 +790,7 @@ public abstract class ServicesTest : IDisposable
 
             //// Cached
 
-            anObject = C1.Create(this.Transaction);
+            anObject = this.Transaction.Build<C1>();
             anObject.C1AllorsString = "a";
 
             AllorsTestUtils.ForceRoleCaching(anObject);
@@ -800,7 +800,7 @@ public abstract class ServicesTest : IDisposable
 
             StrategyAssert.RoleExistHasException(anObject, m.C1.C1AllorsString);
 
-            anObject = C1.Create(this.Transaction);
+            anObject = this.Transaction.Build<C1>();
             anObject.C1AllorsString = "a";
 
             AllorsTestUtils.ForceRoleCaching(anObject);
@@ -810,9 +810,9 @@ public abstract class ServicesTest : IDisposable
 
             StrategyAssert.RoleGetHasException(anObject, m.C1.C1AllorsString);
 
-            secondObject = C1.Create(this.Transaction);
+            secondObject = this.Transaction.Build<C1>();
             secondObject.C1AllorsString = "b";
-            thirdObject = C1.Create(this.Transaction);
+            thirdObject = this.Transaction.Build<C1>();
             thirdObject.C1AllorsString = "c";
 
             Assert.Equal(2, this.GetExtent(m.C1).Length);
@@ -831,7 +831,7 @@ public abstract class ServicesTest : IDisposable
 
             //// Rollback
 
-            anObject = C1.Create(this.Transaction);
+            anObject = this.Transaction.Build<C1>();
             anObject.C1AllorsString = "a";
             this.Transaction.Commit();
 
@@ -842,9 +842,9 @@ public abstract class ServicesTest : IDisposable
             Assert.Single(this.GetExtent(m.C1));
             Assert.Equal("a", ((C1)this.GetExtent(m.C1)[0]).C1AllorsString);
 
-            secondObject = C1.Create(this.Transaction);
+            secondObject = this.Transaction.Build<C1>();
             secondObject.C1AllorsString = "b";
-            thirdObject = C1.Create(this.Transaction);
+            thirdObject = this.Transaction.Build<C1>();
             thirdObject.C1AllorsString = "c";
 
             Assert.Equal(3, this.GetExtent(m.C1).Length);
@@ -861,7 +861,7 @@ public abstract class ServicesTest : IDisposable
 
             //// Cached
 
-            anObject = C1.Create(this.Transaction);
+            anObject = this.Transaction.Build<C1>();
             anObject.C1AllorsString = "a";
             this.Transaction.Commit();
 
@@ -873,9 +873,9 @@ public abstract class ServicesTest : IDisposable
             Assert.Single(this.GetExtent(m.C1));
             Assert.Equal("a", ((C1)this.GetExtent(m.C1)[0]).C1AllorsString);
 
-            secondObject = C1.Create(this.Transaction);
+            secondObject = this.Transaction.Build<C1>();
             secondObject.C1AllorsString = "b";
-            thirdObject = C1.Create(this.Transaction);
+            thirdObject = this.Transaction.Build<C1>();
             thirdObject.C1AllorsString = "c";
 
             Assert.Equal(3, this.GetExtent(m.C1).Length);
@@ -896,20 +896,20 @@ public abstract class ServicesTest : IDisposable
 
             //// Role
 
-            var fromC1a = C1.Create(this.Transaction);
-            var fromC1b = C1.Create(this.Transaction);
-            var fromC1c = C1.Create(this.Transaction);
-            var fromC1d = C1.Create(this.Transaction);
+            var fromC1a = this.Transaction.Build<C1>();
+            var fromC1b = this.Transaction.Build<C1>();
+            var fromC1c = this.Transaction.Build<C1>();
+            var fromC1d = this.Transaction.Build<C1>();
 
-            var toC1a = C1.Create(this.Transaction);
-            var toC1b = C1.Create(this.Transaction);
-            var toC1c = C1.Create(this.Transaction);
-            var toC1d = C1.Create(this.Transaction);
+            var toC1a = this.Transaction.Build<C1>();
+            var toC1b = this.Transaction.Build<C1>();
+            var toC1c = this.Transaction.Build<C1>();
+            var toC1d = this.Transaction.Build<C1>();
 
-            var toC2a = C2.Create(this.Transaction);
-            var toC2b = C2.Create(this.Transaction);
-            var toC2c = C2.Create(this.Transaction);
-            var toC2d = C2.Create(this.Transaction);
+            var toC2a = this.Transaction.Build<C2>();
+            var toC2b = this.Transaction.Build<C2>();
+            var toC2c = this.Transaction.Build<C2>();
+            var toC2d = this.Transaction.Build<C2>();
 
             //// C1 <-> C1
 
@@ -1033,13 +1033,13 @@ public abstract class ServicesTest : IDisposable
 
             //// C1 <-> C1
 
-            fromC1a = C1.Create(this.Transaction);
-            fromC1b = C1.Create(this.Transaction);
+            fromC1a = this.Transaction.Build<C1>();
+            fromC1b = this.Transaction.Build<C1>();
 
-            toC1a = C1.Create(this.Transaction);
-            toC1b = C1.Create(this.Transaction);
-            toC1c = C1.Create(this.Transaction);
-            toC1d = C1.Create(this.Transaction);
+            toC1a = this.Transaction.Build<C1>();
+            toC1b = this.Transaction.Build<C1>();
+            toC1c = this.Transaction.Build<C1>();
+            toC1d = this.Transaction.Build<C1>();
 
             fromC1a.C1C1one2one = toC1a;
             fromC1b.C1C1one2one = toC1c;
@@ -1100,13 +1100,13 @@ public abstract class ServicesTest : IDisposable
 
             //// C1 <-> C2
 
-            fromC1a = C1.Create(this.Transaction);
-            fromC1b = C1.Create(this.Transaction);
+            fromC1a = this.Transaction.Build<C1>();
+            fromC1b = this.Transaction.Build<C1>();
 
-            toC2a = C2.Create(this.Transaction);
-            toC2b = C2.Create(this.Transaction);
-            toC2c = C2.Create(this.Transaction);
-            toC2d = C2.Create(this.Transaction);
+            toC2a = this.Transaction.Build<C2>();
+            toC2b = this.Transaction.Build<C2>();
+            toC2c = this.Transaction.Build<C2>();
+            toC2d = this.Transaction.Build<C2>();
 
             fromC1a.C1C2one2one = toC2a;
             fromC1b.C1C2one2one = toC2c;
@@ -1169,15 +1169,15 @@ public abstract class ServicesTest : IDisposable
 
             //// C1 <-> C1
 
-            fromC1a = C1.Create(this.Transaction);
-            fromC1b = C1.Create(this.Transaction);
-            fromC1c = C1.Create(this.Transaction);
-            fromC1d = C1.Create(this.Transaction);
+            fromC1a = this.Transaction.Build<C1>();
+            fromC1b = this.Transaction.Build<C1>();
+            fromC1c = this.Transaction.Build<C1>();
+            fromC1d = this.Transaction.Build<C1>();
 
-            toC1a = C1.Create(this.Transaction);
-            toC1b = C1.Create(this.Transaction);
-            toC1c = C1.Create(this.Transaction);
-            toC1d = C1.Create(this.Transaction);
+            toC1a = this.Transaction.Build<C1>();
+            toC1b = this.Transaction.Build<C1>();
+            toC1c = this.Transaction.Build<C1>();
+            toC1d = this.Transaction.Build<C1>();
 
             fromC1a.C1C1one2one = toC1a;
             fromC1b.C1C1one2one = toC1c;
@@ -1211,15 +1211,15 @@ public abstract class ServicesTest : IDisposable
             Assert.True(toC1d.Strategy.IsDeleted);
 
             // Commit + Rollback
-            fromC1a = C1.Create(this.Transaction);
-            fromC1b = C1.Create(this.Transaction);
-            fromC1c = C1.Create(this.Transaction);
-            fromC1d = C1.Create(this.Transaction);
+            fromC1a = this.Transaction.Build<C1>();
+            fromC1b = this.Transaction.Build<C1>();
+            fromC1c = this.Transaction.Build<C1>();
+            fromC1d = this.Transaction.Build<C1>();
 
-            toC1a = C1.Create(this.Transaction);
-            toC1b = C1.Create(this.Transaction);
-            toC1c = C1.Create(this.Transaction);
-            toC1d = C1.Create(this.Transaction);
+            toC1a = this.Transaction.Build<C1>();
+            toC1b = this.Transaction.Build<C1>();
+            toC1c = this.Transaction.Build<C1>();
+            toC1d = this.Transaction.Build<C1>();
 
             fromC1a.C1C1one2one = toC1a;
             fromC1b.C1C1one2one = toC1c;
@@ -1262,15 +1262,15 @@ public abstract class ServicesTest : IDisposable
 
             //// C1 <-> C2
 
-            fromC1a = C1.Create(this.Transaction);
-            fromC1b = C1.Create(this.Transaction);
-            fromC1c = C1.Create(this.Transaction);
-            fromC1d = C1.Create(this.Transaction);
+            fromC1a = this.Transaction.Build<C1>();
+            fromC1b = this.Transaction.Build<C1>();
+            fromC1c = this.Transaction.Build<C1>();
+            fromC1d = this.Transaction.Build<C1>();
 
-            toC2a = C2.Create(this.Transaction);
-            toC2b = C2.Create(this.Transaction);
-            toC2c = C2.Create(this.Transaction);
-            toC2d = C2.Create(this.Transaction);
+            toC2a = this.Transaction.Build<C2>();
+            toC2b = this.Transaction.Build<C2>();
+            toC2c = this.Transaction.Build<C2>();
+            toC2d = this.Transaction.Build<C2>();
 
             fromC1a.C1C2one2one = toC2a;
             fromC1b.C1C2one2one = toC2c;
@@ -1304,15 +1304,15 @@ public abstract class ServicesTest : IDisposable
             Assert.True(toC2d.Strategy.IsDeleted);
 
             // Commit + Rollback
-            fromC1a = C1.Create(this.Transaction);
-            fromC1b = C1.Create(this.Transaction);
-            fromC1c = C1.Create(this.Transaction);
-            fromC1d = C1.Create(this.Transaction);
+            fromC1a = this.Transaction.Build<C1>();
+            fromC1b = this.Transaction.Build<C1>();
+            fromC1c = this.Transaction.Build<C1>();
+            fromC1d = this.Transaction.Build<C1>();
 
-            toC2a = C2.Create(this.Transaction);
-            toC2b = C2.Create(this.Transaction);
-            toC2c = C2.Create(this.Transaction);
-            toC2d = C2.Create(this.Transaction);
+            toC2a = this.Transaction.Build<C2>();
+            toC2b = this.Transaction.Build<C2>();
+            toC2c = this.Transaction.Build<C2>();
+            toC2d = this.Transaction.Build<C2>();
 
             fromC1a.C1C2one2one = toC2a;
             fromC1b.C1C2one2one = toC2c;
@@ -1357,13 +1357,13 @@ public abstract class ServicesTest : IDisposable
 
             //// C1 <-> C1
 
-            fromC1a = C1.Create(this.Transaction);
-            fromC1b = C1.Create(this.Transaction);
+            fromC1a = this.Transaction.Build<C1>();
+            fromC1b = this.Transaction.Build<C1>();
 
-            toC1a = C1.Create(this.Transaction);
-            toC1b = C1.Create(this.Transaction);
-            toC1c = C1.Create(this.Transaction);
-            toC1d = C1.Create(this.Transaction);
+            toC1a = this.Transaction.Build<C1>();
+            toC1b = this.Transaction.Build<C1>();
+            toC1c = this.Transaction.Build<C1>();
+            toC1d = this.Transaction.Build<C1>();
 
             fromC1a.C1C1one2one = toC1a;
             fromC1b.C1C1one2one = toC1c;
@@ -1427,13 +1427,13 @@ public abstract class ServicesTest : IDisposable
 
             //// Commit
 
-            fromC1a = C1.Create(this.Transaction);
-            fromC1b = C1.Create(this.Transaction);
+            fromC1a = this.Transaction.Build<C1>();
+            fromC1b = this.Transaction.Build<C1>();
 
-            toC1a = C1.Create(this.Transaction);
-            toC1b = C1.Create(this.Transaction);
-            toC1c = C1.Create(this.Transaction);
-            toC1d = C1.Create(this.Transaction);
+            toC1a = this.Transaction.Build<C1>();
+            toC1b = this.Transaction.Build<C1>();
+            toC1c = this.Transaction.Build<C1>();
+            toC1d = this.Transaction.Build<C1>();
 
             fromC1a.C1C1one2one = toC1a;
             fromC1b.C1C1one2one = toC1c;
@@ -1499,15 +1499,15 @@ public abstract class ServicesTest : IDisposable
 
             //// Rollback
 
-            fromC1a = C1.Create(this.Transaction);
-            fromC1b = C1.Create(this.Transaction);
-            fromC1c = C1.Create(this.Transaction);
-            fromC1d = C1.Create(this.Transaction);
+            fromC1a = this.Transaction.Build<C1>();
+            fromC1b = this.Transaction.Build<C1>();
+            fromC1c = this.Transaction.Build<C1>();
+            fromC1d = this.Transaction.Build<C1>();
 
-            toC1a = C1.Create(this.Transaction);
-            toC1b = C1.Create(this.Transaction);
-            toC1c = C1.Create(this.Transaction);
-            toC1d = C1.Create(this.Transaction);
+            toC1a = this.Transaction.Build<C1>();
+            toC1b = this.Transaction.Build<C1>();
+            toC1c = this.Transaction.Build<C1>();
+            toC1d = this.Transaction.Build<C1>();
 
             fromC1a.C1C1one2one = toC1a;
             fromC1b.C1C1one2one = toC1c;
@@ -1545,15 +1545,15 @@ public abstract class ServicesTest : IDisposable
 
             //// Commit + Rollback
 
-            fromC1a = C1.Create(this.Transaction);
-            fromC1b = C1.Create(this.Transaction);
-            fromC1c = C1.Create(this.Transaction);
-            fromC1d = C1.Create(this.Transaction);
+            fromC1a = this.Transaction.Build<C1>();
+            fromC1b = this.Transaction.Build<C1>();
+            fromC1c = this.Transaction.Build<C1>();
+            fromC1d = this.Transaction.Build<C1>();
 
-            toC1a = C1.Create(this.Transaction);
-            toC1b = C1.Create(this.Transaction);
-            toC1c = C1.Create(this.Transaction);
-            toC1d = C1.Create(this.Transaction);
+            toC1a = this.Transaction.Build<C1>();
+            toC1b = this.Transaction.Build<C1>();
+            toC1c = this.Transaction.Build<C1>();
+            toC1d = this.Transaction.Build<C1>();
 
             fromC1a.C1C1one2one = toC1a;
             fromC1b.C1C1one2one = toC1c;
@@ -1599,13 +1599,13 @@ public abstract class ServicesTest : IDisposable
 
             //// C1 <-> C2
 
-            fromC1a = C1.Create(this.Transaction);
-            fromC1b = C1.Create(this.Transaction);
+            fromC1a = this.Transaction.Build<C1>();
+            fromC1b = this.Transaction.Build<C1>();
 
-            toC2a = C2.Create(this.Transaction);
-            toC2b = C2.Create(this.Transaction);
-            toC2c = C2.Create(this.Transaction);
-            toC2d = C2.Create(this.Transaction);
+            toC2a = this.Transaction.Build<C2>();
+            toC2b = this.Transaction.Build<C2>();
+            toC2c = this.Transaction.Build<C2>();
+            toC2d = this.Transaction.Build<C2>();
 
             fromC1a.C1C2one2one = toC2a;
             fromC1b.C1C2one2one = toC2c;
@@ -1669,13 +1669,13 @@ public abstract class ServicesTest : IDisposable
 
             //// Commit
 
-            fromC1a = C1.Create(this.Transaction);
-            fromC1b = C1.Create(this.Transaction);
+            fromC1a = this.Transaction.Build<C1>();
+            fromC1b = this.Transaction.Build<C1>();
 
-            toC2a = C2.Create(this.Transaction);
-            toC2b = C2.Create(this.Transaction);
-            toC2c = C2.Create(this.Transaction);
-            toC2d = C2.Create(this.Transaction);
+            toC2a = this.Transaction.Build<C2>();
+            toC2b = this.Transaction.Build<C2>();
+            toC2c = this.Transaction.Build<C2>();
+            toC2d = this.Transaction.Build<C2>();
 
             fromC1a.C1C2one2one = toC2a;
             fromC1b.C1C2one2one = toC2c;
@@ -1741,15 +1741,15 @@ public abstract class ServicesTest : IDisposable
 
             //// Rollback
 
-            fromC1a = C1.Create(this.Transaction);
-            fromC1b = C1.Create(this.Transaction);
-            fromC1c = C1.Create(this.Transaction);
-            fromC1d = C1.Create(this.Transaction);
+            fromC1a = this.Transaction.Build<C1>();
+            fromC1b = this.Transaction.Build<C1>();
+            fromC1c = this.Transaction.Build<C1>();
+            fromC1d = this.Transaction.Build<C1>();
 
-            toC2a = C2.Create(this.Transaction);
-            toC2b = C2.Create(this.Transaction);
-            toC2c = C2.Create(this.Transaction);
-            toC2d = C2.Create(this.Transaction);
+            toC2a = this.Transaction.Build<C2>();
+            toC2b = this.Transaction.Build<C2>();
+            toC2c = this.Transaction.Build<C2>();
+            toC2d = this.Transaction.Build<C2>();
 
             fromC1a.C1C2one2one = toC2a;
             fromC1b.C1C2one2one = toC2c;
@@ -1786,15 +1786,15 @@ public abstract class ServicesTest : IDisposable
             Assert.True(toC2d.Strategy.IsDeleted);
 
             // Commit + Rollback
-            fromC1a = C1.Create(this.Transaction);
-            fromC1b = C1.Create(this.Transaction);
-            fromC1c = C1.Create(this.Transaction);
-            fromC1d = C1.Create(this.Transaction);
+            fromC1a = this.Transaction.Build<C1>();
+            fromC1b = this.Transaction.Build<C1>();
+            fromC1c = this.Transaction.Build<C1>();
+            fromC1d = this.Transaction.Build<C1>();
 
-            toC2a = C2.Create(this.Transaction);
-            toC2b = C2.Create(this.Transaction);
-            toC2c = C2.Create(this.Transaction);
-            toC2d = C2.Create(this.Transaction);
+            toC2a = this.Transaction.Build<C2>();
+            toC2b = this.Transaction.Build<C2>();
+            toC2c = this.Transaction.Build<C2>();
+            toC2d = this.Transaction.Build<C2>();
 
             fromC1a.C1C2one2one = toC2a;
             fromC1b.C1C2one2one = toC2c;
@@ -1842,13 +1842,13 @@ public abstract class ServicesTest : IDisposable
 
             //// C1 <-> C1
 
-            fromC1a = C1.Create(this.Transaction);
-            fromC1b = C1.Create(this.Transaction);
+            fromC1a = this.Transaction.Build<C1>();
+            fromC1b = this.Transaction.Build<C1>();
 
-            toC1a = C1.Create(this.Transaction);
-            toC1b = C1.Create(this.Transaction);
-            toC1c = C1.Create(this.Transaction);
-            toC1d = C1.Create(this.Transaction);
+            toC1a = this.Transaction.Build<C1>();
+            toC1b = this.Transaction.Build<C1>();
+            toC1c = this.Transaction.Build<C1>();
+            toC1d = this.Transaction.Build<C1>();
 
             fromC1a.C1C1one2one = toC1a;
             fromC1a.AddC1C1one2many(toC1a);
@@ -1889,13 +1889,13 @@ public abstract class ServicesTest : IDisposable
 
             //// C1 <-> C2
 
-            fromC1a = C1.Create(this.Transaction);
-            fromC1b = C1.Create(this.Transaction);
+            fromC1a = this.Transaction.Build<C1>();
+            fromC1b = this.Transaction.Build<C1>();
 
-            toC2a = C2.Create(this.Transaction);
-            toC2b = C2.Create(this.Transaction);
-            toC2c = C2.Create(this.Transaction);
-            toC2d = C2.Create(this.Transaction);
+            toC2a = this.Transaction.Build<C2>();
+            toC2b = this.Transaction.Build<C2>();
+            toC2c = this.Transaction.Build<C2>();
+            toC2d = this.Transaction.Build<C2>();
 
             fromC1a.C1C2one2one = toC2a;
             fromC1a.AddC1C2one2many(toC2a);
@@ -1938,13 +1938,13 @@ public abstract class ServicesTest : IDisposable
 
             //// C1 <-> C1
 
-            fromC1a = C1.Create(this.Transaction);
-            fromC1b = C1.Create(this.Transaction);
+            fromC1a = this.Transaction.Build<C1>();
+            fromC1b = this.Transaction.Build<C1>();
 
-            toC1a = C1.Create(this.Transaction);
-            toC1b = C1.Create(this.Transaction);
-            toC1c = C1.Create(this.Transaction);
-            toC1d = C1.Create(this.Transaction);
+            toC1a = this.Transaction.Build<C1>();
+            toC1b = this.Transaction.Build<C1>();
+            toC1c = this.Transaction.Build<C1>();
+            toC1d = this.Transaction.Build<C1>();
 
             fromC1a.C1C1one2one = toC1a;
             fromC1a.AddC1C1one2many(toC1a);
@@ -1978,13 +1978,13 @@ public abstract class ServicesTest : IDisposable
 
             //// C1 <-> C2
 
-            fromC1a = C1.Create(this.Transaction);
-            fromC1b = C1.Create(this.Transaction);
+            fromC1a = this.Transaction.Build<C1>();
+            fromC1b = this.Transaction.Build<C1>();
 
-            toC2a = C2.Create(this.Transaction);
-            toC2b = C2.Create(this.Transaction);
-            toC2c = C2.Create(this.Transaction);
-            toC2d = C2.Create(this.Transaction);
+            toC2a = this.Transaction.Build<C2>();
+            toC2b = this.Transaction.Build<C2>();
+            toC2c = this.Transaction.Build<C2>();
+            toC2d = this.Transaction.Build<C2>();
 
             fromC1a.C1C2one2one = toC2a;
             fromC1a.AddC1C2one2many(toC2a);
@@ -2020,15 +2020,15 @@ public abstract class ServicesTest : IDisposable
 
             //// C1 <-> C1
 
-            fromC1a = C1.Create(this.Transaction);
-            fromC1b = C1.Create(this.Transaction);
-            fromC1c = C1.Create(this.Transaction);
-            fromC1d = C1.Create(this.Transaction);
+            fromC1a = this.Transaction.Build<C1>();
+            fromC1b = this.Transaction.Build<C1>();
+            fromC1c = this.Transaction.Build<C1>();
+            fromC1d = this.Transaction.Build<C1>();
 
-            toC1a = C1.Create(this.Transaction);
-            toC1b = C1.Create(this.Transaction);
-            toC1c = C1.Create(this.Transaction);
-            toC1d = C1.Create(this.Transaction);
+            toC1a = this.Transaction.Build<C1>();
+            toC1b = this.Transaction.Build<C1>();
+            toC1c = this.Transaction.Build<C1>();
+            toC1d = this.Transaction.Build<C1>();
 
             fromC1a.C1C1one2one = toC1a;
             fromC1a.AddC1C1one2many(toC1a);
@@ -2078,15 +2078,15 @@ public abstract class ServicesTest : IDisposable
             Assert.True(toC1d.Strategy.IsDeleted);
 
             // Commit + Rollback
-            fromC1a = C1.Create(this.Transaction);
-            fromC1b = C1.Create(this.Transaction);
-            fromC1c = C1.Create(this.Transaction);
-            fromC1d = C1.Create(this.Transaction);
+            fromC1a = this.Transaction.Build<C1>();
+            fromC1b = this.Transaction.Build<C1>();
+            fromC1c = this.Transaction.Build<C1>();
+            fromC1d = this.Transaction.Build<C1>();
 
-            toC1a = C1.Create(this.Transaction);
-            toC1b = C1.Create(this.Transaction);
-            toC1c = C1.Create(this.Transaction);
-            toC1d = C1.Create(this.Transaction);
+            toC1a = this.Transaction.Build<C1>();
+            toC1b = this.Transaction.Build<C1>();
+            toC1c = this.Transaction.Build<C1>();
+            toC1d = this.Transaction.Build<C1>();
 
             fromC1a.C1C1one2one = toC1a;
             fromC1a.AddC1C1one2many(toC1a);
@@ -2125,15 +2125,15 @@ public abstract class ServicesTest : IDisposable
 
             //// C1 <-> C2
 
-            fromC1a = C1.Create(this.Transaction);
-            fromC1b = C1.Create(this.Transaction);
-            fromC1c = C1.Create(this.Transaction);
-            fromC1d = C1.Create(this.Transaction);
+            fromC1a = this.Transaction.Build<C1>();
+            fromC1b = this.Transaction.Build<C1>();
+            fromC1c = this.Transaction.Build<C1>();
+            fromC1d = this.Transaction.Build<C1>();
 
-            toC2a = C2.Create(this.Transaction);
-            toC2b = C2.Create(this.Transaction);
-            toC2c = C2.Create(this.Transaction);
-            toC2d = C2.Create(this.Transaction);
+            toC2a = this.Transaction.Build<C2>();
+            toC2b = this.Transaction.Build<C2>();
+            toC2c = this.Transaction.Build<C2>();
+            toC2d = this.Transaction.Build<C2>();
 
             fromC1a.C1C2one2one = toC2a;
             fromC1a.AddC1C2one2many(toC2a);
@@ -2183,15 +2183,15 @@ public abstract class ServicesTest : IDisposable
             Assert.True(toC2d.Strategy.IsDeleted);
 
             // Commit + Rollback
-            fromC1a = C1.Create(this.Transaction);
-            fromC1b = C1.Create(this.Transaction);
-            fromC1c = C1.Create(this.Transaction);
-            fromC1d = C1.Create(this.Transaction);
+            fromC1a = this.Transaction.Build<C1>();
+            fromC1b = this.Transaction.Build<C1>();
+            fromC1c = this.Transaction.Build<C1>();
+            fromC1d = this.Transaction.Build<C1>();
 
-            toC2a = C2.Create(this.Transaction);
-            toC2b = C2.Create(this.Transaction);
-            toC2c = C2.Create(this.Transaction);
-            toC2d = C2.Create(this.Transaction);
+            toC2a = this.Transaction.Build<C2>();
+            toC2b = this.Transaction.Build<C2>();
+            toC2c = this.Transaction.Build<C2>();
+            toC2d = this.Transaction.Build<C2>();
 
             fromC1a.C1C2one2one = toC2a;
             fromC1a.AddC1C2one2many(toC2a);
@@ -2232,13 +2232,13 @@ public abstract class ServicesTest : IDisposable
 
             //// C1 <-> C1
 
-            fromC1a = C1.Create(this.Transaction);
-            fromC1b = C1.Create(this.Transaction);
+            fromC1a = this.Transaction.Build<C1>();
+            fromC1b = this.Transaction.Build<C1>();
 
-            toC1a = C1.Create(this.Transaction);
-            toC1b = C1.Create(this.Transaction);
-            toC1c = C1.Create(this.Transaction);
-            toC1d = C1.Create(this.Transaction);
+            toC1a = this.Transaction.Build<C1>();
+            toC1b = this.Transaction.Build<C1>();
+            toC1c = this.Transaction.Build<C1>();
+            toC1d = this.Transaction.Build<C1>();
 
             fromC1a.C1C1one2one = toC1a;
             fromC1a.AddC1C1one2many(toC1a);
@@ -2284,13 +2284,13 @@ public abstract class ServicesTest : IDisposable
 
             //// Commit
 
-            fromC1a = C1.Create(this.Transaction);
-            fromC1b = C1.Create(this.Transaction);
+            fromC1a = this.Transaction.Build<C1>();
+            fromC1b = this.Transaction.Build<C1>();
 
-            toC1a = C1.Create(this.Transaction);
-            toC1b = C1.Create(this.Transaction);
-            toC1c = C1.Create(this.Transaction);
-            toC1d = C1.Create(this.Transaction);
+            toC1a = this.Transaction.Build<C1>();
+            toC1b = this.Transaction.Build<C1>();
+            toC1c = this.Transaction.Build<C1>();
+            toC1d = this.Transaction.Build<C1>();
 
             fromC1a.C1C1one2one = toC1a;
             fromC1a.AddC1C1one2many(toC1a);
@@ -2327,15 +2327,15 @@ public abstract class ServicesTest : IDisposable
 
             //// Rollback
 
-            fromC1a = C1.Create(this.Transaction);
-            fromC1b = C1.Create(this.Transaction);
-            fromC1c = C1.Create(this.Transaction);
-            fromC1d = C1.Create(this.Transaction);
+            fromC1a = this.Transaction.Build<C1>();
+            fromC1b = this.Transaction.Build<C1>();
+            fromC1c = this.Transaction.Build<C1>();
+            fromC1d = this.Transaction.Build<C1>();
 
-            toC1a = C1.Create(this.Transaction);
-            toC1b = C1.Create(this.Transaction);
-            toC1c = C1.Create(this.Transaction);
-            toC1d = C1.Create(this.Transaction);
+            toC1a = this.Transaction.Build<C1>();
+            toC1b = this.Transaction.Build<C1>();
+            toC1c = this.Transaction.Build<C1>();
+            toC1d = this.Transaction.Build<C1>();
 
             fromC1a.C1C1one2one = toC1a;
             fromC1a.AddC1C1one2many(toC1a);
@@ -2389,15 +2389,15 @@ public abstract class ServicesTest : IDisposable
 
             //// Commit + Rollback
 
-            fromC1a = C1.Create(this.Transaction);
-            fromC1b = C1.Create(this.Transaction);
-            fromC1c = C1.Create(this.Transaction);
-            fromC1d = C1.Create(this.Transaction);
+            fromC1a = this.Transaction.Build<C1>();
+            fromC1b = this.Transaction.Build<C1>();
+            fromC1c = this.Transaction.Build<C1>();
+            fromC1d = this.Transaction.Build<C1>();
 
-            toC1a = C1.Create(this.Transaction);
-            toC1b = C1.Create(this.Transaction);
-            toC1c = C1.Create(this.Transaction);
-            toC1d = C1.Create(this.Transaction);
+            toC1a = this.Transaction.Build<C1>();
+            toC1b = this.Transaction.Build<C1>();
+            toC1c = this.Transaction.Build<C1>();
+            toC1d = this.Transaction.Build<C1>();
 
             fromC1a.C1C1one2one = toC1a;
             fromC1a.AddC1C1one2many(toC1a);
@@ -2439,13 +2439,13 @@ public abstract class ServicesTest : IDisposable
 
             //// C1 <-> C2
 
-            fromC1a = C1.Create(this.Transaction);
-            fromC1b = C1.Create(this.Transaction);
+            fromC1a = this.Transaction.Build<C1>();
+            fromC1b = this.Transaction.Build<C1>();
 
-            toC2a = C2.Create(this.Transaction);
-            toC2b = C2.Create(this.Transaction);
-            toC2c = C2.Create(this.Transaction);
-            toC2d = C2.Create(this.Transaction);
+            toC2a = this.Transaction.Build<C2>();
+            toC2b = this.Transaction.Build<C2>();
+            toC2c = this.Transaction.Build<C2>();
+            toC2d = this.Transaction.Build<C2>();
 
             fromC1a.C1C2one2one = toC2a;
             fromC1a.AddC1C2one2many(toC2a);
@@ -2491,13 +2491,13 @@ public abstract class ServicesTest : IDisposable
 
             //// Commit
 
-            fromC1a = C1.Create(this.Transaction);
-            fromC1b = C1.Create(this.Transaction);
+            fromC1a = this.Transaction.Build<C1>();
+            fromC1b = this.Transaction.Build<C1>();
 
-            toC2a = C2.Create(this.Transaction);
-            toC2b = C2.Create(this.Transaction);
-            toC2c = C2.Create(this.Transaction);
-            toC2d = C2.Create(this.Transaction);
+            toC2a = this.Transaction.Build<C2>();
+            toC2b = this.Transaction.Build<C2>();
+            toC2c = this.Transaction.Build<C2>();
+            toC2d = this.Transaction.Build<C2>();
 
             fromC1a.C1C2one2one = toC2a;
             fromC1a.AddC1C2one2many(toC2a);
@@ -2534,15 +2534,15 @@ public abstract class ServicesTest : IDisposable
 
             //// Rollback
 
-            fromC1a = C1.Create(this.Transaction);
-            fromC1b = C1.Create(this.Transaction);
-            fromC1c = C1.Create(this.Transaction);
-            fromC1d = C1.Create(this.Transaction);
+            fromC1a = this.Transaction.Build<C1>();
+            fromC1b = this.Transaction.Build<C1>();
+            fromC1c = this.Transaction.Build<C1>();
+            fromC1d = this.Transaction.Build<C1>();
 
-            toC2a = C2.Create(this.Transaction);
-            toC2b = C2.Create(this.Transaction);
-            toC2c = C2.Create(this.Transaction);
-            toC2d = C2.Create(this.Transaction);
+            toC2a = this.Transaction.Build<C2>();
+            toC2b = this.Transaction.Build<C2>();
+            toC2c = this.Transaction.Build<C2>();
+            toC2d = this.Transaction.Build<C2>();
 
             fromC1a.C1C2one2one = toC2a;
             fromC1a.AddC1C2one2many(toC2a);
@@ -2596,15 +2596,15 @@ public abstract class ServicesTest : IDisposable
 
             //// Commit + Rollback
 
-            fromC1a = C1.Create(this.Transaction);
-            fromC1b = C1.Create(this.Transaction);
-            fromC1c = C1.Create(this.Transaction);
-            fromC1d = C1.Create(this.Transaction);
+            fromC1a = this.Transaction.Build<C1>();
+            fromC1b = this.Transaction.Build<C1>();
+            fromC1c = this.Transaction.Build<C1>();
+            fromC1d = this.Transaction.Build<C1>();
 
-            toC2a = C2.Create(this.Transaction);
-            toC2b = C2.Create(this.Transaction);
-            toC2c = C2.Create(this.Transaction);
-            toC2d = C2.Create(this.Transaction);
+            toC2a = this.Transaction.Build<C2>();
+            toC2b = this.Transaction.Build<C2>();
+            toC2c = this.Transaction.Build<C2>();
+            toC2d = this.Transaction.Build<C2>();
 
             fromC1a.C1C2one2one = toC2a;
             fromC1a.AddC1C2one2many(toC2a);
@@ -2646,8 +2646,8 @@ public abstract class ServicesTest : IDisposable
 
             //// Assignment
 
-            anObject = C1.Create(this.Transaction);
-            var c1Removed = C1.Create(this.Transaction);
+            anObject = this.Transaction.Build<C1>();
+            var c1Removed = this.Transaction.Build<C1>();
             c1Removed.Strategy.Delete();
             C1[] c1RemovedArray = [c1Removed];
 
@@ -2717,8 +2717,8 @@ public abstract class ServicesTest : IDisposable
 
             //// Commit
 
-            anObject = C1.Create(this.Transaction);
-            c1Removed = C1.Create(this.Transaction);
+            anObject = this.Transaction.Build<C1>();
+            c1Removed = this.Transaction.Build<C1>();
             c1Removed.Strategy.Delete();
             c1RemovedArray = new C1[1];
             c1RemovedArray[0] = c1Removed;
@@ -2791,8 +2791,8 @@ public abstract class ServicesTest : IDisposable
 
             //// Rollback
 
-            anObject = C1.Create(this.Transaction);
-            c1Removed = C1.Create(this.Transaction);
+            anObject = this.Transaction.Build<C1>();
+            c1Removed = this.Transaction.Build<C1>();
             c1RemovedArray = new C1[1];
             c1RemovedArray[0] = c1Removed;
 
@@ -2861,8 +2861,8 @@ public abstract class ServicesTest : IDisposable
             Assert.True(error);
 
             // Commit + Rollback
-            anObject = C1.Create(this.Transaction);
-            c1Removed = C1.Create(this.Transaction);
+            anObject = this.Transaction.Build<C1>();
+            c1Removed = this.Transaction.Build<C1>();
             c1RemovedArray = new C1[1];
             c1RemovedArray[0] = c1Removed;
 
@@ -2889,21 +2889,21 @@ public abstract class ServicesTest : IDisposable
 
             //// Proxy
 
-            var proxy = C1.Create(this.Transaction);
+            var proxy = this.Transaction.Build<C1>();
             id = proxy.Strategy.ObjectId;
             this.Transaction.Commit();
 
-            var subject = C1.Instantiate(this.Transaction, id);
+            var subject = (C1)this.Transaction.Instantiate(id);
             subject.Strategy.Delete();
             StrategyAssert.RoleExistHasException(proxy, m.C1.C1AllorsString);
 
             this.Transaction.Commit();
 
-            proxy = C1.Create(this.Transaction);
+            proxy = this.Transaction.Build<C1>();
             id = proxy.Strategy.ObjectId;
             this.Transaction.Commit();
 
-            subject = C1.Instantiate(this.Transaction, id);
+            subject = (C1)this.Transaction.Instantiate(id);
             subject.Strategy.Delete();
             StrategyAssert.RoleGetHasException(proxy, m.C1.C1AllorsString);
 
@@ -2911,51 +2911,51 @@ public abstract class ServicesTest : IDisposable
 
             //// Commit
 
-            proxy = C1.Create(this.Transaction);
+            proxy = this.Transaction.Build<C1>();
             id = proxy.Strategy.ObjectId;
             this.Transaction.Commit();
 
-            subject = C1.Instantiate(this.Transaction, id);
+            subject = (C1)this.Transaction.Instantiate(id);
             subject.Strategy.Delete();
             this.Transaction.Commit();
 
-            subject = C1.Instantiate(this.Transaction, id);
+            subject = (C1)this.Transaction.Instantiate(id);
             StrategyAssert.RoleExistHasException(proxy, m.C1.C1AllorsString);
 
             this.Transaction.Commit();
 
-            proxy = C1.Create(this.Transaction);
+            proxy = this.Transaction.Build<C1>();
             id = proxy.Strategy.ObjectId;
             this.Transaction.Commit();
 
-            subject = C1.Instantiate(this.Transaction, id);
+            subject = (C1)this.Transaction.Instantiate(id);
             subject.Strategy.Delete();
             this.Transaction.Commit();
 
-            subject = C1.Instantiate(this.Transaction, id);
+            subject = (C1)this.Transaction.Instantiate(id);
             StrategyAssert.RoleGetHasException(proxy, m.C1.C1AllorsString);
 
             this.Transaction.Commit();
 
             //// Rollback
 
-            proxy = C1.Create(this.Transaction);
+            proxy = this.Transaction.Build<C1>();
             id = proxy.Strategy.ObjectId;
             this.Transaction.Commit();
 
-            subject = C1.Instantiate(this.Transaction, id);
+            subject = (C1)this.Transaction.Instantiate(id);
             subject.Strategy.Delete();
             this.Transaction.Rollback();
 
-            subject = C1.Instantiate(this.Transaction, id);
+            subject = (C1)this.Transaction.Instantiate(id);
             Assert.False(proxy.Strategy.IsDeleted);
 
             this.Transaction.Commit();
 
             //// unit roles
 
-            anObject = C1.Create(this.Transaction);
-            var anotherObject = C1.Create(this.Transaction);
+            anObject = this.Transaction.Build<C1>();
+            var anotherObject = this.Transaction.Build<C1>();
             anotherObject.C1AllorsString = "value";
             anObject.Strategy.Delete();
             Assert.Equal("value", anotherObject.C1AllorsString);
@@ -2964,8 +2964,8 @@ public abstract class ServicesTest : IDisposable
 
             Assert.Equal("value", anotherObject.C1AllorsString);
 
-            anObject = C1.Create(this.Transaction);
-            anotherObject = C1.Create(this.Transaction);
+            anObject = this.Transaction.Build<C1>();
+            anotherObject = this.Transaction.Build<C1>();
             anotherObject.C1AllorsString = "value";
             anObject.Strategy.Delete();
 
@@ -2981,17 +2981,17 @@ public abstract class ServicesTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             var secondTransaction = this.CreateTransaction();
 
             try
             {
-                var c1a = C1.Create(this.Transaction);
-                var c1b = C1.Create(this.Transaction);
+                var c1a = this.Transaction.Build<C1>();
+                var c1b = this.Transaction.Build<C1>();
 
-                var c2a = C2.Create(secondTransaction);
-                var c2b = C2.Create(secondTransaction);
+                var c2a = secondTransaction.Build<C2>();
+                var c2b = secondTransaction.Build<C2>();
                 C2[] c2Array = [c2a, c2b];
 
                 this.Transaction.Commit();
@@ -3082,15 +3082,15 @@ public abstract class ServicesTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
-            var anObject = C1.Create(this.Transaction);
+            var anObject = this.Transaction.Build<C1>();
             var id = anObject.Strategy.ObjectId;
-            var proxy = C1.Instantiate(this.Transaction, id);
+            var proxy = (C1)this.Transaction.Instantiate(id);
 
-            var anotherObject = C1.Create(this.Transaction);
+            var anotherObject = this.Transaction.Build<C1>();
             var anotherId = anotherObject.Strategy.ObjectId;
-            var anotherProxy = C1.Instantiate(this.Transaction, anotherId);
+            var anotherProxy = (C1)this.Transaction.Instantiate(anotherId);
 
             Assert.Equal(anObject, proxy);
             Assert.Equal(anotherObject, anotherProxy);
@@ -3099,17 +3099,17 @@ public abstract class ServicesTest : IDisposable
             Assert.NotEqual(proxy, anotherObject);
             Assert.NotEqual(proxy, anotherProxy);
 
-            anObject = C1.Create(this.Transaction);
+            anObject = this.Transaction.Build<C1>();
             id = anObject.Strategy.ObjectId;
-            proxy = C1.Instantiate(this.Transaction, id);
+            proxy = (C1)this.Transaction.Instantiate(id);
 
-            anotherObject = C1.Create(this.Transaction);
+            anotherObject = this.Transaction.Build<C1>();
             anotherId = anotherObject.Strategy.ObjectId;
-            anotherProxy = C1.Instantiate(this.Transaction, anotherId);
+            anotherProxy = (C1)this.Transaction.Instantiate(anotherId);
 
             this.Transaction.Commit();
-            anObject = C1.Instantiate(this.Transaction, id);
-            anotherObject = C1.Instantiate(this.Transaction, anotherId);
+            anObject = (C1)this.Transaction.Instantiate(id);
+            anotherObject = (C1)this.Transaction.Instantiate(anotherId);
 
             Assert.Equal(anObject, proxy);
             Assert.Equal(anotherObject, anotherProxy);
@@ -3120,13 +3120,13 @@ public abstract class ServicesTest : IDisposable
 
             //// Rollback
 
-            anObject = C1.Create(this.Transaction);
+            anObject = this.Transaction.Build<C1>();
             id = anObject.Strategy.ObjectId;
-            proxy = C1.Instantiate(this.Transaction, id);
+            proxy = (C1)this.Transaction.Instantiate(id);
 
-            anotherObject = C1.Create(this.Transaction);
+            anotherObject = this.Transaction.Build<C1>();
             anotherId = anotherObject.Strategy.ObjectId;
-            anotherProxy = C1.Instantiate(this.Transaction, anotherId);
+            anotherProxy = (C1)this.Transaction.Instantiate(anotherId);
 
             this.Transaction.Rollback();
 
@@ -3145,9 +3145,9 @@ public abstract class ServicesTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
-            var anObject = C1.Create(this.Transaction);
+            var anObject = this.Transaction.Build<C1>();
             var id = anObject.Strategy.ObjectId;
             var sameObject = (C1)this.Transaction.Instantiate(id);
 
@@ -3188,26 +3188,26 @@ public abstract class ServicesTest : IDisposable
 
             //// Unit
 
-            var subject = C1.Create(this.Transaction);
+            var subject = this.Transaction.Build<C1>();
             id = subject.Strategy.ObjectId;
             this.Transaction.Commit();
 
             subject.C1AllorsString = "a";
-            var proxy = C1.Instantiate(this.Transaction, id);
+            var proxy = (C1)this.Transaction.Instantiate(id);
             proxy.C1AllorsString = "b";
             Assert.Equal("b", subject.C1AllorsString);
             Assert.Equal("b", proxy.C1AllorsString);
             this.Transaction.Commit();
 
             subject.C1AllorsString = "c";
-            proxy = C1.Instantiate(this.Transaction, id);
+            proxy = (C1)this.Transaction.Instantiate(id);
             proxy.C1AllorsString = "d";
             Assert.Equal("d", proxy.C1AllorsString);
             Assert.Equal("d", subject.C1AllorsString);
             this.Transaction.Commit();
 
             subject.C1AllorsString = "a";
-            proxy = C1.Instantiate(this.Transaction, id);
+            proxy = (C1)this.Transaction.Instantiate(id);
             proxy.C1AllorsString = "b";
             this.Transaction.Commit();
             Assert.Equal("b", subject.C1AllorsString);
@@ -3215,7 +3215,7 @@ public abstract class ServicesTest : IDisposable
             this.Transaction.Commit();
 
             subject.C1AllorsString = "c";
-            proxy = C1.Instantiate(this.Transaction, id);
+            proxy = (C1)this.Transaction.Instantiate(id);
             proxy.C1AllorsString = "d";
             this.Transaction.Commit();
             Assert.Equal("d", proxy.C1AllorsString);
@@ -3223,7 +3223,7 @@ public abstract class ServicesTest : IDisposable
             this.Transaction.Commit();
 
             subject.C1AllorsString = "a";
-            proxy = C1.Instantiate(this.Transaction, id);
+            proxy = (C1)this.Transaction.Instantiate(id);
             proxy.C1AllorsString = "b";
             Assert.Equal("b", subject.C1AllorsString);
             this.Transaction.Commit();
@@ -3231,7 +3231,7 @@ public abstract class ServicesTest : IDisposable
             this.Transaction.Commit();
 
             subject.C1AllorsString = "c";
-            proxy = C1.Instantiate(this.Transaction, id);
+            proxy = (C1)this.Transaction.Instantiate(id);
             proxy.C1AllorsString = "d";
             Assert.Equal("d", proxy.C1AllorsString);
             this.Transaction.Commit();
@@ -3239,7 +3239,7 @@ public abstract class ServicesTest : IDisposable
             this.Transaction.Commit();
 
             subject.C1AllorsString = "a";
-            proxy = C1.Instantiate(this.Transaction, id);
+            proxy = (C1)this.Transaction.Instantiate(id);
             proxy.C1AllorsString = "b";
             this.Transaction.Commit();
             Assert.Equal("b", subject.C1AllorsString);
@@ -3248,7 +3248,7 @@ public abstract class ServicesTest : IDisposable
             this.Transaction.Commit();
 
             subject.C1AllorsString = "c";
-            proxy = C1.Instantiate(this.Transaction, id);
+            proxy = (C1)this.Transaction.Instantiate(id);
             proxy.C1AllorsString = "d";
             this.Transaction.Commit();
             Assert.Equal("d", proxy.C1AllorsString);
@@ -3258,14 +3258,14 @@ public abstract class ServicesTest : IDisposable
 
             //// IComposite
 
-            var fromProxy = C1.Create(this.Transaction);
-            var toProxy = C1.Create(this.Transaction);
+            var fromProxy = this.Transaction.Build<C1>();
+            var toProxy = this.Transaction.Build<C1>();
             var fromId = fromProxy.Strategy.ObjectId;
             var toId = toProxy.Strategy.ObjectId;
             this.Transaction.Commit();
 
-            var from = C1.Instantiate(this.Transaction, fromId);
-            var to = C1.Instantiate(this.Transaction, toId);
+            var from = (C1)this.Transaction.Instantiate(fromId);
+            var to = (C1)this.Transaction.Instantiate(toId);
             from.C1AllorsString = "a";
             from.C1C1one2one = to;
             from.C1C1many2one = to;
@@ -3328,7 +3328,7 @@ public abstract class ServicesTest : IDisposable
 
             //// Rollback
 
-            anObject = C1.Create(this.Transaction);
+            anObject = this.Transaction.Build<C1>();
             id = anObject.Strategy.ObjectId;
             sameObject = (C1)this.Transaction.Instantiate(id);
 
@@ -3368,26 +3368,26 @@ public abstract class ServicesTest : IDisposable
 
             //// Unit
 
-            subject = C1.Create(this.Transaction);
+            subject = this.Transaction.Build<C1>();
             id = subject.Strategy.ObjectId;
             this.Transaction.Commit();
 
             subject.C1AllorsString = "a";
-            proxy = C1.Instantiate(this.Transaction, id);
+            proxy = (C1)this.Transaction.Instantiate(id);
             proxy.C1AllorsString = "b";
             Assert.Equal("b", subject.C1AllorsString);
             Assert.Equal("b", proxy.C1AllorsString);
             this.Transaction.Rollback();
 
             subject.C1AllorsString = "c";
-            proxy = C1.Instantiate(this.Transaction, id);
+            proxy = (C1)this.Transaction.Instantiate(id);
             proxy.C1AllorsString = "d";
             Assert.Equal("d", proxy.C1AllorsString);
             Assert.Equal("d", subject.C1AllorsString);
             this.Transaction.Rollback();
 
             subject.C1AllorsString = "a";
-            proxy = C1.Instantiate(this.Transaction, id);
+            proxy = (C1)this.Transaction.Instantiate(id);
             proxy.C1AllorsString = "b";
             this.Transaction.Rollback();
             Assert.False(subject.ExistC1AllorsString);
@@ -3395,7 +3395,7 @@ public abstract class ServicesTest : IDisposable
             this.Transaction.Rollback();
 
             subject.C1AllorsString = "c";
-            proxy = C1.Instantiate(this.Transaction, id);
+            proxy = (C1)this.Transaction.Instantiate(id);
             proxy.C1AllorsString = "d";
             this.Transaction.Rollback();
             Assert.False(proxy.ExistC1AllorsString);
@@ -3403,7 +3403,7 @@ public abstract class ServicesTest : IDisposable
             this.Transaction.Rollback();
 
             subject.C1AllorsString = "a";
-            proxy = C1.Instantiate(this.Transaction, id);
+            proxy = (C1)this.Transaction.Instantiate(id);
             proxy.C1AllorsString = "b";
             Assert.Equal("b", subject.C1AllorsString);
             this.Transaction.Rollback();
@@ -3411,7 +3411,7 @@ public abstract class ServicesTest : IDisposable
             this.Transaction.Rollback();
 
             subject.C1AllorsString = "c";
-            proxy = C1.Instantiate(this.Transaction, id);
+            proxy = (C1)this.Transaction.Instantiate(id);
             proxy.C1AllorsString = "d";
             Assert.Equal("d", proxy.C1AllorsString);
             this.Transaction.Rollback();
@@ -3419,7 +3419,7 @@ public abstract class ServicesTest : IDisposable
             this.Transaction.Rollback();
 
             subject.C1AllorsString = "a";
-            proxy = C1.Instantiate(this.Transaction, id);
+            proxy = (C1)this.Transaction.Instantiate(id);
             proxy.C1AllorsString = "b";
             this.Transaction.Rollback();
             Assert.False(subject.ExistC1AllorsString);
@@ -3428,7 +3428,7 @@ public abstract class ServicesTest : IDisposable
             this.Transaction.Rollback();
 
             subject.C1AllorsString = "c";
-            proxy = C1.Instantiate(this.Transaction, id);
+            proxy = (C1)this.Transaction.Instantiate(id);
             proxy.C1AllorsString = "d";
             this.Transaction.Rollback();
             Assert.False(proxy.ExistC1AllorsString);
@@ -3438,8 +3438,8 @@ public abstract class ServicesTest : IDisposable
 
             //// IComposite
 
-            from = C1.Instantiate(this.Transaction, fromId);
-            to = C1.Instantiate(this.Transaction, toId);
+            from = (C1)this.Transaction.Instantiate(fromId);
+            to = (C1)this.Transaction.Instantiate(toId);
             from.C1AllorsString = "a";
             from.C1C1one2one = to;
             from.C1C1many2one = to;
@@ -3517,7 +3517,7 @@ public abstract class ServicesTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             int[] runs = [1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048];
 
@@ -3541,7 +3541,7 @@ public abstract class ServicesTest : IDisposable
                 var ids = new long[run];
                 for (var i = 0; i < run; i++)
                 {
-                    var anObject = C1.Create(this.Transaction);
+                    var anObject = this.Transaction.Build<C1>();
                     objects[i] = anObject;
                     idStrings[i] = anObject.Strategy.ObjectId.ToString();
                     ids[i] = anObject.Strategy.ObjectId;
@@ -3667,10 +3667,10 @@ public abstract class ServicesTest : IDisposable
                 Assert.Empty(this.Transaction.Instantiate(doesntExistIds));
 
                 // Preserve order
-                var c1A = C1.Create(this.Transaction);
-                var c1B = C1.Create(this.Transaction);
-                var c1C = C1.Create(this.Transaction);
-                var c1D = C1.Create(this.Transaction);
+                var c1A = this.Transaction.Build<C1>();
+                var c1B = this.Transaction.Build<C1>();
+                var c1C = this.Transaction.Build<C1>();
+                var c1D = this.Transaction.Build<C1>();
 
                 var objectIds = new[] { c1A.Id, c1B.Id, c1C.Id, c1D.Id };
 
@@ -3706,11 +3706,11 @@ public abstract class ServicesTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             //// Commit + Commit
 
-            var anObject = C1.Create(this.Transaction);
+            var anObject = this.Transaction.Build<C1>();
             Assert.False(anObject.Strategy.IsDeleted);
 
             this.Transaction.Commit();
@@ -3721,7 +3721,7 @@ public abstract class ServicesTest : IDisposable
 
             //// Commit + Rollback
 
-            anObject = C1.Create(this.Transaction);
+            anObject = this.Transaction.Build<C1>();
             Assert.False(anObject.Strategy.IsDeleted);
 
             this.Transaction.Commit();
@@ -3732,7 +3732,7 @@ public abstract class ServicesTest : IDisposable
 
             //// Rollback + Commit
 
-            anObject = C1.Create(this.Transaction);
+            anObject = this.Transaction.Build<C1>();
             Assert.False(anObject.Strategy.IsDeleted);
 
             this.Transaction.Rollback();
@@ -3743,7 +3743,7 @@ public abstract class ServicesTest : IDisposable
 
             //// Rollback + Rollback
 
-            anObject = C1.Create(this.Transaction);
+            anObject = this.Transaction.Build<C1>();
             Assert.False(anObject.Strategy.IsDeleted);
 
             this.Transaction.Rollback();
@@ -3756,7 +3756,7 @@ public abstract class ServicesTest : IDisposable
 
             //// Commit + Commit
 
-            anObject = C1.Create(this.Transaction);
+            anObject = this.Transaction.Build<C1>();
             Assert.False(anObject.Strategy.IsDeleted);
 
             anObject.Strategy.Delete();
@@ -3771,7 +3771,7 @@ public abstract class ServicesTest : IDisposable
 
             //// Commit + Rollback
 
-            anObject = C1.Create(this.Transaction);
+            anObject = this.Transaction.Build<C1>();
             Assert.False(anObject.Strategy.IsDeleted);
 
             anObject.Strategy.Delete();
@@ -3786,7 +3786,7 @@ public abstract class ServicesTest : IDisposable
 
             //// Rollback + Commit
 
-            anObject = C1.Create(this.Transaction);
+            anObject = this.Transaction.Build<C1>();
             Assert.False(anObject.Strategy.IsDeleted);
 
             anObject.Strategy.Delete();
@@ -3801,7 +3801,7 @@ public abstract class ServicesTest : IDisposable
 
             //// Rollback + Rollback
 
-            anObject = C1.Create(this.Transaction);
+            anObject = this.Transaction.Build<C1>();
             Assert.False(anObject.Strategy.IsDeleted);
 
             anObject.Strategy.Delete();
@@ -3820,71 +3820,71 @@ public abstract class ServicesTest : IDisposable
 
             //// Commit + Commit
 
-            anObject = C1.Create(this.Transaction);
+            anObject = this.Transaction.Build<C1>();
             var id = anObject.Strategy.ObjectId;
-            var proxy = C1.Instantiate(this.Transaction, id);
+            var proxy = (C1)this.Transaction.Instantiate(id);
             Assert.False(proxy.Strategy.IsDeleted);
 
             this.Transaction.Commit();
-            anObject = C1.Instantiate(this.Transaction, id);
+            anObject = (C1)this.Transaction.Instantiate(id);
             Assert.False(proxy.Strategy.IsDeleted);
 
             this.Transaction.Commit();
-            anObject = C1.Instantiate(this.Transaction, id);
+            anObject = (C1)this.Transaction.Instantiate(id);
             Assert.False(proxy.Strategy.IsDeleted);
 
             //// Commit + Rollback
 
-            anObject = C1.Create(this.Transaction);
+            anObject = this.Transaction.Build<C1>();
             id = anObject.Strategy.ObjectId;
-            proxy = C1.Instantiate(this.Transaction, id);
+            proxy = (C1)this.Transaction.Instantiate(id);
             Assert.False(proxy.Strategy.IsDeleted);
 
             this.Transaction.Commit();
-            anObject = C1.Instantiate(this.Transaction, id);
+            anObject = (C1)this.Transaction.Instantiate(id);
             Assert.False(proxy.Strategy.IsDeleted);
 
             this.Transaction.Rollback();
-            anObject = C1.Instantiate(this.Transaction, id);
+            anObject = (C1)this.Transaction.Instantiate(id);
             Assert.False(proxy.Strategy.IsDeleted);
 
             //// Rollback + Commit
 
-            anObject = C1.Create(this.Transaction);
+            anObject = this.Transaction.Build<C1>();
             id = anObject.Strategy.ObjectId;
-            proxy = C1.Instantiate(this.Transaction, id);
+            proxy = (C1)this.Transaction.Instantiate(id);
             Assert.False(proxy.Strategy.IsDeleted);
 
             this.Transaction.Rollback();
-            anObject = C1.Instantiate(this.Transaction, id);
+            anObject = (C1)this.Transaction.Instantiate(id);
             Assert.True(proxy.Strategy.IsDeleted);
 
             this.Transaction.Commit();
-            anObject = C1.Instantiate(this.Transaction, id);
+            anObject = (C1)this.Transaction.Instantiate(id);
             Assert.True(proxy.Strategy.IsDeleted);
 
             //// Rollback + Rollback
 
-            anObject = C1.Create(this.Transaction);
+            anObject = this.Transaction.Build<C1>();
             id = anObject.Strategy.ObjectId;
-            proxy = C1.Instantiate(this.Transaction, id);
+            proxy = (C1)this.Transaction.Instantiate(id);
             Assert.False(proxy.Strategy.IsDeleted);
 
             this.Transaction.Rollback();
-            anObject = C1.Instantiate(this.Transaction, id);
+            anObject = (C1)this.Transaction.Instantiate(id);
             Assert.True(proxy.Strategy.IsDeleted);
 
             this.Transaction.Rollback();
-            anObject = C1.Instantiate(this.Transaction, id);
+            anObject = (C1)this.Transaction.Instantiate(id);
             Assert.True(proxy.Strategy.IsDeleted);
 
             //// With Delete
 
             //// Commit + Commit
 
-            anObject = C1.Create(this.Transaction);
+            anObject = this.Transaction.Build<C1>();
             id = anObject.Strategy.ObjectId;
-            proxy = C1.Instantiate(this.Transaction, id);
+            proxy = (C1)this.Transaction.Instantiate(id);
 
             Assert.False(proxy.Strategy.IsDeleted);
 
@@ -3893,18 +3893,18 @@ public abstract class ServicesTest : IDisposable
             Assert.True(proxy.Strategy.IsDeleted);
 
             this.Transaction.Commit();
-            anObject = C1.Instantiate(this.Transaction, id);
+            anObject = (C1)this.Transaction.Instantiate(id);
             Assert.True(proxy.Strategy.IsDeleted);
 
             this.Transaction.Commit();
-            anObject = C1.Instantiate(this.Transaction, id);
+            anObject = (C1)this.Transaction.Instantiate(id);
             Assert.True(proxy.Strategy.IsDeleted);
 
             //// Commit + Rollback
 
-            anObject = C1.Create(this.Transaction);
+            anObject = this.Transaction.Build<C1>();
             id = anObject.Strategy.ObjectId;
-            proxy = C1.Instantiate(this.Transaction, id);
+            proxy = (C1)this.Transaction.Instantiate(id);
 
             Assert.False(proxy.Strategy.IsDeleted);
 
@@ -3913,7 +3913,7 @@ public abstract class ServicesTest : IDisposable
             Assert.True(proxy.Strategy.IsDeleted);
 
             this.Transaction.Commit();
-            anObject = C1.Instantiate(this.Transaction, id);
+            anObject = (C1)this.Transaction.Instantiate(id);
             Assert.True(proxy.Strategy.IsDeleted);
 
             this.Transaction.Rollback();
@@ -3921,9 +3921,9 @@ public abstract class ServicesTest : IDisposable
 
             //// Rollback + Commit
 
-            anObject = C1.Create(this.Transaction);
+            anObject = this.Transaction.Build<C1>();
             id = anObject.Strategy.ObjectId;
-            proxy = C1.Instantiate(this.Transaction, id);
+            proxy = (C1)this.Transaction.Instantiate(id);
 
             Assert.False(proxy.Strategy.IsDeleted);
 
@@ -3932,18 +3932,18 @@ public abstract class ServicesTest : IDisposable
             Assert.True(proxy.Strategy.IsDeleted);
 
             this.Transaction.Rollback();
-            anObject = C1.Instantiate(this.Transaction, id);
+            anObject = (C1)this.Transaction.Instantiate(id);
             Assert.True(proxy.Strategy.IsDeleted);
 
             this.Transaction.Commit();
-            anObject = C1.Instantiate(this.Transaction, id);
+            anObject = (C1)this.Transaction.Instantiate(id);
             Assert.True(proxy.Strategy.IsDeleted);
 
             //// Rollback + Rollback
 
-            anObject = C1.Create(this.Transaction);
+            anObject = this.Transaction.Build<C1>();
             id = anObject.Strategy.ObjectId;
-            proxy = C1.Instantiate(this.Transaction, id);
+            proxy = (C1)this.Transaction.Instantiate(id);
 
             Assert.False(proxy.Strategy.IsDeleted);
 
@@ -3952,11 +3952,11 @@ public abstract class ServicesTest : IDisposable
             Assert.True(proxy.Strategy.IsDeleted);
 
             this.Transaction.Rollback();
-            anObject = C1.Instantiate(this.Transaction, id);
+            anObject = (C1)this.Transaction.Instantiate(id);
             Assert.True(proxy.Strategy.IsDeleted);
 
             this.Transaction.Rollback();
-            anObject = C1.Instantiate(this.Transaction, id);
+            anObject = (C1)this.Transaction.Instantiate(id);
             Assert.True(proxy.Strategy.IsDeleted);
         }
     }
@@ -3973,7 +3973,7 @@ public abstract class ServicesTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             const int ObjectCount = 10;
             var allorsObjects = this.Transaction.Build(m.Company, ObjectCount);
@@ -4000,7 +4000,7 @@ public abstract class ServicesTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             var obj = this.Transaction.Build<C1>();
 
@@ -4069,15 +4069,15 @@ public abstract class ServicesTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // TODO: Move to other tests
-            var withoutValueRoles = ClassWithoutUnitRoles.Create(this.Transaction);
+            var withoutValueRoles = this.Transaction.Build<ClassWithoutUnitRoles>();
             var withoutValueRolesClone = (ClassWithoutUnitRoles)this.GetExtent(m.ClassWithoutUnitRoles)[0];
 
             Assert.Equal(withoutValueRoles, withoutValueRolesClone);
 
-            var withoutRoles = ClassWithoutRoles.Create(this.Transaction);
+            var withoutRoles = this.Transaction.Build<ClassWithoutRoles>();
             var withoutRolesClone = (ClassWithoutRoles)this.GetExtent(m.ClassWithoutRoles)[0];
 
             Assert.Equal(withoutRoles, withoutRolesClone);
@@ -4090,12 +4090,12 @@ public abstract class ServicesTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
-            var c1A = C1.Create(this.Transaction);
-            var c2A = C2.Create(this.Transaction);
-            var c2B = C2.Create(this.Transaction);
-            var c2C = C2.Create(this.Transaction);
+            var c1A = this.Transaction.Build<C1>();
+            var c2A = this.Transaction.Build<C2>();
+            var c2B = this.Transaction.Build<C2>();
+            var c2C = this.Transaction.Build<C2>();
 
             var c1aId = c1A.Id.ToString();
 
@@ -4139,12 +4139,12 @@ public abstract class ServicesTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             if (this.Transaction is ITransaction)
             {
-                var c1A = C1.Create(this.Transaction);
-                var c2A = C2.Create(this.Transaction);
+                var c1A = this.Transaction.Build<C1>();
+                var c2A = this.Transaction.Build<C2>();
 
                 var c1AObjectId = c1A.Id;
                 var c2AObjectId = c2A.Id;
@@ -4221,7 +4221,7 @@ public abstract class ServicesTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // don't garbage collect populations
             var populations = new List<IDatabase>();
@@ -4252,7 +4252,7 @@ public abstract class ServicesTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             var c1a = this.Transaction.Build(m.C1);
             Assert.Equal(m.C1, c1a.Strategy.Class);
@@ -4295,9 +4295,9 @@ public abstract class ServicesTest : IDisposable
             foreach (var init in this.Inits)
             {
                 init();
-                var m = this.Transaction.Database.Context().M;
+                var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
-                var c1A = C1.Create(this.Transaction);
+                var c1A = this.Transaction.Build<C1>();
                 c1A.C1AllorsString = "1";
 
                 var prefetchPolicy = new PrefetchPolicyBuilder().Build();
@@ -4319,9 +4319,9 @@ public abstract class ServicesTest : IDisposable
             foreach (var init in this.Inits)
             {
                 init();
-                var m = this.Transaction.Database.Context().M;
+                var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
-                var c1A = C1.Create(this.Transaction);
+                var c1A = this.Transaction.Build<C1>();
                 c1A.C1AllorsString = "1";
 
                 this.Transaction.Prefetch(new RelationEndType[] { m.C1.C1AllorsString }, new[] { c1A.Strategy.ObjectId });
@@ -4383,11 +4383,11 @@ public abstract class ServicesTest : IDisposable
             foreach (var init in this.Inits)
             {
                 init();
-                var m = this.Transaction.Database.Context().M;
+                var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
-                var c1A = C1.Create(this.Transaction);
-                var c2A = C2.Create(this.Transaction);
-                var c2b = C2.Create(this.Transaction);
+                var c1A = this.Transaction.Build<C1>();
+                var c2A = this.Transaction.Build<C2>();
+                var c2b = this.Transaction.Build<C2>();
 
                 c1A.C1C2one2one = c2A;
 
@@ -4450,15 +4450,15 @@ public abstract class ServicesTest : IDisposable
             foreach (var init in this.Inits)
             {
                 init();
-                var m = this.Transaction.Database.Context().M;
+                var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
                 var prefetchPolicy = new PrefetchPolicyBuilder()
                     .WithRule(m.C1.C1C2one2one, new RelationEndType[] { m.C2.C2AllorsString })
                     .Build();
 
-                var c1a = C1.Create(this.Transaction);
-                var c2a = C2.Create(this.Transaction);
-                var c2b = C2.Create(this.Transaction);
+                var c1a = this.Transaction.Build<C1>();
+                var c2a = this.Transaction.Build<C2>();
+                var c2b = this.Transaction.Build<C2>();
 
                 c2a.C2AllorsString = "c2a";
                 c2b.C2AllorsString = "c2b";
@@ -4520,13 +4520,13 @@ public abstract class ServicesTest : IDisposable
             foreach (var init in this.Inits)
             {
                 init();
-                var m = this.Transaction.Database.Context().M;
+                var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
                 var prefetchPolicy = new PrefetchPolicyBuilder()
                     .WithRule(m.C1.C1C2one2one, new RelationEndType[] { m.C2.C2AllorsString })
                     .Build();
 
-                var c1A = C1.Create(this.Transaction);
+                var c1A = this.Transaction.Build<C1>();
 
                 this.Transaction.Commit();
 
@@ -4559,11 +4559,11 @@ public abstract class ServicesTest : IDisposable
             foreach (var init in this.Inits)
             {
                 init();
-                var m = this.Transaction.Database.Context().M;
+                var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
-                var c1A = C1.Create(this.Transaction);
-                var c2A = C2.Create(this.Transaction);
-                var c2b = C2.Create(this.Transaction);
+                var c1A = this.Transaction.Build<C1>();
+                var c2A = this.Transaction.Build<C2>();
+                var c2b = this.Transaction.Build<C2>();
                 c1A.AddC1C2one2many(c2A);
 
                 this.Transaction.Prefetch(new RelationEndType[] { m.C1.C1C2one2manies }, new[] { c1A.Strategy.ObjectId });
@@ -4622,9 +4622,9 @@ public abstract class ServicesTest : IDisposable
             foreach (var init in this.Inits)
             {
                 init();
-                var m = this.Transaction.Database.Context().M;
+                var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
-                var c1A = C1.Create(this.Transaction);
+                var c1A = this.Transaction.Build<C1>();
 
                 this.Transaction.Commit();
 
@@ -4657,13 +4657,13 @@ public abstract class ServicesTest : IDisposable
             foreach (var init in this.Inits)
             {
                 init();
-                var m = this.Transaction.Database.Context().M;
+                var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
                 var prefetchPolicy = new PrefetchPolicyBuilder()
                     .WithRule(m.C1.C1C2one2manies, new RelationEndType[] { m.C2.C2AllorsString })
                     .Build();
 
-                var c1A = C1.Create(this.Transaction);
+                var c1A = this.Transaction.Build<C1>();
 
                 this.Transaction.Commit();
 
@@ -4694,11 +4694,11 @@ public abstract class ServicesTest : IDisposable
             foreach (var init in this.Inits)
             {
                 init();
-                var m = this.Transaction.Database.Context().M;
+                var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
-                var c1A = C1.Create(this.Transaction);
-                var c2A = C2.Create(this.Transaction);
-                var c2b = C2.Create(this.Transaction);
+                var c1A = this.Transaction.Build<C1>();
+                var c2A = this.Transaction.Build<C2>();
+                var c2b = this.Transaction.Build<C2>();
                 c1A.AddC1C2many2many(c2A);
 
                 this.Transaction.Prefetch(new RelationEndType[] { m.C1.C1C2many2manies }, new[] { c1A.Strategy.ObjectId });
@@ -4761,9 +4761,9 @@ public abstract class ServicesTest : IDisposable
             foreach (var init in this.Inits)
             {
                 init();
-                var m = this.Transaction.Database.Context().M;
+                var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
-                var c1A = C1.Create(this.Transaction);
+                var c1A = this.Transaction.Build<C1>();
 
                 this.Transaction.Commit();
 
@@ -4796,13 +4796,13 @@ public abstract class ServicesTest : IDisposable
             foreach (var init in this.Inits)
             {
                 init();
-                var m = this.Transaction.Database.Context().M;
+                var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
                 var prefetchPolicy = new PrefetchPolicyBuilder()
                     .WithRule(m.C1.C1C2many2manies, new RelationEndType[] { m.C2.C2AllorsString })
                     .Build();
 
-                var c1A = C1.Create(this.Transaction);
+                var c1A = this.Transaction.Build<C1>();
 
                 this.Transaction.Commit();
 
@@ -4835,11 +4835,11 @@ public abstract class ServicesTest : IDisposable
             foreach (var init in this.Inits)
             {
                 init();
-                var m = this.Transaction.Database.Context().M;
+                var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
-                var c1a = C1.Create(this.Transaction);
-                var c1b = C1.Create(this.Transaction);
-                var c2a = C2.Create(this.Transaction);
+                var c1a = this.Transaction.Build<C1>();
+                var c1b = this.Transaction.Build<C1>();
+                var c2a = this.Transaction.Build<C2>();
                 c1a.C1C2one2one = c2a;
 
                 this.Transaction.Prefetch(new RelationEndType[] { m.C2.C1WhereC1C2one2one }, new[] { c2a.Strategy.ObjectId });
@@ -4897,9 +4897,9 @@ public abstract class ServicesTest : IDisposable
             foreach (var init in this.Inits)
             {
                 init();
-                var m = this.Transaction.Database.Context().M;
+                var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
-                var c2A = C2.Create(this.Transaction);
+                var c2A = this.Transaction.Build<C2>();
 
                 this.Transaction.Commit();
 
@@ -4932,12 +4932,12 @@ public abstract class ServicesTest : IDisposable
             foreach (var init in this.Inits)
             {
                 init();
-                var m = this.Transaction.Database.Context().M;
+                var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
                 var prefetchPolicy = new PrefetchPolicyBuilder()
                     .WithRule(m.C2.C1WhereC1C2one2one.RoleType, new RelationEndType[] { m.C1.C1AllorsString }).Build();
 
-                var c2A = C2.Create(this.Transaction);
+                var c2A = this.Transaction.Build<C2>();
 
                 this.Transaction.Commit();
 
@@ -4970,11 +4970,11 @@ public abstract class ServicesTest : IDisposable
             foreach (var init in this.Inits)
             {
                 init();
-                var m = this.Transaction.Database.Context().M;
+                var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
-                var c1a = C1.Create(this.Transaction);
-                var c1b = C1.Create(this.Transaction);
-                var c2a = C2.Create(this.Transaction);
+                var c1a = this.Transaction.Build<C1>();
+                var c1b = this.Transaction.Build<C1>();
+                var c2a = this.Transaction.Build<C2>();
                 c1a.AddC1C2many2many(c2a);
 
                 this.Transaction.Prefetch(new RelationEndType[] { m.C2.C1sWhereC1C2many2many }, new[] { c2a.Strategy.ObjectId });
@@ -5040,9 +5040,9 @@ public abstract class ServicesTest : IDisposable
             foreach (var init in this.Inits)
             {
                 init();
-                var m = this.Transaction.Database.Context().M;
+                var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
-                var c2A = C2.Create(this.Transaction);
+                var c2A = this.Transaction.Build<C2>();
 
                 this.Transaction.Commit();
 
@@ -5075,12 +5075,12 @@ public abstract class ServicesTest : IDisposable
             foreach (var init in this.Inits)
             {
                 init();
-                var m = this.Transaction.Database.Context().M;
+                var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
                 var prefetchPolicy = new PrefetchPolicyBuilder()
                     .WithRule(m.C2.C1sWhereC1C2many2many, new RelationEndType[] { m.C1.C1AllorsString }).Build();
 
-                var c2A = C2.Create(this.Transaction);
+                var c2A = this.Transaction.Build<C2>();
 
                 this.Transaction.Commit();
 
@@ -5113,9 +5113,9 @@ public abstract class ServicesTest : IDisposable
             foreach (var init in this.Inits)
             {
                 init();
-                var m = this.Transaction.Database.Context().M;
+                var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
-                var c2A = C2.Create(this.Transaction);
+                var c2A = this.Transaction.Build<C2>();
 
                 this.Transaction.Commit();
 
@@ -5148,13 +5148,13 @@ public abstract class ServicesTest : IDisposable
             foreach (var init in this.Inits)
             {
                 init();
-                var m = this.Transaction.Database.Context().M;
+                var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
                 var prefetchPolicy = new PrefetchPolicyBuilder()
                     .WithRule(m.C2.C1sWhereC1C2many2one, new RelationEndType[] { m.C1.C1AllorsString })
                     .Build();
 
-                var c2A = C2.Create(this.Transaction);
+                var c2A = this.Transaction.Build<C2>();
 
                 this.Transaction.Commit();
 

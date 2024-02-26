@@ -1,4 +1,4 @@
-// <copyright file="CompositePredicate.cs" company="Allors bv">
+﻿// <copyright file="CompositePredicate.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -78,7 +78,11 @@ internal abstract class CompositePredicate : Predicate, ICompositePredicate
     public ICompositePredicate AddBetween(RoleType role, object firstValue, object secondValue)
     {
         this.Extent.FlushCache();
-        if (firstValue is RoleType betweenRoleA && secondValue is RoleType betweenRoleB)
+
+        var betweenRoleA = firstValue as RoleType ?? firstValue as RoleTypeIndex;
+        var betweenRoleB = secondValue as RoleType ?? secondValue as RoleTypeIndex;
+
+        if (betweenRoleA != null && betweenRoleB != null)
         {
             this.Filters.Add(new RoleBetweenRole(this.Extent, role, betweenRoleA, betweenRoleB));
         }
@@ -146,7 +150,10 @@ internal abstract class CompositePredicate : Predicate, ICompositePredicate
     public ICompositePredicate AddEquals(RoleType role, object obj)
     {
         this.Extent.FlushCache();
-        if (obj is RoleType equalsRole)
+
+        var equalsRole = obj as RoleType ?? obj as RoleTypeIndex;
+
+        if (equalsRole != null)
         {
             this.Filters.Add(new RoleEqualsRole(this.Extent, role, equalsRole));
         }
@@ -186,7 +193,10 @@ internal abstract class CompositePredicate : Predicate, ICompositePredicate
     public ICompositePredicate AddGreaterThan(RoleType role, object value)
     {
         this.Extent.FlushCache();
-        if (value is RoleType greaterThanRole)
+
+        var greaterThanRole = value as RoleType ?? value as RoleTypeIndex;
+
+        if (greaterThanRole != null)
         {
             this.Filters.Add(new RoleGreaterThanRole(this.Extent, role, greaterThanRole));
         }
@@ -226,7 +236,10 @@ internal abstract class CompositePredicate : Predicate, ICompositePredicate
     public ICompositePredicate AddLessThan(RoleType role, object value)
     {
         this.Extent.FlushCache();
-        if (value is RoleType lessThanRole)
+
+        var lessThanRole = value as RoleType ?? value as RoleTypeIndex;
+
+        if (lessThanRole != null)
         {
             this.Filters.Add(new RoleLessThanRole(this.Extent, role, lessThanRole));
         }

@@ -1,4 +1,4 @@
-// <copyright file="CacheTest.cs" company="Allors bv">
+﻿// <copyright file="CacheTest.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -22,7 +22,7 @@ public abstract class CacheTest : IDisposable
 
         using (var transaction = database.CreateTransaction())
         {
-            var c1 = C1.Create(transaction);
+            var c1 = transaction.Build<C1>();
             c1.C1AllorsString = "a";
             transaction.Commit();
         }
@@ -39,7 +39,7 @@ public abstract class CacheTest : IDisposable
 
         using (var transaction = database.CreateTransaction())
         {
-            var c1 = C1.Create(transaction);
+            var c1 = transaction.Build<C1>();
             c1.C1AllorsString = "b";
             transaction.Commit();
         }
@@ -65,8 +65,8 @@ public abstract class CacheTest : IDisposable
 
         using (var transaction = database.CreateTransaction())
         {
-            var c1a = C1.Create(transaction);
-            var c2a = C2.Create(transaction);
+            var c1a = transaction.Build<C1>();
+            var c2a = transaction.Build<C2>();
             c1a.C1C2one2one = c2a;
             transaction.Commit();
 
@@ -78,12 +78,12 @@ public abstract class CacheTest : IDisposable
 
         using (var transaction = database.CreateTransaction())
         {
-            var c1a = C1.Create(transaction);
-            var c1b = C1.Create(transaction);
+            var c1a = transaction.Build<C1>();
+            var c1b = transaction.Build<C1>();
 
             transaction.Commit();
 
-            c1a = C1.Instantiate(transaction, c1a.Id);
+            c1a = (C1)transaction.Instantiate(c1a.Id);
 
             Assert.Null(c1a.C1C2one2one);
         }
@@ -97,7 +97,7 @@ public abstract class CacheTest : IDisposable
 
         using (var transaction = database.CreateTransaction())
         {
-            var c1 = C1.Create(transaction);
+            var c1 = transaction.Build<C1>();
             c1.C1AllorsString = "Test";
 
             transaction.Commit();
@@ -115,8 +115,8 @@ public abstract class CacheTest : IDisposable
 
         using (var transaction = database.CreateTransaction())
         {
-            var c1 = C1.Create(transaction);
-            var c2 = C2.Create(transaction);
+            var c1 = transaction.Build<C1>();
+            var c2 = transaction.Build<C2>();
 
             c1Id = c1.Id;
             c2Id = c2.Id;
@@ -171,14 +171,14 @@ public abstract class CacheTest : IDisposable
     {
         var database = this.CreateDatabase();
         database.Init();
-        var m = database.Context().M;
+        var m = database.Services.Get<IMetaIndex>();
 
         using (var transaction = database.CreateTransaction())
         {
-            var c1a = C1.Create(transaction);
-            var c1b = C1.Create(transaction);
-            var c2a = C2.Create(transaction);
-            var c2b = C2.Create(transaction);
+            var c1a = transaction.Build<C1>();
+            var c1b = transaction.Build<C1>();
+            var c2a = transaction.Build<C2>();
+            var c2b = transaction.Build<C2>();
 
             transaction.Commit();
 
@@ -209,15 +209,15 @@ public abstract class CacheTest : IDisposable
     {
         var database = this.CreateDatabase();
         database.Init();
-        var m = database.Context().M;
+        var m = database.Services.Get<IMetaIndex>();
 
         using (var transaction = database.CreateTransaction())
         {
-            var c1a = C1.Create(transaction);
-            var c1b = C1.Create(transaction);
-            var c2a = C2.Create(transaction);
-            var c2b = C2.Create(transaction);
-            var c2c = C2.Create(transaction);
+            var c1a = transaction.Build<C1>();
+            var c1b = transaction.Build<C1>();
+            var c2a = transaction.Build<C2>();
+            var c2b = transaction.Build<C2>();
+            var c2c = transaction.Build<C2>();
 
             c1a.AddC1C2one2many(c2a);
             c1a.AddC1C2one2many(c2b);

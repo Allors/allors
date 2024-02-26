@@ -143,6 +143,17 @@ public class Transaction : ITransaction
         return newObject;
     }
 
+    public T[] Build<T>(int count) where T : IObject
+    {
+        var allorsObjects = new T[count];
+        for (var i = 0; i < count; i++)
+        {
+            allorsObjects[i] = this.Build<T>();
+        }
+
+        return allorsObjects;
+    }
+
     public T Build<T>(params Action<T>[] builders) where T : IObject
     {
         var objectType = this.Database.ObjectFactory.GetObjectType(typeof(T));

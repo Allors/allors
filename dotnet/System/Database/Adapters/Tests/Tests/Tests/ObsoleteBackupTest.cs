@@ -40,7 +40,7 @@ public abstract class ObsoleteBackupTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             var otherPopulation = this.CreatePopulation();
             using (var otherTransaction = otherPopulation.CreateTransaction())
@@ -153,7 +153,7 @@ public abstract class ObsoleteBackupTest : IDisposable
             foreach (var init in this.Inits)
             {
                 init();
-                var m = this.Transaction.Database.Context().M;
+                var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
                 var otherPopulation = this.CreatePopulation();
                 using (var otherTransaction = otherPopulation.CreateTransaction())
@@ -195,7 +195,7 @@ public abstract class ObsoleteBackupTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             var otherPopulation = this.CreatePopulation();
             using (var otherTransaction = otherPopulation.CreateTransaction())
@@ -261,7 +261,7 @@ public abstract class ObsoleteBackupTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             var otherPopulation = this.CreatePopulation();
             using (var otherTransaction = otherPopulation.CreateTransaction())
@@ -299,7 +299,7 @@ public abstract class ObsoleteBackupTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             var population = this.CreatePopulation();
             var transaction = population.CreateTransaction();
@@ -342,7 +342,7 @@ public abstract class ObsoleteBackupTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             var writeCultureInfo = new CultureInfo("en-US");
             var readCultureInfo = new CultureInfo("en-GB");
@@ -385,7 +385,7 @@ public abstract class ObsoleteBackupTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             var population = this.CreatePopulation();
             var transaction = population.CreateTransaction();
@@ -433,20 +433,20 @@ public abstract class ObsoleteBackupTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             var backupPopulation = this.CreatePopulation();
             var backupTransaction = backupPopulation.CreateTransaction();
 
             try
             {
-                this.c1A = C1.Create(backupTransaction);
+                this.c1A = backupTransaction.Build<C1>();
                 this.c1A.C1AllorsString = "> <";
                 this.c1A.I12AllorsString = "< >";
                 this.c1A.I1AllorsString = "& &&";
                 this.c1A.S1AllorsString = "' \" ''";
 
-                this.c1Empty = C1.Create(backupTransaction);
+                this.c1Empty = backupTransaction.Build<C1>();
 
                 backupTransaction.Commit();
 
@@ -467,14 +467,14 @@ public abstract class ObsoleteBackupTest : IDisposable
 
                 using (var transaction = this.Population.CreateTransaction())
                 {
-                    var copyValues = C1.Instantiate(transaction, this.c1A.Strategy.ObjectId);
+                    var copyValues = (C1)transaction.Instantiate(this.c1A.Strategy.ObjectId);
 
                     Assert.Equal(this.c1A.C1AllorsString, copyValues.C1AllorsString);
                     Assert.Equal(this.c1A.I12AllorsString, copyValues.I12AllorsString);
                     Assert.Equal(this.c1A.I1AllorsString, copyValues.I1AllorsString);
                     Assert.Equal(this.c1A.S1AllorsString, copyValues.S1AllorsString);
 
-                    var c1EmptyRestored = C1.Instantiate(transaction, this.c1Empty.Strategy.ObjectId);
+                    var c1EmptyRestored = (C1)transaction.Instantiate(this.c1Empty.Strategy.ObjectId);
                     Assert.NotNull(c1EmptyRestored);
                 }
             }
@@ -491,7 +491,7 @@ public abstract class ObsoleteBackupTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             using (var transaction = this.Population.CreateTransaction())
             {
@@ -532,7 +532,7 @@ public abstract class ObsoleteBackupTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             using (var transaction = this.Population.CreateTransaction())
             {
@@ -603,7 +603,7 @@ public abstract class ObsoleteBackupTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             var writeCultureInfo = new CultureInfo("en-US");
             var readCultureInfo = new CultureInfo("en-GB");
@@ -646,16 +646,16 @@ public abstract class ObsoleteBackupTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             var otherPopulation = this.CreatePopulation();
             var otherTransaction = otherPopulation.CreateTransaction();
 
             try
             {
-                this.c1A = C1.Create(otherTransaction);
-                this.c1B = C1.Create(otherTransaction);
-                this.c1C = C1.Create(otherTransaction);
+                this.c1A = otherTransaction.Build<C1>();
+                this.c1B = otherTransaction.Build<C1>();
+                this.c1C = otherTransaction.Build<C1>();
 
                 this.c1A.C1AllorsBinary = Array.Empty<byte>();
                 this.c1B.C1AllorsBinary = [1, 2, 3, 4];
@@ -679,9 +679,9 @@ public abstract class ObsoleteBackupTest : IDisposable
 
                 using (var transaction = this.Population.CreateTransaction())
                 {
-                    var c1ACopy = C1.Instantiate(transaction, this.c1A.Strategy.ObjectId);
-                    var c1BCopy = C1.Instantiate(transaction, this.c1B.Strategy.ObjectId);
-                    var c1CCopy = C1.Instantiate(transaction, this.c1C.Strategy.ObjectId);
+                    var c1ACopy = (C1)transaction.Instantiate(this.c1A.Strategy.ObjectId);
+                    var c1BCopy = (C1)transaction.Instantiate(this.c1B.Strategy.ObjectId);
+                    var c1CCopy = (C1)transaction.Instantiate(this.c1C.Strategy.ObjectId);
 
                     Assert.Equal(this.c1A.C1AllorsBinary, c1ACopy.C1AllorsBinary);
                     Assert.Equal(this.c1B.C1AllorsBinary, c1BCopy.C1AllorsBinary);
@@ -701,7 +701,7 @@ public abstract class ObsoleteBackupTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             var xml =
                 @"<?xml version=""1.0"" encoding=""utf-16""?>
@@ -738,7 +738,7 @@ public abstract class ObsoleteBackupTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             var xml =
                 @"<?xml version=""1.0"" encoding=""utf-16""?>
@@ -785,7 +785,7 @@ public abstract class ObsoleteBackupTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             var xml =
                 @"<?xml version=""1.0"" encoding=""utf-16""?>
@@ -850,7 +850,7 @@ public abstract class ObsoleteBackupTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             var xml =
                 @"<?xml version=""1.0"" encoding=""utf-16""?>
@@ -914,7 +914,7 @@ public abstract class ObsoleteBackupTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             var xml =
                 @"<?xml version=""1.0"" encoding=""utf-16""?>
@@ -983,7 +983,7 @@ public abstract class ObsoleteBackupTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             var xml =
                 @"<?xml version=""1.0"" encoding=""utf-16""?>
@@ -1070,29 +1070,29 @@ public abstract class ObsoleteBackupTest : IDisposable
 
     private void AssertPopulation(ITransaction transaction)
     {
-        var m = transaction.Database.Context().M;
+        var m = transaction.Database.Services.Get<IMetaIndex>();
 
         Assert.Equal(4, this.GetExtent(transaction, m.C1).Length);
         Assert.Equal(4, this.GetExtent(transaction, m.C2).Length);
         Assert.Equal(4, this.GetExtent(transaction, m.C3).Length);
         Assert.Equal(4, this.GetExtent(transaction, m.C4).Length);
 
-        var c1ACopy = C1.Instantiate(transaction, this.c1A.Strategy.ObjectId);
-        var c1BCopy = C1.Instantiate(transaction, this.c1B.Strategy.ObjectId);
-        var c1CCopy = C1.Instantiate(transaction, this.c1C.Strategy.ObjectId);
-        var c1DCopy = C1.Instantiate(transaction, this.c1D.Strategy.ObjectId);
-        var c2ACopy = C2.Instantiate(transaction, this.c2A.Strategy.ObjectId);
-        var c2BCopy = C2.Instantiate(transaction, this.c2B.Strategy.ObjectId);
-        var c2CCopy = C2.Instantiate(transaction, this.c2C.Strategy.ObjectId);
-        var c2DCopy = C2.Instantiate(transaction, this.c2D.Strategy.ObjectId);
-        var c3ACopy = C3.Instantiate(transaction, this.c3A.Strategy.ObjectId);
-        var c3BCopy = C3.Instantiate(transaction, this.c3B.Strategy.ObjectId);
-        var c3CCopy = C3.Instantiate(transaction, this.c3C.Strategy.ObjectId);
-        var c3DCopy = C3.Instantiate(transaction, this.c3D.Strategy.ObjectId);
-        var c4ACopy = C4.Instantiate(transaction, this.c4A.Strategy.ObjectId);
-        var c4BCopy = C4.Instantiate(transaction, this.c4B.Strategy.ObjectId);
-        var c4CCopy = C4.Instantiate(transaction, this.c4C.Strategy.ObjectId);
-        var c4DCopy = C4.Instantiate(transaction, this.c4D.Strategy.ObjectId);
+        var c1ACopy = (C1)transaction.Instantiate(this.c1A.Strategy.ObjectId);
+        var c1BCopy = (C1)transaction.Instantiate(this.c1B.Strategy.ObjectId);
+        var c1CCopy = (C1)transaction.Instantiate(this.c1C.Strategy.ObjectId);
+        var c1DCopy = (C1)transaction.Instantiate(this.c1D.Strategy.ObjectId);
+        var c2ACopy = (C2)transaction.Instantiate(this.c2A.Strategy.ObjectId);
+        var c2BCopy = (C2)transaction.Instantiate(this.c2B.Strategy.ObjectId);
+        var c2CCopy = (C2)transaction.Instantiate(this.c2C.Strategy.ObjectId);
+        var c2DCopy = (C2)transaction.Instantiate(this.c2D.Strategy.ObjectId);
+        var c3ACopy = (C3)transaction.Instantiate(this.c3A.Strategy.ObjectId);
+        var c3BCopy = (C3)transaction.Instantiate(this.c3B.Strategy.ObjectId);
+        var c3CCopy = (C3)transaction.Instantiate(this.c3C.Strategy.ObjectId);
+        var c3DCopy = (C3)transaction.Instantiate(this.c3D.Strategy.ObjectId);
+        var c4ACopy = (C4)transaction.Instantiate(this.c4A.Strategy.ObjectId);
+        var c4BCopy = (C4)transaction.Instantiate(this.c4B.Strategy.ObjectId);
+        var c4CCopy = (C4)transaction.Instantiate(this.c4C.Strategy.ObjectId);
+        var c4DCopy = (C4)transaction.Instantiate(this.c4D.Strategy.ObjectId);
 
         IObject[] everyC1 = [c1ACopy, c1BCopy, c1CCopy, c1DCopy];
         IObject[] everyC2 = [c2ACopy, c2BCopy, c2CCopy, c2DCopy];
@@ -1154,22 +1154,22 @@ public abstract class ObsoleteBackupTest : IDisposable
 
     private void Populate(ITransaction transaction)
     {
-        this.c1A = C1.Create(transaction);
-        this.c1B = C1.Create(transaction);
-        this.c1C = C1.Create(transaction);
-        this.c1D = C1.Create(transaction);
-        this.c2A = C2.Create(transaction);
-        this.c2B = C2.Create(transaction);
-        this.c2C = C2.Create(transaction);
-        this.c2D = C2.Create(transaction);
-        this.c3A = C3.Create(transaction);
-        this.c3B = C3.Create(transaction);
-        this.c3C = C3.Create(transaction);
-        this.c3D = C3.Create(transaction);
-        this.c4A = C4.Create(transaction);
-        this.c4B = C4.Create(transaction);
-        this.c4C = C4.Create(transaction);
-        this.c4D = C4.Create(transaction);
+        this.c1A = transaction.Build<C1>();
+        this.c1B = transaction.Build<C1>();
+        this.c1C = transaction.Build<C1>();
+        this.c1D = transaction.Build<C1>();
+        this.c2A = transaction.Build<C2>();
+        this.c2B = transaction.Build<C2>();
+        this.c2C = transaction.Build<C2>();
+        this.c2D = transaction.Build<C2>();
+        this.c3A = transaction.Build<C3>();
+        this.c3B = transaction.Build<C3>();
+        this.c3C = transaction.Build<C3>();
+        this.c3D = transaction.Build<C3>();
+        this.c4A = transaction.Build<C4>();
+        this.c4B = transaction.Build<C4>();
+        this.c4C = transaction.Build<C4>();
+        this.c4D = transaction.Build<C4>();
 
         IObject[] allObjects =
         [

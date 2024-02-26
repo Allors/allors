@@ -31,9 +31,9 @@ public abstract class SandboxTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
-            var user = User.Create(this.Transaction);
+            var user = this.Transaction.Build<User>();
             user.From = "Nowhere";
             Assert.Equal("Nowhere", user.From);
 
@@ -50,7 +50,7 @@ public abstract class SandboxTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             if (this.Population is IDatabase database)
             {
@@ -68,10 +68,10 @@ public abstract class SandboxTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
-            var c1A = C1.Create(this.Transaction);
-            var c1B = C1.Create(this.Transaction);
+            var c1A = this.Transaction.Build<C1>();
+            var c1B = this.Transaction.Build<C1>();
             c1A.C1C1many2one = c1B;
 
             foreach (var c in c1B.C1sWhereC1C1many2one)
@@ -89,7 +89,7 @@ public abstract class SandboxTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             var population = new TestPopulation(this.Transaction);
 
@@ -110,7 +110,7 @@ public abstract class SandboxTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             var population = new TestPopulation(this.Transaction);
 
@@ -187,7 +187,7 @@ public abstract class SandboxTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
             var population = new TestPopulation(this.Transaction);
 
             this.Profile.Transaction.Commit();

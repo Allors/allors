@@ -9,13 +9,14 @@ using Microsoft.Data.SqlClient;
 
 public class Fixture<T>
 {
+    private const string ConnectionStringCreateKey = "ConnectionStrings:sqlclient-create";
     private const string ConnectionStringKey = "ConnectionStrings:sqlclient";
 
     public Fixture()
     {
         this.Config = new Config();
 
-        var connectionString = this.ConnectionStringBuilder.ConnectionString;
+        var connectionString = this.Config.Root[ConnectionStringCreateKey];
 
         using var connection = new SqlConnection(connectionString);
         connection.Open();
@@ -33,6 +34,7 @@ public class Fixture<T>
         get
         {
             var connectionString = this.Config.Root[ConnectionStringKey];
+            connectionString = connectionString.Replace("[database]", this.Database);
             return new SqlConnectionStringBuilder(connectionString);
         }
     }

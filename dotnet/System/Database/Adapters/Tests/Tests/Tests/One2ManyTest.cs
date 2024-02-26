@@ -1,4 +1,4 @@
-// <copyright file="One2ManyTest.cs" company="Allors bv">
+﻿// <copyright file="One2ManyTest.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -32,19 +32,19 @@ public abstract class One2ManyTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             foreach (var mark in this.Markers)
             {
                 for (var i = 0; i < Settings.NumberOfRuns; i++)
                 {
-                    var from = C1.Create(this.Transaction);
-                    var fromAnother = C1.Create(this.Transaction);
+                    var from = this.Transaction.Build<C1>();
+                    var fromAnother = this.Transaction.Build<C1>();
 
-                    var to1 = C1.Create(this.Transaction);
-                    var to2 = C1.Create(this.Transaction);
-                    var to3 = C1.Create(this.Transaction);
-                    var to4 = C1.Create(this.Transaction);
+                    var to1 = this.Transaction.Build<C1>();
+                    var to2 = this.Transaction.Build<C1>();
+                    var to3 = this.Transaction.Build<C1>();
+                    var to4 = this.Transaction.Build<C1>();
 
                     C1[] to1Array = [to1];
                     C1[] to2Array = [to2];
@@ -591,8 +591,8 @@ public abstract class One2ManyTest : IDisposable
                     Assert.Contains(to2, from.C1C1one2manies);
 
                     // Remove and Add
-                    from = C1.Create(this.Transaction);
-                    var to = C1.Create(this.Transaction);
+                    from = this.Transaction.Build<C1>();
+                    var to = this.Transaction.Build<C1>();
 
                     from.AddC1C1one2many(to);
 
@@ -604,9 +604,9 @@ public abstract class One2ManyTest : IDisposable
                     this.Transaction.Commit();
 
                     // Add and Remove
-                    from = C1.Create(this.Transaction);
-                    to1 = C1.Create(this.Transaction);
-                    to2 = C1.Create(this.Transaction);
+                    from = this.Transaction.Build<C1>();
+                    to1 = this.Transaction.Build<C1>();
+                    to2 = this.Transaction.Build<C1>();
 
                     from.AddC1C1one2many(to1);
 
@@ -618,9 +618,9 @@ public abstract class One2ManyTest : IDisposable
                     this.Transaction.Commit();
 
                     // New - Middle - To
-                    from = C1.Create(this.Transaction);
-                    var middle = C1.Create(this.Transaction);
-                    to = C1.Create(this.Transaction);
+                    from = this.Transaction.Build<C1>();
+                    var middle = this.Transaction.Build<C1>();
+                    to = this.Transaction.Build<C1>();
 
                     from.AddC1C1one2many(middle);
                     middle.AddC1C1one2many(to);
@@ -631,7 +631,7 @@ public abstract class One2ManyTest : IDisposable
                     Assert.False(middle.ExistC1C1one2manies);
 
                     // Very Big Array
-                    var bigArray = C1.Create(this.Transaction, Settings.LargeArraySize);
+                    var bigArray = this.Transaction.Build<C1>(Settings.LargeArraySize);
                     from.C1C1one2manies = bigArray;
                     var getBigArray = from.C1C1one2manies.ToArray();
 
@@ -644,7 +644,7 @@ public abstract class One2ManyTest : IDisposable
                         Assert.Contains(bigArrayObject, objects);
                     }
 
-                    from = C1.Create(this.Transaction);
+                    from = this.Transaction.Build<C1>();
 
                     from.Strategy.SetRole(m.C1.C1C1one2manies, to1Array);
                     from.Strategy.SetRole(m.C1.C1C1one2manies, to1Array);
@@ -655,8 +655,8 @@ public abstract class One2ManyTest : IDisposable
                     Assert.Equal(from, to1Array[0].C1WhereC1C1one2many);
 
                     // Extent.ToArray()
-                    from = C1.Create(this.Transaction);
-                    to1 = C1.Create(this.Transaction);
+                    from = this.Transaction.Build<C1>();
+                    to1 = this.Transaction.Build<C1>();
 
                     from.AddC1C1one2many(to1);
 
@@ -665,8 +665,8 @@ public abstract class One2ManyTest : IDisposable
                     Assert.Equal(to1, from.Strategy.GetCompositesRole<IObject>(m.C1.C1C1one2manies).ElementAt(0));
 
                     // Extent<T>.ToArray()
-                    from = C1.Create(this.Transaction);
-                    to1 = C1.Create(this.Transaction);
+                    from = this.Transaction.Build<C1>();
+                    to1 = this.Transaction.Build<C1>();
 
                     from.AddC1C1one2many(to1);
 
@@ -684,17 +684,17 @@ public abstract class One2ManyTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             foreach (var mark in this.Markers)
             {
-                var from = C1.Create(this.Transaction);
-                var fromAnother = C1.Create(this.Transaction);
+                var from = this.Transaction.Build<C1>();
+                var fromAnother = this.Transaction.Build<C1>();
 
-                var to1 = C2.Create(this.Transaction);
-                var to2 = C2.Create(this.Transaction);
-                var to3 = C2.Create(this.Transaction);
-                var to4 = C2.Create(this.Transaction);
+                var to1 = this.Transaction.Build<C2>();
+                var to2 = this.Transaction.Build<C2>();
+                var to3 = this.Transaction.Build<C2>();
+                var to4 = this.Transaction.Build<C2>();
 
                 mark();
 
@@ -974,7 +974,7 @@ public abstract class One2ManyTest : IDisposable
                 Assert.Empty(from.C1C2one2manies);
 
                 // Very Big Array
-                var bigArray = C2.Create(this.Transaction, Settings.LargeArraySize);
+                var bigArray = this.Transaction.Build<C2>(Settings.LargeArraySize);
                 from.C1C2one2manies = bigArray;
                 var getBigArray = from.C1C2one2manies.ToArray();
 
@@ -988,8 +988,8 @@ public abstract class One2ManyTest : IDisposable
                 }
 
                 // Extent.ToArray()
-                from = C1.Create(this.Transaction);
-                to1 = C2.Create(this.Transaction);
+                from = this.Transaction.Build<C1>();
+                to1 = this.Transaction.Build<C2>();
 
                 from.AddC1C2one2many(to1);
 
@@ -998,8 +998,8 @@ public abstract class One2ManyTest : IDisposable
                 Assert.Equal(to1, from.Strategy.GetCompositesRole<IObject>(m.C1.C1C2one2manies).ElementAt(0));
 
                 // Extent<T>.ToArray()
-                from = C1.Create(this.Transaction);
-                to1 = C2.Create(this.Transaction);
+                from = this.Transaction.Build<C1>();
+                to1 = this.Transaction.Build<C2>();
 
                 from.AddC1C2one2many(to1);
 
@@ -1017,17 +1017,17 @@ public abstract class One2ManyTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             foreach (var mark in this.Markers)
             {
-                var from = C1.Create(this.Transaction);
-                var fromAnother = C1.Create(this.Transaction);
+                var from = this.Transaction.Build<C1>();
+                var fromAnother = this.Transaction.Build<C1>();
 
-                var to1 = C1.Create(this.Transaction);
-                var to2 = C1.Create(this.Transaction);
-                var to3 = C1.Create(this.Transaction);
-                var to4 = C1.Create(this.Transaction);
+                var to1 = this.Transaction.Build<C1>();
+                var to2 = this.Transaction.Build<C1>();
+                var to3 = this.Transaction.Build<C1>();
+                var to4 = this.Transaction.Build<C1>();
 
                 mark();
 
@@ -1307,7 +1307,7 @@ public abstract class One2ManyTest : IDisposable
                 Assert.Empty(from.C1I1one2manies);
 
                 // Very Big Array
-                var bigArray = C1.Create(this.Transaction, Settings.LargeArraySize);
+                var bigArray = this.Transaction.Build<C1>(Settings.LargeArraySize);
                 from.C1I1one2manies = bigArray;
                 var getBigArray = from.C1I1one2manies.ToArray();
 
@@ -1322,8 +1322,8 @@ public abstract class One2ManyTest : IDisposable
                 }
 
                 // Extent.ToArray()
-                from = C1.Create(this.Transaction);
-                to1 = C1.Create(this.Transaction);
+                from = this.Transaction.Build<C1>();
+                to1 = this.Transaction.Build<C1>();
 
                 from.AddC1I1one2many(to1);
 
@@ -1332,8 +1332,8 @@ public abstract class One2ManyTest : IDisposable
                 Assert.Equal(to1, from.Strategy.GetCompositesRole<IObject>(m.C1.C1I1one2manies).ElementAt(0));
 
                 // Extent<T>.ToArray()
-                from = C1.Create(this.Transaction);
-                to1 = C1.Create(this.Transaction);
+                from = this.Transaction.Build<C1>();
+                to1 = this.Transaction.Build<C1>();
 
                 from.AddC1I1one2many(to1);
 
@@ -1351,17 +1351,17 @@ public abstract class One2ManyTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             foreach (var mark in this.Markers)
             {
-                var from = C1.Create(this.Transaction);
-                var fromAnother = C1.Create(this.Transaction);
+                var from = this.Transaction.Build<C1>();
+                var fromAnother = this.Transaction.Build<C1>();
 
-                var to1 = C2.Create(this.Transaction);
-                var to2 = C2.Create(this.Transaction);
-                var to3 = C2.Create(this.Transaction);
-                var to4 = C2.Create(this.Transaction);
+                var to1 = this.Transaction.Build<C2>();
+                var to2 = this.Transaction.Build<C2>();
+                var to3 = this.Transaction.Build<C2>();
+                var to4 = this.Transaction.Build<C2>();
 
                 // To 0-4-0
                 mark();
@@ -1623,7 +1623,7 @@ public abstract class One2ManyTest : IDisposable
                 Assert.Empty(from.C1I2one2manies);
 
                 // Very Big Array
-                var bigArray = C2.Create(this.Transaction, Settings.LargeArraySize);
+                var bigArray = this.Transaction.Build<C2>(Settings.LargeArraySize);
                 from.C1I2one2manies = bigArray;
                 var getBigArray = from.C1I2one2manies.ToArray();
 
@@ -1638,8 +1638,8 @@ public abstract class One2ManyTest : IDisposable
                 }
 
                 // Extent.ToArray()
-                from = C1.Create(this.Transaction);
-                to1 = C2.Create(this.Transaction);
+                from = this.Transaction.Build<C1>();
+                to1 = this.Transaction.Build<C2>();
 
                 from.AddC1I2one2many(to1);
 
@@ -1648,8 +1648,8 @@ public abstract class One2ManyTest : IDisposable
                 Assert.Equal(to1, from.Strategy.GetCompositesRole<IObject>(m.C1.C1I2one2manies).ElementAt(0));
 
                 // Extent<T>.ToArray()
-                from = C1.Create(this.Transaction);
-                to1 = C2.Create(this.Transaction);
+                from = this.Transaction.Build<C1>();
+                to1 = this.Transaction.Build<C2>();
 
                 from.AddC1I2one2many(to1);
 
@@ -1667,17 +1667,17 @@ public abstract class One2ManyTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             foreach (var mark in this.Markers)
             {
-                var from = C3.Create(this.Transaction);
-                var fromAnother = C3.Create(this.Transaction);
+                var from = this.Transaction.Build<C3>();
+                var fromAnother = this.Transaction.Build<C3>();
 
-                var to1 = C4.Create(this.Transaction);
-                var to2 = C4.Create(this.Transaction);
-                var to3 = C4.Create(this.Transaction);
-                var to4 = C4.Create(this.Transaction);
+                var to1 = this.Transaction.Build<C4>();
+                var to2 = this.Transaction.Build<C4>();
+                var to3 = this.Transaction.Build<C4>();
+                var to4 = this.Transaction.Build<C4>();
 
                 // To 0-4-0
                 mark();
@@ -1938,7 +1938,7 @@ public abstract class One2ManyTest : IDisposable
                 Assert.Empty(from.C3C4one2manies);
 
                 // Very Big Array
-                var bigArray = C4.Create(this.Transaction, Settings.LargeArraySize);
+                var bigArray = this.Transaction.Build<C4>(Settings.LargeArraySize);
                 from.C3C4one2manies = bigArray;
                 var getBigArray = from.C3C4one2manies.ToArray();
 
@@ -1953,8 +1953,8 @@ public abstract class One2ManyTest : IDisposable
                 }
 
                 // Extent.ToArray()
-                from = C3.Create(this.Transaction);
-                to1 = C4.Create(this.Transaction);
+                from = this.Transaction.Build<C3>();
+                to1 = this.Transaction.Build<C4>();
 
                 from.AddC3C4one2many(to1);
 
@@ -1963,8 +1963,8 @@ public abstract class One2ManyTest : IDisposable
                 Assert.Equal(to1, from.Strategy.GetCompositesRole<IObject>(m.C3.C3C4one2manies).ElementAt(0));
 
                 // Extent<T>.ToArray()
-                from = C3.Create(this.Transaction);
-                to1 = C4.Create(this.Transaction);
+                from = this.Transaction.Build<C3>();
+                to1 = this.Transaction.Build<C4>();
 
                 from.AddC3C4one2many(to1);
 
@@ -1982,19 +1982,19 @@ public abstract class One2ManyTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             foreach (var mark in this.Markers)
             {
                 for (var i = 0; i < Settings.NumberOfRuns; i++)
                 {
-                    var from = C1.Create(this.Transaction);
-                    var fromAnother = C1.Create(this.Transaction);
+                    var from = this.Transaction.Build<C1>();
+                    var fromAnother = this.Transaction.Build<C1>();
 
-                    var to1 = C1.Create(this.Transaction);
-                    var to2 = C1.Create(this.Transaction);
-                    var to3 = C2.Create(this.Transaction);
-                    var to4 = C2.Create(this.Transaction);
+                    var to1 = this.Transaction.Build<C1>();
+                    var to2 = this.Transaction.Build<C1>();
+                    var to3 = this.Transaction.Build<C2>();
+                    var to4 = this.Transaction.Build<C2>();
 
                     // To 0-4-0
                     // Get
@@ -2495,7 +2495,7 @@ public abstract class One2ManyTest : IDisposable
                     Assert.Empty(from.I1I12one2manies);
 
                     // Very Big Array
-                    var bigArray = C2.Create(this.Transaction, Settings.LargeArraySize);
+                    var bigArray = this.Transaction.Build<C2>(Settings.LargeArraySize);
                     from.I1I12one2manies = bigArray;
                     var getBigArray = from.I1I12one2manies.ToArray();
 
@@ -2510,8 +2510,8 @@ public abstract class One2ManyTest : IDisposable
                     }
 
                     // Extent.ToArray() I12->C1
-                    from = C1.Create(this.Transaction);
-                    to1 = C1.Create(this.Transaction);
+                    from = this.Transaction.Build<C1>();
+                    to1 = this.Transaction.Build<C1>();
 
                     from.AddI1I12one2many(to1);
 
@@ -2520,8 +2520,8 @@ public abstract class One2ManyTest : IDisposable
                     Assert.Equal(to1, from.Strategy.GetCompositesRole<IObject>(m.I1.I1I12one2manies).ElementAt(0));
 
                     // Extent<T>.ToArray() I12->C1
-                    from = C1.Create(this.Transaction);
-                    to1 = C1.Create(this.Transaction);
+                    from = this.Transaction.Build<C1>();
+                    to1 = this.Transaction.Build<C1>();
 
                     from.AddI1I12one2many(to1);
 
@@ -2530,8 +2530,8 @@ public abstract class One2ManyTest : IDisposable
                     Assert.Equal(to1, from.I1I12one2manies.ElementAt(0));
 
                     // Extent.ToArray() I12->C2
-                    from = C1.Create(this.Transaction);
-                    to3 = C2.Create(this.Transaction);
+                    from = this.Transaction.Build<C1>();
+                    to3 = this.Transaction.Build<C2>();
 
                     from.AddI1I12one2many(to3);
 
@@ -2540,8 +2540,8 @@ public abstract class One2ManyTest : IDisposable
                     Assert.Equal(to3, from.Strategy.GetCompositesRole<IObject>(m.I1.I1I12one2manies).ElementAt(0));
 
                     // Extent<T>.ToArray() I12->C2
-                    from = C1.Create(this.Transaction);
-                    to3 = C2.Create(this.Transaction);
+                    from = this.Transaction.Build<C1>();
+                    to3 = this.Transaction.Build<C2>();
 
                     from.AddI1I12one2many(to3);
 
@@ -2559,17 +2559,17 @@ public abstract class One2ManyTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             foreach (var mark in this.Markers)
             {
-                var from = C1.Create(this.Transaction);
-                var fromAnother = C1.Create(this.Transaction);
+                var from = this.Transaction.Build<C1>();
+                var fromAnother = this.Transaction.Build<C1>();
 
-                var to1 = C1.Create(this.Transaction);
-                var to2 = C1.Create(this.Transaction);
-                var to3 = C1.Create(this.Transaction);
-                var to4 = C1.Create(this.Transaction);
+                var to1 = this.Transaction.Build<C1>();
+                var to2 = this.Transaction.Build<C1>();
+                var to3 = this.Transaction.Build<C1>();
+                var to4 = this.Transaction.Build<C1>();
 
                 // To 0-4-0
                 mark();
@@ -2830,7 +2830,7 @@ public abstract class One2ManyTest : IDisposable
                 Assert.Empty(from.I1I1one2manies);
 
                 // Very Big Array
-                var bigArray = C1.Create(this.Transaction, Settings.LargeArraySize);
+                var bigArray = this.Transaction.Build<C1>(Settings.LargeArraySize);
                 from.I1I1one2manies = bigArray;
                 var getBigArray = from.I1I1one2manies.ToArray();
 
@@ -2845,9 +2845,9 @@ public abstract class One2ManyTest : IDisposable
                 }
 
                 // New - Middle - To
-                from = C1.Create(this.Transaction);
-                var middle = C1.Create(this.Transaction);
-                var to = C1.Create(this.Transaction);
+                from = this.Transaction.Build<C1>();
+                var middle = this.Transaction.Build<C1>();
+                var to = this.Transaction.Build<C1>();
 
                 from.AddI1I1one2many(middle);
                 middle.AddI1I1one2many(to);
@@ -2858,8 +2858,8 @@ public abstract class One2ManyTest : IDisposable
                 Assert.False(middle.ExistI1I1one2manies);
 
                 // Extent.ToArray()
-                from = C1.Create(this.Transaction);
-                to1 = C1.Create(this.Transaction);
+                from = this.Transaction.Build<C1>();
+                to1 = this.Transaction.Build<C1>();
 
                 from.AddI1I1one2many(to1);
 
@@ -2868,8 +2868,8 @@ public abstract class One2ManyTest : IDisposable
                 Assert.Equal(to1, from.Strategy.GetCompositesRole<IObject>(m.I1.I1I1one2manies).ElementAt(0));
 
                 // Extent<T>.ToArray()
-                from = C1.Create(this.Transaction);
-                to1 = C1.Create(this.Transaction);
+                from = this.Transaction.Build<C1>();
+                to1 = this.Transaction.Build<C1>();
 
                 from.AddI1I1one2many(to1);
 
@@ -2886,17 +2886,17 @@ public abstract class One2ManyTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             foreach (var mark in this.Markers)
             {
-                var from = C1.Create(this.Transaction);
-                var fromAnother = C1.Create(this.Transaction);
+                var from = this.Transaction.Build<C1>();
+                var fromAnother = this.Transaction.Build<C1>();
 
-                var to1 = C2.Create(this.Transaction);
-                var to2 = C2.Create(this.Transaction);
-                var to3 = C2.Create(this.Transaction);
-                var to4 = C2.Create(this.Transaction);
+                var to1 = this.Transaction.Build<C2>();
+                var to2 = this.Transaction.Build<C2>();
+                var to3 = this.Transaction.Build<C2>();
+                var to4 = this.Transaction.Build<C2>();
 
                 // To 0-4-0
                 mark();
@@ -3157,7 +3157,7 @@ public abstract class One2ManyTest : IDisposable
                 Assert.Empty(from.I1I2one2manies);
 
                 // Very Big Array
-                var bigArray = C2.Create(this.Transaction, Settings.LargeArraySize);
+                var bigArray = this.Transaction.Build<C2>(Settings.LargeArraySize);
                 from.I1I2one2manies = bigArray;
                 var getBigArray = from.I1I2one2manies.ToArray();
 
@@ -3172,8 +3172,8 @@ public abstract class One2ManyTest : IDisposable
                 }
 
                 // Extent.ToArray()
-                from = C1.Create(this.Transaction);
-                to1 = C2.Create(this.Transaction);
+                from = this.Transaction.Build<C1>();
+                to1 = this.Transaction.Build<C2>();
 
                 from.AddI1I2one2many(to1);
 
@@ -3182,8 +3182,8 @@ public abstract class One2ManyTest : IDisposable
                 Assert.Equal(to1, from.Strategy.GetCompositesRole<IObject>(m.I1.I1I2one2manies).ElementAt(0));
 
                 // Extent<T>.ToArray()
-                from = C1.Create(this.Transaction);
-                to1 = C2.Create(this.Transaction);
+                from = this.Transaction.Build<C1>();
+                to1 = this.Transaction.Build<C2>();
 
                 from.AddI1I2one2many(to1);
 
@@ -3201,19 +3201,19 @@ public abstract class One2ManyTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             foreach (var mark in this.Markers)
             {
                 for (var i = 0; i < Settings.NumberOfRuns; i++)
                 {
-                    var from = C1.Create(this.Transaction);
-                    var fromAnother = C1.Create(this.Transaction);
+                    var from = this.Transaction.Build<C1>();
+                    var fromAnother = this.Transaction.Build<C1>();
 
-                    var to1 = C3.Create(this.Transaction);
-                    var to2 = C3.Create(this.Transaction);
-                    var to3 = C4.Create(this.Transaction);
-                    var to4 = C4.Create(this.Transaction);
+                    var to1 = this.Transaction.Build<C3>();
+                    var to2 = this.Transaction.Build<C3>();
+                    var to3 = this.Transaction.Build<C4>();
+                    var to4 = this.Transaction.Build<C4>();
 
                     // To 0-4-0
                     // Get
@@ -3715,7 +3715,7 @@ public abstract class One2ManyTest : IDisposable
                     Assert.Empty(from.I1I34one2manies);
 
                     // Very Big Array
-                    var bigArray = C4.Create(this.Transaction, Settings.LargeArraySize);
+                    var bigArray = this.Transaction.Build<C4>(Settings.LargeArraySize);
                     from.I1I34one2manies = bigArray;
                     var getBigArray = from.I1I34one2manies.ToArray();
 
@@ -3730,8 +3730,8 @@ public abstract class One2ManyTest : IDisposable
                     }
 
                     // Extent.ToArray()
-                    from = C1.Create(this.Transaction);
-                    to1 = C3.Create(this.Transaction);
+                    from = this.Transaction.Build<C1>();
+                    to1 = this.Transaction.Build<C3>();
 
                     from.AddI1I34one2many(to1);
 
@@ -3740,8 +3740,8 @@ public abstract class One2ManyTest : IDisposable
                     Assert.Equal(to1, from.Strategy.GetCompositesRole<IObject>(m.I1.I1I34one2manies).ElementAt(0));
 
                     // Extent<T>.ToArray()
-                    from = C1.Create(this.Transaction);
-                    to1 = C3.Create(this.Transaction);
+                    from = this.Transaction.Build<C1>();
+                    to1 = this.Transaction.Build<C3>();
 
                     from.AddI1I34one2many(to1);
 
@@ -3760,15 +3760,15 @@ public abstract class One2ManyTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             foreach (var mark in this.Markers)
             {
-                var c1A = C1.Create(this.Transaction);
-                var c1B = C1.Create(this.Transaction);
+                var c1A = this.Transaction.Build<C1>();
+                var c1B = this.Transaction.Build<C1>();
                 C1[] c1Bs = [c1B];
 
-                var c2A = C2.Create(this.Transaction);
+                var c2A = this.Transaction.Build<C2>();
                 C2[] c2As = [c2A];
 
                 // Illegal role

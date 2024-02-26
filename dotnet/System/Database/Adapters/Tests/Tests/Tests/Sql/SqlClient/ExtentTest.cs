@@ -30,7 +30,7 @@ public class ExtentTest : Adapters.ExtentTest, IClassFixture<Fixture<ExtentTest>
             {
                 init();
                 this.Populate();
-                var m = this.Transaction.Database.Context().M;
+                var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
                 this.Transaction.Commit();
 
@@ -129,7 +129,7 @@ public class ExtentTest : Adapters.ExtentTest, IClassFixture<Fixture<ExtentTest>
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             this.Populate();
 
@@ -195,12 +195,12 @@ public class ExtentTest : Adapters.ExtentTest, IClassFixture<Fixture<ExtentTest>
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
-            var c1A = C1.Create(this.Transaction);
-            var c1B = C1.Create(this.Transaction);
-            var c1C = C1.Create(this.Transaction);
-            var c1D = C1.Create(this.Transaction);
+            var c1A = this.Transaction.Build<C1>();
+            var c1B = this.Transaction.Build<C1>();
+            var c1C = this.Transaction.Build<C1>();
+            var c1D = this.Transaction.Build<C1>();
 
             c1A.C1AllorsString = "2";
             c1B.C1AllorsString = "1";

@@ -135,8 +135,8 @@ public class PredicateAssertions
                 "AddBetween() requires a first and second object, use AddLessThan() or AddGreaterThan() instead.");
         }
 
-        var firstRole = firstObject as RoleType;
-        var secondRole = secondObject as RoleType;
+        var firstRole = firstObject as RoleType ?? firstObject as RoleTypeIndex;
+        var secondRole = secondObject as RoleType ?? secondObject as RoleTypeIndex;
         if ((firstRole != null && !(firstRole.ObjectType is Unit)) ||
             (secondRole != null && !(secondRole.ObjectType is Unit)))
         {
@@ -214,7 +214,12 @@ public class PredicateAssertions
                 "AddEquals() requires a non-null value or object, use AddNot().AddExists() instead.");
         }
 
-        if (compareObject is RoleType compareRole && compareRole.ObjectType is Composite)
+        if (compareObject is RoleType { ObjectType: Composite })
+        {
+            throw new ArgumentException("AddRoleEqual() for composites can only be used with objects (not other roles).");
+        }
+
+        if (compareObject is RoleTypeIndex { RoleType.ObjectType: Composite })
         {
             throw new ArgumentException("AddRoleEqual() for composites can only be used with objects (not other roles).");
         }

@@ -98,6 +98,14 @@ public interface ITransaction : IDisposable
     T Build<T>() where T : IObject;
 
     /// <summary>
+    ///     Creates an Allors Object.
+    /// </summary>
+    /// <typeparam name="T">The IObjectType.</typeparam>
+    /// <returns>a new <see cref="IObject" />.</returns>
+    T[] Build<T>(int count) where T : IObject;
+
+
+    /// <summary>
     ///     Creates an Allors Object and execute builders.
     /// </summary>
     /// <typeparam name="T">The IObjectType.</typeparam>

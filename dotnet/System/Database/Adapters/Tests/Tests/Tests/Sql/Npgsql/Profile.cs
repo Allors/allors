@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Text;
 using Allors.Database.Meta.Configuration;
 using Allors.Database.Adapters.Sql.Caching;
+using Allors.Database.Configuration;
 using Allors.Database.Domain;
 using global::Npgsql;
 
@@ -43,7 +44,7 @@ public class Profile : Adapters.Profile
     public override IDatabase CreateDatabase()
     {
         var metaPopulation = new MetaBuilder().Build();
-        var scope = new DefaultDomainDatabaseServices();
+        var scope = new DatabaseServices();
         return new Database(scope,
             new Configuration
             {

@@ -44,7 +44,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
             var extent = this.Transaction.Extent(m.C1);
@@ -125,7 +125,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
             var extent = this.Transaction.Extent(m.C1);
@@ -202,7 +202,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             foreach (var useEnumerable in TrueFalse)
             {
@@ -644,7 +644,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
             var extent = this.Transaction.Extent(m.C2);
@@ -743,7 +743,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
             var extent = this.Transaction.Extent(m.C2);
@@ -865,7 +865,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             this.Transaction.Commit();
 
@@ -1194,7 +1194,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
             var extent = this.Transaction.Extent(m.C1);
@@ -1293,7 +1293,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             foreach (var useOperator in this.UseOperator)
             {
@@ -1557,7 +1557,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
             var extent = this.Transaction.Extent(m.C2);
@@ -1670,7 +1670,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
             var extent = this.Transaction.Extent(m.C2);
@@ -1792,7 +1792,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
             var extent = this.Transaction.Extent(m.C2);
@@ -1871,7 +1871,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             foreach (var useOperator in this.UseOperator)
             {
@@ -2098,7 +2098,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
             var extent = this.Transaction.Extent(m.C1);
@@ -2262,7 +2262,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
             var extent = this.Transaction.Extent(m.C1);
@@ -2426,7 +2426,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
 
@@ -2659,7 +2659,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Like and any
             var extent = this.Transaction.Extent(m.C1);
@@ -2774,7 +2774,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Except + Union
             var firstExtent = this.Transaction.Extent(m.C1);
@@ -2901,7 +2901,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             var extent = this.Transaction.Extent(m.InterfaceWithoutClass);
 
@@ -2916,7 +2916,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // class
             var extent = this.Transaction.Extent(m.C1);
@@ -2972,7 +2972,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // class
             var extent = this.Transaction.Extent(m.C1);
@@ -3043,7 +3043,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // class
             var extent = this.Transaction.Extent(m.C1);
@@ -3111,7 +3111,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // class
             var extent = this.Transaction.Extent(m.C1);
@@ -3182,7 +3182,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // class
             var firstExtent = this.Transaction.Extent(m.C1);
@@ -3238,7 +3238,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             var extent = this.Transaction.Extent(m.C1);
             extent.Filter.AddExists(m.C1.C1AllorsString);
@@ -3257,7 +3257,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class + Class
             var extent = this.Transaction.Extent(m.C1);
@@ -3355,7 +3355,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // class
             var firstExtent = this.Transaction.Extent(m.C1);
@@ -3423,7 +3423,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             {
                 var extent = this.Transaction.Extent(m.C1);
@@ -3442,7 +3442,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
             var extent = this.Transaction.Extent(m.C1);
@@ -3499,7 +3499,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             this.Transaction.Commit();
 
@@ -3764,7 +3764,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
             var extent = this.Transaction.Extent(m.C2);
@@ -3850,7 +3850,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             foreach (var useOperator in this.UseOperator)
             {
@@ -4114,7 +4114,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             foreach (var useOperator in this.UseOperator)
             {
@@ -4378,7 +4378,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
             var extent = this.Transaction.Extent(m.C1);
@@ -4509,7 +4509,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
             var extent = this.Transaction.Extent(m.C2);
@@ -4595,7 +4595,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             foreach (var useOperator in this.UseOperator)
             {
@@ -4803,7 +4803,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
             var extent = this.Transaction.Extent(m.C1);
@@ -4907,7 +4907,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
             var extent = this.Transaction.Extent(m.C1);
@@ -5020,7 +5020,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
 
@@ -5133,7 +5133,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
             var extent = this.Transaction.Extent(m.C1);
@@ -5190,7 +5190,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
 
@@ -5389,7 +5389,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
 
@@ -5637,7 +5637,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
 
@@ -5885,7 +5885,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
             var extent = this.Transaction.Extent(m.C1);
@@ -5971,7 +5971,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             foreach (var useOperator in this.UseOperator)
             {
@@ -6419,7 +6419,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             this.Transaction.Commit();
 
@@ -6675,7 +6675,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
             var extent = this.Transaction.Extent(m.C1);
@@ -6761,7 +6761,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             foreach (var useOperator in this.UseOperator)
             {
@@ -6964,7 +6964,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             foreach (var useOperator in this.UseOperator)
             {
@@ -7167,7 +7167,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
             var extent = this.Transaction.Extent(m.C1);
@@ -7210,7 +7210,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
             var extent = this.Transaction.Extent(m.C1);
@@ -7296,7 +7296,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             foreach (var useOperator in this.UseOperator)
             {
@@ -7456,7 +7456,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             foreach (var useOperator in this.UseOperator)
             {
@@ -7616,7 +7616,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
             var extent = this.Transaction.Extent(m.C1);
@@ -7711,7 +7711,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
             var extent = this.Transaction.Extent(m.C1);
@@ -7806,7 +7806,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
 
@@ -7901,7 +7901,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
 
@@ -8316,7 +8316,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
             var extent = this.Transaction.Extent(m.C1);
@@ -8402,7 +8402,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
 
@@ -8690,7 +8690,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             var firstExtent = this.Transaction.Extent(m.C1);
             firstExtent.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbra");
@@ -8721,7 +8721,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Dangling empty And behind Or
             var extent = this.Transaction.Extent(m.C1);
@@ -8820,7 +8820,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
             var extent = this.Transaction.Extent(m.C1);
@@ -8875,7 +8875,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Association (Amgiguous Name)
             Extent<Company> parents = this.Transaction.Extent(m.Company);
@@ -8899,7 +8899,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
             var extent = this.Transaction.Extent(m.C1);
@@ -8985,7 +8985,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
 
@@ -9155,7 +9155,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
 
@@ -9384,7 +9384,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
 
@@ -9613,7 +9613,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
 
@@ -9812,7 +9812,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
 
@@ -10060,7 +10060,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
 
@@ -10303,7 +10303,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
             // Equal 0
@@ -10545,7 +10545,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
 
@@ -10744,7 +10744,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
 
@@ -10992,7 +10992,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
 
@@ -11240,7 +11240,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
             // Equal 0
@@ -11482,7 +11482,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             foreach (var flag in TrueFalse)
             {
@@ -11845,7 +11845,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             foreach (var flag in TrueFalse)
             {
@@ -12220,7 +12220,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             foreach (var flag in TrueFalse)
             {
@@ -12597,7 +12597,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             foreach (var flag in TrueFalse)
             {
@@ -12971,7 +12971,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
 
@@ -13170,7 +13170,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
 
@@ -13418,7 +13418,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
 
@@ -13666,7 +13666,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
             // Equal 0
@@ -13908,7 +13908,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // AllorsInteger
             // Class
@@ -14175,7 +14175,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             var exceptionThrown = false;
 
@@ -14201,7 +14201,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             foreach (var useOperator in this.UseOperator)
             {
@@ -14464,7 +14464,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
             var extent = this.Transaction.Extent(m.C1);
@@ -14517,7 +14517,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
             var extent = this.Transaction.Extent(m.C1);
@@ -14603,7 +14603,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             foreach (var useOperator in this.UseOperator)
             {
@@ -14807,7 +14807,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
             var extent = this.Transaction.Extent(m.C1);
@@ -14850,7 +14850,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
             var extent = this.Transaction.Extent(m.C1);
@@ -14936,7 +14936,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             foreach (var useOperator in this.UseOperator)
             {
@@ -15096,7 +15096,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Extent over Class
 
@@ -15205,7 +15205,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             foreach (var useOperator in this.UseOperator)
             {
@@ -15336,7 +15336,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
             var extent = this.Transaction.Extent(m.C1);
@@ -15431,7 +15431,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
             var extent = this.Transaction.Extent(m.C1);
@@ -15535,7 +15535,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
 
@@ -15630,7 +15630,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             var extent = this.Transaction.Extent(m.C1);
             extent.Filter.AddEquals(m.C1.C1AllorsString, m.C1.C1StringEquals);
@@ -15650,7 +15650,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
 
@@ -16065,7 +16065,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
             var extent = this.Transaction.Extent(m.C1);
@@ -16151,7 +16151,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
 
@@ -16439,7 +16439,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             var sharedExtent = this.Transaction.Extent(m.C2);
             sharedExtent.Filter.AddLike(m.C2.C2AllorsString, "%");
@@ -16459,7 +16459,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             this.c1B.C1AllorsString = "3";
             this.c1C.C1AllorsString = "1";
@@ -16524,7 +16524,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             this.c1B.C1AllorsString = "a";
             this.c1C.C1AllorsString = "b";
@@ -16588,12 +16588,12 @@ public abstract class ExtentTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
-            var c1A = C1.Create(this.Transaction);
-            var c1B = C1.Create(this.Transaction);
-            var c1C = C1.Create(this.Transaction);
-            var c1D = C1.Create(this.Transaction);
+            var c1A = this.Transaction.Build<C1>();
+            var c1B = this.Transaction.Build<C1>();
+            var c1C = this.Transaction.Build<C1>();
+            var c1D = this.Transaction.Build<C1>();
 
             c1A.C1AllorsString = "2";
             c1B.C1AllorsString = "1";
@@ -16639,7 +16639,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             var extent = this.Transaction.Extent(m.I4);
             Assert.Equal(4, extent.Count);
@@ -16654,7 +16654,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
 
@@ -16711,7 +16711,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Wrong Parameters
             var exceptionThrown = false;
@@ -16739,7 +16739,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Wrong Parameters
             var exceptionThrown = false;
@@ -16777,7 +16777,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Wrong Parameters
             var exceptionThrown = false;
@@ -16827,7 +16827,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Wrong Parameters
             var exceptionThrown = false;
@@ -16852,7 +16852,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Wrong Parameters
             var exceptionThrown = false;
@@ -16877,7 +16877,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Wrong Parameters
             var exceptionThrown = false;
@@ -16922,7 +16922,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Wrong Parameters
             var exceptionThrown = false;
@@ -16947,7 +16947,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Wrong Parameters
             var exceptionThrown = false;
@@ -16974,7 +16974,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Wrong Parameters
             var exceptionThrown = false;
@@ -16999,7 +16999,7 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Wrong Parameters
             var exceptionThrown = false;
@@ -17030,12 +17030,12 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // many2many contains
-            var c1 = C1.Create(this.Transaction);
-            var c2 = C2.Create(this.Transaction);
-            var c3 = C3.Create(this.Transaction);
+            var c1 = this.Transaction.Build<C1>();
+            var c2 = this.Transaction.Build<C2>();
+            var c3 = this.Transaction.Build<C3>();
 
             c2.AddC3Many2Many(c3);
             c1.C1C2many2one = c2;
@@ -17058,12 +17058,12 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // manymany contains
-            var c2 = C2.Create(this.Transaction);
-            var c3 = C3.Create(this.Transaction);
-            var c4 = C4.Create(this.Transaction);
+            var c2 = this.Transaction.Build<C2>();
+            var c3 = this.Transaction.Build<C3>();
+            var c4 = this.Transaction.Build<C4>();
 
             c3.AddC3C4one2many(c4);
             c2.C3Many2One = c3;
@@ -17086,12 +17086,12 @@ public abstract class ExtentTest : IDisposable
         {
             init();
             this.Populate();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // many2many contains
-            var c1 = C1.Create(this.Transaction);
-            var c2 = C2.Create(this.Transaction);
-            var c3 = C3.Create(this.Transaction);
+            var c1 = this.Transaction.Build<C1>();
+            var c2 = this.Transaction.Build<C2>();
+            var c3 = this.Transaction.Build<C3>();
 
             c3.AddC3C2many2many(c2);
             c1.C1C2many2one = c2;

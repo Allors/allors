@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Allors.Database.Meta.Configuration;
 using Allors.Database.Domain;
 using Allors.Database.Adapters.Memory;
+using Database.Configuration;
 
 public abstract class Profile : IProfile
 {
@@ -55,7 +56,7 @@ public abstract class Profile : IProfile
     public IDatabase CreateMemoryDatabase()
     {
         var metaPopulation = new MetaBuilder().Build();
-        var scope = new DefaultDomainDatabaseServices();
+        var scope = new DatabaseServices();
         return new Database(scope, new Memory.Configuration { ObjectFactory = new ObjectFactory(metaPopulation, typeof(C1)) });
     }
 

@@ -11,6 +11,7 @@ using System.Data;
 using System.Text;
 using Allors.Database.Meta.Configuration;
 using Allors.Database.Adapters.Sql.Caching;
+using Allors.Database.Configuration;
 using Allors.Database.Domain;
 using Microsoft.Data.SqlClient;
 
@@ -59,7 +60,7 @@ public class Profile : Adapters.Profile
     public override IDatabase CreateDatabase()
     {
         var metaPopulation = new MetaBuilder().Build();
-        var scope = new DefaultDomainDatabaseServices();
+        var scope = new DatabaseServices();
         return new Database(scope,
             new Configuration
             {

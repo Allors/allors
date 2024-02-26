@@ -1,4 +1,4 @@
-// <copyright file="UnitTest.cs" company="Allors bv">
+﻿// <copyright file="UnitTest.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -37,13 +37,13 @@ public abstract class UnitTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             foreach (var mark in this.Markers)
             {
                 {
                     // True
-                    var values = C1.Create(this.Transaction);
+                    var values = this.Transaction.Build<C1>();
                     values.C1AllorsBoolean = true;
                     values.I1AllorsBoolean = true;
                     values.S1AllorsBoolean = true;
@@ -57,7 +57,7 @@ public abstract class UnitTest : IDisposable
 
                 {
                     // False
-                    var values = C1.Create(this.Transaction);
+                    var values = this.Transaction.Build<C1>();
                     values.C1AllorsBoolean = false;
                     values.I1AllorsBoolean = false;
                     values.S1AllorsBoolean = false;
@@ -71,7 +71,7 @@ public abstract class UnitTest : IDisposable
 
                 {
                     // initial empty
-                    var values = C1.Create(this.Transaction);
+                    var values = this.Transaction.Build<C1>();
 
                     bool? value = null;
 
@@ -115,7 +115,7 @@ public abstract class UnitTest : IDisposable
 
                 {
                     // reset empty
-                    var values = C1.Create(this.Transaction);
+                    var values = this.Transaction.Build<C1>();
                     values.C1AllorsBoolean = true;
                     values.I1AllorsBoolean = true;
                     values.S1AllorsBoolean = true;
@@ -177,11 +177,11 @@ public abstract class UnitTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             if (this.Transaction is ITransaction)
             {
-                var c1 = C1.Create(this.Transaction);
+                var c1 = this.Transaction.Build<C1>();
                 var c1Id = c1.Id.ToString();
 
                 c1.C1AllorsBoolean = true;
@@ -210,13 +210,13 @@ public abstract class UnitTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             foreach (var mark in this.Markers)
             {
                 {
                     // unspecified
-                    var values = C1.Create(this.Transaction);
+                    var values = this.Transaction.Build<C1>();
 
                     var exceptionThrown = false;
                     try
@@ -237,7 +237,7 @@ public abstract class UnitTest : IDisposable
 
                 {
                     // Minimum
-                    var values = C1.Create(this.Transaction);
+                    var values = this.Transaction.Build<C1>();
                     values.C1AllorsDateTime = DateTime.MinValue;
                     values.I1AllorsDateTime = DateTime.MinValue;
                     values.S1AllorsDateTime = DateTime.MinValue;
@@ -250,7 +250,7 @@ public abstract class UnitTest : IDisposable
 
                 {
                     // Maximum
-                    var values = C1.Create(this.Transaction);
+                    var values = this.Transaction.Build<C1>();
                     values.C1AllorsDateTime = DateTime.MaxValue;
                     values.I1AllorsDateTime = DateTime.MaxValue;
                     values.S1AllorsDateTime = DateTime.MaxValue;
@@ -271,13 +271,13 @@ public abstract class UnitTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             foreach (var mark in this.Markers)
             {
                 {
                     // year, day & month
-                    var values = C1.Create(this.Transaction);
+                    var values = this.Transaction.Build<C1>();
                     values.C1AllorsDateTime = new DateTime(1973, 03, 27, 0, 0, 0, 0, DateTimeKind.Local);
                     values.I1AllorsDateTime = new DateTime(1973, 03, 27, 0, 0, 0, 0, DateTimeKind.Local);
                     values.S1AllorsDateTime = new DateTime(1973, 03, 27, 0, 0, 0, 0, DateTimeKind.Local);
@@ -291,7 +291,7 @@ public abstract class UnitTest : IDisposable
                 {
                     // Now
                     var now = this.StripNanoSeconds(DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Local));
-                    var values = C1.Create(this.Transaction);
+                    var values = this.Transaction.Build<C1>();
                     values.C1AllorsDateTime = now;
                     values.I1AllorsDateTime = now;
                     values.S1AllorsDateTime = now;
@@ -305,7 +305,7 @@ public abstract class UnitTest : IDisposable
 
                 {
                     // initial empty
-                    var values = C1.Create(this.Transaction);
+                    var values = this.Transaction.Build<C1>();
 
                     DateTime? value = null;
 
@@ -350,7 +350,7 @@ public abstract class UnitTest : IDisposable
 
                 {
                     // reset empty
-                    var values = C1.Create(this.Transaction);
+                    var values = this.Transaction.Build<C1>();
                     values.C1AllorsDateTime = DateTime.Now;
                     values.I1AllorsDateTime = DateTime.Now;
                     values.S1AllorsDateTime = DateTime.Now;
@@ -414,13 +414,13 @@ public abstract class UnitTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             foreach (var mark in this.Markers)
             {
                 var universal = new DateTime(1973, 3, 27, 12, 1, 2, 3, DateTimeKind.Utc);
 
-                var c1 = C1.Create(this.Transaction);
+                var c1 = this.Transaction.Build<C1>();
                 c1.C1AllorsDateTime = universal;
                 c1.I1AllorsDateTime = universal;
                 c1.S1AllorsDateTime = universal;
@@ -459,11 +459,11 @@ public abstract class UnitTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             if (this.Transaction is ITransaction)
             {
-                var c1 = C1.Create(this.Transaction);
+                var c1 = this.Transaction.Build<C1>();
                 var c1Id = c1.Id.ToString();
 
                 c1.C1AllorsDateTime = new DateTime(1973, 03, 27, 1, 2, 3, 4, DateTimeKind.Utc);
@@ -495,13 +495,13 @@ public abstract class UnitTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             foreach (var mark in this.Markers)
             {
                 {
                     // Positive
-                    var values = C1.Create(this.Transaction);
+                    var values = this.Transaction.Build<C1>();
                     values.C1AllorsDecimal = 10.10m;
                     values.I1AllorsDecimal = 10.10m;
                     values.S1AllorsDecimal = 10.10m;
@@ -514,7 +514,7 @@ public abstract class UnitTest : IDisposable
 
                 {
                     // Negative
-                    var values = C1.Create(this.Transaction);
+                    var values = this.Transaction.Build<C1>();
                     values.C1AllorsDecimal = -10.10m;
                     values.I1AllorsDecimal = -10.10m;
                     values.S1AllorsDecimal = -10.10m;
@@ -527,7 +527,7 @@ public abstract class UnitTest : IDisposable
 
                 {
                     // Zero
-                    var values = C1.Create(this.Transaction);
+                    var values = this.Transaction.Build<C1>();
                     values.C1AllorsDecimal = 0m;
                     values.I1AllorsDecimal = 0m;
                     values.S1AllorsDecimal = 0m;
@@ -540,7 +540,7 @@ public abstract class UnitTest : IDisposable
 
                 {
                     // Minimum
-                    var values = C1.Create(this.Transaction);
+                    var values = this.Transaction.Build<C1>();
                     values.C1AllorsDecimal = decimal.MinValue;
                     values.I1AllorsDecimal = decimal.MinValue;
                     values.S1AllorsDecimal = decimal.MinValue;
@@ -553,7 +553,7 @@ public abstract class UnitTest : IDisposable
 
                 {
                     // Maximum
-                    var values = C1.Create(this.Transaction);
+                    var values = this.Transaction.Build<C1>();
                     values.C1AllorsDecimal = decimal.MaxValue;
                     values.I1AllorsDecimal = decimal.MaxValue;
                     values.S1AllorsDecimal = decimal.MaxValue;
@@ -566,7 +566,7 @@ public abstract class UnitTest : IDisposable
 
                 {
                     // initial empty
-                    var values = C1.Create(this.Transaction);
+                    var values = this.Transaction.Build<C1>();
 
                     decimal? value = null;
 
@@ -608,7 +608,7 @@ public abstract class UnitTest : IDisposable
 
                 {
                     // reset empty
-                    var values = C1.Create(this.Transaction);
+                    var values = this.Transaction.Build<C1>();
                     values.C1AllorsDecimal = 10.10m;
                     values.I1AllorsDecimal = 10.10m;
                     values.S1AllorsDecimal = 10.10m;
@@ -672,11 +672,11 @@ public abstract class UnitTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             if (this.Transaction is ITransaction)
             {
-                var c1 = C1.Create(this.Transaction);
+                var c1 = this.Transaction.Build<C1>();
                 var c1Id = c1.Id.ToString();
 
                 c1.C1AllorsDecimal = 1M;
@@ -705,13 +705,13 @@ public abstract class UnitTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             foreach (var mark in this.Markers)
             {
                 {
                     // Positive
-                    var values = C1.Create(this.Transaction);
+                    var values = this.Transaction.Build<C1>();
                     values.C1AllorsDouble = 10.10d;
                     values.I1AllorsDouble = 10.10d;
                     values.S1AllorsDouble = 10.10d;
@@ -724,7 +724,7 @@ public abstract class UnitTest : IDisposable
 
                 {
                     // Negative
-                    var values = C1.Create(this.Transaction);
+                    var values = this.Transaction.Build<C1>();
                     values.C1AllorsDouble = -10.10d;
                     values.I1AllorsDouble = -10.10d;
                     values.S1AllorsDouble = -10.10d;
@@ -737,7 +737,7 @@ public abstract class UnitTest : IDisposable
 
                 {
                     // Zero
-                    var values = C1.Create(this.Transaction);
+                    var values = this.Transaction.Build<C1>();
                     values.C1AllorsDouble = 0d;
                     values.I1AllorsDouble = 0d;
                     values.S1AllorsDouble = 0d;
@@ -751,7 +751,7 @@ public abstract class UnitTest : IDisposable
                 // Minimum
                 if (this.UseFloatMinimum)
                 {
-                    var values = C1.Create(this.Transaction);
+                    var values = this.Transaction.Build<C1>();
                     values.C1AllorsDouble = double.MinValue;
                     values.I1AllorsDouble = double.MinValue;
                     values.S1AllorsDouble = double.MinValue;
@@ -765,7 +765,7 @@ public abstract class UnitTest : IDisposable
                 // Maximum
                 if (this.UseFloatMaximum)
                 {
-                    var values = C1.Create(this.Transaction);
+                    var values = this.Transaction.Build<C1>();
                     values.C1AllorsDouble = double.MaxValue;
                     values.I1AllorsDouble = double.MaxValue;
                     values.S1AllorsDouble = double.MaxValue;
@@ -778,7 +778,7 @@ public abstract class UnitTest : IDisposable
 
                 {
                     // initial empty
-                    var values = C1.Create(this.Transaction);
+                    var values = this.Transaction.Build<C1>();
 
                     double? value = null;
 
@@ -821,7 +821,7 @@ public abstract class UnitTest : IDisposable
 
                 {
                     // reset empty
-                    var values = C1.Create(this.Transaction);
+                    var values = this.Transaction.Build<C1>();
                     values.C1AllorsDouble = 10.10d;
                     values.I1AllorsDouble = 10.10d;
                     values.S1AllorsDouble = 10.10d;
@@ -881,11 +881,11 @@ public abstract class UnitTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             if (this.Transaction is ITransaction)
             {
-                var c1 = C1.Create(this.Transaction);
+                var c1 = this.Transaction.Build<C1>();
                 var c1Id = c1.Id.ToString();
 
                 c1.C1AllorsDouble = 1;
@@ -914,13 +914,13 @@ public abstract class UnitTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             foreach (var mark in this.Markers)
             {
                 {
                     // Positive
-                    var values = C1.Create(this.Transaction);
+                    var values = this.Transaction.Build<C1>();
                     values.C1AllorsInteger = 10;
                     values.I1AllorsInteger = 10;
                     values.S1AllorsInteger = 10;
@@ -933,7 +933,7 @@ public abstract class UnitTest : IDisposable
 
                 {
                     // Negative
-                    var values = C1.Create(this.Transaction);
+                    var values = this.Transaction.Build<C1>();
                     values.C1AllorsInteger = -10;
                     values.I1AllorsInteger = -10;
                     values.S1AllorsInteger = -10;
@@ -946,7 +946,7 @@ public abstract class UnitTest : IDisposable
 
                 {
                     // Zero
-                    var values = C1.Create(this.Transaction);
+                    var values = this.Transaction.Build<C1>();
                     values.C1AllorsInteger = 0;
                     values.I1AllorsInteger = 0;
                     values.S1AllorsInteger = 0;
@@ -959,7 +959,7 @@ public abstract class UnitTest : IDisposable
 
                 {
                     // Minimum
-                    var values = C1.Create(this.Transaction);
+                    var values = this.Transaction.Build<C1>();
                     values.C1AllorsInteger = int.MinValue;
                     values.I1AllorsInteger = int.MinValue;
                     values.S1AllorsInteger = int.MinValue;
@@ -972,7 +972,7 @@ public abstract class UnitTest : IDisposable
 
                 {
                     // Maximum
-                    var values = C1.Create(this.Transaction);
+                    var values = this.Transaction.Build<C1>();
                     values.C1AllorsInteger = int.MaxValue;
                     values.I1AllorsInteger = int.MaxValue;
                     values.S1AllorsInteger = int.MaxValue;
@@ -985,7 +985,7 @@ public abstract class UnitTest : IDisposable
 
                 {
                     // initial empty
-                    var values = C1.Create(this.Transaction);
+                    var values = this.Transaction.Build<C1>();
 
                     int? value = null;
 
@@ -1028,7 +1028,7 @@ public abstract class UnitTest : IDisposable
 
                 {
                     // reset empty
-                    var values = C1.Create(this.Transaction);
+                    var values = this.Transaction.Build<C1>();
 
                     this.Transaction.Commit();
 
@@ -1095,11 +1095,11 @@ public abstract class UnitTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             if (this.Transaction is ITransaction)
             {
-                var c1 = C1.Create(this.Transaction);
+                var c1 = this.Transaction.Build<C1>();
                 var c1Id = c1.Id.ToString();
 
                 c1.C1AllorsInteger = 1;
@@ -1128,7 +1128,7 @@ public abstract class UnitTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             foreach (var mark in this.Markers)
             {
@@ -1136,7 +1136,7 @@ public abstract class UnitTest : IDisposable
                 var bLarge = new StringBuilder().Insert(0, "b", 100000).ToString();
                 var cLarge = new StringBuilder().Insert(0, "c", 100000).ToString();
                 {
-                    var values = C1.Create(this.Transaction);
+                    var values = this.Transaction.Build<C1>();
                     values.C1StringLarge = aLarge;
                     values.I1StringLarge = bLarge;
                     values.S1StringLarge = cLarge;
@@ -1153,7 +1153,7 @@ public abstract class UnitTest : IDisposable
 
                 {
                     // initial empty
-                    var values = C1.Create(this.Transaction);
+                    var values = this.Transaction.Build<C1>();
 
                     mark();
                     Assert.False(values.ExistC1StringLarge);
@@ -1167,7 +1167,7 @@ public abstract class UnitTest : IDisposable
 
                 {
                     // reset empty
-                    var values = C1.Create(this.Transaction);
+                    var values = this.Transaction.Build<C1>();
                     values.C1StringLarge = aLarge;
                     values.I1StringLarge = bLarge;
                     values.S1StringLarge = cLarge;
@@ -1193,7 +1193,7 @@ public abstract class UnitTest : IDisposable
 
                 {
                     // reset null
-                    var values = C1.Create(this.Transaction);
+                    var values = this.Transaction.Build<C1>();
                     values.C1StringLarge = aLarge;
                     values.I1StringLarge = bLarge;
                     values.S1StringLarge = cLarge;
@@ -1220,7 +1220,7 @@ public abstract class UnitTest : IDisposable
                 {
                     // large string in small string
                     var exceptionThrown = false;
-                    var values = C1.Create(this.Transaction);
+                    var values = this.Transaction.Build<C1>();
                     try
                     {
                         mark();
@@ -1235,7 +1235,7 @@ public abstract class UnitTest : IDisposable
                     Assert.False(values.ExistC1AllorsString);
 
                     exceptionThrown = false;
-                    values = C1.Create(this.Transaction);
+                    values = this.Transaction.Build<C1>();
                     try
                     {
                         mark();
@@ -1250,7 +1250,7 @@ public abstract class UnitTest : IDisposable
                     Assert.False(values.ExistI1AllorsString);
 
                     exceptionThrown = false;
-                    values = C1.Create(this.Transaction);
+                    values = this.Transaction.Build<C1>();
                     try
                     {
                         mark();
@@ -1276,13 +1276,13 @@ public abstract class UnitTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             if (this.Transaction is ITransaction)
             {
                 var aLarge = new StringBuilder().Insert(0, "a", 100000).ToString();
 
-                var c1 = C1.Create(this.Transaction);
+                var c1 = this.Transaction.Build<C1>();
                 var c1Id = c1.Id.ToString();
 
                 c1.C1StringLarge = aLarge;
@@ -1311,7 +1311,7 @@ public abstract class UnitTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             foreach (var mark in this.Markers)
             {
@@ -1319,7 +1319,7 @@ public abstract class UnitTest : IDisposable
                 var binary2 = new byte[] { 1, 2 };
                 var binary3 = new byte[] { 3, 4, 5 };
                 {
-                    var values = C1.Create(this.Transaction);
+                    var values = this.Transaction.Build<C1>();
                     values.C1AllorsBinary = binary1;
                     values.I1AllorsBinary = binary2;
                     values.S1AllorsBinary = binary3;
@@ -1335,7 +1335,7 @@ public abstract class UnitTest : IDisposable
 
                 {
                     // initial empty
-                    var values = C1.Create(this.Transaction);
+                    var values = this.Transaction.Build<C1>();
 
                     mark();
                     Assert.False(values.ExistC1AllorsBinary);
@@ -1349,7 +1349,7 @@ public abstract class UnitTest : IDisposable
 
                 {
                     // reset empty
-                    var values = C1.Create(this.Transaction);
+                    var values = this.Transaction.Build<C1>();
                     values.C1AllorsBinary = binary1;
                     values.I1AllorsBinary = binary2;
                     values.S1AllorsBinary = binary3;
@@ -1375,7 +1375,7 @@ public abstract class UnitTest : IDisposable
 
                 {
                     // reset null
-                    var values = C1.Create(this.Transaction);
+                    var values = this.Transaction.Build<C1>();
                     values.C1AllorsBinary = binary1;
                     values.I1AllorsBinary = binary2;
                     values.S1AllorsBinary = binary3;
@@ -1401,7 +1401,7 @@ public abstract class UnitTest : IDisposable
 
                 {
                     // rollback set
-                    var values = C1.Create(this.Transaction);
+                    var values = this.Transaction.Build<C1>();
 
                     this.Transaction.Commit();
 
@@ -1418,7 +1418,7 @@ public abstract class UnitTest : IDisposable
 
                 {
                     // rollback reset
-                    var values = C1.Create(this.Transaction);
+                    var values = this.Transaction.Build<C1>();
 
                     mark();
 
@@ -1445,7 +1445,7 @@ public abstract class UnitTest : IDisposable
 
                 {
                     // rollback reset null
-                    var values = C1.Create(this.Transaction);
+                    var values = this.Transaction.Build<C1>();
 
                     mark();
 
@@ -1479,13 +1479,13 @@ public abstract class UnitTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             if (this.Transaction is ITransaction)
             {
                 var binary1 = new byte[] { 0 };
 
-                var c1 = C1.Create(this.Transaction);
+                var c1 = this.Transaction.Build<C1>();
                 var c1Id = c1.Id.ToString();
 
                 c1.C1AllorsBinary = binary1;
@@ -1514,12 +1514,12 @@ public abstract class UnitTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             foreach (var mark in this.Markers)
             {
                 {
-                    var values = C1.Create(this.Transaction);
+                    var values = this.Transaction.Build<C1>();
                     values.C1AllorsString = "a";
                     values.I1AllorsString = "b";
                     values.S1AllorsString = "c";
@@ -1535,7 +1535,7 @@ public abstract class UnitTest : IDisposable
 
                 {
                     // initial empty
-                    var values = C1.Create(this.Transaction);
+                    var values = this.Transaction.Build<C1>();
 
                     mark();
                     Assert.False(values.ExistC1AllorsString);
@@ -1549,7 +1549,7 @@ public abstract class UnitTest : IDisposable
 
                 {
                     // reset empty
-                    var values = C1.Create(this.Transaction);
+                    var values = this.Transaction.Build<C1>();
                     values.C1AllorsString = "a";
                     values.I1AllorsString = "b";
                     values.S1AllorsString = "c";
@@ -1575,7 +1575,7 @@ public abstract class UnitTest : IDisposable
 
                 {
                     // reset null
-                    var values = C1.Create(this.Transaction);
+                    var values = this.Transaction.Build<C1>();
                     values.C1AllorsString = "a";
                     values.I1AllorsString = "b";
                     values.S1AllorsString = "c";
@@ -1601,7 +1601,7 @@ public abstract class UnitTest : IDisposable
 
                 {
                     // rollback set
-                    var values = C1.Create(this.Transaction);
+                    var values = this.Transaction.Build<C1>();
 
                     this.Transaction.Commit();
 
@@ -1618,7 +1618,7 @@ public abstract class UnitTest : IDisposable
 
                 {
                     // rollback reset
-                    var values = C1.Create(this.Transaction);
+                    var values = this.Transaction.Build<C1>();
 
                     mark();
 
@@ -1645,7 +1645,7 @@ public abstract class UnitTest : IDisposable
 
                 {
                     // rollback reset null
-                    var values = C1.Create(this.Transaction);
+                    var values = this.Transaction.Build<C1>();
 
                     mark();
 
@@ -1679,11 +1679,11 @@ public abstract class UnitTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             if (this.Transaction is ITransaction)
             {
-                var c1 = C1.Create(this.Transaction);
+                var c1 = this.Transaction.Build<C1>();
                 var c1Id = c1.Id.ToString();
 
                 c1.C1AllorsString = "a";
@@ -1712,7 +1712,7 @@ public abstract class UnitTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             foreach (var mark in this.Markers)
             {
@@ -1721,7 +1721,7 @@ public abstract class UnitTest : IDisposable
                     var unique2 = Guid.NewGuid();
                     var unique3 = Guid.NewGuid();
 
-                    var values = C1.Create(this.Transaction);
+                    var values = this.Transaction.Build<C1>();
                     values.C1AllorsUnique = unique1;
                     values.I1AllorsUnique = unique2;
                     values.S1AllorsUnique = unique3;
@@ -1734,7 +1734,7 @@ public abstract class UnitTest : IDisposable
 
                 {
                     // Empty Guid
-                    var values = C1.Create(this.Transaction);
+                    var values = this.Transaction.Build<C1>();
                     values.C1AllorsUnique = Guid.Empty;
                     values.I1AllorsUnique = Guid.Empty;
                     values.S1AllorsUnique = Guid.Empty;
@@ -1747,7 +1747,7 @@ public abstract class UnitTest : IDisposable
 
                 {
                     // initial empty
-                    var values = C1.Create(this.Transaction);
+                    var values = this.Transaction.Build<C1>();
 
                     Guid? value = null;
 
@@ -1788,7 +1788,7 @@ public abstract class UnitTest : IDisposable
 
                 {
                     // reset empty
-                    var values = C1.Create(this.Transaction);
+                    var values = this.Transaction.Build<C1>();
                     values.C1AllorsUnique = Guid.NewGuid();
                     values.I1AllorsUnique = Guid.NewGuid();
                     values.S1AllorsUnique = Guid.NewGuid();
@@ -1850,13 +1850,13 @@ public abstract class UnitTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             if (this.Transaction is ITransaction)
             {
                 var unique = Guid.NewGuid();
 
-                var c1 = C1.Create(this.Transaction);
+                var c1 = this.Transaction.Build<C1>();
                 var c1Id = c1.Id.ToString();
 
                 c1.C1AllorsUnique = unique;
@@ -1885,12 +1885,12 @@ public abstract class UnitTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             var values = new ArrayList();
             for (var i = 0; i < 4000; i++)
             {
-                values.Add(SingleUnit.Create(this.Transaction));
+                values.Add(this.Transaction.Build<SingleUnit>());
             }
 
             this.Transaction.Commit();
@@ -1910,12 +1910,12 @@ public abstract class UnitTest : IDisposable
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             foreach (var mark in this.Markers)
             {
-                var c1A = C1.Create(this.Transaction);
-                var c1B = C1.Create(this.Transaction);
+                var c1A = this.Transaction.Build<C1>();
+                var c1B = this.Transaction.Build<C1>();
 
                 // Illegal Role
                 // Illegal values

@@ -1,4 +1,4 @@
-// <copyright file="TestPopulation.cs" company="Allors bv">
+﻿// <copyright file="TestPopulation.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -13,22 +13,22 @@ internal sealed class TestPopulation
 {
     public TestPopulation(ITransaction transaction)
     {
-        this.C1A = C1.Create(transaction);
-        this.C1B = C1.Create(transaction);
-        this.C1C = C1.Create(transaction);
-        this.C1D = C1.Create(transaction);
-        this.C2A = C2.Create(transaction);
-        this.C2B = C2.Create(transaction);
-        this.C2C = C2.Create(transaction);
-        this.C2D = C2.Create(transaction);
-        this.C3A = C3.Create(transaction);
-        this.C3B = C3.Create(transaction);
-        this.C3C = C3.Create(transaction);
-        this.C3D = C3.Create(transaction);
-        this.C4A = C4.Create(transaction);
-        this.C4B = C4.Create(transaction);
-        this.C4C = C4.Create(transaction);
-        this.C4D = C4.Create(transaction);
+        this.C1A = transaction.Build<C1>();
+        this.C1B = transaction.Build<C1>();
+        this.C1C = transaction.Build<C1>();
+        this.C1D = transaction.Build<C1>();
+        this.C2A = transaction.Build<C2>();
+        this.C2B = transaction.Build<C2>();
+        this.C2C = transaction.Build<C2>();
+        this.C2D = transaction.Build<C2>();
+        this.C3A = transaction.Build<C3>();
+        this.C3B = transaction.Build<C3>();
+        this.C3C = transaction.Build<C3>();
+        this.C3D = transaction.Build<C3>();
+        this.C4A = transaction.Build<C4>();
+        this.C4B = transaction.Build<C4>();
+        this.C4C = transaction.Build<C4>();
+        this.C4D = transaction.Build<C4>();
 
         // Names
         this.C1A.Name = "c1a";

@@ -1,4 +1,4 @@
-// <copyright file="RoleLessThan.cs" company="Allors bv">
+﻿// <copyright file="RoleLessThan.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -31,6 +31,10 @@ internal sealed class RoleLessThan : Predicate
         if (this.compare is RoleType compareRole)
         {
             compareValue = strategy.GetInternalizedUnitRole(compareRole);
+        }
+        else if(this.compare is RoleTypeIndex compareRoleIndex)
+        {
+            compareValue = strategy.GetInternalizedUnitRole(compareRoleIndex.RoleType);
         }
         else if (this.roleType.ObjectType is Unit)
         {

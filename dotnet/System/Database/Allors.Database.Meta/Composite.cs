@@ -59,9 +59,9 @@ public abstract class Composite : ObjectType
 
     public abstract bool IsAssignableFrom(Composite objectType);
 
-    public static implicit operator Composite(CompositeIndex index) => index.Composite;
+    public static implicit operator Composite(CompositeIndex index) => index?.Composite;
 
-    public static implicit operator Composite(InterfaceIndex index) => index.Interface;
+    public static implicit operator Composite(InterfaceIndex index) => index?.Interface;
 
-    public static implicit operator Composite(ClassIndex index) => index.Class;
+    public static implicit operator Composite(ClassIndex index) => index?.Class;
 }

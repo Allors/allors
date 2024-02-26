@@ -33,7 +33,7 @@ public sealed class Interface : Composite
 
     public override bool IsClass => false;
 
-    public static implicit operator Interface(InterfaceIndex index) => index.Interface;
+    public static implicit operator Interface(InterfaceIndex index) => index?.Interface;
 
     public override string ToString()
     {

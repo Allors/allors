@@ -103,6 +103,27 @@ public sealed class Transaction : ITransaction
         return newObject;
     }
 
+    public T[] Build<T>(int count) where T : IObject
+    {
+        var @class = (Class)this.Database.ObjectFactory.GetObjectType(typeof(T));
+        var references = this.Commands.CreateObjects(@class, count);
+
+        var domainObjects = new T[count];
+        for (var i = 0; i < references.Count; i++)
+        {
+            var reference = references[i];
+            this.State.ReferenceByObjectId[reference.ObjectId] = reference;
+            this.State.ChangeLog.OnCreated(reference.Strategy);
+
+            T newObject = (T)reference.Strategy.GetObject();
+            newObject.OnBuild();
+            newObject.OnPostBuild();
+            domainObjects[i] = newObject;
+        }
+
+        return domainObjects;
+    }
+
     public T Build<T>(params Action<T>[] builders) where T : IObject
     {
         var objectType = this.Database.ObjectFactory.GetObjectType(typeof(T));

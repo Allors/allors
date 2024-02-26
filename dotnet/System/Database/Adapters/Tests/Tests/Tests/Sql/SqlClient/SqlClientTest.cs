@@ -31,7 +31,7 @@ public class SqlClientTest : IDisposable, IClassFixture<Fixture<SqlClientTest>>
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             var count = Settings.LargeArraySize;
 
@@ -64,7 +64,7 @@ public class SqlClientTest : IDisposable, IClassFixture<Fixture<SqlClientTest>>
         foreach (var init in this.Inits)
         {
             init();
-            var m = this.Transaction.Database.Context().M;
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             var c2PrefetchPolicy = new PrefetchPolicyBuilder()
                 .WithRule(m.C2.C3Many2Manies)

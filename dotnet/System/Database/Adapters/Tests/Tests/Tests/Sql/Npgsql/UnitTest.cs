@@ -33,7 +33,7 @@ public class UnitTest : Adapters.UnitTest, IClassFixture<Fixture<UnitTest>>
 
             // Positive
             {
-                var values = C1.Create(this.Transaction);
+                var values = this.Transaction.Build<C1>();
                 values.C1AllorsDecimal = 10.10m;
                 values.I1AllorsDecimal = 10.10m;
                 values.S1AllorsDecimal = 10.10m;
@@ -47,7 +47,7 @@ public class UnitTest : Adapters.UnitTest, IClassFixture<Fixture<UnitTest>>
 
             // Negative
             {
-                var values = C1.Create(this.Transaction);
+                var values = this.Transaction.Build<C1>();
                 values.C1AllorsDecimal = -10.10m;
                 values.I1AllorsDecimal = -10.10m;
                 values.S1AllorsDecimal = -10.10m;
@@ -61,7 +61,7 @@ public class UnitTest : Adapters.UnitTest, IClassFixture<Fixture<UnitTest>>
 
             // Zero
             {
-                var values = C1.Create(this.Transaction);
+                var values = this.Transaction.Build<C1>();
                 values.C1AllorsDecimal = 0m;
                 values.I1AllorsDecimal = 0m;
                 values.S1AllorsDecimal = 0m;
@@ -75,7 +75,7 @@ public class UnitTest : Adapters.UnitTest, IClassFixture<Fixture<UnitTest>>
 
             // initial empty
             {
-                var values = C1.Create(this.Transaction);
+                var values = this.Transaction.Build<C1>();
 
                 decimal? value = null;
 
@@ -110,7 +110,7 @@ public class UnitTest : Adapters.UnitTest, IClassFixture<Fixture<UnitTest>>
 
             // reset empty
             {
-                var values = C1.Create(this.Transaction);
+                var values = this.Transaction.Build<C1>();
                 values.C1AllorsDecimal = 10.10m;
                 values.I1AllorsDecimal = 10.10m;
                 values.S1AllorsDecimal = 10.10m;

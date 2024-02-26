@@ -10,6 +10,7 @@ using global::Npgsql;
 
 public class Fixture<T>
 {
+    private const string ConnectionStringCreateKey = "ConnectionStrings:npgsql-create";
     private const string ConnectionStringKey = "ConnectionStrings:npgsql";
 
     static Fixture()
@@ -25,7 +26,7 @@ public class Fixture<T>
     {
         this.Config = new Config();
 
-        var connectionString = this.ConnectionStringBuilder.ConnectionString;
+        var connectionString = this.Config.Root[ConnectionStringCreateKey];
 
         int version;
 
