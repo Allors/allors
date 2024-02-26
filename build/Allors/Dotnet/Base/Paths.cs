@@ -7,7 +7,7 @@ public partial class Paths
     public AbsolutePath AllorsDotnetBaseRepository => AllorsDotnetBase / "Repository/Repository.csproj";
 
     public AbsolutePath AllorsDotnetBaseDatabase => AllorsDotnetBase / "Database";
-    public AbsolutePath AllorsDotnetBaseDatabaseAllorsDatabaseGenerated => AllorsDotnetBaseDatabase / "Allors.Database/Generated";
+    public AbsolutePath AllorsDotnetBaseDatabaseAllorsBaseGenerated => AllorsDotnetBaseDatabase / "Allors.Base/Generated";
     public AbsolutePath AllorsDotnetBaseDatabaseMetaTests => AllorsDotnetBaseDatabase / "Meta.Tests/Meta.Tests.csproj";
     public AbsolutePath AllorsDotnetBaseDatabaseGenerate => AllorsDotnetBaseDatabase / "Generate/Generate.csproj";
     public AbsolutePath AllorsDotnetBaseDatabaseCommands => AllorsDotnetBaseDatabase / "Commands";

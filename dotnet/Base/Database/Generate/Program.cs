@@ -20,6 +20,7 @@ namespace Allors.Meta.Generation
             string[,] database =
                 {
                     { "Database/Templates/configuration.cs.stg", "Database/Configuration/Generated" },
+                    { "Database/Templates/meta.cs.stg", "Database/Meta/Generated" },
                     { "Database/Templates/domain.cs.stg", "Database/Domain/Generated" },
                     { "Database/Templates/setup.cs.stg", "Database/Setup/Generated" },
                     { "Database/Templates/uml.cs.stg", "Database/Domain.Diagrams/Generated" },
