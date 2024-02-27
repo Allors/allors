@@ -48,10 +48,10 @@
             this.configuration = new Configuration("Default", metaPopulation);
 
             this.Database = new Database(
-                new DefaultDatabaseServices(this.fixture.Engine),
+                new DefaultDatabaseServices(this.fixture.Engine, this.fixture.M),
                 new Allors.Database.Adapters.Memory.Configuration
                 {
-                    ObjectFactory = new ObjectFactory(this.fixture.M, typeof(Allors.Database.Domain.Person)),
+                    ObjectFactory = new ObjectFactory(this.fixture.M.MetaPopulation, typeof(Allors.Database.Domain.Person)),
                 });
 
             this.Database.Init();

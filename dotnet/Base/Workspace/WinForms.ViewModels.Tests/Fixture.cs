@@ -20,12 +20,13 @@ namespace Allors.Workspace.WinForms.ViewModels.Tests
 
         public Fixture()
         {
-            this.M = MetaBuilder.Build();
+            var metaPopulation = MetaBuilder.Build();
+            this.M = new MetaIndex(metaPopulation);
             var rules = Rules.Create(this.M);
             this.Engine = new Engine(rules);
         }
 
-        public M M { get; private set; }
+        public IMetaIndex M { get; private set; }
 
         public Engine Engine { get; }
 

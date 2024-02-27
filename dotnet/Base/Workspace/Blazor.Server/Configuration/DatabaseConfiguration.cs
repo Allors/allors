@@ -18,9 +18,10 @@ namespace Allors.Workspace.Configuration
         public static void AddAllorsDatabase(this IServiceCollection services, Microsoft.Extensions.Configuration.IConfiguration configuration)
         {
             var metaPopulation = new MetaBuilder().Build();
-            var engine = new Engine(Rules.Create(metaPopulation));
+            var metaIndex = new MetaIndex(metaPopulation);
+            var engine = new Engine(Rules.Create(metaIndex));
             var objectFactory = new ObjectFactory(metaPopulation, typeof(Database.Domain.User));
-            var databaseScope = new DefaultDatabaseServices(engine);
+            var databaseScope = new DefaultDatabaseServices(engine, metaIndex);
             var databaseBuilder = new Database.Adapters.DatabaseBuilder(databaseScope, configuration, objectFactory);
             var database = databaseBuilder.Build();
 

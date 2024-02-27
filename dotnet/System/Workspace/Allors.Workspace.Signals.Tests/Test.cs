@@ -33,10 +33,11 @@
             {
                 var metaBuilder = new Allors.Database.Meta.Configuration.MetaBuilder();
                 var metaPopulation = metaBuilder.Build();
-                var rules = Rules.Create(metaPopulation);
+                var metaIndex = new MetaIndex(metaPopulation);
+                var rules = Rules.Create(metaIndex);
                 var engine = new Engine(rules);
                 this.database = new Database(
-                    new DefaultDatabaseServices(engine),
+                    new DefaultDatabaseServices(engine, metaIndex),
                     new Configuration
                     {
                         ObjectFactory = new ObjectFactory(metaPopulation, typeof(Person)),

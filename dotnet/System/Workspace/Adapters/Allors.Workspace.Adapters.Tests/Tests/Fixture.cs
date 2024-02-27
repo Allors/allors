@@ -1,4 +1,4 @@
-// <copyright file="Fixture.cs" company="Allors bv">
+﻿// <copyright file="Fixture.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -20,12 +20,13 @@ namespace Allors.Workspace.Adapters.Tests
 
         public Fixture()
         {
-            this.M = MetaBuilder.Build();
+            var metaPopulation = MetaBuilder.Build();
+            this.M = new MetaIndex(metaPopulation);
             var rules = Rules.Create(this.M);
             this.Engine = new Engine(rules);
         }
 
-        public M M { get; private set; }
+        public IMetaIndex M { get; private set; }
 
         public Engine Engine { get; }
 

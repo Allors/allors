@@ -14,7 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Base\Database\Configuration\Configuration.csproj" />
-    <ProjectReference Include="..\..\..\..\Base\Database\Meta.Configuration\Meta.Configuration.csproj" />
+    <ProjectReference Include="..\..\..\..\Base\Database\Meta\Meta.csproj" />
     <ProjectReference Include="..\..\..\..\Base\Workspace\Configuration\Workspace.Configuration.csproj" />
     <ProjectReference Include="..\..\..\..\Base\Workspace\Meta.Configuration\Workspace.Meta.Configuration.csproj" />
     <ProjectReference Include="..\..\..\Database\Adapters\Allors.Database.Adapters.Memory\Allors.Database.Adapters.Memory.csproj" />

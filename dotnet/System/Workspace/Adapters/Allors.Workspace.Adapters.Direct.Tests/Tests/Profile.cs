@@ -56,10 +56,10 @@ namespace Allors.Workspace.Adapters.Direct.Tests
             this.configuration = new Configuration("Default", metaPopulation);
 
             this.Database = new Database(
-                new DefaultDatabaseServices(fixture.Engine),
+                new DefaultDatabaseServices(fixture.Engine, fixture.M),
                 new Allors.Database.Adapters.Memory.Configuration
                 {
-                    ObjectFactory = new ObjectFactory(fixture.M, typeof(Allors.Database.Domain.Person)),
+                    ObjectFactory = new ObjectFactory(fixture.M.MetaPopulation, typeof(Allors.Database.Domain.Person)),
                 });
 
             this.Database.Init();
