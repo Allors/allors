@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Allors.Text;
+using Extensions;
 
 /// <summary>
 ///     A <see cref="RelationType" /> defines the state and behavior for
@@ -94,8 +95,28 @@ public sealed class RelationType : IMetaIdentifiableObject, IComparable
     }
 
     private string ValidationName => "relation type" + this.Name;
-
+    
     public int CompareTo(object other) => this.Id.CompareTo((other as RelationType)?.Id);
+
+    public override int GetHashCode()
+    {
+        return this.Id.GetHashCode();
+    }
+
+    public override bool Equals(object obj)
+    {
+        if (obj is not RelationType other)
+        {
+            return false;
+        }
+
+        if (this.AssociationType.EmbeddedPopulation != other.AssociationType.EmbeddedPopulation)
+        {
+            throw new ArgumentException("Object is from another meta population");
+        }
+
+        return this == other;
+    }
 
     public override string ToString()
     {

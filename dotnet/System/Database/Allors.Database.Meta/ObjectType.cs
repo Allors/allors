@@ -11,13 +11,13 @@ using System.Collections.Generic;
 using Allors.Embedded;
 using Embedded.Meta;
 
-public abstract class ObjectType : OperandType, IMetaIdentifiableObject, IComparable<ObjectType>
+public abstract class ObjectType : EmbeddedObject, IMetaIdentifiableObject, IComparable<ObjectType>
 {
     private readonly IEmbeddedUnitRole<string> singularName;
     private readonly IEmbeddedUnitRole<string> assignedPluralName;
     private readonly IEmbeddedUnitRole<string> pluralName;
-    
-    protected ObjectType(MetaPopulation metaPopulation, EmbeddedObjectType embeddedObjectType) 
+
+    protected ObjectType(MetaPopulation metaPopulation, EmbeddedObjectType embeddedObjectType)
         : base(metaPopulation, embeddedObjectType)
     {
         this.Attributes = new MetaExtension();
@@ -63,6 +63,21 @@ public abstract class ObjectType : OperandType, IMetaIdentifiableObject, ICompar
     public static implicit operator ObjectType(InterfaceIndex index) => index?.Interface;
 
     public static implicit operator ObjectType(ClassIndex index) => index?.Class;
+
+    public override bool Equals(object obj)
+    {
+        if (obj is not ObjectType other)
+        {
+            return false;
+        }
+
+        if (this.EmbeddedPopulation != other.EmbeddedPopulation)
+        {
+            throw new ArgumentException("Object is from another meta population");
+        }
+
+        return this == other;
+    }
 
     public int CompareTo(ObjectType other)
     {

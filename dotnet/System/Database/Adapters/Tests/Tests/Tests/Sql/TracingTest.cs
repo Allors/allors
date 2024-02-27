@@ -69,6 +69,7 @@ public abstract class TracingTest : IDisposable
     {
         this.Init();
         var database = (Database)this.CreateDatabase();
+        var m = database.Services.Get<IMetaIndex>();
 
         var sink = new Sink();
         database.Sink = sink;
@@ -81,7 +82,7 @@ public abstract class TracingTest : IDisposable
         transactionSink.Clear();
 
         var prefetchPolicy = new PrefetchPolicyBuilder()
-            .WithRule(this.M.C1.C1C2one2one)
+            .WithRule(m.C1.C1C2one2one)
             .Build();
 
         transaction.Prefetch(prefetchPolicy, c1b);

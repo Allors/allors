@@ -3,7 +3,7 @@
   <Class Name="Allors.Database.Meta.ObjectType" Collapsed="true">
     <Position X="5.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAAgCgAAYIAAIAAAAQACKAAIACQAAAAUBAAAA=</HashCode>
+      <HashCode>AAACAAAAAgCgAAYIgAIAAAAQACKAAIACQAAAAUBAAAA=</HashCode>
       <FileName>ObjectType.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -11,60 +11,75 @@
   <Class Name="Allors.Database.Meta.Composite" Collapsed="true">
     <Position X="4.75" Y="2" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAJAAAAAAAFGAAAAACgAAAQAASCCAEAAQAJAAAAAABA=</HashCode>
+      <HashCode>AAJAAAAAAAFGAAAAACgAAAQAAWCCAEAAQAJAAAAAABA=</HashCode>
       <FileName>Composite.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Allors.Database.Meta.Unit" Collapsed="true">
-    <Position X="7" Y="2" Width="1.5" />
+    <Position X="6.75" Y="2" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAIAAAABACAAABMgAAAAAABACCAAIIQAAAAAUAAAAA=</HashCode>
+      <HashCode>AAAIAAAABACAAABMgAAAAAABACCAAAIQAAAAAUAAAAA=</HashCode>
       <FileName>Unit.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Allors.Database.Meta.Class" Collapsed="true">
     <Position X="3.75" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAQAEBAAHGAAAMgAAAAAAAAEACAMAAQAIAAUAAAAA=</HashCode>
+      <HashCode>AAAAAAEBAAHCAAAMAAAAAAAAAAAAAEAAQAIAAUAAAAA=</HashCode>
       <FileName>Class.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Allors.Database.Meta.Interface" Collapsed="true">
-    <Position X="6" Y="3.5" Width="1.5" />
+    <Position X="5.75" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AYAAAEAAAAHGAEEMogAQAAgAAEAGJsAAQAIAAUAAAAA=</HashCode>
+      <HashCode>AYAAAEAAAAHCAEEMIgAQAAgAAAAEJkAAQAIAAUAAAAA=</HashCode>
       <FileName>Interface.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Allors.Database.Meta.RelationType" Collapsed="true">
-    <Position X="10.5" Y="0.5" Width="1.5" />
+    <Position X="1.75" Y="2" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAICAEEAAACgABQMoIKAAAQQiAAAAIAAEAIAAABCAAA=</HashCode>
+      <HashCode>AAICAEEAAACgABQMIIKAAAQQiAAAAAAAEAIAAABCAAA=</HashCode>
       <FileName>RelationType.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Database.Meta.RelationEndType" Collapsed="true">
-    <Position X="13" Y="0.5" Width="1.5" />
+    <Position X="11.25" Y="2" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAEiAIAAACAAAIAAAAAAAQQAAAAAAACAJAAAAAAAAA=</HashCode>
+      <HashCode>AAAEiAIAAACAAAIAAAAAAAQAAAAAAAACAJAAAAAAAAA=</HashCode>
       <FileName>RelationEndType.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Database.Meta.AssociationType" Collapsed="true">
-    <Position X="12" Y="1.75" Width="1.5" />
+    <Position X="10.25" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAIEiACAAACAQAYEgFCAAAQAAAEEAIACAJAAAAAAAAA=</HashCode>
+      <HashCode>AAIEiACAAACAQAYEAFCAAAQAAAEEAAACAJAAAAAAAAA=</HashCode>
       <FileName>AssociationType.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Allors.Database.Meta.RoleType" Collapsed="true">
-    <Position X="14.25" Y="1.75" Width="1.5" />
+    <Position X="12.25" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAIEqACAAjCAwIYGiELAAAQAgAAAAIACAJAAAACAEAI=</HashCode>
+      <HashCode>AAIEqACAAjCAwIYGCELAAAQAgAAAAIACAJAAAACAEAI=</HashCode>
       <FileName>RoleType.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Allors.Database.Meta.OperandType" Collapsed="true">
+    <Position X="10" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAgAAAAAAQAAABAAAAAAAAAABAAAA=</HashCode>
+      <FileName>OperandType.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Allors.Database.Meta.MethodType" Collapsed="true">
+    <Position X="9.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACIEEIAACgACQMIACAAAQAAAAAAQAAAIAAAAAAAAA=</HashCode>
+      <FileName>MethodType.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>

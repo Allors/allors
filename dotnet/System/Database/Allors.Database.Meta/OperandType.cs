@@ -6,6 +6,7 @@
 
 namespace Allors.Database.Meta;
 
+using System;
 using Embedded.Meta;
 
 /// <summary>
@@ -33,4 +34,19 @@ public abstract class OperandType : EmbeddedObject, IMetaExtensible
     public static implicit operator OperandType(AssociationTypeIndex index) => index?.AssociationType;
 
     public static implicit operator OperandType(RoleTypeIndex index) => index?.RoleType;
+
+    public override bool Equals(object obj)
+    {
+        if (obj is not OperandType other)
+        {
+            return false;
+        }
+
+        if (this.EmbeddedPopulation != other.EmbeddedPopulation)
+        {
+            throw new ArgumentException("Object is from another meta population");
+        }
+
+        return this == other;
+    }
 }
