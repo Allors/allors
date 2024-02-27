@@ -1,4 +1,4 @@
-// <copyright file="IDomainDerivation.cs" company="Allors bv">
+﻿// <copyright file="IDomainDerivation.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -6,9 +6,16 @@
 
 namespace Allors.Database.Derivations;
 
+using System.Collections.Generic;
 using Allors.Database.Meta;
 
 public interface IAssociationPattern : IPattern
 {
     AssociationType AssociationType { get; }
+}
+
+public interface IAssociationPattern<T, TResult> : IAssociationPattern, IPattern<T, TResult>
+    where T : class, IObject
+    where TResult : class, IObject
+{
 }

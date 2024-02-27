@@ -8,8 +8,8 @@ namespace Allors.Database.Domain.Derivations.Rules
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Allors.Database.Derivations;
-    using Allors.Database.Meta;
 
     public abstract class Rule : IRule
     {
@@ -26,5 +26,21 @@ namespace Allors.Database.Domain.Derivations.Rules
         public IEnumerable<IPattern> Patterns { get; protected set; }
 
         public abstract void Derive(ICycle cycle, IEnumerable<IObject> matches);
+    }
+
+    public abstract class Rule<T> : Rule, IRule<T>
+            where T : class, IObject
+    {
+        protected Rule(IMetaIndex m, Guid id)
+            : base(m, id)
+        {
+        }
+
+        public abstract void Derive(ICycle cycle, IEnumerable<T> matches);
+
+        public override void Derive(ICycle cycle, IEnumerable<IObject> matches)
+        {
+            this.Derive(cycle, matches.Cast<T>());
+        }
     }
 }

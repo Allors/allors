@@ -12,17 +12,17 @@ namespace Allors.Database.Domain
     using Meta;
     using Derivations.Rules;
 
-    public class PersonAddressRule : Rule
+    public class PersonAddressRule : Rule<Person>
     {
         public PersonAddressRule(IMetaIndex m) : base(m, new Guid("E6F95E43-838D-47DF-AC8A-F1B9CB89995F")) =>
             this.Patterns =
             [
-                new RolePattern(m.Person.MainAddress, m.Person),
+                new RolePattern<Person, Person>(m.Person.MainAddress),
             ];
 
-        public override void Derive(ICycle cycle, IEnumerable<IObject> matches)
+        public override void Derive(ICycle cycle, IEnumerable<Person> matches)
         {
-            foreach (var @this in matches.Cast<Person>())
+            foreach (var @this in matches)
             {
                 @this.Address = @this.MainAddress;
             }

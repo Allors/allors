@@ -20,6 +20,7 @@ namespace Allors.Database.Domain
 
             var types = assembly.GetTypes()
                 .Where(type => type.Namespace != null &&
+                               !type.IsAbstract &&
                                type.GetTypeInfo().IsSubclassOf(typeof(Rule)))
                 .ToArray();
 

@@ -12,17 +12,17 @@ namespace Allors.Database.Domain
     using Meta;
     using Derivations.Rules;
 
-    public class PersonGreetingRule : Rule
+    public class PersonGreetingRule : Rule<Person>
     {
         public PersonGreetingRule(IMetaIndex m) : base(m, new Guid("5FFD5696-E735-4D05-8405-3A444B6F591E")) =>
             this.Patterns = new[]
             {
-                new RolePattern(m.Person.DomainFullName, m.Person)
+                new RolePattern<Person, Person>(m.Person.DomainFullName),
             };
 
-        public override void Derive(ICycle cycle, IEnumerable<IObject> matches)
+        public override void Derive(ICycle cycle, IEnumerable<Person> matches)
         {
-            foreach (var person in matches.Cast<Person>())
+            foreach (var person in matches)
             {
                 person.DomainGreeting = $"Hello {person.DomainFullName}!";
             }

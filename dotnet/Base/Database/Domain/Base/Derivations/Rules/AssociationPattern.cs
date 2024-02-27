@@ -6,25 +6,70 @@
 
 namespace Allors.Database.Domain.Derivations.Rules
 {
+    using System;
     using System.Collections.Generic;
+    using System.Linq.Expressions;
     using Allors.Database.Derivations;
     using Allors.Database.Meta;
-    using Database.Data;
 
-    public class AssociationPattern : IAssociationPattern
+    public class AssociationPattern<T, TResult> : IAssociationPattern<T, TResult>
+        where T : class, IObject
+        where TResult : class, IObject
     {
-        public AssociationPattern(RoleType roleType) : this(roleType.AssociationType) { }
-
-        public AssociationPattern(AssociationType associationType, Composite ofType = null)
+        public AssociationPattern(AssociationType associationType)
         {
             this.AssociationType = associationType;
-            this.OfType = !this.AssociationType.RoleType.ObjectType.Equals(ofType) ? ofType : null;
+        }
+
+        public AssociationPattern(AssociationType associationType, Expression<Func<T, TResult>> select)
+            : this(associationType)
+        {
+            this.Select = select;
+        }
+
+        public AssociationPattern(AssociationType associationType, Expression<Func<T, IEnumerable<TResult>>> selectMany)
+            : this(associationType)
+        {
+            this.SelectMany = selectMany;
         }
 
         public AssociationType AssociationType { get; }
 
-        public Composite OfType { get; }
+        public Expression<Func<T, TResult>> Select { get; }
 
-        public IEnumerable<Node> Tree { get; set; }
+        public Expression<Func<T, IEnumerable<TResult>>> SelectMany { get; }
+
+        public IEnumerable<IObject> Eval(IObject role)
+        {
+            if (role is not T @object)
+            {
+                yield break;
+            }
+
+            if (this.Select != null)
+            {
+                var lambda = this.Select.Compile();
+                TResult result = lambda((T)@object);
+                if (result != null)
+                {
+                    yield return result;
+                }
+            }
+            else if (this.SelectMany != null)
+            {
+                var lambda = this.SelectMany.Compile();
+                foreach (var result in lambda((T)@object))
+                {
+                    if (result != null)
+                    {
+                        yield return result;
+                    }
+                }
+            }
+            else
+            {
+                yield return @object;
+            }
+        }
     }
 }

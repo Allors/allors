@@ -7,23 +7,21 @@ namespace Allors.Database.Domain
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using Database.Derivations;
-    using Meta;
     using Derivations.Rules;
 
-    public class PersonFullNameRule : Rule
+    public class PersonFullNameRule : Rule<Person>
     {
         public PersonFullNameRule(IMetaIndex m) : base(m, new Guid("CDE0A670-4490-41ED-944E-7DFDF41B672B")) =>
             this.Patterns =
             [
-                new RolePattern(m.Person.FirstName, m.Person),
-                new RolePattern(m.Person.LastName, m.Person),
+                new RolePattern<Person, Person>(m.Person.FirstName),
+                new RolePattern<Person, Person>(m.Person.LastName),
             ];
 
-        public override void Derive(ICycle cycle, IEnumerable<IObject> matches)
+        public override void Derive(ICycle cycle, IEnumerable<Person> matches)
         {
-            foreach (var person in matches.Cast<Person>())
+            foreach (var person in matches)
             {
                 person.DomainFullName = $"{person.FirstName} {person.LastName}";
             }

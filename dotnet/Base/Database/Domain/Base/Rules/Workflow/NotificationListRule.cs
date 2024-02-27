@@ -12,20 +12,20 @@ namespace Allors.Database.Domain
     using Derivations.Rules;
     using Meta;
 
-    public class NotificationListRule : Rule
+    public class NotificationListRule : Rule<NotificationList>
     {
         public NotificationListRule(IMetaIndex m) : base(m, new Guid("e8071e5b-18a4-4a52-8b22-09a75c3dbf72")) =>
             this.Patterns =
             [
-                m.NotificationList.RolePattern(v=>v.Notifications),
-                m.Notification.RolePattern(v=>v.Confirmed, v=> v.NotificationListWhereNotification),
-                m.Notification.RolePattern(v=>v.Confirmed, v=> v.NotificationListWhereUnconfirmedNotification),
-                m.Notification.RolePattern(v=>v.Confirmed, v=> v.NotificationListWhereConfirmedNotification),
+                new RolePattern<NotificationList, NotificationList>(m.NotificationList.Notifications),
+                new RolePattern<Notification, NotificationList>(m.Notification.Confirmed, v=>v.NotificationListWhereNotification),
+                new RolePattern<Notification, NotificationList>(m.Notification.Confirmed, v=>v.NotificationListWhereUnconfirmedNotification),
+                new RolePattern<Notification, NotificationList>(m.Notification.Confirmed, v=>v.NotificationListWhereConfirmedNotification),
             ];
 
-        public override void Derive(ICycle cycle, IEnumerable<IObject> matches)
+        public override void Derive(ICycle cycle, IEnumerable<NotificationList> matches)
         {
-            foreach (var @this in matches.Cast<NotificationList>())
+            foreach (var @this in matches)
             {
                 @this.UnconfirmedNotifications = @this.Notifications.Where(notification => !notification.Confirmed).ToArray();
                 @this.ConfirmedNotifications = @this.Notifications.Where(notification => notification.Confirmed).ToArray();

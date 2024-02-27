@@ -12,18 +12,18 @@ namespace Allors.Database.Domain
     using Allors.Database.Domain.Derivations.Rules;
     using Allors.Database.Meta;
 
-    public class OrganizationPostDeriveRule : Rule
+    public class OrganizationPostDeriveRule : Rule<Organization>
     {
         public OrganizationPostDeriveRule(IMetaIndex m) 
             : base(m, new Guid("755E60CF-1D5E-4D24-8FDE-396FF7C3030B")) =>
             this.Patterns =
             [
-                m.Organization.RolePattern(v => v.PostDeriveTrigger),
+                new RolePattern<Organization, Organization>(m.Organization.PostDeriveTrigger),
             ];
 
-        public override void Derive(ICycle cycle, IEnumerable<IObject> matches)
+        public override void Derive(ICycle cycle, IEnumerable<Organization> matches)
         {
-            foreach (var organization in matches.Cast<Organization>())
+            foreach (var organization in matches)
             {
                 organization.PostDeriveTriggered = organization.PostDeriveTrigger;
             }

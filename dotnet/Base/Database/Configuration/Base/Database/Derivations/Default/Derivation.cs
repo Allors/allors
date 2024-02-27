@@ -1,4 +1,4 @@
-// <copyright file="RulesDerivation.cs" company="Allors bv">
+﻿// <copyright file="RulesDerivation.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -50,6 +50,7 @@ namespace Allors.Database.Configuration.Derivations.Default
         public int MaxCycles { get; }
 
         public bool Embedded { get; }
+
         public bool ContinueOnError { get; }
 
         public IValidation Derive()
@@ -117,18 +118,7 @@ namespace Allors.Database.Configuration.Derivations.Default
                                     matchesByRule.Add(rule, matches);
                                 }
 
-                                IEnumerable<IObject> source = [association];
-
-                                if (pattern.Tree != null)
-                                {
-                                    source = source.SelectMany(v => pattern.Tree.SelectMany(w => w.Resolve(v)));
-                                }
-
-                                if (pattern.OfType != null)
-                                {
-                                    source = source.Where(v => pattern.OfType.IsAssignableFrom(v.Strategy.Class));
-                                }
-
+                                IEnumerable<IObject> source = pattern.Eval(association);
                                 matches.UnionWith(source);
                             }
                         }
@@ -154,18 +144,7 @@ namespace Allors.Database.Configuration.Derivations.Default
                                     matchesByRule.Add(rule, matches);
                                 }
 
-                                IEnumerable<IObject> source = [role];
-
-                                if (pattern.Tree != null)
-                                {
-                                    source = source.SelectMany(v => pattern.Tree.SelectMany(w => w.Resolve(v)));
-                                }
-
-                                if (pattern.OfType != null)
-                                {
-                                    source = source.Where(v => pattern.OfType.IsAssignableFrom(v.Strategy.Class));
-                                }
-
+                                IEnumerable<IObject> source = pattern.Eval(role);
                                 matches.UnionWith(source);
                             }
                         }
@@ -257,5 +236,6 @@ namespace Allors.Database.Configuration.Derivations.Default
                 this.relationEnds.Set(name, value);
             }
         }
+
     }
 }

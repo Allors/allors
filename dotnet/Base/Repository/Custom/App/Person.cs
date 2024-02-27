@@ -57,16 +57,6 @@ namespace Allors.Repository
         public string DomainGreeting { get; set; }
 
         #region Allors
-
-        [Id("9B98B181-E2E6-499B-BD17-82C6E1D6679A")]
-        [Size(256)]
-
-        #endregion
-
-        [Derived]
-        public string CustomFullName { get; set; }
-
-        #region Allors
         [Id("654f6c84-62f2-4c0a-9d68-532ed3f39447")]
         [Multiplicity(Multiplicity.ManyToOne)]
         [Indexed]

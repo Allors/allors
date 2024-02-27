@@ -12,18 +12,18 @@ namespace Allors.Database.Domain
     using Allors.Database.Domain.Derivations.Rules;
     using Allors.Database.Meta;
 
-    public class UserInUserPasswordRule : Rule
+    public class UserInUserPasswordRule : Rule<User>
     {
         public UserInUserPasswordRule(IMetaIndex m) : base(m, new Guid("AF93DA46-1C9A-47C4-9E5F-6A04751F5259")) =>
             this.Patterns =
             [
-                m.User.RolePattern(v=>v.InExistingUserPassword),
-                m.User.RolePattern(v=>v.InUserPassword),
+                new RolePattern<User, User>(m.User.InExistingUserPassword),
+                new RolePattern<User, User>(m.User.InUserPassword),
             ];
 
-        public override void Derive(ICycle cycle, IEnumerable<IObject> matches)
+        public override void Derive(ICycle cycle, IEnumerable<User> matches)
         {
-            foreach (var @this in matches.Cast<User>())
+            foreach (var @this in matches)
             {
                 var passwordHasher = @this.Transaction().Database.Services.Get<IPasswordHasher>();
                 var m = @this.Transaction().Database.Services.Get<IMetaIndex>();

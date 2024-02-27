@@ -12,20 +12,20 @@ namespace Allors.Database.Domain
     using Meta;
     using Derivations.Rules;
 
-    public class OrganizationEmployementRule : Rule
+    public class OrganizationEmployementRule : Rule<Organization>
     {
         public OrganizationEmployementRule(IMetaIndex m) : base(m, new Guid("4B144553-5EED-4B52-BFB3-FACE609C6341")) =>
             this.Patterns =
             [
-                m.Employment.RolePattern(v => v.FromDate, v => v.Employer, m.Organization),
-                m.Employment.RolePattern(v => v.ThroughDate, v => v.Employer, m.Organization),
+                new RolePattern<Employment, Organization>(m.Employment.FromDate, v=>v.Employer),
+                new RolePattern<Employment, Organization>(m.Employment.ThroughDate, v=>v.Employer),
             ];
 
-        public override void Derive(ICycle cycle, IEnumerable<IObject> matches)
+        public override void Derive(ICycle cycle, IEnumerable<Organization> matches)
         {
             var transaction = cycle.Transaction;
 
-            foreach (var @this in matches.Cast<Organization>())
+            foreach (var @this in matches)
             {
                 var now = @this.Transaction().Now();
 

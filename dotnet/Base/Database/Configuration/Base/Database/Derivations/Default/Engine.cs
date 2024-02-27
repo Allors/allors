@@ -34,15 +34,12 @@ namespace Allors.Database.Configuration.Derivations.Default
                 foreach (var pattern in rule.Patterns)
                 {
                     this.RuleByPattern.Add(pattern, rule);
-
+                    
+                    // TODO: Filter on Select and SelectMany type
                     var patternClasses = pattern switch
                     {
-                        IRolePattern { OfType: null } rolePattern => [.. rolePattern.RoleType.AssociationType.Composite.Classes],
-                        IRolePattern { OfType: not null } rolePattern => [.. rolePattern.OfType.Classes],
-
-                        IAssociationPattern { OfType: null } associationPattern => (associationPattern.AssociationType.RoleType.ObjectType as Composite)?.Classes.ToArray() ?? Array.Empty<Class>(),
-                        IAssociationPattern { OfType: not null } associationPattern => [.. associationPattern.OfType.Classes],
-
+                        IRolePattern rolePattern => [.. rolePattern.RoleType.AssociationType.Composite.Classes],
+                        IAssociationPattern associationPattern => (associationPattern.AssociationType.RoleType.ObjectType as Composite)?.Classes.ToArray() ?? Array.Empty<Class>(),
                         _ => Array.Empty<Class>(),
                     };
 

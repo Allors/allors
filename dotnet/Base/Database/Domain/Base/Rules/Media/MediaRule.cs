@@ -11,22 +11,21 @@ namespace Allors.Database.Domain
     using Database.Derivations;
     using Derivations.Rules;
     using DataUtils;
-    using Meta;
 
-    public class MediaRule : Rule
+    public class MediaRule : Rule<Media>
     {
         public MediaRule(IMetaIndex m) : base(m, new Guid("436E574A-FE3E-46ED-8AD2-A59CACC2C9C4")) =>
             this.Patterns =
             [
-                new RolePattern(m.Media.InType, m.Media),
-                new RolePattern(m.Media.InData, m.Media),
-                new RolePattern(m.Media.InDataUri, m.Media),
-                new RolePattern(m.Media.InFileName, m.Media),
+                new RolePattern<Media, Media>(m.Media.InType),
+                new RolePattern<Media, Media>(m.Media.InData),
+                new RolePattern<Media, Media>(m.Media.InDataUri),
+                new RolePattern<Media, Media>(m.Media.InFileName),
             ];
 
-        public override void Derive(ICycle cycle, IEnumerable<IObject> matches)
+        public override void Derive(ICycle cycle, IEnumerable<Media> matches)
         {
-            foreach (var media in matches.Cast<Media>())
+            foreach (var media in matches)
             {
                 var InvalidFileNameChars = System.IO.Path.GetInvalidFileNameChars();
                 var InvalidFileNames = new[]

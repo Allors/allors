@@ -6,13 +6,20 @@
 
 namespace Allors.Database.Derivations;
 
+using System;
 using System.Collections.Generic;
-using Allors.Database.Data;
-using Allors.Database.Meta;
+using System.Linq.Expressions;
 
 public interface IPattern
 {
-    IEnumerable<Node> Tree { get; }
+    IEnumerable<IObject> Eval(IObject @object);
+}
 
-    Composite OfType { get; }
+public interface IPattern<TSource, TResult> : IPattern
+    where TSource : class, IObject
+    where TResult : class, IObject
+{
+    Expression<Func<TSource, TResult>> Select { get; }
+
+    Expression<Func<TSource, IEnumerable<TResult>>> SelectMany { get; }
 }

@@ -13,17 +13,17 @@ namespace Allors.Database.Domain
     using Derivations.Rules;
 
     // TODO: Martien
-    public class OrderOrderStateRule : Rule
+    public class OrderOrderStateRule : Rule<Order>
     {
         public OrderOrderStateRule(IMetaIndex m) : base(m, new Guid("C9895CF4-98B2-4023-A3EA-582107C7D80D")) =>
             this.Patterns =
             [
-                m.Order.RolePattern(v=>v.OrderState)
+                new RolePattern<Order, Order>(m.Order.OrderState),
             ];
 
-        public override void Derive(ICycle cycle, IEnumerable<IObject> matches)
+        public override void Derive(ICycle cycle, IEnumerable<Order> matches)
         {
-            foreach (var @this in matches.Cast<Order>())
+            foreach (var @this in matches)
             {
                 if (@this.ExistAmount && @this.Amount == -1)
                 {

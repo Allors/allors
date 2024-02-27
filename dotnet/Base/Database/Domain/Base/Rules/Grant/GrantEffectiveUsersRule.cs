@@ -10,21 +10,20 @@ namespace Allors.Database.Domain
     using System.Linq;
     using Allors.Database.Derivations;
     using Allors.Database.Domain.Derivations.Rules;
-    using Allors.Database.Meta;
 
-    public class GrantEffectiveUsersRule : Rule
+    public class GrantEffectiveUsersRule : Rule<Grant>
     {
         public GrantEffectiveUsersRule(IMetaIndex m) : base(m, new Guid("2D3F4F02-7439-48E7-9E5B-363F4A4384F0")) =>
             this.Patterns =
             [
-                m.Grant.RolePattern(v=>v.Subjects),
-                m.Grant.RolePattern(v=>v.SubjectGroups),
-                m.UserGroup.RolePattern(v=>v.Members, v=>v.GrantsWhereSubjectGroup),
+                new RolePattern<Grant, Grant>(m.Grant.Subjects),
+                new RolePattern<Grant, Grant>(m.Grant.SubjectGroups),
+                new RolePattern<UserGroup, Grant>(m.UserGroup.Members, v=>v.GrantsWhereSubjectGroup),
             ];
 
-        public override void Derive(ICycle cycle, IEnumerable<IObject> matches)
+        public override void Derive(ICycle cycle, IEnumerable<Grant> matches)
         {
-            foreach (var grant in matches.Cast<Grant>())
+            foreach (var grant in matches)
             {
                 grant.EffectiveUsers = grant
                     .SubjectGroups.SelectMany(v => v.Members)

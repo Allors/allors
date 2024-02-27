@@ -7,22 +7,20 @@ namespace Allors.Database.Domain
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using Allors.Database.Derivations;
     using Allors.Database.Domain.Derivations.Rules;
-    using Allors.Database.Meta;
 
-    public class UserNormalizedUserNameRule : Rule
+    public class UserNormalizedUserNameRule : Rule<User>
     {
         public UserNormalizedUserNameRule(IMetaIndex m) : base(m, new Guid("FD6F30D8-FF50-44FA-8863-343D2B08783B")) =>
             this.Patterns =
             [
-                m.User.RolePattern(v=>v.UserName),
+                new RolePattern<User, User>(m.User.UserName),
             ];
 
-        public override void Derive(ICycle cycle, IEnumerable<IObject> matches)
+        public override void Derive(ICycle cycle, IEnumerable<User> matches)
         {
-            foreach (var @this in matches.Cast<User>())
+            foreach (var @this in matches)
             {
                 @this.NormalizedUserName = User.Normalize(@this.UserName);
             }

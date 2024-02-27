@@ -12,19 +12,19 @@ namespace Allors.Database.Domain
     using Meta;
     using Derivations.Rules;
 
-    public class DataRule : Rule
+    public class DataRule : Rule<Data>
     {
         public DataRule(IMetaIndex m) : base(m, new Guid("B3CADA5C-B844-40BF-82B9-CF4EC41AF198")) =>
             this.Patterns =
             [
-                m.Data.RolePattern(v=>v.AutocompleteAssignedFilter),
-                m.Data.RolePattern(v=>v.AutocompleteAssignedOptions),
-                m.Data.RolePattern(v=>v.SelectAssigned)
+                new RolePattern<Data, Data>(m.Data.AutocompleteAssignedFilter),
+                new RolePattern<Data, Data>(m.Data.AutocompleteAssignedOptions),
+                new RolePattern<Data, Data>(m.Data.SelectAssigned),
             ];
 
-        public override void Derive(ICycle cycle, IEnumerable<IObject> matches)
+        public override void Derive(ICycle cycle, IEnumerable<Data> matches)
         {
-            foreach (var @this in matches.Cast<Data>())
+            foreach (var @this in matches)
             {
                 @this.AutocompleteDerivedFilter = @this.AutocompleteAssignedFilter;
                 @this.AutocompleteDerivedOptions = @this.AutocompleteAssignedOptions;
