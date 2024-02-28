@@ -10,15 +10,14 @@ namespace Allors.Database.Domain
     using System.Linq;
     using Database.Derivations;
     using Derivations.Rules;
-    using Meta;
 
-    public class TransitionalDeniedPermissionRule : Rule<Transitional>
+    public class TransitionalDeniedPermissionRule : Rule<Transitional, TransitionalIndex>
     {
-        public TransitionalDeniedPermissionRule(IMetaIndex m) : base(m, new Guid("5affa463-9365-4916-89ef-cfc18d41b4fb")) =>
+        public TransitionalDeniedPermissionRule(IMetaIndex m) : base(m, m.Transitional, new Guid("5affa463-9365-4916-89ef-cfc18d41b4fb")) =>
             this.Patterns =
             [
-                new RolePattern<Transitional, Transitional>(m.Transitional.ObjectStates) ,
-                new RolePattern<ObjectState, Transitional>(m.ObjectState.ObjectRevocation, v=>v.TransitionalsWhereObjectState),
+                this.Builder.Pattern(v=>v.ObjectStates) ,
+                this.Builder.Pattern<ObjectState>(m.ObjectState.ObjectRevocation, v=>v.TransitionalsWhereObjectState),
             ];
 
         public override void Derive(ICycle cycle, IEnumerable<Transitional> matches)

@@ -10,16 +10,15 @@ namespace Allors.Database.Domain
     using System.Linq;
     using Allors.Database.Derivations;
     using Allors.Database.Domain.Derivations.Rules;
-    using Allors.Database.Meta;
 
-    public class RoleMany2OneRule : Rule<AA>
+    public class RoleMany2OneRule : Rule<AA, AAIndex>
     {
-        public RoleMany2OneRule(IMetaIndex m) : base(m, new Guid("cbebe35e-9931-4701-8b05-8ed61b266bb2")) =>
-            this.Patterns = new[]
-            {
-                new RolePattern<CC, AA>(m.CC.Assigned, v=>v.BBsWhereMany2One.SelectMany(w=>w.AAsWhereMany2One)),
-                new RolePattern<CC, AA>(m.CC.Assigned, v=>v.BBsWhereUnusedMany2One.SelectMany(w=>w.AAsWhereUnusedMany2One)),
-            };
+        public RoleMany2OneRule(IMetaIndex m) : base(m, m.AA, new Guid("cbebe35e-9931-4701-8b05-8ed61b266bb2")) =>
+            this.Patterns =
+            [
+                this.Builder.Pattern<CC>(m.CC.Assigned, v=>v.BBsWhereMany2One.SelectMany(w=>w.AAsWhereMany2One)),
+                this.Builder.Pattern<CC>(m.CC.Assigned, v=>v.BBsWhereUnusedMany2One.SelectMany(w=>w.AAsWhereUnusedMany2One)),
+            ];
 
         public override void Derive(ICycle cycle, IEnumerable<AA> matches)
         {

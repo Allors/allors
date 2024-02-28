@@ -7,19 +7,17 @@ namespace Allors.Database.Domain
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using Database.Derivations;
-    using Meta;
     using Derivations.Rules;
 
-    public class DataRule : Rule<Data>
+    public class DataRule : Rule<Data, DataIndex>
     {
-        public DataRule(IMetaIndex m) : base(m, new Guid("B3CADA5C-B844-40BF-82B9-CF4EC41AF198")) =>
+        public DataRule(IMetaIndex m) : base(m, m.Data, new Guid("B3CADA5C-B844-40BF-82B9-CF4EC41AF198")) =>
             this.Patterns =
             [
-                new RolePattern<Data, Data>(m.Data.AutocompleteAssignedFilter),
-                new RolePattern<Data, Data>(m.Data.AutocompleteAssignedOptions),
-                new RolePattern<Data, Data>(m.Data.SelectAssigned),
+                this.Builder.Pattern(v=>v.AutocompleteAssignedFilter),
+                this.Builder.Pattern(v=>v.AutocompleteAssignedOptions),
+                this.Builder.Pattern(v=>v.SelectAssigned),
             ];
 
         public override void Derive(ICycle cycle, IEnumerable<Data> matches)

@@ -9,14 +9,15 @@ namespace Allors.Database.Domain
     using System.Collections.Generic;
     using Allors.Database.Derivations;
     using Allors.Database.Domain.Derivations.Rules;
-public class S12ChangedRoleRule : Rule<S12>
+
+    public class S12ChangedRoleRule : Rule<S12, S12Index>
     {
-        public S12ChangedRoleRule(IMetaIndex m) : base(m, new Guid("68E9CC01-5DC2-466F-AA2A-2B9F337C2D2E")) =>
+        public S12ChangedRoleRule(IMetaIndex m) : base(m, m.S12, new Guid("68E9CC01-5DC2-466F-AA2A-2B9F337C2D2E")) =>
             this.Patterns =
             [
-                new RolePattern<S12, S12>(m.S12.ChangedRolePingS12),
+                this.Builder.Pattern(v=>v.ChangedRolePingS12),
             ];
-        
+
         public override void Derive(ICycle cycle, IEnumerable<S12> matches)
         {
             foreach (var s12 in matches)

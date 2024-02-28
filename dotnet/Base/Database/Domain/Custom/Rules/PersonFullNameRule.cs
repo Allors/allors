@@ -10,13 +10,13 @@ namespace Allors.Database.Domain
     using Database.Derivations;
     using Derivations.Rules;
 
-    public class PersonFullNameRule : Rule<Person>
+    public class PersonFullNameRule : Rule<Person, PersonIndex>
     {
-        public PersonFullNameRule(IMetaIndex m) : base(m, new Guid("CDE0A670-4490-41ED-944E-7DFDF41B672B")) =>
+        public PersonFullNameRule(IMetaIndex m) : base(m, m.Person, new Guid("CDE0A670-4490-41ED-944E-7DFDF41B672B")) =>
             this.Patterns =
             [
-                new RolePattern<Person, Person>(m.Person.FirstName),
-                new RolePattern<Person, Person>(m.Person.LastName),
+                this.Builder.Pattern(v=>v.FirstName),
+                this.Builder.Pattern(v=>v.LastName),
             ];
 
         public override void Derive(ICycle cycle, IEnumerable<Person> matches)

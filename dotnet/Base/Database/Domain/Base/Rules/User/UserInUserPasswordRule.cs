@@ -7,18 +7,16 @@ namespace Allors.Database.Domain
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using Allors.Database.Derivations;
     using Allors.Database.Domain.Derivations.Rules;
-    using Allors.Database.Meta;
 
-    public class UserInUserPasswordRule : Rule<User>
+    public class UserInUserPasswordRule : Rule<User, UserIndex>
     {
-        public UserInUserPasswordRule(IMetaIndex m) : base(m, new Guid("AF93DA46-1C9A-47C4-9E5F-6A04751F5259")) =>
+        public UserInUserPasswordRule(IMetaIndex m) : base(m, m.User, new Guid("AF93DA46-1C9A-47C4-9E5F-6A04751F5259")) =>
             this.Patterns =
             [
-                new RolePattern<User, User>(m.User.InExistingUserPassword),
-                new RolePattern<User, User>(m.User.InUserPassword),
+                this.Builder.Pattern(v=>v.InExistingUserPassword),
+                this.Builder.Pattern(v=>v.InUserPassword),
             ];
 
         public override void Derive(ICycle cycle, IEnumerable<User> matches)

@@ -7,17 +7,15 @@ namespace Allors.Database.Domain
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using Allors.Database.Derivations;
     using Allors.Database.Domain.Derivations.Rules;
-    using Allors.Database.Meta;
 
-    public class I1ChangedRoleRule : Rule<I1>
+    public class I1ChangedRoleRule : Rule<I1, I1Index>
     {
-        public I1ChangedRoleRule(IMetaIndex m) : base(m, new Guid("475E8B38-21BB-40F9-AD67-9A7432F73CDD")) =>
+        public I1ChangedRoleRule(IMetaIndex m) : base(m, m.I1, new Guid("475E8B38-21BB-40F9-AD67-9A7432F73CDD")) =>
             this.Patterns =
             [
-                new RolePattern<S12, I1>(m.S12.ChangedRolePingI1, v=> v as I1),
+                this.Builder.Pattern<S12>(m.S12.ChangedRolePingI1, v=> v as I1),
             ];
 
         public override void Derive(ICycle cycle, IEnumerable<I1> matches)

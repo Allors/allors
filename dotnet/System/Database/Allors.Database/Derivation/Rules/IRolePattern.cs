@@ -12,9 +12,3 @@ public interface IRolePattern : IPattern
 {
     RoleType RoleType { get; }
 }
-
-public interface IRolePattern<T, TResult> : IRolePattern, IPattern<T, TResult>
-    where T : class, IObject
-    where TResult : class, IObject
-{
-}

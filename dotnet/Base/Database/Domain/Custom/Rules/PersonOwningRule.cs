@@ -7,17 +7,15 @@ namespace Allors.Database.Domain
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using Allors.Database.Derivations;
     using Allors.Database.Domain.Derivations.Rules;
-    using Allors.Database.Meta;
 
-    public class PersonOwningRule : Rule<Person>
+    public class PersonOwningRule : Rule<Person, PersonIndex>
     {
-        public PersonOwningRule(IMetaIndex m) : base(m, new Guid("31564037-C654-45AA-BC2B-69735A93F227")) =>
+        public PersonOwningRule(IMetaIndex m) : base(m, m.Person, new Guid("31564037-C654-45AA-BC2B-69735A93F227")) =>
             this.Patterns =
             [
-                new AssociationPattern<Person, Person>(m.Person.OrganizationsWhereOwner),
+                this.Builder.Pattern(v=>v.OrganizationsWhereOwner),
             ];
 
         public override void Derive(ICycle cycle, IEnumerable<Person> matches)

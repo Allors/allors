@@ -10,7 +10,6 @@ namespace Allors.Database.Domain
     using System.Linq;
     using System;
     using Allors.Database.Domain.Derivations.Rules;
-    using Allors.Database.Meta;
 
     public static class Rules
     {

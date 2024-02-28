@@ -6,25 +6,38 @@
 
 namespace Allors.Database.Domain.Derivations.Rules
 {
+    using System;
     using System.Collections.Generic;
+    using System.Linq.Expressions;
     using Allors.Database.Derivations;
     using Allors.Database.Meta;
 
-    public class AssociationPattern : IAssociationPattern
+    public class AssociationPatternSelect<T, TResult> : IAssociationPattern
+        where T : class, IObject
+        where TResult : class, IObject
     {
-        public AssociationPattern(AssociationType associationType)
+        public AssociationPatternSelect(AssociationType associationType, Expression<Func<T, TResult>> select)
         {
             this.AssociationType = associationType;
+            this.Select = select;
         }
 
         public AssociationType AssociationType { get; }
 
+        public Expression<Func<T, TResult>> Select { get; }
+
         public IEnumerable<IObject> Eval(IObject role)
         {
-            // TODO: Type check
-            if (role != null)
+            if (role is not T @object)
             {
-                yield return role;
+                yield break;
+            }
+
+            var lambda = this.Select.Compile();
+            TResult result = lambda((T)@object);
+            if (result != null)
+            {
+                yield return result;
             }
         }
     }

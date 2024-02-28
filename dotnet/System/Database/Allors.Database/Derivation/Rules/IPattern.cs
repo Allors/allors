@@ -14,12 +14,3 @@ public interface IPattern
 {
     IEnumerable<IObject> Eval(IObject @object);
 }
-
-public interface IPattern<TSource, TResult> : IPattern
-    where TSource : class, IObject
-    where TResult : class, IObject
-{
-    Expression<Func<TSource, TResult>> Select { get; }
-
-    Expression<Func<TSource, IEnumerable<TResult>>> SelectMany { get; }
-}

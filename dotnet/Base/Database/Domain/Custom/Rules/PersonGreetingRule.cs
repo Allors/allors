@@ -7,18 +7,16 @@ namespace Allors.Database.Domain
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using Database.Derivations;
-    using Meta;
     using Derivations.Rules;
 
-    public class PersonGreetingRule : Rule<Person>
+    public class PersonGreetingRule : Rule<Person, PersonIndex>
     {
-        public PersonGreetingRule(IMetaIndex m) : base(m, new Guid("5FFD5696-E735-4D05-8405-3A444B6F591E")) =>
-            this.Patterns = new[]
-            {
-                new RolePattern<Person, Person>(m.Person.DomainFullName),
-            };
+        public PersonGreetingRule(IMetaIndex m) : base(m, m.Person, new Guid("5FFD5696-E735-4D05-8405-3A444B6F591E")) =>
+            this.Patterns =
+            [
+                this.Builder.Pattern(v=>v.DomainFullName),
+            ];
 
         public override void Derive(ICycle cycle, IEnumerable<Person> matches)
         {

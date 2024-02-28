@@ -7,17 +7,15 @@ namespace Allors.Database.Domain
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using Allors.Database.Derivations;
     using Allors.Database.Domain.Derivations.Rules;
-    using Allors.Database.Meta;
 
-    public class UserNormalizedUserEmailRule : Rule<User>
+    public class UserNormalizedUserEmailRule : Rule<User, UserIndex>
     {
-        public UserNormalizedUserEmailRule(IMetaIndex m) : base(m, new Guid("904187C3-773E-47BC-A2EA-EF45ECA78FD2")) =>
+        public UserNormalizedUserEmailRule(IMetaIndex m) : base(m, m.User, new Guid("904187C3-773E-47BC-A2EA-EF45ECA78FD2")) =>
                this.Patterns =
                [
-                   new RolePattern<User, User>(m.User.UserEmail),
+                   this.Builder.Pattern(v=>v.UserEmail),
                ];
 
         public override void Derive(ICycle cycle, IEnumerable<User> matches)

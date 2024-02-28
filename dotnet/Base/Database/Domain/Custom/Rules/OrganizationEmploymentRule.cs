@@ -9,16 +9,15 @@ namespace Allors.Database.Domain
     using System.Collections.Generic;
     using System.Linq;
     using Database.Derivations;
-    using Meta;
     using Derivations.Rules;
 
-    public class OrganizationEmployementRule : Rule<Organization>
+    public class OrganizationEmploymentRule : Rule<Organization, OrganizationIndex>
     {
-        public OrganizationEmployementRule(IMetaIndex m) : base(m, new Guid("4B144553-5EED-4B52-BFB3-FACE609C6341")) =>
+        public OrganizationEmploymentRule(IMetaIndex m) : base(m, m.Organization, new Guid("4B144553-5EED-4B52-BFB3-FACE609C6341")) =>
             this.Patterns =
             [
-                new RolePattern<Employment, Organization>(m.Employment.FromDate, v=>v.Employer),
-                new RolePattern<Employment, Organization>(m.Employment.ThroughDate, v=>v.Employer),
+                this.Builder.Pattern<Employment>(m.Employment.FromDate, v=>v.Employer),
+                this.Builder.Pattern<Employment>(m.Employment.ThroughDate, v=>v.Employer),
             ];
 
         public override void Derive(ICycle cycle, IEnumerable<Organization> matches)

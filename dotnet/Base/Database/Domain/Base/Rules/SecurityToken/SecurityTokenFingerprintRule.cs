@@ -7,19 +7,17 @@ namespace Allors.Database.Domain
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using Allors.Database.Derivations;
     using Allors.Database.Domain.Derivations.Rules;
-    using Allors.Database.Meta;
 
-    public class SecurityTokenFingerprintRule : Rule<SecurityToken>
+    public class SecurityTokenFingerprintRule : Rule<SecurityToken, SecurityTokenIndex>
     {
-        public SecurityTokenFingerprintRule(IMetaIndex m) : base(m, new Guid("0C788305-AD7E-4722-B03C-83B5DE3E881A")) =>
+        public SecurityTokenFingerprintRule(IMetaIndex m) : base(m, m.SecurityToken, new Guid("0C788305-AD7E-4722-B03C-83B5DE3E881A")) =>
             this.Patterns =
             [
-                new RolePattern<SecurityToken, SecurityToken>(m.SecurityToken.Grants),
-                new RolePattern<Grant, SecurityToken>(m.Grant.EffectiveUsers, v=>v.SecurityTokensWhereGrant),
-                new RolePattern<Grant, SecurityToken>(m.Grant.EffectivePermissions, v=>v.SecurityTokensWhereGrant),
+                this.Builder.Pattern(v=>v.Grants),
+                this.Builder.Pattern<Grant>(m.Grant.EffectiveUsers, v=>v.SecurityTokensWhereGrant),
+                this.Builder.Pattern<Grant>(m.Grant.EffectivePermissions, v=>v.SecurityTokensWhereGrant),
             ];
 
         public override void Derive(ICycle cycle, IEnumerable<SecurityToken> matches)

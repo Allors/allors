@@ -10,17 +10,16 @@ namespace Allors.Database.Domain
     using System.Linq;
     using Database.Derivations;
     using Derivations.Rules;
-    using Meta;
 
-    public class NotificationListRule : Rule<NotificationList>
+    public class NotificationListRule : Rule<NotificationList, NotificationListIndex>
     {
-        public NotificationListRule(IMetaIndex m) : base(m, new Guid("e8071e5b-18a4-4a52-8b22-09a75c3dbf72")) =>
+        public NotificationListRule(IMetaIndex m) : base(m, m.NotificationList, new Guid("e8071e5b-18a4-4a52-8b22-09a75c3dbf72")) =>
             this.Patterns =
             [
-                new RolePattern<NotificationList, NotificationList>(m.NotificationList.Notifications),
-                new RolePattern<Notification, NotificationList>(m.Notification.Confirmed, v=>v.NotificationListWhereNotification),
-                new RolePattern<Notification, NotificationList>(m.Notification.Confirmed, v=>v.NotificationListWhereUnconfirmedNotification),
-                new RolePattern<Notification, NotificationList>(m.Notification.Confirmed, v=>v.NotificationListWhereConfirmedNotification),
+                this.Builder.Pattern(v=>v.Notifications),
+                this.Builder.Pattern<Notification>(m.Notification.Confirmed, v=>v.NotificationListWhereNotification),
+                this.Builder.Pattern<Notification>(m.Notification.Confirmed, v=>v.NotificationListWhereUnconfirmedNotification),
+                this.Builder.Pattern<Notification>(m.Notification.Confirmed, v=>v.NotificationListWhereConfirmedNotification),
             ];
 
         public override void Derive(ICycle cycle, IEnumerable<NotificationList> matches)

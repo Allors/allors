@@ -11,14 +11,14 @@ namespace Allors.Database.Domain
     using Allors.Database.Derivations;
     using Allors.Database.Domain.Derivations.Rules;
 
-    public class GrantEffectiveUsersRule : Rule<Grant>
+    public class GrantEffectiveUsersRule : Rule<Grant, GrantIndex>
     {
-        public GrantEffectiveUsersRule(IMetaIndex m) : base(m, new Guid("2D3F4F02-7439-48E7-9E5B-363F4A4384F0")) =>
+        public GrantEffectiveUsersRule(IMetaIndex m) : base(m, m.Grant, new Guid("2D3F4F02-7439-48E7-9E5B-363F4A4384F0")) =>
             this.Patterns =
             [
-                new RolePattern<Grant, Grant>(m.Grant.Subjects),
-                new RolePattern<Grant, Grant>(m.Grant.SubjectGroups),
-                new RolePattern<UserGroup, Grant>(m.UserGroup.Members, v=>v.GrantsWhereSubjectGroup),
+                this.Builder.Pattern(v=>v.Subjects),
+                this.Builder.Pattern(v=>v.SubjectGroups),
+                this.Builder.Pattern<UserGroup>(m.UserGroup.Members, v=>v.GrantsWhereSubjectGroup),
             ];
 
         public override void Derive(ICycle cycle, IEnumerable<Grant> matches)

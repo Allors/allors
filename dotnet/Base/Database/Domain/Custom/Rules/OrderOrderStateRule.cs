@@ -7,18 +7,16 @@ namespace Allors.Database.Domain
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using Database.Derivations;
-    using Meta;
     using Derivations.Rules;
 
     // TODO: Martien
-    public class OrderOrderStateRule : Rule<Order>
+    public class OrderOrderStateRule : Rule<Order, OrderIndex>
     {
-        public OrderOrderStateRule(IMetaIndex m) : base(m, new Guid("C9895CF4-98B2-4023-A3EA-582107C7D80D")) =>
+        public OrderOrderStateRule(IMetaIndex m) : base(m, m.Order, new Guid("C9895CF4-98B2-4023-A3EA-582107C7D80D")) =>
             this.Patterns =
             [
-                new RolePattern<Order, Order>(m.Order.OrderState),
+                this.Builder.Pattern(v=>v.OrderState),
             ];
 
         public override void Derive(ICycle cycle, IEnumerable<Order> matches)

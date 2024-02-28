@@ -10,6 +10,7 @@ namespace Allors.Database.Domain.Derivations.Rules
     using System.Collections.Generic;
     using System.Linq;
     using Allors.Database.Derivations;
+    using Meta;
 
     public abstract class Rule : IRule
     {
@@ -42,5 +43,18 @@ namespace Allors.Database.Domain.Derivations.Rules
         {
             this.Derive(cycle, matches.Cast<T>());
         }
+    }
+
+    public abstract class Rule<T, TIndex> : Rule<T>
+        where T : class, IObject
+        where TIndex : CompositeIndex
+    {
+        protected Rule(IMetaIndex m, TIndex compositeIndex, Guid id)
+            : base(m, id)
+        {
+            this.Builder = new PatternBuilder<T, TIndex>(m, compositeIndex);
+        }
+
+        public PatternBuilder<T, TIndex> Builder { get; }
     }
 }

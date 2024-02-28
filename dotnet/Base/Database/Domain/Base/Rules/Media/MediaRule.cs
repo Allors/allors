@@ -12,15 +12,15 @@ namespace Allors.Database.Domain
     using Derivations.Rules;
     using DataUtils;
 
-    public class MediaRule : Rule<Media>
+    public class MediaRule : Rule<Media, MediaIndex>
     {
-        public MediaRule(IMetaIndex m) : base(m, new Guid("436E574A-FE3E-46ED-8AD2-A59CACC2C9C4")) =>
+        public MediaRule(IMetaIndex m) : base(m, m.Media, new Guid("436E574A-FE3E-46ED-8AD2-A59CACC2C9C4")) =>
             this.Patterns =
             [
-                new RolePattern<Media, Media>(m.Media.InType),
-                new RolePattern<Media, Media>(m.Media.InData),
-                new RolePattern<Media, Media>(m.Media.InDataUri),
-                new RolePattern<Media, Media>(m.Media.InFileName),
+                this.Builder.Pattern(v=>v.InType),
+                this.Builder.Pattern(v=>v.InData),
+                this.Builder.Pattern(v=>v.InDataUri),
+                this.Builder.Pattern(v=>v.InFileName),
             ];
 
         public override void Derive(ICycle cycle, IEnumerable<Media> matches)

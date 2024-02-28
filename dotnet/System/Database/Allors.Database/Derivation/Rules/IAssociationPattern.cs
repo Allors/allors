@@ -13,9 +13,3 @@ public interface IAssociationPattern : IPattern
 {
     AssociationType AssociationType { get; }
 }
-
-public interface IAssociationPattern<T, TResult> : IAssociationPattern, IPattern<T, TResult>
-    where T : class, IObject
-    where TResult : class, IObject
-{
-}
