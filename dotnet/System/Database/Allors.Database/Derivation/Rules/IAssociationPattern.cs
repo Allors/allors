@@ -6,7 +6,6 @@
 
 namespace Allors.Database.Derivations;
 
-using System.Collections.Generic;
 using Allors.Database.Meta;
 
 public interface IAssociationPattern : IPattern

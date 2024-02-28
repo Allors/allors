@@ -18,7 +18,7 @@ public interface IRule
     void Derive(ICycle cycle, IEnumerable<IObject> matches);
 }
 
-public interface IRule<T>
+public interface IRule<in T>
     where T : class, IObject
 {
     void Derive(ICycle cycle, IEnumerable<T> matches);

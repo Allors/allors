@@ -55,6 +55,6 @@ namespace Allors.Database.Domain.Derivations.Rules
             this.Builder = new PatternBuilder<T, TIndex>(m, compositeIndex);
         }
 
-        public PatternBuilder<T, TIndex> Builder { get; }
+        public IPatternBuilder<T, TIndex> Builder { get; }
     }
 }

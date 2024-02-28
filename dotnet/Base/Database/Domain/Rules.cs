@@ -23,13 +23,15 @@ namespace Allors.Database.Domain
                                type.GetTypeInfo().IsSubclassOf(typeof(Rule)))
                 .ToArray();
 
-            var rules = types.Select(v => Activator.CreateInstance(v, m)).Cast<Rule>().ToArray();
+            var rules = types.Select(v => Activator.CreateInstance(v, m))
+                .Cast<Rule>()
+                .ToArray();
 
             var duplicates = rules.GroupBy(v => v.Id).Where(g => g.Count() > 1).ToArray();
 
-            if (duplicates.Any())
+            if (duplicates.Length != 0)
             {
-                throw new Exception("Duplicate rules detected: " + string.Join(", ", duplicates.Select(v => v.Key)));
+                throw new ArgumentException("Duplicate rules detected: " + string.Join(", ", duplicates.Select(v => v.Key)));
             }
 
             return rules;

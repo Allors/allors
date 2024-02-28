@@ -6,14 +6,13 @@
 
 namespace Allors.Database.Domain.Derivations.Rules
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq.Expressions;
-    using Antlr.Runtime.Misc;
     using Database.Derivations;
     using Meta;
-
-    public class PatternBuilder<TResult, TIndex>
-        where TResult : class, IObject
+    
+    public class PatternBuilder<TResult, TIndex> : IPatternBuilder<TResult, TIndex> where TResult : class, IObject
         where TIndex : CompositeIndex
     {
         public IMetaIndex M { get; }
