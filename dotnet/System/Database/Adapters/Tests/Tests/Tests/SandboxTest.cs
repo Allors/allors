@@ -93,7 +93,7 @@ public abstract class SandboxTest : IDisposable
 
             var population = new TestPopulation(this.Transaction);
 
-            var extent = new Extent(m.C1) { Predicate = new Equals(m.C1.C1AllorsString) { Parameter = "pString" } };
+            var extent = new Extent(m.C1.Composite) { Predicate = new Equals(m.C1.C1AllorsString) { Parameter = "pString" } };
 
             var arguments = new Mock<IArguments>();
             arguments.Setup(arg => arg.HasArgument("pString")).Returns(true);
@@ -114,7 +114,7 @@ public abstract class SandboxTest : IDisposable
 
             var population = new TestPopulation(this.Transaction);
 
-            var extent = new Extent(m.C1) { Predicate = new Equals(m.C1.C1AllorsString) { Parameter = "pString" } };
+            var extent = new Extent(m.C1.Composite) { Predicate = new Equals(m.C1.C1AllorsString) { Parameter = "pString" } };
 
             var objects = this.Transaction.Resolve<C1>(extent);
 

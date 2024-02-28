@@ -90,7 +90,7 @@ namespace Tests
 
             var pull = new Allors.Database.Data.Pull
             {
-                Extent = new Extent(this.M.Data),
+                Extent = new Extent(this.M.Data.Composite),
                 Results =
                 [
                     new  Result { Name = "Datas" },
@@ -142,7 +142,7 @@ namespace Tests
 
             var pull = new Allors.Database.Data.Pull
             {
-                Extent = new Extent(this.M.C1)
+                Extent = new Extent(this.M.C1.Composite)
                 {
                     Predicate = new Equals(this.M.C1.Name) { Value = "c1B" },
                 },
@@ -189,7 +189,7 @@ namespace Tests
 
             var pull = new Allors.Database.Data.Pull
             {
-                Extent = new Extent(this.M.C2)
+                Extent = new Extent(this.M.C2.Composite)
                 {
                     Predicate = new Equals(this.M.C2.Name) { Value = "c2B" },
                 },
@@ -236,7 +236,7 @@ namespace Tests
 
             var pull = new Allors.Database.Data.Pull
             {
-                Extent = new Extent(this.M.C1)
+                Extent = new Extent(this.M.C1.Composite)
                 {
                     Predicate = new Equals(this.M.C1.Name) { Value = "c1B" },
                 },
@@ -287,7 +287,7 @@ namespace Tests
 
             var pull = new Allors.Database.Data.Pull
             {
-                Extent = new Extent(this.M.C2)
+                Extent = new Extent(this.M.C2.Composite)
                 {
                     Predicate = new Equals(this.M.C2.Name) { Value = "c2B" },
                 },

@@ -47,7 +47,7 @@ public abstract class ExtentTest : IDisposable
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             var all = extent.Filter.AddAnd();
             all.AddGreaterThan(m.C1.C1AllorsInteger, 0);
             all.AddLessThan(m.C1.C1AllorsInteger, 2);
@@ -71,7 +71,7 @@ public abstract class ExtentTest : IDisposable
             Assert.False(extent.Contains(this.c4D));
 
             // Interface
-            (extent = this.Transaction.Extent(m.I12)).Filter.AddAnd()
+            (extent = this.Transaction.Extent(m.I12.Composite)).Filter.AddAnd()
                 .AddGreaterThan(m.I12.I12AllorsInteger, 0)
                 .AddLessThan(m.I12.I12AllorsInteger, 2);
 
@@ -94,7 +94,7 @@ public abstract class ExtentTest : IDisposable
             Assert.False(extent.Contains(this.c4D));
 
             // Super Interface
-            (extent = this.Transaction.Extent(m.S1234)).Filter.AddAnd()
+            (extent = this.Transaction.Extent(m.S1234.Composite)).Filter.AddAnd()
                 .AddGreaterThan(m.S1234.S1234AllorsInteger, 0)
                 .AddLessThan(m.S1234.S1234AllorsInteger, 2);
 
@@ -128,7 +128,7 @@ public abstract class ExtentTest : IDisposable
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             var all = extent.Filter.AddAnd();
             all.AddLessThan(m.C1.C1AllorsInteger, 2);
 
@@ -151,7 +151,7 @@ public abstract class ExtentTest : IDisposable
             Assert.False(extent.Contains(this.c4D));
 
             // Interface
-            (extent = this.Transaction.Extent(m.I12)).Filter.AddAnd().AddLessThan(m.I12.I12AllorsInteger, 2);
+            (extent = this.Transaction.Extent(m.I12.Composite)).Filter.AddAnd().AddLessThan(m.I12.I12AllorsInteger, 2);
 
             Assert.Equal(2, extent.Count);
             Assert.False(extent.Contains(this.c1A));
@@ -172,7 +172,7 @@ public abstract class ExtentTest : IDisposable
             Assert.False(extent.Contains(this.c4D));
 
             // Super Interface
-            (extent = this.Transaction.Extent(m.S1234)).Filter.AddAnd()
+            (extent = this.Transaction.Extent(m.S1234.Composite)).Filter.AddAnd()
                 .AddLessThan(m.S1234.S1234AllorsInteger, 2);
 
             Assert.Equal(4, extent.Count);
@@ -209,18 +209,18 @@ public abstract class ExtentTest : IDisposable
                 foreach (var useOperator in this.UseOperator)
                 {
                     // Empty
-                    var inExtent = this.Transaction.Extent(m.C1);
+                    var inExtent = this.Transaction.Extent(m.C1.Composite);
                     inExtent.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
                     if (useOperator)
                     {
-                        var inExtentA = this.Transaction.Extent(m.C1);
+                        var inExtentA = this.Transaction.Extent(m.C1.Composite);
                         inExtentA.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
-                        var inExtentB = this.Transaction.Extent(m.C1);
+                        var inExtentB = this.Transaction.Extent(m.C1.Composite);
                         inExtentB.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
                         inExtent = this.Transaction.Union(inExtentA, inExtentB);
                     }
 
-                    var extent = this.Transaction.Extent(m.C2);
+                    var extent = this.Transaction.Extent(m.C2.Composite);
                     if (useEnumerable)
                     {
                         var enumerable = (IEnumerable<IObject>)(Extent<IObject>)inExtent;
@@ -238,15 +238,15 @@ public abstract class ExtentTest : IDisposable
                     this.AssertC4(extent, false, false, false, false);
 
                     // Full
-                    inExtent = this.Transaction.Extent(m.C1);
+                    inExtent = this.Transaction.Extent(m.C1.Composite);
                     if (useOperator)
                     {
-                        var inExtentA = this.Transaction.Extent(m.C1);
-                        var inExtentB = this.Transaction.Extent(m.C1);
+                        var inExtentA = this.Transaction.Extent(m.C1.Composite);
+                        var inExtentB = this.Transaction.Extent(m.C1.Composite);
                         inExtent = this.Transaction.Union(inExtentA, inExtentB);
                     }
 
-                    extent = this.Transaction.Extent(m.C2);
+                    extent = this.Transaction.Extent(m.C2.Composite);
                     if (useEnumerable)
                     {
                         var enumerable = (IEnumerable<IObject>)(Extent<IObject>)inExtent;
@@ -264,18 +264,18 @@ public abstract class ExtentTest : IDisposable
                     this.AssertC4(extent, false, false, false, false);
 
                     // Filtered
-                    inExtent = this.Transaction.Extent(m.C1);
+                    inExtent = this.Transaction.Extent(m.C1.Composite);
                     inExtent.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbra");
                     if (useOperator)
                     {
-                        var inExtentA = this.Transaction.Extent(m.C1);
+                        var inExtentA = this.Transaction.Extent(m.C1.Composite);
                         inExtentA.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbra");
-                        var inExtentB = this.Transaction.Extent(m.C1);
+                        var inExtentB = this.Transaction.Extent(m.C1.Composite);
                         inExtentB.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbra");
                         inExtent = this.Transaction.Union(inExtentA, inExtentB);
                     }
 
-                    extent = this.Transaction.Extent(m.C2);
+                    extent = this.Transaction.Extent(m.C2.Composite);
                     if (useEnumerable)
                     {
                         var enumerable = (IEnumerable<IObject>)(Extent<IObject>)inExtent;
@@ -294,18 +294,18 @@ public abstract class ExtentTest : IDisposable
 
                     // ContainedIn Extent over Interface
                     // Empty
-                    inExtent = this.Transaction.Extent(m.I12);
+                    inExtent = this.Transaction.Extent(m.I12.Composite);
                     inExtent.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
                     if (useOperator)
                     {
-                        var inExtentA = this.Transaction.Extent(m.I12);
+                        var inExtentA = this.Transaction.Extent(m.I12.Composite);
                         inExtentA.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
-                        var inExtentB = this.Transaction.Extent(m.I12);
+                        var inExtentB = this.Transaction.Extent(m.I12.Composite);
                         inExtentB.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
                         inExtent = this.Transaction.Union(inExtentA, inExtentB);
                     }
 
-                    extent = this.Transaction.Extent(m.C2);
+                    extent = this.Transaction.Extent(m.C2.Composite);
                     if (useEnumerable)
                     {
                         var enumerable = (IEnumerable<IObject>)(Extent<IObject>)inExtent;
@@ -323,15 +323,15 @@ public abstract class ExtentTest : IDisposable
                     this.AssertC4(extent, false, false, false, false);
 
                     // Full
-                    inExtent = this.Transaction.Extent(m.I12);
+                    inExtent = this.Transaction.Extent(m.I12.Composite);
                     if (useOperator)
                     {
-                        var inExtentA = this.Transaction.Extent(m.I12);
-                        var inExtentB = this.Transaction.Extent(m.I12);
+                        var inExtentA = this.Transaction.Extent(m.I12.Composite);
+                        var inExtentB = this.Transaction.Extent(m.I12.Composite);
                         inExtent = this.Transaction.Union(inExtentA, inExtentB);
                     }
 
-                    extent = this.Transaction.Extent(m.C2);
+                    extent = this.Transaction.Extent(m.C2.Composite);
                     if (useEnumerable)
                     {
                         var enumerable = (IEnumerable<IObject>)(Extent<IObject>)inExtent;
@@ -349,18 +349,18 @@ public abstract class ExtentTest : IDisposable
                     this.AssertC4(extent, false, false, false, false);
 
                     // Filtered
-                    inExtent = this.Transaction.Extent(m.I12);
+                    inExtent = this.Transaction.Extent(m.I12.Composite);
                     inExtent.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
                     if (useOperator)
                     {
-                        var inExtentA = this.Transaction.Extent(m.I12);
+                        var inExtentA = this.Transaction.Extent(m.I12.Composite);
                         inExtentA.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
-                        var inExtentB = this.Transaction.Extent(m.I12);
+                        var inExtentB = this.Transaction.Extent(m.I12.Composite);
                         inExtentB.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
                         inExtent = this.Transaction.Union(inExtentA, inExtentB);
                     }
 
-                    extent = this.Transaction.Extent(m.C2);
+                    extent = this.Transaction.Extent(m.C2.Composite);
                     if (useEnumerable)
                     {
                         var enumerable = (IEnumerable<IObject>)(Extent<IObject>)inExtent;
@@ -381,18 +381,18 @@ public abstract class ExtentTest : IDisposable
 
                     // ContainedIn Extent over Class
                     // Empty
-                    inExtent = this.Transaction.Extent(m.C1);
+                    inExtent = this.Transaction.Extent(m.C1.Composite);
                     inExtent.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
                     if (useOperator)
                     {
-                        var inExtentA = this.Transaction.Extent(m.C1);
+                        var inExtentA = this.Transaction.Extent(m.C1.Composite);
                         inExtentA.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
-                        var inExtentB = this.Transaction.Extent(m.C1);
+                        var inExtentB = this.Transaction.Extent(m.C1.Composite);
                         inExtentB.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
                         inExtent = this.Transaction.Union(inExtentA, inExtentB);
                     }
 
-                    extent = this.Transaction.Extent(m.C2);
+                    extent = this.Transaction.Extent(m.C2.Composite);
                     if (useEnumerable)
                     {
                         var enumerable = (IEnumerable<IObject>)(Extent<IObject>)inExtent;
@@ -410,15 +410,15 @@ public abstract class ExtentTest : IDisposable
                     this.AssertC4(extent, false, false, false, false);
 
                     // Full
-                    inExtent = this.Transaction.Extent(m.C1);
+                    inExtent = this.Transaction.Extent(m.C1.Composite);
                     if (useOperator)
                     {
-                        var inExtentA = this.Transaction.Extent(m.C1);
-                        var inExtentB = this.Transaction.Extent(m.C1);
+                        var inExtentA = this.Transaction.Extent(m.C1.Composite);
+                        var inExtentB = this.Transaction.Extent(m.C1.Composite);
                         inExtent = this.Transaction.Union(inExtentA, inExtentB);
                     }
 
-                    extent = this.Transaction.Extent(m.C2);
+                    extent = this.Transaction.Extent(m.C2.Composite);
                     if (useEnumerable)
                     {
                         var enumerable = (IEnumerable<IObject>)(Extent<IObject>)inExtent;
@@ -436,18 +436,18 @@ public abstract class ExtentTest : IDisposable
                     this.AssertC4(extent, false, false, false, false);
 
                     // Filtered
-                    inExtent = this.Transaction.Extent(m.C1);
+                    inExtent = this.Transaction.Extent(m.C1.Composite);
                     inExtent.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbra");
                     if (useOperator)
                     {
-                        var inExtentA = this.Transaction.Extent(m.C1);
+                        var inExtentA = this.Transaction.Extent(m.C1.Composite);
                         inExtentA.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbra");
-                        var inExtentB = this.Transaction.Extent(m.C1);
+                        var inExtentB = this.Transaction.Extent(m.C1.Composite);
                         inExtentB.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbra");
                         inExtent = this.Transaction.Union(inExtentA, inExtentB);
                     }
 
-                    extent = this.Transaction.Extent(m.C2);
+                    extent = this.Transaction.Extent(m.C2.Composite);
                     if (useEnumerable)
                     {
                         var enumerable = (IEnumerable<IObject>)(Extent<IObject>)inExtent;
@@ -466,18 +466,18 @@ public abstract class ExtentTest : IDisposable
 
                     // ContainedIn Extent over Interface
                     // Empty
-                    inExtent = this.Transaction.Extent(m.I12);
+                    inExtent = this.Transaction.Extent(m.I12.Composite);
                     inExtent.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
                     if (useOperator)
                     {
-                        var inExtentA = this.Transaction.Extent(m.I12);
+                        var inExtentA = this.Transaction.Extent(m.I12.Composite);
                         inExtentA.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
-                        var inExtentB = this.Transaction.Extent(m.I12);
+                        var inExtentB = this.Transaction.Extent(m.I12.Composite);
                         inExtentB.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
                         inExtent = this.Transaction.Union(inExtentA, inExtentB);
                     }
 
-                    extent = this.Transaction.Extent(m.C2);
+                    extent = this.Transaction.Extent(m.C2.Composite);
                     if (useEnumerable)
                     {
                         var enumerable = (IEnumerable<IObject>)(Extent<IObject>)inExtent;
@@ -495,15 +495,15 @@ public abstract class ExtentTest : IDisposable
                     this.AssertC4(extent, false, false, false, false);
 
                     // Full
-                    inExtent = this.Transaction.Extent(m.I12);
+                    inExtent = this.Transaction.Extent(m.I12.Composite);
                     if (useOperator)
                     {
-                        var inExtentA = this.Transaction.Extent(m.I12);
-                        var inExtentB = this.Transaction.Extent(m.I12);
+                        var inExtentA = this.Transaction.Extent(m.I12.Composite);
+                        var inExtentB = this.Transaction.Extent(m.I12.Composite);
                         inExtent = this.Transaction.Union(inExtentA, inExtentB);
                     }
 
-                    extent = this.Transaction.Extent(m.C2);
+                    extent = this.Transaction.Extent(m.C2.Composite);
                     if (useEnumerable)
                     {
                         var enumerable = (IEnumerable<IObject>)(Extent<IObject>)inExtent;
@@ -521,18 +521,18 @@ public abstract class ExtentTest : IDisposable
                     this.AssertC4(extent, false, false, false, false);
 
                     // Filtered
-                    inExtent = this.Transaction.Extent(m.I12);
+                    inExtent = this.Transaction.Extent(m.I12.Composite);
                     inExtent.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
                     if (useOperator)
                     {
-                        var inExtentA = this.Transaction.Extent(m.I12);
+                        var inExtentA = this.Transaction.Extent(m.I12.Composite);
                         inExtentA.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
-                        var inExtentB = this.Transaction.Extent(m.I12);
+                        var inExtentB = this.Transaction.Extent(m.I12.Composite);
                         inExtentB.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
                         inExtent = this.Transaction.Union(inExtentA, inExtentB);
                     }
 
-                    extent = this.Transaction.Extent(m.C2);
+                    extent = this.Transaction.Extent(m.C2.Composite);
                     if (useEnumerable)
                     {
                         var enumerable = (IEnumerable<IObject>)(Extent<IObject>)inExtent;
@@ -551,18 +551,18 @@ public abstract class ExtentTest : IDisposable
 
                     // ContainedIn Extent over Disjoint Interfaces
                     // Empty
-                    inExtent = this.Transaction.Extent(m.I12);
+                    inExtent = this.Transaction.Extent(m.I12.Composite);
                     inExtent.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
                     if (useOperator)
                     {
-                        var inExtentA = this.Transaction.Extent(m.I12);
+                        var inExtentA = this.Transaction.Extent(m.I12.Composite);
                         inExtentA.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
-                        var inExtentB = this.Transaction.Extent(m.I12);
+                        var inExtentB = this.Transaction.Extent(m.I12.Composite);
                         inExtentB.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
                         inExtent = this.Transaction.Union(inExtentA, inExtentB);
                     }
 
-                    extent = this.Transaction.Extent(m.I34);
+                    extent = this.Transaction.Extent(m.I34.Composite);
                     if (useEnumerable)
                     {
                         extent.Filter.AddContainedIn(m.I34.I12sWhereI12I34many2many, (IEnumerable<IObject>)(Extent<IObject>)inExtent);
@@ -579,15 +579,15 @@ public abstract class ExtentTest : IDisposable
                     this.AssertC4(extent, false, false, false, false);
 
                     // Full
-                    inExtent = this.Transaction.Extent(m.I12);
+                    inExtent = this.Transaction.Extent(m.I12.Composite);
                     if (useOperator)
                     {
-                        var inExtentA = this.Transaction.Extent(m.I12);
-                        var inExtentB = this.Transaction.Extent(m.I12);
+                        var inExtentA = this.Transaction.Extent(m.I12.Composite);
+                        var inExtentB = this.Transaction.Extent(m.I12.Composite);
                         inExtent = this.Transaction.Union(inExtentA, inExtentB);
                     }
 
-                    extent = this.Transaction.Extent(m.I34);
+                    extent = this.Transaction.Extent(m.I34.Composite);
                     if (useEnumerable)
                     {
                         var enumerable = (IEnumerable<IObject>)(Extent<IObject>)inExtent;
@@ -605,18 +605,18 @@ public abstract class ExtentTest : IDisposable
                     this.AssertC4(extent, true, true, true, true);
 
                     // Filtered
-                    inExtent = this.Transaction.Extent(m.I12);
+                    inExtent = this.Transaction.Extent(m.I12.Composite);
                     inExtent.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
                     if (useOperator)
                     {
-                        var inExtentA = this.Transaction.Extent(m.I12);
+                        var inExtentA = this.Transaction.Extent(m.I12.Composite);
                         inExtentA.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
-                        var inExtentB = this.Transaction.Extent(m.I12);
+                        var inExtentB = this.Transaction.Extent(m.I12.Composite);
                         inExtentB.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
                         inExtent = this.Transaction.Union(inExtentA, inExtentB);
                     }
 
-                    extent = this.Transaction.Extent(m.I34);
+                    extent = this.Transaction.Extent(m.I34.Composite);
                     if (useEnumerable)
                     {
                         var enumerable = (IEnumerable<IObject>)(Extent<IObject>)inExtent;
@@ -647,7 +647,7 @@ public abstract class ExtentTest : IDisposable
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
-            var extent = this.Transaction.Extent(m.C2);
+            var extent = this.Transaction.Extent(m.C2.Composite);
             extent.Filter.AddContains(m.C2.C1sWhereC1C2many2many, this.c1C);
 
             Assert.Equal(2, extent.Count);
@@ -668,7 +668,7 @@ public abstract class ExtentTest : IDisposable
             Assert.False(extent.Contains(this.c4C));
             Assert.False(extent.Contains(this.c4D));
 
-            extent = this.Transaction.Extent(m.C2);
+            extent = this.Transaction.Extent(m.C2.Composite);
             extent.Filter.AddContains(m.C2.C1sWhereC1C2many2many, this.c1C);
             extent.Filter.AddContains(m.C2.C1sWhereC1C2many2many, this.c1D);
 
@@ -691,7 +691,7 @@ public abstract class ExtentTest : IDisposable
             Assert.False(extent.Contains(this.c4D));
 
             // Interface
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddContains(m.I12.C1sWhereC1I12many2many, this.c1C);
 
             Assert.Equal(2, extent.Count);
@@ -713,7 +713,7 @@ public abstract class ExtentTest : IDisposable
             Assert.False(extent.Contains(this.c4D));
 
             // Super Interface
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddContains(m.S1234.S1234sWhereS1234many2many, this.c1B);
 
             Assert.Equal(2, extent.Count);
@@ -746,7 +746,7 @@ public abstract class ExtentTest : IDisposable
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
-            var extent = this.Transaction.Extent(m.C2);
+            var extent = this.Transaction.Extent(m.C2.Composite);
             extent.Filter.AddExists(m.C2.C1sWhereC1C2many2many);
 
             Assert.Equal(3, extent.Count);
@@ -768,7 +768,7 @@ public abstract class ExtentTest : IDisposable
             Assert.False(extent.Contains(this.c4D));
 
             // Interface
-            extent = this.Transaction.Extent(m.I2);
+            extent = this.Transaction.Extent(m.I2.Composite);
             extent.Filter.AddExists(m.I2.I1sWhereI1I2many2many);
 
             Assert.Equal(3, extent.Count);
@@ -790,7 +790,7 @@ public abstract class ExtentTest : IDisposable
             Assert.False(extent.Contains(this.c4D));
 
             // Super Interface
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddExists(m.S1234.S1234sWhereS1234many2many);
 
             Assert.Equal(10, extent.Count);
@@ -812,7 +812,7 @@ public abstract class ExtentTest : IDisposable
             Assert.False(extent.Contains(this.c4D));
 
             // Class - Wrong RelationType
-            extent = this.Transaction.Extent(m.C2);
+            extent = this.Transaction.Extent(m.C2.Composite);
 
             var exception = false;
             try
@@ -827,7 +827,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Interface - Wrong RelationType
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
 
             exception = false;
             try
@@ -842,7 +842,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Super Interface - Wrong RelationType
-            extent = this.Transaction.Extent(m.S12);
+            extent = this.Transaction.Extent(m.S12.Composite);
 
             exception = false;
             try
@@ -877,18 +877,18 @@ public abstract class ExtentTest : IDisposable
 
                 // ContainedIn Extent over Class
                 // Empty
-                var inExtent = this.Transaction.Extent(m.C1);
+                var inExtent = this.Transaction.Extent(m.C1.Composite);
                 inExtent.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C1);
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
                     inExtentA.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
-                    var inExtentB = this.Transaction.Extent(m.C1);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
                     inExtentB.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                var extent = this.Transaction.Extent(m.C2);
+                var extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddContainedIn(m.C2.C1sWhereC1C2many2one, inExtent);
 
                 Assert.Empty(extent);
@@ -898,15 +898,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Full
-                inExtent = this.Transaction.Extent(m.C1);
+                inExtent = this.Transaction.Extent(m.C1.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C1);
-                    var inExtentB = this.Transaction.Extent(m.C1);
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddContainedIn(m.C2.C1sWhereC1C2many2one, inExtent);
 
                 Assert.Equal(2, extent.Count);
@@ -916,18 +916,18 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.C1);
+                inExtent = this.Transaction.Extent(m.C1.Composite);
                 inExtent.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbra");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C1);
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
                     inExtentA.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbra");
-                    var inExtentB = this.Transaction.Extent(m.C1);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
                     inExtentB.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbra");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddContainedIn(m.C2.C1sWhereC1C2many2one, inExtent);
 
                 Assert.Single(extent);
@@ -938,18 +938,18 @@ public abstract class ExtentTest : IDisposable
 
                 // ContainedIn Extent over Interface
                 // Empty
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 inExtent.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
                     inExtentA.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtentB.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddContainedIn(m.C2.C1sWhereC1C2many2one, inExtent);
 
                 Assert.Empty(extent);
@@ -959,15 +959,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Full
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddContainedIn(m.C2.C1sWhereC1C2many2one, inExtent);
 
                 Assert.Equal(2, extent.Count);
@@ -977,18 +977,18 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 inExtent.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
                     inExtentA.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtentB.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddContainedIn(m.C2.C1sWhereC1C2many2one, inExtent);
 
                 Assert.Single(extent);
@@ -1001,18 +1001,18 @@ public abstract class ExtentTest : IDisposable
 
                 // ContainedIn Extent over Class
                 // Empty
-                inExtent = this.Transaction.Extent(m.C1);
+                inExtent = this.Transaction.Extent(m.C1.Composite);
                 inExtent.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C1);
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
                     inExtentA.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
-                    var inExtentB = this.Transaction.Extent(m.C1);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
                     inExtentB.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddContainedIn(m.I12.C1sWhereC1I12many2one, inExtent);
 
                 Assert.Empty(extent);
@@ -1022,15 +1022,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Full
-                inExtent = this.Transaction.Extent(m.C1);
+                inExtent = this.Transaction.Extent(m.C1.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C1);
-                    var inExtentB = this.Transaction.Extent(m.C1);
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddContainedIn(m.I12.C1sWhereC1I12many2one, inExtent);
 
                 Assert.Single(extent);
@@ -1040,18 +1040,18 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.C1);
+                inExtent = this.Transaction.Extent(m.C1.Composite);
                 inExtent.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbra");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C1);
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
                     inExtentA.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbra");
-                    var inExtentB = this.Transaction.Extent(m.C1);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
                     inExtentB.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbra");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddContainedIn(m.I12.C1sWhereC1I12many2one, inExtent);
 
                 Assert.Empty(extent);
@@ -1062,18 +1062,18 @@ public abstract class ExtentTest : IDisposable
 
                 // ContainedIn Extent over Interface
                 // Empty
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 inExtent.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
                     inExtentA.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtentB.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddContainedIn(m.I12.C1sWhereC1I12many2one, inExtent);
 
                 Assert.Empty(extent);
@@ -1083,15 +1083,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Full
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddContainedIn(m.I12.C1sWhereC1I12many2one, inExtent);
 
                 Assert.Single(extent);
@@ -1101,18 +1101,18 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 inExtent.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
                     inExtentA.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtentB.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddContainedIn(m.I12.C1sWhereC1I12many2one, inExtent);
 
                 Assert.Empty(extent);
@@ -1125,18 +1125,18 @@ public abstract class ExtentTest : IDisposable
 
                 // ContainedIn Extent over Interface
                 // Empty
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 inExtent.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
                     inExtentA.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtentB.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.I34);
+                extent = this.Transaction.Extent(m.I34.Composite);
                 extent.Filter.AddContainedIn(m.I34.I12sWhereI12I34many2one, inExtent);
 
                 Assert.Empty(extent);
@@ -1146,15 +1146,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Full
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.I34);
+                extent = this.Transaction.Extent(m.I34.Composite);
                 extent.Filter.AddContainedIn(m.I34.I12sWhereI12I34many2one, inExtent);
 
                 Assert.Equal(2, extent.Count);
@@ -1164,18 +1164,18 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, true, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 inExtent.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
                     inExtentA.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtentB.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.I34);
+                extent = this.Transaction.Extent(m.I34.Composite);
                 extent.Filter.AddContainedIn(m.I34.I12sWhereI12I34many2one, inExtent);
 
                 Assert.Equal(2, extent.Count);
@@ -1197,7 +1197,7 @@ public abstract class ExtentTest : IDisposable
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddContains(m.C1.C1sWhereC1C1many2one, this.c1C);
 
             Assert.Single(extent);
@@ -1218,7 +1218,7 @@ public abstract class ExtentTest : IDisposable
             Assert.False(extent.Contains(this.c4C));
             Assert.False(extent.Contains(this.c4D));
 
-            extent = this.Transaction.Extent(m.C2);
+            extent = this.Transaction.Extent(m.C2.Composite);
             extent.Filter.AddContains(m.C2.C1sWhereC1C2many2one, this.c1C);
 
             Assert.Single(extent);
@@ -1239,7 +1239,7 @@ public abstract class ExtentTest : IDisposable
             Assert.False(extent.Contains(this.c4C));
             Assert.False(extent.Contains(this.c4D));
 
-            extent = this.Transaction.Extent(m.C4);
+            extent = this.Transaction.Extent(m.C4.Composite);
             extent.Filter.AddContains(m.C4.C3sWhereC3C4many2one, this.c3C);
 
             Assert.Single(extent);
@@ -1261,7 +1261,7 @@ public abstract class ExtentTest : IDisposable
             Assert.False(extent.Contains(this.c4D));
 
             // Interface
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddContains(m.I12.C1sWhereC1I12many2one, this.c1C);
 
             Assert.Single(extent);
@@ -1303,18 +1303,18 @@ public abstract class ExtentTest : IDisposable
 
                 // ContainedIn Extent over Class
                 // Empty
-                var inExtent = this.Transaction.Extent(m.C1);
+                var inExtent = this.Transaction.Extent(m.C1.Composite);
                 inExtent.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C1);
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
                     inExtentA.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
-                    var inExtentB = this.Transaction.Extent(m.C1);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
                     inExtentB.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                var extent = this.Transaction.Extent(m.C2);
+                var extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddContainedIn(m.C2.C1WhereC1C2one2many, inExtent);
 
                 Assert.Empty(extent);
@@ -1324,15 +1324,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Full
-                inExtent = this.Transaction.Extent(m.C1);
+                inExtent = this.Transaction.Extent(m.C1.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C1);
-                    var inExtentB = this.Transaction.Extent(m.C1);
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddContainedIn(m.C2.C1WhereC1C2one2many, inExtent);
 
                 Assert.Equal(3, extent.Count);
@@ -1342,18 +1342,18 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.C1);
+                inExtent = this.Transaction.Extent(m.C1.Composite);
                 inExtent.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbra");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C1);
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
                     inExtentA.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbra");
-                    var inExtentB = this.Transaction.Extent(m.C1);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
                     inExtentB.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbra");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddContainedIn(m.C2.C1WhereC1C2one2many, inExtent);
 
                 Assert.Single(extent);
@@ -1364,18 +1364,18 @@ public abstract class ExtentTest : IDisposable
 
                 // ContainedIn Extent over Interface
                 // Empty
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 inExtent.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
                     inExtentA.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtentB.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddContainedIn(m.C2.C1WhereC1C2one2many, inExtent);
 
                 Assert.Empty(extent);
@@ -1385,15 +1385,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Full
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddContainedIn(m.C2.C1WhereC1C2one2many, inExtent);
 
                 Assert.Equal(3, extent.Count);
@@ -1403,18 +1403,18 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 inExtent.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
                     inExtentA.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtentB.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddContainedIn(m.C2.C1WhereC1C2one2many, inExtent);
 
                 Assert.Single(extent);
@@ -1427,18 +1427,18 @@ public abstract class ExtentTest : IDisposable
 
                 // ContainedIn Extent over Class
                 // Empty
-                inExtent = this.Transaction.Extent(m.C1);
+                inExtent = this.Transaction.Extent(m.C1.Composite);
                 inExtent.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C1);
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
                     inExtentA.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
-                    var inExtentB = this.Transaction.Extent(m.C1);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
                     inExtentB.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddContainedIn(m.I12.C1WhereC1I12one2many, inExtent);
 
                 Assert.Empty(extent);
@@ -1448,15 +1448,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Full
-                inExtent = this.Transaction.Extent(m.C1);
+                inExtent = this.Transaction.Extent(m.C1.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C1);
-                    var inExtentB = this.Transaction.Extent(m.C1);
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddContainedIn(m.I12.C1WhereC1I12one2many, inExtent);
 
                 Assert.Equal(2, extent.Count);
@@ -1466,18 +1466,18 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.C1);
+                inExtent = this.Transaction.Extent(m.C1.Composite);
                 inExtent.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbra");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C1);
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
                     inExtentA.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbra");
-                    var inExtentB = this.Transaction.Extent(m.C1);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
                     inExtentB.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbra");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddContainedIn(m.I12.C1WhereC1I12one2many, inExtent);
 
                 Assert.Empty(extent);
@@ -1488,18 +1488,18 @@ public abstract class ExtentTest : IDisposable
 
                 // ContainedIn Extent over Interface
                 // Empty
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 inExtent.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
                     inExtentA.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtentB.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddContainedIn(m.I12.C1WhereC1I12one2many, inExtent);
 
                 Assert.Empty(extent);
@@ -1509,15 +1509,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Full
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddContainedIn(m.I12.C1WhereC1I12one2many, inExtent);
 
                 Assert.Equal(2, extent.Count);
@@ -1527,18 +1527,18 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 inExtent.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
                     inExtentA.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtentB.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddContainedIn(m.I12.C1WhereC1I12one2many, inExtent);
 
                 Assert.Empty(extent);
@@ -1560,7 +1560,7 @@ public abstract class ExtentTest : IDisposable
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
-            var extent = this.Transaction.Extent(m.C2);
+            var extent = this.Transaction.Extent(m.C2.Composite);
             extent.Filter.AddEquals(m.C2.C1WhereC1C2one2many, this.c1B);
 
             Assert.Single(extent);
@@ -1569,7 +1569,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, false, false);
             this.AssertC4(extent, false, false, false, false);
 
-            extent = this.Transaction.Extent(m.C2);
+            extent = this.Transaction.Extent(m.C2.Composite);
             extent.Filter.AddEquals(m.C2.C1WhereC1C2one2many, this.c1C);
 
             Assert.Equal(2, extent.Count);
@@ -1579,7 +1579,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Interface
-            extent = this.Transaction.Extent(m.I2);
+            extent = this.Transaction.Extent(m.I2.Composite);
             extent.Filter.AddEquals(m.I2.I1WhereI1I2one2many, this.c1B);
 
             Assert.Single(extent);
@@ -1588,7 +1588,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, false, false);
             this.AssertC4(extent, false, false, false, false);
 
-            extent = this.Transaction.Extent(m.I2);
+            extent = this.Transaction.Extent(m.I2.Composite);
             extent.Filter.AddEquals(m.I2.I1WhereI1I2one2many, this.c1C);
 
             Assert.Equal(2, extent.Count);
@@ -1598,7 +1598,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Super Interface
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddEquals(m.S1234.S1234WhereS1234one2many, this.c1B);
 
             Assert.Single(extent);
@@ -1607,7 +1607,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, false, false);
             this.AssertC4(extent, false, false, false, false);
 
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddEquals(m.S1234.S1234WhereS1234one2many, this.c3C);
 
             Assert.Equal(2, extent.Count);
@@ -1617,7 +1617,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Class - Wrong RelationType
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             var exception = false;
             try
@@ -1632,7 +1632,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Interface - Wrong RelationType
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
 
             exception = false;
             try
@@ -1647,7 +1647,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Super Interface - Wrong RelationType
-            extent = this.Transaction.Extent(m.S12);
+            extent = this.Transaction.Extent(m.S12.Composite);
 
             exception = false;
             try
@@ -1673,7 +1673,7 @@ public abstract class ExtentTest : IDisposable
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
-            var extent = this.Transaction.Extent(m.C2);
+            var extent = this.Transaction.Extent(m.C2.Composite);
             extent.Filter.AddExists(m.C2.C1WhereC1C2one2many);
 
             Assert.Equal(3, extent.Count);
@@ -1695,7 +1695,7 @@ public abstract class ExtentTest : IDisposable
             Assert.False(extent.Contains(this.c4D));
 
             // Interface
-            extent = this.Transaction.Extent(m.I2);
+            extent = this.Transaction.Extent(m.I2.Composite);
             extent.Filter.AddExists(m.I2.I1WhereI1I2one2many);
 
             Assert.Equal(3, extent.Count);
@@ -1717,7 +1717,7 @@ public abstract class ExtentTest : IDisposable
             Assert.False(extent.Contains(this.c4D));
 
             // Super Interface
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddExists(m.S1234.S1234WhereS1234one2many);
 
             Assert.Equal(3, extent.Count);
@@ -1739,7 +1739,7 @@ public abstract class ExtentTest : IDisposable
             Assert.False(extent.Contains(this.c4D));
 
             // Class - Wrong RelationType
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             var exception = false;
             try
@@ -1754,7 +1754,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Interface - Wrong RelationType
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
 
             exception = false;
             try
@@ -1769,7 +1769,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Super Interface - Wrong RelationType
-            extent = this.Transaction.Extent(m.S12);
+            extent = this.Transaction.Extent(m.S12.Composite);
 
             exception = false;
             try
@@ -1795,8 +1795,8 @@ public abstract class ExtentTest : IDisposable
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
-            var extent = this.Transaction.Extent(m.C2);
-            extent.Filter.AddInstanceof(m.C2.C1WhereC1C2one2many, m.C1);
+            var extent = this.Transaction.Extent(m.C2.Composite);
+            extent.Filter.AddInstanceof(m.C2.C1WhereC1C2one2many, m.C1.Composite);
 
             Assert.Equal(3, extent.Count);
             Assert.False(extent.Contains(this.c1A));
@@ -1817,8 +1817,8 @@ public abstract class ExtentTest : IDisposable
             Assert.False(extent.Contains(this.c4D));
 
             // Interface
-            extent = this.Transaction.Extent(m.I12);
-            extent.Filter.AddInstanceof(m.I12.C1WhereC1I12one2many, m.C1);
+            extent = this.Transaction.Extent(m.I12.Composite);
+            extent.Filter.AddInstanceof(m.I12.C1WhereC1I12one2many, m.C1.Composite);
 
             Assert.Equal(3, extent.Count);
             Assert.False(extent.Contains(this.c1A));
@@ -1839,8 +1839,8 @@ public abstract class ExtentTest : IDisposable
             Assert.False(extent.Contains(this.c4D));
 
             // Super Interface
-            extent = this.Transaction.Extent(m.S1234);
-            extent.Filter.AddInstanceof(m.S1234.S1234WhereS1234one2many, m.C1);
+            extent = this.Transaction.Extent(m.S1234.Composite);
+            extent.Filter.AddInstanceof(m.S1234.S1234WhereS1234one2many, m.C1.Composite);
 
             Assert.Single(extent);
             Assert.False(extent.Contains(this.c1A));
@@ -1879,15 +1879,15 @@ public abstract class ExtentTest : IDisposable
                 // RelationType from Class to Class
 
                 // ContainedIn Extent over Class
-                var inExtent = this.Transaction.Extent(m.C1);
+                var inExtent = this.Transaction.Extent(m.C1.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C1);
-                    var inExtentB = this.Transaction.Extent(m.C1);
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                var extent = this.Transaction.Extent(m.C1);
+                var extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddContainedIn(m.C1.C1WhereC1C1one2one, inExtent);
 
                 Assert.Equal(3, extent.Count);
@@ -1908,7 +1908,7 @@ public abstract class ExtentTest : IDisposable
                 Assert.False(extent.Contains(this.c4C));
                 Assert.False(extent.Contains(this.c4D));
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddContainedIn(m.C2.C1WhereC1C2one2one, inExtent);
 
                 Assert.Equal(3, extent.Count);
@@ -1929,15 +1929,15 @@ public abstract class ExtentTest : IDisposable
                 Assert.False(extent.Contains(this.c4C));
                 Assert.False(extent.Contains(this.c4D));
 
-                inExtent = this.Transaction.Extent(m.C3);
+                inExtent = this.Transaction.Extent(m.C3.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C3);
-                    var inExtentB = this.Transaction.Extent(m.C3);
+                    var inExtentA = this.Transaction.Extent(m.C3.Composite);
+                    var inExtentB = this.Transaction.Extent(m.C3.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C4);
+                extent = this.Transaction.Extent(m.C4.Composite);
                 extent.Filter.AddContainedIn(m.C4.C3WhereC3C4one2one, inExtent);
 
                 Assert.Equal(3, extent.Count);
@@ -1959,15 +1959,15 @@ public abstract class ExtentTest : IDisposable
                 Assert.True(extent.Contains(this.c4D));
 
                 // ContainedIn Extent over Interface
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddContainedIn(m.C1.C1WhereC1C1one2one, inExtent);
 
                 Assert.Equal(3, extent.Count);
@@ -1988,7 +1988,7 @@ public abstract class ExtentTest : IDisposable
                 Assert.False(extent.Contains(this.c4C));
                 Assert.False(extent.Contains(this.c4D));
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddContainedIn(m.C2.C1WhereC1C2one2one, inExtent);
 
                 Assert.Equal(3, extent.Count);
@@ -2009,15 +2009,15 @@ public abstract class ExtentTest : IDisposable
                 Assert.False(extent.Contains(this.c4C));
                 Assert.False(extent.Contains(this.c4D));
 
-                inExtent = this.Transaction.Extent(m.I34);
+                inExtent = this.Transaction.Extent(m.I34.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I34);
-                    var inExtentB = this.Transaction.Extent(m.I34);
+                    var inExtentA = this.Transaction.Extent(m.I34.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I34.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C4);
+                extent = this.Transaction.Extent(m.C4.Composite);
                 extent.Filter.AddContainedIn(m.C4.C3WhereC3C4one2one, inExtent);
 
                 Assert.Equal(3, extent.Count);
@@ -2041,15 +2041,15 @@ public abstract class ExtentTest : IDisposable
                 // RelationType from Interface to Class
 
                 // ContainedIn Extent over Class
-                inExtent = this.Transaction.Extent(m.C1);
+                inExtent = this.Transaction.Extent(m.C1.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C1);
-                    var inExtentB = this.Transaction.Extent(m.C1);
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddContainedIn(m.C2.I12WhereI12C2one2one, inExtent);
 
                 Assert.Equal(3, extent.Count);
@@ -2071,15 +2071,15 @@ public abstract class ExtentTest : IDisposable
                 Assert.False(extent.Contains(this.c4D));
 
                 // ContainedIn Extent over Interface
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddContainedIn(m.C2.I12WhereI12C2one2one, inExtent);
 
                 Assert.Equal(4, extent.Count);
@@ -2101,7 +2101,7 @@ public abstract class ExtentTest : IDisposable
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddEquals(m.C1.C1WhereC1C1one2one, this.c1B);
 
             Assert.Single(extent);
@@ -2122,7 +2122,7 @@ public abstract class ExtentTest : IDisposable
             Assert.False(extent.Contains(this.c4C));
             Assert.False(extent.Contains(this.c4D));
 
-            extent = this.Transaction.Extent(m.C2);
+            extent = this.Transaction.Extent(m.C2.Composite);
             extent.Filter.AddEquals(m.C2.C1WhereC1C2one2one, this.c1B);
 
             Assert.Single(extent);
@@ -2143,7 +2143,7 @@ public abstract class ExtentTest : IDisposable
             Assert.False(extent.Contains(this.c4C));
             Assert.False(extent.Contains(this.c4D));
 
-            extent = this.Transaction.Extent(m.C4);
+            extent = this.Transaction.Extent(m.C4.Composite);
             extent.Filter.AddEquals(m.C4.C3WhereC3C4one2one, this.c3B);
 
             Assert.Single(extent);
@@ -2165,7 +2165,7 @@ public abstract class ExtentTest : IDisposable
             Assert.False(extent.Contains(this.c4D));
 
             // Interface
-            extent = this.Transaction.Extent(m.I2);
+            extent = this.Transaction.Extent(m.I2.Composite);
             extent.Filter.AddEquals(m.I2.I1WhereI1I2one2one, this.c1B);
 
             Assert.Single(extent);
@@ -2187,7 +2187,7 @@ public abstract class ExtentTest : IDisposable
             Assert.False(extent.Contains(this.c4D));
 
             // Super Interface
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddEquals(m.S1234.S1234WhereS1234one2one, this.c1C);
 
             Assert.Single(extent);
@@ -2209,7 +2209,7 @@ public abstract class ExtentTest : IDisposable
             Assert.False(extent.Contains(this.c4D));
 
             // Class - Wrong RelationType
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             var exception = false;
             try
@@ -2224,7 +2224,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Interface - Wrong RelationType
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
 
             exception = false;
             try
@@ -2239,7 +2239,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Super Interface - Wrong RelationType
-            extent = this.Transaction.Extent(m.S12);
+            extent = this.Transaction.Extent(m.S12.Composite);
 
             exception = false;
             try
@@ -2265,7 +2265,7 @@ public abstract class ExtentTest : IDisposable
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddExists(m.C1.C1WhereC1C1one2one);
 
             Assert.Equal(3, extent.Count);
@@ -2286,7 +2286,7 @@ public abstract class ExtentTest : IDisposable
             Assert.False(extent.Contains(this.c4C));
             Assert.False(extent.Contains(this.c4D));
 
-            extent = this.Transaction.Extent(m.C2);
+            extent = this.Transaction.Extent(m.C2.Composite);
             extent.Filter.AddExists(m.C2.C1WhereC1C2one2one);
 
             Assert.Equal(3, extent.Count);
@@ -2307,7 +2307,7 @@ public abstract class ExtentTest : IDisposable
             Assert.False(extent.Contains(this.c4C));
             Assert.False(extent.Contains(this.c4D));
 
-            extent = this.Transaction.Extent(m.C4);
+            extent = this.Transaction.Extent(m.C4.Composite);
             extent.Filter.AddExists(m.C4.C3WhereC3C4one2one);
 
             Assert.Equal(3, extent.Count);
@@ -2329,7 +2329,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(extent.Contains(this.c4D));
 
             // Interface
-            extent = this.Transaction.Extent(m.I2);
+            extent = this.Transaction.Extent(m.I2.Composite);
             extent.Filter.AddExists(m.I2.I1WhereI1I2one2one);
 
             Assert.Equal(3, extent.Count);
@@ -2351,7 +2351,7 @@ public abstract class ExtentTest : IDisposable
             Assert.False(extent.Contains(this.c4D));
 
             // Super Interface
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddExists(m.S1234.S1234WhereS1234one2one);
 
             Assert.Equal(9, extent.Count);
@@ -2373,7 +2373,7 @@ public abstract class ExtentTest : IDisposable
             Assert.False(extent.Contains(this.c4D));
 
             // Class - Wrong RelationType
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             var exception = false;
             try
@@ -2388,7 +2388,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Interface - Wrong RelationType
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
 
             exception = false;
             try
@@ -2403,7 +2403,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Super Interface - Wrong RelationType
-            extent = this.Transaction.Extent(m.S12);
+            extent = this.Transaction.Extent(m.S12.Composite);
 
             exception = false;
             try
@@ -2431,8 +2431,8 @@ public abstract class ExtentTest : IDisposable
             // Class
 
             // Class
-            var extent = this.Transaction.Extent(m.C1);
-            extent.Filter.AddInstanceof(m.C1.C1WhereC1C1one2one, m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
+            extent.Filter.AddInstanceof(m.C1.C1WhereC1C1one2one, m.C1.Composite);
 
             Assert.Equal(3, extent.Count);
             Assert.False(extent.Contains(this.c1A));
@@ -2452,8 +2452,8 @@ public abstract class ExtentTest : IDisposable
             Assert.False(extent.Contains(this.c4C));
             Assert.False(extent.Contains(this.c4D));
 
-            extent = this.Transaction.Extent(m.C2);
-            extent.Filter.AddInstanceof(m.C2.C1WhereC1C2one2one, m.C1);
+            extent = this.Transaction.Extent(m.C2.Composite);
+            extent.Filter.AddInstanceof(m.C2.C1WhereC1C2one2one, m.C1.Composite);
 
             Assert.Equal(3, extent.Count);
             Assert.False(extent.Contains(this.c1A));
@@ -2473,8 +2473,8 @@ public abstract class ExtentTest : IDisposable
             Assert.False(extent.Contains(this.c4C));
             Assert.False(extent.Contains(this.c4D));
 
-            extent = this.Transaction.Extent(m.C4);
-            extent.Filter.AddInstanceof(m.C4.C3WhereC3C4one2one, m.C3);
+            extent = this.Transaction.Extent(m.C4.Composite);
+            extent.Filter.AddInstanceof(m.C4.C3WhereC3C4one2one, m.C3.Composite);
 
             Assert.Equal(3, extent.Count);
             Assert.False(extent.Contains(this.c1A));
@@ -2495,8 +2495,8 @@ public abstract class ExtentTest : IDisposable
             Assert.True(extent.Contains(this.c4D));
 
             // Interface
-            extent = this.Transaction.Extent(m.I12);
-            extent.Filter.AddInstanceof(m.I12.C1WhereC1I12one2one, m.C1);
+            extent = this.Transaction.Extent(m.I12.Composite);
+            extent.Filter.AddInstanceof(m.I12.C1WhereC1I12one2one, m.C1.Composite);
 
             Assert.Equal(3, extent.Count);
             Assert.False(extent.Contains(this.c1A));
@@ -2517,8 +2517,8 @@ public abstract class ExtentTest : IDisposable
             Assert.False(extent.Contains(this.c4D));
 
             // Super Interface
-            extent = this.Transaction.Extent(m.S1234);
-            extent.Filter.AddInstanceof(m.S1234.S1234WhereS1234one2one, m.C1);
+            extent = this.Transaction.Extent(m.S1234.Composite);
+            extent.Filter.AddInstanceof(m.S1234.S1234WhereS1234one2one, m.C1.Composite);
 
             Assert.Equal(3, extent.Count);
             Assert.False(extent.Contains(this.c1A));
@@ -2541,8 +2541,8 @@ public abstract class ExtentTest : IDisposable
             // Interface
 
             // Class
-            extent = this.Transaction.Extent(m.C1);
-            extent.Filter.AddInstanceof(m.C1.C1WhereC1C1one2one, m.I1);
+            extent = this.Transaction.Extent(m.C1.Composite);
+            extent.Filter.AddInstanceof(m.C1.C1WhereC1C1one2one, m.I1.Composite);
 
             Assert.Equal(3, extent.Count);
             Assert.False(extent.Contains(this.c1A));
@@ -2562,8 +2562,8 @@ public abstract class ExtentTest : IDisposable
             Assert.False(extent.Contains(this.c4C));
             Assert.False(extent.Contains(this.c4D));
 
-            extent = this.Transaction.Extent(m.C2);
-            extent.Filter.AddInstanceof(m.C2.C1WhereC1C2one2one, m.I1);
+            extent = this.Transaction.Extent(m.C2.Composite);
+            extent.Filter.AddInstanceof(m.C2.C1WhereC1C2one2one, m.I1.Composite);
 
             Assert.Equal(3, extent.Count);
             Assert.False(extent.Contains(this.c1A));
@@ -2583,8 +2583,8 @@ public abstract class ExtentTest : IDisposable
             Assert.False(extent.Contains(this.c4C));
             Assert.False(extent.Contains(this.c4D));
 
-            extent = this.Transaction.Extent(m.C4);
-            extent.Filter.AddInstanceof(m.C4.C3WhereC3C4one2one, m.I3);
+            extent = this.Transaction.Extent(m.C4.Composite);
+            extent.Filter.AddInstanceof(m.C4.C3WhereC3C4one2one, m.I3.Composite);
 
             Assert.Equal(3, extent.Count);
             Assert.False(extent.Contains(this.c1A));
@@ -2605,8 +2605,8 @@ public abstract class ExtentTest : IDisposable
             Assert.True(extent.Contains(this.c4D));
 
             // Interface
-            extent = this.Transaction.Extent(m.I12);
-            extent.Filter.AddInstanceof(m.I12.C1WhereC1I12one2one, m.I1);
+            extent = this.Transaction.Extent(m.I12.Composite);
+            extent.Filter.AddInstanceof(m.I12.C1WhereC1I12one2one, m.I1.Composite);
 
             Assert.Equal(3, extent.Count);
             Assert.False(extent.Contains(this.c1A));
@@ -2627,8 +2627,8 @@ public abstract class ExtentTest : IDisposable
             Assert.False(extent.Contains(this.c4D));
 
             // Super Interface
-            extent = this.Transaction.Extent(m.S1234);
-            extent.Filter.AddInstanceof(m.S1234.S1234WhereS1234one2one, m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
+            extent.Filter.AddInstanceof(m.S1234.S1234WhereS1234one2one, m.S1234.Composite);
 
             Assert.Equal(9, extent.Count);
             Assert.False(extent.Contains(this.c1A));
@@ -2662,7 +2662,7 @@ public abstract class ExtentTest : IDisposable
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Like and any
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
 
             extent.Filter.AddLike(m.C1.C1AllorsString, "%nada%");
 
@@ -2677,7 +2677,7 @@ public abstract class ExtentTest : IDisposable
             extent.ToArray(typeof(C1));
 
             // Role + Value for Shared Interface
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddExists(m.C1.C1C1one2manies);
 
             extent.Filter.AddExists(m.I12.I12AllorsInteger);
@@ -2706,15 +2706,15 @@ public abstract class ExtentTest : IDisposable
             Assert.False(extent.Contains(this.c4D));
 
             // Role In + Except
-            var firstExtent = this.Transaction.Extent(m.C2);
+            var firstExtent = this.Transaction.Extent(m.C2.Composite);
             firstExtent.Filter.AddLike(m.I12.I12AllorsString, "ᴀbra%");
 
-            var secondExtent = this.Transaction.Extent(m.C2);
+            var secondExtent = this.Transaction.Extent(m.C2.Composite);
             secondExtent.Filter.AddLike(m.I12.I12AllorsString, "ᴀbracadabra");
 
             var inExtent = this.Transaction.Except(firstExtent, secondExtent);
 
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddContainedIn(m.C1.C1C2one2manies, inExtent);
 
             Assert.Single(extent);
@@ -2736,15 +2736,15 @@ public abstract class ExtentTest : IDisposable
             Assert.False(extent.Contains(this.c4D));
 
             // AssociationType In + Except
-            firstExtent = this.Transaction.Extent(m.C1);
+            firstExtent = this.Transaction.Extent(m.C1.Composite);
             firstExtent.Filter.AddLike(m.I12.I12AllorsString, "ᴀbra%");
 
-            secondExtent = this.Transaction.Extent(m.C1);
+            secondExtent = this.Transaction.Extent(m.C1.Composite);
             secondExtent.Filter.AddLike(m.I12.I12AllorsString, "ᴀbracadabra");
 
             inExtent = this.Transaction.Except(firstExtent, secondExtent);
 
-            extent = this.Transaction.Extent(m.C2);
+            extent = this.Transaction.Extent(m.C2.Composite);
             extent.Filter.AddContainedIn(m.C2.C1WhereC1C2one2many, inExtent);
 
             Assert.Single(extent);
@@ -2777,14 +2777,14 @@ public abstract class ExtentTest : IDisposable
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Except + Union
-            var firstExtent = this.Transaction.Extent(m.C1);
+            var firstExtent = this.Transaction.Extent(m.C1.Composite);
             firstExtent.Filter.AddNot().AddExists(m.C1.C1AllorsString);
 
-            var secondExtent = this.Transaction.Extent(m.C1);
+            var secondExtent = this.Transaction.Extent(m.C1.Composite);
             secondExtent.Filter.AddLike(m.C1.C1AllorsString, "ᴀbracadabra");
 
             var unionExtent = this.Transaction.Union(firstExtent, secondExtent);
-            var topExtent = this.Transaction.Extent(m.C1);
+            var topExtent = this.Transaction.Extent(m.C1.Composite);
 
             var extent = this.Transaction.Except(topExtent, unionExtent);
 
@@ -2807,14 +2807,14 @@ public abstract class ExtentTest : IDisposable
             Assert.False(extent.Contains(this.c4D));
 
             // Except + Intersect
-            firstExtent = this.Transaction.Extent(m.C1);
+            firstExtent = this.Transaction.Extent(m.C1.Composite);
             firstExtent.Filter.AddExists(m.C1.C1AllorsString);
 
-            secondExtent = this.Transaction.Extent(m.C1);
+            secondExtent = this.Transaction.Extent(m.C1.Composite);
             secondExtent.Filter.AddLike(m.C1.C1AllorsString, "ᴀbracadabra");
 
             var intersectExtent = this.Transaction.Intersect(firstExtent, secondExtent);
-            topExtent = this.Transaction.Extent(m.C1);
+            topExtent = this.Transaction.Extent(m.C1.Composite);
 
             extent = this.Transaction.Except(topExtent, intersectExtent);
 
@@ -2838,11 +2838,11 @@ public abstract class ExtentTest : IDisposable
 
             // Intersect + Intersect + Intersect
             firstExtent = this.Transaction.Intersect(
-                this.Transaction.Extent(m.C1),
-                this.Transaction.Extent(m.C1));
+                this.Transaction.Extent(m.C1.Composite),
+                this.Transaction.Extent(m.C1.Composite));
             secondExtent = this.Transaction.Intersect(
-                this.Transaction.Extent(m.C1),
-                this.Transaction.Extent(m.C1));
+                this.Transaction.Extent(m.C1.Composite),
+                this.Transaction.Extent(m.C1.Composite));
 
             extent = this.Transaction.Intersect(firstExtent, secondExtent);
 
@@ -2866,11 +2866,11 @@ public abstract class ExtentTest : IDisposable
 
             // Except + Intersect + Intersect
             firstExtent = this.Transaction.Intersect(
-                this.Transaction.Extent(m.C1),
-                this.Transaction.Extent(m.C1));
+                this.Transaction.Extent(m.C1.Composite),
+                this.Transaction.Extent(m.C1.Composite));
             secondExtent = this.Transaction.Intersect(
-                this.Transaction.Extent(m.C1),
-                this.Transaction.Extent(m.C1));
+                this.Transaction.Extent(m.C1.Composite),
+                this.Transaction.Extent(m.C1.Composite));
 
             extent = this.Transaction.Except(firstExtent, secondExtent);
 
@@ -2903,7 +2903,7 @@ public abstract class ExtentTest : IDisposable
             this.Populate();
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
-            var extent = this.Transaction.Extent(m.InterfaceWithoutClass);
+            var extent = this.Transaction.Extent(m.InterfaceWithoutClass.Composite);
 
             Assert.Empty(extent);
         }
@@ -2919,7 +2919,7 @@ public abstract class ExtentTest : IDisposable
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // class
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
 
             extent.Filter.AddEquals(this.c1A);
 
@@ -2934,7 +2934,7 @@ public abstract class ExtentTest : IDisposable
             Assert.Empty(extent);
 
             // interface
-            extent = this.Transaction.Extent(m.I1);
+            extent = this.Transaction.Extent(m.I1.Composite);
 
             extent.Filter.AddEquals(this.c1A);
 
@@ -2949,7 +2949,7 @@ public abstract class ExtentTest : IDisposable
             Assert.Empty(extent);
 
             // shared interface
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
 
             extent.Filter.AddEquals(this.c1A);
 
@@ -2975,7 +2975,7 @@ public abstract class ExtentTest : IDisposable
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // class
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             var not = extent.Filter.AddNot();
             var and = not.AddAnd();
             and.AddEquals(this.c1A);
@@ -2995,7 +2995,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // interface
-            extent = this.Transaction.Extent(m.I1);
+            extent = this.Transaction.Extent(m.I1.Composite);
             not = extent.Filter.AddNot();
             and = not.AddAnd();
             and.AddEquals(this.c1A);
@@ -3015,7 +3015,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // shared interface
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             not = extent.Filter.AddNot();
             and = not.AddAnd();
             and.AddEquals(this.c1A);
@@ -3046,7 +3046,7 @@ public abstract class ExtentTest : IDisposable
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // class
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             var or = extent.Filter.AddOr();
             or.AddEquals(this.c1A);
 
@@ -3065,7 +3065,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // interface
-            extent = this.Transaction.Extent(m.I1);
+            extent = this.Transaction.Extent(m.I1.Composite);
             or = extent.Filter.AddOr();
             or.AddEquals(this.c1A);
 
@@ -3084,7 +3084,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // shared interface
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             or = extent.Filter.AddOr();
             or.AddEquals(this.c1A);
 
@@ -3114,7 +3114,7 @@ public abstract class ExtentTest : IDisposable
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // class
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             var not = extent.Filter.AddNot();
             var or = not.AddOr();
             or.AddEquals(this.c1A);
@@ -3134,7 +3134,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // interface
-            extent = this.Transaction.Extent(m.I1);
+            extent = this.Transaction.Extent(m.I1.Composite);
             not = extent.Filter.AddNot();
             or = not.AddOr();
             or.AddEquals(this.c1A);
@@ -3154,7 +3154,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // shared interface
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             not = extent.Filter.AddNot();
             or = not.AddOr();
             or.AddEquals(this.c1A);
@@ -3185,9 +3185,9 @@ public abstract class ExtentTest : IDisposable
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // class
-            var firstExtent = this.Transaction.Extent(m.C1);
+            var firstExtent = this.Transaction.Extent(m.C1.Composite);
 
-            var secondExtent = this.Transaction.Extent(m.C1);
+            var secondExtent = this.Transaction.Extent(m.C1.Composite);
             secondExtent.Filter.AddLike(m.C1.C1AllorsString, "ᴀbracadabra");
 
             var extent = this.Transaction.Except(firstExtent, secondExtent);
@@ -3199,10 +3199,10 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // interface
-            firstExtent = this.Transaction.Extent(m.I12);
+            firstExtent = this.Transaction.Extent(m.I12.Composite);
             firstExtent.Filter.AddLike(m.I12.I12AllorsString, "ᴀbra%");
 
-            secondExtent = this.Transaction.Extent(m.I12);
+            secondExtent = this.Transaction.Extent(m.I12.Composite);
             secondExtent.Filter.AddLike(m.I12.I12AllorsString, "ᴀbracadabra");
 
             extent = this.Transaction.Except(firstExtent, secondExtent);
@@ -3214,8 +3214,8 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Different Classes
-            firstExtent = this.Transaction.Extent(m.C1);
-            secondExtent = this.Transaction.Extent(m.C2);
+            firstExtent = this.Transaction.Extent(m.C1.Composite);
+            secondExtent = this.Transaction.Extent(m.C2.Composite);
 
             var exceptionThrown = false;
             try
@@ -3240,7 +3240,7 @@ public abstract class ExtentTest : IDisposable
             this.Populate();
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddExists(m.C1.C1AllorsString);
             Assert.Equal(3, extent.Count);
             extent.Filter.AddLike(m.C1.C1AllorsString, "ᴀbra");
@@ -3260,8 +3260,8 @@ public abstract class ExtentTest : IDisposable
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class + Class
-            var extent = this.Transaction.Extent(m.C1);
-            extent.Filter.AddInstanceof(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
+            extent.Filter.AddInstanceof(m.C1.Composite);
 
             Assert.Equal(4, extent.Count);
             this.AssertC1(extent, true, true, true, true);
@@ -3270,8 +3270,8 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Class + Interface
-            extent = this.Transaction.Extent(m.I12);
-            extent.Filter.AddInstanceof(m.C1);
+            extent = this.Transaction.Extent(m.I12.Composite);
+            extent.Filter.AddInstanceof(m.C1.Composite);
 
             Assert.Equal(4, extent.Count);
             this.AssertC1(extent, true, true, true, true);
@@ -3280,8 +3280,8 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Class + Shared Interface
-            extent = this.Transaction.Extent(m.S1234);
-            extent.Filter.AddInstanceof(m.C1);
+            extent = this.Transaction.Extent(m.S1234.Composite);
+            extent.Filter.AddInstanceof(m.C1.Composite);
 
             Assert.Equal(4, extent.Count);
             this.AssertC1(extent, true, true, true, true);
@@ -3290,8 +3290,8 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Inteface + Class
-            extent = this.Transaction.Extent(m.C1);
-            extent.Filter.AddInstanceof(m.I1);
+            extent = this.Transaction.Extent(m.C1.Composite);
+            extent.Filter.AddInstanceof(m.I1.Composite);
 
             Assert.Equal(4, extent.Count);
             this.AssertC1(extent, true, true, true, true);
@@ -3300,8 +3300,8 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Interface + Interface
-            extent = this.Transaction.Extent(m.I12);
-            extent.Filter.AddInstanceof(m.I1);
+            extent = this.Transaction.Extent(m.I12.Composite);
+            extent.Filter.AddInstanceof(m.I1.Composite);
 
             Assert.Equal(4, extent.Count);
             this.AssertC1(extent, true, true, true, true);
@@ -3309,8 +3309,8 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, false, false);
             this.AssertC4(extent, false, false, false, false);
 
-            extent = this.Transaction.Extent(m.I12);
-            extent.Filter.AddInstanceof(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
+            extent.Filter.AddInstanceof(m.I12.Composite);
 
             Assert.Equal(8, extent.Count);
             this.AssertC1(extent, true, true, true, true);
@@ -3319,8 +3319,8 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Interface + Super Interface
-            extent = this.Transaction.Extent(m.S1234);
-            extent.Filter.AddInstanceof(m.I1);
+            extent = this.Transaction.Extent(m.S1234.Composite);
+            extent.Filter.AddInstanceof(m.I1.Composite);
 
             Assert.Equal(4, extent.Count);
             this.AssertC1(extent, true, true, true, true);
@@ -3328,8 +3328,8 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, false, false);
             this.AssertC4(extent, false, false, false, false);
 
-            extent = this.Transaction.Extent(m.S1234);
-            extent.Filter.AddInstanceof(m.I12);
+            extent = this.Transaction.Extent(m.S1234.Composite);
+            extent.Filter.AddInstanceof(m.I12.Composite);
 
             Assert.Equal(8, extent.Count);
             this.AssertC1(extent, true, true, true, true);
@@ -3337,8 +3337,8 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, false, false);
             this.AssertC4(extent, false, false, false, false);
 
-            extent = this.Transaction.Extent(m.S1234);
-            extent.Filter.AddInstanceof(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
+            extent.Filter.AddInstanceof(m.S1234.Composite);
 
             Assert.Equal(16, extent.Count);
             this.AssertC1(extent, true, true, true, true);
@@ -3358,9 +3358,9 @@ public abstract class ExtentTest : IDisposable
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // class
-            var firstExtent = this.Transaction.Extent(m.C1);
+            var firstExtent = this.Transaction.Extent(m.C1.Composite);
 
-            var secondExtent = this.Transaction.Extent(m.C1);
+            var secondExtent = this.Transaction.Extent(m.C1.Composite);
             secondExtent.Filter.AddLike(m.C1.C1AllorsString, "ᴀbracadabra");
 
             var extent = this.Transaction.Intersect(firstExtent, secondExtent);
@@ -3372,8 +3372,8 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Different Classes
-            firstExtent = this.Transaction.Extent(m.C1);
-            secondExtent = this.Transaction.Extent(m.C2);
+            firstExtent = this.Transaction.Extent(m.C1.Composite);
+            secondExtent = this.Transaction.Extent(m.C2.Composite);
 
             var exceptionThrown = false;
             try
@@ -3388,9 +3388,9 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exceptionThrown);
 
             // Interface
-            firstExtent = this.Transaction.Extent(m.I12);
-            secondExtent = this.Transaction.Extent(m.I12);
-            secondExtent.Filter.AddInstanceof(m.C2);
+            firstExtent = this.Transaction.Extent(m.I12.Composite);
+            secondExtent = this.Transaction.Extent(m.I12.Composite);
+            secondExtent.Filter.AddInstanceof(m.C2.Composite);
 
             Assert.Equal(4, secondExtent.Count);
 
@@ -3426,7 +3426,7 @@ public abstract class ExtentTest : IDisposable
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             {
-                var extent = this.Transaction.Extent(m.C1);
+                var extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddEquals(m.S1234.ClassName, "c1");
                 extent.Filter.AddContains(m.C1.C1C3one2manies, this.c3B);
                 extent.AddSort(m.S1234.ClassName);
@@ -3445,7 +3445,7 @@ public abstract class ExtentTest : IDisposable
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             var none = extent.Filter.AddNot().AddAnd();
             none.AddGreaterThan(m.C1.C1AllorsInteger, 0);
             none.AddLessThan(m.C1.C1AllorsInteger, 2);
@@ -3457,7 +3457,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Interface
-            (extent = this.Transaction.Extent(m.I12)).Filter.AddNot()
+            (extent = this.Transaction.Extent(m.I12.Composite)).Filter.AddNot()
                 .AddAnd()
                 .AddGreaterThan(m.I12.I12AllorsInteger, 0)
                 .AddLessThan(m.I12.I12AllorsInteger, 2);
@@ -3469,7 +3469,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Super Interface
-            (extent = this.Transaction.Extent(m.S1234)).Filter.AddNot()
+            (extent = this.Transaction.Extent(m.S1234.Composite)).Filter.AddNot()
                 .AddAnd()
                 .AddGreaterThan(m.S1234.S1234AllorsInteger, 0)
                 .AddLessThan(m.S1234.S1234AllorsInteger, 2);
@@ -3481,7 +3481,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, true, true);
 
             // Class
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddNot().AddAnd();
 
             Assert.Equal(4, extent.Count);
@@ -3510,18 +3510,18 @@ public abstract class ExtentTest : IDisposable
 
                 // ContainedIn Extent over Class
                 // Empty
-                var inExtent = this.Transaction.Extent(m.C1);
+                var inExtent = this.Transaction.Extent(m.C1.Composite);
                 inExtent.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C1);
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
                     inExtentA.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
-                    var inExtentB = this.Transaction.Extent(m.C1);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
                     inExtentB.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                var extent = this.Transaction.Extent(m.C2);
+                var extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C2.C1sWhereC1C2many2many, inExtent);
 
                 Assert.Equal(4, extent.Count);
@@ -3531,15 +3531,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Full
-                inExtent = this.Transaction.Extent(m.C1);
+                inExtent = this.Transaction.Extent(m.C1.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C1);
-                    var inExtentB = this.Transaction.Extent(m.C1);
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C2.C1sWhereC1C2many2many, inExtent);
 
                 Assert.Single(extent);
@@ -3549,18 +3549,18 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.C1);
+                inExtent = this.Transaction.Extent(m.C1.Composite);
                 inExtent.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbra");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C1);
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
                     inExtentA.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbra");
-                    var inExtentB = this.Transaction.Extent(m.C1);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
                     inExtentB.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbra");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C2.C1sWhereC1C2many2many, inExtent);
 
                 Assert.Equal(3, extent.Count);
@@ -3571,18 +3571,18 @@ public abstract class ExtentTest : IDisposable
 
                 // ContainedIn Extent over Interface
                 // Empty
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 inExtent.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
                     inExtentA.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtentB.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C2.C1sWhereC1C2many2many, inExtent);
 
                 Assert.Equal(4, extent.Count);
@@ -3592,15 +3592,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Full
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C2.C1sWhereC1C2many2many, inExtent);
 
                 Assert.Single(extent);
@@ -3610,18 +3610,18 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 inExtent.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
                     inExtentA.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtentB.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C2.C1sWhereC1C2many2many, inExtent);
 
                 Assert.Equal(3, extent.Count);
@@ -3634,18 +3634,18 @@ public abstract class ExtentTest : IDisposable
 
                 // ContainedIn Extent over Class
                 // Empty
-                inExtent = this.Transaction.Extent(m.C1);
+                inExtent = this.Transaction.Extent(m.C1.Composite);
                 inExtent.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C1);
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
                     inExtentA.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
-                    var inExtentB = this.Transaction.Extent(m.C1);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
                     inExtentB.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.I12.C1sWhereC1I12many2many, inExtent);
 
                 Assert.Equal(4, extent.Count);
@@ -3655,15 +3655,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Full
-                inExtent = this.Transaction.Extent(m.C1);
+                inExtent = this.Transaction.Extent(m.C1.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C1);
-                    var inExtentB = this.Transaction.Extent(m.C1);
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.I12.C1sWhereC1I12many2many, inExtent);
 
                 Assert.Single(extent);
@@ -3673,18 +3673,18 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.C1);
+                inExtent = this.Transaction.Extent(m.C1.Composite);
                 inExtent.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbra");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C1);
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
                     inExtentA.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbra");
-                    var inExtentB = this.Transaction.Extent(m.C1);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
                     inExtentB.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbra");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.I12.C1sWhereC1I12many2many, inExtent);
 
                 Assert.Equal(3, extent.Count);
@@ -3695,18 +3695,18 @@ public abstract class ExtentTest : IDisposable
 
                 // ContainedIn Extent over Interface
                 // Empty
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 inExtent.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
                     inExtentA.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtentB.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.I12.C1sWhereC1I12many2many, inExtent);
 
                 Assert.Equal(4, extent.Count);
@@ -3716,15 +3716,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Full
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.I12.C1sWhereC1I12many2many, inExtent);
 
                 Assert.Single(extent);
@@ -3734,18 +3734,18 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 inExtent.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
                     inExtentA.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtentB.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.I12.C1sWhereC1I12many2many, inExtent);
 
                 Assert.Equal(3, extent.Count);
@@ -3767,7 +3767,7 @@ public abstract class ExtentTest : IDisposable
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
-            var extent = this.Transaction.Extent(m.C2);
+            var extent = this.Transaction.Extent(m.C2.Composite);
             extent.Filter.AddNot().AddExists(m.C2.C1sWhereC1C2many2many);
 
             Assert.Single(extent);
@@ -3777,7 +3777,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Interface
-            extent = this.Transaction.Extent(m.I2);
+            extent = this.Transaction.Extent(m.I2.Composite);
             extent.Filter.AddNot().AddExists(m.I2.I1sWhereI1I2many2many);
 
             Assert.Single(extent);
@@ -3787,7 +3787,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Super Interface
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddNot().AddExists(m.S1234.S1234sWhereS1234many2many);
 
             Assert.Equal(6, extent.Count);
@@ -3797,7 +3797,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, true, true, true, true);
 
             // Class - Wrong RelationType
-            extent = this.Transaction.Extent(m.C2);
+            extent = this.Transaction.Extent(m.C2.Composite);
 
             var exception = false;
             try
@@ -3812,7 +3812,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Interface - Wrong RelationType
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
 
             exception = false;
             try
@@ -3827,7 +3827,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Super Interface - Wrong RelationType
-            extent = this.Transaction.Extent(m.S12);
+            extent = this.Transaction.Extent(m.S12.Composite);
 
             exception = false;
             try
@@ -3860,18 +3860,18 @@ public abstract class ExtentTest : IDisposable
 
                 // ContainedIn Extent over Class
                 // Empty
-                var inExtent = this.Transaction.Extent(m.C1);
+                var inExtent = this.Transaction.Extent(m.C1.Composite);
                 inExtent.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C1);
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
                     inExtentA.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
-                    var inExtentB = this.Transaction.Extent(m.C1);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
                     inExtentB.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                var extent = this.Transaction.Extent(m.C2);
+                var extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C2.C1sWhereC1C2many2one, inExtent);
 
                 Assert.Equal(4, extent.Count);
@@ -3881,15 +3881,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Full
-                inExtent = this.Transaction.Extent(m.C1);
+                inExtent = this.Transaction.Extent(m.C1.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C1);
-                    var inExtentB = this.Transaction.Extent(m.C1);
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C2.C1sWhereC1C2many2one, inExtent);
 
                 Assert.Equal(2, extent.Count);
@@ -3899,18 +3899,18 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.C1);
+                inExtent = this.Transaction.Extent(m.C1.Composite);
                 inExtent.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbra");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C1);
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
                     inExtentA.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbra");
-                    var inExtentB = this.Transaction.Extent(m.C1);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
                     inExtentB.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbra");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C2.C1sWhereC1C2many2one, inExtent);
 
                 Assert.Equal(3, extent.Count);
@@ -3921,18 +3921,18 @@ public abstract class ExtentTest : IDisposable
 
                 // ContainedIn Extent over Interface
                 // Empty
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 inExtent.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
                     inExtentA.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtentB.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C2.C1sWhereC1C2many2one, inExtent);
 
                 Assert.Equal(4, extent.Count);
@@ -3942,15 +3942,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Full
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C2.C1sWhereC1C2many2one, inExtent);
 
                 Assert.Equal(2, extent.Count);
@@ -3960,18 +3960,18 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 inExtent.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
                     inExtentA.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtentB.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C2.C1sWhereC1C2many2one, inExtent);
 
                 Assert.Equal(3, extent.Count);
@@ -3984,18 +3984,18 @@ public abstract class ExtentTest : IDisposable
 
                 // ContainedIn Extent over Class
                 // Empty
-                inExtent = this.Transaction.Extent(m.C1);
+                inExtent = this.Transaction.Extent(m.C1.Composite);
                 inExtent.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C1);
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
                     inExtentA.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
-                    var inExtentB = this.Transaction.Extent(m.C1);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
                     inExtentB.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.I12.C1sWhereC1I12many2one, inExtent);
 
                 Assert.Equal(4, extent.Count);
@@ -4005,15 +4005,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Full
-                inExtent = this.Transaction.Extent(m.C1);
+                inExtent = this.Transaction.Extent(m.C1.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C1);
-                    var inExtentB = this.Transaction.Extent(m.C1);
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.I12.C1sWhereC1I12many2one, inExtent);
 
                 Assert.Equal(3, extent.Count);
@@ -4023,18 +4023,18 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.C1);
+                inExtent = this.Transaction.Extent(m.C1.Composite);
                 inExtent.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbra");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C1);
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
                     inExtentA.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbra");
-                    var inExtentB = this.Transaction.Extent(m.C1);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
                     inExtentB.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbra");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.I12.C1sWhereC1I12many2one, inExtent);
 
                 Assert.Equal(4, extent.Count);
@@ -4045,18 +4045,18 @@ public abstract class ExtentTest : IDisposable
 
                 // ContainedIn Extent over Interface
                 // Empty
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 inExtent.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
                     inExtentA.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtentB.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.I12.C1sWhereC1I12many2one, inExtent);
 
                 Assert.Equal(4, extent.Count);
@@ -4066,15 +4066,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Full
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.I12.C1sWhereC1I12many2one, inExtent);
 
                 Assert.Equal(3, extent.Count);
@@ -4084,18 +4084,18 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 inExtent.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
                     inExtentA.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtentB.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.I12.C1sWhereC1I12many2one, inExtent);
 
                 Assert.Equal(4, extent.Count);
@@ -4124,18 +4124,18 @@ public abstract class ExtentTest : IDisposable
 
                 // ContainedIn Extent over Class
                 // Empty
-                var inExtent = this.Transaction.Extent(m.C1);
+                var inExtent = this.Transaction.Extent(m.C1.Composite);
                 inExtent.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C1);
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
                     inExtentA.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
-                    var inExtentB = this.Transaction.Extent(m.C1);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
                     inExtentB.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                var extent = this.Transaction.Extent(m.C2);
+                var extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C2.C1WhereC1C2one2many, inExtent);
 
                 Assert.Equal(4, extent.Count);
@@ -4145,15 +4145,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Full
-                inExtent = this.Transaction.Extent(m.C1);
+                inExtent = this.Transaction.Extent(m.C1.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C1);
-                    var inExtentB = this.Transaction.Extent(m.C1);
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C2.C1WhereC1C2one2many, inExtent);
 
                 Assert.Single(extent);
@@ -4163,18 +4163,18 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.C1);
+                inExtent = this.Transaction.Extent(m.C1.Composite);
                 inExtent.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbra");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C1);
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
                     inExtentA.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbra");
-                    var inExtentB = this.Transaction.Extent(m.C1);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
                     inExtentB.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbra");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C2.C1WhereC1C2one2many, inExtent);
 
                 Assert.Equal(3, extent.Count);
@@ -4185,18 +4185,18 @@ public abstract class ExtentTest : IDisposable
 
                 // ContainedIn Extent over Interface
                 // Empty
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 inExtent.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
                     inExtentA.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtentB.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C2.C1WhereC1C2one2many, inExtent);
 
                 Assert.Equal(4, extent.Count);
@@ -4206,15 +4206,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Full
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C2.C1WhereC1C2one2many, inExtent);
 
                 Assert.Single(extent);
@@ -4224,18 +4224,18 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 inExtent.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
                     inExtentA.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtentB.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C2.C1WhereC1C2one2many, inExtent);
 
                 Assert.Equal(3, extent.Count);
@@ -4248,18 +4248,18 @@ public abstract class ExtentTest : IDisposable
 
                 // ContainedIn Extent over Class
                 // Empty
-                inExtent = this.Transaction.Extent(m.C1);
+                inExtent = this.Transaction.Extent(m.C1.Composite);
                 inExtent.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C1);
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
                     inExtentA.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
-                    var inExtentB = this.Transaction.Extent(m.C1);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
                     inExtentB.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.I12.C1WhereC1I12one2many, inExtent);
 
                 Assert.Equal(4, extent.Count);
@@ -4269,15 +4269,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Full
-                inExtent = this.Transaction.Extent(m.C1);
+                inExtent = this.Transaction.Extent(m.C1.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C1);
-                    var inExtentB = this.Transaction.Extent(m.C1);
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.I12.C1WhereC1I12one2many, inExtent);
 
                 Assert.Equal(2, extent.Count);
@@ -4287,18 +4287,18 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.C1);
+                inExtent = this.Transaction.Extent(m.C1.Composite);
                 inExtent.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbra");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C1);
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
                     inExtentA.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbra");
-                    var inExtentB = this.Transaction.Extent(m.C1);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
                     inExtentB.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbra");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.I12.C1WhereC1I12one2many, inExtent);
 
                 Assert.Equal(4, extent.Count);
@@ -4309,18 +4309,18 @@ public abstract class ExtentTest : IDisposable
 
                 // ContainedIn Extent over Interface
                 // Empty
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 inExtent.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
                     inExtentA.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtentB.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.I12.C1WhereC1I12one2many, inExtent);
 
                 Assert.Equal(4, extent.Count);
@@ -4330,15 +4330,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Full
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.I12.C1WhereC1I12one2many, inExtent);
 
                 Assert.Equal(2, extent.Count);
@@ -4348,18 +4348,18 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 inExtent.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
                     inExtentA.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtentB.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.I12.C1WhereC1I12one2many, inExtent);
 
                 Assert.Equal(4, extent.Count);
@@ -4381,7 +4381,7 @@ public abstract class ExtentTest : IDisposable
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddNot().AddEquals(m.C1.C1WhereC1C1one2many, this.c1B);
 
             Assert.Equal(3, extent.Count);
@@ -4390,7 +4390,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, false, false);
             this.AssertC4(extent, false, false, false, false);
 
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddNot().AddEquals(m.C1.C1WhereC1C1one2many, this.c1C);
 
             Assert.Equal(2, extent.Count);
@@ -4399,7 +4399,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, false, false);
             this.AssertC4(extent, false, false, false, false);
 
-            extent = this.Transaction.Extent(m.C2);
+            extent = this.Transaction.Extent(m.C2.Composite);
             extent.Filter.AddNot().AddEquals(m.C2.C1WhereC1C2one2many, this.c1B);
 
             Assert.Equal(3, extent.Count);
@@ -4408,7 +4408,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, false, false);
             this.AssertC4(extent, false, false, false, false);
 
-            extent = this.Transaction.Extent(m.C2);
+            extent = this.Transaction.Extent(m.C2.Composite);
             extent.Filter.AddNot().AddEquals(m.C2.C1WhereC1C2one2many, this.c1C);
 
             Assert.Equal(2, extent.Count);
@@ -4418,7 +4418,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Interface
-            extent = this.Transaction.Extent(m.I2);
+            extent = this.Transaction.Extent(m.I2.Composite);
             extent.Filter.AddNot().AddEquals(m.I2.I1WhereI1I2one2many, this.c1B);
 
             Assert.Equal(3, extent.Count);
@@ -4427,7 +4427,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, false, false);
             this.AssertC4(extent, false, false, false, false);
 
-            extent = this.Transaction.Extent(m.I2);
+            extent = this.Transaction.Extent(m.I2.Composite);
             extent.Filter.AddNot().AddEquals(m.I2.I1WhereI1I2one2many, this.c1C);
 
             Assert.Equal(2, extent.Count);
@@ -4437,7 +4437,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Super Interface
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddNot().AddEquals(m.S1234.S1234WhereS1234one2many, this.c1B);
 
             Assert.Equal(15, extent.Count);
@@ -4446,7 +4446,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, true, true, true, true);
             this.AssertC4(extent, true, true, true, true);
 
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddNot().AddEquals(m.S1234.S1234WhereS1234one2many, this.c3C);
 
             Assert.Equal(14, extent.Count);
@@ -4456,7 +4456,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, true, true, true, true);
 
             // Class - Wrong RelationType
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             var exception = false;
             try
@@ -4471,7 +4471,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Interface - Wrong RelationType
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
 
             exception = false;
             try
@@ -4486,7 +4486,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Super Interface - Wrong RelationType
-            extent = this.Transaction.Extent(m.S12);
+            extent = this.Transaction.Extent(m.S12.Composite);
 
             exception = false;
             try
@@ -4512,7 +4512,7 @@ public abstract class ExtentTest : IDisposable
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
-            var extent = this.Transaction.Extent(m.C2);
+            var extent = this.Transaction.Extent(m.C2.Composite);
             extent.Filter.AddNot().AddExists(m.C2.C1WhereC1C2one2many);
 
             Assert.Single(extent);
@@ -4522,7 +4522,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Interface
-            extent = this.Transaction.Extent(m.I2);
+            extent = this.Transaction.Extent(m.I2.Composite);
             extent.Filter.AddNot().AddExists(m.I2.I1WhereI1I2one2many);
 
             Assert.Single(extent);
@@ -4532,7 +4532,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Super Interface
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddNot().AddExists(m.S1234.S1234WhereS1234one2many);
 
             Assert.Equal(13, extent.Count);
@@ -4542,7 +4542,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, true, true, true, true);
 
             // Class - Wrong RelationType
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             var exception = false;
             try
@@ -4557,7 +4557,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Interface - Wrong RelationType
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
 
             exception = false;
             try
@@ -4572,7 +4572,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Super Interface - Wrong RelationType
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
 
             exception = false;
             try
@@ -4604,15 +4604,15 @@ public abstract class ExtentTest : IDisposable
                 // RelationType from C1 to C1
 
                 // ContainedIn Extent over Class
-                var inExtent = this.Transaction.Extent(m.C1);
+                var inExtent = this.Transaction.Extent(m.C1.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C1);
-                    var inExtentB = this.Transaction.Extent(m.C1);
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                var extent = this.Transaction.Extent(m.C1);
+                var extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C1.C1WhereC1C1one2one, inExtent);
 
                 Assert.Single(extent);
@@ -4622,15 +4622,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // ContainedIn Extent over Interface
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C1.C1WhereC1C1one2one, inExtent);
 
                 Assert.Single(extent);
@@ -4642,15 +4642,15 @@ public abstract class ExtentTest : IDisposable
                 // RelationType from C1 to C2
 
                 // ContainedIn Extent over Class
-                inExtent = this.Transaction.Extent(m.C1);
+                inExtent = this.Transaction.Extent(m.C1.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C1);
-                    var inExtentB = this.Transaction.Extent(m.C1);
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C2.C1WhereC1C2one2one, inExtent);
 
                 Assert.Single(extent);
@@ -4660,15 +4660,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // ContainedIn Extent over Class
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C2.C1WhereC1C2one2one, inExtent);
 
                 Assert.Single(extent);
@@ -4680,15 +4680,15 @@ public abstract class ExtentTest : IDisposable
                 // RelationType from C3 to C4
 
                 // ContainedIn Extent over Class
-                inExtent = this.Transaction.Extent(m.C3);
+                inExtent = this.Transaction.Extent(m.C3.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C3);
-                    var inExtentB = this.Transaction.Extent(m.C3);
+                    var inExtentA = this.Transaction.Extent(m.C3.Composite);
+                    var inExtentB = this.Transaction.Extent(m.C3.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C4);
+                extent = this.Transaction.Extent(m.C4.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C4.C3WhereC3C4one2one, inExtent);
 
                 Assert.Single(extent);
@@ -4698,15 +4698,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, true, false, false, false);
 
                 // ContainedIn Extent over Interface
-                inExtent = this.Transaction.Extent(m.I34);
+                inExtent = this.Transaction.Extent(m.I34.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I34);
-                    var inExtentB = this.Transaction.Extent(m.I34);
+                    var inExtentA = this.Transaction.Extent(m.I34.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I34.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C4);
+                extent = this.Transaction.Extent(m.C4.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C4.C3WhereC3C4one2one, inExtent);
 
                 Assert.Single(extent);
@@ -4718,15 +4718,15 @@ public abstract class ExtentTest : IDisposable
                 // RelationType from I12 to C2
 
                 // ContainedIn Extent over Class
-                inExtent = this.Transaction.Extent(m.C1);
+                inExtent = this.Transaction.Extent(m.C1.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C1);
-                    var inExtentB = this.Transaction.Extent(m.C1);
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C2.I12WhereI12C2one2one, inExtent);
 
                 Assert.Single(extent);
@@ -4736,15 +4736,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // ContainedIn Extent over Interface
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C2);
+                extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C2.I12WhereI12C2one2one, inExtent);
 
                 Assert.Empty(extent);
@@ -4758,15 +4758,15 @@ public abstract class ExtentTest : IDisposable
                 // RelationType from C1 to I12
 
                 // ContainedIn Extent over Class
-                inExtent = this.Transaction.Extent(m.C1);
+                inExtent = this.Transaction.Extent(m.C1.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C1);
-                    var inExtentB = this.Transaction.Extent(m.C1);
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.I12);
+                extent = this.Transaction.Extent(m.I12.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.I12.C1WhereC1I12one2one, inExtent);
 
                 Assert.Equal(5, extent.Count);
@@ -4776,15 +4776,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // ContainedIn Extent over Interface
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.I12);
+                extent = this.Transaction.Extent(m.I12.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.I12.C1WhereC1I12one2one, inExtent);
 
                 Assert.Equal(5, extent.Count);
@@ -4806,7 +4806,7 @@ public abstract class ExtentTest : IDisposable
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddNot().AddEquals(m.C1.C1WhereC1C1one2one, this.c1B);
 
             Assert.Equal(3, extent.Count);
@@ -4815,7 +4815,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, false, false);
             this.AssertC4(extent, false, false, false, false);
 
-            extent = this.Transaction.Extent(m.C2);
+            extent = this.Transaction.Extent(m.C2.Composite);
             extent.Filter.AddNot().AddEquals(m.C2.C1WhereC1C2one2one, this.c1B);
 
             Assert.Equal(3, extent.Count);
@@ -4824,7 +4824,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, false, false);
             this.AssertC4(extent, false, false, false, false);
 
-            extent = this.Transaction.Extent(m.C4);
+            extent = this.Transaction.Extent(m.C4.Composite);
             extent.Filter.AddNot().AddEquals(m.C4.C3WhereC3C4one2one, this.c3B);
 
             Assert.Equal(3, extent.Count);
@@ -4834,7 +4834,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, true, false, true, true);
 
             // Interface
-            extent = this.Transaction.Extent(m.I2);
+            extent = this.Transaction.Extent(m.I2.Composite);
             extent.Filter.AddNot().AddEquals(m.I2.I1WhereI1I2one2one, this.c1B);
 
             Assert.Equal(3, extent.Count);
@@ -4844,7 +4844,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Super Interface
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddNot().AddEquals(m.S1234.S1234WhereS1234one2one, this.c1C);
 
             Assert.Equal(15, extent.Count);
@@ -4854,7 +4854,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, true, true, true, true);
 
             // Class - Wrong RelationType
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             var exception = false;
             try
@@ -4869,7 +4869,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Interface - Wrong RelationType
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
 
             exception = false;
             try
@@ -4884,7 +4884,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Super Interface - Wrong RelationType
-            extent = this.Transaction.Extent(m.S12);
+            extent = this.Transaction.Extent(m.S12.Composite);
 
             exception = false;
             try
@@ -4910,7 +4910,7 @@ public abstract class ExtentTest : IDisposable
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddNot().AddExists(m.C1.C1WhereC1C1one2one);
 
             Assert.Single(extent);
@@ -4919,7 +4919,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, false, false);
             this.AssertC4(extent, false, false, false, false);
 
-            extent = this.Transaction.Extent(m.C2);
+            extent = this.Transaction.Extent(m.C2.Composite);
             extent.Filter.AddNot().AddExists(m.C2.C1WhereC1C2one2one);
 
             Assert.Single(extent);
@@ -4928,7 +4928,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, false, false);
             this.AssertC4(extent, false, false, false, false);
 
-            extent = this.Transaction.Extent(m.C2);
+            extent = this.Transaction.Extent(m.C2.Composite);
             extent.Filter.AddNot().AddExists(m.C2.C1WhereC1C2one2one);
 
             Assert.Single(extent);
@@ -4937,7 +4937,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, false, false);
             this.AssertC4(extent, false, false, false, false);
 
-            extent = this.Transaction.Extent(m.C4);
+            extent = this.Transaction.Extent(m.C4.Composite);
             extent.Filter.AddNot().AddExists(m.C4.C3WhereC3C4one2one);
 
             Assert.Single(extent);
@@ -4947,7 +4947,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, true, false, false, false);
 
             // Interface
-            extent = this.Transaction.Extent(m.I2);
+            extent = this.Transaction.Extent(m.I2.Composite);
             extent.Filter.AddNot().AddExists(m.I2.I1WhereI1I2one2one);
 
             Assert.Single(extent);
@@ -4957,7 +4957,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Super Interface
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddNot().AddExists(m.S1234.S1234WhereS1234one2one);
 
             Assert.Equal(7, extent.Count);
@@ -4967,7 +4967,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, true, true, true, true);
 
             // Class - Wrong RelationType
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             var exception = false;
             try
@@ -4982,7 +4982,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Interface - Wrong RelationType
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
 
             exception = false;
             try
@@ -4997,7 +4997,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Super Interface - Wrong RelationType
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
 
             exception = false;
             try
@@ -5025,8 +5025,8 @@ public abstract class ExtentTest : IDisposable
             // Class
 
             // Class
-            var extent = this.Transaction.Extent(m.C1);
-            extent.Filter.AddNot().AddInstanceof(m.C1.C1WhereC1C1one2one, m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
+            extent.Filter.AddNot().AddInstanceof(m.C1.C1WhereC1C1one2one, m.C1.Composite);
 
             Assert.Single(extent);
             this.AssertC1(extent, true, false, false, false);
@@ -5034,8 +5034,8 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, false, false);
             this.AssertC4(extent, false, false, false, false);
 
-            extent = this.Transaction.Extent(m.C2);
-            extent.Filter.AddNot().AddInstanceof(m.C2.C1WhereC1C2one2one, m.C1);
+            extent = this.Transaction.Extent(m.C2.Composite);
+            extent.Filter.AddNot().AddInstanceof(m.C2.C1WhereC1C2one2one, m.C1.Composite);
 
             Assert.Single(extent);
             this.AssertC1(extent, false, false, false, false);
@@ -5043,8 +5043,8 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, false, false);
             this.AssertC4(extent, false, false, false, false);
 
-            extent = this.Transaction.Extent(m.C4);
-            extent.Filter.AddNot().AddInstanceof(m.C4.C3WhereC3C4one2one, m.C3);
+            extent = this.Transaction.Extent(m.C4.Composite);
+            extent.Filter.AddNot().AddInstanceof(m.C4.C3WhereC3C4one2one, m.C3.Composite);
 
             Assert.Single(extent);
             this.AssertC1(extent, false, false, false, false);
@@ -5053,8 +5053,8 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, true, false, false, false);
 
             // Interface
-            extent = this.Transaction.Extent(m.I12);
-            extent.Filter.AddNot().AddInstanceof(m.I12.C1WhereC1I12one2one, m.C1);
+            extent = this.Transaction.Extent(m.I12.Composite);
+            extent.Filter.AddNot().AddInstanceof(m.I12.C1WhereC1I12one2one, m.C1.Composite);
 
             Assert.Equal(5, extent.Count);
             this.AssertC1(extent, true, false, true, true);
@@ -5063,8 +5063,8 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Super Interface
-            extent = this.Transaction.Extent(m.S1234);
-            extent.Filter.AddNot().AddInstanceof(m.S1234.S1234WhereS1234one2one, m.C1);
+            extent = this.Transaction.Extent(m.S1234.Composite);
+            extent.Filter.AddNot().AddInstanceof(m.S1234.S1234WhereS1234one2one, m.C1.Composite);
 
             Assert.Equal(13, extent.Count);
             this.AssertC1(extent, true, false, true, true);
@@ -5075,8 +5075,8 @@ public abstract class ExtentTest : IDisposable
             // Interface
 
             // Class
-            extent = this.Transaction.Extent(m.C1);
-            extent.Filter.AddNot().AddInstanceof(m.C1.C1WhereC1C1one2one, m.I1);
+            extent = this.Transaction.Extent(m.C1.Composite);
+            extent.Filter.AddNot().AddInstanceof(m.C1.C1WhereC1C1one2one, m.I1.Composite);
 
             Assert.Single(extent);
             this.AssertC1(extent, true, false, false, false);
@@ -5084,8 +5084,8 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, false, false);
             this.AssertC4(extent, false, false, false, false);
 
-            extent = this.Transaction.Extent(m.C2);
-            extent.Filter.AddNot().AddInstanceof(m.C2.C1WhereC1C2one2one, m.I1);
+            extent = this.Transaction.Extent(m.C2.Composite);
+            extent.Filter.AddNot().AddInstanceof(m.C2.C1WhereC1C2one2one, m.I1.Composite);
 
             Assert.Single(extent);
             this.AssertC1(extent, false, false, false, false);
@@ -5093,8 +5093,8 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, false, false);
             this.AssertC4(extent, false, false, false, false);
 
-            extent = this.Transaction.Extent(m.C4);
-            extent.Filter.AddNot().AddInstanceof(m.C4.C3WhereC3C4one2one, m.I3);
+            extent = this.Transaction.Extent(m.C4.Composite);
+            extent.Filter.AddNot().AddInstanceof(m.C4.C3WhereC3C4one2one, m.I3.Composite);
 
             Assert.Single(extent);
             this.AssertC1(extent, false, false, false, false);
@@ -5103,8 +5103,8 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, true, false, false, false);
 
             // Interface
-            extent = this.Transaction.Extent(m.I12);
-            extent.Filter.AddNot().AddInstanceof(m.I12.C1WhereC1I12one2one, m.I1);
+            extent = this.Transaction.Extent(m.I12.Composite);
+            extent.Filter.AddNot().AddInstanceof(m.I12.C1WhereC1I12one2one, m.I1.Composite);
 
             Assert.Equal(5, extent.Count);
             this.AssertC1(extent, true, false, true, true);
@@ -5113,8 +5113,8 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Super Interface
-            extent = this.Transaction.Extent(m.S1234);
-            extent.Filter.AddNot().AddInstanceof(m.S1234.S1234WhereS1234one2one, m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
+            extent.Filter.AddNot().AddInstanceof(m.S1234.S1234WhereS1234one2one, m.S1234.Composite);
 
             Assert.Equal(7, extent.Count);
             this.AssertC1(extent, true, false, false, false);
@@ -5136,7 +5136,7 @@ public abstract class ExtentTest : IDisposable
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             var none = extent.Filter.AddNot().AddOr();
             none.AddGreaterThan(m.C1.C1AllorsInteger, 1);
             none.AddLessThan(m.C1.C1AllorsInteger, 1);
@@ -5148,7 +5148,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Interface
-            (extent = this.Transaction.Extent(m.I12)).Filter.AddNot()
+            (extent = this.Transaction.Extent(m.I12.Composite)).Filter.AddNot()
                 .AddOr()
                 .AddGreaterThan(m.I12.I12AllorsInteger, 1)
                 .AddLessThan(m.I12.I12AllorsInteger, 1);
@@ -5160,7 +5160,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Super Interface
-            (extent = this.Transaction.Extent(m.S1234)).Filter.AddNot()
+            (extent = this.Transaction.Extent(m.S1234.Composite)).Filter.AddNot()
                 .AddOr()
                 .AddGreaterThan(m.S1234.S1234AllorsInteger, 1)
                 .AddLessThan(m.S1234.S1234AllorsInteger, 1);
@@ -5172,7 +5172,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, true, false, false);
 
             // Class
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddNot().AddOr();
 
             Assert.Equal(4, extent.Count);
@@ -5195,7 +5195,7 @@ public abstract class ExtentTest : IDisposable
             // Class
 
             // Between -10 and 0
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddNot().AddBetween(m.C1.C1AllorsInteger, -10, 0);
 
             Assert.Equal(3, extent.Count);
@@ -5205,7 +5205,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Between 0 and 1
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddNot().AddBetween(m.C1.C1AllorsInteger, 0, 1);
 
             Assert.Equal(2, extent.Count);
@@ -5215,7 +5215,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Between 1 and 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddNot().AddBetween(m.C1.C1AllorsInteger, 1, 2);
 
             Assert.Empty(extent);
@@ -5225,7 +5225,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Between 3 and 10
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddNot().AddBetween(m.C1.C1AllorsInteger, 3, 10);
 
             Assert.Equal(3, extent.Count);
@@ -5237,7 +5237,7 @@ public abstract class ExtentTest : IDisposable
             // Interface
 
             // Between -10 and 0
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddNot().AddBetween(m.I12.I12AllorsInteger, -10, 0);
 
             Assert.Equal(6, extent.Count);
@@ -5247,7 +5247,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Between 0 and 1
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddNot().AddBetween(m.I12.I12AllorsInteger, 0, 1);
 
             Assert.Equal(4, extent.Count);
@@ -5257,7 +5257,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Between 1 and 2
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddNot().AddBetween(m.I12.I12AllorsInteger, 1, 2);
 
             Assert.Empty(extent);
@@ -5267,7 +5267,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Between 3 and 10
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddNot().AddBetween(m.I12.I12AllorsInteger, 3, 10);
 
             Assert.Equal(6, extent.Count);
@@ -5279,7 +5279,7 @@ public abstract class ExtentTest : IDisposable
             // Super Interface
 
             // Between -10 and 0
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddNot().AddBetween(m.S1234.S1234AllorsInteger, -10, 0);
 
             Assert.Equal(12, extent.Count);
@@ -5289,7 +5289,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, true, true, true);
 
             // Between 0 and 1
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddNot().AddBetween(m.S1234.S1234AllorsInteger, 0, 1);
 
             Assert.Equal(8, extent.Count);
@@ -5299,7 +5299,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, true, true);
 
             // Between 1 and 2
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddNot().AddBetween(m.S1234.S1234AllorsInteger, 1, 2);
 
             Assert.Empty(extent);
@@ -5309,7 +5309,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Between 3 and 10
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddNot().AddBetween(m.S1234.S1234AllorsInteger, 3, 10);
 
             Assert.Equal(12, extent.Count);
@@ -5321,7 +5321,7 @@ public abstract class ExtentTest : IDisposable
             // Class - Wrong RelationType
 
             // Between -10 and 0
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             var exception = false;
             try
@@ -5336,7 +5336,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Between 0 and 1
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -5351,7 +5351,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Between 1 and 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -5366,7 +5366,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Between 3 and 10
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -5394,7 +5394,7 @@ public abstract class ExtentTest : IDisposable
             // Class
 
             // Less Than 1
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddNot().AddLessThan(m.C1.C1AllorsInteger, 1);
 
             Assert.Equal(3, extent.Count);
@@ -5404,7 +5404,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Less Than 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddNot().AddLessThan(m.C1.C1AllorsInteger, 2);
 
             Assert.Equal(2, extent.Count);
@@ -5414,7 +5414,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Less Than 3
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddNot().AddLessThan(m.C1.C1AllorsInteger, 3);
 
             Assert.Empty(extent);
@@ -5426,7 +5426,7 @@ public abstract class ExtentTest : IDisposable
             // Interface
 
             // Less Than 1
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddNot().AddLessThan(m.I12.I12AllorsInteger, 1);
 
             Assert.Equal(6, extent.Count);
@@ -5436,7 +5436,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Less Than 2
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddNot().AddLessThan(m.I12.I12AllorsInteger, 2);
 
             Assert.Equal(4, extent.Count);
@@ -5446,7 +5446,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Less Than 3
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddNot().AddLessThan(m.I12.I12AllorsInteger, 3);
 
             Assert.Empty(extent);
@@ -5458,7 +5458,7 @@ public abstract class ExtentTest : IDisposable
             // Super Interface
 
             // Less Than 1
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddNot().AddLessThan(m.S1234.S1234AllorsInteger, 1);
 
             Assert.Equal(12, extent.Count);
@@ -5468,7 +5468,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, true, true, true);
 
             // Less Than 2
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddNot().AddLessThan(m.S1234.S1234AllorsInteger, 2);
 
             Assert.Equal(8, extent.Count);
@@ -5478,7 +5478,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, true, true);
 
             // Less Than 3
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddNot().AddLessThan(m.S1234.S1234AllorsInteger, 3);
 
             Assert.Empty(extent);
@@ -5490,7 +5490,7 @@ public abstract class ExtentTest : IDisposable
             // Class - Wrong RelationType
 
             // Less Than 1
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             var exception = false;
             try
@@ -5505,7 +5505,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Less Than 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -5520,7 +5520,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Less Than 3
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -5537,7 +5537,7 @@ public abstract class ExtentTest : IDisposable
             // Interface - Wrong RelationType
 
             // Less Than 1
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -5552,7 +5552,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Less Than 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -5567,7 +5567,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Less Than 3
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -5584,7 +5584,7 @@ public abstract class ExtentTest : IDisposable
             // Super Interface - Wrong RelationType
 
             // Less Than 1
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -5599,7 +5599,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Less Than 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -5614,7 +5614,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Less Than 3
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -5642,7 +5642,7 @@ public abstract class ExtentTest : IDisposable
             // Class
 
             // Greater Than 0
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddNot().AddGreaterThan(m.C1.C1AllorsInteger, 0);
 
             Assert.Empty(extent);
@@ -5652,7 +5652,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Greater Than 1
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddNot().AddGreaterThan(m.C1.C1AllorsInteger, 1);
 
             Assert.Single(extent);
@@ -5662,7 +5662,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Greater Than 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddNot().AddGreaterThan(m.C1.C1AllorsInteger, 2);
 
             Assert.Equal(3, extent.Count);
@@ -5674,7 +5674,7 @@ public abstract class ExtentTest : IDisposable
             // Interface
 
             // Greater Than 0
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddNot().AddGreaterThan(m.I12.I12AllorsInteger, 0);
 
             Assert.Empty(extent);
@@ -5684,7 +5684,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Greater Than 1
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddNot().AddGreaterThan(m.I12.I12AllorsInteger, 1);
 
             Assert.Equal(2, extent.Count);
@@ -5694,7 +5694,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Greater Than 2
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddNot().AddGreaterThan(m.I12.I12AllorsInteger, 2);
 
             Assert.Equal(6, extent.Count);
@@ -5706,7 +5706,7 @@ public abstract class ExtentTest : IDisposable
             // Super Interface
 
             // Greater Than 0
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddNot().AddGreaterThan(m.S1234.S1234AllorsInteger, 0);
 
             Assert.Empty(extent);
@@ -5716,7 +5716,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Greater Than 1
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddNot().AddGreaterThan(m.S1234.S1234AllorsInteger, 1);
 
             Assert.Equal(4, extent.Count);
@@ -5726,7 +5726,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, true, false, false);
 
             // Greater Than 2
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddNot().AddGreaterThan(m.S1234.S1234AllorsInteger, 2);
 
             Assert.Equal(12, extent.Count);
@@ -5738,7 +5738,7 @@ public abstract class ExtentTest : IDisposable
             // Class - Wrong RelationType
 
             // Greater Than 0
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             var exception = false;
             try
@@ -5753,7 +5753,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Greater Than 1
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -5768,7 +5768,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Greater Than 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -5785,7 +5785,7 @@ public abstract class ExtentTest : IDisposable
             // Interface - Wrong RelationType
 
             // Greater Than 0
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -5800,7 +5800,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Greater Than 1
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -5815,7 +5815,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Greater Than 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -5832,7 +5832,7 @@ public abstract class ExtentTest : IDisposable
             // Super Interface - Wrong RelationType
 
             // Greater Than 0
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -5847,7 +5847,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Greater Than 1
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -5862,7 +5862,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Greater Than 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -5888,7 +5888,7 @@ public abstract class ExtentTest : IDisposable
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddNot().AddExists(m.C1.C1AllorsInteger);
 
             Assert.Single(extent);
@@ -5898,7 +5898,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Interface
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddNot().AddExists(m.I12.I12AllorsInteger);
 
             Assert.Equal(2, extent.Count);
@@ -5908,7 +5908,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Super Interface
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddNot().AddExists(m.S1234.S1234AllorsInteger);
 
             Assert.Equal(4, extent.Count);
@@ -5918,7 +5918,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, true, false, false, false);
 
             // Class - Wrong RelationType
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             var exception = false;
             try
@@ -5933,7 +5933,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Interface - Wrong RelationType
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -5948,7 +5948,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Super Interface - Wrong RelationType
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -5980,18 +5980,18 @@ public abstract class ExtentTest : IDisposable
                 // RelationType from C1 to C2
                 // ContainedIn Extent over Class
                 // Empty
-                var inExtent = this.Transaction.Extent(m.C2);
+                var inExtent = this.Transaction.Extent(m.C2.Composite);
                 inExtent.Filter.AddEquals(m.C2.C2AllorsString, "Nothing here!");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C2);
+                    var inExtentA = this.Transaction.Extent(m.C2.Composite);
                     inExtentA.Filter.AddEquals(m.C2.C2AllorsString, "Nothing here!");
-                    var inExtentB = this.Transaction.Extent(m.C2);
+                    var inExtentB = this.Transaction.Extent(m.C2.Composite);
                     inExtentB.Filter.AddEquals(m.C2.C2AllorsString, "Nothing here!");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                var extent = this.Transaction.Extent(m.C1);
+                var extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C1.C1C2many2manies, inExtent);
 
                 Assert.Equal(4, extent.Count);
@@ -6001,15 +6001,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Full
-                inExtent = this.Transaction.Extent(m.C2);
+                inExtent = this.Transaction.Extent(m.C2.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C2);
-                    var inExtentB = this.Transaction.Extent(m.C2);
+                    var inExtentA = this.Transaction.Extent(m.C2.Composite);
+                    var inExtentB = this.Transaction.Extent(m.C2.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C1.C1C2many2manies, inExtent);
 
                 Assert.Single(extent);
@@ -6019,18 +6019,18 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.C2);
+                inExtent = this.Transaction.Extent(m.C2.Composite);
                 inExtent.Filter.AddEquals(m.C2.C2AllorsString, "ᴀbra");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C2);
+                    var inExtentA = this.Transaction.Extent(m.C2.Composite);
                     inExtentA.Filter.AddEquals(m.C2.C2AllorsString, "ᴀbra");
-                    var inExtentB = this.Transaction.Extent(m.C2);
+                    var inExtentB = this.Transaction.Extent(m.C2.Composite);
                     inExtentB.Filter.AddEquals(m.C2.C2AllorsString, "ᴀbra");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C1.C1C2many2manies, inExtent);
 
                 Assert.Single(extent);
@@ -6041,18 +6041,18 @@ public abstract class ExtentTest : IDisposable
 
                 // ContainedIn Extent over Class
                 // Empty
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 inExtent.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
                     inExtentA.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtentB.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C1.C1C2many2manies, inExtent);
 
                 Assert.Equal(4, extent.Count);
@@ -6062,15 +6062,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Full
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C1.C1C2many2manies, inExtent);
 
                 Assert.Single(extent);
@@ -6080,18 +6080,18 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 inExtent.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
                     inExtentA.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtentB.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C1.C1C2many2manies, inExtent);
 
                 Assert.Single(extent);
@@ -6104,18 +6104,18 @@ public abstract class ExtentTest : IDisposable
 
                 // ContainedIn Extent over Class
                 // Empty
-                inExtent = this.Transaction.Extent(m.C1);
+                inExtent = this.Transaction.Extent(m.C1.Composite);
                 inExtent.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C1);
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
                     inExtentA.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
-                    var inExtentB = this.Transaction.Extent(m.C1);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
                     inExtentB.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C1.C1C1many2manies, inExtent);
 
                 Assert.Equal(4, extent.Count);
@@ -6125,15 +6125,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Full
-                inExtent = this.Transaction.Extent(m.C1);
+                inExtent = this.Transaction.Extent(m.C1.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C1);
-                    var inExtentB = this.Transaction.Extent(m.C1);
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C1.C1C1many2manies, inExtent);
 
                 Assert.Single(extent);
@@ -6143,18 +6143,18 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.C1);
+                inExtent = this.Transaction.Extent(m.C1.Composite);
                 inExtent.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbra");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C1);
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
                     inExtentA.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbra");
-                    var inExtentB = this.Transaction.Extent(m.C1);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
                     inExtentB.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbra");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C1.C1C1many2manies, inExtent);
 
                 Assert.Single(extent);
@@ -6165,18 +6165,18 @@ public abstract class ExtentTest : IDisposable
 
                 // ContainedIn Extent over Class
                 // Empty
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 inExtent.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
                     inExtentA.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtentB.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C1.C1C1many2manies, inExtent);
 
                 Assert.Equal(4, extent.Count);
@@ -6186,15 +6186,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Full
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C1.C1C1many2manies, inExtent);
 
                 Assert.Single(extent);
@@ -6204,18 +6204,18 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 inExtent.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
                     inExtentA.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtentB.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C1.C1C1many2manies, inExtent);
 
                 Assert.Single(extent);
@@ -6228,18 +6228,18 @@ public abstract class ExtentTest : IDisposable
 
                 // ContainedIn Extent over Class
                 // Empty
-                inExtent = this.Transaction.Extent(m.C1);
+                inExtent = this.Transaction.Extent(m.C1.Composite);
                 inExtent.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C1);
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
                     inExtentA.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
-                    var inExtentB = this.Transaction.Extent(m.C1);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
                     inExtentB.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C1.C1I12many2manies, inExtent);
 
                 Assert.Equal(4, extent.Count);
@@ -6249,15 +6249,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Full
-                inExtent = this.Transaction.Extent(m.C1);
+                inExtent = this.Transaction.Extent(m.C1.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C1);
-                    var inExtentB = this.Transaction.Extent(m.C1);
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C1.C1I12many2manies, inExtent);
 
                 Assert.Equal(3, extent.Count);
@@ -6267,18 +6267,18 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.C1);
+                inExtent = this.Transaction.Extent(m.C1.Composite);
                 inExtent.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbra");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C1);
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
                     inExtentA.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbra");
-                    var inExtentB = this.Transaction.Extent(m.C1);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
                     inExtentB.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbra");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C1.C1I12many2manies, inExtent);
 
                 Assert.Equal(3, extent.Count);
@@ -6289,18 +6289,18 @@ public abstract class ExtentTest : IDisposable
 
                 // ContainedIn Extent over Class
                 // Empty
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 inExtent.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
                     inExtentA.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtentB.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C1.C1I12many2manies, inExtent);
 
                 Assert.Equal(4, extent.Count);
@@ -6310,15 +6310,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Full
-                inExtent = this.Transaction.Extent(m.C1);
+                inExtent = this.Transaction.Extent(m.C1.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C1);
-                    var inExtentB = this.Transaction.Extent(m.C1);
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C1.C1I12many2manies, inExtent);
 
                 Assert.Equal(3, extent.Count);
@@ -6328,18 +6328,18 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 inExtent.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
                     inExtentA.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtentB.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C1.C1I12many2manies, inExtent);
 
                 Assert.Single(extent);
@@ -6350,18 +6350,18 @@ public abstract class ExtentTest : IDisposable
 
                 // ContainedIn Extent I12<->I34
                 // Empty
-                inExtent = this.Transaction.Extent(m.I34);
+                inExtent = this.Transaction.Extent(m.I34.Composite);
                 inExtent.Filter.AddEquals(m.I34.I34AllorsString, "Nothing here!");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I34);
+                    var inExtentA = this.Transaction.Extent(m.I34.Composite);
                     inExtentA.Filter.AddEquals(m.I34.I34AllorsString, "Nothing here!");
-                    var inExtentB = this.Transaction.Extent(m.I34);
+                    var inExtentB = this.Transaction.Extent(m.I34.Composite);
                     inExtentB.Filter.AddEquals(m.I34.I34AllorsString, "Nothing here!");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.I12);
+                extent = this.Transaction.Extent(m.I12.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.I12.I12I34many2manies, inExtent);
 
                 Assert.Equal(8, extent.Count);
@@ -6371,15 +6371,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Full
-                inExtent = this.Transaction.Extent(m.I34);
+                inExtent = this.Transaction.Extent(m.I34.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I34);
-                    var inExtentB = this.Transaction.Extent(m.I34);
+                    var inExtentA = this.Transaction.Extent(m.I34.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I34.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.I12);
+                extent = this.Transaction.Extent(m.I12.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.I12.I12I34many2manies, inExtent);
 
                 Assert.Equal(4, extent.Count);
@@ -6389,18 +6389,18 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.I34);
+                inExtent = this.Transaction.Extent(m.I34.Composite);
                 inExtent.Filter.AddEquals(m.I34.I34AllorsString, "ᴀbra");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I34);
+                    var inExtentA = this.Transaction.Extent(m.I34.Composite);
                     inExtentA.Filter.AddEquals(m.I34.I34AllorsString, "ᴀbra");
-                    var inExtentB = this.Transaction.Extent(m.I34);
+                    var inExtentB = this.Transaction.Extent(m.I34.Composite);
                     inExtentB.Filter.AddEquals(m.I34.I34AllorsString, "ᴀbra");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.I12);
+                extent = this.Transaction.Extent(m.I12.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.I12.I12I34many2manies, inExtent);
 
                 Assert.Equal(4, extent.Count);
@@ -6428,10 +6428,10 @@ public abstract class ExtentTest : IDisposable
             // RelationType from C1 to C2
             // ContainedIn Extent over Class
             // Empty
-            var inExtent = this.Transaction.Extent(m.C2);
+            var inExtent = this.Transaction.Extent(m.C2.Composite);
             inExtent.Filter.AddEquals(m.C2.C2AllorsString, "Nothing here!");
 
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddNot().AddContainedIn(m.C1.C1C2many2manies, (IEnumerable<IObject>)inExtent.ToArray());
 
             Assert.Equal(4, extent.Count);
@@ -6441,9 +6441,9 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Full
-            inExtent = this.Transaction.Extent(m.C2);
+            inExtent = this.Transaction.Extent(m.C2.Composite);
 
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddNot().AddContainedIn(m.C1.C1C2many2manies, (IEnumerable<IObject>)inExtent.ToArray());
 
             Assert.Single(extent);
@@ -6453,10 +6453,10 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Filtered
-            inExtent = this.Transaction.Extent(m.C2);
+            inExtent = this.Transaction.Extent(m.C2.Composite);
             inExtent.Filter.AddEquals(m.C2.C2AllorsString, "ᴀbra");
 
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddNot().AddContainedIn(m.C1.C1C2many2manies, (IEnumerable<IObject>)inExtent.ToArray());
 
             Assert.Single(extent);
@@ -6467,10 +6467,10 @@ public abstract class ExtentTest : IDisposable
 
             // ContainedIn Extent over Class
             // Empty
-            inExtent = this.Transaction.Extent(m.I12);
+            inExtent = this.Transaction.Extent(m.I12.Composite);
             inExtent.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
 
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddNot().AddContainedIn(m.C1.C1C2many2manies, (IEnumerable<IObject>)inExtent.ToArray());
 
             Assert.Equal(4, extent.Count);
@@ -6480,9 +6480,9 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Full
-            inExtent = this.Transaction.Extent(m.I12);
+            inExtent = this.Transaction.Extent(m.I12.Composite);
 
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddNot().AddContainedIn(m.C1.C1C2many2manies, (IEnumerable<IObject>)inExtent.ToArray());
 
             Assert.Single(extent);
@@ -6492,10 +6492,10 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Filtered
-            inExtent = this.Transaction.Extent(m.I12);
+            inExtent = this.Transaction.Extent(m.I12.Composite);
             inExtent.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
 
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddNot().AddContainedIn(m.C1.C1C2many2manies, (IEnumerable<IObject>)inExtent.ToArray());
 
             Assert.Single(extent);
@@ -6508,10 +6508,10 @@ public abstract class ExtentTest : IDisposable
 
             // ContainedIn Extent over Class
             // Empty
-            inExtent = this.Transaction.Extent(m.C1);
+            inExtent = this.Transaction.Extent(m.C1.Composite);
             inExtent.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
 
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddNot().AddContainedIn(m.C1.C1C1many2manies, (IEnumerable<IObject>)inExtent.ToArray());
 
             Assert.Equal(4, extent.Count);
@@ -6521,9 +6521,9 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Full
-            inExtent = this.Transaction.Extent(m.C1);
+            inExtent = this.Transaction.Extent(m.C1.Composite);
 
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddNot().AddContainedIn(m.C1.C1C1many2manies, (IEnumerable<IObject>)inExtent.ToArray());
 
             Assert.Single(extent);
@@ -6533,10 +6533,10 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Filtered
-            inExtent = this.Transaction.Extent(m.C1);
+            inExtent = this.Transaction.Extent(m.C1.Composite);
             inExtent.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbra");
 
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddNot().AddContainedIn(m.C1.C1C1many2manies, (IEnumerable<IObject>)inExtent.ToArray());
 
             Assert.Single(extent);
@@ -6547,10 +6547,10 @@ public abstract class ExtentTest : IDisposable
 
             // ContainedIn Extent over Class
             // Empty
-            inExtent = this.Transaction.Extent(m.I12);
+            inExtent = this.Transaction.Extent(m.I12.Composite);
             inExtent.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
 
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddNot().AddContainedIn(m.C1.C1C1many2manies, (IEnumerable<IObject>)inExtent.ToArray());
 
             Assert.Equal(4, extent.Count);
@@ -6560,9 +6560,9 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Full
-            inExtent = this.Transaction.Extent(m.I12);
+            inExtent = this.Transaction.Extent(m.I12.Composite);
 
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddNot().AddContainedIn(m.C1.C1C1many2manies, (IEnumerable<IObject>)inExtent.ToArray());
 
             Assert.Single(extent);
@@ -6572,10 +6572,10 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Filtered
-            inExtent = this.Transaction.Extent(m.I12);
+            inExtent = this.Transaction.Extent(m.I12.Composite);
             inExtent.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
 
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddNot().AddContainedIn(m.C1.C1C1many2manies, (IEnumerable<IObject>)inExtent.ToArray());
 
             Assert.Single(extent);
@@ -6588,10 +6588,10 @@ public abstract class ExtentTest : IDisposable
 
             // ContainedIn Extent over Class
             // Empty
-            inExtent = this.Transaction.Extent(m.C1);
+            inExtent = this.Transaction.Extent(m.C1.Composite);
             inExtent.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
 
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddNot().AddContainedIn(m.C1.C1I12many2manies, (IEnumerable<IObject>)inExtent.ToArray());
 
             Assert.Equal(4, extent.Count);
@@ -6601,9 +6601,9 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Full
-            inExtent = this.Transaction.Extent(m.C1);
+            inExtent = this.Transaction.Extent(m.C1.Composite);
 
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddNot().AddContainedIn(m.C1.C1I12many2manies, (IEnumerable<IObject>)inExtent.ToArray());
 
             this.Transaction.Commit();
@@ -6615,10 +6615,10 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Filtered
-            inExtent = this.Transaction.Extent(m.C1);
+            inExtent = this.Transaction.Extent(m.C1.Composite);
             inExtent.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbra");
 
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddNot().AddContainedIn(m.C1.C1I12many2manies, (IEnumerable<IObject>)inExtent.ToArray());
 
             Assert.Equal(3, extent.Count);
@@ -6629,10 +6629,10 @@ public abstract class ExtentTest : IDisposable
 
             // ContainedIn Extent over Class
             // Empty
-            inExtent = this.Transaction.Extent(m.I12);
+            inExtent = this.Transaction.Extent(m.I12.Composite);
             inExtent.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
 
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddNot().AddContainedIn(m.C1.C1I12many2manies, (IEnumerable<IObject>)inExtent.ToArray());
 
             Assert.Equal(4, extent.Count);
@@ -6642,9 +6642,9 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Full
-            inExtent = this.Transaction.Extent(m.C1);
+            inExtent = this.Transaction.Extent(m.C1.Composite);
 
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddNot().AddContainedIn(m.C1.C1I12many2manies, (IEnumerable<IObject>)inExtent.ToArray());
 
             Assert.Equal(3, extent.Count);
@@ -6654,10 +6654,10 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Filtered
-            inExtent = this.Transaction.Extent(m.I12);
+            inExtent = this.Transaction.Extent(m.I12.Composite);
             inExtent.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
 
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddNot().AddContainedIn(m.C1.C1I12many2manies, (IEnumerable<IObject>)inExtent.ToArray());
 
             Assert.Single(extent);
@@ -6678,7 +6678,7 @@ public abstract class ExtentTest : IDisposable
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddNot().AddExists(m.C1.C1C2many2manies);
 
             Assert.Single(extent);
@@ -6688,7 +6688,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Interface
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddNot().AddExists(m.I12.I12C2many2manies);
 
             Assert.Equal(4, extent.Count);
@@ -6698,7 +6698,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Super Interface
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddNot().AddExists(m.S1234.S1234C2many2manies);
 
             Assert.Equal(12, extent.Count);
@@ -6708,7 +6708,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, true, true, true, true);
 
             // Class - Wrong RelationType
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             var exception = false;
             try
@@ -6723,7 +6723,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Interface - Wrong RelationType
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
 
             exception = false;
             try
@@ -6738,7 +6738,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Super Interface - Wrong RelationType
-            extent = this.Transaction.Extent(m.S12);
+            extent = this.Transaction.Extent(m.S12.Composite);
 
             exception = false;
             try
@@ -6770,18 +6770,18 @@ public abstract class ExtentTest : IDisposable
 
                 // ContainedIn Extent over Class
                 // Emtpy Extent
-                var inExtent = this.Transaction.Extent(m.C1);
+                var inExtent = this.Transaction.Extent(m.C1.Composite);
                 inExtent.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C1);
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
                     inExtentA.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
-                    var inExtentB = this.Transaction.Extent(m.C1);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
                     inExtentB.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                var extent = this.Transaction.Extent(m.C1);
+                var extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C1.C1C1one2manies, inExtent);
 
                 Assert.Equal(4, extent.Count);
@@ -6791,15 +6791,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Full Extent
-                inExtent = this.Transaction.Extent(m.C1);
+                inExtent = this.Transaction.Extent(m.C1.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C1);
-                    var inExtentB = this.Transaction.Extent(m.C1);
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C1.C1C1one2manies, inExtent);
 
                 Assert.Equal(2, extent.Count);
@@ -6808,15 +6808,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC3(extent, false, false, false, false);
                 this.AssertC4(extent, false, false, false, false);
 
-                inExtent = this.Transaction.Extent(m.C2);
+                inExtent = this.Transaction.Extent(m.C2.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C2);
-                    var inExtentB = this.Transaction.Extent(m.C2);
+                    var inExtentA = this.Transaction.Extent(m.C2.Composite);
+                    var inExtentB = this.Transaction.Extent(m.C2.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C1.C1C2one2manies, inExtent);
 
                 Assert.Equal(2, extent.Count);
@@ -6825,15 +6825,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC3(extent, false, false, false, false);
                 this.AssertC4(extent, false, false, false, false);
 
-                inExtent = this.Transaction.Extent(m.C4);
+                inExtent = this.Transaction.Extent(m.C4.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C4);
-                    var inExtentB = this.Transaction.Extent(m.C4);
+                    var inExtentA = this.Transaction.Extent(m.C4.Composite);
+                    var inExtentB = this.Transaction.Extent(m.C4.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C3);
+                extent = this.Transaction.Extent(m.C3.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C3.C3C4one2manies, inExtent);
 
                 Assert.Equal(2, extent.Count);
@@ -6844,18 +6844,18 @@ public abstract class ExtentTest : IDisposable
 
                 // ContainedIn Extent over Interface
                 // Emtpy Extent
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 inExtent.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
                     inExtentA.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtentB.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C1.C1C1one2manies, inExtent);
 
                 Assert.Equal(4, extent.Count);
@@ -6865,15 +6865,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Full Extent
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C1.C1C1one2manies, inExtent);
 
                 Assert.Equal(2, extent.Count);
@@ -6882,15 +6882,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC3(extent, false, false, false, false);
                 this.AssertC4(extent, false, false, false, false);
 
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C1.C1C2one2manies, inExtent);
 
                 Assert.Equal(2, extent.Count);
@@ -6899,15 +6899,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC3(extent, false, false, false, false);
                 this.AssertC4(extent, false, false, false, false);
 
-                inExtent = this.Transaction.Extent(m.I34);
+                inExtent = this.Transaction.Extent(m.I34.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I34);
-                    var inExtentB = this.Transaction.Extent(m.I34);
+                    var inExtentA = this.Transaction.Extent(m.I34.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I34.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C3);
+                extent = this.Transaction.Extent(m.C3.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C3.C3C4one2manies, inExtent);
 
                 Assert.Equal(2, extent.Count);
@@ -6919,15 +6919,15 @@ public abstract class ExtentTest : IDisposable
                 // RelationType from Class to Interface
 
                 // ContainedIn Extent over Class
-                inExtent = this.Transaction.Extent(m.C2);
+                inExtent = this.Transaction.Extent(m.C2.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C2);
-                    var inExtentB = this.Transaction.Extent(m.C2);
+                    var inExtentA = this.Transaction.Extent(m.C2.Composite);
+                    var inExtentB = this.Transaction.Extent(m.C2.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.I12.I12C2one2manies, inExtent);
 
                 Assert.Equal(3, extent.Count);
@@ -6937,15 +6937,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // ContainedIn Extent over Interface
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.I12.I12C2one2manies, inExtent);
 
                 Assert.Equal(3, extent.Count);
@@ -6973,18 +6973,18 @@ public abstract class ExtentTest : IDisposable
 
                 // ContainedIn Extent over Class
                 // Emtpy Extent
-                var inExtent = this.Transaction.Extent(m.C1);
+                var inExtent = this.Transaction.Extent(m.C1.Composite);
                 inExtent.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C1);
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
                     inExtentA.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
-                    var inExtentB = this.Transaction.Extent(m.C1);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
                     inExtentB.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                var extent = this.Transaction.Extent(m.C1);
+                var extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C1.C1C1one2manies, (IEnumerable<IObject>)inExtent.ToArray());
 
                 Assert.Equal(4, extent.Count);
@@ -6994,15 +6994,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Full Extent
-                inExtent = this.Transaction.Extent(m.C1);
+                inExtent = this.Transaction.Extent(m.C1.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C1);
-                    var inExtentB = this.Transaction.Extent(m.C1);
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C1.C1C1one2manies, (IEnumerable<IObject>)inExtent.ToArray());
 
                 Assert.Equal(2, extent.Count);
@@ -7011,15 +7011,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC3(extent, false, false, false, false);
                 this.AssertC4(extent, false, false, false, false);
 
-                inExtent = this.Transaction.Extent(m.C2);
+                inExtent = this.Transaction.Extent(m.C2.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C2);
-                    var inExtentB = this.Transaction.Extent(m.C2);
+                    var inExtentA = this.Transaction.Extent(m.C2.Composite);
+                    var inExtentB = this.Transaction.Extent(m.C2.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C1.C1C2one2manies, (IEnumerable<IObject>)inExtent.ToArray());
 
                 Assert.Equal(2, extent.Count);
@@ -7028,15 +7028,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC3(extent, false, false, false, false);
                 this.AssertC4(extent, false, false, false, false);
 
-                inExtent = this.Transaction.Extent(m.C4);
+                inExtent = this.Transaction.Extent(m.C4.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C4);
-                    var inExtentB = this.Transaction.Extent(m.C4);
+                    var inExtentA = this.Transaction.Extent(m.C4.Composite);
+                    var inExtentB = this.Transaction.Extent(m.C4.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C3);
+                extent = this.Transaction.Extent(m.C3.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C3.C3C4one2manies, (IEnumerable<IObject>)inExtent.ToArray());
 
                 Assert.Equal(2, extent.Count);
@@ -7047,18 +7047,18 @@ public abstract class ExtentTest : IDisposable
 
                 // ContainedIn Extent over Interface
                 // Emtpy Extent
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 inExtent.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
                     inExtentA.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtentB.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C1.C1C1one2manies, (IEnumerable<IObject>)inExtent.ToArray());
 
                 Assert.Equal(4, extent.Count);
@@ -7068,15 +7068,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Full Extent
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C1.C1C1one2manies, (IEnumerable<IObject>)inExtent.ToArray());
 
                 Assert.Equal(2, extent.Count);
@@ -7085,15 +7085,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC3(extent, false, false, false, false);
                 this.AssertC4(extent, false, false, false, false);
 
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C1.C1C2one2manies, (IEnumerable<IObject>)inExtent.ToArray());
 
                 Assert.Equal(2, extent.Count);
@@ -7102,15 +7102,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC3(extent, false, false, false, false);
                 this.AssertC4(extent, false, false, false, false);
 
-                inExtent = this.Transaction.Extent(m.I34);
+                inExtent = this.Transaction.Extent(m.I34.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I34);
-                    var inExtentB = this.Transaction.Extent(m.I34);
+                    var inExtentA = this.Transaction.Extent(m.I34.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I34.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C3);
+                extent = this.Transaction.Extent(m.C3.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C3.C3C4one2manies, (IEnumerable<IObject>)inExtent.ToArray());
 
                 Assert.Equal(2, extent.Count);
@@ -7122,15 +7122,15 @@ public abstract class ExtentTest : IDisposable
                 // RelationType from Class to Interface
 
                 // ContainedIn Extent over Class
-                inExtent = this.Transaction.Extent(m.C2);
+                inExtent = this.Transaction.Extent(m.C2.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C2);
-                    var inExtentB = this.Transaction.Extent(m.C2);
+                    var inExtentA = this.Transaction.Extent(m.C2.Composite);
+                    var inExtentB = this.Transaction.Extent(m.C2.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.I12.I12C2one2manies, (IEnumerable<IObject>)inExtent.ToArray());
 
                 Assert.Equal(3, extent.Count);
@@ -7140,15 +7140,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // ContainedIn Extent over Interface
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.I12.I12C2one2manies, (IEnumerable<IObject>)inExtent.ToArray());
 
                 Assert.Equal(3, extent.Count);
@@ -7170,7 +7170,7 @@ public abstract class ExtentTest : IDisposable
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddNot().AddContains(m.C1.C1C2one2manies, this.c2C);
 
             Assert.Equal(3, extent.Count);
@@ -7180,7 +7180,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Interface
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddNot().AddContains(m.C1.C1I12one2manies, this.c2C);
 
             Assert.Equal(3, extent.Count);
@@ -7190,7 +7190,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Super Interface
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddNot().AddContains(m.S1234.S1234one2manies, this.c1B);
 
             Assert.Equal(15, extent.Count);
@@ -7213,7 +7213,7 @@ public abstract class ExtentTest : IDisposable
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddNot().AddExists(m.C1.C1C2one2manies);
 
             Assert.Equal(2, extent.Count);
@@ -7223,7 +7223,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Interface
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddNot().AddExists(m.I12.I12C2one2manies);
 
             Assert.Equal(6, extent.Count);
@@ -7233,7 +7233,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Super Interface
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddNot().AddExists(m.S1234.S1234C2one2manies);
 
             Assert.Equal(14, extent.Count);
@@ -7243,7 +7243,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, true, true, true, true);
 
             // Class - Wrong RelationType
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             var exception = false;
             try
@@ -7258,7 +7258,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Interface - Wrong RelationType
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
 
             exception = false;
             try
@@ -7273,7 +7273,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Super Interface - Wrong RelationType
-            extent = this.Transaction.Extent(m.S12);
+            extent = this.Transaction.Extent(m.S12.Composite);
 
             exception = false;
             try
@@ -7305,15 +7305,15 @@ public abstract class ExtentTest : IDisposable
                 // RelationType from Class to Class
 
                 // ContainedIn Extent over Class
-                var inExtent = this.Transaction.Extent(m.C1);
+                var inExtent = this.Transaction.Extent(m.C1.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C1);
-                    var inExtentB = this.Transaction.Extent(m.C1);
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                var extent = this.Transaction.Extent(m.C1);
+                var extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C1.C1C1one2one, inExtent);
 
                 Assert.Single(extent);
@@ -7322,15 +7322,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC3(extent, false, false, false, false);
                 this.AssertC4(extent, false, false, false, false);
 
-                inExtent = this.Transaction.Extent(m.C2);
+                inExtent = this.Transaction.Extent(m.C2.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C2);
-                    var inExtentB = this.Transaction.Extent(m.C2);
+                    var inExtentA = this.Transaction.Extent(m.C2.Composite);
+                    var inExtentB = this.Transaction.Extent(m.C2.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C1.C1C2one2one, inExtent);
 
                 Assert.Single(extent);
@@ -7339,15 +7339,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC3(extent, false, false, false, false);
                 this.AssertC4(extent, false, false, false, false);
 
-                inExtent = this.Transaction.Extent(m.C4);
+                inExtent = this.Transaction.Extent(m.C4.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C4);
-                    var inExtentB = this.Transaction.Extent(m.C4);
+                    var inExtentA = this.Transaction.Extent(m.C4.Composite);
+                    var inExtentB = this.Transaction.Extent(m.C4.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C3);
+                extent = this.Transaction.Extent(m.C3.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C3.C3C4one2one, inExtent);
 
                 Assert.Single(extent);
@@ -7357,15 +7357,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // ContainedIn Extent over Interface
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C1.C1C1one2one, inExtent);
 
                 Assert.Single(extent);
@@ -7374,15 +7374,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC3(extent, false, false, false, false);
                 this.AssertC4(extent, false, false, false, false);
 
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C1.C1C2one2one, inExtent);
 
                 Assert.Single(extent);
@@ -7391,15 +7391,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC3(extent, false, false, false, false);
                 this.AssertC4(extent, false, false, false, false);
 
-                inExtent = this.Transaction.Extent(m.I34);
+                inExtent = this.Transaction.Extent(m.I34.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I34);
-                    var inExtentB = this.Transaction.Extent(m.I34);
+                    var inExtentA = this.Transaction.Extent(m.I34.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I34.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C3);
+                extent = this.Transaction.Extent(m.C3.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C3.C3C4one2one, inExtent);
 
                 Assert.Single(extent);
@@ -7411,15 +7411,15 @@ public abstract class ExtentTest : IDisposable
                 // RelationType from Class to Interface
 
                 // ContainedIn Extent over Class
-                inExtent = this.Transaction.Extent(m.C2);
+                inExtent = this.Transaction.Extent(m.C2.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C2);
-                    var inExtentB = this.Transaction.Extent(m.C2);
+                    var inExtentA = this.Transaction.Extent(m.C2.Composite);
+                    var inExtentB = this.Transaction.Extent(m.C2.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C1.C1I12one2one, inExtent);
 
                 Assert.Equal(2, extent.Count);
@@ -7429,15 +7429,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // ContainedIn Extent over Interface
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C1.C1I12one2one, inExtent);
 
                 Assert.Single(extent);
@@ -7465,15 +7465,15 @@ public abstract class ExtentTest : IDisposable
                 // RelationType from Class to Class
 
                 // ContainedIn Extent over Class
-                var inExtent = this.Transaction.Extent(m.C1);
+                var inExtent = this.Transaction.Extent(m.C1.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C1);
-                    var inExtentB = this.Transaction.Extent(m.C1);
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                var extent = this.Transaction.Extent(m.C1);
+                var extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C1.C1C1one2one, (IEnumerable<IObject>)inExtent.ToArray());
 
                 Assert.Single(extent);
@@ -7482,15 +7482,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC3(extent, false, false, false, false);
                 this.AssertC4(extent, false, false, false, false);
 
-                inExtent = this.Transaction.Extent(m.C2);
+                inExtent = this.Transaction.Extent(m.C2.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C2);
-                    var inExtentB = this.Transaction.Extent(m.C2);
+                    var inExtentA = this.Transaction.Extent(m.C2.Composite);
+                    var inExtentB = this.Transaction.Extent(m.C2.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C1.C1C2one2one, (IEnumerable<IObject>)inExtent.ToArray());
 
                 Assert.Single(extent);
@@ -7499,15 +7499,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC3(extent, false, false, false, false);
                 this.AssertC4(extent, false, false, false, false);
 
-                inExtent = this.Transaction.Extent(m.C4);
+                inExtent = this.Transaction.Extent(m.C4.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C4);
-                    var inExtentB = this.Transaction.Extent(m.C4);
+                    var inExtentA = this.Transaction.Extent(m.C4.Composite);
+                    var inExtentB = this.Transaction.Extent(m.C4.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C3);
+                extent = this.Transaction.Extent(m.C3.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C3.C3C4one2one, (IEnumerable<IObject>)inExtent.ToArray());
 
                 Assert.Single(extent);
@@ -7517,15 +7517,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // ContainedIn Extent over Interface
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C1.C1C1one2one, (IEnumerable<IObject>)inExtent.ToArray());
 
                 Assert.Single(extent);
@@ -7534,15 +7534,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC3(extent, false, false, false, false);
                 this.AssertC4(extent, false, false, false, false);
 
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C1.C1C2one2one, (IEnumerable<IObject>)inExtent.ToArray());
 
                 Assert.Single(extent);
@@ -7551,15 +7551,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC3(extent, false, false, false, false);
                 this.AssertC4(extent, false, false, false, false);
 
-                inExtent = this.Transaction.Extent(m.I34);
+                inExtent = this.Transaction.Extent(m.I34.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I34);
-                    var inExtentB = this.Transaction.Extent(m.I34);
+                    var inExtentA = this.Transaction.Extent(m.I34.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I34.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C3);
+                extent = this.Transaction.Extent(m.C3.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C3.C3C4one2one, (IEnumerable<IObject>)inExtent.ToArray());
 
                 Assert.Single(extent);
@@ -7571,15 +7571,15 @@ public abstract class ExtentTest : IDisposable
                 // RelationType from Class to Interface
 
                 // ContainedIn Extent over Class
-                inExtent = this.Transaction.Extent(m.C2);
+                inExtent = this.Transaction.Extent(m.C2.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C2);
-                    var inExtentB = this.Transaction.Extent(m.C2);
+                    var inExtentA = this.Transaction.Extent(m.C2.Composite);
+                    var inExtentB = this.Transaction.Extent(m.C2.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C1.C1I12one2one, (IEnumerable<IObject>)inExtent.ToArray());
 
                 Assert.Equal(2, extent.Count);
@@ -7589,15 +7589,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // ContainedIn Extent over Interface
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddNot().AddContainedIn(m.C1.C1I12one2one, (IEnumerable<IObject>)inExtent.ToArray());
 
                 Assert.Single(extent);
@@ -7619,7 +7619,7 @@ public abstract class ExtentTest : IDisposable
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddNot().AddEquals(m.C1.C1C1one2one, this.c1B);
 
             Assert.Equal(3, extent.Count);
@@ -7628,7 +7628,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, false, false);
             this.AssertC4(extent, false, false, false, false);
 
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddNot().AddEquals(m.C1.C1C2one2one, this.c2B);
 
             Assert.Equal(3, extent.Count);
@@ -7638,7 +7638,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Interface
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddNot().AddEquals(m.I12.I12C2one2one, this.c2A);
 
             Assert.Equal(7, extent.Count);
@@ -7648,7 +7648,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Super Interface
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddNot().AddEquals(m.S1234.S1234C2one2one, this.c2A);
 
             Assert.Equal(15, extent.Count);
@@ -7658,7 +7658,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, true, true, true, true);
 
             // Class - Wrong RelationType
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             var exception = false;
             try
@@ -7673,7 +7673,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Interface - Wrong RelationType
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
 
             exception = false;
             try
@@ -7688,7 +7688,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Super Interface - Wrong RelationType
-            extent = this.Transaction.Extent(m.S12);
+            extent = this.Transaction.Extent(m.S12.Composite);
 
             exception = false;
             try
@@ -7714,7 +7714,7 @@ public abstract class ExtentTest : IDisposable
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddNot().AddExists(m.C1.C1C2one2one);
 
             Assert.Single(extent);
@@ -7723,7 +7723,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, false, false);
             this.AssertC4(extent, false, false, false, false);
 
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddNot().AddExists(m.C1.C1C2one2one);
 
             Assert.Single(extent);
@@ -7733,7 +7733,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Interface
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddNot().AddExists(m.I12.I12C2one2one);
 
             Assert.Equal(4, extent.Count);
@@ -7743,7 +7743,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Super Interface
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddNot().AddExists(m.S1234.S1234C2one2one);
 
             Assert.Equal(12, extent.Count);
@@ -7753,7 +7753,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, true, true, true, true);
 
             // Class - Wrong RelationType
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             var exception = false;
             try
@@ -7768,7 +7768,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Interface - Wrong RelationType
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
 
             exception = false;
             try
@@ -7783,7 +7783,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Super Interface - Wrong RelationType
-            extent = this.Transaction.Extent(m.S12);
+            extent = this.Transaction.Extent(m.S12.Composite);
 
             exception = false;
             try
@@ -7811,8 +7811,8 @@ public abstract class ExtentTest : IDisposable
             // Class
 
             // Class
-            var extent = this.Transaction.Extent(m.C1);
-            extent.Filter.AddNot().AddInstanceof(m.C1.C1C1one2one, m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
+            extent.Filter.AddNot().AddInstanceof(m.C1.C1C1one2one, m.C1.Composite);
 
             Assert.Single(extent);
             this.AssertC1(extent, true, false, false, false);
@@ -7820,8 +7820,8 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, false, false);
             this.AssertC4(extent, false, false, false, false);
 
-            extent = this.Transaction.Extent(m.C1);
-            extent.Filter.AddNot().AddInstanceof(m.C1.C1C2one2one, m.C2);
+            extent = this.Transaction.Extent(m.C1.Composite);
+            extent.Filter.AddNot().AddInstanceof(m.C1.C1C2one2one, m.C2.Composite);
 
             Assert.Single(extent);
             this.AssertC1(extent, true, false, false, false);
@@ -7830,8 +7830,8 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Interface
-            extent = this.Transaction.Extent(m.C1);
-            extent.Filter.AddNot().AddInstanceof(m.C1.C1I12one2one, m.C2);
+            extent = this.Transaction.Extent(m.C1.Composite);
+            extent.Filter.AddNot().AddInstanceof(m.C1.C1I12one2one, m.C2.Composite);
 
             Assert.Equal(2, extent.Count);
             this.AssertC1(extent, true, true, false, false);
@@ -7840,8 +7840,8 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Super Interface
-            extent = this.Transaction.Extent(m.S1234);
-            extent.Filter.AddNot().AddInstanceof(m.S1234.S1234one2one, m.C2);
+            extent = this.Transaction.Extent(m.S1234.Composite);
+            extent.Filter.AddNot().AddInstanceof(m.S1234.S1234one2one, m.C2.Composite);
 
             Assert.Equal(13, extent.Count);
             this.AssertC1(extent, true, true, false, true);
@@ -7852,8 +7852,8 @@ public abstract class ExtentTest : IDisposable
             // Interface
 
             // Class
-            extent = this.Transaction.Extent(m.C1);
-            extent.Filter.AddNot().AddInstanceof(m.C1.C1C2one2one, m.I2);
+            extent = this.Transaction.Extent(m.C1.Composite);
+            extent.Filter.AddNot().AddInstanceof(m.C1.C1C2one2one, m.I2.Composite);
 
             Assert.Single(extent);
             this.AssertC1(extent, true, false, false, false);
@@ -7862,8 +7862,8 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Interface
-            extent = this.Transaction.Extent(m.C1);
-            extent.Filter.AddNot().AddInstanceof(m.C1.C1I12one2one, m.I2);
+            extent = this.Transaction.Extent(m.C1.Composite);
+            extent.Filter.AddNot().AddInstanceof(m.C1.C1I12one2one, m.I2.Composite);
 
             Assert.Equal(2, extent.Count);
             this.AssertC1(extent, true, true, false, false);
@@ -7871,8 +7871,8 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, false, false);
             this.AssertC4(extent, false, false, false, false);
 
-            extent = this.Transaction.Extent(m.C1);
-            extent.Filter.AddNot().AddInstanceof(m.C1.C1I12one2one, m.I12);
+            extent = this.Transaction.Extent(m.C1.Composite);
+            extent.Filter.AddNot().AddInstanceof(m.C1.C1I12one2one, m.I12.Composite);
 
             Assert.Single(extent);
             this.AssertC1(extent, true, false, false, false);
@@ -7881,8 +7881,8 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Super Interface
-            extent = this.Transaction.Extent(m.S1234);
-            extent.Filter.AddNot().AddInstanceof(m.S1234.S1234one2one, m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
+            extent.Filter.AddNot().AddInstanceof(m.S1234.S1234one2one, m.S1234.Composite);
 
             Assert.Equal(7, extent.Count);
             this.AssertC1(extent, true, false, false, false);
@@ -7906,7 +7906,7 @@ public abstract class ExtentTest : IDisposable
             // Class
 
             // Equal ""
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddNot().AddEquals(m.C1.C1AllorsString, string.Empty);
 
             Assert.Equal(3, extent.Count);
@@ -7915,7 +7915,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, false, false);
             this.AssertC4(extent, false, false, false, false);
 
-            extent = this.Transaction.Extent(m.C3);
+            extent = this.Transaction.Extent(m.C3.Composite);
             extent.Filter.AddNot().AddEquals(m.C3.C3AllorsString, string.Empty);
 
             Assert.Equal(3, extent.Count);
@@ -7925,7 +7925,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Equal "ᴀbra"
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddNot().AddEquals(m.C1.C1AllorsString, "ᴀbra");
 
             Assert.Equal(2, extent.Count);
@@ -7934,7 +7934,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, false, false);
             this.AssertC4(extent, false, false, false, false);
 
-            extent = this.Transaction.Extent(m.C3);
+            extent = this.Transaction.Extent(m.C3.Composite);
             extent.Filter.AddNot().AddEquals(m.C3.C3AllorsString, "ᴀbra");
 
             Assert.Equal(2, extent.Count);
@@ -7944,7 +7944,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Equal "ᴀbracadabra"
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddNot().AddEquals(m.C1.C1AllorsString, "ᴀbracadabra");
 
             Assert.Single(extent);
@@ -7953,7 +7953,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, false, false);
             this.AssertC4(extent, false, false, false, false);
 
-            extent = this.Transaction.Extent(m.C3);
+            extent = this.Transaction.Extent(m.C3.Composite);
             extent.Filter.AddNot().AddEquals(m.C3.C3AllorsString, "ᴀbracadabra");
 
             Assert.Single(extent);
@@ -7965,7 +7965,7 @@ public abstract class ExtentTest : IDisposable
             // Interface
 
             // Equal ""
-            extent = this.Transaction.Extent(m.I1);
+            extent = this.Transaction.Extent(m.I1.Composite);
             extent.Filter.AddNot().AddEquals(m.I1.I1AllorsString, string.Empty);
 
             Assert.Equal(3, extent.Count);
@@ -7974,7 +7974,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, false, false);
             this.AssertC4(extent, false, false, false, false);
 
-            extent = this.Transaction.Extent(m.I3);
+            extent = this.Transaction.Extent(m.I3.Composite);
             extent.Filter.AddNot().AddEquals(m.I3.I3AllorsString, string.Empty);
 
             Assert.Equal(3, extent.Count);
@@ -7984,7 +7984,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Equal "ᴀbra"
-            extent = this.Transaction.Extent(m.I1);
+            extent = this.Transaction.Extent(m.I1.Composite);
             extent.Filter.AddNot().AddEquals(m.I1.I1AllorsString, "ᴀbra");
 
             Assert.Equal(2, extent.Count);
@@ -7993,7 +7993,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, false, false);
             this.AssertC4(extent, false, false, false, false);
 
-            extent = this.Transaction.Extent(m.I3);
+            extent = this.Transaction.Extent(m.I3.Composite);
             extent.Filter.AddNot().AddEquals(m.I3.I3AllorsString, "ᴀbra");
 
             Assert.Equal(2, extent.Count);
@@ -8003,7 +8003,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Equal "ᴀbracadabra"
-            extent = this.Transaction.Extent(m.I1);
+            extent = this.Transaction.Extent(m.I1.Composite);
             extent.Filter.AddNot().AddEquals(m.I1.I1AllorsString, "ᴀbracadabra");
 
             Assert.Single(extent);
@@ -8012,7 +8012,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, false, false);
             this.AssertC4(extent, false, false, false, false);
 
-            extent = this.Transaction.Extent(m.I3);
+            extent = this.Transaction.Extent(m.I3.Composite);
             extent.Filter.AddNot().AddEquals(m.I3.I3AllorsString, "ᴀbracadabra");
 
             Assert.Single(extent);
@@ -8024,7 +8024,7 @@ public abstract class ExtentTest : IDisposable
             // Shared Interface
 
             // Equal ""
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddNot().AddEquals(m.I12.I12AllorsString, string.Empty);
 
             Assert.Equal(6, extent.Count);
@@ -8033,7 +8033,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, false, false);
             this.AssertC4(extent, false, false, false, false);
 
-            extent = this.Transaction.Extent(m.I34);
+            extent = this.Transaction.Extent(m.I34.Composite);
             extent.Filter.AddNot().AddEquals(m.I34.I34AllorsString, string.Empty);
 
             Assert.Equal(6, extent.Count);
@@ -8043,7 +8043,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, true, true, true);
 
             // Equal "ᴀbra"
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddNot().AddEquals(m.I12.I12AllorsString, "ᴀbra");
 
             Assert.Equal(4, extent.Count);
@@ -8052,7 +8052,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, false, false);
             this.AssertC4(extent, false, false, false, false);
 
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddNot().AddEquals(m.I12.I12AllorsString, "ᴀbra");
 
             Assert.Equal(2, extent.Count);
@@ -8061,7 +8061,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, false, false);
             this.AssertC4(extent, false, false, false, false);
 
-            extent = this.Transaction.Extent(m.I23);
+            extent = this.Transaction.Extent(m.I23.Composite);
             extent.Filter.AddNot().AddEquals(m.I23.I23AllorsString, "ᴀbra");
 
             Assert.Equal(4, extent.Count);
@@ -8070,7 +8070,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, true, true);
             this.AssertC4(extent, false, false, false, false);
 
-            extent = this.Transaction.Extent(m.C2);
+            extent = this.Transaction.Extent(m.C2.Composite);
             extent.Filter.AddNot().AddEquals(m.I23.I23AllorsString, "ᴀbra");
 
             Assert.Equal(2, extent.Count);
@@ -8079,7 +8079,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, false, false);
             this.AssertC4(extent, false, false, false, false);
 
-            extent = this.Transaction.Extent(m.C3);
+            extent = this.Transaction.Extent(m.C3.Composite);
             extent.Filter.AddNot().AddEquals(m.I23.I23AllorsString, "ᴀbra");
 
             Assert.Equal(2, extent.Count);
@@ -8088,7 +8088,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, true, true);
             this.AssertC4(extent, false, false, false, false);
 
-            extent = this.Transaction.Extent(m.I34);
+            extent = this.Transaction.Extent(m.I34.Composite);
             extent.Filter.AddNot().AddEquals(m.I34.I34AllorsString, "ᴀbra");
 
             Assert.Equal(4, extent.Count);
@@ -8097,7 +8097,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, true, true);
             this.AssertC4(extent, false, false, true, true);
 
-            extent = this.Transaction.Extent(m.C3);
+            extent = this.Transaction.Extent(m.C3.Composite);
             extent.Filter.AddNot().AddEquals(m.I34.I34AllorsString, "ᴀbra");
 
             Assert.Equal(2, extent.Count);
@@ -8107,7 +8107,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Equal "ᴀbracadabra"
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddNot().AddEquals(m.I12.I12AllorsString, "ᴀbracadabra");
 
             Assert.Equal(2, extent.Count);
@@ -8116,7 +8116,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, false, false);
             this.AssertC4(extent, false, false, false, false);
 
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddNot().AddEquals(m.I12.I12AllorsString, "ᴀbracadabra");
 
             Assert.Single(extent);
@@ -8125,7 +8125,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, false, false);
             this.AssertC4(extent, false, false, false, false);
 
-            extent = this.Transaction.Extent(m.I34);
+            extent = this.Transaction.Extent(m.I34.Composite);
             extent.Filter.AddNot().AddEquals(m.I34.I34AllorsString, "ᴀbracadabra");
 
             Assert.Equal(2, extent.Count);
@@ -8137,7 +8137,7 @@ public abstract class ExtentTest : IDisposable
             // Super Interface
 
             // Equal ""
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddNot().AddEquals(m.S1234.S1234AllorsString, string.Empty);
 
             Assert.Equal(12, extent.Count);
@@ -8147,7 +8147,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, true, true, true);
 
             // Equal "ᴀbra"
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddNot().AddEquals(m.S1234.S1234AllorsString, "ᴀbra");
 
             Assert.Equal(8, extent.Count);
@@ -8157,7 +8157,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, true, true);
 
             // Equal "ᴀbracadabra"
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddNot().AddEquals(m.S1234.S1234AllorsString, "ᴀbracadabra");
 
             Assert.Equal(4, extent.Count);
@@ -8169,7 +8169,7 @@ public abstract class ExtentTest : IDisposable
             // Class - Wrong RelationType
 
             // Equal ""
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             var exception = false;
             try
@@ -8184,7 +8184,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Equal "ᴀbra"
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -8199,7 +8199,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Equal "ᴀbracadabra"
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -8216,7 +8216,7 @@ public abstract class ExtentTest : IDisposable
             // Interface - Wrong RelationType
 
             // Equal ""
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -8231,7 +8231,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Equal "ᴀbra"
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -8246,7 +8246,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Equal "ᴀbracadabra"
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -8263,7 +8263,7 @@ public abstract class ExtentTest : IDisposable
             // Super Interface - Wrong RelationType
 
             // Equal ""
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -8278,7 +8278,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Equal "ᴀbra"
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -8293,7 +8293,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Equal "ᴀbracadabra"
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -8319,7 +8319,7 @@ public abstract class ExtentTest : IDisposable
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddNot().AddExists(m.C1.C1AllorsString);
 
             Assert.Single(extent);
@@ -8329,7 +8329,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Interface
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddNot().AddExists(m.I12.I12AllorsString);
 
             Assert.Equal(2, extent.Count);
@@ -8339,7 +8339,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Super Interface
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddNot().AddExists(m.S1234.S1234AllorsString);
 
             Assert.Equal(4, extent.Count);
@@ -8349,7 +8349,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, true, false, false, false);
 
             // Class - Wrong RelationType
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             var exception = false;
             try
@@ -8364,7 +8364,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Interface - Wrong RelationType
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -8379,7 +8379,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Super Interface - Wrong RelationType
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -8407,7 +8407,7 @@ public abstract class ExtentTest : IDisposable
             // Class
 
             // Like ""
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddNot().AddLike(m.C1.C1AllorsString, string.Empty);
 
             Assert.Equal(3, extent.Count);
@@ -8417,7 +8417,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Like "ᴀbra"
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddNot().AddLike(m.C1.C1AllorsString, "ᴀbra");
 
             Assert.Equal(2, extent.Count);
@@ -8427,7 +8427,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Like "ᴀbracadabra"
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddNot().AddLike(m.C1.C1AllorsString, "ᴀbracadabra");
 
             Assert.Single(extent);
@@ -8437,7 +8437,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Like "notfound"
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddNot().AddLike(m.C1.C1AllorsString, "notfound");
 
             Assert.Equal(3, extent.Count);
@@ -8447,7 +8447,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Like "%ra%"
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddNot().AddLike(m.C1.C1AllorsString, "%ra%");
 
             Assert.Empty(extent);
@@ -8457,7 +8457,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Like "%bra"
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddNot().AddLike(m.C1.C1AllorsString, "%bra");
 
             Assert.Empty(extent);
@@ -8467,7 +8467,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Like "%cadabra"
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddNot().AddLike(m.C1.C1AllorsString, "%cadabra");
 
             Assert.Single(extent);
@@ -8479,7 +8479,7 @@ public abstract class ExtentTest : IDisposable
             // Interface
 
             // Like ""
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddNot().AddLike(m.I12.I12AllorsString, string.Empty);
 
             Assert.Equal(6, extent.Count);
@@ -8489,7 +8489,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Like "ᴀbra"
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddNot().AddLike(m.I12.I12AllorsString, "ᴀbra");
 
             Assert.Equal(4, extent.Count);
@@ -8499,7 +8499,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Like "ᴀbracadabra"
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddNot().AddLike(m.I12.I12AllorsString, "ᴀbracadabra");
 
             Assert.Equal(2, extent.Count);
@@ -8511,7 +8511,7 @@ public abstract class ExtentTest : IDisposable
             // Super Interface
 
             // Like ""
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddNot().AddLike(m.S1234.S1234AllorsString, string.Empty);
 
             Assert.Equal(12, extent.Count);
@@ -8521,7 +8521,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, true, true, true);
 
             // Like "ᴀbra"
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddNot().AddLike(m.S1234.S1234AllorsString, "ᴀbra");
 
             Assert.Equal(8, extent.Count);
@@ -8531,7 +8531,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, true, true);
 
             // Like "ᴀbracadabra"
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddNot().AddLike(m.S1234.S1234AllorsString, "ᴀbracadabra");
 
             Assert.Equal(4, extent.Count);
@@ -8543,7 +8543,7 @@ public abstract class ExtentTest : IDisposable
             // Class - Wrong RelationType
 
             // Like ""
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             var exception = false;
             try
@@ -8558,7 +8558,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Like "ᴀbra"
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -8573,7 +8573,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Like "ᴀbracadabra"
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -8590,7 +8590,7 @@ public abstract class ExtentTest : IDisposable
             // Interface - Wrong RelationType
 
             // Like ""
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -8605,7 +8605,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Like "ᴀbra"
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -8620,7 +8620,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Like "ᴀbracadabra"
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -8637,7 +8637,7 @@ public abstract class ExtentTest : IDisposable
             // Super Interface - Wrong RelationType
 
             // Like ""
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -8652,7 +8652,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Like "ᴀbra"
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -8667,7 +8667,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Like "ᴀbracadabra"
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -8692,10 +8692,10 @@ public abstract class ExtentTest : IDisposable
             this.Populate();
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
-            var firstExtent = this.Transaction.Extent(m.C1);
+            var firstExtent = this.Transaction.Extent(m.C1.Composite);
             firstExtent.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbra");
 
-            var secondExtent = this.Transaction.Extent(m.C1);
+            var secondExtent = this.Transaction.Extent(m.C1.Composite);
             secondExtent.Filter.AddLike(m.C1.C1AllorsString, "ᴀbracadabra");
 
             var extent = this.Transaction.Union(firstExtent, secondExtent);
@@ -8724,7 +8724,7 @@ public abstract class ExtentTest : IDisposable
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Dangling empty And behind Or
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             var or = extent.Filter.AddOr();
 
             or.AddAnd();
@@ -8737,7 +8737,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Dangling empty Or behind Or
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             or = extent.Filter.AddOr();
 
             or.AddOr();
@@ -8750,7 +8750,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Dangling empty Not behind Or
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             or = extent.Filter.AddOr();
 
             or.AddNot();
@@ -8763,7 +8763,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Dangling empty And behind And
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             var and = extent.Filter.AddAnd();
 
             and.AddAnd();
@@ -8776,7 +8776,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Dangling empty Or behind And
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             and = extent.Filter.AddAnd();
 
             and.AddOr();
@@ -8789,7 +8789,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Dangling empty Not behind And
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             and = extent.Filter.AddAnd();
 
             and.AddNot();
@@ -8802,7 +8802,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Dangling empty And
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddAnd();
 
             Assert.Equal(4, extent.Count);
@@ -8823,7 +8823,7 @@ public abstract class ExtentTest : IDisposable
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             var any = extent.Filter.AddOr();
             any.AddGreaterThan(m.C1.C1AllorsInteger, 0);
             any.AddLessThan(m.C1.C1AllorsInteger, 3);
@@ -8835,7 +8835,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Interface
-            (extent = this.Transaction.Extent(m.I12)).Filter.AddOr()
+            (extent = this.Transaction.Extent(m.I12.Composite)).Filter.AddOr()
                 .AddGreaterThan(m.I12.I12AllorsInteger, 0)
                 .AddLessThan(m.I12.I12AllorsInteger, 3);
 
@@ -8846,7 +8846,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Super Interface
-            (extent = this.Transaction.Extent(m.S1234)).Filter.AddOr()
+            (extent = this.Transaction.Extent(m.S1234.Composite)).Filter.AddOr()
                 .AddGreaterThan(m.S1234.S1234AllorsInteger, 0)
                 .AddLessThan(m.S1234.S1234AllorsInteger, 3);
 
@@ -8857,7 +8857,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, true, true, true);
 
             // Class Without predicates
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddOr();
 
             Assert.Equal(4, extent.Count);
@@ -8878,12 +8878,12 @@ public abstract class ExtentTest : IDisposable
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Association (Amgiguous Name)
-            Extent<Company> parents = this.Transaction.Extent(m.Company);
+            Extent<Company> parents = this.Transaction.Extent(m.Company.Composite);
 
-            Extent<Company> children = this.Transaction.Extent(m.Company);
+            Extent<Company> children = this.Transaction.Extent(m.Company.Composite);
             children.Filter.AddContainedIn(m.Company.CompanyWhereChild, parents);
 
-            Extent<Person> persons = this.Transaction.Extent(m.Person);
+            Extent<Person> persons = this.Transaction.Extent(m.Person.Composite);
             var or = persons.Filter.AddOr();
             or.AddContainedIn(m.Person.Company, parents);
             or.AddContainedIn(m.Person.Company, children);
@@ -8902,7 +8902,7 @@ public abstract class ExtentTest : IDisposable
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddExists(m.C1.C1AllorsInteger);
 
             Assert.Equal(3, extent.Count);
@@ -8912,7 +8912,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Interface
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddExists(m.I12.I12AllorsInteger);
 
             Assert.Equal(6, extent.Count);
@@ -8922,7 +8922,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Super Interface
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddExists(m.S1234.S1234AllorsInteger);
 
             Assert.Equal(12, extent.Count);
@@ -8932,7 +8932,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, true, true, true);
 
             // Class - Wrong RelationType
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             var exception = false;
             try
@@ -8947,7 +8947,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Interface - Wrong RelationType
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -8962,7 +8962,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Super Interface - Wrong RelationType
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -8990,7 +8990,7 @@ public abstract class ExtentTest : IDisposable
             // Class
 
             // Between C1
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddBetween(m.C1.C1AllorsInteger, m.C1.C1IntegerBetweenA, m.C1.C1IntegerBetweenB);
 
             Assert.Equal(2, extent.Count);
@@ -9003,7 +9003,7 @@ public abstract class ExtentTest : IDisposable
             // Interface
 
             // Between -10 and 0
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddBetween(m.I12.I12AllorsInteger, -10, 0);
 
             Assert.Empty(extent);
@@ -9013,7 +9013,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Between 0 and 1
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddBetween(m.I12.I12AllorsInteger, 0, 1);
 
             Assert.Equal(2, extent.Count);
@@ -9023,7 +9023,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Between 1 and 2
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddBetween(m.I12.I12AllorsInteger, 1, 2);
 
             Assert.Equal(6, extent.Count);
@@ -9033,7 +9033,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Between 3 and 10
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddBetween(m.I12.I12AllorsInteger, 3, 10);
 
             Assert.Empty(extent);
@@ -9045,7 +9045,7 @@ public abstract class ExtentTest : IDisposable
             // Super Interface
 
             // Between -10 and 0
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddBetween(m.S1234.S1234AllorsInteger, -10, 0);
 
             Assert.Empty(extent);
@@ -9055,7 +9055,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Between 0 and 1
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddBetween(m.S1234.S1234AllorsInteger, 0, 1);
 
             Assert.Equal(4, extent.Count);
@@ -9065,7 +9065,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, true, false, false);
 
             // Between 1 and 2
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddBetween(m.S1234.S1234AllorsInteger, 1, 2);
 
             Assert.Equal(12, extent.Count);
@@ -9075,7 +9075,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, true, true, true);
 
             // Between 3 and 10
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddBetween(m.S1234.S1234AllorsInteger, 3, 10);
 
             Assert.Empty(extent);
@@ -9087,7 +9087,7 @@ public abstract class ExtentTest : IDisposable
             // Class - Wrong RelationType
 
             // Between -10 and 0
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             var exception = false;
             try
@@ -9102,7 +9102,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Between 0 and 1
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -9117,7 +9117,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Between 1 and 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -9132,7 +9132,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Between 3 and 10
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -9160,7 +9160,7 @@ public abstract class ExtentTest : IDisposable
             // Class
 
             // Less Than 1
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddLessThan(m.C1.C1AllorsInteger, m.C1.C1IntegerLessThan);
 
             Assert.Single(extent);
@@ -9173,7 +9173,7 @@ public abstract class ExtentTest : IDisposable
             // Interface
 
             // Less Than 1
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddLessThan(m.I12.I12AllorsInteger, 1);
 
             Assert.Empty(extent);
@@ -9183,7 +9183,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Less Than 2
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddLessThan(m.I12.I12AllorsInteger, 2);
 
             Assert.Equal(2, extent.Count);
@@ -9193,7 +9193,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Less Than 3
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddLessThan(m.I12.I12AllorsInteger, 3);
 
             Assert.Equal(6, extent.Count);
@@ -9205,7 +9205,7 @@ public abstract class ExtentTest : IDisposable
             // Super Interface
 
             // Less Than 1
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddLessThan(m.S1234.S1234AllorsInteger, 1);
 
             Assert.Empty(extent);
@@ -9215,7 +9215,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Less Than 2
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddLessThan(m.S1234.S1234AllorsInteger, 2);
 
             Assert.Equal(4, extent.Count);
@@ -9225,7 +9225,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, true, false, false);
 
             // Less Than 3
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddLessThan(m.S1234.S1234AllorsInteger, 3);
 
             Assert.Equal(12, extent.Count);
@@ -9237,7 +9237,7 @@ public abstract class ExtentTest : IDisposable
             // Class - Wrong RelationType
 
             // Less Than 1
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             var exception = false;
             try
@@ -9252,7 +9252,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Less Than 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -9267,7 +9267,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Less Than 3
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -9284,7 +9284,7 @@ public abstract class ExtentTest : IDisposable
             // Interface - Wrong RelationType
 
             // Less Than 1
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -9299,7 +9299,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Less Than 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -9314,7 +9314,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Less Than 3
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -9331,7 +9331,7 @@ public abstract class ExtentTest : IDisposable
             // Super Interface - Wrong RelationType
 
             // Less Than 1
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -9346,7 +9346,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Less Than 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -9361,7 +9361,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Less Than 3
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -9389,7 +9389,7 @@ public abstract class ExtentTest : IDisposable
             // Class
 
             // C1
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddGreaterThan(m.C1.C1AllorsInteger, m.C1.C1IntegerGreaterThan);
 
             Assert.Single(extent);
@@ -9402,7 +9402,7 @@ public abstract class ExtentTest : IDisposable
             // Interface
 
             // Greater Than 0
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddGreaterThan(m.I12.I12AllorsInteger, 0);
 
             Assert.Equal(6, extent.Count);
@@ -9412,7 +9412,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Greater Than 1
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddGreaterThan(m.I12.I12AllorsInteger, 1);
 
             Assert.Equal(4, extent.Count);
@@ -9422,7 +9422,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Greater Than 2
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddGreaterThan(m.I12.I12AllorsInteger, 2);
 
             Assert.Empty(extent);
@@ -9434,7 +9434,7 @@ public abstract class ExtentTest : IDisposable
             // Super Interface
 
             // Greater Than 0
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddGreaterThan(m.S1234.S1234AllorsInteger, 0);
 
             Assert.Equal(12, extent.Count);
@@ -9444,7 +9444,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, true, true, true);
 
             // Greater Than 1
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddGreaterThan(m.S1234.S1234AllorsInteger, 1);
 
             Assert.Equal(8, extent.Count);
@@ -9454,7 +9454,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, true, true);
 
             // Greater Than 2
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddGreaterThan(m.S1234.S1234AllorsInteger, 2);
 
             Assert.Empty(extent);
@@ -9466,7 +9466,7 @@ public abstract class ExtentTest : IDisposable
             // Class - Wrong RelationType
 
             // Greater Than 0
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             var exception = false;
             try
@@ -9481,7 +9481,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Greater Than 1
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -9496,7 +9496,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Greater Than 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -9513,7 +9513,7 @@ public abstract class ExtentTest : IDisposable
             // Interface - Wrong RelationType
 
             // Greater Than 0
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -9528,7 +9528,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Greater Than 1
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -9543,7 +9543,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Greater Than 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -9560,7 +9560,7 @@ public abstract class ExtentTest : IDisposable
             // Super Interface - Wrong RelationType
 
             // Greater Than 0
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -9575,7 +9575,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Greater Than 1
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -9590,7 +9590,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Greater Than 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -9618,7 +9618,7 @@ public abstract class ExtentTest : IDisposable
             // Class
 
             // Between -10 and 0
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddBetween(m.C1.C1AllorsInteger, -10, 0);
 
             Assert.Empty(extent);
@@ -9628,7 +9628,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Between 0 and 1
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddBetween(m.C1.C1AllorsInteger, 0, 1);
 
             Assert.Single(extent);
@@ -9638,7 +9638,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Between 1 and 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddBetween(m.C1.C1AllorsInteger, 1, 2);
 
             Assert.Equal(3, extent.Count);
@@ -9648,7 +9648,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Between 3 and 10
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddBetween(m.C1.C1AllorsInteger, 3, 10);
 
             Assert.Empty(extent);
@@ -9660,7 +9660,7 @@ public abstract class ExtentTest : IDisposable
             // Interface
 
             // Between -10 and 0
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddBetween(m.I12.I12AllorsInteger, -10, 0);
 
             Assert.Empty(extent);
@@ -9670,7 +9670,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Between 0 and 1
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddBetween(m.I12.I12AllorsInteger, 0, 1);
 
             Assert.Equal(2, extent.Count);
@@ -9680,7 +9680,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Between 1 and 2
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddBetween(m.I12.I12AllorsInteger, 1, 2);
 
             Assert.Equal(6, extent.Count);
@@ -9690,7 +9690,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Between 3 and 10
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddBetween(m.I12.I12AllorsInteger, 3, 10);
 
             Assert.Empty(extent);
@@ -9702,7 +9702,7 @@ public abstract class ExtentTest : IDisposable
             // Super Interface
 
             // Between -10 and 0
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddBetween(m.S1234.S1234AllorsInteger, -10, 0);
 
             Assert.Empty(extent);
@@ -9712,7 +9712,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Between 0 and 1
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddBetween(m.S1234.S1234AllorsInteger, 0, 1);
 
             Assert.Equal(4, extent.Count);
@@ -9722,7 +9722,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, true, false, false);
 
             // Between 1 and 2
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddBetween(m.S1234.S1234AllorsInteger, 1, 2);
 
             Assert.Equal(12, extent.Count);
@@ -9732,7 +9732,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, true, true, true);
 
             // Between 3 and 10
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddBetween(m.S1234.S1234AllorsInteger, 3, 10);
 
             Assert.Empty(extent);
@@ -9744,7 +9744,7 @@ public abstract class ExtentTest : IDisposable
             // Class - Wrong RelationType
 
             // Between -10 and 0
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             var exception = false;
             try
@@ -9759,7 +9759,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Between 0 and 1
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -9774,7 +9774,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Between 1 and 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -9789,7 +9789,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Between 3 and 10
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -9817,7 +9817,7 @@ public abstract class ExtentTest : IDisposable
             // Class
 
             // Less Than 1
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddLessThan(m.C1.C1AllorsInteger, 1);
 
             Assert.Empty(extent);
@@ -9827,7 +9827,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Less Than 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddLessThan(m.C1.C1AllorsInteger, 2);
 
             Assert.Single(extent);
@@ -9837,7 +9837,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Less Than 3
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddLessThan(m.C1.C1AllorsInteger, 3);
 
             Assert.Equal(3, extent.Count);
@@ -9849,7 +9849,7 @@ public abstract class ExtentTest : IDisposable
             // Interface
 
             // Less Than 1
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddLessThan(m.I12.I12AllorsInteger, 1);
 
             Assert.Empty(extent);
@@ -9859,7 +9859,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Less Than 2
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddLessThan(m.I12.I12AllorsInteger, 2);
 
             Assert.Equal(2, extent.Count);
@@ -9869,7 +9869,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Less Than 3
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddLessThan(m.I12.I12AllorsInteger, 3);
 
             Assert.Equal(6, extent.Count);
@@ -9881,7 +9881,7 @@ public abstract class ExtentTest : IDisposable
             // Super Interface
 
             // Less Than 1
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddLessThan(m.S1234.S1234AllorsInteger, 1);
 
             Assert.Empty(extent);
@@ -9891,7 +9891,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Less Than 2
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddLessThan(m.S1234.S1234AllorsInteger, 2);
 
             Assert.Equal(4, extent.Count);
@@ -9901,7 +9901,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, true, false, false);
 
             // Less Than 3
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddLessThan(m.S1234.S1234AllorsInteger, 3);
 
             Assert.Equal(12, extent.Count);
@@ -9913,7 +9913,7 @@ public abstract class ExtentTest : IDisposable
             // Class - Wrong RelationType
 
             // Less Than 1
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             var exception = false;
             try
@@ -9928,7 +9928,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Less Than 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -9943,7 +9943,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Less Than 3
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -9960,7 +9960,7 @@ public abstract class ExtentTest : IDisposable
             // Interface - Wrong RelationType
 
             // Less Than 1
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -9975,7 +9975,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Less Than 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -9990,7 +9990,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Less Than 3
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -10007,7 +10007,7 @@ public abstract class ExtentTest : IDisposable
             // Super Interface - Wrong RelationType
 
             // Less Than 1
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -10022,7 +10022,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Less Than 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -10037,7 +10037,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Less Than 3
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -10065,7 +10065,7 @@ public abstract class ExtentTest : IDisposable
             // Class
 
             // Greater Than 0
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddGreaterThan(m.C1.C1AllorsInteger, 0);
 
             Assert.Equal(3, extent.Count);
@@ -10075,7 +10075,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Greater Than 1
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddGreaterThan(m.C1.C1AllorsInteger, 1);
 
             Assert.Equal(2, extent.Count);
@@ -10085,7 +10085,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Greater Than 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddGreaterThan(m.C1.C1AllorsInteger, 2);
 
             Assert.Empty(extent);
@@ -10096,7 +10096,7 @@ public abstract class ExtentTest : IDisposable
 
             // Interface
             // Greater Than 0
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddGreaterThan(m.I12.I12AllorsInteger, 0);
 
             Assert.Equal(6, extent.Count);
@@ -10106,7 +10106,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Greater Than 1
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddGreaterThan(m.I12.I12AllorsInteger, 1);
 
             Assert.Equal(4, extent.Count);
@@ -10116,7 +10116,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Greater Than 2
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddGreaterThan(m.I12.I12AllorsInteger, 2);
 
             Assert.Empty(extent);
@@ -10127,7 +10127,7 @@ public abstract class ExtentTest : IDisposable
 
             // Super Interface
             // Greater Than 0
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddGreaterThan(m.S1234.S1234AllorsInteger, 0);
 
             Assert.Equal(12, extent.Count);
@@ -10137,7 +10137,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, true, true, true);
 
             // Greater Than 1
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddGreaterThan(m.S1234.S1234AllorsInteger, 1);
 
             Assert.Equal(8, extent.Count);
@@ -10147,7 +10147,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, true, true);
 
             // Greater Than 2
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddGreaterThan(m.S1234.S1234AllorsInteger, 2);
 
             Assert.Empty(extent);
@@ -10158,7 +10158,7 @@ public abstract class ExtentTest : IDisposable
 
             // Class - Wrong RelationType
             // Greater Than 0
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             var exception = false;
             try
@@ -10173,7 +10173,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Greater Than 1
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -10188,7 +10188,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Greater Than 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -10204,7 +10204,7 @@ public abstract class ExtentTest : IDisposable
 
             // Interface - Wrong RelationType
             // Greater Than 0
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -10219,7 +10219,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Greater Than 1
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -10234,7 +10234,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Greater Than 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -10250,7 +10250,7 @@ public abstract class ExtentTest : IDisposable
 
             // Super Interface - Wrong RelationType
             // Greater Than 0
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -10265,7 +10265,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Greater Than 1
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -10280,7 +10280,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Greater Than 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -10307,7 +10307,7 @@ public abstract class ExtentTest : IDisposable
 
             // Class
             // Equal 0
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddEquals(m.C1.C1AllorsInteger, 0);
 
             Assert.Empty(extent);
@@ -10317,7 +10317,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Equal 1
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddEquals(m.C1.C1AllorsInteger, 1);
 
             Assert.Single(extent);
@@ -10327,7 +10327,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Equal 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddEquals(m.C1.C1AllorsInteger, 2);
 
             Assert.Equal(2, extent.Count);
@@ -10338,7 +10338,7 @@ public abstract class ExtentTest : IDisposable
 
             // Interface
             // Equal 0
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddEquals(m.I12.I12AllorsInteger, 0);
 
             Assert.Empty(extent);
@@ -10348,7 +10348,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Equal 1
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddEquals(m.I12.I12AllorsInteger, 1);
 
             Assert.Equal(2, extent.Count);
@@ -10358,7 +10358,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Equal 2
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddEquals(m.I12.I12AllorsInteger, 2);
 
             Assert.Equal(4, extent.Count);
@@ -10369,7 +10369,7 @@ public abstract class ExtentTest : IDisposable
 
             // Super Interface
             // Equal 0
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddEquals(m.S1234.S1234AllorsInteger, 0);
 
             Assert.Empty(extent);
@@ -10379,7 +10379,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Equal 1
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddEquals(m.S1234.S1234AllorsInteger, 1);
 
             Assert.Equal(4, extent.Count);
@@ -10389,7 +10389,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, true, false, false);
 
             // Equal 2
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddEquals(m.S1234.S1234AllorsInteger, 2);
 
             Assert.Equal(8, extent.Count);
@@ -10400,7 +10400,7 @@ public abstract class ExtentTest : IDisposable
 
             // Class - Wrong RelationType
             // Equal 0
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             var exception = false;
             try
@@ -10415,7 +10415,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Equal 1
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -10430,7 +10430,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Equal 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -10446,7 +10446,7 @@ public abstract class ExtentTest : IDisposable
 
             // Interface - Wrong RelationType
             // Equal 0
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -10461,7 +10461,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Equal 1
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -10476,7 +10476,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Equal 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -10492,7 +10492,7 @@ public abstract class ExtentTest : IDisposable
 
             // Super Interface - Wrong RelationType
             // Equal 0
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -10507,7 +10507,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Equal 1
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -10522,7 +10522,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Equal 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -10550,7 +10550,7 @@ public abstract class ExtentTest : IDisposable
             // Class
 
             // Between -10 and 0
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddBetween(m.C1.C1AllorsDouble, -10, 0);
 
             Assert.Empty(extent);
@@ -10560,7 +10560,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Between 0 and 1
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddBetween(m.C1.C1AllorsDouble, 0, 1);
 
             Assert.Single(extent);
@@ -10570,7 +10570,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Between 1 and 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddBetween(m.C1.C1AllorsDouble, 1, 2);
 
             Assert.Equal(3, extent.Count);
@@ -10580,7 +10580,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Between 3 and 10
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddBetween(m.C1.C1AllorsDouble, 3, 10);
 
             Assert.Empty(extent);
@@ -10592,7 +10592,7 @@ public abstract class ExtentTest : IDisposable
             // Interface
 
             // Between -10 and 0
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddBetween(m.I12.I12AllorsDouble, -10, 0);
 
             Assert.Empty(extent);
@@ -10602,7 +10602,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Between 0 and 1
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddBetween(m.I12.I12AllorsDouble, 0, 1);
 
             Assert.Equal(2, extent.Count);
@@ -10612,7 +10612,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Between 1 and 2
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddBetween(m.I12.I12AllorsDouble, 1, 2);
 
             Assert.Equal(6, extent.Count);
@@ -10622,7 +10622,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Between 3 and 10
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddBetween(m.I12.I12AllorsDouble, 3, 10);
 
             Assert.Empty(extent);
@@ -10634,7 +10634,7 @@ public abstract class ExtentTest : IDisposable
             // Super Interface
 
             // Between -10 and 0
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddBetween(m.S1234.S1234AllorsDouble, -10, 0);
 
             Assert.Empty(extent);
@@ -10644,7 +10644,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Between 0 and 1
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddBetween(m.S1234.S1234AllorsDouble, 0, 1);
 
             Assert.Equal(4, extent.Count);
@@ -10654,7 +10654,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, true, false, false);
 
             // Between 1 and 2
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddBetween(m.S1234.S1234AllorsDouble, 1, 2);
 
             Assert.Equal(12, extent.Count);
@@ -10664,7 +10664,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, true, true, true);
 
             // Between 3 and 10
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddBetween(m.S1234.S1234AllorsDouble, 3, 10);
 
             Assert.Empty(extent);
@@ -10676,7 +10676,7 @@ public abstract class ExtentTest : IDisposable
             // Class - Wrong RelationType
 
             // Between -10 and 0
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             var exception = false;
             try
@@ -10691,7 +10691,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Between 0 and 1
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -10706,7 +10706,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Between 1 and 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -10721,7 +10721,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Between 3 and 10
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -10749,7 +10749,7 @@ public abstract class ExtentTest : IDisposable
             // Class
 
             // Less Than 1
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddLessThan(m.C1.C1AllorsDouble, 1);
 
             Assert.Empty(extent);
@@ -10759,7 +10759,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Less Than 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddLessThan(m.C1.C1AllorsDouble, 2);
 
             Assert.Single(extent);
@@ -10769,7 +10769,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Less Than 3
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddLessThan(m.C1.C1AllorsDouble, 3);
 
             Assert.Equal(3, extent.Count);
@@ -10781,7 +10781,7 @@ public abstract class ExtentTest : IDisposable
             // Interface
 
             // Less Than 1
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddLessThan(m.I12.I12AllorsDouble, 1);
 
             Assert.Empty(extent);
@@ -10791,7 +10791,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Less Than 2
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddLessThan(m.I12.I12AllorsDouble, 2);
 
             Assert.Equal(2, extent.Count);
@@ -10801,7 +10801,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Less Than 3
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddLessThan(m.I12.I12AllorsDouble, 3);
 
             Assert.Equal(6, extent.Count);
@@ -10813,7 +10813,7 @@ public abstract class ExtentTest : IDisposable
             // Super Interface
 
             // Less Than 1
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddLessThan(m.S1234.S1234AllorsDouble, 1);
 
             Assert.Empty(extent);
@@ -10823,7 +10823,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Less Than 2
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddLessThan(m.S1234.S1234AllorsDouble, 2);
 
             Assert.Equal(4, extent.Count);
@@ -10833,7 +10833,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, true, false, false);
 
             // Less Than 3
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddLessThan(m.S1234.S1234AllorsDouble, 3);
 
             Assert.Equal(12, extent.Count);
@@ -10845,7 +10845,7 @@ public abstract class ExtentTest : IDisposable
             // Class - Wrong RelationType
 
             // Less Than 1
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             var exception = false;
             try
@@ -10860,7 +10860,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Less Than 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -10875,7 +10875,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Less Than 3
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -10892,7 +10892,7 @@ public abstract class ExtentTest : IDisposable
             // Interface - Wrong RelationType
 
             // Less Than 1
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -10907,7 +10907,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Less Than 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -10922,7 +10922,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Less Than 3
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -10939,7 +10939,7 @@ public abstract class ExtentTest : IDisposable
             // Super Interface - Wrong RelationType
 
             // Less Than 1
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -10954,7 +10954,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Less Than 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -10969,7 +10969,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Less Than 3
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -10997,7 +10997,7 @@ public abstract class ExtentTest : IDisposable
             // Class
 
             // Greater Than 0
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddGreaterThan(m.C1.C1AllorsDouble, 0);
 
             Assert.Equal(3, extent.Count);
@@ -11007,7 +11007,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Greater Than 1
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddGreaterThan(m.C1.C1AllorsDouble, 1);
 
             Assert.Equal(2, extent.Count);
@@ -11017,7 +11017,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Greater Than 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddGreaterThan(m.C1.C1AllorsDouble, 2);
 
             Assert.Empty(extent);
@@ -11029,7 +11029,7 @@ public abstract class ExtentTest : IDisposable
             // Interface
 
             // Greater Than 0
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddGreaterThan(m.I12.I12AllorsDouble, 0);
 
             Assert.Equal(6, extent.Count);
@@ -11039,7 +11039,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Greater Than 1
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddGreaterThan(m.I12.I12AllorsDouble, 1);
 
             Assert.Equal(4, extent.Count);
@@ -11049,7 +11049,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Greater Than 2
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddGreaterThan(m.I12.I12AllorsDouble, 2);
 
             Assert.Empty(extent);
@@ -11061,7 +11061,7 @@ public abstract class ExtentTest : IDisposable
             // Super Interface
 
             // Greater Than 0
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddGreaterThan(m.S1234.S1234AllorsDouble, 0);
 
             Assert.Equal(12, extent.Count);
@@ -11071,7 +11071,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, true, true, true);
 
             // Greater Than 1
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddGreaterThan(m.S1234.S1234AllorsDouble, 1);
 
             Assert.Equal(8, extent.Count);
@@ -11081,7 +11081,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, true, true);
 
             // Greater Than 2
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddGreaterThan(m.S1234.S1234AllorsDouble, 2);
 
             Assert.Empty(extent);
@@ -11093,7 +11093,7 @@ public abstract class ExtentTest : IDisposable
             // Class - Wrong RelationType
 
             // Greater Than 0
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             var exception = false;
             try
@@ -11108,7 +11108,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Greater Than 1
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -11123,7 +11123,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Greater Than 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -11140,7 +11140,7 @@ public abstract class ExtentTest : IDisposable
             // Interface - Wrong RelationType
 
             // Greater Than 0
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -11155,7 +11155,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Greater Than 1
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -11170,7 +11170,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Greater Than 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -11187,7 +11187,7 @@ public abstract class ExtentTest : IDisposable
             // Super Interface - Wrong RelationType
 
             // Greater Than 0
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -11202,7 +11202,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Greater Than 1
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -11217,7 +11217,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Greater Than 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -11244,7 +11244,7 @@ public abstract class ExtentTest : IDisposable
 
             // Class
             // Equal 0
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddEquals(m.C1.C1AllorsDouble, 0);
 
             Assert.Empty(extent);
@@ -11254,7 +11254,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Equal 1
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddEquals(m.C1.C1AllorsDouble, 1);
 
             Assert.Single(extent);
@@ -11264,7 +11264,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Equal 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddEquals(m.C1.C1AllorsDouble, 2);
 
             Assert.Equal(2, extent.Count);
@@ -11275,7 +11275,7 @@ public abstract class ExtentTest : IDisposable
 
             // Interface
             // Equal 0
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddEquals(m.I12.I12AllorsDouble, 0);
 
             Assert.Empty(extent);
@@ -11285,7 +11285,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Equal 1
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddEquals(m.I12.I12AllorsDouble, 1);
 
             Assert.Equal(2, extent.Count);
@@ -11295,7 +11295,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Equal 2
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddEquals(m.I12.I12AllorsDouble, 2);
 
             Assert.Equal(4, extent.Count);
@@ -11306,7 +11306,7 @@ public abstract class ExtentTest : IDisposable
 
             // Super Interface
             // Equal 0
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddEquals(m.S1234.S1234AllorsDouble, 0);
 
             Assert.Empty(extent);
@@ -11316,7 +11316,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Equal 1
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddEquals(m.S1234.S1234AllorsDouble, 1);
 
             Assert.Equal(4, extent.Count);
@@ -11326,7 +11326,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, true, false, false);
 
             // Equal 2
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddEquals(m.S1234.S1234AllorsDouble, 2);
 
             Assert.Equal(8, extent.Count);
@@ -11337,7 +11337,7 @@ public abstract class ExtentTest : IDisposable
 
             // Class - Wrong RelationType
             // Equal 0
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             var exception = false;
             try
@@ -11352,7 +11352,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Equal 1
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -11367,7 +11367,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Equal 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -11383,7 +11383,7 @@ public abstract class ExtentTest : IDisposable
 
             // Interface - Wrong RelationType
             // Equal 0
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -11398,7 +11398,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Equal 1
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -11413,7 +11413,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Equal 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -11429,7 +11429,7 @@ public abstract class ExtentTest : IDisposable
 
             // Super Interface - Wrong RelationType
             // Equal 0
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -11444,7 +11444,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Equal 1
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -11459,7 +11459,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Equal 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -11509,7 +11509,7 @@ public abstract class ExtentTest : IDisposable
 
                 // Class
                 // Between 1 and 3
-                var extent = this.Transaction.Extent(m.C1);
+                var extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddBetween(m.C1.C1AllorsDateTime, dateTime1, dateTime3);
 
                 Assert.Empty(extent);
@@ -11531,7 +11531,7 @@ public abstract class ExtentTest : IDisposable
                 Assert.False(extent.Contains(this.c4D));
 
                 // Between 3 and 4
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddBetween(m.C1.C1AllorsDateTime, dateTime3, dateTime4);
 
                 Assert.Single(extent);
@@ -11553,7 +11553,7 @@ public abstract class ExtentTest : IDisposable
                 Assert.False(extent.Contains(this.c4D));
 
                 // Between 4 and 5
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddBetween(m.C1.C1AllorsDateTime, dateTime4, dateTime5);
 
                 Assert.Equal(3, extent.Count);
@@ -11575,7 +11575,7 @@ public abstract class ExtentTest : IDisposable
                 Assert.False(extent.Contains(this.c4D));
 
                 // Between 6 and 10
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddBetween(m.C1.C1AllorsDateTime, dateTime6, dateTime10);
 
                 Assert.Empty(extent);
@@ -11598,7 +11598,7 @@ public abstract class ExtentTest : IDisposable
 
                 // Interface
                 // Between 1 and 3
-                extent = this.Transaction.Extent(m.I12);
+                extent = this.Transaction.Extent(m.I12.Composite);
                 extent.Filter.AddBetween(m.I12.I12AllorsDateTime, dateTime1, dateTime3);
 
                 Assert.Empty(extent);
@@ -11620,7 +11620,7 @@ public abstract class ExtentTest : IDisposable
                 Assert.False(extent.Contains(this.c4D));
 
                 // Between 3 and 4
-                extent = this.Transaction.Extent(m.I12);
+                extent = this.Transaction.Extent(m.I12.Composite);
                 extent.Filter.AddBetween(m.I12.I12AllorsDateTime, dateTime3, dateTime4);
 
                 Assert.Equal(2, extent.Count);
@@ -11642,7 +11642,7 @@ public abstract class ExtentTest : IDisposable
                 Assert.False(extent.Contains(this.c4D));
 
                 // Between 4 and 5
-                extent = this.Transaction.Extent(m.I12);
+                extent = this.Transaction.Extent(m.I12.Composite);
                 extent.Filter.AddBetween(m.I12.I12AllorsDateTime, dateTime4, dateTime5);
 
                 Assert.Equal(6, extent.Count);
@@ -11664,7 +11664,7 @@ public abstract class ExtentTest : IDisposable
                 Assert.False(extent.Contains(this.c4D));
 
                 // Between 6 and 10
-                extent = this.Transaction.Extent(m.I12);
+                extent = this.Transaction.Extent(m.I12.Composite);
                 extent.Filter.AddBetween(m.I12.I12AllorsDateTime, dateTime6, dateTime10);
 
                 Assert.Empty(extent);
@@ -11687,7 +11687,7 @@ public abstract class ExtentTest : IDisposable
 
                 // Super Interface
                 // Between 1 and 3
-                extent = this.Transaction.Extent(m.S1234);
+                extent = this.Transaction.Extent(m.S1234.Composite);
                 extent.Filter.AddBetween(m.S1234.S1234AllorsDateTime, dateTime1, dateTime3);
 
                 Assert.Empty(extent);
@@ -11709,7 +11709,7 @@ public abstract class ExtentTest : IDisposable
                 Assert.False(extent.Contains(this.c4D));
 
                 // Between 3 and 4
-                extent = this.Transaction.Extent(m.S1234);
+                extent = this.Transaction.Extent(m.S1234.Composite);
                 extent.Filter.AddBetween(m.S1234.S1234AllorsDateTime, dateTime3, dateTime4);
 
                 Assert.Equal(4, extent.Count);
@@ -11731,7 +11731,7 @@ public abstract class ExtentTest : IDisposable
                 Assert.False(extent.Contains(this.c4D));
 
                 // Between 4 and 5
-                extent = this.Transaction.Extent(m.S1234);
+                extent = this.Transaction.Extent(m.S1234.Composite);
                 extent.Filter.AddBetween(m.S1234.S1234AllorsDateTime, dateTime4, dateTime5);
 
                 Assert.Equal(12, extent.Count);
@@ -11753,7 +11753,7 @@ public abstract class ExtentTest : IDisposable
                 Assert.True(extent.Contains(this.c4D));
 
                 // Between 6 and 10
-                extent = this.Transaction.Extent(m.S1234);
+                extent = this.Transaction.Extent(m.S1234.Composite);
                 extent.Filter.AddBetween(m.S1234.S1234AllorsDateTime, dateTime6, dateTime10);
 
                 Assert.Empty(extent);
@@ -11776,7 +11776,7 @@ public abstract class ExtentTest : IDisposable
 
                 // Class - Wrong RelationType0
                 // Between 1 and 3
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
 
                 var exception = false;
                 try
@@ -11791,7 +11791,7 @@ public abstract class ExtentTest : IDisposable
                 Assert.True(exception);
 
                 // Between 3 and 4
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
 
                 exception = false;
                 try
@@ -11806,7 +11806,7 @@ public abstract class ExtentTest : IDisposable
                 Assert.True(exception);
 
                 // Between 4 and 5
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
 
                 exception = false;
                 try
@@ -11821,7 +11821,7 @@ public abstract class ExtentTest : IDisposable
                 Assert.True(exception);
 
                 // Between 6 and 10
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
 
                 exception = false;
                 try
@@ -11872,7 +11872,7 @@ public abstract class ExtentTest : IDisposable
 
                 // Class
                 // Less Than 4
-                var extent = this.Transaction.Extent(m.C1);
+                var extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddLessThan(m.C1.C1AllorsDateTime, dateTime4);
 
                 Assert.Empty(extent);
@@ -11894,7 +11894,7 @@ public abstract class ExtentTest : IDisposable
                 Assert.False(extent.Contains(this.c4D));
 
                 // Less Than 5
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddLessThan(m.C1.C1AllorsDateTime, dateTime5);
 
                 Assert.Single(extent);
@@ -11916,7 +11916,7 @@ public abstract class ExtentTest : IDisposable
                 Assert.False(extent.Contains(this.c4D));
 
                 // Less Than 6
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddLessThan(m.C1.C1AllorsDateTime, dateTime6);
 
                 Assert.Equal(3, extent.Count);
@@ -11939,7 +11939,7 @@ public abstract class ExtentTest : IDisposable
 
                 // Interface
                 // Less Than 4
-                extent = this.Transaction.Extent(m.I12);
+                extent = this.Transaction.Extent(m.I12.Composite);
                 extent.Filter.AddLessThan(m.I12.I12AllorsDateTime, dateTime4);
 
                 Assert.Empty(extent);
@@ -11961,7 +11961,7 @@ public abstract class ExtentTest : IDisposable
                 Assert.False(extent.Contains(this.c4D));
 
                 // Less Than 5
-                extent = this.Transaction.Extent(m.I12);
+                extent = this.Transaction.Extent(m.I12.Composite);
                 extent.Filter.AddLessThan(m.I12.I12AllorsDateTime, dateTime5);
 
                 Assert.Equal(2, extent.Count);
@@ -11983,7 +11983,7 @@ public abstract class ExtentTest : IDisposable
                 Assert.False(extent.Contains(this.c4D));
 
                 // Less Than 6
-                extent = this.Transaction.Extent(m.I12);
+                extent = this.Transaction.Extent(m.I12.Composite);
                 extent.Filter.AddLessThan(m.I12.I12AllorsDateTime, dateTime6);
 
                 Assert.Equal(6, extent.Count);
@@ -12006,7 +12006,7 @@ public abstract class ExtentTest : IDisposable
 
                 // Super Interface
                 // Less Than 4
-                extent = this.Transaction.Extent(m.S1234);
+                extent = this.Transaction.Extent(m.S1234.Composite);
                 extent.Filter.AddLessThan(m.S1234.S1234AllorsDateTime, dateTime4);
 
                 Assert.Empty(extent);
@@ -12028,7 +12028,7 @@ public abstract class ExtentTest : IDisposable
                 Assert.False(extent.Contains(this.c4D));
 
                 // Less Than 5
-                extent = this.Transaction.Extent(m.S1234);
+                extent = this.Transaction.Extent(m.S1234.Composite);
                 extent.Filter.AddLessThan(m.S1234.S1234AllorsDateTime, dateTime5);
 
                 Assert.Equal(4, extent.Count);
@@ -12050,7 +12050,7 @@ public abstract class ExtentTest : IDisposable
                 Assert.False(extent.Contains(this.c4D));
 
                 // Less Than 6
-                extent = this.Transaction.Extent(m.S1234);
+                extent = this.Transaction.Extent(m.S1234.Composite);
                 extent.Filter.AddLessThan(m.S1234.S1234AllorsDateTime, dateTime6);
 
                 Assert.Equal(12, extent.Count);
@@ -12074,7 +12074,7 @@ public abstract class ExtentTest : IDisposable
                 // Class - Wrong RelationType
 
                 // Less Than 4
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
 
                 var exception = false;
                 try
@@ -12089,7 +12089,7 @@ public abstract class ExtentTest : IDisposable
                 Assert.True(exception);
 
                 // Less Than 5
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
 
                 exception = false;
                 try
@@ -12104,7 +12104,7 @@ public abstract class ExtentTest : IDisposable
                 Assert.True(exception);
 
                 // Less Than 6
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
 
                 exception = false;
                 try
@@ -12120,7 +12120,7 @@ public abstract class ExtentTest : IDisposable
 
                 // Interface - Wrong RelationType
                 // Less Than 4
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
 
                 exception = false;
                 try
@@ -12135,7 +12135,7 @@ public abstract class ExtentTest : IDisposable
                 Assert.True(exception);
 
                 // Less Than 5
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
 
                 exception = false;
                 try
@@ -12150,7 +12150,7 @@ public abstract class ExtentTest : IDisposable
                 Assert.True(exception);
 
                 // Less Than 6
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
 
                 exception = false;
                 try
@@ -12166,7 +12166,7 @@ public abstract class ExtentTest : IDisposable
 
                 // Super Interface - Wrong RelationType
                 // Less Than 4
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
 
                 exception = false;
                 try
@@ -12181,7 +12181,7 @@ public abstract class ExtentTest : IDisposable
                 Assert.True(exception);
 
                 // Less Than 5
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
 
                 exception = false;
                 try
@@ -12196,7 +12196,7 @@ public abstract class ExtentTest : IDisposable
                 Assert.True(exception);
 
                 // Less Than 6
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
 
                 exception = false;
                 try
@@ -12247,7 +12247,7 @@ public abstract class ExtentTest : IDisposable
 
                 // Class
                 // Greater Than 3
-                var extent = this.Transaction.Extent(m.C1);
+                var extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddGreaterThan(m.C1.C1AllorsDateTime, dateTime3);
 
                 Assert.Equal(3, extent.Count);
@@ -12269,7 +12269,7 @@ public abstract class ExtentTest : IDisposable
                 Assert.False(extent.Contains(this.c4D));
 
                 // Greater Than 4
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddGreaterThan(m.C1.C1AllorsDateTime, dateTime4);
 
                 Assert.Equal(2, extent.Count);
@@ -12291,7 +12291,7 @@ public abstract class ExtentTest : IDisposable
                 Assert.False(extent.Contains(this.c4D));
 
                 // Greater Than 5
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddGreaterThan(m.C1.C1AllorsDateTime, dateTime5);
 
                 Assert.Empty(extent);
@@ -12314,7 +12314,7 @@ public abstract class ExtentTest : IDisposable
 
                 // Interface
                 // Greater Than 3
-                extent = this.Transaction.Extent(m.I12);
+                extent = this.Transaction.Extent(m.I12.Composite);
                 extent.Filter.AddGreaterThan(m.I12.I12AllorsDateTime, dateTime3);
 
                 Assert.Equal(6, extent.Count);
@@ -12336,7 +12336,7 @@ public abstract class ExtentTest : IDisposable
                 Assert.False(extent.Contains(this.c4D));
 
                 // Greater Than 4
-                extent = this.Transaction.Extent(m.I12);
+                extent = this.Transaction.Extent(m.I12.Composite);
                 extent.Filter.AddGreaterThan(m.I12.I12AllorsDateTime, dateTime4);
 
                 Assert.Equal(4, extent.Count);
@@ -12358,7 +12358,7 @@ public abstract class ExtentTest : IDisposable
                 Assert.False(extent.Contains(this.c4D));
 
                 // Greater Than 5
-                extent = this.Transaction.Extent(m.I12);
+                extent = this.Transaction.Extent(m.I12.Composite);
                 extent.Filter.AddGreaterThan(m.I12.I12AllorsDateTime, dateTime5);
 
                 Assert.Empty(extent);
@@ -12381,7 +12381,7 @@ public abstract class ExtentTest : IDisposable
 
                 // Super Interface
                 // Greater Than 3
-                extent = this.Transaction.Extent(m.S1234);
+                extent = this.Transaction.Extent(m.S1234.Composite);
                 extent.Filter.AddGreaterThan(m.S1234.S1234AllorsDateTime, dateTime3);
 
                 Assert.Equal(12, extent.Count);
@@ -12403,7 +12403,7 @@ public abstract class ExtentTest : IDisposable
                 Assert.True(extent.Contains(this.c4D));
 
                 // Greater Than 4
-                extent = this.Transaction.Extent(m.S1234);
+                extent = this.Transaction.Extent(m.S1234.Composite);
                 extent.Filter.AddGreaterThan(m.S1234.S1234AllorsDateTime, dateTime4);
 
                 Assert.Equal(8, extent.Count);
@@ -12425,7 +12425,7 @@ public abstract class ExtentTest : IDisposable
                 Assert.True(extent.Contains(this.c4D));
 
                 // Greater Than 5
-                extent = this.Transaction.Extent(m.S1234);
+                extent = this.Transaction.Extent(m.S1234.Composite);
                 extent.Filter.AddGreaterThan(m.S1234.S1234AllorsDateTime, dateTime5);
 
                 Assert.Empty(extent);
@@ -12449,7 +12449,7 @@ public abstract class ExtentTest : IDisposable
                 // Class - Wrong RelationType
 
                 // Greater Than 3
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
 
                 var exception = false;
                 try
@@ -12464,7 +12464,7 @@ public abstract class ExtentTest : IDisposable
                 Assert.True(exception);
 
                 // Greater Than 4
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
 
                 exception = false;
                 try
@@ -12479,7 +12479,7 @@ public abstract class ExtentTest : IDisposable
                 Assert.True(exception);
 
                 // Greater Than 5
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
 
                 exception = false;
                 try
@@ -12496,7 +12496,7 @@ public abstract class ExtentTest : IDisposable
                 // Interface - Wrong RelationType
 
                 // Greater Than 3
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
 
                 exception = false;
                 try
@@ -12511,7 +12511,7 @@ public abstract class ExtentTest : IDisposable
                 Assert.True(exception);
 
                 // Greater Than 4
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
 
                 exception = false;
                 try
@@ -12526,7 +12526,7 @@ public abstract class ExtentTest : IDisposable
                 Assert.True(exception);
 
                 // Greater Than 5
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
 
                 exception = false;
                 try
@@ -12543,7 +12543,7 @@ public abstract class ExtentTest : IDisposable
                 // Super Interface - Wrong RelationType
 
                 // Greater Than 3
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
 
                 exception = false;
                 try
@@ -12558,7 +12558,7 @@ public abstract class ExtentTest : IDisposable
                 Assert.True(exception);
 
                 // Greater Than 4
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
 
                 exception = false;
                 try
@@ -12573,7 +12573,7 @@ public abstract class ExtentTest : IDisposable
                 Assert.True(exception);
 
                 // Greater Than 5
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
 
                 exception = false;
                 try
@@ -12624,7 +12624,7 @@ public abstract class ExtentTest : IDisposable
 
                 // Class
                 // Equal 3
-                var extent = this.Transaction.Extent(m.C1);
+                var extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddEquals(m.C1.C1AllorsDateTime, dateTime3);
 
                 Assert.Empty(extent);
@@ -12646,7 +12646,7 @@ public abstract class ExtentTest : IDisposable
                 Assert.False(extent.Contains(this.c4D));
 
                 // Equal 4
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddEquals(m.C1.C1AllorsDateTime, dateTime4);
 
                 Assert.Single(extent);
@@ -12668,7 +12668,7 @@ public abstract class ExtentTest : IDisposable
                 Assert.False(extent.Contains(this.c4D));
 
                 // Equal 5
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddEquals(m.C1.C1AllorsDateTime, dateTime5);
 
                 Assert.Equal(2, extent.Count);
@@ -12691,7 +12691,7 @@ public abstract class ExtentTest : IDisposable
 
                 // Interface
                 // Equal 3
-                extent = this.Transaction.Extent(m.I12);
+                extent = this.Transaction.Extent(m.I12.Composite);
                 extent.Filter.AddEquals(m.I12.I12AllorsDateTime, dateTime3);
 
                 Assert.Empty(extent);
@@ -12713,7 +12713,7 @@ public abstract class ExtentTest : IDisposable
                 Assert.False(extent.Contains(this.c4D));
 
                 // Equal 4
-                extent = this.Transaction.Extent(m.I12);
+                extent = this.Transaction.Extent(m.I12.Composite);
                 extent.Filter.AddEquals(m.I12.I12AllorsDateTime, dateTime4);
 
                 Assert.Equal(2, extent.Count);
@@ -12735,7 +12735,7 @@ public abstract class ExtentTest : IDisposable
                 Assert.False(extent.Contains(this.c4D));
 
                 // Equal 5
-                extent = this.Transaction.Extent(m.I12);
+                extent = this.Transaction.Extent(m.I12.Composite);
                 extent.Filter.AddEquals(m.I12.I12AllorsDateTime, dateTime5);
 
                 Assert.Equal(4, extent.Count);
@@ -12758,7 +12758,7 @@ public abstract class ExtentTest : IDisposable
 
                 // Super Interface
                 // Equal 3
-                extent = this.Transaction.Extent(m.S1234);
+                extent = this.Transaction.Extent(m.S1234.Composite);
                 extent.Filter.AddEquals(m.S1234.S1234AllorsDateTime, dateTime3);
 
                 Assert.Empty(extent);
@@ -12780,7 +12780,7 @@ public abstract class ExtentTest : IDisposable
                 Assert.False(extent.Contains(this.c4D));
 
                 // Equal 4
-                extent = this.Transaction.Extent(m.S1234);
+                extent = this.Transaction.Extent(m.S1234.Composite);
                 extent.Filter.AddEquals(m.S1234.S1234AllorsDateTime, dateTime4);
 
                 Assert.Equal(4, extent.Count);
@@ -12802,7 +12802,7 @@ public abstract class ExtentTest : IDisposable
                 Assert.False(extent.Contains(this.c4D));
 
                 // Equal 5
-                extent = this.Transaction.Extent(m.S1234);
+                extent = this.Transaction.Extent(m.S1234.Composite);
                 extent.Filter.AddEquals(m.S1234.S1234AllorsDateTime, dateTime5);
 
                 Assert.Equal(8, extent.Count);
@@ -12825,7 +12825,7 @@ public abstract class ExtentTest : IDisposable
 
                 // Class - Wrong RelationType
                 // Equal 3
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
 
                 var exception = false;
                 try
@@ -12840,7 +12840,7 @@ public abstract class ExtentTest : IDisposable
                 Assert.True(exception);
 
                 // Equal 4
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
 
                 exception = false;
                 try
@@ -12855,7 +12855,7 @@ public abstract class ExtentTest : IDisposable
                 Assert.True(exception);
 
                 // Equal 5
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
 
                 exception = false;
                 try
@@ -12871,7 +12871,7 @@ public abstract class ExtentTest : IDisposable
 
                 // Interface - Wrong RelationType
                 // Equal 3
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
 
                 exception = false;
                 try
@@ -12886,7 +12886,7 @@ public abstract class ExtentTest : IDisposable
                 Assert.True(exception);
 
                 // Equal 4
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
 
                 exception = false;
                 try
@@ -12901,7 +12901,7 @@ public abstract class ExtentTest : IDisposable
                 Assert.True(exception);
 
                 // Equal 5
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
 
                 exception = false;
                 try
@@ -12917,7 +12917,7 @@ public abstract class ExtentTest : IDisposable
 
                 // Super Interface - Wrong RelationType
                 // Equal 3
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
 
                 exception = false;
                 try
@@ -12932,7 +12932,7 @@ public abstract class ExtentTest : IDisposable
                 Assert.True(exception);
 
                 // Equal 4
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
 
                 exception = false;
                 try
@@ -12947,7 +12947,7 @@ public abstract class ExtentTest : IDisposable
                 Assert.True(exception);
 
                 // Equal 5
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
 
                 exception = false;
                 try
@@ -12976,7 +12976,7 @@ public abstract class ExtentTest : IDisposable
             // Class
 
             // Between -10 and 0
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddBetween(m.C1.C1AllorsDecimal, -10, 0);
 
             Assert.Empty(extent);
@@ -12986,7 +12986,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Between 0 and 1
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddBetween(m.C1.C1AllorsDecimal, 0, 1);
 
             Assert.Single(extent);
@@ -12996,7 +12996,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Between 1 and 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddBetween(m.C1.C1AllorsDecimal, 1, 2);
 
             Assert.Equal(3, extent.Count);
@@ -13006,7 +13006,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Between 3 and 10
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddBetween(m.C1.C1AllorsDecimal, 3, 10);
 
             Assert.Empty(extent);
@@ -13018,7 +13018,7 @@ public abstract class ExtentTest : IDisposable
             // Interface
 
             // Between -10 and 0
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddBetween(m.I12.I12AllorsDecimal, -10, 0);
 
             Assert.Empty(extent);
@@ -13028,7 +13028,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Between 0 and 1
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddBetween(m.I12.I12AllorsDecimal, 0, 1);
 
             Assert.Equal(2, extent.Count);
@@ -13038,7 +13038,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Between 1 and 2
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddBetween(m.I12.I12AllorsDecimal, 1, 2);
 
             Assert.Equal(6, extent.Count);
@@ -13048,7 +13048,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Between 3 and 10
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddBetween(m.I12.I12AllorsDecimal, 3, 10);
 
             Assert.Empty(extent);
@@ -13060,7 +13060,7 @@ public abstract class ExtentTest : IDisposable
             // Super Interface
 
             // Between -10 and 0
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddBetween(m.S1234.S1234AllorsDecimal, -10, 0);
 
             Assert.Empty(extent);
@@ -13070,7 +13070,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Between 0 and 1
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddBetween(m.S1234.S1234AllorsDecimal, 0, 1);
 
             Assert.Equal(4, extent.Count);
@@ -13080,7 +13080,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, true, false, false);
 
             // Between 1 and 2
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddBetween(m.S1234.S1234AllorsDecimal, 1, 2);
 
             Assert.Equal(12, extent.Count);
@@ -13090,7 +13090,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, true, true, true);
 
             // Between 3 and 10
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddBetween(m.S1234.S1234AllorsDecimal, 3, 10);
 
             Assert.Empty(extent);
@@ -13102,7 +13102,7 @@ public abstract class ExtentTest : IDisposable
             // Class - Wrong RelationType
 
             // Between -10 and 0
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             var exception = false;
             try
@@ -13117,7 +13117,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Between 0 and 1
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -13132,7 +13132,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Between 1 and 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -13147,7 +13147,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Between 3 and 10
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -13175,7 +13175,7 @@ public abstract class ExtentTest : IDisposable
             // Class
 
             // Less Than 1
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddLessThan(m.C1.C1AllorsDecimal, 1);
 
             Assert.Empty(extent);
@@ -13185,7 +13185,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Less Than 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddLessThan(m.C1.C1AllorsDecimal, 2);
 
             Assert.Single(extent);
@@ -13195,7 +13195,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Less Than 3
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddLessThan(m.C1.C1AllorsDecimal, 3);
 
             Assert.Equal(3, extent.Count);
@@ -13207,7 +13207,7 @@ public abstract class ExtentTest : IDisposable
             // Interface
 
             // Less Than 1
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddLessThan(m.I12.I12AllorsDecimal, 1);
 
             Assert.Empty(extent);
@@ -13217,7 +13217,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Less Than 2
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddLessThan(m.I12.I12AllorsDecimal, 2);
 
             Assert.Equal(2, extent.Count);
@@ -13227,7 +13227,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Less Than 3
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddLessThan(m.I12.I12AllorsDecimal, 3);
 
             Assert.Equal(6, extent.Count);
@@ -13239,7 +13239,7 @@ public abstract class ExtentTest : IDisposable
             // Super Interface
 
             // Less Than 1
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddLessThan(m.S1234.S1234AllorsDecimal, 1);
 
             Assert.Empty(extent);
@@ -13249,7 +13249,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Less Than 2
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddLessThan(m.S1234.S1234AllorsDecimal, 2);
 
             Assert.Equal(4, extent.Count);
@@ -13259,7 +13259,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, true, false, false);
 
             // Less Than 3
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddLessThan(m.S1234.S1234AllorsDecimal, 3);
 
             Assert.Equal(12, extent.Count);
@@ -13271,7 +13271,7 @@ public abstract class ExtentTest : IDisposable
             // Class - Wrong RelationType
 
             // Less Than 1
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             var exception = false;
             try
@@ -13286,7 +13286,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Less Than 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -13301,7 +13301,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Less Than 3
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -13318,7 +13318,7 @@ public abstract class ExtentTest : IDisposable
             // Interface - Wrong RelationType
 
             // Less Than 1
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -13333,7 +13333,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Less Than 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -13348,7 +13348,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Less Than 3
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -13365,7 +13365,7 @@ public abstract class ExtentTest : IDisposable
             // Super Interface - Wrong RelationType
 
             // Less Than 1
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -13380,7 +13380,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Less Than 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -13395,7 +13395,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Less Than 3
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -13423,7 +13423,7 @@ public abstract class ExtentTest : IDisposable
             // Class
 
             // Greater Than 0
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddGreaterThan(m.C1.C1AllorsDecimal, 0);
 
             Assert.Equal(3, extent.Count);
@@ -13433,7 +13433,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Greater Than 1
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddGreaterThan(m.C1.C1AllorsDecimal, 1);
 
             Assert.Equal(2, extent.Count);
@@ -13443,7 +13443,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Greater Than 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddGreaterThan(m.C1.C1AllorsDecimal, 2);
 
             Assert.Empty(extent);
@@ -13455,7 +13455,7 @@ public abstract class ExtentTest : IDisposable
             // Interface
 
             // Greater Than 0
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddGreaterThan(m.I12.I12AllorsDecimal, 0);
 
             Assert.Equal(6, extent.Count);
@@ -13465,7 +13465,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Greater Than 1
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddGreaterThan(m.I12.I12AllorsDecimal, 1);
 
             Assert.Equal(4, extent.Count);
@@ -13475,7 +13475,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Greater Than 2
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddGreaterThan(m.I12.I12AllorsDecimal, 2);
 
             Assert.Empty(extent);
@@ -13487,7 +13487,7 @@ public abstract class ExtentTest : IDisposable
             // Super Interface
 
             // Greater Than 0
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddGreaterThan(m.S1234.S1234AllorsDecimal, 0);
 
             Assert.Equal(12, extent.Count);
@@ -13497,7 +13497,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, true, true, true);
 
             // Greater Than 1
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddGreaterThan(m.S1234.S1234AllorsDecimal, 1);
 
             Assert.Equal(8, extent.Count);
@@ -13507,7 +13507,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, true, true);
 
             // Greater Than 2
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddGreaterThan(m.S1234.S1234AllorsDecimal, 2);
 
             Assert.Empty(extent);
@@ -13519,7 +13519,7 @@ public abstract class ExtentTest : IDisposable
             // Class - Wrong RelationType
 
             // Greater Than 0
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             var exception = false;
             try
@@ -13534,7 +13534,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Greater Than 1
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -13549,7 +13549,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Greater Than 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -13566,7 +13566,7 @@ public abstract class ExtentTest : IDisposable
             // Interface - Wrong RelationType
 
             // Greater Than 0
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -13581,7 +13581,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Greater Than 1
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -13596,7 +13596,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Greater Than 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -13613,7 +13613,7 @@ public abstract class ExtentTest : IDisposable
             // Super Interface - Wrong RelationType
 
             // Greater Than 0
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -13628,7 +13628,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Greater Than 1
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -13643,7 +13643,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Greater Than 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -13670,7 +13670,7 @@ public abstract class ExtentTest : IDisposable
 
             // Class
             // Equal 0
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddEquals(m.C1.C1AllorsDecimal, 0);
 
             Assert.Empty(extent);
@@ -13680,7 +13680,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Equal 1
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddEquals(m.C1.C1AllorsDecimal, 1);
 
             Assert.Single(extent);
@@ -13690,7 +13690,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Equal 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddEquals(m.C1.C1AllorsDecimal, 2);
 
             Assert.Equal(2, extent.Count);
@@ -13701,7 +13701,7 @@ public abstract class ExtentTest : IDisposable
 
             // Interface
             // Equal 0
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddEquals(m.I12.I12AllorsDecimal, 0);
 
             Assert.Empty(extent);
@@ -13711,7 +13711,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Equal 1
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddEquals(m.I12.I12AllorsDecimal, 1);
 
             Assert.Equal(2, extent.Count);
@@ -13721,7 +13721,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Equal 2
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddEquals(m.I12.I12AllorsDecimal, 2);
 
             Assert.Equal(4, extent.Count);
@@ -13732,7 +13732,7 @@ public abstract class ExtentTest : IDisposable
 
             // Super Interface
             // Equal 0
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddEquals(m.S1234.S1234AllorsDecimal, 0);
 
             Assert.Empty(extent);
@@ -13742,7 +13742,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Equal 1
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddEquals(m.S1234.S1234AllorsDecimal, 1);
 
             Assert.Equal(4, extent.Count);
@@ -13752,7 +13752,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, true, false, false);
 
             // Equal 2
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddEquals(m.S1234.S1234AllorsDecimal, 2);
 
             Assert.Equal(8, extent.Count);
@@ -13763,7 +13763,7 @@ public abstract class ExtentTest : IDisposable
 
             // Class - Wrong RelationType
             // Equal 0
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             var exception = false;
             try
@@ -13778,7 +13778,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Equal 1
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -13793,7 +13793,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Equal 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -13809,7 +13809,7 @@ public abstract class ExtentTest : IDisposable
 
             // Interface - Wrong RelationType
             // Equal 0
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -13824,7 +13824,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Equal 1
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -13839,7 +13839,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Equal 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -13855,7 +13855,7 @@ public abstract class ExtentTest : IDisposable
 
             // Super Interface - Wrong RelationType
             // Equal 0
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -13870,7 +13870,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Equal 1
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -13885,7 +13885,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Equal 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -13914,7 +13914,7 @@ public abstract class ExtentTest : IDisposable
             // Class
 
             // Equal 0
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddEquals(m.C1.C1AllorsInteger, Zero2Four.Zero);
 
             Assert.Empty(extent);
@@ -13924,7 +13924,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Equal 1
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddEquals(m.C1.C1AllorsInteger, Zero2Four.One);
 
             Assert.Single(extent);
@@ -13934,7 +13934,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Equal 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddEquals(m.C1.C1AllorsInteger, Zero2Four.Two);
 
             Assert.Equal(2, extent.Count);
@@ -13946,7 +13946,7 @@ public abstract class ExtentTest : IDisposable
             // Interface
 
             // Equal 0
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddEquals(m.I12.I12AllorsInteger, Zero2Four.Zero);
 
             Assert.Empty(extent);
@@ -13956,7 +13956,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Equal 1
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddEquals(m.I12.I12AllorsInteger, Zero2Four.One);
 
             Assert.Equal(2, extent.Count);
@@ -13966,7 +13966,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Equal 2
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddEquals(m.I12.I12AllorsInteger, Zero2Four.Two);
 
             Assert.Equal(4, extent.Count);
@@ -13978,7 +13978,7 @@ public abstract class ExtentTest : IDisposable
             // Super Interface
 
             // Equal 0
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddEquals(m.S1234.S1234AllorsInteger, Zero2Four.Zero);
 
             Assert.Empty(extent);
@@ -13988,7 +13988,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Equal 1
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddEquals(m.S1234.S1234AllorsInteger, Zero2Four.One);
 
             Assert.Equal(4, extent.Count);
@@ -13998,7 +13998,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, true, false, false);
 
             // Equal 2
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddEquals(m.S1234.S1234AllorsInteger, Zero2Four.Two);
 
             Assert.Equal(8, extent.Count);
@@ -14010,7 +14010,7 @@ public abstract class ExtentTest : IDisposable
             // Class - Wrong RelationType
 
             // Equal 0
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             var exception = false;
             try
@@ -14025,7 +14025,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Equal 1
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -14040,7 +14040,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Equal 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -14057,7 +14057,7 @@ public abstract class ExtentTest : IDisposable
             // Interface - Wrong RelationType
 
             // Equal 0
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -14072,7 +14072,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Equal 1
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -14087,7 +14087,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Equal 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -14104,7 +14104,7 @@ public abstract class ExtentTest : IDisposable
             // Super Interface - Wrong RelationType
 
             // Equal 0
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -14119,7 +14119,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Equal 1
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -14134,7 +14134,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Equal 2
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -14149,7 +14149,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Wrong type
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             var exceptionThrown = false;
             C1 first = null;
@@ -14180,7 +14180,7 @@ public abstract class ExtentTest : IDisposable
             var exceptionThrown = false;
 
             // Class
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             try
             {
                 extent.Filter.AddEquals(m.C1.C1C2one2one, m.I1.I1C1one2one);
@@ -14210,18 +14210,18 @@ public abstract class ExtentTest : IDisposable
 
                 // ContainedIn Extent over Class
                 // Empty
-                var inExtent = this.Transaction.Extent(m.C1);
+                var inExtent = this.Transaction.Extent(m.C1.Composite);
                 inExtent.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C1);
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
                     inExtentA.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
-                    var inExtentB = this.Transaction.Extent(m.C1);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
                     inExtentB.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                var extent = this.Transaction.Extent(m.C1);
+                var extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddContainedIn(m.C1.C1C1many2manies, inExtent);
 
                 Assert.Empty(extent);
@@ -14231,15 +14231,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Full
-                inExtent = this.Transaction.Extent(m.C1);
+                inExtent = this.Transaction.Extent(m.C1.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C1);
-                    var inExtentB = this.Transaction.Extent(m.C1);
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddContainedIn(m.C1.C1C1many2manies, inExtent);
 
                 Assert.Equal(3, extent.Count);
@@ -14249,18 +14249,18 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.C1);
+                inExtent = this.Transaction.Extent(m.C1.Composite);
                 inExtent.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbra");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C1);
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
                     inExtentA.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbra");
-                    var inExtentB = this.Transaction.Extent(m.C1);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
                     inExtentB.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbra");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddContainedIn(m.C1.C1C1many2manies, inExtent);
 
                 Assert.Equal(3, extent.Count);
@@ -14271,18 +14271,18 @@ public abstract class ExtentTest : IDisposable
 
                 // ContainedIn Extent over Interface
                 // Empty
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 inExtent.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
                     inExtentA.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtentB.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddContainedIn(m.C1.C1C1many2manies, inExtent);
 
                 Assert.Empty(extent);
@@ -14292,15 +14292,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Full
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddContainedIn(m.C1.C1C1many2manies, inExtent);
 
                 Assert.Equal(3, extent.Count);
@@ -14310,18 +14310,18 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 inExtent.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
                     inExtentA.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtentB.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddContainedIn(m.C1.C1C1many2manies, inExtent);
 
                 Assert.Equal(3, extent.Count);
@@ -14334,18 +14334,18 @@ public abstract class ExtentTest : IDisposable
 
                 // ContainedIn Extent over Class
                 // Empty
-                inExtent = this.Transaction.Extent(m.C1);
+                inExtent = this.Transaction.Extent(m.C1.Composite);
                 inExtent.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C1);
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
                     inExtentA.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
-                    var inExtentB = this.Transaction.Extent(m.C1);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
                     inExtentB.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddContainedIn(m.C1.C1I12many2manies, inExtent);
 
                 Assert.Empty(extent);
@@ -14355,15 +14355,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Full
-                inExtent = this.Transaction.Extent(m.C1);
+                inExtent = this.Transaction.Extent(m.C1.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C1);
-                    var inExtentB = this.Transaction.Extent(m.C1);
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddContainedIn(m.C1.C1I12many2manies, inExtent);
 
                 Assert.Single(extent);
@@ -14373,18 +14373,18 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.C1);
+                inExtent = this.Transaction.Extent(m.C1.Composite);
                 inExtent.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbra");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C1);
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
                     inExtentA.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbra");
-                    var inExtentB = this.Transaction.Extent(m.C1);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
                     inExtentB.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbra");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddContainedIn(m.C1.C1I12many2manies, inExtent);
 
                 Assert.Single(extent);
@@ -14395,18 +14395,18 @@ public abstract class ExtentTest : IDisposable
 
                 // ContainedIn Extent over Interface
                 // Empty
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 inExtent.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
                     inExtentA.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtentB.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddContainedIn(m.C1.C1I12many2manies, inExtent);
 
                 Assert.Empty(extent);
@@ -14416,15 +14416,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Full
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddContainedIn(m.C1.C1I12many2manies, inExtent);
 
                 Assert.Equal(3, extent.Count);
@@ -14434,18 +14434,18 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Filtered
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 inExtent.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
                     inExtentA.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtentB.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddContainedIn(m.C1.C1I12many2manies, inExtent);
 
                 Assert.Equal(3, extent.Count);
@@ -14467,7 +14467,7 @@ public abstract class ExtentTest : IDisposable
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddContains(m.C1.C1C2many2manies, this.c2C);
 
             Assert.Equal(2, extent.Count);
@@ -14476,7 +14476,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, false, false);
             this.AssertC4(extent, false, false, false, false);
 
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddContains(m.C1.C1C2many2manies, this.c2B);
             extent.Filter.AddContains(m.C1.C1C2many2manies, this.c2C);
 
@@ -14487,7 +14487,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Interface
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddContains(m.C1.C1I12many2manies, this.c2C);
 
             Assert.Equal(2, extent.Count);
@@ -14497,7 +14497,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Super Interface
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddContains(m.S1234.S1234many2manies, this.c1A);
 
             Assert.Equal(9, extent.Count);
@@ -14520,7 +14520,7 @@ public abstract class ExtentTest : IDisposable
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddExists(m.C1.C1C2many2manies);
 
             Assert.Equal(3, extent.Count);
@@ -14530,7 +14530,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Interface
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddExists(m.I12.I12C2many2manies);
 
             Assert.Equal(4, extent.Count);
@@ -14540,7 +14540,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Super Interface
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddExists(m.S1234.S1234C2many2manies);
 
             Assert.Equal(4, extent.Count);
@@ -14550,7 +14550,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Class - Wrong RelationType
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             var exception = false;
             try
@@ -14565,7 +14565,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Interface - Wrong RelationType
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
 
             exception = false;
             try
@@ -14580,7 +14580,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Super Interface - Wrong RelationType
-            extent = this.Transaction.Extent(m.S12);
+            extent = this.Transaction.Extent(m.S12.Composite);
 
             exception = false;
             try
@@ -14613,18 +14613,18 @@ public abstract class ExtentTest : IDisposable
 
                 // ContainedIn Extent over Class
                 // Emtpy Extent
-                var inExtent = this.Transaction.Extent(m.C1);
+                var inExtent = this.Transaction.Extent(m.C1.Composite);
                 inExtent.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C1);
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
                     inExtentA.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
-                    var inExtentB = this.Transaction.Extent(m.C1);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
                     inExtentB.Filter.AddEquals(m.C1.C1AllorsString, "Nothing here!");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                var extent = this.Transaction.Extent(m.C1);
+                var extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddContainedIn(m.C1.C1C1one2manies, inExtent);
 
                 Assert.Empty(extent);
@@ -14634,15 +14634,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Full Extent
-                inExtent = this.Transaction.Extent(m.C1);
+                inExtent = this.Transaction.Extent(m.C1.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C1);
-                    var inExtentB = this.Transaction.Extent(m.C1);
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddContainedIn(m.C1.C1C1one2manies, inExtent);
 
                 Assert.Equal(2, extent.Count);
@@ -14651,15 +14651,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC3(extent, false, false, false, false);
                 this.AssertC4(extent, false, false, false, false);
 
-                inExtent = this.Transaction.Extent(m.C2);
+                inExtent = this.Transaction.Extent(m.C2.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C2);
-                    var inExtentB = this.Transaction.Extent(m.C2);
+                    var inExtentA = this.Transaction.Extent(m.C2.Composite);
+                    var inExtentB = this.Transaction.Extent(m.C2.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddContainedIn(m.C1.C1C2one2manies, inExtent);
 
                 Assert.Equal(2, extent.Count);
@@ -14668,15 +14668,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC3(extent, false, false, false, false);
                 this.AssertC4(extent, false, false, false, false);
 
-                inExtent = this.Transaction.Extent(m.C4);
+                inExtent = this.Transaction.Extent(m.C4.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C4);
-                    var inExtentB = this.Transaction.Extent(m.C4);
+                    var inExtentA = this.Transaction.Extent(m.C4.Composite);
+                    var inExtentB = this.Transaction.Extent(m.C4.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C3);
+                extent = this.Transaction.Extent(m.C3.Composite);
                 extent.Filter.AddContainedIn(m.C3.C3C4one2manies, inExtent);
 
                 Assert.Equal(2, extent.Count);
@@ -14687,18 +14687,18 @@ public abstract class ExtentTest : IDisposable
 
                 // ContainedIn Extent over Shared Interface
                 // Emtpy Extent
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 inExtent.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
                     inExtentA.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtentB.Filter.AddEquals(m.I12.I12AllorsString, "Nothing here!");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddContainedIn(m.C1.C1C1one2manies, inExtent);
 
                 Assert.Empty(extent);
@@ -14708,15 +14708,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Full Extent
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddContainedIn(m.C1.C1C1one2manies, inExtent);
 
                 Assert.Equal(2, extent.Count);
@@ -14725,15 +14725,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC3(extent, false, false, false, false);
                 this.AssertC4(extent, false, false, false, false);
 
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddContainedIn(m.C1.C1C2one2manies, inExtent);
 
                 Assert.Equal(2, extent.Count);
@@ -14742,15 +14742,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC3(extent, false, false, false, false);
                 this.AssertC4(extent, false, false, false, false);
 
-                inExtent = this.Transaction.Extent(m.I34);
+                inExtent = this.Transaction.Extent(m.I34.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I34);
-                    var inExtentB = this.Transaction.Extent(m.I34);
+                    var inExtentA = this.Transaction.Extent(m.I34.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I34.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C3);
+                extent = this.Transaction.Extent(m.C3.Composite);
                 extent.Filter.AddContainedIn(m.C3.C3C4one2manies, inExtent);
 
                 Assert.Equal(2, extent.Count);
@@ -14762,15 +14762,15 @@ public abstract class ExtentTest : IDisposable
                 // RelationType from Interface to Class
 
                 // ContainedIn Extent over Class
-                inExtent = this.Transaction.Extent(m.C2);
+                inExtent = this.Transaction.Extent(m.C2.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C2);
-                    var inExtentB = this.Transaction.Extent(m.C2);
+                    var inExtentA = this.Transaction.Extent(m.C2.Composite);
+                    var inExtentB = this.Transaction.Extent(m.C2.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddContainedIn(m.I12.I12C2one2manies, inExtent);
 
                 Assert.Single(extent);
@@ -14780,15 +14780,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // ContainedIn Extent over Interface
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddContainedIn(m.I12.I12C2one2manies, inExtent);
 
                 Assert.Single(extent);
@@ -14810,7 +14810,7 @@ public abstract class ExtentTest : IDisposable
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddContains(m.C1.C1C2one2manies, this.c2C);
 
             Assert.Single(extent);
@@ -14820,7 +14820,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Interface
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddContains(m.C1.C1I12one2manies, this.c2C);
 
             Assert.Single(extent);
@@ -14830,7 +14830,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Super Interface
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddContains(m.S1234.S1234one2manies, this.c1B);
 
             Assert.Single(extent);
@@ -14853,7 +14853,7 @@ public abstract class ExtentTest : IDisposable
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddExists(m.C1.C1C2one2manies);
 
             Assert.Equal(2, extent.Count);
@@ -14863,7 +14863,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Interface
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddExists(m.I12.I12C2one2manies);
 
             Assert.Equal(2, extent.Count);
@@ -14873,7 +14873,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Super Interface
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddExists(m.S1234.S1234C2one2manies);
 
             Assert.Equal(2, extent.Count);
@@ -14883,7 +14883,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Class - Wrong RelationType
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             var exception = false;
             try
@@ -14898,7 +14898,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Interface - Wrong RelationType
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
 
             exception = false;
             try
@@ -14913,7 +14913,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Super Interface - Wrong RelationType
-            extent = this.Transaction.Extent(m.S12);
+            extent = this.Transaction.Extent(m.S12.Composite);
 
             exception = false;
             try
@@ -14945,15 +14945,15 @@ public abstract class ExtentTest : IDisposable
                 // RelationType from Class to Class
 
                 // ContainedIn Extent over Class
-                var inExtent = this.Transaction.Extent(m.C1);
+                var inExtent = this.Transaction.Extent(m.C1.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C1);
-                    var inExtentB = this.Transaction.Extent(m.C1);
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                var extent = this.Transaction.Extent(m.C1);
+                var extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddContainedIn(m.C1.C1C1one2one, inExtent);
 
                 Assert.Equal(3, extent.Count);
@@ -14962,15 +14962,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC3(extent, false, false, false, false);
                 this.AssertC4(extent, false, false, false, false);
 
-                inExtent = this.Transaction.Extent(m.C2);
+                inExtent = this.Transaction.Extent(m.C2.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C2);
-                    var inExtentB = this.Transaction.Extent(m.C2);
+                    var inExtentA = this.Transaction.Extent(m.C2.Composite);
+                    var inExtentB = this.Transaction.Extent(m.C2.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddContainedIn(m.C1.C1C2one2one, inExtent);
 
                 Assert.Equal(3, extent.Count);
@@ -14979,15 +14979,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC3(extent, false, false, false, false);
                 this.AssertC4(extent, false, false, false, false);
 
-                inExtent = this.Transaction.Extent(m.C4);
+                inExtent = this.Transaction.Extent(m.C4.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C4);
-                    var inExtentB = this.Transaction.Extent(m.C4);
+                    var inExtentA = this.Transaction.Extent(m.C4.Composite);
+                    var inExtentB = this.Transaction.Extent(m.C4.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C3);
+                extent = this.Transaction.Extent(m.C3.Composite);
                 extent.Filter.AddContainedIn(m.C3.C3C4one2one, inExtent);
 
                 Assert.Equal(3, extent.Count);
@@ -14997,15 +14997,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // ContainedIn Extent over Shared Interface
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddContainedIn(m.C1.C1C1one2one, inExtent);
 
                 Assert.Equal(3, extent.Count);
@@ -15014,15 +15014,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC3(extent, false, false, false, false);
                 this.AssertC4(extent, false, false, false, false);
 
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddContainedIn(m.C1.C1C2one2one, inExtent);
 
                 Assert.Equal(3, extent.Count);
@@ -15031,15 +15031,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC3(extent, false, false, false, false);
                 this.AssertC4(extent, false, false, false, false);
 
-                inExtent = this.Transaction.Extent(m.I34);
+                inExtent = this.Transaction.Extent(m.I34.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I34);
-                    var inExtentB = this.Transaction.Extent(m.I34);
+                    var inExtentA = this.Transaction.Extent(m.I34.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I34.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C3);
+                extent = this.Transaction.Extent(m.C3.Composite);
                 extent.Filter.AddContainedIn(m.C3.C3C4one2one, inExtent);
 
                 Assert.Equal(3, extent.Count);
@@ -15051,15 +15051,15 @@ public abstract class ExtentTest : IDisposable
                 // RelationType from Class to Interface
 
                 // ContainedIn Extent over Class
-                inExtent = this.Transaction.Extent(m.C2);
+                inExtent = this.Transaction.Extent(m.C2.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C2);
-                    var inExtentB = this.Transaction.Extent(m.C2);
+                    var inExtentA = this.Transaction.Extent(m.C2.Composite);
+                    var inExtentB = this.Transaction.Extent(m.C2.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddContainedIn(m.C1.C1I12one2one, inExtent);
 
                 Assert.Equal(2, extent.Count);
@@ -15069,15 +15069,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // ContainedIn Extent over Shared Interface
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddContainedIn(m.C1.C1I12one2one, inExtent);
 
                 Assert.Equal(3, extent.Count);
@@ -15103,9 +15103,9 @@ public abstract class ExtentTest : IDisposable
             // RelationType from Class to Class
 
             // ContainedIn Extent over Class
-            var inExtent = this.Transaction.Extent(m.C1).ToArray();
+            var inExtent = this.Transaction.Extent(m.C1.Composite).ToArray();
 
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddContainedIn(m.C1.C1C1one2one, (IEnumerable<IObject>)inExtent);
 
             Assert.Equal(3, extent.Count);
@@ -15114,9 +15114,9 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, false, false);
             this.AssertC4(extent, false, false, false, false);
 
-            inExtent = this.Transaction.Extent(m.C2).ToArray();
+            inExtent = this.Transaction.Extent(m.C2.Composite).ToArray();
 
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddContainedIn(m.C1.C1C2one2one, (IEnumerable<IObject>)inExtent);
 
             Assert.Equal(3, extent.Count);
@@ -15125,9 +15125,9 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, false, false);
             this.AssertC4(extent, false, false, false, false);
 
-            inExtent = this.Transaction.Extent(m.C4).ToArray();
+            inExtent = this.Transaction.Extent(m.C4.Composite).ToArray();
 
-            extent = this.Transaction.Extent(m.C3);
+            extent = this.Transaction.Extent(m.C3.Composite);
             extent.Filter.AddContainedIn(m.C3.C3C4one2one, (IEnumerable<IObject>)inExtent);
 
             Assert.Equal(3, extent.Count);
@@ -15137,9 +15137,9 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // ContainedIn Extent over Shared Interface
-            inExtent = this.Transaction.Extent(m.I12).ToArray();
+            inExtent = this.Transaction.Extent(m.I12.Composite).ToArray();
 
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddContainedIn(m.C1.C1C1one2one, (IEnumerable<IObject>)inExtent);
 
             Assert.Equal(3, extent.Count);
@@ -15148,9 +15148,9 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, false, false);
             this.AssertC4(extent, false, false, false, false);
 
-            inExtent = this.Transaction.Extent(m.I12).ToArray();
+            inExtent = this.Transaction.Extent(m.I12.Composite).ToArray();
 
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddContainedIn(m.C1.C1C2one2one, (IEnumerable<IObject>)inExtent);
 
             Assert.Equal(3, extent.Count);
@@ -15159,9 +15159,9 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, false, false);
             this.AssertC4(extent, false, false, false, false);
 
-            inExtent = this.Transaction.Extent(m.I34).ToArray();
+            inExtent = this.Transaction.Extent(m.I34.Composite).ToArray();
 
-            extent = this.Transaction.Extent(m.C3);
+            extent = this.Transaction.Extent(m.C3.Composite);
             extent.Filter.AddContainedIn(m.C3.C3C4one2one, (IEnumerable<IObject>)inExtent);
 
             Assert.Equal(3, extent.Count);
@@ -15173,9 +15173,9 @@ public abstract class ExtentTest : IDisposable
             // RelationType from Class to Interface
 
             // ContainedIn Extent over Class
-            inExtent = this.Transaction.Extent(m.C2).ToArray();
+            inExtent = this.Transaction.Extent(m.C2.Composite).ToArray();
 
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddContainedIn(m.C1.C1I12one2one, (IEnumerable<IObject>)inExtent);
 
             Assert.Equal(2, extent.Count);
@@ -15185,9 +15185,9 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // ContainedIn Extent over Shared Interface
-            inExtent = this.Transaction.Extent(m.I12);
+            inExtent = this.Transaction.Extent(m.I12.Composite);
 
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddContainedIn(m.C1.C1I12one2one, (IEnumerable<IObject>)inExtent);
 
             Assert.Equal(3, extent.Count);
@@ -15216,18 +15216,18 @@ public abstract class ExtentTest : IDisposable
                 // ContainedIn Extent over Shared Interface
 
                 // With filter
-                var inExtent = this.Transaction.Extent(m.C1);
+                var inExtent = this.Transaction.Extent(m.C1.Composite);
                 inExtent.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbra");
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C1);
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
                     inExtentA.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbra");
-                    var inExtentB = this.Transaction.Extent(m.C1);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
                     inExtentB.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbra");
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                var extent = this.Transaction.Extent(m.C1);
+                var extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddContainedIn(m.C1.C1C1many2one, inExtent);
 
                 Assert.Single(extent);
@@ -15237,15 +15237,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // Full
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddContainedIn(m.C1.C1C1many2one, inExtent);
 
                 Assert.Equal(3, extent.Count);
@@ -15254,15 +15254,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC3(extent, false, false, false, false);
                 this.AssertC4(extent, false, false, false, false);
 
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddContainedIn(m.C1.C1C2many2one, inExtent);
 
                 Assert.Equal(3, extent.Count);
@@ -15271,15 +15271,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC3(extent, false, false, false, false);
                 this.AssertC4(extent, false, false, false, false);
 
-                inExtent = this.Transaction.Extent(m.I34);
+                inExtent = this.Transaction.Extent(m.I34.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I34);
-                    var inExtentB = this.Transaction.Extent(m.I34);
+                    var inExtentA = this.Transaction.Extent(m.I34.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I34.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C3);
+                extent = this.Transaction.Extent(m.C3.Composite);
                 extent.Filter.AddContainedIn(m.C3.C3C4many2one, inExtent);
 
                 Assert.Equal(3, extent.Count);
@@ -15291,15 +15291,15 @@ public abstract class ExtentTest : IDisposable
                 // RelationType from Class to Interface
 
                 // ContainedIn Extent over Class
-                inExtent = this.Transaction.Extent(m.C2);
+                inExtent = this.Transaction.Extent(m.C2.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.C2);
-                    var inExtentB = this.Transaction.Extent(m.C2);
+                    var inExtentA = this.Transaction.Extent(m.C2.Composite);
+                    var inExtentB = this.Transaction.Extent(m.C2.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddContainedIn(m.C1.C1I12many2one, inExtent);
 
                 Assert.Equal(2, extent.Count);
@@ -15309,15 +15309,15 @@ public abstract class ExtentTest : IDisposable
                 this.AssertC4(extent, false, false, false, false);
 
                 // ContainedIn Extent over Shared Interface
-                inExtent = this.Transaction.Extent(m.I12);
+                inExtent = this.Transaction.Extent(m.I12.Composite);
                 if (useOperator)
                 {
-                    var inExtentA = this.Transaction.Extent(m.I12);
-                    var inExtentB = this.Transaction.Extent(m.I12);
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
                     inExtent = this.Transaction.Union(inExtentA, inExtentB);
                 }
 
-                extent = this.Transaction.Extent(m.C1);
+                extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddContainedIn(m.C1.C1I12many2one, inExtent);
 
                 Assert.Equal(3, extent.Count);
@@ -15339,7 +15339,7 @@ public abstract class ExtentTest : IDisposable
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddEquals(m.C1.C1C1one2one, this.c1B);
 
             Assert.Single(extent);
@@ -15348,7 +15348,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, false, false);
             this.AssertC4(extent, false, false, false, false);
 
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddEquals(m.C1.C1C2one2one, this.c2B);
 
             Assert.Single(extent);
@@ -15358,7 +15358,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Interface
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddEquals(m.I12.I12C2one2one, this.c2A);
 
             Assert.Single(extent);
@@ -15368,7 +15368,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Super Interface
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddEquals(m.S1234.S1234C2one2one, this.c2A);
 
             Assert.Single(extent);
@@ -15378,7 +15378,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Class - Wrong RelationType
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             var exception = false;
             try
@@ -15393,7 +15393,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Interface - Wrong RelationType
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
 
             exception = false;
             try
@@ -15408,7 +15408,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Super Interface - Wrong RelationType
-            extent = this.Transaction.Extent(m.S12);
+            extent = this.Transaction.Extent(m.S12.Composite);
 
             exception = false;
             try
@@ -15434,7 +15434,7 @@ public abstract class ExtentTest : IDisposable
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddExists(m.C1.C1C1one2one);
 
             Assert.Equal(3, extent.Count);
@@ -15443,7 +15443,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, false, false);
             this.AssertC4(extent, false, false, false, false);
 
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddExists(m.C1.C1C2one2one);
 
             Assert.Equal(3, extent.Count);
@@ -15452,7 +15452,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, false, false);
             this.AssertC4(extent, false, false, false, false);
 
-            extent = this.Transaction.Extent(m.C3);
+            extent = this.Transaction.Extent(m.C3.Composite);
             extent.Filter.AddExists(m.C3.C3C4one2one);
 
             Assert.Equal(3, extent.Count);
@@ -15462,7 +15462,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Interface
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddExists(m.I12.I12C2one2one);
 
             Assert.Equal(4, extent.Count);
@@ -15472,7 +15472,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Super Interface
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddExists(m.S1234.S1234C2one2one);
 
             Assert.Equal(4, extent.Count);
@@ -15482,7 +15482,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Class - Wrong RelationType
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             var exception = false;
             try
@@ -15497,7 +15497,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Interface - Wrong RelationType
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
 
             exception = false;
             try
@@ -15512,7 +15512,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Super Interface - Wrong RelationType
-            extent = this.Transaction.Extent(m.S12);
+            extent = this.Transaction.Extent(m.S12.Composite);
 
             exception = false;
             try
@@ -15540,8 +15540,8 @@ public abstract class ExtentTest : IDisposable
             // Class
 
             // Class
-            var extent = this.Transaction.Extent(m.C1);
-            extent.Filter.AddInstanceof(m.C1.C1C1one2one, m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
+            extent.Filter.AddInstanceof(m.C1.C1C1one2one, m.C1.Composite);
 
             Assert.Equal(3, extent.Count);
             this.AssertC1(extent, false, true, true, true);
@@ -15549,8 +15549,8 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, false, false);
             this.AssertC4(extent, false, false, false, false);
 
-            extent = this.Transaction.Extent(m.C1);
-            extent.Filter.AddInstanceof(m.C1.C1C2one2one, m.C2);
+            extent = this.Transaction.Extent(m.C1.Composite);
+            extent.Filter.AddInstanceof(m.C1.C1C2one2one, m.C2.Composite);
 
             Assert.Equal(3, extent.Count);
             this.AssertC1(extent, false, true, true, true);
@@ -15559,8 +15559,8 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Interface
-            extent = this.Transaction.Extent(m.C1);
-            extent.Filter.AddInstanceof(m.C1.C1I12one2one, m.C2);
+            extent = this.Transaction.Extent(m.C1.Composite);
+            extent.Filter.AddInstanceof(m.C1.C1I12one2one, m.C2.Composite);
 
             Assert.Equal(2, extent.Count);
             this.AssertC1(extent, false, false, true, true);
@@ -15569,8 +15569,8 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Super Interface
-            extent = this.Transaction.Extent(m.S1234);
-            extent.Filter.AddInstanceof(m.S1234.S1234one2one, m.C2);
+            extent = this.Transaction.Extent(m.S1234.Composite);
+            extent.Filter.AddInstanceof(m.S1234.S1234one2one, m.C2.Composite);
 
             Assert.Equal(3, extent.Count);
             this.AssertC1(extent, false, false, true, false);
@@ -15581,8 +15581,8 @@ public abstract class ExtentTest : IDisposable
             // Interface
 
             // Class
-            extent = this.Transaction.Extent(m.C1);
-            extent.Filter.AddInstanceof(m.C1.C1C2one2one, m.I2);
+            extent = this.Transaction.Extent(m.C1.Composite);
+            extent.Filter.AddInstanceof(m.C1.C1C2one2one, m.I2.Composite);
 
             Assert.Equal(3, extent.Count);
             this.AssertC1(extent, false, true, true, true);
@@ -15591,8 +15591,8 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Interface
-            extent = this.Transaction.Extent(m.C1);
-            extent.Filter.AddInstanceof(m.C1.C1I12one2one, m.I2);
+            extent = this.Transaction.Extent(m.C1.Composite);
+            extent.Filter.AddInstanceof(m.C1.C1I12one2one, m.I2.Composite);
 
             Assert.Equal(2, extent.Count);
             this.AssertC1(extent, false, false, true, true);
@@ -15600,8 +15600,8 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, false, false);
             this.AssertC4(extent, false, false, false, false);
 
-            extent = this.Transaction.Extent(m.C1);
-            extent.Filter.AddInstanceof(m.C1.C1I12one2one, m.I12);
+            extent = this.Transaction.Extent(m.C1.Composite);
+            extent.Filter.AddInstanceof(m.C1.C1I12one2one, m.I12.Composite);
 
             Assert.Equal(3, extent.Count);
             this.AssertC1(extent, false, true, true, true);
@@ -15610,8 +15610,8 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Super Interface
-            extent = this.Transaction.Extent(m.S1234);
-            extent.Filter.AddInstanceof(m.S1234.S1234one2one, m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
+            extent.Filter.AddInstanceof(m.S1234.S1234one2one, m.S1234.Composite);
 
             Assert.Equal(9, extent.Count);
             this.AssertC1(extent, false, true, true, true);
@@ -15632,7 +15632,7 @@ public abstract class ExtentTest : IDisposable
             this.Populate();
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddEquals(m.C1.C1AllorsString, m.C1.C1StringEquals);
 
             Assert.Single(extent);
@@ -15655,7 +15655,7 @@ public abstract class ExtentTest : IDisposable
             // Class
 
             // Equal ""
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddEquals(m.C1.C1AllorsString, string.Empty);
 
             Assert.Empty(extent);
@@ -15664,7 +15664,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, false, false);
             this.AssertC4(extent, false, false, false, false);
 
-            extent = this.Transaction.Extent(m.C3);
+            extent = this.Transaction.Extent(m.C3.Composite);
             extent.Filter.AddEquals(m.C3.C3AllorsString, string.Empty);
 
             Assert.Empty(extent);
@@ -15674,7 +15674,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Equal "ᴀbra"
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbra");
 
             Assert.Single(extent);
@@ -15683,7 +15683,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, false, false);
             this.AssertC4(extent, false, false, false, false);
 
-            extent = this.Transaction.Extent(m.C3);
+            extent = this.Transaction.Extent(m.C3.Composite);
             extent.Filter.AddEquals(m.C3.C3AllorsString, "ᴀbra");
 
             Assert.Single(extent);
@@ -15693,7 +15693,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Equal "ᴀbracadabra"
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbracadabra");
 
             Assert.Equal(2, extent.Count);
@@ -15702,7 +15702,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, false, false);
             this.AssertC4(extent, false, false, false, false);
 
-            extent = this.Transaction.Extent(m.C3);
+            extent = this.Transaction.Extent(m.C3.Composite);
             extent.Filter.AddEquals(m.C3.C3AllorsString, "ᴀbracadabra");
 
             Assert.Equal(2, extent.Count);
@@ -15714,7 +15714,7 @@ public abstract class ExtentTest : IDisposable
             // Exclusive Interface
 
             // Equal ""
-            extent = this.Transaction.Extent(m.I1);
+            extent = this.Transaction.Extent(m.I1.Composite);
             extent.Filter.AddEquals(m.I1.I1AllorsString, string.Empty);
 
             Assert.Empty(extent);
@@ -15723,7 +15723,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, false, false);
             this.AssertC4(extent, false, false, false, false);
 
-            extent = this.Transaction.Extent(m.I3);
+            extent = this.Transaction.Extent(m.I3.Composite);
             extent.Filter.AddEquals(m.I3.I3AllorsString, string.Empty);
 
             Assert.Empty(extent);
@@ -15733,7 +15733,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Equal "ᴀbra"
-            extent = this.Transaction.Extent(m.I1);
+            extent = this.Transaction.Extent(m.I1.Composite);
             extent.Filter.AddEquals(m.I1.I1AllorsString, "ᴀbra");
 
             Assert.Single(extent);
@@ -15742,7 +15742,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, false, false);
             this.AssertC4(extent, false, false, false, false);
 
-            extent = this.Transaction.Extent(m.I3);
+            extent = this.Transaction.Extent(m.I3.Composite);
             extent.Filter.AddEquals(m.I3.I3AllorsString, "ᴀbra");
 
             Assert.Single(extent);
@@ -15752,7 +15752,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Equal "ᴀbracadabra"
-            extent = this.Transaction.Extent(m.I1);
+            extent = this.Transaction.Extent(m.I1.Composite);
             extent.Filter.AddEquals(m.I1.I1AllorsString, "ᴀbracadabra");
 
             Assert.Equal(2, extent.Count);
@@ -15761,7 +15761,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, false, false);
             this.AssertC4(extent, false, false, false, false);
 
-            extent = this.Transaction.Extent(m.I3);
+            extent = this.Transaction.Extent(m.I3.Composite);
             extent.Filter.AddEquals(m.I3.I3AllorsString, "ᴀbracadabra");
 
             Assert.Equal(2, extent.Count);
@@ -15773,7 +15773,7 @@ public abstract class ExtentTest : IDisposable
             // Shared Interface
 
             // Equal ""
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddEquals(m.I12.I12AllorsString, string.Empty);
 
             Assert.Empty(extent);
@@ -15782,7 +15782,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, false, false);
             this.AssertC4(extent, false, false, false, false);
 
-            extent = this.Transaction.Extent(m.I34);
+            extent = this.Transaction.Extent(m.I34.Composite);
             extent.Filter.AddEquals(m.I34.I34AllorsString, string.Empty);
 
             Assert.Empty(extent);
@@ -15792,7 +15792,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Equal "ᴀbra"
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
 
             Assert.Equal(2, extent.Count);
@@ -15801,7 +15801,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, false, false);
             this.AssertC4(extent, false, false, false, false);
 
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbra");
 
             Assert.Single(extent);
@@ -15810,7 +15810,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, false, false);
             this.AssertC4(extent, false, false, false, false);
 
-            extent = this.Transaction.Extent(m.I23);
+            extent = this.Transaction.Extent(m.I23.Composite);
             extent.Filter.AddEquals(m.I23.I23AllorsString, "ᴀbra");
 
             Assert.Equal(2, extent.Count);
@@ -15819,7 +15819,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, true, false, false);
             this.AssertC4(extent, false, false, false, false);
 
-            extent = this.Transaction.Extent(m.C2);
+            extent = this.Transaction.Extent(m.C2.Composite);
             extent.Filter.AddEquals(m.I23.I23AllorsString, "ᴀbra");
 
             Assert.Single(extent);
@@ -15828,7 +15828,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, false, false);
             this.AssertC4(extent, false, false, false, false);
 
-            extent = this.Transaction.Extent(m.C3);
+            extent = this.Transaction.Extent(m.C3.Composite);
             extent.Filter.AddEquals(m.I23.I23AllorsString, "ᴀbra");
 
             Assert.Single(extent);
@@ -15837,7 +15837,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, true, false, false);
             this.AssertC4(extent, false, false, false, false);
 
-            extent = this.Transaction.Extent(m.I34);
+            extent = this.Transaction.Extent(m.I34.Composite);
             extent.Filter.AddEquals(m.I34.I34AllorsString, "ᴀbra");
 
             Assert.Equal(2, extent.Count);
@@ -15846,7 +15846,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, true, false, false);
             this.AssertC4(extent, false, true, false, false);
 
-            extent = this.Transaction.Extent(m.C3);
+            extent = this.Transaction.Extent(m.C3.Composite);
             extent.Filter.AddEquals(m.I34.I34AllorsString, "ᴀbra");
 
             Assert.Single(extent);
@@ -15856,7 +15856,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Equal "ᴀbracadabra"
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbracadabra");
 
             Assert.Equal(4, extent.Count);
@@ -15865,7 +15865,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, false, false);
             this.AssertC4(extent, false, false, false, false);
 
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddEquals(m.I12.I12AllorsString, "ᴀbracadabra");
 
             Assert.Equal(2, extent.Count);
@@ -15874,7 +15874,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC3(extent, false, false, false, false);
             this.AssertC4(extent, false, false, false, false);
 
-            extent = this.Transaction.Extent(m.I34);
+            extent = this.Transaction.Extent(m.I34.Composite);
             extent.Filter.AddEquals(m.I34.I34AllorsString, "ᴀbracadabra");
 
             Assert.Equal(4, extent.Count);
@@ -15886,7 +15886,7 @@ public abstract class ExtentTest : IDisposable
             // Super Interface
 
             // Equal ""
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddEquals(m.S1234.S1234AllorsString, string.Empty);
 
             Assert.Empty(extent);
@@ -15896,7 +15896,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Equal "ᴀbra"
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddEquals(m.S1234.S1234AllorsString, "ᴀbra");
 
             Assert.Equal(4, extent.Count);
@@ -15906,7 +15906,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, true, false, false);
 
             // Equal "ᴀbracadabra"
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddEquals(m.S1234.S1234AllorsString, "ᴀbracadabra");
 
             Assert.Equal(8, extent.Count);
@@ -15918,7 +15918,7 @@ public abstract class ExtentTest : IDisposable
             // Class - Wrong RelationType
 
             // Equal ""
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             var exception = false;
             try
@@ -15933,7 +15933,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Equal "ᴀbra"
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -15948,7 +15948,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Equal "ᴀbracadabra"
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -15965,7 +15965,7 @@ public abstract class ExtentTest : IDisposable
             // Interface - Wrong RelationType
 
             // Equal ""
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -15980,7 +15980,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Equal "ᴀbra"
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -15995,7 +15995,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Equal "ᴀbracadabra"
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -16012,7 +16012,7 @@ public abstract class ExtentTest : IDisposable
             // Super Interface - Wrong RelationType
 
             // Equal ""
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -16027,7 +16027,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Equal "ᴀbra"
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -16042,7 +16042,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Equal "ᴀbracadabra"
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -16068,7 +16068,7 @@ public abstract class ExtentTest : IDisposable
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             // Class
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddExists(m.C1.C1AllorsString);
 
             Assert.Equal(3, extent.Count);
@@ -16078,7 +16078,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Interface
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddExists(m.I12.I12AllorsString);
 
             Assert.Equal(6, extent.Count);
@@ -16088,7 +16088,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Super Interface
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddExists(m.S1234.S1234AllorsString);
 
             Assert.Equal(12, extent.Count);
@@ -16098,7 +16098,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, true, true, true);
 
             // Class - Wrong RelationType
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             var exception = false;
             try
@@ -16113,7 +16113,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Interface - Wrong RelationType
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -16128,7 +16128,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Super Interface - Wrong RelationType
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -16156,7 +16156,7 @@ public abstract class ExtentTest : IDisposable
             // Class
 
             // Like ""
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddLike(m.C1.C1AllorsString, string.Empty);
 
             Assert.Empty(extent);
@@ -16166,7 +16166,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Like "ᴀbra"
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddLike(m.C1.C1AllorsString, "ᴀbra");
 
             Assert.Single(extent);
@@ -16176,7 +16176,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Like "ᴀbracadabra"
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddLike(m.C1.C1AllorsString, "ᴀbracadabra");
 
             Assert.Equal(2, extent.Count);
@@ -16186,7 +16186,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Like "notfound"
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddLike(m.C1.C1AllorsString, "notfound");
 
             Assert.Empty(extent);
@@ -16196,7 +16196,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Like "%ra%"
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddLike(m.C1.C1AllorsString, "%ra%");
 
             Assert.Equal(3, extent.Count);
@@ -16206,7 +16206,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Like "%bra"
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddLike(m.C1.C1AllorsString, "%bra");
 
             Assert.Equal(3, extent.Count);
@@ -16216,7 +16216,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Like "%cadabra"
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.Filter.AddLike(m.C1.C1AllorsString, "%cadabra");
 
             Assert.Equal(2, extent.Count);
@@ -16228,7 +16228,7 @@ public abstract class ExtentTest : IDisposable
             // Interface
 
             // Like ""
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddLike(m.I12.I12AllorsString, string.Empty);
 
             Assert.Empty(extent);
@@ -16238,7 +16238,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Like "ᴀbra"
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddLike(m.I12.I12AllorsString, "ᴀbra");
 
             Assert.Equal(2, extent.Count);
@@ -16248,7 +16248,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Like "ᴀbracadabra"
-            extent = this.Transaction.Extent(m.I12);
+            extent = this.Transaction.Extent(m.I12.Composite);
             extent.Filter.AddLike(m.I12.I12AllorsString, "ᴀbracadabra");
 
             Assert.Equal(4, extent.Count);
@@ -16260,7 +16260,7 @@ public abstract class ExtentTest : IDisposable
             // Super Interface
 
             // Like ""
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddLike(m.S1234.S1234AllorsString, string.Empty);
 
             Assert.Empty(extent);
@@ -16270,7 +16270,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Like "ᴀbra"
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddLike(m.S1234.S1234AllorsString, "ᴀbra");
 
             Assert.Equal(4, extent.Count);
@@ -16280,7 +16280,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, true, false, false);
 
             // Like "ᴀbracadabra"
-            extent = this.Transaction.Extent(m.S1234);
+            extent = this.Transaction.Extent(m.S1234.Composite);
             extent.Filter.AddLike(m.S1234.S1234AllorsString, "ᴀbracadabra");
 
             Assert.Equal(8, extent.Count);
@@ -16292,7 +16292,7 @@ public abstract class ExtentTest : IDisposable
             // Class - Wrong RelationType
 
             // Like ""
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             var exception = false;
             try
@@ -16307,7 +16307,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Like "ᴀbra"
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -16322,7 +16322,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Like "ᴀbracadabra"
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -16339,7 +16339,7 @@ public abstract class ExtentTest : IDisposable
             // Interface - Wrong RelationType
 
             // Like ""
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -16354,7 +16354,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Like "ᴀbra"
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -16369,7 +16369,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Like "ᴀbracadabra"
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -16386,7 +16386,7 @@ public abstract class ExtentTest : IDisposable
             // Super Interface - Wrong RelationType
 
             // Like ""
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -16401,7 +16401,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Like "ᴀbra"
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -16416,7 +16416,7 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exception);
 
             // Like "ᴀbracadabra"
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
 
             exception = false;
             try
@@ -16441,11 +16441,11 @@ public abstract class ExtentTest : IDisposable
             this.Populate();
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
-            var sharedExtent = this.Transaction.Extent(m.C2);
+            var sharedExtent = this.Transaction.Extent(m.C2.Composite);
             sharedExtent.Filter.AddLike(m.C2.C2AllorsString, "%");
-            var firstExtent = this.Transaction.Extent(m.C1);
+            var firstExtent = this.Transaction.Extent(m.C1.Composite);
             firstExtent.Filter.AddContainedIn(m.C1.C1C2many2manies, sharedExtent);
-            var secondExtent = this.Transaction.Extent(m.C1);
+            var secondExtent = this.Transaction.Extent(m.C1.Composite);
             secondExtent.Filter.AddContainedIn(m.C1.C1C2many2manies, sharedExtent);
             var intersectExtent = this.Transaction.Intersect(firstExtent, secondExtent);
             intersectExtent.ToArray(typeof(C1));
@@ -16467,7 +16467,7 @@ public abstract class ExtentTest : IDisposable
 
             this.Transaction.Commit();
 
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             extent.AddSort(m.C1.C1AllorsString);
 
             var sortedObjects = (C1[])extent.ToArray(typeof(C1));
@@ -16477,7 +16477,7 @@ public abstract class ExtentTest : IDisposable
             Assert.Equal(this.c1B, sortedObjects[2]);
             Assert.Equal(this.c1A, sortedObjects[3]);
 
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.AddSort(m.C1.C1AllorsString, SortDirection.Ascending);
 
             sortedObjects = (C1[])extent.ToArray(typeof(C1));
@@ -16487,7 +16487,7 @@ public abstract class ExtentTest : IDisposable
             Assert.Equal(this.c1B, sortedObjects[2]);
             Assert.Equal(this.c1A, sortedObjects[3]);
 
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.AddSort(m.C1.C1AllorsString, SortDirection.Descending);
 
             sortedObjects = (C1[])extent.ToArray(typeof(C1));
@@ -16501,9 +16501,9 @@ public abstract class ExtentTest : IDisposable
             {
                 if (useOperator)
                 {
-                    var firstExtent = this.Transaction.Extent(m.C1);
+                    var firstExtent = this.Transaction.Extent(m.C1.Composite);
                     firstExtent.Filter.AddLike(m.C1.C1AllorsString, "1");
-                    var secondExtent = this.Transaction.Extent(m.C1);
+                    var secondExtent = this.Transaction.Extent(m.C1.Composite);
                     extent = this.Transaction.Union(firstExtent, secondExtent);
                     secondExtent.Filter.AddLike(m.C1.C1AllorsString, "3");
                     extent.AddSort(m.C1.C1AllorsString);
@@ -16536,7 +16536,7 @@ public abstract class ExtentTest : IDisposable
 
             this.Transaction.Commit();
 
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             extent.AddSort(m.C1.C1AllorsString);
             extent.AddSort(m.C1.C1AllorsInteger);
 
@@ -16547,7 +16547,7 @@ public abstract class ExtentTest : IDisposable
             Assert.Equal(this.c1C, sortedObjects[2]);
             Assert.Equal(this.c1A, sortedObjects[3]);
 
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.AddSort(m.C1.C1AllorsString);
             extent.AddSort(m.C1.C1AllorsInteger, SortDirection.Ascending);
 
@@ -16558,7 +16558,7 @@ public abstract class ExtentTest : IDisposable
             Assert.Equal(this.c1C, sortedObjects[2]);
             Assert.Equal(this.c1A, sortedObjects[3]);
 
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.AddSort(m.C1.C1AllorsString);
             extent.AddSort(m.C1.C1AllorsInteger, SortDirection.Descending);
 
@@ -16569,7 +16569,7 @@ public abstract class ExtentTest : IDisposable
             Assert.Equal(this.c1C, sortedObjects[2]);
             Assert.Equal(this.c1A, sortedObjects[3]);
 
-            extent = this.Transaction.Extent(m.C1);
+            extent = this.Transaction.Extent(m.C1.Composite);
             extent.AddSort(m.C1.C1AllorsString, SortDirection.Descending);
             extent.AddSort(m.C1.C1AllorsInteger, SortDirection.Descending);
 
@@ -16599,7 +16599,7 @@ public abstract class ExtentTest : IDisposable
             c1B.C1AllorsString = "1";
             c1C.C1AllorsString = "3";
 
-            var extent = this.Transaction.Extent(m.C1);
+            var extent = this.Transaction.Extent(m.C1.Composite);
             extent.AddSort(m.C1.C1AllorsString, SortDirection.Ascending);
 
             var sortedObjects = (C1[])extent.ToArray(typeof(C1));
@@ -16618,7 +16618,7 @@ public abstract class ExtentTest : IDisposable
             {
                 c1A = (C1)transaction2.Instantiate(c1AId);
 
-                extent = transaction2.Extent(m.C1);
+                extent = transaction2.Extent(m.C1.Composite);
                 extent.AddSort(m.C1.C1AllorsString, SortDirection.Ascending);
 
                 sortedObjects = (C1[])extent.ToArray(typeof(C1));
@@ -16641,7 +16641,7 @@ public abstract class ExtentTest : IDisposable
             this.Populate();
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
-            var extent = this.Transaction.Extent(m.I4);
+            var extent = this.Transaction.Extent(m.I4.Composite);
             Assert.Equal(4, extent.Count);
             this.AssertC4(extent, true, true, true, true);
         }
@@ -16659,10 +16659,10 @@ public abstract class ExtentTest : IDisposable
             // Class
 
             // Filtered
-            var firstExtent = this.Transaction.Extent(m.C1);
+            var firstExtent = this.Transaction.Extent(m.C1.Composite);
             firstExtent.Filter.AddEquals(m.C1.C1AllorsString, "ᴀbra");
 
-            var secondExtent = this.Transaction.Extent(m.C1);
+            var secondExtent = this.Transaction.Extent(m.C1.Composite);
             secondExtent.Filter.AddLike(m.C1.C1AllorsString, "ᴀbracadabra");
 
             var extent = this.Transaction.Union(firstExtent, secondExtent);
@@ -16674,8 +16674,8 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Different Classes
-            firstExtent = this.Transaction.Extent(m.C1);
-            secondExtent = this.Transaction.Extent(m.C2);
+            firstExtent = this.Transaction.Extent(m.C1.Composite);
+            secondExtent = this.Transaction.Extent(m.C2.Composite);
 
             var exceptionThrown = false;
             try
@@ -16690,14 +16690,14 @@ public abstract class ExtentTest : IDisposable
             Assert.True(exceptionThrown);
 
             // Name clashes
-            Extent<Company> parents = this.Transaction.Extent(m.Company);
+            Extent<Company> parents = this.Transaction.Extent(m.Company.Composite);
 
-            Extent<Company> children = this.Transaction.Extent(m.Company);
+            Extent<Company> children = this.Transaction.Extent(m.Company.Composite);
             children.Filter.AddContainedIn(m.Company.CompanyWhereChild, parents);
 
             Extent<Company> allCompanies = this.Transaction.Union(parents, children);
 
-            Extent<Person> persons = this.Transaction.Extent(m.Person);
+            Extent<Person> persons = this.Transaction.Extent(m.Person.Composite);
             persons.Filter.AddContainedIn(m.Person.Company, allCompanies);
 
             Assert.Empty(persons);
@@ -16717,9 +16717,9 @@ public abstract class ExtentTest : IDisposable
             var exceptionThrown = false;
             try
             {
-                var inExtent = this.Transaction.Extent(m.C1);
+                var inExtent = this.Transaction.Extent(m.C1.Composite);
 
-                var extent = this.Transaction.Extent(m.C2);
+                var extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddContainedIn(((RoleType)m.C1.I12AllorsBoolean).AssociationType, inExtent);
                 extent.ToArray();
             }
@@ -16745,7 +16745,7 @@ public abstract class ExtentTest : IDisposable
             var exceptionThrown = false;
             try
             {
-                var extent = this.Transaction.Extent(m.C2);
+                var extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddContains(m.C2.C1WhereC1C2one2many, this.c1C);
             }
             catch (ArgumentException)
@@ -16758,7 +16758,7 @@ public abstract class ExtentTest : IDisposable
             exceptionThrown = false;
             try
             {
-                var extent = this.Transaction.Extent(m.C2);
+                var extent = this.Transaction.Extent(m.C2.Composite);
                 extent.Filter.AddContains(m.C2.C1WhereC1C2one2one, this.c1C);
             }
             catch (ArgumentException)
@@ -16783,7 +16783,7 @@ public abstract class ExtentTest : IDisposable
             var exceptionThrown = false;
             try
             {
-                var extent = this.Transaction.Extent(m.C1);
+                var extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddEquals(m.C1.C1sWhereC1C1many2many, this.c1B);
             }
             catch (ArgumentException)
@@ -16796,7 +16796,7 @@ public abstract class ExtentTest : IDisposable
             exceptionThrown = false;
             try
             {
-                var extent = this.Transaction.Extent(m.C1);
+                var extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddEquals(m.C1.C1sWhereC1C1many2one, this.c1B);
             }
             catch (ArgumentException)
@@ -16833,7 +16833,7 @@ public abstract class ExtentTest : IDisposable
             var exceptionThrown = false;
             try
             {
-                var extent = this.Transaction.Extent(m.C1);
+                var extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddBetween(m.C1.C1C2one2one, 0, 1);
             }
             catch (ArgumentException)
@@ -16858,7 +16858,7 @@ public abstract class ExtentTest : IDisposable
             var exceptionThrown = false;
             try
             {
-                var extent = this.Transaction.Extent(m.C1);
+                var extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddContains(m.C1.C1AllorsString, this.c2C);
             }
             catch (ArgumentException)
@@ -16883,7 +16883,7 @@ public abstract class ExtentTest : IDisposable
             var exceptionThrown = false;
             try
             {
-                var extent = this.Transaction.Extent(m.C1);
+                var extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddEquals(m.C1.C1C2one2manies, this.c2B);
             }
             catch (ArgumentException)
@@ -16897,7 +16897,7 @@ public abstract class ExtentTest : IDisposable
             exceptionThrown = false;
             try
             {
-                var extent = this.Transaction.Extent(m.C1);
+                var extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddEquals(m.C1.C1C2many2manies, this.c2B);
             }
             catch (ArgumentException)
@@ -16928,7 +16928,7 @@ public abstract class ExtentTest : IDisposable
             var exceptionThrown = false;
             try
             {
-                var extent = this.Transaction.Extent(m.C1);
+                var extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddGreaterThan(m.C1.C1C2one2one, 0);
             }
             catch (ArgumentException)
@@ -16953,9 +16953,9 @@ public abstract class ExtentTest : IDisposable
             var exceptionThrown = false;
             try
             {
-                var inExtent = this.Transaction.Extent(m.C1);
+                var inExtent = this.Transaction.Extent(m.C1.Composite);
 
-                var extent = this.Transaction.Extent(m.C1);
+                var extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddContainedIn(m.C1.C1AllorsString, inExtent);
             }
             catch (ArgumentException)
@@ -16980,7 +16980,7 @@ public abstract class ExtentTest : IDisposable
             var exceptionThrown = false;
             try
             {
-                var extent = this.Transaction.Extent(m.C1);
+                var extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddLessThan(m.C1.C1C2one2one, 1);
             }
             catch (ArgumentException)
@@ -17005,7 +17005,7 @@ public abstract class ExtentTest : IDisposable
             var exceptionThrown = false;
             try
             {
-                var extent = this.Transaction.Extent(m.C1);
+                var extent = this.Transaction.Extent(m.C1.Composite);
                 extent.Filter.AddLike(m.C1.C1AllorsBoolean, string.Empty);
             }
             catch (ArgumentException)
@@ -17040,10 +17040,10 @@ public abstract class ExtentTest : IDisposable
             c2.AddC3Many2Many(c3);
             c1.C1C2many2one = c2;
 
-            var c2s = this.Transaction.Extent(m.C2);
+            var c2s = this.Transaction.Extent(m.C2.Composite);
             c2s.Filter.AddContains(m.C2.C3Many2Manies, c3);
 
-            Extent<C1> c1s = this.Transaction.Extent(m.C1);
+            Extent<C1> c1s = this.Transaction.Extent(m.C1.Composite);
             c1s.Filter.AddContainedIn(m.C1.C1C2many2one, c2s);
 
             Assert.Single(c1s);
@@ -17068,10 +17068,10 @@ public abstract class ExtentTest : IDisposable
             c3.AddC3C4one2many(c4);
             c2.C3Many2One = c3;
 
-            var c3s = this.Transaction.Extent(m.C3);
+            var c3s = this.Transaction.Extent(m.C3.Composite);
             c3s.Filter.AddContains(m.C3.C3C4one2manies, c4);
 
-            Extent<C2> c2s = this.Transaction.Extent(m.C2);
+            Extent<C2> c2s = this.Transaction.Extent(m.C2.Composite);
             c2s.Filter.AddContainedIn(m.C2.C3Many2One, c3s);
 
             Assert.Single(c2s);
@@ -17096,10 +17096,10 @@ public abstract class ExtentTest : IDisposable
             c3.AddC3C2many2many(c2);
             c1.C1C2many2one = c2;
 
-            var c2s = this.Transaction.Extent(m.C2);
+            var c2s = this.Transaction.Extent(m.C2.Composite);
             c2s.Filter.AddContains(m.C2.C3sWhereC3C2many2many, c3);
 
-            Extent<C1> c1s = this.Transaction.Extent(m.C1);
+            Extent<C1> c1s = this.Transaction.Extent(m.C1.Composite);
             c1s.Filter.AddContainedIn(m.C1.C1C2many2one, c2s);
 
             Assert.Single(c1s);

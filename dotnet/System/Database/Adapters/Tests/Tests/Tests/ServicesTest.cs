@@ -58,18 +58,18 @@ public abstract class ServicesTest : IDisposable
             var total = 0;
             foreach (var run in runs)
             {
-                var allorsObjects = this.Transaction.Build(m.C1, run);
+                var allorsObjects = this.Transaction.Build(m.C1.Class, run);
 
                 Assert.Equal(run, allorsObjects.Length);
 
                 total += run;
 
-                Assert.Equal(total, this.GetExtent(m.C1).Length);
+                Assert.Equal(total, this.GetExtent(m.C1.Composite).Length);
 
                 var ids = new ArrayList();
                 foreach (C1 allorsObject in allorsObjects)
                 {
-                    Assert.Equal(m.C1, allorsObject.Strategy.Class);
+                    Assert.Equal(m.C1.Class, allorsObject.Strategy.Class);
                     ids.Add(allorsObject.Strategy.ObjectId);
                     allorsObject.C1AllorsString = "CreateMany";
                 }
@@ -81,11 +81,11 @@ public abstract class ServicesTest : IDisposable
                 allorsObjects = this.Transaction.Instantiate((long[])ids.ToArray(typeof(long)));
                 foreach (C1 allorsObject in allorsObjects)
                 {
-                    Assert.Equal(m.C1, allorsObject.Strategy.Class);
+                    Assert.Equal(m.C1.Class, allorsObject.Strategy.Class);
                     allorsObject.C1AllorsString = "CreateMany";
                 }
 
-                var c2s = (C2[])this.Transaction.Build(m.C2, run);
+                var c2s = (C2[])this.Transaction.Build(m.C2.Class, run);
                 Assert.Equal(run, c2s.Length);
             }
         }
@@ -425,7 +425,7 @@ public abstract class ServicesTest : IDisposable
 
             // Clean up
             this.Transaction.Commit();
-            foreach (C1 removeObject in this.GetExtent(m.C1))
+            foreach (C1 removeObject in this.GetExtent(m.C1.Composite))
             {
                 removeObject.Strategy.Delete();
             }
@@ -681,7 +681,7 @@ public abstract class ServicesTest : IDisposable
 
                 // Clean up
                 databaseTransaction.Commit();
-                foreach (C1 removeObject in this.GetExtent(m.C1))
+                foreach (C1 removeObject in this.GetExtent(m.C1.Composite))
                 {
                     removeObject.Strategy.Delete();
                 }
@@ -708,11 +708,11 @@ public abstract class ServicesTest : IDisposable
             var thirdObject = this.Transaction.Build<C1>();
             thirdObject.C1AllorsString = "c";
 
-            Assert.Equal(2, this.GetExtent(m.C1).Length);
+            Assert.Equal(2, this.GetExtent(m.C1.Composite).Length);
             thirdObject.Strategy.Delete();
 
-            Assert.Single(this.GetExtent(m.C1));
-            Assert.Equal("b", ((C1)this.GetExtent(m.C1)[0]).C1AllorsString);
+            Assert.Single(this.GetExtent(m.C1.Composite));
+            Assert.Equal("b", ((C1)this.GetExtent(m.C1.Composite)[0]).C1AllorsString);
 
             secondObject.Strategy.Delete();
 
@@ -741,15 +741,15 @@ public abstract class ServicesTest : IDisposable
             thirdObject = this.Transaction.Build<C1>();
             thirdObject.C1AllorsString = "c";
 
-            Assert.Equal(2, this.GetExtent(m.C1).Length);
+            Assert.Equal(2, this.GetExtent(m.C1.Composite).Length);
 
             AllorsTestUtils.ForceRoleCaching(secondObject);
             AllorsTestUtils.ForceRoleCaching(thirdObject);
 
             thirdObject.Strategy.Delete();
 
-            Assert.Single(this.GetExtent(m.C1));
-            Assert.Equal("b", ((C1)this.GetExtent(m.C1)[0]).C1AllorsString);
+            Assert.Single(this.GetExtent(m.C1.Composite));
+            Assert.Equal("b", ((C1)this.GetExtent(m.C1.Composite)[0]).C1AllorsString);
 
             secondObject.Strategy.Delete();
 
@@ -776,13 +776,13 @@ public abstract class ServicesTest : IDisposable
             thirdObject = this.Transaction.Build<C1>();
             thirdObject.C1AllorsString = "c";
 
-            Assert.Equal(2, this.GetExtent(m.C1).Length);
+            Assert.Equal(2, this.GetExtent(m.C1.Composite).Length);
             thirdObject.Strategy.Delete();
 
             this.Transaction.Commit();
 
-            Assert.Single(this.GetExtent(m.C1));
-            Assert.Equal("b", ((C1)this.GetExtent(m.C1)[0]).C1AllorsString);
+            Assert.Single(this.GetExtent(m.C1.Composite));
+            Assert.Equal("b", ((C1)this.GetExtent(m.C1.Composite)[0]).C1AllorsString);
 
             secondObject.Strategy.Delete();
 
@@ -815,7 +815,7 @@ public abstract class ServicesTest : IDisposable
             thirdObject = this.Transaction.Build<C1>();
             thirdObject.C1AllorsString = "c";
 
-            Assert.Equal(2, this.GetExtent(m.C1).Length);
+            Assert.Equal(2, this.GetExtent(m.C1.Composite).Length);
 
             AllorsTestUtils.ForceRoleCaching(secondObject);
             AllorsTestUtils.ForceRoleCaching(thirdObject);
@@ -823,8 +823,8 @@ public abstract class ServicesTest : IDisposable
             thirdObject.Strategy.Delete();
             this.Transaction.Commit();
 
-            Assert.Single(this.GetExtent(m.C1));
-            Assert.Equal("b", ((C1)this.GetExtent(m.C1)[0]).C1AllorsString);
+            Assert.Single(this.GetExtent(m.C1.Composite));
+            Assert.Equal("b", ((C1)this.GetExtent(m.C1.Composite)[0]).C1AllorsString);
 
             secondObject.Strategy.Delete();
             this.Transaction.Commit();
@@ -839,21 +839,21 @@ public abstract class ServicesTest : IDisposable
 
             this.Transaction.Rollback();
 
-            Assert.Single(this.GetExtent(m.C1));
-            Assert.Equal("a", ((C1)this.GetExtent(m.C1)[0]).C1AllorsString);
+            Assert.Single(this.GetExtent(m.C1.Composite));
+            Assert.Equal("a", ((C1)this.GetExtent(m.C1.Composite)[0]).C1AllorsString);
 
             secondObject = this.Transaction.Build<C1>();
             secondObject.C1AllorsString = "b";
             thirdObject = this.Transaction.Build<C1>();
             thirdObject.C1AllorsString = "c";
 
-            Assert.Equal(3, this.GetExtent(m.C1).Length);
+            Assert.Equal(3, this.GetExtent(m.C1.Composite).Length);
             thirdObject.Strategy.Delete();
 
             this.Transaction.Rollback();
 
-            Assert.Single(this.GetExtent(m.C1));
-            Assert.Equal("a", ((C1)this.GetExtent(m.C1)[0]).C1AllorsString);
+            Assert.Single(this.GetExtent(m.C1.Composite));
+            Assert.Equal("a", ((C1)this.GetExtent(m.C1.Composite)[0]).C1AllorsString);
 
             anObject.Strategy.Delete();
 
@@ -870,15 +870,15 @@ public abstract class ServicesTest : IDisposable
             anObject.Strategy.Delete();
             this.Transaction.Rollback();
 
-            Assert.Single(this.GetExtent(m.C1));
-            Assert.Equal("a", ((C1)this.GetExtent(m.C1)[0]).C1AllorsString);
+            Assert.Single(this.GetExtent(m.C1.Composite));
+            Assert.Equal("a", ((C1)this.GetExtent(m.C1.Composite)[0]).C1AllorsString);
 
             secondObject = this.Transaction.Build<C1>();
             secondObject.C1AllorsString = "b";
             thirdObject = this.Transaction.Build<C1>();
             thirdObject.C1AllorsString = "c";
 
-            Assert.Equal(3, this.GetExtent(m.C1).Length);
+            Assert.Equal(3, this.GetExtent(m.C1.Composite).Length);
 
             AllorsTestUtils.ForceRoleCaching(secondObject);
             AllorsTestUtils.ForceRoleCaching(thirdObject);
@@ -886,8 +886,8 @@ public abstract class ServicesTest : IDisposable
             thirdObject.Strategy.Delete();
             this.Transaction.Rollback();
 
-            Assert.Single(this.GetExtent(m.C1));
-            Assert.Equal("a", ((C1)this.GetExtent(m.C1)[0]).C1AllorsString);
+            Assert.Single(this.GetExtent(m.C1.Composite));
+            Assert.Equal("a", ((C1)this.GetExtent(m.C1.Composite)[0]).C1AllorsString);
 
             anObject.Strategy.Delete();
             this.Transaction.Commit();
@@ -3976,7 +3976,7 @@ public abstract class ServicesTest : IDisposable
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
             const int ObjectCount = 10;
-            var allorsObjects = this.Transaction.Build(m.Company, ObjectCount);
+            var allorsObjects = this.Transaction.Build(m.Company.Class, ObjectCount);
             var ids = new string[ObjectCount];
             for (var i = 0; i < ObjectCount; i++)
             {
@@ -4073,12 +4073,12 @@ public abstract class ServicesTest : IDisposable
 
             // TODO: Move to other tests
             var withoutValueRoles = this.Transaction.Build<ClassWithoutUnitRoles>();
-            var withoutValueRolesClone = (ClassWithoutUnitRoles)this.GetExtent(m.ClassWithoutUnitRoles)[0];
+            var withoutValueRolesClone = (ClassWithoutUnitRoles)this.GetExtent(m.ClassWithoutUnitRoles.Composite)[0];
 
             Assert.Equal(withoutValueRoles, withoutValueRolesClone);
 
             var withoutRoles = this.Transaction.Build<ClassWithoutRoles>();
-            var withoutRolesClone = (ClassWithoutRoles)this.GetExtent(m.ClassWithoutRoles)[0];
+            var withoutRolesClone = (ClassWithoutRoles)this.GetExtent(m.ClassWithoutRoles.Composite)[0];
 
             Assert.Equal(withoutRoles, withoutRolesClone);
         }
@@ -4109,16 +4109,16 @@ public abstract class ServicesTest : IDisposable
 
             var switchC1A = (C1)this.Transaction.Instantiate(c1A.Id.ToString());
 
-            Assert.Equal(m.C1, switchC1A.Strategy.Class);
+            Assert.Equal(m.C1.Class, switchC1A.Strategy.Class);
 
             var switchC2A = switchC1A.C1I12one2one;
 
-            Assert.Equal(m.C2, switchC2A.Strategy.Class);
+            Assert.Equal(m.C2.Class, switchC2A.Strategy.Class);
 
             var switchC2BC = switchC1A.C1I12one2manies;
 
-            Assert.Equal(m.C2, switchC2BC.ElementAt(0).Strategy.Class);
-            Assert.Equal(m.C2, switchC2BC.ElementAt(1).Strategy.Class);
+            Assert.Equal(m.C2.Class, switchC2BC.ElementAt(0).Strategy.Class);
+            Assert.Equal(m.C2.Class, switchC2BC.ElementAt(1).Strategy.Class);
 
             this.Transaction.Commit();
 
@@ -4254,14 +4254,14 @@ public abstract class ServicesTest : IDisposable
             init();
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
-            var c1a = this.Transaction.Build(m.C1);
-            Assert.Equal(m.C1, c1a.Strategy.Class);
+            var c1a = this.Transaction.Build(m.C1.Class);
+            Assert.Equal(m.C1.Class, c1a.Strategy.Class);
 
             this.Transaction.Commit();
 
-            Assert.Equal(m.C1, c1a.Strategy.Class);
+            Assert.Equal(m.C1.Class, c1a.Strategy.Class);
 
-            var c1b = this.Transaction.Build(m.C1);
+            var c1b = this.Transaction.Build(m.C1.Class);
 
             this.Transaction.Rollback();
 
@@ -4278,12 +4278,12 @@ public abstract class ServicesTest : IDisposable
 
             Assert.True(exceptionThrown);
 
-            var c2a = this.Transaction.Build(m.C2);
-            Assert.Equal(m.C2, c2a.Strategy.Class);
+            var c2a = this.Transaction.Build(m.C2.Class);
+            Assert.Equal(m.C2.Class, c2a.Strategy.Class);
 
             this.Transaction.Commit();
 
-            Assert.Equal(m.C2, c2a.Strategy.Class);
+            Assert.Equal(m.C2.Class, c2a.Strategy.Class);
         }
     }
 

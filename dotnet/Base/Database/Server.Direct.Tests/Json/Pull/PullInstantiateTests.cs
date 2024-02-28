@@ -1,4 +1,4 @@
-// <copyright file="ContentTests.cs" company="Allors bv">
+﻿// <copyright file="ContentTests.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -201,7 +201,7 @@ namespace Tests
                         Select = new Select
                         {
                             RelationEndType = this.M.C1.C1I12Many2Manies,
-                            OfType = this.M.C1,
+                            OfType = this.M.C1.Composite,
                         },
                     },
                 ],

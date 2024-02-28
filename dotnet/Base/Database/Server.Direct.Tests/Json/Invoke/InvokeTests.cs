@@ -48,7 +48,7 @@ namespace Tests
                     {
                         i = this.x1.Id,
                         v = this.x1.Strategy.ObjectVersion,
-                        m = this.M.WorkspaceXObject1.DoX.MethodType.Tag,
+                        m = this.M.WorkspaceXObject1.DoX.Tag,
                     },
                 ],
             };
@@ -72,7 +72,7 @@ namespace Tests
                     {
                         i = this.x1.Id,
                         v = this.x1.Strategy.ObjectVersion,
-                        m = this.M.WorkspaceXObject1.DoX.MethodType.Tag,
+                        m = this.M.WorkspaceXObject1.DoX.Tag,
                     },
                 ],
             };
@@ -102,7 +102,7 @@ namespace Tests
                     {
                         i = this.x1.Id,
                         v = this.x1.Strategy.ObjectVersion,
-                        m = this.M.WorkspaceXObject1.DoX.MethodType.Tag,
+                        m = this.M.WorkspaceXObject1.DoX.Tag,
                     },
                 ],
             };

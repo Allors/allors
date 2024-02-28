@@ -34,8 +34,8 @@ public abstract class ChangesTest : IDisposable
             init();
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
-            var a = (C1)this.Transaction.Build(m.C1);
-            var c = this.Transaction.Build(m.C3);
+            var a = (C1)this.Transaction.Build(m.C1.Class);
+            var c = this.Transaction.Build(m.C3.Class);
             this.Transaction.Commit();
 
             a = (C1)this.Transaction.Instantiate(a);
@@ -70,7 +70,7 @@ public abstract class ChangesTest : IDisposable
         {
             init();
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
-            dynamic newObject = this.Transaction.Build(m.C1);
+            dynamic newObject = this.Transaction.Build(m.C1.Class);
             Assert.True(newObject.onPostBuild);
         }
     }
@@ -83,7 +83,7 @@ public abstract class ChangesTest : IDisposable
             init();
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
-            var newObjects = this.Transaction.Build(m.C1, 2);
+            var newObjects = this.Transaction.Build(m.C1.Class, 2);
             foreach (dynamic newObject in newObjects)
             {
                 Assert.True(newObject.onPostBuild);
@@ -462,8 +462,8 @@ public abstract class ChangesTest : IDisposable
             init();
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
-            var a = (C1)this.Transaction.Build(m.C1);
-            var c = this.Transaction.Build(m.C3);
+            var a = (C1)this.Transaction.Build(m.C1.Class);
+            var c = this.Transaction.Build(m.C3.Class);
             this.Transaction.Commit();
 
             a = (C1)this.Transaction.Instantiate(a);
@@ -675,8 +675,8 @@ public abstract class ChangesTest : IDisposable
             init();
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
-            var a = (C1)this.Transaction.Build(m.C1);
-            var c = this.Transaction.Build(m.C3);
+            var a = (C1)this.Transaction.Build(m.C1.Class);
+            var c = this.Transaction.Build(m.C3.Class);
             this.Transaction.Commit();
 
             a = (C1)this.Transaction.Instantiate(a);
@@ -867,10 +867,10 @@ public abstract class ChangesTest : IDisposable
             init();
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
-            var c1a = (C1)this.Transaction.Build(m.C1);
-            var c1b = (C1)this.Transaction.Build(m.C1);
-            var c2a = (C2)this.Transaction.Build(m.C2);
-            var c2b = (C2)this.Transaction.Build(m.C2);
+            var c1a = (C1)this.Transaction.Build(m.C1.Class);
+            var c1b = (C1)this.Transaction.Build(m.C1.Class);
+            var c2a = (C2)this.Transaction.Build(m.C2.Class);
+            var c2b = (C2)this.Transaction.Build(m.C2.Class);
 
             c1a.Name = "c1a";
             c1b.Name = "c1b";
@@ -977,9 +977,9 @@ public abstract class ChangesTest : IDisposable
             init();
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
-            var c1a = (C1)this.Transaction.Build(m.C1);
-            var c1b = (C1)this.Transaction.Build(m.C1);
-            var c2a = (C2)this.Transaction.Build(m.C2);
+            var c1a = (C1)this.Transaction.Build(m.C1.Class);
+            var c1b = (C1)this.Transaction.Build(m.C1.Class);
+            var c2a = (C2)this.Transaction.Build(m.C2.Class);
             var c2b = this.Transaction.Build<C2>();
 
             c1a.Name = "c1a";
@@ -1087,9 +1087,9 @@ public abstract class ChangesTest : IDisposable
             init();
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
-            var c1a = (C1)this.Transaction.Build(m.C1);
-            var c1b = (C1)this.Transaction.Build(m.C1);
-            var c2a = (C2)this.Transaction.Build(m.C2);
+            var c1a = (C1)this.Transaction.Build(m.C1.Class);
+            var c1b = (C1)this.Transaction.Build(m.C1.Class);
+            var c2a = (C2)this.Transaction.Build(m.C2.Class);
             var c2b = this.Transaction.Build<C2>();
 
             c1a.Name = "c1a";
@@ -1259,9 +1259,9 @@ public abstract class ChangesTest : IDisposable
             init();
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
-            var c1a = (C1)this.Transaction.Build(m.C1);
-            var c1b = (C1)this.Transaction.Build(m.C1);
-            var c2a = (C2)this.Transaction.Build(m.C2);
+            var c1a = (C1)this.Transaction.Build(m.C1.Class);
+            var c1b = (C1)this.Transaction.Build(m.C1.Class);
+            var c2a = (C2)this.Transaction.Build(m.C2.Class);
             var c2b = this.Transaction.Build<C2>();
 
             c1a.Name = "c1a";
@@ -1427,8 +1427,8 @@ public abstract class ChangesTest : IDisposable
             init();
             var m = this.Transaction.Database.Services.Get<IMetaIndex>();
 
-            var a = (C1)this.Transaction.Build(m.C1);
-            var c = this.Transaction.Build(m.C3);
+            var a = (C1)this.Transaction.Build(m.C1.Class);
+            var c = this.Transaction.Build(m.C3.Class);
             this.Transaction.Commit();
 
             a = (C1)this.Transaction.Instantiate(a);

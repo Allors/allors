@@ -1072,10 +1072,10 @@ public abstract class ObsoleteBackupTest : IDisposable
     {
         var m = transaction.Database.Services.Get<IMetaIndex>();
 
-        Assert.Equal(4, this.GetExtent(transaction, m.C1).Length);
-        Assert.Equal(4, this.GetExtent(transaction, m.C2).Length);
-        Assert.Equal(4, this.GetExtent(transaction, m.C3).Length);
-        Assert.Equal(4, this.GetExtent(transaction, m.C4).Length);
+        Assert.Equal(4, ((IObject[])transaction.Extent(m.C1.Composite)).Length);
+        Assert.Equal(4, ((IObject[])transaction.Extent(m.C2.Composite)).Length);
+        Assert.Equal(4, ((IObject[])transaction.Extent(m.C3.Composite)).Length);
+        Assert.Equal(4, ((IObject[])transaction.Extent(m.C4.Composite)).Length);
 
         var c1ACopy = (C1)transaction.Instantiate(this.c1A.Strategy.ObjectId);
         var c1BCopy = (C1)transaction.Instantiate(this.c1B.Strategy.ObjectId);
@@ -1227,9 +1227,7 @@ public abstract class ObsoleteBackupTest : IDisposable
             }
         }
     }
-
-    private IObject[] GetExtent(ITransaction transaction, Composite objectType) => transaction.Extent(objectType);
-
+    
     #region population
     private C1 c1A;
     private C1 c1B;

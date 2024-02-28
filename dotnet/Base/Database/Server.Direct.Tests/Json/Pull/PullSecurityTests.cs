@@ -37,7 +37,7 @@ namespace Tests
 
             // Extent
             {
-                var pull = new Pull { Extent = new Extent(m.WorkspaceXObject1) };
+                var pull = new Pull { Extent = new Extent(m.WorkspaceXObject1.Composite) };
                 var pullRequest = new PullRequest { l = [pull.ToJson(this.UnitConvert)], };
 
                 var api = new Api(this.Transaction, "X", CancellationToken.None);
@@ -84,7 +84,7 @@ namespace Tests
 
             // Extent
             {
-                var pull = new Pull { Extent = new Extent(m.WorkspaceXObject1) };
+                var pull = new Pull { Extent = new Extent(m.WorkspaceXObject1.Composite) };
 
                 var pullRequest = new PullRequest { l = [pull.ToJson(this.UnitConvert)] };
 
@@ -125,7 +125,7 @@ namespace Tests
 
             // Extent
             {
-                var pull = new Pull { Extent = new Extent(m.WorkspaceXObject1) };
+                var pull = new Pull { Extent = new Extent(m.WorkspaceXObject1.Composite) };
                 var pullRequest = new PullRequest { l = [pull.ToJson(this.UnitConvert)], };
 
                 var api = new Api(this.Transaction, "None", CancellationToken.None);
@@ -162,13 +162,13 @@ namespace Tests
 
             var data = this.Transaction.Build<Data>(v => v.String = "First");
             var permissions = this.Transaction.Extent<Permission>();
-            var permission = permissions.First(v => Equals(v.Class, (Class)this.M.Data) && v.InWorkspace("Default"));
+            var permission = permissions.First(v => Equals(v.Class, this.M.Data.Class) && v.InWorkspace("Default"));
             var revocation = this.Transaction.Build<Revocation>(v => v.AddDeniedPermission(permission));
             data.AddRevocation(revocation);
 
             this.Transaction.Commit();
 
-            var pull = new Pull { Extent = new Extent(m.Data) };
+            var pull = new Pull { Extent = new Extent(m.Data.Composite) };
             var pullRequest = new PullRequest
             {
                 l =
@@ -211,7 +211,7 @@ namespace Tests
             var m = this.M;
             var user = this.SetUser("jane@example.com");
 
-            var pull = new Pull { Extent = new Extent(m.Denied) };
+            var pull = new Pull { Extent = new Extent(m.Denied.Composite) };
 
             var pullRequest = new PullRequest
             {
@@ -250,7 +250,7 @@ namespace Tests
 
             var uri = new Uri(@"allors/pull", UriKind.Relative);
 
-            var pull = new Pull { Extent = new Extent(this.M.Data) };
+            var pull = new Pull { Extent = new Extent(this.M.Data.Composite) };
 
             var pullRequest = new PullRequest
             {

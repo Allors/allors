@@ -44,7 +44,7 @@ namespace Tests
                         [
                             new PushRequestRole
                             {
-                              t = this.M.Organization.Name.RoleType.RelationType.Tag,
+                              t = this.M.Organization.Name.RelationType.Tag,
                               u = "Acme",
                             },
                         ],

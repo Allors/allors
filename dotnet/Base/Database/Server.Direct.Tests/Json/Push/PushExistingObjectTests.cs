@@ -52,7 +52,7 @@ namespace Tests
                         [
                             new PushRequestRole
                             {
-                                t = this.M.WorkspaceXObject1.WorkspaceXString.RoleType.RelationType.Tag,
+                                t = this.M.WorkspaceXObject1.WorkspaceXString.RelationType.Tag,
                                 u = "x string",
                             },
                         ],
@@ -87,7 +87,7 @@ namespace Tests
                         [
                             new PushRequestRole
                             {
-                                t = this.M.WorkspaceXObject1.WorkspaceXString.RoleType.RelationType.Tag,
+                                t = this.M.WorkspaceXObject1.WorkspaceXString.RelationType.Tag,
                                 u = "x string",
                             },
                         ],
