@@ -73,7 +73,7 @@ objectType_Plural() ::= <<
 		{
 			get
 			{
-				return Meta;
+				return this.Meta.$if(objectType.IsClass)$Class$else$Interface$endif$;
 			}
 		}
 $if(objectType.isClass)$

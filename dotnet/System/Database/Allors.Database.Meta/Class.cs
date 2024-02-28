@@ -27,8 +27,6 @@ public sealed class Class : Composite
 
     public override bool IsClass => true;
 
-    public static implicit operator Class(ClassIndex index) => index?.Class;
-
     public override string ToString()
     {
         if (!string.IsNullOrEmpty(this.SingularName))

@@ -108,8 +108,6 @@ public sealed class RoleType : RelationEndType, IComparable
 
     public int? Scale { get; set; }
 
-    public static implicit operator RoleType(RoleTypeIndex index) => index?.RoleType;
-
     public int CompareTo(object other) => this.relationType.Id.CompareTo((other as RoleType)?.relationType.Id);
 
     /// <summary>

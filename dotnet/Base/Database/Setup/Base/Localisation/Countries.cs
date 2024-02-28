@@ -13,7 +13,7 @@ namespace Allors.Database.Domain
         {
             base.BasePrepare(setup);
 
-            setup.AddDependency(this.ObjectType, this.M.Currency);
+            setup.AddDependency(this.ObjectType, this.M.Currency.Composite);
         }
 
         protected override void BaseSetup(Setup setup)

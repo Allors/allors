@@ -54,11 +54,18 @@ namespace Allors.Database.Domain.Tests
                 v.AddC1C2Many2Many(c2D);
             });
 
-            var cloned = c1A.Clone(this.M.C1.Nodes(
-                v => v.C1C2One2One.Node(),
-                v => v.C1C2One2Manies.Node(),
-                v => v.C1C2Many2One.Node(),
-                v => v.C1C2Many2Manies.Node()));
+
+            var deepClone = new C1TreeBuilder
+            {
+                C1C2One2One = new(this.M),
+                C1C2One2Manies = new(this.M),
+                C1C2Many2One = new(this.M),
+                C1C2Many2Manies = new(this.M),
+            }.Build();
+
+
+
+            var cloned = c1A.Clone(deepClone);
 
             Assert.NotEqual(c1A, cloned);
             Assert.Equal("c1A", cloned.C1AllorsString);
@@ -87,7 +94,16 @@ namespace Allors.Database.Domain.Tests
 
             var c1A = this.BuildC1("c1A", v => v.C1C2One2One = c2A);
 
-            var deepClone = this.M.C1.Node(v => v.C1C2One2One.Node(w => w.ObjectType.C2C2One2One.Node()));
+            var deepClone = new C1TreeBuilder
+            {
+                C1C2One2One = new C1C1C2One2OneNodeBuilder(this.M)
+                {
+                    C2 = new C2TreeBuilder()
+                    {
+                        C2C2One2One = new C2C2C2One2OneNodeBuilder(this.M)
+                    }
+                }
+            }.Build();
 
             var cloned1A = c1A.Clone(deepClone);
             var cloned = cloned1A.C1C2One2One;

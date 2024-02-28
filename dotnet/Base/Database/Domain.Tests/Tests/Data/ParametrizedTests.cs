@@ -1,4 +1,4 @@
-// <copyright file="ParametrizedTests.cs" company="Allors bv">
+﻿// <copyright file="ParametrizedTests.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -19,7 +19,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void EqualsWithArguments()
         {
-            var filter = new Extent(this.M.Person)
+            var filter = new Extent(this.M.Person.Composite)
             {
                 Predicate = new Equals { RelationEndType = this.M.Person.FirstName, Parameter = "firstName" },
             };
@@ -27,7 +27,7 @@ namespace Allors.Database.Domain.Tests
             var arguments = new Arguments(new Dictionary<string, object> { { "firstName", "John" } });
             var queryExtent = filter.Build(this.Transaction, arguments);
 
-            var extent = this.Transaction.Extent(this.M.Person);
+            var extent = this.Transaction.Extent(this.M.Person.Composite);
             extent.Filter.AddEquals(this.M.Person.FirstName, "John");
 
             Assert.Equal(extent.ToArray(), [.. queryExtent]);
@@ -36,14 +36,14 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void EqualsWithoutArguments()
         {
-            var filter = new Extent(this.M.Person)
+            var filter = new Extent(this.M.Person.Composite)
             {
                 Predicate = new Equals { RelationEndType = this.M.Person.FirstName, Parameter = "firstName" },
             };
 
             var queryExtent = filter.Build(this.Transaction);
 
-            var extent = this.Transaction.Extent(this.M.Person);
+            var extent = this.Transaction.Extent(this.M.Person.Composite);
 
             Assert.Equal(extent.ToArray(), [.. queryExtent]);
         }
@@ -52,7 +52,7 @@ namespace Allors.Database.Domain.Tests
         public void AndWithArguments()
         {
             // select from Person where FirstName='John' and LastName='Doe'
-            var filter = new Extent(this.M.Person)
+            var filter = new Extent(this.M.Person.Composite)
             {
                 Predicate = new And
                 {
@@ -79,7 +79,7 @@ namespace Allors.Database.Domain.Tests
                                 });
             var queryExtent = filter.Build(this.Transaction, arguments);
 
-            var extent = this.Transaction.Extent(this.M.Person);
+            var extent = this.Transaction.Extent(this.M.Person.Composite);
             var and = extent.Filter.AddAnd();
             and.AddEquals(this.M.Person.FirstName, "John");
             and.AddEquals(this.M.Person.LastName, "Doe");
@@ -91,7 +91,7 @@ namespace Allors.Database.Domain.Tests
         public void AndWithoutArguments()
         {
             // select from Person where FirstName='John' and LastName='Doe'
-            var filter = new Extent(this.M.Person)
+            var filter = new Extent(this.M.Person.Composite)
             {
                 Predicate = new And
                 {
@@ -117,7 +117,7 @@ namespace Allors.Database.Domain.Tests
                                     });
                 var queryExtent = filter.Build(this.Transaction, arguments);
 
-                var extent = this.Transaction.Extent(this.M.Person);
+                var extent = this.Transaction.Extent(this.M.Person.Composite);
                 extent.Filter.AddEquals(this.M.Person.FirstName, "John");
 
                 Assert.Equal(extent.ToArray(), [.. queryExtent]);
@@ -126,7 +126,7 @@ namespace Allors.Database.Domain.Tests
             {
                 var queryExtent = filter.Build(this.Transaction);
 
-                var extent = this.Transaction.Extent(this.M.Person);
+                var extent = this.Transaction.Extent(this.M.Person.Composite);
 
                 Assert.Equal(extent.ToArray(), [.. queryExtent]);
             }
@@ -135,12 +135,12 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void NestedWithArguments()
         {
-            var filter = new Extent(this.M.C1)
+            var filter = new Extent(this.M.C1.Composite)
             {
                 Predicate = new ContainedIn
                 {
                     RelationEndType = this.M.C1.C1C2One2One,
-                    Extent = new Extent(this.M.C2)
+                    Extent = new Extent(this.M.C2.Composite)
                     {
                         Predicate = new Equals
                         {
@@ -154,9 +154,9 @@ namespace Allors.Database.Domain.Tests
             var arguments = new Arguments(new Dictionary<string, object> { { "nested", "c2B" } });
             var queryExtent = filter.Build(this.Transaction, arguments);
 
-            var c2s = this.Transaction.Extent(this.M.C2);
+            var c2s = this.Transaction.Extent(this.M.C2.Composite);
             c2s.Filter.AddEquals(this.M.C2.C2AllorsString, "c2B");
-            var extent = this.Transaction.Extent(this.M.C1);
+            var extent = this.Transaction.Extent(this.M.C1.Composite);
             extent.Filter.AddContainedIn(this.M.C1.C1C2One2One, c2s);
 
             Assert.Equal(extent.ToArray(), [.. queryExtent]);
@@ -165,12 +165,12 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void NestedWithoutArguments()
         {
-            var filter = new Extent(this.M.C1)
+            var filter = new Extent(this.M.C1.Composite)
             {
                 Predicate = new ContainedIn
                 {
                     RelationEndType = this.M.C1.C1C2One2One,
-                    Extent = new Extent(this.M.C2)
+                    Extent = new Extent(this.M.C2.Composite)
                     {
                         Predicate = new Equals
                         {
@@ -184,7 +184,7 @@ namespace Allors.Database.Domain.Tests
             var arguments = new Arguments(new Dictionary<string, object>());
             var queryExtent = filter.Build(this.Transaction, arguments);
 
-            var extent = this.Transaction.Extent(this.M.C1);
+            var extent = this.Transaction.Extent(this.M.C1.Composite);
 
             Assert.Equal(extent.ToArray(), [.. queryExtent]);
         }
@@ -192,7 +192,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void AndNestedContainedInWithoutArguments()
         {
-            var filter = new Extent(this.M.C1)
+            var filter = new Extent(this.M.C1.Composite)
             {
                 Predicate = new And
                 {
@@ -201,7 +201,7 @@ namespace Allors.Database.Domain.Tests
                         new ContainedIn
                         {
                             RelationEndType = this.M.C1.C1C2One2One,
-                            Extent = new Extent(this.M.C2)
+                            Extent = new Extent(this.M.C2.Composite)
                             {
                                 Predicate = new Equals
                                 {
@@ -217,7 +217,7 @@ namespace Allors.Database.Domain.Tests
             var parameters = new Arguments(new Dictionary<string, object>());
             var queryExtent = filter.Build(this.Transaction, parameters);
 
-            var extent = this.Transaction.Extent(this.M.C1);
+            var extent = this.Transaction.Extent(this.M.C1.Composite);
 
             Assert.Equal(extent.ToArray(), [.. queryExtent]);
         }
@@ -225,7 +225,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void AndNestedContainsWithoutArguments()
         {
-            var filter = new Extent(this.M.C1)
+            var filter = new Extent(this.M.C1.Composite)
             {
                 Predicate = new And
                 {
@@ -234,7 +234,7 @@ namespace Allors.Database.Domain.Tests
                         new ContainedIn
                             {
                                 RelationEndType = this.M.C1.C1C2One2One,
-                                Extent = new Extent(this.M.C2)
+                                Extent = new Extent(this.M.C2.Composite)
                                              {
                                                  Predicate = new Contains
                                                                  {
@@ -250,7 +250,7 @@ namespace Allors.Database.Domain.Tests
             var arguments = new Arguments(new Dictionary<string, object>());
             var queryExtent = filter.Build(this.Transaction, arguments);
 
-            var extent = this.Transaction.Extent(this.M.C1);
+            var extent = this.Transaction.Extent(this.M.C1.Composite);
 
             Assert.Equal(extent.ToArray(), [.. queryExtent]);
         }

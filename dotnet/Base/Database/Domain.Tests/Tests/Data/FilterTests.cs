@@ -1,4 +1,4 @@
-// <copyright file="FilterTests.cs" company="Allors bv">
+﻿// <copyright file="FilterTests.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -18,10 +18,10 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void Type()
         {
-            var query = new Extent(this.M.Person);
+            var query = new Extent(this.M.Person.Composite);
             var queryExtent = query.Build(this.Transaction);
 
-            var extent = this.Transaction.Extent(this.M.Person);
+            var extent = this.Transaction.Extent(this.M.Person.Composite);
 
             Assert.Equal(extent.ToArray(), [.. queryExtent]);
         }
@@ -29,7 +29,7 @@ namespace Allors.Database.Domain.Tests
         [Fact]
         public void RoleEquals()
         {
-            var filter = new Extent(this.M.Person)
+            var filter = new Extent(this.M.Person.Composite)
             {
                 Predicate = new Equals
                 {
@@ -40,7 +40,7 @@ namespace Allors.Database.Domain.Tests
 
             var queryExtent = filter.Build(this.Transaction);
 
-            var extent = this.Transaction.Extent(this.M.Person);
+            var extent = this.Transaction.Extent(this.M.Person.Composite);
             extent.Filter.AddEquals(this.M.Person.FirstName, "John");
 
             Assert.Equal(extent.ToArray(), [.. queryExtent]);
@@ -50,7 +50,7 @@ namespace Allors.Database.Domain.Tests
         public void And()
         {
             // select from Person where FirstName='John' and LastName='Doe'
-            var filter = new Extent(this.M.Person)
+            var filter = new Extent(this.M.Person.Composite)
             {
                 Predicate = new And
                 {
@@ -72,7 +72,7 @@ namespace Allors.Database.Domain.Tests
 
             var queryExtent = filter.Build(this.Transaction);
 
-            var extent = this.Transaction.Extent(this.M.Person);
+            var extent = this.Transaction.Extent(this.M.Person.Composite);
             var and = extent.Filter.AddAnd();
             and.AddEquals(this.M.Person.FirstName, "John");
             and.AddEquals(this.M.Person.LastName, "Doe");

@@ -11,7 +11,7 @@ namespace Allors.Database.Domain
         {
             base.CustomPrepare(setup);
 
-            setup.AddDependency(this.ObjectType, this.M.Media);
+            setup.AddDependency(this.ObjectType, this.M.Media.Composite);
         }
 
         protected override void CustomSetup(Setup setup)

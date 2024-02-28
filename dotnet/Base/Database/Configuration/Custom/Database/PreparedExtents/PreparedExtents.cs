@@ -33,7 +33,7 @@ namespace Allors.Database.Configuration
             if (id == OrganizationByName)
             {
                 var m = this.Database.Services.Get<IMetaIndex>();
-                return new Extent(m.Organization) { Predicate = new Equals(m.Organization.Name) { Parameter = "name" } };
+                return new Extent(m.Organization.Composite) { Predicate = new Equals(m.Organization.Name) { Parameter = "name" } };
             }
 
             if (!this.extentById.TryGetValue(id, out var extent))
@@ -43,7 +43,7 @@ namespace Allors.Database.Configuration
                 {
                     var m = transaction.Database.Services.Get<IMetaIndex>();
 
-                    var filter = new Extent(m.PersistentPreparedExtent)
+                    var filter = new Extent(m.PersistentPreparedExtent.Composite)
                     {
                         Predicate = new Equals(m.PersistentPreparedExtent.UniqueId) { Value = id },
                     };

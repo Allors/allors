@@ -60,8 +60,6 @@ public sealed class MethodType : OperandType, IComparable, IMetaIdentifiableObje
         }
     }
 
-    public static implicit operator MethodType(MethodTypeIndex index) => index?.MethodType;
-
     public int CompareTo(object other) => this.Id.CompareTo((other as MethodType)?.Id);
 
     public override string ToString() => this.Name;

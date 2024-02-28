@@ -28,12 +28,10 @@ public sealed class Interface : Composite
     {
         metaPopulation.OnCreated(this);
     }
-    
+
     public override bool IsInterface => true;
 
     public override bool IsClass => false;
-
-    public static implicit operator Interface(InterfaceIndex index) => index?.Interface;
 
     public override string ToString()
     {
@@ -50,7 +48,7 @@ public sealed class Interface : Composite
         this.ValidateObjectType(validationLog);
         this.ValidateComposite(validationLog);
     }
-    
+
     public override IReadOnlyList<Composite> DirectSubtypes => this.directSubtypes;
 
     public override IReadOnlyList<Composite> Composites => this.composites;

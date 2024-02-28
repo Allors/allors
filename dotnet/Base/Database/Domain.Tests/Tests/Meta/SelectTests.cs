@@ -1,4 +1,4 @@
-// <copyright file="PathTests.cs" company="Allors bv">
+﻿// <copyright file="PathTests.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -73,7 +73,7 @@ namespace Allors.Database.Domain.Tests
 
             this.Transaction.Derive();
 
-            Select.TryParse(this.M.C2, "C1WhereC1C2One2Many", out var select);
+            Select.TryParse(this.M.C2.Composite, "C1WhereC1C2One2Many", out var select);
 
             var result = (C1)select.Get(c2A, this.AclsMock.Object);
             Assert.Equal(result, c1A);

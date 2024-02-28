@@ -1,4 +1,4 @@
-// <copyright file="Order.cs" company="Allors bv">
+﻿// <copyright file="Order.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -11,9 +11,9 @@ namespace Allors.Database.Domain
         // TODO: Cache
         public TransitionalConfiguration[] TransitionalConfigurations =>
             [
-                new TransitionalConfiguration(this.M.Order, this.M.Order.OrderState),
-                new TransitionalConfiguration(this.M.Order, this.M.Order.ShipmentState),
-                new TransitionalConfiguration(this.M.Order, this.M.Order.PaymentState),
+                new TransitionalConfiguration(this.M.Order.Class, this.M.Order.OrderState),
+                new TransitionalConfiguration(this.M.Order.Class, this.M.Order.ShipmentState),
+                new TransitionalConfiguration(this.M.Order.Class, this.M.Order.PaymentState),
             ];
     }
 }

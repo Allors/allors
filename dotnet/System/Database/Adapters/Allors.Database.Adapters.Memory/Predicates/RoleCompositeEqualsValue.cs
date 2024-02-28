@@ -36,11 +36,6 @@ internal sealed class RoleCompositeEqualsValue : Predicate
         {
             equalsValue = strategy.GetCompositeRole(type);
         }
-        else if (this.equals is RoleTypeIndex index)
-        {
-            var equalsRole = index.RoleType;
-            equalsValue = strategy.GetCompositeRole(equalsRole);
-        }
 
         if (equalsValue == null)
         {

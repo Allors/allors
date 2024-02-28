@@ -94,7 +94,7 @@ namespace Allors.Database.Domain
         {
             foreach (var @class in this.Config.Translation.ResourceSetByCultureInfoByRoleTypeByClass.Keys)
             {
-                this.AddDependency(@class, this.M.Locale);
+                this.AddDependency(@class, this.M.Locale.Composite);
             }
         }
 

@@ -11,8 +11,8 @@ namespace Allors.Database.Domain
         {
             base.BasePrepare(setup);
 
-            setup.AddDependency(this.ObjectType, this.M.UserGroup);
-            setup.AddDependency(this.ObjectType, this.M.SecurityToken);
+            setup.AddDependency(this.ObjectType, this.M.UserGroup.Composite);
+            setup.AddDependency(this.ObjectType, this.M.SecurityToken.Composite);
         }
 
         protected override void BaseSetup(Setup setup)

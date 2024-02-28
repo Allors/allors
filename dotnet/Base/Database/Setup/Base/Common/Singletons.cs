@@ -11,7 +11,7 @@ namespace Allors.Database.Domain
         {
             base.BasePrepare(setup);
 
-            setup.AddDependency(this.ObjectType, this.M.Locale);
+            setup.AddDependency(this.ObjectType, this.M.Locale.Composite);
         }
 
         protected override void BaseSetup(Setup setup)

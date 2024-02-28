@@ -34,11 +34,5 @@ public abstract class RelationEndType : OperandType
 
     public abstract bool IsMany { get; }
 
-    public static implicit operator RelationEndType(RelationEndTypeIndex index) => index?.RelationEndType;
-
-    public static implicit operator RelationEndType(AssociationTypeIndex index) => index?.AssociationType;
-
-    public static implicit operator RelationEndType(RoleTypeIndex index) => index?.RoleType;
-
     public abstract void Validate(ValidationLog validationLog);
 }

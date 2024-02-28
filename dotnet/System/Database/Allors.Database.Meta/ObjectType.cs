@@ -56,14 +56,6 @@ public abstract class ObjectType : EmbeddedObject, IMetaIdentifiableObject, ICom
 
     public abstract bool IsClass { get; }
 
-    public static implicit operator ObjectType(UnitIndex index) => index?.Unit;
-
-    public static implicit operator ObjectType(CompositeIndex index) => index?.Composite;
-
-    public static implicit operator ObjectType(InterfaceIndex index) => index?.Interface;
-
-    public static implicit operator ObjectType(ClassIndex index) => index?.Class;
-
     public override bool Equals(object obj)
     {
         if (obj is not ObjectType other)

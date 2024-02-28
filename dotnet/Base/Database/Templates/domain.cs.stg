@@ -291,7 +291,7 @@ nodeBuilderRoleTypeSubtype_Declaration() ::= <<
 nodeBuilderRoleTypeSubtype_Build() ::= <<
 			if(this.As$subtype.SingularName$ != null) 
 			{
-				nodes = [.. nodes, new Allors.Database.Data.Node(this.M.$roleType.AssociationType.ObjectType.SingularName$.$roleType.Name$, this.As$subtype.SingularName$.Build()) { OfType = this.M.$subtype.SingularName$ }];
+				nodes = [.. nodes, new Allors.Database.Data.Node(this.M.$roleType.AssociationType.ObjectType.SingularName$.$roleType.Name$, this.As$subtype.SingularName$.Build()) { OfType = this.M.$subtype.SingularName$.Composite }];
 			}
 
 >>
@@ -330,7 +330,7 @@ nodeBuilderAssociationTypeSubtype_Declaration() ::= <<
 nodeBuilderAssociationTypeSubtype_Build() ::= <<
 			if(this.As$subtype.SingularName$ != null) 
 			{
-				nodes = [.. nodes, new Allors.Database.Data.Node(this.M.$associationType.RoleType.ObjectType.SingularName$.$associationType.Name$, this.As$subtype.SingularName$.Build()) { OfType = this.M.$subtype.SingularName$ }];
+				nodes = [.. nodes, new Allors.Database.Data.Node(this.M.$associationType.RoleType.ObjectType.SingularName$.$associationType.Name$, this.As$subtype.SingularName$.Build()) { OfType = this.M.$subtype.SingularName$.Composite }];
 			}
 >>
 
@@ -512,7 +512,7 @@ $if(methodType.ObjectType.IsClass)$
 			get
 			{
 			    var m = this.Object.Strategy.Transaction.Database.Services.Get<IMetaIndex>();
-				return new Allors.Database.Meta.MethodInvocation(m.$methodType.ObjectType.SingularName$, m.$methodType.ObjectType.SingularName$.$methodType.Name$);
+				return new Allors.Database.Meta.MethodInvocation(m.$methodType.ObjectType.SingularName$.Class, m.$methodType.ObjectType.SingularName$.$methodType.Name$);
 			}
 		}
 	}
@@ -542,7 +542,7 @@ methodTypeLeafClass() ::= <<
 			get
 			{
 			    var m = this.Object.Strategy.Transaction.Database.Services.Get<IMetaIndex>();
-				return new Allors.Database.Meta.MethodInvocation(m.$class.SingularName$, m.$class.SingularName$.$methodType.Name$);
+				return new Allors.Database.Meta.MethodInvocation(m.$class.SingularName$.Class, m.$class.SingularName$.$methodType.Name$);
 			}
 		}
 	}
@@ -588,7 +588,7 @@ cacheClass() ::= <<$class.KeyRoleTypes:{roleType|$cacheClassKeyRoleTypes()$}$>>
 
 cacheClassKeyRoleTypes() ::= <<
 $\n$
-		public static ICache<$roleType_ObjectType(roleType)$, $class.SingularName$> $class.SingularName$By$roleType.SingularName$(this ICaches @this) => @this.Get<$roleType_ObjectType(roleType)$, $class.SingularName$>(@this.M.$class.SingularName$, @this.M.$class.SingularName$.$roleType.SingularName$);
+		public static ICache<$roleType_ObjectType(roleType)$, $class.SingularName$> $class.SingularName$By$roleType.SingularName$(this ICaches @this) => @this.Get<$roleType_ObjectType(roleType)$, $class.SingularName$>(@this.M.$class.SingularName$.Composite, @this.M.$class.SingularName$.$roleType.SingularName$);
 >>
 
 boolean(value) ::= "$if(value)$true$else$false$endif$"

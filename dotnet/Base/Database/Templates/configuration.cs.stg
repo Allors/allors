@@ -63,20 +63,11 @@ $meta.interfaces:{objectType|$metaInterface_Init_Properties()$}; separator="\n"$
 
 			// Class Properties
 $meta.classes:{objectType|$metaClass_Init_Properties()$}; separator="\n"$
-
-			// RoleType Properties
-$meta.relationTypes:{relationType|$metaRoleType_Init_Properties()$}; separator="\n"$
-
-			// AssociationType Properties
-$meta.relationTypes:{relationType|$metaAssociationType_Init_Properties()$}; separator="\n"$
-
-			// MethodType Properties
-$meta.methodTypes:{methodType|$metaMethodType_Init_Properties()$}; separator="\n"$
 		}
 
-$meta.units:{objectType|$metaObjectType_Property()$}; separator="\n"$
-$meta.interfaces:{objectType|$metaObjectType_Property()$}; separator="\n"$
-$meta.classes:{objectType|$metaObjectType_Property()$}; separator="\n"$
+$meta.units:{objectType|$metaUnit_Property()$}; separator="\n"$
+$meta.interfaces:{objectType|$metaComposite_Property()$}; separator="\n"$
+$meta.classes:{objectType|$metaComposite_Property()$}; separator="\n"$
 $meta.relationTypes:{relationType|$metaRoleType_Property()$}; separator="\n"$
 $meta.relationTypes:{relationType|$metaAssociationType_Property()$}; separator="\n"$
 $meta.methodTypes:{methodType|$metaMethodType_Property()$}; separator="\n"$
@@ -84,28 +75,33 @@ $meta.methodTypes:{methodType|$metaMethodType_Property()$}; separator="\n"$
 }
 >>
 
-metaObjectType_Property() ::= <<
+metaUnit_Property() ::= <<
+		public Unit $objectType.SingularName$ { get; set; }
+
+>>
+
+metaComposite_Property() ::= <<
 		public $objectType.SingularName$Index $objectType.SingularName$ { get; set; }
 
 >>
 
 metaRoleType_Property() ::= <<
-		public $relationType.RoleType.FullName$Index $relationType.RoleType.FullName$ { get; set; }
+		public RoleType $relationType.RoleType.FullName$ { get; set; }
 
 >>
 
 metaAssociationType_Property() ::= <<
-		public $relationType.AssociationType.Name$Index $relationType.AssociationType.Name$ { get; set; }
+		public AssociationType $relationType.AssociationType.Name$ { get; set; }
 
 >>
 
 metaMethodType_Property() ::= <<
-		public $methodType.FullName$Index $methodType.FullName$ { get; set; }
+		public MethodType $methodType.FullName$ { get; set; }
 
 >>
 
 metaUnit_Init() ::= <<
-			this.$objectType.SingularName$ = new $objectType.SingularName$Index((Unit)meta.FindById(MetaIds.$objectType.SingularName$));
+			this.$objectType.SingularName$ = (Unit)meta.FindById(MetaIds.$objectType.SingularName$);
 >>
 
 metaInterface_Init() ::= <<
@@ -117,15 +113,15 @@ metaClass_Init() ::= <<
 >>
 
 metaRoleType_Init() ::= <<
-			this.$relationType.RoleType.FullName$ = new $relationType.RoleType.FullName$Index(((RelationType)meta.FindById(MetaIds.$relationType.RoleType.FullName$)).RoleType);
+			this.$relationType.RoleType.FullName$ = ((RelationType)meta.FindById(MetaIds.$relationType.RoleType.FullName$)).RoleType;
 >>
 
 metaAssociationType_Init() ::= <<
-			this.$relationType.AssociationType.Name$ = new $relationType.AssociationType.Name$Index(((RelationType)meta.FindById(MetaIds.$relationType.RoleType.FullName$)).AssociationType);
+			this.$relationType.AssociationType.Name$ = ((RelationType)meta.FindById(MetaIds.$relationType.RoleType.FullName$)).AssociationType;
 >>
 
 metaMethodType_Init() ::= <<
-			this.$methodType.FullName$ = new $methodType.FullName$Index((MethodType)meta.FindById(MetaIds.$methodType.FullName$));
+			this.$methodType.FullName$ = (MethodType)meta.FindById(MetaIds.$methodType.FullName$);
 >>
 
 metaInterface_Init_Properties() ::= <<
@@ -139,22 +135,6 @@ metaClass_Init_Properties() ::= <<
 $objectType.RoleTypes:{roleType|$metaObjectType_Init_Properties_RoleType()$}; separator="\n"$
 $objectType.AssociationTypes:{associationType|$metaObjectType_Init_Properties_AssociationType()$}; separator="\n"$
 $objectType.MethodTypes:{methodType|$metaObjectType_Init_Properties_MethodType()$}; separator="\n"$
->>
-
-metaRoleType_Init_Properties() ::= <<
-$if(relationType.RoleType.ObjectType.IsComposite)$
-			this.$relationType.RoleType.FullName$.ObjectType = this.$relationType.RoleType.ObjectType.SingularName$;
-			this.$relationType.RoleType.FullName$.AssociationType = this.$relationType.AssociationType.Name$;
-$endif$
->>
-
-metaAssociationType_Init_Properties() ::= <<
-			this.$relationType.AssociationType.Name$.ObjectType = this.$relationType.AssociationType.ObjectType.SingularName$;
-			this.$relationType.AssociationType.Name$.RoleType = this.$relationType.RoleType.FullName$;
->>
-
-metaMethodType_Init_Properties() ::= <<
-			this.$methodType.FullName$.ObjectType = this.$methodType.ObjectType.SingularName$;
 >>
 
 metaInterface_Init_Properties_Subtype() ::= <<

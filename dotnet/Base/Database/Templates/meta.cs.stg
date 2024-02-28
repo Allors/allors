@@ -72,48 +72,17 @@ namespace Allors.Database.Domain
 
     public interface IMetaIndex : IMetaPopulationIndex
     {
-$meta.units:{objectType|$metaObjectType_Property()$}; separator="\n"$
 $meta.interfaces:{objectType|$metaObjectType_Property()$}; separator="\n"$
 $meta.classes:{objectType|$metaObjectType_Property()$}; separator="\n"$
-$meta.relationTypes:{relationType|$metaRoleType_Property()$}; separator="\n"$
-$meta.relationTypes:{relationType|$metaAssociationType_Property()$}; separator="\n"$
-$meta.methodTypes:{methodType|$metaMethodType_Property()$}; separator="\n"$
     }
 
-$meta.units:{unit|$metaUnit_Type()$}; separator="\n"$
 $meta.interfaces:{interface|$metaInterface_Type()$}; separator="\n"$
 $meta.classes:{class|$metaClass_Type()$}; separator="\n"$
-$meta.relationTypes:{relationType|$metaRoleType_Type()$}; separator="\n"$
-$meta.relationTypes:{relationType|$metaAssociationType_Type()$}; separator="\n"$
-$meta.methodTypes:{methodType|$metaMethodType_Type()$}; separator="\n"$
 }
 >>
 
 metaObjectType_Property() ::= <<
 		$objectType.SingularName$Index $objectType.SingularName$ { get; set; }
-
->>
-
-metaRoleType_Property() ::= <<
-		$relationType.RoleType.FullName$Index $relationType.RoleType.FullName$ { get; set; }
-
->>
-
-metaAssociationType_Property() ::= <<
-		$relationType.AssociationType.Name$Index $relationType.AssociationType.Name$ { get; set; }
-
->>
-
-metaMethodType_Property() ::= <<
-		$methodType.FullName$Index $methodType.FullName$ { get; set; }
-
->>
-
-metaUnit_Type() ::= <<
-	public class $unit.SingularName$Index(Unit meta) : UnitIndex 
-	{
-		public override Unit Unit => meta;
-	}
 
 >>
 
@@ -151,60 +120,15 @@ metaObjectType_Subtype() ::= <<
 >>
 
 metaObjectType_RoleType() ::= <<
-		public $roleType.FullName$Index $roleType.Name$ { get; set; }
+		public RoleType $roleType.Name$ { get; set; }
 >>
 
 metaObjectType_AssociationType() ::= <<
-		public $associationType.Name$Index $associationType.Name$ { get; set; }
+		public AssociationType $associationType.Name$ { get; set; }
 >>
 
 metaObjectType_MethodType() ::= <<
-		public $methodType.FullName$Index $methodType.Name$ { get; set; }
->>
-
-metaRoleType_Type() ::= <<
-	public class $relationType.RoleType.FullName$Index(RoleType meta) : RoleTypeIndex
-	{
-	    public override OperandType OperandType => meta;
-
-	    public override RelationEndType RelationEndType => meta;
-
-        public override RoleType RoleType => meta;
-
-$if(relationType.RoleType.ObjectType.IsComposite)$	
-	public $relationType.RoleType.ObjectType$Index ObjectType { get; set; }
-
-	public $relationType.AssociationType.Name$Index AssociationType { get; set; }
-$endif$
-	}
->>
-
-metaAssociationType_Type() ::= <<
-	public class $relationType.AssociationType.Name$Index(AssociationType meta) : AssociationTypeIndex
-	{
-	    public override OperandType OperandType => meta;
-
-		public override RelationEndType RelationEndType => meta;
-
-		public override AssociationType AssociationType => meta;
-
-		public $relationType.AssociationType.ObjectType$Index ObjectType { get; set; }
-
-		public $relationType.RoleType.FullName$Index RoleType { get; set; }
-	}
-
->>
-
-metaMethodType_Type() ::= <<
-	public class $methodType.FullName$Index(MethodType meta) : MethodTypeIndex
-	{
-	    public override OperandType OperandType => meta;
-
-		public override MethodType MethodType => meta;
-
-		public $methodType.ObjectType$Index ObjectType { get; set; }
-	}
-
+		public MethodType $methodType.Name$ { get; set; }
 >>
 
 boolean(value) ::= "$if(value)$true$else$false$endif$"

@@ -12,7 +12,7 @@ namespace Allors.Database.Domain
         {
             base.CustomPrepare(security);
 
-            security.AddDependency(this.ObjectType, this.M.Revocation);
+            security.AddDependency(this.ObjectType, this.M.Revocation.Composite);
         }
 
         protected override void CustomSecure(Security security)
@@ -24,9 +24,9 @@ namespace Allors.Database.Domain
 
             revocations.ToggleRevocation.DeniedPermissions =
             [
-                permissions.Get(this.Meta, this.Meta.Name, Operations.Write),
-                permissions.Get(this.Meta, this.Meta.Owner, Operations.Write),
-                permissions.Get(this.Meta, this.Meta.Employees, Operations.Write),
+                permissions.Get(this.Meta.Class, this.Meta.Name, Operations.Write),
+                permissions.Get(this.Meta.Class, this.Meta.Owner, Operations.Write),
+                permissions.Get(this.Meta.Class, this.Meta.Employees, Operations.Write),
             ];
         }
     }

@@ -11,7 +11,7 @@ namespace Allors.Database.Domain
         {
             base.BasePrepare(setup);
 
-            setup.AddDependency(this.ObjectType, this.M.TemplateType);
+            setup.AddDependency(this.ObjectType, this.M.TemplateType.Composite);
         }
     }
 }

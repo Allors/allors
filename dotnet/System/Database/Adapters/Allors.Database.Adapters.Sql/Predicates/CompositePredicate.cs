@@ -79,14 +79,11 @@ internal abstract class CompositePredicate : Predicate, ICompositePredicate
     {
         this.Extent.FlushCache();
 
-        var betweenRoleA = firstValue as RoleType ?? firstValue as RoleTypeIndex;
-        var betweenRoleB = secondValue as RoleType ?? secondValue as RoleTypeIndex;
-
-        if (betweenRoleA != null && betweenRoleB != null)
+        if (firstValue is RoleType betweenRoleA && secondValue is RoleType betweenRoleB)
         {
             this.Filters.Add(new RoleBetweenRole(this.Extent, role, betweenRoleA, betweenRoleB));
         }
-        else if (firstValue is AssociationType betweenAssociationA && secondValue is AssociationType betweenAssociationB)
+        else if (firstValue is AssociationType && secondValue is AssociationType)
         {
             throw new NotImplementedException();
         }
@@ -151,13 +148,11 @@ internal abstract class CompositePredicate : Predicate, ICompositePredicate
     {
         this.Extent.FlushCache();
 
-        var equalsRole = obj as RoleType ?? obj as RoleTypeIndex;
-
-        if (equalsRole != null)
+        if (obj is RoleType equalsRole)
         {
             this.Filters.Add(new RoleEqualsRole(this.Extent, role, equalsRole));
         }
-        else if (obj is AssociationType equalsAssociation)
+        else if (obj is AssociationType)
         {
             throw new NotImplementedException();
         }
@@ -194,9 +189,7 @@ internal abstract class CompositePredicate : Predicate, ICompositePredicate
     {
         this.Extent.FlushCache();
 
-        var greaterThanRole = value as RoleType ?? value as RoleTypeIndex;
-
-        if (greaterThanRole != null)
+        if (value is RoleType greaterThanRole)
         {
             this.Filters.Add(new RoleGreaterThanRole(this.Extent, role, greaterThanRole));
         }
@@ -237,9 +230,7 @@ internal abstract class CompositePredicate : Predicate, ICompositePredicate
     {
         this.Extent.FlushCache();
 
-        var lessThanRole = value as RoleType ?? value as RoleTypeIndex;
-
-        if (lessThanRole != null)
+        if (value is RoleType lessThanRole)
         {
             this.Filters.Add(new RoleLessThanRole(this.Extent, role, lessThanRole));
         }

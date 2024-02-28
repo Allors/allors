@@ -53,11 +53,6 @@ internal sealed class RoleUnitEquals : Predicate
         {
             equalsValue = strategy.GetInternalizedUnitRole(type);
         }
-        else if (this.equals is RoleTypeIndex index)
-        {
-            var equalsRole = index.RoleType;
-            equalsValue = strategy.GetInternalizedUnitRole(equalsRole);
-        }
         else if (this.roleType.ObjectType is Unit)
         {
             equalsValue = this.roleType.Normalize(this.equals);

@@ -18,7 +18,7 @@ namespace Allors.Database.Domain
             merge(PersistentPreparedExtent.ByNameId, v =>
             {
                 v.Description = "Organization by name";
-                v.Extent = new Extent(this.M.Organization) { Predicate = new Equals(this.M.Organization.Name) { Parameter = "name" } };
+                v.Extent = new Extent(this.M.Organization.Composite) { Predicate = new Equals(this.M.Organization.Name) { Parameter = "name" } };
             });
         }
     }
