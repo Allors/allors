@@ -7,6 +7,7 @@ namespace Allors.Database.Adapters;
 
 using System;
 using System.Collections.Generic;
+using System.Formats.Tar;
 using System.Linq;
 using Allors.Database.Domain;
 using Allors.Database.Meta;
@@ -71,9 +72,9 @@ public abstract class ExtentTest : IDisposable
             Assert.False(extent.Contains(this.c4D));
 
             // Interface
-            (extent = this.Transaction.Extent(m.I12.Composite)).Filter.AddAnd()
-                .AddGreaterThan(m.I12.I12AllorsInteger, 0)
-                .AddLessThan(m.I12.I12AllorsInteger, 2);
+            extent = this.Transaction.Extent(m.I12.Composite);
+            extent.Filter.AddGreaterThan(m.I12.I12AllorsInteger, 0);
+            extent.Filter.AddLessThan(m.I12.I12AllorsInteger, 2);
 
             Assert.Equal(2, extent.Count);
             Assert.False(extent.Contains(this.c1A));
@@ -94,9 +95,9 @@ public abstract class ExtentTest : IDisposable
             Assert.False(extent.Contains(this.c4D));
 
             // Super Interface
-            (extent = this.Transaction.Extent(m.S1234.Composite)).Filter.AddAnd()
-                .AddGreaterThan(m.S1234.S1234AllorsInteger, 0)
-                .AddLessThan(m.S1234.S1234AllorsInteger, 2);
+            extent = this.Transaction.Extent(m.S1234.Composite);
+            extent.Filter.AddGreaterThan(m.S1234.S1234AllorsInteger, 0);
+            extent.Filter.AddLessThan(m.S1234.S1234AllorsInteger, 2);
 
             Assert.Equal(4, extent.Count);
             Assert.False(extent.Contains(this.c1A));
@@ -3457,10 +3458,13 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Interface
-            (extent = this.Transaction.Extent(m.I12.Composite)).Filter.AddNot()
-                .AddAnd()
-                .AddGreaterThan(m.I12.I12AllorsInteger, 0)
-                .AddLessThan(m.I12.I12AllorsInteger, 2);
+            extent = this.Transaction.Extent(m.I12.Composite);
+            {
+                var not = extent.Filter.AddNot();
+                var and = not.AddAnd();
+                and.AddGreaterThan(m.I12.I12AllorsInteger, 0);
+                and.AddLessThan(m.I12.I12AllorsInteger, 2);
+            }
 
             Assert.Equal(4, extent.Count);
             this.AssertC1(extent, false, false, true, true);
@@ -3469,10 +3473,13 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Super Interface
-            (extent = this.Transaction.Extent(m.S1234.Composite)).Filter.AddNot()
-                .AddAnd()
-                .AddGreaterThan(m.S1234.S1234AllorsInteger, 0)
-                .AddLessThan(m.S1234.S1234AllorsInteger, 2);
+            extent = this.Transaction.Extent(m.S1234.Composite);
+            {
+                var not = extent.Filter.AddNot();
+                var and = not.AddAnd();
+                and.AddGreaterThan(m.S1234.S1234AllorsInteger, 0);
+                and.AddLessThan(m.S1234.S1234AllorsInteger, 2);
+            }
 
             Assert.Equal(8, extent.Count);
             this.AssertC1(extent, false, false, true, true);
@@ -5148,10 +5155,13 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Interface
-            (extent = this.Transaction.Extent(m.I12.Composite)).Filter.AddNot()
-                .AddOr()
-                .AddGreaterThan(m.I12.I12AllorsInteger, 1)
-                .AddLessThan(m.I12.I12AllorsInteger, 1);
+            extent = this.Transaction.Extent(m.I12.Composite);
+            {
+                var not = extent.Filter.AddNot();
+                var or = not.AddOr();
+                or.AddGreaterThan(m.I12.I12AllorsInteger, 1);
+                or.AddLessThan(m.I12.I12AllorsInteger, 1);
+            }
 
             Assert.Equal(2, extent.Count);
             this.AssertC1(extent, false, true, false, false);
@@ -5160,10 +5170,13 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Super Interface
-            (extent = this.Transaction.Extent(m.S1234.Composite)).Filter.AddNot()
-                .AddOr()
-                .AddGreaterThan(m.S1234.S1234AllorsInteger, 1)
-                .AddLessThan(m.S1234.S1234AllorsInteger, 1);
+            extent = this.Transaction.Extent(m.S1234.Composite);
+            {
+                var not = extent.Filter.AddNot();
+                var or = not.AddOr();
+                or.AddGreaterThan(m.S1234.S1234AllorsInteger, 1);
+                or.AddLessThan(m.S1234.S1234AllorsInteger, 1);
+            }
 
             Assert.Equal(4, extent.Count);
             this.AssertC1(extent, false, true, false, false);
@@ -8835,9 +8848,12 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Interface
-            (extent = this.Transaction.Extent(m.I12.Composite)).Filter.AddOr()
-                .AddGreaterThan(m.I12.I12AllorsInteger, 0)
-                .AddLessThan(m.I12.I12AllorsInteger, 3);
+            extent = this.Transaction.Extent(m.I12.Composite);
+            {
+                var or = extent.Filter.AddOr();
+                or.AddGreaterThan(m.I12.I12AllorsInteger, 0);
+                or.AddLessThan(m.I12.I12AllorsInteger, 3);
+            }
 
             Assert.Equal(6, extent.Count);
             this.AssertC1(extent, false, true, true, true);
@@ -8846,9 +8862,12 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             // Super Interface
-            (extent = this.Transaction.Extent(m.S1234.Composite)).Filter.AddOr()
-                .AddGreaterThan(m.S1234.S1234AllorsInteger, 0)
-                .AddLessThan(m.S1234.S1234AllorsInteger, 3);
+            extent = this.Transaction.Extent(m.S1234.Composite);
+            {
+                var or = extent.Filter.AddOr();
+                or.AddGreaterThan(m.S1234.S1234AllorsInteger, 0);
+                or.AddLessThan(m.S1234.S1234AllorsInteger, 3);
+            }
 
             Assert.Equal(12, extent.Count);
             this.AssertC1(extent, false, true, true, true);
