@@ -1,4 +1,4 @@
-// <copyright file="Not.cs" company="Allors bv">
+﻿// <copyright file="Not.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -57,89 +57,114 @@ internal sealed class Not : Predicate, ICompositePredicate
         return (ICompositePredicate)this.filter;
     }
 
-    public ICompositePredicate AddBetween(RoleType role, object firstValue, object secondValue)
+    public IPredicate AddBetween(RoleType role, object firstValue, object secondValue)
     {
         this.CheckUnarity();
-        this.extent.FlushCache();
+
+        Between between;
         if (firstValue is RoleType betweenRoleA && secondValue is RoleType betweenRoleB)
         {
-            this.filter = new RoleBetweenRole(this.extent, role, betweenRoleA, betweenRoleB);
+            between = new RoleBetweenRole(this.extent, role, betweenRoleA, betweenRoleB);
         }
-        else if (firstValue is AssociationType betweenAssociationA && secondValue is AssociationType betweenAssociationB)
+        else if (firstValue is AssociationType || secondValue is AssociationType)
         {
             throw new NotImplementedException();
         }
         else
         {
-            this.filter = new RoleBetweenValue(this.extent, role, firstValue, secondValue);
+            between = new RoleBetweenValue(this.extent, role, firstValue, secondValue);
         }
 
-        return this;
+        this.extent.FlushCache();
+        this.filter = between;
+        return between;
     }
 
-    public ICompositePredicate AddContainedIn(RoleType role, Allors.Database.Extent containingExtent)
+    public IPredicate AddContainedIn(RoleType role, Allors.Database.Extent containingExtent)
     {
         this.CheckUnarity();
+
+        var containedIn = new RoleContainedInExtent(this.extent, role, containingExtent);
+
         this.extent.FlushCache();
-        this.filter = new RoleContainedInExtent(this.extent, role, containingExtent);
-        return this;
+        this.filter = containedIn;
+        return containedIn;
     }
 
-    public ICompositePredicate AddContainedIn(RoleType role, IEnumerable<IObject> containingEnumerable)
+    public IPredicate AddContainedIn(RoleType role, IEnumerable<IObject> containingEnumerable)
     {
         this.CheckUnarity();
+        
+        var containedIn = new NotRoleContainedInEnumerable(this.extent, role, containingEnumerable);
+
         this.extent.FlushCache();
-        this.filter = new NotRoleContainedInEnumerable(this.extent, role, containingEnumerable);
-        return this;
+        this.filter = containedIn;
+        return containedIn;
     }
 
-    public ICompositePredicate AddContainedIn(AssociationType association, Allors.Database.Extent containingExtent)
+    public IPredicate AddContainedIn(AssociationType association, Allors.Database.Extent containingExtent)
     {
         this.CheckUnarity();
+
+        var containedIn = new NotAssociationContainedInExtent(this.extent, association, containingExtent);
+
         this.extent.FlushCache();
-        this.filter = new NotAssociationContainedInExtent(this.extent, association, containingExtent);
-        return this;
+        this.filter = containedIn;
+        return containedIn;
     }
 
-    public ICompositePredicate AddContainedIn(AssociationType association, IEnumerable<IObject> containingEnumerable)
+    public IPredicate AddContainedIn(AssociationType association, IEnumerable<IObject> containingEnumerable)
     {
         this.CheckUnarity();
+        
+        var containedIn = new NotAssociationContainedInEnumerable(this.extent, association, containingEnumerable);
+
         this.extent.FlushCache();
-        this.filter = new NotAssociationContainedInEnumerable(this.extent, association, containingEnumerable);
-        return this;
+        this.filter = containedIn;
+        return containedIn;
     }
 
-    public ICompositePredicate AddContains(RoleType role, IObject containedObject)
+    public IPredicate AddContains(RoleType role, IObject containedObject)
     {
         this.CheckUnarity();
+        
+        var contains = new RoleContains(this.extent, role, containedObject);
+
         this.extent.FlushCache();
-        this.filter = new RoleContains(this.extent, role, containedObject);
-        return this;
+        this.filter = contains;
+        return contains;
     }
 
-    public ICompositePredicate AddContains(AssociationType association, IObject containedObject)
+    public IPredicate AddContains(AssociationType association, IObject containedObject)
     {
         this.CheckUnarity();
+
+        var contains = new AssociationContains(this.extent, association, containedObject);
+
         this.extent.FlushCache();
-        this.filter = new AssociationContains(this.extent, association, containedObject);
-        return this;
+        this.filter = contains;
+        return contains;
     }
 
-    public ICompositePredicate AddEquals(IObject allorsObject)
+    public IPredicate AddEquals(IObject allorsObject)
     {
         this.CheckUnarity();
+        
+        var equals = new EqualsComposite(allorsObject);
+
         this.extent.FlushCache();
-        this.filter = new Equals(allorsObject);
-        return this;
+        this.filter = equals;
+        return equals;
     }
 
-    public ICompositePredicate AddEquals(RoleType role, object obj)
+    public IPredicate AddEquals(RoleType role, object obj)
     {
         this.CheckUnarity();
-        this.extent.FlushCache();
+
+        Equals equals;
         if (obj is RoleType equalsRole)
         {
-            this.filter = new RoleEqualsRole(this.extent, role, equalsRole);
+            equals = new RoleEqualsRole(this.extent, role, equalsRole);
         }
         else if (obj is AssociationType equalsAssociation)
         {
@@ -147,43 +172,55 @@ internal sealed class Not : Predicate, ICompositePredicate
         }
         else
         {
-            this.filter = new RoleEqualsValue(this.extent, role, obj);
+            equals = new RoleEqualsValue(this.extent, role, obj);
         }
 
-        return this;
+        this.extent.FlushCache();
+        this.filter = equals;
+        return equals;
     }
 
-    public ICompositePredicate AddEquals(AssociationType association, IObject allorsObject)
+    public IPredicate AddEquals(AssociationType association, IObject allorsObject)
     {
         this.CheckUnarity();
+        
+        Equals equals = new AssociationEquals(this.extent, association, allorsObject);
+        
         this.extent.FlushCache();
-        this.filter = new AssociationEquals(this.extent, association, allorsObject);
-        return this;
+        this.filter = equals;
+        return equals;
     }
 
-    public ICompositePredicate AddExists(RoleType role)
+    public IPredicate AddExists(RoleType role)
     {
         this.CheckUnarity();
+        
+        var exists = new RoleExists(this.extent, role);
+
         this.extent.FlushCache();
-        this.filter = new RoleExists(this.extent, role);
-        return this;
+        this.filter = exists;
+        return exists;
     }
 
-    public ICompositePredicate AddExists(AssociationType association)
+    public IPredicate AddExists(AssociationType association)
     {
         this.CheckUnarity();
+        
+        var exists = new AssociationExists(this.extent, association);
+
         this.extent.FlushCache();
-        this.filter = new AssociationExists(this.extent, association);
-        return this;
+        this.filter = exists;
+        return exists;
     }
 
-    public ICompositePredicate AddGreaterThan(RoleType role, object value)
+    public IPredicate AddGreaterThan(RoleType role, object value)
     {
         this.CheckUnarity();
-        this.extent.FlushCache();
+
+        GreaterThan greaterThan;
         if (value is RoleType greaterThanRole)
         {
-            this.filter = new RoleGreaterThanRole(this.extent, role, greaterThanRole);
+            greaterThan = new RoleGreaterThanRole(this.extent, role, greaterThanRole);
         }
         else if (value is AssociationType greaterThanAssociation)
         {
@@ -191,69 +228,82 @@ internal sealed class Not : Predicate, ICompositePredicate
         }
         else
         {
-            this.filter = new RoleGreaterThanValue(this.extent, role, value);
+            greaterThan = new RoleGreaterThanValue(this.extent, role, value);
         }
 
-        return this;
+        this.extent.FlushCache();
+        this.filter = greaterThan;
+        return greaterThan;
     }
 
-    public ICompositePredicate AddInstanceof(Composite type)
+    public IPredicate AddInstanceOf(Composite type)
     {
         this.CheckUnarity();
+        
+        var instanceOf = new InstanceOfComposite(type, CompositePredicate.GetConcreteSubClasses(type));
+
         this.extent.FlushCache();
-        this.filter = new InstanceOf(type, CompositePredicate.GetConcreteSubClasses(type));
-        return this;
+        this.filter = instanceOf;
+        return instanceOf;
     }
 
-    public ICompositePredicate AddInstanceof(RoleType role, Composite type)
+    public IPredicate AddInstanceOf(RoleType role, Composite type)
     {
         this.CheckUnarity();
+       
+        var instanceOf = new RoleInstanceof(this.extent, role, type, CompositePredicate.GetConcreteSubClasses(type));
+
         this.extent.FlushCache();
-        this.filter = new RoleInstanceof(this.extent, role, type, CompositePredicate.GetConcreteSubClasses(type));
-        return this;
+        this.filter = instanceOf;
+        return instanceOf;
     }
 
-    public ICompositePredicate AddInstanceof(AssociationType association, Composite type)
+    public IPredicate AddInstanceOf(AssociationType association, Composite type)
     {
         this.CheckUnarity();
+        
+        var instanceOf = new AssociationInstanceOf(this.extent, association, type, CompositePredicate.GetConcreteSubClasses(type));
+
         this.extent.FlushCache();
-        this.filter = new AssociationInstanceOf(this.extent, association, type, CompositePredicate.GetConcreteSubClasses(type));
-        return this;
+        this.filter = instanceOf;
+        return instanceOf;
     }
 
-    public ICompositePredicate AddLessThan(RoleType role, object value)
+    public IPredicate AddLessThan(RoleType role, object value)
     {
         this.CheckUnarity();
-        this.extent.FlushCache();
-        if (value is RoleType lessThanRole)
+
+        LessThan lessThan = value switch
         {
-            this.filter = new RoleLessThanRole(this.extent, role, lessThanRole);
-        }
-        else if (value is AssociationType lessThanAssociation)
-        {
-            throw new NotImplementedException();
-        }
-        else
-        {
-            this.filter = new RoleLessThanValue(this.extent, role, value);
-        }
+            AssociationType => throw new NotImplementedException(),
+            RoleType lessThanRole => new RoleLessThanRole(this.extent, role, lessThanRole),
+            _ => new RoleLessThanValue(this.extent, role, value)
+        };
 
-        return this;
+        this.extent.FlushCache();
+        this.filter = lessThan;
+        return lessThan;
     }
 
-    public ICompositePredicate AddLike(RoleType role, string value)
+    public IPredicate AddLike(RoleType role, string value)
     {
         this.CheckUnarity();
+
+        var like = new Like(this.extent, role, value);
+
         this.extent.FlushCache();
-        this.filter = new RoleLike(this.extent, role, value);
-        return this;
+        this.filter = like;
+        return like;
     }
 
     public ICompositePredicate AddNot()
     {
         this.CheckUnarity();
+        
+        var not = new Not(this.extent);
+
         this.extent.FlushCache();
-        this.filter = new Not(this.extent);
+        this.filter = not;
         return (ICompositePredicate)this.filter;
     }
 

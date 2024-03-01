@@ -1,4 +1,4 @@
-// <copyright file="RoleExists.cs" company="Allors bv">
+﻿// <copyright file="RoleExists.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -7,11 +7,11 @@ namespace Allors.Database.Adapters.Memory;
 
 using Allors.Database.Meta;
 
-internal sealed class RoleExists : Predicate
+internal sealed class ExistsRole : Exists
 {
     private readonly RoleType roleType;
 
-    internal RoleExists(ExtentFiltered extent, RoleType roleType)
+    internal ExistsRole(ExtentFiltered extent, RoleType roleType)
     {
         extent.CheckForRoleType(roleType);
         PredicateAssertions.ValidateRoleExists(roleType);

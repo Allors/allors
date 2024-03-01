@@ -1,4 +1,4 @@
-// <copyright file="AssociationEquals.cs" company="Allors bv">
+﻿// <copyright file="AssociationEquals.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -7,12 +7,12 @@ namespace Allors.Database.Adapters.Memory;
 
 using Allors.Database.Meta;
 
-internal sealed class AssociationEquals : Predicate
+internal sealed class EqualsAssociation : Equals
 {
     private readonly AssociationType associationType;
     private readonly IObject equals;
 
-    internal AssociationEquals(ExtentFiltered extent, AssociationType associationType, IObject equals)
+    internal EqualsAssociation(ExtentFiltered extent, AssociationType associationType, IObject equals)
     {
         extent.CheckForAssociationType(associationType);
         PredicateAssertions.AssertAssociationEquals(associationType, equals);

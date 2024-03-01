@@ -7,12 +7,12 @@ namespace Allors.Database.Adapters.Memory;
 
 using Allors.Database.Meta;
 
-internal sealed class RoleInstanceof : Predicate
+internal sealed class InstanceOfRole : InstanceOf
 {
     private readonly Composite objectType;
     private readonly RoleType roleType;
 
-    internal RoleInstanceof(ExtentFiltered extent, RoleType roleType, Composite objectType)
+    internal InstanceOfRole(ExtentFiltered extent, RoleType roleType, Composite objectType)
     {
         extent.CheckForRoleType(roleType);
         PredicateAssertions.ValidateRoleInstanceOf(roleType, objectType);

@@ -1,23 +1,26 @@
-﻿// <copyright file="RoleLessThan.cs" company="Allors bv">
+﻿// <copyright file="RoleGreaterThan.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
+// <summary>
+//   Defines the AllorsPredicateRoleGreaterThanValueMemory type.
+// </summary>
 
 namespace Allors.Database.Adapters.Memory;
 
 using System;
 using Allors.Database.Meta;
 
-internal sealed class RoleLessThan : Predicate
+internal sealed class GreaterThan : Predicate, IPredicate
 {
     private readonly object compare;
     private readonly ExtentFiltered extent;
     private readonly RoleType roleType;
 
-    internal RoleLessThan(ExtentFiltered extent, RoleType roleType, object compare)
+    internal GreaterThan(ExtentFiltered extent, RoleType roleType, object compare)
     {
         extent.CheckForRoleType(roleType);
-        PredicateAssertions.ValidateRoleLessThan(roleType, compare);
+        PredicateAssertions.ValidateRoleGreaterThan(roleType, compare);
 
         this.extent = extent;
         this.roleType = roleType;
@@ -42,7 +45,7 @@ internal sealed class RoleLessThan : Predicate
             return ThreeValuedLogic.Unknown;
         }
 
-        return comparable.CompareTo(compareValue) < 0
+        return comparable.CompareTo(compareValue) > 0
             ? ThreeValuedLogic.True
             : ThreeValuedLogic.False;
     }

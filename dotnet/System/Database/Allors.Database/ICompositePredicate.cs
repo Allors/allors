@@ -1,4 +1,4 @@
-// <copyright file="ICompositePredicate.cs" company="Allors bv">
+﻿// <copyright file="ICompositePredicate.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -43,7 +43,7 @@ public interface ICompositePredicate
     /// <param name="firstValue">The first object.</param>
     /// <param name="secondValue">The second object.</param>
     /// <returns>the composing CompositePredicate.</returns>
-    ICompositePredicate AddBetween(RoleType role, object firstValue, object secondValue);
+    IPredicate AddBetween(RoleType role, object firstValue, object secondValue);
 
     /// <summary>
     ///     Adds a Predicate that evaluates to true if any object of the role of the object under evaluation is contained in
@@ -52,7 +52,7 @@ public interface ICompositePredicate
     /// <param name="role">The role .</param>
     /// <param name="containingExtent">The extent.</param>
     /// <returns>this CompositePredicate.</returns>
-    ICompositePredicate AddContainedIn(RoleType role, Extent containingExtent);
+    IPredicate AddContainedIn(RoleType role, Extent containingExtent);
 
     /// <summary>
     ///     Adds a Predicate that evaluates to true if any object of the role of the object under evaluation is contained in
@@ -61,7 +61,7 @@ public interface ICompositePredicate
     /// <param name="role">The role .</param>
     /// <param name="containingEnumerable">The enumerable.</param>
     /// <returns>This CompositePredicate. </returns>
-    ICompositePredicate AddContainedIn(RoleType role, IEnumerable<IObject> containingEnumerable);
+    IPredicate AddContainedIn(RoleType role, IEnumerable<IObject> containingEnumerable);
 
     /// <summary>
     ///     Adds a Predicate that evaluates to true if any object of the association of the object under evaluation is
@@ -70,7 +70,7 @@ public interface ICompositePredicate
     /// <param name="association">The association.</param>
     /// <param name="containingExtent">The extent.</param>
     /// <returns>the composing CompositePredicate.</returns>
-    ICompositePredicate AddContainedIn(AssociationType association, Extent containingExtent);
+    IPredicate AddContainedIn(AssociationType association, Extent containingExtent);
 
     /// <summary>
     ///     Adds a Predicate that evaluates to true if any object of the role of the object under evaluation is contained in
@@ -79,7 +79,7 @@ public interface ICompositePredicate
     /// <param name="association">The association.</param>
     /// <param name="containingEnumerable">The enumerable.</param>
     /// <returns>This CompositePredicate. </returns>
-    ICompositePredicate AddContainedIn(AssociationType association, IEnumerable<IObject> containingEnumerable);
+    IPredicate AddContainedIn(AssociationType association, IEnumerable<IObject> containingEnumerable);
 
     /// <summary>
     ///     Adds a Predicate that evaluates to true if the role of the object under evaluation contains the allorsObject.
@@ -87,7 +87,7 @@ public interface ICompositePredicate
     /// <param name="role">The role .</param>
     /// <param name="containedObject">The allors object.</param>
     /// <returns>the composing CompositePredicate.</returns>
-    ICompositePredicate AddContains(RoleType role, IObject containedObject);
+    IPredicate AddContains(RoleType role, IObject containedObject);
 
     /// <summary>
     ///     Adds a Predicate that evaluates to true if the association of the object under evaluation contains the
@@ -96,14 +96,14 @@ public interface ICompositePredicate
     /// <param name="association">The association.</param>
     /// <param name="containedObject">The allors object.</param>
     /// <returns>the composing CompositePredicate.</returns>
-    ICompositePredicate AddContains(AssociationType association, IObject containedObject);
+    IPredicate AddContains(AssociationType association, IObject containedObject);
 
     /// <summary>
     ///     Adds a Predicate that evaluates to true if the object under evaluation equals the allorsObject.
     /// </summary>
     /// <param name="allorsObject">The allors object.</param>
     /// <returns>the composing CompositePredicate.</returns>
-    ICompositePredicate AddEquals(IObject allorsObject);
+    IPredicate AddEquals(IObject allorsObject);
 
     /// <summary>
     ///     Adds a Predicate that evaluates to true if the role of the object under evaluation equals the object (unit or
@@ -112,7 +112,7 @@ public interface ICompositePredicate
     /// <param name="roleType">The role .</param>
     /// <param name="valueOrAllorsObject">The object.</param>
     /// <returns>the composing CompositePredicate.</returns>
-    ICompositePredicate AddEquals(RoleType roleType, object valueOrAllorsObject);
+    IPredicate AddEquals(RoleType roleType, object valueOrAllorsObject);
 
     /// <summary>
     ///     Adds a Predicate that evaluates to true if the association of the object under evaluation equals the allorsObject.
@@ -120,21 +120,21 @@ public interface ICompositePredicate
     /// <param name="association">The association.</param>
     /// <param name="allorsObject">The allors object.</param>
     /// <returns>the composing CompositePredicate.</returns>
-    ICompositePredicate AddEquals(AssociationType association, IObject allorsObject);
+    IPredicate AddEquals(AssociationType association, IObject allorsObject);
 
     /// <summary>
     ///     Adds a Predicate that evaluates to true if the role of the object under evaluation exists.
     /// </summary>
     /// <param name="role">The role .</param>
     /// <returns>the composing CompositePredicate.</returns>
-    ICompositePredicate AddExists(RoleType role);
+    IPredicate AddExists(RoleType role);
 
     /// <summary>
     ///     Adds a Predicate that evaluates to true if the association of the object under evaluation exists.
     /// </summary>
     /// <param name="assocation">The assocation.</param>
     /// <returns>the composing CompositePredicate.</returns>
-    ICompositePredicate AddExists(AssociationType assocation);
+    IPredicate AddExists(AssociationType assocation);
 
     /// <summary>
     ///     Adds a Predicate that evaluates to true if the role of the object under evaluation is greater than the object.
@@ -142,14 +142,14 @@ public interface ICompositePredicate
     /// <param name="role">The role .</param>
     /// <param name="value">The object.</param>
     /// <returns>the composing CompositePredicate.</returns>
-    ICompositePredicate AddGreaterThan(RoleType role, object value);
+    IPredicate AddGreaterThan(RoleType role, object value);
 
     /// <summary>
     ///     Adds a Predicate that evaluates to true if the object under evaluation is an state of the IObjectType.
     /// </summary>
     /// <param name="objectType">the IObjectType.</param>
     /// <returns>the composing CompositePredicate.</returns>
-    ICompositePredicate AddInstanceof(Composite objectType);
+    IPredicate AddInstanceOf(Composite objectType);
 
     /// <summary>
     ///     Adds a Predicate that evaluates to true if the role of the object under evaluation is an state of the IObjectType.
@@ -157,7 +157,7 @@ public interface ICompositePredicate
     /// <param name="role">the RoleType .</param>
     /// <param name="objectType">the IObjectType.</param>
     /// <returns>the composing CompositePredicate.</returns>
-    ICompositePredicate AddInstanceof(RoleType role, Composite objectType);
+    IPredicate AddInstanceOf(RoleType role, Composite objectType);
 
     /// <summary>
     ///     Adds a Predicate that evaluates to true if the association of the object under evaluation is an state of the
@@ -166,7 +166,7 @@ public interface ICompositePredicate
     /// <param name="association">the AssociationType.</param>
     /// <param name="objectType">the IObjectType.</param>
     /// <returns>the composing CompositePredicate.</returns>
-    ICompositePredicate AddInstanceof(AssociationType association, Composite objectType);
+    IPredicate AddInstanceOf(AssociationType association, Composite objectType);
 
     /// <summary>
     ///     Adds a Predicate that evaluates to true if the role of the object under evaluation is less than the object.
@@ -174,7 +174,7 @@ public interface ICompositePredicate
     /// <param name="role">The role .</param>
     /// <param name="value">The object.</param>
     /// <returns>the composing CompositePredicate.</returns>
-    ICompositePredicate AddLessThan(RoleType role, object value);
+    IPredicate AddLessThan(RoleType role, object value);
 
     /// <summary>
     ///     Adds a Predicate that evaluates to true if the role of the object under evaluation is like the string (Sql like).
@@ -182,7 +182,7 @@ public interface ICompositePredicate
     /// <param name="role">The role .</param>
     /// <param name="value">The string.</param>
     /// <returns>the composing CompositePredicate.</returns>
-    ICompositePredicate AddLike(RoleType role, string value);
+    IPredicate AddLike(RoleType role, string value);
 
     /// <summary>
     ///     Adds a CompositePredicate that evaluates to true if its composed predicate evaluates to false.

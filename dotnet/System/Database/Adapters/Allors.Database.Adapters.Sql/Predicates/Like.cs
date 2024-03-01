@@ -1,4 +1,4 @@
-// <copyright file="RoleLike.cs" company="Allors bv">
+﻿// <copyright file="RoleLike.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -7,12 +7,12 @@ namespace Allors.Database.Adapters.Sql;
 
 using Allors.Database.Meta;
 
-internal sealed class RoleLike : Predicate
+internal sealed class Like : Predicate, IPredicate
 {
     private readonly string like;
     private readonly RoleType role;
 
-    internal RoleLike(ExtentFiltered extent, RoleType role, string like)
+    internal Like(ExtentFiltered extent, RoleType role, string like)
     {
         extent.CheckRole(role);
         PredicateAssertions.ValidateRoleLikeFilter(role, like);

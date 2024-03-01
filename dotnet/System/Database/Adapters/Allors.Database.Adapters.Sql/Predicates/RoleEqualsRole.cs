@@ -11,7 +11,7 @@ namespace Allors.Database.Adapters.Sql;
 using System;
 using Allors.Database.Meta;
 
-internal sealed class RoleEqualsRole : Predicate
+internal sealed class RoleEqualsRole : Equals
 {
     private readonly RoleType equalsRole;
     private readonly RoleType role;

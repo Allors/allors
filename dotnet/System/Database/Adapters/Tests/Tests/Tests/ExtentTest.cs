@@ -1796,7 +1796,7 @@ public abstract class ExtentTest : IDisposable
 
             // Class
             var extent = this.Transaction.Extent(m.C2.Composite);
-            extent.Filter.AddInstanceof(m.C2.C1WhereC1C2one2many, m.C1.Composite);
+            extent.Filter.AddInstanceOf(m.C2.C1WhereC1C2one2many, m.C1.Composite);
 
             Assert.Equal(3, extent.Count);
             Assert.False(extent.Contains(this.c1A));
@@ -1818,7 +1818,7 @@ public abstract class ExtentTest : IDisposable
 
             // Interface
             extent = this.Transaction.Extent(m.I12.Composite);
-            extent.Filter.AddInstanceof(m.I12.C1WhereC1I12one2many, m.C1.Composite);
+            extent.Filter.AddInstanceOf(m.I12.C1WhereC1I12one2many, m.C1.Composite);
 
             Assert.Equal(3, extent.Count);
             Assert.False(extent.Contains(this.c1A));
@@ -1840,7 +1840,7 @@ public abstract class ExtentTest : IDisposable
 
             // Super Interface
             extent = this.Transaction.Extent(m.S1234.Composite);
-            extent.Filter.AddInstanceof(m.S1234.S1234WhereS1234one2many, m.C1.Composite);
+            extent.Filter.AddInstanceOf(m.S1234.S1234WhereS1234one2many, m.C1.Composite);
 
             Assert.Single(extent);
             Assert.False(extent.Contains(this.c1A));
@@ -2432,7 +2432,7 @@ public abstract class ExtentTest : IDisposable
 
             // Class
             var extent = this.Transaction.Extent(m.C1.Composite);
-            extent.Filter.AddInstanceof(m.C1.C1WhereC1C1one2one, m.C1.Composite);
+            extent.Filter.AddInstanceOf(m.C1.C1WhereC1C1one2one, m.C1.Composite);
 
             Assert.Equal(3, extent.Count);
             Assert.False(extent.Contains(this.c1A));
@@ -2453,7 +2453,7 @@ public abstract class ExtentTest : IDisposable
             Assert.False(extent.Contains(this.c4D));
 
             extent = this.Transaction.Extent(m.C2.Composite);
-            extent.Filter.AddInstanceof(m.C2.C1WhereC1C2one2one, m.C1.Composite);
+            extent.Filter.AddInstanceOf(m.C2.C1WhereC1C2one2one, m.C1.Composite);
 
             Assert.Equal(3, extent.Count);
             Assert.False(extent.Contains(this.c1A));
@@ -2474,7 +2474,7 @@ public abstract class ExtentTest : IDisposable
             Assert.False(extent.Contains(this.c4D));
 
             extent = this.Transaction.Extent(m.C4.Composite);
-            extent.Filter.AddInstanceof(m.C4.C3WhereC3C4one2one, m.C3.Composite);
+            extent.Filter.AddInstanceOf(m.C4.C3WhereC3C4one2one, m.C3.Composite);
 
             Assert.Equal(3, extent.Count);
             Assert.False(extent.Contains(this.c1A));
@@ -2496,7 +2496,7 @@ public abstract class ExtentTest : IDisposable
 
             // Interface
             extent = this.Transaction.Extent(m.I12.Composite);
-            extent.Filter.AddInstanceof(m.I12.C1WhereC1I12one2one, m.C1.Composite);
+            extent.Filter.AddInstanceOf(m.I12.C1WhereC1I12one2one, m.C1.Composite);
 
             Assert.Equal(3, extent.Count);
             Assert.False(extent.Contains(this.c1A));
@@ -2518,7 +2518,7 @@ public abstract class ExtentTest : IDisposable
 
             // Super Interface
             extent = this.Transaction.Extent(m.S1234.Composite);
-            extent.Filter.AddInstanceof(m.S1234.S1234WhereS1234one2one, m.C1.Composite);
+            extent.Filter.AddInstanceOf(m.S1234.S1234WhereS1234one2one, m.C1.Composite);
 
             Assert.Equal(3, extent.Count);
             Assert.False(extent.Contains(this.c1A));
@@ -2542,7 +2542,7 @@ public abstract class ExtentTest : IDisposable
 
             // Class
             extent = this.Transaction.Extent(m.C1.Composite);
-            extent.Filter.AddInstanceof(m.C1.C1WhereC1C1one2one, m.I1.Composite);
+            extent.Filter.AddInstanceOf(m.C1.C1WhereC1C1one2one, m.I1.Composite);
 
             Assert.Equal(3, extent.Count);
             Assert.False(extent.Contains(this.c1A));
@@ -2563,7 +2563,7 @@ public abstract class ExtentTest : IDisposable
             Assert.False(extent.Contains(this.c4D));
 
             extent = this.Transaction.Extent(m.C2.Composite);
-            extent.Filter.AddInstanceof(m.C2.C1WhereC1C2one2one, m.I1.Composite);
+            extent.Filter.AddInstanceOf(m.C2.C1WhereC1C2one2one, m.I1.Composite);
 
             Assert.Equal(3, extent.Count);
             Assert.False(extent.Contains(this.c1A));
@@ -2584,7 +2584,7 @@ public abstract class ExtentTest : IDisposable
             Assert.False(extent.Contains(this.c4D));
 
             extent = this.Transaction.Extent(m.C4.Composite);
-            extent.Filter.AddInstanceof(m.C4.C3WhereC3C4one2one, m.I3.Composite);
+            extent.Filter.AddInstanceOf(m.C4.C3WhereC3C4one2one, m.I3.Composite);
 
             Assert.Equal(3, extent.Count);
             Assert.False(extent.Contains(this.c1A));
@@ -2606,7 +2606,7 @@ public abstract class ExtentTest : IDisposable
 
             // Interface
             extent = this.Transaction.Extent(m.I12.Composite);
-            extent.Filter.AddInstanceof(m.I12.C1WhereC1I12one2one, m.I1.Composite);
+            extent.Filter.AddInstanceOf(m.I12.C1WhereC1I12one2one, m.I1.Composite);
 
             Assert.Equal(3, extent.Count);
             Assert.False(extent.Contains(this.c1A));
@@ -2628,7 +2628,7 @@ public abstract class ExtentTest : IDisposable
 
             // Super Interface
             extent = this.Transaction.Extent(m.S1234.Composite);
-            extent.Filter.AddInstanceof(m.S1234.S1234WhereS1234one2one, m.S1234.Composite);
+            extent.Filter.AddInstanceOf(m.S1234.S1234WhereS1234one2one, m.S1234.Composite);
 
             Assert.Equal(9, extent.Count);
             Assert.False(extent.Contains(this.c1A));
@@ -3261,7 +3261,7 @@ public abstract class ExtentTest : IDisposable
 
             // Class + Class
             var extent = this.Transaction.Extent(m.C1.Composite);
-            extent.Filter.AddInstanceof(m.C1.Composite);
+            extent.Filter.AddInstanceOf(m.C1.Composite);
 
             Assert.Equal(4, extent.Count);
             this.AssertC1(extent, true, true, true, true);
@@ -3271,7 +3271,7 @@ public abstract class ExtentTest : IDisposable
 
             // Class + Interface
             extent = this.Transaction.Extent(m.I12.Composite);
-            extent.Filter.AddInstanceof(m.C1.Composite);
+            extent.Filter.AddInstanceOf(m.C1.Composite);
 
             Assert.Equal(4, extent.Count);
             this.AssertC1(extent, true, true, true, true);
@@ -3281,7 +3281,7 @@ public abstract class ExtentTest : IDisposable
 
             // Class + Shared Interface
             extent = this.Transaction.Extent(m.S1234.Composite);
-            extent.Filter.AddInstanceof(m.C1.Composite);
+            extent.Filter.AddInstanceOf(m.C1.Composite);
 
             Assert.Equal(4, extent.Count);
             this.AssertC1(extent, true, true, true, true);
@@ -3291,7 +3291,7 @@ public abstract class ExtentTest : IDisposable
 
             // Inteface + Class
             extent = this.Transaction.Extent(m.C1.Composite);
-            extent.Filter.AddInstanceof(m.I1.Composite);
+            extent.Filter.AddInstanceOf(m.I1.Composite);
 
             Assert.Equal(4, extent.Count);
             this.AssertC1(extent, true, true, true, true);
@@ -3301,7 +3301,7 @@ public abstract class ExtentTest : IDisposable
 
             // Interface + Interface
             extent = this.Transaction.Extent(m.I12.Composite);
-            extent.Filter.AddInstanceof(m.I1.Composite);
+            extent.Filter.AddInstanceOf(m.I1.Composite);
 
             Assert.Equal(4, extent.Count);
             this.AssertC1(extent, true, true, true, true);
@@ -3310,7 +3310,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             extent = this.Transaction.Extent(m.I12.Composite);
-            extent.Filter.AddInstanceof(m.I12.Composite);
+            extent.Filter.AddInstanceOf(m.I12.Composite);
 
             Assert.Equal(8, extent.Count);
             this.AssertC1(extent, true, true, true, true);
@@ -3320,7 +3320,7 @@ public abstract class ExtentTest : IDisposable
 
             // Interface + Super Interface
             extent = this.Transaction.Extent(m.S1234.Composite);
-            extent.Filter.AddInstanceof(m.I1.Composite);
+            extent.Filter.AddInstanceOf(m.I1.Composite);
 
             Assert.Equal(4, extent.Count);
             this.AssertC1(extent, true, true, true, true);
@@ -3329,7 +3329,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             extent = this.Transaction.Extent(m.S1234.Composite);
-            extent.Filter.AddInstanceof(m.I12.Composite);
+            extent.Filter.AddInstanceOf(m.I12.Composite);
 
             Assert.Equal(8, extent.Count);
             this.AssertC1(extent, true, true, true, true);
@@ -3338,7 +3338,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             extent = this.Transaction.Extent(m.S1234.Composite);
-            extent.Filter.AddInstanceof(m.S1234.Composite);
+            extent.Filter.AddInstanceOf(m.S1234.Composite);
 
             Assert.Equal(16, extent.Count);
             this.AssertC1(extent, true, true, true, true);
@@ -3390,7 +3390,7 @@ public abstract class ExtentTest : IDisposable
             // Interface
             firstExtent = this.Transaction.Extent(m.I12.Composite);
             secondExtent = this.Transaction.Extent(m.I12.Composite);
-            secondExtent.Filter.AddInstanceof(m.C2.Composite);
+            secondExtent.Filter.AddInstanceOf(m.C2.Composite);
 
             Assert.Equal(4, secondExtent.Count);
 
@@ -5026,7 +5026,7 @@ public abstract class ExtentTest : IDisposable
 
             // Class
             var extent = this.Transaction.Extent(m.C1.Composite);
-            extent.Filter.AddNot().AddInstanceof(m.C1.C1WhereC1C1one2one, m.C1.Composite);
+            extent.Filter.AddNot().AddInstanceOf(m.C1.C1WhereC1C1one2one, m.C1.Composite);
 
             Assert.Single(extent);
             this.AssertC1(extent, true, false, false, false);
@@ -5035,7 +5035,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             extent = this.Transaction.Extent(m.C2.Composite);
-            extent.Filter.AddNot().AddInstanceof(m.C2.C1WhereC1C2one2one, m.C1.Composite);
+            extent.Filter.AddNot().AddInstanceOf(m.C2.C1WhereC1C2one2one, m.C1.Composite);
 
             Assert.Single(extent);
             this.AssertC1(extent, false, false, false, false);
@@ -5044,7 +5044,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             extent = this.Transaction.Extent(m.C4.Composite);
-            extent.Filter.AddNot().AddInstanceof(m.C4.C3WhereC3C4one2one, m.C3.Composite);
+            extent.Filter.AddNot().AddInstanceOf(m.C4.C3WhereC3C4one2one, m.C3.Composite);
 
             Assert.Single(extent);
             this.AssertC1(extent, false, false, false, false);
@@ -5054,7 +5054,7 @@ public abstract class ExtentTest : IDisposable
 
             // Interface
             extent = this.Transaction.Extent(m.I12.Composite);
-            extent.Filter.AddNot().AddInstanceof(m.I12.C1WhereC1I12one2one, m.C1.Composite);
+            extent.Filter.AddNot().AddInstanceOf(m.I12.C1WhereC1I12one2one, m.C1.Composite);
 
             Assert.Equal(5, extent.Count);
             this.AssertC1(extent, true, false, true, true);
@@ -5064,7 +5064,7 @@ public abstract class ExtentTest : IDisposable
 
             // Super Interface
             extent = this.Transaction.Extent(m.S1234.Composite);
-            extent.Filter.AddNot().AddInstanceof(m.S1234.S1234WhereS1234one2one, m.C1.Composite);
+            extent.Filter.AddNot().AddInstanceOf(m.S1234.S1234WhereS1234one2one, m.C1.Composite);
 
             Assert.Equal(13, extent.Count);
             this.AssertC1(extent, true, false, true, true);
@@ -5076,7 +5076,7 @@ public abstract class ExtentTest : IDisposable
 
             // Class
             extent = this.Transaction.Extent(m.C1.Composite);
-            extent.Filter.AddNot().AddInstanceof(m.C1.C1WhereC1C1one2one, m.I1.Composite);
+            extent.Filter.AddNot().AddInstanceOf(m.C1.C1WhereC1C1one2one, m.I1.Composite);
 
             Assert.Single(extent);
             this.AssertC1(extent, true, false, false, false);
@@ -5085,7 +5085,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             extent = this.Transaction.Extent(m.C2.Composite);
-            extent.Filter.AddNot().AddInstanceof(m.C2.C1WhereC1C2one2one, m.I1.Composite);
+            extent.Filter.AddNot().AddInstanceOf(m.C2.C1WhereC1C2one2one, m.I1.Composite);
 
             Assert.Single(extent);
             this.AssertC1(extent, false, false, false, false);
@@ -5094,7 +5094,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             extent = this.Transaction.Extent(m.C4.Composite);
-            extent.Filter.AddNot().AddInstanceof(m.C4.C3WhereC3C4one2one, m.I3.Composite);
+            extent.Filter.AddNot().AddInstanceOf(m.C4.C3WhereC3C4one2one, m.I3.Composite);
 
             Assert.Single(extent);
             this.AssertC1(extent, false, false, false, false);
@@ -5104,7 +5104,7 @@ public abstract class ExtentTest : IDisposable
 
             // Interface
             extent = this.Transaction.Extent(m.I12.Composite);
-            extent.Filter.AddNot().AddInstanceof(m.I12.C1WhereC1I12one2one, m.I1.Composite);
+            extent.Filter.AddNot().AddInstanceOf(m.I12.C1WhereC1I12one2one, m.I1.Composite);
 
             Assert.Equal(5, extent.Count);
             this.AssertC1(extent, true, false, true, true);
@@ -5114,7 +5114,7 @@ public abstract class ExtentTest : IDisposable
 
             // Super Interface
             extent = this.Transaction.Extent(m.S1234.Composite);
-            extent.Filter.AddNot().AddInstanceof(m.S1234.S1234WhereS1234one2one, m.S1234.Composite);
+            extent.Filter.AddNot().AddInstanceOf(m.S1234.S1234WhereS1234one2one, m.S1234.Composite);
 
             Assert.Equal(7, extent.Count);
             this.AssertC1(extent, true, false, false, false);
@@ -7812,7 +7812,7 @@ public abstract class ExtentTest : IDisposable
 
             // Class
             var extent = this.Transaction.Extent(m.C1.Composite);
-            extent.Filter.AddNot().AddInstanceof(m.C1.C1C1one2one, m.C1.Composite);
+            extent.Filter.AddNot().AddInstanceOf(m.C1.C1C1one2one, m.C1.Composite);
 
             Assert.Single(extent);
             this.AssertC1(extent, true, false, false, false);
@@ -7821,7 +7821,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             extent = this.Transaction.Extent(m.C1.Composite);
-            extent.Filter.AddNot().AddInstanceof(m.C1.C1C2one2one, m.C2.Composite);
+            extent.Filter.AddNot().AddInstanceOf(m.C1.C1C2one2one, m.C2.Composite);
 
             Assert.Single(extent);
             this.AssertC1(extent, true, false, false, false);
@@ -7831,7 +7831,7 @@ public abstract class ExtentTest : IDisposable
 
             // Interface
             extent = this.Transaction.Extent(m.C1.Composite);
-            extent.Filter.AddNot().AddInstanceof(m.C1.C1I12one2one, m.C2.Composite);
+            extent.Filter.AddNot().AddInstanceOf(m.C1.C1I12one2one, m.C2.Composite);
 
             Assert.Equal(2, extent.Count);
             this.AssertC1(extent, true, true, false, false);
@@ -7841,7 +7841,7 @@ public abstract class ExtentTest : IDisposable
 
             // Super Interface
             extent = this.Transaction.Extent(m.S1234.Composite);
-            extent.Filter.AddNot().AddInstanceof(m.S1234.S1234one2one, m.C2.Composite);
+            extent.Filter.AddNot().AddInstanceOf(m.S1234.S1234one2one, m.C2.Composite);
 
             Assert.Equal(13, extent.Count);
             this.AssertC1(extent, true, true, false, true);
@@ -7853,7 +7853,7 @@ public abstract class ExtentTest : IDisposable
 
             // Class
             extent = this.Transaction.Extent(m.C1.Composite);
-            extent.Filter.AddNot().AddInstanceof(m.C1.C1C2one2one, m.I2.Composite);
+            extent.Filter.AddNot().AddInstanceOf(m.C1.C1C2one2one, m.I2.Composite);
 
             Assert.Single(extent);
             this.AssertC1(extent, true, false, false, false);
@@ -7863,7 +7863,7 @@ public abstract class ExtentTest : IDisposable
 
             // Interface
             extent = this.Transaction.Extent(m.C1.Composite);
-            extent.Filter.AddNot().AddInstanceof(m.C1.C1I12one2one, m.I2.Composite);
+            extent.Filter.AddNot().AddInstanceOf(m.C1.C1I12one2one, m.I2.Composite);
 
             Assert.Equal(2, extent.Count);
             this.AssertC1(extent, true, true, false, false);
@@ -7872,7 +7872,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             extent = this.Transaction.Extent(m.C1.Composite);
-            extent.Filter.AddNot().AddInstanceof(m.C1.C1I12one2one, m.I12.Composite);
+            extent.Filter.AddNot().AddInstanceOf(m.C1.C1I12one2one, m.I12.Composite);
 
             Assert.Single(extent);
             this.AssertC1(extent, true, false, false, false);
@@ -7882,7 +7882,7 @@ public abstract class ExtentTest : IDisposable
 
             // Super Interface
             extent = this.Transaction.Extent(m.S1234.Composite);
-            extent.Filter.AddNot().AddInstanceof(m.S1234.S1234one2one, m.S1234.Composite);
+            extent.Filter.AddNot().AddInstanceOf(m.S1234.S1234one2one, m.S1234.Composite);
 
             Assert.Equal(7, extent.Count);
             this.AssertC1(extent, true, false, false, false);
@@ -15541,7 +15541,7 @@ public abstract class ExtentTest : IDisposable
 
             // Class
             var extent = this.Transaction.Extent(m.C1.Composite);
-            extent.Filter.AddInstanceof(m.C1.C1C1one2one, m.C1.Composite);
+            extent.Filter.AddInstanceOf(m.C1.C1C1one2one, m.C1.Composite);
 
             Assert.Equal(3, extent.Count);
             this.AssertC1(extent, false, true, true, true);
@@ -15550,7 +15550,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             extent = this.Transaction.Extent(m.C1.Composite);
-            extent.Filter.AddInstanceof(m.C1.C1C2one2one, m.C2.Composite);
+            extent.Filter.AddInstanceOf(m.C1.C1C2one2one, m.C2.Composite);
 
             Assert.Equal(3, extent.Count);
             this.AssertC1(extent, false, true, true, true);
@@ -15560,7 +15560,7 @@ public abstract class ExtentTest : IDisposable
 
             // Interface
             extent = this.Transaction.Extent(m.C1.Composite);
-            extent.Filter.AddInstanceof(m.C1.C1I12one2one, m.C2.Composite);
+            extent.Filter.AddInstanceOf(m.C1.C1I12one2one, m.C2.Composite);
 
             Assert.Equal(2, extent.Count);
             this.AssertC1(extent, false, false, true, true);
@@ -15570,7 +15570,7 @@ public abstract class ExtentTest : IDisposable
 
             // Super Interface
             extent = this.Transaction.Extent(m.S1234.Composite);
-            extent.Filter.AddInstanceof(m.S1234.S1234one2one, m.C2.Composite);
+            extent.Filter.AddInstanceOf(m.S1234.S1234one2one, m.C2.Composite);
 
             Assert.Equal(3, extent.Count);
             this.AssertC1(extent, false, false, true, false);
@@ -15582,7 +15582,7 @@ public abstract class ExtentTest : IDisposable
 
             // Class
             extent = this.Transaction.Extent(m.C1.Composite);
-            extent.Filter.AddInstanceof(m.C1.C1C2one2one, m.I2.Composite);
+            extent.Filter.AddInstanceOf(m.C1.C1C2one2one, m.I2.Composite);
 
             Assert.Equal(3, extent.Count);
             this.AssertC1(extent, false, true, true, true);
@@ -15592,7 +15592,7 @@ public abstract class ExtentTest : IDisposable
 
             // Interface
             extent = this.Transaction.Extent(m.C1.Composite);
-            extent.Filter.AddInstanceof(m.C1.C1I12one2one, m.I2.Composite);
+            extent.Filter.AddInstanceOf(m.C1.C1I12one2one, m.I2.Composite);
 
             Assert.Equal(2, extent.Count);
             this.AssertC1(extent, false, false, true, true);
@@ -15601,7 +15601,7 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, false, false, false, false);
 
             extent = this.Transaction.Extent(m.C1.Composite);
-            extent.Filter.AddInstanceof(m.C1.C1I12one2one, m.I12.Composite);
+            extent.Filter.AddInstanceOf(m.C1.C1I12one2one, m.I12.Composite);
 
             Assert.Equal(3, extent.Count);
             this.AssertC1(extent, false, true, true, true);
@@ -15611,7 +15611,7 @@ public abstract class ExtentTest : IDisposable
 
             // Super Interface
             extent = this.Transaction.Extent(m.S1234.Composite);
-            extent.Filter.AddInstanceof(m.S1234.S1234one2one, m.S1234.Composite);
+            extent.Filter.AddInstanceOf(m.S1234.S1234one2one, m.S1234.Composite);
 
             Assert.Equal(9, extent.Count);
             this.AssertC1(extent, false, true, true, true);

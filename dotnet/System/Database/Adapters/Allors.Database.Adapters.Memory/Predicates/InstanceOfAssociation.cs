@@ -7,12 +7,12 @@ namespace Allors.Database.Adapters.Memory;
 
 using Allors.Database.Meta;
 
-internal sealed class AssociationInstanceOf : Predicate
+internal sealed class InstanceOfAssociation : InstanceOf
 {
     private readonly AssociationType associationType;
     private readonly ObjectType objectType;
 
-    internal AssociationInstanceOf(ExtentFiltered extent, AssociationType associationType, ObjectType instanceObjectType)
+    internal InstanceOfAssociation(ExtentFiltered extent, AssociationType associationType, ObjectType instanceObjectType)
     {
         extent.CheckForAssociationType(associationType);
         PredicateAssertions.ValidateAssociationInstanceof(associationType, instanceObjectType);

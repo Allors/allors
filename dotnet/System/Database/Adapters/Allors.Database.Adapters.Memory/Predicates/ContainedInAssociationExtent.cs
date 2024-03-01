@@ -1,37 +1,33 @@
-// <copyright file="AssociationContainedInEnumerable.cs" company="Allors bv">
+﻿// <copyright file="AssociationContainedInExtent.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
 namespace Allors.Database.Adapters.Memory;
 
-using System.Collections.Generic;
 using Allors.Database.Meta;
 
-internal sealed class AssociationContainedInEnumerable : Predicate
+internal sealed class ContainedInAssociationExtent : ContainedIn
 {
     private readonly AssociationType associationType;
-    private readonly IEnumerable<IObject> containingEnumerable;
+    private readonly Allors.Database.Extent containingExtent;
 
-    internal AssociationContainedInEnumerable(ExtentFiltered extent, AssociationType associationType,
-        IEnumerable<IObject> containingEnumerable)
+    internal ContainedInAssociationExtent(ExtentFiltered extent, AssociationType associationType, Allors.Database.Extent containingExtent)
     {
         extent.CheckForAssociationType(associationType);
-        PredicateAssertions.AssertAssociationContainedIn(associationType, containingEnumerable);
+        PredicateAssertions.AssertAssociationContainedIn(associationType, containingExtent);
 
         this.associationType = associationType;
-        this.containingEnumerable = containingEnumerable;
+        this.containingExtent = containingExtent;
     }
 
     internal override ThreeValuedLogic Evaluate(Strategy strategy)
     {
-        var containing = new HashSet<IObject>(this.containingEnumerable);
-
         if (this.associationType.IsMany)
         {
             foreach (var assoc in strategy.GetCompositesAssociation<IObject>(this.associationType))
             {
-                if (containing.Contains(assoc))
+                if (this.containingExtent.Contains(assoc))
                 {
                     return ThreeValuedLogic.True;
                 }
@@ -43,7 +39,7 @@ internal sealed class AssociationContainedInEnumerable : Predicate
         var association = strategy.GetCompositeAssociation(this.associationType);
         if (association != null)
         {
-            return containing.Contains(association)
+            return this.containingExtent.Contains(association)
                 ? ThreeValuedLogic.True
                 : ThreeValuedLogic.False;
         }

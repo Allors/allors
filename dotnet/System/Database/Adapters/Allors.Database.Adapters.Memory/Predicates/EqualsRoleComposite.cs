@@ -7,12 +7,12 @@ namespace Allors.Database.Adapters.Memory;
 
 using Allors.Database.Meta;
 
-internal sealed class RoleCompositeEqualsValue : Predicate
+internal sealed class EqualsRoleComposite : Equals
 {
     private readonly object equals;
     private readonly RoleType roleType;
 
-    internal RoleCompositeEqualsValue(ExtentFiltered extent, RoleType roleType, object equals)
+    internal EqualsRoleComposite(ExtentFiltered extent, RoleType roleType, object equals)
     {
         extent.CheckForRoleType(roleType);
         PredicateAssertions.ValidateRoleEquals(roleType, equals);

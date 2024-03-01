@@ -1,4 +1,4 @@
-// <copyright file="AssociationExists.cs" company="Allors bv">
+﻿// <copyright file="AssociationExists.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -7,11 +7,11 @@ namespace Allors.Database.Adapters.Memory;
 
 using Allors.Database.Meta;
 
-internal sealed class AssociationExists : Predicate
+internal sealed class ExistsAssociation : Exists
 {
     private readonly AssociationType associationType;
 
-    internal AssociationExists(ExtentFiltered extent, AssociationType associationType)
+    internal ExistsAssociation(ExtentFiltered extent, AssociationType associationType)
     {
         extent.CheckForAssociationType(associationType);
         PredicateAssertions.ValidateAssociationExists(associationType);

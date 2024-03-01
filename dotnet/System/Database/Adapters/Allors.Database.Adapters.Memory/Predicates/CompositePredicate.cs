@@ -1,4 +1,4 @@
-// <copyright file="CompositePredicate.cs" company="Allors bv">
+﻿// <copyright file="CompositePredicate.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -39,174 +39,195 @@ internal abstract class CompositePredicate : Predicate, ICompositePredicate
     public ICompositePredicate AddAnd()
     {
         var andFilter = new And(this.extent);
-        this.Filters.Add(andFilter);
+
         this.extent.Invalidate();
+        this.Filters.Add(andFilter);
         return andFilter;
     }
 
-    public ICompositePredicate AddBetween(RoleType role, object firstValue, object secondValue)
+    public IPredicate AddBetween(RoleType role, object firstValue, object secondValue)
     {
-        this.Filters.Add(new RoleBetween(this.extent, role, firstValue, secondValue));
+        var between = new Between(this.extent, role, firstValue, secondValue);
+
         this.extent.Invalidate();
-        return this;
+        this.Filters.Add(between);
+        return between;
     }
 
-    public ICompositePredicate AddContainedIn(RoleType role, Allors.Database.Extent containingExtent)
+    public IPredicate AddContainedIn(RoleType role, Allors.Database.Extent containingExtent)
     {
-        if (role.IsMany)
-        {
-            this.Filters.Add(new RoleManyContainedInExtent(this.extent, role, containingExtent));
-        }
-        else
-        {
-            this.Filters.Add(new RoleOneContainedInExtent(this.extent, role, containingExtent));
-        }
+        ContainedIn containedIn = role.IsMany
+            ? new ContainedInRoleManyExtent(this.extent, role, containingExtent)
+            : new ContainedInRoleOneExtent(this.extent, role, containingExtent);
 
         this.extent.Invalidate();
-        return this;
+        this.Filters.Add(containedIn);
+        return containedIn;
     }
 
-    public ICompositePredicate AddContainedIn(RoleType role, IEnumerable<IObject> containingEnumerable)
+    public IPredicate AddContainedIn(RoleType role, IEnumerable<IObject> containingEnumerable)
     {
-        if (role.IsMany)
-        {
-            this.Filters.Add(new RoleManyContainedInEnumerable(this.extent, role, containingEnumerable));
-        }
-        else
-        {
-            this.Filters.Add(new RoleOneContainedInEnumerable(this.extent, role, containingEnumerable));
-        }
+        ContainedIn containedIn = role.IsMany
+            ? new ContainedInRoleManyEnumerable(this.extent, role, containingEnumerable)
+            : new ContainedInRoleOneEnumerable(this.extent, role, containingEnumerable);
 
         this.extent.Invalidate();
-        return this;
+        this.Filters.Add(containedIn);
+        return containedIn;
     }
 
-    public ICompositePredicate AddContainedIn(AssociationType association, Allors.Database.Extent containingExtent)
+    public IPredicate AddContainedIn(AssociationType association, Allors.Database.Extent containingExtent)
     {
-        this.Filters.Add(new AssociationContainedInExtent(this.extent, association, containingExtent));
+        var containedIn = new ContainedInAssociationExtent(this.extent, association, containingExtent);
+
         this.extent.Invalidate();
-        return this;
+        this.Filters.Add(containedIn);
+        return containedIn;
     }
 
-    public ICompositePredicate AddContainedIn(AssociationType association, IEnumerable<IObject> containingEnumerable)
+    public IPredicate AddContainedIn(AssociationType association, IEnumerable<IObject> containingEnumerable)
     {
-        this.Filters.Add(new AssociationContainedInEnumerable(this.extent, association, containingEnumerable));
+        var containedIn = new ContainedInAssociationEnumerable(this.extent, association, containingEnumerable);
+
         this.extent.Invalidate();
-        return this;
+        this.Filters.Add(containedIn);
+        return containedIn;
     }
 
-    public ICompositePredicate AddContains(RoleType role, IObject containedObject)
+    public IPredicate AddContains(RoleType role, IObject containedObject)
     {
-        this.Filters.Add(new RoleContains(this.extent, role, containedObject));
+        var contains = new ContainsRole(this.extent, role, containedObject);
+
         this.extent.Invalidate();
-        return this;
+        this.Filters.Add(contains);
+        return contains;
     }
 
-    public ICompositePredicate AddContains(AssociationType association, IObject containedObject)
+    public IPredicate AddContains(AssociationType association, IObject containedObject)
     {
-        this.Filters.Add(new AssociationContains(this.extent, association, containedObject));
+        var contains = new ContainsAssociation(this.extent, association, containedObject);
+
         this.extent.Invalidate();
-        return this;
+        this.Filters.Add(contains);
+        return contains;
     }
 
-    public ICompositePredicate AddEquals(IObject allorsObject)
+    public IPredicate AddEquals(IObject allorsObject)
     {
-        this.Filters.Add(new Equals(allorsObject));
+        var equals = new EqualsComposite(allorsObject);
+
         this.extent.Invalidate();
-        return this;
+        this.Filters.Add(equals);
+        return equals;
     }
 
-    public ICompositePredicate AddEquals(RoleType role, object obj)
+    public IPredicate AddEquals(RoleType role, object obj)
     {
-        if (role.ObjectType is Unit)
-        {
-            this.Filters.Add(new RoleUnitEquals(this.extent, role, obj));
-        }
-        else
-        {
-            this.Filters.Add(new RoleCompositeEqualsValue(this.extent, role, obj));
-        }
+        Equals equals = role.ObjectType is Unit
+            ? new EqualsRoleUnit(this.extent, role, obj)
+            : new EqualsRoleComposite(this.extent, role, obj);
 
         this.extent.Invalidate();
-        return this;
+        this.Filters.Add(equals);
+        return equals;
     }
 
-    public ICompositePredicate AddEquals(AssociationType association, IObject allorsObject)
+    public IPredicate AddEquals(AssociationType association, IObject allorsObject)
     {
-        this.Filters.Add(new AssociationEquals(this.extent, association, allorsObject));
+        var equals = new EqualsAssociation(this.extent, association, allorsObject);
+
         this.extent.Invalidate();
-        return this;
+        this.Filters.Add(equals);
+        return equals;
     }
 
-    public ICompositePredicate AddExists(RoleType role)
+    public IPredicate AddExists(RoleType role)
     {
-        this.Filters.Add(new RoleExists(this.extent, role));
+        var exists = new ExistsRole(this.extent, role);
+  
         this.extent.Invalidate();
-        return this;
+        this.Filters.Add(exists);
+        return exists;
     }
 
-    public ICompositePredicate AddExists(AssociationType association)
+    public IPredicate AddExists(AssociationType association)
     {
-        this.Filters.Add(new AssociationExists(this.extent, association));
+        var exists = new ExistsAssociation(this.extent, association);
+
         this.extent.Invalidate();
-        return this;
+        this.Filters.Add(exists);
+        return exists;
     }
 
-    public ICompositePredicate AddGreaterThan(RoleType role, object value)
+    public IPredicate AddGreaterThan(RoleType role, object value)
     {
-        this.Filters.Add(new RoleGreaterThan(this.extent, role, value));
+        var greaterThan = new GreaterThan(this.extent, role, value);
+
         this.extent.Invalidate();
-        return this;
+        this.Filters.Add(greaterThan);
+        return greaterThan;
     }
 
-    public ICompositePredicate AddInstanceof(Composite type)
+    public IPredicate AddInstanceOf(Composite type)
     {
-        this.Filters.Add(new Instanceof(type));
+        var instanceOf = new InstanceOfObject(type);
+
         this.extent.Invalidate();
-        return this;
+        this.Filters.Add(instanceOf);
+        return instanceOf;
     }
 
-    public ICompositePredicate AddInstanceof(RoleType role, Composite type)
+    public IPredicate AddInstanceOf(RoleType role, Composite type)
     {
-        this.Filters.Add(new RoleInstanceof(this.extent, role, type));
+        var instanceOf = new InstanceOfRole(this.extent, role, type);
+
         this.extent.Invalidate();
-        return this;
+        this.Filters.Add(instanceOf);
+        return instanceOf;
     }
 
-    public ICompositePredicate AddInstanceof(AssociationType association, Composite type)
+    public IPredicate AddInstanceOf(AssociationType association, Composite type)
     {
-        this.Filters.Add(new AssociationInstanceOf(this.extent, association, type));
+        var instanceOf = new InstanceOfAssociation(this.extent, association, type);
+
         this.extent.Invalidate();
-        return this;
+        this.Filters.Add(instanceOf);
+        return instanceOf;
     }
 
-    public ICompositePredicate AddLessThan(RoleType role, object value)
+    public IPredicate AddLessThan(RoleType role, object value)
     {
-        this.Filters.Add(new RoleLessThan(this.extent, role, value));
+        var lessThan = new LessThan(this.extent, role, value);
+
         this.extent.Invalidate();
-        return this;
+        this.Filters.Add(lessThan);
+        return lessThan;
     }
 
-    public ICompositePredicate AddLike(RoleType role, string value)
+    public IPredicate AddLike(RoleType role, string value)
     {
-        this.Filters.Add(new RoleLike(this.extent, role, value));
+        var like = new Like(this.extent, role, value);
+
         this.extent.Invalidate();
-        return this;
+        this.Filters.Add(like);
+        return like;
     }
 
     public ICompositePredicate AddNot()
     {
-        var notFilter = new Not(this.extent);
-        this.Filters.Add(notFilter);
+        var not = new Not(this.extent);
+
         this.extent.Invalidate();
-        return notFilter;
+        this.Filters.Add(not);
+        return not;
     }
 
     public ICompositePredicate AddOr()
     {
-        var orFilter = new Or(this.extent);
-        this.Filters.Add(orFilter);
+        var or = new Or(this.extent);
+
         this.extent.Invalidate();
-        return orFilter;
+        this.Filters.Add(or);
+        return or;
     }
 }

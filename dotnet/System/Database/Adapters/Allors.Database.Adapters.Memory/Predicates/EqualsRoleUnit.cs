@@ -8,13 +8,13 @@ namespace Allors.Database.Adapters.Memory;
 using System;
 using Allors.Database.Meta;
 
-internal sealed class RoleUnitEquals : Predicate
+internal sealed class EqualsRoleUnit : Equals
 {
     private readonly object equals;
     private readonly ExtentFiltered extent;
     private readonly RoleType roleType;
 
-    internal RoleUnitEquals(ExtentFiltered extent, RoleType roleType, object equals)
+    internal EqualsRoleUnit(ExtentFiltered extent, RoleType roleType, object equals)
     {
         extent.CheckForRoleType(roleType);
         PredicateAssertions.ValidateRoleEquals(roleType, equals);

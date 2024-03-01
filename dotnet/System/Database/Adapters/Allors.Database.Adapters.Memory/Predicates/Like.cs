@@ -8,13 +8,13 @@ namespace Allors.Database.Adapters.Memory;
 using System.Text.RegularExpressions;
 using Allors.Database.Meta;
 
-internal sealed class RoleLike : Predicate
+internal sealed class Like : Predicate, IPredicate
 {
     private readonly bool isEmpty;
     private readonly Regex regex;
     private readonly RoleType roleType;
 
-    internal RoleLike(ExtentFiltered extent, RoleType roleType, string like)
+    internal Like(ExtentFiltered extent, RoleType roleType, string like)
     {
         extent.CheckForRoleType(roleType);
         PredicateAssertions.ValidateRoleLikeFilter(roleType, like);

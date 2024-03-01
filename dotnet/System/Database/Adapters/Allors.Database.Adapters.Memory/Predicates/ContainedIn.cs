@@ -5,6 +5,6 @@
 
 namespace Allors.Database.Adapters.Memory;
 
-internal abstract class Equals : Predicate, IPredicate
+internal abstract class ContainedIn : Predicate, IPredicate
 {
 }

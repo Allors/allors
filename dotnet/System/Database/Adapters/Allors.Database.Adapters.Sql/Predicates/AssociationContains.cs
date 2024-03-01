@@ -1,4 +1,4 @@
-// <copyright file="AssociationContains.cs" company="Allors bv">
+﻿// <copyright file="AssociationContains.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -7,7 +7,7 @@ namespace Allors.Database.Adapters.Sql;
 
 using Allors.Database.Meta;
 
-internal sealed class AssociationContains : Predicate
+internal sealed class AssociationContains : Contains
 {
     private readonly IObject allorsObject;
     private readonly AssociationType association;

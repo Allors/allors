@@ -1,4 +1,4 @@
-// <copyright file="Not.cs" company="Allors bv">
+﻿// <copyright file="Not.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -26,188 +26,230 @@ internal sealed class Not : Predicate, ICompositePredicate
         return (ICompositePredicate)this.predicate;
     }
 
-    public ICompositePredicate AddBetween(RoleType role, object firstValue, object secondValue)
+    public IPredicate AddBetween(RoleType role, object firstValue, object secondValue)
     {
         this.CheckUnarity();
-        this.predicate = new RoleBetween(this.extent, role, firstValue, secondValue);
+        
+        var between = new Between(this.extent, role, firstValue, secondValue);
+        
         this.extent.Invalidate();
-        return this;
+        this.predicate = between;
+        return between;
     }
 
-    public ICompositePredicate AddContainedIn(RoleType role, Allors.Database.Extent containingExtent)
+    public IPredicate AddContainedIn(RoleType role, Allors.Database.Extent containingExtent)
     {
         this.CheckUnarity();
-        if (role.IsMany)
-        {
-            this.predicate = new RoleManyContainedInExtent(this.extent, role, containingExtent);
-        }
-        else
-        {
-            this.predicate = new RoleOneContainedInExtent(this.extent, role, containingExtent);
-        }
+
+        ContainedIn containedIn = role.IsMany ? 
+            new ContainedInRoleManyExtent(this.extent, role, containingExtent) : 
+            new ContainedInRoleOneExtent(this.extent, role, containingExtent);
 
         this.extent.Invalidate();
-        return this;
+        this.predicate = containedIn;
+        return containedIn;
     }
 
-    public ICompositePredicate AddContainedIn(RoleType role, IEnumerable<IObject> containingEnumerable)
+    public IPredicate AddContainedIn(RoleType role, IEnumerable<IObject> containingEnumerable)
     {
         this.CheckUnarity();
-        if (role.IsMany)
-        {
-            this.predicate = new RoleManyContainedInEnumerable(this.extent, role, containingEnumerable);
-        }
-        else
-        {
-            this.predicate = new RoleOneContainedInEnumerable(this.extent, role, containingEnumerable);
-        }
+
+        ContainedIn containedIn = role.IsMany ?
+            new ContainedInRoleManyEnumerable(this.extent, role, containingEnumerable) :
+            new ContainedInRoleOneEnumerable(this.extent, role, containingEnumerable);
 
         this.extent.Invalidate();
-        return this;
+        this.predicate = containedIn;
+        return containedIn;
     }
 
-    public ICompositePredicate AddContainedIn(AssociationType association, Allors.Database.Extent containingExtent)
+    public IPredicate AddContainedIn(AssociationType association, Allors.Database.Extent containingExtent)
     {
         this.CheckUnarity();
-        this.predicate = new AssociationContainedInExtent(this.extent, association, containingExtent);
+
+        var containedIn = new ContainedInAssociationExtent(this.extent, association, containingExtent);
+        
         this.extent.Invalidate();
-        return this;
+        this.predicate = containedIn;
+        return containedIn;
     }
 
-    public ICompositePredicate AddContainedIn(AssociationType association, IEnumerable<IObject> containingEnumerable)
+    public IPredicate AddContainedIn(AssociationType association, IEnumerable<IObject> containingEnumerable)
     {
         this.CheckUnarity();
-        this.predicate = new AssociationContainedInEnumerable(this.extent, association, containingEnumerable);
+
+        var containedIn = new ContainedInAssociationEnumerable(this.extent, association, containingEnumerable);
+        
         this.extent.Invalidate();
-        return this;
+        this.predicate = containedIn;
+        return containedIn;
     }
 
-    public ICompositePredicate AddContains(RoleType role, IObject containedObject)
+    public IPredicate AddContains(RoleType role, IObject containedObject)
     {
         this.CheckUnarity();
-        this.predicate = new RoleContains(this.extent, role, containedObject);
+
+        var contains = new ContainsRole(this.extent, role, containedObject);
+        
         this.extent.Invalidate();
-        return this;
+        this.predicate = contains;
+        return contains;
     }
 
-    public ICompositePredicate AddContains(AssociationType association, IObject containedObject)
+    public IPredicate AddContains(AssociationType association, IObject containedObject)
     {
         this.CheckUnarity();
-        this.predicate = new AssociationContains(this.extent, association, containedObject);
+
+        var contains = new ContainsAssociation(this.extent, association, containedObject);
+
         this.extent.Invalidate();
-        return this;
+        this.predicate = contains;
+        return contains;
     }
 
-    public ICompositePredicate AddEquals(IObject allorsObject)
+    public IPredicate AddEquals(IObject allorsObject)
     {
         this.CheckUnarity();
-        this.predicate = new Equals(allorsObject);
+        
+        var equals = new EqualsComposite(allorsObject);
+
         this.extent.Invalidate();
-        return this;
+        this.predicate = equals;
+        return equals;
     }
 
-    public ICompositePredicate AddEquals(RoleType role, object obj)
+    public IPredicate AddEquals(RoleType role, object obj)
     {
         this.CheckUnarity();
-        if (role.ObjectType is Unit)
-        {
-            this.predicate = new RoleUnitEquals(this.extent, role, obj);
-        }
-        else
-        {
-            this.predicate = new RoleCompositeEqualsValue(this.extent, role, obj);
-        }
 
+        Equals equals = role.ObjectType is Unit
+            ? new EqualsRoleUnit(this.extent, role, obj)
+            : new EqualsRoleComposite(this.extent, role, obj);
+        
         this.extent.Invalidate();
-        return this;
+        this.predicate = equals;
+        return equals;
     }
 
-    public ICompositePredicate AddEquals(AssociationType association, IObject allorsObject)
+    public IPredicate AddEquals(AssociationType association, IObject allorsObject)
     {
         this.CheckUnarity();
-        this.predicate = new AssociationEquals(this.extent, association, allorsObject);
+
+        var equals = new EqualsAssociation(this.extent, association, allorsObject);
+        
         this.extent.Invalidate();
-        return this;
+        this.predicate = equals;
+        return equals;
     }
 
-    public ICompositePredicate AddExists(RoleType role)
+    public IPredicate AddExists(RoleType role)
     {
         this.CheckUnarity();
-        this.predicate = new RoleExists(this.extent, role);
+
+        var exists = new ExistsRole(this.extent, role);
+        
         this.extent.Invalidate();
-        return this;
+        this.predicate = exists;
+        return exists;
     }
 
-    public ICompositePredicate AddExists(AssociationType association)
+    public IPredicate AddExists(AssociationType association)
     {
         this.CheckUnarity();
-        this.predicate = new AssociationExists(this.extent, association);
+
+        var exists = new ExistsAssociation(this.extent, association);
+        
         this.extent.Invalidate();
-        return this;
+        this.predicate = exists;
+        return exists;
     }
 
-    public ICompositePredicate AddGreaterThan(RoleType role, object value)
+    public IPredicate AddGreaterThan(RoleType role, object value)
     {
         this.CheckUnarity();
-        this.predicate = new RoleGreaterThan(this.extent, role, value);
+        
+        var greaterThan = new GreaterThan(this.extent, role, value);
+
         this.extent.Invalidate();
-        return this;
+        this.predicate = greaterThan;
+        return greaterThan;
     }
 
-    public ICompositePredicate AddInstanceof(Composite type)
+    public IPredicate AddInstanceOf(Composite type)
     {
         this.CheckUnarity();
-        this.predicate = new Instanceof(type);
+
+        var instanceOf = new InstanceOfObject(type);
+        
         this.extent.Invalidate();
-        return this;
+        this.predicate = instanceOf;
+        return instanceOf;
     }
 
-    public ICompositePredicate AddInstanceof(RoleType role, Composite type)
+    public IPredicate AddInstanceOf(RoleType role, Composite type)
     {
         this.CheckUnarity();
-        this.predicate = new RoleInstanceof(this.extent, role, type);
+
+        var instanceOf = new InstanceOfRole(this.extent, role, type);
+
         this.extent.Invalidate();
-        return this;
+        this.predicate = instanceOf;
+        return instanceOf;
     }
 
-    public ICompositePredicate AddInstanceof(AssociationType association, Composite type)
+    public IPredicate AddInstanceOf(AssociationType association, Composite type)
     {
         this.CheckUnarity();
-        this.predicate = new AssociationInstanceOf(this.extent, association, type);
+
+        var instanceOf = new InstanceOfAssociation(this.extent, association, type);
+        
         this.extent.Invalidate();
-        return this;
+        this.predicate = instanceOf;
+        return instanceOf;
     }
 
-    public ICompositePredicate AddLessThan(RoleType role, object value)
+    public IPredicate AddLessThan(RoleType role, object value)
     {
         this.CheckUnarity();
-        this.predicate = new RoleLessThan(this.extent, role, value);
+
+        var lessThan = new LessThan(this.extent, role, value);
+        
         this.extent.Invalidate();
-        return this;
+        this.predicate = lessThan;
+        return lessThan;
     }
 
-    public ICompositePredicate AddLike(RoleType role, string value)
+    public IPredicate AddLike(RoleType role, string value)
     {
         this.CheckUnarity();
-        this.predicate = new RoleLike(this.extent, role, value);
+
+        var like = new Like(this.extent, role, value);
+        
         this.extent.Invalidate();
-        return this;
+        this.predicate = like;
+        return like;
     }
 
     public ICompositePredicate AddNot()
     {
         this.CheckUnarity();
-        this.predicate = new Not(this.extent);
+
+        var not = new Not(this.extent);
+        
         this.extent.Invalidate();
-        return (ICompositePredicate)this.predicate;
+        this.predicate = not;
+        return not;
     }
 
     public ICompositePredicate AddOr()
     {
         this.CheckUnarity();
-        this.predicate = new Or(this.extent);
+
+        var or = new Or(this.extent);
+        
         this.extent.Invalidate();
-        return (ICompositePredicate)this.predicate;
+        this.predicate = or;
+        return or;
     }
 
     internal override ThreeValuedLogic Evaluate(Strategy strategy) =>

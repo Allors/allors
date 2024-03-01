@@ -5,6 +5,6 @@
 
 namespace Allors.Database.Adapters.Sql;
 
-internal abstract class Equals: Predicate, IPredicate
+internal abstract class GreaterThan : Predicate, IPredicate
 {
 }

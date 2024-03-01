@@ -1,4 +1,4 @@
-// <copyright file="RoleLessThanRole.cs" company="Allors bv">
+﻿// <copyright file="RoleLessThanRole.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -7,7 +7,7 @@ namespace Allors.Database.Adapters.Sql;
 
 using Allors.Database.Meta;
 
-internal sealed class RoleLessThanRole : Predicate
+internal sealed class RoleLessThanRole : LessThan
 {
     private readonly RoleType lessThanRole;
     private readonly RoleType role;
