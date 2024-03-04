@@ -25,7 +25,9 @@
 
             var objects = this.existingRecordsByClass.Keys
                 .Where(v => v.KeyRoleType != null)
-                .SelectMany(transaction.Extent);
+                .SelectMany(v => transaction.Extent(v))
+                .ToArray();
+
             return objects;
         }
 
@@ -36,8 +38,8 @@
             var excluded = new HashSet<ObjectType>
             {
                 // Remove Magic Strings
-                m.FindCompositeByName("Country"), 
-                m.FindCompositeByName("Currency"), 
+                m.FindCompositeByName("Country"),
+                m.FindCompositeByName("Currency"),
                 m.FindCompositeByName("Language")
             };
             var fromExisting = HandleResolvers.FromExisting(this.existingRecordsByClass);

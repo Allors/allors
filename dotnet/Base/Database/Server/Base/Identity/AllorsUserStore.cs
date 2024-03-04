@@ -224,8 +224,8 @@ namespace Allors.Security
 
             using var transaction = this.database.CreateTransaction();
             var extent = transaction.Extent<Login>();
-            extent.Filter.AddEquals(m.Login.Provider, loginProvider);
-            extent.Filter.AddEquals(m.Login.Key, providerKey);
+            extent.Filter().AddEquals(m.Login.Provider, loginProvider);
+            extent.Filter().AddEquals(m.Login.Key, providerKey);
 
             var user = extent.FirstOrDefault()?.UserWhereLogin;
             return user?.AsIdentityUser();
@@ -248,8 +248,8 @@ namespace Allors.Security
 
             using var transaction = this.database.CreateTransaction();
             var extent = transaction.Extent<Login>();
-            extent.Filter.AddEquals(m.Login.Provider, loginProvider);
-            extent.Filter.AddEquals(m.Login.Key, providerKey);
+            extent.Filter().AddEquals(m.Login.Provider, loginProvider);
+            extent.Filter().AddEquals(m.Login.Key, providerKey);
 
             var login = extent.FirstOrDefault();
             login?.Delete();
