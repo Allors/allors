@@ -1,4 +1,4 @@
-﻿// <copyright file="ContainedIn.cs" company="Allors bv">
+﻿// <copyright file="In.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -9,11 +9,11 @@ namespace Allors.Workspace.Data
     using Workspace;
     using Meta;
 
-    public class ContainedIn : IPropertyPredicate
+    public class In : IPropertyPredicate
     {
         public string[] Dependencies { get; set; }
 
-        public ContainedIn(IRelationEndType propertyType = null) => this.PropertyType = propertyType;
+        public In(IRelationEndType propertyType = null) => this.PropertyType = propertyType;
 
         public IRelationEndType PropertyType { get; set; }
 
@@ -23,6 +23,6 @@ namespace Allors.Workspace.Data
 
         public string Parameter { get; set; }
 
-        public void Accept(IVisitor visitor) => visitor.VisitContainedIn(this);
+        public void Accept(IVisitor visitor) => visitor.VisitIn(this);
     }
 }

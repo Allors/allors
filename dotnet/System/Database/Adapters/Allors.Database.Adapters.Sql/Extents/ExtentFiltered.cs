@@ -158,7 +158,7 @@ internal class ExtentFiltered : SqlExtent
         }
         else
         {
-            // ContainedIn
+            // In
             var inStatement = (ExtentStatementChild)statement;
 
             if (inStatement.RoleType != null)

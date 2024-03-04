@@ -12,7 +12,6 @@ using Allors.Database.Meta;
 using Allors.Workspace.Data;
 using And = Allors.Workspace.Data.And;
 using Between = Allors.Workspace.Data.Between;
-using ContainedIn = Allors.Workspace.Data.ContainedIn;
 using Contains = Allors.Workspace.Data.Contains;
 using Equals = Allors.Workspace.Data.Equals;
 using Except = Allors.Workspace.Data.Except;
@@ -37,6 +36,8 @@ using Union = Allors.Workspace.Data.Union;
 
 namespace Allors.Workspace.Protocol.Direct
 {
+    using In = Data.In;
+
     public class ToDatabaseVisitor
     {
         private readonly ITransaction transaction;
@@ -81,7 +82,7 @@ namespace Allors.Workspace.Protocol.Direct
             {
                 And and => this.Visit(and),
                 Between between => this.Visit(between),
-                ContainedIn containedIn => this.Visit(containedIn),
+                In containedIn => this.Visit(containedIn),
                 Contains contains => this.Visit(contains),
                 Equals equals => this.Visit(equals),
                 Exists exists => this.Visit(exists),
@@ -104,7 +105,7 @@ namespace Allors.Workspace.Protocol.Direct
             Paths = this.Visit(ws.Paths)
         };
 
-        private IPredicate Visit(ContainedIn ws) => new Database.Data.ContainedIn(this.Visit(ws.PropertyType))
+        private IPredicate Visit(In ws) => new Database.Data.In(this.Visit(ws.PropertyType))
         {
             Parameter = ws.Parameter,
             Objects = this.Visit(ws.Objects),

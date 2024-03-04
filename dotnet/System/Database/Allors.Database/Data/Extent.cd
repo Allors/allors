@@ -120,11 +120,11 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="Allors.Database.Data.ContainedIn" Collapsed="true">
+  <Class Name="Allors.Database.Data.In" Collapsed="true">
     <Position X="0.75" Y="8" Width="1.5" />
     <TypeIdentifier>
       <HashCode>MIAAAAAAAAAAAAAAAJAAAAAAAAAQAAEAAAAACAAABAA=</HashCode>
-      <FileName>Data\ContainedIn.cs</FileName>
+      <FileName>Data\In.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>

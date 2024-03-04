@@ -1,28 +1,30 @@
-﻿// <copyright file="RoleOneContainedInExtent.cs" company="Allors bv">
+﻿// <copyright file="InRoleOneEnumerable.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
 namespace Allors.Database.Adapters.Memory;
 
+using System.Collections.Generic;
 using Allors.Database.Meta;
 
-internal sealed class ContainedInRoleOneExtent : ContainedIn
+internal sealed class InRoleOneEnumerable : In
 {
-    private readonly Allors.Database.Extent containingExtent;
+    private readonly IEnumerable<IObject> containingEnumerable;
     private readonly RoleType roleType;
 
-    internal ContainedInRoleOneExtent(ExtentFiltered extent, RoleType roleType, Allors.Database.Extent containingExtent)
+    internal InRoleOneEnumerable(ExtentFiltered extent, RoleType roleType, IEnumerable<IObject> containingEnumerable)
     {
         extent.CheckForRoleType(roleType);
-        PredicateAssertions.ValidateRoleContainedIn(roleType, containingExtent);
+        PredicateAssertions.ValidateRoleIn(roleType, containingEnumerable);
 
         this.roleType = roleType;
-        this.containingExtent = containingExtent;
+        this.containingEnumerable = containingEnumerable;
     }
 
     internal override ThreeValuedLogic Evaluate(Strategy strategy)
     {
+        var containing = new HashSet<IObject>(this.containingEnumerable);
         var roleStrategy = strategy.GetCompositeRole(this.roleType);
 
         if (roleStrategy == null)
@@ -30,7 +32,7 @@ internal sealed class ContainedInRoleOneExtent : ContainedIn
             return ThreeValuedLogic.False;
         }
 
-        return this.containingExtent.Contains(roleStrategy)
+        return containing.Contains(roleStrategy)
             ? ThreeValuedLogic.True
             : ThreeValuedLogic.False;
     }

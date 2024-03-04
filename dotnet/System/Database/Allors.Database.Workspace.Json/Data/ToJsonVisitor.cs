@@ -1,4 +1,4 @@
-// <copyright file="ToJsonVisitor.cs" company="Allors bv">
+﻿// <copyright file="ToJsonVisitor.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -79,11 +79,11 @@ public class ToJsonVisitor : IVisitor
         this.predicates.Push(predicate);
     }
 
-    public void VisitContainedIn(ContainedIn visited)
+    public void VisitIn(In visited)
     {
         var predicate = new Predicate
         {
-            k = PredicateKind.ContainedIn,
+            k = PredicateKind.In,
             a = (visited.RelationEndType as AssociationType)?.RelationType.Tag,
             r = (visited.RelationEndType as RoleType)?.RelationType.Tag,
             vs = visited.Objects?.Select(v => v.Id.ToString()).ToArray(),

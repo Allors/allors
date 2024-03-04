@@ -21,7 +21,7 @@ namespace Allors.Protocol.Json.Data
 
         Contains = 7,
 
-        ContainedIn = 8,
+        In = 8,
 
         Between = 9,
 

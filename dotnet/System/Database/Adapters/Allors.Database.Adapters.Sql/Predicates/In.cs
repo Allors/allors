@@ -5,6 +5,6 @@
 
 namespace Allors.Database.Adapters.Sql;
 
-internal abstract class ContainedIn : Predicate, IPredicate
+internal abstract class In : Predicate, IPredicate
 {
 }

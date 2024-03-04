@@ -41,48 +41,48 @@ internal sealed class Not : Predicate, ICompositePredicate
         return between;
     }
 
-    public IPredicate AddContainedIn(RoleType role, Allors.Database.Extent containingExtent)
+    public IPredicate AddIn(RoleType role, Allors.Database.Extent containingExtent)
     {
         this.CheckUnarity();
 
-        ContainedIn containedIn = role.IsMany ?
-            new ContainedInRoleManyExtent(this.extent, role, containingExtent) :
-            new ContainedInRoleOneExtent(this.extent, role, containingExtent);
+        In @in = role.IsMany ?
+            new InRoleManyExtent(this.extent, role, containingExtent) :
+            new InRoleOneExtent(this.extent, role, containingExtent);
+
+        this.extent.Invalidate();
+        this.predicate = @in;
+        return @in;
+    }
+
+    public IPredicate AddIn(RoleType role, IEnumerable<IObject> containingEnumerable)
+    {
+        this.CheckUnarity();
+
+        In @in = role.IsMany ?
+            new InRoleManyEnumerable(this.extent, role, containingEnumerable) :
+            new InRoleOneEnumerable(this.extent, role, containingEnumerable);
+
+        this.extent.Invalidate();
+        this.predicate = @in;
+        return @in;
+    }
+
+    public IPredicate AddIn(AssociationType association, Allors.Database.Extent containingExtent)
+    {
+        this.CheckUnarity();
+
+        var containedIn = new InAssociationExtent(this.extent, association, containingExtent);
 
         this.extent.Invalidate();
         this.predicate = containedIn;
         return containedIn;
     }
 
-    public IPredicate AddContainedIn(RoleType role, IEnumerable<IObject> containingEnumerable)
+    public IPredicate AddIn(AssociationType association, IEnumerable<IObject> containingEnumerable)
     {
         this.CheckUnarity();
 
-        ContainedIn containedIn = role.IsMany ?
-            new ContainedInRoleManyEnumerable(this.extent, role, containingEnumerable) :
-            new ContainedInRoleOneEnumerable(this.extent, role, containingEnumerable);
-
-        this.extent.Invalidate();
-        this.predicate = containedIn;
-        return containedIn;
-    }
-
-    public IPredicate AddContainedIn(AssociationType association, Allors.Database.Extent containingExtent)
-    {
-        this.CheckUnarity();
-
-        var containedIn = new ContainedInAssociationExtent(this.extent, association, containingExtent);
-
-        this.extent.Invalidate();
-        this.predicate = containedIn;
-        return containedIn;
-    }
-
-    public IPredicate AddContainedIn(AssociationType association, IEnumerable<IObject> containingEnumerable)
-    {
-        this.CheckUnarity();
-
-        var containedIn = new ContainedInAssociationEnumerable(this.extent, association, containingEnumerable);
+        var containedIn = new InAssociationEnumerable(this.extent, association, containingEnumerable);
 
         this.extent.Invalidate();
         this.predicate = containedIn;

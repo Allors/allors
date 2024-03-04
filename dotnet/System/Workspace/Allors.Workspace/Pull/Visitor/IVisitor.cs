@@ -11,7 +11,7 @@ namespace Allors.Workspace.Data
 
         void VisitBetween(Between visited);
 
-        void VisitContainedIn(ContainedIn visited);
+        void VisitIn(In visited);
 
         void VisitContains(Contains visited);
 

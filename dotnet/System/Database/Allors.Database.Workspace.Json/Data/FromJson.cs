@@ -1,4 +1,4 @@
-// <copyright file="FromJson.cs" company="Allors bv">
+﻿// <copyright file="FromJson.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -31,7 +31,7 @@ public class FromJson
 
     public void Resolve(Contains contains, long objectId) => this.resolvers.Add(new ContainsResolver(contains, objectId));
 
-    public void Resolve(ContainedIn containedIn, long[] objectIds) => this.resolvers.Add(new ContainedInResolver(containedIn, objectIds));
+    public void Resolve(In @in, long[] objectIds) => this.resolvers.Add(new InResolver(@in, objectIds));
 
     public void Resolve(Equals equals, long objectId) => this.resolvers.Add(new EqualsResolver(equals, objectId));
 

@@ -16,7 +16,7 @@ internal abstract class SqlExtent : Extent
 
     public override int Count => this.ObjectIds.Count;
 
-    internal override SqlExtent ContainedInExtent => this;
+    internal override SqlExtent InExtent => this;
 
     internal ExtentOperation ParentOperationExtent { get; set; }
 

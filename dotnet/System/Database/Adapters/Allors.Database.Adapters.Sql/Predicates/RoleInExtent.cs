@@ -1,4 +1,4 @@
-﻿// <copyright file="RoleContainedInExtent.cs" company="Allors bv">
+﻿// <copyright file="RoleInExtent.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -7,17 +7,17 @@ namespace Allors.Database.Adapters.Sql;
 
 using Allors.Database.Meta;
 
-internal sealed class RoleContainedInExtent : ContainedIn
+internal sealed class RoleInExtent : In
 {
     private readonly SqlExtent inExtent;
     private readonly RoleType role;
 
-    internal RoleContainedInExtent(ExtentFiltered extent, RoleType role, Allors.Database.Extent inExtent)
+    internal RoleInExtent(ExtentFiltered extent, RoleType role, Allors.Database.Extent inExtent)
     {
         extent.CheckRole(role);
-        PredicateAssertions.ValidateRoleContainedIn(role, inExtent);
+        PredicateAssertions.ValidateRoleIn(role, inExtent);
         this.role = role;
-        this.inExtent = ((Extent)inExtent).ContainedInExtent;
+        this.inExtent = ((Extent)inExtent).InExtent;
     }
 
     internal override bool BuildWhere(ExtentStatement statement, string alias)

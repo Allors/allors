@@ -1,4 +1,4 @@
-// <copyright file="FromJsonVisitor.cs" company="Allors bv">
+﻿// <copyright file="FromJsonVisitor.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -266,9 +266,9 @@ public class FromJsonVisitor : IVisitor
                         this.predicates.Push(contains);
                         break;
 
-                    case PredicateKind.ContainedIn:
+                    case PredicateKind.In:
 
-                        var containedIn = new ContainedIn(relationEndType) { Parameter = visited.p };
+                        var containedIn = new In(relationEndType) { Parameter = visited.p };
 
                         this.predicates.Push(containedIn);
 

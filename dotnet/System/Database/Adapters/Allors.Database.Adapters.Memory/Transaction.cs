@@ -378,7 +378,7 @@ public class Transaction : ITransaction
         }
     }
 
-    public Extent<T> Extent<T>(Action<ICompositePredicate> init = null) where T : IObject
+    public Extent<T> Extent<T>(Action<ICompositePredicate> filter = null) where T : IObject
     {
         if (!(this.Database.ObjectFactory.GetObjectType(typeof(T)) is Composite compositeType))
         {
@@ -388,12 +388,12 @@ public class Transaction : ITransaction
         return this.Extent(compositeType);
     }
 
-    public virtual Allors.Database.Extent Extent(Composite objectType, Action<ICompositePredicate> init = null)
+    public virtual Allors.Database.Extent Extent(Composite objectType, Action<ICompositePredicate> filter = null)
     {
         var extent = new ExtentFiltered(this, objectType);
-        if (init != null)
+        if (filter != null)
         {
-            extent.Filter(init);
+            extent.Filter(filter);
         }
 
         return extent;

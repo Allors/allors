@@ -1,4 +1,4 @@
-// <copyright file="ContainedIn.cs" company="Allors bv">
+﻿// <copyright file="In.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -8,9 +8,9 @@ namespace Allors.Database.Data;
 using System.Collections.Generic;
 using Allors.Database.Meta;
 
-public class ContainedIn : IPropertyPredicate
+public class In : IPropertyPredicate
 {
-    public ContainedIn(RelationEndType relationEndType = null) => this.RelationEndType = relationEndType;
+    public In(RelationEndType relationEndType = null) => this.RelationEndType = relationEndType;
 
     public IExtent Extent { get; set; }
 
@@ -34,11 +34,11 @@ public class ContainedIn : IPropertyPredicate
             {
                 if (objects != null)
                 {
-                    compositePredicate.AddContainedIn(roleType, objects);
+                    compositePredicate.AddIn(roleType, objects);
                 }
                 else
                 {
-                    compositePredicate.AddContainedIn(roleType, this.Extent.Build(transaction, arguments));
+                    compositePredicate.AddIn(roleType, this.Extent.Build(transaction, arguments));
                 }
             }
             else
@@ -46,17 +46,17 @@ public class ContainedIn : IPropertyPredicate
                 var associationType = (AssociationType)this.RelationEndType;
                 if (objects != null)
                 {
-                    compositePredicate.AddContainedIn(associationType, objects);
+                    compositePredicate.AddIn(associationType, objects);
                 }
                 else
                 {
-                    compositePredicate.AddContainedIn(associationType, this.Extent.Build(transaction, arguments));
+                    compositePredicate.AddIn(associationType, this.Extent.Build(transaction, arguments));
                 }
             }
         }
     }
 
-    public void Accept(IVisitor visitor) => visitor.VisitContainedIn(this);
+    public void Accept(IVisitor visitor) => visitor.VisitIn(this);
 
     private bool HasMissingArguments(IArguments arguments) => (this.Parameter != null && arguments?.HasArgument(this.Parameter) != true) ||
                                                               this.Extent?.HasMissingArguments(arguments) == true;

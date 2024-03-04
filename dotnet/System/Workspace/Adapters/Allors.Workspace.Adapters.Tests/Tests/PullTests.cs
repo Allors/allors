@@ -82,7 +82,7 @@ namespace Allors.Workspace.Adapters.Tests
         }
 
         [Fact]
-        public async void AssociationMany2ManyContainedIn()
+        public async void AssociationMany2ManyIn()
         {
             await this.Login("administrator");
 
@@ -94,7 +94,7 @@ namespace Allors.Workspace.Adapters.Tests
             {
                 Extent = new Filter(this.M.C2)
                 {
-                    Predicate = new ContainedIn(m.C2.C1sWhereC1C2Many2Many)
+                    Predicate = new In(m.C2.C1sWhereC1C2Many2Many)
                     {
                         Extent = new Filter(this.M.C1)
                         {
@@ -115,7 +115,7 @@ namespace Allors.Workspace.Adapters.Tests
             {
                 Extent = new Filter(this.M.C2)
                 {
-                    Predicate = new ContainedIn(m.C2.C1sWhereC1C2Many2Many)
+                    Predicate = new In(m.C2.C1sWhereC1C2Many2Many)
                     {
                         Extent = new Filter(this.M.C1)
                     }
@@ -135,7 +135,7 @@ namespace Allors.Workspace.Adapters.Tests
             {
                 Extent = new Filter(this.M.C2)
                 {
-                    Predicate = new ContainedIn(m.C2.C1sWhereC1C2Many2Many)
+                    Predicate = new In(m.C2.C1sWhereC1C2Many2Many)
                     {
                         Extent = new Filter(this.M.C1)
                         {
@@ -212,7 +212,7 @@ namespace Allors.Workspace.Adapters.Tests
         }
 
         [Fact]
-        public async void AssociationMany2OneContainedIn()
+        public async void AssociationMany2OneIn()
         {
             await this.Login("administrator");
 
@@ -223,7 +223,7 @@ namespace Allors.Workspace.Adapters.Tests
             {
                 Extent = new Filter(this.M.C2)
                 {
-                    Predicate = new ContainedIn(m.C2.C1sWhereC1C2Many2One)
+                    Predicate = new In(m.C2.C1sWhereC1C2Many2One)
                     {
                         Extent = new Filter(this.M.C1)
                         {
@@ -274,7 +274,7 @@ namespace Allors.Workspace.Adapters.Tests
         }
 
         [Fact]
-        public async void AssociationOne2ManyContainedIn()
+        public async void AssociationOne2ManyIn()
         {
             await this.Login("administrator");
 
@@ -285,7 +285,7 @@ namespace Allors.Workspace.Adapters.Tests
             {
                 Extent = new Filter(this.M.C2)
                 {
-                    Predicate = new ContainedIn(m.C2.C1WhereC1C2One2Many)
+                    Predicate = new In(m.C2.C1WhereC1C2One2Many)
                     {
                         Extent = new Filter(this.M.C1)
                         {
@@ -423,7 +423,7 @@ namespace Allors.Workspace.Adapters.Tests
         }
 
         [Fact]
-        public async void AssociationOne2OneContainedIn()
+        public async void AssociationOne2OneIn()
         {
             await this.Login("administrator");
 
@@ -434,7 +434,7 @@ namespace Allors.Workspace.Adapters.Tests
             {
                 Extent = new Filter(this.M.C2)
                 {
-                    Predicate = new ContainedIn(m.C2.C1WhereC1C2One2One)
+                    Predicate = new In(m.C2.C1WhereC1C2One2One)
                     {
                         Extent = new Filter(this.M.C1)
                         {
@@ -1747,7 +1747,7 @@ namespace Allors.Workspace.Adapters.Tests
         }
 
         [Fact]
-        public async void RoleMany2ManyContainedIn()
+        public async void RoleMany2ManyIn()
         {
             await this.Login("administrator");
 
@@ -1759,7 +1759,7 @@ namespace Allors.Workspace.Adapters.Tests
             {
                 Extent = new Filter(this.M.C1)
                 {
-                    Predicate = new ContainedIn(m.C1.C1I12Many2Manies)
+                    Predicate = new In(m.C1.C1I12Many2Manies)
                     {
                         Extent = new Filter(this.M.I12)
                         {
@@ -1780,7 +1780,7 @@ namespace Allors.Workspace.Adapters.Tests
             {
                 Extent = new Filter(this.M.C1)
                 {
-                    Predicate = new ContainedIn(m.C1.C1I12Many2Manies)
+                    Predicate = new In(m.C1.C1I12Many2Manies)
                     {
                         Extent = new Filter(this.M.I12)
                     }
@@ -1800,7 +1800,7 @@ namespace Allors.Workspace.Adapters.Tests
             {
                 Extent = new Filter(this.M.C1)
                 {
-                    Predicate = new ContainedIn(m.C1.C1I12Many2Manies)
+                    Predicate = new In(m.C1.C1I12Many2Manies)
                     {
                         Extent = new Filter(this.M.I12)
                         {
@@ -1850,7 +1850,7 @@ namespace Allors.Workspace.Adapters.Tests
         }
 
         [Fact]
-        public async void RoleOne2ManyContainedIn()
+        public async void RoleOne2ManyIn()
         {
             await this.Login("administrator");
 
@@ -1861,7 +1861,7 @@ namespace Allors.Workspace.Adapters.Tests
             {
                 Extent = new Filter(this.M.C1)
                 {
-                    Predicate = new ContainedIn(m.C1.C1I12One2Manies)
+                    Predicate = new In(m.C1.C1I12One2Manies)
                     {
                         Extent = new Filter(this.M.I12)
                         {
@@ -1911,7 +1911,7 @@ namespace Allors.Workspace.Adapters.Tests
         }
 
         [Fact]
-        public async void RoleMany2OneContainedIn()
+        public async void RoleMany2OneIn()
         {
             await this.Login("administrator");
 
@@ -1922,7 +1922,7 @@ namespace Allors.Workspace.Adapters.Tests
             {
                 Extent = new Filter(this.M.C1)
                 {
-                    Predicate = new ContainedIn(m.C1.C1I12Many2One)
+                    Predicate = new In(m.C1.C1I12Many2One)
                     {
                         Extent = new Filter(this.M.I12)
                         {
@@ -1942,7 +1942,7 @@ namespace Allors.Workspace.Adapters.Tests
         }
 
         [Fact]
-        public async void RoleOne2OneContainedIn()
+        public async void RoleOne2OneIn()
         {
             await this.Login("administrator");
 
@@ -1953,7 +1953,7 @@ namespace Allors.Workspace.Adapters.Tests
             {
                 Extent = new Filter(this.M.C1)
                 {
-                    Predicate = new ContainedIn(m.C1.C1I12One2One)
+                    Predicate = new In(m.C1.C1I12One2One)
                     {
                         Extent = new Filter(this.M.I12)
                         {

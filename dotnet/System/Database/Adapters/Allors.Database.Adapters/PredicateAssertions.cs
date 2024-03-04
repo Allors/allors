@@ -16,16 +16,16 @@ public class PredicateAssertions
 {
     /// <summary>
     ///     Asserts that the <see cref="AssociationType" /> and the <see cref="Extent" /> are compatible with
-    ///     <see cref="ICompositePredicate#AddContainedIn" />.
+    ///     <see cref="ICompositePredicate#AddIn" />.
     /// </summary>
     /// <param name="association">The association.</param>
     /// <param name="extent">The extent.</param>
-    public static void AssertAssociationContainedIn(AssociationType association, Extent extent)
+    public static void AssertAssociationIn(AssociationType association, Extent extent)
     {
         // TODO: ?
     }
 
-    public static void AssertAssociationContainedIn(AssociationType association, IEnumerable<IObject> enumerable)
+    public static void AssertAssociationIn(AssociationType association, IEnumerable<IObject> enumerable)
     {
         // TODO: ?
     }
@@ -146,39 +146,39 @@ public class PredicateAssertions
 
     /// <summary>
     ///     Asserts that the <see cref="RoleType" /> and the <see cref="Extent" /> are compatible with
-    ///     <see cref="ICompositePredicate#AddContainedIn" />.
+    ///     <see cref="ICompositePredicate#AddIn" />.
     /// </summary>
     /// <param name="role">The role .</param>
     /// <param name="extent">The extent.</param>
-    public static void ValidateRoleContainedIn(RoleType role, Extent extent)
+    public static void ValidateRoleIn(RoleType role, Extent extent)
     {
         if (role.ObjectType is Unit)
         {
-            throw new ArgumentException("AddContainedIn() can only be used with composite types.");
+            throw new ArgumentException("AddIn() can only be used with composite types.");
         }
 
         if (extent == null)
         {
-            throw new ArgumentException("AddContainedIn() requires a non-null extent.");
+            throw new ArgumentException("AddIn() requires a non-null extent.");
         }
     }
 
-    public static void ValidateRoleContainedIn(RoleType role, IEnumerable<IObject> enumerable)
+    public static void ValidateRoleIn(RoleType role, IEnumerable<IObject> enumerable)
     {
         if (role.ObjectType is Unit)
         {
-            throw new ArgumentException("AddContainedIn() can only be used with composite types.");
+            throw new ArgumentException("AddIn() can only be used with composite types.");
         }
 
         if (enumerable == null)
         {
-            throw new ArgumentException("AddContainedIn() requires a non-null extent.");
+            throw new ArgumentException("AddIn() requires a non-null extent.");
         }
     }
 
     /// <summary>
     ///     Asserts that the <see cref="RoleType" /> and the <see cref="IObject" /> are compatible with
-    ///     <see cref="ICompositePredicate#AddContainedIn" />.
+    ///     <see cref="ICompositePredicate#AddIn" />.
     /// </summary>
     /// <param name="role">The role .</param>
     /// <param name="allorsObject">The allors object.</param>

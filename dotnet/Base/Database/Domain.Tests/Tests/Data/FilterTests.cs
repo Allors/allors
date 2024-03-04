@@ -40,8 +40,7 @@ namespace Allors.Database.Domain.Tests
 
             var queryExtent = filter.Build(this.Transaction);
 
-            var extent = this.Transaction.Extent(this.M.Person.Composite);
-            extent.Filter().AddEquals(this.M.Person.FirstName, "John");
+            var extent = this.Transaction.Extent<Person>(v => v.AddEquals(this.M.Person.FirstName, "John"));
 
             Assert.Equal(extent.ToArray(), [.. queryExtent]);
         }

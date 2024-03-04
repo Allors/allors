@@ -1,23 +1,25 @@
-// <copyright file="NotAssociationContainedInExtent.cs" company="Allors bv">
+﻿// <copyright file="NotAssociationInEnumerable.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
 
 namespace Allors.Database.Adapters.Sql;
 
+using System.Collections.Generic;
+using System.Text;
 using Allors.Database.Meta;
 
-internal sealed class NotAssociationContainedInExtent : ContainedIn
+internal sealed class NotAssociationInEnumerable : In
 {
     private readonly AssociationType association;
-    private readonly SqlExtent inExtent;
+    private readonly IEnumerable<IObject> enumerable;
 
-    internal NotAssociationContainedInExtent(ExtentFiltered extent, AssociationType association, Allors.Database.Extent inExtent)
+    internal NotAssociationInEnumerable(ExtentFiltered extent, AssociationType association, IEnumerable<IObject> enumerable)
     {
         extent.CheckAssociation(association);
-        PredicateAssertions.AssertAssociationContainedIn(association, inExtent);
+        PredicateAssertions.AssertAssociationIn(association, this.enumerable);
         this.association = association;
-        this.inExtent = ((Extent)inExtent).ContainedInExtent;
+        this.enumerable = enumerable;
     }
 
     internal override bool IsNotFilter => true;
@@ -25,32 +27,37 @@ internal sealed class NotAssociationContainedInExtent : ContainedIn
     internal override bool BuildWhere(ExtentStatement statement, string alias)
     {
         var schema = statement.Mapping;
-        var inStatement = statement.CreateChild(this.inExtent, this.association);
 
-        inStatement.UseRole(this.association.RoleType);
-
-        if ((this.association.IsMany && this.association.RoleType.IsMany) || !this.association.RelationType.ExistExclusiveClasses)
+        var inStatement = new StringBuilder("0");
+        foreach (var inObject in this.enumerable)
         {
-            statement.Append(" (" + this.association.SingularFullName + "_A." + Mapping.ColumnNameForRole + " IS NULL OR");
+            inStatement.Append(",");
+            inStatement.Append(inObject.Id.ToString());
+        }
+
+        if ((this.association.IsMany && this.association.RelationType.RoleType.IsMany) ||
+            !this.association.RelationType.ExistExclusiveClasses)
+        {
+            statement.Append(" (" + this.association.SingularFullName + "_A." + Mapping.ColumnNameForRole + " IS NULL OR ");
             statement.Append(" NOT " + this.association.SingularFullName + "_A." + Mapping.ColumnNameForRole + " IN (\n");
             statement.Append(" SELECT " + Mapping.ColumnNameForRole + " FROM " +
                              schema.TableNameForRelationByRelationType[this.association.RelationType] + " WHERE " +
                              Mapping.ColumnNameForAssociation + " IN (");
-            this.inExtent.BuildSql(inStatement);
-            statement.Append(" )))\n");
+            statement.Append(inStatement.ToString());
+            statement.Append(" ))\n");
         }
-        else if (this.association.RoleType.IsMany)
+        else if (this.association.RelationType.RoleType.IsMany)
         {
             statement.Append(" (" + alias + "." + schema.ColumnNameByRelationType[this.association.RelationType] + " IS NULL OR ");
             statement.Append(" NOT " + alias + "." + schema.ColumnNameByRelationType[this.association.RelationType] + " IN (\n");
-            this.inExtent.BuildSql(inStatement);
+            statement.Append(inStatement.ToString());
             statement.Append(" ))\n");
         }
         else
         {
             statement.Append(" (" + this.association.SingularFullName + "_A." + Mapping.ColumnNameForObject + " IS NULL OR ");
             statement.Append(" NOT " + this.association.SingularFullName + "_A." + Mapping.ColumnNameForObject + " IN (\n");
-            this.inExtent.BuildSql(inStatement);
+            statement.Append(inStatement.ToString());
             statement.Append(" ))\n");
         }
 

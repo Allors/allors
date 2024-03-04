@@ -1,4 +1,4 @@
-﻿// <copyright file="AssociationContainedInExtent.cs" company="Allors bv">
+﻿// <copyright file="InAssociationExtent.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -7,15 +7,15 @@ namespace Allors.Database.Adapters.Memory;
 
 using Allors.Database.Meta;
 
-internal sealed class ContainedInAssociationExtent : ContainedIn
+internal sealed class InAssociationExtent : In
 {
     private readonly AssociationType associationType;
     private readonly Allors.Database.Extent containingExtent;
 
-    internal ContainedInAssociationExtent(ExtentFiltered extent, AssociationType associationType, Allors.Database.Extent containingExtent)
+    internal InAssociationExtent(ExtentFiltered extent, AssociationType associationType, Allors.Database.Extent containingExtent)
     {
         extent.CheckForAssociationType(associationType);
-        PredicateAssertions.AssertAssociationContainedIn(associationType, containingExtent);
+        PredicateAssertions.AssertAssociationIn(associationType, containingExtent);
 
         this.associationType = associationType;
         this.containingExtent = containingExtent;

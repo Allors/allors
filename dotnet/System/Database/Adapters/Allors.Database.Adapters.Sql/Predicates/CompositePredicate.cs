@@ -99,36 +99,36 @@ internal abstract class CompositePredicate : Predicate, ICompositePredicate
         return between;
     }
 
-    public IPredicate AddContainedIn(RoleType role, Allors.Database.Extent containingExtent)
+    public IPredicate AddIn(RoleType role, Allors.Database.Extent containingExtent)
     {
-        var containedIn = new RoleContainedInExtent(this.Extent, role, containingExtent);
+        var containedIn = new RoleInExtent(this.Extent, role, containingExtent);
 
         this.Extent.FlushCache();
         this.Filters.Add(containedIn);
         return containedIn;
     }
 
-    public IPredicate AddContainedIn(RoleType role, IEnumerable<IObject> containingEnumerable)
+    public IPredicate AddIn(RoleType role, IEnumerable<IObject> containingEnumerable)
     {
-        var containedIn = new RoleContainedInEnumerable(this.Extent, role, containingEnumerable);
+        var containedIn = new RoleInEnumerable(this.Extent, role, containingEnumerable);
 
         this.Extent.FlushCache();
         this.Filters.Add(containedIn);
         return containedIn;
     }
 
-    public IPredicate AddContainedIn(AssociationType association, Allors.Database.Extent containingExtent)
+    public IPredicate AddIn(AssociationType association, Allors.Database.Extent containingExtent)
     {
-        var containedIn = new AssociationContainedInExtent(this.Extent, association, containingExtent);
+        var containedIn = new AssociationInExtent(this.Extent, association, containingExtent);
 
         this.Extent.FlushCache();
         this.Filters.Add(containedIn);
         return containedIn;
     }
 
-    public IPredicate AddContainedIn(AssociationType association, IEnumerable<IObject> containingEnumerable)
+    public IPredicate AddIn(AssociationType association, IEnumerable<IObject> containingEnumerable)
     {
-        var containedIn = new AssociationContainedInEnumerable(this.Extent, association, containingEnumerable);
+        var containedIn = new AssociationInEnumerable(this.Extent, association, containingEnumerable);
 
         this.Extent.FlushCache();
         this.Filters.Add(containedIn);

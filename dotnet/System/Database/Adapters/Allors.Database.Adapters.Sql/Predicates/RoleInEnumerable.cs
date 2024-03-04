@@ -1,4 +1,4 @@
-// <copyright file="RoleContainedInEnumerable.cs" company="Allors bv">
+﻿// <copyright file="RoleInEnumerable.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -9,15 +9,15 @@ using System.Collections.Generic;
 using System.Text;
 using Allors.Database.Meta;
 
-internal sealed class RoleContainedInEnumerable : ContainedIn
+internal sealed class RoleInEnumerable : In
 {
     private readonly IEnumerable<IObject> enumerable;
     private readonly RoleType role;
 
-    internal RoleContainedInEnumerable(ExtentFiltered extent, RoleType role, IEnumerable<IObject> enumerable)
+    internal RoleInEnumerable(ExtentFiltered extent, RoleType role, IEnumerable<IObject> enumerable)
     {
         extent.CheckRole(role);
-        PredicateAssertions.ValidateRoleContainedIn(role, enumerable);
+        PredicateAssertions.ValidateRoleIn(role, enumerable);
         this.role = role;
         this.enumerable = enumerable;
     }

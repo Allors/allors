@@ -9,19 +9,19 @@ using System.Collections.Generic;
 using System.Linq;
 using Allors.Database.Data;
 
-public class ContainedInResolver : IResolver
+public class InResolver : IResolver
 {
-    private readonly ContainedIn containedIn;
+    private readonly In @in;
     private readonly long[] objectIds;
 
-    public ContainedInResolver(ContainedIn containedIn, long[] objectIds)
+    public InResolver(In @in, long[] objectIds)
     {
-        this.containedIn = containedIn;
+        this.@in = @in;
         this.objectIds = objectIds;
     }
 
     public void Prepare(HashSet<long> objectIds) => objectIds.UnionWith(this.objectIds);
 
     public void Resolve(Dictionary<long, IObject> objectById) =>
-        this.containedIn.Objects = this.objectIds.Select(v => objectById[v]).ToArray();
+        this.@in.Objects = this.objectIds.Select(v => objectById[v]).ToArray();
 }

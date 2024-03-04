@@ -139,7 +139,7 @@ namespace Allors.Database.Domain.Tests
         {
             var filter = new Extent(this.M.C1.Composite)
             {
-                Predicate = new ContainedIn
+                Predicate = new In
                 {
                     RelationEndType = this.M.C1.C1C2One2One,
                     Extent = new Extent(this.M.C2.Composite)
@@ -159,7 +159,7 @@ namespace Allors.Database.Domain.Tests
             var c2s = this.Transaction.Extent(this.M.C2.Composite);
             c2s.Filter().AddEquals(this.M.C2.C2AllorsString, "c2B");
             var extent = this.Transaction.Extent(this.M.C1.Composite);
-            extent.Filter().AddContainedIn(this.M.C1.C1C2One2One, c2s);
+            extent.Filter().AddIn(this.M.C1.C1C2One2One, c2s);
 
             Assert.Equal(extent.ToArray(), [.. queryExtent]);
         }
@@ -169,7 +169,7 @@ namespace Allors.Database.Domain.Tests
         {
             var filter = new Extent(this.M.C1.Composite)
             {
-                Predicate = new ContainedIn
+                Predicate = new In
                 {
                     RelationEndType = this.M.C1.C1C2One2One,
                     Extent = new Extent(this.M.C2.Composite)
@@ -192,7 +192,7 @@ namespace Allors.Database.Domain.Tests
         }
 
         [Fact]
-        public void AndNestedContainedInWithoutArguments()
+        public void AndNestedInWithoutArguments()
         {
             var filter = new Extent(this.M.C1.Composite)
             {
@@ -200,7 +200,7 @@ namespace Allors.Database.Domain.Tests
                 {
                     Operands =
                     [
-                        new ContainedIn
+                        new In
                         {
                             RelationEndType = this.M.C1.C1C2One2One,
                             Extent = new Extent(this.M.C2.Composite)
@@ -233,7 +233,7 @@ namespace Allors.Database.Domain.Tests
                 {
                     Operands =
                     [
-                        new ContainedIn
+                        new In
                             {
                                 RelationEndType = this.M.C1.C1C2One2One,
                                 Extent = new Extent(this.M.C2.Composite)

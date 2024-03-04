@@ -53,7 +53,7 @@ public interface ICompositePredicate
     /// <param name="role">The role .</param>
     /// <param name="containingExtent">The extent.</param>
     /// <returns>this CompositePredicate.</returns>
-    IPredicate AddContainedIn(RoleType role, Extent containingExtent);
+    IPredicate AddIn(RoleType role, Extent containingExtent);
 
     /// <summary>
     ///     Adds a Predicate that evaluates to true if any object of the role of the object under evaluation is contained in
@@ -62,7 +62,7 @@ public interface ICompositePredicate
     /// <param name="role">The role .</param>
     /// <param name="containingEnumerable">The enumerable.</param>
     /// <returns>This CompositePredicate. </returns>
-    IPredicate AddContainedIn(RoleType role, IEnumerable<IObject> containingEnumerable);
+    IPredicate AddIn(RoleType role, IEnumerable<IObject> containingEnumerable);
 
     /// <summary>
     ///     Adds a Predicate that evaluates to true if any object of the association of the object under evaluation is
@@ -71,7 +71,7 @@ public interface ICompositePredicate
     /// <param name="association">The association.</param>
     /// <param name="containingExtent">The extent.</param>
     /// <returns>the composing CompositePredicate.</returns>
-    IPredicate AddContainedIn(AssociationType association, Extent containingExtent);
+    IPredicate AddIn(AssociationType association, Extent containingExtent);
 
     /// <summary>
     ///     Adds a Predicate that evaluates to true if any object of the role of the object under evaluation is contained in
@@ -80,7 +80,7 @@ public interface ICompositePredicate
     /// <param name="association">The association.</param>
     /// <param name="containingEnumerable">The enumerable.</param>
     /// <returns>This CompositePredicate. </returns>
-    IPredicate AddContainedIn(AssociationType association, IEnumerable<IObject> containingEnumerable);
+    IPredicate AddIn(AssociationType association, IEnumerable<IObject> containingEnumerable);
 
     /// <summary>
     ///     Adds a Predicate that evaluates to true if the role of the object under evaluation contains the allorsObject.

@@ -435,28 +435,28 @@ public sealed class Transaction : ITransaction
         }
     }
 
-    public Extent<T> Extent<T>(Action<ICompositePredicate> init = null) where T : IObject => this.Extent((Composite)this.Database.ObjectFactory.GetObjectType(typeof(T)), init);
+    public Extent<T> Extent<T>(Action<ICompositePredicate> filter = null) where T : IObject => this.Extent((Composite)this.Database.ObjectFactory.GetObjectType(typeof(T)), filter);
 
-    public Allors.Database.Extent Extent(Composite type, Action<ICompositePredicate> init = null)
+    public Allors.Database.Extent Extent(Composite type, Action<ICompositePredicate> filter = null)
     {
         var extent = new ExtentFiltered(this, type);
-        if (init != null)
+        if (filter != null)
         {
-            extent.Filter(init);
+            extent.Filter(filter);
         }
 
         return extent;
     }
 
     public Allors.Database.Extent Union(Allors.Database.Extent firstOperand, Allors.Database.Extent secondOperand) =>
-        new ExtentOperation(((Extent)firstOperand).ContainedInExtent, ((Extent)secondOperand).ContainedInExtent, ExtentOperations.Union);
+        new ExtentOperation(((Extent)firstOperand).InExtent, ((Extent)secondOperand).InExtent, ExtentOperations.Union);
 
     public Allors.Database.Extent Intersect(Allors.Database.Extent firstOperand, Allors.Database.Extent secondOperand) =>
-        new ExtentOperation(((Extent)firstOperand).ContainedInExtent, ((Extent)secondOperand).ContainedInExtent,
+        new ExtentOperation(((Extent)firstOperand).InExtent, ((Extent)secondOperand).InExtent,
             ExtentOperations.Intersect);
 
     public Allors.Database.Extent Except(Allors.Database.Extent firstOperand, Allors.Database.Extent secondOperand) =>
-        new ExtentOperation(((Extent)firstOperand).ContainedInExtent, ((Extent)secondOperand).ContainedInExtent, ExtentOperations.Except);
+        new ExtentOperation(((Extent)firstOperand).InExtent, ((Extent)secondOperand).InExtent, ExtentOperations.Except);
 
     public void Commit()
     {
