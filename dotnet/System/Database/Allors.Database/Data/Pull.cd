@@ -4,7 +4,7 @@
     <Position X="1" Y="2.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>EIAAAAAAAAAAAAAgAAAAAAAACAAAAAAAIIAACAAAAAA=</HashCode>
-      <FileName>data\Pull.cs</FileName>
+      <FileName>Data\Pull.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="Extent" />
@@ -17,7 +17,7 @@
     <Position X="4" Y="4" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AIAAAAAAAAAAAAAEAgAACAQAAAAAAAAAAAEAQAAAEAA=</HashCode>
-      <FileName>data\Result.cs</FileName>
+      <FileName>Data\Result.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="Select" />
@@ -28,12 +28,11 @@
   <Class Name="Allors.Database.Data.Select">
     <Position X="7.5" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AoICgAAAAACABABEAAAgCAAAAAAAAAQAAAACAAAAAAA=</HashCode>
-      <FileName>data\Select.cs</FileName>
+      <HashCode>AoICgAAAAACAAAAEABAgCAAAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>Data\Select.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="Include" />
-      <Property Name="RelationEndType" />
       <Property Name="Next" />
       <Property Name="End" />
     </ShowAsAssociation>
@@ -42,8 +41,8 @@
   <Class Name="Allors.Database.Data.Node">
     <Position X="10.5" Y="5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AIIoAAAAAACAAAAAABAAAAAAAACAAAAAAAACAABAAAA=</HashCode>
-      <FileName>data\Node.cs</FileName>
+      <HashCode>AIIgAAAAAACAAAAAABAAAAAAAACAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>Data\Tree\Node.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="Nodes" />
@@ -54,21 +53,14 @@
     <Position X="4" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>IAAAAAAAAAAAAAAAAAAAAAAQAAAAgAAAAIAAAAAAAAA=</HashCode>
-      <FileName>data\IExtent.cs</FileName>
+      <FileName>Data\IExtent.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Allors.Database.IObject" Collapsed="true">
     <Position X="4" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAA=</HashCode>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAkAAAAAAAAAABAAAAA=</HashCode>
       <FileName>IObject.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="Allors.Database.Meta.IRelationEndType" Collapsed="true">
-    <Position X="10.5" Y="3.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAEiAAAAAAAAAJAAAAAAAQAAAAAAAACAJAAAAAAAAA=</HashCode>
-      <FileName>meta\IRelationEndType.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Font Name="Segoe UI" Size="9" />

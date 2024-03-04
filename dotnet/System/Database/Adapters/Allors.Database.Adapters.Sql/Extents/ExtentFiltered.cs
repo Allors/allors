@@ -15,7 +15,7 @@ internal class ExtentFiltered : SqlExtent
     private readonly Composite objectType;
     private readonly Transaction transaction;
 
-    private AndPredicate filter;
+    private And filter;
 
     internal ExtentFiltered(Transaction transaction, Strategy strategy, RoleType roleType)
         : this(transaction, (Composite)roleType.ObjectType)
@@ -37,13 +37,11 @@ internal class ExtentFiltered : SqlExtent
         this.objectType = objectType;
     }
 
-    public override ICompositePredicate Filter
+    public override ICompositePredicate Filter(Action<ICompositePredicate> init = null)
     {
-        get
-        {
-            this.LazyLoadFilter();
-            return this.filter;
-        }
+        this.LazyLoadFilter();
+        init?.Invoke(this.filter);
+        return this.filter;
     }
 
     internal Mapping Mapping => this.transaction.Database.Mapping;
@@ -135,7 +133,7 @@ internal class ExtentFiltered : SqlExtent
     {
         if (this.filter == null)
         {
-            this.filter = new AndPredicate(this);
+            this.filter = new And(this);
             this.Strategy = null;
             this.AssociationType = null;
             this.RoleType = null;

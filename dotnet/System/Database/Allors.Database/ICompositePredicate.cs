@@ -6,6 +6,7 @@
 
 namespace Allors.Database;
 
+using System;
 using System.Collections.Generic;
 using Allors.Database.Meta;
 
@@ -33,7 +34,7 @@ public interface ICompositePredicate
     ///     This predicate is ignored when there are no composed predicates.
     /// </summary>
     /// <returns>the newly added CompositePredicate.</returns>
-    ICompositePredicate AddAnd();
+    ICompositePredicate AddAnd(Action<ICompositePredicate> init = null);
 
     /// <summary>
     ///     Adds a Predicate that evaluates to true if the role of the object under evaluation is between the first and the
@@ -189,12 +190,12 @@ public interface ICompositePredicate
     ///     This predicate is ignored when there are no composed predicates.
     /// </summary>
     /// <returns>the newly added CompositePredicate.</returns>
-    ICompositePredicate AddNot();
+    ICompositePredicate AddNot(Action<ICompositePredicate> init = null);
 
     /// <summary>
     ///     Adds a CompositePredicate that evaluates to true if any of its composed predicates evaluate to true.
     ///     This predicate is ignored when there are no composed predicates.
     /// </summary>
     /// <returns>the newly added CompositePredicate.</returns>
-    ICompositePredicate AddOr();
+    ICompositePredicate AddOr(Action<ICompositePredicate> init = null);
 }

@@ -18,20 +18,24 @@ internal sealed class Not : Predicate, ICompositePredicate
 
     internal override bool Include => this.predicate?.Include == true;
 
-    public ICompositePredicate AddAnd()
+    public ICompositePredicate AddAnd(Action<ICompositePredicate> init = null)
     {
         this.CheckUnarity();
-        this.predicate = new And(this.extent);
+
+        var and = new And(this.extent);
+        init?.Invoke(and);
+
         this.extent.Invalidate();
+        this.predicate = and;
         return (ICompositePredicate)this.predicate;
     }
 
     public IPredicate AddBetween(RoleType role, object firstValue, object secondValue)
     {
         this.CheckUnarity();
-        
+
         var between = new Between(this.extent, role, firstValue, secondValue);
-        
+
         this.extent.Invalidate();
         this.predicate = between;
         return between;
@@ -41,8 +45,8 @@ internal sealed class Not : Predicate, ICompositePredicate
     {
         this.CheckUnarity();
 
-        ContainedIn containedIn = role.IsMany ? 
-            new ContainedInRoleManyExtent(this.extent, role, containingExtent) : 
+        ContainedIn containedIn = role.IsMany ?
+            new ContainedInRoleManyExtent(this.extent, role, containingExtent) :
             new ContainedInRoleOneExtent(this.extent, role, containingExtent);
 
         this.extent.Invalidate();
@@ -68,7 +72,7 @@ internal sealed class Not : Predicate, ICompositePredicate
         this.CheckUnarity();
 
         var containedIn = new ContainedInAssociationExtent(this.extent, association, containingExtent);
-        
+
         this.extent.Invalidate();
         this.predicate = containedIn;
         return containedIn;
@@ -79,7 +83,7 @@ internal sealed class Not : Predicate, ICompositePredicate
         this.CheckUnarity();
 
         var containedIn = new ContainedInAssociationEnumerable(this.extent, association, containingEnumerable);
-        
+
         this.extent.Invalidate();
         this.predicate = containedIn;
         return containedIn;
@@ -90,7 +94,7 @@ internal sealed class Not : Predicate, ICompositePredicate
         this.CheckUnarity();
 
         var contains = new ContainsRole(this.extent, role, containedObject);
-        
+
         this.extent.Invalidate();
         this.predicate = contains;
         return contains;
@@ -110,7 +114,7 @@ internal sealed class Not : Predicate, ICompositePredicate
     public IPredicate AddEquals(IObject allorsObject)
     {
         this.CheckUnarity();
-        
+
         var equals = new EqualsComposite(allorsObject);
 
         this.extent.Invalidate();
@@ -125,7 +129,7 @@ internal sealed class Not : Predicate, ICompositePredicate
         Equals equals = role.ObjectType is Unit
             ? new EqualsRoleUnit(this.extent, role, obj)
             : new EqualsRoleComposite(this.extent, role, obj);
-        
+
         this.extent.Invalidate();
         this.predicate = equals;
         return equals;
@@ -136,7 +140,7 @@ internal sealed class Not : Predicate, ICompositePredicate
         this.CheckUnarity();
 
         var equals = new EqualsAssociation(this.extent, association, allorsObject);
-        
+
         this.extent.Invalidate();
         this.predicate = equals;
         return equals;
@@ -147,7 +151,7 @@ internal sealed class Not : Predicate, ICompositePredicate
         this.CheckUnarity();
 
         var exists = new ExistsRole(this.extent, role);
-        
+
         this.extent.Invalidate();
         this.predicate = exists;
         return exists;
@@ -158,7 +162,7 @@ internal sealed class Not : Predicate, ICompositePredicate
         this.CheckUnarity();
 
         var exists = new ExistsAssociation(this.extent, association);
-        
+
         this.extent.Invalidate();
         this.predicate = exists;
         return exists;
@@ -167,7 +171,7 @@ internal sealed class Not : Predicate, ICompositePredicate
     public IPredicate AddGreaterThan(RoleType role, object value)
     {
         this.CheckUnarity();
-        
+
         var greaterThan = new GreaterThan(this.extent, role, value);
 
         this.extent.Invalidate();
@@ -180,7 +184,7 @@ internal sealed class Not : Predicate, ICompositePredicate
         this.CheckUnarity();
 
         var instanceOf = new InstanceOfObject(type);
-        
+
         this.extent.Invalidate();
         this.predicate = instanceOf;
         return instanceOf;
@@ -202,7 +206,7 @@ internal sealed class Not : Predicate, ICompositePredicate
         this.CheckUnarity();
 
         var instanceOf = new InstanceOfAssociation(this.extent, association, type);
-        
+
         this.extent.Invalidate();
         this.predicate = instanceOf;
         return instanceOf;
@@ -213,7 +217,7 @@ internal sealed class Not : Predicate, ICompositePredicate
         this.CheckUnarity();
 
         var lessThan = new LessThan(this.extent, role, value);
-        
+
         this.extent.Invalidate();
         this.predicate = lessThan;
         return lessThan;
@@ -224,29 +228,31 @@ internal sealed class Not : Predicate, ICompositePredicate
         this.CheckUnarity();
 
         var like = new Like(this.extent, role, value);
-        
+
         this.extent.Invalidate();
         this.predicate = like;
         return like;
     }
 
-    public ICompositePredicate AddNot()
+    public ICompositePredicate AddNot(Action<ICompositePredicate> init = null)
     {
         this.CheckUnarity();
 
         var not = new Not(this.extent);
-        
+        init?.Invoke(not);
+
         this.extent.Invalidate();
         this.predicate = not;
         return not;
     }
 
-    public ICompositePredicate AddOr()
+    public ICompositePredicate AddOr(Action<ICompositePredicate> init = null)
     {
         this.CheckUnarity();
 
         var or = new Or(this.extent);
-        
+        init?.Invoke(or);
+
         this.extent.Invalidate();
         this.predicate = or;
         return or;

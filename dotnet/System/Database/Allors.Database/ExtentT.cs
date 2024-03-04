@@ -1,4 +1,4 @@
-// <copyright file="ExtentT.cs" company="Allors bv">
+﻿// <copyright file="ExtentT.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -42,7 +42,7 @@ public class Extent<T> : IList, IList<T> where T : IObject // Extent<T> must als
     ///     The filter is a top level AND filter. If you require an OR or a NOT filter
     ///     then simply add it to this AND filter.
     /// </value>
-    public ICompositePredicate Filter => this.BaseExtent.Filter;
+    public ICompositePredicate Filter(Action<ICompositePredicate> filter = null) => this.BaseExtent.Filter(filter);
 
     /// <summary>
     ///     Gets the first object from the Extent.

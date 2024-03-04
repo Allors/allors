@@ -67,13 +67,14 @@ internal abstract class CompositePredicate : Predicate, ICompositePredicate
 
     protected List<Predicate> Filters { get; }
 
-    public ICompositePredicate AddAnd()
+    public ICompositePredicate AddAnd(Action<ICompositePredicate> init = null)
     {
-        var allFilter = new AndPredicate(this.Extent);
+        var and = new And(this.Extent);
+        init?.Invoke(and);
 
         this.Extent.FlushCache();
-        this.Filters.Add(allFilter);
-        return allFilter;
+        this.Filters.Add(and);
+        return and;
     }
 
     public IPredicate AddBetween(RoleType role, object firstValue, object secondValue)
@@ -266,20 +267,24 @@ internal abstract class CompositePredicate : Predicate, ICompositePredicate
         return like;
     }
 
-    public ICompositePredicate AddNot()
+    public ICompositePredicate AddNot(Action<ICompositePredicate> init = null)
     {
+        var not = new Not(this.Extent);
+        init?.Invoke(not);
+
         this.Extent.FlushCache();
-        var noneFilter = new Not(this.Extent);
-        this.Filters.Add(noneFilter);
-        return noneFilter;
+        this.Filters.Add(not);
+        return not;
     }
 
-    public ICompositePredicate AddOr()
+    public ICompositePredicate AddOr(Action<ICompositePredicate> init = null)
     {
+        var or = new Or(this.Extent);
+        init?.Invoke(or);
+
         this.Extent.FlushCache();
-        var anyFilter = new Or(this.Extent);
-        this.Filters.Add(anyFilter);
-        return anyFilter;
+        this.Filters.Add(or);
+        return or;
     }
 
     internal static ObjectType[] GetConcreteSubClasses(ObjectType type)

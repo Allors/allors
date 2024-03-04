@@ -17,7 +17,12 @@ internal sealed class ExtentFiltered : Extent
         : base(transaction) =>
         this.ObjectType = objectType;
 
-    public override ICompositePredicate Filter => this.filter ??= new And(this);
+    public override ICompositePredicate Filter(Action<ICompositePredicate> init = null)
+    {
+        this.filter ??= new And(this);
+        init?.Invoke(this.filter);
+        return this.filter;
+    }
 
     public override Composite ObjectType { get; }
 

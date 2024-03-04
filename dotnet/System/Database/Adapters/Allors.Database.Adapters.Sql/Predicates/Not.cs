@@ -49,11 +49,15 @@ internal sealed class Not : Predicate, ICompositePredicate
 
     internal override bool Include => this.filter != null && this.filter.Include;
 
-    public ICompositePredicate AddAnd()
+    public ICompositePredicate AddAnd(Action<ICompositePredicate> init = null)
     {
         this.CheckUnarity();
+
+        var and = new And(this.extent);
+        init?.Invoke(and);
+
         this.extent.FlushCache();
-        this.filter = new AndPredicate(this.extent);
+        this.filter = and;
         return (ICompositePredicate)this.filter;
     }
 
@@ -296,22 +300,27 @@ internal sealed class Not : Predicate, ICompositePredicate
         return like;
     }
 
-    public ICompositePredicate AddNot()
+    public ICompositePredicate AddNot(Action<ICompositePredicate> init = null)
     {
         this.CheckUnarity();
         
         var not = new Not(this.extent);
+        init?.Invoke(not);
 
         this.extent.FlushCache();
         this.filter = not;
         return (ICompositePredicate)this.filter;
     }
 
-    public ICompositePredicate AddOr()
+    public ICompositePredicate AddOr(Action<ICompositePredicate> init = null)
     {
         this.CheckUnarity();
+
+        var or = new Or(this.extent);
+        init?.Invoke(or);
+
         this.extent.FlushCache();
-        this.filter = new Or(this.extent);
+        this.filter = or;
         return (ICompositePredicate)this.filter;
     }
 

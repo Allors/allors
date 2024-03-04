@@ -435,9 +435,18 @@ public sealed class Transaction : ITransaction
         }
     }
 
-    public Extent<T> Extent<T>() where T : IObject => this.Extent((Composite)this.Database.ObjectFactory.GetObjectType(typeof(T)));
+    public Extent<T> Extent<T>(Action<ICompositePredicate> init = null) where T : IObject => this.Extent((Composite)this.Database.ObjectFactory.GetObjectType(typeof(T)), init);
 
-    public Allors.Database.Extent Extent(Composite type) => new ExtentFiltered(this, type);
+    public Allors.Database.Extent Extent(Composite type, Action<ICompositePredicate> init = null)
+    {
+        var extent = new ExtentFiltered(this, type);
+        if (init != null)
+        {
+            extent.Filter(init);
+        }
+
+        return extent;
+    }
 
     public Allors.Database.Extent Union(Allors.Database.Extent firstOperand, Allors.Database.Extent secondOperand) =>
         new ExtentOperation(((Extent)firstOperand).ContainedInExtent, ((Extent)secondOperand).ContainedInExtent, ExtentOperations.Union);

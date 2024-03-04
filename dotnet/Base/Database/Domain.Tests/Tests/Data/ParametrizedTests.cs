@@ -32,7 +32,7 @@ namespace Allors.Database.Domain.Tests
 
             Assert.Equal(extent.ToArray(), [.. queryExtent]);
         }
-        
+
         [Fact]
         public void EqualsWithoutArguments()
         {
@@ -80,9 +80,11 @@ namespace Allors.Database.Domain.Tests
             var queryExtent = filter.Build(this.Transaction, arguments);
 
             var extent = this.Transaction.Extent(this.M.Person.Composite);
-            var and = extent.Filter.AddAnd();
-            and.AddEquals(this.M.Person.FirstName, "John");
-            and.AddEquals(this.M.Person.LastName, "Doe");
+            extent.Filter.AddAnd(v =>
+            {
+                v.AddEquals(this.M.Person.FirstName, "John");
+                v.AddEquals(this.M.Person.LastName, "Doe");
+            });
 
             Assert.Equal(extent.ToArray(), [.. queryExtent]);
         }
@@ -118,7 +120,7 @@ namespace Allors.Database.Domain.Tests
                 var queryExtent = filter.Build(this.Transaction, arguments);
 
                 var extent = this.Transaction.Extent(this.M.Person.Composite);
-                extent.Filter.AddEquals(this.M.Person.FirstName, "John");
+                extent.Filter(v => v.AddEquals(this.M.Person.FirstName, "John"));
 
                 Assert.Equal(extent.ToArray(), [.. queryExtent]);
             }

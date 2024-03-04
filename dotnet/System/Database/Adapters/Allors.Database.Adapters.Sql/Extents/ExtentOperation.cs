@@ -1,4 +1,4 @@
-// <copyright file="ExtentOperation.cs" company="Allors bv">
+﻿// <copyright file="ExtentOperation.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -30,7 +30,7 @@ internal class ExtentOperation : SqlExtent
         second.ParentOperationExtent = this;
     }
 
-    public override ICompositePredicate Filter => null;
+    public override ICompositePredicate Filter(Action<ICompositePredicate> init = null) => null;
 
     internal override Transaction Transaction => this.first.Transaction;
 

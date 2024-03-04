@@ -5,6 +5,7 @@
 
 namespace Allors.Database.Adapters.Memory;
 
+using System;
 using System.Collections.Generic;
 using Allors.Database.Meta;
 
@@ -36,13 +37,14 @@ internal abstract class CompositePredicate : Predicate, ICompositePredicate
 
     protected internal List<Predicate> Filters { get; }
 
-    public ICompositePredicate AddAnd()
+    public ICompositePredicate AddAnd(Action<ICompositePredicate> init = null)
     {
-        var andFilter = new And(this.extent);
+        var and = new And(this.extent);
+        init?.Invoke(and);
 
         this.extent.Invalidate();
-        this.Filters.Add(andFilter);
-        return andFilter;
+        this.Filters.Add(and);
+        return and;
     }
 
     public IPredicate AddBetween(RoleType role, object firstValue, object secondValue)
@@ -213,18 +215,20 @@ internal abstract class CompositePredicate : Predicate, ICompositePredicate
         return like;
     }
 
-    public ICompositePredicate AddNot()
+    public ICompositePredicate AddNot(Action<ICompositePredicate> init = null)
     {
         var not = new Not(this.extent);
+        init?.Invoke(not);
 
         this.extent.Invalidate();
         this.Filters.Add(not);
         return not;
     }
 
-    public ICompositePredicate AddOr()
+    public ICompositePredicate AddOr(Action<ICompositePredicate> init = null)
     {
         var or = new Or(this.extent);
+        init?.Invoke(or);
 
         this.extent.Invalidate();
         this.Filters.Add(or);

@@ -5,9 +5,9 @@
 
 namespace Allors.Database.Adapters.Sql;
 
-internal sealed class AndPredicate : CompositePredicate
+internal sealed class And : CompositePredicate
 {
-    internal AndPredicate(ExtentFiltered extent) : base(extent)
+    internal And(ExtentFiltered extent) : base(extent)
     {
     }
 
@@ -15,7 +15,7 @@ internal sealed class AndPredicate : CompositePredicate
     {
         if (this.Include)
         {
-            var root = this.Extent.Filter == null || this.Extent.Filter.Equals(this);
+            var root = this.Extent.Filter() == null || this.Extent.Filter().Equals(this);
             if (root)
             {
                 var wherePresent = this.Extent.ObjectType.ExclusiveClass == null;

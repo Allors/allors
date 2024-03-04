@@ -1,4 +1,4 @@
-// <copyright file="ExtentOperation.cs" company="Allors bv">
+﻿// <copyright file="ExtentOperation.cs" company="Allors bv">
 // Copyright (c) Allors bv. All rights reserved.
 // Licensed under the LGPL license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -32,7 +32,7 @@ internal sealed class ExtentOperation : Extent
         secondOperand.Parent = this;
     }
 
-    public override ICompositePredicate Filter => null;
+    public override ICompositePredicate Filter(Action<ICompositePredicate> init = null) => null;
 
     public override Composite ObjectType => this.firstOperand.ObjectType;
 
@@ -45,44 +45,44 @@ internal sealed class ExtentOperation : Extent
 
             switch (this.operationType)
             {
-                case ExtentOperationType.Union:
-                    this.Strategies = firstOperandStrategies;
-                    foreach (var strategy in secondOperandStrategies)
+            case ExtentOperationType.Union:
+                this.Strategies = firstOperandStrategies;
+                foreach (var strategy in secondOperandStrategies)
+                {
+                    if (!this.Strategies.Contains(strategy))
                     {
-                        if (!this.Strategies.Contains(strategy))
-                        {
-                            this.Strategies.Add(strategy);
-                        }
+                        this.Strategies.Add(strategy);
                     }
+                }
 
-                    break;
+                break;
 
-                case ExtentOperationType.Intersect:
-                    this.Strategies = new List<Strategy>();
-                    foreach (var strategy in firstOperandStrategies)
+            case ExtentOperationType.Intersect:
+                this.Strategies = new List<Strategy>();
+                foreach (var strategy in firstOperandStrategies)
+                {
+                    if (secondOperandStrategies.Contains(strategy))
                     {
-                        if (secondOperandStrategies.Contains(strategy))
-                        {
-                            this.Strategies.Add(strategy);
-                        }
+                        this.Strategies.Add(strategy);
                     }
+                }
 
-                    break;
+                break;
 
-                case ExtentOperationType.Except:
-                    this.Strategies = firstOperandStrategies;
-                    foreach (var strategy in secondOperandStrategies)
+            case ExtentOperationType.Except:
+                this.Strategies = firstOperandStrategies;
+                foreach (var strategy in secondOperandStrategies)
+                {
+                    if (this.Strategies.Contains(strategy))
                     {
-                        if (this.Strategies.Contains(strategy))
-                        {
-                            this.Strategies.Remove(strategy);
-                        }
+                        this.Strategies.Remove(strategy);
                     }
+                }
 
-                    break;
+                break;
 
-                default:
-                    throw new Exception("Unknown extent operation");
+            default:
+                throw new Exception("Unknown extent operation");
             }
 
             if (this.Sorter != null)

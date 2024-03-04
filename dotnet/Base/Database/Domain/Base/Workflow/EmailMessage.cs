@@ -15,8 +15,11 @@ namespace Allors.Database.Domain
 
             var mailer = transaction.Database.Services.Get<IMailer>();
             var emailMessages = transaction.Extent<EmailMessage>();
-            emailMessages.Filter.AddNot().AddExists(m.EmailMessage.DateSending);
-            emailMessages.Filter.AddNot().AddExists(m.EmailMessage.DateSent);
+            emailMessages.Filter(v =>
+            {
+                v.AddNot().AddExists(m.EmailMessage.DateSending);
+                v.AddNot().AddExists(m.EmailMessage.DateSent);
+            });
 
             foreach (EmailMessage emailMessage in emailMessages)
             {
