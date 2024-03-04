@@ -7813,7 +7813,7 @@ public abstract class ExtentTest : IDisposable
     }
 
     [Fact]
-    public void NotRoleOne2OneInstanceof()
+    public void NotRoleOne2OneInstanceOf()
     {
         foreach (var init in this.Inits)
         {
@@ -7904,6 +7904,326 @@ public abstract class ExtentTest : IDisposable
             this.AssertC4(extent, true, true, true, true);
 
             // TODO: wrong relation
+        }
+    }
+
+    [Fact]
+    public void NotRoleMany2OneContainedIn()
+    {
+        foreach (var init in this.Inits)
+        {
+            init();
+            this.Populate();
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
+
+            foreach (var useOperator in this.UseOperator)
+            {
+                // Extent over Class
+
+                // RelationType from Class to Class
+
+                // ContainedIn Extent over Class
+                var inExtent = this.Transaction.Extent(m.C1.Composite);
+                if (useOperator)
+                {
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
+                    inExtent = this.Transaction.Union(inExtentA, inExtentB);
+                }
+
+                var extent = this.Transaction.Extent(m.C1.Composite);
+                extent.Filter.AddNot().AddContainedIn(m.C1.C1C1many2one, inExtent);
+
+                Assert.Single(extent);
+                this.AssertC1(extent, true, false, false, false);
+                this.AssertC2(extent, false, false, false, false);
+                this.AssertC3(extent, false, false, false, false);
+                this.AssertC4(extent, false, false, false, false);
+
+                inExtent = this.Transaction.Extent(m.C2.Composite);
+                if (useOperator)
+                {
+                    var inExtentA = this.Transaction.Extent(m.C2.Composite);
+                    var inExtentB = this.Transaction.Extent(m.C2.Composite);
+                    inExtent = this.Transaction.Union(inExtentA, inExtentB);
+                }
+
+                extent = this.Transaction.Extent(m.C1.Composite);
+                extent.Filter.AddNot().AddContainedIn(m.C1.C1C2many2one, inExtent);
+
+                Assert.Single(extent);
+                this.AssertC1(extent, true, false, false, false);
+                this.AssertC2(extent, false, false, false, false);
+                this.AssertC3(extent, false, false, false, false);
+                this.AssertC4(extent, false, false, false, false);
+
+                inExtent = this.Transaction.Extent(m.C4.Composite);
+                if (useOperator)
+                {
+                    var inExtentA = this.Transaction.Extent(m.C4.Composite);
+                    var inExtentB = this.Transaction.Extent(m.C4.Composite);
+                    inExtent = this.Transaction.Union(inExtentA, inExtentB);
+                }
+
+                extent = this.Transaction.Extent(m.C3.Composite);
+                extent.Filter.AddNot().AddContainedIn(m.C3.C3C4many2one, inExtent);
+
+                Assert.Single(extent);
+                this.AssertC1(extent, false, false, false, false);
+                this.AssertC2(extent, false, false, false, false);
+                this.AssertC3(extent, true, false, false, false);
+                this.AssertC4(extent, false, false, false, false);
+
+                // ContainedIn Extent over Interface
+                inExtent = this.Transaction.Extent(m.I12.Composite);
+                if (useOperator)
+                {
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
+                    inExtent = this.Transaction.Union(inExtentA, inExtentB);
+                }
+
+                extent = this.Transaction.Extent(m.C1.Composite);
+                extent.Filter.AddNot().AddContainedIn(m.C1.C1C1many2one, inExtent);
+
+                Assert.Single(extent);
+                this.AssertC1(extent, true, false, false, false);
+                this.AssertC2(extent, false, false, false, false);
+                this.AssertC3(extent, false, false, false, false);
+                this.AssertC4(extent, false, false, false, false);
+
+                inExtent = this.Transaction.Extent(m.I12.Composite);
+                if (useOperator)
+                {
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
+                    inExtent = this.Transaction.Union(inExtentA, inExtentB);
+                }
+
+                extent = this.Transaction.Extent(m.C1.Composite);
+                extent.Filter.AddNot().AddContainedIn(m.C1.C1C2many2one, inExtent);
+
+                Assert.Single(extent);
+                this.AssertC1(extent, true, false, false, false);
+                this.AssertC2(extent, false, false, false, false);
+                this.AssertC3(extent, false, false, false, false);
+                this.AssertC4(extent, false, false, false, false);
+
+                inExtent = this.Transaction.Extent(m.I34.Composite);
+                if (useOperator)
+                {
+                    var inExtentA = this.Transaction.Extent(m.I34.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I34.Composite);
+                    inExtent = this.Transaction.Union(inExtentA, inExtentB);
+                }
+
+                extent = this.Transaction.Extent(m.C3.Composite);
+                extent.Filter.AddNot().AddContainedIn(m.C3.C3C4many2one, inExtent);
+
+                Assert.Single(extent);
+                this.AssertC1(extent, false, false, false, false);
+                this.AssertC2(extent, false, false, false, false);
+                this.AssertC3(extent, true, false, false, false);
+                this.AssertC4(extent, false, false, false, false);
+
+                // RelationType from Class to Interface
+
+                // ContainedIn Extent over Class
+                inExtent = this.Transaction.Extent(m.C2.Composite);
+                if (useOperator)
+                {
+                    var inExtentA = this.Transaction.Extent(m.C2.Composite);
+                    var inExtentB = this.Transaction.Extent(m.C2.Composite);
+                    inExtent = this.Transaction.Union(inExtentA, inExtentB);
+                }
+
+                extent = this.Transaction.Extent(m.C1.Composite);
+                extent.Filter.AddNot().AddContainedIn(m.C1.C1I12many2one, inExtent);
+
+                Assert.Equal(2, extent.Count);
+                this.AssertC1(extent, true, true, false, false);
+                this.AssertC2(extent, false, false, false, false);
+                this.AssertC3(extent, false, false, false, false);
+                this.AssertC4(extent, false, false, false, false);
+
+                // ContainedIn Extent over Interface
+                inExtent = this.Transaction.Extent(m.I12.Composite);
+                if (useOperator)
+                {
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
+                    inExtent = this.Transaction.Union(inExtentA, inExtentB);
+                }
+
+                extent = this.Transaction.Extent(m.C1.Composite);
+                extent.Filter.AddNot().AddContainedIn(m.C1.C1I12many2one, inExtent);
+
+                Assert.Single(extent);
+                this.AssertC1(extent, true, false, false, false);
+                this.AssertC2(extent, false, false, false, false);
+                this.AssertC3(extent, false, false, false, false);
+                this.AssertC4(extent, false, false, false, false);
+            }
+        }
+    }
+
+    [Fact]
+    public void NotRoleMany2OneContainedInArray()
+    {
+        foreach (var init in this.Inits)
+        {
+            init();
+            this.Populate();
+            var m = this.Transaction.Database.Services.Get<IMetaIndex>();
+
+            foreach (var useOperator in this.UseOperator)
+            {
+                // Extent over Class
+
+                // RelationType from Class to Class
+
+                // ContainedIn Extent over Class
+                var inExtent = this.Transaction.Extent(m.C1.Composite);
+                if (useOperator)
+                {
+                    var inExtentA = this.Transaction.Extent(m.C1.Composite);
+                    var inExtentB = this.Transaction.Extent(m.C1.Composite);
+                    inExtent = this.Transaction.Union(inExtentA, inExtentB);
+                }
+
+                var extent = this.Transaction.Extent(m.C1.Composite);
+                extent.Filter.AddNot().AddContainedIn(m.C1.C1C1many2one, (IEnumerable<IObject>)inExtent.ToArray());
+
+                Assert.Single(extent);
+                this.AssertC1(extent, true, false, false, false);
+                this.AssertC2(extent, false, false, false, false);
+                this.AssertC3(extent, false, false, false, false);
+                this.AssertC4(extent, false, false, false, false);
+
+                inExtent = this.Transaction.Extent(m.C2.Composite);
+                if (useOperator)
+                {
+                    var inExtentA = this.Transaction.Extent(m.C2.Composite);
+                    var inExtentB = this.Transaction.Extent(m.C2.Composite);
+                    inExtent = this.Transaction.Union(inExtentA, inExtentB);
+                }
+
+                extent = this.Transaction.Extent(m.C1.Composite);
+                extent.Filter.AddNot().AddContainedIn(m.C1.C1C2many2one, (IEnumerable<IObject>)inExtent.ToArray());
+
+                Assert.Single(extent);
+                this.AssertC1(extent, true, false, false, false);
+                this.AssertC2(extent, false, false, false, false);
+                this.AssertC3(extent, false, false, false, false);
+                this.AssertC4(extent, false, false, false, false);
+
+                inExtent = this.Transaction.Extent(m.C4.Composite);
+                if (useOperator)
+                {
+                    var inExtentA = this.Transaction.Extent(m.C4.Composite);
+                    var inExtentB = this.Transaction.Extent(m.C4.Composite);
+                    inExtent = this.Transaction.Union(inExtentA, inExtentB);
+                }
+
+                extent = this.Transaction.Extent(m.C3.Composite);
+                extent.Filter.AddNot().AddContainedIn(m.C3.C3C4many2one, (IEnumerable<IObject>)inExtent.ToArray());
+
+                Assert.Single(extent);
+                this.AssertC1(extent, false, false, false, false);
+                this.AssertC2(extent, false, false, false, false);
+                this.AssertC3(extent, true, false, false, false);
+                this.AssertC4(extent, false, false, false, false);
+
+                // ContainedIn Extent over Interface
+                inExtent = this.Transaction.Extent(m.I12.Composite);
+                if (useOperator)
+                {
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
+                    inExtent = this.Transaction.Union(inExtentA, inExtentB);
+                }
+
+                extent = this.Transaction.Extent(m.C1.Composite);
+                extent.Filter.AddNot().AddContainedIn(m.C1.C1C1many2one, (IEnumerable<IObject>)inExtent.ToArray());
+
+                Assert.Single(extent);
+                this.AssertC1(extent, true, false, false, false);
+                this.AssertC2(extent, false, false, false, false);
+                this.AssertC3(extent, false, false, false, false);
+                this.AssertC4(extent, false, false, false, false);
+
+                inExtent = this.Transaction.Extent(m.I12.Composite);
+                if (useOperator)
+                {
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
+                    inExtent = this.Transaction.Union(inExtentA, inExtentB);
+                }
+
+                extent = this.Transaction.Extent(m.C1.Composite);
+                extent.Filter.AddNot().AddContainedIn(m.C1.C1C2many2one, (IEnumerable<IObject>)inExtent.ToArray());
+
+                Assert.Single(extent);
+                this.AssertC1(extent, true, false, false, false);
+                this.AssertC2(extent, false, false, false, false);
+                this.AssertC3(extent, false, false, false, false);
+                this.AssertC4(extent, false, false, false, false);
+
+                inExtent = this.Transaction.Extent(m.I34.Composite);
+                if (useOperator)
+                {
+                    var inExtentA = this.Transaction.Extent(m.I34.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I34.Composite);
+                    inExtent = this.Transaction.Union(inExtentA, inExtentB);
+                }
+
+                extent = this.Transaction.Extent(m.C3.Composite);
+                extent.Filter.AddNot().AddContainedIn(m.C3.C3C4many2one, (IEnumerable<IObject>)inExtent.ToArray());
+
+                Assert.Single(extent);
+                this.AssertC1(extent, false, false, false, false);
+                this.AssertC2(extent, false, false, false, false);
+                this.AssertC3(extent, true, false, false, false);
+                this.AssertC4(extent, false, false, false, false);
+
+                // RelationType from Class to Interface
+
+                // ContainedIn Extent over Class
+                inExtent = this.Transaction.Extent(m.C2.Composite);
+                if (useOperator)
+                {
+                    var inExtentA = this.Transaction.Extent(m.C2.Composite);
+                    var inExtentB = this.Transaction.Extent(m.C2.Composite);
+                    inExtent = this.Transaction.Union(inExtentA, inExtentB);
+                }
+
+                extent = this.Transaction.Extent(m.C1.Composite);
+                extent.Filter.AddNot().AddContainedIn(m.C1.C1I12many2one, (IEnumerable<IObject>)inExtent.ToArray());
+
+                Assert.Equal(2, extent.Count);
+                this.AssertC1(extent, true, true, false, false);
+                this.AssertC2(extent, false, false, false, false);
+                this.AssertC3(extent, false, false, false, false);
+                this.AssertC4(extent, false, false, false, false);
+
+                // ContainedIn Extent over Interface
+                inExtent = this.Transaction.Extent(m.I12.Composite);
+                if (useOperator)
+                {
+                    var inExtentA = this.Transaction.Extent(m.I12.Composite);
+                    var inExtentB = this.Transaction.Extent(m.I12.Composite);
+                    inExtent = this.Transaction.Union(inExtentA, inExtentB);
+                }
+
+                extent = this.Transaction.Extent(m.C1.Composite);
+                extent.Filter.AddNot().AddContainedIn(m.C1.C1I12many2one, (IEnumerable<IObject>)inExtent.ToArray());
+
+                Assert.Single(extent);
+                this.AssertC1(extent, true, false, false, false);
+                this.AssertC2(extent, false, false, false, false);
+                this.AssertC3(extent, false, false, false, false);
+                this.AssertC4(extent, false, false, false, false);
+            }
         }
     }
 
