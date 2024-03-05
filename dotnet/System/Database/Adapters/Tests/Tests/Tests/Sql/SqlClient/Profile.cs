@@ -8,6 +8,7 @@ namespace Allors.Database.Adapters.Sql.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Text;
 using Allors.Database.Meta.Configuration;
 using Allors.Database.Adapters.Sql.Caching;

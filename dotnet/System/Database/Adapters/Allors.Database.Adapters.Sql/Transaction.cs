@@ -435,7 +435,11 @@ public sealed class Transaction : ITransaction
         }
     }
 
-    public Extent<T> Extent<T>(Action<ICompositePredicate> filter = null) where T : IObject => this.Extent((Composite)this.Database.ObjectFactory.GetObjectType(typeof(T)), filter);
+    public Extent<T> Extent<T>(Action<ICompositePredicate> filter = null) where T : class, IObject
+    {
+        var extent = this.Extent((Composite)this.Database.ObjectFactory.GetObjectType(typeof(T)), filter);
+        return new GenericExtent<T>(extent);
+    }
 
     public Allors.Database.Extent Extent(Composite type, Action<ICompositePredicate> filter = null)
     {

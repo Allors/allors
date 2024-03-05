@@ -5,6 +5,7 @@
 
 namespace Allors.Database.Adapters.Memory;
 
+using System.Linq;
 using Allors.Database.Meta;
 
 internal sealed class InRoleOneExtent : In

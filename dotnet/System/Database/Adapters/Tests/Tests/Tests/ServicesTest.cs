@@ -5185,5 +5185,5 @@ public abstract class ServicesTest : IDisposable
 
     protected abstract ITransaction CreateTransaction();
 
-    private IObject[] GetExtent(Composite objectType) => this.Transaction.Extent(objectType);
+    private IObject[] GetExtent(Composite objectType) => this.Transaction.Extent(objectType).Cast<IObject>().ToArray();
 }

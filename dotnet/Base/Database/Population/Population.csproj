@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="CaseExtensions" Version="1.1.0" />
-    <PackageReference Include="KGySoft.CoreLibraries" Version="8.0.0" />
+    <PackageReference Include="KGySoft.CoreLibraries" Version="8.1.0" />
   </ItemGroup>
 
   <ItemGroup>

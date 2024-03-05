@@ -378,14 +378,15 @@ public class Transaction : ITransaction
         }
     }
 
-    public Extent<T> Extent<T>(Action<ICompositePredicate> filter = null) where T : IObject
+    public Extent<T> Extent<T>(Action<ICompositePredicate> filter = null) where T : class, IObject
     {
         if (!(this.Database.ObjectFactory.GetObjectType(typeof(T)) is Composite compositeType))
         {
             throw new Exception("type should be a CompositeType");
         }
 
-        return this.Extent(compositeType);
+        Allors.Database.Extent extent = this.Extent(compositeType, filter);
+        return new GenericExtent<T>(extent);
     }
 
     public virtual Allors.Database.Extent Extent(Composite objectType, Action<ICompositePredicate> filter = null)

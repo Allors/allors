@@ -8,6 +8,7 @@
 
 namespace Allors.Database.Domain.Tests
 {
+    using System.Linq;
     using Xunit;
 
     public class ValidationTests : DomainTest, IClassFixture<Fixture>
@@ -21,7 +22,7 @@ namespace Allors.Database.Domain.Tests
 
             Assert.True(this.Transaction.Derive(false).HasErrors);
 
-            valiData.RequiredPerson = this.Transaction.Extent<Person>().First;
+            valiData.RequiredPerson = this.Transaction.Extent<Person>().First();
 
             Assert.False(this.Transaction.Derive(false).HasErrors);
         }

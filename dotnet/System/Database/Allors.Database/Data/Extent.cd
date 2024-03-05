@@ -2,9 +2,6 @@
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="Allors.Database.Data.Between" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="13" Y="7.75" Width="1.5" />
-    <Members>
-      <Property Name="RoleType" Hidden="true" />
-    </Members>
     <TypeIdentifier>
       <HashCode>AIIAAAAAAAAAAAEAAIAAAAAAAAAQAAAAAAAgCAAABAA=</HashCode>
       <FileName>Data\Between.cs</FileName>
@@ -13,9 +10,6 @@
   </Class>
   <Class Name="Allors.Database.Data.Except" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="4.25" Y="4" Width="1.5" />
-    <Members>
-      <Property Name="Operands" Hidden="true" />
-    </Members>
     <TypeIdentifier>
       <HashCode>AIAAAAAAAAAIAAAAAAAAAAAQAACCAAAAAIAAAAAAAAA=</HashCode>
       <FileName>Data\Except.cs</FileName>
@@ -24,9 +18,6 @@
   </Class>
   <Class Name="Allors.Database.Data.GreaterThan" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="14.75" Y="7.75" Width="1.5" />
-    <Members>
-      <Property Name="RoleType" Hidden="true" />
-    </Members>
     <TypeIdentifier>
       <HashCode>AIIAAAAAAAAAAAIAAIAAAAAAAAAQAAAAAAAgCAAABAA=</HashCode>
       <FileName>Data\GreaterThan.cs</FileName>
@@ -35,9 +26,6 @@
   </Class>
   <Class Name="Allors.Database.Data.Intersect" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="2.5" Y="4" Width="1.5" />
-    <Members>
-      <Property Name="Operands" Hidden="true" />
-    </Members>
     <TypeIdentifier>
       <HashCode>AIAAAAAAAAAIAAAAAAAAAAAQAACCAAAAAIAAAAAAAAA=</HashCode>
       <FileName>Data\Intersect.cs</FileName>
@@ -46,9 +34,6 @@
   </Class>
   <Class Name="Allors.Database.Data.LessThan" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="16.5" Y="7.75" Width="1.5" />
-    <Members>
-      <Property Name="RoleType" Hidden="true" />
-    </Members>
     <TypeIdentifier>
       <HashCode>AIIAAAAAAAAAAAIAAIAAAAAAAAAQAAAAAAAgCAAABAA=</HashCode>
       <FileName>Data\LessThan.cs</FileName>
@@ -57,9 +42,6 @@
   </Class>
   <Class Name="Allors.Database.Data.Like" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="18.25" Y="7.75" Width="1.5" />
-    <Members>
-      <Property Name="RoleType" Hidden="true" />
-    </Members>
     <TypeIdentifier>
       <HashCode>AIIAAAAAAAAAAAAAAIAAAAAAAAAQAAAAAAAgCAAABAA=</HashCode>
       <FileName>Data\Like.cs</FileName>
@@ -84,9 +66,6 @@
   </Class>
   <Class Name="Allors.Database.Data.Union" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="0.75" Y="4" Width="1.5" />
-    <Members>
-      <Property Name="Operands" Hidden="true" />
-    </Members>
     <TypeIdentifier>
       <HashCode>AIAAAAAAAAAIAAAAAAAAAAAQAAACgAAAAIAAAAAAAAA=</HashCode>
       <FileName>Data\Union.cs</FileName>

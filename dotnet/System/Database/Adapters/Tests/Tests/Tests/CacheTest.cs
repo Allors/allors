@@ -29,7 +29,7 @@ public abstract class CacheTest : IDisposable
 
         using (var transaction = database.CreateTransaction())
         {
-            var c1 = transaction.Extent<C1>().First;
+            var c1 = transaction.Extent<C1>().First();
             Assert.Equal("a", c1.C1AllorsString);
         }
 
@@ -46,13 +46,13 @@ public abstract class CacheTest : IDisposable
 
         using (var transaction = database2.CreateTransaction())
         {
-            var c1 = transaction.Extent<C1>().First;
+            var c1 = transaction.Extent<C1>().First();
             c1.C1AllorsString = "c";
         }
 
         using (var transaction = database.CreateTransaction())
         {
-            var c1 = transaction.Extent<C1>().First;
+            var c1 = transaction.Extent<C1>().First();
             Assert.Equal("c", c1.C1AllorsString);
         }
     }

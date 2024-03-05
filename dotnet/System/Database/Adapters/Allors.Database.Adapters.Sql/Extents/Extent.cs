@@ -5,7 +5,30 @@
 
 namespace Allors.Database.Adapters.Sql;
 
+using System.Collections;
+using System.Collections.Generic;
+using Meta;
+
 internal abstract class Extent : Allors.Database.Extent
 {
     internal abstract SqlExtent InExtent { get; }
+    IEnumerator<IObject> IEnumerable<IObject>.GetEnumerator()
+    {
+        foreach (var @object in this)
+        {
+            yield return (IObject)@object;
+        }
+    }
+
+    public abstract int Count { get; }
+
+    public abstract ICompositePredicate Filter { get; }
+
+    public abstract Composite ObjectType { get; }
+
+    public abstract Allors.Database.Extent AddSort(RoleType roleType);
+
+    public abstract Allors.Database.Extent AddSort(RoleType roleType, SortDirection direction);
+
+    public abstract IEnumerator GetEnumerator();
 }

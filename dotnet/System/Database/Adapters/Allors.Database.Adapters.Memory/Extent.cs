@@ -20,7 +20,19 @@ public abstract class Extent : Allors.Database.Extent
 
     protected Extent(Transaction transaction) => this.Transaction = transaction;
 
-    public override int Count
+    IEnumerator<IObject> IEnumerable<IObject>.GetEnumerator()
+    {
+        foreach (var @object in this)
+        {
+            yield return (IObject)@object;
+        }
+    }
+
+    public abstract Composite ObjectType { get; }
+
+    public abstract ICompositePredicate Filter { get; }
+
+    public int Count
     {
         get
         {
@@ -50,9 +62,9 @@ public abstract class Extent : Allors.Database.Extent
 
     protected List<Strategy> Strategies { get; set; }
 
-    public override Allors.Database.Extent AddSort(RoleType roleType) => this.AddSort(roleType, SortDirection.Ascending);
+    public Allors.Database.Extent AddSort(RoleType roleType) => this.AddSort(roleType, SortDirection.Ascending);
 
-    public override Allors.Database.Extent AddSort(RoleType roleType, SortDirection direction)
+    public Allors.Database.Extent AddSort(RoleType roleType, SortDirection direction)
     {
         if (this.Sorter == null)
         {
@@ -66,91 +78,11 @@ public abstract class Extent : Allors.Database.Extent
         this.Invalidate();
         return this;
     }
-
-    public override bool Contains(object value) => this.IndexOf(value) >= 0;
-
-    public override void CopyTo(Array array, int index)
-    {
-        this.Evaluate();
-
-        var i = index;
-        foreach (var strategy in this.Strategies)
-        {
-            array.SetValue(strategy.GetObject(), i);
-            ++i;
-        }
-    }
-
-    public override IEnumerator GetEnumerator()
+    
+    public IEnumerator GetEnumerator()
     {
         this.Evaluate();
         return new ExtentEnumerator(this.Strategies.GetEnumerator());
-    }
-
-    public override int IndexOf(object value)
-    {
-        this.Evaluate();
-        var containedObject = (IObject)value;
-
-        var i = 0;
-        foreach (var strategy in this.Strategies)
-        {
-            if (strategy.ObjectId.Equals(containedObject.Strategy.ObjectId))
-            {
-                return i;
-            }
-
-            ++i;
-        }
-
-        return -1;
-    }
-
-    public override IObject[] ToArray()
-    {
-        this.Evaluate();
-        var clrType = this.Transaction.GetTypeForObjectType(this.ObjectType);
-
-        if (this.Strategies.Count > 0)
-        {
-            var objects = (IObject[])Array.CreateInstance(clrType, this.Strategies.Count);
-
-            var i = 0;
-            foreach (var strategy in this.Strategies)
-            {
-                objects[i] = strategy.GetObject();
-                ++i;
-            }
-
-            return objects;
-        }
-
-        return this.defaultObjectArray ??= (IObject[])Array.CreateInstance(clrType, 0);
-    }
-
-    public override IObject[] ToArray(Type type)
-    {
-        this.Evaluate();
-        if (this.Strategies.Count > 0)
-        {
-            var objects = (IObject[])Array.CreateInstance(type, this.Strategies.Count);
-            var i = 0;
-            foreach (var strategy in this.Strategies)
-            {
-                objects[i] = strategy.GetObject();
-                ++i;
-            }
-
-            return objects;
-        }
-
-        return (IObject[])Array.CreateInstance(type, 0);
-    }
-
-    internal bool ContainsStrategy(Strategy strategy)
-    {
-        this.Evaluate();
-        return this.Strategies.Contains(strategy);
     }
 
     internal List<Strategy> GetEvaluatedStrategies()
@@ -166,10 +98,4 @@ public abstract class Extent : Allors.Database.Extent
     }
 
     protected abstract void Evaluate();
-
-    protected override IObject GetItem(int index)
-    {
-        this.Evaluate();
-        return this.Strategies[index].GetObject();
-    }
 }

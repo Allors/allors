@@ -13,7 +13,7 @@ namespace Allors.Database.Server.Controllers
     using Microsoft.AspNetCore.Mvc;
     using Database;
     using Protocol.Json;
-
+    using System.Linq;
 
     public class TestUnitSamplesController : Controller
     {
@@ -35,7 +35,7 @@ namespace Allors.Database.Server.Controllers
         {
             try
             {
-                var unitSample = this.Transaction.Extent<UnitSample>().First;
+                var unitSample = this.Transaction.Extent<UnitSample>().First();
                 if (unitSample == null)
                 {
                     unitSample = this.Transaction.Build<UnitSample>();

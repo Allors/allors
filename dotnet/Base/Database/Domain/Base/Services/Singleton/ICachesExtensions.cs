@@ -5,6 +5,8 @@
 
 namespace Allors.Database.Domain
 {
+    using System.Linq;
+
     public static partial class ICachesExtensions
     {
         public static Singleton GetSingleton(this ITransaction @this)
@@ -14,7 +16,7 @@ namespace Allors.Database.Domain
             var singleton = (Singleton)@this.Instantiate(singletonId.Id);
             if (singleton == null)
             {
-                singleton = @this.Extent<Singleton>().First;
+                singleton = @this.Extent<Singleton>().FirstOrDefault();
                 singletonId.Id = singleton?.Id ?? 0;
             }
 

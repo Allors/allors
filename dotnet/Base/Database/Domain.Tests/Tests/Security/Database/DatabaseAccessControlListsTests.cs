@@ -26,7 +26,7 @@ namespace Allors.Database.Domain.Tests
 
                 var guest = this.Transaction.Extent<User>().FindBy(this.M.User.UserName, "guest@example.com");
                 var acls = new DatabaseAccessControl(this.Security, guest);
-                foreach (Object aco in (IObject[])transaction.Extent(this.M.Organization.Composite))
+                foreach (var aco in transaction.Extent(this.M.Organization.Composite))
                 {
                     // When
                     var accessList = acls[aco];

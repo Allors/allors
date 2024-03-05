@@ -6,6 +6,7 @@
 namespace Allors.Database.Domain.Tests
 {
     using System.Collections.Generic;
+    using System.Linq;
     using Allors.Protocol.Json.SystemText;
     using Database;
     using Domain;
@@ -29,7 +30,7 @@ namespace Allors.Database.Domain.Tests
                 { "name", "Acme" },
             }, new UnitConvert());
 
-            Extent<Organization> organizations = organizationByName.Build(this.Transaction, arguments).ToArray();
+            var organizations = organizationByName.Build(this.Transaction, arguments).Cast<Organization>().ToArray();
 
             Assert.Single(organizations);
 

@@ -45,7 +45,7 @@ public interface ITransaction : IDisposable
     /// </summary>
     /// <typeparam name="T">The type for the extent.</typeparam>
     /// <returns>The extent.</returns>
-    Extent<T> Extent<T>(Action<ICompositePredicate> filter = null) where T : IObject;
+    Extent<T> Extent<T>(Action<ICompositePredicate> filter = null) where T : class, IObject;
 
     /// <summary>
     ///     Creates an Extent for the specified <see cref="ObjectType" />.

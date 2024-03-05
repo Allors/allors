@@ -8,6 +8,7 @@ namespace Allors.Database.Domain
     using System;
     using System.Collections.Concurrent;
     using System.Collections.Generic;
+    using System.Linq;
     using Meta;
 
     public class Cache<TKey, TObject> : ICache<TKey, TObject>
@@ -52,7 +53,7 @@ namespace Allors.Database.Domain
                     var extent = this.Transaction.Extent<TObject>();
                     extent.Filter.AddEquals(this.RoleType, key);
 
-                    var @object = extent.First;
+                    var @object = extent.FirstOrDefault();
                     if (@object != null)
                     {
                         objectId = @object.Id;

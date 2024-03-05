@@ -5,6 +5,8 @@
 
 namespace Allors.Database.Domain
 {
+    using System.Linq;
+
     /// <summary>
     /// Shared.
     /// </summary>
@@ -29,7 +31,7 @@ namespace Allors.Database.Domain
         {
             var people = this.strategy.Transaction.Extent<Person>();
             people.Filter.AddEquals(this.m.Person.FirstName, "John");
-            var john = people.First;
+            var john = people.First();
 
             this.AutocompleteDerivedFilter ??= john;
             this.AutocompleteDerivedOptions ??= john;

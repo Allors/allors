@@ -46,7 +46,7 @@ namespace Tests
             this.SetUser("jane@example.com");
 
             var people = this.Transaction.Extent<Person>();
-            var person = people[0];
+            var person = people.First();
 
             var syncRequest = new SyncRequest
             {
@@ -75,7 +75,7 @@ namespace Tests
             this.SetUser("noacl");
 
             var people = this.Transaction.Extent<Person>();
-            var person = people[0];
+            var person = people.First();
 
             var syncRequest = new SyncRequest
             {

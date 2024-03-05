@@ -6,6 +6,7 @@
 namespace Allors.Database.Adapters.Sql.SqlClient;
 
 using System;
+using System.Linq;
 using Allors.Database.Domain;
 using Meta;
 using Xunit;
@@ -38,8 +39,8 @@ public class SqlClientTest : IDisposable, IClassFixture<Fixture<SqlClientTest>>
 
             using (var transaction = this.CreateTransaction())
             {
-                var c1s = (Extent<C1>)transaction.Build(m.C1.Class, count);
-                var c2s = (Extent<C2>)transaction.Build(m.C2.Class, count);
+                var c1s = transaction.Build<C1>(count);
+                var c2s = transaction.Build<C2>(count);
 
                 for (var i = 0; i < count; i++)
                 {
